@@ -236,10 +236,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			value = infoFormParameterMap.get(infoField.getName());
 		}
 		else {
-			value = GetterUtil.getString(
-				_getValue(
-					httpServletRequest, infoField, infoForm.getName(), locale),
-				value);
+			value = _getValue(
+				value, httpServletRequest, infoField, infoForm.getName(),
+				locale);
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
@@ -553,11 +552,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	private String _getValue(
-		HttpServletRequest httpServletRequest, InfoField infoField,
-		String infoFormName, Locale locale) {
+		String defaultValue, HttpServletRequest httpServletRequest,
+		InfoField infoField, String infoFormName, Locale locale) {
 
 		if (httpServletRequest == null) {
-			return StringPool.BLANK;
+			return defaultValue;
 		}
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
@@ -565,14 +564,14 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (layoutDisplayPageObjectProvider == null) {
-			return StringPool.BLANK;
+			return defaultValue;
 		}
 
 		String className = _infoSearchClassMapperRegistry.getClassName(
 			layoutDisplayPageObjectProvider.getClassName());
 
 		if (!Objects.equals(className, infoFormName)) {
-			return StringPool.BLANK;
+			return defaultValue;
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
@@ -586,7 +585,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 						layoutDisplayPageObjectProvider.getClassName());
 			}
 
-			return StringPool.BLANK;
+			return defaultValue;
 		}
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -597,7 +596,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			infoItemFieldValues.getInfoFieldValue(infoField.getName());
 
 		if (infoFieldValue == null) {
-			return StringPool.BLANK;
+			return defaultValue;
 		}
 
 		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
@@ -612,7 +611,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				(ArrayList<KeyLocalizedLabelPair>)infoFieldValue.getValue();
 
 			if (ListUtil.isEmpty(values)) {
-				return StringPool.BLANK;
+				return defaultValue;
 			}
 
 			List<OptionInfoFieldType> optionInfoFieldTypes =
@@ -629,7 +628,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				(ArrayList<KeyLocalizedLabelPair>)infoFieldValue.getValue();
 
 			if (ListUtil.isEmpty(values)) {
-				return StringPool.BLANK;
+				return defaultValue;
 			}
 
 			List<OptionInfoFieldType> optionInfoFieldTypes =
@@ -643,8 +642,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 		Object value = infoFieldValue.getValue();
 
-		if (value == null) {
-			return StringPool.BLANK;
+		if (Validator.isNull(value)) {
+			return defaultValue;
 		}
 
 		return String.valueOf(value);

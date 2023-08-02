@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -112,7 +111,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					group.getCtCollectionId())) {
 
 			if (cmd.equals(Constants.ADD_TEMP)) {
-				_importLayoutsMVCActionCommand.addTempFileEntry(
+				addTempFileEntry(
 					actionRequest,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
@@ -125,7 +124,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
-				_importLayoutsMVCActionCommand.deleteTempFileEntry(
+				deleteTempFileEntry(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
@@ -156,7 +155,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 
-				_importLayoutsMVCActionCommand.handleUploadException(
+				handleUploadException(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId(),
@@ -245,8 +244,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 			importData(actionRequest, inputStream);
 
-			_importLayoutsMVCActionCommand.deleteTempFileEntry(
-				groupId, folderName);
+			deleteTempFileEntry(groupId, folderName);
 		}
 	}
 
@@ -389,9 +387,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;
 
 	@Reference
 	private Portal _portal;

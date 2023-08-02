@@ -116,8 +116,8 @@ public class APISchemaEntityModelTest {
 			entityFieldsMap.put(
 				fieldName,
 				new EntityField(
-					fieldName, EntityField.Type.STRING, o -> null, o -> null,
-					o -> null));
+					fieldName, EntityField.Type.STRING, locale -> null,
+					locale -> null, object -> null));
 		}
 
 		entityModelImpl.setEntityFieldsMap(entityFieldsMap);

@@ -899,6 +899,10 @@ public abstract class BaseDiscountResourceTestCase {
 	protected void assertValid(Discount discount) throws Exception {
 		boolean valid = true;
 
+		if (discount.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (discount.getId() == null) {
 			valid = false;
 		}
@@ -1338,6 +1342,17 @@ public abstract class BaseDiscountResourceTestCase {
 				if (!equals(
 						(Map)discount1.getCustomFields(),
 						(Map)discount2.getCustomFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						discount1.getDateModified(),
+						discount2.getDateModified())) {
 
 					return false;
 				}
@@ -1871,6 +1886,37 @@ public abstract class BaseDiscountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(discount.getDateModified(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(discount.getDateModified(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(discount.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("discountAccountGroups")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2321,6 +2367,7 @@ public abstract class BaseDiscountResourceTestCase {
 					RandomTestUtil.randomString());
 				couponCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				dateModified = RandomTestUtil.nextDate();
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(

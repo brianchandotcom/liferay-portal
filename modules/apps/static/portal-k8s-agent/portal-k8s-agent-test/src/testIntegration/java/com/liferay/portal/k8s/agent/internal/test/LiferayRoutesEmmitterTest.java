@@ -18,10 +18,11 @@ import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -94,7 +95,7 @@ public class LiferayRoutesEmmitterTest {
 	@Test
 	public void testDefaultDxpMetadata() throws Exception {
 		Path dxpMetadataPath = _liferayHomePath.resolve(
-			PropsValues.LIFERAY_ROUTES + "/default/dxp");
+			PropsUtil.get(PropsKeys.LIFERAY_ROUTES) + "/default/dxp");
 
 		Assert.assertTrue(
 			dxpMetadataPath.toString() + " does not exist",
@@ -135,7 +136,7 @@ public class LiferayRoutesEmmitterTest {
 
 		Path dxpMetadataPath = _liferayHomePath.resolve(
 			StringBundler.concat(
-				PropsValues.LIFERAY_ROUTES, "/", webId, "/dxp"));
+				PropsUtil.get(PropsKeys.LIFERAY_ROUTES), "/", webId, "/dxp"));
 
 		Assert.assertTrue(
 			dxpMetadataPath.toString() + " does not exist",
@@ -198,7 +199,9 @@ public class LiferayRoutesEmmitterTest {
 			configMapName);
 
 		Path projectMetadataPath = _liferayHomePath.resolve(
-			Paths.get(PropsValues.LIFERAY_ROUTES + "/default", projectName));
+			Paths.get(
+				PropsUtil.get(PropsKeys.LIFERAY_ROUTES) + "/default",
+				projectName));
 
 		Assert.assertTrue(
 			projectMetadataPath.toString() + " should exist",
@@ -235,7 +238,7 @@ public class LiferayRoutesEmmitterTest {
 
 		Path dxpMetadataPath = _liferayHomePath.resolve(
 			StringBundler.concat(
-				PropsValues.LIFERAY_ROUTES, "/", webId, "/dxp"));
+				PropsUtil.get(PropsKeys.LIFERAY_ROUTES), "/", webId, "/dxp"));
 
 		Assert.assertTrue(
 			dxpMetadataPath.toString() + " does not exist",

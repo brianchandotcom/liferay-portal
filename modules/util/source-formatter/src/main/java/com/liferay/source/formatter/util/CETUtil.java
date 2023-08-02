@@ -5,13 +5,11 @@
 
 package com.liferay.source.formatter.util;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -131,16 +129,12 @@ public class CETUtil {
 		List<JavaClass> cetJavaClasses = new ArrayList<>();
 
 		for (String fileName : new LinkedHashSet<>(fileNames)) {
-			String normalizedFileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String absolutePath = SourceUtil.getAbsolutePath(
-				normalizedFileName);
+			String absolutePath = SourceUtil.getAbsolutePath(fileName);
 
 			String fileContent = FileUtil.read(new File(absolutePath), false);
 
 			JavaClass javaClass = JavaClassParser.parseJavaClass(
-				normalizedFileName, fileContent);
+				fileName, fileContent);
 
 			if (Objects.equals(javaClass.getName(), "CET")) {
 				baseCETJavaClass = javaClass;

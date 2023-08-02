@@ -126,9 +126,6 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		Version expectedSchemaVersion = null;
 
 		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 			File file = new File(fileName);
 
 			String content = FileUtil.read(file);

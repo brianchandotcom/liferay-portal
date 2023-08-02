@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -136,9 +135,6 @@ public class BNDBundleCheck extends BaseFileCheck {
 			true);
 
 		for (String testcaseFileName : testcaseFileNames) {
-			testcaseFileName = StringUtil.replace(
-				testcaseFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 			String content = FileUtil.read(new File(testcaseFileName));
 
 			if (content.contains(

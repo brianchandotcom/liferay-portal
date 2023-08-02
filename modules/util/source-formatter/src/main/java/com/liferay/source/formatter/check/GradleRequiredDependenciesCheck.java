@@ -5,9 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -116,9 +114,6 @@ public class GradleRequiredDependenciesCheck extends BaseFileCheck {
 					getSourceFormatterExcludes(), false);
 
 			for (String buildGradleFileName : buildGradleFileNames) {
-				buildGradleFileName = StringUtil.replace(
-					buildGradleFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 				buildGradleContents.add(
 					FileUtil.read(new File(buildGradleFileName)));
 			}

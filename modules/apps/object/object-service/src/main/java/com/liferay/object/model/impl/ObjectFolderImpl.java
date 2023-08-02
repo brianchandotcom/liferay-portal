@@ -5,6 +5,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -13,7 +14,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class ObjectFolderImpl extends ObjectFolderBaseImpl {
 
 	public boolean isUncategorized() {
-		if (StringUtil.equals(getName(), "Uncategorized")) {
+		if (StringUtil.equals(
+				getName(), ObjectFolderConstants.NAME_UNCATEGORIZED)) {
+
 			return true;
 		}
 

@@ -14,6 +14,7 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -338,7 +339,8 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setEnableLocalization(true);
 		objectDefinition.setModifiable(true);
 		objectDefinition.setName("O" + objectDefinition.getName());
-		objectDefinition.setObjectFolderExternalReferenceCode("uncategorized");
+		objectDefinition.setObjectFolderExternalReferenceCode(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));

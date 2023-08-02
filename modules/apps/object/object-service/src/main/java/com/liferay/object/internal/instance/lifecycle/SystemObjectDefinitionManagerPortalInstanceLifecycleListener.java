@@ -11,6 +11,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -171,14 +172,16 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 				ObjectFolder objectFolder =
 					_objectFolderLocalService.fetchObjectFolder(
-						companyId, "Uncategorized");
+						companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
 
 				if (objectFolder == null) {
 					objectFolder = _objectFolderLocalService.addObjectFolder(
-						"uncategorized",
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
 						_userLocalService.getGuestUserId(companyId),
-						LocalizedMapUtil.getLocalizedMap("Uncategorized"),
-						"Uncategorized");
+						LocalizedMapUtil.getLocalizedMap(
+							ObjectFolderConstants.NAME_UNCATEGORIZED),
+						ObjectFolderConstants.NAME_UNCATEGORIZED);
 				}
 
 				objectDefinition =

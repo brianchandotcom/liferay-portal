@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.object.model.ObjectDefinition;
@@ -123,7 +124,8 @@ public class ObjectFolderLocalServiceImpl
 
 		ObjectFolder uncategorizedObjectFolder =
 			objectFolderPersistence.findByC_N(
-				objectFolder.getCompanyId(), "Uncategorized");
+				objectFolder.getCompanyId(),
+				ObjectFolderConstants.NAME_UNCATEGORIZED);
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionPersistence.findByObjectFolderId(

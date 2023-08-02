@@ -6,6 +6,7 @@
 package com.liferay.object.internal.security.permission.resource;
 
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,7 +64,8 @@ public class ObjectFolderModelResourcePermission
 
 		if (objectFolderId == 0) {
 			objectFolder = _objectFolderLocalService.getObjectFolder(
-				permissionChecker.getCompanyId(), "Uncategorized");
+				permissionChecker.getCompanyId(),
+				ObjectFolderConstants.NAME_UNCATEGORIZED);
 		}
 		else {
 			objectFolder = _objectFolderLocalService.getObjectFolder(

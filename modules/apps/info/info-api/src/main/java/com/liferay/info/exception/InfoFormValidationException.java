@@ -6,6 +6,7 @@
 package com.liferay.info.exception;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -160,6 +161,21 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public static class InvalidCaptcha extends InfoFormValidationException {
 
+		public InvalidCaptcha(
+			CaptchaException captchaException, long fragmentEntryLinkId) {
+
+			_captchaException = captchaException;
+			_fragmentEntryLinkId = fragmentEntryLinkId;
+		}
+
+		public CaptchaException getCaptchaException() {
+			return _captchaException;
+		}
+
+		public long getFragmentEntryLinkId() {
+			return _fragmentEntryLinkId;
+		}
+
 		@Override
 		public String getLocalizedMessage(Locale locale) {
 			return LanguageUtil.get(locale, "captcha-verification-failed");
@@ -169,6 +185,9 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return getLocalizedMessage(locale);
 		}
+
+		private final CaptchaException _captchaException;
+		private final long _fragmentEntryLinkId;
 
 	}
 

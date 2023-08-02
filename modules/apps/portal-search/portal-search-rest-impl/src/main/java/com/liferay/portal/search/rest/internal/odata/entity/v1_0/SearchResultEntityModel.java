@@ -7,7 +7,6 @@ package com.liferay.portal.search.rest.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -44,8 +43,14 @@ public class SearchResultEntityModel implements EntityModel {
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
-					LocalizationUtil.getLocalizedName(
-						"localized_title", LocaleUtil.toLanguageId(locale)))));
+					"localized_title_".concat(LocaleUtil.toLanguageId(locale))),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						"localized_title_".concat(
+							LocaleUtil.toLanguageId(locale)));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}));
 	}
 
 	@Override

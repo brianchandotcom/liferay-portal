@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +45,7 @@ public class FunctionObjectValidationRuleEngineImpl
 	public Map<String, Object> execute(
 		Map<String, Object> inputObjects, String script) {
 
-		Map<String, Object> results = HashMapBuilder.<String, Object>put(
-			"invalidFields", false
-		).build();
+		Map<String, Object> results = new HashMap<>();
 
 		try {
 			JSONObject payloadJSONObject = _getPayloadJSONObject(inputObjects);
@@ -73,7 +71,7 @@ public class FunctionObjectValidationRuleEngineImpl
 		catch (Exception exception) {
 			_log.error(exception);
 
-			results.put("invalidFields", true);
+			results.put("validationCriteriaMet", false);
 		}
 
 		return results;

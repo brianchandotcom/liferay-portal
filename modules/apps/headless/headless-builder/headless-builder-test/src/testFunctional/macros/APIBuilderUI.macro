@@ -28,7 +28,8 @@ definition {
 		Click(locator1 = "APIBuilder#ADD_NEW_API_APPLICATION");
 
 		Type(
-			locator1 = "APIBuilder#APPLICATION_TITLE",
+			key_fieldLabel = "Title",
+			locator1 = "Modal#INPUT_WITH_LABEL",
 			value1 = ${title});
 
 		Click(locator1 = "APIBuilder#CREATE_BUTTON");

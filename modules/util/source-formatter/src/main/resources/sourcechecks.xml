@@ -1601,6 +1601,10 @@
 			<description name="Checks if the property value `-includeresource` or `Include-Resource` exists and removes it" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeDLUtilCheck">
+			<category name="Upgrade" />
+			<description name="Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`." />
+		</check>
 		<check name="UpgradeGetClassNamesMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of method from 'getClassNames' to 'getSearchClassNames'" />

@@ -65,8 +65,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 					apiSchemaId, "L_API_SCHEMA")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API property must be related to an API schema",
-					"an-api-property-must-be-related-to-an-api-schema", null);
+					null, "An API property must be related to an API schema",
+					"an-api-property-must-be-related-to-an-api-schema");
 			}
 
 			if (!_validateAPIProperty(
@@ -74,11 +74,11 @@ public class APIPropertyRelevantObjectEntryModelListener
 					(String)values.get("objectRelationshipNames"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
 					"An API property must be related to an existing Object " +
 						"Field",
 					"an-api-property-must-be-related-to-an-existing-object-" +
-						"field",
-					null);
+						"field");
 			}
 		}
 		catch (Exception exception) {

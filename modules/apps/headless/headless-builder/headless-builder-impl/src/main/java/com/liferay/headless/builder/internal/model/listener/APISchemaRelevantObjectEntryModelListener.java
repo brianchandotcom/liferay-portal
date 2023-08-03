@@ -75,9 +75,8 @@ public class APISchemaRelevantObjectEntryModelListener
 
 			if (objectDefinition == null) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API schema must be an existing Object Definition",
-					"an-api-schema-must-be-an-existing-object-definition",
-					null);
+					null, "An API schema must be an existing Object Definition",
+					"an-api-schema-must-be-an-existing-object-definition");
 			}
 
 			if (Validator.isNotNull(

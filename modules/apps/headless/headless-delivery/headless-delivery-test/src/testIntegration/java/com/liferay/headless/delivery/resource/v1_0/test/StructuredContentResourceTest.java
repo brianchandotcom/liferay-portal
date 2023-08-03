@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -85,6 +86,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -108,6 +110,10 @@ public class StructuredContentResourceTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
@@ -138,6 +144,14 @@ public class StructuredContentResourceTest
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Override
@@ -1725,6 +1739,7 @@ public class StructuredContentResourceTest
 		_layoutPageTemplateEntryLocalService;
 
 	private DDMStructure _localizedDDMStructure;
+	private String _originalName;
 
 	@Inject
 	private Portal _portal;

@@ -65,6 +65,8 @@ public class SQLServerDB extends BaseDB {
 			removePrimaryKey(connection, tableName);
 		}
 
+		_dropDefaultConstraint(connection, tableName, columnName);
+
 		super.alterColumnType(connection, tableName, columnName, newColumnType);
 
 		if (primaryKey) {
@@ -432,6 +434,17 @@ public class SQLServerDB extends BaseDB {
 						REWORD_TEMPLATE, template);
 
 					line = StringUtil.replace(line, " ;", ";");
+
+					String defaults = template[template.length - 2];
+
+					if (!Validator.isBlank(defaults)) {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ add constraint " +
+									"@old-column@_default default @default@ " +
+										"for @old-column@;",
+								REWORD_TEMPLATE, template));
+					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);

@@ -183,19 +183,33 @@ public class MySQLDB extends BaseDB {
 				else if (line.startsWith(ALTER_COLUMN_NAME)) {
 					String[] template = buildColumnNameTokens(line);
 
-					line = StringUtil.replace(
-						"alter table @table@ change column @old-column@ " +
-							"@new-column@ @type@;",
-						REWORD_TEMPLATE, template);
+					String defaultValue = template[template.length - 2];
+
+					if (!Validator.isBlank(defaultValue)) {
+						line = StringUtil.replace(
+							"alter table @table@ change column @old-column@ " +
+								"@new-column@ @type@ default @default@ " +
+									"@nullable@;",
+							REWORD_TEMPLATE, template);
+					}
+					else {
+						line = StringUtil.replace(
+							"alter table @table@ change column @old-column@ " +
+								"@new-column@ @type@ @nullable@;",
+							REWORD_TEMPLATE, template);
+
+						line = StringUtil.replace(line, " ;", ";");
+					}
 				}
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
-					String nullable = template[template.length - 1];
+					String defaultValue = template[template.length - 2];
 
-					if (Validator.isBlank(nullable)) {
+					if (!Validator.isBlank(defaultValue)) {
 						line = StringUtil.replace(
-							"alter table @table@ modify @old-column@ @type@;",
+							"alter table @table@ modify @old-column@ @type@ " +
+								"default @default@ @nullable@;",
 							REWORD_TEMPLATE, template);
 					}
 					else {
@@ -203,6 +217,8 @@ public class MySQLDB extends BaseDB {
 							"alter table @table@ modify @old-column@ @type@ " +
 								"@nullable@;",
 							REWORD_TEMPLATE, template);
+
+						line = StringUtil.replace(line, " ;", ";");
 					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {

@@ -222,6 +222,23 @@ public class HypersonicDB extends BaseDB {
 						"alter table @table@ alter column @old-column@ @type@;",
 						REWORD_TEMPLATE, template);
 
+					String defaultValue = template[template.length - 2];
+
+					if (Validator.isBlank(defaultValue)) {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set default null;",
+								REWORD_TEMPLATE, template));
+					}
+					else {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set default @default@;",
+								REWORD_TEMPLATE, template));
+					}
+
 					String nullable = template[template.length - 1];
 
 					if (!Validator.isBlank(nullable)) {

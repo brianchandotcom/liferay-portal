@@ -46,6 +46,9 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 
 		};
 
+	public String getBreadcrumb(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<LayoutRevision> getChildren();
 
 	public ColorScheme getColorScheme()
@@ -53,6 +56,8 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 
 	public String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public Group getGroup();
 
 	public String getHTMLTitle(java.util.Locale locale);
 

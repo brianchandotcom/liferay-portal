@@ -254,6 +254,13 @@ public class LayoutRevisionWrapper
 	}
 
 	@Override
+	public String getBreadcrumb(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getBreadcrumb(locale);
+	}
+
+	@Override
 	public java.util.List<LayoutRevision> getChildren() {
 		return model.getChildren();
 	}
@@ -391,6 +398,11 @@ public class LayoutRevisionWrapper
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
 		return model.getDescriptionMap();
+	}
+
+	@Override
+	public Group getGroup() {
+		return model.getGroup();
 	}
 
 	/**

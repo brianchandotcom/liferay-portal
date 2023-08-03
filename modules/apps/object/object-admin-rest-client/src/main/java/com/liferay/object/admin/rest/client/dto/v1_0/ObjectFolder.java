@@ -171,6 +171,28 @@ public class ObjectFolder implements Cloneable, Serializable {
 
 	protected String name;
 
+	public ObjectFolderItem[] getObjectFolderItems() {
+		return objectFolderItems;
+	}
+
+	public void setObjectFolderItems(ObjectFolderItem[] objectFolderItems) {
+		this.objectFolderItems = objectFolderItems;
+	}
+
+	public void setObjectFolderItems(
+		UnsafeSupplier<ObjectFolderItem[], Exception>
+			objectFolderItemsUnsafeSupplier) {
+
+		try {
+			objectFolderItems = objectFolderItemsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectFolderItem[] objectFolderItems;
+
 	@Override
 	public ObjectFolder clone() throws CloneNotSupportedException {
 		return (ObjectFolder)super.clone();

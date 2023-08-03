@@ -10,13 +10,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.model.DefaultModelHintsImpl;
+import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
@@ -120,6 +124,40 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 					}
 				});
 		}
+	}
+
+	@Test
+	public void testCopyClassName() throws Exception {
+		String classNameValue = "";
+		long classNameId = 0;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select value, classNameId from ClassName_ order by " +
+					"classNameId asc limit 1; ");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				classNameValue = resultSet.getString(1);
+				classNameId = resultSet.getLong(2);
+			}
+		}
+
+		ClassName emptyClassName = ReflectionTestUtil.getFieldValue(
+			ClassNameLocalServiceImpl.class, "_nullClassName");
+
+		long finalClassNameId = classNameId;
+		String finalClassNameValue = classNameValue;
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				ClassName className = _classNameLocalService.fetchClassName(
+					finalClassNameValue);
+
+				Assert.assertNotEquals(emptyClassName, className);
+				Assert.assertEquals(
+					finalClassNameId, className.getClassNameId());
+				Assert.assertEquals(finalClassNameValue, className.getValue());
+			});
 	}
 
 	@Test
@@ -269,10 +307,24 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
+	private static final String _CLASS_NAME_VALUE = "class.name.test";
+
 	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private class ClassNameModelHints extends DefaultModelHintsImpl {
+
+		@Override
+		public List<String> getModels() {
+			return Arrays.asList(_CLASS_NAME_VALUE);
+		}
+
+	}
 
 }

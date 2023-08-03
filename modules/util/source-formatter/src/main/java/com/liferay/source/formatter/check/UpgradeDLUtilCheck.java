@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Cavalcanti
  */
-public class UpgradeJavaDLUtilCheck extends BaseUpgradeMatcherReplacementCheck {
+public class UpgradeDLUtilCheck extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
 	protected String afterFormat(

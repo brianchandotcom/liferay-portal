@@ -6,7 +6,6 @@
 /// <reference types="react" />
 
 declare type Props = {
-	className: string;
 	description: string;
 	disabled: boolean;
 	index: number;
@@ -15,7 +14,6 @@ declare type Props = {
 	value: boolean;
 };
 declare const AccessibilitySetting: ({
-	className,
 	description,
 	disabled,
 	index,

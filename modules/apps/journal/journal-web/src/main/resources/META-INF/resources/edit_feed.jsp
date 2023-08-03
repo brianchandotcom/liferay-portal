@@ -151,20 +151,26 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:input name="assetCategory" type="resource" value="<%= editJournalFeedDisplayContext.getAssetCategoryName() %>" />
 
-				<clay:button
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "selectAssetCategoryButton" %>'
-					label="select"
-					onClick='<%= liferayPortletResponse.getNamespace() + "openAssetCategorySelector();" %>'
-				/>
+				<div class="c-gap-1 d-flex">
+					<clay:button
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"selectAssetCategoryPropsTransformerURL", editJournalFeedDisplayContext.getAssetCategoriesSelectorURL()
+							).build()
+						%>'
+						displayType="secondary"
+						label="select"
+						propsTransformer="js/SelectAssetCategoryButtonPropsTransformer"
+					/>
 
-				<clay:button
-					disabled="<%= editJournalFeedDisplayContext.getAssetCategoryId() == 0 %>"
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "removeAssetCategoryButton" %>'
-					label="remove"
-					onClick='<%= liferayPortletResponse.getNamespace() + "removeAssetCategory();" %>'
-				/>
+					<clay:button
+						disabled="<%= editJournalFeedDisplayContext.getAssetCategoryId() == 0 %>"
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "removeAssetCategoryButton" %>'
+						label="remove"
+						onClick='<%= liferayPortletResponse.getNamespace() + "removeAssetCategory();" %>'
+					/>
+				</div>
 			</div>
 		</liferay-frontend:fieldset>
 
@@ -277,24 +283,6 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 </liferay-frontend:edit-form>
 
 <aui:script>
-	function <portlet:namespace />openAssetCategorySelector() {
-		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItems) {
-				const [selectedItem] = Object.values(selectedItems);
-
-				document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
-					selectedItem.classPK;
-				document.<portlet:namespace />fm.<portlet:namespace />assetCategory.value =
-					selectedItem.title;
-				document.<portlet:namespace />fm.<portlet:namespace />removeAssetCategoryButton.disabled = false;
-			},
-			selectEventName: '<portlet:namespace />selectAssetCategory',
-			title: '<%= UnicodeLanguageUtil.get(request, "select-category") %>',
-			url:
-				'<%= editJournalFeedDisplayContext.getAssetCategoriesSelectorURL() %>>',
-		});
-	}
-
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {

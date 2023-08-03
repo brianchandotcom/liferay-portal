@@ -50,5 +50,6 @@
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-engine-creole/src/main/java/com/liferay/wiki/engine/creole/internal/util/WikiEngineCreoleComponentProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/display/context/DLMimeTypeDisplayContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/util/WikiWebComponentProvider\.java" />
+		<suppress checks="UnprocessedExceptionCheck" files="static/osgi/osgi-util/src/main/java/com/liferay/osgi/util/service/Snapshot\.java" />
 	</checkstyle>
 </suppressions>

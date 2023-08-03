@@ -67,16 +67,18 @@ public class ObjectActionExecutorRegistryImpl
 			ListUtil.filter(
 				ListUtil.fromCollection(objectActionExecutorsCollection),
 				objectActionExecutor -> {
-					boolean allowed = true;
+					boolean companyAllowed = true;
 
 					if (objectActionExecutor instanceof CompanyScoped) {
 						CompanyScoped objectActionExecutorCompanyScoped =
 							(CompanyScoped)objectActionExecutor;
 
-						allowed =
+						companyAllowed =
 							objectActionExecutorCompanyScoped.isAllowedCompany(
 								companyId);
 					}
+
+					boolean objectDefinitionAllowed = true;
 
 					if (objectActionExecutor instanceof
 							ObjectDefinitionScoped) {
@@ -85,12 +87,12 @@ public class ObjectActionExecutorRegistryImpl
 							objectActionExecutorObjectDefinitionScoped =
 								(ObjectDefinitionScoped)objectActionExecutor;
 
-						allowed =
+						objectDefinitionAllowed =
 							objectActionExecutorObjectDefinitionScoped.
 								isAllowedObjectDefinition(objectDefinitionName);
 					}
 
-					return allowed;
+					return companyAllowed && objectDefinitionAllowed;
 				}),
 			(ObjectActionExecutor objectActionExecutor1,
 			 ObjectActionExecutor objectActionExecutor2) -> {

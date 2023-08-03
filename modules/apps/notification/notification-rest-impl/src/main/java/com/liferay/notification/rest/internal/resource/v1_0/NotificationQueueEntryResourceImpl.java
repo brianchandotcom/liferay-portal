@@ -136,9 +136,14 @@ public class NotificationQueueEntryResourceImpl
 				contextUser));
 		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
 
-		return _toNotificationQueueEntry(
-			_notificationQueueEntryService.addNotificationQueueEntry(
-				notificationContext));
+		com.liferay.notification.model.NotificationQueueEntry
+			serviceBuilderNotificationQueueEntry =
+				_notificationQueueEntryService.addNotificationQueueEntry(
+					notificationContext);
+
+		notificationType.sendNotification(serviceBuilderNotificationQueueEntry);
+
+		return _toNotificationQueueEntry(serviceBuilderNotificationQueueEntry);
 	}
 
 	@Override

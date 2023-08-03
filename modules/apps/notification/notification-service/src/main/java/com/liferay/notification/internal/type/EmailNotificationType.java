@@ -143,7 +143,7 @@ public class EmailNotificationType extends BaseNotificationType {
 					NotificationQueueEntryConstants.STATUS_UNSENT);
 		}
 
-		_sendEmail(notificationQueueEntry);
+		sendNotification(notificationQueueEntry);
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public class EmailNotificationType extends BaseNotificationType {
 				).build(),
 				subject);
 
-			_sendEmail(
+			sendNotification(
 				notificationQueueEntryLocalService.addNotificationQueueEntry(
 					notificationContext));
 
@@ -303,10 +303,78 @@ public class EmailNotificationType extends BaseNotificationType {
 				).build(),
 				subject);
 
-			_sendEmail(
+			sendNotification(
 				notificationQueueEntryLocalService.addNotificationQueueEntry(
 					notificationContext));
 		}
+	}
+
+	@Override
+	public void sendNotification(
+		NotificationQueueEntry notificationQueueEntry) {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				try {
+					NotificationRecipient notificationRecipient =
+						notificationQueueEntry.getNotificationRecipient();
+
+					Map<String, Object> notificationRecipientSettingsMap =
+						NotificationRecipientSettingUtil.toMap(
+							notificationRecipient.
+								getNotificationRecipientSettings());
+
+					MailMessage mailMessage = new MailMessage(
+						new InternetAddress(
+							String.valueOf(
+								notificationRecipientSettingsMap.get("from")),
+							String.valueOf(
+								notificationRecipientSettingsMap.get(
+									"fromName"))),
+						notificationQueueEntry.getSubject(),
+						notificationQueueEntry.getBody(), true);
+
+					_addFileAttachments(
+						mailMessage,
+						notificationQueueEntry.getNotificationQueueEntryId());
+
+					mailMessage.setBCC(
+						_toInternetAddresses(
+							String.valueOf(
+								notificationRecipientSettingsMap.get("bcc"))));
+					mailMessage.setCC(
+						_toInternetAddresses(
+							String.valueOf(
+								notificationRecipientSettingsMap.get("cc"))));
+					mailMessage.setTo(
+						_toInternetAddresses(
+							String.valueOf(
+								notificationRecipientSettingsMap.get("to"))));
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.MAIL, mailMessage);
+
+					notificationQueueEntryLocalService.updateStatus(
+						notificationQueueEntry.getNotificationQueueEntryId(),
+						NotificationQueueEntryConstants.STATUS_SENT);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
+					if (notificationQueueEntry.getStatus() !=
+							NotificationQueueEntryConstants.STATUS_FAILED) {
+
+						notificationQueueEntryLocalService.updateStatus(
+							notificationQueueEntry.
+								getNotificationQueueEntryId(),
+							NotificationQueueEntryConstants.STATUS_FAILED);
+					}
+				}
+
+				return null;
+			});
 	}
 
 	@Override
@@ -557,71 +625,6 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 
 		return sb.toString();
-	}
-
-	private void _sendEmail(NotificationQueueEntry notificationQueueEntry) {
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				try {
-					NotificationRecipient notificationRecipient =
-						notificationQueueEntry.getNotificationRecipient();
-
-					Map<String, Object> notificationRecipientSettingsMap =
-						NotificationRecipientSettingUtil.toMap(
-							notificationRecipient.
-								getNotificationRecipientSettings());
-
-					MailMessage mailMessage = new MailMessage(
-						new InternetAddress(
-							String.valueOf(
-								notificationRecipientSettingsMap.get("from")),
-							String.valueOf(
-								notificationRecipientSettingsMap.get(
-									"fromName"))),
-						notificationQueueEntry.getSubject(),
-						notificationQueueEntry.getBody(), true);
-
-					_addFileAttachments(
-						mailMessage,
-						notificationQueueEntry.getNotificationQueueEntryId());
-
-					mailMessage.setBCC(
-						_toInternetAddresses(
-							String.valueOf(
-								notificationRecipientSettingsMap.get("bcc"))));
-					mailMessage.setCC(
-						_toInternetAddresses(
-							String.valueOf(
-								notificationRecipientSettingsMap.get("cc"))));
-					mailMessage.setTo(
-						_toInternetAddresses(
-							String.valueOf(
-								notificationRecipientSettingsMap.get("to"))));
-
-					MessageBusUtil.sendMessage(
-						DestinationNames.MAIL, mailMessage);
-
-					notificationQueueEntryLocalService.updateStatus(
-						notificationQueueEntry.getNotificationQueueEntryId(),
-						NotificationQueueEntryConstants.STATUS_SENT);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-
-					if (notificationQueueEntry.getStatus() !=
-							NotificationQueueEntryConstants.STATUS_FAILED) {
-
-						notificationQueueEntryLocalService.updateStatus(
-							notificationQueueEntry.
-								getNotificationQueueEntryId(),
-							NotificationQueueEntryConstants.STATUS_FAILED);
-					}
-				}
-
-				return null;
-			});
 	}
 
 	private InternetAddress[] _toInternetAddresses(String string)

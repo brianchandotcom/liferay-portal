@@ -7,7 +7,7 @@ package com.liferay.object.rest.filter.factory;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
-import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
+import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.InvalidFilterException;

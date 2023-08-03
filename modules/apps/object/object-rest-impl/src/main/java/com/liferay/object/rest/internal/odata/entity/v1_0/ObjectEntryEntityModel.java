@@ -49,7 +49,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 		return _entityFieldsMap;
 	}
 
-	protected ObjectEntryEntityModel(
+	public ObjectEntryEntityModel(
 			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
 		throws Exception {
 

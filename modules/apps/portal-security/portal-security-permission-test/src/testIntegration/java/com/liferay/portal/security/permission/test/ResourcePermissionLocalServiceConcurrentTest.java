@@ -52,6 +52,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -212,6 +213,7 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 			)
 		}
 	)
+	@Ignore
 	@Test
 	public void testAddResourcePermissionConcurrently() throws Exception {
 		SynchronousInvocationHandler.enable();

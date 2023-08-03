@@ -40,6 +40,11 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 			"1.0.1", "1.0.2",
 			UpgradeProcessFactory.alterColumnType(
 				"Configuration_", "configurationId", "VARCHAR(512) not null"));
+
+		registry.register(
+			"1.0.2", "1.0.3",
+			new com.liferay.portal.configuration.persistence.internal.upgrade.
+				v1_0_3.ConfigurationUpgradeProcess());
 	}
 
 }

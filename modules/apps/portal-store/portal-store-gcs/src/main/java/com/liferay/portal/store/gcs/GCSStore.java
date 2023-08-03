@@ -638,12 +638,12 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 
-	private Blob.BlobSourceOption _decryptBlobBlobSourceOption;
 	private BucketInfo _bucketInfo;
+	private Blob.BlobSourceOption _decryptBlobBlobSourceOption;
+	private Storage.BlobSourceOption _decryptStorageBlobSourceOption;
+	private Storage.BlobWriteOption _encryptStorageBlobWriteOption;
 	private Storage _gcsStore;
 	private volatile GCSStoreConfiguration _gcsStoreConfiguration;
 	private GoogleCredentials _googleCredentials;
-	private Storage.BlobSourceOption _decryptStorageBlobSourceOption;
-	private Storage.BlobWriteOption _encryptStorageBlobWriteOption;
 
 }

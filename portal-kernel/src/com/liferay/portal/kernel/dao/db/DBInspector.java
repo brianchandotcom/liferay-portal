@@ -139,6 +139,17 @@ public class DBInspector {
 				return false;
 			}
 
+			Integer expectedColumnDataType = _getByColumnType(
+				columnType, DB::getSQLType);
+
+			int actualColumnDataType = resultSet.getInt("DATA_TYPE");
+
+			if ((expectedColumnDataType == null) ||
+				(expectedColumnDataType != actualColumnDataType)) {
+
+				return false;
+			}
+
 			Integer expectedColumnDecimalDigits = _getByColumnType(
 				columnType, DB::getSQLTypeDecimalDigits);
 
@@ -149,17 +160,6 @@ public class DBInspector {
 				if (expectedColumnDecimalDigits != actualColumnDecimalDigits) {
 					return false;
 				}
-			}
-
-			Integer expectedColumnDataType = _getByColumnType(
-				columnType, DB::getSQLType);
-
-			int actualColumnDataType = resultSet.getInt("DATA_TYPE");
-
-			if ((expectedColumnDataType == null) ||
-				(expectedColumnDataType != actualColumnDataType)) {
-
-				return false;
 			}
 
 			boolean expectedColumnNullable = _isColumnNullable(columnType);

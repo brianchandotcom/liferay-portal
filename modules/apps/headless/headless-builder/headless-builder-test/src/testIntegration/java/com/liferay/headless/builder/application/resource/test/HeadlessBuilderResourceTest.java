@@ -183,7 +183,70 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testGet() throws Exception {
+	public void testGetWithAPIFilter() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+
+		_addAPIFilter(
+			_API_ENDPOINT_ERC_1,
+			"textField eq 'value5' or textField eq 'value7'");
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		for (int i = 0; i <= 25; i++) {
+			_addCustomObjectEntry(i, null, _objectDefinition1, "value" + i);
+		}
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put("textProperty", "value5"),
+					JSONUtil.put("textProperty", "value7"))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 2
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items", JSONUtil.putAll(JSONUtil.put("textProperty", "value5"))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?filter=",
+					URLCodec.encodeURL(
+						"textProperty eq 'value5' or textProperty eq " +
+							"'value8'")),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetWithCompanyScopedEndpoint() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
@@ -313,69 +376,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeToHttpCode(null, endpoint2, Http.Method.GET));
-	}
-
-	@Test
-	public void testGetWithAPIFilter() throws Exception {
-		_addAPIApplication(
-			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
-			_objectDefinition1.getExternalReferenceCode(),
-			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
-
-		_addAPIFilter(
-			_API_ENDPOINT_ERC_1,
-			"textField eq 'value5' or textField eq 'value7'");
-
-		_publishAPIApplication(_API_APPLICATION_ERC_1);
-
-		for (int i = 0; i <= 25; i++) {
-			_addCustomObjectEntry(i, null, _objectDefinition1, "value" + i);
-		}
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"items",
-				JSONUtil.putAll(
-					JSONUtil.put("textProperty", "value5"),
-					JSONUtil.put("textProperty", "value7"))
-			).put(
-				"lastPage", 1
-			).put(
-				"page", 1
-			).put(
-				"pageSize", 20
-			).put(
-				"totalCount", 2
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"items", JSONUtil.putAll(JSONUtil.put("textProperty", "value5"))
-			).put(
-				"lastPage", 1
-			).put(
-				"page", 1
-			).put(
-				"pageSize", 20
-			).put(
-				"totalCount", 1
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?filter=",
-					URLCodec.encodeURL(
-						"textProperty eq 'value5' or textProperty eq " +
-							"'value8'")),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
 	}
 
 	@Test

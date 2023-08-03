@@ -714,12 +714,12 @@ public class SourceFormatterUtil {
 					_populateIgnoreDirectories(baseDirName);
 				}
 
-				if (_gitTopLevel == null) {
+				if (_gitTopLevelFolder == null) {
 					List<String> lines = git(
 						Arrays.asList("rev-parse", "--show-toplevel"), null,
 						null, false);
 
-					_gitTopLevel = new File(
+					_gitTopLevelFolder = new File(
 						StringUtil.replace(
 							lines.get(0), CharPool.BACK_SLASH, CharPool.SLASH));
 				}
@@ -731,7 +731,7 @@ public class SourceFormatterUtil {
 					pathMatchers, includeSubrepositories,
 					line -> gitFiles.add(
 						StringBundler.concat(
-							_gitTopLevel, StringPool.FORWARD_SLASH,
+							_gitTopLevelFolder, StringPool.FORWARD_SLASH,
 							StringUtil.replace(
 								line, CharPool.BACK_SLASH, CharPool.SLASH))));
 
@@ -884,7 +884,7 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
-	private static File _gitTopLevel;
+	private static File _gitTopLevelFolder;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;
 

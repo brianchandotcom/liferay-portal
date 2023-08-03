@@ -10,9 +10,11 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Dictionary;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -24,6 +26,7 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
@@ -45,10 +48,29 @@ public class SnapshotTest {
 	public static void setUpClass() {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
+		Bundle bundle = bundleContext.getBundle();
+
+		ReflectionTestUtil.setFieldValue(
+			bundle, "bundleContext",
+			ProxyUtil.newDelegateProxyInstance(
+				BundleContext.class.getClassLoader(), BundleContext.class,
+				new Object() {
+
+					public Bundle getBundle() {
+						if (!_valid.getAndSet(true)) {
+							throw new IllegalStateException();
+						}
+
+						return bundle;
+					}
+
+				},
+				bundleContext));
+
 		Mockito.when(
 			FrameworkUtil.getBundle(Mockito.any())
 		).thenReturn(
-			bundleContext.getBundle()
+			bundle
 		);
 	}
 
@@ -96,6 +118,31 @@ public class SnapshotTest {
 
 		Assert.assertNull(snapshot1.get());
 		Assert.assertNull(snapshot2.get());
+	}
+
+	@Test
+	public void testDynamicWithInvalidBundleContext() {
+		Snapshot<TestService<String>> snapshot = new Snapshot<>(
+			SnapshotTest.class, Snapshot.cast(TestService.class), null, true);
+
+		Assert.assertNull(snapshot.get());
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		TestService<String> testService = new TestService<>();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(TestService.class, testService, null);
+
+		Assert.assertSame(testService, snapshot.get());
+
+		_valid.set(false);
+
+		Assert.assertSame(testService, snapshot.get());
+
+		serviceRegistration.unregister();
+
+		Assert.assertNull(snapshot.get());
 	}
 
 	@Test
@@ -297,6 +344,7 @@ public class SnapshotTest {
 
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static final AtomicBoolean _valid = new AtomicBoolean(true);
 
 	private static class TestService<T> {
 	}

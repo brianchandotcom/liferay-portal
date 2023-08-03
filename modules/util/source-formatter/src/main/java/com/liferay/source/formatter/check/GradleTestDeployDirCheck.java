@@ -33,21 +33,21 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 
 		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 
-		File deployMarkerFile = new File(
+		File lfrBuildPortalFile = new File(
 			absolutePath.substring(0, pos + 1) + ".lfrbuild-portal");
 
-		String liferayBlock = _getLiferayBlock(content);
+		String liferayBlock = _isDeployedInOSGITestDir(content);
 
 		if ((liferayBlock == null) ||
 			!liferayBlock.contains(
 				"deployDir = file(\"${liferayHome}/osgi/test\")")) {
 
-			if (deployMarkerFile.exists()) {
+			if (lfrBuildPortalFile.exists()) {
 				addMessage(fileName, "Missing 'deployDir'");
 			}
 		}
 		else {
-			if (!deployMarkerFile.exists()) {
+			if (!lfrBuildPortalFile.exists()) {
 				addMessage(
 					fileName,
 					"Do not have 'deployDir' in liferay when not have a " +
@@ -58,20 +58,20 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _getLiferayBlock(String content) {
+	private String _isDeployedInOSGITestDir(String content) {
 		Matcher matcher = _liferayPattern.matcher(content);
 
 		if (matcher.find()) {
-			int y = matcher.start();
+			int x = matcher.start();
 
 			while (true) {
-				y = content.indexOf("}", y + 1);
+				x = content.indexOf("}", x + 1);
 
-				if (y == -1) {
+				if (x == -1) {
 					return null;
 				}
 
-				String codeBlock = content.substring(matcher.start(2), y + 1);
+				String codeBlock = content.substring(matcher.start(2), x + 1);
 
 				int level = ToolsUtil.getLevel(codeBlock, "{", "}");
 

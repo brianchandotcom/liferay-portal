@@ -93,7 +93,7 @@ definition {
 		task ("When in API Explorer o/c/managers requesting getManagersPage with fields=name,id") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "managers");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getManagersPage",
 				parameter = "fields",
 				service = "Manager",
@@ -113,7 +113,7 @@ definition {
 		task ("When in API Explorer o/c/departments requesting getDepartmentsPage with fields=non-existing-field") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "departments");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getDepartmentsPage",
 				parameter = "fields",
 				service = "Department",
@@ -133,7 +133,7 @@ definition {
 		task ("When in API Explorer o/c/employees requesting getEmployeesPage with fields=name") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "employees");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getEmployeesPage",
 				parameter = "fields",
 				service = "Employee",
@@ -153,7 +153,7 @@ definition {
 		task ("When in API Explorer o/c/employees requesting getEmployee with {employeeId} nestedFields=managersEmployees") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "employees");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getEmployee",
 				parameter = "employeeId",
 				parameter_two = "nestedFields",
@@ -180,7 +180,7 @@ definition {
 		task ("When in API Explorer o/c/departments requesting getDepartmentsPage with nestedFields=departmentManagers") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "departments");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getDepartmentsPage",
 				parameter = "nestedFields",
 				service = "Department",
@@ -205,7 +205,7 @@ definition {
 		task ("When in API Explorer o/c/managers requesting getManager with {managerId} with restrictFields=name,id") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "managers");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getManager",
 				parameter = "managerId",
 				parameter_two = "restrictFields",
@@ -232,7 +232,7 @@ definition {
 		task ("When in API Explorer o/c/employees requesting getEmployee with {employeeId} restrictFields=non-exiting-field") {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "employees");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getEmployee",
 				parameter = "employeeId",
 				service = "Employee",

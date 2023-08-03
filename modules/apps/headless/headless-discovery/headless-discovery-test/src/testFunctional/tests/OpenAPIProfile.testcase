@@ -51,7 +51,7 @@ definition {
 		}
 
 		task ("When executing HeadlessAdminWorkflow.v1.0.getOpenAPI") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "HeadlessAdminWorkflow\.v1\.0\.getOpenAPI",
 				parameter = "type",
 				service = "default",

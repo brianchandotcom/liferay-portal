@@ -132,6 +132,12 @@ html#{$cadmin-selector} {
 				.sidebar-header {
 					top: 0;
 				}
+
+				.sidebar-section {
+					.nav {
+						border-bottom: 1px solid $cadmin-gray-300;
+					}
+				}
 			}
 		}
 

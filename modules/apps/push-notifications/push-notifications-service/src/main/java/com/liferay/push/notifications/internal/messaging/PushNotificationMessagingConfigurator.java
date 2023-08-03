@@ -72,12 +72,7 @@ public class PushNotificationMessagingConfigurator {
 			for (ServiceRegistration<Destination> serviceRegistration :
 					_serviceRegistrations.values()) {
 
-				Destination destination = _bundleContext.getService(
-					serviceRegistration.getReference());
-
 				serviceRegistration.unregister();
-
-				destination.destroy();
 			}
 
 			_serviceRegistrations.clear();

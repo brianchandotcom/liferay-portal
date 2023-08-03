@@ -28,8 +28,6 @@ public class MessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
@@ -50,18 +48,9 @@ public class MessagingConfigurator {
 	@Deactivate
 	protected void deactivate() {
 		if (_serviceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_serviceRegistration.getReference());
-
 			_serviceRegistration.unregister();
-
-			destination.destroy();
 		}
-
-		_bundleContext = null;
 	}
-
-	private volatile BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

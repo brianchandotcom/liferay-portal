@@ -388,12 +388,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		for (ServiceRegistration<Destination> serviceRegistration :
 				_destinationServiceRegistrations) {
 
-			Destination destination = _bundleContext.getService(
-				serviceRegistration.getReference());
-
 			serviceRegistration.unregister();
-
-			destination.destroy();
 		}
 
 		_bundleContext = null;

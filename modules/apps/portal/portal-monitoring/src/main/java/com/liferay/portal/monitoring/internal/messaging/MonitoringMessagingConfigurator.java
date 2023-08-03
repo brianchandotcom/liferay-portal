@@ -38,7 +38,7 @@ public class MonitoringMessagingConfigurator {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		_bundleContext = componentContext.getBundleContext();
+		BundleContext bundleContext = componentContext.getBundleContext();
 
 		MonitoringConfiguration monitoringConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -83,28 +83,19 @@ public class MonitoringMessagingConfigurator {
 				"destination.name", destination.getName()
 			).build();
 
-		_destinationServiceRegistration = _bundleContext.registerService(
+		_destinationServiceRegistration = bundleContext.registerService(
 			Destination.class, destination, destinationProperties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_destinationServiceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_destinationServiceRegistration.getReference());
-
 			_destinationServiceRegistration.unregister();
-
-			destination.destroy();
 		}
-
-		_bundleContext = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringMessagingConfigurator.class);
-
-	private volatile BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

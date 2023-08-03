@@ -37,11 +37,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	@Override
 	public void run() {
-		List<String> testSuiteNames = _getSelectedTestSuiteNames();
-
-		boolean keepLogs = !testSuiteNames.isEmpty();
-
-		keepJenkinsBuild(keepLogs);
+		keepJenkinsBuild(true);
 
 		invokeTestSuiteBuilds();
 	}
@@ -225,24 +221,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			}
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		String portalSHA = buildData.getPortalBranchSHA();
-
-		sb.append(JenkinsResultsParserUtil.join(", ", _invokedTestSuiteNames));
-
-		sb.append(" <strong>GIT ID</strong> - ");
-		sb.append("<a href=\"https://github.com/");
-		sb.append(buildData.getPortalGitHubUsername());
-		sb.append("/");
-		sb.append(buildData.getPortalGitHubRepositoryName());
-		sb.append("/commit/");
-		sb.append(buildData.getPortalBranchSHA());
-		sb.append("\">");
-		sb.append(portalSHA, 0, 7);
-		sb.append("</a>");
-
-		buildData.setBuildDescription(sb.toString());
+		buildData.setBuildDescription(
+			JenkinsResultsParserUtil.join(", ", _invokedTestSuiteNames));
 
 		updateBuildDescription();
 	}

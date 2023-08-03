@@ -892,6 +892,39 @@ public class ObjectDefinition implements Serializable {
 	protected String restContextPath;
 
 	@Schema
+	public String getRootObjectDefinitionExternalReferenceCode() {
+		return rootObjectDefinitionExternalReferenceCode;
+	}
+
+	public void setRootObjectDefinitionExternalReferenceCode(
+		String rootObjectDefinitionExternalReferenceCode) {
+
+		this.rootObjectDefinitionExternalReferenceCode =
+			rootObjectDefinitionExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setRootObjectDefinitionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			rootObjectDefinitionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			rootObjectDefinitionExternalReferenceCode =
+				rootObjectDefinitionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String rootObjectDefinitionExternalReferenceCode;
+
+	@Schema
 	public String getScope() {
 		return scope;
 	}
@@ -1448,6 +1481,20 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(restContextPath));
+
+			sb.append("\"");
+		}
+
+		if (rootObjectDefinitionExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rootObjectDefinitionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(rootObjectDefinitionExternalReferenceCode));
 
 			sb.append("\"");
 		}

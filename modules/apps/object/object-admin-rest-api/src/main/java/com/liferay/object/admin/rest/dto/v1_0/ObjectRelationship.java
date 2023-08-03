@@ -120,6 +120,32 @@ public class ObjectRelationship implements Serializable {
 	protected DeletionType deletionType;
 
 	@Schema
+	public Boolean getEdge() {
+		return edge;
+	}
+
+	public void setEdge(Boolean edge) {
+		this.edge = edge;
+	}
+
+	@JsonIgnore
+	public void setEdge(UnsafeSupplier<Boolean, Exception> edgeUnsafeSupplier) {
+		try {
+			edge = edgeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean edge;
+
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -583,6 +609,16 @@ public class ObjectRelationship implements Serializable {
 			sb.append(deletionType);
 
 			sb.append("\"");
+		}
+
+		if (edge != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"edge\": ");
+
+			sb.append(edge);
 		}
 
 		if (id != null) {

@@ -10,15 +10,21 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+	KeyboardEvent,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import useControlledState from '../../hooks/useControlledState';
 import isValidStyleValue from '../../utils/isValidStyleValue';
+import {Field} from '../color_picker/ColorPicker';
 
 import './LengthInput.scss';
 
-const CUSTOM = 'custom';
+const CUSTOM = 'custom' as const;
 
 const KEYS_NOT_ALLOWED = new Set(['+', ',', 'e']);
 
@@ -28,9 +34,16 @@ const KEYS_NOT_ALLOWED = new Set(['+', ',', 'e']);
 
 const REGEX = /^(-?(?:[\d]*\.?[\d]+))(px|em|vh|vw|rem|%)$/;
 
-const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM];
+const UNITS = ['px', '%', 'em', 'rem', 'vw', 'vh', CUSTOM] as const;
 
-const getInitialValue = (value) => {
+type Unit = typeof UNITS[number];
+type Value = {unit: Unit; value: number | string};
+
+const isUnit = (unit: string): unit is Unit => {
+	return UNITS.includes(unit as Unit);
+};
+
+const getInitialValue = (value: string | undefined): Value => {
 	if (!value) {
 		return {unit: UNITS[0], value: ''};
 	}
@@ -39,6 +52,10 @@ const getInitialValue = (value) => {
 
 	if (match) {
 		const [, number, unit] = match;
+
+		if (!isUnit(unit)) {
+			throw new Error(`Invalid unit "${unit}"`);
+		}
 
 		return {
 			unit,
@@ -52,6 +69,16 @@ const getInitialValue = (value) => {
 	};
 };
 
+interface Props {
+	className?: string;
+	defaultUnit?: Unit;
+	field: Field;
+	onEnter?: () => {};
+	onValueSelect: (fieldName: string, value: string) => void;
+	showLabel?: boolean;
+	value?: string;
+}
+
 export default function LengthInput({
 	className,
 	defaultUnit,
@@ -60,11 +87,11 @@ export default function LengthInput({
 	onValueSelect,
 	showLabel = true,
 	value,
-}) {
+}: Props) {
 	const [active, setActive] = useState(false);
 	const [error, setError] = useState(false);
 	const inputId = useId();
-	const inputRef = useRef();
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const initialValue = useMemo(() => getInitialValue(value), [value]);
 
@@ -72,11 +99,11 @@ export default function LengthInput({
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
 	const triggerId = useId();
 
-	const handleUnitSelect = (unit) => {
+	const handleUnitSelect = (unit: Unit) => {
 		setActive(false);
 		setNextUnit(unit);
 
-		document.getElementById(triggerId)?.focus();
+		document.getElementById(triggerId)!.focus();
 
 		if (!nextValue || unit === nextUnit) {
 			return;
@@ -85,16 +112,16 @@ export default function LengthInput({
 		let valueWithUnits = `${nextValue}${unit}`;
 
 		if (unit === CUSTOM) {
-			inputRef.current.focus();
+			inputRef.current!.focus();
 
 			setNextValue('');
 
 			return;
 		}
-		else if (isNaN(nextValue)) {
+		else if (typeof nextValue !== 'number' || isNaN(nextValue)) {
 			valueWithUnits = '';
 
-			inputRef.current.focus();
+			inputRef.current!.focus();
 
 			if (field.typeOptions?.showLengthField) {
 				setNextValue(valueWithUnits);
@@ -109,7 +136,7 @@ export default function LengthInput({
 	};
 
 	const handleValueSelect = () => {
-		const match = nextValue.toLowerCase().match(REGEX);
+		const match = nextValue.toString().toLowerCase().match(REGEX);
 		let valueWithUnits = nextValue;
 
 		if (match) {
@@ -126,12 +153,15 @@ export default function LengthInput({
 		if (
 			field.typeOptions?.showLengthField &&
 			(!valueWithUnits ||
-				!isValidStyleValue(field.cssProperty, valueWithUnits))
+				!isValidStyleValue(
+					field.cssProperty || '',
+					valueWithUnits.toString()
+				))
 		) {
-			const [, number, unit] = value.toLowerCase().match(REGEX) || [];
+			const [, number, unit] = value?.toLowerCase().match(REGEX) || [];
 
-			setNextValue(number || value);
-			setNextUnit(unit || CUSTOM);
+			setNextValue(number || value || '');
+			setNextUnit(isUnit(unit) ? unit : CUSTOM);
 			setError(true);
 
 			setTimeout(() => setError(false), 1000);
@@ -140,11 +170,11 @@ export default function LengthInput({
 		}
 
 		if (valueWithUnits !== value) {
-			onValueSelect(field.name, valueWithUnits);
+			onValueSelect(field.name, valueWithUnits.toString());
 		}
 	};
 
-	const handleKeyUp = (event) => {
+	const handleKeyUp = (event: KeyboardEvent) => {
 		if (nextUnit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
 			event.preventDefault();
 		}
@@ -165,7 +195,7 @@ export default function LengthInput({
 
 		const [, , unit] = value.toString().toLowerCase().match(REGEX) || [];
 
-		setNextUnit(unit || CUSTOM);
+		setNextUnit(isUnit(unit) ? unit : CUSTOM);
 	}, [value]);
 
 	return (
@@ -185,9 +215,9 @@ export default function LengthInput({
 						aria-label={field.label}
 						id={inputId}
 						insetBefore={Boolean(field.icon)}
-						onBlur={(event) => {
+						onBlur={() => {
 							if (nextValue !== value) {
-								handleValueSelect(event);
+								handleValueSelect();
 							}
 						}}
 						onChange={(event) => {
@@ -243,7 +273,7 @@ export default function LengthInput({
 									nextUnit
 								)}
 								className="layout__length-input__button p-1"
-								disabled={defaultUnit}
+								disabled={Boolean(defaultUnit)}
 								displayType="secondary"
 								id={triggerId}
 								size="sm"
@@ -282,27 +312,3 @@ export default function LengthInput({
 		</ClayForm.Group>
 	);
 }
-
-LengthInput.propTypes = {
-	className: PropTypes.string,
-	defaultUnit: PropTypes.string,
-	field: PropTypes.shape({
-		dataType: PropTypes.string,
-		defaultValue: PropTypes.oneOfType([
-			PropTypes.array,
-			PropTypes.bool,
-			PropTypes.number,
-			PropTypes.object,
-			PropTypes.string,
-		]),
-		description: PropTypes.string,
-		label: PropTypes.string,
-		localizable: PropTypes.bool,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string,
-	}).isRequired,
-	onEnter: PropTypes.func,
-	onValueSelect: PropTypes.func.isRequired,
-	showLabel: PropTypes.bool,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};

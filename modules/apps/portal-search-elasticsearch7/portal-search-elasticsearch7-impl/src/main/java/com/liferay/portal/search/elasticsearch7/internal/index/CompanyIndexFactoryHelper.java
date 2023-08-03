@@ -252,7 +252,7 @@ public class CompanyIndexFactoryHelper {
 		Settings.Builder builder = settingsBuilder.getBuilder();
 
 		String defaultIndexSettings = ResourceUtil.getResourceAsString(
-			getClass(), "/META-INF/index-settings-defaults.json");
+			getClass(), "/META-INF/settings/index-settings-defaults.json");
 
 		builder.loadFromSource(defaultIndexSettings, XContentType.JSON);
 	}

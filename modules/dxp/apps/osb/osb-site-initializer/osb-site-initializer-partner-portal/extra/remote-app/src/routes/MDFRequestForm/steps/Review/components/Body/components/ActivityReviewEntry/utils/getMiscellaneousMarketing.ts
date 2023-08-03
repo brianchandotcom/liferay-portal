@@ -93,7 +93,7 @@ export default function getMiscellaneousMarketing(
 				value: mdfRequestActivity.activityDescription?.audienceTarget,
 			},
 			{
-				title: 'Source and Size of call List*',
+				title: 'Source and Size of call List',
 				value:
 					mdfRequestActivity.activityDescription
 						?.sourceAndSizeOfCallList,

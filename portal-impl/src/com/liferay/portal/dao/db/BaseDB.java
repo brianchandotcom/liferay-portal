@@ -814,15 +814,16 @@ public abstract class BaseDB implements DB {
 				matcher.matches() ? GetterUtil.getInteger(matcher.group(1)) :
 					DB.SQL_SIZE_NONE);
 
-			if (templateType.equals("STRING") || templateType.equals("TEXT")) {
-				_sqlTypeSizes.put(
-					templateType, getSQLVarcharSizes().get(templateType));
+			if (templateType.equals("DATE")) {
+				_sqlTypeSizes.put(templateType, DB.SQL_SIZE_NONE);
 
 				continue;
 			}
+			else if (templateType.equals("STRING") ||
+					 templateType.equals("TEXT")) {
 
-			if (templateType.equals("DATE")) {
-				_sqlTypeSizes.put(templateType, DB.SQL_SIZE_NONE);
+				_sqlTypeSizes.put(
+					templateType, getSQLVarcharSizes().get(templateType));
 
 				continue;
 			}

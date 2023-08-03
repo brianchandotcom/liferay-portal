@@ -35,7 +35,7 @@ const zodSchema = {
 	invitedNewMember: z.object({
 		emailAddress: z
 			.string()
-			.nonempty('Please enter an email ')
+			.nonempty('Please enter an email')
 			.email('Invalid email address'),
 		firstName: z.string().nonempty('Please enter member name'),
 		lastName: z.string().nonempty('Last name is required'),

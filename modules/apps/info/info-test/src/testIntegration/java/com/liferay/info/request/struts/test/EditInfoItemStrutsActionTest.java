@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -302,8 +303,8 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "-99999999999999.9999999999999999",
-			Boolean.TRUE.toString(), 0, null, "-999.9999999999999", "-123456",
-			"-9007199254740991",
+			Boolean.TRUE.toString(), 0, "2023-03-01", null,
+			"-999.9999999999999", "-123456", "-9007199254740991",
 			Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey()),
 			listTypeEntry1.getKey(), "<p>TITLE</p>", null, null);
 
@@ -330,8 +331,9 @@ public class EditInfoItemStrutsActionTest {
 
 		uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "99999999999999.9999999999999999",
-			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(), null,
-			"999.9999999999999", "123456", "9007199254740991",
+			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(),
+			"2020-03-01", null, "999.9999999999999", "123456",
+			"9007199254740991",
 			Arrays.asList(listTypeEntry2.getKey(), listTypeEntry3.getKey()),
 			listTypeEntry2.getKey(), "<p>SUBTITLE</p>", null, null);
 
@@ -349,6 +351,11 @@ public class EditInfoItemStrutsActionTest {
 
 		Assert.assertEquals(
 			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
+		Assert.assertEquals(
+			DateUtil.formatDate("yyyy-MM-dd", "2020-03-01", LocaleUtil.US),
+			DateUtil.formatDate(
+				"yyyy-MM-dd", String.valueOf(values.get("myDate")),
+				LocaleUtil.US));
 
 		DecimalFormat decimalFormat = new DecimalFormat(
 			"0", new DecimalFormatSymbols(LocaleUtil.ENGLISH));
@@ -554,6 +561,10 @@ public class EditInfoItemStrutsActionTest {
 				"myMultiselectPicklist"
 			).build(),
 			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				ObjectFieldConstants.DB_TYPE_DATE,
+				RandomTestUtil.randomString(), "myDate", false),
+			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 				ObjectFieldConstants.DB_TYPE_DOUBLE,
 				RandomTestUtil.randomString(), "myDecimal", false),
@@ -708,9 +719,10 @@ public class EditInfoItemStrutsActionTest {
 
 	private UploadPortletRequest _getUploadPortletRequest(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
-			String booleanValueInput, long classPK, String displayPage,
-			String doubleValueInput, String integerValueInput,
-			String longValueInput, List<String> multiselectPicklistValueInput,
+			String booleanValueInput, long classPK, String dateValueInput,
+			String displayPage, String doubleValueInput,
+			String integerValueInput, String longValueInput,
+			List<String> multiselectPicklistValueInput,
 			String picklistValueInput, String richTextValueInput,
 			String stringValue, String redirect)
 		throws Exception {
@@ -783,6 +795,15 @@ public class EditInfoItemStrutsActionTest {
 						}
 
 						return Collections.singletonList(booleanValueInput);
+					}
+				).put(
+					"myDate",
+					() -> {
+						if (Validator.isNotNull(dateValueInput)) {
+							return Collections.singletonList(dateValueInput);
+						}
+
+						return null;
 					}
 				).put(
 					"myDecimal",
@@ -919,7 +940,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			attachmentValue, backURL, bigDecimalValueInput, null, 0,
+			attachmentValue, backURL, bigDecimalValueInput, null, 0, null,
 			displayPage, doubleValueInput, integerValueInput, longValueInput,
 			null, null, null, stringValue, redirect);
 
@@ -1018,7 +1039,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			null, null, bigDecimalValueInput, null, 0, null, null,
+			null, null, bigDecimalValueInput, null, 0, null, null, null,
 			integerValueInput, longValueInput, null, null, null, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);

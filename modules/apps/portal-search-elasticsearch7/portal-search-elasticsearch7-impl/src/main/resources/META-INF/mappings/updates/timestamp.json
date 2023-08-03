@@ -1,0 +1,8 @@
+{
+	"properties": {
+		"timestamp": {
+			"store": true,
+			"type": "date"
+		}
+	}
+}

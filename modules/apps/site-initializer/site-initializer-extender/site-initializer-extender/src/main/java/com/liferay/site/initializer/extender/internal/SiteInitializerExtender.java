@@ -163,7 +163,7 @@ public class SiteInitializerExtender
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
-				_styleBookEntryZipProcessor, _sxpBlueprintResourceFactory,
+				_styleBookEntryZipProcessor,
 				_taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
 				_themeLocalService, _userAccountResourceFactory,
@@ -289,7 +289,7 @@ public class SiteInitializerExtender
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
-				_styleBookEntryZipProcessor, _sxpBlueprintResourceFactory,
+				_styleBookEntryZipProcessor,
 				_taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
 				_themeLocalService, _userAccountResourceFactory,
@@ -509,9 +509,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
-
-	@Reference
-	private SXPBlueprintResource.Factory _sxpBlueprintResourceFactory;
 
 	@Reference
 	private TaxonomyCategoryResource.Factory _taxonomyCategoryResourceFactory;

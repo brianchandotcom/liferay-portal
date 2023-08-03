@@ -175,7 +175,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -295,7 +294,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
-		SXPBlueprintResource.Factory sxpBlueprintResourceFactory,
 		TaxonomyCategoryResource.Factory taxonomyCategoryResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		TemplateEntryLocalService templateEntryLocalService,
@@ -380,7 +378,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_structuredContentFolderResourceFactory =
 			structuredContentFolderResourceFactory;
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
-		_sxpBlueprintResourceFactory = sxpBlueprintResourceFactory;
 		_taxonomyCategoryResourceFactory = taxonomyCategoryResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_templateEntryLocalService = templateEntryLocalService;
@@ -615,7 +612,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					segmentsEntriesIdsStringUtilReplaceValues, serviceContext,
 					taxonomyCategoryIdsAndTaxonomyVocabularyIdsStringUtilReplaceValues));
-			_invoke(() -> _addSXPBlueprint(serviceContext));
 			_invoke(() -> _addUserRoles(serviceContext));
 
 			_invoke(
@@ -4233,43 +4229,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			zipWriter.getFile(), true);
 	}
 
-	private void _addSXPBlueprint(ServiceContext serviceContext)
-		throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/sxp-blueprints.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		SXPBlueprintResource.Builder builder =
-			_sxpBlueprintResourceFactory.create();
-
-		SXPBlueprintResource sxpBlueprintResource = builder.httpServletRequest(
-			serviceContext.getRequest()
-		).user(
-			serviceContext.fetchUser()
-		).build();
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(
-				String.valueOf(jsonArray.getJSONObject(i)));
-
-			if (sxpBlueprint == null) {
-				_log.error(
-					"Unable to transform SXPBlueprint from JSON: " + json);
-
-				continue;
-			}
-
-			sxpBlueprintResource.putSXPBlueprintByExternalReferenceCode(
-				sxpBlueprint.getExternalReferenceCode(), sxpBlueprint);
-		}
-	}
-
 	private Map<String, String> _addTaxonomyCategories(
 			String parentResourcePath, String parentTaxonomyCategoryId,
 			ServiceContext serviceContext,
@@ -5233,7 +5192,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final StructuredContentFolderResource.Factory
 		_structuredContentFolderResourceFactory;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
-	private final SXPBlueprintResource.Factory _sxpBlueprintResourceFactory;
 	private final TaxonomyCategoryResource.Factory
 		_taxonomyCategoryResourceFactory;
 	private final TaxonomyVocabularyResource.Factory

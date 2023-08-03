@@ -1,0 +1,19 @@
+{
+  ":configurator:policy" : "force",
+  "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~lps-184771-liferay-sample-batch-1-oauth-application-headless-server" : {
+    "baseURL" : "${portalURL}/o/liferay-sample-batch-1",
+    "description" : "",
+    "dxp.lxc.liferay.com.virtualInstanceId" : "www.able.com",
+    "homePageURL" : "http://localhost:8080",
+    "name" : "LPS-184771 Liferay Sample Batch 1 OAuth Application Headless Server",
+    "projectId" : "liferaysamplebatch1",
+    "projectName" : "liferay-sample-batch-1",
+    "properties" : [ ],
+    "scopes" : [ "Liferay.Headless.Admin.User.everything.read", "Liferay.Headless.Delivery.everything" ],
+    "sourceCodeURL" : "",
+    "type" : "oAuthApplicationHeadlessServer",
+    "typeSettings" : [ "userAccountEmailAddress=test@liferay.com", "Liferay.Headless.Admin.User.everything.read\nLiferay.Headless.Delivery.everything", "homePageURL=http://localhost:8080" ],
+    "userAccountEmailAddress" : "test@liferay.com",
+    "webContextPath" : "/liferay-sample-batch-1"
+  }
+}

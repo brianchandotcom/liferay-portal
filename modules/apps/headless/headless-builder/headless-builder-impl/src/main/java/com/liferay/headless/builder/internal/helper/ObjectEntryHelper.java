@@ -74,7 +74,7 @@ public class ObjectEntryHelper {
 	public Page<ObjectEntry> getObjectEntriesPage(
 			long companyId, Expression filterExpression,
 			List<String> nestedFields, Pagination pagination,
-			String objectDefinitionExternalReferenceCode)
+			String objectDefinitionExternalReferenceCode, String scopeKey)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -98,7 +98,7 @@ public class ObjectEntryHelper {
 					(DefaultObjectEntryManager)_objectEntryManager;
 
 				return defaultObjectEntryManager.getObjectEntries(
-					companyId, objectDefinition, null, null,
+					companyId, objectDefinition, scopeKey, null,
 					_getDefaultDTOConverterContext(objectDefinition),
 					filterExpression, pagination, null, null);
 			});
@@ -121,7 +121,8 @@ public class ObjectEntryHelper {
 		return getObjectEntriesPage(
 			companyId,
 			_objectDefinitionFilterParser.parse(filterString, objectDefinition),
-			nestedFields, pagination, objectDefinitionExternalReferenceCode);
+			nestedFields, pagination, objectDefinitionExternalReferenceCode,
+			null);
 	}
 
 	public ObjectEntry getObjectEntry(

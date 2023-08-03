@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
-import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -56,11 +56,13 @@ public class WorkflowInstanceEditDisplayContext
 	public WorkflowInstanceEditDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		WorkflowComparatorFactory workflowComparatorFactory) {
+		WorkflowComparatorFactory workflowComparatorFactory,
+		WorkflowLogManager workflowLogManager) {
 
 		super(liferayPortletRequest, liferayPortletResponse);
 
 		_workflowComparatorFactory = workflowComparatorFactory;
+		_workflowLogManager = workflowLogManager;
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {
@@ -267,7 +269,7 @@ public class WorkflowInstanceEditDisplayContext
 				_workflowComparatorFactory.getLogCreateDateComparator(false);
 
 			_workflowLogs =
-				WorkflowLogManagerUtil.getWorkflowLogsByWorkflowInstance(
+				_workflowLogManager.getWorkflowLogsByWorkflowInstance(
 					workflowInstanceRequestHelper.getCompanyId(),
 					getWorkflowInstanceId(), _logTypes, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, orderByComparator);
@@ -409,6 +411,7 @@ public class WorkflowInstanceEditDisplayContext
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();
 	private final WorkflowComparatorFactory _workflowComparatorFactory;
+	private final WorkflowLogManager _workflowLogManager;
 	private List<WorkflowLog> _workflowLogs;
 
 }

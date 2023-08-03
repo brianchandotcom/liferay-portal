@@ -1,6 +1,6 @@
 Bundle-Description: The Javadoc Formatter Gradle plugin lets you format project Javadoc comments using the Liferay Javadoc Formatter tool.
 Bundle-Name: Liferay Gradle Plugins Javadoc Formatter
 Bundle-SymbolicName: com.liferay.gradle.plugins.javadoc.formatter
-Bundle-Version: 1.0.35
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.gradle.plugins.javadoc.formatter
 -includeresource: @com.liferay.javadoc.formatter-*.jar!/com/liferay/javadoc/formatter/JavadocFormatterArgs.class

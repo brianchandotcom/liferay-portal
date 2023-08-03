@@ -43,7 +43,7 @@ definition {
 				api = "headless-builder",
 				version = "applications");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "putAPIApplication",
 				parameter = "aPIApplicationId",
 				requestBody = "{\"applicationStatus\": \"published\", \"baseURL\": \"my-app\", \"title\": \"My App\"}",
@@ -72,7 +72,7 @@ definition {
 				api = "headless-builder",
 				version = "applications");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "postAPIApplication",
 				requestBody = "{\"baseURL\": \"my-app-1234\", \"title\": \"My App\"}",
 				service = "APIApplication");
@@ -101,7 +101,7 @@ definition {
 				api = "headless-builder",
 				version = "applications");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "postAPIApplication",
 				requestBody = "{\"applicationStatus\": \"unpublished\", \"baseURL\": \"my-app\", \"title\": \"My App\"}",
 				service = "APIApplication");
@@ -138,7 +138,7 @@ definition {
 				api = "headless-builder",
 				version = "applications");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "deleteAPIApplication",
 				parameter = "aPIApplicationId",
 				service = "APIApplication",
@@ -171,7 +171,7 @@ definition {
 				api = "headless-builder",
 				version = "applications");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "postAPIApplication",
 				requestBody = "{\"baseURL\": \"my app 1234\", \"title\": \"My App\"}",
 				service = "APIApplication");
@@ -220,7 +220,7 @@ definition {
 				api = "headless-builder",
 				version = "applications");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "putAPIApplication",
 				parameter = "aPIApplicationId",
 				requestBody = "{\"applicationStatus\": \"String\", \"baseURL\": \"my-app\", \"title\": \"My App\"}",

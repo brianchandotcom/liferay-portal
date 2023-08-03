@@ -218,7 +218,7 @@ definition {
 		}
 
 		task ("When executing getSiteBlogPosingPage with siteID as the parameter") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getSiteBlogPostingsPage",
 				parameter = "siteId",
 				service = "BlogPosting");
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("When executing getSiteKeywordsPage with siteID as the parameter") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getSiteKeywordsPage",
 				parameter = "siteId",
 				service = "Keyword");
@@ -268,7 +268,7 @@ definition {
 		}
 
 		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getSiteStructuredContentsPage",
 				parameter = "siteId",
 				service = "StructuredContent");
@@ -301,7 +301,7 @@ definition {
 		task ("When executing postSiteTaxonomyVocabulary with siteID as the parameter") {
 			var requestBody = '''{"name": "Vocubulary Name"}''';
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "postSiteTaxonomyVocabulary",
 				parameter = "siteId",
 				requestBody = ${requestBody},
@@ -373,7 +373,7 @@ definition {
 				}
 			''';
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "postSiteStructuredContentDraft",
 				parameter = "siteId",
 				requestBody = ${requestBody},
@@ -445,7 +445,7 @@ definition {
 				}
 			''';
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "postSiteStructuredContent",
 				parameter = "siteId",
 				requestBody = ${requestBody},
@@ -501,7 +501,7 @@ definition {
 		}
 
 		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getSiteStructuredContentsPage",
 				parameter = "siteId",
 				service = "StructuredContent");
@@ -546,7 +546,7 @@ definition {
 		}
 
 		task ("When executing getSiteTaxonomyVocabulariesPage with siteID as the parameter") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getSiteTaxonomyVocabulariesPage",
 				parameter = "siteId",
 				service = "TaxonomyVocabulary");
@@ -592,7 +592,7 @@ definition {
 		}
 
 		task ("When executing getSiteStructuredContentsPage with siteID as the parameter") {
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "getSiteStructuredContentsPage",
 				parameter = "siteId",
 				service = "StructuredContent");

@@ -69,7 +69,7 @@ definition {
 		}
 	}
 
-	macro executeAPIMethodWithParameters {
+	macro executeAPIMethod {
 		Variables.assertDefined(parameterList = "${service},${method}");
 
 		Click(

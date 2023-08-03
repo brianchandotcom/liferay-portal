@@ -1068,7 +1068,7 @@ definition {
 			''';
 			var value = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "userea1@liferay.com");
 
-			APIExplorer.executeAPIMethodWithParameters(
+			APIExplorer.executeAPIMethod(
 				method = "patchUserAccount",
 				parameter = "userAccountId",
 				requestBody = ${requestBody},

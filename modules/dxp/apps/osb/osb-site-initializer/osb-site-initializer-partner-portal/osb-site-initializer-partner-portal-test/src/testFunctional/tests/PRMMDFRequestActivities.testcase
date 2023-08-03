@@ -68,7 +68,7 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given I go to add a new MDF Request with 'Digital Marketing' as Type of Activity and 'Digital Advertising/Banner Ad' as Tactic") {
+		task ("Given that the PMU goes to add a new MDF Request with 'Digital Marketing' as Type of Activity and 'Digital Advertising/Banner Ad' as Tactic") {
 			PRMMDFRequest.createNewRequest(
 				accountName = "Company Name 1",
 				activityDescription = "Activity Description",
@@ -84,13 +84,13 @@ definition {
 				typeOfActivity = "Digital Marketing");
 		}
 
-		task ("When I go to the created MDF") {
+		task ("When the PMU goes to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 		}
 
-		task ("Then I can see the added data in MDF Detail Page") {
+		task ("Then the PMU can see the added data in MDF Detail Page") {
 			PRMMDFRequest.viewMDFActivityDetails(
 				activityName = "Activity Name 1",
 				tactic = "Digital Advertising/Banner Ad",

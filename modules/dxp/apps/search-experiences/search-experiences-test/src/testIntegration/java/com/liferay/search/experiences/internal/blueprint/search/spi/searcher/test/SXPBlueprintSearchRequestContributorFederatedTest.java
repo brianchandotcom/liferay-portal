@@ -66,7 +66,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 					_sxpBlueprint.getExternalReferenceCode())
 			).addFederatedSearchRequest(
 				searchRequestBuilder2.federatedSearchKey(
-					"federatedKey1"
+					"federatedSearchKey1"
 				).withSearchContext(
 					searchContext -> searchContext.setAttribute(
 						"search.experiences.blueprint.external.reference.code",
@@ -74,7 +74,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 				).build()
 			).addFederatedSearchRequest(
 				searchRequestBuilder3.federatedSearchKey(
-					"federatedKey2"
+					"federatedSearchKey2"
 				).withSearchContext(
 					searchContext -> searchContext.setAttribute(
 						"search.experiences.blueprint.external.reference.code",
@@ -86,9 +86,11 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 
 		_assert(searchResponse, query);
 		_assert(
-			searchResponse.getFederatedSearchResponse("federatedKey1"), query);
+			searchResponse.getFederatedSearchResponse("federatedSearchKey1"),
+			query);
 		_assert(
-			searchResponse.getFederatedSearchResponse("federatedKey2"), query);
+			searchResponse.getFederatedSearchResponse("federatedSearchKey2"),
+			query);
 	}
 
 	@Rule

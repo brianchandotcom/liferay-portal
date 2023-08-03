@@ -148,6 +148,7 @@ import java.util.Objects;
 import org.hamcrest.CoreMatchers;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -192,6 +193,13 @@ public class DefaultObjectEntryManagerImplTest {
 			PermissionCheckerFactoryUtil.create(_adminUser));
 
 		PrincipalThreadLocal.setName(_adminUser.getUserId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -472,10 +480,6 @@ public class DefaultObjectEntryManagerImplTest {
 	public void tearDown() throws Exception {
 		NestedFieldsContextThreadLocal.setNestedFieldsContext(
 			_originalNestedFieldsContext);
-
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
-		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test

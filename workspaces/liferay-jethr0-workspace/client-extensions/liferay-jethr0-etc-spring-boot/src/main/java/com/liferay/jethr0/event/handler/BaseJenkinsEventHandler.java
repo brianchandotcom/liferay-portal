@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.repository.BuildRunRepository;
-import com.liferay.jethr0.build.run.BuildRun;
+import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.task;
 
-import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;

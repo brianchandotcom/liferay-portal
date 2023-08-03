@@ -5,10 +5,10 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.queue.BuildQueue;
-import com.liferay.jethr0.build.repository.BuildParameterRepository;
-import com.liferay.jethr0.build.repository.BuildRepository;
-import com.liferay.jethr0.build.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.queue.BuildQueue;
+import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;

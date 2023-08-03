@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.queue.BuildQueue;
+import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;

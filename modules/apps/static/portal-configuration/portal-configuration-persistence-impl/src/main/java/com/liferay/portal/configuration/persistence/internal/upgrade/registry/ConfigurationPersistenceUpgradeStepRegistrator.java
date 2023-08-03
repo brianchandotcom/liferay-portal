@@ -8,7 +8,9 @@ package com.liferay.portal.configuration.persistence.internal.upgrade.registry;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sam Ziemer
@@ -44,7 +46,10 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 		registry.register(
 			"1.0.2", "1.0.3",
 			new com.liferay.portal.configuration.persistence.internal.upgrade.
-				v1_0_3.ConfigurationUpgradeProcess());
+				v1_0_3.ConfigurationUpgradeProcess(_configurationAdmin));
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

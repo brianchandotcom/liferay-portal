@@ -43,7 +43,7 @@ public class EndpointHelper {
 
 	public Page<Map<String, Object>> getResponseEntityMapsPage(
 			long companyId, APIApplication.Endpoint endpoint,
-			String filterString, Pagination pagination)
+			String filterString, Pagination pagination, String scopeKey)
 		throws Exception {
 
 		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
@@ -63,7 +63,8 @@ public class EndpointHelper {
 				companyId,
 				_getFilterExpression(companyId, endpoint, filterString),
 				ListUtil.fromCollection(relationshipsNames), pagination,
-				responseSchema.getMainObjectDefinitionExternalReferenceCode());
+				responseSchema.getMainObjectDefinitionExternalReferenceCode(),
+				scopeKey);
 
 		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 			Map<String, Object> responseEntityMap = new HashMap<>();

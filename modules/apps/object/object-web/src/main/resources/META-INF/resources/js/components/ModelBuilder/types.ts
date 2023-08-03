@@ -34,10 +34,7 @@ export type TState = {
 	leftSidebarItems: LeftSidebarItemType[];
 	objectDefinitions: ObjectDefinition[];
 	objectFolders: ObjectFolder[];
-	rightSidebarType:
-		| 'objectDefinitionDetails'
-		| 'objectRelationshipDetails'
-		| 'empty';
+	rightSidebarType: RightSidebarType;
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
@@ -85,3 +82,13 @@ export interface ObjectRelationshipEdgeData {
 	targetY: number;
 	type: string;
 }
+
+export type nonRelationshipObjectFieldsInfo = {
+	label: LocalizedValue<string>;
+	name: string;
+};
+
+export type RightSidebarType =
+	| 'empty'
+	| 'objectDefinitionDetails'
+	| 'objectRelationshipDetails';

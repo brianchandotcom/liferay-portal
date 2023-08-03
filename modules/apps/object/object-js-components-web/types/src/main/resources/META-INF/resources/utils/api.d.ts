@@ -106,6 +106,9 @@ export declare function fetchJSON<T>(
 export declare function getAllFolders(): Promise<ObjectFolder[]>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getAllObjectFolders(): Promise<Folder[]>;
+export declare function getFolderByERC(
+	folderERC: string
+): Promise<ObjectFolder>;
 export declare function getList<T>(url: string): Promise<T[]>;
 export declare function getNotificationTemplateByExternalReferenceCode(
 	notificationTemplateExternalReferenceCode: string

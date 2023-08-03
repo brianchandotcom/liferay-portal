@@ -2012,13 +2012,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
-		throws PortalException {
-
-		return getCurrentAndAncestorSiteGroups(groupId, false);
-	}
-
-	@Override
 	public List<Group> getCurrentAndAncestorSiteGroups(
 			long groupId, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException {

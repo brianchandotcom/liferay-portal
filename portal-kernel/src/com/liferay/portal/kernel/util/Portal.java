@@ -467,9 +467,6 @@ public interface Portal {
 			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException;
 
-	public List<Group> getCurrentAndAncestorSiteGroups(long groupId)
-		throws PortalException;
-
 	public List<Group> getCurrentAndAncestorSiteGroups(
 			long groupId, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException;

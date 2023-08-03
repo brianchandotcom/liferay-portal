@@ -21,7 +21,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.34"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "2.0.0"
 	}
 
 	repositories {

@@ -301,6 +301,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-164683."
+	@ignore = "true"
 	@priority = 4
 	test ConfigureSearchBarToShowTopAndTrendingSearchesUsingDataFromAnalyticsCloud {
 		property custom.properties = "feature.flag.LPS-159643=true";
@@ -397,6 +398,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-188710 - Configure Site Activities suggestions to display results from the user's locale."
+	@ignore = "true"
 	@priority = 3
 	test ConfigureSuggestionsToDisplayResultsFromUsersLocale {
 		property custom.properties = "feature.flag.LPS-159643=true";

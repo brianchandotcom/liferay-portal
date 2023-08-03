@@ -369,12 +369,12 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	private StorageBatchResult<Boolean> _deleteBlob(
 		Blob blob, StorageBatch storageBatch) {
 
-		if (_storageBlobDecryptSourceOption == null) {
+		if (_decryptStorageBlobSourceOption == null) {
 			return storageBatch.delete(blob.getBlobId());
 		}
 
 		return storageBatch.delete(
-			blob.getBlobId(), _storageBlobDecryptSourceOption);
+			blob.getBlobId(), _decryptStorageBlobSourceOption);
 	}
 
 	private BucketInfo _getBucketInfo() {
@@ -465,11 +465,11 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private ReadChannel _getReadChannel(Blob blob) {
-		if (_blobBlobDecryptSourceOption == null) {
+		if (_decryptBlobBlobSourceOption == null) {
 			return blob.reader();
 		}
 
-		return blob.reader(_blobBlobDecryptSourceOption);
+		return blob.reader(_decryptBlobBlobSourceOption);
 	}
 
 	private String _getRepositoryKey(long companyId, long repositoryId) {
@@ -477,11 +477,11 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {
-		if (_storageBlobEncryptWriteOption == null) {
+		if (_encryptStorageBlobWriteOption == null) {
 			return _gcsStore.writer(blobInfo);
 		}
 
-		return _gcsStore.writer(blobInfo, _storageBlobEncryptWriteOption);
+		return _gcsStore.writer(blobInfo, _encryptStorageBlobWriteOption);
 	}
 
 	private void _initEncryption() {
@@ -494,16 +494,16 @@ public class GCSStore implements Store, StoreAreaProcessor {
 						"\"dl.store.gcs.aes256.key\" is not set");
 			}
 
-			_blobBlobDecryptSourceOption = null;
-			_storageBlobDecryptSourceOption = null;
-			_storageBlobEncryptWriteOption = null;
+			_decryptBlobBlobSourceOption = null;
+			_decryptStorageBlobSourceOption = null;
+			_encryptStorageBlobWriteOption = null;
 		}
 		else {
-			_blobBlobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(
+			_decryptBlobBlobSourceOption = Blob.BlobSourceOption.decryptionKey(
 				aes256Key);
-			_storageBlobDecryptSourceOption =
+			_decryptStorageBlobSourceOption =
 				Storage.BlobSourceOption.decryptionKey(aes256Key);
-			_storageBlobEncryptWriteOption =
+			_encryptStorageBlobWriteOption =
 				Storage.BlobWriteOption.encryptionKey(aes256Key);
 		}
 	}
@@ -638,12 +638,12 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 
-	private Blob.BlobSourceOption _blobBlobDecryptSourceOption;
+	private Blob.BlobSourceOption _decryptBlobBlobSourceOption;
 	private BucketInfo _bucketInfo;
 	private Storage _gcsStore;
 	private volatile GCSStoreConfiguration _gcsStoreConfiguration;
 	private GoogleCredentials _googleCredentials;
-	private Storage.BlobSourceOption _storageBlobDecryptSourceOption;
-	private Storage.BlobWriteOption _storageBlobEncryptWriteOption;
+	private Storage.BlobSourceOption _decryptStorageBlobSourceOption;
+	private Storage.BlobWriteOption _encryptStorageBlobWriteOption;
 
 }

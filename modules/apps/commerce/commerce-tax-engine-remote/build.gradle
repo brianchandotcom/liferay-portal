@@ -17,5 +17,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 }

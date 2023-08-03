@@ -40,5 +40,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.pegdown", name: "pegdown", version: "1.1.0"
+	testImplementation group: "org.pegdown", name: "pegdown", version: "1.1.0"
 }

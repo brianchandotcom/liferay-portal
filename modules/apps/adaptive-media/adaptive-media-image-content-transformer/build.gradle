@@ -6,5 +6,5 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api");
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-lang")
 }

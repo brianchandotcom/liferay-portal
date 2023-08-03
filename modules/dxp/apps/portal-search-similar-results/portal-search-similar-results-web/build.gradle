@@ -27,6 +27,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:portal-search-similar-results:portal-search-similar-results-web-spi")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 }

@@ -8,7 +8,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "org.apache.velocity", name: "velocity", version: "1.6.4"
+	api group: "org.apache.velocity", name: "velocity", version: "1.6.4"
 }
 
 patch {

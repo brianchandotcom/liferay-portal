@@ -5,7 +5,7 @@ configurations {
 }
 
 dependencies {
-	compile group: "com.ibm.icu", name: "icu4j", optional, version: "54.1.1"
+	api group: "com.ibm.icu", name: "icu4j", optional, version: "54.1.1"
 
 	jarjar group: "com.googlecode.jarjar", name: "jarjar", version: "1.3"
 }

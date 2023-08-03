@@ -2,6 +2,6 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-memory")
 }

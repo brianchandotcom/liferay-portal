@@ -23,9 +23,9 @@ configurations {
 dependencies {
 	ajc group: "org.aspectj", name: "aspectjtools", version: "1.8.9"
 
-	compile group: "javax.persistence", name: "javax.persistence-api", version: "2.2"
-	compile group: "org.aspectj", name: "aspectjrt", version: "1.8.9"
-	compile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
+	api group: "javax.persistence", name: "javax.persistence-api", version: "2.2"
+	api group: "org.aspectj", name: "aspectjrt", version: "1.8.9"
+	api group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 
 	compileOnly group: "com.liferay", name: "org.hibernate.core", version: "5.6.7.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

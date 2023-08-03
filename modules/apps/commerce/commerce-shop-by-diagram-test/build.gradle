@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":apps:commerce:commerce-product-api")
-	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
-	testIntegrationCompile project(":apps:commerce:commerce-shop-by-diagram-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":apps:commerce:commerce-product-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-product-test-util")
+	testIntegrationImplementation project(":apps:commerce:commerce-shop-by-diagram-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":apps:portal-background-task:portal-background-task-api")
-	testIntegrationCompile project(":apps:portal-background-task:portal-background-task-service")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:portal-background-task:portal-background-task-api")
+	testIntegrationImplementation project(":apps:portal-background-task:portal-background-task-service")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

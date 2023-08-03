@@ -10,5 +10,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 }

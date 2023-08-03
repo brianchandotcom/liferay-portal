@@ -1,25 +1,25 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "org.apache.commons", name: "commons-lang3", version: "3.11"
-	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
-	testIntegrationCompile project(":apps:account:account-api")
-	testIntegrationCompile project(":apps:asset:asset-api")
-	testIntegrationCompile project(":apps:commerce:commerce-api")
-	testIntegrationCompile project(":apps:commerce:commerce-currency-api")
-	testIntegrationCompile project(":apps:commerce:commerce-currency-test-util")
-	testIntegrationCompile project(":apps:commerce:commerce-product-api")
-	testIntegrationCompile project(":apps:commerce:commerce-test-util")
-	testIntegrationCompile project(":apps:depot:depot-api")
-	testIntegrationCompile project(":apps:document-library:document-library-api")
-	testIntegrationCompile project(":apps:frontend-taglib:frontend-taglib")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:list-type:list-type-api")
-	testIntegrationCompile project(":apps:notification:notification-api")
-	testIntegrationCompile project(":apps:object:object-admin-rest-api")
-	testIntegrationCompile project(":apps:object:object-api")
-	testIntegrationCompile project(":apps:object:object-rest-api")
-	testIntegrationCompile project(":apps:object:object-scripting-api")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.apache.commons", name: "commons-lang3", version: "3.11"
+	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testIntegrationImplementation project(":apps:account:account-api")
+	testIntegrationImplementation project(":apps:asset:asset-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-currency-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-currency-test-util")
+	testIntegrationImplementation project(":apps:commerce:commerce-product-api")
+	testIntegrationImplementation project(":apps:commerce:commerce-test-util")
+	testIntegrationImplementation project(":apps:depot:depot-api")
+	testIntegrationImplementation project(":apps:document-library:document-library-api")
+	testIntegrationImplementation project(":apps:frontend-taglib:frontend-taglib")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:list-type:list-type-api")
+	testIntegrationImplementation project(":apps:notification:notification-api")
+	testIntegrationImplementation project(":apps:object:object-admin-rest-api")
+	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:object:object-rest-api")
+	testIntegrationImplementation project(":apps:object:object-scripting-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

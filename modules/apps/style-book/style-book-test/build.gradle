@@ -1,4 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":apps:style-book:style-book-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:style-book:style-book-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

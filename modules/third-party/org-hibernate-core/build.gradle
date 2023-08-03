@@ -7,7 +7,7 @@ task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.hibernate", name: "hibernate-core", optional, version: "5.6.7.Final"
+	api group: "org.hibernate", name: "hibernate-core", optional, version: "5.6.7.Final"
 }
 
 deploy {

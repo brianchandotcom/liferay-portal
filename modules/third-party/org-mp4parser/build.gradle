@@ -6,7 +6,7 @@ task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.tallison", name: "isoparser", version: "1.9.41.2"
+	api group: "org.tallison", name: "isoparser", version: "1.9.41.2"
 }
 
 deploy {

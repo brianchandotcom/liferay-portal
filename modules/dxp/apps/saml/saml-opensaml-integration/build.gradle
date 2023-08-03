@@ -58,10 +58,10 @@ dependencies {
 	compileOnly project(":dxp:apps:saml:saml-api")
 	compileOnly project(":dxp:apps:saml:saml-persistence-api")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":dxp:apps:saml:saml-persistence-service")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	testImplementation project(":core:petra:petra-lang")
+	testImplementation project(":dxp:apps:saml:saml-persistence-service")
 }
 
 liferayOSGi {

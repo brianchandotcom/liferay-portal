@@ -1,10 +1,10 @@
 dependencies {
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":apps:journal:journal-test-util")
-	testIntegrationCompile project(":apps:translation:translation-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
+	testIntegrationImplementation project(":apps:translation:translation-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

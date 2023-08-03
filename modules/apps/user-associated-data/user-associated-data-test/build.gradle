@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

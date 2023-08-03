@@ -1,12 +1,12 @@
 dependencies {
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile project(":apps:frontend-view-state:frontend-view-state-api")
-	testIntegrationCompile project(":apps:frontend-view-state:frontend-view-state-rest-api")
-	testIntegrationCompile project(":apps:frontend-view-state:frontend-view-state-rest-client")
-	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation project(":apps:frontend-view-state:frontend-view-state-api")
+	testIntegrationImplementation project(":apps:frontend-view-state:frontend-view-state-rest-api")
+	testIntegrationImplementation project(":apps:frontend-view-state:frontend-view-state-rest-client")
+	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

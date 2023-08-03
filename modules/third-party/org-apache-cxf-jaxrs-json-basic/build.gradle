@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "org.apache.cxf", name: "cxf-rt-rs-json-basic", version: "3.2.14"
+	api group: "org.apache.cxf", name: "cxf-rt-rs-json-basic", version: "3.2.14"
 }
 
 patch {

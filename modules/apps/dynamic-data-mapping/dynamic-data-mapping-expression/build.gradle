@@ -28,7 +28,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-spi")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-lang")
 }
 
 generateGrammarSource {

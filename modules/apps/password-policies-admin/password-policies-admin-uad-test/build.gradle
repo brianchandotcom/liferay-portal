@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationCompile project(":apps:password-policies-admin:password-policies-admin-uad")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
-	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:password-policies-admin:password-policies-admin-uad")
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-api")
+	testIntegrationImplementation project(":apps:user-associated-data:user-associated-data-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

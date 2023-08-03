@@ -4,7 +4,7 @@ apply plugin: "java-library"
 task runGradleTest
 
 dependencies {
-	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	api group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 }

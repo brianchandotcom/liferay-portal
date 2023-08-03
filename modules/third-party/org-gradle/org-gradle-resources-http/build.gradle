@@ -11,7 +11,7 @@ tasks.eclipse {
 }
 
 dependencies {
-	compile fileTree(dir: gradle.gradleHomeDir, include: "lib/**/*.jar")
+	api fileTree(dir: gradle.gradleHomeDir, include: "lib/**/*.jar")
 }
 
 jar {

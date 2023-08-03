@@ -1,10 +1,10 @@
 dependencies {
-	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:portal-instances:portal-instances-api")
-	testIntegrationCompile project(":apps:portal-instances:portal-instances-service")
-	testIntegrationCompile project(":core:osgi-service-tracker-collections")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":apps:portal-instances:portal-instances-api")
+	testIntegrationImplementation project(":apps:portal-instances:portal-instances-service")
+	testIntegrationImplementation project(":core:osgi-service-tracker-collections")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

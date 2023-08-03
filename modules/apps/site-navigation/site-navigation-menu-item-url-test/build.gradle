@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
-	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")
-	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
+	testIntegrationImplementation project(":apps:site-navigation:site-navigation-api")
+	testIntegrationImplementation project(":apps:site-navigation:site-navigation-menu-item-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

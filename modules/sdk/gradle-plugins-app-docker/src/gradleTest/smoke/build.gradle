@@ -89,14 +89,14 @@ subprojects {
 
 project(":sample-service") {
 	dependencies {
-		compile project(":sample-api")
+		api project(":sample-api")
 	}
 }
 
 project(":sample-test") {
 	dependencies {
-		testCompile group: "junit", name: "junit", version: "4.13.1"
-		testCompile project(":sample-service")
+		testImplementation group: "junit", name: "junit", version: "4.13.1"
+		testImplementation project(":sample-service")
 	}
 }
 

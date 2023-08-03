@@ -60,5 +60,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
+	testImplementation group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 }

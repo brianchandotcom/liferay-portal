@@ -8,7 +8,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
+	api group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 }
 
 patch {

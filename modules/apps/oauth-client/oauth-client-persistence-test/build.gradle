@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testIntegrationCompile project(":apps:oauth-client:oauth-client-persistence-api")
-	testIntegrationCompile project(":apps:oauth-client:oauth-client-persistence-service")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testIntegrationImplementation project(":apps:oauth-client:oauth-client-persistence-api")
+	testIntegrationImplementation project(":apps:oauth-client:oauth-client-persistence-service")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

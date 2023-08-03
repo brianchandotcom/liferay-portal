@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:expando:expando-api")
-	testIntegrationCompile project(":apps:layout:layout-api")
-	testIntegrationCompile project(":apps:site:site-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:expando:expando-api")
+	testIntegrationImplementation project(":apps:layout:layout-api")
+	testIntegrationImplementation project(":apps:site:site-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

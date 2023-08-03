@@ -6,11 +6,11 @@ File jasperFile = file("jasperreports-${jasperVersion}-project.zip")
 FileTree jasperZipTree = zipTree(jasperFile)
 
 dependencies {
-	testIntegrationCompile group: "commons-io", name: "commons-io", version: "2.11.0"
-	testIntegrationCompile group: "org.apache.pdfbox", name: "fontbox", version: "2.0.24"
-	testIntegrationCompile group: "org.apache.pdfbox", name: "pdfbox", version: "2.0.24"
-	testIntegrationCompile project(":apps:portal-reports-engine:portal-reports-engine-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "commons-io", name: "commons-io", version: "2.11.0"
+	testIntegrationImplementation group: "org.apache.pdfbox", name: "fontbox", version: "2.0.24"
+	testIntegrationImplementation group: "org.apache.pdfbox", name: "pdfbox", version: "2.0.24"
+	testIntegrationImplementation project(":apps:portal-reports-engine:portal-reports-engine-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }
 
 processTestIntegrationResources {

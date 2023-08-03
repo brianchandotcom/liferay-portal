@@ -37,9 +37,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":apps:portal-search:portal-search")
-	testCompile project(":apps:portal-search:portal-search-test-util")
-	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	testImplementation project(":apps:portal-search:portal-search")
+	testImplementation project(":apps:portal-search:portal-search-test-util")
+	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }
 
 test {

@@ -7,7 +7,7 @@ task deployJar(type: Copy)
 task patch(type: PatchTask)
 
 dependencies {
-	compile group: "commons-configuration", name: "commons-configuration", optional, version: "1.10"
+	api group: "commons-configuration", name: "commons-configuration", optional, version: "1.10"
 }
 
 deploy {

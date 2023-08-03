@@ -1,4 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":apps:flags:flags-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:flags:flags-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

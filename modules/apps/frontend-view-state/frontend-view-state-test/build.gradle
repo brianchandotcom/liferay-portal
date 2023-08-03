@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":apps:frontend-view-state:frontend-view-state-api")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:frontend-view-state:frontend-view-state-api")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

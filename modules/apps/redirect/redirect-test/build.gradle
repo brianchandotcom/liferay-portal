@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
-	testIntegrationCompile project(":apps:portal:portal-instance-lifecycle-api")
-	testIntegrationCompile project(":apps:redirect:redirect-api")
-	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":apps:portal-search:portal-search-test-util")
+	testIntegrationImplementation project(":apps:portal:portal-instance-lifecycle-api")
+	testIntegrationImplementation project(":apps:redirect:redirect-api")
+	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

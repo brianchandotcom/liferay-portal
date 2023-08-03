@@ -1,14 +1,14 @@
 dependencies {
-	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testIntegrationCompile project(":apps:asset:asset-display-page-api")
-	testIntegrationCompile project(":apps:content-dashboard:content-dashboard-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":apps:journal:journal-test-util")
-	testIntegrationCompile project(":apps:layout:layout-display-page-api")
-	testIntegrationCompile project(":apps:layout:layout-page-template-api")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationImplementation project(":apps:asset:asset-display-page-api")
+	testIntegrationImplementation project(":apps:content-dashboard:content-dashboard-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
+	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
+	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -9,6 +9,6 @@ dependencies {
 	compileOnly project(":apps:wiki:wiki-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-memory")
 }

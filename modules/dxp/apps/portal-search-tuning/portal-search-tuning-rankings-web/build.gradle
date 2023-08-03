@@ -31,11 +31,11 @@ dependencies {
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-rankings-api")
 	compileOnly project(":dxp:apps:portal-search-tuning:portal-search-tuning-web-api")
 
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	testCompile project(":apps:portal-search:portal-search")
-	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-memory")
-	testCompile project(":core:petra:petra-reflect")
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testImplementation project(":apps:portal-search:portal-search")
+	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-reflect")
 }

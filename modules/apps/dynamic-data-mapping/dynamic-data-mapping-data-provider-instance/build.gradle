@@ -7,6 +7,6 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

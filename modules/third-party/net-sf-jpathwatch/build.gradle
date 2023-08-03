@@ -9,7 +9,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "net.sf.jpathwatch", name: "jpathwatch", optional, version: "0.95"
+	api group: "net.sf.jpathwatch", name: "jpathwatch", optional, version: "0.95"
 }
 
 patch {

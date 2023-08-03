@@ -32,7 +32,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }
 
 generateGrammarSource {

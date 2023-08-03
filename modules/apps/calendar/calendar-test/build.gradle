@@ -1,16 +1,16 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":apps:calendar:calendar-api")
-	testIntegrationCompile project(":apps:calendar:calendar-test-util")
-	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:portal-search:portal-search-api")
-	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
-	testIntegrationCompile project(":apps:ratings:ratings-test-util")
-	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":apps:calendar:calendar-api")
+	testIntegrationImplementation project(":apps:calendar:calendar-test-util")
+	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":apps:portal-search:portal-search-api")
+	testIntegrationImplementation project(":apps:portal-search:portal-search-test-util")
+	testIntegrationImplementation project(":apps:ratings:ratings-test-util")
+	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

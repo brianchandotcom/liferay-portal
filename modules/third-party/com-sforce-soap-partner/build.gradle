@@ -2,6 +2,6 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "axis", name: "axis", version: "1.4"
-	compile group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
+	api group: "axis", name: "axis", version: "1.4"
+	api group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
 }

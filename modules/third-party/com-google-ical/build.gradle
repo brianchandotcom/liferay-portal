@@ -15,7 +15,7 @@ compileJava {
 }
 
 dependencies {
-	compile group: "joda-time", name: "joda-time", version: "1.5.2"
+	api group: "joda-time", name: "joda-time", version: "1.5.2"
 }
 
 downloadSrc {

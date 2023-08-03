@@ -17,11 +17,11 @@ dependencies {
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "commons-io", name: "commons-io", version: "2.11.0"
-	testCompile group: "jaxen", name: "jaxen", version: "1.1.1"
-	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-memory")
-	testCompile project(":core:petra:petra-process")
+	testImplementation group: "commons-io", name: "commons-io", version: "2.11.0"
+	testImplementation group: "jaxen", name: "jaxen", version: "1.1.1"
+	testImplementation group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-lang")
+	testImplementation project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-process")
 }

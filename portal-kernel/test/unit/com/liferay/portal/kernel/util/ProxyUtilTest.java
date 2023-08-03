@@ -103,6 +103,10 @@ public class ProxyUtilTest {
 			}
 
 			@Override
+			public void method3() {
+			}
+
+			@Override
 			public String toString() {
 				return "Default Object";
 			}
@@ -117,6 +121,17 @@ public class ProxyUtilTest {
 
 		Assert.assertEquals("delegateMethod1", testInterface.method1());
 		Assert.assertEquals("defaultMethod2", testInterface.method2());
+
+		try {
+			testInterface.method3();
+
+			Assert.fail();
+		}
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertSame(
+				DelegateClass._ILLEGAL_STATE_EXCEPTION, illegalStateException);
+		}
+
 		Assert.assertEquals("Delegate Object", testInterface.toString());
 		Assert.assertEquals(testInterface, identityObject);
 		Assert.assertNotEquals(testInterface, defaultTestInterface);
@@ -163,6 +178,10 @@ public class ProxyUtilTest {
 			return "delegateMethod1";
 		}
 
+		public void method3() {
+			throw _ILLEGAL_STATE_EXCEPTION;
+		}
+
 		@Override
 		public String toString() {
 			return "Delegate Object";
@@ -184,6 +203,9 @@ public class ProxyUtilTest {
 		private void _irrelevantMethod3() {
 		}
 
+		private static final IllegalStateException _ILLEGAL_STATE_EXCEPTION =
+			new IllegalStateException();
+
 		private final Object _identityObject;
 
 	}
@@ -193,6 +215,8 @@ public class ProxyUtilTest {
 		public String method1();
 
 		public String method2();
+
+		public void method3();
 
 	}
 

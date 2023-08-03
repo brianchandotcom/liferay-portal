@@ -143,6 +143,8 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setDBTableName(RandomTestUtil.randomString());
 
+		newObjectRelationship.setEdge(RandomTestUtil.randomBoolean());
+
 		newObjectRelationship.setLabel(RandomTestUtil.randomString());
 
 		newObjectRelationship.setName(RandomTestUtil.randomString());
@@ -200,6 +202,9 @@ public class ObjectRelationshipPersistenceTest {
 		Assert.assertEquals(
 			existingObjectRelationship.getDBTableName(),
 			newObjectRelationship.getDBTableName());
+		Assert.assertEquals(
+			existingObjectRelationship.isEdge(),
+			newObjectRelationship.isEdge());
 		Assert.assertEquals(
 			existingObjectRelationship.getLabel(),
 			newObjectRelationship.getLabel());
@@ -378,8 +383,8 @@ public class ObjectRelationshipPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId1", true, "objectDefinitionId2", true,
 			"objectFieldId2", true, "parameterObjectFieldId", true,
-			"deletionType", true, "dbTableName", true, "label", true, "name",
-			true, "reverse", true, "type", true);
+			"deletionType", true, "dbTableName", true, "edge", true, "label",
+			true, "name", true, "reverse", true, "type", true);
 	}
 
 	@Test
@@ -721,6 +726,8 @@ public class ObjectRelationshipPersistenceTest {
 		objectRelationship.setDeletionType(RandomTestUtil.randomString());
 
 		objectRelationship.setDBTableName(RandomTestUtil.randomString());
+
+		objectRelationship.setEdge(RandomTestUtil.randomBoolean());
 
 		objectRelationship.setLabel(RandomTestUtil.randomString());
 

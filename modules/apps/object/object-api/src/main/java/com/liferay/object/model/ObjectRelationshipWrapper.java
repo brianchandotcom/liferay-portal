@@ -48,6 +48,7 @@ public class ObjectRelationshipWrapper
 		attributes.put("parameterObjectFieldId", getParameterObjectFieldId());
 		attributes.put("deletionType", getDeletionType());
 		attributes.put("dbTableName", getDBTableName());
+		attributes.put("edge", isEdge());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("reverse", isReverse());
@@ -144,6 +145,12 @@ public class ObjectRelationshipWrapper
 			setDBTableName(dbTableName);
 		}
 
+		Boolean edge = (Boolean)attributes.get("edge");
+
+		if (edge != null) {
+			setEdge(edge);
+		}
+
 		String label = (String)attributes.get("label");
 
 		if (label != null) {
@@ -222,6 +229,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public String getDeletionType() {
 		return model.getDeletionType();
+	}
+
+	/**
+	 * Returns the edge of this object relationship.
+	 *
+	 * @return the edge of this object relationship
+	 */
+	@Override
+	public boolean getEdge() {
+		return model.getEdge();
 	}
 
 	/**
@@ -456,6 +473,16 @@ public class ObjectRelationshipWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object relationship is edge.
+	 *
+	 * @return <code>true</code> if this object relationship is edge; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEdge() {
+		return model.isEdge();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object relationship is reverse.
 	 *
 	 * @return <code>true</code> if this object relationship is reverse; <code>false</code> otherwise
@@ -528,6 +555,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setDeletionType(String deletionType) {
 		model.setDeletionType(deletionType);
+	}
+
+	/**
+	 * Sets whether this object relationship is edge.
+	 *
+	 * @param edge the edge of this object relationship
+	 */
+	@Override
+	public void setEdge(boolean edge) {
+		model.setEdge(edge);
 	}
 
 	/**

@@ -49,6 +49,7 @@ public class ObjectDefinitionWrapper
 		attributes.put(
 			"descriptionObjectFieldId", getDescriptionObjectFieldId());
 		attributes.put("objectFolderId", getObjectFolderId());
+		attributes.put("rootObjectDefinitionId", getRootObjectDefinitionId());
 		attributes.put("titleObjectFieldId", getTitleObjectFieldId());
 		attributes.put("accountEntryRestricted", isAccountEntryRestricted());
 		attributes.put("active", isActive());
@@ -154,6 +155,13 @@ public class ObjectDefinitionWrapper
 
 		if (objectFolderId != null) {
 			setObjectFolderId(objectFolderId);
+		}
+
+		Long rootObjectDefinitionId = (Long)attributes.get(
+			"rootObjectDefinitionId");
+
+		if (rootObjectDefinitionId != null) {
+			setRootObjectDefinitionId(rootObjectDefinitionId);
 		}
 
 		Long titleObjectFieldId = (Long)attributes.get("titleObjectFieldId");
@@ -760,6 +768,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public String getRESTContextPath() {
 		return model.getRESTContextPath();
+	}
+
+	/**
+	 * Returns the root object definition ID of this object definition.
+	 *
+	 * @return the root object definition ID of this object definition
+	 */
+	@Override
+	public long getRootObjectDefinitionId() {
+		return model.getRootObjectDefinitionId();
 	}
 
 	/**
@@ -1374,6 +1392,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the root object definition ID of this object definition.
+	 *
+	 * @param rootObjectDefinitionId the root object definition ID of this object definition
+	 */
+	@Override
+	public void setRootObjectDefinitionId(long rootObjectDefinitionId) {
+		model.setRootObjectDefinitionId(rootObjectDefinitionId);
 	}
 
 	/**

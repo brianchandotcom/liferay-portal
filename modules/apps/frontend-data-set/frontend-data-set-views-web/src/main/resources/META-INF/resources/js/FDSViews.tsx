@@ -339,6 +339,9 @@ const FDSViews = ({
 				image: '/states/empty_state.gif',
 				title: Liferay.Language.get('no-views-created'),
 			}}
+			header={{
+				title: Liferay.Language.get('views'),
+			}}
 			id={`${namespace}FDSViews`}
 			itemsActions={[
 				{
@@ -354,7 +357,6 @@ const FDSViews = ({
 			]}
 			sorting={[{direction: 'desc', key: 'dateModified'}]}
 			views={views}
-			viewsTitle={Liferay.Language.get('views')}
 		/>
 	);
 };

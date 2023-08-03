@@ -20,6 +20,7 @@ export function FrontendDataSet({
 	filters,
 	formId,
 	formName,
+	header,
 	id,
 	initialSelectedItemsValues,
 	inlineAddingSettings,
@@ -44,7 +45,6 @@ export function FrontendDataSet({
 	sorting,
 	style,
 	views,
-	viewsTitle,
 }: IFrontendDataSetProps): JSX.Element;
 
 export function DateTimeRenderer({
@@ -134,6 +134,9 @@ export interface IFrontendDataSetProps {
 	filters?: any;
 	formId?: string;
 	formName?: string;
+	header?: {
+		title?: string;
+	};
 	id: string;
 	initialSelectedItemsValues?: any[];
 	inlineAddingSettings?: {

@@ -17,18 +17,18 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
 
-const List = ({items, schema, viewsTitle}) => {
+const List = ({header, items, schema}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
 	return items?.length ? (
 		<ClayLayout.Sheet
 			className={classNames('data-views-list-sheet', {
-				'data-views-list': !viewsTitle,
+				'data-views-list': !header?.title,
 			})}
 		>
-			{viewsTitle && (
+			{header?.title && (
 				<ClayLayout.SheetHeader className="mb-4">
-					<h2 className="sheet-title">{viewsTitle}</h2>
+					<h2 className="hola sheet-title">{header?.title}</h2>
 				</ClayLayout.SheetHeader>
 			)}
 

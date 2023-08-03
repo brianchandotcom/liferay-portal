@@ -60,6 +60,7 @@ const FrontendDataSet = ({
 	filters: initialFilters,
 	formId,
 	formName,
+	header,
 	id,
 	inlineAddingSettings,
 	inlineEditingSettings,
@@ -85,7 +86,6 @@ const FrontendDataSet = ({
 	style,
 	uniformActionsDisplay,
 	views,
-	viewsTitle,
 }) => {
 	const wrapperRef = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
@@ -476,10 +476,10 @@ const FrontendDataSet = ({
 				inlineAddingSettings ? (
 					<View
 						frontendDataSetContext={FrontendDataSetContext}
+						header={header}
 						items={items}
 						itemsActions={itemsActions}
 						style={style}
-						viewsTitle={viewsTitle}
 						{...currentViewProps}
 					/>
 				) : (

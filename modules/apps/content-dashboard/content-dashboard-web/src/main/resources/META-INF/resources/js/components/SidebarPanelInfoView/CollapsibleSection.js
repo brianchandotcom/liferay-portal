@@ -8,15 +8,11 @@ import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const SidebarPanelInfoCollapsibleSection = ({
-	children,
-	expanded = false,
-	title,
-}) => {
+const SidebarPanelInfoCollapsibleSection = ({children, title}) => {
 	return (
 		<ClayPanel
 			collapsable
-			defaultExpanded={expanded}
+			defaultExpanded
 			displayTitle={
 				<span className="c-inner" tabIndex="-1">
 					<ClayPanel.Title>

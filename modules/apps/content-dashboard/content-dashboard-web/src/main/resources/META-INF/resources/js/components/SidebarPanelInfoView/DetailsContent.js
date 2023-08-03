@@ -46,7 +46,7 @@ const DetailsContent = ({
 				<Categorization tags={tags} vocabularies={vocabularies} />
 			</>
 
-			<CollapsibleSection title={Liferay.Language.get('details')}>
+			<CollapsibleSection title={Liferay.Language.get('properties')}>
 				<div className="sidebar-section">
 					<SpecificFields
 						fields={specificItems}

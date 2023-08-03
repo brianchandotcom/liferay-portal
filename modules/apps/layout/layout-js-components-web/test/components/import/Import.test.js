@@ -4,10 +4,9 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {Import} from '@liferay/layout-js-components-web';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
-
-import Import from '../../src/main/resources/META-INF/resources/js/Import';
 
 describe('ImportModal', () => {
 	beforeAll(() => {

@@ -51,6 +51,11 @@ public class CETLabelUtil {
 			return "fds-cell-renderer";
 		}
 		else if (Objects.equals(
+					type, ClientExtensionEntryConstants.TYPE_FDS_FILTER)) {
+
+			return "fds-filter";
+		}
+		else if (Objects.equals(
 					type, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)) {
 
 			return "css";

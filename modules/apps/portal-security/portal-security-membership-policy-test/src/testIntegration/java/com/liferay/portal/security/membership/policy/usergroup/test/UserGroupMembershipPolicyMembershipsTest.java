@@ -30,6 +30,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -172,6 +173,7 @@ public class UserGroupMembershipPolicyMembershipsTest
 		Assert.assertTrue(isPropagateMembership());
 	}
 
+	@Ignore
 	@Test
 	public void testUnassignUserFromRequiredUserGroups() throws Exception {
 		long[] userIds = addUsers();

@@ -14,7 +14,7 @@ To use the plugin, include it in the build script of the root project:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.2.4"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.2.5"
 	}
 
 	repositories {

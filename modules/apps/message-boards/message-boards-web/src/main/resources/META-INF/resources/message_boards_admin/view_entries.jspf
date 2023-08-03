@@ -65,7 +65,12 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								</aui:a>
 
 								<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
-									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+									<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "question") %>">
+										<clay:icon
+											aria-label="<%= LanguageUtil.get(request, "question") %>"
+											symbol="question-circle"
+										/>
+									</span>
 								</c:if>
 							</h2>
 
@@ -158,7 +163,12 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								</c:if>
 
 								<c:if test="<%= thread.isQuestion() %>">
-									<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+									<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "question") %>">
+										<clay:icon
+											aria-label="<%= LanguageUtil.get(request, "question") %>"
+											symbol="question-circle"
+										/>
+									</span>
 								</c:if>
 							</h2>
 
@@ -237,7 +247,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
 
 								<c:if test="<%= thread.isLocked() %>">
-									<aui:icon image="lock" markupView="lexicon" />
+									<clay:icon
+										aria-label="<%= LanguageUtil.get(request, "locked") %>"
+										symbol="lock"
+									/>
 
 									<liferay-ui:message key="locked" />
 								</c:if>

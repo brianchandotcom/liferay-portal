@@ -88,8 +88,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public static String getContentByLocale(
 		Document document, String languageId, Map<String, String> tokens) {
 
-		if (_localeTransformerListener != null) {
-			document = _localeTransformerListener.onXml(
+		if (_transformerListener != null) {
+			document = _transformerListener.onXml(
 				document.clone(), languageId, tokens);
 		}
 
@@ -106,10 +106,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_journalConverter = journalConverter;
 	}
 
-	public static void setLocaleTransformerListener(
-		TransformerListener localeTransformerListener) {
+	public static void setTransformerListener(
+		TransformerListener transformerListener) {
 
-		_localeTransformerListener = localeTransformerListener;
+		_transformerListener = transformerListener;
 	}
 
 	@Override
@@ -815,7 +815,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	private static volatile DDMFormValuesToFieldsConverter
 		_ddmFormValuesToFieldsConverter;
 	private static volatile JournalConverter _journalConverter;
-	private static volatile TransformerListener _localeTransformerListener;
+	private static volatile TransformerListener _transformerListener;
 
 	private Map<Locale, String> _descriptionMap;
 	private Document _document;

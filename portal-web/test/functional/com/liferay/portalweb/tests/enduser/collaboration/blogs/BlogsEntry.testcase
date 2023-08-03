@@ -1478,6 +1478,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanSchedulePost {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");

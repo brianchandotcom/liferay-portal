@@ -19,9 +19,9 @@ definition {
 		}
 
 		task ("Activate remote staging") {
-			Staging.remoteStagingSetUpViaJson(
-				groupName = "Test Site Name",
-				remotePort = 9080);
+			Staging.remoteStagingSetUp(
+				remotePort = 9080,
+				siteName = "Test Site Name");
 		}
 	}
 

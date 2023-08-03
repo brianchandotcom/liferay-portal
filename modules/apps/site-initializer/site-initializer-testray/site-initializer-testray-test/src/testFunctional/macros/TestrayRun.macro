@@ -8,20 +8,16 @@ definition {
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = ${listOption});
 
-		if (isSet(label1)) {
+		if (isSet(categoryField2)) {
 			Select(
 				key_fieldLabel = ${categoryField2},
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${listOption1});
+				value1 = ${listOption2});
 		}
 
 		Button.click(button = "Save");
-	}
 
-	macro assertValueRun {
-		AssertElementPresent(
-			key_title = ${valueRun},
-			locator1 = "TestrayRun#VERIFY_VALUES_RUN");
+		Alert.viewSuccessMessage();
 	}
 
 	macro editRun {
@@ -32,15 +28,15 @@ definition {
 			tableEntry = ${tableEntry});
 
 		Select(
-			key_fieldLabel = ${label},
+			key_fieldLabel = ${categoryField},
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = ${listOption});
 
-		if (isSet(label1)) {
+		if (isSet(categoryField2)) {
 			Select(
-				key_fieldLabel = ${label1},
+				key_fieldLabel = ${categoryField2},
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${listOption1});
+				value1 = ${listOption2});
 		}
 
 		Button.click(button = "Save");

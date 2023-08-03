@@ -16,7 +16,7 @@ definition {
 	var productVersion = "1.2";
 	var projectName = "Project 1";
 	var routineName = "Routine 1";
-	var runName = "Run 1";
+	var runName = "Option 1";
 	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
@@ -108,13 +108,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given that I add a Testray run via API") {
-			JSONTestray.addRun(
-				buildName = ${buildName},
-				runName = ${runName});
-		}
-
-		task ("And I go to the run manage page") {
+		task ("Given that I go to the run page") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -124,12 +118,18 @@ definition {
 			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
+		task ("And create a run") {
+			TestrayRun.addRun(
+				categoryField = "Category 1",
+				listOption = ${runName});
+		}
+
 		task ("When I delete a run") {
-			Testray.deleteItem(itemName = 00);
+			Testray.deleteItem(itemName = ${runName});
 		}
 
 		task ("Then I should be assert to say that the run no longer appears in the list") {
-			Testray.viewTableEntryListNotPresent(listEntry = 00);
+			Testray.viewTableEntryListNotPresent(listEntry = ${runName});
 		}
 	}
 
@@ -139,7 +139,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given that a Testray categories, options and build is created") {
+		task ("Given that a category and options is created") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
 				menuItem = "Categories");
@@ -159,7 +159,9 @@ definition {
 				option = "Option 3");
 
 			Testray.closeModal(modalTitle = "Options");
+		}
 
+		task ("And I create the build") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -169,7 +171,7 @@ definition {
 			Testray.selectDefaultEnvironmentFactors(
 				arrowDirection = "Right",
 				firstOption = "Option 1",
-				listCategory = "Category 1,Category 2",
+				listCategory = "Category 2",
 				secondOption = "Option 3");
 
 			TestrayBuild.addBuildViaUI(
@@ -178,28 +180,28 @@ definition {
 				dropdownItem = "New Build",
 				productVersionOption = ${productVersion},
 				routine = ${routineName});
-
-			Testray.clickTableEntry(tableEntry = "Build 2");
 		}
 
-		task ("And I go to the run page ") {
+		task ("And I go to the run page") {
+			Testray.clickTableEntry(tableEntry = "Build 2");
+
 			Navigator.gotoNavTab(navTab = "Runs");
 
-			TestrayRun.assertValueRun(valueRun = "Option 1");
+			Testray.viewTableEntryList(listEntry = ${runName});
 		}
 
 		task ("When I edit a run") {
 			TestrayRun.editRun(
-				label = "Category 1",
+				categoryField = "Category 1",
 				listOption = "Option 2",
-				tableEntry = 01);
+				tableEntry = ${runName});
 		}
 
 		task ("Then I should be assert to say that the option has been edited") {
-			TestrayRun.assertValueRun(valueRun = "Option 2");
+			Testray.viewTableEntryList(listEntry = "Option 2");
 		}
 
-		task ("Delete object") {
+		task ("Delete the object") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "factorcategories",
 				objectName = "Category 2");

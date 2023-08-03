@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -167,7 +168,7 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			new WorkflowTaskDisplayContext(
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse),
-				_workflowComparatorFactory));
+				_workflowComparatorFactory, _workflowLogManager));
 	}
 
 	private void _setWorkflowTaskRenderRequestAttribute(
@@ -199,6 +200,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;
+
+	@Reference
+	private WorkflowLogManager _workflowLogManager;
 
 	@Reference
 	private WorkflowTaskPermission _workflowTaskPermission;

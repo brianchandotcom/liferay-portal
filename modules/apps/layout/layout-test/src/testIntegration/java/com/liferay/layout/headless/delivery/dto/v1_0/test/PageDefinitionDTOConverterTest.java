@@ -538,7 +538,7 @@ public class PageDefinitionDTOConverterTest {
 		com.liferay.headless.delivery.dto.v1_0.Layout sectionLayout =
 			pageSectionDefinition1.getLayout();
 
-		Assert.assertEquals("Fluid", sectionLayout.getWidthTypeAsString());
+		Assert.assertNull(sectionLayout.getWidthTypeAsString());
 		Assert.assertEquals(
 			Integer.valueOf(10), sectionLayout.getPaddingBottom());
 		Assert.assertEquals(Integer.valueOf(4), sectionLayout.getPaddingLeft());

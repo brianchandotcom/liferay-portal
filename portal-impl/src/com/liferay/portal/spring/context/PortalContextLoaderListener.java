@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.dao.init.DBInitUtil;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.deploy.hot.CustomJspBagRegistryUtil;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -363,7 +364,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				_log.debug("Check class names");
 			}
 
-			ClassNameLocalServiceUtil.checkClassNames();
+			try {
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> ClassNameLocalServiceUtil.checkClassNames());
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		ModuleFrameworkUtil.registerContext(applicationContext);

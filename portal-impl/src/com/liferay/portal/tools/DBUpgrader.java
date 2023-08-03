@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -333,7 +334,13 @@ public class DBUpgrader {
 			_log.debug("Check class names");
 		}
 
-		ClassNameLocalServiceUtil.checkClassNames();
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> ClassNameLocalServiceUtil.checkClassNames());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Check resource actions");

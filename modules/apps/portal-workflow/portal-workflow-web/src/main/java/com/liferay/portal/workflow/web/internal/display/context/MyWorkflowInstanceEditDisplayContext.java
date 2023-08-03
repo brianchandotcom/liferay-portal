@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -24,11 +25,12 @@ public class MyWorkflowInstanceEditDisplayContext
 	public MyWorkflowInstanceEditDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		WorkflowComparatorFactory workflowComparatorFactory) {
+		WorkflowComparatorFactory workflowComparatorFactory,
+		WorkflowLogManager workflowLogManager) {
 
 		super(
 			liferayPortletRequest, liferayPortletResponse,
-			workflowComparatorFactory);
+			workflowComparatorFactory, workflowLogManager);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import {
 	RichTextLocalized,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
-import { InputLocalized } from 'frontend-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {Attachments} from './Attachments';

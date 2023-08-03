@@ -6,11 +6,8 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {
-	FormError,
-	Input,
-} from '@liferay/object-js-components-web';
-import { InputLocalized } from 'frontend-js-components-web';
+import {FormError, Input} from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {NotificationTemplateError} from '../EditNotificationTemplate';

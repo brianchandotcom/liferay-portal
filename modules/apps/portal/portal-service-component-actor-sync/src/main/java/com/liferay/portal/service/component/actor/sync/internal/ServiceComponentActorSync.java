@@ -6,18 +6,14 @@
 package com.liferay.portal.service.component.actor.sync.internal;
 
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
-import org.osgi.service.component.ComponentContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
+import org.osgi.util.promise.Promise;
 
 /**
  * @author Tina Tian
@@ -26,59 +22,26 @@ import org.osgi.service.component.annotations.Component;
 public class ServiceComponentActorSync {
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
-
+	protected void activate() {
 		DependencyManagerSyncUtil.registerSyncCallable(
 			() -> {
-				String componentName =
-					ServiceComponentActorGateKeeper.class.getName();
-
-				CountDownLatch countDownLatch = new CountDownLatch(1);
-
-				ServiceListener serviceListener = serviceEvent -> {
-					if (serviceEvent.getType() == ServiceEvent.REGISTERED) {
-						countDownLatch.countDown();
-					}
-				};
-
-				try {
-					bundleContext.addServiceListener(
-						serviceListener,
-						"(&(objectClass=" + componentName + "))");
-
-					componentContext.enableComponent(componentName);
-
-					while (true) {
-						if (countDownLatch.await(1, TimeUnit.MINUTES)) {
-							break;
-						}
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Waiting on tasks in SCR component actor " +
-									"thread to be finished.");
-						}
-					}
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to sync SCR component actor thread", exception);
-				}
-				finally {
-					bundleContext.removeServiceListener(serviceListener);
-
-					componentContext.disableComponent(componentName);
-
-					componentContext.disableComponent(
+				ComponentDescriptionDTO componentDescriptionDTO =
+					_serviceComponentRuntime.getComponentDescriptionDTO(
+						FrameworkUtil.getBundle(
+							ServiceComponentActorSync.class),
 						ServiceComponentActorSync.class.getName());
-				}
+
+				Promise<Void> promise = 
+					_serviceComponentRuntime.disableComponent(
+						componentDescriptionDTO);
+
+				promise.getValue();
 
 				return null;
 			});
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceComponentActorSync.class);
+	@Reference
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

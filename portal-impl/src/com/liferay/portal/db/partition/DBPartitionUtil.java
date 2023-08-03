@@ -99,6 +99,13 @@ public class DBPartitionUtil {
 					else {
 						statement.executeUpdate(
 							_getCreateTableSQL(companyId, tableName));
+
+						if (dbInspector.isPartitionedControlTable(tableName)) {
+							_copyData(
+								tableName, _defaultSchemaName,
+								_getSchemaName(companyId), statement,
+								StringPool.BLANK);
+						}
 					}
 				}
 			}

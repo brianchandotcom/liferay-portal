@@ -266,7 +266,8 @@ public class DBInspector {
 	public boolean isControlTable(List<Long> companyIds, String tableName)
 		throws Exception {
 
-		if (!isObjectTable(companyIds, tableName) &&
+		if (!isPartitionedControlTable(tableName) &&
+			!isObjectTable(companyIds, tableName) &&
 			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
 			 !hasColumn(tableName, "companyId"))) {
 
@@ -297,6 +298,16 @@ public class DBInspector {
 
 			return false;
 		}
+	}
+
+	public boolean isPartitionedControlTable(String tableName) {
+		if (_partitionedControlTableNames.contains(
+				StringUtil.toLowerCase(tableName))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String normalizeName(String name) throws SQLException {
@@ -416,6 +427,8 @@ public class DBInspector {
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("company", "virtualhost"));
+	private static final Set<String> _partitionedControlTableNames =
+		new HashSet<>(Arrays.asList("classname_"));
 
 	private final Connection _connection;
 

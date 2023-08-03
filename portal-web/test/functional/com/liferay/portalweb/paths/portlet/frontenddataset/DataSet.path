@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_LABEL_POSITION</td>
+	<td>//div[@class='dnd-tr'][${key_rowPosition}]//div[(text()='${key_labelName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_ICON</td>
 	<td>//button[contains(text(),'${key_labelName}')]//span[contains(@class,'inline-item inline-item-after')]</td>
 	<td></td>

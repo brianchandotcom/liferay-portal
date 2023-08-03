@@ -11,22 +11,16 @@ import com.liferay.petra.string.StringBundler;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Supplier;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -85,9 +79,6 @@ public class Snapshot<T> {
 				}
 
 				serviceTracker.open();
-
-				_dclSingletonBundleListener.addDCLSingleton(
-					bundle.getBundleId(), serviceTrackerDCLSingleton);
 
 				return serviceTracker;
 			};
@@ -181,64 +172,6 @@ public class Snapshot<T> {
 		}
 	}
 
-	private static final DCLSingletonBundleListener
-		_dclSingletonBundleListener = new DCLSingletonBundleListener();
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(Snapshot.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		bundleContext.addBundleListener(_dclSingletonBundleListener);
-	}
-
 	private final Supplier<T> _serivceSupplier;
-
-	private static class DCLSingletonBundleListener
-		implements SynchronousBundleListener {
-
-		public void addDCLSingleton(
-			long bundleId, DCLSingleton<?> dclSingleton) {
-
-			Queue<DCLSingleton<?>> dclSingletons = _dclSingletons.get(bundleId);
-
-			if (dclSingletons == null) {
-				dclSingletons = new ConcurrentLinkedQueue<>();
-
-				Queue<DCLSingleton<?>> previousDCLSingletons =
-					_dclSingletons.putIfAbsent(bundleId, dclSingletons);
-
-				if (previousDCLSingletons != null) {
-					dclSingletons = previousDCLSingletons;
-				}
-			}
-
-			dclSingletons.add(dclSingleton);
-		}
-
-		@Override
-		public void bundleChanged(BundleEvent bundleEvent) {
-			if (bundleEvent.getType() != BundleEvent.STOPPING) {
-				return;
-			}
-
-			Bundle bundle = bundleEvent.getBundle();
-
-			Queue<DCLSingleton<?>> dclSingletons = _dclSingletons.remove(
-				bundle.getBundleId());
-
-			if (dclSingletons == null) {
-				return;
-			}
-
-			for (DCLSingleton<?> dclSingleton : dclSingletons) {
-				dclSingleton.destroy(null);
-			}
-		}
-
-		private Map<Long, Queue<DCLSingleton<?>>> _dclSingletons =
-			new ConcurrentHashMap<>();
-
-	}
 
 }

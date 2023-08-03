@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project;
 
-import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;

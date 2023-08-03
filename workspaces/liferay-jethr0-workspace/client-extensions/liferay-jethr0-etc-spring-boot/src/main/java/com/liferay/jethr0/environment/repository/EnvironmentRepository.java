@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.environment.repository;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.dalo.BuildToEnvironmentsDALO;
+import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.dalo.BuildToEnvironmentsDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.environment.dalo.EnvironmentDALO;

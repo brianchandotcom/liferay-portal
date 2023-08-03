@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.build.repository;
+package com.liferay.jethr0.bui1d.repository;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.dalo.BuildDALO;
+import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.dalo.BuildDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;

@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.task.repository;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.dalo.BuildToTasksDALO;
+import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.dalo.BuildToTasksDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToTasksDALO;

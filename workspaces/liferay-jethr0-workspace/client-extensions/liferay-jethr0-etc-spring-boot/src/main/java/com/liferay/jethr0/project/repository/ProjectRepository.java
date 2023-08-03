@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project.repository;
 
-import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectDALO;

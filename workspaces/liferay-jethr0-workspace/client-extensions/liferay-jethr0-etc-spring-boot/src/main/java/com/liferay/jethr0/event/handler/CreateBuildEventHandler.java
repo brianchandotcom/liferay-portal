@@ -5,11 +5,11 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.parameter.BuildParameter;
-import com.liferay.jethr0.build.queue.BuildQueue;
-import com.liferay.jethr0.build.repository.BuildParameterRepository;
-import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.queue.BuildQueue;
+import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;

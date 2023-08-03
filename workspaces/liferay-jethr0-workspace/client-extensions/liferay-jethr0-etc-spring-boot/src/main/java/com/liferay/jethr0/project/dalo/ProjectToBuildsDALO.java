@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.project.dalo;
 
-import com.liferay.jethr0.build.Build;
-import com.liferay.jethr0.build.BuildFactory;
+import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.project.Project;

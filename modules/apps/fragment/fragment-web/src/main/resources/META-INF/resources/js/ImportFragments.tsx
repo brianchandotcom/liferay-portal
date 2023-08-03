@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
+import {Import} from '@liferay/layout-js-components-web';
+import React from 'react';
 
 interface Props {
 	backURL: string;
 	importURL: string;
 	portletNamespace: string;
 }
-declare function Import({
-	backURL,
-	importURL,
-	portletNamespace,
-}: Props): JSX.Element;
-export default Import;
+
+export default function ImportFragments(props: Props) {
+	return <Import {...props} />;
+}

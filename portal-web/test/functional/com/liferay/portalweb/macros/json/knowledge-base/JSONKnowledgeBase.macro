@@ -381,6 +381,31 @@ definition {
 		}
 	}
 
+	macro removeKBArticle {
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		if (isSet(folderName)) {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				folderName = ${folderName},
+				groupName = ${groupName},
+				kbArticleTitle = ${kbArticleTitle});
+		}
+		else {
+			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
+				groupName = ${groupName},
+				kbArticleTitle = ${kbArticleTitle});
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/kb.kbarticle/delete-kb-article \
+				-u ${userLoginInfo} \
+				-d resourcePrimKey=${resourcePrimKey}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro updateKBArticle {
 		var portalURL = JSONCompany.getPortalURL();
 

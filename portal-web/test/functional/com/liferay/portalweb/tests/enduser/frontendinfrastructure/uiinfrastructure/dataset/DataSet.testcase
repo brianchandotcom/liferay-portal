@@ -104,48 +104,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-177576 - Verifiy if is possible to cancel changes when clicks on cancel button"
-	@priority = 4
-	test CanDiscartChangesOnCancelButton {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("And the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("And the user changes the Name field") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Dataset Test 2");
-		}
-
-		task ("And clicks on the Cancel button") {
-			Button.clickCancel();
-		}
-
-		task ("Then the Edit Dataset modal is closed") {
-			AssertElementNotPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Rename Data Set");
-		}
-
-		task ("And the changes are not applied") {
-			AssertElementNotPresent(
-				key_itemName = "Dataset Test 2",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-172882: Display a list of headless resources in new FDS View modal"
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
@@ -204,97 +162,6 @@ definition {
 		}
 	}
 
-	@description = "Blocked by LPS-191845. LPS-177576 - Verify if is not possible to leave the Name field on the Rename modal"
-	@ignore = "true"
-	@priority = 5
-	test CannotLeaveNameFieldEmpty {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("And the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("And the user leaves the Name field empty") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "");
-		}
-
-		task ("And clicks on Save button") {
-			Click(
-				key_text = "Save",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Then an error message is displayed") {
-			AssertElementPresent(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "This field is required.");
-		}
-
-		task ("And the user can't save the changes") {
-			AssertElementPresent(
-				key_itemName = "Dataset Test",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
-	@description = "LPS-177576 - Verifiy if is possible to save changes when clicks on save button"
-	@priority = 5
-	test CanRenameDataSet {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("And the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("And the user changes the Name field") {
-			Type(
-				locator1 = "TextInput#NAME",
-				value1 = "Dataset Test 2");
-		}
-
-		task ("And clicks on Save button") {
-			Button.clickSave();
-		}
-
-		task ("Then the Edit Dataset modal is closed") {
-			AssertElementNotPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Rename Data Set");
-		}
-
-		task ("And a successful message is displayed") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("And the changes are applied") {
-			AssertElementPresent(
-				key_itemName = "Dataset Test 2",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-172882: Display matched result in new FDS View modal"
 	@priority = 3
 	test CanReturnAMatchedResult {
@@ -333,49 +200,49 @@ definition {
 		}
 	}
 
-	@description = "LPS-177576 - Verify if is possible choose the Rename option on dropdown menu and view the Rename modal"
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by Date"
 	@priority = 5
-	test CanViewRenameDataSetModal {
-		task ("Given the creation of a new dataset") {
+	test CanSortByDate {
+		task ("Given two datasets entries via API:") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "FDSEntry",
+				restApplication = "/data-set-manager/entries",
+				restEndpoint = "/",
+				restSchema = "FDSEntry");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "FDSField",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And Create a Dataset Entry via UI") {
 			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/data-set-manager/entries");
+				key_name = "FDSSort",
+				key_type = "/data-set-manager/sorts");
 		}
 
-		task ("And the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
-		}
-
-		task ("When the user chooses the Rename option") {
-			Click(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-		}
-
-		task ("Then the Edit Dataset modal is displayed") {
+		task ("Then Confirm that the last entry is at the top of the list") {
 			AssertElementPresent(
-				locator1 = "Portlet#MODAL_TITLE",
-				value1 = "Rename Data Set");
-		}
-	}
-
-	@description = "LPS-177576 - Verify if is possible to see the Rename option on dropdown menu"
-	@priority = 5
-	test CanViewRenameMenuOption {
-		task ("Given the creation of a new dataset") {
-			DataSetAdmin.createDataSet(
-				key_name = "Dataset Test",
-				key_type = "/data-set-manager/entries");
+				key_labelName = "FDSSort",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
 		}
 
-		task ("When the user clicks on the 3 dots button of a dataset entry") {
-			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		task ("When ordered in descending order by Date") {
+			while (IsElementNotPresent(key_labelName = "FDSSort", key_rowPosition = 3, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "Date",
+					locator1 = "DataSet#SORT_ICON");
+			}
 		}
 
-		task ("Then the option Rename is present in the 3 dots menu") {
+		task ("Then confirm that the list is in descending order") {
 			AssertElementPresent(
-				key_kebabOption = "Rename",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				key_labelName = "FDSSort",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
 		}
 	}
 

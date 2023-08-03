@@ -25,6 +25,23 @@ import java.util.Map;
 public class ObjectEntryTestUtil {
 
 	public static ObjectEntry addObjectEntry(
+			long groupId, ObjectDefinition objectDefinition,
+			Map<String, Serializable> values, String... keywords)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		if (keywords.length > 0) {
+			serviceContext.setAssetTagNames(keywords);
+		}
+
+		return ObjectEntryLocalServiceUtil.addObjectEntry(
+			TestPropsValues.getUserId(), groupId,
+			objectDefinition.getObjectDefinitionId(), values, serviceContext);
+	}
+
+	public static ObjectEntry addObjectEntry(
 			ObjectDefinition objectDefinition, Map<String, Serializable> values,
 			String... keywords)
 		throws Exception {
@@ -38,16 +55,7 @@ public class ObjectEntryTestUtil {
 			groupId = TestPropsValues.getGroupId();
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		if (keywords.length > 0) {
-			serviceContext.setAssetTagNames(keywords);
-		}
-
-		return ObjectEntryLocalServiceUtil.addObjectEntry(
-			TestPropsValues.getUserId(), groupId,
-			objectDefinition.getObjectDefinitionId(), values, serviceContext);
+		return addObjectEntry(groupId, objectDefinition, values, keywords);
 	}
 
 	public static ObjectEntry addObjectEntry(

@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.application.resource.test;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
@@ -13,6 +14,7 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -44,12 +46,15 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -129,9 +134,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				listTypeEntries);
 
-		_objectDefinition1 = _addObjectDefinition(1);
-		_objectDefinition2 = _addObjectDefinition(2);
-		_objectDefinition3 = _addObjectDefinition(3);
+		_objectDefinition1 = _addObjectDefinition(
+			1, ObjectDefinitionConstants.SCOPE_COMPANY);
+		_objectDefinition2 = _addObjectDefinition(
+			2, ObjectDefinitionConstants.SCOPE_COMPANY);
+		_objectDefinition3 = _addObjectDefinition(
+			3, ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_objectRelationship1 = _addObjectRelationship(
 			_objectDefinition1, _objectDefinition2);
@@ -142,6 +150,35 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectDefinition1, _objectRelationship1.getName());
 		_addAggregationObjectField(
 			_objectDefinition2, _objectRelationship2.getName());
+
+		_siteScopedObjectDefinition1 = _addObjectDefinition(
+			1, ObjectDefinitionConstants.SCOPE_SITE);
+		_siteScopedObjectDefinition2 = _addObjectDefinition(
+			2, ObjectDefinitionConstants.SCOPE_SITE);
+		_siteScopedObjectDefinition3 = _addObjectDefinition(
+			3, ObjectDefinitionConstants.SCOPE_SITE);
+
+		_siteScopedObjectRelationship1 = _addObjectRelationship(
+			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2);
+
+		_siteScopedObjectRelationship2 = _addObjectRelationship(
+			_siteScopedObjectDefinition2, _siteScopedObjectDefinition3);
+
+		_addAggregationObjectField(
+			_siteScopedObjectDefinition1,
+			_siteScopedObjectRelationship1.getName());
+		_addAggregationObjectField(
+			_siteScopedObjectDefinition2,
+			_siteScopedObjectRelationship2.getName());
+
+		_documentResource = DocumentResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
@@ -149,19 +186,25 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
-			_API_APPLICATION_PATH_1);
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 		_addAPIApplication(
 			_API_APPLICATION_ERC_2, _API_ENDPOINT_ERC_2, _BASE_URL_2,
 			_objectDefinition1.getExternalReferenceCode(),
-			_API_APPLICATION_PATH_2);
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_2, APIApplication.Endpoint.Scope.COMPANY);
 
 		String endpoint1 = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
+		String scopedEndpoint1 = StringBundler.concat(
+			"c/", _BASE_URL_1, "/scopes/%s", _API_APPLICATION_PATH_1);
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeToHttpCode(null, endpoint1, Http.Method.GET));
 
 		String endpoint2 = "c/" + _BASE_URL_2 + _API_APPLICATION_PATH_2;
+		String scopedEndpoint2 = StringBundler.concat(
+			"c/", _BASE_URL_2, "/scopes/%s", _API_APPLICATION_PATH_2);
 
 		Assert.assertEquals(
 			404,
@@ -174,8 +217,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			200,
 			HTTPTestUtil.invokeToHttpCode(null, endpoint1, Http.Method.GET));
 		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				String.format(scopedEndpoint1, TestPropsValues.getGroupId()),
+				Http.Method.GET));
+		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeToHttpCode(null, endpoint2, Http.Method.GET));
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				String.format(scopedEndpoint2, TestPropsValues.getGroupId()),
+				Http.Method.GET));
 
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
 			1, null, _objectDefinition1, "value1");
@@ -200,6 +255,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"textProperty", "value1"
 					))
+			).put(
+				"totalCount", 1
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null, endpoint1, Http.Method.GET
@@ -216,6 +273,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).put(
 						"textProperty", "value1"
 					))
+			).put(
+				"totalCount", 1
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null, endpoint2, Http.Method.GET
@@ -260,7 +319,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
-			_API_APPLICATION_PATH_1);
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPIFilter(
 			_API_ENDPOINT_ERC_1,
@@ -322,7 +382,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
-			_API_APPLICATION_PATH_1);
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -363,7 +424,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
-			_API_APPLICATION_PATH_1);
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -540,6 +602,108 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetWithSiteScopedEndpoint() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_siteScopedObjectDefinition1.getExternalReferenceCode(),
+			_siteScopedObjectRelationship1.getName(),
+			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
+			APIApplication.Endpoint.Scope.GROUP);
+
+		String endpointPath = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
+		String scopedEndpointPath = StringBundler.concat(
+			"c/", _BASE_URL_1, "/scopes/%s", _API_APPLICATION_PATH_1);
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath, Http.Method.GET));
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				String.format(scopedEndpointPath, TestPropsValues.getGroupId()),
+				Http.Method.GET));
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath, Http.Method.GET));
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				String.format(scopedEndpointPath, TestPropsValues.getGroupId()),
+				Http.Method.GET));
+
+		ObjectEntry objectEntry1 = _addCustomObjectEntry(
+			_group.getGroupId(), 1, null, _siteScopedObjectDefinition1,
+			"value1");
+		ObjectEntry objectEntry2 = _addCustomObjectEntry(
+			_group.getGroupId(), 2, null, _siteScopedObjectDefinition2,
+			"value2");
+
+		_relateObjectEntries(
+			objectEntry1, objectEntry2, _siteScopedObjectRelationship1);
+
+		ObjectEntry objectEntry3 = _addCustomObjectEntry(
+			_group.getGroupId(), 3, null, _siteScopedObjectDefinition3,
+			"value3");
+
+		_relateObjectEntries(
+			objectEntry2, objectEntry3, _siteScopedObjectRelationship2);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items", JSONFactoryUtil.createJSONArray()
+			).put(
+				"totalCount", 0
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				String.format(scopedEndpointPath, TestPropsValues.getGroupId()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.put(
+					JSONUtil.put(
+						"relatedTextProperty1", JSONUtil.put("value2")
+					).put(
+						"relatedTextProperty2", JSONUtil.put("value3")
+					).put(
+						"textProperty", "value1"
+					))
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, String.format(scopedEndpointPath, _group.getGroupId()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "unpublished"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.PATCH);
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath, Http.Method.GET));
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null, String.format(scopedEndpointPath, _group.getGroupId()),
+				Http.Method.GET));
+	}
+
+	@Test
 	public void testPut() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -585,7 +749,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
-			_API_APPLICATION_PATH_1);
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -644,7 +809,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private void _addAPIApplication(
 			String apiApplicationExternalReferenceCode,
 			String apiEndpointExternalReferenceCode, String baseURL,
-			String objectDefinitionExternalReferenceCode, String path)
+			String objectDefinitionExternalReferenceCode,
+			String objectRelationshipName1, String objectRelationshipName2,
+			String path, APIApplication.Endpoint.Scope scope)
 		throws Exception {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
@@ -666,7 +833,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						).put(
 							"path", path
 						).put(
-							"scope", "company"
+							"scope", scope.name()
 						))
 				).put(
 					"apiApplicationToAPISchemas",
@@ -708,7 +875,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 									_API_SCHEMA_INTEGER_FIELD_ERC + 2
 								).put(
 									"objectRelationshipNames",
-									_objectRelationship1.getName()
+									objectRelationshipName1
 								),
 								JSONUtil.put(
 									"description", "description"
@@ -721,7 +888,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 										2
 								).put(
 									"objectRelationshipNames",
-									_objectRelationship1.getName()
+									objectRelationshipName1
 								),
 								JSONUtil.put(
 									"description", "description"
@@ -732,7 +899,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 									_API_SCHEMA_TEXT_FIELD_ERC + 2
 								).put(
 									"objectRelationshipNames",
-									_objectRelationship1.getName()
+									objectRelationshipName1
 								),
 								JSONUtil.put(
 									"description", "description"
@@ -744,8 +911,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								).put(
 									"objectRelationshipNames",
 									String.format(
-										"%s,%s", _objectRelationship1.getName(),
-										_objectRelationship2.getName())
+										"%s,%s", objectRelationshipName1,
+										objectRelationshipName2)
 								),
 								JSONUtil.put(
 									"description", "description"
@@ -759,8 +926,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								).put(
 									"objectRelationshipNames",
 									String.format(
-										"%s,%s", _objectRelationship1.getName(),
-										_objectRelationship2.getName())
+										"%s,%s", objectRelationshipName1,
+										objectRelationshipName2)
 								),
 								JSONUtil.put(
 									"description", "description"
@@ -772,8 +939,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								).put(
 									"objectRelationshipNames",
 									String.format(
-										"%s,%s", _objectRelationship1.getName(),
-										_objectRelationship2.getName())
+										"%s,%s", objectRelationshipName1,
+										objectRelationshipName2)
 								))
 						).put(
 							"description", "description"
@@ -837,11 +1004,22 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			ObjectDefinition objectDefinition, String textFieldValue)
 		throws Exception {
 
+		return _addCustomObjectEntry(
+			0L, integerFieldValue, multiselectPicklistFieldValue,
+			objectDefinition, textFieldValue);
+	}
+
+	private ObjectEntry _addCustomObjectEntry(
+			long groupId, int integerFieldValue,
+			List<ListTypeValue> multiselectPicklistFieldValue,
+			ObjectDefinition objectDefinition, String textFieldValue)
+		throws Exception {
+
 		ListTypeValue listTypeValue = RandomTestUtil.randomEnum(
 			ListTypeValue.class);
 
 		return ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition,
+			groupId, objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
 				"attachmentField",
 				() -> {
@@ -896,7 +1074,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).build());
 	}
 
-	private ObjectDefinition _addObjectDefinition(int index) throws Exception {
+	private ObjectDefinition _addObjectDefinition(int index, String scope)
+		throws Exception {
+
 		return ObjectDefinitionTestUtil.publishObjectDefinition(
 			Arrays.asList(
 				new AttachmentObjectFieldBuilder(
@@ -1032,7 +1212,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"textField"
-				).build()));
+				).build()),
+			scope);
 	}
 
 	private ObjectRelationship _addObjectRelationship(
@@ -1182,6 +1363,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	private DocumentResource _documentResource;
+	private Group _group;
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject
@@ -1201,6 +1383,18 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteScopedObjectDefinition1;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteScopedObjectDefinition2;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteScopedObjectDefinition3;
+
+	private ObjectRelationship _siteScopedObjectRelationship1;
+	private ObjectRelationship _siteScopedObjectRelationship2;
 
 	private enum ListTypeValue {
 

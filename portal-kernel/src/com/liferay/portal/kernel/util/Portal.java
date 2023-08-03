@@ -1027,14 +1027,6 @@ public interface Portal {
 
 	public boolean isCompanyAdmin(User user) throws Exception;
 
-	public boolean isCompanyControlPanelPortlet(
-			String portletId, String category, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	public boolean isCompanyControlPanelPortlet(
-			String portletId, ThemeDisplay themeDisplay)
-		throws PortalException;
-
 	public boolean isControlPanelPortlet(
 		String portletId, String category, ThemeDisplay themeDisplay);
 

@@ -5927,46 +5927,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public boolean isCompanyControlPanelPortlet(
-			String portletId, String category, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			themeDisplay.getCompanyId());
-
-		themeDisplay.setScopeGroupId(companyGroup.getGroupId());
-
-		return isControlPanelPortlet(portletId, category, themeDisplay);
-	}
-
-	@Override
-	public boolean isCompanyControlPanelPortlet(
-			String portletId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			themeDisplay.getCompanyId());
-
-		themeDisplay.setScopeGroupId(companyGroup.getGroupId());
-
-		return isControlPanelPortlet(portletId, themeDisplay);
-	}
-
-	@Override
 	public boolean isControlPanelPortlet(
 		String portletId, String category, ThemeDisplay themeDisplay) {
 

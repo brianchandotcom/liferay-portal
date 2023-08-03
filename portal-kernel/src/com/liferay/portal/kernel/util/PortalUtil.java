@@ -1662,21 +1662,6 @@ public class PortalUtil {
 		return _portal.isCompanyAdmin(user);
 	}
 
-	public static boolean isCompanyControlPanelPortlet(
-			String portletId, String category, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _portal.isCompanyControlPanelPortlet(
-			portletId, category, themeDisplay);
-	}
-
-	public static boolean isCompanyControlPanelPortlet(
-			String portletId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _portal.isCompanyControlPanelPortlet(portletId, themeDisplay);
-	}
-
 	public static boolean isControlPanelPortlet(
 		String portletId, String category, ThemeDisplay themeDisplay) {
 

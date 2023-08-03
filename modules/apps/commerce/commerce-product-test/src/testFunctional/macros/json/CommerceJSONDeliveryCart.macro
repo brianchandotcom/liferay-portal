@@ -10,6 +10,15 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(billingAddressName))) {
+			var billingAddressId = 0;
+		}
+		else {
+			var billingAddressId = CommerceJSONAccountsAPI._getAccountAddressIdByAddressName(
+				accountEntryId = ${accountEntryId},
+				addressName = ${billingAddressName});
+		}
+
 		var channelId = CommerceJSONChannelsAPI._getCommerceChannelIds();
 
 		if (!(isSet(currencyCode))) {
@@ -47,6 +56,41 @@ definition {
 			}
 		}
 
+		if (!(isSet(printedNote))) {
+			var printedNote = "";
+		}
+
+		if (!(isSet(shippingAddressName))) {
+			var shippingAddressId = 0;
+		}
+		else {
+			var shippingAddressId = CommerceJSONAccountsAPI._getAccountAddressIdByAddressName(
+				accountEntryId = ${accountEntryId},
+				addressName = ${shippingAddressName});
+		}
+
+		if (isSet(shippingOption)) {
+			if (!(isSet(shippingMethod))) {
+				if ((${shippingOption} == "Standard Delivery") || (${shippingOption} == "Expedited Delivery")) {
+					var shippingMethod = "fixed";
+				}
+			}
+			else {
+				if (${shippingMethod} == "Flat Rate") {
+					var shippingMethod = "fixed";
+				}
+				else if (${shippingMethod} == "Variable Rate") {
+					var shippingMethod = "by-weight";
+				}
+			}
+
+			var shippingOption = CommerceUtilities.convertStringToKey(string = ${shippingOption});
+		}
+		else {
+			var shippingMethod = "";
+			var shippingOption = "";
+		}
+
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
@@ -56,14 +100,37 @@ definition {
 				-H 'Content-Type: application/json' \
 				-d '{
 					"accountId": ${accountEntryId},
+					"billingAddressId": ${billingAddressId},
 					"cartItems": [${cartItemsList}],
-					"currencyCode": "${currencyCode}"
+					"currencyCode": "${currencyCode}",
+					"printedNote": "${printedNote}",
+					"shippingAddressId": ${shippingAddressId},
+					"shippingMethod": "${shippingMethod}",
+					"shippingOption": "${shippingOption}"
 				}'
 		''';
 
 		var responseBody = JSONCurlUtil.post(${curl});
 
 		return ${responseBody};
+	}
+
+	macro _postCommerceCartCheckout {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-delivery-cart/v1.0/carts/${cartId}/checkout \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.post(${curl});
 	}
 
 	macro getOrderItemPostRequestStatus {

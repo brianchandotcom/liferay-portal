@@ -8,7 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 
 import './routes/customer-portal/app.scss';
-import {useEffect, useMemo, useState} from 'react';
+import {memo, useEffect, useMemo, useState} from 'react';
 import {createPortal} from 'react-dom';
 import i18n from './common/I18n';
 import {useAppPropertiesContext} from './common/contexts/AppPropertiesContext';
@@ -143,6 +143,8 @@ const OktaStatus = () => {
 	);
 };
 
+const OktaStatusMemoized = memo(OktaStatus);
+
 const OktaStatusPortal = () => {
 	const [container, setContainer] = useState<HTMLElement | null>();
 
@@ -158,9 +160,9 @@ const OktaStatusPortal = () => {
 		}
 	}, [container]);
 
-	return <>{container && createPortal(<OktaStatus />, container)}</>;
+	return <>{container && createPortal(<OktaStatusMemoized />, container)}</>;
 };
 
 export {OktaStatusPortal};
 
-export default OktaStatus;
+export default memo(OktaStatus);

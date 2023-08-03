@@ -5,9 +5,9 @@
 
 import classNames from 'classnames';
 import CodeMirror from 'codemirror';
+import {FieldBase} from 'frontend-js-components-web';
 import React, {ReactNode, useRef} from 'react';
 
-import { FieldBase } from 'frontend-js-components-web';
 import CodeMirrorEditor, {ICodeMirrorEditor} from './CodeMirrorEditor';
 import {Sidebar, SidebarCategory} from './Sidebar';
 

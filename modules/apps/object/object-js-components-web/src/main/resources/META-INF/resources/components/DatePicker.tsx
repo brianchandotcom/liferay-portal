@@ -4,6 +4,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
+import {FieldBase} from 'frontend-js-components-web';
 
 // @ts-ignore
 
@@ -18,7 +19,6 @@ import {
 	generateDateConfigurations,
 	generateInputMask,
 } from '../utils/datetime';
-import { FieldBase } from 'frontend-js-components-web';
 
 interface DatePickerProps
 	extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {

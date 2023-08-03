@@ -7,9 +7,8 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {FieldBase} from 'frontend-js-components-web';
 import React, {ReactNode, cloneElement, useRef} from 'react';
-
-import { FieldBase } from 'frontend-js-components-web';
 
 import './index.scss';
 

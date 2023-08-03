@@ -4,9 +4,9 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import {FieldBase} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import { FieldBase } from 'frontend-js-components-web';
 import {CustomSelect} from './CustomSelect';
 
 import './index.scss';

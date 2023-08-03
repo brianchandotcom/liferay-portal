@@ -4,9 +4,8 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import {FieldBase} from 'frontend-js-components-web';
 import React from 'react';
-
-import { FieldBase } from 'frontend-js-components-web';
 
 export const Input = React.forwardRef<HTMLInputElement, IProps>(
 	(

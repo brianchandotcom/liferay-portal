@@ -6,12 +6,12 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
+import {FieldBase} from 'frontend-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {REQUIRED_MSG} from '../utils/constants';
 import CodeEditor, {SidebarCategory} from './CodeEditor/index';
-import { FieldBase } from 'frontend-js-components-web';
 
 export function ExpressionBuilder({
 	buttonDisabled,

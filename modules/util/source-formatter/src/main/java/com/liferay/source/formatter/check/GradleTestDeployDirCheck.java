@@ -27,7 +27,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws DocumentException, IOException, ParseException {
 
-		if (!absolutePath.contains("-test-util/")) {
+		if (!absolutePath.endsWith("-test-util/build.gradle")) {
 			return content;
 		}
 

@@ -214,7 +214,7 @@ create table CommerceOrderItem (
 	requestedDeliveryDate DATE null,
 	shipSeparately BOOLEAN,
 	shippable BOOLEAN,
-	shippedQuantity INTEGER,
+	shippedQuantity BIGDECIMAL null,
 	shippingExtraPrice DOUBLE,
 	sku VARCHAR(75) null,
 	subscription BOOLEAN,
@@ -335,7 +335,7 @@ create table CommerceShipmentItem (
 	commerceShipmentId LONG,
 	commerceOrderItemId LONG,
 	commerceInventoryWarehouseId LONG,
-	quantity INTEGER,
+	quantity BIGDECIMAL null,
 	unitOfMeasureKey VARCHAR(75) null
 );
 

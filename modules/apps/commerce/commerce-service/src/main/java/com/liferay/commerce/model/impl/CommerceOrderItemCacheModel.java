@@ -516,8 +516,7 @@ public class CommerceOrderItemCacheModel
 		shipSeparately = objectInput.readBoolean();
 
 		shippable = objectInput.readBoolean();
-
-		shippedQuantity = objectInput.readInt();
+		shippedQuantity = (BigDecimal)objectInput.readObject();
 
 		shippingExtraPrice = objectInput.readDouble();
 		sku = objectInput.readUTF();
@@ -684,8 +683,7 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeBoolean(shipSeparately);
 
 		objectOutput.writeBoolean(shippable);
-
-		objectOutput.writeInt(shippedQuantity);
+		objectOutput.writeObject(shippedQuantity);
 
 		objectOutput.writeDouble(shippingExtraPrice);
 
@@ -786,7 +784,7 @@ public class CommerceOrderItemCacheModel
 	public long requestedDeliveryDate;
 	public boolean shipSeparately;
 	public boolean shippable;
-	public int shippedQuantity;
+	public BigDecimal shippedQuantity;
 	public double shippingExtraPrice;
 	public String sku;
 	public boolean subscription;

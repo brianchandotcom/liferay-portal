@@ -494,7 +494,8 @@ public class CommerceOrderItemWrapper
 			setShippable(shippable);
 		}
 
-		Integer shippedQuantity = (Integer)attributes.get("shippedQuantity");
+		BigDecimal shippedQuantity = (BigDecimal)attributes.get(
+			"shippedQuantity");
 
 		if (shippedQuantity != null) {
 			setShippedQuantity(shippedQuantity);
@@ -1292,7 +1293,7 @@ public class CommerceOrderItemWrapper
 	 * @return the shipped quantity of this commerce order item
 	 */
 	@Override
-	public int getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return model.getShippedQuantity();
 	}
 
@@ -2192,7 +2193,7 @@ public class CommerceOrderItemWrapper
 	 * @param shippedQuantity the shipped quantity of this commerce order item
 	 */
 	@Override
-	public void setShippedQuantity(int shippedQuantity) {
+	public void setShippedQuantity(BigDecimal shippedQuantity) {
 		model.setShippedQuantity(shippedQuantity);
 	}
 

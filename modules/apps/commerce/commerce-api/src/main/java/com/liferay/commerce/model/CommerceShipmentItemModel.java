@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -275,14 +277,14 @@ public interface CommerceShipmentItemModel
 	 *
 	 * @return the quantity of this commerce shipment item
 	 */
-	public int getQuantity();
+	public BigDecimal getQuantity();
 
 	/**
 	 * Sets the quantity of this commerce shipment item.
 	 *
 	 * @param quantity the quantity of this commerce shipment item
 	 */
-	public void setQuantity(int quantity);
+	public void setQuantity(BigDecimal quantity);
 
 	/**
 	 * Returns the unit of measure key of this commerce shipment item.

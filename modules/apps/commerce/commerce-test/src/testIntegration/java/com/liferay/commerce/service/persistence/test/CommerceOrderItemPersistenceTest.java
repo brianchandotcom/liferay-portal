@@ -256,7 +256,8 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setShippable(RandomTestUtil.randomBoolean());
 
-		newCommerceOrderItem.setShippedQuantity(RandomTestUtil.nextInt());
+		newCommerceOrderItem.setShippedQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceOrderItem.setShippingExtraPrice(RandomTestUtil.nextDouble());
 
@@ -1119,7 +1120,8 @@ public class CommerceOrderItemPersistenceTest {
 
 		commerceOrderItem.setShippable(RandomTestUtil.randomBoolean());
 
-		commerceOrderItem.setShippedQuantity(RandomTestUtil.nextInt());
+		commerceOrderItem.setShippedQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceOrderItem.setShippingExtraPrice(RandomTestUtil.nextDouble());
 

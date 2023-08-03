@@ -45,7 +45,7 @@ public class CommerceOrderItemServiceHttp {
 			addCommerceOrderItem(
 				HttpPrincipal httpPrincipal, long commerceOrderId,
 				long cpInstanceId, String json, java.math.BigDecimal quantity,
-				long replacedCPInstanceId, int shippedQuantity,
+				long replacedCPInstanceId, java.math.BigDecimal shippedQuantity,
 				String unitOfMeasureKey,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -93,7 +93,7 @@ public class CommerceOrderItemServiceHttp {
 			addOrUpdateCommerceOrderItem(
 				HttpPrincipal httpPrincipal, long commerceOrderId,
 				long cpInstanceId, String json, java.math.BigDecimal quantity,
-				long replacedCPInstanceId, int shippedQuantity,
+				long replacedCPInstanceId, java.math.BigDecimal shippedQuantity,
 				String unitOfMeasureKey,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -497,9 +497,10 @@ public class CommerceOrderItemServiceHttp {
 		}
 	}
 
-	public static int getCommerceInventoryWarehouseItemQuantity(
-			HttpPrincipal httpPrincipal, long commerceOrderItemId,
-			long commerceInventoryWarehouseId)
+	public static java.math.BigDecimal
+			getCommerceInventoryWarehouseItemQuantity(
+				HttpPrincipal httpPrincipal, long commerceOrderItemId,
+				long commerceInventoryWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -528,7 +529,7 @@ public class CommerceOrderItemServiceHttp {
 					exception);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (java.math.BigDecimal)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -882,7 +883,8 @@ public class CommerceOrderItemServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long commerceOrderItemId, long commerceOrderId,
 				long cpInstanceId, String cpMeasurementUnitKey,
-				java.math.BigDecimal quantity, int shippedQuantity,
+				java.math.BigDecimal quantity,
+				java.math.BigDecimal shippedQuantity,
 				java.math.BigDecimal unitOfMeasureIncrementalOrderQuantity,
 				String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1720,14 +1722,14 @@ public class CommerceOrderItemServiceHttp {
 	private static final Class<?>[] _addCommerceOrderItemParameterTypes0 =
 		new Class[] {
 			long.class, long.class, String.class, java.math.BigDecimal.class,
-			long.class, int.class, String.class,
+			long.class, java.math.BigDecimal.class, String.class,
 			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommerceOrderItemParameterTypes1 = new Class[] {
 			long.class, long.class, String.class, java.math.BigDecimal.class,
-			long.class, int.class, String.class,
+			long.class, java.math.BigDecimal.class, String.class,
 			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -1788,8 +1790,9 @@ public class CommerceOrderItemServiceHttp {
 	private static final Class<?>[] _importCommerceOrderItemParameterTypes20 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, String.class,
-			java.math.BigDecimal.class, int.class, java.math.BigDecimal.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _searchCommerceOrderItemsParameterTypes21 =
 		new Class[] {

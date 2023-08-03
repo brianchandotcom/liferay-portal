@@ -30,6 +30,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.math.BigDecimal;
+
 import java.sql.Blob;
 import java.sql.Types;
 
@@ -74,7 +76,7 @@ public class CommerceShipmentItemModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"commerceShipmentId", Types.BIGINT},
 		{"commerceOrderItemId", Types.BIGINT},
 		{"commerceInventoryWarehouseId", Types.BIGINT},
-		{"quantity", Types.INTEGER}, {"unitOfMeasureKey", Types.VARCHAR}
+		{"quantity", Types.DECIMAL}, {"unitOfMeasureKey", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,12 +96,12 @@ public class CommerceShipmentItemModelImpl
 		TABLE_COLUMNS_MAP.put("commerceShipmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceOrderItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceInventoryWarehouseId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShipmentItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceInventoryWarehouseId LONG,quantity INTEGER,unitOfMeasureKey VARCHAR(75) null)";
+		"create table CommerceShipmentItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceInventoryWarehouseId LONG,quantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShipmentItem";
@@ -382,7 +384,7 @@ public class CommerceShipmentItemModelImpl
 					CommerceShipmentItem::setCommerceInventoryWarehouseId);
 			attributeSetterBiConsumers.put(
 				"quantity",
-				(BiConsumer<CommerceShipmentItem, Integer>)
+				(BiConsumer<CommerceShipmentItem, BigDecimal>)
 					CommerceShipmentItem::setQuantity);
 			attributeSetterBiConsumers.put(
 				"unitOfMeasureKey",
@@ -698,12 +700,12 @@ public class CommerceShipmentItemModelImpl
 
 	@JSON
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -852,7 +854,7 @@ public class CommerceShipmentItemModelImpl
 		commerceShipmentItemImpl.setCommerceInventoryWarehouseId(
 			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
 		commerceShipmentItemImpl.setQuantity(
-			this.<Integer>getColumnOriginalValue("quantity"));
+			this.<BigDecimal>getColumnOriginalValue("quantity"));
 		commerceShipmentItemImpl.setUnitOfMeasureKey(
 			this.<String>getColumnOriginalValue("unitOfMeasureKey"));
 
@@ -1089,7 +1091,7 @@ public class CommerceShipmentItemModelImpl
 	private long _commerceShipmentId;
 	private long _commerceOrderItemId;
 	private long _commerceInventoryWarehouseId;
-	private int _quantity;
+	private BigDecimal _quantity;
 	private String _unitOfMeasureKey;
 
 	public <T> T getColumnValue(String columnName) {

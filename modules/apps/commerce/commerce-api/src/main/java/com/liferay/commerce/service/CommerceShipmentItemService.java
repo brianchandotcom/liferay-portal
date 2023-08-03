@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -47,15 +49,15 @@ public interface CommerceShipmentItemService extends BaseService {
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, String unitOfMeasureKey, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, String unitOfMeasureKey, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -134,7 +136,7 @@ public interface CommerceShipmentItemService extends BaseService {
 
 	public CommerceShipmentItem updateCommerceShipmentItem(
 			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory)
+			BigDecimal quantity, boolean validateInventory)
 		throws PortalException;
 
 	public CommerceShipmentItem updateExternalReferenceCode(

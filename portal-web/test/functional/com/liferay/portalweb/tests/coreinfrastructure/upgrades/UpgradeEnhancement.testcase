@@ -193,9 +193,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "No unregistered components found");
+		GogoShell.viewOutput(outputContent = "\"Registered by bundle:\" com.liferay.revert.schema");
 
 		// Change schema version from 2.1.1 to 2.1.0.
 
@@ -205,9 +205,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "No unregistered components found");
+		GogoShell.viewOutput(outputContent = "\"Registered by bundle:\" com.liferay.revert.schema");
 
 		// Change schema version from 2.1.0 to 2.0.0.
 
@@ -217,9 +217,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "No unregistered components found");
+		GogoShell.viewOutput(outputContent = "\"Registered by bundle:\" com.liferay.revert.schema");
 
 		// Change schema version from 2.0.0 to 1.0.0.
 
@@ -229,11 +229,9 @@ definition {
 
 		GogoShell.openGogoShellAdmin();
 
-		GogoShell.executeCommand(commandName = "dm wtf");
+		GogoShell.executeCommand(commandName = "services \"(&(objectClass=com.liferay.portal.kernel.configuration.Configuration)(origin.bundle.symbolic.name=com.liferay.revert.schema.version.service))\"");
 
-		GogoShell.viewOutput(outputContent = "1 unregistered components found");
-
-		GogoShell.viewOutput(outputContent = "com.liferay.revert.schema");
+		GogoShell.viewOutput(outputContent = "No registered services");
 	}
 
 }

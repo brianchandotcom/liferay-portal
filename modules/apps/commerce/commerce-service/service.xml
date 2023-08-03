@@ -370,7 +370,7 @@
 		<column name="requestedDeliveryDate" type="Date" />
 		<column name="shipSeparately" type="boolean" />
 		<column name="shippable" type="boolean" />
-		<column name="shippedQuantity" type="int" />
+		<column name="shippedQuantity" type="BigDecimal" />
 		<column name="shippingExtraPrice" type="double" />
 		<column name="sku" type="String" />
 		<column name="subscription" type="boolean" />
@@ -663,7 +663,7 @@
 		<column name="commerceShipmentId" type="long" />
 		<column name="commerceOrderItemId" type="long" />
 		<column name="commerceInventoryWarehouseId" type="long" />
-		<column name="quantity" type="int" />
+		<column name="quantity" type="BigDecimal" />
 		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Order -->

@@ -34,9 +34,6 @@ public interface ModelSearchDefinition {
 
 	/**
 	 * See LPS-192313.
-	 *
-	 * @param permissionAware false if the indexer should not add permission
-	 *        clauses to the pre-filter of the search query
 	 */
 	public void setPermissionAware(boolean permissionAware);
 

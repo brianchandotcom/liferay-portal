@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,11 +57,25 @@ public class GetLayoutReportTabsStrutsAction implements StrutsAction {
 					_language.get(themeDisplay.getLocale(), "render-times")
 				).put(
 					"url",
-					() -> HttpComponentsUtil.addParameter(
-						themeDisplay.getPortalURL() +
-							themeDisplay.getPathMain() +
-								"/layout_reports/get_render_times_data",
-						"p_l_id", themeDisplay.getPlid())
+					() -> {
+						String url = HttpComponentsUtil.addParameter(
+							themeDisplay.getPortalURL() +
+								themeDisplay.getPathMain() +
+									"/layout_reports/get_render_times_data",
+							"p_l_id", themeDisplay.getPlid());
+
+						long segmentsExperienceId = ParamUtil.getLong(
+							_portal.getOriginalServletRequest(
+								httpServletRequest),
+							"segmentsExperienceId", -1);
+
+						if (segmentsExperienceId == -1) {
+							return url;
+						}
+
+						return HttpComponentsUtil.addParameter(
+							url, "segmentsExperienceId", segmentsExperienceId);
+					}
 				));
 		}
 
@@ -97,5 +113,8 @@ public class GetLayoutReportTabsStrutsAction implements StrutsAction {
 	@Reference
 	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

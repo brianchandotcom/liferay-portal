@@ -60,6 +60,9 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
 				backgroundTaskId);
 
+		boolean complete = false;
+		boolean error = false;
+
 		long fileEntryId = ParamUtil.getLong(resourceRequest, "fileEntryId");
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -69,9 +72,6 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 				fetchDLOpenerFileEntryReference(
 					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
-
-		boolean complete = false;
-		boolean error = false;
 
 		if (backgroundTaskStatus == null) {
 			if (dlOpenerFileEntryReference == null) {

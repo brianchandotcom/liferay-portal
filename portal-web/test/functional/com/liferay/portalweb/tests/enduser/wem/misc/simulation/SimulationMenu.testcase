@@ -4,20 +4,21 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Simulation";
 	property testray.main.component.name = "Web Content Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
 
-		User.firstLoginPG();
-	}
-
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -25,13 +26,22 @@ definition {
 	@priority = 3
 	@uitest
 	test NavigateToPageInSimulationMode {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add an Asset Publisher to a widget page") {
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
+				groupName = ${siteName},
 				layoutName = "Test Page Name");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
+				groupName = ${siteName},
 				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}
@@ -39,7 +49,7 @@ definition {
 		task ("Navigate to the widget page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Guest");
+				siteName = ${siteName});
 		}
 
 		task ("Access to Mobile Device mode via simulation menu") {
@@ -58,18 +68,6 @@ definition {
 				locator1 = "Home#PAGE");
 
 			Smoke.viewWelcomeContentPage();
-		}
-
-		task ("Quit simulation mode") {
-			SelectFrameTop();
-
-			Click(locator1 = "ControlMenu#SIMULATION");
-		}
-
-		task ("Delete the widget page") {
-			JSONLayout.deletePublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page Name");
 		}
 	}
 
@@ -131,18 +129,16 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a new personalized variation with new segment") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
 			AssetListsAdmin.addPersonalizedVariation(segmentName = "New Segment");
 		}
 
@@ -177,6 +173,11 @@ definition {
 		}
 
 		task ("Add a Collection Display fragment to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});

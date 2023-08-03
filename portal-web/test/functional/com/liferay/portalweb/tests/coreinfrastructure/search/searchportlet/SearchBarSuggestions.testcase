@@ -396,9 +396,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-188710 - Configure Site Activities suggestions to display results from the locale of the user."
+	@description = "This is a use case for LPS-188710 - Configure Site Activities suggestions to display results from the user's locale."
 	@priority = 3
-	test ConfigureSuggestionsToDisplayResultsFromTheLocaleOfTheUser {
+	test ConfigureSuggestionsToDisplayResultsFromUsersLocale {
 		property custom.properties = "feature.flag.LPS-159643=true";
 		property property.group = "analytics.cloud.profile";
 

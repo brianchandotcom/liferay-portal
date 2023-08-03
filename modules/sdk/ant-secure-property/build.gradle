@@ -15,7 +15,3 @@ dependencies {
 liferay {
 	deployDir = file("../../../lib/development")
 }
-
-updateFileVersions {
-	match(/\t\t<dependency name="com.liferay.ant.secure.property" org="com.liferay" rev="(\d.+)" \/>/, "../../../tools/sdk/dependencies/com.liferay.ant.secure.property/ivy.xml")
-}

@@ -342,6 +342,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-183502. Confirm that the user can sort Data Set entries by REST Schema"
+	@priority = 4
+	test CanSortByRESTSchema {
+		task ("Given three datasets entries via API") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Sku",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/skus",
+				restSchema = "Sku");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Product",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/products",
+				restSchema = "Product");
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Catalog",
+				restApplication = "/headless-commerce-admin-catalog/v1.0",
+				restEndpoint = "/v1.0/catalogs",
+				restSchema = "Catalog");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the list is ordered increasing") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 1,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+
+		task ("When ordered in descending order by REST Schema") {
+			while (IsElementNotPresent(key_labelName = "Catalog", key_rowPosition = 3, locator1 = "DataSet#VIEW_LABEL_POSITION")) {
+				Click(
+					key_labelName = "REST Schema",
+					locator1 = "DataSet#SORT_ICON");
+			}
+		}
+
+		task ("Then confirm that the list is in descending order") {
+			AssertElementPresent(
+				key_labelName = "Catalog",
+				key_rowPosition = 3,
+				locator1 = "DataSet#VIEW_LABEL_POSITION");
+		}
+	}
+
 	@description = "LPS-172398. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
 	@priority = 3
 	test DeleteAndViewAreAvailable {

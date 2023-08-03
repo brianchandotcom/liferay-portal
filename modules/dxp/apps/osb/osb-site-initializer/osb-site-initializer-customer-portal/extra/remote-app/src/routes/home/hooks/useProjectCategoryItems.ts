@@ -45,6 +45,10 @@ const getFLSOrganizationsAccounts = (client: ApolloClient<any>) => async ({
 }: {
 	organizationIds: number[];
 }) => {
+	if (!organizationIds.length) {
+		return [];
+	}
+
 	const response = await client.query({
 		query: getOrganizations,
 		variables: {
@@ -72,12 +76,18 @@ const useProjectCategoryItems = () => {
 		data: myUserAccount = {accountBriefs: [], organizationBriefs: []},
 	} = useSWR({key: '/projects'}, getMyUserAccount);
 
+	const myFLSOrganizationBriefIds = useMemo(
+		() =>
+			myUserAccount?.organizationBriefs
+				?.filter(({name}) => name.includes('FLS'))
+				.map(({id}) => id),
+		[myUserAccount?.organizationBriefs]
+	);
+
 	const {data: organizations = []} = useSWR(
 		{
 			key: '/organizations',
-			organizationIds: myUserAccount?.organizationBriefs
-				?.filter(({name}) => name.includes('FLS'))
-				.map(({id}) => id),
+			organizationIds: myFLSOrganizationBriefIds,
 		},
 		myUserAccount ? getFLSOrganizationsAccounts(client) : null
 	);

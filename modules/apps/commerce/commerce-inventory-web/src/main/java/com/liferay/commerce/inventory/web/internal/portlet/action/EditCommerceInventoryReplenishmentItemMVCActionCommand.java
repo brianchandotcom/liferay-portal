@@ -9,7 +9,6 @@ import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,13 +90,16 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
 		String sku = ParamUtil.getString(actionRequest, "sku");
+		String unitOfMeasureKey = ParamUtil.getString(
+			actionRequest, "unitOfMeasureKey");
 
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
 				null, commerceInventoryWarehouseId, calendar.getTime(),
-				BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
+				quantity, sku, unitOfMeasureKey);
 	}
 
 	private void _deleteCommerceInventoryReplenishmentItem(
@@ -124,7 +126,8 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				getCommerceInventoryReplenishmentItem(
 					commerceInventoryReplenishmentItemId);
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
 
 		int day = ParamUtil.getInteger(actionRequest, "dateDay");
 		int month = ParamUtil.getInteger(actionRequest, "dateMonth");
@@ -140,7 +143,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			updateCommerceInventoryReplenishmentItem(
 				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
 				commerceInventoryReplenishmentItemId, calendar.getTime(),
-				BigDecimal.valueOf(quantity), mvccVersion);
+				quantity, mvccVersion);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

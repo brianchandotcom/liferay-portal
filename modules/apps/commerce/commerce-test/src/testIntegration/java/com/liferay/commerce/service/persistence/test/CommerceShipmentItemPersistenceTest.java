@@ -33,6 +33,8 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -147,7 +149,8 @@ public class CommerceShipmentItemPersistenceTest {
 		newCommerceShipmentItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		newCommerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
+		newCommerceShipmentItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceShipmentItem.setUnitOfMeasureKey(
 			RandomTestUtil.randomString());
@@ -705,7 +708,8 @@ public class CommerceShipmentItemPersistenceTest {
 		commerceShipmentItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		commerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
+		commerceShipmentItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceShipmentItem.setUnitOfMeasureKey(RandomTestUtil.randomString());
 

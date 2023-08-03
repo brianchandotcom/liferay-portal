@@ -225,7 +225,7 @@
 		<field name="requestedDeliveryDate" type="Date" />
 		<field name="shipSeparately" type="boolean" />
 		<field name="shippable" type="boolean" />
-		<field name="shippedQuantity" type="int" />
+		<field name="shippedQuantity" type="BigDecimal" />
 		<field name="shippingExtraPrice" type="double" />
 		<field name="sku" type="String" />
 		<field name="subscription" type="boolean" />
@@ -349,7 +349,7 @@
 		<field name="commerceShipmentId" type="long" />
 		<field name="commerceOrderItemId" type="long" />
 		<field name="commerceInventoryWarehouseId" type="long" />
-		<field name="quantity" type="int" />
+		<field name="quantity" type="BigDecimal" />
 		<field name="unitOfMeasureKey" type="String" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShippingMethod">

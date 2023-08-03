@@ -80,16 +80,16 @@ public interface CommerceOrderItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			BigDecimal quantity, long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			BigDecimal quantity, long replacedCPInstanceId,
+			BigDecimal shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
-			BigDecimal quantity, long replacedCPInstanceId, int shippedQuantity,
-			String unitOfMeasureKey, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			BigDecimal quantity, long replacedCPInstanceId,
+			BigDecimal shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId);
@@ -283,7 +283,7 @@ public interface CommerceOrderItemLocalService
 		long parentCommerceOrderItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceInventoryWarehouseItemQuantity(
+	public BigDecimal getCommerceInventoryWarehouseItemQuantity(
 			long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws PortalException;
 
@@ -453,13 +453,13 @@ public interface CommerceOrderItemLocalService
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal quantity,
-			int shippedQuantity,
+			BigDecimal shippedQuantity,
 			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem incrementShippedQuantity(
-			long commerceOrderItemId, int shippedQuantity)
+			long commerceOrderItemId, BigDecimal shippedQuantity)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

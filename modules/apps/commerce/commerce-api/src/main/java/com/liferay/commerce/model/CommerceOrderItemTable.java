@@ -212,9 +212,9 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, Boolean> shippable =
 		createColumn(
 			"shippable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, Integer> shippedQuantity =
+	public final Column<CommerceOrderItemTable, BigDecimal> shippedQuantity =
 		createColumn(
-			"shippedQuantity", Integer.class, Types.INTEGER,
+			"shippedQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Double> shippingExtraPrice =
 		createColumn(

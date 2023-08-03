@@ -111,7 +111,7 @@ public class CommerceOrderItemModelImpl
 		{"replacedCPInstanceId", Types.BIGINT}, {"replacedSku", Types.VARCHAR},
 		{"requestedDeliveryDate", Types.TIMESTAMP},
 		{"shipSeparately", Types.BOOLEAN}, {"shippable", Types.BOOLEAN},
-		{"shippedQuantity", Types.INTEGER},
+		{"shippedQuantity", Types.DECIMAL},
 		{"shippingExtraPrice", Types.DOUBLE}, {"sku", Types.VARCHAR},
 		{"subscription", Types.BOOLEAN}, {"subscriptionLength", Types.INTEGER},
 		{"subscriptionType", Types.VARCHAR},
@@ -181,7 +181,7 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("requestedDeliveryDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("shipSeparately", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("shippable", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("shippingExtraPrice", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subscription", Types.BOOLEAN);
@@ -197,7 +197,7 @@ public class CommerceOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CIBookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
+		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CIBookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity BIGDECIMAL null,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -727,7 +727,7 @@ public class CommerceOrderItemModelImpl
 					CommerceOrderItem::setShippable);
 			attributeSetterBiConsumers.put(
 				"shippedQuantity",
-				(BiConsumer<CommerceOrderItem, Integer>)
+				(BiConsumer<CommerceOrderItem, BigDecimal>)
 					CommerceOrderItem::setShippedQuantity);
 			attributeSetterBiConsumers.put(
 				"shippingExtraPrice",
@@ -1938,12 +1938,12 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public int getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return _shippedQuantity;
 	}
 
 	@Override
-	public void setShippedQuantity(int shippedQuantity) {
+	public void setShippedQuantity(BigDecimal shippedQuantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -2500,7 +2500,7 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemImpl.setShippable(
 			this.<Boolean>getColumnOriginalValue("shippable"));
 		commerceOrderItemImpl.setShippedQuantity(
-			this.<Integer>getColumnOriginalValue("shippedQuantity"));
+			this.<BigDecimal>getColumnOriginalValue("shippedQuantity"));
 		commerceOrderItemImpl.setShippingExtraPrice(
 			this.<Double>getColumnOriginalValue("shippingExtraPrice"));
 		commerceOrderItemImpl.setSku(
@@ -3005,7 +3005,7 @@ public class CommerceOrderItemModelImpl
 	private Date _requestedDeliveryDate;
 	private boolean _shipSeparately;
 	private boolean _shippable;
-	private int _shippedQuantity;
+	private BigDecimal _shippedQuantity;
 	private double _shippingExtraPrice;
 	private String _sku;
 	private boolean _subscription;

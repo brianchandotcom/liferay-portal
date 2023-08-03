@@ -45,8 +45,9 @@ public class CommerceShipmentItemServiceHttp {
 			addCommerceShipmentItem(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long commerceShipmentId, long commerceOrderItemId,
-				long commerceInventoryWarehouseId, int quantity,
-				String unitOfMeasureKey, boolean validateInventory,
+				long commerceInventoryWarehouseId,
+				java.math.BigDecimal quantity, String unitOfMeasureKey,
+				boolean validateInventory,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -93,8 +94,9 @@ public class CommerceShipmentItemServiceHttp {
 			addOrUpdateCommerceShipmentItem(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long commerceShipmentId, long commerceOrderItemId,
-				long commerceInventoryWarehouseId, int quantity,
-				String unitOfMeasureKey, boolean validateInventory,
+				long commerceInventoryWarehouseId,
+				java.math.BigDecimal quantity, String unitOfMeasureKey,
+				boolean validateInventory,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -642,8 +644,8 @@ public class CommerceShipmentItemServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipmentItem
 			updateCommerceShipmentItem(
 				HttpPrincipal httpPrincipal, long commerceShipmentItemId,
-				long commerceInventoryWarehouseId, int quantity,
-				boolean validateInventory)
+				long commerceInventoryWarehouseId,
+				java.math.BigDecimal quantity, boolean validateInventory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -732,14 +734,14 @@ public class CommerceShipmentItemServiceHttp {
 
 	private static final Class<?>[] _addCommerceShipmentItemParameterTypes0 =
 		new Class[] {
-			String.class, long.class, long.class, long.class, int.class,
-			String.class, boolean.class,
+			String.class, long.class, long.class, long.class,
+			java.math.BigDecimal.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommerceShipmentItemParameterTypes1 = new Class[] {
-			String.class, long.class, long.class, long.class, int.class,
-			String.class, boolean.class,
+			String.class, long.class, long.class, long.class,
+			java.math.BigDecimal.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShipmentItemParameterTypes2 =
@@ -780,7 +782,7 @@ public class CommerceShipmentItemServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCommerceShipmentItemParameterTypes14 = new Class[] {
-			long.class, long.class, int.class, boolean.class
+			long.class, long.class, java.math.BigDecimal.class, boolean.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes15 = new Class[] {

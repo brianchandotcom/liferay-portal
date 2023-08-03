@@ -32,7 +32,7 @@ public class CommerceOrderItemServiceUtil {
 	public static CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json,
 			java.math.BigDecimal quantity, long replacedCPInstanceId,
-			int shippedQuantity, String unitOfMeasureKey,
+			java.math.BigDecimal shippedQuantity, String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -45,7 +45,7 @@ public class CommerceOrderItemServiceUtil {
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json,
 			java.math.BigDecimal quantity, long replacedCPInstanceId,
-			int shippedQuantity, String unitOfMeasureKey,
+			java.math.BigDecimal shippedQuantity, String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -123,8 +123,9 @@ public class CommerceOrderItemServiceUtil {
 			parentCommerceOrderItemId);
 	}
 
-	public static int getCommerceInventoryWarehouseItemQuantity(
-			long commerceOrderItemId, long commerceInventoryWarehouseId)
+	public static java.math.BigDecimal
+			getCommerceInventoryWarehouseItemQuantity(
+				long commerceOrderItemId, long commerceInventoryWarehouseId)
 		throws PortalException {
 
 		return getService().getCommerceInventoryWarehouseItemQuantity(
@@ -204,7 +205,7 @@ public class CommerceOrderItemServiceUtil {
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, java.math.BigDecimal quantity,
-			int shippedQuantity,
+			java.math.BigDecimal shippedQuantity,
 			java.math.BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

@@ -1020,14 +1020,14 @@ public interface CommerceOrderItemModel
 	 *
 	 * @return the shipped quantity of this commerce order item
 	 */
-	public int getShippedQuantity();
+	public BigDecimal getShippedQuantity();
 
 	/**
 	 * Sets the shipped quantity of this commerce order item.
 	 *
 	 * @param shippedQuantity the shipped quantity of this commerce order item
 	 */
-	public void setShippedQuantity(int shippedQuantity);
+	public void setShippedQuantity(BigDecimal shippedQuantity);
 
 	/**
 	 * Returns the shipping extra price of this commerce order item.

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -76,8 +78,8 @@ public interface CommerceShipmentItemLocalService
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, String unitOfMeasureKey, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -89,8 +91,8 @@ public interface CommerceShipmentItemLocalService
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, String unitOfMeasureKey, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -413,7 +415,7 @@ public interface CommerceShipmentItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipmentItem updateCommerceShipmentItem(
 			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory)
+			BigDecimal quantity, boolean validateInventory)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

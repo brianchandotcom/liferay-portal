@@ -105,7 +105,7 @@ const SidebarPanelInfoView = ({
 							))}
 						</div>
 
-						<div className="sidebar-section">
+						<div className="mb-1 sidebar-section">
 							{fetchSharingCollaboratorsURL ? (
 								<ManageCollaborators
 									fetchSharingCollaboratorsURL={
@@ -144,11 +144,15 @@ const SidebarPanelInfoView = ({
 				</ClayLayout.ContentRow>
 			</Sidebar.Header>
 
-			<div className="mb-0 sidebar-section">
+			<div className="c-mb-4 sidebar-section">
 				{showTabs && activeTabKeyValue !== null && (
-					<ClayTabs modern>
+					<ClayTabs
+						className="flex-nowrap justify-content-center"
+						modern
+					>
 						<ClayTabs.Item
 							active={activeTabKeyValue === 0}
+							className="flex-shrink-0"
 							innerProps={{
 								'aria-controls': 'details',
 							}}
@@ -159,6 +163,7 @@ const SidebarPanelInfoView = ({
 
 						<ClayTabs.Item
 							active={activeTabKeyValue === 1}
+							className="flex-shrink-0"
 							innerProps={{
 								'aria-controls': 'versions',
 							}}
@@ -169,6 +174,7 @@ const SidebarPanelInfoView = ({
 
 						<ClayTabs.Item
 							active={activeTabKeyValue === 2}
+							className="flex-shrink-0"
 							innerProps={{
 								'aria-controls': 'categorization',
 							}}

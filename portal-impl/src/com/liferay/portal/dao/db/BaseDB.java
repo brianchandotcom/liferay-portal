@@ -877,9 +877,9 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String[] buildColumnTypeTokens(String line) {
-		String parsedLine = StringUtil.removeLast(line, ";");
-
 		String nullable = StringPool.BLANK;
+
+		String parsedLine = StringUtil.removeLast(line, ";");
 
 		if (StringUtil.endsWith(parsedLine, " not null")) {
 			nullable = "not null";

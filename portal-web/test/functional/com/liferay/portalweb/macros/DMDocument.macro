@@ -1413,7 +1413,7 @@ definition {
 			key_rowEntry = ${mgDocumentTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		Click.waitForMenuToggleJSClick(
+		Click.waitForPersonalMenuJSClick(
 			key_rowEntry = ${mgDocumentTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 

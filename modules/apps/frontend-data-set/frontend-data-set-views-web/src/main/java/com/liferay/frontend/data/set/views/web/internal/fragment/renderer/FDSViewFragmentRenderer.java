@@ -295,7 +295,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return _interpolateURL(sb.toString(), httpServletRequest);
 	}
 
-	private JSONObject _getFDSSortJSONObject(ObjectEntry fdsSort) {
+	private JSONObject _getSortsJSONObject(ObjectEntry fdsSort) {
 		Map<String, Object> fdsSortProperties = fdsSort.getProperties();
 
 		return JSONUtil.put(
@@ -434,7 +434,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		try {
 			return JSONUtil.toJSONArray(
 				fdsSorts,
-				(ObjectEntry fdsSort) -> _getFDSSortJSONObject(fdsSort));
+				(ObjectEntry fdsSort) -> _getSortsJSONObject(fdsSort));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

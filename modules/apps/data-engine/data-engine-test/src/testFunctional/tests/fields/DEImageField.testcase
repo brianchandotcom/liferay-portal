@@ -517,6 +517,76 @@ definition {
 			index = 2);
 	}
 
+	@description = "LPS-190801 - Verify if the image selector defaults to the Global site image library"
+	@priority = 3
+	test ViewDefaultImageSelector {
+		task ("Given that a user uploads an image to documents and media on a Global site") {
+			ApplicationsMenu.gotoSite(site = "Global");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
+
+			DMDocument.addCP(
+				dmDocumentFile = "RayOne.png",
+				dmDocumentTitle = "RayOne");
+		}
+
+		task ("And Given a structure with an image selector required field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "content-structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+
+			Check.checkToggleSwitch(
+				checkboxName = "Required Field",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+		}
+
+		task ("And Given a new Web Content based on the structure created") {
+			Navigator.gotoNavTab(navTab = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "content-structure");
+
+			WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+		}
+
+		task ("When the user goes to select an uploaded image") {
+			SelectFrameTop();
+
+			ClickNoError(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the image selector defaults to the Global site image library") {
+			AssertElementPresent(
+				key_viewHomeFolder = "Global",
+				locator1 = "ObjectField#VIEW_HOME_FOLDER");
+
+			LexiconCard.clickCardTitle(card = "RayOne");
+		}
+
+		task ("And When the user goes to select an uploaded image again") {
+			SelectFrameTop();
+
+			ClickNoError(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the image picker still defaults to the site's global image library") {
+			AssertElementPresent(
+				key_viewHomeFolder = "Global",
+				locator1 = "ObjectField#VIEW_HOME_FOLDER");
+
+			LexiconCard.clickCardTitle(card = "RayOne");
+		}
+	}
+
 	@description = "Check if Image Field details can be seen."
 	@priority = 4
 	test ViewImageFieldDetails {

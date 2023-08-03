@@ -109,20 +109,28 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:input name="structure" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
 
-				<clay:button
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "selectDDMStructureButton" %>'
-					label="select"
-					onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>'
-				/>
+				<div class="c-gap-1 d-flex">
+					<clay:button
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"description", JournalFeedConstants.WEB_CONTENT_DESCRIPTION
+							).put(
+								"selectDDMStructurePropsTransformerURL", journalDisplayContext.getSelectDDMStructureURL()
+							).build()
+						%>'
+						displayType="secondary"
+						label="select"
+						propsTransformer="js/SelectDDMStructureButtonPropsTransformer"
+					/>
 
-				<clay:button
-					disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>"
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "removeDDMStructureButton" %>'
-					label="remove"
-					onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>'
-				/>
+					<clay:button
+						disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>"
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "removeDDMStructureButton" %>'
+						label="remove"
+						onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>'
+					/>
+				</div>
 			</div>
 
 			<c:choose>
@@ -283,47 +291,6 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 </liferay-frontend:edit-form>
 
 <aui:script>
-	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItem) {
-				const itemValue = JSON.parse(selectedItem.value);
-
-				if (
-					document.<portlet:namespace />fm
-						.<portlet:namespace />ddmStructureId.value !=
-					itemValue.ddmstructureid
-				) {
-					Liferay.Util.openConfirmModal({
-						message:
-							'<%= UnicodeLanguageUtil.get(request, "selecting-a-new-structure-changes-the-available-templates-and-available-feed-item-content") %>',
-						onConfirm: (isConfirmed) => {
-							if (isConfirmed) {
-								document.<portlet:namespace />fm.<portlet:namespace />ddmStructureId.value =
-									itemValue.ddmstructureid;
-								document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
-									'';
-								document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
-									'';
-								document.<portlet:namespace />fm.<portlet:namespace />contentField.value =
-									'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
-
-								submitForm(
-									document.<portlet:namespace />fm,
-									null,
-									false,
-									false
-								);
-							}
-						},
-					});
-				}
-			},
-			selectEventName: '<portlet:namespace />selectDDMStructure',
-			title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-			url: '<%= journalDisplayContext.getSelectDDMStructureURL() %>>',
-		});
-	}
-
 	function <portlet:namespace />removeAssetCategory() {
 		document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
 			'';

@@ -1661,7 +1661,7 @@
 		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />
-			<description name="Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search(` method call." />
+			<description name="Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call." />
 		</check>
 		<check name="UpgradeJavaFDSActionProviderCheck">
 			<category name="Upgrade" />

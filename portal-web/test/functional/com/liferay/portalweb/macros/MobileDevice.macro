@@ -61,6 +61,32 @@ definition {
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
 
+	macro previewBy {
+		if (isSet(previewBy)) {
+			Click(
+				key_fieldLabel = "Preview By",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			DropdownMenuItem.click(menuItem = ${previewBy});
+		}
+
+		if (isSet(experience)) {
+			Click(
+				key_fieldLabel = "Experience",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			DropdownMenuItem.click(menuItem = ${experience});
+		}
+
+		if (isSet(segment)) {
+			Click(
+				key_fieldLabel = "Segment",
+				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
+
+			DropdownMenuItem.click(menuItem = ${segment});
+		}
+	}
+
 	macro previewPG {
 		Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
 

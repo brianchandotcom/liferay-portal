@@ -159,15 +159,15 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 					attributeValue);
 
 				if (languageUtilMatcher.find()) {
-					String secondParameter = languageUtilMatcher.group(1);
+					String languageKey = languageUtilMatcher.group(1);
 
-					if (secondParameter.matches("\"[^\"]+\"")) {
+					if (languageKey.matches("\"[^\"]+\"")) {
 						tag.putAttribute(
-							attributeName, StringUtil.unquote(secondParameter));
+							attributeName, StringUtil.unquote(languageKey));
 					}
 					else {
 						tag.putAttribute(
-							attributeName, "<%= " + secondParameter + " %>");
+							attributeName, "<%= " + languageKey + " %>");
 					}
 				}
 			}

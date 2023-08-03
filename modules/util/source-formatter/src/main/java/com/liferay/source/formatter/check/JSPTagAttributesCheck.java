@@ -155,10 +155,21 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 				tagFullName.equals("clay:alert") &&
 				attributeName.equals("message")) {
 
-				tag.putAttribute(
-					attributeName,
-					attributeValue.replaceFirst(
-						"<%= LanguageUtil\\.get\\(\\w+, \"(.+)\"\\) %>", "$1"));
+				Matcher languageUtilMatcher = _languageUtilPattern.matcher(
+					attributeValue);
+
+				if (languageUtilMatcher.find()) {
+					String secondParameter = languageUtilMatcher.group(1);
+
+					if (secondParameter.matches("\"[^\"]+\"")) {
+						tag.putAttribute(
+							attributeName, StringUtil.unquote(secondParameter));
+					}
+					else {
+						tag.putAttribute(
+							attributeName, "<%= " + secondParameter + " %>");
+					}
+				}
 			}
 
 			if (tagFullName.equals("liferay-ui:message") &&
@@ -663,6 +674,8 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 	private static final Pattern _javaSourceInsideTagPattern = Pattern.compile(
 		"<%.*?%>");
+	private static final Pattern _languageUtilPattern = Pattern.compile(
+		"<%= LanguageUtil\\.get\\(\\w+, (.+)\\) %>");
 	private static final Pattern _messageArgumentArrayPattern = Pattern.compile(
 		"^(<%= )new \\w+\\[\\] \\{([^<>]+)\\}( %>)$");
 	private static final Pattern _styleAttributePattern = Pattern.compile(

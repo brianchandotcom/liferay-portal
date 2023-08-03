@@ -266,7 +266,7 @@ export const Overview: React.FC<IOverviewProps> = ({
 
 										<p className='text-secondary'>
 											{Liferay.Language.get(
-												'suppressed-data-subjects-will-be-excluded-in-further-identity-resolution-activity.-deleted-data-subjects-will-automatically-be-suppressed-by-their-user-id-and-their-identity-will-not-be-resolveable'
+												'suppressed-data-subjects-will-be-excluded-in-further-identity-resolution-activity.-deleted-data-subjects-will-automatically-be-suppressed-by-their-user-id-and-their-identity-will-not-be-resolvable'
 											)}
 										</p>
 									</div>

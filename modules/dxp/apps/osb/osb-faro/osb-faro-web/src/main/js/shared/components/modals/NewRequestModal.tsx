@@ -8,7 +8,6 @@ import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import React, {useRef, useState} from 'react';
 import SearchInputList from 'shared/components/SearchInputList';
-import URLConstants from 'shared/util/url-constants';
 import {Formik, FormikValues} from 'formik';
 import {paginationDefaults} from 'shared/util/pagination';
 import {sub} from 'shared/util/lang';
@@ -184,24 +183,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 					<Form.Form onSubmit={handleSubmit}>
 						<Modal.Body>
 							<p className='text-secondary'>
-								{sub(
-									Liferay.Language.get(
-										'new-requests-will-be-added-to-the-queue-and-you-will-be-notified-once-the-job-has-completed-running.-you-can-also-x'
-									),
-									[
-										<a
-											href={
-												URLConstants.APIOverviewDocumentationLink
-											}
-											key='API_OVERVIEW_DOCUMENTATION'
-											target='_blank'
-										>
-											{Liferay.Language.get(
-												'create-requests-via-api-fragment'
-											)}
-										</a>
-									],
-									false
+								{Liferay.Language.get(
+									'new-requests-will-be-added-to-the-queue-and-you-will-be-notified-once-the-job-has-completed-running'
 								)}
 							</p>
 
@@ -243,7 +226,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 										label={getCheckboxLabel(
 											Liferay.Language.get('suppress'),
 											Liferay.Language.get(
-												'suppress-identity-resolution-of-users-based-on-their-user-id'
+												'suppress-identity-resolution-of-users-based-on-their-email'
 											)
 										)}
 										name='suppressRequest'

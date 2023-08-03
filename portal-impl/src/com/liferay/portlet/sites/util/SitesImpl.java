@@ -1564,14 +1564,6 @@ public class SitesImpl implements Sites {
 			layoutSetPrototypeUuid);
 
 		LayoutLocalServiceUtil.updatePriorities(groupId, privateLayout);
-
-		// Force propagation from site template to site. See LPS-48206.
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-		mergeLayoutSetPrototypeLayouts(
-			GroupLocalServiceUtil.getGroup(groupId),
-			LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout));
 	}
 
 	private String _acquireLock(

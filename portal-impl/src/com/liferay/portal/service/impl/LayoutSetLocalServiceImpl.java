@@ -6,6 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -279,29 +281,42 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
 
-			layoutSetPersistence.update(layoutSet);
+			layoutSet = layoutSetPersistence.update(layoutSet);
+		}
+		else {
+			if (Validator.isNull(layoutSetPrototypeUuid)) {
+				layoutSetPrototypeUuid =
+					layoutSetBranch.getLayoutSetPrototypeUuid();
+			}
 
-			return;
+			if (Validator.isNull(layoutSetPrototypeUuid) &&
+				layoutSetPrototypeLinkEnabled) {
+
+				throw new IllegalStateException(
+					"Cannot set layoutSetPrototypeLinkEnabled to true when " +
+						"layoutSetPrototypeUuid is null");
+			}
+
+			layoutSetBranch.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+			layoutSetBranch.setLayoutSetPrototypeLinkEnabled(
+				layoutSetPrototypeLinkEnabled);
+
+			_layoutSetBranchPersistence.update(layoutSetBranch);
 		}
 
-		if (Validator.isNull(layoutSetPrototypeUuid)) {
-			layoutSetPrototypeUuid =
-				layoutSetBranch.getLayoutSetPrototypeUuid();
+		try {
+			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
+
+			SitesUtil.mergeLayoutSetPrototypeLayouts(
+				_groupPersistence.findByPrimaryKey(groupId), layoutSet);
 		}
-
-		if (Validator.isNull(layoutSetPrototypeUuid) &&
-			layoutSetPrototypeLinkEnabled) {
-
-			throw new IllegalStateException(
-				"Cannot set layoutSetPrototypeLinkEnabled to true when " +
-					"layoutSetPrototypeUuid is null");
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Could not force propagation from site template to site",
+					exception);
+			}
 		}
-
-		layoutSetBranch.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
-		layoutSetBranch.setLayoutSetPrototypeLinkEnabled(
-			layoutSetPrototypeLinkEnabled);
-
-		_layoutSetBranchPersistence.update(layoutSetBranch);
 	}
 
 	@Override

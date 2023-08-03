@@ -214,31 +214,22 @@ const AccessibilityMenu = (props: Props) => {
 
 						<ul className="list-unstyled mb-0">
 							{(Object.keys(settings) as Array<KEYS>).map(
-								(key, index, array) => {
-									return (
-										<AccessibilitySetting
-											className={
-												index + 1 < array.length
-													? 'mb-3'
-													: ''
-											}
-											description={
-												settings[key].description
-											}
-											disabled={isSettingsDisabled}
-											index={index}
-											key={settings[key].key}
-											label={settings[key].label}
-											onChange={(value) =>
-												handleAccessiblitySettingChange(
-													value,
-													settings[key]
-												)
-											}
-											value={settings[key].value}
-										/>
-									);
-								}
+								(key, index) => (
+									<AccessibilitySetting
+										description={settings[key].description}
+										disabled={isSettingsDisabled}
+										index={index}
+										key={settings[key].key}
+										label={settings[key].label}
+										onChange={(value) =>
+											handleAccessiblitySettingChange(
+												value,
+												settings[key]
+											)
+										}
+										value={settings[key].value}
+									/>
+								)
 							)}
 						</ul>
 					</ClayModal.Body>

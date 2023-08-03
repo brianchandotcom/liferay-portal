@@ -4,13 +4,12 @@
  */
 
 import {Text} from '@clayui/core';
-import {ClayToggle} from '@clayui/form';
+import ClayForm, {ClayToggle} from '@clayui/form';
 import React from 'react';
 
 const KEY_EVENT = 'Enter';
 
 type Props = {
-	className: string;
 	description: string;
 	disabled: boolean;
 	index: number;
@@ -20,7 +19,6 @@ type Props = {
 };
 
 const AccessibilitySetting = ({
-	className,
 	description,
 	disabled,
 	index,
@@ -28,25 +26,31 @@ const AccessibilitySetting = ({
 	onChange,
 	value,
 }: Props) => (
-	<li className={className}>
-		<ClayToggle
-			aria-describedby={`accessibility-help-${index}`}
-			disabled={disabled}
-			label={label}
-			onKeyDown={(event) => {
-				if (!disabled && event.key === KEY_EVENT) {
-					onChange(!value);
-				}
-			}}
-			onToggle={onChange}
-			toggled={value}
-		/>
+	<li>
+		<ClayForm.Group>
+			<ClayToggle
+				aria-describedby={`accessibility-help-${index}`}
+				disabled={disabled}
+				label={label}
+				onKeyDown={(event) => {
+					if (!disabled && event.key === KEY_EVENT) {
+						onChange(!value);
+					}
+				}}
+				onToggle={onChange}
+				toggled={value}
+			/>
 
-		<span className="toggle-switch-text">
-			<Text color="secondary" id={`accessibility-help-${index}`} size={3}>
-				{description}
-			</Text>
-		</span>
+			<ClayForm.FeedbackGroup>
+				<Text
+					color="secondary"
+					id={`accessibility-help-${index}`}
+					size={3}
+				>
+					{description}
+				</Text>
+			</ClayForm.FeedbackGroup>
+		</ClayForm.Group>
 	</li>
 );
 

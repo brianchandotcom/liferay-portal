@@ -292,10 +292,6 @@ public interface Portal {
 
 	public long[] getAncestorSiteGroupIds(long groupId);
 
-	public List<Group> getBrowsableScopeGroups(
-			long userId, long companyId, long groupId, String portletId)
-		throws PortalException;
-
 	/**
 	 * Returns the canonical URL of the page, to distinguish it among its
 	 * translations.

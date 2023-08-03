@@ -349,14 +349,6 @@ public class PortalUtil {
 		return _portal.getAncestorSiteGroupIds(groupId);
 	}
 
-	public static List<Group> getBrowsableScopeGroups(
-			long userId, long companyId, long groupId, String portletId)
-		throws PortalException {
-
-		return _portal.getBrowsableScopeGroups(
-			userId, companyId, groupId, portletId);
-	}
-
 	/**
 	 * Returns the canonical URL for the page. The canonical URL is often used
 	 * to distinguish a preferred page from its translations.

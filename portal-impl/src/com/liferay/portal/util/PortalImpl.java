@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -127,7 +126,6 @@ import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
@@ -168,9 +166,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListMergeable;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -1408,62 +1404,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return groupIds;
-	}
-
-	@Override
-	public List<Group> getBrowsableScopeGroups(
-			long userId, long companyId, long groupId, String portletId)
-		throws PortalException {
-
-		List<Group> groups = new ArrayList<>();
-
-		groups.addAll(
-			0,
-			GroupLocalServiceUtil.search(
-				companyId, null, null,
-				LinkedHashMapBuilder.<String, Object>put(
-					"usersGroups", Long.valueOf(userId)
-				).build(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-
-		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getUserOrganizations(userId);
-
-		for (Organization organization : organizations) {
-			groups.add(0, organization.getGroup());
-		}
-
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-			PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED)) {
-
-			groups.add(
-				0, GroupLocalServiceUtil.getUserGroup(companyId, userId));
-		}
-
-		groups.addAll(0, getCurrentAndAncestorSiteGroups(groupId));
-
-		List<Group> filteredGroups = new ArrayList<>();
-
-		for (Group group : ListUtil.unique(groups)) {
-			if (group.hasStagingGroup()) {
-				Group stagingGroup = group.getStagingGroup();
-
-				if ((stagingGroup.getGroupId() == groupId) &&
-					group.isStagedPortlet(portletId) &&
-					!group.isStagedRemotely() &&
-					group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
-
-					filteredGroups.add(stagingGroup);
-				}
-			}
-			else {
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
 	}
 
 	@Override

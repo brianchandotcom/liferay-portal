@@ -35,10 +35,10 @@ public class UpgradeJavaFacetedSearcherCheck extends BaseUpgradeCheck {
 
 			String javaMethodContent = javaMethod.getContent();
 
+			String newJavaMethodContent = javaMethodContent;
+
 			Matcher matcher = _facetedSearcherGetInstancePattern.matcher(
 				javaMethodContent);
-
-			String newJavaMethodContent = javaMethodContent;
 
 			while (matcher.find()) {
 				String methodCall = matcher.group(0);

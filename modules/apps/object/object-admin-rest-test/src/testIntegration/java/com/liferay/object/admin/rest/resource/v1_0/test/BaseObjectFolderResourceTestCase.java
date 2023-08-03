@@ -797,6 +797,16 @@ public abstract class BaseObjectFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectFolderItems", additionalAssertFieldName)) {
+
+				if (objectFolder.getObjectFolderItems() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -986,6 +996,19 @@ public abstract class BaseObjectFolderResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectFolder1.getName(), objectFolder2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectFolderItems", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectFolder1.getObjectFolderItems(),
+						objectFolder2.getObjectFolderItems())) {
 
 					return false;
 				}
@@ -1267,6 +1290,11 @@ public abstract class BaseObjectFolderResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("objectFolderItems")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

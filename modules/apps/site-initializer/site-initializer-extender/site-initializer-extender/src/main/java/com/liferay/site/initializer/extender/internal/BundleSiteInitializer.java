@@ -175,7 +175,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -183,6 +182,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.extender.CommerceSiteInitializer;
+import com.liferay.site.initializer.extender.OSBSiteInitializer;
 import com.liferay.site.initializer.extender.SiteInitializerUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -432,6 +432,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Commerce site initializer " + _commerceSiteInitializer);
+			_log.debug("OSB site initializer " + _osbSiteInitializer);
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -612,6 +613,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					segmentsEntriesIdsStringUtilReplaceValues, serviceContext,
 					taxonomyCategoryIdsAndTaxonomyVocabularyIdsStringUtilReplaceValues));
+			_invoke(() -> _addSXPBlueprint(serviceContext));
 			_invoke(() -> _addUserRoles(serviceContext));
 
 			_invoke(
@@ -664,6 +666,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		CommerceSiteInitializer commerceSiteInitializer) {
 
 		_commerceSiteInitializer = commerceSiteInitializer;
+	}
+
+	protected void setOSBSiteInitializer(
+		OSBSiteInitializer osbSiteInitializer) {
+
+		_osbSiteInitializer = osbSiteInitializer;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -4229,6 +4237,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 			zipWriter.getFile(), true);
 	}
 
+	private void _addSXPBlueprint(ServiceContext serviceContext)
+		throws Exception {
+
+		if (_osbSiteInitializer == null) {
+			return;
+		}
+
+		_osbSiteInitializer.addSXPBlueprint(serviceContext, _servletContext);
+	}
+
 	private Map<String, String> _addTaxonomyCategories(
 			String parentResourcePath, String parentTaxonomyCategoryId,
 			ServiceContext serviceContext,
@@ -5170,6 +5188,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory;
 	private final OrganizationLocalService _organizationLocalService;
 	private final OrganizationResource.Factory _organizationResourceFactory;
+	private OSBSiteInitializer _osbSiteInitializer;
 	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
 	private final Map<String, String> _releaseInfoStringUtilReplaceValues;

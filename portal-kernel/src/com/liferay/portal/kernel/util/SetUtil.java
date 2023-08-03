@@ -36,11 +36,11 @@ public class SetUtil {
 		Set<T> set1 = new HashSet<>(collection1);
 		Set<T> set2 = new HashSet<>(collection2);
 
-		Set<T> symmetricDifference = symmetricDifference(set1, set2);
+		Set<T> symmetricDifferenceSet = symmetricDifference(set1, set2);
 
-		symmetricDifference.removeAll(set2);
+		symmetricDifferenceSet.removeAll(set2);
 
-		return symmetricDifference;
+		return symmetricDifferenceSet;
 	}
 
 	public static Set<Boolean> fromArray(boolean[] array) {
@@ -302,7 +302,7 @@ public class SetUtil {
 		Set<T> set1 = _toSet(collection1);
 		Set<T> set2 = _toSet(collection2);
 
-		Set<T> intersection = intersect(set1, set2);
+		Set<T> intersectionSet = intersect(set1, set2);
 
 		if (set1.size() > set2.size()) {
 			set1.addAll(set2);
@@ -313,7 +313,7 @@ public class SetUtil {
 			set1 = set2;
 		}
 
-		set1.removeAll(intersection);
+		set1.removeAll(intersectionSet);
 
 		return set1;
 	}

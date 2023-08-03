@@ -700,7 +700,7 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (objectRelationships != null) {
-			Set<String> objectRelationshipsNamesToBeDeleted =
+			Set<String> deleteObjectRelationshipsNames =
 				SetUtil.asymmetricDifference(
 					transform(
 						_objectRelationshipLocalService.getObjectRelationships(
@@ -709,17 +709,18 @@ public class ObjectDefinitionResourceImpl
 					transformToList(
 						objectRelationships, ObjectRelationship::getName));
 
-			for (String objectRelationshipNameToBeDeleted :
-					objectRelationshipsNamesToBeDeleted) {
+			for (String deleteObjectRelationshipsName :
+					deleteObjectRelationshipsNames) {
 
-				com.liferay.object.model.ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.
-						fetchObjectRelationshipByObjectDefinitionId(
-							objectDefinitionId,
-							objectRelationshipNameToBeDeleted);
+				com.liferay.object.model.ObjectRelationship
+					serviceBuilderObjectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectDefinitionId(
+								objectDefinitionId,
+								deleteObjectRelationshipsName);
 
 				_objectRelationshipLocalService.deleteObjectRelationship(
-					objectRelationship.getObjectRelationshipId());
+					serviceBuilderObjectRelationship.getObjectRelationshipId());
 			}
 
 			ObjectRelationshipResource.Builder builder =
@@ -732,15 +733,16 @@ public class ObjectDefinitionResourceImpl
 
 			for (ObjectRelationship objectRelationship : objectRelationships) {
 				com.liferay.object.model.ObjectRelationship
-					originalObjectRelationship =
+					serviceBuilderObjectRelationship =
 						_objectRelationshipLocalService.
 							fetchObjectRelationshipByObjectDefinitionId(
 								objectDefinitionId,
 								objectRelationship.getName());
 
-				if (originalObjectRelationship != null) {
+				if (serviceBuilderObjectRelationship != null) {
 					objectRelationshipResource.putObjectRelationship(
-						originalObjectRelationship.getObjectRelationshipId(),
+						serviceBuilderObjectRelationship.
+							getObjectRelationshipId(),
 						objectRelationship);
 
 					continue;

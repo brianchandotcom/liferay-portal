@@ -10,7 +10,7 @@ import {
 	waitFor,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import React from 'react';
+import React, {ComponentProps} from 'react';
 
 import {DropdownColorPicker} from '../../../src/main/resources/META-INF/resources/js/components/color_picker/DropdownColorPicker';
 
@@ -46,18 +46,16 @@ const renderDropdownColorPicker = ({
 	active = false,
 	label = 'default',
 	onSetActive = () => {},
-	onTokenIsDisabled = () => {},
 	onValueChange = () => {},
 	showSelector = true,
 	value = '#fff',
-}) =>
+}: Partial<ComponentProps<typeof DropdownColorPicker>>) =>
 	render(
 		<DropdownColorPicker
 			active={active}
 			colors={COLORS}
 			label={label}
 			onSetActive={onSetActive}
-			onTokenIsDisabled={onTokenIsDisabled}
 			onValueChange={onValueChange}
 			showSelector={showSelector}
 			value={value}

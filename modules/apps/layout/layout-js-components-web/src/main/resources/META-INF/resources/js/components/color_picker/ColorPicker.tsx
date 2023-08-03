@@ -10,22 +10,25 @@ import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
-import PropTypes from 'prop-types';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {KeyboardEvent, useMemo, useRef, useState} from 'react';
 
 import {
 	useDeleteStyleError,
 	useSetStyleError,
 	useStyleErrors,
 } from '../../contexts/StyleErrorsContext';
-import {DropdownColorPicker} from './DropdownColorPicker';
+import {
+	Color,
+	ColorCategoryMap,
+	DropdownColorPicker,
+} from './DropdownColorPicker';
 import {parseColorValue} from './parseColorValue';
 
 import './ColorPicker.scss';
 
 export const DEFAULT_TOKEN_LABEL = Liferay.Language.get('inherited');
 
-function usePropsFirst(value, {forceProp = false}) {
+function usePropsFirst<T>(value: T, {forceProp = false}) {
 	const [nextValue, setNextValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
@@ -34,14 +37,53 @@ function usePropsFirst(value, {forceProp = false}) {
 		setPreviousValue(value);
 	}
 
-	return [nextValue, setNextValue];
+	return [nextValue, setNextValue] as const;
+}
+
+export interface Token {
+	editorType: string;
+	label: string;
+	name: string;
+	tokenCategoryLabel: string;
+	tokenSetLabel: string;
+	value: string;
+}
+
+export interface Field {
+	cssProperty?: string;
+	dataType?: string;
+	defaultValue?: string;
+	description?: string;
+	icon?: string;
+	inherited?: boolean;
+	label: string;
+	name: string;
+	type?: string;
+	typeOptions?: {
+		showLengthField?: boolean;
+	};
+	value?: string;
+}
+
+interface Props {
+	activeItemId?: string;
+	canDetachTokenValues?: boolean;
+	defaultTokenLabel?: string;
+	defaultTokenValue?: string;
+	editedTokenValues: Record<string, Token>;
+	field: Field;
+	onValueSelect: (fieldName: string, value: string) => void;
+	restoreButtonLabel?: string;
+	showLabel?: boolean;
+	tokenValues: Record<string, Token>;
+	value: string;
 }
 
 export default function ColorPicker({
-	activeItemId = null,
+	activeItemId = '',
 	canDetachTokenValues = true,
 	defaultTokenLabel = DEFAULT_TOKEN_LABEL,
-	defaultTokenValue = undefined,
+	defaultTokenValue = '',
 	editedTokenValues,
 	field,
 	onValueSelect,
@@ -49,8 +91,8 @@ export default function ColorPicker({
 	tokenValues,
 	restoreButtonLabel = Liferay.Language.get('clear-selection'),
 	value,
-}) {
-	const colors = {};
+}: Props) {
+	const colors: ColorCategoryMap = {};
 	const inputId = useId();
 	const labelId = useId();
 	const deleteStyleError = useDeleteStyleError();
@@ -68,17 +110,13 @@ export default function ColorPicker({
 	);
 	const colorButtonRef = useRef(null);
 	const [customColors, setCustomColors] = useState([value || '']);
-	const [error, setError] = useState({
-		label: styleErrors[activeItemId]?.[field.name]?.error,
-		value: styleErrors[activeItemId]?.[field.name]?.value,
-	});
-	const inputRef = useRef(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 	const isMounted = useIsMounted();
 
 	const debouncedOnValueSelect = useMemo(() => {
-		let timeoutId;
+		let timeoutId: NodeJS.Timeout;
 
-		return (fieldName, value) => {
+		return (fieldName: string, value: string) => {
 			clearTimeout(timeoutId);
 
 			timeoutId = setTimeout(() => {
@@ -89,10 +127,20 @@ export default function ColorPicker({
 		};
 	}, [isMounted, onValueSelect]);
 
+	const [error, setError] = useState<{
+		label: string | null;
+		value: string | null;
+	}>({
+		label: styleErrors[activeItemId]?.[field.name]?.error,
+		value: styleErrors[activeItemId]?.[field.name]?.value,
+	});
+
 	const [tokenLabel, setTokenLabel] = usePropsFirst(
 		value
 			? tokenValues[value]?.label
-			: field.inherited && defaultTokenLabel,
+			: field.inherited
+			? defaultTokenLabel
+			: null,
 		{forceProp: clearedValue}
 	);
 
@@ -114,7 +162,7 @@ export default function ColorPicker({
 			tokenSetLabel: tokenSet,
 			value,
 		}) => {
-			const color = {disabled, label, name, value};
+			const color: Color = {disabled, label, name, value};
 
 			if (Object.keys(colors).includes(category)) {
 				if (Object.keys(colors[category]).includes(tokenSet)) {
@@ -130,7 +178,11 @@ export default function ColorPicker({
 		}
 	);
 
-	const onSetValue = (value, label, name) => {
+	const onSetValue = (
+		value: string,
+		label: string | null = null,
+		name: string | null = null
+	) => {
 		setColor(value);
 		setTokenLabel(label);
 		onValueSelect(field.name, name ?? value);
@@ -143,7 +195,7 @@ export default function ColorPicker({
 		}
 	};
 
-	const onBlurInput = ({target}) => {
+	const onBlurInput = ({target}: {target: HTMLInputElement}) => {
 		if (value.toLowerCase() === target.value.toLowerCase()) {
 			return;
 		}
@@ -167,7 +219,7 @@ export default function ColorPicker({
 				value: target.value,
 			});
 
-			if (nextValue.error) {
+			if ('error' in nextValue) {
 				setError({label: nextValue.error, value: target.value});
 				setCustomColors(['FFFFFF']);
 				setStyleError(
@@ -182,23 +234,23 @@ export default function ColorPicker({
 				return;
 			}
 
-			if (nextValue.value) {
-				onValueSelect(field.name, nextValue.value);
+			if ('value' in nextValue) {
+				onValueSelect(field.name, nextValue.value || '');
 			}
 
-			if (nextValue.label) {
-				setTokenLabel(nextValue.label);
+			if ('label' in nextValue) {
+				setTokenLabel(nextValue.label || '');
 			}
 
-			if (nextValue.pickerColor) {
+			if ('pickerColor' in nextValue) {
 				setCustomColors([nextValue.pickerColor]);
 			}
 
-			setColor(nextValue.color || nextValue.value || value);
+			setColor(nextValue?.color || nextValue?.value || value);
 		}
 	};
 
-	const onChangeInput = ({target: {value}}) => {
+	const onChangeInput = ({target: {value}}: {target: HTMLInputElement}) => {
 		if (error.value) {
 			setError({label: null, value: null});
 			deleteStyleError(field.name, activeItemId);
@@ -207,9 +259,9 @@ export default function ColorPicker({
 		setColor(value);
 	};
 
-	const onKeyDownInput = (event) => {
+	const onKeyDownInput = (event: KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
-			onBlurInput(event);
+			onBlurInput({target: event.currentTarget});
 		}
 	};
 
@@ -281,7 +333,7 @@ export default function ColorPicker({
 
 						<ClayInput.GroupItem append>
 							<ClayInput
-								aria-invalid={error.label}
+								aria-invalid={Boolean(error.label)}
 								aria-label={field.label}
 								className="layout__color-picker__input"
 								id={inputId}
@@ -316,12 +368,16 @@ export default function ColorPicker({
 										),
 									]);
 
-									onSetValue(tokenValues[value].value, null);
+									onSetValue(tokenValues[value].value);
 								}
 								else {
-									setCustomColors([defaultTokenValue]);
+									setCustomColors(
+										defaultTokenValue
+											? [defaultTokenValue]
+											: []
+									);
 
-									onSetValue(defaultTokenValue, null);
+									onSetValue(defaultTokenValue);
 								}
 							}}
 							size="sm"
@@ -369,7 +425,7 @@ export default function ColorPicker({
 							setError({label: null, value: null});
 
 							onSetValue(
-								field.defaultValue ?? null,
+								field.defaultValue ?? '',
 								field.defaultValue ? null : defaultTokenValue
 							);
 						}}
@@ -390,24 +446,3 @@ export default function ColorPicker({
 		</ClayForm.Group>
 	);
 }
-
-ColorPicker.propTypes = {
-	field: PropTypes.shape({
-		dataType: PropTypes.string,
-		defaultValue: PropTypes.oneOfType([
-			PropTypes.array,
-			PropTypes.bool,
-			PropTypes.number,
-			PropTypes.object,
-			PropTypes.string,
-		]),
-		description: PropTypes.string,
-		label: PropTypes.string,
-		localizable: PropTypes.bool,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string,
-	}).isRequired,
-	onValueSelect: PropTypes.func.isRequired,
-	tokenValues: PropTypes.shape({}).isRequired,
-	value: PropTypes.string,
-};

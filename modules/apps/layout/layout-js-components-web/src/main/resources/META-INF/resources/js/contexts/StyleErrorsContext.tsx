@@ -3,18 +3,41 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useCallback, useContext, useState} from 'react';
+import React, {
+	Dispatch,
+	ReactNode,
+	SetStateAction,
+	useCallback,
+	useContext,
+	useState,
+} from 'react';
 
 const DEFAULT_ID = 'defaultId';
 
-const INITIAL_STATE = {
+interface Error {
+	error: string;
+	value: string;
+}
+
+type State = Record<string, Record<string, Error>>;
+
+const StyleErrorsStateContext = React.createContext<{
+	setState: Dispatch<SetStateAction<State>>;
+	state: State;
+}>({
 	setState: () => {},
 	state: {},
-};
+});
 
-const StyleErrorsStateContext = React.createContext(INITIAL_STATE);
+interface Props {
+	children: ReactNode;
+	initialState?: State;
+}
 
-export function StyleErrorsContextProvider({children, initialState = {}}) {
+export function StyleErrorsContextProvider({
+	children,
+	initialState = {},
+}: Props) {
 	const [state, setState] = useState(initialState);
 
 	return (
@@ -28,9 +51,9 @@ export function useDeleteStyleError() {
 	const {setState, state} = useContext(StyleErrorsStateContext);
 
 	return useCallback(
-		(fieldName, itemId = DEFAULT_ID) => {
+		(fieldName: string, itemId: string = DEFAULT_ID) => {
 			if (state[itemId]?.[fieldName]) {
-				const filteredErrors = {};
+				const filteredErrors: Record<string, Error> = {};
 				const {[itemId]: itemErrors, ...rest} = state;
 
 				for (const key in itemErrors) {

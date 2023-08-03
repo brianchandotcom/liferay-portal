@@ -5,6 +5,7 @@
 
 import convertRGBtoHex from '../../utils/convertRGBtoHex';
 import getValidHexColor from '../../utils/getValidHexColor';
+import {Field, Token} from './ColorPicker';
 
 const ERROR_MESSAGES = {
 	mutuallyReferenced: Liferay.Language.get(
@@ -13,10 +14,31 @@ const ERROR_MESSAGES = {
 	selfReferenced: Liferay.Language.get('tokens-cannot-reference-itself'),
 };
 
-export function parseColorValue({editedTokenValues, field, token, value}) {
+interface ColorValue {
+	color?: string;
+	label?: string;
+	pickerColor: string;
+	value?: string;
+}
+
+interface Error {
+	error: string;
+}
+
+export function parseColorValue({
+	editedTokenValues,
+	field,
+	token,
+	value,
+}: {
+	editedTokenValues: Record<string, Token>;
+	field: Field;
+	token: Token | undefined;
+	value: string;
+}): ColorValue | Error | Record<string, never> {
 	let validValue = token?.name;
-	let tokenLabel = null;
-	let pickerColor = null;
+	let tokenLabel: string | undefined = undefined;
+	let pickerColor: string = '';
 
 	if (token) {
 		if (token.name === field.name) {
@@ -56,13 +78,13 @@ export function parseColorValue({editedTokenValues, field, token, value}) {
 			window.getComputedStyle(element).backgroundColor
 		).replace(/^#/, '');
 
-		element.parentElement.removeChild(element);
+		element.parentElement!.removeChild(element);
 	}
 
 	return {
+		color: token?.value,
 		label: tokenLabel,
 		pickerColor,
 		value: validValue,
-		...(token && {color: token.value}),
 	};
 }

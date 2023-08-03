@@ -4,13 +4,14 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	ColorPicker,
-	StyleErrorsContextProvider,
-} from '@liferay/layout-js-components-web';
 import {fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+
+import ColorPicker, {
+	Field,
+} from '../../../src/main/resources/META-INF/resources/js/components/color_picker/ColorPicker';
+import {StyleErrorsContextProvider} from '../../../src/main/resources/META-INF/resources/js/contexts/StyleErrorsContext';
 
 const COLOR_PICKER_CLASS = '.layout__color-picker';
 const INPUT_NAME = 'Color Picker';
@@ -49,7 +50,7 @@ const TOKEN_VALUES = {
 	},
 };
 
-const FIELD = {label: INPUT_NAME, name: INPUT_NAME};
+const FIELD: Field = {label: INPUT_NAME, name: INPUT_NAME};
 
 const renderColorPicker = ({
 	onValueSelect = () => {},
@@ -69,7 +70,7 @@ const renderColorPicker = ({
 		</StyleErrorsContextProvider>
 	);
 
-const onTypeValue = (input, value) => {
+const onTypeValue = (input: HTMLInputElement, value: string) => {
 	userEvent.type(input, value);
 
 	fireEvent.blur(input);
@@ -91,7 +92,7 @@ describe('ColorPicker', () => {
 
 		userEvent.click(getByTitle('clear-selection'));
 
-		expect(onValueSelect).toBeCalledWith('Color Picker', null);
+		expect(onValueSelect).toBeCalledWith('Color Picker', '');
 	});
 
 	it('clears the value and sets the default value of the field if it exists', () => {
@@ -136,7 +137,7 @@ describe('ColorPicker', () => {
 
 		it('does not show the Value From Stylebook button when the value is inherited', () => {
 			const {queryByTitle} = renderColorPicker({
-				field: {...FIELD, inherited: true, value: null},
+				field: {...FIELD, inherited: true, value: undefined},
 			});
 
 			expect(
@@ -206,7 +207,7 @@ describe('ColorPicker', () => {
 				}
 			);
 
-			onTypeValue(baseElement.querySelector('input'), 'green');
+			onTypeValue(baseElement.querySelector('input')!, 'green');
 
 			expect(getByTitle('detach-style')).toBeInTheDocument();
 			expect(getByLabelText('Green')).toBeInTheDocument();
@@ -216,7 +217,7 @@ describe('ColorPicker', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = baseElement.querySelector('input');
+			const input = baseElement.querySelector('input')!;
 
 			onTypeValue(input, '');
 
@@ -227,7 +228,7 @@ describe('ColorPicker', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = baseElement.querySelector('input');
+			const input = baseElement.querySelector('input')!;
 
 			onTypeValue(input, '#44');
 
@@ -238,7 +239,7 @@ describe('ColorPicker', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = baseElement.querySelector('input');
+			const input = baseElement.querySelector('input')!;
 
 			onTypeValue(input, '#55555555555');
 
@@ -249,9 +250,9 @@ describe('ColorPicker', () => {
 			const {baseElement} = renderColorPicker({
 				value: '#444444',
 			});
-			const input = baseElement.querySelector('input');
+			const input = baseElement.querySelector('input')!;
 
-			onTypeValue(baseElement.querySelector('input'), '#abc');
+			onTypeValue(input, '#abc');
 
 			expect(input).toHaveValue('#AABBCC');
 		});
@@ -262,7 +263,7 @@ describe('ColorPicker', () => {
 					value: '#FFF',
 				});
 
-				const input = baseElement.querySelector('input');
+				const input = baseElement.querySelector('input')!;
 
 				onTypeValue(input, 'prim');
 
@@ -279,7 +280,7 @@ describe('ColorPicker', () => {
 					value: '#fff',
 				});
 
-				onTypeValue(baseElement.querySelector('input'), 'orange');
+				onTypeValue(baseElement.querySelector('input')!, 'orange');
 
 				userEvent.click(getByTitle('clear-selection'));
 
@@ -294,7 +295,7 @@ describe('ColorPicker', () => {
 					value: '#fff',
 				});
 
-				onTypeValue(baseElement.querySelector('input'), 'orange');
+				onTypeValue(baseElement.querySelector('input')!, 'orange');
 
 				expect(
 					getByText('tokens-cannot-reference-itself')
@@ -313,7 +314,7 @@ describe('ColorPicker', () => {
 					value: '#fff',
 				});
 
-				onTypeValue(baseElement.querySelector('input'), 'blue');
+				onTypeValue(baseElement.querySelector('input')!, 'blue');
 
 				expect(
 					getByText('tokens-cannot-be-mutually-referenced')

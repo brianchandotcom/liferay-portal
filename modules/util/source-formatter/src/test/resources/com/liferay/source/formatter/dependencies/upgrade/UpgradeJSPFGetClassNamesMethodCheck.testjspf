@@ -8,7 +8,7 @@
 <div class="upgrade">
 
 	<%
-	public void method(Indexer indexer) throws Exception {
+	public void method(Indexer<?> indexer) throws Exception {
 		String indexerClassName = indexer.getClassNames()[0];
 	}
 	%>

@@ -147,6 +147,13 @@ public abstract class BaseNotificationType implements NotificationType {
 	}
 
 	@Override
+	public void sendNotification(NotificationQueueEntry notificationQueueEntry)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Object[] toRecipients(
 		List<NotificationRecipientSetting> notificationRecipientSettings) {
 

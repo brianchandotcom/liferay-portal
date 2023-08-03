@@ -54,6 +54,9 @@ public interface NotificationType {
 	public void sendNotification(NotificationContext notificationContext)
 		throws PortalException;
 
+	public void sendNotification(NotificationQueueEntry notificationQueueEntry)
+		throws PortalException;
+
 	public Object[] toRecipients(
 		List<NotificationRecipientSetting> notificationRecipientSettings);
 

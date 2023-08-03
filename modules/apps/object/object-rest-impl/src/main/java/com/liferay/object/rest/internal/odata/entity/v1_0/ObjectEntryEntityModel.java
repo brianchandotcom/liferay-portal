@@ -44,11 +44,6 @@ import javax.ws.rs.BadRequestException;
  */
 public class ObjectEntryEntityModel implements EntityModel {
 
-	@Override
-	public Map<String, EntityField> getEntityFieldsMap() {
-		return _entityFieldsMap;
-	}
-
 	public ObjectEntryEntityModel(
 			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
 		throws Exception {
@@ -69,6 +64,11 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 			_handledObjectDefinitions.clear();
 		}
+	}
+
+	@Override
+	public Map<String, EntityField> getEntityFieldsMap() {
+		return _entityFieldsMap;
 	}
 
 	private EntityField _getEntityField(ObjectField objectField) {

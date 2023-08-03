@@ -44,7 +44,8 @@
 								{
 									"id": "text-product-tag",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Experience Management"
@@ -57,16 +58,19 @@
 									"value": {
 										"fragmentImage": {
 											"url": {
-												"value_i18n": {}
+												"value_i18n": {
+												}
 											}
 										},
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								},
 								{
 									"id": "text-product-tag-2",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Analytics"
@@ -77,7 +81,8 @@
 								{
 									"id": "text-product-name-2",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Clarity Customer Portal"
@@ -100,12 +105,14 @@
 								"key": "hero",
 								"siteKey": "[$GROUP_KEY$]"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "title-hero",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								},
 								{
@@ -130,13 +137,15 @@
 												}
 											}
 										},
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								},
 								{
 									"id": "hero-description",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -188,11 +197,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -208,11 +219,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -257,7 +270,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "About Clarity"
@@ -279,12 +293,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Clarity Customer Portal is a sophisticated and intuitive solution designed to provide businesses with a powerful and user-friendly platform for managing customer interactions. With its clean and modern design, the Clarity Customer Portal template offers a seamless and professional experience for both customers and business owners alike.<br />\n<br />\nClarity ensures that customers can easily navigate through various features and access the information they need with minimal effort. The user interface is thoughtfully crafted, combining elegant aesthetics with a logical layout that prioritizes functionality."
@@ -313,11 +329,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -435,7 +453,8 @@
 										"bottomSpacing": "3",
 										"separatorColor": ""
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"marginBottom": "7",
 										"marginTop": "7",
@@ -485,7 +504,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Empower Businesses with Seamless Customer Management and Support"
@@ -518,11 +538,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "middle"
@@ -538,11 +560,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -609,7 +633,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -653,7 +678,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Analytics and Reporting"
@@ -675,12 +701,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Robust analytics and reporting features provide businesses with valuable insights into customer behavior, support ticket trends, and overall portal performance, enabling data-driven decision-making."
@@ -716,11 +744,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -787,7 +817,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -832,7 +863,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Account Management"
@@ -854,12 +886,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Customers can view and update their personal information, such as contact details, billing preferences, and shipping addresses, to ensure accurate and up-to-date records."
@@ -894,11 +928,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -965,7 +1001,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1009,7 +1046,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Order Tracking and History"
@@ -1031,12 +1069,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Customers can easily track the status of their orders, view order details, and access their purchase history for reference and reordering purposes."
@@ -1072,11 +1112,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1143,7 +1185,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1187,7 +1230,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Integration Capabilities"
@@ -1209,12 +1253,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "The Clarity solution can integrate with other business systems, such as CRM tools or support ticket platforms, to streamline workflows and leverage existing infrastructure."
@@ -1250,11 +1296,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1321,7 +1369,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1365,7 +1414,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Communication and Messaging"
@@ -1387,12 +1437,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Seamless communication channels facilitate real-time interactions between customers and support agents, fostering efficient and personalized customer support experiences."
@@ -1428,11 +1480,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1499,7 +1553,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1543,7 +1598,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Customer Authentication and Profiles"
@@ -1565,12 +1621,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Secure user authentication and personalized customer profiles enable users to access and manage their accounts conveniently."
@@ -1678,7 +1736,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -1734,7 +1793,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "About Liferay"
@@ -1757,12 +1817,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Liferay helps organizations meet their unique challenges by creating innovative, customer-centered experiences on our cloud-powered digital experience platform (DXP). Our platform is open source, which makes it more reliable and secure. Over a thousand organizations in financial services, insurance, manufacturing, healthcare and government use Liferay worldwide.<br />\n<br />\nOur goal is to help companies reach their full potential to serve others, and we try to leave a positive mark on the world through our business and technology."
@@ -1804,11 +1866,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "middle"
@@ -1824,11 +1888,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1892,7 +1958,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1938,7 +2005,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1963,7 +2031,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "https://www.liferay.com"
@@ -2000,11 +2069,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -2068,7 +2139,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -2114,7 +2186,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Email"
@@ -2144,7 +2217,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "sales-au@liferay.com"
@@ -2181,11 +2255,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -2249,7 +2325,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -2295,7 +2372,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Phone"
@@ -2325,7 +2403,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "1-800-283-1192"
@@ -2370,7 +2449,8 @@
 								"bottomSpacing": "3",
 								"separatorColor": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"marginBottom": "7",
 								"marginTop": "7",
@@ -2389,7 +2469,8 @@
 								"bottomSpacing": "3",
 								"separatorColor": ""
 							},
-							"fragmentFields": [],
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"marginBottom": "7",
 								"marginTop": "7",

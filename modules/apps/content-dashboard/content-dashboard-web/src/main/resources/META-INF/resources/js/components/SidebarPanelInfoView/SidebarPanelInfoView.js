@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 import Sidebar from '../Sidebar';
+import Categorization from './Categorization';
 import DetailsContent from './DetailsContent';
 import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
@@ -139,40 +140,53 @@ const SidebarPanelInfoView = ({
 								</>
 							)}
 						</div>
-
-						<div className="mb-0 sidebar-section">
-							{showTabs && activeTabKeyValue !== null && (
-								<ClayTabs modern>
-									<ClayTabs.Item
-										active={activeTabKeyValue === 0}
-										innerProps={{
-											'aria-controls': 'details',
-										}}
-										onClick={() => setActiveTabKeyValue(0)}
-									>
-										{Liferay.Language.get('details')}
-									</ClayTabs.Item>
-
-									<ClayTabs.Item
-										active={activeTabKeyValue === 1}
-										innerProps={{
-											'aria-controls': 'versions',
-										}}
-										onClick={() => setActiveTabKeyValue(1)}
-									>
-										{Liferay.Language.get('versions')}
-									</ClayTabs.Item>
-								</ClayTabs>
-							)}
-						</div>
 					</div>
 				</ClayLayout.ContentRow>
 			</Sidebar.Header>
 
+			<div className="mb-0 sidebar-section">
+				{showTabs && activeTabKeyValue !== null && (
+					<ClayTabs modern>
+						<ClayTabs.Item
+							active={activeTabKeyValue === 0}
+							innerProps={{
+								'aria-controls': 'details',
+							}}
+							onClick={() => setActiveTabKeyValue(0)}
+						>
+							{Liferay.Language.get('details')}
+						</ClayTabs.Item>
+
+						<ClayTabs.Item
+							active={activeTabKeyValue === 1}
+							innerProps={{
+								'aria-controls': 'versions',
+							}}
+							onClick={() => setActiveTabKeyValue(1)}
+						>
+							{Liferay.Language.get('versions')}
+						</ClayTabs.Item>
+
+						<ClayTabs.Item
+							active={activeTabKeyValue === 2}
+							innerProps={{
+								'aria-controls': 'categorization',
+							}}
+							onClick={() => setActiveTabKeyValue(2)}
+						>
+							{Liferay.Language.get('categorization')}
+						</ClayTabs.Item>
+					</ClayTabs>
+				)}
+			</div>
+
 			<Sidebar.Body>
 				<div>
 					<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
-						<ClayTabs.TabPane aria-labelledby="tab-1">
+						<ClayTabs.TabPane
+							aria-labelledby="tab-1"
+							className="flex-shrink-0"
+						>
 							<DetailsContent
 								classPK={classPK}
 								createDate={createDate}
@@ -183,20 +197,33 @@ const SidebarPanelInfoView = ({
 								modifiedDate={modifiedDate}
 								preview={preview}
 								specificFields={specificFields}
-								tags={tags}
 								title={title}
 								viewURLs={viewURLs}
-								vocabularies={vocabularies}
 							/>
 						</ClayTabs.TabPane>
 
-						{showTabs && (
-							<ClayTabs.TabPane aria-labelledby="tab-2">
+						{showTabs && activeTabKeyValue === 1 && (
+							<ClayTabs.TabPane
+								aria-labelledby="tab-2"
+								className="flex-shrink-0"
+							>
 								<VersionsContent
 									active={activeTabKeyValue === 1}
 									getItemVersionsURL={getItemVersionsURL}
 									languageTag={languageTag}
 									onError={handleError}
+								/>
+							</ClayTabs.TabPane>
+						)}
+
+						{showTabs && activeTabKeyValue === 2 && (
+							<ClayTabs.TabPane
+								aria-labelledby="tab-2"
+								className="flex-shrink-0"
+							>
+								<Categorization
+									tags={tags}
+									vocabularies={vocabularies}
 								/>
 							</ClayTabs.TabPane>
 						)}

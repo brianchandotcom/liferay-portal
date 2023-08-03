@@ -146,7 +146,7 @@ exports[`Data Privacy Overview should render 1`] = `
                     <p
                       class="text-secondary"
                     >
-                      Suppressed data subjects will be excluded in further identity resolution activity. Deleted data subjects will automatically be suppressed by their user ID and their identity will not be resolveable.
+                      Suppressed data subjects will be excluded in further identity resolution activity. Deleted data subjects will automatically be suppressed by their user ID and their identity will not be resolvable.
                     </p>
                   </div>
                   <div

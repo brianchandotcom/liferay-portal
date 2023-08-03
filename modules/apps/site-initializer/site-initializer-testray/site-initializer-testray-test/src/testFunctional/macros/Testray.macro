@@ -381,6 +381,138 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
+	macro selectDefaultEnvironmentFactors {
+		AssertElementPresent.pauseAssertVisible(
+			key_arrowDirection = "Right",
+			key_caseParameters = "Available",
+			locator1 = "Testray#ARROW_DIRECTION");
+
+		if (${arrowDirection} == "Right") {
+			for (var listboxItem : list ${listCategory}) {
+				Click(
+					key_availableType = ${listboxItem},
+					key_caseParameters = "Available",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
+					value1 = ${listboxItem});
+
+				Click(
+					key_arrowDirection = ${arrowDirection},
+					key_caseParameters = "Available",
+					locator1 = "Testray#ARROW_DIRECTION");
+			}
+		}
+
+		if (${arrowDirection} == "Left") {
+			for (var listboxItem : list ${listCategory}) {
+				Click(
+					key_availableType = ${listboxItem},
+					key_caseParameters = "Selected",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
+					value1 = ${listboxItem});
+
+				Click(
+					key_arrowDirection = ${arrowDirection},
+					key_caseParameters = "Selected",
+					locator1 = "Testray#ARROW_DIRECTION");
+			}
+		}
+
+		Button.click(button = "Next");
+
+		if (isSet(firstOption)) {
+			Select(
+				key_fieldLabel = "Category 1",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${firstOption});
+		}
+
+		if (isSet(secondOption)) {
+			Select(
+				key_fieldLabel = "Category 2",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${secondOption});
+		}
+
+		if (isSet(applicationServer)) {
+			Select(
+				key_fieldLabel = "Application Server",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${applicationServer});
+		}
+
+		if (isSet(browser)) {
+			Select(
+				key_fieldLabel = "Browser",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${browser});
+		}
+
+		if (isSet(database)) {
+			Select(
+				key_fieldLabel = "Database",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${database});
+		}
+
+		if (isSet(javaJDK)) {
+			Select(
+				key_fieldLabel = "Java JDK",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${javaJDK});
+		}
+
+		if (isSet(liferayVersion)) {
+			Select(
+				key_fieldLabel = "Liferay Version",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${liferayVersion});
+		}
+
+		if (isSet(mobileBrowser)) {
+			Select(
+				key_fieldLabel = "Mobile Browser",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${mobileBrowser});
+		}
+
+		if (isSet(mobileDevice)) {
+			Select(
+				key_fieldLabel = "Mobile Device",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${mobileDevice});
+		}
+
+		if (isSet(mobileOperatingSystem)) {
+			Select(
+				key_fieldLabel = "Mobile Operating System",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${mobileOperatingSystem});
+		}
+
+		if (isSet(operatingSystem)) {
+			Select(
+				key_fieldLabel = "Operating System",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${operatingSystem});
+		}
+
+		if (isSet(portalEdition)) {
+			Select(
+				key_fieldLabel = "Portal Edition",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${portalEdition});
+		}
+
+		if (isSet(productEdition)) {
+			Select(
+				key_fieldLabel = "Product Edition",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${productEdition});
+		}
+
+		Button.click(button = "Save");
+	}
+
 	macro selectUsers {
 		Button.click(button = "Assign Users");
 
@@ -434,6 +566,27 @@ definition {
 			value1 = ${description});
 
 		Button.clickSave();
+	}
+
+	macro verifySpecificEnvironmentFactors {
+		if (isSet(listCategory)) {
+			for (var listboxItem : list ${listCategory}) {
+				AssertElementPresent(
+					key_environmentFactors = ${listboxItem},
+					locator1 = "Testray#OPTIONS_ENVIRONMENT_FACTORS_SELECTED");
+			}
+		}
+
+		Button.click(button = "Next");
+
+		if (isSet(listCategory)) {
+			for (var listboxItem : list ${listCategory}) {
+				AssertElementPresent(
+					key_fieldLabel = ${listCategory},
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${listOption});
+			}
+		}
 	}
 
 	macro viewAlert {

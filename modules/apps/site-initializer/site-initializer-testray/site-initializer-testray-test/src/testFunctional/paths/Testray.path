@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
-	<td>//button[contains(@class, 'transfer-button-ltr')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEMS_PER_PAGE_BUTTON</td>
 	<td>//h5[contains(., '')]//ancestor::div//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown') and contains(.,'${key_numberItems}')]</td>
 	<td></td>
@@ -181,17 +176,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_ENVIRONMENT_FACTORS</td>
-	<td>//div[contains(@class,'listbox')]//label[contains(.,'Available')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TABLE_ENTRY</td>
 	<td>//table[contains(@class,'table-autofit')]//tr/td[normalize-space()="${key_tableEntry}"]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>VERIFY_ENVIRONMENT_FACTORS_SELECTED</td>
+	<td>OPTIONS_ENVIRONMENT_FACTORS_SELECTED</td>
 	<td>//div[contains(@class,'listbox')]//label[contains(.,'Selected')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
 	<td></td>
 </tr>

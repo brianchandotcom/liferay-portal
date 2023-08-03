@@ -164,13 +164,13 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayRoutines.selectDefaultEnvironmentFactors(
-				categoryField = "Category 1",
-				categoryField2 = "Category 2",
-				listCategory = "Category 2",
-				listOption = "Option 1",
-				listOption2 = "Option 3",
-				routineName = ${routineName});
+			Testray.kebabMenuOption(kebabOption = "Select Default Environment Factors");
+
+			Testray.selectDefaultEnvironmentFactors(
+				arrowDirection = "Right",
+				firstOption = "Option 1",
+				listCategory = "Category 1,Category 2",
+				secondOption = "Option 3");
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = "Build 2",

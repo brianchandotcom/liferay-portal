@@ -214,59 +214,12 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectDefaultEnvironmentFactors {
-		WaitForElementPresent(
-			key_environmentFactors = "Application Server",
-			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
-
-		for (var listboxItem : list ${listCategory}) {
-			Click(
-				key_environmentFactors = ${listboxItem},
-				locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
-
-			Click(locator1 = "Testray#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
-		}
-
-		Button.click(button = "Next");
-
-		Select(
-			key_fieldLabel = ${label},
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${listOption});
-
-		if (isSet(label1)) {
-			Select(
-				key_fieldLabel = ${label1},
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${listOption1});
-		}
-
-		Button.click(button = "Save");
-	}
-
 	macro verifyPromotedBuild {
 		Alert.viewSuccessMessage();
 
 		Refresh();
 
 		AssertElementPresent(locator1 = "TestrayBuild#PROMOTE_BUILD");
-	}
-
-	macro verifySpecificEnvironmentFactors {
-		if (isSet(listCategory)) {
-			AssertElementPresent(
-				key_environmentFactors = ${listCategory},
-				locator1 = "Testray#VERIFY_ENVIRONMENT_FACTORS_SELECTED");
-		}
-
-		Button.click(button = "Next");
-
-		if (isSet(label)) {
-			AssertElementPresent(
-				key_fieldLabel = ${label},
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${listOption});
-		}
 	}
 
 }

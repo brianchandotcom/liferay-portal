@@ -263,12 +263,11 @@ definition {
 				rowOption = "Select Default Environment Factors",
 				tableEntry = "Routines_1 Routine");
 
-			TestrayBuild.selectDefaultEnvironmentFactors(
-				label = "Application Server",
-				label1 = "Browser",
-				listCategory = "Application Server,Browser",
-				listOption = "Tomcat 6.0",
-				listOption1 = "Chrome 57");
+			Testray.selectDefaultEnvironmentFactors(
+				applicationServer = "Tomcat 6.0",
+				arrowDirection = "Right",
+				browser = "Chrome 57",
+				listCategory = "Application Server,Browser");
 
 			Testray.clickTableEntry(tableEntry = "Routines_1 Routine");
 

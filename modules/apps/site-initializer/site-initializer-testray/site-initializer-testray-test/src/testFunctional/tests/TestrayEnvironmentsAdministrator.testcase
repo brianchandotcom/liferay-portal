@@ -172,8 +172,7 @@ definition {
 		task ("Then I assert affirm the Enviroment Factor created") {
 			Testray.kebabMenuOption(kebabOption = "Select Default Environment Factors");
 
-			TestrayBuild.verifySpecificEnvironmentFactors(
-				label = ${categoryName},
+			Testray.verifySpecificEnvironmentFactors(
 				listCategory = ${categoryName},
 				listOption = ${optionsName});
 		}

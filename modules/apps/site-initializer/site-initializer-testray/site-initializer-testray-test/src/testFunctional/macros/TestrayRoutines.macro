@@ -50,38 +50,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectDefaultEnvironmentFactors {
-		Testray.kebabMenuOption(kebabOption = "Select Default Environment Factors");
-
-		WaitForElementPresent(
-			key_environmentFactors = "Application Server",
-			locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
-
-		for (var listboxItem : list ${listCategory}) {
-			Click(
-				key_environmentFactors = ${listboxItem},
-				locator1 = "Testray#SELECT_ENVIRONMENT_FACTORS");
-
-			Click(locator1 = "Testray#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
-		}
-
-		Button.click(button = "Next");
-
-		Select(
-			key_fieldLabel = ${categoryField},
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${listOption});
-
-		if (isSet(categoryField2)) {
-			Select(
-				key_fieldLabel = ${categoryField2},
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${listOption2});
-		}
-
-		Button.click(button = "Save");
-	}
-
 	macro selectOptionDropdownRoutine {
 		Click(locator1 = "TestrayRoutines#DROPDOWN_ROUTINE");
 

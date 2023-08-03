@@ -241,6 +241,14 @@ portletDisplay.setURLBack(backURL);
 												'.portlet-body'
 											);
 
+											const existingAlert = portletBody.querySelector(
+												'.alert'
+											);
+
+											if (existingAlert) {
+												existingAlert.remove();
+											}
+
 											const alertElement = document.createElement(
 												'div'
 											);

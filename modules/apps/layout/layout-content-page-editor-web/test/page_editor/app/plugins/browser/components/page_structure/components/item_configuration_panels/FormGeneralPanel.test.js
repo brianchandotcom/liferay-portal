@@ -131,10 +131,12 @@ const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
 describe('FormGeneralPanel', () => {
 	beforeAll(() => {
 		Liferay.FeatureFlags['LPS-169923'] = true;
+		Liferay.FeatureFlags['LPS-183498'] = true;
 	});
 
 	afterAll(() => {
 		Liferay.FeatureFlags['LPS-169923'] = false;
+		Liferay.FeatureFlags['LPS-183498'] = false;
 	});
 
 	beforeEach(() => {
@@ -252,6 +254,20 @@ describe('FormGeneralPanel', () => {
 
 		expect(input).toBeInTheDocument();
 		expect(input.value).toBe('https://liferay.com');
+	});
+
+	it('renders the success notification text selector when Show Notification is enabled', async () => {
+		await act(async () => {
+			renderComponent({
+				successMessage: {
+					showNotification: true,
+				},
+			});
+		});
+
+		expect(
+			screen.getByLabelText('success-notification-text')
+		).toBeInTheDocument();
 	});
 
 	it('loads the correct fields when the item is already configured with page', async () => {

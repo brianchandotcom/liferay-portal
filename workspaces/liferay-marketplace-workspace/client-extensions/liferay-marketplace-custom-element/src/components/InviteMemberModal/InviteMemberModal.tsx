@@ -279,7 +279,7 @@ export function InviteMemberModal({
 		setFormValid(isValid);
 	};
 
-	const handleCheck = (selectedRoleName: string) => {
+	const handleRoleCheckboxChange = (selectedRoleName: string) => {
 		clearErrors('roles');
 		const rolesChecked = checkboxRoles.map((role) => {
 			if (selectedRoleName === role.roleName) {
@@ -291,18 +291,15 @@ export function InviteMemberModal({
 			return role;
 		}, []);
 
-		const rolesSelected: string[] = [];
-
-		for (const roleCheck of rolesChecked) {
-			for (const accountRole of (accountRoles || []) as AccountRole[]) {
-				if (
+		const rolesSelected: string[] = rolesChecked
+			.filter(
+				(roleCheck) =>
 					roleCheck.isChecked &&
-					roleCheck.roleName === accountRole.name
-				) {
-					rolesSelected.push(accountRole.name);
-				}
-			}
-		}
+					(accountRoles || []).some(
+						(accountRole) => roleCheck.roleName === accountRole.name
+					)
+			)
+			.map((roleCheck) => roleCheck.roleName);
 
 		if (!rolesChecked.length || !rolesSelected.length) {
 			setError('roles', {message: 'Please select at least one role'});
@@ -405,7 +402,9 @@ export function InviteMemberModal({
 										key={index}
 										label={role}
 										name={`roles-${index}`}
-										onChange={() => handleCheck(role)}
+										onChange={() =>
+											handleRoleCheckboxChange(role)
+										}
 										value={role}
 									/>
 								);

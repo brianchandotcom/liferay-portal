@@ -883,14 +883,6 @@ public class PortalUtil {
 			httpServletRequest, name, type, displayType);
 	}
 
-	public static Serializable getExpandoValue(
-			PortletRequest portletRequest, String name, int type,
-			String displayType)
-		throws PortalException {
-
-		return _portal.getExpandoValue(portletRequest, name, type, displayType);
-	}
-
 	public static String getFirstPageLayoutTypes(
 		HttpServletRequest httpServletRequest) {
 

@@ -1,0 +1,258 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-184413=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-178642=true${line.separator}feature.flag.LPS-186757=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiApplicationSchema {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI of 'headless-builder/applications' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "applications");
+		}
+
+		task ("Then I can see schema of APIApplication object") {
+			AssertElementPresent(
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
+				schema = "APIApplication");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiApplicationSchemaFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI of 'headless-builder/applications' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "applications");
+		}
+
+		task ("Then the fields applicationStatus*, baseURL*, description, title*, version are present") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APIApplication",
+				schemaFields = "applicationStatus*,baseURL*,description,title*,version");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiApplicationSchemaNestedFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI of 'headless-builder/applications'") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "applications");
+		}
+
+		task ("Then the nestedFields of one-to-many relationships apiApplicationToAPISchemas and apiApplicationToAPIEndpoints are present in the schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APIApplication",
+				schemaFields = "apiApplicationToAPISchemas,apiApplicationToAPIEndpoints");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiEndpointSchema {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/endpoints' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "endpoints");
+		}
+
+		task ("Then I can see schema of APIEndpoint object") {
+			AssertElementPresent(
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
+				schema = "APIEndpoint");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiEndpointSchemaFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/endpoints' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "endpoints");
+		}
+
+		task ("Then the fields httpMethod*, name*, path*, scope* are present in the APIEndpoint schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APIEndpoint",
+				schemaFields = "httpMethod*,name*,path*,scope*");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiEndpointSchemaNestedFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/endpoints' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "endpoints");
+		}
+
+		task ("Then the nestedFields of one-to-many relationships apiEndpointToAPIFilters and apiEndpointToAPISorts are present in the schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APIEndpoint",
+				schemaFields = "apiEndpointToAPIFilters,apiEndpointToAPISorts");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiPropertySchema {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/properties'") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "properties");
+		}
+
+		task ("Then I can see schema of APIProperty object") {
+			AssertElementPresent(
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
+				schema = "APIProperty");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiPropertySchemaFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/properties'") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "properties");
+		}
+
+		task ("Then the fields description, name*, objectFieldERC*, objectRelationshipIds???, parentAPIPropertyERC are present in the APIProperty schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APIProperty",
+				schemaFields = "description,name*,objectFieldERC*,objectRelationshipNames,parentAPIPropertyERC");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiPropertySchemaNestedFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/properties' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "properties");
+		}
+
+		task ("Then the nestedFields of many-to-many self relationship apiPropertiesToAPIProperties is present in the schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APIProperty",
+				schemaFields = "apiPropertiesToAPIProperties");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiSchemaSchema {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/schemas'") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "schemas");
+		}
+
+		task ("Then I can see schema of APISchema object") {
+			AssertElementPresent(
+				locator1 = "OpenAPI#SCHEMA_ENTITY",
+				schema = "APISchema");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiSchemaSchemaFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/schemas' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "schemas");
+		}
+
+		task ("Then the fields description, mainObjectDefinitionERC, name* are present in the schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APISchema",
+				schemaFields = "description,mainObjectDefinitionERC,name*");
+		}
+	}
+
+	@priority = 5
+	test CanSeeApiSchemaSchemaNestedFields {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI 'headless-builder/schemas' application") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-builder",
+				version = "schemas");
+		}
+
+		task ("Then the nestedFields of one-to-many relationships apiSchemaToAPIProperties and responseAPISchemaToAPIEndpoints are present in the schema") {
+			APIExplorer.assertSchemaFieldsPresent(
+				schemaEntity = "APISchema",
+				schemaFields = "apiSchemaToAPIProperties,responseAPISchemaToAPIEndpoints");
+		}
+	}
+
+	@priority = 5
+	test CanSeeHeadlessBuilderApplications {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When I navigate to OpenAPI Explorer") {
+			APIExplorer.navigateToOpenAPI();
+		}
+
+		task ("Then I can see ‘headless-builder/applications’, 'headless-builder/endpoints', 'headless-builder/filters', 'headless-builder/properties', 'headless-builder/schemas', and 'headless-builder/sorts' on the REST Applications list") {
+			for (var restApplication : list "headless-builder/applications,headless-builder/endpoints,headless-builder/filters,headless-builder/properties,headless-builder/schemas,headless-builder/sorts") {
+				AssertElementPresent(
+					locator1 = "Button#BUTTON_WITH_VALUE",
+					value = ${restApplication});
+			}
+		}
+	}
+
+}

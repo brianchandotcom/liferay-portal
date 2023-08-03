@@ -98,9 +98,10 @@ public class CollectionPageLayoutTypeController
 			}
 		}
 
+		String redirect = StringPool.BLANK;
+
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
-		String redirect = StringPool.BLANK;
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			if (!_hasUpdatePermissions(

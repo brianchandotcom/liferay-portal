@@ -123,6 +123,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-153676.The Asset Publisher would be displaying the Basic Web Content article"
+	@priority = 4
+	test PublishGlobalScopedWebContentDisplayToLive {
+		task ("When the user creates other Web Content") {
+			Navigator.gotoSitePage(
+				pageName = "Test Site Name",
+				siteName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "${randomSiteName} (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "${randomSiteName} Staging");
+
+			PageEditor.addWidget(portletName = "Web Content Display");
+
+			PageEditor.addWidget(
+				portletName = "Web Content Display",
+				targetFragmentName = "Asset Publisher");
+		}
+
+		task ("When the user adds elements to the page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Site Name",
+				site = "false",
+				widgetName = "Web Content Display");
+
+			PageEditor.addWidget(
+				dropTarget = "Header",
+				portletName = "Asset Publisher",
+				scope = "Global");
+		}
+
+		task ("Then Asset Publisher would display the Site Article") {
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+	}
+
 	@description = "This is a use case for LPS-101289. View comment is shown after edited in a staging site."
 	@priority = 4
 	test ViewCommentAfterEditingInStaging {

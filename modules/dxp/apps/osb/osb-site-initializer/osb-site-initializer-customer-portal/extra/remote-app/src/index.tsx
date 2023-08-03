@@ -35,7 +35,7 @@ type Properties = {
 	articleDeployingActivationKeysURL: string | null;
 	articleGettingStartedWithLiferayEnterpriseSearchURL: string | null;
 	articleWhatIsMyInstanceSizingValueURL: string | null;
-	featureFlag?: string[];
+	featureFlags?: string[];
 	importDate?: Date | null;
 	submitSupportTicketURL: string | null;
 };
@@ -80,7 +80,9 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 					} as any
 				}
 			>
-				<OktaStatusPortal />
+				{properties.featureFlags?.includes('LPS-192494') && (
+					<OktaStatusPortal />
+				)}
 
 				<AppRouteComponent />
 			</AppPropertiesContext.Provider>

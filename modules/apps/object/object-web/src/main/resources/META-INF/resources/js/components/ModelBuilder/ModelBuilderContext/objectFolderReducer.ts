@@ -14,6 +14,7 @@ import {
 	ObjectDefinitionNodeData,
 	ObjectFieldNode,
 	ObjectRelationshipEdgeData,
+	RightSidebarType,
 	TAction,
 	TState,
 } from '../types';
@@ -130,8 +131,10 @@ export function objectFolderReducer(state: TState, action: TAction) {
 
 						return {
 							data: {
-								creationLanguageId:
+								defaultLanguageId:
 									objectDefinition.defaultLanguageId,
+								externalReferenceCode:
+									objectDefinition.externalReferenceCode,
 								hasObjectDefinitionDeleteResourcePermission: true,
 								hasObjectDefinitionManagePermissionsResourcePermission: true,
 								hasObjectDefinitionUpdateResourcePermission: true,
@@ -202,6 +205,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				...state,
 				elements: [...edges, ...newObjectDefinitionNodes],
 				leftSidebarItems: newLeftSidebarItems,
+				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
 			};
 		}
 		case TYPES.SET_ELEMENTS: {

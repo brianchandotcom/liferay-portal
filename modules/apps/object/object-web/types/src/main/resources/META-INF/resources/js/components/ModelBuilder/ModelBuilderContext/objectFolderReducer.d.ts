@@ -7,6 +7,7 @@ import {Node} from 'react-flow-renderer';
 import {
 	LeftSidebarItemType,
 	ObjectDefinitionNodeData,
+	RightSidebarType,
 	TAction,
 	TState,
 } from '../types';
@@ -18,10 +19,7 @@ export declare function objectFolderReducer(
 	leftSidebarItems: LeftSidebarItemType[];
 	objectDefinitions: ObjectDefinition[];
 	objectFolders: ObjectFolder[];
-	rightSidebarType:
-		| 'objectDefinitionDetails'
-		| 'objectRelationshipDetails'
-		| 'empty';
+	rightSidebarType: RightSidebarType;
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;

@@ -130,7 +130,8 @@ export default function EditableActionPanel({item}) {
 				}}
 			/>
 
-			{editableValue.config.mappedAction?.fieldId && (
+			{(editableValue.config.mappedAction?.fieldId ||
+				editableValue.config.mappedAction?.mappedField) && (
 				<>
 					<InteractionSelector
 						config={editableValue.config}

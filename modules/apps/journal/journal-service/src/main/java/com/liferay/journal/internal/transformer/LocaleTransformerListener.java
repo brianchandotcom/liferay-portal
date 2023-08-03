@@ -8,7 +8,6 @@ package com.liferay.journal.internal.transformer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.impl.JournalArticleImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,9 +25,7 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -65,16 +62,6 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		_filterByLanguage(document, languageId);
 
 		return document;
-	}
-
-	@Activate
-	protected void activate() {
-		JournalArticleImpl.setLocaleTransformerListener(this);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		JournalArticleImpl.setLocaleTransformerListener(null);
 	}
 
 	protected void filter(

@@ -37,11 +37,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 					<c:when test="<%= curCategory != null %>">
 
 						<%
-						Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-							"actions", StringUtil.merge(mbEntriesManagementToolbarDisplayContext.getAvailableActions(curCategory))
-						).build();
-
-						row.setData(rowData);
+						row.setData(
+							HashMapBuilder.<String, Object>put(
+								"actions", StringUtil.merge(mbEntriesManagementToolbarDisplayContext.getAvailableActions(curCategory))
+							).build());
 
 						row.setPrimaryKey(String.valueOf(curCategory.getCategoryId()));
 						%>
@@ -114,11 +113,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 							row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 						}
 
-						Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-							"actions", StringUtil.merge(mbEntriesManagementToolbarDisplayContext.getAvailableActions(message))
-						).build();
-
-						row.setData(rowData);
+						row.setData(
+							HashMapBuilder.<String, Object>put(
+								"actions", StringUtil.merge(mbEntriesManagementToolbarDisplayContext.getAvailableActions(message))
+							).build());
 						%>
 
 						<liferay-portlet:renderURL varImpl="rowURL">

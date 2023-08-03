@@ -1385,6 +1385,14 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("edge", additionalAssertFieldName)) {
+				if (objectRelationship.getEdge() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("label", additionalAssertFieldName)) {
 				if (objectRelationship.getLabel() == null) {
 					valid = false;
@@ -1651,6 +1659,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				if (!Objects.deepEquals(
 						objectRelationship1.getDeletionType(),
 						objectRelationship2.getDeletionType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("edge", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectRelationship1.getEdge(),
+						objectRelationship2.getEdge())) {
 
 					return false;
 				}
@@ -1946,6 +1965,11 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		}
 
 		if (entityFieldName.equals("deletionType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("edge")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2271,6 +2295,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	protected ObjectRelationship randomObjectRelationship() throws Exception {
 		return new ObjectRelationship() {
 			{
+				edge = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				objectDefinitionExternalReferenceCode1 = StringUtil.toLowerCase(

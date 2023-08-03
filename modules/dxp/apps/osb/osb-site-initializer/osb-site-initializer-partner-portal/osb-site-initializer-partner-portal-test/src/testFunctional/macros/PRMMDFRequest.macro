@@ -562,11 +562,12 @@ definition {
 				key_fieldName = "activities[${activityIndex}].activityDescription.primaryThemeOrMessage",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
 				value1 = "Primary Theme");
+
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.goalOfContent",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
 				value1 = "Goal of Content");
-				
+
 			Click.clickAtNotVisible(
 				key_buttonText = "No",
 				key_fieldName = "activities[${activityIndex}].activityDescription.hiringOutsideWriterOrAgency",

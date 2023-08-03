@@ -17,7 +17,7 @@ export default function SearchForm({
 	onChange,
 }: {
 	className?: string;
-	label: string;
+	label?: string;
 	onChange: Function;
 }) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;

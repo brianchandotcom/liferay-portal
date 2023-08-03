@@ -16,6 +16,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%
 String cssClass = "cssClass";
 String editorName = "editorName";
+String info = "info"
 String inputEditorName = "inputEditorName";
 String randomNamespace = "randomNamespace";
 String placeholder = "placeholder";
@@ -45,6 +46,20 @@ boolean portletTitleBasedNavigation = true;
 	dismissible="<%= true %>"
 	displayType="info"
 	message='<%= LanguageUtil.get(request, "commerce-order-type-info") %>'
+	title='<%= LanguageUtil.get(request, "info") %>'
+/>
+
+<clay:alert
+	dismissible="<%= true %>"
+	displayType="info"
+	message='<%= LanguageUtil.get(request, (info == null) ? "a" : "b") %>'
+	title='<%= LanguageUtil.get(request, "info") %>'
+/>
+
+<clay:alert
+	dismissible="<%= true %>"
+	displayType="info"
+	message='<%= LanguageUtil.get(request, info) %>'
 	title='<%= LanguageUtil.get(request, "info") %>'
 />
 

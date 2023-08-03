@@ -7,10 +7,8 @@ package com.liferay.headless.builder.internal.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
-import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -34,41 +33,30 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	@GET
-	@Path("{any: .*}")
+	@Path("/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,
-			@Context Pagination pagination)
+			@Context Pagination pagination, @PathParam("path") String path)
 		throws Exception {
 
-		String endpointPath = StringUtil.removeSubstring(
-			PathUtil.removeBasePath(contextHttpServletRequest.getRequestURI()),
-			contextAPIApplication.getBaseURL());
+		return _get(
+			filterString, pagination, path,
+			APIApplication.Endpoint.Scope.COMPANY, null);
+	}
 
-		for (APIApplication.Endpoint endpoint :
-				contextAPIApplication.getEndpoints()) {
+	@GET
+	@Path("scopes/{scopeKey}/{path: .*}")
+	@Produces({"application/json", "application/xml"})
+	public Response get(
+			@QueryParam("filter") String filterString,
+			@Context Pagination pagination, @PathParam("path") String path,
+			@PathParam("scopeKey") String scopeKey)
+		throws Exception {
 
-			if ((endpoint.getScope() ==
-					APIApplication.Endpoint.Scope.COMPANY) &&
-				Objects.equals(endpoint.getPath(), endpointPath)) {
-
-				if (endpoint.getResponseSchema() == null) {
-					return Response.noContent(
-					).build();
-				}
-
-				return Response.ok(
-					_endpointHelper.getResponseEntityMapsPage(
-						contextCompany.getCompanyId(), endpoint, filterString,
-						pagination, null)
-				).build();
-			}
-		}
-
-		throw new NoSuchModelException(
-			String.format(
-				"Endpoint %s does not exist for %s", endpointPath,
-				contextAPIApplication.getTitle()));
+		return _get(
+			filterString, pagination, path, APIApplication.Endpoint.Scope.GROUP,
+			scopeKey);
 	}
 
 	@Context
@@ -79,6 +67,36 @@ public class HeadlessBuilderResourceImpl {
 
 	@Context
 	protected HttpServletRequest contextHttpServletRequest;
+
+	private Response _get(
+			String filterString, Pagination pagination, String path,
+			APIApplication.Endpoint.Scope scope, String scopeKey)
+		throws Exception {
+
+		for (APIApplication.Endpoint endpoint :
+				contextAPIApplication.getEndpoints()) {
+
+			if ((endpoint.getScope() == scope) &&
+				Objects.equals(endpoint.getPath(), "/" + path)) {
+
+				if (endpoint.getResponseSchema() == null) {
+					return Response.noContent(
+					).build();
+				}
+
+				return Response.ok(
+					_endpointHelper.getResponseEntityMapsPage(
+						contextCompany.getCompanyId(), endpoint, filterString,
+						pagination, scopeKey)
+				).build();
+			}
+		}
+
+		throw new NoSuchModelException(
+			String.format(
+				"Endpoint /%s does not exist for %s", path,
+				contextAPIApplication.getTitle()));
+	}
 
 	private final EndpointHelper _endpointHelper;
 

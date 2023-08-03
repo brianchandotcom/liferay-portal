@@ -55,7 +55,6 @@ public class NotificationRecipientSettingUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement2.setLong(
 					8, resultSet.getLong("notificationRecipientId"));
-
 				preparedStatement2.setString(9, "singleRecipient");
 				preparedStatement2.setString(10, StringPool.TRUE);
 

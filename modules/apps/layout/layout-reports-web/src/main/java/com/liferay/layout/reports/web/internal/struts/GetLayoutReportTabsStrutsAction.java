@@ -44,9 +44,9 @@ public class GetLayoutReportTabsStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeContent() || layout.isTypeAssetDisplay()) {
 			jsonArray.put(

@@ -7,6 +7,7 @@
 		"@clayui/panel": "3.103.1",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/object-js-components-web": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*"
 	},
 	"name": "@liferay/notification-web",

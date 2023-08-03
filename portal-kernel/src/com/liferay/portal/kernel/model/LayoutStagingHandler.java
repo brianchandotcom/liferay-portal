@@ -283,13 +283,13 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 			Layout.class);
 	private static final Set<String> _layoutRevisionMethodNames = new HashSet<>(
 		Arrays.asList(
-			"getColorScheme", "getColorSchemeId", "getCss", "getCssText",
-			"getDescription", "getDescriptionMap", "getKeywordsMap",
-			"getGroupId", "getHTMLTitle", "getIconImage", "getIconImageId",
-			"getKeywords", "getLayoutSet", "getModifiedDate", "getName",
-			"getNameMap", "getRobots", "getRobotsMap", "getTarget", "getTheme",
-			"getThemeId", "getThemeSetting", "getTitle", "getTitleMap",
-			"getTypeSettings", "getTypeSettingsProperties",
+			"getBreadcrumb", "getColorScheme", "getColorSchemeId", "getCss",
+			"getCssText", "getDescription", "getDescriptionMap",
+			"getKeywordsMap", "getGroupId", "getHTMLTitle", "getIconImage",
+			"getIconImageId", "getKeywords", "getLayoutSet", "getModifiedDate",
+			"getName", "getNameMap", "getRobots", "getRobotsMap", "getTarget",
+			"getTheme", "getThemeId", "getThemeSetting", "getTitle",
+			"getTitleMap", "getTypeSettings", "getTypeSettingsProperties",
 			"getTypeSettingsProperty", "isContentDisplayPage", "isCustomizable",
 			"isEscapedModel", "isIconImage", "isInheritLookAndFeel",
 			"setColorSchemeId", "setCss", "setDescription", "setDescriptionMap",

@@ -248,6 +248,13 @@ public class HypersonicDB extends BaseDB {
 									"@old-column@ set @nullable@;",
 								REWORD_TEMPLATE, template));
 					}
+					else {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set null;",
+								REWORD_TEMPLATE, template));
+					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);

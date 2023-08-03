@@ -26,6 +26,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -336,21 +337,19 @@ public class PostgreSQLDB extends BaseDB {
 
 					String nullable = template[template.length - 1];
 
-					if (!Validator.isBlank(nullable)) {
-						if (nullable.equals("not null")) {
-							line = line.concat(
-								StringUtil.replace(
-									"alter table @table@ alter column " +
-										"@old-column@ set not null;",
-									REWORD_TEMPLATE, template));
-						}
-						else {
-							line = line.concat(
-								StringUtil.replace(
-									"alter table @table@ alter column " +
-										"@old-column@ drop not null;",
-									REWORD_TEMPLATE, template));
-						}
+					if (Objects.equals(nullable, "not null")) {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set not null;",
+								REWORD_TEMPLATE, template));
+					}
+					else {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ drop not null;",
+								REWORD_TEMPLATE, template));
 					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {

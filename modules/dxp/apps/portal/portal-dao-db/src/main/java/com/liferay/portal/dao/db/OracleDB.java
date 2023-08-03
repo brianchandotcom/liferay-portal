@@ -419,40 +419,38 @@ public class OracleDB extends BaseDB {
 
 					String nullable = template[template.length - 1];
 
-					if (!Validator.isBlank(nullable)) {
-						boolean currentNullable = isNullable(
-							template[0], template[1]);
+					boolean currentNullable = isNullable(
+						template[0], template[1]);
 
+					if (!Validator.isBlank(nullable)) {
 						if ((nullable.equals("null") && currentNullable) ||
 							(nullable.equals("not null") && !currentNullable)) {
 
 							nullable = StringPool.BLANK;
 						}
 					}
-
-					line = StringUtil.replace(
-						"alter table @table@ modify @old-column@ @type@ " +
-							nullable + ";",
-						REWORD_TEMPLATE, template);
-
-					line = StringUtil.replace(line, " ;", ";");
+					else if (!currentNullable) {
+						nullable = "null";
+					}
 
 					String defaultValue = template[template.length - 2];
 
-					if (Validator.isBlank(defaultValue)) {
-						line = line.concat(
-							StringUtil.replace(
-								"alter table @table@ modify @old-column@ " +
-									"default null;",
-								REWORD_TEMPLATE, template));
+					if (!Validator.isBlank(defaultValue)) {
+						line = StringUtil.replace(
+							StringBundler.concat(
+								"alter table @table@ modify @old-column@ ",
+								"@type@ default @default@ ", nullable, ";"),
+							REWORD_TEMPLATE, template);
 					}
 					else {
-						line = line.concat(
-							StringUtil.replace(
-								"alter table @table@ modify @old-column@ " +
-									"default @default@;",
-								REWORD_TEMPLATE, template));
+						line = StringUtil.replace(
+							StringBundler.concat(
+								"alter table @table@ modify @old-column@ ",
+								"@type@ default null ", nullable, ";"),
+							REWORD_TEMPLATE, template);
 					}
+
+					line = StringUtil.replace(line, " ;", ";");
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);

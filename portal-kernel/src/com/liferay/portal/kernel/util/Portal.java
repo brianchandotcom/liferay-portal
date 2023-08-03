@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.InetAddress;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -776,8 +774,6 @@ public interface Portal {
 	public int getPortalLocalPort(boolean secure);
 
 	public Properties getPortalProperties();
-
-	public InetAddress getPortalServerInetAddress(boolean secure);
 
 	public int getPortalServerPort(boolean secure);
 

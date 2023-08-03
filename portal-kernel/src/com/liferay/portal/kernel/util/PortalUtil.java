@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.InetAddress;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -1175,10 +1173,6 @@ public class PortalUtil {
 
 	public static Properties getPortalProperties() {
 		return _portal.getPortalProperties();
-	}
-
-	public static InetAddress getPortalServerInetAddress(boolean secure) {
-		return _portal.getPortalServerInetAddress(secure);
 	}
 
 	public static int getPortalServerPort(boolean secure) {

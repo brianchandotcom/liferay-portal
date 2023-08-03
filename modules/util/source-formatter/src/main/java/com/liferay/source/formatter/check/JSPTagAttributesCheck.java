@@ -155,11 +155,10 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 				tagFullName.equals("clay:alert") &&
 				attributeName.equals("message")) {
 
-				Matcher languageUtilMatcher = _languageUtilPattern.matcher(
-					attributeValue);
+				matcher = _languageUtilPattern.matcher(attributeValue);
 
-				if (languageUtilMatcher.find()) {
-					String languageKey = languageUtilMatcher.group(1);
+				if (matcher.find()) {
+					String languageKey = matcher.group(1);
 
 					if (languageKey.matches("\"[^\"]+\"")) {
 						tag.putAttribute(

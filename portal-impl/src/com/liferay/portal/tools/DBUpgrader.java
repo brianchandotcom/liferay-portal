@@ -154,7 +154,7 @@ public class DBUpgrader {
 
 			InitUtil.registerContext();
 
-			upgradeModules();
+			upgradeModules(false);
 
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -217,10 +217,12 @@ public class DBUpgrader {
 		}
 	}
 
-	public static void upgradeModules() {
+	public static void upgradeModules(boolean autoUpgrade) {
 		_registerModuleServiceLifecycle("portal.initialized");
 
-		DependencyManagerSyncUtil.sync();
+		if (!autoUpgrade) {
+			DependencyManagerSyncUtil.sync();
+		}
 
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);

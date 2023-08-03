@@ -17,6 +17,6 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 %>
 
 <react:component
-	module="js/Import"
+	module="js/ImportFragments"
 	props="<%= importDisplayContext.getProps() %>"
 />

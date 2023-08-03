@@ -5,7 +5,7 @@
 
 import {useState} from 'react';
 
-export default function useControlledState(value) {
+export default function useControlledState<T>(value: T) {
 	const [nextValue, setNextValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
@@ -14,5 +14,5 @@ export default function useControlledState(value) {
 		setPreviousValue(value);
 	}
 
-	return [nextValue, setNextValue];
+	return [nextValue, setNextValue] as const;
 }

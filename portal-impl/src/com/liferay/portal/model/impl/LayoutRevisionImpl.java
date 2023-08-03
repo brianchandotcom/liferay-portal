@@ -52,7 +52,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 	@Override
 	public String getBreadcrumb(Locale locale) throws PortalException {
-		List<Layout> layouts = getAncestors();
+		List<Layout> layouts = _getAncestors();
 
 		StringBundler sb = new StringBundler((4 * layouts.size()) + 5);
 
@@ -67,7 +67,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		Collections.reverse(layouts);
 
 		for (Layout layout : layouts) {
-			sb.append(HtmlUtil.escape(layout.getName(locale)));
+			sb.append(HtmlUtil.escape(_getLayoutName(layout, locale)));
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.GREATER_THAN);
 			sb.append(StringPool.SPACE);
@@ -351,6 +351,24 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 
 		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
+	}
+
+	private List<Layout> _getAncestors() throws PortalException {
+		Layout layout = LayoutLocalServiceUtil.getLayout(getPlid());
+
+		return layout.getAncestors();
+	}
+
+	private String _getLayoutName(Layout layout, Locale locale) {
+		LayoutRevision layoutRevision =
+			LayoutRevisionLocalServiceUtil.fetchLatestLayoutRevision(
+				getLayoutSetBranchId(), layout.getPlid());
+
+		if (layoutRevision == null) {
+			return layout.getName(locale);
+		}
+
+		return layoutRevision.getName(locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

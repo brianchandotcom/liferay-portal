@@ -243,7 +243,7 @@ public class GCSStore implements Store, StoreAreaProcessor {
 			}
 		}
 		catch (StorageException storageException) {
-			_log.error("Error deleting objects at " + path, storageException);
+			_log.error("Unable to delete " + path, storageException);
 		}
 	}
 

@@ -129,6 +129,36 @@ const RichText = ({
 		);
 	};
 
+	const handleContentChange = (content) => {
+		if (currentValue[currentEditingLocale?.localeId] !== content) {
+			const newValue = {
+				...currentValue,
+				[currentEditingLocale.localeId]: content,
+			};
+
+			setCurrentValue(newValue);
+			setCurrentInternalValue(content);
+
+			const {availableLocales} = {
+				...transformAvailableLocalesAndValue({
+					availableLocales: currentAvailableLocales,
+					defaultLocale,
+					value: newValue,
+				}),
+			};
+
+			setCurrentAvailableLocales(availableLocales);
+
+			onChange({
+				target: {
+					value: localizedObjectField
+						? newValue
+						: newValue[currentEditingLocale?.localeId],
+				},
+			});
+		}
+	};
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -150,48 +180,14 @@ const RichText = ({
 						editorConfig={editorConfig}
 						name={name}
 						onBlur={onBlur}
-						onChange={(content) => {
-							if (
-								currentValue[currentEditingLocale?.localeId] !==
-								content
-							) {
-								const newValue = {
-									...currentValue,
-									[currentEditingLocale.localeId]: content,
-								};
-
-								setCurrentValue(newValue);
-								setCurrentInternalValue(content);
-
-								const {availableLocales} = {
-									...transformAvailableLocalesAndValue({
-										availableLocales: currentAvailableLocales,
-										defaultLocale,
-										value: newValue,
-									}),
-								};
-
-								setCurrentAvailableLocales(availableLocales);
-
-								onChange({
-									target: {
-										value: localizedObjectField
-											? newValue
-											: newValue[
-													currentEditingLocale
-														?.localeId
-											  ],
-									},
-								});
-							}
-						}}
+						onChange={(content) => handleContentChange(content)}
 						onFocus={onFocus}
 						onSetData={({
 							data: {dataValue: value},
 							editor: {mode},
 						}) => {
 							if (mode === 'source') {
-								onChange({target: {value}});
+								handleContentChange(value);
 							}
 						}}
 						readOnly={readOnly}

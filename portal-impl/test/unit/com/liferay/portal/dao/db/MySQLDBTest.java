@@ -36,6 +36,46 @@ public class MySQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnName() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder change column userName userNameTest " +
+				"varchar(75);\n",
+			buildSQL(
+				"alter_column_name DLFolder userName userNameTest " +
+					"VARCHAR(75);"));
+	}
+
+	@Test
+	public void testRewordAlterColumnNameNotNull() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder change column userName userNameTest " +
+				"varchar(75) not null;\n",
+			buildSQL(
+				"alter_column_name DLFolder userName userNameTest " +
+					"VARCHAR(75) not null;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnNameNull() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder change column userName userNameTest " +
+				"varchar(75) null;\n",
+			buildSQL(
+				"alter_column_name DLFolder userName userNameTest " +
+					"VARCHAR(75) null;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnNameWithDefault() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder change column userName userNameTest " +
+				"varchar(75) default 'test test' not null;\n",
+			buildSQL(
+				"alter_column_name DLFolder userName userNameTest " +
+					"VARCHAR(75) default 'test test' not null;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName varchar(75);\n",
@@ -84,6 +124,16 @@ public class MySQLDBTest extends BaseDBTestCase {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName varchar(75) null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) NULL;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeWithDefault() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder modify userName varchar(75) default 'test " +
+				"test' not null;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) default " +
+					"'test test' not null;"));
 	}
 
 	@Test

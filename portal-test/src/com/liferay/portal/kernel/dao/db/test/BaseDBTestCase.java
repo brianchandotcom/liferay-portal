@@ -36,6 +36,22 @@ public abstract class BaseDBTestCase {
 			buildSQL(_BOOLEAN_PATTERN_QUERY));
 	}
 
+	@Test
+	public void testRewordAlterColumnTypeWithDefaultNull() throws Exception {
+		try {
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) default " +
+					"'test test' null;");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Invalid alter column type statement",
+				illegalArgumentException.getMessage());
+		}
+	}
+
 	protected String buildSQL(String query) throws IOException, SQLException {
 		return db.buildSQL(query);
 	}

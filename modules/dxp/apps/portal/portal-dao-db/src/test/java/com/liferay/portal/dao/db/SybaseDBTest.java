@@ -49,28 +49,32 @@ public class SybaseDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordAlterColumnType() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userName varchar(75)\ngo\n",
+			"alter table DLFolder modify userName varchar(75);alter table " +
+				"DLFolder replace userName default null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeBigDecimal() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userId decimal(30, 16)\ngo\n",
+			"alter table DLFolder modify userId decimal(30, 16);alter table " +
+				"DLFolder replace userId default null;\n",
 			buildSQL("alter_column_type DLFolder userId BIGDECIMAL;"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userName varchar(75)\ngo\n",
+			"alter table DLFolder modify userName varchar(75);alter table " +
+				"DLFolder replace userName default null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNotNull() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userName varchar(75) not null;\n",
+			"alter table DLFolder modify userName varchar(75) not null;" +
+				"alter table DLFolder replace userName default null;\n",
 			buildSQL(
 				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
 	}
@@ -78,7 +82,8 @@ public class SybaseDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordAlterColumnTypeNotNullUpperCase() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userName varchar(75) not null;\n",
+			"alter table DLFolder modify userName varchar(75) not null;alter " +
+				"table DLFolder replace userName default null;\n",
 			buildSQL(
 				"alter_column_type DLFolder userName VARCHAR(75) NOT NULL;"));
 	}
@@ -86,15 +91,27 @@ public class SybaseDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userName varchar(75) null;\n",
+			"alter table DLFolder modify userName varchar(75) null;alter " +
+				"table DLFolder replace userName default null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNullUpperCase() throws Exception {
 		Assert.assertEquals(
-			"alter table DLFolder modify userName varchar(75) null;\n",
+			"alter table DLFolder modify userName varchar(75) null;alter " +
+				"table DLFolder replace userName default null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) NULL;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeWithDefault() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder modify userName varchar(75) not null;" +
+				"alter table DLFolder replace userName default 'test test';\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) default " +
+					"'test test' not null;"));
 	}
 
 	@Test

@@ -89,6 +89,17 @@ public class SQLServerDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeWithDefault() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName nvarchar(75) not " +
+				"null;alter table DLFolder add constraint userName_default " +
+					"default 'test test' for userName;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) default " +
+					"'test test' not null;"));
+	}
+
+	@Test
 	public void testRewordRenameTable() throws Exception {
 		Assert.assertEquals(
 			"exec sp_rename 'a', 'b';\n", buildSQL(RENAME_TABLE_QUERY));

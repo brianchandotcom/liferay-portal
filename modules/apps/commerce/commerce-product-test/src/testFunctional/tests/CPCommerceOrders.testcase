@@ -3050,6 +3050,88 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11737. If admin adds a product to the cart with a printed note, then the printed note still can be viewed after the cart checkout via headless API"
+	@priority = 5
+	test CanViewPrintedNoteAfterCartCheckoutViaHeadlessAPI {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a business account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Commerce Account",
+				accountType = "Business");
+
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("When the product 'ABS Sensor' with a printed note is added to the cart via API") {
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93015:10",
+				printedNote = "Test Print Note Content",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+		}
+
+		task ("Then the admin can view the printed note is added in the open order via API") {
+			var printedNote = CommerceJSONOrdersAPI.getOrderField(
+				email = "test@liferay.com",
+				jsonPath = "$.printedNote",
+				orderId = ${orderId},
+				parameter = "fields",
+				parameterValue = "printedNote",
+				password = "test");
+
+			TestUtils.assertEquals(
+				actual = ${printedNote},
+				expected = "Test Print Note Content");
+		}
+
+		task ("And the admin can view the printed note is added in the open order via UI") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+
+			CommerceOrders.viewOrdersEntry(printedNote = "Test Print Note Content");
+		}
+
+		task ("When the cart checkout is patched") {
+			CommerceJSONDeliveryCart._postCommerceCartCheckout(cartId = ${orderId});
+		}
+
+		task ("Then the admin can view the printed note is added in the placed order via API") {
+			var printedNote = CommerceJSONOrdersAPI.getOrderField(
+				email = "test@liferay.com",
+				jsonPath = "$.printedNote",
+				orderId = ${orderId},
+				parameter = "fields",
+				parameterValue = "printedNote",
+				password = "test");
+
+			TestUtils.assertEquals(
+				actual = ${printedNote},
+				expected = "Test Print Note Content");
+		}
+
+		task ("And the admin can view the printed note is added in the placed order via UI") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceOrders.viewOrdersEntry(printedNote = "Test Print Note Content");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11392. Can see timestamps from payment transaction history"
 	@priority = 3
 	test CanViewTimestampsInOrderTransactionHistory {

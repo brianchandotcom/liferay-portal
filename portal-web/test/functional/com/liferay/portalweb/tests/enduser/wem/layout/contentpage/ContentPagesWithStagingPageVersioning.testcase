@@ -21,7 +21,7 @@ definition {
 		}
 
 		task ("Activate local live staging with page versioning enabled") {
-			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
 			Staging.activateStagingCP(
 				pageVersioningEnabled = "true",

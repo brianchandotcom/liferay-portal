@@ -440,8 +440,6 @@ definition {
 
 		SelectFrameTop();
 
-		DataEngine.waitForAutoSave();
-
 		Button.clickPublish();
 
 		FormsAdminNavigator.gotoBack();
@@ -775,8 +773,6 @@ definition {
 		Button.clickAdd();
 
 		SelectFrameTop();
-
-		DataEngine.waitForAutoSave();
 
 		Button.clickPublish();
 

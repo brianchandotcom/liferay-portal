@@ -63,8 +63,26 @@ public class SXPBlueprintSearchRequestContributor
 			String string = (String)object;
 
 			if (!Validator.isBlank(string)) {
-				_enhanceWithExternalReferenceCode(
-					searchRequestBuilder, StringUtil.split(string));
+				String[] sxpBlueprintExternalReferenceCodes = StringUtil.split(
+					string);
+
+				for (String sxpBlueprintExternalReferenceCode :
+						sxpBlueprintExternalReferenceCodes) {
+
+					if (Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
+						continue;
+					}
+
+					SXPBlueprint sxpBlueprint =
+						_sxpBlueprintLocalService.
+							fetchSXPBlueprintByExternalReferenceCode(
+								sxpBlueprintExternalReferenceCode,
+								GetterUtil.getLong(
+									searchRequestBuilder.withSearchContextGet(
+										SearchContext::getCompanyId)));
+
+					_enhance(searchRequestBuilder, sxpBlueprint);
+				}
 			}
 		}
 		else if (object != null) {
@@ -85,107 +103,65 @@ public class SXPBlueprintSearchRequestContributor
 			_log.debug("Search experiences blueprint ID " + object);
 		}
 
+		long[] sxpBlueprintIds = null;
+
 		if (object instanceof Number) {
-			_enhanceWithId(searchRequestBuilder, GetterUtil.getLong(object));
+			sxpBlueprintIds = new long[] {GetterUtil.getLong(object)};
 		}
 		else if (object instanceof String) {
 			String string = (String)object;
 
 			if (!Validator.isBlank(string)) {
-				_enhanceWithId(
-					searchRequestBuilder,
-					GetterUtil.getLongValues(StringUtil.split(string)));
+				sxpBlueprintIds = GetterUtil.getLongValues(
+					StringUtil.split(string));
 			}
 		}
 		else if (object != null) {
 			throw new IllegalArgumentException(
 				"Invalid search experiences blueprint ID " + object);
 		}
-	}
 
-	private void _enhanceWithExternalReferenceCode(
-		SearchRequestBuilder searchRequestBuilder,
-		String... sxpBlueprintExternalReferenceCodes) {
-
-		RuntimeException runtimeException = new RuntimeException();
-
-		for (String sxpBlueprintExternalReferenceCode :
-				sxpBlueprintExternalReferenceCodes) {
-
-			if (Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
-				continue;
-			}
-
-			SXPBlueprint sxpBlueprint =
-				_sxpBlueprintLocalService.
-					fetchSXPBlueprintByExternalReferenceCode(
-						sxpBlueprintExternalReferenceCode,
-						GetterUtil.getLong(
-							searchRequestBuilder.withSearchContextGet(
-								SearchContext::getCompanyId)));
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Search experiences blueprint " + sxpBlueprint);
-			}
-
-			if (sxpBlueprint != null) {
-				try {
-					_sxpBlueprintSearchRequestEnhancer.enhance(
-						searchRequestBuilder, sxpBlueprint);
+		if (sxpBlueprintIds != null) {
+			for (long sxpBlueprintId : sxpBlueprintIds) {
+				if (sxpBlueprintId == 0) {
+					continue;
 				}
-				catch (Exception exception) {
-					runtimeException.addSuppressed(exception);
-				}
-			}
-		}
 
-		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(runtimeException);
-			}
-		}
+				SXPBlueprint sxpBlueprint =
+					_sxpBlueprintLocalService.fetchSXPBlueprint(sxpBlueprintId);
 
-		if (SXPExceptionUtil.hasErrors(runtimeException)) {
-			throw runtimeException;
+				_enhance(searchRequestBuilder, sxpBlueprint);
+			}
 		}
 	}
 
-	private void _enhanceWithId(
-		SearchRequestBuilder searchRequestBuilder, long... sxpBlueprintIds) {
+	private void _enhance(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
-		RuntimeException runtimeException = new RuntimeException();
+		if (_log.isDebugEnabled()) {
+			_log.debug("Search experiences blueprint " + sxpBlueprint);
+		}
 
-		for (long sxpBlueprintId : sxpBlueprintIds) {
-			if (sxpBlueprintId == 0) {
-				continue;
-			}
-
-			SXPBlueprint sxpBlueprint =
-				_sxpBlueprintLocalService.fetchSXPBlueprint(sxpBlueprintId);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Search experiences blueprint " + sxpBlueprint);
-			}
+		if (sxpBlueprint != null) {
+			RuntimeException runtimeException = new RuntimeException();
 
 			try {
-				if (sxpBlueprint != null) {
-					_sxpBlueprintSearchRequestEnhancer.enhance(
-						searchRequestBuilder, sxpBlueprint);
-				}
+				_sxpBlueprintSearchRequestEnhancer.enhance(
+					searchRequestBuilder, sxpBlueprint);
 			}
 			catch (Exception exception) {
 				runtimeException.addSuppressed(exception);
 			}
-		}
 
-		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(runtimeException);
+			if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(runtimeException);
+				}
 			}
-		}
 
-		if (SXPExceptionUtil.hasErrors(runtimeException)) {
-			throw runtimeException;
+			if (SXPExceptionUtil.hasErrors(runtimeException)) {
+				throw runtimeException;
+			}
 		}
 	}
 

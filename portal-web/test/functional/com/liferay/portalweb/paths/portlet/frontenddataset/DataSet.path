@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SORT_ICON</td>
+	<td>//button[contains(text(),'${key_labelName}')]//span[contains(@class,'inline-item inline-item-after')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_KEBAB_MENU</td>
 	<td>//div[contains(@class,'dnd-tbody')]//*[contains(text(),'${key_entry}')]/parent::div/following-sibling::div//button | //div[contains(@class, 'dnd-td') and contains(., '${key_entry}')]/following-sibling::div//button</td>
 	<td></td>

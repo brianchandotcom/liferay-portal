@@ -123,15 +123,14 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<SocialBookmark> serviceReference, String service) {
+			ServiceReference<SocialBookmark> serviceReference, String type) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<SocialBookmark> serviceReference, String service) {
+			ServiceReference<SocialBookmark> serviceReference, String type) {
 
-			_socialBookmarks.remove(
-				(String)serviceReference.getProperty("social.bookmarks.type"));
+			_socialBookmarks.remove(type);
 
 			_bundleContext.ungetService(serviceReference);
 		}

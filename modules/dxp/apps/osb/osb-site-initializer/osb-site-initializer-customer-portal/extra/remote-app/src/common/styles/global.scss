@@ -3,17 +3,17 @@
 @import 'variables';
 
 .okta-status-icon {
-	width: 12px;
-	height: 12px;
 	border-radius: 50%;
+	height: 12px;
+	width: 12px;
 }
 
 .okta-status {
 	button {
-		display: flex;
 		align-items: center;
-		gap: 4px;
 		color: white;
+		display: flex;
+		gap: 4px;
 	}
 
 	button:hover {

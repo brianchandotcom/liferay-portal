@@ -70,6 +70,16 @@ public class ObjectRelationshipSerDes {
 			sb.append("\"");
 		}
 
+		if (objectRelationship.getEdge() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"edge\": ");
+
+			sb.append(objectRelationship.getEdge());
+		}
+
 		if (objectRelationship.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -282,6 +292,13 @@ public class ObjectRelationshipSerDes {
 				String.valueOf(objectRelationship.getDeletionType()));
 		}
 
+		if (objectRelationship.getEdge() == null) {
+			map.put("edge", null);
+		}
+		else {
+			map.put("edge", String.valueOf(objectRelationship.getEdge()));
+		}
+
 		if (objectRelationship.getId() == null) {
 			map.put("id", null);
 		}
@@ -442,6 +459,11 @@ public class ObjectRelationshipSerDes {
 					objectRelationship.setDeletionType(
 						ObjectRelationship.DeletionType.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "edge")) {
+				if (jsonParserFieldValue != null) {
+					objectRelationship.setEdge((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

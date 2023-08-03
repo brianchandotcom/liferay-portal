@@ -653,6 +653,32 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected String restContextPath;
 
+	public String getRootObjectDefinitionExternalReferenceCode() {
+		return rootObjectDefinitionExternalReferenceCode;
+	}
+
+	public void setRootObjectDefinitionExternalReferenceCode(
+		String rootObjectDefinitionExternalReferenceCode) {
+
+		this.rootObjectDefinitionExternalReferenceCode =
+			rootObjectDefinitionExternalReferenceCode;
+	}
+
+	public void setRootObjectDefinitionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			rootObjectDefinitionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			rootObjectDefinitionExternalReferenceCode =
+				rootObjectDefinitionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String rootObjectDefinitionExternalReferenceCode;
+
 	public String getScope() {
 		return scope;
 	}

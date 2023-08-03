@@ -185,6 +185,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		objectDefinition.setPanelAppOrder(regex);
 		objectDefinition.setPanelCategoryKey(regex);
 		objectDefinition.setRestContextPath(regex);
+		objectDefinition.setRootObjectDefinitionExternalReferenceCode(regex);
 		objectDefinition.setScope(regex);
 		objectDefinition.setStorageType(regex);
 		objectDefinition.setTitleObjectFieldName(regex);
@@ -205,6 +206,9 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
 		Assert.assertEquals(regex, objectDefinition.getPanelCategoryKey());
 		Assert.assertEquals(regex, objectDefinition.getRestContextPath());
+		Assert.assertEquals(
+			regex,
+			objectDefinition.getRootObjectDefinitionExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getScope());
 		Assert.assertEquals(regex, objectDefinition.getStorageType());
 		Assert.assertEquals(regex, objectDefinition.getTitleObjectFieldName());
@@ -1328,6 +1332,20 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"rootObjectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectDefinition.
+						getRootObjectDefinitionExternalReferenceCode() ==
+							null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("scope", additionalAssertFieldName)) {
 				if (objectDefinition.getScope() == null) {
 					valid = false;
@@ -1830,6 +1848,22 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getRestContextPath(),
 						objectDefinition2.getRestContextPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"rootObjectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.
+							getRootObjectDefinitionExternalReferenceCode(),
+						objectDefinition2.
+							getRootObjectDefinitionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2531,6 +2565,55 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals(
+				"rootObjectDefinitionExternalReferenceCode")) {
+
+			Object object =
+				objectDefinition.getRootObjectDefinitionExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("scope")) {
 			Object object = objectDefinition.getScope();
 
@@ -2750,6 +2833,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				portlet = RandomTestUtil.randomBoolean();
 				restContextPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				rootObjectDefinitionExternalReferenceCode =
+					StringUtil.toLowerCase(RandomTestUtil.randomString());
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				storageType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

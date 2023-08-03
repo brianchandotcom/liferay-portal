@@ -17,6 +17,7 @@ import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.OSDetector;
+import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -4251,9 +4252,25 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			@Override
 			public boolean evaluate() throws Exception {
+				String metaCharactersRegex =
+					"[\\\\\\^\\$\\{\\}\\[\\]\\(\\)\\.\\*\\+\\?\\|" +
+						"\\<\\>\\-\\&\\%]";
+
+				String textMatchesPattern =
+					"(\\(\\?i\\))?(\\.\\*|\\^\\(\\(\\?\\!)?(.*?)(" +
+						"\\.\\*|\\)\\.\\)\\*\\$)?$";
+
 				String text = getText(locator);
 
-				return text.matches(regex);
+				String value = RegexUtil.getGroup(regex, textMatchesPattern, 3);
+
+				String escapedValue = StringUtil.regexReplaceAll(
+					value, metaCharactersRegex, "\\\\$0");
+
+				String formattedRegex = StringUtil.replace(
+					regex, value, escapedValue);
+
+				return text.matches(formattedRegex);
 			}
 
 		};

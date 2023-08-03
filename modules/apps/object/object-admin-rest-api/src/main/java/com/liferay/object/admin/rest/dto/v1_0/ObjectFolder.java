@@ -248,6 +248,36 @@ public class ObjectFolder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
+	@Valid
+	public ObjectFolderItem[] getObjectFolderItems() {
+		return objectFolderItems;
+	}
+
+	public void setObjectFolderItems(ObjectFolderItem[] objectFolderItems) {
+		this.objectFolderItems = objectFolderItems;
+	}
+
+	@JsonIgnore
+	public void setObjectFolderItems(
+		UnsafeSupplier<ObjectFolderItem[], Exception>
+			objectFolderItemsUnsafeSupplier) {
+
+		try {
+			objectFolderItems = objectFolderItemsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectFolderItem[] objectFolderItems;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -362,6 +392,26 @@ public class ObjectFolder implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (objectFolderItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectFolderItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectFolderItems.length; i++) {
+				sb.append(String.valueOf(objectFolderItems[i]));
+
+				if ((i + 1) < objectFolderItems.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

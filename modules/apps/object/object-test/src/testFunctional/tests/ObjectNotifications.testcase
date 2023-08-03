@@ -186,8 +186,8 @@ definition {
 				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
 
 			Click(
-				key_objectLabel = "Custom Object B 183441",
-				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS_SELECT_OBJECT");
+				key_optionName = "Custom Object B 183441",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
 
 			Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
 		}

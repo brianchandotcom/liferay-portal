@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.db.partition;
 
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -13,6 +15,17 @@ import com.liferay.portal.kernel.util.PropsUtil;
  * @author Luis Ortiz
  */
 public class DBPartition {
+
+	public static boolean isPartitionedModel(Class<?> clazz) {
+		if (isPartitionEnabled() &&
+			(ShardedModel.class.isAssignableFrom(clazz) ||
+			 ClassName.class.isAssignableFrom(clazz))) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	public static boolean isPartitionEnabled() {
 		if (PortalRunMode.isTestMode()) {

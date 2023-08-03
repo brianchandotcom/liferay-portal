@@ -18,7 +18,7 @@ UpgradeJavaCookieUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) |
 UpgradeJavaExtractTextMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class |
 UpgradeJavaFDSActionProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface |
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface |
-UpgradeJavaFacetedSearcherCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search(` method call. |
+UpgradeJavaFacetedSearcherCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call. |
 UpgradeJavaGetFileMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile' |
 UpgradeJavaGetLayoutDisplayPageProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName |
 UpgradeJavaIndexerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace Indexer by Indexer<?> |

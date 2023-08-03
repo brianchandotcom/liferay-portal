@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.Theme;
@@ -221,8 +220,6 @@ import java.awt.image.RenderedImage;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import java.lang.reflect.Method;
 
 import java.net.IDN;
 import java.net.Inet4Address;
@@ -1411,66 +1408,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return groupIds;
-	}
-
-	@Override
-	public BaseModel<?> getBaseModel(ResourcePermission resourcePermission)
-		throws PortalException {
-
-		String modelName = resourcePermission.getName();
-
-		return getBaseModel(modelName, resourcePermission.getPrimKey());
-	}
-
-	@Override
-	public BaseModel<?> getBaseModel(String modelName, String primKey)
-		throws PortalException {
-
-		if (!modelName.contains(".model.")) {
-			return null;
-		}
-
-		String[] parts = StringUtil.split(modelName, CharPool.PERIOD);
-
-		if ((parts.length <= 2) || !parts[parts.length - 2].equals("model")) {
-			return null;
-		}
-
-		parts[parts.length - 2] = "service";
-
-		String serviceName =
-			StringUtil.merge(parts, StringPool.PERIOD) + "LocalServiceUtil";
-		String methodName = "get" + parts[parts.length - 1];
-
-		Method method = null;
-
-		try {
-			Class<?> serviceUtil = Class.forName(serviceName);
-
-			if (Validator.isNumber(primKey)) {
-				method = serviceUtil.getMethod(
-					methodName, new Class<?>[] {Long.TYPE});
-
-				return (BaseModel<?>)method.invoke(null, Long.valueOf(primKey));
-			}
-
-			method = serviceUtil.getMethod(
-				methodName, new Class<?>[] {String.class});
-
-			return (BaseModel<?>)method.invoke(null, primKey);
-		}
-		catch (Exception exception) {
-			Throwable throwable = exception.getCause();
-
-			if (throwable instanceof PortalException) {
-				throw (PortalException)throwable;
-			}
-			else if (throwable instanceof SystemException) {
-				throw (SystemException)throwable;
-			}
-
-			throw new SystemException(throwable);
-		}
 	}
 
 	@Override

@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
@@ -348,37 +347,6 @@ public class PortalUtil {
 
 	public static long[] getAncestorSiteGroupIds(long groupId) {
 		return _portal.getAncestorSiteGroupIds(groupId);
-	}
-
-	/**
-	 * Returns the base model instance for the resource permission.
-	 *
-	 * @param  resourcePermission the resource permission
-	 * @return the base model instance, or <code>null</code> if the resource
-	 *         permission does not have a base model instance (such as if it's a
-	 *         portlet)
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static BaseModel<?> getBaseModel(
-			ResourcePermission resourcePermission)
-		throws PortalException {
-
-		return _portal.getBaseModel(resourcePermission);
-	}
-
-	/**
-	 * Returns the base model instance for the model name and primary key.
-	 *
-	 * @param  modelName the fully qualified class name of the model
-	 * @param  primKey the primary key of the model instance to get
-	 * @return the base model instance, or <code>null</code> if the model does
-	 *         not have a base model instance (such as if it's a portlet)
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static BaseModel<?> getBaseModel(String modelName, String primKey)
-		throws PortalException {
-
-		return _portal.getBaseModel(modelName, primKey);
 	}
 
 	public static List<Group> getBrowsableScopeGroups(

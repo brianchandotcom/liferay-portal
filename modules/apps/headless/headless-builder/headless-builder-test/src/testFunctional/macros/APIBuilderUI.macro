@@ -25,7 +25,12 @@ definition {
 			panel = "Control Panel",
 			portlet = "API Builder");
 
-		Click(locator1 = "APIBuilder#ADD_NEW_API_APPLICATION");
+		if (isSet(addByPlus)) {
+			Click(locator1 = "Button#PLUS");
+		}
+		else {
+			Click(locator1 = "APIBuilder#ADD_NEW_API_APPLICATION");
+		}
 
 		Type(
 			key_fieldLabel = "Title",
@@ -46,6 +51,12 @@ definition {
 			locator1 = "APIBuilder#DROPDOWN_MENU");
 
 		Click(locator1 = "APIBuilder#EDIT_BUTTON");
+	}
+
+	macro publishApplication {
+		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${key_title});
+
+		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
 	}
 
 }

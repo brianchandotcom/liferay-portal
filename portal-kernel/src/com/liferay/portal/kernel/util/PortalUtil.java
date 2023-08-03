@@ -641,12 +641,6 @@ public class PortalUtil {
 			groupId, checkContentSharingWithChildrenEnabled);
 	}
 
-	public static List<Group> getCurrentAndAncestorSiteGroups(long[] groupIds)
-		throws PortalException {
-
-		return _portal.getCurrentAndAncestorSiteGroups(groupIds);
-	}
-
 	public static List<Group> getCurrentAndAncestorSiteGroups(
 			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
 		throws PortalException {

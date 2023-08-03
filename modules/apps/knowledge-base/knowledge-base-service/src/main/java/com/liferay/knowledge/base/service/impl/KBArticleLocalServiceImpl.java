@@ -2321,13 +2321,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
 	}
 
-	private void _validatePriority(double priority) throws PortalException {
-		if (priority <= 0) {
-			throw new KBArticlePriorityException(
-				"Invalid priority " + priority);
-		}
-	}
-
 	private void _validate(
 			String title, String content, String sourceURL, Date displayDate,
 			Date expirationDate, Date reviewDate)
@@ -2454,6 +2447,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
 			throw new KBArticleStatusException();
+		}
+	}
+
+	private void _validatePriority(double priority) throws PortalException {
+		if (priority <= 0) {
+			throw new KBArticlePriorityException(
+				"Invalid priority " + priority);
 		}
 	}
 

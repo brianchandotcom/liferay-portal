@@ -149,7 +149,12 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								%>
 
 								<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
-									<div class="<%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></div>
+									<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>">
+										<clay:icon
+											aria-label="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"
+											symbol="<%= threadPriority[1] %>"
+										/>
+									</span>
 								</c:if>
 
 								<c:if test="<%= thread.isQuestion() %>">

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowInstance;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowNode;
+import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -76,7 +77,8 @@ public class WorkflowInstanceViewDisplayContextTest {
 		_workflowInstanceViewDisplayContext = Mockito.spy(
 			new WorkflowInstanceViewDisplayContext(
 				_liferayPortletRequest, _liferayPortletResponse,
-				Mockito.mock(WorkflowComparatorFactory.class)));
+				Mockito.mock(WorkflowComparatorFactory.class),
+				Mockito.mock(WorkflowLogManager.class)));
 
 		_language = Mockito.mock(Language.class);
 

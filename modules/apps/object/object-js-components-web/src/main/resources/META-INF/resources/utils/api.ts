@@ -189,6 +189,17 @@ export async function getAllObjectFolders() {
 	);
 }
 
+export async function getFolderByERC(folderERC: string) {
+	const folderResponse = await fetch(
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folderERC}`,
+		{method: 'GET'}
+	);
+
+	const folder = (await folderResponse.json()) as ObjectFolder;
+
+	return folder;
+}
+
 export async function getList<T>(url: string) {
 	const {items} = await fetchJSON<{items: T[]}>(url);
 

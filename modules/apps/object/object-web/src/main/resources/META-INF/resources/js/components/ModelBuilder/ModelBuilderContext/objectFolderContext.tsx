@@ -10,6 +10,7 @@ import {
 	LeftSidebarItemType,
 	ObjectDefinitionNodeData,
 	ObjectRelationshipEdgeData,
+	RightSidebarType,
 	TAction,
 	TState,
 } from '../types';
@@ -34,7 +35,7 @@ const initialState = {
 	leftSidebarItems: [] as LeftSidebarItemType[],
 	objectDefinitions: [] as ObjectDefinition[],
 	objectFolders: [] as ObjectFolder[],
-	rightSidebarType: 'empty',
+	rightSidebarType: 'empty' as RightSidebarType,
 	selectedFolderERC: '',
 } as TState;
 

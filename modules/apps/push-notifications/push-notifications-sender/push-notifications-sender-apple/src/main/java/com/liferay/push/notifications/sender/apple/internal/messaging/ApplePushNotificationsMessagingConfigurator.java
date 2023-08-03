@@ -5,15 +5,15 @@
 
 package com.liferay.push.notifications.sender.apple.internal.messaging;
 
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -25,22 +25,19 @@ public class ApplePushNotificationsMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_applePushNotificationsResponseMessageListener =
-			new ApplePushNotificationsResponseMessageListener();
-
-		_destination.register(_applePushNotificationsResponseMessageListener);
+		_serviceRegistration = bundleContext.registerService(
+			MessageListener.class,
+			new ApplePushNotificationsResponseMessageListener(),
+			MapUtil.singletonDictionary(
+				"destination.name",
+				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_destination.unregister(_applePushNotificationsResponseMessageListener);
+		_serviceRegistration.unregister();
 	}
 
-	private MessageListener _applePushNotificationsResponseMessageListener;
-
-	@Reference(
-		target = "(destination.name= " + PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE + ")"
-	)
-	private Destination _destination;
+	private ServiceRegistration<MessageListener> _serviceRegistration;
 
 }

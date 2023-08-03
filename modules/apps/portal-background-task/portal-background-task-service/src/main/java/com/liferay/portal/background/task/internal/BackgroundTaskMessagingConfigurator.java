@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -58,26 +59,36 @@ public class BackgroundTaskMessagingConfigurator {
 			backgroundTaskManagerConfiguration.workersCoreSize(),
 			backgroundTaskManagerConfiguration.workersMaxSize());
 
-		backgroundTaskDestination.register(
-			new BackgroundTaskMessageListener(
-				_backgroundTaskExecutorRegistry, _backgroundTaskLocalService,
-				_backgroundTaskStatusRegistry,
-				_backgroundTaskThreadLocalManager, _lockManager, _messageBus));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class,
+				new BackgroundTaskMessageListener(
+					_backgroundTaskExecutorRegistry,
+					_backgroundTaskLocalService, _backgroundTaskStatusRegistry,
+					_backgroundTaskThreadLocalManager, _lockManager,
+					_messageBus),
+				MapUtil.singletonDictionary(
+					"destination.name", backgroundTaskDestination.getName())));
 
 		Destination backgroundTaskStatusDestination = _registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 			DestinationNames.BACKGROUND_TASK_STATUS, 1, 1);
 
-		backgroundTaskStatusDestination.register(
-			new BackgroundTaskStatusMessageListener(
-				_backgroundTaskLocalService, _backgroundTaskStatusRegistry,
-				_lockManager, _roleLocalService, _userLocalService,
-				_userNotificationEventLocalService));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class,
+				new BackgroundTaskStatusMessageListener(
+					_backgroundTaskLocalService, _backgroundTaskStatusRegistry,
+					_lockManager, _roleLocalService, _userLocalService,
+					_userNotificationEventLocalService),
+				MapUtil.singletonDictionary(
+					"destination.name",
+					backgroundTaskStatusDestination.getName())));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<Destination> serviceRegistration :
+		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
 			serviceRegistration.unregister();
@@ -130,7 +141,7 @@ public class BackgroundTaskMessagingConfigurator {
 	@Reference
 	private RoleLocalService _roleLocalService;
 
-	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 
 	@Reference

@@ -5,10 +5,17 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -17,15 +24,31 @@ public class GlobalMessageBusEventListener implements MessageBusEventListener {
 
 	@Override
 	public void destinationAdded(Destination destination) {
-		if (!_ignoredDestinations.contains(destination.getName())) {
-			destination.register(_messageListener);
+		String destinationName = destination.getName();
+
+		if (!_ignoredDestinations.contains(destinationName)) {
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			_serviceRegistrationsMap.put(
+				destinationName,
+				bundleContext.registerService(
+					MessageListener.class, _messageListener,
+					MapUtil.singletonDictionary(
+						"destination.name", destinationName)));
 		}
 	}
 
 	@Override
 	public void destinationRemoved(Destination destination) {
-		if (!_ignoredDestinations.contains(destination.getName())) {
-			destination.unregister(_messageListener);
+		String destinationName = destination.getName();
+
+		if (!_ignoredDestinations.contains(destinationName)) {
+			ServiceRegistration<MessageListener> serviceRegistration =
+				_serviceRegistrationsMap.remove(destinationName);
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
+			}
 		}
 	}
 
@@ -39,5 +62,7 @@ public class GlobalMessageBusEventListener implements MessageBusEventListener {
 
 	private Set<String> _ignoredDestinations;
 	private MessageListener _messageListener;
+	private final Map<String, ServiceRegistration<MessageListener>>
+		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

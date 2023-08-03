@@ -5,17 +5,10 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import java.text.SimpleDateFormat;
 
@@ -85,29 +78,12 @@ public class CopyrightCheck extends BaseFileCheck {
 				}
 			}
 
-			String rootDirName = SourceUtil.getRootDirName(absolutePath);
+			for (String currentBranchAddedFileNames :
+					GitUtil.getCurrentBranchAddedFileNames(
+						sourceFormatterArgs.getBaseDirName(),
+						sourceFormatterArgs.getGitWorkingBranchName())) {
 
-			if (Validator.isNull(rootDirName)) {
-				return content;
-			}
-
-			String portalBranchName = getAttributeValue(
-				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
-
-			URL url = SourceFormatterUtil.getPortalGitURL(
-				absolutePath.substring(rootDirName.length()), portalBranchName);
-
-			try {
-				HttpURLConnection httpURLConnection =
-					(HttpURLConnection)url.openConnection();
-
-				httpURLConnection.setConnectTimeout(5000);
-				httpURLConnection.setReadTimeout(5000);
-				httpURLConnection.setRequestMethod(HttpMethods.HEAD);
-
-				if (httpURLConnection.getResponseCode() !=
-						HttpURLConnection.HTTP_OK) {
-
+				if (absolutePath.endsWith(currentBranchAddedFileNames)) {
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 						"yyyy");
 
@@ -116,15 +92,10 @@ public class CopyrightCheck extends BaseFileCheck {
 					String year = s.substring(0, 4);
 
 					if (!year.equals(currentYear)) {
-						content = StringUtil.replaceFirst(
+						return StringUtil.replaceFirst(
 							content, year, currentYear, x + 35);
 					}
 				}
-
-				httpURLConnection.disconnect();
-			}
-			catch (Exception exception) {
-				addMessage(fileName, exception.getMessage());
 			}
 		}
 

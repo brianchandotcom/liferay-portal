@@ -19,8 +19,8 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.9"
-	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.47"
+	api group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.10"
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }

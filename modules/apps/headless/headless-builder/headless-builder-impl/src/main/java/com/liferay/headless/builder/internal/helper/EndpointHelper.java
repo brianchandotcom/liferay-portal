@@ -11,7 +11,7 @@ import com.liferay.headless.builder.internal.odata.filter.expression.APISchemaTr
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
-import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
+import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;

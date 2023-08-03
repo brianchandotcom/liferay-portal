@@ -16,7 +16,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
 import com.liferay.object.rest.internal.odata.filter.expression.field.predicate.provider.FieldPredicateProviderTracker;
 import com.liferay.object.rest.internal.util.BinaryExpressionConverterUtil;
-import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
+import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;

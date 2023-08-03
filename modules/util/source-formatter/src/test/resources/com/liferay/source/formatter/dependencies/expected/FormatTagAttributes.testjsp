@@ -52,14 +52,7 @@ boolean portletTitleBasedNavigation = true;
 <clay:alert
 	dismissible="<%= true %>"
 	displayType="info"
-	message='<%= (info == null) ? "a" : "b" %>'
-	title='<%= LanguageUtil.get(request, "info") %>'
-/>
-
-<clay:alert
-	dismissible="<%= true %>"
-	displayType="info"
-	message="<%= info %>"
+	message='<%= "KEY_" + (info == null) ? "a" : "b" %>'
 	title='<%= LanguageUtil.get(request, "info") %>'
 />
 

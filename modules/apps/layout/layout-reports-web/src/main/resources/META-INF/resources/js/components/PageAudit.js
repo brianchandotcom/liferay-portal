@@ -34,16 +34,16 @@ export default function PageAudit({panelIsOpen}) {
 	}
 
 	return (
-		<Body
+		<PageAuditBody
 			segments={data.segmentExperienceSelectorData}
 			tabs={data.tabsData}
 		>
 			<LayoutReports />
-		</Body>
+		</PageAuditBody>
 	);
 }
 
-const Body = ({children, segments, tabs}) => {
+export function PageAuditBody({children, segments, tabs}) {
 	const [activeTab, setActiveTab] = useState(0);
 	const {selectedIssue} = useContext(StoreStateContext);
 
@@ -103,4 +103,4 @@ const Body = ({children, segments, tabs}) => {
 			)}
 		</>
 	);
-};
+}

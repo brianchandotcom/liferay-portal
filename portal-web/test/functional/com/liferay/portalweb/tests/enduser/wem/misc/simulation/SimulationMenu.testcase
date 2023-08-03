@@ -317,4 +317,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in widget page."
+	@priority = 4
+	test ViewInfoMessageWhenPreviewWidgetPage {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a widget page") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = ${randomSiteName},
+				operator = "contains",
+				segmentName = "Email Address Segment",
+				text = "liferay");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the site administrator previews the widget page by Anyone segment") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Anyone\".");
+		}
+
+		task ("When the site administrator previews the content page by new segment") {
+			MobileDevice.previewBy(segment = "Email Address Segment");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Email Address Segment\".");
+		}
+	}
+
 }

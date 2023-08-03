@@ -10,6 +10,10 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_time_page") + StringPool.UNDERLINE;
 
+if (!GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:useNamespace"), true)) {
+	namespace = StringPool.BLANK;
+}
+
 String amPmParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:amPmParam"));
 int amPmValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:amPmValue"));
 String autoComplete = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:autoComplete"));

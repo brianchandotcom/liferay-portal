@@ -139,6 +139,8 @@ components:
                 restContextPath:
                     readOnly: true
                     type: string
+                rootObjectDefinitionExternalReferenceCode:
+                    type: string
                 scope:
                     type: string
                 status:
@@ -375,6 +377,8 @@ components:
                 deletionType:
                     enum: [cascade, disassociate, prevent]
                     type: string
+                edge:
+                    type: boolean
                 id:
                     format: int64
                     readOnly: true

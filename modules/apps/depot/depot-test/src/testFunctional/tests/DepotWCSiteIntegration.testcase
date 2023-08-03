@@ -270,6 +270,10 @@ definition {
 
 		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
+		Refresh();
+
+		WaitForPageLoad();
+
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(

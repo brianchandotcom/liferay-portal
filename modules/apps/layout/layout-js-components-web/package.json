@@ -3,9 +3,7 @@
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
-		"prop-types": "15.7.2",
-		"react": "16.12.0",
-		"uuid": "9.0.0"
+		"react": "16.12.0"
 	},
 	"main": "js/index.js",
 	"name": "@liferay/layout-js-components-web",

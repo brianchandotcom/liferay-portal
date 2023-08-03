@@ -6,10 +6,13 @@
 import {ReactElement} from 'react';
 
 import type {Atom} from '@liferay/frontend-js-state-web';
-
+export type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 export const activeLanguageIdsAtom: Atom<any>;
 
 export {default as ClientExtension} from './ClientExtension';
+export {default as FieldBase} from './forms/common/FieldBase';
+export {default as FieldFeedback} from './forms/common/FieldFeedback';
+export {default as InputLocalized} from './forms/input/InputLocalized';
 export {
 	default as LearnMessage,
 	LearnResourcesContext,

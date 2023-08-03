@@ -1,0 +1,10 @@
+@import 'atlas-variables';
+
+.field-feedback {
+	color: $secondary;
+	font-size: 0.875rem;
+
+	div:first-child {
+		margin-top: 0.25rem;
+	}
+}

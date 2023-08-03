@@ -286,6 +286,27 @@ public interface ObjectRelationshipModel
 	public void setDBTableName(String dbTableName);
 
 	/**
+	 * Returns the edge of this object relationship.
+	 *
+	 * @return the edge of this object relationship
+	 */
+	public boolean getEdge();
+
+	/**
+	 * Returns <code>true</code> if this object relationship is edge.
+	 *
+	 * @return <code>true</code> if this object relationship is edge; <code>false</code> otherwise
+	 */
+	public boolean isEdge();
+
+	/**
+	 * Sets whether this object relationship is edge.
+	 *
+	 * @param edge the edge of this object relationship
+	 */
+	public void setEdge(boolean edge);
+
+	/**
 	 * Returns the label of this object relationship.
 	 *
 	 * @return the label of this object relationship

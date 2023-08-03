@@ -247,4 +247,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in content page."
+	@priority = 4
+	test ViewInfoMessageWhenPreviewContentPage {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a content page with experience based on new segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = ${randomSiteName},
+				operator = "contains",
+				segmentName = "Email Address Segment",
+				text = "liferay");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Email Address Segment");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator previews the content page by Anyone segment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Anyone\".");
+		}
+
+		task ("When the site administrator previews the content page by new segment") {
+			MobileDevice.previewBy(segment = "Email Address Segment");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the segment \"Email Address Segment\".");
+		}
+
+		task ("When the site administrator previews the content page by Default experience") {
+			MobileDevice.previewBy(previewBy = "Experiences");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the experience \"Default\".");
+		}
+
+		task ("When the site administrator previews the content page by new experience") {
+			MobileDevice.previewBy(experience = "New Experience");
+		}
+
+		task ("Then the site administrator sees the info message shown on preview window") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Showing content for the experience \"New Experience\".");
+		}
+	}
+
 }

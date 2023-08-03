@@ -69,7 +69,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(71);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,6 +95,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(descriptionObjectFieldId);
 		sb.append(", objectFolderId=");
 		sb.append(objectFolderId);
+		sb.append(", rootObjectDefinitionId=");
+		sb.append(rootObjectDefinitionId);
 		sb.append(", titleObjectFieldId=");
 		sb.append(titleObjectFieldId);
 		sb.append(", accountEntryRestricted=");
@@ -197,6 +199,7 @@ public class ObjectDefinitionCacheModel
 		objectDefinitionImpl.setDescriptionObjectFieldId(
 			descriptionObjectFieldId);
 		objectDefinitionImpl.setObjectFolderId(objectFolderId);
+		objectDefinitionImpl.setRootObjectDefinitionId(rootObjectDefinitionId);
 		objectDefinitionImpl.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinitionImpl.setAccountEntryRestricted(accountEntryRestricted);
 		objectDefinitionImpl.setActive(active);
@@ -318,6 +321,8 @@ public class ObjectDefinitionCacheModel
 
 		objectFolderId = objectInput.readLong();
 
+		rootObjectDefinitionId = objectInput.readLong();
+
 		titleObjectFieldId = objectInput.readLong();
 
 		accountEntryRestricted = objectInput.readBoolean();
@@ -393,6 +398,8 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeLong(descriptionObjectFieldId);
 
 		objectOutput.writeLong(objectFolderId);
+
+		objectOutput.writeLong(rootObjectDefinitionId);
 
 		objectOutput.writeLong(titleObjectFieldId);
 
@@ -508,6 +515,7 @@ public class ObjectDefinitionCacheModel
 	public long accountEntryRestrictedObjectFieldId;
 	public long descriptionObjectFieldId;
 	public long objectFolderId;
+	public long rootObjectDefinitionId;
 	public long titleObjectFieldId;
 	public boolean accountEntryRestricted;
 	public boolean active;

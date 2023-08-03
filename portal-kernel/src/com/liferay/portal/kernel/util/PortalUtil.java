@@ -1169,10 +1169,6 @@ public class PortalUtil {
 		return _portal;
 	}
 
-	public static InetAddress getPortalLocalInetAddress(boolean secure) {
-		return _portal.getPortalLocalInetAddress(secure);
-	}
-
 	public static int getPortalLocalPort(boolean secure) {
 		return _portal.getPortalLocalPort(secure);
 	}

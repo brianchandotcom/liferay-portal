@@ -773,8 +773,6 @@ public interface Portal {
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException;
 
-	public InetAddress getPortalLocalInetAddress(boolean secure);
-
 	public int getPortalLocalPort(boolean secure);
 
 	public Properties getPortalProperties();

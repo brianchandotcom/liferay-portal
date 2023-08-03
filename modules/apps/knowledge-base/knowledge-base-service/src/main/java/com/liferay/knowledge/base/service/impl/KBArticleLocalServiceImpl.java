@@ -193,7 +193,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		_validate(
-			content, displayDate, expirationDate, reviewDate, sourceURL, title);
+			title, content, sourceURL, displayDate, expirationDate, reviewDate);
 		_validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
 		long kbFolderId = KnowledgeBaseUtil.getKBFolderId(
@@ -1032,8 +1032,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		_validateParentStatus(
 			parentResourceClassNameId, parentResourcePrimKey,
 			kbArticle.getStatus());
-
-		_validate(priority);
+		_validatePriority(priority);
 
 		_updatePermissionFields(
 			resourcePrimKey, parentResourceClassNameId, parentResourcePrimKey);
@@ -1187,7 +1186,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		User user = _userLocalService.getUser(userId);
 
 		_validate(
-			content, displayDate, expirationDate, reviewDate, sourceURL, title);
+			title, content, sourceURL, displayDate, expirationDate, reviewDate);
 
 		KBArticle oldKBArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
@@ -1319,7 +1318,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		for (double priority : resourcePrimKeyToPriorityMap.values()) {
-			_validate(priority);
+			_validatePriority(priority);
 		}
 
 		long[] resourcePrimKeys = StringUtil.split(
@@ -2322,7 +2321,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
 	}
 
-	private void _validate(double priority) throws PortalException {
+	private void _validatePriority(double priority) throws PortalException {
 		if (priority <= 0) {
 			throw new KBArticlePriorityException(
 				"Invalid priority " + priority);
@@ -2330,8 +2329,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	private void _validate(
-			String content, Date displayDate, Date expirationDate,
-			Date reviewDate, String sourceURL, String title)
+			String title, String content, String sourceURL, Date displayDate,
+			Date expirationDate, Date reviewDate)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -2342,12 +2341,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleContentException("Content is null");
 		}
 
+		_validateSourceURL(sourceURL);
+
 		if (displayDate == null) {
 			throw new KBArticleDisplayDateException("Display date is null");
 		}
 
 		_validateExpirationReviewDate(expirationDate, reviewDate);
-		_validateSourceURL(sourceURL);
 	}
 
 	private void _validateExpirationReviewDate(

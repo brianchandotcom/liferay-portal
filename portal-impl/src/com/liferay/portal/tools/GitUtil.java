@@ -33,6 +33,17 @@ import java.util.Set;
  */
 public class GitUtil {
 
+	public static List<String> getCurrentBranchAddedFileNames(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		String gitWorkingBranchLatestCommitId = _getLatestCommitId(
+			gitWorkingBranchName, "origin/" + gitWorkingBranchName,
+			"upstream/" + gitWorkingBranchName);
+
+		return _getAddedFileNames(baseDirName, gitWorkingBranchLatestCommitId);
+	}
+
 	public static List<String> getCurrentBranchCommitMessages(
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
@@ -557,6 +568,30 @@ public class GitUtil {
 				return null;
 			}
 		}
+	}
+
+	private static List<String> _getAddedFileNames(
+			String baseDirName, String commitId)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			StringBundler.concat(
+				"git diff --diff-filter=A --name-only ", commitId, " ",
+				getLatestCommitId()));
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {
+				fileNames.add(getFileName(line, gitLevel));
+			}
+		}
+
+		return fileNames;
 	}
 
 	private static String _getLatestCommitId(String... branchNames)

@@ -119,7 +119,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				_log.info(
 					StringBundler.concat(
 						"Start reindexing company ", companyId,
-						" for class name ", className, " in execution mode ",
+						" for class name ", className, " with execution mode ",
 						executionMode));
 			}
 
@@ -169,7 +169,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 						StringBundler.concat(
 							"Finished reindexing company ", companyId,
 							" for class name ", className,
-							" in execution mode ", executionMode));
+							" with execution mode ", executionMode));
 				}
 			}
 		}

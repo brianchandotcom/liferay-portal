@@ -209,7 +209,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Reindexing ", className, " in execution mode ",
+					"Reindexing ", className, " with execution mode ",
 					ParamUtil.getString(actionRequest, "executionMode")));
 		}
 
@@ -232,7 +232,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 				_log.info(
 					StringBundler.concat(
-						"Reindexing ", clazz.getName(), " in execution mode ",
+						"Reindexing ", clazz.getName(), " with execution mode ",
 						ParamUtil.getString(actionRequest, "executionMode")));
 			}
 

@@ -57,7 +57,7 @@ public class ReindexPortalBackgroundTaskExecutor
 				_log.info(
 					StringBundler.concat(
 						"Start reindexing company ", companyId,
-						" in execution mode ", executionMode));
+						" with execution mode ", executionMode));
 			}
 
 			try {
@@ -81,7 +81,7 @@ public class ReindexPortalBackgroundTaskExecutor
 					_log.info(
 						StringBundler.concat(
 							"Finished reindexing company ", companyId,
-							" in execution mode ", executionMode));
+							" with execution mode ", executionMode));
 				}
 			}
 		}

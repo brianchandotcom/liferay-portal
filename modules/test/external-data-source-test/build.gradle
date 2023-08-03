@@ -1,8 +1,8 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":test:external-data-source-test-api")
-	testIntegrationCompile project(":test:external-data-source-test-service")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":test:external-data-source-test-api")
+	testIntegrationImplementation project(":test:external-data-source-test-service")
 }
 
 jar {

@@ -3,7 +3,7 @@ apply plugin: "com.liferay.test.integration.base"
 task runGradleTest
 
 dependencies {
-	testIntegrationCompile group: "junit", name: "junit", version: "4.13.1"
+	testIntegrationImplementation group: "junit", name: "junit", version: "4.13.1"
 }
 
 repositories {

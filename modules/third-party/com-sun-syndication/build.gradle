@@ -9,7 +9,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compile group: "rome", name: "rome", optional, version: "1.0"
+	api group: "rome", name: "rome", optional, version: "1.0"
 }
 
 patch {

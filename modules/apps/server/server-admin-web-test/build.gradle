@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

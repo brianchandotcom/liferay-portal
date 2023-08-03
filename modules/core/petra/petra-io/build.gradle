@@ -3,5 +3,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-nio")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-reflect")
+	testImplementation project(":core:petra:petra-reflect")
 }

@@ -1,18 +1,18 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.15.3"
-	testIntegrationCompile project(":apps:asset:asset-api")
-	testIntegrationCompile project(":apps:asset:asset-test-util")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:fragment:fragment-api")
-	testIntegrationCompile project(":apps:fragment:fragment-service")
-	testIntegrationCompile project(":apps:journal:journal-api")
-	testIntegrationCompile project(":apps:journal:journal-test-util")
-	testIntegrationCompile project(":apps:layout:layout-api")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:object:object-api")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":apps:segments:segments-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.jsoup", name: "jsoup", version: "1.15.3"
+	testIntegrationImplementation project(":apps:asset:asset-api")
+	testIntegrationImplementation project(":apps:asset:asset-test-util")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationImplementation project(":apps:fragment:fragment-api")
+	testIntegrationImplementation project(":apps:fragment:fragment-service")
+	testIntegrationImplementation project(":apps:journal:journal-api")
+	testIntegrationImplementation project(":apps:journal:journal-test-util")
+	testIntegrationImplementation project(":apps:layout:layout-api")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:segments:segments-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

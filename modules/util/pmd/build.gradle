@@ -1,9 +1,9 @@
 dependencies {
-	compile group: "net.sourceforge.pmd", name: "pmd-java", version: "5.5.0"
+	api group: "net.sourceforge.pmd", name: "pmd-java", version: "5.5.0"
 
-	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile group: "net.sourceforge.pmd", name: "pmd-test", version: "5.5.0"
+	testImplementation group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testImplementation group: "net.sourceforge.pmd", name: "pmd-test", version: "5.5.0"
 }
 
 updateFileVersions {

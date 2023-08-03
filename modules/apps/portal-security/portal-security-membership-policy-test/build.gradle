@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	testIntegrationCompile project(":apps:site:site-api")
-	testIntegrationCompile project(":apps:user-groups-admin:user-groups-admin-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	testIntegrationImplementation project(":apps:site:site-api")
+	testIntegrationImplementation project(":apps:user-groups-admin:user-groups-admin-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

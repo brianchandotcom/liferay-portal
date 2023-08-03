@@ -1,22 +1,22 @@
 dependencies {
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
-	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testIntegrationCompile group: "org.jsoup", name: "jsoup", version: "1.15.3"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:fragment:fragment-api")
-	testIntegrationCompile project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
-	testIntegrationCompile project(":apps:fragment:fragment-service")
-	testIntegrationCompile project(":apps:info:info-api")
-	testIntegrationCompile project(":apps:layout:layout-page-template-api")
-	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:portal:portal-db-partition-test-util")
-	testIntegrationCompile project(":apps:portal:portal-props-test-util")
-	testIntegrationCompile project(":apps:segments:segments-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.4"
+	testIntegrationImplementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.4.2"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationImplementation group: "org.jsoup", name: "jsoup", version: "1.15.3"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":apps:export-import:export-import-test-util")
+	testIntegrationImplementation project(":apps:fragment:fragment-api")
+	testIntegrationImplementation project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
+	testIntegrationImplementation project(":apps:fragment:fragment-service")
+	testIntegrationImplementation project(":apps:info:info-api")
+	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
+	testIntegrationImplementation project(":apps:layout:layout-test-util")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":apps:portal:portal-db-partition-test-util")
+	testIntegrationImplementation project(":apps:portal:portal-props-test-util")
+	testIntegrationImplementation project(":apps:segments:segments-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

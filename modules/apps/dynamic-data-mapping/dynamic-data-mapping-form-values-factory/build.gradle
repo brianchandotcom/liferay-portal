@@ -10,7 +10,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
+	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

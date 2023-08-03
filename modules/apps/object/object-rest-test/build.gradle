@@ -2,18 +2,18 @@ dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
-	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
-	testIntegrationCompile project(":apps:account:account-api")
-	testIntegrationCompile project(":apps:document-library:document-library-api")
-	testIntegrationCompile project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-client")
-	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
-	testIntegrationCompile project(":apps:list-type:list-type-api")
-	testIntegrationCompile project(":apps:object:object-api")
-	testIntegrationCompile project(":apps:object:object-rest-api")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.apache.cxf", name: "cxf-core", version: "3.4.10"
+	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testIntegrationImplementation project(":apps:account:account-api")
+	testIntegrationImplementation project(":apps:document-library:document-library-api")
+	testIntegrationImplementation project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-client")
+	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-api")
+	testIntegrationImplementation project(":apps:list-type:list-type-api")
+	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:object:object-rest-api")
+	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

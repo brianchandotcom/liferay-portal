@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

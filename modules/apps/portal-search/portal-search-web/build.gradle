@@ -39,9 +39,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile project(":apps:portal-search:portal-search")
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-memory")
-	testCompile project(":core:petra:petra-process")
-	testCompile project(":core:petra:petra-reflect")
+	testImplementation project(":apps:portal-search:portal-search")
+	testImplementation project(":core:petra:petra-concurrent")
+	testImplementation project(":core:petra:petra-memory")
+	testImplementation project(":core:petra:petra-process")
+	testImplementation project(":core:petra:petra-reflect")
 }

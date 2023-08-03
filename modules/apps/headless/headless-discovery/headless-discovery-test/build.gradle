@@ -1,7 +1,7 @@
 dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 
-	testIntegrationCompile project(":apps:object:object-api")
-	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

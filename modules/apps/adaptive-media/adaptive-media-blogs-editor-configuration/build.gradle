@@ -11,6 +11,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 }

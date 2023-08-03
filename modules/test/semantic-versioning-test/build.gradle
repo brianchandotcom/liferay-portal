@@ -1,7 +1,7 @@
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile project(":core:petra:petra-string")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testImplementation project(":core:petra:petra-string")
 }
 
 test {

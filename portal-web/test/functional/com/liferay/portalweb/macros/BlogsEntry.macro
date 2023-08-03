@@ -829,9 +829,9 @@ definition {
 
 		var displayTime = DateUtil.getDateOffsetByMinutes(2, "hh:mm a");
 
-		var expirationDateTime = StringUtil.removeSpaces(${displayTime});
+		var displayTime = StringUtil.removeSpaces(${displayTime});
 
-		Type(
+		Type.sendKeys(
 			locator1 = "TextInput#DISPLAY_DATE_TIME",
 			value1 = ${displayTime});
 	}

@@ -38,11 +38,16 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 		>
 			<aui:a href="<%= rowURL.toString() %>">
 				<%= curCategory.getName() %>
-			</aui:a>
 
-			<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
-				<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
-			</c:if>
+				<c:if test='<%= Objects.equals(curCategory.getDisplayStyle(), "question") %>'>
+					<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "question") %>">
+						<clay:icon
+							aria-label="<%= LanguageUtil.get(request, "question") %>"
+							symbol="question-circle"
+						/>
+					</span>
+				</c:if>
+			</aui:a>
 
 			<span class="text-default">
 				<%= curCategory.getDescription() %>

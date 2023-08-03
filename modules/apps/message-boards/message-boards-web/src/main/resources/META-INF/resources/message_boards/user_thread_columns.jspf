@@ -15,11 +15,21 @@
 	%>
 
 	<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
-		<span class="text-default <%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></span>
+		<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>">
+			<clay:icon
+				aria-label="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"
+				symbol="<%= threadPriority[1] %>"
+			/>
+		</span>
 	</c:if>
 
 	<c:if test="<%= thread.isLocked() %>">
-		<i class="icon-lock" title="<liferay-ui:message key="thread-locked" />"></i>
+		<clay:icon
+			aria-label="<%= LanguageUtil.get(request, "thread-locked") %>"
+			symbol="lock"
+		/>
+
+		<liferay-ui:message key="thread-locked" />
 	</c:if>
 
 	<c:if test="<%= message != null %>">

@@ -74,11 +74,21 @@
 				%>
 
 				<c:if test="<%= (threadPriority != null) && (thread.getPriority() > 0) %>">
-					<div class="<%= threadPriority[1] %>" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"></div>
+					<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>">
+						<clay:icon
+							aria-label="<%= HtmlUtil.escapeAttribute(threadPriority[0]) %>"
+							symbol="<%= threadPriority[1] %>"
+						/>
+					</span>
 				</c:if>
 
 				<c:if test="<%= thread.isQuestion() %>">
-					<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+					<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "question") %>">
+						<clay:icon
+							aria-label="<%= LanguageUtil.get(request, "question") %>"
+							symbol="question-circle"
+						/>
+					</span>
 				</c:if>
 			</div>
 
@@ -171,7 +181,10 @@
 
 			<c:if test="<%= thread.isLocked() %>">
 				<div>
-					<aui:icon image="lock" markupView="lexicon" />
+					<clay:icon
+						aria-label="<%= LanguageUtil.get(request, "locked") %>"
+						symbol="lock"
+					/>
 
 					<liferay-ui:message key="locked" />
 				</div>

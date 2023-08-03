@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.internal.blueprint.parameter.BooleanArraySXPParameter;
@@ -262,7 +261,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				expandoColumn.getColumnId());
 
 			if (expandoValue == null) {
-				expandoValue = new ExpandoValueImpl();
+				expandoValue = _expandoValueLocalService.createExpandoValue(0);
 
 				expandoValue.setData(expandoColumn.getDefaultData());
 			}

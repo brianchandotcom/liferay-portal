@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
-import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,7 +120,7 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 		boolean hasValue = true;
 
 		if (expandoValue == null) {
-			expandoValue = new ExpandoValueImpl();
+			expandoValue = _expandoValueLocalService.createExpandoValue(0);
 
 			expandoValue.setColumnId(expandoColumn.getColumnId());
 			expandoValue.setData(expandoColumn.getDefaultData());

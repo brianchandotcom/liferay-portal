@@ -544,7 +544,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -675,9 +675,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -761,7 +760,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -890,9 +889,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -1142,7 +1140,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -1257,9 +1255,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}
@@ -2240,7 +2237,7 @@ definition {
 			}
 
 			task ("Create two object entries") {
-				JSONObject.addObjectEntryViaJSONAPI(
+				var objectEntryId = JSONObject.addObjectEntryViaJSONAPI(
 					fieldName = "name",
 					fieldValue = "Apple",
 					groupName = ${randomSiteName},
@@ -2364,9 +2361,8 @@ definition {
 				PageEditor.editContentDisplay(
 					entryContent = "Apple",
 					fragmentName = "Content Display",
-					index = 1,
-					objecEntrytName = "${labelName}s",
-					object = "true");
+					object = "${labelName}s",
+					objectEntryId = ${objectEntryId});
 
 				PageEditor.publish();
 			}

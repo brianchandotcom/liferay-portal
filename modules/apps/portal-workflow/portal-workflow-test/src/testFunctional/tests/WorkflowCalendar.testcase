@@ -525,15 +525,6 @@ definition {
 		CalendarEvent.viewStatusViaDetails(status = "Pending");
 	}
 
-	@description = "Verify that the Calendar Event status changes when approved"
-	@ignore = "Test Stub"
-	@priority = 4
-	test StatusChangesWhenApproved {
-
-		// TODO LRQA-68597 StatusChangesWhenApproved pending implementation
-
-	}
-
 	@description = "Verify that the Calendar Event status stay on pending when rejected after submitted"
 	@priority = 3
 	test StatusStayPendingAfterRejected {

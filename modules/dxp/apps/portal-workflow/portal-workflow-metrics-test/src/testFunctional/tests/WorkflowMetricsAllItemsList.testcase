@@ -1047,15 +1047,6 @@ definition {
 		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review,Update,Approved");
 	}
 
-	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will group SLAs into Open or Resolved"
-	@ignore = "Test Stub"
-	@priority = 3
-	test DueDateBySlaGroupsSlaIntoOpenOrResolved {
-
-		// TODO LRQA-67743 DueDateBySlaGroupsSlaIntoOpenOrResolved pending implementation
-
-	}
-
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will provide a summary for the total number of entries for each group next to the section title"
 	@priority = 3
 	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {

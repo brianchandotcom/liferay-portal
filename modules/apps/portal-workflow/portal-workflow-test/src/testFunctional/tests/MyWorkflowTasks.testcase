@@ -655,15 +655,6 @@ definition {
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE");
 	}
 
-	@description = "Verify that in Update Due Date modal, the user can expand the comment box"
-	@ignore = "Test Stub"
-	@priority = 2
-	test CanExpandCommentBox {
-
-		// TODO LRQA-68860 CanExpandCommentBox pending implementation
-
-	}
-
 	@description = "Verify that the user can filter the results inside Assigned to Me by status"
 	@priority = 3
 	test CanFilterAssignedtoMeTasksByAssetStatus {

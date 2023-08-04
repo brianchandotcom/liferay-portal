@@ -43,15 +43,6 @@ definition {
 
 	}
 
-	@description = "Verify that the user is able to import a XML file"
-	@ignore = "Test Stub"
-	@priority = 4
-	test CanImportXMLFile {
-
-		// TODO LRQA-74659 CanImportXMLFile pending implementation
-
-	}
-
 	@description = "Verify that, when importing a non XML file, an error message is displayed and the Workflow is not published"
 	@ignore = "Test Stub"
 	@priority = 4

@@ -30,11 +30,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			modelVar="siteInitializerItem"
 		>
 			<liferay-ui:search-container-column-text>
-				<button class="add-site-action-button align-items-stretch btn btn-unstyled form-check-card mb-4 w-100" type="button">
-					<clay:vertical-card
-						verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
-					/>
-				</button>
+				<clay:vertical-card
+					propsTransformer="js/SelectSiteInitializerVerticalCardPropsTransformer"
+					verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -48,36 +47,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<portlet:param name="mvcPath" value="/select_layout_set_prototype_entry.jsp" />
 		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>
-
-	<aui:script require="frontend-js-web/index as frontendJsWeb">
-		var {delegate, openSimpleInputModal} = frontendJsWeb;
-
-		var addSiteActionOptionQueryClickHandler = delegate(
-			document.body,
-			'click',
-			'.add-site-action-button',
-			(event) => {
-				var data = event.delegateTarget.querySelector('.add-site-action-card')
-					.dataset;
-
-				Liferay.Util.openModal({
-					disableAutoClose: true,
-					height: '60vh',
-					id: '<portlet:namespace />addSiteDialog',
-					iframeBodyCssClass: '',
-					size: 'md',
-					title: '<liferay-ui:message key="add-site" />',
-					url: data.addSiteUrl,
-				});
-			}
-		);
-
-		function handleDestroyPortlet() {
-			addSiteActionOptionQueryClickHandler.dispose();
-
-			Liferay.detach('destroyPortlet', handleDestroyPortlet);
-		}
-
-		Liferay.on('destroyPortlet', handleDestroyPortlet);
-	</aui:script>
 </aui:form>

@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +102,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		String formItemId = ParamUtil.getString(
 			httpServletRequest, "formItemId");
 
-		List<InfoFieldValue<Object>> infoFieldValues = null;
+		Map<String, InfoFieldValue<Object>> infoFieldValues = null;
 
 		try {
 			infoFieldValues =
@@ -191,7 +192,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 						infoItemObjectProvider.getInfoItem(infoItemIdentifier),
 						InfoItemFieldValues.builder(
 						).infoFieldValues(
-							infoFieldValues
+							new ArrayList<>(infoFieldValues.values())
 						).infoItemReference(
 							new InfoItemReference(className, 0)
 						).build());
@@ -209,7 +210,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					groupId,
 					InfoItemFieldValues.builder(
 					).infoFieldValues(
-						infoFieldValues
+						new ArrayList<>(infoFieldValues.values())
 					).infoItemReference(
 						new InfoItemReference(className, 0)
 					).build());
@@ -309,7 +310,9 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		if (!success && (infoFieldValues != null)) {
 			Map<String, String> infoFormParameterMap = new HashMap<>();
 
-			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+			for (InfoFieldValue<Object> infoFieldValue :
+					infoFieldValues.values()) {
+
 				InfoField<?> infoField = infoFieldValue.getInfoField();
 
 				infoFormParameterMap.put(
@@ -548,7 +551,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	}
 
 	private void _validateRequiredField(
-			List<InfoFieldValue<Object>> infoFieldValues,
+			Map<String, InfoFieldValue<Object>> infoFieldValues,
 			LayoutStructureItem layoutStructureItem)
 		throws InfoFormValidationException.RequiredInfoField {
 
@@ -584,26 +587,17 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					"inputFieldId", "string", "", false, "text"),
 				LocaleUtil.getMostRelevantLocale()));
 
-		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-			InfoField infoField = infoFieldValue.getInfoField();
+		if (!infoFieldValues.containsKey(inputFieldId) ||
+			Validator.isNull(infoFieldValues.get(inputFieldId))) {
 
-			if (!Objects.equals(inputFieldId, infoField.getUniqueId())) {
-				continue;
-			}
-
-			if (Validator.isNotNull(infoFieldValue.getValue())) {
-				return;
-			}
-
-			break;
+			throw new InfoFormValidationException.RequiredInfoField(
+				inputFieldId);
 		}
-
-		throw new InfoFormValidationException.RequiredInfoField(inputFieldId);
 	}
 
 	private void _validateRequiredFields(
 			HttpServletRequest httpServletRequest,
-			List<InfoFieldValue<Object>> infoFieldValues,
+			Map<String, InfoFieldValue<Object>> infoFieldValues,
 			LayoutStructure layoutStructure)
 		throws InfoFormException {
 

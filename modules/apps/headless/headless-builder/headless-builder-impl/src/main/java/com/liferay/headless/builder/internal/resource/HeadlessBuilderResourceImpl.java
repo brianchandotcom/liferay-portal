@@ -10,6 +10,7 @@ import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
@@ -38,12 +39,13 @@ public class HeadlessBuilderResourceImpl {
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,
-			@Context Pagination pagination, @PathParam("path") String path)
+			@Context Pagination pagination, @PathParam("path") String path,
+			@Context Sort[] sorts)
 		throws Exception {
 
 		return _get(
 			filterString, pagination, path,
-			APIApplication.Endpoint.Scope.COMPANY, null);
+			APIApplication.Endpoint.Scope.COMPANY, null, sorts);
 	}
 
 	@GET
@@ -52,12 +54,12 @@ public class HeadlessBuilderResourceImpl {
 	public Response get(
 			@QueryParam("filter") String filterString,
 			@Context Pagination pagination, @PathParam("path") String path,
-			@PathParam("scopeKey") String scopeKey)
+			@PathParam("scopeKey") String scopeKey, @Context Sort[] sorts)
 		throws Exception {
 
 		return _get(
 			filterString, pagination, path, APIApplication.Endpoint.Scope.GROUP,
-			scopeKey);
+			scopeKey, sorts);
 	}
 
 	@Context
@@ -71,7 +73,7 @@ public class HeadlessBuilderResourceImpl {
 
 	private Response _get(
 			String filterString, Pagination pagination, String path,
-			APIApplication.Endpoint.Scope scope, String scopeKey)
+			APIApplication.Endpoint.Scope scope, String scopeKey, Sort[] sorts)
 		throws Exception {
 
 		for (APIApplication.Endpoint endpoint :
@@ -91,7 +93,7 @@ public class HeadlessBuilderResourceImpl {
 			return Response.ok(
 				_endpointHelper.getResponseEntityMapsPage(
 					contextCompany.getCompanyId(), endpoint, filterString,
-					pagination, scopeKey)
+					pagination, scopeKey, sorts)
 			).build();
 		}
 

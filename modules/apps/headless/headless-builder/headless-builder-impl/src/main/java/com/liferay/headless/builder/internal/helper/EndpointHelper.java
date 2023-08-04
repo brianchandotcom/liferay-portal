@@ -13,6 +13,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -43,7 +44,8 @@ public class EndpointHelper {
 
 	public Page<Map<String, Object>> getResponseEntityMapsPage(
 			long companyId, APIApplication.Endpoint endpoint,
-			String filterString, Pagination pagination, String scopeKey)
+			String filterString, Pagination pagination, String scopeKey,
+			Sort[] sorts)
 		throws Exception {
 
 		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
@@ -64,7 +66,7 @@ public class EndpointHelper {
 				_getFilterExpression(companyId, endpoint, filterString),
 				ListUtil.fromCollection(relationshipsNames), pagination,
 				responseSchema.getMainObjectDefinitionExternalReferenceCode(),
-				scopeKey);
+				scopeKey, sorts);
 
 		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 			Map<String, Object> responseEntityMap = new HashMap<>();

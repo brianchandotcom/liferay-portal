@@ -16,6 +16,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -74,7 +75,8 @@ public class ObjectEntryHelper {
 	public Page<ObjectEntry> getObjectEntriesPage(
 			long companyId, Expression filterExpression,
 			List<String> nestedFields, Pagination pagination,
-			String objectDefinitionExternalReferenceCode, String scopeKey)
+			String objectDefinitionExternalReferenceCode, String scopeKey,
+			Sort[] sorts)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -100,7 +102,7 @@ public class ObjectEntryHelper {
 				return defaultObjectEntryManager.getObjectEntries(
 					companyId, objectDefinition, scopeKey, null,
 					_getDefaultDTOConverterContext(objectDefinition),
-					filterExpression, pagination, null, null);
+					filterExpression, pagination, null, sorts);
 			});
 	}
 
@@ -122,7 +124,7 @@ public class ObjectEntryHelper {
 			companyId,
 			_objectDefinitionFilterParser.parse(filterString, objectDefinition),
 			nestedFields, pagination, objectDefinitionExternalReferenceCode,
-			null);
+			null, null);
 	}
 
 	public ObjectEntry getObjectEntry(

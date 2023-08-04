@@ -537,7 +537,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_PICKLIST_OPTIONS</td>
-		<td>//div[@class='dropdown-menu show']//.//ul//button[contains(@class, 'dropdown-item')]//div[contains(text(), '${key_optionName}')]</td>
+		<td>//div[@class='dropdown-menu autocomplete-expand show']//div[contains(text(), '${key_optionName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

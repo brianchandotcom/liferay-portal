@@ -1225,9 +1225,10 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param userPK the primary key of the user
+	 * @return <code>true</code> if the association between the team and the user is added; <code>false</code> if it was already added
 	 */
-	public static void addUser(long pk, long userPK) {
-		getPersistence().addUser(pk, userPK);
+	public static boolean addUser(long pk, long userPK) {
+		return getPersistence().addUser(pk, userPK);
 	}
 
 	/**
@@ -1235,11 +1236,12 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param user the user
+	 * @return <code>true</code> if the association between the team and the user is added; <code>false</code> if it was already added
 	 */
-	public static void addUser(
+	public static boolean addUser(
 		long pk, com.liferay.portal.kernel.model.User user) {
 
-		getPersistence().addUser(pk, user);
+		return getPersistence().addUser(pk, user);
 	}
 
 	/**
@@ -1247,9 +1249,10 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param userPKs the primary keys of the users
+	 * @return <code>true</code> if at least an association between the team and the users is added; <code>false</code> if all were already added
 	 */
-	public static void addUsers(long pk, long[] userPKs) {
-		getPersistence().addUsers(pk, userPKs);
+	public static boolean addUsers(long pk, long[] userPKs) {
+		return getPersistence().addUsers(pk, userPKs);
 	}
 
 	/**
@@ -1257,11 +1260,12 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param users the users
+	 * @return <code>true</code> if at least an association between the team and the users is added; <code>false</code> if all were already added
 	 */
-	public static void addUsers(
+	public static boolean addUsers(
 		long pk, List<com.liferay.portal.kernel.model.User> users) {
 
-		getPersistence().addUsers(pk, users);
+		return getPersistence().addUsers(pk, users);
 	}
 
 	/**
@@ -1437,9 +1441,10 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroupPK the primary key of the user group
+	 * @return <code>true</code> if the association between the team and the user group is added; <code>false</code> if it was already added
 	 */
-	public static void addUserGroup(long pk, long userGroupPK) {
-		getPersistence().addUserGroup(pk, userGroupPK);
+	public static boolean addUserGroup(long pk, long userGroupPK) {
+		return getPersistence().addUserGroup(pk, userGroupPK);
 	}
 
 	/**
@@ -1447,11 +1452,12 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroup the user group
+	 * @return <code>true</code> if the association between the team and the user group is added; <code>false</code> if it was already added
 	 */
-	public static void addUserGroup(
+	public static boolean addUserGroup(
 		long pk, com.liferay.portal.kernel.model.UserGroup userGroup) {
 
-		getPersistence().addUserGroup(pk, userGroup);
+		return getPersistence().addUserGroup(pk, userGroup);
 	}
 
 	/**
@@ -1459,9 +1465,10 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroupPKs the primary keys of the user groups
+	 * @return <code>true</code> if at least an association between the team and the user groups is added; <code>false</code> if all were already added
 	 */
-	public static void addUserGroups(long pk, long[] userGroupPKs) {
-		getPersistence().addUserGroups(pk, userGroupPKs);
+	public static boolean addUserGroups(long pk, long[] userGroupPKs) {
+		return getPersistence().addUserGroups(pk, userGroupPKs);
 	}
 
 	/**
@@ -1469,11 +1476,12 @@ public class TeamUtil {
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroups the user groups
+	 * @return <code>true</code> if at least an association between the team and the user groups is added; <code>false</code> if all were already added
 	 */
-	public static void addUserGroups(
+	public static boolean addUserGroups(
 		long pk, List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
 
-		getPersistence().addUserGroups(pk, userGroups);
+		return getPersistence().addUserGroups(pk, userGroups);
 	}
 
 	/**

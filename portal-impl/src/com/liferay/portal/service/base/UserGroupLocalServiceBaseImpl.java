@@ -496,29 +496,31 @@ public abstract class UserGroupLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addGroupUserGroup(long groupId, long userGroupId) {
-		groupPersistence.addUserGroup(groupId, userGroupId);
+	public boolean addGroupUserGroup(long groupId, long userGroupId) {
+		return groupPersistence.addUserGroup(groupId, userGroupId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupUserGroup(long groupId, UserGroup userGroup) {
-		groupPersistence.addUserGroup(groupId, userGroup);
+	public boolean addGroupUserGroup(long groupId, UserGroup userGroup) {
+		return groupPersistence.addUserGroup(groupId, userGroup);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
-		groupPersistence.addUserGroups(groupId, userGroupIds);
+	public boolean addGroupUserGroups(long groupId, long[] userGroupIds) {
+		return groupPersistence.addUserGroups(groupId, userGroupIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupUserGroups(long groupId, List<UserGroup> userGroups) {
-		groupPersistence.addUserGroups(groupId, userGroups);
+	public boolean addGroupUserGroups(
+		long groupId, List<UserGroup> userGroups) {
+
+		return groupPersistence.addUserGroups(groupId, userGroups);
 	}
 
 	/**
@@ -627,29 +629,29 @@ public abstract class UserGroupLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addTeamUserGroup(long teamId, long userGroupId) {
-		teamPersistence.addUserGroup(teamId, userGroupId);
+	public boolean addTeamUserGroup(long teamId, long userGroupId) {
+		return teamPersistence.addUserGroup(teamId, userGroupId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addTeamUserGroup(long teamId, UserGroup userGroup) {
-		teamPersistence.addUserGroup(teamId, userGroup);
+	public boolean addTeamUserGroup(long teamId, UserGroup userGroup) {
+		return teamPersistence.addUserGroup(teamId, userGroup);
 	}
 
 	/**
 	 */
 	@Override
-	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
-		teamPersistence.addUserGroups(teamId, userGroupIds);
+	public boolean addTeamUserGroups(long teamId, long[] userGroupIds) {
+		return teamPersistence.addUserGroups(teamId, userGroupIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addTeamUserGroups(long teamId, List<UserGroup> userGroups) {
-		teamPersistence.addUserGroups(teamId, userGroups);
+	public boolean addTeamUserGroups(long teamId, List<UserGroup> userGroups) {
+		return teamPersistence.addUserGroups(teamId, userGroups);
 	}
 
 	/**
@@ -755,40 +757,40 @@ public abstract class UserGroupLocalServiceBaseImpl
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroup(long userId, long userGroupId)
+	public boolean addUserUserGroup(long userId, long userGroupId)
 		throws PortalException {
 
-		userPersistence.addUserGroup(userId, userGroupId);
+		return userPersistence.addUserGroup(userId, userGroupId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroup(long userId, UserGroup userGroup)
+	public boolean addUserUserGroup(long userId, UserGroup userGroup)
 		throws PortalException {
 
-		userPersistence.addUserGroup(userId, userGroup);
+		return userPersistence.addUserGroup(userId, userGroup);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroups(long userId, long[] userGroupIds)
+	public boolean addUserUserGroups(long userId, long[] userGroupIds)
 		throws PortalException {
 
-		userPersistence.addUserGroups(userId, userGroupIds);
+		return userPersistence.addUserGroups(userId, userGroupIds);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroups(long userId, List<UserGroup> userGroups)
+	public boolean addUserUserGroups(long userId, List<UserGroup> userGroups)
 		throws PortalException {
 
-		userPersistence.addUserGroups(userId, userGroups);
+		return userPersistence.addUserGroups(userId, userGroups);
 	}
 
 	/**

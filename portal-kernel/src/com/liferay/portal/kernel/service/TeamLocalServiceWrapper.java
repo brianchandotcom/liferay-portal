@@ -54,45 +54,45 @@ public class TeamLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserGroupTeam(long userGroupId, long teamId) {
-		_teamLocalService.addUserGroupTeam(userGroupId, teamId);
+	public boolean addUserGroupTeam(long userGroupId, long teamId) {
+		return _teamLocalService.addUserGroupTeam(userGroupId, teamId);
 	}
 
 	@Override
-	public void addUserGroupTeam(long userGroupId, Team team) {
-		_teamLocalService.addUserGroupTeam(userGroupId, team);
+	public boolean addUserGroupTeam(long userGroupId, Team team) {
+		return _teamLocalService.addUserGroupTeam(userGroupId, team);
 	}
 
 	@Override
-	public void addUserGroupTeams(
+	public boolean addUserGroupTeams(
 		long userGroupId, java.util.List<Team> teams) {
 
-		_teamLocalService.addUserGroupTeams(userGroupId, teams);
+		return _teamLocalService.addUserGroupTeams(userGroupId, teams);
 	}
 
 	@Override
-	public void addUserGroupTeams(long userGroupId, long[] teamIds) {
-		_teamLocalService.addUserGroupTeams(userGroupId, teamIds);
+	public boolean addUserGroupTeams(long userGroupId, long[] teamIds) {
+		return _teamLocalService.addUserGroupTeams(userGroupId, teamIds);
 	}
 
 	@Override
-	public void addUserTeam(long userId, long teamId) {
-		_teamLocalService.addUserTeam(userId, teamId);
+	public boolean addUserTeam(long userId, long teamId) {
+		return _teamLocalService.addUserTeam(userId, teamId);
 	}
 
 	@Override
-	public void addUserTeam(long userId, Team team) {
-		_teamLocalService.addUserTeam(userId, team);
+	public boolean addUserTeam(long userId, Team team) {
+		return _teamLocalService.addUserTeam(userId, team);
 	}
 
 	@Override
-	public void addUserTeams(long userId, java.util.List<Team> teams) {
-		_teamLocalService.addUserTeams(userId, teams);
+	public boolean addUserTeams(long userId, java.util.List<Team> teams) {
+		return _teamLocalService.addUserTeams(userId, teams);
 	}
 
 	@Override
-	public void addUserTeams(long userId, long[] teamIds) {
-		_teamLocalService.addUserTeams(userId, teamIds);
+	public boolean addUserTeams(long userId, long[] teamIds) {
+		return _teamLocalService.addUserTeams(userId, teamIds);
 	}
 
 	@Override

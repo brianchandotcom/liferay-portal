@@ -68,13 +68,14 @@ public interface AssetTagLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the asset tag local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AssetTagLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addAssetEntryAssetTag(long entryId, AssetTag assetTag);
+	public boolean addAssetEntryAssetTag(long entryId, AssetTag assetTag);
 
-	public void addAssetEntryAssetTag(long entryId, long tagId);
+	public boolean addAssetEntryAssetTag(long entryId, long tagId);
 
-	public void addAssetEntryAssetTags(long entryId, List<AssetTag> assetTags);
+	public boolean addAssetEntryAssetTags(
+		long entryId, List<AssetTag> assetTags);
 
-	public void addAssetEntryAssetTags(long entryId, long[] tagIds);
+	public boolean addAssetEntryAssetTags(long entryId, long[] tagIds);
 
 	/**
 	 * Adds the asset tag to the database. Also notifies the appropriate model listeners.

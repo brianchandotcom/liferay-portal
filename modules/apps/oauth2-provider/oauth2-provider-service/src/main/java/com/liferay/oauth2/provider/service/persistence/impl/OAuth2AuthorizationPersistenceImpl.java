@@ -3486,18 +3486,21 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrantPK the primary key of the o auth2 scope grant
+	 * @return <code>true</code> if the association between the o auth2 authorization and the o auth2 scope grant is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addOAuth2ScopeGrant(long pk, long oAuth2ScopeGrantPK) {
+	public boolean addOAuth2ScopeGrant(long pk, long oAuth2ScopeGrantPK) {
 		OAuth2Authorization oAuth2Authorization = fetchByPrimaryKey(pk);
 
 		if (oAuth2Authorization == null) {
-			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
-				CompanyThreadLocal.getCompanyId(), pk, oAuth2ScopeGrantPK);
+			return oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.
+				addTableMapping(
+					CompanyThreadLocal.getCompanyId(), pk, oAuth2ScopeGrantPK);
 		}
 		else {
-			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
-				oAuth2Authorization.getCompanyId(), pk, oAuth2ScopeGrantPK);
+			return oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.
+				addTableMapping(
+					oAuth2Authorization.getCompanyId(), pk, oAuth2ScopeGrantPK);
 		}
 	}
 
@@ -3506,22 +3509,25 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrant the o auth2 scope grant
+	 * @return <code>true</code> if the association between the o auth2 authorization and the o auth2 scope grant is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addOAuth2ScopeGrant(
+	public boolean addOAuth2ScopeGrant(
 		long pk, OAuth2ScopeGrant oAuth2ScopeGrant) {
 
 		OAuth2Authorization oAuth2Authorization = fetchByPrimaryKey(pk);
 
 		if (oAuth2Authorization == null) {
-			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
-				CompanyThreadLocal.getCompanyId(), pk,
-				oAuth2ScopeGrant.getPrimaryKey());
+			return oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.
+				addTableMapping(
+					CompanyThreadLocal.getCompanyId(), pk,
+					oAuth2ScopeGrant.getPrimaryKey());
 		}
 		else {
-			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMapping(
-				oAuth2Authorization.getCompanyId(), pk,
-				oAuth2ScopeGrant.getPrimaryKey());
+			return oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.
+				addTableMapping(
+					oAuth2Authorization.getCompanyId(), pk,
+					oAuth2ScopeGrant.getPrimaryKey());
 		}
 	}
 
@@ -3530,9 +3536,10 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrantPKs the primary keys of the o auth2 scope grants
+	 * @return <code>true</code> if at least an association between the o auth2 authorization and the o auth2 scope grants is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addOAuth2ScopeGrants(long pk, long[] oAuth2ScopeGrantPKs) {
+	public boolean addOAuth2ScopeGrants(long pk, long[] oAuth2ScopeGrantPKs) {
 		long companyId = 0;
 
 		OAuth2Authorization oAuth2Authorization = fetchByPrimaryKey(pk);
@@ -3544,8 +3551,15 @@ public class OAuth2AuthorizationPersistenceImpl
 			companyId = oAuth2Authorization.getCompanyId();
 		}
 
-		oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMappings(
-			companyId, pk, oAuth2ScopeGrantPKs);
+		long[] addedKeys =
+			oAuth2AuthorizationToOAuth2ScopeGrantTableMapper.addTableMappings(
+				companyId, pk, oAuth2ScopeGrantPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -3553,12 +3567,13 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrants the o auth2 scope grants
+	 * @return <code>true</code> if at least an association between the o auth2 authorization and the o auth2 scope grants is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addOAuth2ScopeGrants(
+	public boolean addOAuth2ScopeGrants(
 		long pk, List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
 
-		addOAuth2ScopeGrants(
+		return addOAuth2ScopeGrants(
 			pk,
 			ListUtil.toLongArray(
 				oAuth2ScopeGrants,

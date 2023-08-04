@@ -31,25 +31,25 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addGroupUserGroup(long groupId, long userGroupId) {
-		_userGroupLocalService.addGroupUserGroup(groupId, userGroupId);
+	public boolean addGroupUserGroup(long groupId, long userGroupId) {
+		return _userGroupLocalService.addGroupUserGroup(groupId, userGroupId);
 	}
 
 	@Override
-	public void addGroupUserGroup(long groupId, UserGroup userGroup) {
-		_userGroupLocalService.addGroupUserGroup(groupId, userGroup);
+	public boolean addGroupUserGroup(long groupId, UserGroup userGroup) {
+		return _userGroupLocalService.addGroupUserGroup(groupId, userGroup);
 	}
 
 	@Override
-	public void addGroupUserGroups(
+	public boolean addGroupUserGroups(
 		long groupId, java.util.List<UserGroup> userGroups) {
 
-		_userGroupLocalService.addGroupUserGroups(groupId, userGroups);
+		return _userGroupLocalService.addGroupUserGroups(groupId, userGroups);
 	}
 
 	@Override
-	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
-		_userGroupLocalService.addGroupUserGroups(groupId, userGroupIds);
+	public boolean addGroupUserGroups(long groupId, long[] userGroupIds) {
+		return _userGroupLocalService.addGroupUserGroups(groupId, userGroupIds);
 	}
 
 	@Override
@@ -64,25 +64,25 @@ public class UserGroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addTeamUserGroup(long teamId, long userGroupId) {
-		_userGroupLocalService.addTeamUserGroup(teamId, userGroupId);
+	public boolean addTeamUserGroup(long teamId, long userGroupId) {
+		return _userGroupLocalService.addTeamUserGroup(teamId, userGroupId);
 	}
 
 	@Override
-	public void addTeamUserGroup(long teamId, UserGroup userGroup) {
-		_userGroupLocalService.addTeamUserGroup(teamId, userGroup);
+	public boolean addTeamUserGroup(long teamId, UserGroup userGroup) {
+		return _userGroupLocalService.addTeamUserGroup(teamId, userGroup);
 	}
 
 	@Override
-	public void addTeamUserGroups(
+	public boolean addTeamUserGroups(
 		long teamId, java.util.List<UserGroup> userGroups) {
 
-		_userGroupLocalService.addTeamUserGroups(teamId, userGroups);
+		return _userGroupLocalService.addTeamUserGroups(teamId, userGroups);
 	}
 
 	@Override
-	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
-		_userGroupLocalService.addTeamUserGroups(teamId, userGroupIds);
+	public boolean addTeamUserGroups(long teamId, long[] userGroupIds) {
+		return _userGroupLocalService.addTeamUserGroups(teamId, userGroupIds);
 	}
 
 	/**
@@ -133,41 +133,41 @@ public class UserGroupLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroup(long userId, long userGroupId)
+	public boolean addUserUserGroup(long userId, long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userGroupLocalService.addUserUserGroup(userId, userGroupId);
+		return _userGroupLocalService.addUserUserGroup(userId, userGroupId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroup(long userId, UserGroup userGroup)
+	public boolean addUserUserGroup(long userId, UserGroup userGroup)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userGroupLocalService.addUserUserGroup(userId, userGroup);
+		return _userGroupLocalService.addUserUserGroup(userId, userGroup);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroups(
+	public boolean addUserUserGroups(
 			long userId, java.util.List<UserGroup> userGroups)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userGroupLocalService.addUserUserGroups(userId, userGroups);
+		return _userGroupLocalService.addUserUserGroups(userId, userGroups);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserUserGroups(long userId, long[] userGroupIds)
+	public boolean addUserUserGroups(long userId, long[] userGroupIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_userGroupLocalService.addUserUserGroups(userId, userGroupIds);
+		return _userGroupLocalService.addUserUserGroups(userId, userGroupIds);
 	}
 
 	@Override

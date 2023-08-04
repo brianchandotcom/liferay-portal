@@ -404,37 +404,41 @@ public abstract class LVEntryLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, long lvEntryId) {
 
-		bigDecimalEntryPersistence.addLVEntry(bigDecimalEntryId, lvEntryId);
+		return bigDecimalEntryPersistence.addLVEntry(
+			bigDecimalEntryId, lvEntryId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, LVEntry lvEntry) {
 
-		bigDecimalEntryPersistence.addLVEntry(bigDecimalEntryId, lvEntry);
+		return bigDecimalEntryPersistence.addLVEntry(
+			bigDecimalEntryId, lvEntry);
 	}
 
 	/**
 	 */
 	@Override
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, long[] lvEntryIds) {
 
-		bigDecimalEntryPersistence.addLVEntries(bigDecimalEntryId, lvEntryIds);
+		return bigDecimalEntryPersistence.addLVEntries(
+			bigDecimalEntryId, lvEntryIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, List<LVEntry> lvEntries) {
 
-		bigDecimalEntryPersistence.addLVEntries(bigDecimalEntryId, lvEntries);
+		return bigDecimalEntryPersistence.addLVEntries(
+			bigDecimalEntryId, lvEntries);
 	}
 
 	/**

@@ -502,29 +502,29 @@ public abstract class TeamLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addUserTeam(long userId, long teamId) {
-		userPersistence.addTeam(userId, teamId);
+	public boolean addUserTeam(long userId, long teamId) {
+		return userPersistence.addTeam(userId, teamId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserTeam(long userId, Team team) {
-		userPersistence.addTeam(userId, team);
+	public boolean addUserTeam(long userId, Team team) {
+		return userPersistence.addTeam(userId, team);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserTeams(long userId, long[] teamIds) {
-		userPersistence.addTeams(userId, teamIds);
+	public boolean addUserTeams(long userId, long[] teamIds) {
+		return userPersistence.addTeams(userId, teamIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserTeams(long userId, List<Team> teams) {
-		userPersistence.addTeams(userId, teams);
+	public boolean addUserTeams(long userId, List<Team> teams) {
+		return userPersistence.addTeams(userId, teams);
 	}
 
 	/**
@@ -628,29 +628,29 @@ public abstract class TeamLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addUserGroupTeam(long userGroupId, long teamId) {
-		userGroupPersistence.addTeam(userGroupId, teamId);
+	public boolean addUserGroupTeam(long userGroupId, long teamId) {
+		return userGroupPersistence.addTeam(userGroupId, teamId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserGroupTeam(long userGroupId, Team team) {
-		userGroupPersistence.addTeam(userGroupId, team);
+	public boolean addUserGroupTeam(long userGroupId, Team team) {
+		return userGroupPersistence.addTeam(userGroupId, team);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserGroupTeams(long userGroupId, long[] teamIds) {
-		userGroupPersistence.addTeams(userGroupId, teamIds);
+	public boolean addUserGroupTeams(long userGroupId, long[] teamIds) {
+		return userGroupPersistence.addTeams(userGroupId, teamIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserGroupTeams(long userGroupId, List<Team> teams) {
-		userGroupPersistence.addTeams(userGroupId, teams);
+	public boolean addUserGroupTeams(long userGroupId, List<Team> teams) {
+		return userGroupPersistence.addTeams(userGroupId, teams);
 	}
 
 	/**

@@ -122,36 +122,36 @@ public interface UserLocalService
 	 */
 	public boolean addDefaultUserGroups(long userId) throws PortalException;
 
-	public void addGroupUser(long groupId, long userId);
+	public boolean addGroupUser(long groupId, long userId);
 
-	public void addGroupUser(long groupId, User user);
+	public boolean addGroupUser(long groupId, User user);
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addGroupUsers(long groupId, List<User> users)
+	public boolean addGroupUsers(long groupId, List<User> users)
 		throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addGroupUsers(long groupId, long[] userIds)
+	public boolean addGroupUsers(long groupId, long[] userIds)
 		throws PortalException;
 
-	public void addOrganizationUser(long organizationId, long userId);
+	public boolean addOrganizationUser(long organizationId, long userId);
 
-	public void addOrganizationUser(long organizationId, User user);
+	public boolean addOrganizationUser(long organizationId, User user);
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addOrganizationUsers(long organizationId, List<User> users)
+	public boolean addOrganizationUsers(long organizationId, List<User> users)
 		throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addOrganizationUsers(long organizationId, long[] userIds)
+	public boolean addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException;
 
 	public User addOrUpdateUser(
@@ -173,36 +173,36 @@ public interface UserLocalService
 	 */
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds);
 
-	public void addRoleUser(long roleId, long userId);
+	public boolean addRoleUser(long roleId, long userId);
 
-	public void addRoleUser(long roleId, User user);
+	public boolean addRoleUser(long roleId, User user);
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addRoleUsers(long roleId, List<User> users)
+	public boolean addRoleUsers(long roleId, List<User> users)
 		throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addRoleUsers(long roleId, long[] userIds)
+	public boolean addRoleUsers(long roleId, long[] userIds)
 		throws PortalException;
 
-	public void addTeamUser(long teamId, long userId);
+	public boolean addTeamUser(long teamId, long userId);
 
-	public void addTeamUser(long teamId, User user);
+	public boolean addTeamUser(long teamId, User user);
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addTeamUsers(long teamId, List<User> users)
+	public boolean addTeamUsers(long teamId, List<User> users)
 		throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addTeamUsers(long teamId, long[] userIds)
+	public boolean addTeamUsers(long teamId, long[] userIds)
 		throws PortalException;
 
 	/**
@@ -275,20 +275,20 @@ public interface UserLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public User addUser(User user);
 
-	public void addUserGroupUser(long userGroupId, long userId);
+	public boolean addUserGroupUser(long userGroupId, long userId);
 
-	public void addUserGroupUser(long userGroupId, User user);
+	public boolean addUserGroupUser(long userGroupId, User user);
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addUserGroupUsers(long userGroupId, List<User> users)
+	public boolean addUserGroupUsers(long userGroupId, List<User> users)
 		throws PortalException;
 
 	/**
 	 * @throws PortalException
 	 */
-	public void addUserGroupUsers(long userGroupId, long[] userIds)
+	public boolean addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException;
 
 	/**

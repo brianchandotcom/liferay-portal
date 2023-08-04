@@ -6548,17 +6548,18 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 * @return <code>true</code> if the association between the lv entry version and the big decimal entry is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
+	public boolean addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
 		LVEntryVersion lvEntryVersion = fetchByPrimaryKey(pk);
 
 		if (lvEntryVersion == null) {
-			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, bigDecimalEntryPK);
 		}
 		else {
-			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
 				lvEntryVersion.getCompanyId(), pk, bigDecimalEntryPK);
 		}
 	}
@@ -6568,9 +6569,10 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntry the big decimal entry
+	 * @return <code>true</code> if the association between the lv entry version and the big decimal entry is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addBigDecimalEntry(
+	public boolean addBigDecimalEntry(
 		long pk,
 		com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry
 			bigDecimalEntry) {
@@ -6578,12 +6580,12 @@ public class LVEntryVersionPersistenceImpl
 		LVEntryVersion lvEntryVersion = fetchByPrimaryKey(pk);
 
 		if (lvEntryVersion == null) {
-			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk,
 				bigDecimalEntry.getPrimaryKey());
 		}
 		else {
-			lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
+			return lvEntryVersionToBigDecimalEntryTableMapper.addTableMapping(
 				lvEntryVersion.getCompanyId(), pk,
 				bigDecimalEntry.getPrimaryKey());
 		}
@@ -6594,9 +6596,10 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
+	 * @return <code>true</code> if at least an association between the lv entry version and the big decimal entries is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs) {
+	public boolean addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs) {
 		long companyId = 0;
 
 		LVEntryVersion lvEntryVersion = fetchByPrimaryKey(pk);
@@ -6608,8 +6611,15 @@ public class LVEntryVersionPersistenceImpl
 			companyId = lvEntryVersion.getCompanyId();
 		}
 
-		lvEntryVersionToBigDecimalEntryTableMapper.addTableMappings(
-			companyId, pk, bigDecimalEntryPKs);
+		long[] addedKeys =
+			lvEntryVersionToBigDecimalEntryTableMapper.addTableMappings(
+				companyId, pk, bigDecimalEntryPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -6617,15 +6627,16 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntries the big decimal entries
+	 * @return <code>true</code> if at least an association between the lv entry version and the big decimal entries is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addBigDecimalEntries(
+	public boolean addBigDecimalEntries(
 		long pk,
 		List
 			<com.liferay.portal.tools.service.builder.test.model.
 				BigDecimalEntry> bigDecimalEntries) {
 
-		addBigDecimalEntries(
+		return addBigDecimalEntries(
 			pk,
 			ListUtil.toLongArray(
 				bigDecimalEntries,

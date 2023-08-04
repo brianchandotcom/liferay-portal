@@ -91,17 +91,17 @@ public interface OAuth2AuthorizationLocalService
 	public OAuth2Authorization addOAuth2Authorization(
 		OAuth2Authorization oAuth2Authorization);
 
-	public void addOAuth2ScopeGrantOAuth2Authorization(
+	public boolean addOAuth2ScopeGrantOAuth2Authorization(
 		long oAuth2ScopeGrantId, long oAuth2AuthorizationId);
 
-	public void addOAuth2ScopeGrantOAuth2Authorization(
+	public boolean addOAuth2ScopeGrantOAuth2Authorization(
 		long oAuth2ScopeGrantId, OAuth2Authorization oAuth2Authorization);
 
-	public void addOAuth2ScopeGrantOAuth2Authorizations(
+	public boolean addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId,
 		List<OAuth2Authorization> oAuth2Authorizations);
 
-	public void addOAuth2ScopeGrantOAuth2Authorizations(
+	public boolean addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, long[] oAuth2AuthorizationIds);
 
 	public void clearOAuth2ScopeGrantOAuth2Authorizations(

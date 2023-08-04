@@ -35,22 +35,24 @@ public class UserGroupLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addGroupUserGroup(long groupId, long userGroupId) {
-		getService().addGroupUserGroup(groupId, userGroupId);
+	public static boolean addGroupUserGroup(long groupId, long userGroupId) {
+		return getService().addGroupUserGroup(groupId, userGroupId);
 	}
 
-	public static void addGroupUserGroup(long groupId, UserGroup userGroup) {
-		getService().addGroupUserGroup(groupId, userGroup);
+	public static boolean addGroupUserGroup(long groupId, UserGroup userGroup) {
+		return getService().addGroupUserGroup(groupId, userGroup);
 	}
 
-	public static void addGroupUserGroups(
+	public static boolean addGroupUserGroups(
 		long groupId, List<UserGroup> userGroups) {
 
-		getService().addGroupUserGroups(groupId, userGroups);
+		return getService().addGroupUserGroups(groupId, userGroups);
 	}
 
-	public static void addGroupUserGroups(long groupId, long[] userGroupIds) {
-		getService().addGroupUserGroups(groupId, userGroupIds);
+	public static boolean addGroupUserGroups(
+		long groupId, long[] userGroupIds) {
+
+		return getService().addGroupUserGroups(groupId, userGroupIds);
 	}
 
 	public static UserGroup addOrUpdateUserGroup(
@@ -63,22 +65,22 @@ public class UserGroupLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void addTeamUserGroup(long teamId, long userGroupId) {
-		getService().addTeamUserGroup(teamId, userGroupId);
+	public static boolean addTeamUserGroup(long teamId, long userGroupId) {
+		return getService().addTeamUserGroup(teamId, userGroupId);
 	}
 
-	public static void addTeamUserGroup(long teamId, UserGroup userGroup) {
-		getService().addTeamUserGroup(teamId, userGroup);
+	public static boolean addTeamUserGroup(long teamId, UserGroup userGroup) {
+		return getService().addTeamUserGroup(teamId, userGroup);
 	}
 
-	public static void addTeamUserGroups(
+	public static boolean addTeamUserGroups(
 		long teamId, List<UserGroup> userGroups) {
 
-		getService().addTeamUserGroups(teamId, userGroups);
+		return getService().addTeamUserGroups(teamId, userGroups);
 	}
 
-	public static void addTeamUserGroups(long teamId, long[] userGroupIds) {
-		getService().addTeamUserGroups(teamId, userGroupIds);
+	public static boolean addTeamUserGroups(long teamId, long[] userGroupIds) {
+		return getService().addTeamUserGroups(teamId, userGroupIds);
 	}
 
 	/**
@@ -126,38 +128,38 @@ public class UserGroupLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserUserGroup(long userId, long userGroupId)
+	public static boolean addUserUserGroup(long userId, long userGroupId)
 		throws PortalException {
 
-		getService().addUserUserGroup(userId, userGroupId);
+		return getService().addUserUserGroup(userId, userGroupId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserUserGroup(long userId, UserGroup userGroup)
+	public static boolean addUserUserGroup(long userId, UserGroup userGroup)
 		throws PortalException {
 
-		getService().addUserUserGroup(userId, userGroup);
+		return getService().addUserUserGroup(userId, userGroup);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserUserGroups(
+	public static boolean addUserUserGroups(
 			long userId, List<UserGroup> userGroups)
 		throws PortalException {
 
-		getService().addUserUserGroups(userId, userGroups);
+		return getService().addUserUserGroups(userId, userGroups);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static void addUserUserGroups(long userId, long[] userGroupIds)
+	public static boolean addUserUserGroups(long userId, long[] userGroupIds)
 		throws PortalException {
 
-		getService().addUserUserGroups(userId, userGroupIds);
+		return getService().addUserUserGroups(userId, userGroupIds);
 	}
 
 	public static void clearGroupUserGroups(long groupId) {

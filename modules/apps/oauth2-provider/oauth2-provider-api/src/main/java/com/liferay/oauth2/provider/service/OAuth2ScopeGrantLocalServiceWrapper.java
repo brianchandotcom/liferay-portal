@@ -30,38 +30,42 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 	}
 
 	@Override
-	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+	public boolean addOAuth2AuthorizationOAuth2ScopeGrant(
 		long oAuth2AuthorizationId, long oAuth2ScopeGrantId) {
 
-		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrant(
-			oAuth2AuthorizationId, oAuth2ScopeGrantId);
+		return _oAuth2ScopeGrantLocalService.
+			addOAuth2AuthorizationOAuth2ScopeGrant(
+				oAuth2AuthorizationId, oAuth2ScopeGrantId);
 	}
 
 	@Override
-	public void addOAuth2AuthorizationOAuth2ScopeGrant(
+	public boolean addOAuth2AuthorizationOAuth2ScopeGrant(
 		long oAuth2AuthorizationId,
 		com.liferay.oauth2.provider.model.OAuth2ScopeGrant oAuth2ScopeGrant) {
 
-		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrant(
-			oAuth2AuthorizationId, oAuth2ScopeGrant);
+		return _oAuth2ScopeGrantLocalService.
+			addOAuth2AuthorizationOAuth2ScopeGrant(
+				oAuth2AuthorizationId, oAuth2ScopeGrant);
 	}
 
 	@Override
-	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+	public boolean addOAuth2AuthorizationOAuth2ScopeGrants(
 		long oAuth2AuthorizationId,
 		java.util.List<com.liferay.oauth2.provider.model.OAuth2ScopeGrant>
 			oAuth2ScopeGrants) {
 
-		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrants(
-			oAuth2AuthorizationId, oAuth2ScopeGrants);
+		return _oAuth2ScopeGrantLocalService.
+			addOAuth2AuthorizationOAuth2ScopeGrants(
+				oAuth2AuthorizationId, oAuth2ScopeGrants);
 	}
 
 	@Override
-	public void addOAuth2AuthorizationOAuth2ScopeGrants(
+	public boolean addOAuth2AuthorizationOAuth2ScopeGrants(
 		long oAuth2AuthorizationId, long[] oAuth2ScopeGrantIds) {
 
-		_oAuth2ScopeGrantLocalService.addOAuth2AuthorizationOAuth2ScopeGrants(
-			oAuth2AuthorizationId, oAuth2ScopeGrantIds);
+		return _oAuth2ScopeGrantLocalService.
+			addOAuth2AuthorizationOAuth2ScopeGrants(
+				oAuth2AuthorizationId, oAuth2ScopeGrantIds);
 	}
 
 	/**

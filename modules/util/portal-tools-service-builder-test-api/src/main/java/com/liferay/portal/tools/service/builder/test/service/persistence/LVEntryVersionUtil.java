@@ -2254,9 +2254,10 @@ public class LVEntryVersionUtil {
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 * @return <code>true</code> if the association between the lv entry version and the big decimal entry is added; <code>false</code> if it was already added
 	 */
-	public static void addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
-		getPersistence().addBigDecimalEntry(pk, bigDecimalEntryPK);
+	public static boolean addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
+		return getPersistence().addBigDecimalEntry(pk, bigDecimalEntryPK);
 	}
 
 	/**
@@ -2264,13 +2265,14 @@ public class LVEntryVersionUtil {
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntry the big decimal entry
+	 * @return <code>true</code> if the association between the lv entry version and the big decimal entry is added; <code>false</code> if it was already added
 	 */
-	public static void addBigDecimalEntry(
+	public static boolean addBigDecimalEntry(
 		long pk,
 		com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry
 			bigDecimalEntry) {
 
-		getPersistence().addBigDecimalEntry(pk, bigDecimalEntry);
+		return getPersistence().addBigDecimalEntry(pk, bigDecimalEntry);
 	}
 
 	/**
@@ -2278,11 +2280,12 @@ public class LVEntryVersionUtil {
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
+	 * @return <code>true</code> if at least an association between the lv entry version and the big decimal entries is added; <code>false</code> if all were already added
 	 */
-	public static void addBigDecimalEntries(
+	public static boolean addBigDecimalEntries(
 		long pk, long[] bigDecimalEntryPKs) {
 
-		getPersistence().addBigDecimalEntries(pk, bigDecimalEntryPKs);
+		return getPersistence().addBigDecimalEntries(pk, bigDecimalEntryPKs);
 	}
 
 	/**
@@ -2290,14 +2293,15 @@ public class LVEntryVersionUtil {
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntries the big decimal entries
+	 * @return <code>true</code> if at least an association between the lv entry version and the big decimal entries is added; <code>false</code> if all were already added
 	 */
-	public static void addBigDecimalEntries(
+	public static boolean addBigDecimalEntries(
 		long pk,
 		List
 			<com.liferay.portal.tools.service.builder.test.model.
 				BigDecimalEntry> bigDecimalEntries) {
 
-		getPersistence().addBigDecimalEntries(pk, bigDecimalEntries);
+		return getPersistence().addBigDecimalEntries(pk, bigDecimalEntries);
 	}
 
 	/**

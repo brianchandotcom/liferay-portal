@@ -373,31 +373,31 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addAssetTagAssetEntry(long tagId, long entryId) {
-		assetTagPersistence.addAssetEntry(tagId, entryId);
+	public boolean addAssetTagAssetEntry(long tagId, long entryId) {
+		return assetTagPersistence.addAssetEntry(tagId, entryId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addAssetTagAssetEntry(long tagId, AssetEntry assetEntry) {
-		assetTagPersistence.addAssetEntry(tagId, assetEntry);
+	public boolean addAssetTagAssetEntry(long tagId, AssetEntry assetEntry) {
+		return assetTagPersistence.addAssetEntry(tagId, assetEntry);
 	}
 
 	/**
 	 */
 	@Override
-	public void addAssetTagAssetEntries(long tagId, long[] entryIds) {
-		assetTagPersistence.addAssetEntries(tagId, entryIds);
+	public boolean addAssetTagAssetEntries(long tagId, long[] entryIds) {
+		return assetTagPersistence.addAssetEntries(tagId, entryIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addAssetTagAssetEntries(
+	public boolean addAssetTagAssetEntries(
 		long tagId, List<AssetEntry> assetEntries) {
 
-		assetTagPersistence.addAssetEntries(tagId, assetEntries);
+		return assetTagPersistence.addAssetEntries(tagId, assetEntries);
 	}
 
 	/**

@@ -66,16 +66,16 @@ public interface LVEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.LVEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the lv entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link LVEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, List<LVEntry> lvEntries);
 
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, long[] lvEntryIds);
 
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, long lvEntryId);
 
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, LVEntry lvEntry);
 
 	/**

@@ -3874,16 +3874,18 @@ public interface DLFolderPersistence
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypePK the primary key of the document library file entry type
+	 * @return <code>true</code> if the association between the document library folder and the document library file entry type is added; <code>false</code> if it was already added
 	 */
-	public void addDLFileEntryType(long pk, long dlFileEntryTypePK);
+	public boolean addDLFileEntryType(long pk, long dlFileEntryTypePK);
 
 	/**
 	 * Adds an association between the document library folder and the document library file entry type. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryType the document library file entry type
+	 * @return <code>true</code> if the association between the document library folder and the document library file entry type is added; <code>false</code> if it was already added
 	 */
-	public void addDLFileEntryType(
+	public boolean addDLFileEntryType(
 		long pk,
 		com.liferay.document.library.kernel.model.DLFileEntryType
 			dlFileEntryType);
@@ -3893,16 +3895,18 @@ public interface DLFolderPersistence
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypePKs the primary keys of the document library file entry types
+	 * @return <code>true</code> if at least an association between the document library folder and the document library file entry types is added; <code>false</code> if all were already added
 	 */
-	public void addDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs);
+	public boolean addDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs);
 
 	/**
 	 * Adds an association between the document library folder and the document library file entry types. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypes the document library file entry types
+	 * @return <code>true</code> if at least an association between the document library folder and the document library file entry types is added; <code>false</code> if all were already added
 	 */
-	public void addDLFileEntryTypes(
+	public boolean addDLFileEntryTypes(
 		long pk,
 		java.util.List
 			<com.liferay.document.library.kernel.model.DLFileEntryType>

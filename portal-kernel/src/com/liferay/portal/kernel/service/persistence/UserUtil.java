@@ -2890,9 +2890,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param groupPK the primary key of the group
+	 * @return <code>true</code> if the association between the user and the group is added; <code>false</code> if it was already added
 	 */
-	public static void addGroup(long pk, long groupPK) {
-		getPersistence().addGroup(pk, groupPK);
+	public static boolean addGroup(long pk, long groupPK) {
+		return getPersistence().addGroup(pk, groupPK);
 	}
 
 	/**
@@ -2900,11 +2901,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param group the group
+	 * @return <code>true</code> if the association between the user and the group is added; <code>false</code> if it was already added
 	 */
-	public static void addGroup(
+	public static boolean addGroup(
 		long pk, com.liferay.portal.kernel.model.Group group) {
 
-		getPersistence().addGroup(pk, group);
+		return getPersistence().addGroup(pk, group);
 	}
 
 	/**
@@ -2912,9 +2914,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param groupPKs the primary keys of the groups
+	 * @return <code>true</code> if at least an association between the user and the groups is added; <code>false</code> if all were already added
 	 */
-	public static void addGroups(long pk, long[] groupPKs) {
-		getPersistence().addGroups(pk, groupPKs);
+	public static boolean addGroups(long pk, long[] groupPKs) {
+		return getPersistence().addGroups(pk, groupPKs);
 	}
 
 	/**
@@ -2922,11 +2925,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param groups the groups
+	 * @return <code>true</code> if at least an association between the user and the groups is added; <code>false</code> if all were already added
 	 */
-	public static void addGroups(
+	public static boolean addGroups(
 		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
 
-		getPersistence().addGroups(pk, groups);
+		return getPersistence().addGroups(pk, groups);
 	}
 
 	/**
@@ -3103,9 +3107,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param organizationPK the primary key of the organization
+	 * @return <code>true</code> if the association between the user and the organization is added; <code>false</code> if it was already added
 	 */
-	public static void addOrganization(long pk, long organizationPK) {
-		getPersistence().addOrganization(pk, organizationPK);
+	public static boolean addOrganization(long pk, long organizationPK) {
+		return getPersistence().addOrganization(pk, organizationPK);
 	}
 
 	/**
@@ -3113,11 +3118,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param organization the organization
+	 * @return <code>true</code> if the association between the user and the organization is added; <code>false</code> if it was already added
 	 */
-	public static void addOrganization(
+	public static boolean addOrganization(
 		long pk, com.liferay.portal.kernel.model.Organization organization) {
 
-		getPersistence().addOrganization(pk, organization);
+		return getPersistence().addOrganization(pk, organization);
 	}
 
 	/**
@@ -3125,9 +3131,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param organizationPKs the primary keys of the organizations
+	 * @return <code>true</code> if at least an association between the user and the organizations is added; <code>false</code> if all were already added
 	 */
-	public static void addOrganizations(long pk, long[] organizationPKs) {
-		getPersistence().addOrganizations(pk, organizationPKs);
+	public static boolean addOrganizations(long pk, long[] organizationPKs) {
+		return getPersistence().addOrganizations(pk, organizationPKs);
 	}
 
 	/**
@@ -3135,12 +3142,13 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param organizations the organizations
+	 * @return <code>true</code> if at least an association between the user and the organizations is added; <code>false</code> if all were already added
 	 */
-	public static void addOrganizations(
+	public static boolean addOrganizations(
 		long pk,
 		List<com.liferay.portal.kernel.model.Organization> organizations) {
 
-		getPersistence().addOrganizations(pk, organizations);
+		return getPersistence().addOrganizations(pk, organizations);
 	}
 
 	/**
@@ -3315,9 +3323,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param rolePK the primary key of the role
+	 * @return <code>true</code> if the association between the user and the role is added; <code>false</code> if it was already added
 	 */
-	public static void addRole(long pk, long rolePK) {
-		getPersistence().addRole(pk, rolePK);
+	public static boolean addRole(long pk, long rolePK) {
+		return getPersistence().addRole(pk, rolePK);
 	}
 
 	/**
@@ -3325,11 +3334,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param role the role
+	 * @return <code>true</code> if the association between the user and the role is added; <code>false</code> if it was already added
 	 */
-	public static void addRole(
+	public static boolean addRole(
 		long pk, com.liferay.portal.kernel.model.Role role) {
 
-		getPersistence().addRole(pk, role);
+		return getPersistence().addRole(pk, role);
 	}
 
 	/**
@@ -3337,9 +3347,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param rolePKs the primary keys of the roles
+	 * @return <code>true</code> if at least an association between the user and the roles is added; <code>false</code> if all were already added
 	 */
-	public static void addRoles(long pk, long[] rolePKs) {
-		getPersistence().addRoles(pk, rolePKs);
+	public static boolean addRoles(long pk, long[] rolePKs) {
+		return getPersistence().addRoles(pk, rolePKs);
 	}
 
 	/**
@@ -3347,11 +3358,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param roles the roles
+	 * @return <code>true</code> if at least an association between the user and the roles is added; <code>false</code> if all were already added
 	 */
-	public static void addRoles(
+	public static boolean addRoles(
 		long pk, List<com.liferay.portal.kernel.model.Role> roles) {
 
-		getPersistence().addRoles(pk, roles);
+		return getPersistence().addRoles(pk, roles);
 	}
 
 	/**
@@ -3524,9 +3536,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param teamPK the primary key of the team
+	 * @return <code>true</code> if the association between the user and the team is added; <code>false</code> if it was already added
 	 */
-	public static void addTeam(long pk, long teamPK) {
-		getPersistence().addTeam(pk, teamPK);
+	public static boolean addTeam(long pk, long teamPK) {
+		return getPersistence().addTeam(pk, teamPK);
 	}
 
 	/**
@@ -3534,11 +3547,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param team the team
+	 * @return <code>true</code> if the association between the user and the team is added; <code>false</code> if it was already added
 	 */
-	public static void addTeam(
+	public static boolean addTeam(
 		long pk, com.liferay.portal.kernel.model.Team team) {
 
-		getPersistence().addTeam(pk, team);
+		return getPersistence().addTeam(pk, team);
 	}
 
 	/**
@@ -3546,9 +3560,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param teamPKs the primary keys of the teams
+	 * @return <code>true</code> if at least an association between the user and the teams is added; <code>false</code> if all were already added
 	 */
-	public static void addTeams(long pk, long[] teamPKs) {
-		getPersistence().addTeams(pk, teamPKs);
+	public static boolean addTeams(long pk, long[] teamPKs) {
+		return getPersistence().addTeams(pk, teamPKs);
 	}
 
 	/**
@@ -3556,11 +3571,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param teams the teams
+	 * @return <code>true</code> if at least an association between the user and the teams is added; <code>false</code> if all were already added
 	 */
-	public static void addTeams(
+	public static boolean addTeams(
 		long pk, List<com.liferay.portal.kernel.model.Team> teams) {
 
-		getPersistence().addTeams(pk, teams);
+		return getPersistence().addTeams(pk, teams);
 	}
 
 	/**
@@ -3736,9 +3752,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param userGroupPK the primary key of the user group
+	 * @return <code>true</code> if the association between the user and the user group is added; <code>false</code> if it was already added
 	 */
-	public static void addUserGroup(long pk, long userGroupPK) {
-		getPersistence().addUserGroup(pk, userGroupPK);
+	public static boolean addUserGroup(long pk, long userGroupPK) {
+		return getPersistence().addUserGroup(pk, userGroupPK);
 	}
 
 	/**
@@ -3746,11 +3763,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param userGroup the user group
+	 * @return <code>true</code> if the association between the user and the user group is added; <code>false</code> if it was already added
 	 */
-	public static void addUserGroup(
+	public static boolean addUserGroup(
 		long pk, com.liferay.portal.kernel.model.UserGroup userGroup) {
 
-		getPersistence().addUserGroup(pk, userGroup);
+		return getPersistence().addUserGroup(pk, userGroup);
 	}
 
 	/**
@@ -3758,9 +3776,10 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param userGroupPKs the primary keys of the user groups
+	 * @return <code>true</code> if at least an association between the user and the user groups is added; <code>false</code> if all were already added
 	 */
-	public static void addUserGroups(long pk, long[] userGroupPKs) {
-		getPersistence().addUserGroups(pk, userGroupPKs);
+	public static boolean addUserGroups(long pk, long[] userGroupPKs) {
+		return getPersistence().addUserGroups(pk, userGroupPKs);
 	}
 
 	/**
@@ -3768,11 +3787,12 @@ public class UserUtil {
 	 *
 	 * @param pk the primary key of the user
 	 * @param userGroups the user groups
+	 * @return <code>true</code> if at least an association between the user and the user groups is added; <code>false</code> if all were already added
 	 */
-	public static void addUserGroups(
+	public static boolean addUserGroups(
 		long pk, List<com.liferay.portal.kernel.model.UserGroup> userGroups) {
 
-		getPersistence().addUserGroups(pk, userGroups);
+		return getPersistence().addUserGroups(pk, userGroups);
 	}
 
 	/**

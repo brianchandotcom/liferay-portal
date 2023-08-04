@@ -50,24 +50,24 @@ public class AssetEntryLocalServiceUtil {
 		return getService().addAssetEntry(assetEntry);
 	}
 
-	public static void addAssetTagAssetEntries(
+	public static boolean addAssetTagAssetEntries(
 		long tagId, List<AssetEntry> assetEntries) {
 
-		getService().addAssetTagAssetEntries(tagId, assetEntries);
+		return getService().addAssetTagAssetEntries(tagId, assetEntries);
 	}
 
-	public static void addAssetTagAssetEntries(long tagId, long[] entryIds) {
-		getService().addAssetTagAssetEntries(tagId, entryIds);
+	public static boolean addAssetTagAssetEntries(long tagId, long[] entryIds) {
+		return getService().addAssetTagAssetEntries(tagId, entryIds);
 	}
 
-	public static void addAssetTagAssetEntry(
+	public static boolean addAssetTagAssetEntry(
 		long tagId, AssetEntry assetEntry) {
 
-		getService().addAssetTagAssetEntry(tagId, assetEntry);
+		return getService().addAssetTagAssetEntry(tagId, assetEntry);
 	}
 
-	public static void addAssetTagAssetEntry(long tagId, long entryId) {
-		getService().addAssetTagAssetEntry(tagId, entryId);
+	public static boolean addAssetTagAssetEntry(long tagId, long entryId) {
+		return getService().addAssetTagAssetEntry(tagId, entryId);
 	}
 
 	public static void clearAssetTagAssetEntries(long tagId) {

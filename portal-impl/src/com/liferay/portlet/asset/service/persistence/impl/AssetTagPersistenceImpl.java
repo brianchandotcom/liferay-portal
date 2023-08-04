@@ -5089,17 +5089,18 @@ public class AssetTagPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntryPK the primary key of the asset entry
+	 * @return <code>true</code> if the association between the asset tag and the asset entry is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addAssetEntry(long pk, long assetEntryPK) {
+	public boolean addAssetEntry(long pk, long assetEntryPK) {
 		AssetTag assetTag = fetchByPrimaryKey(pk);
 
 		if (assetTag == null) {
-			assetTagToAssetEntryTableMapper.addTableMapping(
+			return assetTagToAssetEntryTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, assetEntryPK);
 		}
 		else {
-			assetTagToAssetEntryTableMapper.addTableMapping(
+			return assetTagToAssetEntryTableMapper.addTableMapping(
 				assetTag.getCompanyId(), pk, assetEntryPK);
 		}
 	}
@@ -5109,20 +5110,21 @@ public class AssetTagPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntry the asset entry
+	 * @return <code>true</code> if the association between the asset tag and the asset entry is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addAssetEntry(
+	public boolean addAssetEntry(
 		long pk, com.liferay.asset.kernel.model.AssetEntry assetEntry) {
 
 		AssetTag assetTag = fetchByPrimaryKey(pk);
 
 		if (assetTag == null) {
-			assetTagToAssetEntryTableMapper.addTableMapping(
+			return assetTagToAssetEntryTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk,
 				assetEntry.getPrimaryKey());
 		}
 		else {
-			assetTagToAssetEntryTableMapper.addTableMapping(
+			return assetTagToAssetEntryTableMapper.addTableMapping(
 				assetTag.getCompanyId(), pk, assetEntry.getPrimaryKey());
 		}
 	}
@@ -5132,9 +5134,10 @@ public class AssetTagPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntryPKs the primary keys of the asset entries
+	 * @return <code>true</code> if at least an association between the asset tag and the asset entries is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addAssetEntries(long pk, long[] assetEntryPKs) {
+	public boolean addAssetEntries(long pk, long[] assetEntryPKs) {
 		long companyId = 0;
 
 		AssetTag assetTag = fetchByPrimaryKey(pk);
@@ -5146,8 +5149,14 @@ public class AssetTagPersistenceImpl
 			companyId = assetTag.getCompanyId();
 		}
 
-		assetTagToAssetEntryTableMapper.addTableMappings(
+		long[] addedKeys = assetTagToAssetEntryTableMapper.addTableMappings(
 			companyId, pk, assetEntryPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -5155,12 +5164,13 @@ public class AssetTagPersistenceImpl
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntries the asset entries
+	 * @return <code>true</code> if at least an association between the asset tag and the asset entries is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addAssetEntries(
+	public boolean addAssetEntries(
 		long pk, List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
 
-		addAssetEntries(
+		return addAssetEntries(
 			pk,
 			ListUtil.toLongArray(
 				assetEntries,

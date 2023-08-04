@@ -79,14 +79,14 @@ public interface AssetEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetEntry addAssetEntry(AssetEntry assetEntry);
 
-	public void addAssetTagAssetEntries(
+	public boolean addAssetTagAssetEntries(
 		long tagId, List<AssetEntry> assetEntries);
 
-	public void addAssetTagAssetEntries(long tagId, long[] entryIds);
+	public boolean addAssetTagAssetEntries(long tagId, long[] entryIds);
 
-	public void addAssetTagAssetEntry(long tagId, AssetEntry assetEntry);
+	public boolean addAssetTagAssetEntry(long tagId, AssetEntry assetEntry);
 
-	public void addAssetTagAssetEntry(long tagId, long entryId);
+	public boolean addAssetTagAssetEntry(long tagId, long entryId);
 
 	public void clearAssetTagAssetEntries(long tagId);
 

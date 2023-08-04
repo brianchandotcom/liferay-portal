@@ -504,31 +504,33 @@ public abstract class OrganizationLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addGroupOrganization(long groupId, long organizationId) {
-		groupPersistence.addOrganization(groupId, organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId) {
+		return groupPersistence.addOrganization(groupId, organizationId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupOrganization(long groupId, Organization organization) {
-		groupPersistence.addOrganization(groupId, organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization) {
+
+		return groupPersistence.addOrganization(groupId, organization);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		groupPersistence.addOrganizations(groupId, organizationIds);
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds) {
+		return groupPersistence.addOrganizations(groupId, organizationIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, List<Organization> organizations) {
 
-		groupPersistence.addOrganizations(groupId, organizations);
+		return groupPersistence.addOrganizations(groupId, organizations);
 	}
 
 	/**
@@ -639,31 +641,31 @@ public abstract class OrganizationLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addUserOrganization(long userId, long organizationId) {
-		userPersistence.addOrganization(userId, organizationId);
+	public boolean addUserOrganization(long userId, long organizationId) {
+		return userPersistence.addOrganization(userId, organizationId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserOrganization(long userId, Organization organization) {
-		userPersistence.addOrganization(userId, organization);
+	public boolean addUserOrganization(long userId, Organization organization) {
+		return userPersistence.addOrganization(userId, organization);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserOrganizations(long userId, long[] organizationIds) {
-		userPersistence.addOrganizations(userId, organizationIds);
+	public boolean addUserOrganizations(long userId, long[] organizationIds) {
+		return userPersistence.addOrganizations(userId, organizationIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addUserOrganizations(
+	public boolean addUserOrganizations(
 		long userId, List<Organization> organizations) {
 
-		userPersistence.addOrganizations(userId, organizations);
+		return userPersistence.addOrganizations(userId, organizations);
 	}
 
 	/**

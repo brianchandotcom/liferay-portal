@@ -27,38 +27,38 @@ public class LVEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId,
 		java.util.List
 			<com.liferay.portal.tools.service.builder.test.model.LVEntry>
 				lvEntries) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntries(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntries(
 			bigDecimalEntryId, lvEntries);
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntries(
+	public boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, long[] lvEntryIds) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntries(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntries(
 			bigDecimalEntryId, lvEntryIds);
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, long lvEntryId) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntry(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntry(
 			bigDecimalEntryId, lvEntryId);
 	}
 
 	@Override
-	public void addBigDecimalEntryLVEntry(
+	public boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId,
 		com.liferay.portal.tools.service.builder.test.model.LVEntry lvEntry) {
 
-		_lvEntryLocalService.addBigDecimalEntryLVEntry(
+		return _lvEntryLocalService.addBigDecimalEntryLVEntry(
 			bigDecimalEntryId, lvEntry);
 	}
 

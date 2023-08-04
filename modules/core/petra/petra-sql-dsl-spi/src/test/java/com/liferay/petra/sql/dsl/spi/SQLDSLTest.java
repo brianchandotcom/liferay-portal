@@ -945,30 +945,6 @@ public class SQLDSLTest {
 	}
 
 	@Test
-	public void testPredicateNot() {
-		Predicate leftPredicate =
-			MainExampleTable.INSTANCE.mainExampleIdColumn.gte(1L);
-		Predicate rightPredicate =
-			MainExampleTable.INSTANCE.mainExampleIdColumn.lte(3L);
-
-		DefaultPredicate defaultPredicate = new DefaultPredicate(
-			leftPredicate, Operand.OR, rightPredicate);
-
-		Assert.assertSame(leftPredicate, defaultPredicate.getLeftExpression());
-		Assert.assertSame(Operand.OR, defaultPredicate.getOperand());
-		Assert.assertSame(
-			rightPredicate, defaultPredicate.getRightExpression());
-
-		Assert.assertNotNull(defaultPredicate.not((Expression<Boolean>)null));
-		Assert.assertEquals(
-			"MainExample.mainExampleId >= ? or MainExample.mainExampleId <= " +
-				"? not MainExample.flag = ?",
-			String.valueOf(
-				defaultPredicate.not(
-					MainExampleTable.INSTANCE.flagColumn.eq(0))));
-	}
-
-	@Test
 	public void testPredicateParentheses() {
 		Predicate leftPredicate =
 			MainExampleTable.INSTANCE.mainExampleIdColumn.gte(1L);

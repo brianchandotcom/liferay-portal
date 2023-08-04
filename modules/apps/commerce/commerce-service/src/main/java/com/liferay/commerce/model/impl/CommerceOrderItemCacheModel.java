@@ -71,7 +71,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(137);
+		StringBundler sb = new StringBundler(135);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,8 +111,6 @@ public class CommerceOrderItemCacheModel
 		sb.append(parentCommerceOrderItemId);
 		sb.append(", shippingAddressId=");
 		sb.append(shippingAddressId);
-		sb.append(", decimalQuantity=");
-		sb.append(decimalQuantity);
 		sb.append(", deliveryGroup=");
 		sb.append(deliveryGroup);
 		sb.append(", deliveryMaxSubscriptionCycles=");
@@ -273,7 +271,6 @@ public class CommerceOrderItemCacheModel
 		commerceOrderItemImpl.setParentCommerceOrderItemId(
 			parentCommerceOrderItemId);
 		commerceOrderItemImpl.setShippingAddressId(shippingAddressId);
-		commerceOrderItemImpl.setDecimalQuantity(decimalQuantity);
 
 		if (deliveryGroup == null) {
 			commerceOrderItemImpl.setDeliveryGroup("");
@@ -461,7 +458,6 @@ public class CommerceOrderItemCacheModel
 		parentCommerceOrderItemId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
-		decimalQuantity = (BigDecimal)objectInput.readObject();
 		deliveryGroup = objectInput.readUTF();
 
 		deliveryMaxSubscriptionCycles = objectInput.readLong();
@@ -506,8 +502,7 @@ public class CommerceOrderItemCacheModel
 		printedNote = objectInput.readUTF();
 		promoPrice = (BigDecimal)objectInput.readObject();
 		promoPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
-
-		quantity = objectInput.readInt();
+		quantity = (BigDecimal)objectInput.readObject();
 
 		replacedCPInstanceId = objectInput.readLong();
 		replacedSku = objectInput.readUTF();
@@ -589,7 +584,6 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(parentCommerceOrderItemId);
 
 		objectOutput.writeLong(shippingAddressId);
-		objectOutput.writeObject(decimalQuantity);
 
 		if (deliveryGroup == null) {
 			objectOutput.writeUTF("");
@@ -667,8 +661,7 @@ public class CommerceOrderItemCacheModel
 
 		objectOutput.writeObject(promoPrice);
 		objectOutput.writeObject(promoPriceWithTaxAmount);
-
-		objectOutput.writeInt(quantity);
+		objectOutput.writeObject(quantity);
 
 		objectOutput.writeLong(replacedCPInstanceId);
 
@@ -748,7 +741,6 @@ public class CommerceOrderItemCacheModel
 	public long customerCommerceOrderItemId;
 	public long parentCommerceOrderItemId;
 	public long shippingAddressId;
-	public BigDecimal decimalQuantity;
 	public String deliveryGroup;
 	public long deliveryMaxSubscriptionCycles;
 	public int deliverySubscriptionLength;
@@ -779,7 +771,7 @@ public class CommerceOrderItemCacheModel
 	public String printedNote;
 	public BigDecimal promoPrice;
 	public BigDecimal promoPriceWithTaxAmount;
-	public int quantity;
+	public BigDecimal quantity;
 	public long replacedCPInstanceId;
 	public String replacedSku;
 	public long requestedDeliveryDate;

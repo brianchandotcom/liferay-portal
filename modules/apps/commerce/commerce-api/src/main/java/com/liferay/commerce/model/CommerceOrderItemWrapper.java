@@ -57,7 +57,6 @@ public class CommerceOrderItemWrapper
 		attributes.put(
 			"parentCommerceOrderItemId", getParentCommerceOrderItemId());
 		attributes.put("shippingAddressId", getShippingAddressId());
-		attributes.put("decimalQuantity", getDecimalQuantity());
 		attributes.put("deliveryGroup", getDeliveryGroup());
 		attributes.put(
 			"deliveryMaxSubscriptionCycles",
@@ -247,13 +246,6 @@ public class CommerceOrderItemWrapper
 
 		if (shippingAddressId != null) {
 			setShippingAddressId(shippingAddressId);
-		}
-
-		BigDecimal decimalQuantity = (BigDecimal)attributes.get(
-			"decimalQuantity");
-
-		if (decimalQuantity != null) {
-			setDecimalQuantity(decimalQuantity);
 		}
 
 		String deliveryGroup = (String)attributes.get("deliveryGroup");
@@ -461,7 +453,7 @@ public class CommerceOrderItemWrapper
 			setPromoPriceWithTaxAmount(promoPriceWithTaxAmount);
 		}
 
-		Integer quantity = (Integer)attributes.get("quantity");
+		BigDecimal quantity = (BigDecimal)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
@@ -747,16 +739,6 @@ public class CommerceOrderItemWrapper
 	@Override
 	public long getCustomerCommerceOrderItemId() {
 		return model.getCustomerCommerceOrderItemId();
-	}
-
-	/**
-	 * Returns the decimal quantity of this commerce order item.
-	 *
-	 * @return the decimal quantity of this commerce order item
-	 */
-	@Override
-	public BigDecimal getDecimalQuantity() {
-		return model.getDecimalQuantity();
 	}
 
 	@Override
@@ -1249,7 +1231,7 @@ public class CommerceOrderItemWrapper
 	 * @return the quantity of this commerce order item
 	 */
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return model.getQuantity();
 	}
 
@@ -1696,16 +1678,6 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
-	 * Sets the decimal quantity of this commerce order item.
-	 *
-	 * @param decimalQuantity the decimal quantity of this commerce order item
-	 */
-	@Override
-	public void setDecimalQuantity(BigDecimal decimalQuantity) {
-		model.setDecimalQuantity(decimalQuantity);
-	}
-
-	/**
 	 * Sets the delivery group of this commerce order item.
 	 *
 	 * @param deliveryGroup the delivery group of this commerce order item
@@ -2149,7 +2121,7 @@ public class CommerceOrderItemWrapper
 	 * @param quantity the quantity of this commerce order item
 	 */
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		model.setQuantity(quantity);
 	}
 

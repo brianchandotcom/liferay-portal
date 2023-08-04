@@ -28,6 +28,7 @@ public interface CommerceOrderItemFinder {
 			long groupId, long commerceAccountId, int[] orderStatuses,
 			int start, int end);
 
-	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+	public java.math.BigDecimal getCommerceOrderItemsQuantity(
+		long commerceOrderId);
 
 }

@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
@@ -15,13 +16,17 @@ import ImportResults, {ImportResultsData} from './ImportResults';
 
 interface Props {
 	backURL: string;
+	helpLink?: {
+		href: string;
+		message: string;
+	};
 	importURL: string;
 	portletNamespace: string;
 }
 
 const ZIP_EXTENSION = '.zip';
 
-function Import({backURL, importURL, portletNamespace}: Props) {
+function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const [error, setError] = useState<string | null>(null);
 	const [overwrite, setOverwrite] = useState<boolean>(true);
 	const [file, setFile] = useState<File | null>(null);
@@ -187,6 +192,17 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 						<p className="c-mb-0 text-secondary">
 							{Liferay.Language.get(
 								'select-a-zip-file-containing-one-or-multiple-entries'
+							)}
+
+							{helpLink && (
+								<span className="ml-1">
+									<ClayLink
+										href={helpLink.href}
+										target="_blank"
+									>
+										{helpLink.message}
+									</ClayLink>
+								</span>
 							)}
 						</p>
 

@@ -537,10 +537,10 @@ public class EmailNotificationType extends BaseNotificationType {
 	private String _getValidEmailAddresses(
 		long companyId, String emailAddresses) {
 
+		StringBundler sb = new StringBundler();
+
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
-
-		StringBundler sb = new StringBundler();
 
 		for (String emailAddress : StringUtil.split(emailAddresses)) {
 			if (!emailAddressValidator.validate(companyId, emailAddress)) {

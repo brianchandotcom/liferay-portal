@@ -34,6 +34,18 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro deleteServiceAccessPolicy {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = ${policyName});
+
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		AssertElementNotPresent(
+			key_policyName = ${policyName},
+			locator1 = "ServiceAccessPolicy#POLICY_NAME");
+	}
+
 	macro editServiceAccessPolicy {
 		ServiceAccessPolicy.gotoServiceAccessPolicy(policyName = ${policyName});
 

@@ -1,8 +1,8 @@
 @component-name = "portal-service-builder"
 definition {
 
-	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.release = "openjdk11";
+	property portal.upstream = "openjdk11";
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Service Builder";
 
@@ -23,7 +23,6 @@ definition {
 	@priority = 4
 	test Smoke {
 		property osgi.modules.includes.jdk11 = "portal-tools-service-builder-test-api";
-		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(

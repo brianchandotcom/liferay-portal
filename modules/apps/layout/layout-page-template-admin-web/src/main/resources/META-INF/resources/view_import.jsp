@@ -15,3 +15,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "import"));
 
 ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest, renderResponse);
 %>
+
+<react:component
+	module="js/ImportPageTemplates"
+	props="<%= importDisplayContext.getProps() %>"
+/>

@@ -105,6 +105,8 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
+		SearchAdministration.executeReindex();
+
 		Navigator.openSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");

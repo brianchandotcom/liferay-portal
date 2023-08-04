@@ -54,7 +54,7 @@ const DDMFolderSelector = ({
 				setCopyButtonDisabled(false);
 			},
 			selectEventName: `${portletNamespace}folderSelected`,
-			title: sub(Liferay.Language.get('select-x'), 'folder'),
+			title: sub(Liferay.Language.get('select')),
 			url: selectionModalURL,
 		});
 	};

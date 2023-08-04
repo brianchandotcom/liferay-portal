@@ -1,14 +1,14 @@
 assemble:
     - from: src
 liferay-marketplace-etc-node-oauth-application-user-agent:
-    .serviceAddress: localhost:3001
+    .serviceAddress: 127.0.0.1:3001
     .serviceScheme: http
     name: Liferay Marketplace Etc Node OAuth Application User Agent
     scopes:
         - C_Test.everything
         - Liferay.Headless.Commerce.Delivery.Order.everything.read
         - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Admin.User.read
+        - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Commerce.Admin.Order.everything
     type: oAuthApplicationUserAgent
 liferay-marketplace-etc-node-object-action-test:

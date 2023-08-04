@@ -881,7 +881,11 @@ public class SourceFormatterUtil {
 							continue;
 						}
 
-						fileNames.add(filePath.toString());
+						String fileName = StringUtil.replace(
+							filePath.toString(), CharPool.BACK_SLASH,
+							CharPool.SLASH);
+
+						fileNames.add(fileName);
 
 						return FileVisitResult.CONTINUE;
 					}

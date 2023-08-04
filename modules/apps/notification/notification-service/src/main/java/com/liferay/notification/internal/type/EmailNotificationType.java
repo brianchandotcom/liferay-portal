@@ -561,11 +561,14 @@ public class EmailNotificationType extends BaseNotificationType {
 				}
 			}
 
+			if (sb.index() > 0) {
+				sb.append(StringPool.COMMA);
+			}
+
 			sb.append(emailAddress);
-			sb.append(StringPool.COMMA);
 		}
 
-		return StringUtil.removeLast(sb.toString(), StringPool.COMMA);
+		return sb.toString();
 	}
 
 	private void _sendEmail(NotificationQueueEntry notificationQueueEntry) {

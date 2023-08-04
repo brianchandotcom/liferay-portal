@@ -38,8 +38,8 @@ const TriggerLabel = React.forwardRef(
 				)}
 				ref={ref}
 			>
-				<Layout.ContentRow className="c-pr-3" verticalAlign="center">
-					<Layout.ContentCol className="text-truncate" expand>
+				<Layout.ContentRow verticalAlign="center">
+					<Layout.ContentCol className="c-mr-2 text-truncate" expand>
 						<Text size={3} weight="normal">
 							{selectedItem.segmentsExperienceName}
 						</Text>

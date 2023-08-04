@@ -55,7 +55,7 @@ const Body = ({children, segments, tabs}) => {
 		<>
 			{segments.segmentsExperiences.length > 1 ? (
 				<ExperienceSelector
-					className="c-px-3 c-py-1"
+					className="c-px-3 c-py-1 page-audit__experience-selector"
 					segmentsExperiences={segments.segmentsExperiences}
 					selectedSegmentsExperience={
 						segments.selectedSegmentsExperience

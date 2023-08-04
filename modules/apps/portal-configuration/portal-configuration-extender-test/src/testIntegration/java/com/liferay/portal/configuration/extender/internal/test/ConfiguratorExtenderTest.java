@@ -344,7 +344,8 @@ public class ConfiguratorExtenderTest {
 
 	private Object _createNamedConfigurationContent(
 			String factoryPid, String pid,
-			UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier)
+			UnsafeSupplier<Dictionary<?, ?>, IOException>
+				propertyUnsafeSupplier)
 		throws Exception {
 
 		Class<?> clazz = _bundle.loadClass(
@@ -354,7 +355,7 @@ public class ConfiguratorExtenderTest {
 		Constructor<?> constructor = clazz.getDeclaredConstructor(
 			String.class, String.class, UnsafeSupplier.class);
 
-		return constructor.newInstance(factoryPid, pid, propertySupplier);
+		return constructor.newInstance(factoryPid, pid, propertyUnsafeSupplier);
 	}
 
 	private void _deleteConfigurations(String filter) throws Exception {

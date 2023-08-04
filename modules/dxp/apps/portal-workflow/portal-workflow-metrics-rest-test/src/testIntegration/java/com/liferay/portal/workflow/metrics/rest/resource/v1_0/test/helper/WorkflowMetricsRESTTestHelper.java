@@ -247,14 +247,14 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public NodeMetric addNodeMetric(
 			Assignee assignee, long companyId,
-			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
-			String status, User user)
+			UnsafeSupplier<Instance, Exception> instanceUnsafeSupplier,
+			long processId, String status, User user)
 		throws Exception {
 
 		String randomString = RandomTestUtil.randomString();
 
 		return addNodeMetric(
-			assignee, companyId, instanceSuplier,
+			assignee, companyId, instanceUnsafeSupplier,
 			new NodeMetric() {
 				{
 					durationAvg =
@@ -276,7 +276,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	public NodeMetric addNodeMetric(
 			Assignee assignee, long companyId,
-			UnsafeSupplier<Instance, Exception> instanceSuplier,
+			UnsafeSupplier<Instance, Exception> instanceUnsafeSupplier,
 			NodeMetric nodeMetric, long processId, String status, User user,
 			String version)
 		throws Exception {
@@ -288,7 +288,7 @@ public class WorkflowMetricsRESTTestHelper {
 		Long overdueInstanceCount = nodeMetric.getOverdueInstanceCount();
 
 		for (int i = 0; i < nodeMetric.getInstanceCount(); i++) {
-			Instance instance = instanceSuplier.get();
+			Instance instance = instanceUnsafeSupplier.get();
 			Long taskId = RandomTestUtil.nextLong();
 
 			if (onTimeInstanceCount > 0) {

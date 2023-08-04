@@ -329,7 +329,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	private AccountEntry _withServiceContext(
-			UnsafeSupplier<AccountEntry, PortalException> unsafeRunnable,
+			UnsafeSupplier<AccountEntry, PortalException> unsafeSupplier,
 			long userId)
 		throws PortalException {
 
@@ -340,7 +340,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			return unsafeRunnable.get();
+			return unsafeSupplier.get();
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

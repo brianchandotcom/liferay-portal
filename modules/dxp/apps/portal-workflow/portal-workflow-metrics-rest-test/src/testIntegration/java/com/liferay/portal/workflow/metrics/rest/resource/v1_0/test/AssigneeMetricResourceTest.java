@@ -516,23 +516,24 @@ public class AssigneeMetricResourceTest
 
 	private void _addNodeMetric(
 			Assignee assignee,
-			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			UnsafeSupplier<Instance, Exception> instanceUnsafeSupplier,
 			long processId, NodeMetric... nodeMetrics)
 		throws Exception {
 
 		_addNodeMetric(
-			assignee, instanceSupplier, processId, "RUNNING", nodeMetrics);
+			assignee, instanceUnsafeSupplier, processId, "RUNNING",
+			nodeMetrics);
 	}
 
 	private void _addNodeMetric(
 			Assignee assignee,
-			UnsafeSupplier<Instance, Exception> instanceSupplier,
+			UnsafeSupplier<Instance, Exception> instanceUnsafeSupplier,
 			long processId, String status, NodeMetric... nodeMetrics)
 		throws Exception {
 
 		for (NodeMetric nodeMetric : nodeMetrics) {
 			_workflowMetricsRESTTestHelper.addNodeMetric(
-				assignee, testGroup.getCompanyId(), instanceSupplier,
+				assignee, testGroup.getCompanyId(), instanceUnsafeSupplier,
 				nodeMetric, processId, status, TestPropsValues.getUser(),
 				"1.0");
 		}

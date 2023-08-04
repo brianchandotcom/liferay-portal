@@ -19,11 +19,11 @@ public class NamedConfigurationContent {
 
 	public NamedConfigurationContent(
 		String factoryPid, String pid,
-		UnsafeSupplier<Dictionary<?, ?>, IOException> propertySupplier) {
+		UnsafeSupplier<Dictionary<?, ?>, IOException> propertyUnsafeSupplier) {
 
 		_factoryPid = factoryPid;
 		_pid = pid;
-		_propertySupplier = propertySupplier;
+		_propertyUnsafeSupplier = propertyUnsafeSupplier;
 	}
 
 	public String getFactoryPid() {
@@ -36,7 +36,7 @@ public class NamedConfigurationContent {
 
 	@SuppressWarnings("unchecked")
 	public Dictionary<String, Object> getProperties() throws IOException {
-		Dictionary<?, ?> properties = _propertySupplier.get();
+		Dictionary<?, ?> properties = _propertyUnsafeSupplier.get();
 
 		return (Dictionary<String, Object>)properties;
 	}
@@ -50,6 +50,6 @@ public class NamedConfigurationContent {
 	private final String _factoryPid;
 	private final String _pid;
 	private final UnsafeSupplier<Dictionary<?, ?>, IOException>
-		_propertySupplier;
+		_propertyUnsafeSupplier;
 
 }

@@ -96,13 +96,13 @@ public class SharepointConnectionTestUtil {
 	}
 
 	private static <T> T _withRetries(
-		int tries, UnsafeSupplier<T, ? extends Exception> supplier) {
+		int tries, UnsafeSupplier<T, ? extends Exception> unsafeSupplier) {
 
 		while (tries > 0) {
 			try {
 				tries--;
 
-				T value = supplier.get();
+				T value = unsafeSupplier.get();
 
 				if (value != null) {
 					return value;

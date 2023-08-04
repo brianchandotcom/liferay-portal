@@ -492,12 +492,12 @@ public class SearchContainer<R> {
 	}
 
 	public <E extends Throwable> void setResultsAndTotal(
-			UnsafeSupplier<List<R>, E> setResultsSupplier, int total)
+			UnsafeSupplier<List<R>, E> setResultsUnsafeSupplier, int total)
 		throws E {
 
 		_setTotal(total);
 
-		_setResults(setResultsSupplier.get());
+		_setResults(setResultsUnsafeSupplier.get());
 	}
 
 	public void setRowChecker(RowChecker rowChecker) {

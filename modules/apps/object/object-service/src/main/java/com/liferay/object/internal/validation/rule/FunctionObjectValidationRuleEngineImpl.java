@@ -88,7 +88,7 @@ public class FunctionObjectValidationRuleEngineImpl
 	}
 
 	@Override
-	public String getName() {
+	public String getLabel() {
 		return _name;
 	}
 

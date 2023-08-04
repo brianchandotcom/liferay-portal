@@ -77,8 +77,8 @@ public class ObjectValidationRuleEngineRegistryImpl
 			(ObjectValidationRuleEngine objectValidationRuleEngine1,
 			 ObjectValidationRuleEngine objectValidationRuleEngine2) -> {
 
-				String name1 = objectValidationRuleEngine1.getName();
-				String name2 = objectValidationRuleEngine2.getName();
+				String name1 = objectValidationRuleEngine1.getLabel();
+				String name2 = objectValidationRuleEngine2.getLabel();
 
 				return name1.compareTo(name2);
 			});
@@ -99,7 +99,7 @@ public class ObjectValidationRuleEngineRegistryImpl
 					ObjectValidationRuleEngine objectValidationRuleEngine =
 						bundleContext.getService(serviceReference);
 
-					emitter.emit(objectValidationRuleEngine.getName());
+					emitter.emit(objectValidationRuleEngine.getLabel());
 				}
 
 			});

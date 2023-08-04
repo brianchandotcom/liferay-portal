@@ -162,11 +162,27 @@ public class SXPBlueprintSearchRequestContributorTest {
 				"[charlie delta, beta delta, alpha delta]", "", "delta"));
 	}
 
+	@Test
+	public void testSXPBlueprintIdAttribute() throws Exception {
+		_test(
+			new String[] {"alpha", "beta", "charlie"},
+			() -> _assertSearch(
+				"[beta]", "", "beta", _sxpBlueprint.getSXPBlueprintId()));
+	}
+
 	@Rule
 	public TestName testName = new TestName();
 
 	private void _assertSearch(
 			String expected, String ipAddress, String keywords)
+		throws Exception {
+
+		_assertSearch(expected, ipAddress, keywords, 0);
+	}
+
+	private void _assertSearch(
+			String expected, String ipAddress, String keywords,
+			long sxpBlueprintId)
 		throws Exception {
 
 		SearchResponse searchResponse = _searcher.search(
@@ -178,10 +194,18 @@ public class SXPBlueprintSearchRequestContributorTest {
 					keywords
 				).withSearchContext(
 					_searchContext -> {
-						_searchContext.setAttribute(
-							"search.experiences.blueprint.external.reference." +
-								"code",
-							_sxpBlueprint.getExternalReferenceCode());
+						if (sxpBlueprintId > 0) {
+							_searchContext.setAttribute(
+								"search.experiences.blueprint.id",
+								sxpBlueprintId);
+						}
+						else {
+							_searchContext.setAttribute(
+								"search.experiences.blueprint.external." +
+									"reference.code",
+								_sxpBlueprint.getExternalReferenceCode());
+						}
+
 						_searchContext.setAttribute(
 							"search.experiences.ip.address", ipAddress);
 						_searchContext.setAttribute(

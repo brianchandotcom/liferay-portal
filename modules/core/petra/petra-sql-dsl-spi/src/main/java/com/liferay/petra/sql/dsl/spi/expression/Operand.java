@@ -32,8 +32,6 @@ public class Operand {
 
 	public static final Operand LIKE = new Operand("like");
 
-	public static final Operand NOT = new Operand("not");
-
 	public static final Operand NOT_EQUAL = new Operand("!=");
 
 	public static final Operand NOT_IN = new Operand("not in");

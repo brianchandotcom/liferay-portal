@@ -36,6 +36,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -55,6 +56,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -293,6 +295,34 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			aggregationObjectField.isRequired(),
 			aggregationObjectField.isState(),
 			aggregationObjectField.getObjectFieldSettings());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"requestAPISchemaToAPIEndpoints",
+					JSONFactoryUtil.createJSONArray()
+				).put(
+					"responseAPISchemaToAPIEndpoints",
+					JSONFactoryUtil.createJSONArray()
+				).toString(),
+				"headless-builder/schemas/by-external-reference-code/" +
+					_API_SCHEMA_ERC,
+				Http.Method.PATCH));
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"requestAPISchemaToAPIEndpoints",
+					JSONFactoryUtil.createJSONArray()
+				).put(
+					"responseAPISchemaToAPIEndpoints",
+					JSONFactoryUtil.createJSONArray()
+				).toString(),
+				"headless-builder/schemas/by-external-reference-code/" +
+					_API_SITE_SCOPED_SCHEMA_ERC,
+				Http.Method.PATCH));
 	}
 
 	@Test

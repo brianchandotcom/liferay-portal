@@ -539,10 +539,10 @@ public class EmailNotificationType extends BaseNotificationType {
 
 		StringBundler sb = new StringBundler();
 
-		EmailAddressValidator emailAddressValidator =
-			EmailAddressValidatorFactory.getInstance();
-
 		for (String emailAddress : StringUtil.split(emailAddresses)) {
+			EmailAddressValidator emailAddressValidator =
+				EmailAddressValidatorFactory.getInstance();
+
 			if (!emailAddressValidator.validate(companyId, emailAddress)) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Invalid email address " + emailAddress);

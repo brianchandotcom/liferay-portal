@@ -5,7 +5,6 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.analytics.message.sender.model.listener.BaseEntityModelListener;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -23,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shinn Lok
  */
 @Component(service = {EntityModelListener.class, ModelListener.class})
-public class TeamModelListener extends BaseEntityModelListener<Team> {
+public class TeamModelListener extends BaseModelListener<Team> {
 
 	@Override
 	public List<String> getAttributeNames(long companyId) {

@@ -1,11 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.analytics.message.sender.model.listener;
+package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
+import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -64,15 +64,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
  */
-@ProviderType
-public abstract class BaseEntityModelListener<T extends BaseModel<T>>
-	extends BaseModelListener<T> implements EntityModelListener<T> {
+public abstract class BaseModelListener<T extends BaseModel<T>>
+	extends com.liferay.portal.kernel.model.BaseModelListener<T>
+	implements EntityModelListener<T> {
 
 	@Override
 	public void addAnalyticsMessage(
@@ -787,7 +786,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseEntityModelListener.class);
+		BaseModelListener.class);
 
 	private static final List<String> _organizationAttributeNames =
 		Arrays.asList(

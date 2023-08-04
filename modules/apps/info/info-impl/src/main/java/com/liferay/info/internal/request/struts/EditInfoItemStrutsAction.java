@@ -41,6 +41,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -617,25 +618,13 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			throw new InfoFormException();
 		}
 
-		_validateRequiredFields(
-			infoFieldValues, formLayoutStructureItem.getChildrenItemIds(),
-			layoutStructure);
-	}
+		for (String itemId :
+				LayoutStructureItemUtil.getChildrenItemIds(
+					formLayoutStructureItem.getItemId(), layoutStructure)) {
 
-	private void _validateRequiredFields(
-			List<InfoFieldValue<Object>> infoFieldValues, List<String> itemIds,
-			LayoutStructure layoutStructure)
-		throws InfoFormValidationException.RequiredInfoField {
-
-		for (String itemId : itemIds) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(itemId);
-
-			_validateRequiredField(infoFieldValues, layoutStructureItem);
-
-			_validateRequiredFields(
-				infoFieldValues, layoutStructureItem.getChildrenItemIds(),
-				layoutStructure);
+			_validateRequiredField(
+				infoFieldValues,
+				layoutStructure.getLayoutStructureItem(itemId));
 		}
 	}
 

@@ -10,6 +10,8 @@
 <%
 String currentURL = PortalUtil.getCurrentURL(request);
 
+boolean oldFormat = (boolean)request.getAttribute("oldFormat");
+
 String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 
 Ticket ticket = (Ticket)request.getAttribute(WebKeys.TICKET);
@@ -48,7 +50,14 @@ if (Validator.isNull(titlePage)) {
 		<c:choose>
 			<c:when test="<%= !themeDisplay.isSignedIn() && (ticket == null) %>">
 				<div class="alert alert-warning">
-					<liferay-ui:message key="your-password-reset-link-is-no-longer-valid" />
+					<c:choose>
+						<c:when test="<%= oldFormat %>">
+							<liferay-ui:message key="this-link-format-is-no-longer-recognized-please-request-a-new-link" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="your-password-reset-link-is-no-longer-valid" />
+						</c:otherwise>
+					</c:choose>
 
 					<%
 					PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);

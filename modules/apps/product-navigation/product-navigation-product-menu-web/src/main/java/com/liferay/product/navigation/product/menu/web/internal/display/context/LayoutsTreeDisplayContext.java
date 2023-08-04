@@ -86,9 +86,6 @@ public class LayoutsTreeDisplayContext {
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
-		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
-			renderRequest);
-
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_layoutLocalService = layoutLocalService;
@@ -101,6 +98,9 @@ public class LayoutsTreeDisplayContext {
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
+
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			renderRequest);
 
 		_groupProvider = (GroupProvider)_liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);

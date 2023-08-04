@@ -56,6 +56,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -73,11 +74,11 @@ public class InfoRequestFieldValuesProviderHelper {
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 	}
 
-	public List<InfoFieldValue<Object>> getInfoFieldValues(
+	public Map<String, InfoFieldValue<Object>> getInfoFieldValues(
 			HttpServletRequest httpServletRequest)
 		throws InfoFormFileUploadException {
 
-		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
+		Map<String, InfoFieldValue<Object>> infoFieldValues = new HashMap<>();
 
 		UploadServletRequest uploadServletRequest =
 			PortalUtil.getUploadServletRequest(httpServletRequest);
@@ -125,7 +126,8 @@ public class InfoRequestFieldValuesProviderHelper {
 							fileItem, groupId, infoField, themeDisplay);
 
 					if (infoFieldValue != null) {
-						infoFieldValues.add(infoFieldValue);
+						infoFieldValues.put(
+							infoField.getUniqueId(), infoFieldValue);
 					}
 				}
 			}
@@ -133,7 +135,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			if (infoField.getInfoFieldType() instanceof
 					MultiselectInfoFieldType) {
 
-				infoFieldValues.add(
+				infoFieldValues.put(
+					infoField.getUniqueId(),
 					_getInfoFieldValue(
 						infoField, themeDisplay.getLocale(),
 						regularParameterMap.get(infoField.getName())));
@@ -149,7 +152,8 @@ public class InfoRequestFieldValuesProviderHelper {
 						BooleanInfoFieldType) &&
 					ArrayUtil.contains(checkboxNames, infoField.getName())) {
 
-					infoFieldValues.add(
+					infoFieldValues.put(
+						infoField.getUniqueId(),
 						_getInfoFieldValue(
 							infoField, themeDisplay.getLocale(), false));
 				}
@@ -162,7 +166,8 @@ public class InfoRequestFieldValuesProviderHelper {
 					infoField, themeDisplay.getLocale(), value);
 
 				if (infoFieldValue != null) {
-					infoFieldValues.add(infoFieldValue);
+					infoFieldValues.put(
+						infoField.getUniqueId(), infoFieldValue);
 				}
 			}
 		}

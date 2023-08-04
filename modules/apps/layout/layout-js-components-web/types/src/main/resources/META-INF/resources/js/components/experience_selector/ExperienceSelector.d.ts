@@ -8,7 +8,7 @@
 import SegmentExperience from '../../types/SegmentExperience';
 interface BaseProps {
 	displayType?: 'light' | 'dark';
-	selectedItem: SegmentExperience;
+	selectedItem?: SegmentExperience;
 }
 interface ExperienceSelectorProps extends BaseProps {
 	disabled?: boolean;

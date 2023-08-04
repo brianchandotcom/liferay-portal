@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.internal.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
@@ -33,7 +34,7 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	@GET
-	@Path("/{path: .*}")
+	@Path(_COMPANY_SCOPED_PATH_REGEX)
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,
@@ -46,7 +47,7 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	@GET
-	@Path("scopes/{scopeKey}/{path: .*}")
+	@Path(_SITE_SCOPED_PATH_REGEX)
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,
@@ -97,6 +98,11 @@ public class HeadlessBuilderResourceImpl {
 				"Endpoint /%s does not exist for %s", path,
 				contextAPIApplication.getTitle()));
 	}
+
+	private static final String _COMPANY_SCOPED_PATH_REGEX = "/{path: .*}";
+
+	private static final String _SITE_SCOPED_PATH_REGEX =
+		HeadlessBuilderConstants.SITE_SCOPED_BASE_PATH + "/{path: .*}";
 
 	private final EndpointHelper _endpointHelper;
 

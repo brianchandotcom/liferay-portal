@@ -8,10 +8,10 @@ package com.liferay.headless.builder.internal.vulcan.openapi.contributor;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
@@ -166,24 +166,16 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			path = StringPool.SLASH + path;
 		}
 
-		if (endpoint.getScope() == APIApplication.Endpoint.Scope.GROUP) {
-			path = "/scopes/{scopeKey}" + path;
-		}
-
-		return path;
+		return PathUtil.getPathPrefix(endpoint.getScope()) + path;
 	}
 
 	private String _getOperationId(APIApplication.Endpoint endpoint) {
 		Http.Method method = endpoint.getMethod();
 
-		if (endpoint.getScope() == APIApplication.Endpoint.Scope.GROUP) {
-			return StringBundler.concat(
-				StringUtil.toLowerCase(method.name()), "Scopes",
-				_toCamelCase(endpoint.getPath()), "Page");
-		}
+		String pathPrefix = PathUtil.getPathPrefix(endpoint.getScope());
 
 		return StringUtil.toLowerCase(method.name()) +
-			_toCamelCase(endpoint.getPath()) + "Page";
+			_toCamelCase(pathPrefix + endpoint.getPath()) + "Page";
 	}
 
 	private String _toCamelCase(String path) {

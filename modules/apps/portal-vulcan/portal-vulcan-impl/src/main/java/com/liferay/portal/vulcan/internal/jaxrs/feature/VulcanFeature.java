@@ -46,11 +46,11 @@ import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.ExceptionMapper
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.IllegalArgumentExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFilterExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidFormatExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidPaginationExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonMappingExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonParseExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NoSuchModelExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NotAcceptableExceptionMapper;
-import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidPaginationExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NotFoundExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.PrincipalExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.UnrecognizedPropertyExceptionMapper;
@@ -161,8 +161,8 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			_nestedFieldsWriterInterceptor, Priorities.USER - 10);
 
-		featureContext.register(new PaginationContextProvider(
-			_configurationProvider, _portal));
+		featureContext.register(
+			new PaginationContextProvider(_configurationProvider, _portal));
 
 		featureContext.register(
 			new SiteParamConverterProvider(

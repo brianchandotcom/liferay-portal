@@ -438,9 +438,15 @@ public class ContentManager {
 					return null;
 				}
 
-				return infoEditURLProvider.getURL(
-					layoutDisplayPageObjectProvider.getDisplayObject(),
-					httpServletRequest);
+				PortletResponse portletResponse =
+					(PortletResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+				return LayoutLockManager.getUnlockDraftLayoutURL(
+					_portal.getLiferayPortletResponse(portletResponse),
+					() -> infoEditURLProvider.getURL(
+						layoutDisplayPageObjectProvider.getDisplayObject(),
+						httpServletRequest));
 			}
 		).put(
 			"permissionsURL",

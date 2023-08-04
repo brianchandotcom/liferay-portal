@@ -31,6 +31,7 @@ import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExpe
 import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -409,9 +410,14 @@ public class ContentPageLayoutEditorDisplayContext
 			_editSegmentsEntryURL = StringPool.BLANK;
 		}
 		else {
-			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+			_editSegmentsEntryURL = LayoutLockManager.getUnlockDraftLayoutURL(
+				portal.getLiferayPortletResponse(renderResponse),
+				() -> {
+					portletURL.setParameter(
+						"redirect", themeDisplay.getURLCurrent());
 
-			_editSegmentsEntryURL = portletURL.toString();
+					return portletURL.toString();
+				});
 		}
 
 		return _editSegmentsEntryURL;

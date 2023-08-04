@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -90,6 +91,25 @@ public class LayoutLockManager {
 
 				return ParamUtil.getString(httpServletRequest, "redirect");
 			}
+		).buildString();
+	}
+
+	public static String getUnlockDraftLayoutURL(
+			LiferayPortletResponse liferayPortletResponse,
+			PortletURLBuilder.UnsafeSupplier<Object, Exception>
+				redirectUnsafeSupplier)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+			return String.valueOf(redirectUnsafeSupplier.get());
+		}
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/layout_content_page_editor/unlock_draft_layout"
+		).setRedirect(
+			redirectUnsafeSupplier
 		).buildString();
 	}
 

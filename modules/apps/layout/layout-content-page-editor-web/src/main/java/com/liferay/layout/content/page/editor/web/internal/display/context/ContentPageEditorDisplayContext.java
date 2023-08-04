@@ -42,6 +42,7 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
+import com.liferay.layout.content.page.editor.web.internal.util.LayoutLockManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingTypesUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
@@ -1494,42 +1495,46 @@ public class ContentPageEditorDisplayContext {
 		return _layoutType;
 	}
 
-	private Object _getLookAndFeelURL() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		return PortletURLBuilder.create(
-			portal.getControlPanelPortletURL(
-				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/layout_admin/edit_layout"
-		).setRedirect(
-			ParamUtil.getString(
-				portal.getOriginalServletRequest(httpServletRequest),
-				"p_l_back_url")
-		).setBackURL(
-			themeDisplay.getURLCurrent()
-		).setParameter(
-			"groupId", layout.getGroupId()
-		).setParameter(
-			"privateLayout", layout.isPrivateLayout()
-		).setParameter(
-			"screenNavigationEntryKey",
-			LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN
-		).setParameter(
-			"selPlid",
+	private Object _getLookAndFeelURL() throws Exception {
+		return LayoutLockManager.getUnlockDraftLayoutURL(
+			portal.getLiferayPortletResponse(renderResponse),
 			() -> {
-				if (layout.isDraftLayout()) {
-					return layout.getClassPK();
-				}
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-				return layout.getPlid();
-			}
-		).buildString();
+				Layout layout = themeDisplay.getLayout();
+
+				return PortletURLBuilder.create(
+					portal.getControlPanelPortletURL(
+						httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/layout_admin/edit_layout"
+				).setRedirect(
+					ParamUtil.getString(
+						portal.getOriginalServletRequest(httpServletRequest),
+						"p_l_back_url")
+				).setBackURL(
+					themeDisplay.getURLCurrent()
+				).setParameter(
+					"groupId", layout.getGroupId()
+				).setParameter(
+					"privateLayout", layout.isPrivateLayout()
+				).setParameter(
+					"screenNavigationEntryKey",
+					LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN
+				).setParameter(
+					"selPlid",
+					() -> {
+						if (layout.isDraftLayout()) {
+							return layout.getClassPK();
+						}
+
+						return layout.getPlid();
+					}
+				).buildString();
+			});
 	}
 
 	private JSONObject _getMappingFieldsJSONObject() throws Exception {

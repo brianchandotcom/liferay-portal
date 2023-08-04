@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.related.models.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -100,8 +101,10 @@ public class ObjectRelatedModelsProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition1 = _addObjectDefinition();
-		_objectDefinition2 = _addObjectDefinition();
+		_objectDefinition1 = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService, _objectFieldLocalService);
+		_objectDefinition2 = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService, _objectFieldLocalService);
 
 		_setUser(TestPropsValues.getUser());
 	}
@@ -416,35 +419,6 @@ public class ObjectRelatedModelsProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private ObjectDefinition _addObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList());
-
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null, null,
-			false, false, Collections.emptyList());
-
-		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
-
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
-
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId());
-	}
-
 	private ObjectEntry _addObjectEntry(
 			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values)
@@ -589,7 +563,9 @@ public class ObjectRelatedModelsProviderTest {
 
 			_setUser(user);
 
-			ObjectDefinition objectDefinition = _addObjectDefinition();
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.addObjectDefinition(
+					_objectDefinitionLocalService, _objectFieldLocalService);
 
 			ObjectDefinition systemObjectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(

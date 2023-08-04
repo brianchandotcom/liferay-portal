@@ -5,7 +5,6 @@
 
 package com.liferay.object.related.models.test;
 
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
@@ -14,11 +13,11 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.related.models.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -60,28 +59,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 	@Before
 	public void setUp() throws Exception {
 		_systemObjectDefinition = getSystemObjectDefinition();
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				_objectDefinitionLocalService);
-
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null, null,
-			false, false, Collections.emptyList());
-
-		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
-
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
-
-		_objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId());
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService, _objectFieldLocalService);
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));

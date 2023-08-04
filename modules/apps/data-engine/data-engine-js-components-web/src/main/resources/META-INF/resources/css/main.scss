@@ -104,6 +104,20 @@ body .ddm-user-view-content {
 		color: #6b6c7e;
 	}
 
+	.custom-radio
+		.custom-control-input:checked:disabled
+		~ .custom-control-label::before {
+		background-color: #0b5fff;
+		border-color: #0043c5;
+	}
+
+	.custom-checkbox
+		.custom-control-input:checked:disabled
+		~ .custom-control-label::before {
+		background-color: #0b5fff;
+		border-color: #0043c5;
+	}
+
 	.form-control {
 		color: #6b6c7e;
 	}

@@ -7,6 +7,7 @@ package com.liferay.portal.search.test.util.background.task;
 
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -32,6 +33,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Adam Brandizzi
@@ -71,6 +75,12 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 		if (_searchEngineFixture != null) {
 			_searchEngineFixture.tearDown();
 		}
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 	}
 
 	@Test
@@ -97,10 +107,14 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 	protected ReindexSingleIndexerBackgroundTaskExecutor
 		getReindexSingleIndexerBackgroundTaskExecutor() {
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			IndexWriterHelper.class, _indexWriterHelper, null);
+
 		return new ReindexSingleIndexerBackgroundTaskExecutor() {
 			{
 				indexerRegistry = _indexerRegistry;
-				indexWriterHelper = _indexWriterHelper;
 				reindexStatusMessageSender = _reindexStatusMessageSender;
 				searchEngineHelper = _searchEngineHelper;
 				systemIndexers = _systemIndexers;
@@ -144,6 +158,7 @@ public abstract class BaseReindexSingleIndexerBackgroundTaskExecutorTestCase {
 		Mockito.mock(ReindexStatusMessageSender.class);
 	private SearchEngineFixture _searchEngineFixture;
 	private SearchEngineHelper _searchEngineHelper;
+	private ServiceRegistration<IndexWriterHelper> _serviceRegistration;
 	private final ServiceTrackerList<Indexer<?>> _systemIndexers = Mockito.mock(
 		ServiceTrackerList.class);
 

@@ -25,6 +25,47 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-166740. It validates that the display page template can be deleted after removing the related article."
+	@priority = 4
+	test CanDeleteDisplayPageTemplateAfterRemovingReferencedArticle {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Test Site Name",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Knowledge Base Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.publish();
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Knowledge Base",
+			entryTitle = "Knowledge Base Article Title",
+			groupName = "Test Site Name",
+			pageName = "Display Page Name",
+			siteURLKey = "test-site-name");
+
+		JSONKnowledgeBase.removeKBArticle(
+			groupName = "Test Site Name",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
+
+		DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Name");
+	}
+
 	@description = "This test ensures that the Max Nesting settings can be configured in the KB navigation fragment for a display page."
 	@priority = 5
 	test CanUpdateMaxNestingForArticleNavigation {

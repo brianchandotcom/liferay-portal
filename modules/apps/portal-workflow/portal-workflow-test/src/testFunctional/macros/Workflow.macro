@@ -542,15 +542,15 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Duplicate");
 
+		if (isSet(workflowName)) {
+			Type(
+				locator1 = "WorkflowDefinition#DUPLICATE_WORKFLOW_MODAL_INPUT",
+				value1 = ${workflowName});
+		}
+
 		Button.click(button = "Duplicate");
 
-		PortletEntry.inputTitle(title = ${workflowName});
-
-		ScrollWebElementIntoView(
-			key_text = "Update",
-			locator1 = "Button#ANY");
-
-		Button.click(button = "Update");
+		Alert.viewSuccessMessage();
 	}
 
 	macro gotoAssetViaTableTitle {

@@ -21,26 +21,11 @@ public interface EntityModelListener<T extends BaseModel<T>> {
 	public void addAnalyticsMessage(
 		String eventType, List<String> includeAttributeNames, T model);
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getAttributeNames(long)}
-	 */
-	@Deprecated
-	public default List<String> getAttributeNames() {
-		return null;
-	}
-
 	public List<String> getAttributeNames(long companyId);
 
 	public long[] getMembershipIds(User user) throws Exception;
 
 	public String getModelClassName();
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #syncAll(long)}
-	 */
-	@Deprecated
-	public default void syncAll() throws Exception {
-	}
 
 	public void syncAll(long companyId) throws Exception;
 

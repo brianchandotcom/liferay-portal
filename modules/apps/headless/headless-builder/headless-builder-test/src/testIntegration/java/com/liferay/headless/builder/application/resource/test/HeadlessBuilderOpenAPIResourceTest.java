@@ -39,6 +39,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -221,7 +222,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"textField"
-				).build()));
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_objectDefinition2 = _publishObjectDefinition(
 			Arrays.asList(
@@ -231,7 +233,21 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"textField"
-				).build()));
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_siteScopedObjectDefinition1 = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_SITE);
 
 		String relationshipName = "a" + RandomTestUtil.randomString();
 
@@ -331,7 +347,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put(
 						"description", "description"
 					).put(
@@ -344,10 +360,23 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"path", "/path"
 					).put(
 						"scope", "company"
+					),
+					JSONUtil.put(
+						"description", "site scoped description"
+					).put(
+						"externalReferenceCode", _API_SITE_SCOPED_ENDPOINT_ERC
+					).put(
+						"httpMethod", "get"
+					).put(
+						"name", "site scoped name"
+					).put(
+						"path", "/site-scoped-path"
+					).put(
+						"scope", "group"
 					))
 			).put(
 				"apiApplicationToAPISchemas",
-				JSONUtil.put(
+				JSONUtil.putAll(
 					JSONUtil.put(
 						"apiSchemaToAPIProperties",
 						JSONUtil.putAll(
@@ -468,6 +497,28 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						_objectDefinition1.getExternalReferenceCode()
 					).put(
 						"name", "SchemaName"
+					),
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"description",
+								"siteScopedTextProperty description"
+							).put(
+								"name", "siteScopedTextProperty"
+							).put(
+								"objectFieldERC",
+								_API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
+							))
+					).put(
+						"description", "site scoped description"
+					).put(
+						"externalReferenceCode", _API_SITE_SCOPED_SCHEMA_ERC
+					).put(
+						"mainObjectDefinitionERC",
+						_siteScopedObjectDefinition1.getExternalReferenceCode()
+					).put(
+						"name", "SiteScopedSchemaName"
 					))
 			).put(
 				"applicationStatus", "unpublished"
@@ -493,6 +544,21 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				_API_SITE_SCOPED_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
+				_API_SITE_SCOPED_ENDPOINT_ERC),
+			Http.Method.PUT);
+		HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				_API_SITE_SCOPED_SCHEMA_ERC,
+				"/responseAPISchemaToAPIEndpoints/",
+				_API_SITE_SCOPED_ENDPOINT_ERC),
+			Http.Method.PUT);
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -508,7 +574,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
-			List<ObjectField> objectFields)
+			List<ObjectField> objectFields, String scope)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -517,8 +583,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				objectFields);
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -578,12 +644,24 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String _API_SITE_SCOPED_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_SITE_SCOPED_SCHEMA_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC =
+		RandomTestUtil.randomString();
+
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
+	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
+
+	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
 	@Inject
@@ -597,5 +675,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteScopedObjectDefinition1;
 
 }

@@ -138,6 +138,48 @@
 				},
 				"type": "object"
 			},
+			"PageSiteScopedSchemaName": {
+				"properties": {
+					"actions": {
+						"additionalProperties": {
+							"additionalProperties": {
+								"type": "string"
+							},
+							"type": "object"
+						},
+						"type": "object"
+					},
+					"facets": {
+						"items": {
+							"$ref": "#/components/schemas/Facet"
+						},
+						"type": "array"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/SiteScopedSchemaName"
+						},
+						"type": "array"
+					},
+					"lastPage": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"page": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"pageSize": {
+						"format": "int64",
+						"type": "integer"
+					},
+					"totalCount": {
+						"format": "int64",
+						"type": "integer"
+					}
+				},
+				"type": "object"
+			},
 			"SchemaName": {
 				"description": "description",
 				"properties": {
@@ -204,6 +246,16 @@
 					},
 					"textProperty": {
 						"description": "textProperty description",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"SiteScopedSchemaName": {
+				"description": "site scoped description",
+				"properties": {
+					"siteScopedTextProperty": {
+						"description": "siteScopedTextProperty description",
 						"type": "string"
 					}
 				},
@@ -286,6 +338,47 @@
 				},
 				"tags": [
 					"SchemaName"
+				]
+			}
+		},
+		"/scopes/{scopeKey}/site-scoped-path": {
+			"get": {
+				"operationId": "getScopesSiteScopedPathPage",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageSiteScopedSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageSiteScopedSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"SiteScopedSchemaName"
 				]
 			}
 		}

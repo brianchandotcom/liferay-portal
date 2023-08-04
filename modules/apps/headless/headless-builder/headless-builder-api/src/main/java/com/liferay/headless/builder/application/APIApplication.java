@@ -42,6 +42,8 @@ public interface APIApplication {
 
 		public Scope getScope();
 
+		public Sort getSort();
+
 		public enum Scope {
 
 			COMPANY, GROUP
@@ -91,6 +93,12 @@ public interface APIApplication {
 		public String getName();
 
 		public List<Property> getProperties();
+
+	}
+
+	public interface Sort {
+
+		public String getODataSortString();
 
 	}
 

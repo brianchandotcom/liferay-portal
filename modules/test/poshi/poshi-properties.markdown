@@ -263,6 +263,16 @@ environments are denoted by the *CE* or *EE* values, respectively.
 Sets a boolean for whether Poshi log frontend resources are used locally or
 remotely.
 
+### test.run.thread.pool.size
+
+Sets the maximum number of threads to be used when running tests in parallel.
+This is only applicable when `test.run.type` is set to `parallel`.
+
+### test.run.type
+
+Sets the mode of execution Poshi will use. Valid options are `sequential` or
+`parallel`.
+
 ### test.skip.tear.down
 
 Sets a boolean for whether the tear down is skipped.

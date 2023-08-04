@@ -7,15 +7,10 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ContactLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,31 +18,17 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {AnalyticsEntityModel.class, ModelListener.class})
+@Component(service = ModelListener.class)
 public class ContactModelListener extends BaseModelListener<Contact> {
 
 	@Override
-	public List<String> getAttributeNames(long companyId) {
-		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
-
-		if (ArrayUtil.isEmpty(
-				analyticsConfiguration.syncedContactFieldNames())) {
-
-			return _attributeNames;
-		}
-
-		return Arrays.asList(analyticsConfiguration.syncedContactFieldNames());
+	protected AnalyticsEntityModel<Contact> getAnalyticsEntityModel() {
+		return _contactAnalyticsEntityModel;
 	}
 
 	@Override
 	protected Contact getModel(long id) throws Exception {
 		return _contactLocalService.getContact(id);
-	}
-
-	@Override
-	protected String getPrimaryKeyName() {
-		return "contactId";
 	}
 
 	@Override
@@ -64,13 +45,8 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 			user);
 	}
 
-	private static final List<String> _attributeNames = Arrays.asList(
-		"birthday", "classNameId", "classPK", "companyId", "createDate",
-		"emailAddress", "employeeNumber", "employeeStatusId", "facebookSn",
-		"firstName", "hoursOfOperation", "jabberSn", "jobClass", "jobTitle",
-		"lastName", "male", "middleName", "modifiedDate", "parentContactId",
-		"prefixListTypeId", "skypeSn", "smsSn", "suffixListTypeId", "twitterSn",
-		"userId", "userName");
+	@Reference(target = "(analytics.entity.model.type=contact)")
+	private AnalyticsEntityModel<Contact> _contactAnalyticsEntityModel;
 
 	@Reference
 	private ContactLocalService _contactLocalService;

@@ -6,15 +6,10 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-
-import java.util.Collections;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -22,23 +17,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {AnalyticsEntityModel.class, ModelListener.class})
+@Component(service = ModelListener.class)
 public class UserGroupModelListener extends BaseModelListener<UserGroup> {
-
-	@Override
-	public List<String> getAttributeNames(long companyId) {
-		return _attributeNames;
-	}
-
-	@Override
-	public long[] getMembershipIds(User user) {
-		return user.getUserGroupIds();
-	}
-
-	@Override
-	public String getModelClassName() {
-		return UserGroup.class.getName();
-	}
 
 	@Override
 	public void onAfterRemove(UserGroup userGroup)
@@ -56,8 +36,8 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 	}
 
 	@Override
-	protected ActionableDynamicQuery getActionableDynamicQuery() {
-		return _userGroupLocalService.getActionableDynamicQuery();
+	protected AnalyticsEntityModel<UserGroup> getAnalyticsEntityModel() {
+		return _userGroupAnalyticsEntityModel;
 	}
 
 	@Override
@@ -65,13 +45,8 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		return _userGroupLocalService.getUserGroup(id);
 	}
 
-	@Override
-	protected String getPrimaryKeyName() {
-		return "userGroupId";
-	}
-
-	private static final List<String> _attributeNames =
-		Collections.singletonList("name");
+	@Reference(target = "(analytics.entity.model.type=userGroup)")
+	private AnalyticsEntityModel<UserGroup> _userGroupAnalyticsEntityModel;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

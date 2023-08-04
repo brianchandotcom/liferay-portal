@@ -93,4 +93,16 @@ public class LayoutLockManager {
 		).buildString();
 	}
 
+	public static void unlock(Layout layout, long userId) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			!layout.isDraftLayout()) {
+
+			return;
+		}
+
+		LockManagerUtil.unlock(
+			Layout.class.getName(), String.valueOf(layout.getPlid()),
+			String.valueOf(userId));
+	}
+
 }

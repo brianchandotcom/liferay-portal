@@ -33,6 +33,7 @@ import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -539,7 +540,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
 
-		StringBuilder validEmailAddresses = new StringBuilder();
+		StringBundler validEmailAddresses = new StringBundler();
 
 		for (String emailAddress : StringUtil.split(emailAddresses)) {
 			if (!emailAddressValidator.validate(companyId, emailAddress)) {

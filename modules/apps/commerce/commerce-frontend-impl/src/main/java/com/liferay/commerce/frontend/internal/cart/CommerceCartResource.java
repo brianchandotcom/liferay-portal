@@ -147,10 +147,11 @@ public class CommerceCartResource {
 		@FormParam("groupId") long groupId,
 		@FormParam("languageId") String languageId,
 		@FormParam("commerceAccountId") long commerceAccountId,
-		@FormParam("quantity") int quantity,
+		@FormParam("quantity") String quantity,
 		@FormParam("productId") long cpInstanceId,
 		@FormParam("options") String options,
 		@FormParam("orderId") long orderId,
+		@FormParam("unitOfMeasureKey") String unitOfMeasureKey,
 		@Context HttpServletRequest httpServletRequest) {
 
 		Cart cart = null;
@@ -195,7 +196,7 @@ public class CommerceCartResource {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					BigDecimal.valueOf(quantity), 0, 0, StringPool.BLANK,
+					new BigDecimal(quantity), 0, 0, unitOfMeasureKey,
 					commerceContext, serviceContext);
 
 			cart = _commerceCartResourceUtil.getCart(

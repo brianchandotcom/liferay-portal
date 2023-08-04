@@ -1,7 +1,7 @@
 dependencies {
 	compileInclude group: "com.googlecode.owasp-java-html-sanitizer", name: "owasp-java-html-sanitizer", version: "20211018.2"
 
-	compileOnly group: "com.google.guava", name: "guava", version: "30.1.1-jre"
+	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.codehaus.mojo", name: "animal-sniffer-annotations", version: "1.17"

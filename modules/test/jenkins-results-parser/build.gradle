@@ -9,7 +9,7 @@ dependencies {
 	api group: "com.atlassian.jira", name: "jira-rest-java-client-app", version: "5.2.0"
 	api group: "com.atlassian.sal", name: "sal-api", version: "4.4.0"
 	api group: "com.google.cloud", name: "google-cloud-storage", version: "1.113.16"
-	api group: "com.google.guava", name: "guava", version: "30.1.1-jre"
+	api group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	api group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.135"
 	api group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	api group: "commons-codec", name: "commons-codec", version: "1.15"

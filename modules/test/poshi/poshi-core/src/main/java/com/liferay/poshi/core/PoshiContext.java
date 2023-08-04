@@ -169,6 +169,10 @@ public class PoshiContext {
 		return classCommandNames;
 	}
 
+	public static Map<String, Element> getCommandElements() {
+		return _commandElements;
+	}
+
 	public static String getDefaultNamespace() {
 		return _DEFAULT_NAMESPACE;
 	}
@@ -460,6 +464,10 @@ public class PoshiContext {
 		}
 
 		return requiredPoshiPropertyNames;
+	}
+
+	public static Map<String, Element> getRootElements() {
+		return _rootElements;
 	}
 
 	public static List<Element> getRootVarElements(

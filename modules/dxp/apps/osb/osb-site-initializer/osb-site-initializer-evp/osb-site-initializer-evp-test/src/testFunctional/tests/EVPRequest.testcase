@@ -33,7 +33,7 @@ definition {
 				contactName = "Contact Test",
 				contactPhone = 12345,
 				country = "Country Test",
-				createRequest = "true",
+				done = "true",
 				organizationName = "Organization Test",
 				organizationSite = "www.test.com.br",
 				smallDescription = "Description Test",
@@ -290,6 +290,24 @@ definition {
 		}
 
 		task ("When The employee user creates a funds request") {
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+
 			EVPRequest.fillRequestForm(
 				grantAmount = 10,
 				grantRequestType = "Proposed",

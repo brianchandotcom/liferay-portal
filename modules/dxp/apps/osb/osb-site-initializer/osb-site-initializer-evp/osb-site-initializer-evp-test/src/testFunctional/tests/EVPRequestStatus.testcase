@@ -180,21 +180,35 @@ definition {
 	@description = "LPS-181773 - Verify that the Employee can not see 'Review' button when request are in 'Awaiting Approval On Evp' status"
 	@priority = 4
 	test CanNotEmployeeUserSeeReviewInAwaitingApprovalOnEvptatus {
-		task ("Given that the employee user go to request page") {
+		task ("Given that the employee user is logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
 				userLoginFullName = "Employee User");
 
 			EVPUtils.gotoEVP();
-
-			EVPNavigator.goToNavItem(navItem = "Request");
 		}
 
-		task ("When the employee user create a request") {
-			Button.click(button = "Create a Request");
+		task ("When the employee user creates a request") {
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
 
 			EVPRequest.fillRequestForm(
-				grantAmount = 20,
+				grantAmount = 10,
 				grantRequestType = "Proposed",
 				organization = "Organization Test",
 				phoneNumber = 12345,

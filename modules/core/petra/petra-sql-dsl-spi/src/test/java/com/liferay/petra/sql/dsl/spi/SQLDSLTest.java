@@ -945,6 +945,53 @@ public class SQLDSLTest {
 	}
 
 	@Test
+	public void testPredicateNot() {
+		Predicate leftPredicate =
+			MainExampleTable.INSTANCE.mainExampleIdColumn.gte(1L);
+		Predicate rightPredicate =
+			MainExampleTable.INSTANCE.mainExampleIdColumn.lte(3L);
+
+		DefaultPredicate defaultPredicate = new DefaultPredicate(
+			leftPredicate, Operand.OR, rightPredicate);
+
+		Assert.assertEquals(
+			"MainExample.mainExampleId >= ?", String.valueOf(leftPredicate));
+
+		Assert.assertEquals(
+			"not (MainExample.mainExampleId >= ?)",
+			String.valueOf(leftPredicate.not()));
+
+		Assert.assertEquals(
+			"(MainExample.mainExampleId <= ?)",
+			String.valueOf(rightPredicate.withParentheses()));
+
+		Assert.assertEquals(
+			"not (MainExample.mainExampleId <= ?)",
+			String.valueOf(rightPredicate.not()));
+
+		Assert.assertSame(leftPredicate, defaultPredicate.getLeftExpression());
+		Assert.assertSame(Operand.OR, defaultPredicate.getOperand());
+		Assert.assertSame(
+			rightPredicate, defaultPredicate.getRightExpression());
+		Assert.assertFalse(defaultPredicate.isNot());
+		Assert.assertFalse(defaultPredicate.isWrapParentheses());
+
+		Assert.assertEquals(
+			"MainExample.mainExampleId >= ? or MainExample.mainExampleId <= ?",
+			String.valueOf(defaultPredicate));
+		Assert.assertEquals(
+			"not (MainExample.mainExampleId >= ? or " +
+				"MainExample.mainExampleId <= ?)",
+			String.valueOf(defaultPredicate.not()));
+
+		Predicate notPredicate = defaultPredicate.not();
+
+		Assert.assertEquals(
+			String.valueOf(defaultPredicate.not()),
+			String.valueOf(notPredicate.not()));
+	}
+
+	@Test
 	public void testPredicateParentheses() {
 		Predicate leftPredicate =
 			MainExampleTable.INSTANCE.mainExampleIdColumn.gte(1L);

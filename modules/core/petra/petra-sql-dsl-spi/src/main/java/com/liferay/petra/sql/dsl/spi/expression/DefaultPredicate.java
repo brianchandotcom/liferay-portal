@@ -26,7 +26,7 @@ public class DefaultPredicate
 		Expression<?> leftExpression, Operand operand,
 		Expression<?> rightExpression) {
 
-		this(leftExpression, operand, rightExpression, false);
+		this(leftExpression, operand, rightExpression, false, false);
 	}
 
 	@Override
@@ -50,8 +50,22 @@ public class DefaultPredicate
 		return _rightExpression;
 	}
 
+	public boolean isNot() {
+		return _not;
+	}
+
 	public boolean isWrapParentheses() {
 		return _wrapParentheses;
+	}
+
+	@Override
+	public Predicate not() {
+		if (_not) {
+			return this;
+		}
+
+		return new DefaultPredicate(
+			_leftExpression, _operand, _rightExpression, true, true);
 	}
 
 	@Override
@@ -77,7 +91,7 @@ public class DefaultPredicate
 		}
 
 		return new DefaultPredicate(
-			_leftExpression, _operand, _rightExpression, true);
+			_leftExpression, _operand, _rightExpression, true, _not);
 	}
 
 	@Override
@@ -113,6 +127,10 @@ public class DefaultPredicate
 				if (defaultPredicate.isWrapParentheses()) {
 					deque.push(new ASTNodeAdapter("("));
 				}
+
+				if (defaultPredicate.isNot()) {
+					deque.push(new ASTNodeAdapter("not "));
+				}
 			}
 			else {
 				astNode.toSQL(consumer, astNodeListener);
@@ -122,15 +140,17 @@ public class DefaultPredicate
 
 	private DefaultPredicate(
 		Expression<?> leftExpression, Operand operand,
-		Expression<?> rightExpression, boolean wrapParentheses) {
+		Expression<?> rightExpression, boolean wrapParentheses, boolean not) {
 
 		_leftExpression = Objects.requireNonNull(leftExpression);
 		_operand = Objects.requireNonNull(operand);
 		_rightExpression = Objects.requireNonNull(rightExpression);
 		_wrapParentheses = wrapParentheses;
+		_not = not;
 	}
 
 	private final Expression<?> _leftExpression;
+	private final boolean _not;
 	private final Operand _operand;
 	private final Expression<?> _rightExpression;
 	private final boolean _wrapParentheses;

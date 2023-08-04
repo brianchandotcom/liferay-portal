@@ -22,6 +22,14 @@ public interface Predicate extends Expression<Boolean> {
 		return leftPredicate.and(rightPredicate);
 	}
 
+	public static Predicate not(Predicate predicate) {
+		if (predicate == null) {
+			return null;
+		}
+
+		return predicate.not();
+	}
+
 	public static Predicate or(
 		Predicate leftPredicate, Predicate rightPredicate) {
 
@@ -48,6 +56,8 @@ public interface Predicate extends Expression<Boolean> {
 
 		return and(unsafeSupplier.get());
 	}
+
+	public Predicate not();
 
 	public Predicate or(Expression<Boolean> expression);
 

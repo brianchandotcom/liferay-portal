@@ -51,8 +51,8 @@ public class LayoutLockManager {
 			try {
 				LockManagerUtil.lock(
 					themeDisplay.getUserId(), Layout.class.getName(),
-					layout.getPlid(), null, false,
-					LayoutModelImpl.LOCK_EXPIRATION_TIME);
+					layout.getPlid(), String.valueOf(themeDisplay.getUserId()),
+					false, LayoutModelImpl.LOCK_EXPIRATION_TIME);
 			}
 			catch (PortalException portalException) {
 				throw new LockedLayoutException(portalException);

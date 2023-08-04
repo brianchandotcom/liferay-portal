@@ -387,7 +387,8 @@ definition {
 	test CanUpdateExistingClientExtension {
 	}
 
-	@description = "LPS-182184. Verify the JSON field is present when the user clicks on Import button"
+	@description = "LPS-182184. Verify the JSON field is present when the user clicks on Import button. Blocked by LPS-189881."
+	@ignore = "true"
 	@priority = 4
 	test CanViewImportField {
 		task ("Given the admin page of Client Extension") {

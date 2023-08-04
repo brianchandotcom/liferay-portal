@@ -220,6 +220,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(
@@ -244,6 +245,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setPermissionChecker(permissionChecker);
 		themeDisplay.setPlid(_layout.getPlid());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(

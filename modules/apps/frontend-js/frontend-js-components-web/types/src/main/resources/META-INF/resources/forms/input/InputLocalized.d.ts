@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
+import React from 'react';
 import {LocalizedValue} from '../../index';
 import './InputLocalized.scss';
 interface InputLocalizedProps {
@@ -19,6 +18,7 @@ interface InputLocalizedProps {
 	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
 	required?: boolean;
+	resultFormatter?: (val: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
 	translations: LocalizedValue<string>;
 }
@@ -37,6 +37,7 @@ export default function InputLocalized({
 	onSelectedLocaleChange,
 	placeholder,
 	required,
+	resultFormatter,
 	selectedLocale,
 	translations,
 	...otherProps

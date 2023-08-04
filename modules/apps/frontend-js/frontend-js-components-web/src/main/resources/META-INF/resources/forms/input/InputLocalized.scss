@@ -3,8 +3,8 @@
 		margin-bottom: 0;
 	}
 
-	.form-text {
-		display: none;
+	.form-text:empty {
+	 	display: none;
 	}
 
 	&--rtl {

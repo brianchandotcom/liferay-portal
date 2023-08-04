@@ -3,7 +3,7 @@
 		"@liferay/frontend-icons-web": "*",
 		"frontend-js-web": "*"
 	},
-	"name": "layout-template-admin-web",
+	"name": "@liferay/layout-page-template-admin-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

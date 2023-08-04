@@ -772,7 +772,6 @@ module.exports = {
 			'layout-seo-web',
 			'layout-set-prototype-web',
 			'layout-taglib',
-			'layout-template-admin-web',
 			'lfris-www-components',
 			'liferay-admin-theme',
 			'liferay-classic-theme',

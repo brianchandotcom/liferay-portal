@@ -15,7 +15,7 @@ import SegmentExperience from '../../types/SegmentExperience';
 
 interface BaseProps {
 	displayType?: 'light' | 'dark';
-	selectedItem: SegmentExperience;
+	selectedItem?: SegmentExperience;
 }
 
 interface ExperienceSelectorProps extends BaseProps {
@@ -29,6 +29,10 @@ const TriggerLabel = React.forwardRef(
 		{displayType, selectedItem, ...otherProps}: BaseProps,
 		ref: React.LegacyRef<HTMLButtonElement>
 	) => {
+		if (!selectedItem) {
+			return null;
+		}
+
 		return (
 			<button
 				{...otherProps}

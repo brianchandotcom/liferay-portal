@@ -9,5 +9,5 @@ export default interface SegmentExperience {
 	segmentsExperienceId: string;
 	segmentsExperienceName: string;
 	statusLabel: string;
-	url: string;
+	url?: string;
 }

@@ -540,7 +540,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
 
-		StringBundler validEmailAddresses = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		for (String emailAddress : StringUtil.split(emailAddresses)) {
 			if (!emailAddressValidator.validate(companyId, emailAddress)) {
@@ -561,12 +561,11 @@ public class EmailNotificationType extends BaseNotificationType {
 				}
 			}
 
-			validEmailAddresses.append(emailAddress);
-			validEmailAddresses.append(StringPool.COMMA);
+			sb.append(emailAddress);
+			sb.append(StringPool.COMMA);
 		}
 
-		return StringUtil.removeLast(
-			validEmailAddresses.toString(), StringPool.COMMA);
+		return StringUtil.removeLast(sb.toString(), StringPool.COMMA);
 	}
 
 	private void _sendEmail(NotificationQueueEntry notificationQueueEntry) {

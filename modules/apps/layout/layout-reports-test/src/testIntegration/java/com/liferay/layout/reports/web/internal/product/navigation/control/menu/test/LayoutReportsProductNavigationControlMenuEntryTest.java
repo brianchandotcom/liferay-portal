@@ -74,12 +74,15 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 	@Test
 	public void testIsShow() throws Exception {
+		User user = TestPropsValues.getUser();
+
 		LayoutReportsTestUtil.
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
 				StringPool.BLANK, true, _group.getGroupId(),
 				() -> Assert.assertTrue(
 					_productNavigationControlMenuEntry.isShow(
-						_getHttpServletRequest())));
+						_getHttpServletRequest(
+							PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
 	@Test
@@ -88,31 +91,40 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
+		User user = TestPropsValues.getUser();
+
 		LayoutReportsTestUtil.
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
 				RandomTestUtil.randomString(), true, _group.getGroupId(),
 				() -> Assert.assertTrue(
 					_productNavigationControlMenuEntry.isShow(
-						_getHttpServletRequest())));
+						_getHttpServletRequest(
+							PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
 	@Test
 	public void testIsShowWithoutEnableCompanyConfiguration() throws Exception {
+		User user = TestPropsValues.getUser();
+
 		LayoutReportsTestUtil.
 			withLayoutReportsGooglePageSpeedCompanyConfiguration(
 				_group.getCompanyId(), false,
 				() -> Assert.assertFalse(
 					_productNavigationControlMenuEntry.isShow(
-						_getHttpServletRequest())));
+						_getHttpServletRequest(
+							PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
 	@Test
 	public void testIsShowWithoutEnableSystemConfiguration() throws Exception {
+		User user = TestPropsValues.getUser();
+
 		LayoutReportsTestUtil.withLayoutReportsGooglePageSpeedConfiguration(
 			false,
 			() -> Assert.assertFalse(
 				_productNavigationControlMenuEntry.isShow(
-					_getHttpServletRequest())));
+					_getHttpServletRequest(
+						PermissionCheckerFactoryUtil.create(user), user))));
 	}
 
 	@Test
@@ -202,31 +214,6 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 			_userLocalService.deleteUser(user);
 			_roleLocalService.deleteRole(roleId);
 		}
-	}
-
-	private HttpServletRequest _getHttpServletRequest() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-
-		User user = TestPropsValues.getUser();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-		themeDisplay.setPlid(_layout.getPlid());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setUser(user);
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
 	}
 
 	private HttpServletRequest _getHttpServletRequest(

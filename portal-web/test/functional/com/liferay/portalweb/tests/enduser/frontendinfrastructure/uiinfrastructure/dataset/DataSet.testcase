@@ -14,10 +14,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given access to the Data Sets admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Data Sets");
+			DataSetAdmin.goToDataSetAdminPage();
 		}
 	}
 

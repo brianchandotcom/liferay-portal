@@ -126,6 +126,19 @@ public class JSONCurlUtil {
 		return _getParsedResponse(request, jsonPath);
 	}
 
+	public static synchronized String synchronizedPost(String requestString)
+		throws IOException, TimeoutException {
+
+		return post(requestString);
+	}
+
+	public static synchronized String synchronizedPost(
+			String requestString, String jsonPath)
+		throws IOException, TimeoutException {
+
+		return post(requestString, jsonPath);
+	}
+
 	private static String _getParsedResponse(Request request, String jsonPath)
 		throws IOException, TimeoutException {
 

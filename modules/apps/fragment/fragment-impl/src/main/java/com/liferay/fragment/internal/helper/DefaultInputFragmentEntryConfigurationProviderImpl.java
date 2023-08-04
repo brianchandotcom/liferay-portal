@@ -9,6 +9,7 @@ import com.liferay.fragment.configuration.DefaultInputFragmentEntryConfiguration
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -126,6 +127,9 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 		).put(
 			DateInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-date-input")
+		).put(
+			DateTimeInfoFieldType.INSTANCE.getName(),
+			JSONUtil.put("key", "INPUTS-date-time-input")
 		).put(
 			FileInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-file-upload")

@@ -25,6 +25,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -295,7 +296,9 @@ public class InfoRequestFieldValuesProviderHelper {
 			return _getDateInfoFieldValue(infoField, locale, value);
 		}
 
-		if (infoField.getInfoFieldType() instanceof DateTimeInfoFieldType) {
+		if ((infoField.getInfoFieldType() instanceof DateTimeInfoFieldType) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+
 			return _getDateTimeInfoFieldValue(infoField, locale, value);
 		}
 

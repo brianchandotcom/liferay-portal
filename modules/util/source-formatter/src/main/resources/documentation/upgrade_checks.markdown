@@ -13,6 +13,7 @@ JavaUpgradeServiceTrackerListCheck | .java | Replace the number of generic type 
 [PropertiesUpgradeLiferayPluginPackageFileCheck](check/properties_upgrade_liferay_plugin_package_file_check.markdown#propertiesupgradeliferaypluginpackagefilecheck) | .eslintignore, .prettierignore or .properties | Performs several upgrade checks in `liferay-plugin-package.properties` file. |
 PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .prettierignore or .properties | Validates and upgrades the version in `liferay-plugin-package.properties` file. |
 UpgradeBNDIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it |
+UpgradeDLUtilCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`. |
 UpgradeDeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
 UpgradeGetClassNamesMethodCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Run code migration of method from 'getClassNames' to 'getSearchClassNames' |
 UpgradeGetImagePreviewURLMethodCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class |

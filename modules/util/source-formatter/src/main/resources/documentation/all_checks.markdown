@@ -454,6 +454,7 @@ UnusedParameterCheck | [Performance](performance_checks.markdown#performance-che
 UnusedVariableCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds variables that are declared, but not used. |
 UnwrappedVariableInfoCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds cases where the variable should be wrapped into an inner class in order to defer array elements initialization. |
 UpgradeBNDIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it |
+UpgradeDLUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`. |
 UpgradeDeprecatedAPICheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
 UpgradeGetClassNamesMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Run code migration of method from 'getClassNames' to 'getSearchClassNames' |
 UpgradeGetImagePreviewURLMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class |

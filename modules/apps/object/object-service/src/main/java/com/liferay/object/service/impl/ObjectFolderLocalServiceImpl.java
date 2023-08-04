@@ -10,6 +10,7 @@ import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectFolderLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -157,7 +158,8 @@ public class ObjectFolderLocalServiceImpl
 	@Override
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<Locale, String> labelMap)
+			Map<Locale, String> labelMap,
+			List<ObjectFolderItem> objectFolderItems)
 		throws PortalException {
 
 		_validateLabel(labelMap);

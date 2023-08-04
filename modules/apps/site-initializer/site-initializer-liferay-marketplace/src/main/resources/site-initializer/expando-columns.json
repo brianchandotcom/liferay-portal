@@ -1,7 +1,10 @@
 [
 	{
 		"dataType": 16,
-		"defaultValue": ["No", "Yes"],
+		"defaultValue": [
+			"No",
+			"Yes"
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "App Icon",
 		"properties": {
@@ -230,7 +233,7 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.model.CommerceOrder",
-		"name": "Github username",
+		"name": "Github Username",
 		"properties": {
 			"hidden": false,
 			"indexType": 2,
@@ -244,7 +247,7 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Github username",
+		"name": "Github Username",
 		"properties": {
 			"hidden": false,
 			"indexType": 2,
@@ -918,7 +921,10 @@
 	},
 	{
 		"dataType": 16,
-		"defaultValue": ["No", "Yes"],
+		"defaultValue": [
+			"No",
+			"Yes"
+		],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "Source Files",
 		"properties": {

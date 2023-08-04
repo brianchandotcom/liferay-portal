@@ -3,24 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert, { DisplayType } from "@clayui/alert";
-import ClayButton from "@clayui/button";
-import ClayForm, { ClayRadio } from "@clayui/form";
-import ClayLink from "@clayui/link";
-import { useEffect, useState } from "react";
+import ClayAlert, {DisplayType} from '@clayui/alert';
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayRadio} from '@clayui/form';
+import ClayLink from '@clayui/link';
+import {useEffect, useState} from 'react';
 
-import emptyPictureIcon from "../../assets/icons/avatar.svg";
-import { Header } from "../../components/Header/Header";
+import emptyPictureIcon from '../../assets/icons/avatar.svg';
+import {Header} from '../../components/Header/Header';
 
-import "./PurchasedSolutions.scss";
+import './PurchasedSolutions.scss';
 
-import ClaySticker from "@clayui/sticker";
-import classNames from "classnames";
+import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 
-import { getChannels, getOrderTypes, postOrder } from "../../utils/api";
+import {getChannels, getOrderTypes, postOrder} from '../../utils/api';
 
 type Steps = {
-	page: "accountCreation" | "accountSelection" | "projectCreated";
+	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
 };
 
 type PurchasedSolutionsccountSelectionProps = {
@@ -31,40 +31,40 @@ type PurchasedSolutionsccountSelectionProps = {
 };
 
 const productCustomFields = [
-	"Github username",
-	"Project Name",
-	"Site Initializer",
+	'Github Username',
+	'Project Name',
+	'Site Initializer',
 ];
 
 const PurchasedSolutionsAccountSelection: React.FC<
 	PurchasedSolutionsccountSelectionProps
-> = ({ accounts, currentUserAccount, orderInfo, setStep }) => {
+> = ({accounts, currentUserAccount, orderInfo, setStep}) => {
 	const [radio, setRadio] = useState<RadioOption>();
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(false);
 	const [toastItems, setToastItems] = useState<
-		{ message: string; title?: string; type: DisplayType }[]
+		{message: string; title?: string; type: DisplayType}[]
 	>([]);
 
 	const renderToast = (message: string, title: string, type: DisplayType) => {
-		setToastItems([...toastItems, { message, title, type }]);
+		setToastItems([...toastItems, {message, title, type}]);
 	};
 
 	const [channel, setChannel] = useState<Channel>({
 		channelId: 0,
-		currencyCode: "",
-		externalReferenceCode: "",
+		currencyCode: '',
+		externalReferenceCode: '',
 		id: 0,
-		name: "",
+		name: '',
 		siteGroupId: 0,
-		type: "",
+		type: '',
 	});
 
 	const renderToastMessage = () => {
 		renderToast(
-			"We are unable to start your trial. Please contact our sales team via email - sales@liferay.com",
-			"",
-			"danger",
+			'We are unable to start your trial. Please contact our sales team via email - sales@liferay.com',
+			'',
+			'danger'
 		);
 	};
 
@@ -74,10 +74,10 @@ const PurchasedSolutionsAccountSelection: React.FC<
 
 	const findOrderTypeByName = (
 		orderTypes: OrderType[],
-		nameOrderType: string,
+		nameOrderType: string
 	) => {
 		return orderTypes.find(
-			({ name }: OrderType) => name["en_US"] === nameOrderType,
+			({name}: OrderType) => name['en_US'] === nameOrderType
 		);
 	};
 
@@ -94,12 +94,12 @@ const PurchasedSolutionsAccountSelection: React.FC<
 		}
 
 		const channel =
-			findChannelByName(channels, "Marketplace Channel") || channels[0];
+			findChannelByName(channels, 'Marketplace Channel') || channels[0];
 		setChannel(channel);
 
 		const projectOrderType = findOrderTypeByName(
 			orderTypes,
-			"Solutions - 30 day trial",
+			'Solutions - 30 day trial'
 		);
 
 		setOrderType(projectOrderType);
@@ -111,8 +111,8 @@ const PurchasedSolutionsAccountSelection: React.FC<
 	}, []);
 
 	const customFields =
-		orderInfo?.product?.customFields.filter((item) =>
-			productCustomFields.find((field) => item.name === field),
+		orderInfo?.product?.customFields?.filter((item) =>
+			productCustomFields.find((field) => item.name === field)
 		) || [];
 
 	const getProductCustomFields = () => {
@@ -121,7 +121,7 @@ const PurchasedSolutionsAccountSelection: React.FC<
 		productCustomFields.forEach((fieldName) => {
 			customFields.forEach((field) => {
 				if (field.name === fieldName) {
-					data = { ...data, [fieldName]: field.customValue.data };
+					data = {...data, [fieldName]: field.customValue.data};
 				}
 			});
 		});
@@ -143,7 +143,7 @@ const PurchasedSolutionsAccountSelection: React.FC<
 				type: channel?.type,
 			},
 			channelId: channel?.id,
-			currencyCode: "USD",
+			currencyCode: 'USD',
 			customFields: getProductCustomFields(),
 			orderItems: [
 				{
@@ -160,7 +160,7 @@ const PurchasedSolutionsAccountSelection: React.FC<
 
 		await postOrder(payload);
 
-		setStep({ page: "projectCreated" });
+		setStep({page: 'projectCreated'});
 	};
 
 	return (
@@ -188,10 +188,11 @@ const PurchasedSolutionsAccountSelection: React.FC<
 									{accounts.map((account, index) => (
 										<div
 											className={classNames(
-												"align-items-center d-flex form-control justify-content-between mb-5 cursor-pointer",
+												'align-items-center d-flex form-control justify-content-between mb-5 cursor-pointer',
 												{
-													fieldchecked: radio?.index === index,
-												},
+													fieldchecked:
+														radio?.index === index,
+												}
 											)}
 											key={index}
 											onClick={() =>
@@ -202,19 +203,29 @@ const PurchasedSolutionsAccountSelection: React.FC<
 											}
 										>
 											<span className="align-items-center d-flex p-2">
-												<ClaySticker shape="circle" size="lg">
+												<ClaySticker
+													shape="circle"
+													size="lg"
+												>
 													<ClaySticker.Image
 														alt="placeholder"
-														src={account?.logoURL ?? emptyPictureIcon}
+														src={
+															account?.logoURL ??
+															emptyPictureIcon
+														}
 													/>
 												</ClaySticker>
 
-												<h5 className="mb-0 ml-3">{account?.name}</h5>
+												<h5 className="mb-0 ml-3">
+													{account?.name}
+												</h5>
 											</span>
 
 											<div className="pr-4">
 												<ClayRadio
-													checked={radio?.index === index}
+													checked={
+														radio?.index === index
+													}
 													className="mr-5"
 													onChange={() =>
 														setRadio({
@@ -247,7 +258,7 @@ const PurchasedSolutionsAccountSelection: React.FC<
 											displayType="unstyled"
 											onClick={() => {
 												setStep({
-													page: "accountCreation",
+													page: 'accountCreation',
 												});
 											}}
 										>
@@ -256,8 +267,12 @@ const PurchasedSolutionsAccountSelection: React.FC<
 									</div>
 
 									<ClayButton
-										disabled={!radio?.value || disabledButton}
-										onClick={() => orderInfo?.sku && onsubmit()}
+										disabled={
+											!radio?.value || disabledButton
+										}
+										onClick={() =>
+											orderInfo?.sku && onsubmit()
+										}
 									>
 										Continue
 									</ClayButton>
@@ -275,7 +290,7 @@ const PurchasedSolutionsAccountSelection: React.FC<
 						key={index}
 						onClose={() => {
 							setToastItems((prevItems) =>
-								prevItems.filter((item) => item !== alert),
+								prevItems.filter((item) => item !== alert)
 							);
 						}}
 						title={alert.title}

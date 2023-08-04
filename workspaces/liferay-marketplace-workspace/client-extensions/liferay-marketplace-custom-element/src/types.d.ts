@@ -300,6 +300,7 @@ interface Product {
 	attachments: ProductAttachment[];
 	catalogId: number;
 	categories: ProductCategories[];
+	customFields?: CustomField[];
 	description: {[key: string]: string};
 	externalReferenceCode: string;
 	id: number;

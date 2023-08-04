@@ -159,6 +159,39 @@ AUI.add(
 					}
 
 					submitForm(form, instance.get(STR_URL));
+
+					if (
+						Liferay.FeatureFlags['LPS-183661'] &&
+						[
+							'reindexDictionaries',
+							'reindexIndexReindexer',
+						].includes(data.cmd)
+					) {
+						document
+							.querySelectorAll(instance.get('submitButton'))
+							.forEach((element) => {
+								element.disabled = true;
+							});
+
+						const currentControlMenu = document.getElementById(
+							instance.ns('controlMenu')
+						);
+
+						const currentControlMenuCategory = currentControlMenu.querySelector(
+							`.${instance.get(
+								'controlMenuCategoryKey'
+							)}-control-group .control-menu-nav`
+						);
+
+						const syncIcon = document.createElement('div');
+
+						syncIcon.innerHTML =
+							'<svg class="lexicon-icon" focusable="false"><use href="' +
+							Liferay.Icons.spritemap +
+							'#reload" /></svg>';
+
+						currentControlMenuCategory.appendChild(syncIcon);
+					}
 				},
 
 				_showError(message) {

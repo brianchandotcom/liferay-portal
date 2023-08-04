@@ -9,8 +9,6 @@ import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.portal.vulcan.pagination.InvalidPaginationException;
 
-import javax.ws.rs.core.Response;
-
 /**
  * @author Alberto Javier Moreno Lage
  */
@@ -23,4 +21,5 @@ public class InvalidPaginationExceptionMapper
 
 		return new Problem(invalidPaginationException);
 	}
+
 }

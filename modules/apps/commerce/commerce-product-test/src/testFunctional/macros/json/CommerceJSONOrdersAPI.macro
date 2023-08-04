@@ -588,6 +588,9 @@ definition {
 		if (isSet(parameter)) {
 			var parameter = "?${parameter}=${parameterValue}";
 		}
+		else {
+			var parameter = "";
+		}
 
 		if (!(isSet(email))) {
 			var email = "test@liferay.com";
@@ -769,10 +772,12 @@ definition {
 	macro getOrderItemField {
 		Variables.assertDefined(parameterList = "${jsonPath},${orderId}");
 
-		var response = CommerceJSONOrdersAPI._getOrderItemById(
-			email = ${email},
-			orderId = ${orderId},
-			password = ${password});
+		if (!(isSet(response))) {
+			var response = CommerceJSONOrdersAPI._getOrderItemById(
+				email = ${email},
+				orderId = ${orderId},
+				password = ${password});
+		}
 
 		var fieldValue = JSONUtil.getWithJSONPath(${response}, ${jsonPath});
 

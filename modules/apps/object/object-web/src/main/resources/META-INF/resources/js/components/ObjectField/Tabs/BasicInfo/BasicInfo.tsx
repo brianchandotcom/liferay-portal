@@ -170,21 +170,23 @@ export function BasicInfo({
 				</ObjectFieldFormBase>
 			</Card>
 
-			{values.businessType === 'Aggregation' && (
-				<AggregationFilterContainer
-					aggregationFilters={aggregationFilters}
-					creationLanguageId2={creationLanguageId2}
-					filterOperators={filterOperators}
-					objectDefinitionExternalReferenceCode2={
-						objectDefinitionExternalReferenceCode2
-					}
-					setAggregationFilters={setAggregationFilters}
-					setCreationLanguageId2={setCreationLanguageId2}
-					setValues={setValues}
-					values={values}
-					workflowStatusJSONArray={workflowStatusJSONArray}
-				/>
-			)}
+			{values.businessType === 'Aggregation' &&
+				objectDefinitionExternalReferenceCode !==
+					objectDefinitionExternalReferenceCode2 && (
+					<AggregationFilterContainer
+						aggregationFilters={aggregationFilters}
+						creationLanguageId2={creationLanguageId2}
+						filterOperators={filterOperators}
+						objectDefinitionExternalReferenceCode2={
+							objectDefinitionExternalReferenceCode2
+						}
+						setAggregationFilters={setAggregationFilters}
+						setCreationLanguageId2={setCreationLanguageId2}
+						setValues={setValues}
+						values={values}
+						workflowStatusJSONArray={workflowStatusJSONArray}
+					/>
+				)}
 
 			{values.businessType === 'Formula' && (
 				<FormulaContainer

@@ -31,7 +31,7 @@ public class GroovyObjectValidationRuleEngineImpl
 	}
 
 	@Override
-	public String getName() {
+	public String getLabel() {
 		return ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY;
 	}
 

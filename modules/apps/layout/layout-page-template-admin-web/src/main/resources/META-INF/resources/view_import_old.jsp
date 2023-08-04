@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest);
+ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <portlet:actionURL name="/layout_page_template_admin/import" var="importURL">

@@ -9,10 +9,14 @@ import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,10 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ImportDisplayContext {
 
 	public ImportDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 	}
 
 	public String getDialogMessage() {
@@ -253,6 +260,28 @@ public class ImportDisplayContext {
 		return notImportedLayoutsImporterResultEntries;
 	}
 
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"backURL",
+			PortletURLBuilder.create(
+				_renderResponse.createRenderURL()
+			).setTabs1(
+				"page-templates"
+			).buildString()
+		).put(
+			"importURL",
+			ResourceURLBuilder.createResourceURL(
+				_renderResponse
+			).setParameter(
+				"layoutPageTemplateCollectionId",
+				ParamUtil.getString(
+					_httpServletRequest, "layoutPageTemplateCollectionId")
+			).setResourceID(
+				"/layout_page_template_admin/import"
+			).buildString()
+		).build();
+	}
+
 	public String getSuccessMessage(
 		Map.Entry<Integer, List<LayoutsImporterResultEntry>> entrySet) {
 
@@ -303,5 +332,6 @@ public class ImportDisplayContext {
 	private List<LayoutsImporterResultEntry>
 		_notImportedLayoutsImporterResultEntries;
 	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 
 }

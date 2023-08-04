@@ -29,6 +29,7 @@ import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -282,6 +283,12 @@ public class BasicFragmentManagementToolbarDisplayContext
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") &&
+				(infoFieldType == DateTimeInfoFieldType.INSTANCE)) {
+
+				continue;
+			}
+
 			jsonArray.put(
 				JSONUtil.put(
 					"key", infoFieldType.getName()

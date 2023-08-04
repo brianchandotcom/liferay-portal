@@ -29,6 +29,7 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -284,6 +285,12 @@ public class EditFragmentEntryDisplayContext {
 		}
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") &&
+				(infoFieldType == DateTimeInfoFieldType.INSTANCE)) {
+
+				continue;
+			}
+
 			jsonArray.put(
 				JSONUtil.put(
 					"key", infoFieldType.getName()
@@ -358,7 +365,9 @@ public class EditFragmentEntryDisplayContext {
 		}
 
 		for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
-			if (!JSONUtil.hasValue(
+			if ((!FeatureFlagManagerUtil.isEnabled("LPS-183727") &&
+				 (infoFieldType == DateTimeInfoFieldType.INSTANCE)) ||
+				!JSONUtil.hasValue(
 					fieldTypesJSONArray, infoFieldType.getName())) {
 
 				continue;

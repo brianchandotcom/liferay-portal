@@ -19,6 +19,7 @@ import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Objects;
 
@@ -48,7 +49,8 @@ public class ObjectFieldDBTypeUtil {
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME) &&
+				 FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 
 			return DateTimeInfoFieldType.INSTANCE;
 		}

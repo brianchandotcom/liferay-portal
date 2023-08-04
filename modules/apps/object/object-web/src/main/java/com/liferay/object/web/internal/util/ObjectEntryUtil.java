@@ -15,6 +15,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -96,7 +97,8 @@ public class ObjectEntryUtil {
 			else if (Objects.equals(
 						DateTimeInfoFieldType.INSTANCE,
 						infoField.getInfoFieldType()) &&
-					 (value instanceof LocalDateTime)) {
+					 (value instanceof LocalDateTime) &&
+					 FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 
 				DateTimeFormatter dateTimeFormatter =
 					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

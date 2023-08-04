@@ -144,6 +144,66 @@ definition {
 		}
 	}
 
+	@description = "LPS-180356 - Verify that  the 'phone number' field is enabled  if it's not registered and it is possible to fill this"
+	@priority = 3
+	test IsPossibleFillPhoneNumberField {
+		task ("Given the Employee user doesn't have a phone number registered") {
+			EVPUtils.gotoContactInformation(
+				category = "User",
+				contactUser = "Contact",
+				enterUser = "Employee User",
+				inforUser = "Contact Information",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			EVPUtils.assertContactInformation(inforMessage = "This user does not have any phone numbers");
+		}
+
+		task ("When he goes to Create Request Form") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPRequest.goToCreateRequest();
+		}
+
+		task ("Then the 'phone number' field is enabled and He fill this") {
+			EVPUtils.addUserPhoneNumber(
+				assertNumber = 1234567890,
+				key_number = 1234567890);
+		}
+
+		task ("Given the Employee user has a phone number registered") {
+			EVPUtils.gotoContactInformation(
+				category = "User",
+				contactUser = "Contact",
+				enterUser = "Employee User",
+				inforUser = "Contact Information",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.addContactInformation(
+				contactType = "add-phone-number-link",
+				number = 1234567890);
+		}
+
+		task ("When he goes to Create Request Form") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPRequest.goToCreateRequest();
+		}
+
+		task ("Then the 'phone number' field is disabled and it's not possible fill") {
+			EVPUtils.assertNotAllowed(notAllowed = "Phone Number");
+		}
+	}
+
 	@description = "LPS-177444 - Verify that "In flow" requests consume balance"
 	@priority = 5
 	test VerifyInFlowRequestsConsumeCap {

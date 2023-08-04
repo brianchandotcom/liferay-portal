@@ -5,11 +5,13 @@
 
 package com.liferay.ant.mirrors.get;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
@@ -333,6 +335,37 @@ public class MirrorsGetTask extends Task {
 		return path;
 	}
 
+	protected String getProcessOutput(String[] commands)
+		throws IOException, RuntimeException {
+
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+		Process process = processBuilder.start();
+
+		StringBuilder processOutput = new StringBuilder();
+
+		try {
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(process.getInputStream()));
+
+			String line = bufferedReader.readLine();
+
+			while (line != null) {
+				processOutput.append(line + System.lineSeparator());
+				line = bufferedReader.readLine();
+			}
+
+			process.waitFor();
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to get process output.");
+
+			exception.printStackTrace();
+		}
+
+		return processOutput.toString();
+	}
+
 	protected String getURLScheme() {
 		Project project = getProject();
 
@@ -373,6 +406,64 @@ public class MirrorsGetTask extends Task {
 		_username = project.getProperty("mirrors.username");
 
 		return _username;
+	}
+
+	protected boolean has7z() {
+		String[] command = {"/bin/bash", "-c", "type 7z"};
+
+		try {
+			String processOutput = getProcessOutput(command);
+
+			if (processOutput.contains("not found")) {
+				System.out.println("Unable to validate 7z file");
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to validate 7z file");
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean is7ZArchiveValid(File file) {
+		if (!has7z()) {
+			return false;
+		}
+
+		String[] command = {"/bin/bash", "-c", "7z t " + file.toString()};
+
+		try {
+			String processOutput = getProcessOutput(command);
+
+			if (!processOutput.contains("Everything is Ok") &&
+				processOutput.contains("Files: 0\n")) {
+
+				System.out.println(processOutput);
+
+				System.out.println(file + " archive file is not valid.");
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			System.out.println(file + " archive file is not valid.");
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected boolean is7ZFileName(String fileName) {
+		if (fileName.endsWith(".7z")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isValidMD5(File file, URL url) throws IOException {
@@ -650,6 +741,15 @@ public class MirrorsGetTask extends Task {
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is an invalid zip file.");
+		}
+
+		if (is7ZFileName(targetFile.getName()) &&
+			!is7ZArchiveValid(targetFile)) {
+
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid 7z file.");
 		}
 	}
 

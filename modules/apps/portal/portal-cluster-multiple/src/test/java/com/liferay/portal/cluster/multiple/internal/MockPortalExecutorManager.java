@@ -38,14 +38,6 @@ public class MockPortalExecutorManager implements PortalExecutorManager {
 		return null;
 	}
 
-	@Override
-	public void shutdown() {
-	}
-
-	@Override
-	public void shutdown(boolean interrupt) {
-	}
-
 	private static class MockNoticeableExecutorService
 		extends BaseNoticeableExecutorService
 		implements NoticeableExecutorService {

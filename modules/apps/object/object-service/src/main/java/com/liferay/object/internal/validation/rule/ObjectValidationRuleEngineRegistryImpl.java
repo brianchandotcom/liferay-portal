@@ -32,9 +32,9 @@ public class ObjectValidationRuleEngineRegistryImpl
 
 	@Override
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
-		String name) {
+		String key) {
 
-		return _serviceTrackerMap.getService(name);
+		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override

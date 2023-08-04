@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins Target Platform
 Bundle-SymbolicName: com.liferay.gradle.plugins.target.platform
-Bundle-Version: 3.0.13
+Bundle-Version: 3.0.14
 Export-Package:\
 	com.liferay.gradle.plugins.target.platform,\
 	com.liferay.gradle.plugins.target.platform.extensions,\

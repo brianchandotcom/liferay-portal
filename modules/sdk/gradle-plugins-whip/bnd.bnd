@@ -1,5 +1,5 @@
 Bundle-Description: The Whip Gradle plugin lets you use the Liferay Whip library to ensure that unit tests fully cover your project's code.
 Bundle-Name: Liferay Gradle Plugins Whip
 Bundle-SymbolicName: com.liferay.gradle.plugins.whip
-Bundle-Version: 1.0.10
+Bundle-Version: 1.0.11
 Export-Package: com.liferay.gradle.plugins.whip

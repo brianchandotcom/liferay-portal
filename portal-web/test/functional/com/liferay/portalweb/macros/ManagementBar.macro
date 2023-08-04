@@ -48,6 +48,34 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
+	macro sortAssets {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		WaitForVisible(
+			key_text = "order-list",
+			locator1 = "ManagementBar#ANY_ICON");
+
+		if (${sortDirection} == "Ascending") {
+			Click(
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			VerifyVisible(
+				key_text = "order-list-up",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+
+		if (${sortDirection} == "Descending") {
+			Click(
+				key_text = "order-list-up",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			VerifyVisible(
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+	}
+
 	macro toggleViewOrder {
 		if (isSet(order)) {
 			Click.clickNoMouseOver(

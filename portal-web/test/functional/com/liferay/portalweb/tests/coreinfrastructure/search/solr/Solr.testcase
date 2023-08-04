@@ -104,8 +104,9 @@ definition {
 			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
+	@description = "This is a use case for LPS-183360."
 	@priority = 3
-	test ConcurrentReindexNotAvailableOnSolr {
+	test ConcurrentReindexNotAvailableWithSolr {
 		property custom.properties = "feature.flag.LPS-177664=true";
 		property test.liferay.virtual.instance = "false";
 

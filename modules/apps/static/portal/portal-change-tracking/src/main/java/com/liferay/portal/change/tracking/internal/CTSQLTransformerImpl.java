@@ -486,14 +486,15 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			leftExpression.accept(this);
 
-			Expression betweenExpressionStart =
+			Expression betweenExpressionStartExpression =
 				between.getBetweenExpressionStart();
 
-			betweenExpressionStart.accept(this);
+			betweenExpressionStartExpression.accept(this);
 
-			Expression betweenExpressionEnd = between.getBetweenExpressionEnd();
+			Expression betweenExpressionEndExpression =
+				between.getBetweenExpressionEnd();
 
-			betweenExpressionEnd.accept(this);
+			betweenExpressionEndExpression.accept(this);
 		}
 
 		@Override
@@ -908,10 +909,10 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			plainSelect.setWhere(_visit(plainSelect.getWhere()));
 
-			Expression having = plainSelect.getHaving();
+			Expression havingExpression = plainSelect.getHaving();
 
-			if (having != null) {
-				having.accept(this);
+			if (havingExpression != null) {
+				havingExpression.accept(this);
 			}
 
 			OracleHierarchicalExpression oracleHierarchicalExpression =

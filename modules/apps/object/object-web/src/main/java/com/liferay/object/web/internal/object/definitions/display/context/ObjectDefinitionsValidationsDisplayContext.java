@@ -96,7 +96,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 						objectRequestHelper.getLocale(),
 						objectValidationRuleEngine.getLabel())
 				).put(
-					"name", objectValidationRuleEngine.getLabel()
+					"name", objectValidationRuleEngine.getKey()
 				).build()),
 			Comparator.comparing(item -> item.get("label")));
 	}

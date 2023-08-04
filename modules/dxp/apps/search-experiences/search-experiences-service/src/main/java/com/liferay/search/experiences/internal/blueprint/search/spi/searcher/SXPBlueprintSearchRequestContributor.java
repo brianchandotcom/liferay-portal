@@ -73,15 +73,14 @@ public class SXPBlueprintSearchRequestContributor
 						continue;
 					}
 
-					SXPBlueprint sxpBlueprint =
+					_enhance(
+						searchRequestBuilder,
 						_sxpBlueprintLocalService.
 							fetchSXPBlueprintByExternalReferenceCode(
 								sxpBlueprintExternalReferenceCode,
 								GetterUtil.getLong(
 									searchRequestBuilder.withSearchContextGet(
-										SearchContext::getCompanyId)));
-
-					_enhance(searchRequestBuilder, sxpBlueprint);
+										SearchContext::getCompanyId))));
 				}
 			}
 		}
@@ -127,10 +126,10 @@ public class SXPBlueprintSearchRequestContributor
 					continue;
 				}
 
-				SXPBlueprint sxpBlueprint =
-					_sxpBlueprintLocalService.fetchSXPBlueprint(sxpBlueprintId);
-
-				_enhance(searchRequestBuilder, sxpBlueprint);
+				_enhance(
+					searchRequestBuilder,
+					_sxpBlueprintLocalService.fetchSXPBlueprint(
+						sxpBlueprintId));
 			}
 		}
 	}
@@ -142,26 +141,28 @@ public class SXPBlueprintSearchRequestContributor
 			_log.debug("Search experiences blueprint " + sxpBlueprint);
 		}
 
-		if (sxpBlueprint != null) {
-			RuntimeException runtimeException = new RuntimeException();
+		if (sxpBlueprint == null) {
+			return;
+		}
 
-			try {
-				_sxpBlueprintSearchRequestEnhancer.enhance(
-					searchRequestBuilder, sxpBlueprint);
-			}
-			catch (Exception exception) {
-				runtimeException.addSuppressed(exception);
-			}
+		RuntimeException runtimeException = new RuntimeException();
 
-			if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(runtimeException);
-				}
-			}
+		try {
+			_sxpBlueprintSearchRequestEnhancer.enhance(
+				searchRequestBuilder, sxpBlueprint);
+		}
+		catch (Exception exception) {
+			runtimeException.addSuppressed(exception);
+		}
 
-			if (SXPExceptionUtil.hasErrors(runtimeException)) {
-				throw runtimeException;
+		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(runtimeException);
 			}
+		}
+
+		if (SXPExceptionUtil.hasErrors(runtimeException)) {
+			throw runtimeException;
 		}
 	}
 

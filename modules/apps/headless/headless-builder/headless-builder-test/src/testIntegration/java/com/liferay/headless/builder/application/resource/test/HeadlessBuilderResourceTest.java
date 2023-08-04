@@ -236,6 +236,106 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetWithAPISortAsc() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+
+		_addAPISort(
+			_API_ENDPOINT_ERC_1, String.format("%s:asc", "textProperty"));
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_addCustomObjectEntry(1, null, _objectDefinition1, "value1");
+		_addCustomObjectEntry(2, null, _objectDefinition1, "value2");
+		_addCustomObjectEntry(3, null, _objectDefinition1, "value3");
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"name", "value1"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value2"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value3"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				)
+			).toString(),
+			itemsJSONArray.toString(), JSONCompareMode.STRICT);
+	}
+
+	@Test
+	public void testGetWithAPISortDesc() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+
+		_addAPISort(
+			_API_ENDPOINT_ERC_1, String.format("%s:desc", "textProperty"));
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_addCustomObjectEntry(1, null, _objectDefinition1, "value1");
+		_addCustomObjectEntry(2, null, _objectDefinition1, "value2");
+		_addCustomObjectEntry(3, null, _objectDefinition1, "value3");
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"name", "value3"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value2"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value1"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				)
+			).toString(),
+			itemsJSONArray.toString(), JSONCompareMode.STRICT);
+	}
+
+	@Test
 	public void testGetWithCompanyScopedEndpoint() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
@@ -895,6 +995,21 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				apiEndpointExternalReferenceCode
 			).toString(),
 			"headless-builder/filters", Http.Method.POST);
+	}
+
+	private void _addAPISort(
+			String apiEndpointExternalReferenceCode, String sortString)
+		throws Exception {
+
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"oDataSort", sortString
+				).put(
+					"r_apiEndpointToAPISorts_c_apiEndpointERC",
+					apiEndpointExternalReferenceCode
+				).toString(),
+				"headless-builder/sorts", Http.Method.POST));
 	}
 
 	private ObjectEntry _addCustomObjectEntry(

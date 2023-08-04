@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -37,7 +37,7 @@ import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 	configurationPid = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class ComponentBlacklistImpl {
+public class ComponentBlacklist {
 
 	@Activate
 	protected void activate(
@@ -168,7 +168,7 @@ public class ComponentBlacklistImpl {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ComponentBlacklistImpl.class);
+		ComponentBlacklist.class);
 
 	private Set<String> _blacklistComponentNames;
 	private BundleContext _bundleContext;

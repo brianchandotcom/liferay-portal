@@ -11,6 +11,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -48,6 +49,9 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 
 import java.text.ParseException;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -189,6 +193,15 @@ public class InfoRequestFieldValuesProviderHelper {
 		return null;
 	}
 
+	private InfoFieldValue<Object> _getDateTimeInfoFieldValue(
+		InfoField<?> infoField, Locale locale, String value) {
+
+		LocalDateTime localDateTime = LocalDateTime.parse(
+			value, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+
+		return _getInfoFieldValue(infoField, locale, localDateTime);
+	}
+
 	private InfoFieldValue<Object> _getFileInfoFieldValue(
 			FileItem fileItem, long groupId, InfoField infoField,
 			ThemeDisplay themeDisplay)
@@ -280,6 +293,10 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 			return _getDateInfoFieldValue(infoField, locale, value);
+		}
+
+		if (infoField.getInfoFieldType() instanceof DateTimeInfoFieldType) {
+			return _getDateTimeInfoFieldValue(infoField, locale, value);
 		}
 
 		if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {

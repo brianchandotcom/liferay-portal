@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.util;
 
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
@@ -44,6 +45,12 @@ public class ObjectFieldDBTypeUtil {
 					ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
 
 			return DateInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+			return DateTimeInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

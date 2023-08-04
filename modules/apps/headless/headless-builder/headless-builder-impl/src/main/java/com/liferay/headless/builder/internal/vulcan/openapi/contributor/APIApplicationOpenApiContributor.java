@@ -121,8 +121,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		}
 
 		for (APIApplication.Endpoint endpoint : apiApplication.getEndpoints()) {
-			paths.put(
-				_formatPath(endpoint.getPath()), _toOpenAPIPathItem(endpoint));
+			paths.put(_formatPath(endpoint), _toOpenAPIPathItem(endpoint));
 		}
 
 		openAPI.setPaths(paths);
@@ -157,12 +156,18 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			path, CompanyThreadLocal.getCompanyId());
 	}
 
-	private String _formatPath(String path) {
-		if (path.startsWith(StringPool.SLASH)) {
-			return path;
+	private String _formatPath(APIApplication.Endpoint endpoint) {
+		String path = endpoint.getPath();
+
+		if (!path.startsWith(StringPool.SLASH)) {
+			path = StringPool.SLASH + path;
 		}
 
-		return StringPool.SLASH + path;
+		if (endpoint.getScope() == APIApplication.Endpoint.Scope.GROUP) {
+			path = "/scopes/{scopeKey}" + path;
+		}
+
+		return path;
 	}
 
 	private PathItem _toOpenAPIPathItem(APIApplication.Endpoint endpoint) {

@@ -316,6 +316,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"7.0.0", "7.1.0",
 			new com.liferay.object.internal.upgrade.v7_1_0.
 				SchemaUpgradeProcess());
+
+		registry.register(
+			"7.1.0", "8.0.0",
+			new com.liferay.object.internal.upgrade.v8_0_0.
+				ObjectFolderItemUpgradeProcess(_portalUUID));
 	}
 
 	@Reference

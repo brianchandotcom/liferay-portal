@@ -10,10 +10,16 @@ import com.liferay.headless.builder.application.publisher.APIApplicationPublishe
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationContextProvider;
+import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationProvider;
+import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationSortContextProvider;
+import com.liferay.headless.builder.internal.jaxrs.context.resolver.APIApplicationSortContextResolver;
 import com.liferay.headless.builder.internal.resource.HeadlessBuilderResourceImpl;
 import com.liferay.headless.builder.internal.resource.OpenAPIResourceImpl;
+import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import javax.ws.rs.core.Application;
+import javax.ws.rs.ext.ContextResolver;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
@@ -78,6 +85,18 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 								return apiApplicationContextProvider;
 							},
+							osgiJaxRsName));
+					add(
+						_registerContextProvider(
+							() -> new APIApplicationSortContextProvider(
+								_apiApplicationProvider),
+							osgiJaxRsName));
+					add(
+						_registerContextResolver(
+							() -> new APIApplicationSortContextResolver(
+								_entityModelProvider,
+								_objectDefinitionLocalService,
+								_sortParserProvider),
 							osgiJaxRsName));
 					add(
 						_registerResource(
@@ -162,20 +181,17 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			).build());
 	}
 
-	private ServiceRegistration<?> _registerContextProvider(
-		Supplier<ContextProvider<?>> contextProviderSupplier,
+	private <T> ServiceRegistration<?> _registerContextExtension(
+		Class<T> contextExtensionType, T contextExtension,
 		String osgiJaxRsName) {
 
-		ContextProvider<?> contextProvider = contextProviderSupplier.get();
+		Class<?> contextExtensionClass = contextExtension.getClass();
 
-		Class<? extends ContextProvider> contextProviderClass =
-			contextProvider.getClass();
-
-		String contextProviderClassSimpleName =
-			contextProviderClass.getSimpleName();
+		String contextExtensionClassSimpleName =
+			contextExtensionClass.getSimpleName();
 
 		return _bundleContext.registerService(
-			ContextProvider.class, contextProvider,
+			contextExtensionType, contextExtension,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
@@ -183,8 +199,26 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"osgi.jaxrs.extension", "true"
 			).put(
 				"osgi.jaxrs.name",
-				osgiJaxRsName + contextProviderClassSimpleName
+				osgiJaxRsName + contextExtensionClassSimpleName
 			).build());
+	}
+
+	private ServiceRegistration<?> _registerContextProvider(
+		Supplier<ContextProvider<?>> contextProviderSupplier,
+		String osgiJaxRsName) {
+
+		return _registerContextExtension(
+			ContextProvider.class, contextProviderSupplier.get(),
+			osgiJaxRsName);
+	}
+
+	private ServiceRegistration<?> _registerContextResolver(
+		Supplier<ContextResolver<?>> contextResolverSupplier,
+		String osgiJaxRsName) {
+
+		return _registerContextExtension(
+			ContextResolver.class, contextResolverSupplier.get(),
+			osgiJaxRsName);
 	}
 
 	private <T> ServiceRegistration<T> _registerResource(
@@ -237,12 +271,24 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		_apiApplicationContextProviders = new HashMap<>();
 
 	@Reference
+	private APIApplicationProvider _apiApplicationProvider;
+
+	@Reference
 	private EndpointHelper _endpointHelper;
+
+	@Reference
+	private EntityModelProvider _entityModelProvider;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;
 
 	private final Map<String, List<ServiceRegistration<?>>>
 		_serviceRegistrationsMap = new HashMap<>();
+
+	@Reference
+	private SortParserProvider _sortParserProvider;
 
 }

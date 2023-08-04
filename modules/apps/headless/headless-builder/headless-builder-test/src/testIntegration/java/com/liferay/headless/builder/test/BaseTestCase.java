@@ -15,6 +15,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
+import javax.ws.rs.core.Response;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -56,6 +59,12 @@ public abstract class BaseTestCase {
 				completableFuture.join();
 			}
 		}
+	}
+
+	protected void assertSuccessfulHttpCode(int httpCode) {
+		Assert.assertEquals(
+			Response.Status.Family.SUCCESSFUL,
+			Response.Status.Family.familyOf(httpCode));
 	}
 
 	@Inject

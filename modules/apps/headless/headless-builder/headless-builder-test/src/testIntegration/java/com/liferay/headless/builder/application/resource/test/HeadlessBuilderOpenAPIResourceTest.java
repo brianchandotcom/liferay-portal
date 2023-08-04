@@ -311,13 +311,14 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeToHttpCode(
 				null, apiApplicationURL + "/openapi.json", Http.Method.GET));
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC,
-			Http.Method.PATCH);
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"applicationStatus", "published"
+				).toString(),
+				"headless-builder/applications/by-external-reference-code/" +
+					_API_APPLICATION_ERC,
+				Http.Method.PATCH));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "/openapi", Http.Method.GET);
@@ -344,221 +345,240 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	}
 
 	private void _addAPIApplication() throws Exception {
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"apiApplicationToAPIEndpoints",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", _API_ENDPOINT_ERC
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "name"
-					).put(
-						"path", "/path"
-					).put(
-						"scope", "company"
-					),
-					JSONUtil.put(
-						"description", "site scoped description"
-					).put(
-						"externalReferenceCode", _API_SITE_SCOPED_ENDPOINT_ERC
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "site scoped name"
-					).put(
-						"path", "/site-scoped-path"
-					).put(
-						"scope", "group"
-					))
-			).put(
-				"apiApplicationToAPISchemas",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"apiSchemaToAPIProperties",
-						JSONUtil.putAll(
-							JSONUtil.put(
-								"description", "aggregationProperty description"
-							).put(
-								"name", "aggregationProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_AGGREGATION_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "attachmentProperty description"
-							).put(
-								"name", "attachmentProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_ATTACHMENT_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "booleanProperty description"
-							).put(
-								"name", "booleanProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_BOOLEAN_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "dateProperty description"
-							).put(
-								"name", "dateProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_DATE_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "dateTimeProperty description"
-							).put(
-								"name", "dateTimeProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_DATE_TIME_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "decimalProperty description"
-							).put(
-								"name", "decimalProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_DECIMAL_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "integerProperty description"
-							).put(
-								"name", "integerProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "longIntegerProperty description"
-							).put(
-								"name", "longIntegerProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_LONG_INTEGER_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "longTextProperty description"
-							).put(
-								"name", "longTextProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_LONG_TEXT_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description",
-								"multiselectPicklistProperty description"
-							).put(
-								"name", "multiselectPicklistProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "picklistProperty description"
-							).put(
-								"name", "picklistProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_PICKLIST_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description",
-								"precisionDecimalProperty description"
-							).put(
-								"name", "precisionDecimalProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_PRECISION_DECIMAL_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "richTextProperty description"
-							).put(
-								"name", "richTextProperty"
-							).put(
-								"objectFieldERC",
-								_API_SCHEMA_RICH_TEXT_FIELD_ERC
-							),
-							JSONUtil.put(
-								"description", "textProperty description"
-							).put(
-								"name", "textProperty"
-							).put(
-								"objectFieldERC", _API_SCHEMA_TEXT_FIELD_ERC
-							))
-					).put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", _API_SCHEMA_ERC
-					).put(
-						"mainObjectDefinitionERC",
-						_objectDefinition1.getExternalReferenceCode()
-					).put(
-						"name", "SchemaName"
-					),
-					JSONUtil.put(
-						"apiSchemaToAPIProperties",
-						JSONUtil.putAll(
-							JSONUtil.put(
-								"description",
-								"siteScopedTextProperty description"
-							).put(
-								"name", "siteScopedTextProperty"
-							).put(
-								"objectFieldERC",
-								_API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
-							))
-					).put(
-						"description", "site scoped description"
-					).put(
-						"externalReferenceCode", _API_SITE_SCOPED_SCHEMA_ERC
-					).put(
-						"mainObjectDefinitionERC",
-						_siteScopedObjectDefinition1.getExternalReferenceCode()
-					).put(
-						"name", "SiteScopedSchemaName"
-					))
-			).put(
-				"applicationStatus", "unpublished"
-			).put(
-				"baseURL", _API_BASE_URL
-			).put(
-				"externalReferenceCode", _API_APPLICATION_ERC
-			).put(
-				"title", "title"
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_API_ENDPOINT_ERC),
-			Http.Method.PUT);
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
-				_API_ENDPOINT_ERC),
-			Http.Method.PUT);
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SITE_SCOPED_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
-				_API_SITE_SCOPED_ENDPOINT_ERC),
-			Http.Method.PUT);
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				_API_SITE_SCOPED_SCHEMA_ERC,
-				"/responseAPISchemaToAPIEndpoints/",
-				_API_SITE_SCOPED_ENDPOINT_ERC),
-			Http.Method.PUT);
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"apiApplicationToAPIEndpoints",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"description", "description"
+						).put(
+							"externalReferenceCode", _API_ENDPOINT_ERC
+						).put(
+							"httpMethod", "get"
+						).put(
+							"name", "name"
+						).put(
+							"path", "/path"
+						).put(
+							"scope", "company"
+						),
+						JSONUtil.put(
+							"description", "site scoped description"
+						).put(
+							"externalReferenceCode",
+							_API_SITE_SCOPED_ENDPOINT_ERC
+						).put(
+							"httpMethod", "get"
+						).put(
+							"name", "site scoped name"
+						).put(
+							"path", "/site-scoped-path"
+						).put(
+							"scope", "group"
+						))
+				).put(
+					"apiApplicationToAPISchemas",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"apiSchemaToAPIProperties",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"description",
+									"aggregationProperty description"
+								).put(
+									"name", "aggregationProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_AGGREGATION_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"attachmentProperty description"
+								).put(
+									"name", "attachmentProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_ATTACHMENT_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description", "booleanProperty description"
+								).put(
+									"name", "booleanProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_BOOLEAN_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description", "dateProperty description"
+								).put(
+									"name", "dateProperty"
+								).put(
+									"objectFieldERC", _API_SCHEMA_DATE_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"dateTimeProperty description"
+								).put(
+									"name", "dateTimeProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_DATE_TIME_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description", "decimalProperty description"
+								).put(
+									"name", "decimalProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_DECIMAL_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description", "integerProperty description"
+								).put(
+									"name", "integerProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_INTEGER_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"longIntegerProperty description"
+								).put(
+									"name", "longIntegerProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_LONG_INTEGER_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"longTextProperty description"
+								).put(
+									"name", "longTextProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_LONG_TEXT_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"multiselectPicklistProperty description"
+								).put(
+									"name", "multiselectPicklistProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"picklistProperty description"
+								).put(
+									"name", "picklistProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_PICKLIST_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"precisionDecimalProperty description"
+								).put(
+									"name", "precisionDecimalProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_PRECISION_DECIMAL_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description",
+									"richTextProperty description"
+								).put(
+									"name", "richTextProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_RICH_TEXT_FIELD_ERC
+								),
+								JSONUtil.put(
+									"description", "textProperty description"
+								).put(
+									"name", "textProperty"
+								).put(
+									"objectFieldERC", _API_SCHEMA_TEXT_FIELD_ERC
+								))
+						).put(
+							"description", "description"
+						).put(
+							"externalReferenceCode", _API_SCHEMA_ERC
+						).put(
+							"mainObjectDefinitionERC",
+							_objectDefinition1.getExternalReferenceCode()
+						).put(
+							"name", "SchemaName"
+						),
+						JSONUtil.put(
+							"apiSchemaToAPIProperties",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"description",
+									"siteScopedTextProperty description"
+								).put(
+									"name", "siteScopedTextProperty"
+								).put(
+									"objectFieldERC",
+									_API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
+								))
+						).put(
+							"description", "site scoped description"
+						).put(
+							"externalReferenceCode", _API_SITE_SCOPED_SCHEMA_ERC
+						).put(
+							"mainObjectDefinitionERC",
+							_siteScopedObjectDefinition1.
+								getExternalReferenceCode()
+						).put(
+							"name", "SiteScopedSchemaName"
+						))
+				).put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL", _API_BASE_URL
+				).put(
+					"externalReferenceCode", _API_APPLICATION_ERC
+				).put(
+					"title", "title"
+				).toString(),
+				"headless-builder/applications", Http.Method.POST));
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
+					_API_ENDPOINT_ERC),
+				Http.Method.PUT));
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
+					_API_ENDPOINT_ERC),
+				Http.Method.PUT));
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					_API_SITE_SCOPED_SCHEMA_ERC,
+					"/requestAPISchemaToAPIEndpoints/",
+					_API_SITE_SCOPED_ENDPOINT_ERC),
+				Http.Method.PUT));
+		assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					_API_SITE_SCOPED_SCHEMA_ERC,
+					"/responseAPISchemaToAPIEndpoints/",
+					_API_SITE_SCOPED_ENDPOINT_ERC),
+				Http.Method.PUT));
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

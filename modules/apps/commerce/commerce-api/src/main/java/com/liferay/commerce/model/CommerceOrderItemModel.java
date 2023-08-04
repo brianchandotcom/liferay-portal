@@ -361,20 +361,6 @@ public interface CommerceOrderItemModel
 	public void setShippingAddressId(long shippingAddressId);
 
 	/**
-	 * Returns the decimal quantity of this commerce order item.
-	 *
-	 * @return the decimal quantity of this commerce order item
-	 */
-	public BigDecimal getDecimalQuantity();
-
-	/**
-	 * Sets the decimal quantity of this commerce order item.
-	 *
-	 * @param decimalQuantity the decimal quantity of this commerce order item
-	 */
-	public void setDecimalQuantity(BigDecimal decimalQuantity);
-
-	/**
 	 * Returns the delivery group of this commerce order item.
 	 *
 	 * @return the delivery group of this commerce order item
@@ -934,14 +920,14 @@ public interface CommerceOrderItemModel
 	 *
 	 * @return the quantity of this commerce order item
 	 */
-	public int getQuantity();
+	public BigDecimal getQuantity();
 
 	/**
 	 * Sets the quantity of this commerce order item.
 	 *
 	 * @param quantity the quantity of this commerce order item
 	 */
-	public void setQuantity(int quantity);
+	public void setQuantity(BigDecimal quantity);
 
 	/**
 	 * Returns the replaced cp instance ID of this commerce order item.

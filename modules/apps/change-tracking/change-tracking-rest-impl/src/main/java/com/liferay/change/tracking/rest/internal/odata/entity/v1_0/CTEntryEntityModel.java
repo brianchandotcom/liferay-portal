@@ -36,13 +36,18 @@ public class CTEntryEntityModel implements EntityModel {
 			new IdEntityField(
 				"modelClassNameId", locale -> "modelClassNameId",
 				String::valueOf),
+			new IdEntityField(
+				"ownerId", locale -> Field.USER_ID, String::valueOf),
 			new StringEntityField("ownerName", locale -> Field.USER_NAME),
+			new IdEntityField(
+				"siteId", locale -> Field.GROUP_ID, String::valueOf),
 			new StringEntityField("siteName", locale -> "groupName"),
 			new IntegerEntityField("status", locale -> Field.STATUS),
 			new EntityField(
 				"title", EntityField.Type.STRING,
 				locale -> Field.getSortableFieldName(Field.TITLE),
-				locale -> Field.TITLE, String::valueOf));
+				locale -> Field.TITLE, String::valueOf),
+			new StringEntityField("typeName", locale -> "typeName"));
 	}
 
 	@Override

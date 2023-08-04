@@ -32,43 +32,27 @@ public class ObjectValidationRule1RestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		return new ResponseEntity<>(
-			_validateObjectEntry(
-				json
-			).toString(),
-			HttpStatus.OK);
-	}
-
-	private JSONObject _getObjectEntryJSONObject(String json) {
 		JSONObject jsonObject = new JSONObject(json);
 
+		jsonObject.put("validationCriteriaMet", true);
+
 		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
-			"objectEntry");
+				"objectEntry");
 
 		if (objectEntryJSONObject == null) {
 			throw new IllegalArgumentException("Object entry is null");
 		}
 
-		return objectEntryJSONObject;
-	}
-
-	private JSONObject _validateObjectEntry(String json) {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("validationCriteriaMet", false);
-
-		JSONObject objectEntryJSONObject = _getObjectEntryJSONObject(json);
-
 		if (!objectEntryJSONObject.get(
 				"name"
-			).equals(
+		).equals(
 				"Invalid Name"
-			)) {
+		)) {
 
-			return jsonObject.put("validationCriteriaMet", true);
+			jsonObject.put("validationCriteriaMet", false);
 		}
 
-		return jsonObject;
+		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
 	}
 
 	private static final Log _log = LogFactory.getLog(

@@ -6,14 +6,10 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -21,23 +17,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {AnalyticsEntityModel.class, ModelListener.class})
+@Component(service = ModelListener.class)
 public class OrganizationModelListener extends BaseModelListener<Organization> {
-
-	@Override
-	public List<String> getAttributeNames(long companyId) {
-		return getOrganizationAttributeNames();
-	}
-
-	@Override
-	public long[] getMembershipIds(User user) throws Exception {
-		return user.getOrganizationIds();
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Organization.class.getName();
-	}
 
 	@Override
 	public void onAfterRemove(Organization organization)
@@ -55,8 +36,8 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 	}
 
 	@Override
-	protected ActionableDynamicQuery getActionableDynamicQuery() {
-		return _organizationLocalService.getActionableDynamicQuery();
+	protected AnalyticsEntityModel<Organization> getAnalyticsEntityModel() {
+		return _organizationAnalyticsEntityModel;
 	}
 
 	@Override
@@ -64,10 +45,9 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 		return _organizationLocalService.getOrganization(id);
 	}
 
-	@Override
-	protected String getPrimaryKeyName() {
-		return "organizationId";
-	}
+	@Reference(target = "(analytics.entity.model.type=organization)")
+	private AnalyticsEntityModel<Organization>
+		_organizationAnalyticsEntityModel;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

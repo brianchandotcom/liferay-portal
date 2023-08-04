@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -197,6 +198,8 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
+
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		PrincipalThreadLocal.setName(_originalName);
@@ -2981,7 +2984,6 @@ public class DefaultObjectEntryManagerImplTest {
 	@Inject
 	private static DTOConverterRegistry _dtoConverterRegistry;
 
-	@DeleteAfterTestRun
 	private static Group _group;
 
 	@Inject(

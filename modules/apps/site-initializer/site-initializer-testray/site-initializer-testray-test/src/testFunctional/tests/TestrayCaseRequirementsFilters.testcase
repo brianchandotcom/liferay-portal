@@ -91,6 +91,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -101,8 +103,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -111,9 +111,6 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by link"
 	@priority = 3
 	test AdminCanFilterCaseRequirementsByLink {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user filter a case requirement by link") {
 			TestrayFilter.clickFilter();
 
@@ -135,9 +132,6 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by summary"
 	@priority = 3
 	test AdminCanFilterCaseRequirementsBySummary {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user filter a case requirement by summary") {
 			TestrayFilter.clickFilter();
 
@@ -159,9 +153,6 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterCaseRequirementsWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user filter a case requirement with multiple options") {
 			TestrayFilter.clickFilter();
 
@@ -188,9 +179,6 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should not see case requirements that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanFilterForNonexistentCaseRequirements {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user filters a case requirement by its non-existent name") {
 			TestrayFilter.clickFilter();
 
@@ -210,9 +198,6 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();
 

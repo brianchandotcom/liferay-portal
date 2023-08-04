@@ -93,6 +93,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -107,8 +109,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -117,9 +117,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Assign Tests directly to me through the context menu"
 	@priority = 3
 	test AdminCanAssignTestsDirectlyThroughTheContextMenu {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -142,9 +139,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Delete Results"
 	@priority = 5
 	test AdminCanDeleteResults {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -165,9 +159,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to execute Tests and mark them as Failed"
 	@priority = 4
 	test AdminCanExecuteTestsAndMarkThemAsFailed {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -206,9 +197,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Quick Edit Tests"
 	@priority = 4
 	test AdminCanQuickEditTests {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -244,9 +232,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Reopen Tests"
 	@priority = 3
 	test AdminCanReopenTests {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -292,9 +277,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to reset Tests"
 	@priority = 4
 	test AdminCanResetTests {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -327,9 +309,6 @@ definition {
 	@description = "Story ID: LPS-170820 | Test Summary: Verify that, as an Administrator, I should be able to see all the Problem Lists in the tables"
 	@priority = 4
 	test AdminCanSeeIssuesInAllTables {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -402,9 +381,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests"
 	@priority = 3
 	test AdminCanUnassignTests {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -439,9 +415,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests through the context menu"
 	@priority = 2
 	test AdminCanUnassignTestsThroughTheContextMenu {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -470,9 +443,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
 	@priority = 4
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -489,9 +459,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to view Results grouped by Component"
 	@priority = 3
 	test AdminCanViewResultsGroupedByComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -516,9 +483,6 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to view Results grouped by Team"
 	@priority = 3
 	test AdminCanViewResultsGroupedByTeam {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 

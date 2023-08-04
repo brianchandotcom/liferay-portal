@@ -38,13 +38,13 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete user via API, Testray Site and Client Extensions") {
 			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -54,9 +54,6 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify that as an administrator can add and delete a new user"
 	@priority = 5
 	test AdminCanAddAndDeleteNewUser {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to manage user") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
@@ -98,9 +95,6 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
 	@priority = 4
 	test AdminCanFilterUsersByName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to manage user") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
@@ -131,9 +125,6 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should not see manage users that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentUsers {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to manage user") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
@@ -160,9 +151,6 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify if as an User can edit account information"
 	@priority = 4
 	test CanEditAccountInformation {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to user created") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
@@ -197,9 +185,6 @@ definition {
 	@description = "Story ID: LPS-164964 | Test Summary: Verify if as an administrator I cannot save roles without the select options"
 	@priority = 3
 	test CanNotSaveRolesWithoutOptions {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to manage user") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
@@ -228,9 +213,6 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify that the user can not edit informations of user if all the required fields are not filled in"
 	@priority = 2
 	test CanViewFieldRequired {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to manage user") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",

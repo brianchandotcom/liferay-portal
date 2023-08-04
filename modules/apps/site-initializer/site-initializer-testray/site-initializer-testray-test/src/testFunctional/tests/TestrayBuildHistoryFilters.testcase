@@ -92,6 +92,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete routine, case type, factor categorie and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "routines",
@@ -110,8 +112,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -120,9 +120,6 @@ definition {
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by build name"
 	@priority = 3
 	test AdminCanFilterByBuildName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two builds different in the table") {
 			Testray.viewTableEntryList(listEntry = "Build 1,Build 2");
 		}
@@ -147,9 +144,6 @@ definition {
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history by product version"
 	@priority = 3
 	test AdminCanFilterByProductVersion {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two builds with different versions in the table") {
 			Testray.viewTableEntryList(listEntry = "7.0,1.2");
 		}
@@ -177,9 +171,6 @@ definition {
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should be able to filter build history using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user select multiple options in the filter") {
 			TestrayFilter.clickFilter();
 
@@ -205,9 +196,6 @@ definition {
 	@description = "Story ID: LPS-173523 | Test Summary: Verify if as an Administrator I should not see build history that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentBuildName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two builds that existent in the table") {
 			Testray.viewTableEntryList(listEntry = "Build 1,Build 2");
 		}
@@ -228,9 +216,6 @@ definition {
 	@description = "Story ID: LPS-173523 | Test Summary: Verify that can search for a field"
 	@priority = 2
 	test AdminCanSearchForField {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user searches for a field called product version") {
 			TestrayFilter.clickFilter();
 

@@ -128,6 +128,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete product version, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "productversions",
@@ -158,8 +160,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -168,9 +168,6 @@ definition {
 	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an Administrator I should be able to filter team by team name"
 	@priority = 3
 	test AdminCanFilterTeamByTeamName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two teams different in the table") {
 			Testray.changePagination(quantity = 150);
 
@@ -206,9 +203,6 @@ definition {
 	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user searches for a field called priority") {
 			TestrayFilter.clickFilter();
 

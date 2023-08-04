@@ -125,6 +125,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete product version, routine, case type, factor categorie and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "productversions",
@@ -151,8 +153,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -161,9 +161,6 @@ definition {
 	@description = "Story ID: LPS-162623 | Test Summary: Verify if as an Administrator I am able to filter the cases Tab in a Run Comparison Result by case name"
 	@priority = 3
 	test AdminCanFilterCasesTabInRunComparisonResultByCaseName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user select two runs for compare runs") {
 			Navigator.gotoNavTab(navTab = "Runs");
 
@@ -211,9 +208,6 @@ definition {
 	@description = "Story ID: LPS-162623 | Test Summary: Verify if as an Administrator I am able to filter the cases Tab in a Run Comparison Result by priority"
 	@priority = 3
 	test AdminCanFilterDetailsTabInRunComparisonResultByPriority {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user select two runs for compare runs") {
 			Navigator.gotoNavTab(navTab = "Runs");
 

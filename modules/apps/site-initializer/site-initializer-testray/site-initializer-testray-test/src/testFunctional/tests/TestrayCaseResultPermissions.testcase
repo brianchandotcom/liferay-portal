@@ -87,6 +87,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -107,8 +109,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -117,9 +117,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to delete the case result"
 	@priority = 3
 	test AssertAnalystRoleCanDeleteCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -150,9 +147,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the case result"
 	@priority = 3
 	test AssertAnalystRoleCanEditCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -196,9 +190,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the case result"
 	@priority = 3
 	test AssertLeadRoleCanDeleteCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -229,9 +220,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the case result"
 	@priority = 3
 	test AssertLeadRoleCanEditCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -279,9 +267,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the case result"
 	@priority = 2
 	test AssertUserRoleCanNotDeleteCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -314,9 +299,6 @@ definition {
 	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the case result"
 	@priority = 2
 	test AssertUserRoleCanNotEditCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

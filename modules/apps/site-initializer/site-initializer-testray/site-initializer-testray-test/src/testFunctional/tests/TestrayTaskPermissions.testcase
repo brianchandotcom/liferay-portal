@@ -108,6 +108,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -136,8 +138,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -146,9 +146,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the task"
 	@priority = 4
 	test AssertAnalystRoleCanEditTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -177,9 +174,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create the task"
 	@priority = 3
 	test AssertAnalystRoleCanNotCreateTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -200,9 +194,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to delete the task"
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -229,9 +220,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the task"
 	@priority = 4
 	test AssertLeadRoleCanCreateTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -269,9 +257,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the task"
 	@priority = 4
 	test AssertLeadRoleCanDeleteTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -300,9 +285,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the task"
 	@priority = 4
 	test AssertLeadRoleCanEditTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -336,9 +318,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the task"
 	@priority = 3
 	test AssertUserRoleCanNotCreateTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -359,9 +338,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the task"
 	@priority = 3
 	test AssertUserRoleCanNotDeleteTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
@@ -386,9 +362,6 @@ definition {
 	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the task"
 	@priority = 3
 	test AssertUserRoleCanNotEditTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

@@ -38,13 +38,13 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -54,9 +54,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify that as an Administrator I can delete a smart suite"
 	@priority = 5
 	test AdminCanDeleteSmartSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I add a new Testray component and requirement") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -106,9 +103,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I am able delete a suite"
 	@priority = 5
 	test AdminCanDeleteSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I add a new Testray Suite via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 		}
@@ -135,9 +129,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I am able to design Suites"
 	@priority = 4
 	test AdminCanDesignSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that a Testray team, component, case type and case are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -190,9 +181,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify that as an Administrator I can edit and update a smart suite"
 	@priority = 5
 	test AdminCanEditSmartSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I add a new Testray component and requirement") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -267,9 +255,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I am able to edit suites"
 	@priority = 5
 	test AdminCanEditSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I add a new suite") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -299,9 +284,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Suites"
 	@priority = 3
 	test AdminCanNotAddDuplicateSuites {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I add a new Testray Suite via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 		}
@@ -330,9 +312,6 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Suite that does not exist the system should not return that suite"
 	@priority = 3
 	test AdminCanNotSearchSuiteNonExistent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that suite are created via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 		}
@@ -363,9 +342,6 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Suite the system should return that suite"
 	@priority = 4
 	test AdminCanSearchSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that two suite are created via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
@@ -406,9 +382,6 @@ definition {
 	@description = "Story ID: LPS-159467 | Test Summary: Verify that the user can not create a suite if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given I go to the Testray Suite page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

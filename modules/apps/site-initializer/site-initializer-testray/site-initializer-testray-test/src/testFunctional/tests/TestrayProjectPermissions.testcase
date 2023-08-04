@@ -33,6 +33,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -45,8 +47,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -55,9 +55,6 @@ definition {
 	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDeleteProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -110,9 +107,6 @@ definition {
 	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -165,9 +159,6 @@ definition {
 	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test UserRoleCanNotCreateEditAndDeleteProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

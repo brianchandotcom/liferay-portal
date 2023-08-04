@@ -27,11 +27,11 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete Testray Site and Client Extensions") {
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -41,9 +41,6 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Add Case Types"
 	@priority = 5
 	test AdminCanAddCaseTypes {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When I create a Case Type") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -68,9 +65,6 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify that as an Administrator I can delete Case Types"
 	@priority = 5
 	test AdminCanDeleteCaseTypes {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
@@ -99,9 +93,6 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Edit Case Types"
 	@priority = 5
 	test AdminCanEditCaseTypes {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
@@ -138,9 +129,6 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate cases types"
 	@priority = 3
 	test AdminCanNotAddDuplicateCasesTypes {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
@@ -169,9 +157,6 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify that the user can not create a case type if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to the case types") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

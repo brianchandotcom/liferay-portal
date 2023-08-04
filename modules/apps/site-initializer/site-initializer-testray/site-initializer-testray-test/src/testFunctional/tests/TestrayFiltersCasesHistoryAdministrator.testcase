@@ -138,6 +138,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete product version, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "productversions",
@@ -172,8 +174,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -182,9 +182,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
 	@priority = 3
 	test AdminCanFilterByAssignee {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user assign to me a case result") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -224,9 +221,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by issues"
 	@priority = 3
 	test AdminCanFilterByIssue {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a issue in the case result") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -263,9 +257,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by product version name"
 	@priority = 2
 	test AdminCanFilterByProductVersionName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two product version different in the table") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -301,9 +292,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by routine"
 	@priority = 3
 	test AdminCanFilterByRoutine {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two routine different in the table") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -335,9 +323,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
 	@priority = 3
 	test AdminCanFilterByStatus {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user complete a test with passed status") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -371,9 +356,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by environment"
 	@priority = 3
 	test AdminCanFilterCaseHistoryByEnvironment {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two enviroments different in the table") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -411,9 +393,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by error"
 	@priority = 4
 	test AdminCanFilterCaseHistoryByError {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has two case result with errors different in the table") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -451,9 +430,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by team"
 	@priority = 3
 	test AdminCanFilterCaseHistoryTeam {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user has a team in the table") {
 			Testray.viewTableEntryList(listEntry = "Team 1");
 		}
@@ -487,9 +463,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user searches for a field called routine") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -516,9 +489,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterWithMultipleOptions {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user complete a test with passed status") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -581,9 +551,6 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentCaseResult {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user filter a case result history existent") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 

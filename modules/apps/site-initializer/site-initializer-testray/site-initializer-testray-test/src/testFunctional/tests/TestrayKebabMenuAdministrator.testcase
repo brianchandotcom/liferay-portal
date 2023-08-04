@@ -105,6 +105,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type, factor category, routine and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -125,8 +127,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -135,9 +135,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Components in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageComponents {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to components") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -156,9 +153,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Product Versions in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageProductVersions {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to product version") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -177,9 +171,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Teams in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageTeams {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to teams") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -198,9 +189,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can delete cases in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteCases {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to the case created") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -225,9 +213,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can delete project in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to the project created") {
 			Testray.clickTableEntry(tableEntry = "Project 2");
 		}
@@ -258,9 +243,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to delete Requirements in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteRequirements {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to the requirement created") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -293,9 +275,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can delete routine in the kebab menu"
 	@priority = 3
 	test AdminCanDeleteRoutine {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that go to the routine created") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -322,9 +301,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit build in the kebab menu"
 	@priority = 3
 	test AdminCanEditBuild {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to build") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -361,9 +337,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit cases in the kebab menu"
 	@priority = 3
 	test AdminCanEditCases {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to case") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -401,9 +374,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit project in the kebab menu"
 	@priority = 3
 	test AdminCanEditProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to project") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
@@ -430,9 +400,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Requirements in the kebab menu"
 	@priority = 3
 	test AdminCanEditRequirements {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to requirement") {
 			JSONTestray.addRequirement(
 				componentName = ${componentName},
@@ -473,9 +440,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit routine in the kebab menu"
 	@priority = 3
 	test AdminCanEditRoutine {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to routine") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -506,9 +470,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Suite in the kebab menu"
 	@priority = 3
 	test AdminCanEditSuite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to suite") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
@@ -541,9 +502,6 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can promoted build in the kebab menu"
 	@priority = 3
 	test AdminCanPromotedBuilds {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user go to build") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 

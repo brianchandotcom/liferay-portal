@@ -81,6 +81,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
@@ -95,8 +97,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -105,9 +105,6 @@ definition {
 	@description = "Story ID: LPS-162434 | Test Summary: Verify if as an Administrator I should be able to add and delete a Run"
 	@priority = 5
 	test AdminCanAddAndDeleteRun {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I go to the run page") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -136,9 +133,6 @@ definition {
 	@description = "Story ID: LPS-162434 | Test Summary: Verify if as an Administrator I should be able to edit a Run"
 	@priority = 5
 	test AdminCanEditRun {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that a category and options is created") {
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",

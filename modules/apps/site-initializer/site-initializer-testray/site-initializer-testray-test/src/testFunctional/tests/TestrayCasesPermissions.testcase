@@ -54,6 +54,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Logout And Login with another user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -70,8 +72,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -80,9 +80,6 @@ definition {
 	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create/edit/delete the case"
 	@priority = 4
 	test AssertAnalystRoleCanCreateEditAndDeleteCase {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -145,9 +142,6 @@ definition {
 	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create/edit/delete the case"
 	@priority = 4
 	test AssertLeadRoleCanCreateEditAndDeleteCase {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -210,9 +204,6 @@ definition {
 	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the case but can view"
 	@priority = 2
 	test AssertUserRoleCanNotCreateEditAndDeleteCase {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

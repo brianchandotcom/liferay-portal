@@ -91,6 +91,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete task, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "tasks",
@@ -113,8 +115,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -123,9 +123,6 @@ definition {
 	@description = "Story ID: LPS-162695 | Test Summary: Verify if as an Administrator I should be able to add a task with user groups"
 	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given the user add a user and UserGroups") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -200,9 +197,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -256,9 +250,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to edit a task"
 	@priority = 4
 	test AdminCanEditTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -310,9 +301,6 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Task"
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user try to add a duplicate Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -353,9 +341,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an abandoned task"
 	@priority = 3
 	test AdminCanReanalyzeAbandonedTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a Task and subtask via API") {
 			JSONTestray.addTask(
 				buildName = ${buildName},
@@ -405,9 +390,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an complete task"
 	@priority = 3
 	test AdminCanReanalyzeCompleteTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -453,9 +435,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to update a task's status to complete"
 	@priority = 4
 	test AdminCanUpdateTaskStatusToComplete {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -498,9 +477,6 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an Administrator I should see the build that is associated with the task"
 	@priority = 2
 	test AdminCanViewAssociatedBuildInTask {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -538,9 +514,6 @@ definition {
 	@description = "Story ID: LPS-162695 | Test Summary: Verify that the user cannot create a task without assign users"
 	@priority = 4
 	test AdminCanViewRequiredAssignUsers {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user try to add a Task without User") {
 			TestrayTestflow.goToTestflow();
 
@@ -560,9 +533,6 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user cannot create a task without Case Type"
 	@priority = 2
 	test AdminCanViewRequiredCaseType {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user try to add a Task without case type") {
 			TestrayTestflow.goToTestflow();
 
@@ -582,9 +552,6 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify if as an Administrator I should be able view task in analysis"
 	@priority = 4
 	test AdminCanViewTaskInAnalysis {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given the user add a Task in a different flow") {
 			TestrayDropdown.goToResultSidebar();
 
@@ -625,9 +592,6 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that As an administrator can remove users from the context menu"
 	@priority = 3
 	test CanRemoveUser {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -669,9 +633,6 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user can not create a task without name"
 	@priority = 2
 	test CanViewFieldNameRequired {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user try to add a Task without name") {
 			TestrayTestflow.goToTestflow();
 

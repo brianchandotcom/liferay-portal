@@ -39,13 +39,13 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -55,9 +55,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I am able to add Components"
 	@priority = 5
 	test AdminCanAddComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -83,9 +80,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a component that does not have a team"
 	@priority = 5
 	test AdminCanAddComponentWithoutTeam {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -110,9 +104,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I am able to edit Components while connecting a Team"
 	@priority = 5
 	test AdminCanAddTeamToComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -146,9 +137,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
 	@priority = 3
 	test AdminCanChangeTeamToComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -184,9 +172,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to delete a component that does not have a team"
 	@priority = 3
 	test AdminCanDeleteComponentWithoutTeam {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -217,9 +202,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a Component that has a Team"
 	@priority = 5
 	test AdminCanDeleteComponentWithTeam {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -251,9 +233,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I can edit Components"
 	@priority = 4
 	test AdminCanEditComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -293,9 +272,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate component"
 	@priority = 3
 	test AdminCanNotAddDuplicatedComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -325,9 +301,6 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component the system should return that component"
 	@priority = 4
 	test AdminCanSearchComponent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that two component are created via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -380,9 +353,6 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
 	@priority = 3
 	test AdminCanSearchComponentNonExistent {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that component are created via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -416,9 +386,6 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
 	@priority = 2
 	test CannotAddComponentWithoutAName {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given I go to the Manage Component page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

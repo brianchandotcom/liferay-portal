@@ -31,13 +31,13 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
-
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -47,9 +47,6 @@ definition {
 	@description = "Story ID: LPS-165583 | Test Summary: Verify if as an Administrator I am able to add a Project"
 	@priority = 5
 	test AdminCanAddProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user Create a Project") {
 			Testray.createProject(
 				description = "Project Description",
@@ -66,9 +63,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify that as an Administrator I am able to add a Project from the dropdown"
 	@priority = 3
 	test AdminCanAddProjectFromDropdown {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user Create a Project from the dropdown") {
 			Testray.createProjectByDropdown(
 				description = "Project Description",
@@ -85,9 +79,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I am able to delete a Project"
 	@priority = 5
 	test AdminCanDeleteProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user Create a Project via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -106,9 +97,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I am able to edit a Project"
 	@priority = 5
 	test AdminCanEditProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user Create a Project") {
 			Testray.createProject(
 				description = "Project Description",
@@ -137,9 +125,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Project"
 	@priority = 3
 	test AdminCanNotAddDuplicateProject {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user tries to create a duplicate project") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -158,9 +143,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify that the user can not create a project if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewWarningMessage {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("When the user tries to create a project without a name") {
 			Testray.createProject(
 				description = "",
@@ -177,9 +159,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I should be able to delete a project that contains routines without associated builds"
 	@priority = 3
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user Create a Project without associated builds") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -204,9 +183,6 @@ definition {
 	@description = "Story ID: LPS-146927 | Test Summary: Verify if as an Administrator I should not be able to delete a project that contains routines with associated builds"
 	@priority = 4
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user Create a Project") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",

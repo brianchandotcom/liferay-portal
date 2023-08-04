@@ -118,6 +118,8 @@ definition {
 	}
 
 	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
 		task ("Delete subtask, task, routine, case type, factor category and project via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "subtasks",
@@ -150,8 +152,6 @@ definition {
 			Testray.testrayApisTearDown();
 		}
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -160,9 +160,6 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the build associated with a task from the sidebar"
 	@priority = 3
 	test AdminCanGoToBuildFromTheSidebar {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
@@ -187,9 +184,6 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the Subtask from the sidebar"
 	@priority = 3
 	test AdminCanGoToSubtaskFromTheSidebar {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
@@ -226,9 +220,6 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can go to the task from the sidebar"
 	@priority = 3
 	test AdminCanGoToTaskFromTheSidebar {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
@@ -255,9 +246,6 @@ definition {
 	@description = "Story ID: LPS-164985 | Test Summary: Verify that can see the details of a re-examined subtask in the sidebar"
 	@priority = 3
 	test AdminCanSeeSubtaskReexaminedInSidebar {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 

@@ -1046,6 +1046,45 @@ definition {
 			kbStatus = "Draft");
 	}
 
+	@description = "This test covers LPS-128095. It validates that the articles can be sorted."
+	@priority = 3
+	test CanSortArticles {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Apple",
+			kbArticleTitle = "Apple");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Bag",
+			kbArticleTitle = "Bag");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Cat",
+			kbArticleTitle = "Cat");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Apple",
+			position = 1);
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Cat",
+			position = 3);
+
+		ManagementBar.sortAssets(sortDirection = "Descending");
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Apple",
+			position = 3);
+
+		LexiconList.viewListEntryTitleLinkSpecific(
+			listEntry = "Cat",
+			position = 1);
+	}
+
 	@description = "This test ensures that users can subscribe to a kb article by clicking the ellipsis on the kb entry."
 	@priority = 5
 	test CanSubscribeToArticle {

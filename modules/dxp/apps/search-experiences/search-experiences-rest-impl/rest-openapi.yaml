@@ -969,6 +969,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPBlueprint"
             tags: ["SXPBlueprint"]
+        put:
+            operationId: putSXPBlueprint
+            parameters:
+                - in: path
+                  name: sxpBlueprintId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SXPBlueprint"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SXPBlueprint"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+            tags: [ "SXPBlueprint" ]
     /sxp-blueprints/{sxpBlueprintId}/copy:
         post:
             operationId: postSXPBlueprintCopy

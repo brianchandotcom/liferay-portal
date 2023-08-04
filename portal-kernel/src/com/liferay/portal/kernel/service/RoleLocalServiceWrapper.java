@@ -29,23 +29,23 @@ public class RoleLocalServiceWrapper
 	}
 
 	@Override
-	public void addGroupRole(long groupId, long roleId) {
-		_roleLocalService.addGroupRole(groupId, roleId);
+	public boolean addGroupRole(long groupId, long roleId) {
+		return _roleLocalService.addGroupRole(groupId, roleId);
 	}
 
 	@Override
-	public void addGroupRole(long groupId, Role role) {
-		_roleLocalService.addGroupRole(groupId, role);
+	public boolean addGroupRole(long groupId, Role role) {
+		return _roleLocalService.addGroupRole(groupId, role);
 	}
 
 	@Override
-	public void addGroupRoles(long groupId, java.util.List<Role> roles) {
-		_roleLocalService.addGroupRoles(groupId, roles);
+	public boolean addGroupRoles(long groupId, java.util.List<Role> roles) {
+		return _roleLocalService.addGroupRoles(groupId, roles);
 	}
 
 	@Override
-	public void addGroupRoles(long groupId, long[] roleIds) {
-		_roleLocalService.addGroupRoles(groupId, roleIds);
+	public boolean addGroupRoles(long groupId, long[] roleIds) {
+		return _roleLocalService.addGroupRoles(groupId, roleIds);
 	}
 
 	/**
@@ -101,40 +101,40 @@ public class RoleLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRole(long userId, long roleId)
+	public boolean addUserRole(long userId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_roleLocalService.addUserRole(userId, roleId);
+		return _roleLocalService.addUserRole(userId, roleId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRole(long userId, Role role)
+	public boolean addUserRole(long userId, Role role)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_roleLocalService.addUserRole(userId, role);
+		return _roleLocalService.addUserRole(userId, role);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRoles(long userId, java.util.List<Role> roles)
+	public boolean addUserRoles(long userId, java.util.List<Role> roles)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_roleLocalService.addUserRoles(userId, roles);
+		return _roleLocalService.addUserRoles(userId, roles);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRoles(long userId, long[] roleIds)
+	public boolean addUserRoles(long userId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_roleLocalService.addUserRoles(userId, roleIds);
+		return _roleLocalService.addUserRoles(userId, roleIds);
 	}
 
 	/**

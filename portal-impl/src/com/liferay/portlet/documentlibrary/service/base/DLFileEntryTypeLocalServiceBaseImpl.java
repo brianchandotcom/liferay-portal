@@ -521,37 +521,41 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addDLFolderDLFileEntryType(
+	public boolean addDLFolderDLFileEntryType(
 		long folderId, long fileEntryTypeId) {
 
-		dlFolderPersistence.addDLFileEntryType(folderId, fileEntryTypeId);
+		return dlFolderPersistence.addDLFileEntryType(
+			folderId, fileEntryTypeId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addDLFolderDLFileEntryType(
+	public boolean addDLFolderDLFileEntryType(
 		long folderId, DLFileEntryType dlFileEntryType) {
 
-		dlFolderPersistence.addDLFileEntryType(folderId, dlFileEntryType);
+		return dlFolderPersistence.addDLFileEntryType(
+			folderId, dlFileEntryType);
 	}
 
 	/**
 	 */
 	@Override
-	public void addDLFolderDLFileEntryTypes(
+	public boolean addDLFolderDLFileEntryTypes(
 		long folderId, long[] fileEntryTypeIds) {
 
-		dlFolderPersistence.addDLFileEntryTypes(folderId, fileEntryTypeIds);
+		return dlFolderPersistence.addDLFileEntryTypes(
+			folderId, fileEntryTypeIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addDLFolderDLFileEntryTypes(
+	public boolean addDLFolderDLFileEntryTypes(
 		long folderId, List<DLFileEntryType> dlFileEntryTypes) {
 
-		dlFolderPersistence.addDLFileEntryTypes(folderId, dlFileEntryTypes);
+		return dlFolderPersistence.addDLFileEntryTypes(
+			folderId, dlFileEntryTypes);
 	}
 
 	/**

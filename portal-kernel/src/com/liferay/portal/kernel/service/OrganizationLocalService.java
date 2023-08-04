@@ -65,14 +65,15 @@ public interface OrganizationLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.OrganizationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the organization local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OrganizationLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addGroupOrganization(long groupId, long organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId);
 
-	public void addGroupOrganization(long groupId, Organization organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization);
 
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, List<Organization> organizations);
 
-	public void addGroupOrganizations(long groupId, long[] organizationIds);
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds);
 
 	/**
 	 * Adds an organization.
@@ -174,18 +175,18 @@ public interface OrganizationLocalService
 	public void addPasswordPolicyOrganizations(
 		long passwordPolicyId, long[] organizationIds);
 
-	public void addUserOrganization(long userId, long organizationId);
+	public boolean addUserOrganization(long userId, long organizationId);
 
-	public void addUserOrganization(long userId, Organization organization);
+	public boolean addUserOrganization(long userId, Organization organization);
 
 	public void addUserOrganizationByEmailAddress(
 			String emailAddress, long organizationId)
 		throws PortalException;
 
-	public void addUserOrganizations(
+	public boolean addUserOrganizations(
 		long userId, List<Organization> organizations);
 
-	public void addUserOrganizations(long userId, long[] organizationIds);
+	public boolean addUserOrganizations(long userId, long[] organizationIds);
 
 	public void clearGroupOrganizations(long groupId);
 

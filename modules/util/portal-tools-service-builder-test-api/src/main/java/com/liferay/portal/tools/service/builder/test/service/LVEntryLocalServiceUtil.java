@@ -36,28 +36,32 @@ public class LVEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.tools.service.builder.test.service.impl.LVEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addBigDecimalEntryLVEntries(
+	public static boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, List<LVEntry> lvEntries) {
 
-		getService().addBigDecimalEntryLVEntries(bigDecimalEntryId, lvEntries);
+		return getService().addBigDecimalEntryLVEntries(
+			bigDecimalEntryId, lvEntries);
 	}
 
-	public static void addBigDecimalEntryLVEntries(
+	public static boolean addBigDecimalEntryLVEntries(
 		long bigDecimalEntryId, long[] lvEntryIds) {
 
-		getService().addBigDecimalEntryLVEntries(bigDecimalEntryId, lvEntryIds);
+		return getService().addBigDecimalEntryLVEntries(
+			bigDecimalEntryId, lvEntryIds);
 	}
 
-	public static void addBigDecimalEntryLVEntry(
+	public static boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, long lvEntryId) {
 
-		getService().addBigDecimalEntryLVEntry(bigDecimalEntryId, lvEntryId);
+		return getService().addBigDecimalEntryLVEntry(
+			bigDecimalEntryId, lvEntryId);
 	}
 
-	public static void addBigDecimalEntryLVEntry(
+	public static boolean addBigDecimalEntryLVEntry(
 		long bigDecimalEntryId, LVEntry lvEntry) {
 
-		getService().addBigDecimalEntryLVEntry(bigDecimalEntryId, lvEntry);
+		return getService().addBigDecimalEntryLVEntry(
+			bigDecimalEntryId, lvEntry);
 	}
 
 	/**

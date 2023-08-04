@@ -81,24 +81,28 @@ public class GroupLocalServiceUtil {
 			friendlyURL, site, active, serviceContext);
 	}
 
-	public static void addOrganizationGroup(long organizationId, Group group) {
-		getService().addOrganizationGroup(organizationId, group);
+	public static boolean addOrganizationGroup(
+		long organizationId, Group group) {
+
+		return getService().addOrganizationGroup(organizationId, group);
 	}
 
-	public static void addOrganizationGroup(long organizationId, long groupId) {
-		getService().addOrganizationGroup(organizationId, groupId);
+	public static boolean addOrganizationGroup(
+		long organizationId, long groupId) {
+
+		return getService().addOrganizationGroup(organizationId, groupId);
 	}
 
-	public static void addOrganizationGroups(
+	public static boolean addOrganizationGroups(
 		long organizationId, List<Group> groups) {
 
-		getService().addOrganizationGroups(organizationId, groups);
+		return getService().addOrganizationGroups(organizationId, groups);
 	}
 
-	public static void addOrganizationGroups(
+	public static boolean addOrganizationGroups(
 		long organizationId, long[] groupIds) {
 
-		getService().addOrganizationGroups(organizationId, groupIds);
+		return getService().addOrganizationGroups(organizationId, groupIds);
 	}
 
 	public static Group addOrUpdateGroup(
@@ -118,54 +122,56 @@ public class GroupLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void addRoleGroup(long roleId, Group group) {
-		getService().addRoleGroup(roleId, group);
+	public static boolean addRoleGroup(long roleId, Group group) {
+		return getService().addRoleGroup(roleId, group);
 	}
 
-	public static void addRoleGroup(long roleId, long groupId) {
-		getService().addRoleGroup(roleId, groupId);
+	public static boolean addRoleGroup(long roleId, long groupId) {
+		return getService().addRoleGroup(roleId, groupId);
 	}
 
-	public static void addRoleGroups(long roleId, List<Group> groups) {
-		getService().addRoleGroups(roleId, groups);
+	public static boolean addRoleGroups(long roleId, List<Group> groups) {
+		return getService().addRoleGroups(roleId, groups);
 	}
 
-	public static void addRoleGroups(long roleId, long[] groupIds) {
-		getService().addRoleGroups(roleId, groupIds);
+	public static boolean addRoleGroups(long roleId, long[] groupIds) {
+		return getService().addRoleGroups(roleId, groupIds);
 	}
 
-	public static void addUserGroup(long userId, Group group) {
-		getService().addUserGroup(userId, group);
+	public static boolean addUserGroup(long userId, Group group) {
+		return getService().addUserGroup(userId, group);
 	}
 
-	public static void addUserGroup(long userId, long groupId) {
-		getService().addUserGroup(userId, groupId);
+	public static boolean addUserGroup(long userId, long groupId) {
+		return getService().addUserGroup(userId, groupId);
 	}
 
-	public static void addUserGroupGroup(long userGroupId, Group group) {
-		getService().addUserGroupGroup(userGroupId, group);
+	public static boolean addUserGroupGroup(long userGroupId, Group group) {
+		return getService().addUserGroupGroup(userGroupId, group);
 	}
 
-	public static void addUserGroupGroup(long userGroupId, long groupId) {
-		getService().addUserGroupGroup(userGroupId, groupId);
+	public static boolean addUserGroupGroup(long userGroupId, long groupId) {
+		return getService().addUserGroupGroup(userGroupId, groupId);
 	}
 
-	public static void addUserGroupGroups(
+	public static boolean addUserGroupGroups(
 		long userGroupId, List<Group> groups) {
 
-		getService().addUserGroupGroups(userGroupId, groups);
+		return getService().addUserGroupGroups(userGroupId, groups);
 	}
 
-	public static void addUserGroupGroups(long userGroupId, long[] groupIds) {
-		getService().addUserGroupGroups(userGroupId, groupIds);
+	public static boolean addUserGroupGroups(
+		long userGroupId, long[] groupIds) {
+
+		return getService().addUserGroupGroups(userGroupId, groupIds);
 	}
 
-	public static void addUserGroups(long userId, List<Group> groups) {
-		getService().addUserGroups(userId, groups);
+	public static boolean addUserGroups(long userId, List<Group> groups) {
+		return getService().addUserGroups(userId, groups);
 	}
 
-	public static void addUserGroups(long userId, long[] groupIds) {
-		getService().addUserGroups(userId, groupIds);
+	public static boolean addUserGroups(long userId, long[] groupIds) {
+		return getService().addUserGroups(userId, groupIds);
 	}
 
 	/**

@@ -2880,9 +2880,10 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPK the primary key of the group
+	 * @return <code>true</code> if the association between the organization and the group is added; <code>false</code> if it was already added
 	 */
-	public static void addGroup(long pk, long groupPK) {
-		getPersistence().addGroup(pk, groupPK);
+	public static boolean addGroup(long pk, long groupPK) {
+		return getPersistence().addGroup(pk, groupPK);
 	}
 
 	/**
@@ -2890,11 +2891,12 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param group the group
+	 * @return <code>true</code> if the association between the organization and the group is added; <code>false</code> if it was already added
 	 */
-	public static void addGroup(
+	public static boolean addGroup(
 		long pk, com.liferay.portal.kernel.model.Group group) {
 
-		getPersistence().addGroup(pk, group);
+		return getPersistence().addGroup(pk, group);
 	}
 
 	/**
@@ -2902,9 +2904,10 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPKs the primary keys of the groups
+	 * @return <code>true</code> if at least an association between the organization and the groups is added; <code>false</code> if all were already added
 	 */
-	public static void addGroups(long pk, long[] groupPKs) {
-		getPersistence().addGroups(pk, groupPKs);
+	public static boolean addGroups(long pk, long[] groupPKs) {
+		return getPersistence().addGroups(pk, groupPKs);
 	}
 
 	/**
@@ -2912,11 +2915,12 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groups the groups
+	 * @return <code>true</code> if at least an association between the organization and the groups is added; <code>false</code> if all were already added
 	 */
-	public static void addGroups(
+	public static boolean addGroups(
 		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
 
-		getPersistence().addGroups(pk, groups);
+		return getPersistence().addGroups(pk, groups);
 	}
 
 	/**
@@ -3089,9 +3093,10 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPK the primary key of the user
+	 * @return <code>true</code> if the association between the organization and the user is added; <code>false</code> if it was already added
 	 */
-	public static void addUser(long pk, long userPK) {
-		getPersistence().addUser(pk, userPK);
+	public static boolean addUser(long pk, long userPK) {
+		return getPersistence().addUser(pk, userPK);
 	}
 
 	/**
@@ -3099,11 +3104,12 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param user the user
+	 * @return <code>true</code> if the association between the organization and the user is added; <code>false</code> if it was already added
 	 */
-	public static void addUser(
+	public static boolean addUser(
 		long pk, com.liferay.portal.kernel.model.User user) {
 
-		getPersistence().addUser(pk, user);
+		return getPersistence().addUser(pk, user);
 	}
 
 	/**
@@ -3111,9 +3117,10 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPKs the primary keys of the users
+	 * @return <code>true</code> if at least an association between the organization and the users is added; <code>false</code> if all were already added
 	 */
-	public static void addUsers(long pk, long[] userPKs) {
-		getPersistence().addUsers(pk, userPKs);
+	public static boolean addUsers(long pk, long[] userPKs) {
+		return getPersistence().addUsers(pk, userPKs);
 	}
 
 	/**
@@ -3121,11 +3128,12 @@ public class OrganizationUtil {
 	 *
 	 * @param pk the primary key of the organization
 	 * @param users the users
+	 * @return <code>true</code> if at least an association between the organization and the users is added; <code>false</code> if all were already added
 	 */
-	public static void addUsers(
+	public static boolean addUsers(
 		long pk, List<com.liferay.portal.kernel.model.User> users) {
 
-		getPersistence().addUsers(pk, users);
+		return getPersistence().addUsers(pk, users);
 	}
 
 	/**

@@ -91,32 +91,32 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return getService().addOAuth2Authorization(oAuth2Authorization);
 	}
 
-	public static void addOAuth2ScopeGrantOAuth2Authorization(
+	public static boolean addOAuth2ScopeGrantOAuth2Authorization(
 		long oAuth2ScopeGrantId, long oAuth2AuthorizationId) {
 
-		getService().addOAuth2ScopeGrantOAuth2Authorization(
+		return getService().addOAuth2ScopeGrantOAuth2Authorization(
 			oAuth2ScopeGrantId, oAuth2AuthorizationId);
 	}
 
-	public static void addOAuth2ScopeGrantOAuth2Authorization(
+	public static boolean addOAuth2ScopeGrantOAuth2Authorization(
 		long oAuth2ScopeGrantId, OAuth2Authorization oAuth2Authorization) {
 
-		getService().addOAuth2ScopeGrantOAuth2Authorization(
+		return getService().addOAuth2ScopeGrantOAuth2Authorization(
 			oAuth2ScopeGrantId, oAuth2Authorization);
 	}
 
-	public static void addOAuth2ScopeGrantOAuth2Authorizations(
+	public static boolean addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId,
 		List<OAuth2Authorization> oAuth2Authorizations) {
 
-		getService().addOAuth2ScopeGrantOAuth2Authorizations(
+		return getService().addOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2Authorizations);
 	}
 
-	public static void addOAuth2ScopeGrantOAuth2Authorizations(
+	public static boolean addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, long[] oAuth2AuthorizationIds) {
 
-		getService().addOAuth2ScopeGrantOAuth2Authorizations(
+		return getService().addOAuth2ScopeGrantOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2AuthorizationIds);
 	}
 

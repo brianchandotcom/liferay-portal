@@ -47,25 +47,26 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void addAssetTagAssetEntries(
+	public boolean addAssetTagAssetEntries(
 		long tagId, java.util.List<AssetEntry> assetEntries) {
 
-		_assetEntryLocalService.addAssetTagAssetEntries(tagId, assetEntries);
+		return _assetEntryLocalService.addAssetTagAssetEntries(
+			tagId, assetEntries);
 	}
 
 	@Override
-	public void addAssetTagAssetEntries(long tagId, long[] entryIds) {
-		_assetEntryLocalService.addAssetTagAssetEntries(tagId, entryIds);
+	public boolean addAssetTagAssetEntries(long tagId, long[] entryIds) {
+		return _assetEntryLocalService.addAssetTagAssetEntries(tagId, entryIds);
 	}
 
 	@Override
-	public void addAssetTagAssetEntry(long tagId, AssetEntry assetEntry) {
-		_assetEntryLocalService.addAssetTagAssetEntry(tagId, assetEntry);
+	public boolean addAssetTagAssetEntry(long tagId, AssetEntry assetEntry) {
+		return _assetEntryLocalService.addAssetTagAssetEntry(tagId, assetEntry);
 	}
 
 	@Override
-	public void addAssetTagAssetEntry(long tagId, long entryId) {
-		_assetEntryLocalService.addAssetTagAssetEntry(tagId, entryId);
+	public boolean addAssetTagAssetEntry(long tagId, long entryId) {
+		return _assetEntryLocalService.addAssetTagAssetEntry(tagId, entryId);
 	}
 
 	@Override

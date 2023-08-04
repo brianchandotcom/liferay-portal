@@ -1767,16 +1767,18 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntryPK the primary key of the big decimal entry
+	 * @return <code>true</code> if the association between the lv entry and the big decimal entry is added; <code>false</code> if it was already added
 	 */
-	public void addBigDecimalEntry(long pk, long bigDecimalEntryPK);
+	public boolean addBigDecimalEntry(long pk, long bigDecimalEntryPK);
 
 	/**
 	 * Adds an association between the lv entry and the big decimal entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntry the big decimal entry
+	 * @return <code>true</code> if the association between the lv entry and the big decimal entry is added; <code>false</code> if it was already added
 	 */
-	public void addBigDecimalEntry(
+	public boolean addBigDecimalEntry(
 		long pk,
 		com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry
 			bigDecimalEntry);
@@ -1786,16 +1788,18 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
+	 * @return <code>true</code> if at least an association between the lv entry and the big decimal entries is added; <code>false</code> if all were already added
 	 */
-	public void addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs);
+	public boolean addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs);
 
 	/**
 	 * Adds an association between the lv entry and the big decimal entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the lv entry
 	 * @param bigDecimalEntries the big decimal entries
+	 * @return <code>true</code> if at least an association between the lv entry and the big decimal entries is added; <code>false</code> if all were already added
 	 */
-	public void addBigDecimalEntries(
+	public boolean addBigDecimalEntries(
 		long pk,
 		java.util.List
 			<com.liferay.portal.tools.service.builder.test.model.

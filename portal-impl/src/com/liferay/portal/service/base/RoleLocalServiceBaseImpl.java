@@ -495,29 +495,29 @@ public abstract class RoleLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addGroupRole(long groupId, long roleId) {
-		groupPersistence.addRole(groupId, roleId);
+	public boolean addGroupRole(long groupId, long roleId) {
+		return groupPersistence.addRole(groupId, roleId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupRole(long groupId, Role role) {
-		groupPersistence.addRole(groupId, role);
+	public boolean addGroupRole(long groupId, Role role) {
+		return groupPersistence.addRole(groupId, role);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupRoles(long groupId, long[] roleIds) {
-		groupPersistence.addRoles(groupId, roleIds);
+	public boolean addGroupRoles(long groupId, long[] roleIds) {
+		return groupPersistence.addRoles(groupId, roleIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addGroupRoles(long groupId, List<Role> roles) {
-		groupPersistence.addRoles(groupId, roles);
+	public boolean addGroupRoles(long groupId, List<Role> roles) {
+		return groupPersistence.addRoles(groupId, roles);
 	}
 
 	/**
@@ -623,36 +623,38 @@ public abstract class RoleLocalServiceBaseImpl
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRole(long userId, long roleId) throws PortalException {
-		userPersistence.addRole(userId, roleId);
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public void addUserRole(long userId, Role role) throws PortalException {
-		userPersistence.addRole(userId, role);
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public void addUserRoles(long userId, long[] roleIds)
+	public boolean addUserRole(long userId, long roleId)
 		throws PortalException {
 
-		userPersistence.addRoles(userId, roleIds);
+		return userPersistence.addRole(userId, roleId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRoles(long userId, List<Role> roles)
+	public boolean addUserRole(long userId, Role role) throws PortalException {
+		return userPersistence.addRole(userId, role);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public boolean addUserRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		userPersistence.addRoles(userId, roles);
+		return userPersistence.addRoles(userId, roleIds);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public boolean addUserRoles(long userId, List<Role> roles)
+		throws PortalException {
+
+		return userPersistence.addRoles(userId, roles);
 	}
 
 	/**

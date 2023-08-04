@@ -76,25 +76,26 @@ public class GroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addOrganizationGroup(long organizationId, Group group) {
-		_groupLocalService.addOrganizationGroup(organizationId, group);
+	public boolean addOrganizationGroup(long organizationId, Group group) {
+		return _groupLocalService.addOrganizationGroup(organizationId, group);
 	}
 
 	@Override
-	public void addOrganizationGroup(long organizationId, long groupId) {
-		_groupLocalService.addOrganizationGroup(organizationId, groupId);
+	public boolean addOrganizationGroup(long organizationId, long groupId) {
+		return _groupLocalService.addOrganizationGroup(organizationId, groupId);
 	}
 
 	@Override
-	public void addOrganizationGroups(
+	public boolean addOrganizationGroups(
 		long organizationId, java.util.List<Group> groups) {
 
-		_groupLocalService.addOrganizationGroups(organizationId, groups);
+		return _groupLocalService.addOrganizationGroups(organizationId, groups);
 	}
 
 	@Override
-	public void addOrganizationGroups(long organizationId, long[] groupIds) {
-		_groupLocalService.addOrganizationGroups(organizationId, groupIds);
+	public boolean addOrganizationGroups(long organizationId, long[] groupIds) {
+		return _groupLocalService.addOrganizationGroups(
+			organizationId, groupIds);
 	}
 
 	@Override
@@ -116,65 +117,65 @@ public class GroupLocalServiceWrapper
 	}
 
 	@Override
-	public void addRoleGroup(long roleId, Group group) {
-		_groupLocalService.addRoleGroup(roleId, group);
+	public boolean addRoleGroup(long roleId, Group group) {
+		return _groupLocalService.addRoleGroup(roleId, group);
 	}
 
 	@Override
-	public void addRoleGroup(long roleId, long groupId) {
-		_groupLocalService.addRoleGroup(roleId, groupId);
+	public boolean addRoleGroup(long roleId, long groupId) {
+		return _groupLocalService.addRoleGroup(roleId, groupId);
 	}
 
 	@Override
-	public void addRoleGroups(long roleId, java.util.List<Group> groups) {
-		_groupLocalService.addRoleGroups(roleId, groups);
+	public boolean addRoleGroups(long roleId, java.util.List<Group> groups) {
+		return _groupLocalService.addRoleGroups(roleId, groups);
 	}
 
 	@Override
-	public void addRoleGroups(long roleId, long[] groupIds) {
-		_groupLocalService.addRoleGroups(roleId, groupIds);
+	public boolean addRoleGroups(long roleId, long[] groupIds) {
+		return _groupLocalService.addRoleGroups(roleId, groupIds);
 	}
 
 	@Override
-	public void addUserGroup(long userId, Group group) {
-		_groupLocalService.addUserGroup(userId, group);
+	public boolean addUserGroup(long userId, Group group) {
+		return _groupLocalService.addUserGroup(userId, group);
 	}
 
 	@Override
-	public void addUserGroup(long userId, long groupId) {
-		_groupLocalService.addUserGroup(userId, groupId);
+	public boolean addUserGroup(long userId, long groupId) {
+		return _groupLocalService.addUserGroup(userId, groupId);
 	}
 
 	@Override
-	public void addUserGroupGroup(long userGroupId, Group group) {
-		_groupLocalService.addUserGroupGroup(userGroupId, group);
+	public boolean addUserGroupGroup(long userGroupId, Group group) {
+		return _groupLocalService.addUserGroupGroup(userGroupId, group);
 	}
 
 	@Override
-	public void addUserGroupGroup(long userGroupId, long groupId) {
-		_groupLocalService.addUserGroupGroup(userGroupId, groupId);
+	public boolean addUserGroupGroup(long userGroupId, long groupId) {
+		return _groupLocalService.addUserGroupGroup(userGroupId, groupId);
 	}
 
 	@Override
-	public void addUserGroupGroups(
+	public boolean addUserGroupGroups(
 		long userGroupId, java.util.List<Group> groups) {
 
-		_groupLocalService.addUserGroupGroups(userGroupId, groups);
+		return _groupLocalService.addUserGroupGroups(userGroupId, groups);
 	}
 
 	@Override
-	public void addUserGroupGroups(long userGroupId, long[] groupIds) {
-		_groupLocalService.addUserGroupGroups(userGroupId, groupIds);
+	public boolean addUserGroupGroups(long userGroupId, long[] groupIds) {
+		return _groupLocalService.addUserGroupGroups(userGroupId, groupIds);
 	}
 
 	@Override
-	public void addUserGroups(long userId, java.util.List<Group> groups) {
-		_groupLocalService.addUserGroups(userId, groups);
+	public boolean addUserGroups(long userId, java.util.List<Group> groups) {
+		return _groupLocalService.addUserGroups(userId, groups);
 	}
 
 	@Override
-	public void addUserGroups(long userId, long[] groupIds) {
-		_groupLocalService.addUserGroups(userId, groupIds);
+	public boolean addUserGroups(long userId, long[] groupIds) {
+		return _groupLocalService.addUserGroups(userId, groupIds);
 	}
 
 	/**

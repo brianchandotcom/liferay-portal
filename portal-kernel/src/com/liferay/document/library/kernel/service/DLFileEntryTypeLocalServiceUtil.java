@@ -59,28 +59,32 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().addDLFileEntryType(dlFileEntryType);
 	}
 
-	public static void addDLFolderDLFileEntryType(
+	public static boolean addDLFolderDLFileEntryType(
 		long folderId, DLFileEntryType dlFileEntryType) {
 
-		getService().addDLFolderDLFileEntryType(folderId, dlFileEntryType);
+		return getService().addDLFolderDLFileEntryType(
+			folderId, dlFileEntryType);
 	}
 
-	public static void addDLFolderDLFileEntryType(
+	public static boolean addDLFolderDLFileEntryType(
 		long folderId, long fileEntryTypeId) {
 
-		getService().addDLFolderDLFileEntryType(folderId, fileEntryTypeId);
+		return getService().addDLFolderDLFileEntryType(
+			folderId, fileEntryTypeId);
 	}
 
-	public static void addDLFolderDLFileEntryTypes(
+	public static boolean addDLFolderDLFileEntryTypes(
 		long folderId, List<DLFileEntryType> dlFileEntryTypes) {
 
-		getService().addDLFolderDLFileEntryTypes(folderId, dlFileEntryTypes);
+		return getService().addDLFolderDLFileEntryTypes(
+			folderId, dlFileEntryTypes);
 	}
 
-	public static void addDLFolderDLFileEntryTypes(
+	public static boolean addDLFolderDLFileEntryTypes(
 		long folderId, long[] fileEntryTypeIds) {
 
-		getService().addDLFolderDLFileEntryTypes(folderId, fileEntryTypeIds);
+		return getService().addDLFolderDLFileEntryTypes(
+			folderId, fileEntryTypeIds);
 	}
 
 	public static DLFileEntryType addFileEntryType(

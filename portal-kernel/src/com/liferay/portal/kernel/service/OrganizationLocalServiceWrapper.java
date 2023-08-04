@@ -32,25 +32,30 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public void addGroupOrganization(long groupId, long organizationId) {
-		_organizationLocalService.addGroupOrganization(groupId, organizationId);
+	public boolean addGroupOrganization(long groupId, long organizationId) {
+		return _organizationLocalService.addGroupOrganization(
+			groupId, organizationId);
 	}
 
 	@Override
-	public void addGroupOrganization(long groupId, Organization organization) {
-		_organizationLocalService.addGroupOrganization(groupId, organization);
+	public boolean addGroupOrganization(
+		long groupId, Organization organization) {
+
+		return _organizationLocalService.addGroupOrganization(
+			groupId, organization);
 	}
 
 	@Override
-	public void addGroupOrganizations(
+	public boolean addGroupOrganizations(
 		long groupId, java.util.List<Organization> organizations) {
 
-		_organizationLocalService.addGroupOrganizations(groupId, organizations);
+		return _organizationLocalService.addGroupOrganizations(
+			groupId, organizations);
 	}
 
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		_organizationLocalService.addGroupOrganizations(
+	public boolean addGroupOrganizations(long groupId, long[] organizationIds) {
+		return _organizationLocalService.addGroupOrganizations(
 			groupId, organizationIds);
 	}
 
@@ -191,13 +196,15 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserOrganization(long userId, long organizationId) {
-		_organizationLocalService.addUserOrganization(userId, organizationId);
+	public boolean addUserOrganization(long userId, long organizationId) {
+		return _organizationLocalService.addUserOrganization(
+			userId, organizationId);
 	}
 
 	@Override
-	public void addUserOrganization(long userId, Organization organization) {
-		_organizationLocalService.addUserOrganization(userId, organization);
+	public boolean addUserOrganization(long userId, Organization organization) {
+		return _organizationLocalService.addUserOrganization(
+			userId, organization);
 	}
 
 	@Override
@@ -210,15 +217,17 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserOrganizations(
+	public boolean addUserOrganizations(
 		long userId, java.util.List<Organization> organizations) {
 
-		_organizationLocalService.addUserOrganizations(userId, organizations);
+		return _organizationLocalService.addUserOrganizations(
+			userId, organizations);
 	}
 
 	@Override
-	public void addUserOrganizations(long userId, long[] organizationIds) {
-		_organizationLocalService.addUserOrganizations(userId, organizationIds);
+	public boolean addUserOrganizations(long userId, long[] organizationIds) {
+		return _organizationLocalService.addUserOrganizations(
+			userId, organizationIds);
 	}
 
 	@Override

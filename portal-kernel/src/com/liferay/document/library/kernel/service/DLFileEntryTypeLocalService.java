@@ -85,15 +85,16 @@ public interface DLFileEntryTypeLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntryType addDLFileEntryType(DLFileEntryType dlFileEntryType);
 
-	public void addDLFolderDLFileEntryType(
+	public boolean addDLFolderDLFileEntryType(
 		long folderId, DLFileEntryType dlFileEntryType);
 
-	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
+	public boolean addDLFolderDLFileEntryType(
+		long folderId, long fileEntryTypeId);
 
-	public void addDLFolderDLFileEntryTypes(
+	public boolean addDLFolderDLFileEntryTypes(
 		long folderId, List<DLFileEntryType> dlFileEntryTypes);
 
-	public void addDLFolderDLFileEntryTypes(
+	public boolean addDLFolderDLFileEntryTypes(
 		long folderId, long[] fileEntryTypeIds);
 
 	public DLFileEntryType addFileEntryType(

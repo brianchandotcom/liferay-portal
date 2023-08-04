@@ -78,21 +78,21 @@ public interface TeamLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Team addTeam(Team team);
 
-	public void addUserGroupTeam(long userGroupId, long teamId);
+	public boolean addUserGroupTeam(long userGroupId, long teamId);
 
-	public void addUserGroupTeam(long userGroupId, Team team);
+	public boolean addUserGroupTeam(long userGroupId, Team team);
 
-	public void addUserGroupTeams(long userGroupId, List<Team> teams);
+	public boolean addUserGroupTeams(long userGroupId, List<Team> teams);
 
-	public void addUserGroupTeams(long userGroupId, long[] teamIds);
+	public boolean addUserGroupTeams(long userGroupId, long[] teamIds);
 
-	public void addUserTeam(long userId, long teamId);
+	public boolean addUserTeam(long userId, long teamId);
 
-	public void addUserTeam(long userId, Team team);
+	public boolean addUserTeam(long userId, Team team);
 
-	public void addUserTeams(long userId, List<Team> teams);
+	public boolean addUserTeams(long userId, List<Team> teams);
 
-	public void addUserTeams(long userId, long[] teamIds);
+	public boolean addUserTeams(long userId, long[] teamIds);
 
 	public void clearUserGroupTeams(long userGroupId);
 

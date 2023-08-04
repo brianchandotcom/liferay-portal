@@ -10772,17 +10772,18 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param groupPK the primary key of the group
+	 * @return <code>true</code> if the association between the role and the group is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addGroup(long pk, long groupPK) {
+	public boolean addGroup(long pk, long groupPK) {
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			roleToGroupTableMapper.addTableMapping(
+			return roleToGroupTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, groupPK);
 		}
 		else {
-			roleToGroupTableMapper.addTableMapping(
+			return roleToGroupTableMapper.addTableMapping(
 				role.getCompanyId(), pk, groupPK);
 		}
 	}
@@ -10792,17 +10793,20 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param group the group
+	 * @return <code>true</code> if the association between the role and the group is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addGroup(long pk, com.liferay.portal.kernel.model.Group group) {
+	public boolean addGroup(
+		long pk, com.liferay.portal.kernel.model.Group group) {
+
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			roleToGroupTableMapper.addTableMapping(
+			return roleToGroupTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, group.getPrimaryKey());
 		}
 		else {
-			roleToGroupTableMapper.addTableMapping(
+			return roleToGroupTableMapper.addTableMapping(
 				role.getCompanyId(), pk, group.getPrimaryKey());
 		}
 	}
@@ -10812,9 +10816,10 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param groupPKs the primary keys of the groups
+	 * @return <code>true</code> if at least an association between the role and the groups is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addGroups(long pk, long[] groupPKs) {
+	public boolean addGroups(long pk, long[] groupPKs) {
 		long companyId = 0;
 
 		Role role = fetchByPrimaryKey(pk);
@@ -10826,7 +10831,14 @@ public class RolePersistenceImpl
 			companyId = role.getCompanyId();
 		}
 
-		roleToGroupTableMapper.addTableMappings(companyId, pk, groupPKs);
+		long[] addedKeys = roleToGroupTableMapper.addTableMappings(
+			companyId, pk, groupPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -10834,12 +10846,13 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param groups the groups
+	 * @return <code>true</code> if at least an association between the role and the groups is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addGroups(
+	public boolean addGroups(
 		long pk, List<com.liferay.portal.kernel.model.Group> groups) {
 
-		addGroups(
+		return addGroups(
 			pk,
 			ListUtil.toLongArray(
 				groups,
@@ -11082,17 +11095,18 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param userPK the primary key of the user
+	 * @return <code>true</code> if the association between the role and the user is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addUser(long pk, long userPK) {
+	public boolean addUser(long pk, long userPK) {
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			roleToUserTableMapper.addTableMapping(
+			return roleToUserTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, userPK);
 		}
 		else {
-			roleToUserTableMapper.addTableMapping(
+			return roleToUserTableMapper.addTableMapping(
 				role.getCompanyId(), pk, userPK);
 		}
 	}
@@ -11102,17 +11116,18 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param user the user
+	 * @return <code>true</code> if the association between the role and the user is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addUser(long pk, com.liferay.portal.kernel.model.User user) {
+	public boolean addUser(long pk, com.liferay.portal.kernel.model.User user) {
 		Role role = fetchByPrimaryKey(pk);
 
 		if (role == null) {
-			roleToUserTableMapper.addTableMapping(
+			return roleToUserTableMapper.addTableMapping(
 				CompanyThreadLocal.getCompanyId(), pk, user.getPrimaryKey());
 		}
 		else {
-			roleToUserTableMapper.addTableMapping(
+			return roleToUserTableMapper.addTableMapping(
 				role.getCompanyId(), pk, user.getPrimaryKey());
 		}
 	}
@@ -11122,9 +11137,10 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param userPKs the primary keys of the users
+	 * @return <code>true</code> if at least an association between the role and the users is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addUsers(long pk, long[] userPKs) {
+	public boolean addUsers(long pk, long[] userPKs) {
 		long companyId = 0;
 
 		Role role = fetchByPrimaryKey(pk);
@@ -11136,7 +11152,14 @@ public class RolePersistenceImpl
 			companyId = role.getCompanyId();
 		}
 
-		roleToUserTableMapper.addTableMappings(companyId, pk, userPKs);
+		long[] addedKeys = roleToUserTableMapper.addTableMappings(
+			companyId, pk, userPKs);
+
+		if (addedKeys.length > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -11144,12 +11167,13 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param users the users
+	 * @return <code>true</code> if at least an association between the role and the users is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addUsers(
+	public boolean addUsers(
 		long pk, List<com.liferay.portal.kernel.model.User> users) {
 
-		addUsers(
+		return addUsers(
 			pk,
 			ListUtil.toLongArray(
 				users, com.liferay.portal.kernel.model.User.USER_ID_ACCESSOR));

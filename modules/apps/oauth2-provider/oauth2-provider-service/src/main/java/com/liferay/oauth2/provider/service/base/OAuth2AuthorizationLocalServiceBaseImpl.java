@@ -404,41 +404,41 @@ public abstract class OAuth2AuthorizationLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addOAuth2ScopeGrantOAuth2Authorization(
+	public boolean addOAuth2ScopeGrantOAuth2Authorization(
 		long oAuth2ScopeGrantId, long oAuth2AuthorizationId) {
 
-		oAuth2ScopeGrantPersistence.addOAuth2Authorization(
+		return oAuth2ScopeGrantPersistence.addOAuth2Authorization(
 			oAuth2ScopeGrantId, oAuth2AuthorizationId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addOAuth2ScopeGrantOAuth2Authorization(
+	public boolean addOAuth2ScopeGrantOAuth2Authorization(
 		long oAuth2ScopeGrantId, OAuth2Authorization oAuth2Authorization) {
 
-		oAuth2ScopeGrantPersistence.addOAuth2Authorization(
+		return oAuth2ScopeGrantPersistence.addOAuth2Authorization(
 			oAuth2ScopeGrantId, oAuth2Authorization);
 	}
 
 	/**
 	 */
 	@Override
-	public void addOAuth2ScopeGrantOAuth2Authorizations(
+	public boolean addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId, long[] oAuth2AuthorizationIds) {
 
-		oAuth2ScopeGrantPersistence.addOAuth2Authorizations(
+		return oAuth2ScopeGrantPersistence.addOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2AuthorizationIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addOAuth2ScopeGrantOAuth2Authorizations(
+	public boolean addOAuth2ScopeGrantOAuth2Authorizations(
 		long oAuth2ScopeGrantId,
 		List<OAuth2Authorization> oAuth2Authorizations) {
 
-		oAuth2ScopeGrantPersistence.addOAuth2Authorizations(
+		return oAuth2ScopeGrantPersistence.addOAuth2Authorizations(
 			oAuth2ScopeGrantId, oAuth2Authorizations);
 	}
 

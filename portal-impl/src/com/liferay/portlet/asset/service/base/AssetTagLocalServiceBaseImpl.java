@@ -507,29 +507,31 @@ public abstract class AssetTagLocalServiceBaseImpl
 	/**
 	 */
 	@Override
-	public void addAssetEntryAssetTag(long entryId, long tagId) {
-		assetEntryPersistence.addAssetTag(entryId, tagId);
+	public boolean addAssetEntryAssetTag(long entryId, long tagId) {
+		return assetEntryPersistence.addAssetTag(entryId, tagId);
 	}
 
 	/**
 	 */
 	@Override
-	public void addAssetEntryAssetTag(long entryId, AssetTag assetTag) {
-		assetEntryPersistence.addAssetTag(entryId, assetTag);
+	public boolean addAssetEntryAssetTag(long entryId, AssetTag assetTag) {
+		return assetEntryPersistence.addAssetTag(entryId, assetTag);
 	}
 
 	/**
 	 */
 	@Override
-	public void addAssetEntryAssetTags(long entryId, long[] tagIds) {
-		assetEntryPersistence.addAssetTags(entryId, tagIds);
+	public boolean addAssetEntryAssetTags(long entryId, long[] tagIds) {
+		return assetEntryPersistence.addAssetTags(entryId, tagIds);
 	}
 
 	/**
 	 */
 	@Override
-	public void addAssetEntryAssetTags(long entryId, List<AssetTag> assetTags) {
-		assetEntryPersistence.addAssetTags(entryId, assetTags);
+	public boolean addAssetEntryAssetTags(
+		long entryId, List<AssetTag> assetTags) {
+
+		return assetEntryPersistence.addAssetTags(entryId, assetTags);
 	}
 
 	/**

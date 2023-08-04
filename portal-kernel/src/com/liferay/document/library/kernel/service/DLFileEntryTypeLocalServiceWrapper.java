@@ -56,34 +56,34 @@ public class DLFileEntryTypeLocalServiceWrapper
 	}
 
 	@Override
-	public void addDLFolderDLFileEntryType(
+	public boolean addDLFolderDLFileEntryType(
 		long folderId, DLFileEntryType dlFileEntryType) {
 
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(
+		return _dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(
 			folderId, dlFileEntryType);
 	}
 
 	@Override
-	public void addDLFolderDLFileEntryType(
+	public boolean addDLFolderDLFileEntryType(
 		long folderId, long fileEntryTypeId) {
 
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(
+		return _dlFileEntryTypeLocalService.addDLFolderDLFileEntryType(
 			folderId, fileEntryTypeId);
 	}
 
 	@Override
-	public void addDLFolderDLFileEntryTypes(
+	public boolean addDLFolderDLFileEntryTypes(
 		long folderId, java.util.List<DLFileEntryType> dlFileEntryTypes) {
 
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(
+		return _dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(
 			folderId, dlFileEntryTypes);
 	}
 
 	@Override
-	public void addDLFolderDLFileEntryTypes(
+	public boolean addDLFolderDLFileEntryTypes(
 		long folderId, long[] fileEntryTypeIds) {
 
-		_dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(
+		return _dlFileEntryTypeLocalService.addDLFolderDLFileEntryTypes(
 			folderId, fileEntryTypeIds);
 	}
 

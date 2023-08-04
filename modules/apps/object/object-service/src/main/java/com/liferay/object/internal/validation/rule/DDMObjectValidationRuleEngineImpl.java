@@ -73,6 +73,11 @@ public class DDMObjectValidationRuleEngineImpl
 	}
 
 	@Override
+	public String getKey() {
+		return ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
+	}
+
+	@Override
 	public String getLabel() {
 		return ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
 	}

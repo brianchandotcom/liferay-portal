@@ -48,6 +48,16 @@
 	<td>//div[contains(@class,'lfr-layout-structure-item-collection')]//*[normalize-space()='${key_text}']//preceding::h2[normalize-space()='${key_value}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VALIDATE_SECONDARY_TEXT</td>
+	<td>//div[contains(@class,'container-view')]//p[contains(text(),'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOT_ALLOWED</td>
+	<td>//label[contains(.,'${field_disabled}')]//following-sibling::input[contains(@style,'cursor: not-allowed')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

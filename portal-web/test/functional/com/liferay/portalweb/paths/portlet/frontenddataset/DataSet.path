@@ -149,6 +149,11 @@
 	<td>//div[contains(@class,'form-group')]//input[contains(@id,'ViewDefaultItemsPerPage')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DEFOCUS</td>
+	<td>//*[@id="banner"]/div[1]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET DEFAULT SORT -->
 

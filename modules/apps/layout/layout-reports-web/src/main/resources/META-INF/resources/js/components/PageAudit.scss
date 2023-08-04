@@ -1,6 +1,10 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} .cadmin .page-audit {
+	&__experience-selector .btn:not(.btn-unstyled) {
+		padding-right: 2em;
+	}
+
 	&__fragmentList {
 		border: 1px solid $cadmin-gray-300;
 		border-radius: 4px;

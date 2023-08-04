@@ -94,7 +94,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			PrintWriter writer = httpServletResponse.getWriter();
 
 			writer.write("<div class=\"border-left border-secondary ");
-			writer.write("control-menu-nav-item ml-3 pl-3\">");
+			writer.write("control-menu-nav-item c-ml-3 c-pl-md-3\">");
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(

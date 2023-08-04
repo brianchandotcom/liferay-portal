@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {LocalizedValue} from '../..';
+import {LocalizedValue} from '../../index';
 import './InputLocalized.scss';
 interface InputLocalizedProps {
 	className?: string;

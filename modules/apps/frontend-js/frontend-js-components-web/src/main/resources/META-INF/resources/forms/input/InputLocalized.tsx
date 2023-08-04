@@ -7,7 +7,7 @@ import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {LocalizedValue} from '../..';
+import {LocalizedValue} from '../../index';
 import FieldBase from '../common/FieldBase';
 
 import './InputLocalized.scss';

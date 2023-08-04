@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -105,6 +106,9 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 		return HashMapBuilder.<String, Object>put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
+		).put(
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject("object-web")
 		).put(
 			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 		).put(

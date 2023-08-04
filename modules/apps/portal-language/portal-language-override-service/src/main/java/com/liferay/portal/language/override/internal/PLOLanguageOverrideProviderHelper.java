@@ -141,7 +141,7 @@ public class PLOLanguageOverrideProviderHelper {
 	private final Supplier<Map<String, OverrideResourceBundle>> _supplier =
 		this::_createOverrideResourceBundles;
 
-	private class OverrideResourceBundle extends ResourceBundle {
+	private static class OverrideResourceBundle extends ResourceBundle {
 
 		@Override
 		public Enumeration<String> getKeys() {

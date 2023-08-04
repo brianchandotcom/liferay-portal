@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.related.models.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -38,7 +39,6 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,8 +81,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService, Collections.emptyMap());
 
 		_assertGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
@@ -133,8 +134,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		_updateObjectRelationship(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE);
 
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService, Collections.emptyMap());
 
 		_insertIntoOrUpdateExtensionTable(
 			objectEntry2.getObjectEntryId(), primaryKeys[0],
@@ -153,8 +155,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		_updateObjectRelationship(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
-		ObjectEntry objectEntry3 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService, Collections.emptyMap());
 
 		_insertIntoOrUpdateExtensionTable(
 			objectEntry3.getObjectEntryId(), primaryKeys[0],
@@ -185,8 +188,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService, Collections.emptyMap());
 
 		_assertGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
@@ -234,8 +238,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		_updateObjectRelationship(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE);
 
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService, Collections.emptyMap());
 
 		_addObjectRelationshipMappingTableValues(
 			objectEntry2.getObjectEntryId(), primaryKeys[2]);
@@ -253,8 +258,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		_updateObjectRelationship(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
-		ObjectEntry objectEntry3 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(),
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService,
 			HashMapBuilder.<String, Serializable>put(
 				"able", "Entry"
 			).build());
@@ -284,8 +290,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				_objectDefinition.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		ObjectEntry objectEntry4 = _addObjectEntry(
-			_objectDefinition.getObjectDefinitionId(),
+		ObjectEntry objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService,
 			HashMapBuilder.<String, Serializable>put(
 				"able", "New Entry"
 			).build());
@@ -344,15 +351,6 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	private ObjectEntry _addObjectEntry(
-			long objectDefinitionId, Map<String, Serializable> values)
-		throws Exception {
-
-		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, objectDefinitionId, values,
-			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _addObjectRelationship(

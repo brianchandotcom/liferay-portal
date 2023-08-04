@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.related.models.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -306,9 +307,10 @@ public class ObjectRelatedModelsProviderTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		ObjectEntry objectEntry5 = _addObjectEntry(
+		ObjectEntry objectEntry5 = ObjectEntryTestUtil.addObjectEntry(
 			group.getGroupId(),
 			scopeSiteObjectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService,
 			HashMapBuilder.<String, Serializable>put(
 				_relationshipObjectField.getName(),
 				objectEntry4.getObjectEntryId()
@@ -330,9 +332,10 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectEntry objectEntry6 = _addObjectEntry(
 			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
 
-		ObjectEntry objectEntry7 = _addObjectEntry(
+		ObjectEntry objectEntry7 = ObjectEntryTestUtil.addObjectEntry(
 			group.getGroupId(),
 			scopeSiteObjectDefinition.getObjectDefinitionId(),
+			_objectEntryLocalService,
 			HashMapBuilder.<String, Serializable>put(
 				_relationshipObjectField.getName(),
 				objectEntry6.getObjectEntryId()
@@ -420,20 +423,11 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private ObjectEntry _addObjectEntry(
-			long groupId, long objectDefinitionId,
-			Map<String, Serializable> values)
-		throws Exception {
-
-		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private ObjectEntry _addObjectEntry(
 			long objectDefinitionId, Map<String, Serializable> values)
 		throws Exception {
 
-		return _addObjectEntry(0, objectDefinitionId, values);
+		return ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinitionId, _objectEntryLocalService, values);
 	}
 
 	private void _addObjectRelationship(

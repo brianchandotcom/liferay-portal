@@ -17,4 +17,6 @@ public class HeadlessBuilderConstants {
 
 	public static final String BASE_PATH_SUFFIX = "/c/";
 
+	public static final String SITE_SCOPED_BASE_PATH = "/scopes/{scopeKey}";
+
 }

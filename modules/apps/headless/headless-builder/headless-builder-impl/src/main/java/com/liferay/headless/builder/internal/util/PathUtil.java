@@ -5,12 +5,22 @@
 
 package com.liferay.headless.builder.internal.util;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Luis Miguel Barcos
  */
 public class PathUtil {
+
+	public static String getPathPrefix(APIApplication.Endpoint.Scope scope) {
+		if (scope == APIApplication.Endpoint.Scope.GROUP) {
+			return HeadlessBuilderConstants.SITE_SCOPED_BASE_PATH;
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public static String removeBasePath(String path) {
 		if (path.startsWith(HeadlessBuilderConstants.BASE_PATH)) {

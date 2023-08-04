@@ -10,6 +10,10 @@ import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTEntryEntityModel;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -80,14 +84,45 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 		return _entityModel;
 	}
 
-	private DefaultDTOConverterContext _getDTOConverterContext(
-			com.liferay.change.tracking.model.CTEntry ctEntry)
+	private <T extends BaseModel<T>> DefaultDTOConverterContext
+			_getDTOConverterContext(
+				com.liferay.change.tracking.model.CTEntry ctEntry)
 		throws Exception {
 
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
 			HashMapBuilder.put(
 				"get",
+				addAction(
+					ActionKeys.VIEW, ctEntry.getCtCollectionId(), "getCTEntry",
+					_ctCollectionModelResourcePermission)
+			).put(
+				"move-changes",
+				() -> {
+					CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+						_ctDisplayRendererRegistry.getCTSQLMode(
+							ctEntry.getCtCollectionId(), ctEntry);
+
+					T model = _ctDisplayRendererRegistry.fetchCTModel(
+						ctEntry.getCtCollectionId(), ctSQLMode,
+						ctEntry.getModelClassNameId(),
+						ctEntry.getModelClassPK());
+
+					if (!FeatureFlagManagerUtil.isEnabled(
+							contextCompany.getCompanyId(), "LPS-171364") ||
+						(model == null) ||
+						_ctDisplayRendererRegistry.isHideable(
+							model, ctEntry.getModelClassNameId())) {
+
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.VIEW, ctEntry.getCtCollectionId(),
+						"getCTEntry", _ctCollectionModelResourcePermission);
+				}
+			).put(
+				"view-discard",
 				addAction(
 					ActionKeys.VIEW, ctEntry.getCtCollectionId(), "getCTEntry",
 					_ctCollectionModelResourcePermission)
@@ -112,9 +147,11 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
 	)
-	private volatile ModelResourcePermission
-		<CTCollection>
+	private volatile ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
+
+	@Reference
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference(
 		target = "(component.name=com.liferay.change.tracking.rest.internal.dto.v1_0.converter.CTEntryDTOConverter)"

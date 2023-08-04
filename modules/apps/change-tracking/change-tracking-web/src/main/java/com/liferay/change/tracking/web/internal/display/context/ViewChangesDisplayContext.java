@@ -21,17 +21,21 @@ import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTModelDisplayRendererAdapter;
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.ChangeTypeSelectionFDSFilter;
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.HideableSelectionFDSFilter;
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.SiteSelectionFDSFilter;
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.TypeNameSelectionFDSFilter;
+import com.liferay.change.tracking.web.internal.frontend.data.set.filter.UserSelectionFDSFilter;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.lang.HashUtil;
@@ -58,7 +62,6 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -170,21 +173,75 @@ public class ViewChangesDisplayContext {
 		return portletURL.toString();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_change"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"ctEntryId", "{id}"
+				).buildString(),
+				"list-ul", "view-change",
+				_language.get(_httpServletRequest, "review-change"), "get",
+				"get", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/change_tracking/move_changes"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString(),
+				"move-folder", "move-changes",
+				_language.get(_httpServletRequest, "move-changes"), "post",
+				"move-changes", null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_discard"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"modelClassNameId", "{modelClassNameId}"
+				).setParameter(
+					"modelClassPK", "{modelClassPK}"
+				).buildString(),
+				"times-circle", "view-discard",
+				_language.get(_httpServletRequest, "discard"), "get",
+				"view-discard", null));
+	}
 
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_tracking/view_changes", "ctCollectionId",
-					_ctCollection.getCtCollectionId(), "showHideable",
-					!_ctConfiguration.showAllItemsEnabled());
-				dropdownItem.setIcon("times-circle");
-				dropdownItem.setLabel(
-					_language.get(
-						_httpServletRequest, "show-all-items"));
-			}
-		).build();
+	public List<FDSFilter> getFDSFilters() {
+		JSONObject usersJSONObject = DisplayContextUtil.getUserInfoJSONObject(
+			CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
+			CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
+			CTEntryTable.INSTANCE.ctCollectionId.eq(
+				_ctCollection.getCtCollectionId()));
+
+		Map<Long, String> typeNames = DisplayContextUtil.getTypeNames(
+			_ctCollection.getCtCollectionId(), _ctDisplayRendererRegistry,
+			_themeDisplay);
+
+		Map<Long, String> siteNames = DisplayContextUtil.getSiteNames(
+			_ctCollection.getCtCollectionId(), _themeDisplay);
+
+		return ListUtil.fromArray(
+			new ChangeTypeSelectionFDSFilter(),
+			new HideableSelectionFDSFilter(),
+			new SiteSelectionFDSFilter(siteNames),
+			new TypeNameSelectionFDSFilter(typeNames),
+			new UserSelectionFDSFilter(usersJSONObject.toMap()));
 	}
 
 	public FDSSortItemList getFDSSortItemList() {
@@ -879,33 +936,6 @@ public class ViewChangesDisplayContext {
 					_language.get(_httpServletRequest, "relationships"));
 			}
 		).build();
-	}
-
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/change_tracking/view_change"
-				).setRedirect(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCRenderCommandName(
-						"/change_tracking/view_changes"
-					).setParameter(
-						"ctCollectionId", _ctCollection.getCtCollectionId()
-					).buildString()
-				).setParameter(
-					"ctEntryId", "{id}"
-				).setParameter(
-					"ctCollectionId", "{ctCollectionId}"
-				).setParameter(
-					"showHideable", "true"
-				).buildString(),
-				"list-ul", "view-change",
-				_language.get(_httpServletRequest, "review-change"),
-				"get", "get", null));
 	}
 
 	private JSONObject _getContextViewJSONObject(

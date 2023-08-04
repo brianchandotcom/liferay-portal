@@ -39,6 +39,7 @@ else {
 		<frontend-data-set:headless-display
 			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
 			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
+			fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
 			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
 			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
 			style="stacked"

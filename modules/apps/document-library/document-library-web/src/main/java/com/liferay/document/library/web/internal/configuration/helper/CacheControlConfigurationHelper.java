@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.web.internal.configuration.admin.service;
+package com.liferay.document.library.web.internal.configuration.helper;
 
 import com.liferay.document.library.web.internal.configuration.CacheControlConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,12 +28,10 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.web.internal.configuration.CacheControlConfiguration.scoped",
 	service = {
-		CacheControlConfigurationManagedServiceFactory.class,
-		ManagedServiceFactory.class
+		CacheControlConfigurationHelper.class, ManagedServiceFactory.class
 	}
 )
-public class CacheControlConfigurationManagedServiceFactory
-	implements ManagedServiceFactory {
+public class CacheControlConfigurationHelper implements ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {

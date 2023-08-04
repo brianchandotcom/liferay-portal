@@ -7,7 +7,7 @@ package com.liferay.document.library.web.internal.servlet;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.web.internal.configuration.CacheControlConfiguration;
-import com.liferay.document.library.web.internal.configuration.admin.service.CacheControlConfigurationManagedServiceFactory;
+import com.liferay.document.library.web.internal.configuration.helper.CacheControlConfigurationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,7 +51,7 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 		throws PortalException {
 
 		CacheControlConfiguration cacheControlConfiguration =
-			_cacheControlConfigurationManagedServiceFactory.
+			_cacheControlConfigurationHelper.
 				getCompanyCacheControlConfiguration(fileEntry.getCompanyId());
 
 		if (ArrayUtil.contains(
@@ -84,8 +84,7 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 		CacheControlFileEntryHttpHeaderCustomizer.class);
 
 	@Reference
-	private CacheControlConfigurationManagedServiceFactory
-		_cacheControlConfigurationManagedServiceFactory;
+	private CacheControlConfigurationHelper _cacheControlConfigurationHelper;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

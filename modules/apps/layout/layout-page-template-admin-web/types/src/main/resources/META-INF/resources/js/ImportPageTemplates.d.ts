@@ -7,17 +7,8 @@
 
 interface Props {
 	backURL: string;
-	helpLink?: {
-		href: string;
-		message: string;
-	};
 	importURL: string;
 	portletNamespace: string;
 }
-declare function Import({
-	backURL,
-	helpLink,
-	importURL,
-	portletNamespace,
-}: Props): JSX.Element;
-export default Import;
+export default function ImportFragments(props: Props): JSX.Element;
+export {};

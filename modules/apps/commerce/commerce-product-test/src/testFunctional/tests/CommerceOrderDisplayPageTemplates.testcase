@@ -7,7 +7,9 @@ definition {
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp(minium = "true");
+		CommerceConfiguration.commerceSetUp(
+			minium = "true",
+			moneyOrder = "true");
 
 		task ("Setup: Create an account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -27,6 +29,307 @@ definition {
 
 	tearDown {
 		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-12066 | As a content editor specialist, I want to be able to map Order Items basic information when building a DPT of Commerce Order type"
+	@priority = 5
+	test CanMapOrderItemBasicInformation {
+		property portal.acceptance = "true";
+
+		task ("Given an order with 2 skus is created") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93016A:2,MIN55861:5",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			CommerceJSONDeliveryCart._postCommerceCartCheckout(cartId = ${orderId});
+		}
+
+		task ("And a new Display Page Template for Commerce Order is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Order",
+				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And a Collection Display fragment is deployed on the page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Order Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				index = 1);
+
+			CommerceDisplayPageTemplates.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = 1,
+				infoItemRelatedListProviderName = "Order Items");
+		}
+
+		task ("And a Heading fragment is deployed to map Basic Information fields") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Heading");
+		}
+
+		task ("And an order is set for the preview") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = ${orderId},
+				assetType = "Document");
+		}
+
+		task ("And all order item fields to check are set") {
+			var fieldsValuesList = ListUtil.newListFromString("Brake Fluid:U-Joint,2:5,MIN93016A:MIN55861,12:");
+			var productThumbnailURLs = "";
+			var productURLs = "";
+
+			for (var productName : list "Brake Fluid,U-Joint") {
+				var productThumbnailURLs = CommerceJSONDeliveryOrderAPI.getPlacedOrderItemsFieldByOrderId(
+					jsonPath = "$..['thumbnail']",
+					placedOrderId = ${orderId});
+				var productURL = CommerceJSONProductsAPI.getProductField(
+					jsonPath = "$.['urls'].['en_US']",
+					productName = ${productName});
+
+				var productURLs = "${productURLs}:${productURL}";
+			}
+
+			ListUtil.add(${fieldsValuesList}, ${productThumbnailURLs});
+
+			ListUtil.add(${fieldsValuesList}, ${productURLs});
+		}
+
+		task ("When an order item field is mapped to the Heading fragment") {
+			var index = 0;
+
+			for (var fieldName : list "Name,Quantity,SKU,Options,Thumbnail URL,URL") {
+				CommerceDisplayPageTemplates.mapEditableTextToField(
+					field = ${fieldName},
+					fragmentName = "Heading",
+					index = 1);
+
+				task ("Then the field value is shown for each order item") {
+					var fieldValuesList = ListUtil.get(${fieldsValuesList}, ${index});
+
+					var fieldValuesList = StringUtil.replace(${fieldValuesList}, ":", ",");
+
+					CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = ${fieldValuesList});
+
+					var index = ${index} + 1;
+				}
+			}
+		}
+	}
+
+	@description = "COMMERCE-12066 | As a content editor specialist, I want to be able to map Order Items detailed information when building a DPT of Commerce Order type"
+	@priority = 5
+	test CanMapOrderItemDetailedInformation {
+		property portal.acceptance = "true";
+
+		task ("Given an order is created") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93015:1",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			CommerceJSONDeliveryCart._postCommerceCartCheckout(cartId = ${orderId});
+		}
+
+		task ("And a new Display Page Template for Commerce Order is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Order",
+				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And a Collection Display fragment is deployed on the page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Order Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				index = 1);
+
+			CommerceDisplayPageTemplates.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = 1,
+				infoItemRelatedListProviderName = "Order Items");
+		}
+
+		task ("And a Heading fragment is deployed to map Basic Information fields") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Heading");
+		}
+
+		task ("And an order is set for the preview") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = ${orderId},
+				assetType = "Document");
+		}
+
+		task ("And all order item fields to check are set") {
+			var fieldsValuesList = ListUtil.newListFromString("${orderId},en_US,Test Test");
+			var id = CommerceJSONDeliveryOrderAPI.getPlacedOrderItemsFieldByOrderId(
+				jsonPath = "$..['id']",
+				placedOrderId = ${orderId});
+
+			ListUtil.add(${fieldsValuesList}, ${id});
+
+			var orderResponse = CommerceJSONOrdersAPI._getOrderById(orderId = ${orderId});
+
+			for (var field : list "createDate,modifiedDate") {
+				var timeString = JSONUtil.getWithJSONPath(${orderResponse}, "$..['${field}']");
+
+				var timeString = DateUtil.format(${timeString}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "M/d/yy h:m a");
+
+				ListUtil.add(${fieldsValuesList}, ${timeString});
+			}
+		}
+
+		task ("When an order item field is mapped to the Heading fragment") {
+			var index = 0;
+
+			for (var fieldName : list "Order ID,Default LanguageId,Author Name,Order Item ID,Create Date,Modified Date") {
+				CommerceDisplayPageTemplates.mapEditableTextToField(
+					field = ${fieldName},
+					fragmentName = "Heading",
+					index = 1);
+
+				task ("Then the field value is shown for each order item") {
+					var fieldValuesList = ListUtil.get(${fieldsValuesList}, ${index});
+
+					CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = ${fieldValuesList});
+
+					var index = ${index} + 1;
+				}
+			}
+		}
+	}
+
+	@description = "COMMERCE-12066 | As a content editor specialist, I want to be able to map Order Items pricing information when building a DPT of Commerce Order type"
+	@priority = 5
+	test CanMapOrderItemPricingInformation {
+		property portal.acceptance = "true";
+
+		var fieldsValuesList = ListUtil.newListFromString("$ 21.00,$ 18.90,$ 3.78,$ 34.02");
+
+		task ("Given a 10% discount is applied to a sku") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				productSKUs = "MIN93018",
+				target = "skus",
+				title = "Test Discount",
+				usePercentage = "true");
+		}
+
+		task ("And an order is created") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93018:2",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			CommerceJSONDeliveryCart._postCommerceCartCheckout(cartId = ${orderId});
+		}
+
+		task ("And a new Display Page Template for Commerce Order is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Order",
+				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And a Collection Display fragment is deployed on the page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Order Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				index = 1);
+
+			CommerceDisplayPageTemplates.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = 1,
+				infoItemRelatedListProviderName = "Order Items");
+		}
+
+		task ("And a Heading fragment is deployed to map Basic Information fields") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Heading");
+		}
+
+		task ("And an order is set for the preview") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = ${orderId},
+				assetType = "Document");
+		}
+
+		task ("When an order item field is mapped to the Heading fragment") {
+			var index = 0;
+
+			for (var fieldName : list "Unit Price,Promo Price,Discount,Total price") {
+				CommerceDisplayPageTemplates.mapEditableTextToField(
+					field = ${fieldName},
+					fragmentName = "Heading",
+					index = 1);
+
+				task ("Then the field value is shown for each order item") {
+					var fieldValuesList = ListUtil.get(${fieldsValuesList}, ${index});
+
+					CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = ${fieldValuesList});
+
+					var index = ${index} + 1;
+				}
+			}
+		}
 	}
 
 	@description = "Verify that order fields values are mapped to fragments."

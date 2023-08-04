@@ -69,8 +69,6 @@ public interface DestinationNames {
 
 	public static final String FLAGS = "liferay/flags";
 
-	public static final String HOT_DEPLOY = "liferay/hot_deploy";
-
 	public static final String IP_GEOCODER = "liferay/ip_geocoder";
 
 	public static final String IP_GEOCODER_RESPONSE =

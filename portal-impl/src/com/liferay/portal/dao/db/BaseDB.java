@@ -317,7 +317,7 @@ public abstract class BaseDB implements DB {
 			return matcher.group(2);
 		}
 
-		return columnDef;
+		return StringUtil.trim(columnDef);
 	}
 
 	@Override
@@ -1560,7 +1560,7 @@ public abstract class BaseDB implements DB {
 	private static final Pattern _columnLengthPattern = Pattern.compile(
 		"([^,(\\s]+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _defaultValuePattern = Pattern.compile(
-		"^('?)(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
+		"^(')?(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _sqlTypeDecimalDigitsPattern = Pattern.compile(
 		"^\\w+(?:\\(\\d+,\\s(\\d+)\\))", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _sqlTypeSizePattern = Pattern.compile(

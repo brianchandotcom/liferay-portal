@@ -43,6 +43,17 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
+	public String getDefaultValue(String columnDef) {
+		String defaultValue = super.getDefaultValue(columnDef);
+
+		if (defaultValue.equals("NULL")) {
+			return null;
+		}
+
+		return defaultValue;
+	}
+
+	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return StringPool.BLANK;
 	}

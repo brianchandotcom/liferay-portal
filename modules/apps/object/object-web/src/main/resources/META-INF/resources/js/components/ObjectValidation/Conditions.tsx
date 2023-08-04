@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
+
 import 'codemirror/mode/groovy/groovy';
 import {
 	AutoComplete,
@@ -14,12 +16,14 @@ import {
 	filterArrayByQuery,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {TabProps} from './useObjectValidationForm';
 
 interface ConditionsProps extends TabProps {
 	creationLanguageId: Liferay.Language.Locale;
+	learnResources: object;
 	objectFields: ObjectField[];
 	objectValidationRuleElements: SidebarCategory[];
 }
@@ -39,6 +43,7 @@ export function Conditions({
 	creationLanguageId,
 	disabled,
 	errors,
+	learnResources,
 	objectFields,
 	objectValidationRuleElements,
 	setValues,
@@ -102,6 +107,21 @@ export function Conditions({
 
 	return (
 		<>
+			<ClayAlert
+				className="lfr-objects__side-panel-content-container"
+				displayType="info"
+				title={`${Liferay.Language.get('info')}:`}
+			>
+				{Liferay.Language.get('create-validations-using-expressions')}
+				&nbsp;
+				<LearnResourcesContext.Provider value={learnResources}>
+					<LearnMessage
+						className="alert-link"
+						resource="object-web"
+						resourceKey="general"
+					/>
+				</LearnResourcesContext.Provider>
+			</ClayAlert>
 			<Card
 				title={values.engineLabel!}
 				tooltip={engine === 'ddm' ? ddmTooltip : null}

@@ -34,7 +34,6 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.layout.constants.LayoutWebKeys;
-import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
@@ -630,10 +629,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditInfoItemStrutsAction.class);
-
-	@Reference
-	private DisplayPageInfoItemFieldSetProvider
-		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private FragmentCollectionContributorRegistry

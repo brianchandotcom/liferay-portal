@@ -88,6 +88,11 @@ public class FunctionObjectValidationRuleEngineImpl
 	}
 
 	@Override
+	public String getKey() {
+		return _key;
+	}
+
+	@Override
 	public String getLabel() {
 		return _name;
 	}
@@ -102,6 +107,7 @@ public class FunctionObjectValidationRuleEngineImpl
 			ConfigurableUtil.createConfigurable(
 				FunctionObjectValidationRuleEngineImplConfiguration.class,
 				properties);
+		_key = GetterUtil.getString(properties.get("object.validation.rule"));
 		_name = GetterUtil.getString(properties.get("name"));
 	}
 
@@ -149,6 +155,7 @@ public class FunctionObjectValidationRuleEngineImpl
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	private String _key;
 	private String _name;
 
 	@Reference

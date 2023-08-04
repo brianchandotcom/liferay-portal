@@ -248,16 +248,17 @@ const Translate = ({
 			fields: {[fieldId]: sourceFields[fieldId]},
 		})
 			.then(({error, fields, html}) => {
+				if (error) {
+					throw error;
+				}
+
 				let contentData;
+
 				if (html && sourceFields[fieldId].html === html[fieldId]) {
 					contentData = fields[fieldId];
 				}
 				else {
 					contentData = unescapeHTML(fields[fieldId]);
-				}
-
-				if (error) {
-					throw error;
 				}
 
 				if (isMounted()) {

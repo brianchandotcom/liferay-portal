@@ -31,11 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Regisson Aguiar
  */
-@Component(service = PLOLanguageOverrideProviderHelper.class)
-public class PLOLanguageOverrideProviderHelper {
+@Component(service = PLOOverrideResourceBundleManager.class)
+public class PLOOverrideResourceBundleManager {
 
 	public ResourceBundle getOverrideResourceBundle(Locale locale) {
-		Map<String, PLOLanguageOverrideProviderHelper.OverrideResourceBundle>
+		Map<String, PLOOverrideResourceBundleManager.OverrideResourceBundle>
 			overrideResourceBundles =
 				_overrideResourceBundlesDCLSingleton.getSingleton(_supplier);
 

@@ -21,12 +21,11 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 	@Override
 	public ResourceBundle getOverrideResourceBundle(Locale locale) {
-		return _ploLanguageOverrideProviderHelper.getOverrideResourceBundle(
+		return _ploOverrideResourceBundleManager.getOverrideResourceBundle(
 			locale);
 	}
 
 	@Reference
-	private PLOLanguageOverrideProviderHelper
-		_ploLanguageOverrideProviderHelper;
+	private PLOOverrideResourceBundleManager _ploOverrideResourceBundleManager;
 
 }

@@ -1,10 +1,7 @@
 [
 	{
 		"dataType": 16,
-		"defaultValue": [
-			"No",
-			"Yes"
-		],
+		"defaultValue": ["No", "Yes"],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "App Icon",
 		"properties": {
@@ -233,6 +230,20 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.model.CommerceOrder",
+		"name": "Github username",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": false,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Github username",
 		"properties": {
 			"hidden": false,
@@ -796,6 +807,20 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Project Name",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": false,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Publisher Icon",
 		"properties": {
 			"hidden": true,
@@ -851,6 +876,34 @@
 	},
 	{
 		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrder",
+		"name": "Site Initializer",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Site Initializer",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPInstance",
 		"name": "Source",
 		"properties": {
@@ -865,10 +918,7 @@
 	},
 	{
 		"dataType": 16,
-		"defaultValue": [
-			"No",
-			"Yes"
-		],
+		"defaultValue": ["No", "Yes"],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "Source Files",
 		"properties": {

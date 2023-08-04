@@ -6,7 +6,6 @@
 package com.liferay.portal.component.blacklist.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.component.blacklist.ComponentBlacklist;
 import com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,17 +37,7 @@ import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 	configurationPid = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class ComponentBlacklistImpl implements ComponentBlacklist {
-
-	@Override
-	public boolean contains(String componentName) {
-		return _blacklistComponentNames.contains(componentName);
-	}
-
-	@Override
-	public Set<String> getBlacklistComponentNames() {
-		return Collections.unmodifiableSet(_blacklistComponentNames);
-	}
+public class ComponentBlacklistImpl {
 
 	@Activate
 	protected void activate(

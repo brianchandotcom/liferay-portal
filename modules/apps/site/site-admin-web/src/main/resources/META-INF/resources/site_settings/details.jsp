@@ -116,13 +116,18 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		</div>
 
 		<div class="input-group-item input-group-item-shrink">
-			<button class="btn btn-secondary mr-1" id="<portlet:namespace />clearParentSiteLink" type="button">
-				<liferay-ui:message key="clear" />
-			</button>
+			<clay:button
+				cssClass="c-mr-1"
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "clearParentSiteLink" %>'
+				label="clear"
+			/>
 
-			<button class="btn btn-secondary" id="<portlet:namespace />changeParentSiteLink" type="button">
-				<liferay-ui:message key="change" />
-			</button>
+			<clay:button
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "changeParentSiteLink" %>'
+				label="change"
+			/>
 		</div>
 	</div>
 

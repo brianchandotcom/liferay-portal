@@ -148,16 +148,18 @@ public class FragmentEntryProcessorHelperImpl
 			InfoItemIdentifier infoItemIdentifier =
 				infoItemReference.getInfoItemIdentifier();
 
-			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				classPK = classPKInfoItemIdentifier.getClassPK();
+			}
+			else if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
 				return null;
 			}
 
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
 			className = infoItemReference.getClassName();
-			classPK = classPKInfoItemIdentifier.getClassPK();
 
 			fieldName = editableValueJSONObject.getString("collectionFieldId");
 

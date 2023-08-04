@@ -1,7 +1,6 @@
 dependencies {
 	compileInclude group: "com.github.scribejava", name: "scribejava-apis", version: "6.6.3"
 	compileInclude group: "com.github.scribejava", name: "scribejava-core", version: "6.6.3"
-	compileInclude group: "com.google.collections", name: "google-collections", version: "1.0"
 	compileInclude group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph", version: "1.5.0"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph-core", version: "1.0.9"

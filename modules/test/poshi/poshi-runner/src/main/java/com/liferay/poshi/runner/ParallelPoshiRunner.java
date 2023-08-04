@@ -6,7 +6,6 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.core.PoshiProperties;
-import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.runner.junit.ParallelParameterized;
 import com.liferay.poshi.runner.logger.ParallelPrintStream;
 
@@ -20,16 +19,12 @@ import java.io.PrintStream;
 
 import java.nio.file.Files;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -44,36 +39,6 @@ public class ParallelPoshiRunner extends PoshiRunner {
 		new ParallelPrintStream(System.err);
 	public static ParallelPrintStream systemOutParallelPrintStream =
 		new ParallelPrintStream(System.out);
-
-	@AfterClass
-	public static void evaluateResults() throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		for (Map.Entry<String, List<String>> testResult :
-				_testResults.entrySet()) {
-
-			List<String> testResultMessages = testResult.getValue();
-
-			if (testResultMessages.size() == 1) {
-				continue;
-			}
-
-			int passes = Collections.frequency(testResultMessages, "PASS");
-
-			int failures = testResultMessages.size() - passes;
-
-			if ((passes > 0) && (failures > 0)) {
-				sb.append("\n");
-				sb.append(testResult.getKey());
-			}
-		}
-
-		if (sb.length() != 0) {
-			FileUtil.write(
-				FileUtil.getCanonicalPath(".") + "/test-results/flaky-tests",
-				sb.toString());
-		}
-	}
 
 	@ParallelParameterized.Parameters(name = "{0}")
 	public static List<String> getList() throws Exception {
@@ -176,8 +141,5 @@ public class ParallelPoshiRunner extends PoshiRunner {
 		}
 
 	}
-
-	private static final Map<String, List<String>> _testResults =
-		new HashMap<>();
 
 }

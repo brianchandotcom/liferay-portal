@@ -36,6 +36,30 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-191375. This ensures that a file entry can be accessed by the legacy URL."
+	@priority = 5
+	test CanAccessFileByLegacyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			fileName = "This is an image.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteId}/0/this+is+an+image.jpg");
+
+		AssertVisible(
+			key_imageSourceURL = "this+is+an+image.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
+	}
+
 	@description = "This ensures that an old image friendlyURL redirects properly after document is reverted."
 	@priority = 5
 	test CanAccessOldFriendlyURLAfterRevert {

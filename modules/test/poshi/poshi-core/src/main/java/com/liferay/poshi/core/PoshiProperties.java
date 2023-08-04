@@ -50,6 +50,8 @@ public class PoshiProperties extends Properties {
 	public static final String GENERATE_COMMAND_SIGNATURE =
 		"generate.command.signature";
 
+	public static final String GENERATE_USAGE_REPORT = "generate.usage.report";
+
 	public static final String GET_LOCATION_MAX_RETRIES =
 		"get.location.max.retries";
 
@@ -297,6 +299,8 @@ public class PoshiProperties extends Properties {
 		getProperty(DEBUG_STACKTRACE));
 	public Boolean generateCommandSignature = GetterUtil.getBoolean(
 		getProperty(GENERATE_COMMAND_SIGNATURE));
+	public Boolean generateUsageReport = GetterUtil.getBoolean(
+		getProperty(GENERATE_USAGE_REPORT));
 	public int getLocationMaxRetries = GetterUtil.getInteger(
 		getProperty(GET_LOCATION_MAX_RETRIES));
 	public int getLocationTimeout = GetterUtil.getInteger(

@@ -7,12 +7,14 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLink from '@clayui/link';
+import {
+	ExperienceSelector,
+	SegmentExperience,
+} from '@liferay/layout-js-components-web';
 import {fetch, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SegmentEntry from '../../types/SegmentEntry';
-import SegmentExperience from '../../types/SegmentExperience';
-import ExperienceSelector from './ExperienceSelector';
 import SegmentSelector from './SegmentSelector';
 
 interface Props {
@@ -346,18 +348,19 @@ function PageContentSelectors({
 				/>
 			)}
 
-			{selectedPreviewOption.value === 'experiences' && (
-				<ExperienceSelector
-					maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
-					namespace={namespace}
-					onMoreSegmentExperiencesButtonClick={
-						handleMoreSegmentExperiencesButtonClick
-					}
-					onSelectSegmentExperience={setSelectedSegmentsExperience}
-					segmentsExperiences={segmentsExperiences}
-					selectedSegmentsExperience={selectedSegmentsExperience}
-				/>
-			)}
+			{selectedPreviewOption.value === 'experiences' &&
+				(segmentsExperiences.length < 2 ? (
+					<p>
+						{Liferay.Language.get(
+							'no-experiences-have-been-added-yet'
+						)}
+					</p>
+				) : (
+					<ExperienceSelector
+						segmentsExperiences={segmentsExperiences}
+						selectedSegmentsExperience={selectedSegmentsExperience}
+					/>
+				))}
 		</form>
 	);
 }

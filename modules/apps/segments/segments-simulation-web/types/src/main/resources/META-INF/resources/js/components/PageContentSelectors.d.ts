@@ -5,8 +5,8 @@
 
 /// <reference types="react" />
 
+import {SegmentExperience} from '@liferay/layout-js-components-web';
 import SegmentEntry from '../../types/SegmentEntry';
-import SegmentExperience from '../../types/SegmentExperience';
 interface Props {
 	deactivateSimulationURL: string;
 	namespace: string;

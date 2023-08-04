@@ -551,16 +551,6 @@ public class EmailNotificationType extends BaseNotificationType {
 				continue;
 			}
 
-			if (Objects.isNull(
-					userLocalService.fetchUserByEmailAddress(
-						companyId, emailAddress))) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"No user exists with email address " + emailAddress);
-				}
-			}
-
 			if (sb.index() > 0) {
 				sb.append(StringPool.COMMA);
 			}

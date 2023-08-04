@@ -79,8 +79,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -718,7 +716,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		_assertSuccessfulHttpCode(
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"applicationStatus", "published"
@@ -755,7 +753,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		_assertSuccessfulHttpCode(
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"applicationStatus", "published"
@@ -817,7 +815,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		_assertSuccessfulHttpCode(
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"apiApplicationToAPIEndpoints",
@@ -964,7 +962,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"title", RandomTestUtil.randomString()
 				).toString(),
 				"headless-builder/applications", Http.Method.POST));
-		_assertSuccessfulHttpCode(
+
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				null,
 				StringBundler.concat(
@@ -973,7 +972,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"/requestAPISchemaToAPIEndpoints/",
 					apiEndpointExternalReferenceCode),
 				Http.Method.PUT));
-		_assertSuccessfulHttpCode(
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				null,
 				StringBundler.concat(
@@ -988,7 +987,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiEndpointExternalReferenceCode, String filterString)
 		throws Exception {
 
-		_assertSuccessfulHttpCode(
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"oDataFilter", filterString
@@ -1251,12 +1250,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
 	}
 
-	private void _assertSuccessfulHttpCode(int httpCode) {
-		Assert.assertEquals(
-			Response.Status.Family.SUCCESSFUL,
-			Response.Status.Family.familyOf(httpCode));
-	}
-
 	private ObjectFieldSetting _createObjectFieldSetting(
 		String name, String value) {
 
@@ -1273,7 +1266,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiApplicationExternalReferenceCode)
 		throws Exception {
 
-		_assertSuccessfulHttpCode(
+		assertSuccessfulHttpCode(
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"applicationStatus", "published"

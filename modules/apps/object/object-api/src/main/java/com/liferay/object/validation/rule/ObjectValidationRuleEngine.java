@@ -19,6 +19,8 @@ public interface ObjectValidationRuleEngine {
 		return Collections.emptyMap();
 	}
 
+	public String getKey();
+
 	public String getLabel();
 
 }

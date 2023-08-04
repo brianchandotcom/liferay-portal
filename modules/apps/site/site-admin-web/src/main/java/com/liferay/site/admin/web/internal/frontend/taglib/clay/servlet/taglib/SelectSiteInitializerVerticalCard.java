@@ -38,7 +38,8 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 
 	@Override
 	public String getCssClass() {
-		return "add-site-action-card mb-0";
+		return "add-site-action-card card-interactive " +
+			"card-interactive-primary c-mb-2";
 	}
 
 	@Override
@@ -65,9 +66,6 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
-		).put(
-			"data-layout-set-prototype-id",
-			String.valueOf(_siteInitializerItem.getLayoutSetPrototypeId())
 		).build();
 	}
 

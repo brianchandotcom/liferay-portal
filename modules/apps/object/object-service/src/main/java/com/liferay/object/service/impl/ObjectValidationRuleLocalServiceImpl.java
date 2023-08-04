@@ -308,14 +308,14 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRule.getEngine());
 
 			if (StringUtil.equals(
-					objectValidationRuleEngine.getLabel(),
+					objectValidationRuleEngine.getKey(),
 					ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
 
 				results = objectValidationRuleEngine.execute(
 					variables, objectValidationRule.getScript());
 			}
 			else if (StringUtil.equals(
-						objectValidationRuleEngine.getLabel(),
+						objectValidationRuleEngine.getKey(),
 						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
 
 				results = objectValidationRuleEngine.execute(

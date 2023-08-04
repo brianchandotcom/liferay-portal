@@ -9,16 +9,16 @@ import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -48,16 +48,18 @@ public class ObjectValidationRuleEngineRegistryImpl
 			ListUtil.filter(
 				ListUtil.fromCollection(objectValidationRuleEnginesCollection),
 				objectValidationRuleEngine -> {
-					boolean allowed = true;
+					boolean companyAllowed = true;
 
 					if (objectValidationRuleEngine instanceof CompanyScoped) {
 						CompanyScoped objectValidationRuleEngineCompanyScoped =
 							(CompanyScoped)objectValidationRuleEngine;
 
-						allowed =
+						companyAllowed =
 							objectValidationRuleEngineCompanyScoped.
 								isAllowedCompany(companyId);
 					}
+
+					boolean objectDefinitionAllowed = true;
 
 					if (objectValidationRuleEngine instanceof
 							ObjectDefinitionScoped) {
@@ -67,12 +69,12 @@ public class ObjectValidationRuleEngineRegistryImpl
 								(ObjectDefinitionScoped)
 									objectValidationRuleEngine;
 
-						allowed =
+						objectDefinitionAllowed =
 							objectValidationRuleEngineObjectDefinitionScoped.
 								isAllowedObjectDefinition(objectDefinitionName);
 					}
 
-					return allowed;
+					return companyAllowed && objectDefinitionAllowed;
 				}),
 			(ObjectValidationRuleEngine objectValidationRuleEngine1,
 			 ObjectValidationRuleEngine objectValidationRuleEngine2) -> {
@@ -88,26 +90,33 @@ public class ObjectValidationRuleEngineRegistryImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ObjectValidationRuleEngine.class, null,
-			new ServiceReferenceMapper<String, ObjectValidationRuleEngine>() {
+			(serviceReference, emitter) -> {
+				ObjectValidationRuleEngine objectValidationRuleEngine =
+					bundleContext.getService(serviceReference);
 
-				@Override
-				public void map(
-					ServiceReference<ObjectValidationRuleEngine>
-						serviceReference,
-					Emitter<String> emitter) {
+				String key = objectValidationRuleEngine.getKey();
 
-					ObjectValidationRuleEngine objectValidationRuleEngine =
-						bundleContext.getService(serviceReference);
+				if (objectValidationRuleEngine instanceof CompanyScoped) {
+					CompanyScoped objectValidationRuleEngineCompanyScoped =
+						(CompanyScoped)objectValidationRuleEngine;
 
-					emitter.emit(objectValidationRuleEngine.getLabel());
+					key = _getCompanyScopedKey(
+						key,
+						objectValidationRuleEngineCompanyScoped.
+							getAllowedCompanyId());
 				}
 
+				emitter.emit(key);
 			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private String _getCompanyScopedKey(String key, long company) {
+		return StringBundler.concat(key, StringPool.POUND, company);
 	}
 
 	private ServiceTrackerMap<String, ObjectValidationRuleEngine>

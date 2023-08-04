@@ -795,10 +795,12 @@ public class NestedFieldsWriterInterceptorTest {
 						return Pagination.of(
 							GetterUtil.getInteger(
 								nestedFieldsHttpServletRequestWrapper.
-									getParameter("page"), 1),
+									getParameter("page"),
+								1),
 							GetterUtil.getInteger(
 								nestedFieldsHttpServletRequestWrapper.
-									getParameter("pageSize"), 20));
+									getParameter("pageSize"),
+								20));
 					}
 
 				};

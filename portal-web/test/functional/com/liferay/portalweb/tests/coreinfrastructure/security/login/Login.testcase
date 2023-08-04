@@ -326,6 +326,10 @@ definition {
 			FormFields.enableCheckbox(fieldName = "Enabled");
 
 			SystemSettings.saveConfiguration();
+
+			// The pause is necessary because it takes a while to load new configuration
+
+			Pause(locator1 = 3000);
 		}
 
 		task ("Run and command") {
@@ -361,6 +365,10 @@ definition {
 			FormFields.enableCheckbox(fieldName = "enabled");
 
 			SystemSettings.saveConfiguration();
+
+			// The pause is necessary because it takes a while to load new configuration
+
+			Pause(locator1 = 3000);
 		}
 
 		task ("Run ant command") {

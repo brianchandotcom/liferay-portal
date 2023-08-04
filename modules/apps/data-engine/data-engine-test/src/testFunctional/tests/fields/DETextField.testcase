@@ -67,6 +67,8 @@ definition {
 
 		DataEngine.duplicate(fieldFieldLabel = "Text");
 
+		Click(locator1 = "Sidebar#BACK");
+
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");

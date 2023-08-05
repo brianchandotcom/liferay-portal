@@ -37,8 +37,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.impl.LayoutSetPrototypeImpl" %><%@
-page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.sites.kernel.util.SitesUtil" %>
+page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.Set" %>

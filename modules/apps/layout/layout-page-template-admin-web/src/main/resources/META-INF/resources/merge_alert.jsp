@@ -11,7 +11,7 @@
 LayoutPrototype layoutPrototype = (LayoutPrototype)request.getAttribute("edit_layout_prototype.jsp-layoutPrototype");
 String redirect = (String)request.getAttribute("edit_layout_prototype.jsp-redirect");
 
-int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
+int mergeFailCount = layoutPrototype.getMergeFailCount();
 %>
 
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">

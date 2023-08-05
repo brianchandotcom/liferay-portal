@@ -234,7 +234,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
 		List<Layout> initialMergeFailFriendlyURLLayouts =
-			_sites.getMergeFailFriendlyURLLayouts(layoutSet);
+			layoutSet.getMergeFailFriendlyURLLayouts();
 
 		setLinkEnabled(true);
 
@@ -244,10 +244,11 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
+		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSet.getLayoutSetId());
+
 		List<Layout> mergeFailFriendlyURLLayouts =
-			_sites.getMergeFailFriendlyURLLayouts(
-				LayoutSetLocalServiceUtil.getLayoutSet(
-					layoutSet.getLayoutSetId()));
+			layoutSet.getMergeFailFriendlyURLLayouts();
 
 		Assert.assertEquals(
 			mergeFailFriendlyURLLayouts.toString(),
@@ -262,7 +263,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
 		List<Layout> initialMergeFailFriendlyURLLayouts =
-			_sites.getMergeFailFriendlyURLLayouts(layoutSet);
+			layoutSet.getMergeFailFriendlyURLLayouts();
 
 		setLinkEnabled(true);
 
@@ -278,10 +279,11 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
+		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSet.getLayoutSetId());
+
 		List<Layout> mergeFailFriendlyURLLayouts =
-			_sites.getMergeFailFriendlyURLLayouts(
-				LayoutSetLocalServiceUtil.getLayoutSet(
-					layoutSet.getLayoutSetId()));
+			layoutSet.getMergeFailFriendlyURLLayouts();
 
 		Assert.assertEquals(
 			mergeFailFriendlyURLLayouts.toString(),

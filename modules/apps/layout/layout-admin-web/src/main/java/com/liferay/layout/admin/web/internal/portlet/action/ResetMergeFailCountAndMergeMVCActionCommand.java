@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -66,8 +67,10 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 
 		_sites.mergeLayoutPrototypeLayout(selLayout.getGroup(), selLayout);
 
-		int mergeFailCountAfterMerge = _sites.getMergeFailCount(
-			_layoutPrototypeService.getLayoutPrototype(layoutPrototypeId));
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
+
+		int mergeFailCountAfterMerge = layoutPrototype.getMergeFailCount();
 
 		if (mergeFailCountAfterMerge > 0) {
 			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");

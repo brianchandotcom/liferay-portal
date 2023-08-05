@@ -78,7 +78,7 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 		layoutSetPrototype = _layoutSetPrototypeService.getLayoutSetPrototype(
 			layoutSetPrototypeId);
 
-		if (_sites.getMergeFailCount(layoutSetPrototype) > 0) {
+		if (layoutSetPrototype.getMergeFailCount() > 0) {
 			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
 		}
 	}

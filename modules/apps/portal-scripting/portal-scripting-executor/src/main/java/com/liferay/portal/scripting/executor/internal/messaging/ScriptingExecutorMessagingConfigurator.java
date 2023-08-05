@@ -62,8 +62,7 @@ public class ScriptingExecutorMessagingConfigurator {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private volatile ServiceRegistration<Destination>
-		_destinationServiceRegistration;
+	private ServiceRegistration<Destination> _destinationServiceRegistration;
 
 	@Reference
 	private MessageBus _messageBus;

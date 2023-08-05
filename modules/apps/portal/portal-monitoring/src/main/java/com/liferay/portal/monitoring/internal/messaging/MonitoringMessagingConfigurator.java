@@ -100,7 +100,6 @@ public class MonitoringMessagingConfigurator {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private volatile ServiceRegistration<Destination>
-		_destinationServiceRegistration;
+	private ServiceRegistration<Destination> _destinationServiceRegistration;
 
 }

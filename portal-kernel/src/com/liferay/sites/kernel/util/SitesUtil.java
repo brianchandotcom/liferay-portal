@@ -31,10 +31,6 @@ public class SitesUtil {
 		return _sites;
 	}
 
-	public static boolean isContentSharingWithChildrenEnabled(Group group) {
-		return _sites.isContentSharingWithChildrenEnabled(group);
-	}
-
 	public static boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException {
 

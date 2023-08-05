@@ -93,7 +93,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -751,39 +750,6 @@ public class SitesImpl implements Sites {
 
 		ExportImportServiceUtil.importLayouts(
 			exportImportConfiguration, inputStream);
-	}
-
-	@Override
-	public boolean isContentSharingWithChildrenEnabled(Group group) {
-		int companyContentSharingEnabled = PrefsPropsUtil.getInteger(
-			group.getCompanyId(),
-			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
-
-		if (companyContentSharingEnabled ==
-				CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
-
-			return false;
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			group.getParentLiveGroupTypeSettingsProperties();
-
-		int groupContentSharingEnabled = GetterUtil.getInteger(
-			typeSettingsUnicodeProperties.getProperty(
-				"contentSharingWithChildrenEnabled"),
-			CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE);
-
-		if ((groupContentSharingEnabled ==
-				CONTENT_SHARING_WITH_CHILDREN_ENABLED) ||
-			((companyContentSharingEnabled ==
-				CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT) &&
-			 (groupContentSharingEnabled ==
-				 CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

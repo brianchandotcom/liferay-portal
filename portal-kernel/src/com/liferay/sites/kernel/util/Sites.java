@@ -143,8 +143,6 @@ public interface Sites {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public boolean isContentSharingWithChildrenEnabled(Group group);
-
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException;
 

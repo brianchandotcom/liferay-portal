@@ -36,12 +36,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 		File lfrBuildPortalFile = new File(
 			absolutePath.substring(0, pos + 1) + ".lfrbuild-portal");
 
-		String liferayBlock = _isDeployedInOSGITestDir(content);
-
-		if ((liferayBlock == null) ||
-			!liferayBlock.contains(
-				"deployDir = file(\"${liferayHome}/osgi/test\")")) {
-
+		if (!_isDeployedInOSGITestDir(content)) {
 			if (lfrBuildPortalFile.exists()) {
 				addMessage(fileName, "Missing 'deployDir'");
 			}
@@ -58,7 +53,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _isDeployedInOSGITestDir(String content) {
+	private boolean _isDeployedInOSGITestDir(String content) {
 		Matcher matcher = _liferayPattern.matcher(content);
 
 		if (matcher.find()) {
@@ -68,20 +63,24 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 				x = content.indexOf("}", x + 1);
 
 				if (x == -1) {
-					return null;
+					return false;
 				}
 
 				String codeBlock = content.substring(matcher.start(2), x + 1);
 
-				int level = ToolsUtil.getLevel(codeBlock, "{", "}");
+				if (ToolsUtil.getLevel(codeBlock, "{", "}") != 0) {
+					continue;
+				}
 
-				if (level == 0) {
-					return codeBlock;
+				if (codeBlock.contains(
+						"deployDir = file(\"${liferayHome}/osgi/test\")")) {
+
+					return true;
 				}
 			}
 		}
 
-		return null;
+		return false;
 	}
 
 	private static final Pattern _liferayPattern = Pattern.compile(

@@ -18,7 +18,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.petra.function.transform.TransformUtil" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
 page import="com.liferay.portal.kernel.exception.GroupKeyException" %><%@
 page import="com.liferay.portal.kernel.exception.MembershipRequestCommentsException" %><%@
@@ -36,6 +37,7 @@ page import="com.liferay.portal.kernel.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
 page import="com.liferay.portal.kernel.model.Team" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
+page import="com.liferay.portal.kernel.model.UserGroup" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
@@ -44,6 +46,7 @@ page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><
 page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.TeamLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -84,11 +87,9 @@ page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserA
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserGroupActionDropdownItemsProvider" %><%@
 page import="com.liferay.site.memberships.web.internal.util.GroupUtil" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
-page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Date" %><%@
+<%@ page import="java.util.Date" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

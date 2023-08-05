@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
 page import="com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants" %><%@
 page import="com.liferay.map.constants.MapProviderWebKeys" %><%@
+page import="com.liferay.petra.function.transform.TransformUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.exception.AvailableLocaleException" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateGroupException" %><%@
@@ -52,6 +53,7 @@ page import="com.liferay.portal.kernel.model.MembershipRequest" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.SiteConstants" %><%@
+page import="com.liferay.portal.kernel.model.UserGroup" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
@@ -107,8 +109,7 @@ page import="com.liferay.site.admin.web.internal.display.context.SiteAdminManage
 page import="com.liferay.site.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectSiteInitializerVerticalCard" %><%@
 page import="com.liferay.site.admin.web.internal.frontend.taglib.clay.servlet.taglib.SiteVerticalCard" %><%@
 page import="com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor" %><%@
-page import="com.liferay.sites.kernel.util.Sites" %><%@
-page import="com.liferay.sites.kernel.util.SitesUtil" %>
+page import="com.liferay.sites.kernel.util.Sites" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@

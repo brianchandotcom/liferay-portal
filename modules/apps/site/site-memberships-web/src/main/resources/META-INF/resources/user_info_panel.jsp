@@ -87,11 +87,9 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				<clay:tabs-panel>
 
 					<%
-					List<String> names = new ArrayList<String>();
+					List<String> names = TransformUtil.transform(OrganizationLocalServiceUtil.getGroupUserOrganizations(group.getGroupId(), curUser.getUserId()), Organization::getName);
 
-					names.addAll(SitesUtil.getOrganizationNames(group, curUser));
-
-					names.addAll(SitesUtil.getUserGroupNames(group, curUser));
+					names.addAll(TransformUtil.transform(UserGroupLocalServiceUtil.getGroupUserUserGroups(group.getGroupId(), curUser.getUserId()), UserGroup::getName));
 					%>
 
 					<c:if test="<%= ListUtil.isNotEmpty(names) %>">

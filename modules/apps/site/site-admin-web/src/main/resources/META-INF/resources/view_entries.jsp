@@ -116,9 +116,9 @@ SiteAdminDisplayContext siteAdminDisplayContext = (SiteAdminDisplayContext)reque
 					</c:if>
 
 					<%
-					List<String> names = SitesUtil.getOrganizationNames(curGroup, user);
+					List<String> names = TransformUtil.transform(OrganizationLocalServiceUtil.getGroupUserOrganizations(curGroup.getGroupId(), user.getUserId()), Organization::getName);
 
-					names.addAll(SitesUtil.getUserGroupNames(curGroup, user));
+					names.addAll(TransformUtil.transform(UserGroupLocalServiceUtil.getGroupUserUserGroups(curGroup.getGroupId(), user.getUserId()), UserGroup::getName));
 					%>
 
 					<c:if test="<%= ListUtil.isNotEmpty(names) %>">

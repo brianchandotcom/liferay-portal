@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -159,20 +158,8 @@ public class SitesUtil {
 		return _sites.getLayoutSetPrototypeParameters(serviceContext);
 	}
 
-	public static List<String> getOrganizationNames(Group group, User user)
-		throws Exception {
-
-		return _sites.getOrganizationNames(group, user);
-	}
-
 	public static Sites getSites() {
 		return _sites;
-	}
-
-	public static List<String> getUserGroupNames(Group group, User user)
-		throws Exception {
-
-		return _sites.getUserGroupNames(group, user);
 	}
 
 	public static void importLayoutSetPrototype(

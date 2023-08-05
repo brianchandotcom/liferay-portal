@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -70,7 +69,6 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
@@ -811,28 +809,6 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID}
 		).build();
-	}
-
-	@Override
-	public List<String> getOrganizationNames(Group group, User user)
-		throws Exception {
-
-		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getGroupUserOrganizations(
-				group.getGroupId(), user.getUserId());
-
-		return ListUtil.toList(organizations, Organization.NAME_ACCESSOR);
-	}
-
-	@Override
-	public List<String> getUserGroupNames(Group group, User user)
-		throws Exception {
-
-		List<UserGroup> userGroups =
-			UserGroupLocalServiceUtil.getGroupUserUserGroups(
-				group.getGroupId(), user.getUserId());
-
-		return ListUtil.toList(userGroups, UserGroup.NAME_ACCESSOR);
 	}
 
 	@Override

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.initializer.SiteInitializer;
@@ -51,6 +52,33 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		InitialRequestSyncUtil.registerSyncCallable(
+			() -> {
+				_portalInstanceRegistered(company);
+
+				return null;
+			});
+	}
+
+	private User _getUser(long companyId) throws PortalException {
+		Role role = _roleLocalService.fetchRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		if (role == null) {
+			return _userLocalService.getGuestUser(companyId);
+		}
+
+		List<User> adminUsers = _userLocalService.getRoleUsers(
+			role.getRoleId(), 0, 1);
+
+		if (adminUsers.isEmpty()) {
+			return _userLocalService.getGuestUser(companyId);
+		}
+
+		return adminUsers.get(0);
+	}
+
+	private void _portalInstanceRegistered(Company company) throws Exception {
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
@@ -94,24 +122,6 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 				}
 			}
 		}
-	}
-
-	private User _getUser(long companyId) throws PortalException {
-		Role role = _roleLocalService.fetchRole(
-			companyId, RoleConstants.ADMINISTRATOR);
-
-		if (role == null) {
-			return _userLocalService.getGuestUser(companyId);
-		}
-
-		List<User> adminUsers = _userLocalService.getRoleUsers(
-			role.getRoleId(), 0, 1);
-
-		if (adminUsers.isEmpty()) {
-			return _userLocalService.getGuestUser(companyId);
-		}
-
-		return adminUsers.get(0);
 	}
 
 	@Reference

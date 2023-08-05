@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.browser.web.internal.constants.SiteBrowserPortletKeys;
 import com.liferay.site.search.GroupSearch;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -399,7 +398,7 @@ public class SiteBrowserDisplayContext {
 
 		for (Group group : groups) {
 			if (filter.equals("contentSharingWithChildrenEnabled") &&
-				SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+				group.isContentSharingWithChildrenEnabled()) {
 
 				filteredGroups.add(group);
 			}

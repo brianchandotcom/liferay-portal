@@ -488,7 +488,7 @@ public class AssetPublisherWebHelper {
 
 			Group group = _groupLocalService.getGroup(groupId);
 
-			if (_sites.isContentSharingWithChildrenEnabled(group)) {
+			if (group.isContentSharingWithChildrenEnabled()) {
 				return true;
 			}
 

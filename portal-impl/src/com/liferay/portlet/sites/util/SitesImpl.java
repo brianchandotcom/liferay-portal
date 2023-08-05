@@ -813,97 +813,6 @@ public class SitesImpl implements Sites {
 		).build();
 	}
 
-	/**
-	 * Returns the number of failed merge attempts for the layout prototype
-	 * since its last reset or update.
-	 *
-	 * @param  layoutPrototype the page template being checked for failed merge
-	 *         attempts
-	 * @return the number of failed merge attempts for the layout prototype
-	 */
-	@Override
-	public int getMergeFailCount(LayoutPrototype layoutPrototype)
-		throws PortalException {
-
-		if ((layoutPrototype == null) ||
-			(layoutPrototype.getLayoutPrototypeId() == 0)) {
-
-			return 0;
-		}
-
-		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-		UnicodeProperties prototypeTypeSettingsUnicodeProperties =
-			layoutPrototypeLayout.getTypeSettingsProperties();
-
-		return GetterUtil.getInteger(
-			prototypeTypeSettingsUnicodeProperties.getProperty(
-				MERGE_FAIL_COUNT));
-	}
-
-	/**
-	 * Returns the number of failed merge attempts for the layout set prototype
-	 * since its last reset or update.
-	 *
-	 * @param  layoutSetPrototype the site template being checked for failed
-	 *         merge attempts
-	 * @return the number of failed merge attempts for the layout set prototype
-	 */
-	@Override
-	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
-		throws PortalException {
-
-		if ((layoutSetPrototype == null) ||
-			(layoutSetPrototype.getLayoutSetPrototypeId() == 0)) {
-
-			return 0;
-		}
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		return GetterUtil.getInteger(
-			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-				MERGE_FAIL_COUNT));
-	}
-
-	@Override
-	public List<Layout> getMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws PortalException {
-
-		if (layoutSet == null) {
-			return Collections.emptyList();
-		}
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		String uuids = settingsUnicodeProperties.getProperty(
-			MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
-
-		if (Validator.isNotNull(uuids)) {
-			List<Layout> layouts = new ArrayList<>();
-
-			for (String uuid : StringUtil.split(uuids)) {
-				Layout layout =
-					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-						uuid, layoutSet.getGroupId(),
-						layoutSet.isPrivateLayout());
-
-				if (layout != null) {
-					layouts.add(layout);
-				}
-			}
-
-			return layouts;
-		}
-
-		return Collections.emptyList();
-	}
-
 	@Override
 	public List<String> getOrganizationNames(Group group, User user)
 		throws Exception {
@@ -1164,35 +1073,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
-		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-			return true;
-		}
-
-		try {
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.
-					getLayoutSetPrototypeByUuidAndCompanyId(
-						layoutSet.getLayoutSetPrototypeUuid(),
-						layoutSet.getCompanyId());
-
-			String layoutsUpdateable = layoutSetPrototype.getSettingsProperty(
-				"layoutsUpdateable");
-
-			if (Validator.isNotNull(layoutsUpdateable)) {
-				return GetterUtil.getBoolean(layoutsUpdateable, true);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isLayoutSortable(Layout layout) {
 		return isLayoutDeleteable(layout);
 	}
@@ -1214,7 +1094,7 @@ public class SitesImpl implements Sites {
 
 			if (layoutSet.isLayoutSetPrototypeLinkActive()) {
 				boolean layoutSetPrototypeUpdateable =
-					isLayoutSetPrototypeUpdateable(layoutSet);
+					layoutSet.isLayoutSetPrototypeUpdateable();
 
 				if (!layoutSetPrototypeUpdateable) {
 					return false;

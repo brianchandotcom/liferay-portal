@@ -12,7 +12,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.IOException;
 
@@ -39,6 +41,28 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 	public LayoutSet getLayoutSet() throws PortalException {
 		return LayoutSetLocalServiceUtil.getLayoutSet(
 			getGroup().getGroupId(), true);
+	}
+
+	/**
+	 * Returns the number of failed merge attempts for the layout set prototype
+	 * since its last reset or update.
+	 *
+	 * @return the number of failed merge attempts for the layout set prototype
+	 */
+	@Override
+	public int getMergeFailCount() throws PortalException {
+		if (getLayoutSetPrototypeId() == 0) {
+			return 0;
+		}
+
+		LayoutSet layoutSetPrototypeLayoutSet = getLayoutSet();
+
+		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
+			layoutSetPrototypeLayoutSet.getSettingsProperties();
+
+		return GetterUtil.getInteger(
+			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
+				Sites.MERGE_FAIL_COUNT));
 	}
 
 	@Override

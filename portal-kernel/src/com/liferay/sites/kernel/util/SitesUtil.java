@@ -159,25 +159,6 @@ public class SitesUtil {
 		return _sites.getLayoutSetPrototypeParameters(serviceContext);
 	}
 
-	public static int getMergeFailCount(LayoutPrototype layoutPrototype)
-		throws PortalException {
-
-		return _sites.getMergeFailCount(layoutPrototype);
-	}
-
-	public static int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
-		throws PortalException {
-
-		return _sites.getMergeFailCount(layoutSetPrototype);
-	}
-
-	public static List<Layout> getMergeFailFriendlyURLLayouts(
-			LayoutSet layoutSet)
-		throws PortalException {
-
-		return _sites.getMergeFailFriendlyURLLayouts(layoutSet);
-	}
-
 	public static List<String> getOrganizationNames(Group group, User user)
 		throws Exception {
 
@@ -221,10 +202,6 @@ public class SitesUtil {
 		throws PortalException {
 
 		return _sites.isLayoutSetMergeable(group, layoutSet);
-	}
-
-	public static boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet) {
-		return _sites.isLayoutSetPrototypeUpdateable(layoutSet);
 	}
 
 	public static boolean isLayoutSortable(Layout layout) {

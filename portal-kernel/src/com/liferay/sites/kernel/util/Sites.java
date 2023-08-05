@@ -158,15 +158,6 @@ public interface Sites {
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext);
 
-	public int getMergeFailCount(LayoutPrototype layoutPrototype)
-		throws PortalException;
-
-	public int getMergeFailCount(LayoutSetPrototype layoutSetPrototype)
-		throws PortalException;
-
-	public List<Layout> getMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws PortalException;
-
 	public List<String> getOrganizationNames(Group group, User user)
 		throws Exception;
 
@@ -187,8 +178,6 @@ public interface Sites {
 
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException;
-
-	public boolean isLayoutSetPrototypeUpdateable(LayoutSet layoutSet);
 
 	public boolean isLayoutSortable(Layout layout);
 

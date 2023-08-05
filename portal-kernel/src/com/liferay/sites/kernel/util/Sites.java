@@ -26,7 +26,6 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -72,22 +71,6 @@ public interface Sites {
 
 	public void addMergeFailFriendlyURLLayout(Layout layout)
 		throws PortalException;
-
-	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest httpServletRequest,
-			PortletURL portletURL)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse)
-		throws Exception;
-
-	public void addPortletBreadcrumbEntries(
-			Group group, String pagesName, PortletURL redirectURL,
-			HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse)
-		throws Exception;
 
 	public void applyLayoutPrototype(
 			LayoutPrototype layoutPrototype, Layout targetLayout,

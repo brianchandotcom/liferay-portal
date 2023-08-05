@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -41,34 +40,6 @@ public class SitesUtil {
 		throws PortalException {
 
 		_sites.addMergeFailFriendlyURLLayout(layout);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest httpServletRequest,
-			PortletURL portletURL)
-		throws Exception {
-
-		_sites.addPortletBreadcrumbEntries(
-			group, httpServletRequest, portletURL);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		_sites.addPortletBreadcrumbEntries(
-			group, httpServletRequest, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			Group group, String pagesName, PortletURL redirectURL,
-			HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		_sites.addPortletBreadcrumbEntries(
-			group, pagesName, redirectURL, httpServletRequest, renderResponse);
 	}
 
 	public static void applyLayoutPrototype(

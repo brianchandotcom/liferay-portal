@@ -19,9 +19,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.search.GroupSearch;
 import com.liferay.site.util.GroupSearchProvider;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -114,8 +115,7 @@ public class MySitesItemSelectorViewDisplayContext
 				httpServletRequest, LanguageUtil.get(httpServletRequest, "all"),
 				portletURL.toString());
 
-			SitesUtil.addPortletBreadcrumbEntries(
-				group, httpServletRequest, portletURL);
+			_addPortletBreadcrumbEntries(group, httpServletRequest, portletURL);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -123,6 +123,34 @@ public class MySitesItemSelectorViewDisplayContext
 					group.getGroupId(),
 				exception);
 		}
+	}
+
+	private void _addPortletBreadcrumbEntries(
+			Group group, HttpServletRequest httpServletRequest,
+			PortletURL portletURL)
+		throws Exception {
+
+		List<Group> ancestorGroups = group.getAncestors();
+
+		Collections.reverse(ancestorGroups);
+
+		for (Group ancestorGroup : ancestorGroups) {
+			portletURL.setParameter(
+				"groupId", String.valueOf(ancestorGroup.getGroupId()));
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				httpServletRequest, ancestorGroup.getDescriptiveName(),
+				portletURL.toString());
+		}
+
+		Group unescapedGroup = group.toUnescapedModel();
+
+		portletURL.setParameter(
+			"groupId", String.valueOf(unescapedGroup.getGroupId()));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			httpServletRequest, unescapedGroup.getDescriptiveName(),
+			portletURL.toString());
 	}
 
 	private Group _getGroup() {

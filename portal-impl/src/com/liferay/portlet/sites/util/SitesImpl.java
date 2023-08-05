@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -112,7 +111,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -122,7 +120,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -163,86 +160,6 @@ public class SitesImpl implements Sites {
 				newMergeFailFriendlyURLLayouts);
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-		}
-	}
-
-	@Override
-	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest httpServletRequest,
-			PortletURL portletURL)
-		throws Exception {
-
-		List<Group> ancestorGroups = group.getAncestors();
-
-		Collections.reverse(ancestorGroups);
-
-		for (Group ancestorGroup : ancestorGroups) {
-			portletURL.setParameter(
-				"groupId", String.valueOf(ancestorGroup.getGroupId()));
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, ancestorGroup.getDescriptiveName(),
-				portletURL.toString());
-		}
-
-		Group unescapedGroup = group.toUnescapedModel();
-
-		portletURL.setParameter(
-			"groupId", String.valueOf(unescapedGroup.getGroupId()));
-
-		PortalUtil.addPortletBreadcrumbEntry(
-			httpServletRequest, unescapedGroup.getDescriptiveName(),
-			portletURL.toString());
-	}
-
-	@Override
-	public void addPortletBreadcrumbEntries(
-			Group group, HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		addPortletBreadcrumbEntries(group, httpServletRequest, portletURL);
-	}
-
-	@Override
-	public void addPortletBreadcrumbEntries(
-			Group group, String pagesName, PortletURL redirectURL,
-			HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		if (renderResponse == null) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group unescapedGroup = group.toUnescapedModel();
-
-		Locale locale = themeDisplay.getLocale();
-
-		if (group.isLayoutPrototype()) {
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, LanguageUtil.get(locale, "page-template"),
-				null);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, unescapedGroup.getDescriptiveName(),
-				redirectURL.toString());
-		}
-		else {
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, unescapedGroup.getDescriptiveName(), null);
-		}
-
-		if (!group.isLayoutPrototype()) {
-			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, LanguageUtil.get(locale, pagesName),
-				redirectURL.toString());
 		}
 	}
 

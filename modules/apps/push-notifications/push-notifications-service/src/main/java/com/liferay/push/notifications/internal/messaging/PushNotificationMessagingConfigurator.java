@@ -14,9 +14,9 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -70,7 +70,7 @@ public class PushNotificationMessagingConfigurator {
 	protected void deactivate() {
 		if (!_serviceRegistrations.isEmpty()) {
 			for (ServiceRegistration<Destination> serviceRegistration :
-					_serviceRegistrations.values()) {
+					_serviceRegistrations) {
 
 				serviceRegistration.unregister();
 			}
@@ -92,11 +92,9 @@ public class PushNotificationMessagingConfigurator {
 				"destination.name", destination.getName()
 			).build();
 
-		ServiceRegistration<Destination> serviceRegistration =
+		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				Destination.class, destination, properties);
-
-		_serviceRegistrations.put(destination.getName(), serviceRegistration);
+				Destination.class, destination, properties));
 
 		return destination;
 	}
@@ -113,7 +111,7 @@ public class PushNotificationMessagingConfigurator {
 	private PushNotificationsDeviceLocalService
 		_pushNotificationsDeviceLocalService;
 
-	private final Map<String, ServiceRegistration<Destination>>
-		_serviceRegistrations = new HashMap<>();
+	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

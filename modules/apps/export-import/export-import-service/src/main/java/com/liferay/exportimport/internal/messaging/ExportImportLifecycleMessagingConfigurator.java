@@ -11,9 +11,9 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -74,7 +74,7 @@ public class ExportImportLifecycleMessagingConfigurator {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
-		new HashSet<>();
+	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

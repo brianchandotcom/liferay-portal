@@ -135,8 +135,6 @@ public interface Sites {
 
 	public Long[] filterGroups(List<Group> groups, String[] names);
 
-	public Layout getLayoutSetPrototypeLayout(Layout layout);
-
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext);
 
@@ -147,17 +145,11 @@ public interface Sites {
 
 	public boolean isContentSharingWithChildrenEnabled(Group group);
 
-	public boolean isLayoutDeleteable(Layout layout);
-
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException;
 
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException;
-
-	public boolean isLayoutSortable(Layout layout);
-
-	public boolean isLayoutUpdateable(Layout layout);
 
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)

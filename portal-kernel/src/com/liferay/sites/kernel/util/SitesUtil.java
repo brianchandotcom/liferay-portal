@@ -119,10 +119,6 @@ public class SitesUtil {
 		return _sites.filterGroups(groups, names);
 	}
 
-	public static Layout getLayoutSetPrototypeLayout(Layout layout) {
-		return _sites.getLayoutSetPrototypeLayout(layout);
-	}
-
 	public static Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext) {
 
@@ -146,10 +142,6 @@ public class SitesUtil {
 		return _sites.isContentSharingWithChildrenEnabled(group);
 	}
 
-	public static boolean isLayoutDeleteable(Layout layout) {
-		return _sites.isLayoutDeleteable(layout);
-	}
-
 	public static boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException {
 
@@ -160,14 +152,6 @@ public class SitesUtil {
 		throws PortalException {
 
 		return _sites.isLayoutSetMergeable(group, layoutSet);
-	}
-
-	public static boolean isLayoutSortable(Layout layout) {
-		return _sites.isLayoutSortable(layout);
-	}
-
-	public static boolean isLayoutUpdateable(Layout layout) {
-		return _sites.isLayoutUpdateable(layout);
 	}
 
 	public static boolean isUserGroupLayoutSetViewable(

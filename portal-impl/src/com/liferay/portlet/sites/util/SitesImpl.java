@@ -641,34 +641,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public Layout getLayoutSetPrototypeLayout(Layout layout) {
-		try {
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-				return null;
-			}
-
-			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.
-					getLayoutSetPrototypeByUuidAndCompanyId(
-						layoutSet.getLayoutSetPrototypeUuid(),
-						layout.getCompanyId());
-
-			return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layout.getSourcePrototypeLayoutUuid(),
-				layoutSetPrototype.getGroupId(), true);
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to fetch the the layout set prototype's layout",
-				exception);
-		}
-
-		return null;
-	}
-
-	@Override
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext) {
 
@@ -815,45 +787,11 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public boolean isLayoutDeleteable(Layout layout) {
-		try {
-			if (layout instanceof VirtualLayout) {
-				return false;
-			}
-
-			if (Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
-				return true;
-			}
-
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-				return true;
-			}
-
-			if (LayoutLocalServiceUtil.hasLayoutSetPrototypeLayout(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layout.getCompanyId(),
-					layout.getSourcePrototypeLayoutUuid())) {
-
-				return false;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout) {
 		if ((layout == null) ||
 			Validator.isNull(layout.getSourcePrototypeLayoutUuid()) ||
 			layout.isLayoutPrototypeLinkActive() ||
-			!isLayoutUpdateable(layout)) {
+			(layout instanceof VirtualLayout) || !layout.isLayoutUpdateable()) {
 
 			return false;
 		}
@@ -960,61 +898,6 @@ public class SitesImpl implements Sites {
 			}
 
 			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean isLayoutSortable(Layout layout) {
-		return isLayoutDeleteable(layout);
-	}
-
-	@Override
-	public boolean isLayoutUpdateable(Layout layout) {
-		try {
-			if (layout instanceof VirtualLayout) {
-				return false;
-			}
-
-			if (Validator.isNull(layout.getLayoutPrototypeUuid()) &&
-				Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
-
-				return true;
-			}
-
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			if (layoutSet.isLayoutSetPrototypeLinkActive()) {
-				boolean layoutSetPrototypeUpdateable =
-					layoutSet.isLayoutSetPrototypeUpdateable();
-
-				if (!layoutSetPrototypeUpdateable) {
-					return false;
-				}
-
-				Layout layoutSetPrototypeLayout = getLayoutSetPrototypeLayout(
-					layout);
-
-				if (layoutSetPrototypeLayout == null) {
-					return true;
-				}
-
-				String layoutUpdateable =
-					layoutSetPrototypeLayout.getTypeSettingsProperty(
-						LAYOUT_UPDATEABLE);
-
-				if (Validator.isNull(layoutUpdateable)) {
-					return true;
-				}
-
-				return GetterUtil.getBoolean(layoutUpdateable);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
 		}
 
 		return true;

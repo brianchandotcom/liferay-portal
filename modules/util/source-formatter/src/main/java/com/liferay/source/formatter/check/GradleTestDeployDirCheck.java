@@ -38,15 +38,18 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 
 		if (!_isDeployedInOSGITestDir(content)) {
 			if (lfrBuildPortalFile.exists()) {
-				addMessage(fileName, "Missing 'deployDir'");
+				addMessage(
+					fileName,
+					"Missing deploy to 'osgi/test' when '.lfrbuild-portal' " +
+						"exists");
 			}
 		}
 		else {
 			if (!lfrBuildPortalFile.exists()) {
 				addMessage(
 					fileName,
-					"Do not have 'deployDir' in liferay when not have a " +
-						"deploy marker file(.lfrbuild-portal)");
+					"Do not deploy to 'osgi/test' when '.lfrbuild-portal' " +
+						"does not exist");
 			}
 		}
 

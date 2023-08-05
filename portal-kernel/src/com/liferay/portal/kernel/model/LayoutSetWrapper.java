@@ -337,6 +337,11 @@ public class LayoutSetWrapper
 		return model.getLogoId();
 	}
 
+	@Override
+	public java.util.List<Layout> getMergeFailFriendlyURLLayouts() {
+		return model.getMergeFailFriendlyURLLayouts();
+	}
+
 	/**
 	 * Returns the modified date of this layout set.
 	 *
@@ -461,6 +466,11 @@ public class LayoutSetWrapper
 	@Override
 	public boolean isLayoutSetPrototypeLinkEnabled() {
 		return model.isLayoutSetPrototypeLinkEnabled();
+	}
+
+	@Override
+	public boolean isLayoutSetPrototypeUpdateable() {
+		return model.isLayoutSetPrototypeUpdateable();
 	}
 
 	@Override

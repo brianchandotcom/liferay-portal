@@ -57,6 +57,15 @@ public interface LayoutSetPrototype
 	public LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	 * Returns the number of failed merge attempts for the layout set prototype
+	 * since its last reset or update.
+	 *
+	 * @return the number of failed merge attempts for the layout set prototype
+	 */
+	public int getMergeFailCount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSettingsProperties();
 

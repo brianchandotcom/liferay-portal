@@ -89,6 +89,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public boolean getLogo();
 
+	public java.util.List<Layout> getMergeFailFriendlyURLLayouts();
+
 	public int getPageCount();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
@@ -119,6 +121,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	public boolean hasSetModifiedDate();
 
 	public boolean isLayoutSetPrototypeLinkActive();
+
+	public boolean isLayoutSetPrototypeUpdateable();
 
 	public boolean isLogo();
 

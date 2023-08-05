@@ -296,6 +296,19 @@ public class LayoutPrototypeWrapper
 	}
 
 	/**
+	 * Returns the number of failed merge attempts for the layout prototype
+	 * since its last reset or update.
+	 *
+	 * @return the number of failed merge attempts for the layout prototype
+	 */
+	@Override
+	public int getMergeFailCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getMergeFailCount();
+	}
+
+	/**
 	 * Returns the modified date of this layout prototype.
 	 *
 	 * @return the modified date of this layout prototype

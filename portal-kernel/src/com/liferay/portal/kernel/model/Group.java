@@ -160,6 +160,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean isCompanyStagingGroup();
 
+	public boolean isContentSharingWithChildrenEnabled();
+
 	public boolean isControlPanel();
 
 	public boolean isDepot();

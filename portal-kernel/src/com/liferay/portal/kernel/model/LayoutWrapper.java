@@ -928,6 +928,11 @@ public class LayoutWrapper
 		return model.getLayoutSet();
 	}
 
+	@Override
+	public Layout getLayoutSetPrototypeLayout() {
+		return model.getLayoutSetPrototypeLayout();
+	}
+
 	/**
 	 * Returns the current layout's {@link LayoutType}.
 	 *
@@ -1707,6 +1712,11 @@ public class LayoutWrapper
 		return model.isInheritLookAndFeel();
 	}
 
+	@Override
+	public boolean isLayoutDeleteable() {
+		return model.isLayoutDeleteable();
+	}
+
 	/**
 	 * Returns <code>true</code> if the current layout is built from a layout
 	 * template and still maintains an active connection to it.
@@ -1728,6 +1738,16 @@ public class LayoutWrapper
 	@Override
 	public boolean isLayoutPrototypeLinkEnabled() {
 		return model.isLayoutPrototypeLinkEnabled();
+	}
+
+	@Override
+	public boolean isLayoutSortable() {
+		return model.isLayoutSortable();
+	}
+
+	@Override
+	public boolean isLayoutUpdateable() {
+		return model.isLayoutUpdateable();
 	}
 
 	/**

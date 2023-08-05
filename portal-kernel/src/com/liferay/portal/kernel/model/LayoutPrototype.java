@@ -55,6 +55,15 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 	public Layout getLayout()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	 * Returns the number of failed merge attempts for the layout prototype
+	 * since its last reset or update.
+	 *
+	 * @return the number of failed merge attempts for the layout prototype
+	 */
+	public int getMergeFailCount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean hasSetModifiedDate();
 
 }

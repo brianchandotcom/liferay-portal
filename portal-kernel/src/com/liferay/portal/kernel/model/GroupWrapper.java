@@ -928,6 +928,11 @@ public class GroupWrapper
 	}
 
 	@Override
+	public boolean isContentSharingWithChildrenEnabled() {
+		return model.isContentSharingWithChildrenEnabled();
+	}
+
+	@Override
 	public boolean isControlPanel() {
 		return model.isControlPanel();
 	}

@@ -232,6 +232,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 */
 	public LayoutSet getLayoutSet();
 
+	public Layout getLayoutSetPrototypeLayout();
+
 	/**
 	 * Returns the current layout's {@link LayoutType}.
 	 *
@@ -370,6 +372,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 */
 	public boolean isInheritLookAndFeel();
 
+	public boolean isLayoutDeleteable();
+
 	/**
 	 * Returns <code>true</code> if the current layout is built from a layout
 	 * template and still maintains an active connection to it.
@@ -379,6 +383,10 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 <code>false</code> otherwise
 	 */
 	public boolean isLayoutPrototypeLinkActive();
+
+	public boolean isLayoutSortable();
+
+	public boolean isLayoutUpdateable();
 
 	public boolean isPortletEmbedded(String portletId, long groupId);
 

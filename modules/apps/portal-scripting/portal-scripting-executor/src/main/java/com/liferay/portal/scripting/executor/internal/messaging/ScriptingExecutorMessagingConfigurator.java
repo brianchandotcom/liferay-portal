@@ -43,7 +43,7 @@ public class ScriptingExecutorMessagingConfigurator {
 				"destination.name", destination.getName()
 			).build();
 
-		_destinationServiceRegistration = bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 
 		ScriptingExecutorMessageListener scriptingExecutorMessageListener =
@@ -54,18 +54,18 @@ public class ScriptingExecutorMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		_destinationServiceRegistration.unregister();
+		_serviceRegistration.unregister();
 	}
 
 	@Reference
 	private DestinationFactory _destinationFactory;
-
-	private ServiceRegistration<Destination> _destinationServiceRegistration;
 
 	@Reference
 	private MessageBus _messageBus;
 
 	@Reference
 	private Scripting _scripting;
+
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

@@ -83,13 +83,13 @@ public class MonitoringMessagingConfigurator {
 				"destination.name", destination.getName()
 			).build();
 
-		_destinationServiceRegistration = bundleContext.registerService(
+		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, destinationProperties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_destinationServiceRegistration.unregister();
+		_serviceRegistration.unregister();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -98,6 +98,6 @@ public class MonitoringMessagingConfigurator {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private ServiceRegistration<Destination> _destinationServiceRegistration;
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

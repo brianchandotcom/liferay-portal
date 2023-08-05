@@ -7,15 +7,11 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.parser.ParseException;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.DocumentException;
 
 /**
  * @author Qi Zhang
@@ -24,8 +20,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException, ParseException {
+		String fileName, String absolutePath, String content) {
 
 		if (!absolutePath.endsWith("-test-util/build.gradle")) {
 			return content;

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class GradleTestDeployDirCheck extends BaseFileCheck {
+public class GradleTestUtilDeployDirCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

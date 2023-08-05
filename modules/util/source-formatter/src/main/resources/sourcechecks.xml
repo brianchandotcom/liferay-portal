@@ -324,9 +324,9 @@
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.extension.junit.bridge" />
 			<property name="allowedDependencyNames" value="com.liferay.portal.cache.test.util" />
 		</check>
-		<check name="GradleTestDeployDirCheck">
+		<check name="GradleTestUtilDeployDirCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks for incorrect use of property 'deployDir'." />
+			<description name="Checks for incorrect use of `deployDir`." />
 		</check>
 		<check name="GradleUpgradeReleaseDXPCheck">
 			<category name="Upgrade" />

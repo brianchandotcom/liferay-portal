@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.UserSearch;
-import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 import com.liferay.user.groups.admin.search.UnsetUserUserGroupChecker;
 import com.liferay.users.admin.item.selector.UserUserGroupItemSelectorCriterion;
+import com.liferay.users.admin.search.UserSearch;
+import com.liferay.users.admin.search.UserSearchTerms;
 
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -62,7 +62,6 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.sites.kernel.util.Sites;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -107,20 +106,20 @@ public class LayoutSetPrototypePropagationTest
 
 	@Test
 	public void testIsLayoutDeleteable() throws Exception {
-		Assert.assertFalse(SitesUtil.isLayoutDeleteable(layout));
+		Assert.assertFalse(_sites.isLayoutDeleteable(layout));
 
 		setLinkEnabled(false);
 
-		Assert.assertTrue(SitesUtil.isLayoutDeleteable(layout));
+		Assert.assertTrue(_sites.isLayoutDeleteable(layout));
 	}
 
 	@Test
 	public void testIsLayoutSortable() throws Exception {
-		Assert.assertFalse(SitesUtil.isLayoutSortable(layout));
+		Assert.assertFalse(_sites.isLayoutSortable(layout));
 
 		setLinkEnabled(false);
 
-		Assert.assertTrue(SitesUtil.isLayoutSortable(layout));
+		Assert.assertTrue(_sites.isLayoutSortable(layout));
 	}
 
 	@Test
@@ -235,7 +234,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
 		List<Layout> initialMergeFailFriendlyURLLayouts =
-			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
+			_sites.getMergeFailFriendlyURLLayouts(layoutSet);
 
 		setLinkEnabled(true);
 
@@ -246,7 +245,7 @@ public class LayoutSetPrototypePropagationTest
 		propagateChanges(group);
 
 		List<Layout> mergeFailFriendlyURLLayouts =
-			SitesUtil.getMergeFailFriendlyURLLayouts(
+			_sites.getMergeFailFriendlyURLLayouts(
 				LayoutSetLocalServiceUtil.getLayoutSet(
 					layoutSet.getLayoutSetId()));
 
@@ -263,7 +262,7 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
 		List<Layout> initialMergeFailFriendlyURLLayouts =
-			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
+			_sites.getMergeFailFriendlyURLLayouts(layoutSet);
 
 		setLinkEnabled(true);
 
@@ -280,7 +279,7 @@ public class LayoutSetPrototypePropagationTest
 		propagateChanges(group);
 
 		List<Layout> mergeFailFriendlyURLLayouts =
-			SitesUtil.getMergeFailFriendlyURLLayouts(
+			_sites.getMergeFailFriendlyURLLayouts(
 				LayoutSetLocalServiceUtil.getLayoutSet(
 					layoutSet.getLayoutSetId()));
 
@@ -444,8 +443,8 @@ public class LayoutSetPrototypePropagationTest
 
 	@Test
 	public void testResetLayoutTemplate() throws Exception {
-		SitesUtil.resetPrototype(layout);
-		SitesUtil.resetPrototype(_layout);
+		_sites.resetPrototype(layout);
+		_sites.resetPrototype(_layout);
 
 		propagateChanges(group);
 
@@ -453,26 +452,26 @@ public class LayoutSetPrototypePropagationTest
 
 		layout = LayoutTestUtil.updateLayoutTemplateId(layout, "1_column");
 
-		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(layout));
 
-		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
+		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(_layout));
 
 		_layout = LayoutTestUtil.updateLayoutTemplateId(_layout, "1_column");
 
 		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-		SitesUtil.resetPrototype(layout);
+		_sites.resetPrototype(layout);
 
 		layout = propagateChanges(layout);
 
-		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(layout));
 		Assert.assertEquals(
 			initialLayoutTemplateId,
 			LayoutTestUtil.getLayoutTemplateId(layout));
 
 		_layout = propagateChanges(_layout);
 
-		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
+		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(_layout));
 		Assert.assertEquals(
 			"1_column", LayoutTestUtil.getLayoutTemplateId(_layout));
 	}
@@ -483,8 +482,8 @@ public class LayoutSetPrototypePropagationTest
 			prototypeLayout, portletId, "showAvailableLocales",
 			Boolean.FALSE.toString());
 
-		SitesUtil.resetPrototype(layout);
-		SitesUtil.resetPrototype(_layout);
+		_sites.resetPrototype(layout);
+		_sites.resetPrototype(_layout);
 
 		propagateChanges(group);
 
@@ -493,9 +492,9 @@ public class LayoutSetPrototypePropagationTest
 		layout = LayoutTestUtil.updateLayoutPortletPreference(
 			layout, portletId, "showAvailableLocales", Boolean.TRUE.toString());
 
-		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(layout));
 
-		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
+		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(_layout));
 
 		_layout = LayoutTestUtil.updateLayoutPortletPreference(
 			_layout, _portletId, "showAvailableLocales",
@@ -503,11 +502,11 @@ public class LayoutSetPrototypePropagationTest
 
 		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-		SitesUtil.resetPrototype(layout);
+		_sites.resetPrototype(layout);
 
 		layout = propagateChanges(layout);
 
-		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+		Assert.assertFalse(_sites.isLayoutModifiedSinceLastMerge(layout));
 
 		PortletPreferences layoutPortletPreferences =
 			LayoutTestUtil.getPortletPreferences(layout, portletId);
@@ -519,7 +518,7 @@ public class LayoutSetPrototypePropagationTest
 
 		_layout = propagateChanges(_layout);
 
-		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
+		Assert.assertTrue(_sites.isLayoutModifiedSinceLastMerge(_layout));
 
 		layoutPortletPreferences = LayoutTestUtil.getPortletPreferences(
 			_layout, _portletId);
@@ -542,7 +541,7 @@ public class LayoutSetPrototypePropagationTest
 			userGroup.getGroupId(), true);
 
 		try {
-			SitesUtil.resetPrototype(layoutSet);
+			_sites.resetPrototype(layoutSet);
 
 			Assert.fail(
 				"The user should not be able to reset another user's " +
@@ -573,7 +572,7 @@ public class LayoutSetPrototypePropagationTest
 		Group userGroup = GroupLocalServiceUtil.getUserGroup(
 			_user2.getCompanyId(), _user2.getUserId());
 
-		SitesUtil.resetPrototype(
+		_sites.resetPrototype(
 			LayoutSetLocalServiceUtil.getLayoutSet(
 				userGroup.getGroupId(), true));
 	}
@@ -586,7 +585,7 @@ public class LayoutSetPrototypePropagationTest
 		Group userGroup = GroupLocalServiceUtil.getUserGroup(
 			_user1.getCompanyId(), _user1.getUserId());
 
-		SitesUtil.resetPrototype(
+		_sites.resetPrototype(
 			LayoutSetLocalServiceUtil.getLayoutSet(
 				userGroup.getGroupId(), true));
 	}
@@ -713,26 +712,26 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	protected void doTestIsLayoutUpdateable() throws Exception {
-		Assert.assertTrue(SitesUtil.isLayoutUpdateable(layout));
-		Assert.assertTrue(SitesUtil.isLayoutUpdateable(_layout));
+		Assert.assertTrue(_sites.isLayoutUpdateable(layout));
+		Assert.assertTrue(_sites.isLayoutUpdateable(_layout));
 
 		prototypeLayout = LayoutLocalServiceUtil.getLayout(
 			prototypeLayout.getPlid());
 
 		setLayoutUpdateable(prototypeLayout, false);
 
-		Assert.assertFalse(SitesUtil.isLayoutUpdateable(layout));
-		Assert.assertTrue(SitesUtil.isLayoutUpdateable(_layout));
+		Assert.assertFalse(_sites.isLayoutUpdateable(layout));
+		Assert.assertTrue(_sites.isLayoutUpdateable(_layout));
 
 		setLayoutsUpdateable(false);
 
-		Assert.assertFalse(SitesUtil.isLayoutUpdateable(layout));
-		Assert.assertFalse(SitesUtil.isLayoutUpdateable(_layout));
+		Assert.assertFalse(_sites.isLayoutUpdateable(layout));
+		Assert.assertFalse(_sites.isLayoutUpdateable(_layout));
 
 		setLinkEnabled(false);
 
-		Assert.assertTrue(SitesUtil.isLayoutUpdateable(layout));
-		Assert.assertTrue(SitesUtil.isLayoutUpdateable(_layout));
+		Assert.assertTrue(_sites.isLayoutUpdateable(layout));
+		Assert.assertTrue(_sites.isLayoutUpdateable(_layout));
 	}
 
 	protected void doTestLayoutPropagation(boolean linkEnabled)
@@ -879,7 +878,7 @@ public class LayoutSetPrototypePropagationTest
 
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
-		SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 
 		Thread.sleep(2000);
 
@@ -947,7 +946,7 @@ public class LayoutSetPrototypePropagationTest
 
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
+		_sites.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 			linkEnabled, linkEnabled);
 
@@ -1001,6 +1000,9 @@ public class LayoutSetPrototypePropagationTest
 
 	private String _portletId;
 	private Layout _prototypeLayout;
+
+	@Inject
+	private Sites _sites;
 
 	@DeleteAfterTestRun
 	private User _user1;

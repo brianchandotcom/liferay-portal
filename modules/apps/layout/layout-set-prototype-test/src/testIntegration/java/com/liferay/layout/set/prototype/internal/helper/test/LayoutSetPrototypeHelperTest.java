@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -271,7 +271,7 @@ public class LayoutSetPrototypeHelperTest {
 	protected void setLinkEnabled() throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
+		_sites.updateLayoutSetPrototypesLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);
 	}
@@ -290,5 +290,8 @@ public class LayoutSetPrototypeHelperTest {
 
 	private Layout _prototypeLayout;
 	private Layout _siteLayout;
+
+	@Inject
+	private Sites _sites;
 
 }

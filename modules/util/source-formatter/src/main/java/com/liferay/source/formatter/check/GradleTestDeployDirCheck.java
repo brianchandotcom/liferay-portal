@@ -36,7 +36,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 		File lfrBuildPortalFile = new File(
 			absolutePath.substring(0, pos + 1) + ".lfrbuild-portal");
 
-		if (!_isDeployedInOSGITestDir(content)) {
+		if (!_isDeployedInOSGiTestDir(content)) {
 			if (lfrBuildPortalFile.exists()) {
 				addMessage(
 					fileName,
@@ -56,7 +56,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _isDeployedInOSGITestDir(String content) {
+	private boolean _isDeployedInOSGiTestDir(String content) {
 		Matcher matcher = _liferayPattern.matcher(content);
 
 		if (matcher.find()) {

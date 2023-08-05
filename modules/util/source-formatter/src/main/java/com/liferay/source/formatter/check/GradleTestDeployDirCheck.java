@@ -69,7 +69,7 @@ public class GradleTestDeployDirCheck extends BaseFileCheck {
 					return false;
 				}
 
-				String codeBlock = content.substring(matcher.start(2), x + 1);
+				String codeBlock = content.substring(matcher.end(2), x + 1);
 
 				if (ToolsUtil.getLevel(codeBlock, "{", "}") != 0) {
 					continue;

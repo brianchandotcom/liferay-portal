@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.users.admin.configuration,\
 	com.liferay.users.admin.constants,\
 	com.liferay.users.admin.management.toolbar,\
+	com.liferay.users.admin.search,\
 	com.liferay.users.admin.user.action.contributor

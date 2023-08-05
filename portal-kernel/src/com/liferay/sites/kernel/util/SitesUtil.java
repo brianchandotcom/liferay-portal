@@ -207,12 +207,6 @@ public class SitesUtil {
 		return _sites.isContentSharingWithChildrenEnabled(group);
 	}
 
-	public static boolean isFirstLayout(
-		long groupId, boolean privateLayout, long layoutId) {
-
-		return _sites.isFirstLayout(groupId, privateLayout, layoutId);
-	}
-
 	public static boolean isLayoutDeleteable(Layout layout) {
 		return _sites.isLayoutDeleteable(layout);
 	}

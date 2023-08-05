@@ -180,9 +180,6 @@ public interface Sites {
 
 	public boolean isContentSharingWithChildrenEnabled(Group group);
 
-	public boolean isFirstLayout(
-		long groupId, boolean privateLayout, long layoutId);
-
 	public boolean isLayoutDeleteable(Layout layout);
 
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)

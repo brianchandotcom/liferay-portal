@@ -7,6 +7,8 @@ package com.liferay.organizations.item.selector.web.internal.display.context;
 
 import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 import com.liferay.organizations.item.selector.web.internal.search.OrganizationItemSelectorChecker;
+import com.liferay.organizations.search.OrganizationSearch;
+import com.liferay.organizations.search.OrganizationSearchTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -15,8 +17,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.usersadmin.search.OrganizationSearch;
-import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import javax.portlet.PortletURL;

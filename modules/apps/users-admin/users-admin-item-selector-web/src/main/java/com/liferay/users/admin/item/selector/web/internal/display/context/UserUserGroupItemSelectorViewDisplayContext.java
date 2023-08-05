@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.usersadmin.search.UserSearch;
-import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.user.groups.admin.search.SetUserUserGroupChecker;
 import com.liferay.users.admin.item.selector.UserUserGroupItemSelectorCriterion;
+import com.liferay.users.admin.search.UserSearch;
+import com.liferay.users.admin.search.UserSearchTerms;
 
 import java.util.LinkedHashMap;
 

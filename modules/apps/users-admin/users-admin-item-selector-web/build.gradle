@@ -10,6 +10,7 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:user-groups-admin:user-groups-admin-api")
+	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":apps:users-admin:users-admin-item-selector-api")
 	compileOnly project(":core:petra:petra-function")
 }

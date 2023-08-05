@@ -16,8 +16,8 @@ import com.liferay.portal.security.membership.policy.role.BaseRoleMembershipPoli
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.RenderResponseFactory;
-import com.liferay.portlet.rolesadmin.search.SetUserRoleChecker;
-import com.liferay.portlet.rolesadmin.search.UnsetUserRoleChecker;
+import com.liferay.roles.admin.search.SetUserRoleChecker;
+import com.liferay.roles.admin.search.UnsetUserRoleChecker;
 
 import javax.portlet.RenderResponse;
 import javax.portlet.filter.RenderResponseWrapper;

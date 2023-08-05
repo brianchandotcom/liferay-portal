@@ -54,9 +54,7 @@ public class ScriptingExecutorMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_destinationServiceRegistration != null) {
-			_destinationServiceRegistration.unregister();
-		}
+		_destinationServiceRegistration.unregister();
 	}
 
 	@Reference

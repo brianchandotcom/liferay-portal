@@ -89,9 +89,7 @@ public class MonitoringMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_destinationServiceRegistration != null) {
-			_destinationServiceRegistration.unregister();
-		}
+		_destinationServiceRegistration.unregister();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

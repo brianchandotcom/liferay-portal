@@ -9,7 +9,6 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -337,21 +336,19 @@ public class SiteActionDropdownItemsProvider {
 			return false;
 		}
 
-		List<String> organizationNames = TransformUtil.transform(
+		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getGroupUserOrganizations(
-				_group.getGroupId(), _themeDisplay.getUserId()),
-			Organization::getName);
+				_group.getGroupId(), _themeDisplay.getUserId());
 
-		if (!organizationNames.isEmpty()) {
+		if (!organizations.isEmpty()) {
 			return false;
 		}
 
-		List<String> userGroupNames = TransformUtil.transform(
+		List<UserGroup> userGroups =
 			UserGroupLocalServiceUtil.getGroupUserUserGroups(
-				_group.getGroupId(), _themeDisplay.getUserId()),
-			UserGroup::getName);
+				_group.getGroupId(), _themeDisplay.getUserId());
 
-		if (!userGroupNames.isEmpty() ||
+		if (!userGroups.isEmpty() ||
 			((_group.getType() != GroupConstants.TYPE_SITE_OPEN) &&
 			 (_group.getType() != GroupConstants.TYPE_SITE_RESTRICTED))) {
 

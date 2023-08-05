@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -678,7 +677,8 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		if (!group.isLayoutSetPrototype() &&
 			actionId.equals(ActionKeys.CONFIGURATION) &&
-			!SitesUtil.isLayoutUpdateable(layout)) {
+			((layout instanceof VirtualLayout) ||
+			 !layout.isLayoutUpdateable())) {
 
 			return false;
 		}

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -105,7 +106,6 @@ import com.liferay.portal.util.RobotsUtil;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.io.IOException;
@@ -1958,7 +1958,8 @@ public class LayoutsAdminDisplayContext {
 		Layout selLayout = getSelLayout();
 
 		if ((selLayout.getGroupId() == getGroupId()) &&
-			SitesUtil.isLayoutUpdateable(selLayout) &&
+			!(selLayout instanceof VirtualLayout) &&
+			selLayout.isLayoutUpdateable() &&
 			LayoutPermissionUtil.containsLayoutUpdatePermission(
 				themeDisplay.getPermissionChecker(), selLayout)) {
 

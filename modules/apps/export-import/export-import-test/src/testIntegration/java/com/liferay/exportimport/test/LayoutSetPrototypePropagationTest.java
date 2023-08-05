@@ -106,20 +106,20 @@ public class LayoutSetPrototypePropagationTest
 
 	@Test
 	public void testIsLayoutDeleteable() throws Exception {
-		Assert.assertFalse(_sites.isLayoutDeleteable(layout));
+		Assert.assertFalse(layout.isLayoutDeleteable());
 
 		setLinkEnabled(false);
 
-		Assert.assertTrue(_sites.isLayoutDeleteable(layout));
+		Assert.assertTrue(layout.isLayoutDeleteable());
 	}
 
 	@Test
 	public void testIsLayoutSortable() throws Exception {
-		Assert.assertFalse(_sites.isLayoutSortable(layout));
+		Assert.assertFalse(layout.isLayoutSortable());
 
 		setLinkEnabled(false);
 
-		Assert.assertTrue(_sites.isLayoutSortable(layout));
+		Assert.assertTrue(layout.isLayoutSortable());
 	}
 
 	@Test
@@ -714,26 +714,26 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	protected void doTestIsLayoutUpdateable() throws Exception {
-		Assert.assertTrue(_sites.isLayoutUpdateable(layout));
-		Assert.assertTrue(_sites.isLayoutUpdateable(_layout));
+		Assert.assertTrue(layout.isLayoutUpdateable());
+		Assert.assertTrue(_layout.isLayoutUpdateable());
 
 		prototypeLayout = LayoutLocalServiceUtil.getLayout(
 			prototypeLayout.getPlid());
 
 		setLayoutUpdateable(prototypeLayout, false);
 
-		Assert.assertFalse(_sites.isLayoutUpdateable(layout));
-		Assert.assertTrue(_sites.isLayoutUpdateable(_layout));
+		Assert.assertFalse(layout.isLayoutUpdateable());
+		Assert.assertTrue(_layout.isLayoutUpdateable());
 
 		setLayoutsUpdateable(false);
 
-		Assert.assertFalse(_sites.isLayoutUpdateable(layout));
-		Assert.assertFalse(_sites.isLayoutUpdateable(_layout));
+		Assert.assertFalse(layout.isLayoutUpdateable());
+		Assert.assertFalse(_layout.isLayoutUpdateable());
 
 		setLinkEnabled(false);
 
-		Assert.assertTrue(_sites.isLayoutUpdateable(layout));
-		Assert.assertTrue(_sites.isLayoutUpdateable(_layout));
+		Assert.assertTrue(layout.isLayoutUpdateable());
+		Assert.assertTrue(_layout.isLayoutUpdateable());
 	}
 
 	protected void doTestLayoutPropagation(boolean linkEnabled)

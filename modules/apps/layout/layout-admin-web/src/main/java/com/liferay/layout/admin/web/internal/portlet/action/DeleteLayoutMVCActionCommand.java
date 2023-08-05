@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -89,9 +90,7 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Group group = layout.getGroup();
-
-		if (!_sites.isLayoutDeleteable(layout)) {
+		if ((layout instanceof VirtualLayout) || !layout.isLayoutDeleteable()) {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			SessionMessages.add(
@@ -101,6 +100,8 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new GroupInheritContentException();
 		}
+
+		Group group = layout.getGroup();
 
 		if (group.isStagingGroup() &&
 			!_groupPermission.contains(

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -185,7 +186,8 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 		if (Objects.equals(
 				className, LayoutPageTemplateEntry.class.getName()) ||
-			!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
+			!layout.isTypeContent() || (layout instanceof VirtualLayout) ||
+			!layout.isLayoutUpdateable()) {
 
 			return false;
 		}

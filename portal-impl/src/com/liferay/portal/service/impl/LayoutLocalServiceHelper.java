@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -286,10 +286,11 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			Layout parentLayout = layoutPersistence.findByG_P_L(
 				groupId, privateLayout, parentLayoutId);
 
-			if (((layout == null) ||
-				 Validator.isNull(layout.getSourcePrototypeLayoutUuid())) &&
-				!_isDraftLayout(classNameId, classPK, type) &&
-				!SitesUtil.isLayoutSortable(parentLayout)) {
+			if ((((layout == null) ||
+				  Validator.isNull(layout.getSourcePrototypeLayoutUuid())) &&
+				 !_isDraftLayout(classNameId, classPK, type) &&
+				 (layout instanceof VirtualLayout)) ||
+				!parentLayout.isLayoutSortable()) {
 
 				throw new LayoutParentLayoutIdException(
 					LayoutParentLayoutIdException.NOT_SORTABLE);
@@ -609,8 +610,9 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		// Layout cannot become a child of a layout that is not sortable because
 		// it is linked to a layout set prototype
 
-		if (Validator.isNull(layout.getSourcePrototypeLayoutUuid()) &&
-			!SitesUtil.isLayoutSortable(parentLayout)) {
+		if ((Validator.isNull(layout.getSourcePrototypeLayoutUuid()) &&
+			 (layout instanceof VirtualLayout)) ||
+			!parentLayout.isLayoutSortable()) {
 
 			throw new LayoutParentLayoutIdException(
 				LayoutParentLayoutIdException.NOT_SORTABLE);

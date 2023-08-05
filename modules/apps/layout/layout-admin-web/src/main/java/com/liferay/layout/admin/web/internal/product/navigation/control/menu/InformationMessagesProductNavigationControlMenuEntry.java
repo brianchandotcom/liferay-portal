@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -124,7 +125,7 @@ public class InformationMessagesProductNavigationControlMenuEntry
 
 		Group group = layout.getGroup();
 
-		if (!_sites.isLayoutUpdateable(layout) ||
+		if ((layout instanceof VirtualLayout) || !layout.isLayoutUpdateable() ||
 			(layout.isLayoutPrototypeLinkActive() &&
 			 !group.hasStagingGroup())) {
 

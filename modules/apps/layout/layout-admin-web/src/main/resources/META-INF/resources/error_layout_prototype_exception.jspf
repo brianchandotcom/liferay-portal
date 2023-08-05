@@ -17,12 +17,12 @@ Group selLayoutGroup = selLayout.getGroup();
 %>
 
 <c:choose>
-	<c:when test="<%= !SitesUtil.isLayoutUpdateable(selLayout) %>">
+	<c:when test="<%= (selLayout instanceof VirtualLayout) || !selLayout.isLayoutUpdateable() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="this-page-cannot-be-modified-because-it-is-associated-with-a-site-template-does-not-allow-modifications-to-it" />
 		</div>
 	</c:when>
-	<c:when test="<%= !SitesUtil.isLayoutDeleteable(selLayout) %>">
+	<c:when test="<%= (selLayout instanceof VirtualLayout) || !selLayout.isLayoutDeleteable() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template" />
 		</div>

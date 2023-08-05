@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.layoutconfiguration.util.velocity.ColumnProcessor;
-import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.taglib.aui.InputTag;
 
 import java.io.Writer;
@@ -74,7 +74,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		_layoutTypeSettingsUnicodeProperties =
 			selLayout.getTypeSettingsProperties();
 
-		if (!SitesUtil.isLayoutUpdateable(selLayout) ||
+		if ((selLayout instanceof VirtualLayout) ||
+			!selLayout.isLayoutUpdateable() ||
 			selLayout.isLayoutPrototypeLinkActive()) {
 
 			_customizationEnabled = false;

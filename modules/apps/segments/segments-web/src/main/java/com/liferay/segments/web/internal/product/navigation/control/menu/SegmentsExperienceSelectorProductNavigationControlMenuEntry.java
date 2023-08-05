@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -141,7 +142,9 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
+		if (!layout.isTypeContent() || (layout instanceof VirtualLayout) ||
+			!layout.isLayoutUpdateable()) {
+
 			return false;
 		}
 

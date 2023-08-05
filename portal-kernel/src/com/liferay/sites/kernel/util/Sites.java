@@ -176,8 +176,6 @@ public interface Sites {
 
 	public boolean isLayoutUpdateable(Layout layout);
 
-	public boolean isUserGroupLayout(Layout layout) throws PortalException;
-
 	public boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException;

@@ -10,6 +10,7 @@ import com.liferay.layout.admin.web.internal.product.navigation.control.menu.Inf
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.Map;
 
@@ -66,7 +66,7 @@ public class LayoutInformationMessagesDisplayContext {
 
 					message = "this-page-is-linked-to-a-page-template";
 				}
-				else if (SitesUtil.isUserGroupLayout(layout)) {
+				else if (_isUserGroupLayout(layout)) {
 					message = "this-page-belongs-to-a-user-group";
 				}
 
@@ -97,6 +97,24 @@ public class LayoutInformationMessagesDisplayContext {
 					InformationMessagesProductNavigationControlMenuEntry.
 						INFORMATION_MESSAGES_MODIFIED_LAYOUT))
 		).build();
+	}
+
+	private boolean _isUserGroupLayout(Layout layout) {
+		if (!(layout instanceof VirtualLayout)) {
+			return false;
+		}
+
+		VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+		Layout sourceLayout = virtualLayout.getSourceLayout();
+
+		Group sourceGroup = sourceLayout.getGroup();
+
+		if (sourceGroup.isUserGroup()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

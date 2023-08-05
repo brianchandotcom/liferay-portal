@@ -199,12 +199,6 @@ public class SitesUtil {
 		return _sites.isLayoutUpdateable(layout);
 	}
 
-	public static boolean isUserGroupLayout(Layout layout)
-		throws PortalException {
-
-		return _sites.isUserGroupLayout(layout);
-	}
-
 	public static boolean isUserGroupLayoutSetViewable(
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException {

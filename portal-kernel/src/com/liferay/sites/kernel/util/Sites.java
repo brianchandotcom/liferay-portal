@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
@@ -158,13 +157,6 @@ public interface Sites {
 	public void setMergeFailCount(
 			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
 		throws PortalException;
-
-	public void updateLayoutScopes(
-			long userId, Layout sourceLayout, Layout targetLayout,
-			PortletPreferences sourcePreferences,
-			PortletPreferences targetPreferences, String sourcePortletId,
-			String languageId)
-		throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,

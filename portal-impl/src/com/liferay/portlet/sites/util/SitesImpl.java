@@ -442,7 +442,7 @@ public class SitesImpl implements Sites {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			updateLayoutScopes(
+			_updateLayoutScopes(
 				serviceContext.getUserId(), sourceLayout, targetLayout,
 				sourcePreferences, targetPreferences, sourcePortletId,
 				serviceContext.getLanguageId());
@@ -970,54 +970,6 @@ public class SitesImpl implements Sites {
 				layoutSetPrototypeLayoutSet.isPrivateLayout(),
 				layoutSetPrototypeLayoutSet.getSettings());
 		}
-	}
-
-	@Override
-	public void updateLayoutScopes(
-			long userId, Layout sourceLayout, Layout targetLayout,
-			PortletPreferences sourcePreferences,
-			PortletPreferences targetPreferences, String sourcePortletId,
-			String languageId)
-		throws Exception {
-
-		String scopeType = GetterUtil.getString(
-			sourcePreferences.getValue("lfrScopeType", null));
-
-		if (Validator.isNull(scopeType) || !scopeType.equals("layout")) {
-			return;
-		}
-
-		Layout targetScopeLayout =
-			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				targetLayout.getUuid(), targetLayout.getGroupId(),
-				targetLayout.isPrivateLayout());
-
-		if (!targetScopeLayout.hasScopeGroup()) {
-			GroupLocalServiceUtil.addGroup(
-				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				Layout.class.getName(), targetLayout.getPlid(),
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, targetLayout.getNameMap(),
-				null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-				null, false, true, null);
-		}
-
-		String newPortletTitle = PortalUtil.getNewPortletTitle(
-			PortalUtil.getPortletTitle(
-				PortletIdCodec.decodePortletName(sourcePortletId), languageId),
-			String.valueOf(sourceLayout.getLayoutId()),
-			targetLayout.getName(languageId));
-
-		targetPreferences.setValue(
-			"groupId", String.valueOf(targetLayout.getGroupId()));
-		targetPreferences.setValue("lfrScopeType", "layout");
-		targetPreferences.setValue(
-			"lfrScopeLayoutUuid", targetLayout.getUuid());
-		targetPreferences.setValue(
-			"portletSetupTitle_" + languageId, newPortletTitle);
-		targetPreferences.setValue(
-			"portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-		targetPreferences.store();
 	}
 
 	@Override
@@ -1882,6 +1834,53 @@ public class SitesImpl implements Sites {
 					"Released lock for ", SitesImpl.class.getName(),
 					" to update ", className, StringPool.POUND, classPK));
 		}
+	}
+
+	private void _updateLayoutScopes(
+			long userId, Layout sourceLayout, Layout targetLayout,
+			PortletPreferences sourcePreferences,
+			PortletPreferences targetPreferences, String sourcePortletId,
+			String languageId)
+		throws Exception {
+
+		String scopeType = GetterUtil.getString(
+			sourcePreferences.getValue("lfrScopeType", null));
+
+		if (Validator.isNull(scopeType) || !scopeType.equals("layout")) {
+			return;
+		}
+
+		Layout targetScopeLayout =
+			LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+				targetLayout.getUuid(), targetLayout.getGroupId(),
+				targetLayout.isPrivateLayout());
+
+		if (!targetScopeLayout.hasScopeGroup()) {
+			GroupLocalServiceUtil.addGroup(
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				Layout.class.getName(), targetLayout.getPlid(),
+				GroupConstants.DEFAULT_LIVE_GROUP_ID, targetLayout.getNameMap(),
+				null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+				null, false, true, null);
+		}
+
+		String newPortletTitle = PortalUtil.getNewPortletTitle(
+			PortalUtil.getPortletTitle(
+				PortletIdCodec.decodePortletName(sourcePortletId), languageId),
+			String.valueOf(sourceLayout.getLayoutId()),
+			targetLayout.getName(languageId));
+
+		targetPreferences.setValue(
+			"groupId", String.valueOf(targetLayout.getGroupId()));
+		targetPreferences.setValue("lfrScopeType", "layout");
+		targetPreferences.setValue(
+			"lfrScopeLayoutUuid", targetLayout.getUuid());
+		targetPreferences.setValue(
+			"portletSetupTitle_" + languageId, newPortletTitle);
+		targetPreferences.setValue(
+			"portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+		targetPreferences.store();
 	}
 
 	private static final String _TEMP_DIR =

@@ -1091,6 +1091,25 @@ public class ObjectDefinitionResourceImpl
 						});
 				}
 
+				if (FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+					setRootObjectDefinitionExternalReferenceCode(
+						() -> {
+							com.liferay.object.model.ObjectDefinition
+								serviceBuilderObjectDefinition =
+									_objectDefinitionLocalService.
+										fetchObjectDefinition(
+											objectDefinition.
+												getRootObjectDefinitionId());
+
+							if (serviceBuilderObjectDefinition == null) {
+								return null;
+							}
+
+							return serviceBuilderObjectDefinition.
+								getExternalReferenceCode();
+						});
+				}
+
 				setTitleObjectFieldName(
 					() -> {
 						com.liferay.object.model.ObjectField

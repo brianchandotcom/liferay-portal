@@ -18,16 +18,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -95,34 +86,11 @@ public interface Sites {
 		}
 	}
 
-	public void copyLayout(
-			long userId, Layout sourceLayout, Layout targetLayout,
-			ServiceContext serviceContext)
-		throws Exception;
-
 	public void copyPortletPermissions(Layout targetLayout, Layout sourceLayout)
 		throws Exception;
 
 	public void copyPortletSetups(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
-
-	public void copyTypeSettings(Group sourceGroup, Group targetGroup)
-		throws Exception;
-
-	public Object[] deleteLayout(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception;
-
-	public Object[] deleteLayout(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception;
-
-	public void deleteLayout(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception;
-
-	public Long[] filterGroups(List<Group> groups, String[] names);
 
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext);

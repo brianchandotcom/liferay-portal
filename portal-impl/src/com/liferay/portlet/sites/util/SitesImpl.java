@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.RequiredLayoutException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -36,11 +34,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -57,7 +53,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
@@ -70,7 +65,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -78,23 +72,18 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -112,13 +101,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Raymond Augé
@@ -278,61 +260,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public void copyLayout(
-			long userId, Layout sourceLayout, Layout targetLayout,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		User user = UserLocalServiceUtil.getUser(userId);
-
-		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
-			serviceContext);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[] {Boolean.FALSE.toString()});
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, sourceLayout.getGroupId(),
-					sourceLayout.isPrivateLayout(),
-					new long[] {sourceLayout.getLayoutId()}, parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addDraftExportImportConfiguration(
-					user.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap);
-
-		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
-
-		try {
-			Map<String, Serializable> importLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactoryUtil.
-					buildImportLayoutSettingsMap(
-						userId, targetLayout.getGroupId(),
-						targetLayout.isPrivateLayout(), null, parameterMap,
-						user.getLocale(), user.getTimeZone());
-
-			exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
-					addDraftExportImportConfiguration(
-						userId,
-						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						importLayoutSettingsMap);
-
-			ExportImportLocalServiceUtil.importLayouts(
-				exportImportConfiguration, file);
-		}
-		finally {
-			file.delete();
-		}
-	}
-
-	@Override
 	public void copyPortletPermissions(Layout targetLayout, Layout sourceLayout)
 		throws Exception {
 
@@ -447,130 +374,6 @@ public class SitesImpl implements Sites {
 				sourcePreferences, targetPreferences, sourcePortletId,
 				serviceContext.getLanguageId());
 		}
-	}
-
-	@Override
-	public void copyTypeSettings(Group sourceGroup, Group targetGroup)
-		throws Exception {
-
-		GroupServiceUtil.updateGroup(
-			targetGroup.getGroupId(), sourceGroup.getTypeSettings());
-	}
-
-	@Override
-	public Object[] deleteLayout(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long selPlid = ParamUtil.getLong(httpServletRequest, "selPlid");
-
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			httpServletRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(httpServletRequest, "layoutId");
-
-		Layout layout = null;
-
-		if (selPlid <= 0) {
-			layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
-		}
-		else {
-			layout = LayoutLocalServiceUtil.getLayout(selPlid);
-
-			groupId = layout.getGroupId();
-			privateLayout = layout.isPrivateLayout();
-			layoutId = layout.getLayoutId();
-		}
-
-		Group group = layout.getGroup();
-
-		if (group.isStagingGroup() &&
-			!GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.MANAGE_STAGING) &&
-			!GroupPermissionUtil.contains(
-				permissionChecker, group, ActionKeys.PUBLISH_STAGING)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, Group.class.getName(), group.getGroupId(),
-				ActionKeys.MANAGE_STAGING, ActionKeys.PUBLISH_STAGING);
-		}
-
-		String oldFriendlyURL = themeDisplay.getLayoutFriendlyURL(layout);
-
-		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.DELETE)) {
-
-			LayoutType layoutType = layout.getLayoutType();
-
-			EventsProcessorUtil.process(
-				PropsKeys.LAYOUT_CONFIGURATION_ACTION_DELETE,
-				layoutType.getConfigurationActionDelete(), httpServletRequest,
-				httpServletResponse);
-		}
-
-		if (group.isGuest() && !layout.isPrivateLayout() &&
-			layout.isRootLayout()) {
-
-			int count = LayoutLocalServiceUtil.getLayoutsCount(
-				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (count == 1) {
-				throw new RequiredLayoutException(
-					RequiredLayoutException.AT_LEAST_ONE);
-			}
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
-		LayoutServiceUtil.deleteLayout(
-			groupId, privateLayout, layoutId, serviceContext);
-
-		return new Object[] {
-			group, oldFriendlyURL, LayoutConstants.DEFAULT_PLID
-		};
-	}
-
-	@Override
-	public Object[] deleteLayout(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		return deleteLayout(
-			PortalUtil.getHttpServletRequest(portletRequest),
-			PortalUtil.getHttpServletResponse(portletResponse));
-	}
-
-	@Override
-	public void deleteLayout(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
-
-		deleteLayout(
-			PortalUtil.getHttpServletRequest(renderRequest),
-			PortalUtil.getHttpServletResponse(renderResponse));
-	}
-
-	@Override
-	public Long[] filterGroups(List<Group> groups, String[] groupKeys) {
-		List<Long> groupIds = new ArrayList<>();
-
-		for (Group group : groups) {
-			if (!ArrayUtil.contains(groupKeys, group.getGroupKey())) {
-				groupIds.add(group.getGroupId());
-			}
-		}
-
-		return ArrayUtil.toArray(ArrayUtil.toLongArray(groupIds));
 	}
 
 	@Override

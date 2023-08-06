@@ -18,12 +18,20 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototypeTable;
 import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.LayoutTable;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Collections;
 import java.util.List;
@@ -203,6 +211,67 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 		return _hasDuplicatedFriendlyURLPrototypeLayout(
 			layoutUuid, groupId, privateLayout, friendlyURL);
+	}
+
+	/**
+	 * Checks the permissions necessary for resetting the layout. If sufficient,
+	 * the layout is reset by calling {@link #_resetPrototype(Layout)}.
+	 *
+	 * @param layout the page being checked for sufficient permissions
+	 */
+	@Override
+	public void resetPrototype(Layout layout) throws PortalException {
+		_checkResetPrototypePermissions(layout.getGroup(), layout);
+
+		_resetPrototype(layout);
+	}
+
+	/**
+	 * Checks the permissions necessary for resetting the layout set. If
+	 * sufficient, the layout set is reset by calling {@link
+	 * #_resetPrototype(LayoutSet)}.
+	 *
+	 * @param layoutSet the site being checked for sufficient permissions
+	 */
+	@Override
+	public void resetPrototype(LayoutSet layoutSet) throws PortalException {
+		_checkResetPrototypePermissions(layoutSet.getGroup(), null);
+
+		_resetPrototype(layoutSet);
+	}
+
+	/**
+	 * Checks the permissions necessary for resetting the layout or site. If the
+	 * permissions are not sufficient, a {@link PortalException} is thrown.
+	 *
+	 * @param group the site being checked for sufficient permissions
+	 * @param layout the page being checked for sufficient permissions
+	 *        (optionally <code>null</code>). If <code>null</code>, the
+	 *        permissions are only checked for resetting the site.
+	 */
+	private void _checkResetPrototypePermissions(Group group, Layout layout)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((layout != null) &&
+			!_layoutPermission.contains(
+				permissionChecker, layout, ActionKeys.UPDATE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, layout.getName(), layout.getLayoutId(),
+				ActionKeys.UPDATE);
+		}
+		else if (!_groupPermission.contains(
+					permissionChecker, group, ActionKeys.UPDATE) &&
+				 (!group.isUser() ||
+				  (permissionChecker.getUserId() != group.getClassPK()))) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, group.getName(), group.getGroupId(),
+				ActionKeys.UPDATE);
+		}
 	}
 
 	private Layout _getDuplicatedFriendlyURLPrototypeLayout(Layout layout)
@@ -393,14 +462,63 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return true;
 	}
 
+	/**
+	 * Resets the modified timestamp on the layout, and then calls {@link
+	 * #_resetPrototype(LayoutSet)} to reset the modified timestamp on the
+	 * layout's site.
+	 *
+	 * <p>
+	 * After the timestamps are reset, the modified page template and site
+	 * template are merged into their linked layout and site when they are first
+	 * accessed.
+	 * </p>
+	 *
+	 * @param layout the page having its timestamp reset
+	 */
+	private void _resetPrototype(Layout layout) throws PortalException {
+		layout.setModifiedDate(null);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
+		_resetPrototype(layout.getLayoutSet());
+	}
+
+	/**
+	 * Resets the modified timestamp on the layout set.
+	 *
+	 * <p>
+	 * After the timestamp is reset, the modified site template is merged into
+	 * its linked layout set when it is first accessed.
+	 * </p>
+	 *
+	 * @param layoutSet the site having its timestamp reset
+	 */
+	private void _resetPrototype(LayoutSet layoutSet) throws PortalException {
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+
+		settingsUnicodeProperties.setProperty(
+			Sites.LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
+
+		_layoutSetLocalService.updateLayoutSet(layoutSet);
+	}
+
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

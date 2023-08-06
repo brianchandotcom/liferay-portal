@@ -47,10 +47,8 @@ import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
@@ -69,7 +67,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -660,33 +657,6 @@ public class SitesImpl implements Sites {
 	}
 
 	/**
-	 * Checks the permissions necessary for resetting the layout. If sufficient,
-	 * the layout is reset by calling {@link #doResetPrototype(Layout)}.
-	 *
-	 * @param layout the page being checked for sufficient permissions
-	 */
-	@Override
-	public void resetPrototype(Layout layout) throws PortalException {
-		checkResetPrototypePermissions(layout.getGroup(), layout);
-
-		doResetPrototype(layout);
-	}
-
-	/**
-	 * Checks the permissions necessary for resetting the layout set. If
-	 * sufficient, the layout set is reset by calling {@link
-	 * #doResetPrototype(LayoutSet)}.
-	 *
-	 * @param layoutSet the site being checked for sufficient permissions
-	 */
-	@Override
-	public void resetPrototype(LayoutSet layoutSet) throws PortalException {
-		checkResetPrototypePermissions(layoutSet.getGroup(), null);
-
-		doResetPrototype(layoutSet);
-	}
-
-	/**
 	 * Sets the number of failed merge attempts for the layout prototype to a
 	 * new value.
 	 *
@@ -789,40 +759,6 @@ public class SitesImpl implements Sites {
 		updateLayoutSetPrototypeLink(
 			group.getGroupId(), false, publicLayoutSetPrototypeId,
 			publicLayoutSetPrototypeLinkEnabled);
-	}
-
-	/**
-	 * Checks the permissions necessary for resetting the layout or site. If the
-	 * permissions are not sufficient, a {@link PortalException} is thrown.
-	 *
-	 * @param group the site being checked for sufficient permissions
-	 * @param layout the page being checked for sufficient permissions
-	 *        (optionally <code>null</code>). If <code>null</code>, the
-	 *        permissions are only checked for resetting the site.
-	 */
-	protected void checkResetPrototypePermissions(Group group, Layout layout)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((layout != null) &&
-			!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, layout.getName(), layout.getLayoutId(),
-				ActionKeys.UPDATE);
-		}
-		else if (!GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.UPDATE) &&
-				 (!group.isUser() ||
-				  (permissionChecker.getUserId() != group.getClassPK()))) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, group.getName(), group.getGroupId(),
-				ActionKeys.UPDATE);
-		}
 	}
 
 	protected void deleteUnreferencedPortlets(
@@ -953,51 +889,6 @@ public class SitesImpl implements Sites {
 
 			_releaseLock(Layout.class.getName(), layout.getPlid(), owner);
 		}
-	}
-
-	/**
-	 * Resets the modified timestamp on the layout, and then calls {@link
-	 * #doResetPrototype(LayoutSet)} to reset the modified timestamp on the
-	 * layout's site.
-	 *
-	 * <p>
-	 * After the timestamps are reset, the modified page template and site
-	 * template are merged into their linked layout and site when they are first
-	 * accessed.
-	 * </p>
-	 *
-	 * @param layout the page having its timestamp reset
-	 */
-	protected void doResetPrototype(Layout layout) throws PortalException {
-		layout.setModifiedDate(null);
-
-		layout = LayoutLocalServiceUtil.updateLayout(layout);
-
-		doResetPrototype(layout.getLayoutSet());
-	}
-
-	/**
-	 * Resets the modified timestamp on the layout set.
-	 *
-	 * <p>
-	 * After the timestamp is reset, the modified site template is merged into
-	 * its linked layout set when it is first accessed.
-	 * </p>
-	 *
-	 * @param layoutSet the site having its timestamp reset
-	 */
-	protected void doResetPrototype(LayoutSet layoutSet)
-		throws PortalException {
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.remove(LAST_MERGE_TIME);
-
-		settingsUnicodeProperties.setProperty(
-			LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
-
-		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 	}
 
 	protected File exportLayoutSetPrototype(

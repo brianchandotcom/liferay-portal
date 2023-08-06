@@ -31,4 +31,8 @@ public interface LayoutSetPrototypeHelper {
 			String friendlyURL)
 		throws PortalException;
 
+	public void resetPrototype(Layout layout) throws PortalException;
+
+	public void resetPrototype(LayoutSet layoutSet) throws PortalException;
+
 }

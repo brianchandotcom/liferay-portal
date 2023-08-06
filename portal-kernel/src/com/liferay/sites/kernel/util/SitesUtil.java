@@ -10,7 +10,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 /**
  * @author Raymond Augé
@@ -41,8 +46,26 @@ public class SitesUtil {
 			PermissionChecker permissionChecker, Group userGroupGroup)
 		throws PortalException {
 
-		return _sites.isUserGroupLayoutSetViewable(
-			permissionChecker, userGroupGroup);
+		if (!userGroupGroup.isUserGroup()) {
+			return false;
+		}
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, userGroupGroup, ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
+			userGroupGroup.getClassPK());
+
+		if (UserLocalServiceUtil.hasUserGroupUser(
+				userGroup.getUserGroupId(), permissionChecker.getUserId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static void mergeLayoutPrototypeLayout(Group group, Layout layout)

@@ -42,13 +42,10 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
@@ -63,9 +60,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -517,33 +512,6 @@ public class SitesImpl implements Sites {
 		}
 
 		return true;
-	}
-
-	@Override
-	public boolean isUserGroupLayoutSetViewable(
-			PermissionChecker permissionChecker, Group userGroupGroup)
-		throws PortalException {
-
-		if (!userGroupGroup.isUserGroup()) {
-			return false;
-		}
-
-		if (GroupPermissionUtil.contains(
-				permissionChecker, userGroupGroup, ActionKeys.VIEW)) {
-
-			return true;
-		}
-
-		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-			userGroupGroup.getClassPK());
-
-		if (UserLocalServiceUtil.hasUserGroupUser(
-				userGroup.getUserGroupId(), permissionChecker.getUserId())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

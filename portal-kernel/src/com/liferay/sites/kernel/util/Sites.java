@@ -97,10 +97,6 @@ public interface Sites {
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException;
 
-	public boolean isUserGroupLayoutSetViewable(
-			PermissionChecker permissionChecker, Group userGroupGroup)
-		throws PortalException;
-
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception;
 

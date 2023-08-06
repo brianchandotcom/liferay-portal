@@ -3,6 +3,7 @@
 	"description_i18n": {
 		"en_US": "An app is a specialized component developed using Liferay or other technology that helps a customer to accomplish a specific task."
 	},
+	"externalReferenceCode": "449736586",
 	"name": "App",
 	"name_i18n": {
 		"en_US": "App"

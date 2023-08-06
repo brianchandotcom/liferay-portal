@@ -58,19 +58,6 @@ public class SitesUtil {
 		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 	}
 
-	public static void updateLayoutSetPrototypesLinks(
-			Group group, long publicLayoutSetPrototypeId,
-			long privateLayoutSetPrototypeId,
-			boolean publicLayoutSetPrototypeLinkEnabled,
-			boolean privateLayoutSetPrototypeLinkEnabled)
-		throws Exception {
-
-		_sites.updateLayoutSetPrototypesLinks(
-			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
-			publicLayoutSetPrototypeLinkEnabled,
-			privateLayoutSetPrototypeLinkEnabled);
-	}
-
 	public void setSites(Sites sites) {
 		_sites = sites;
 	}

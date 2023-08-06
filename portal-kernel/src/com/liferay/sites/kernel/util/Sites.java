@@ -101,9 +101,6 @@ public interface Sites {
 			ServiceContext serviceContext)
 		throws Exception;
 
-	public void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
-		throws Exception;
-
 	public void copyPortletPermissions(Layout targetLayout, Layout sourceLayout)
 		throws Exception;
 

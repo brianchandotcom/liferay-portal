@@ -242,7 +242,11 @@ public class SitesImpl implements Sites {
 
 		copyPortletSetups(layoutPrototypeLayout, targetLayout);
 
-		copyLookAndFeel(targetLayout, layoutPrototypeLayout);
+		LayoutLocalServiceUtil.updateLookAndFeel(
+			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
+			targetLayout.getLayoutId(), layoutPrototypeLayout.getThemeId(),
+			layoutPrototypeLayout.getColorSchemeId(),
+			layoutPrototypeLayout.getCss());
 
 		deleteUnreferencedPortlets(
 			targetLayoutPortletIds, targetLayout, layoutPrototypeLayout);
@@ -326,16 +330,6 @@ public class SitesImpl implements Sites {
 		finally {
 			file.delete();
 		}
-	}
-
-	@Override
-	public void copyLookAndFeel(Layout targetLayout, Layout sourceLayout)
-		throws Exception {
-
-		LayoutLocalServiceUtil.updateLookAndFeel(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), sourceLayout.getThemeId(),
-			sourceLayout.getColorSchemeId(), sourceLayout.getCss());
 	}
 
 	@Override

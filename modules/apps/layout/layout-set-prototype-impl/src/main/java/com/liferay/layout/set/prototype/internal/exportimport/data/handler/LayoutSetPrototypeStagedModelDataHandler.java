@@ -8,19 +8,19 @@ package com.liferay.layout.set.prototype.internal.exportimport.data.handler;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
-import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -42,12 +42,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -310,28 +309,27 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+		User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
 		if (user == null) {
 			BackgroundTask backgroundTask =
-				BackgroundTaskManagerUtil.fetchBackgroundTask(
+				_backgroundTaskManager.fetchBackgroundTask(
 					BackgroundTaskThreadLocal.getBackgroundTaskId());
 
 			if (backgroundTask != null) {
-				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
+				user = _userLocalService.getUser(backgroundTask.getUserId());
 			}
 		}
 
 		if (user == null) {
-			user = UserLocalServiceUtil.getUser(
+			user = _userLocalService.getUser(
 				GetterUtil.getLong(PrincipalThreadLocal.getName()));
 		}
 
 		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
-		List<Layout> layoutSetPrototypeLayouts =
-			LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
 		Map<String, String[]> parameterMap =
 			_sites.getLayoutSetPrototypeParameters(serviceContext);
@@ -344,18 +342,17 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
 					user, layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-					ExportImportHelperUtil.getLayoutIds(
-						layoutSetPrototypeLayouts),
+					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
 					parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					exportLayoutSettingsMap);
 
-		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
+		return _exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 	}
 
@@ -416,20 +413,20 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		_setLayoutSetPrototypeLinkEnabledParameter(
 			parameterMap, layoutSet, serviceContext);
 
-		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+		User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
 		if (user == null) {
 			BackgroundTask backgroundTask =
-				BackgroundTaskManagerUtil.fetchBackgroundTask(
+				_backgroundTaskManager.fetchBackgroundTask(
 					BackgroundTaskThreadLocal.getBackgroundTaskId());
 
 			if (backgroundTask != null) {
-				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
+				user = _userLocalService.getUser(backgroundTask.getUserId());
 			}
 		}
 
 		if (user == null) {
-			user = UserLocalServiceUtil.getUser(
+			user = _userLocalService.getUser(
 				GetterUtil.getLong(PrincipalThreadLocal.getName()));
 		}
 
@@ -441,13 +438,13 @@ public class LayoutSetPrototypeStagedModelDataHandler
 					user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					importLayoutSettingsMap);
 
-		ExportImportServiceUtil.importLayouts(
+		_exportImportService.importLayouts(
 			exportImportConfiguration, inputStream);
 	}
 
@@ -459,7 +456,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((permissionChecker == null) ||
-			!PortalPermissionUtil.contains(
+			!_portalPermission.contains(
 				permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
 
 			return;
@@ -501,6 +498,22 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		LayoutSetPrototypeStagedModelDataHandler.class);
 
 	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
+	@Reference
+	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private ExportImportService _exportImportService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -513,6 +526,12 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
+	private PortalPermission _portalPermission;
+
+	@Reference
 	private Sites _sites;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

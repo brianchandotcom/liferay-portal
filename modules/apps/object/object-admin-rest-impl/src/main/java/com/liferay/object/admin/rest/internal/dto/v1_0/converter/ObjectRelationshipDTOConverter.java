@@ -60,6 +60,11 @@ public class ObjectRelationshipDTOConverter
 				actions = dtoConverterContext.getActions();
 				deletionType = ObjectRelationship.DeletionType.create(
 					serviceBuilderObjectRelationship.getDeletionType());
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+					edge = serviceBuilderObjectRelationship.isEdge();
+				}
+
 				id = serviceBuilderObjectRelationship.getObjectRelationshipId();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectRelationship.getLabelMap());

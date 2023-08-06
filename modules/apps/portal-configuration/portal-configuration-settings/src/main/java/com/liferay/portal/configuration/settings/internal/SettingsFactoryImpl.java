@@ -95,7 +95,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	private Settings _applyFallbackKeys(String settingsId, Settings settings) {
-		if (settings instanceof FallbackKeys) {
+		if (settings instanceof FallbackSettings) {
 			return settings;
 		}
 

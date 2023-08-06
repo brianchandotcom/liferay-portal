@@ -283,6 +283,41 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?sort=",
+				URLCodec.encodeURL("name:desc")),
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"name", "value3"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value2"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value1"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				)
+			).toString(),
+			itemsJSONArray.toString(), JSONCompareMode.STRICT);
 	}
 
 	@Test
@@ -326,6 +361,41 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				),
 				JSONUtil.put(
 					"name", "value1"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				)
+			).toString(),
+			itemsJSONArray.toString(), JSONCompareMode.STRICT);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?sort=",
+				URLCodec.encodeURL("name:asc")),
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"name", "value1"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value2"
+				).put(
+					"relatedFieldName1", Collections.emptyList()
+				).put(
+					"relatedFieldName2", Collections.emptyList()
+				),
+				JSONUtil.put(
+					"name", "value3"
 				).put(
 					"relatedFieldName1", Collections.emptyList()
 				).put(

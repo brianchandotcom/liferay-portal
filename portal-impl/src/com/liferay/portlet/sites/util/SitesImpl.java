@@ -107,36 +107,6 @@ import javax.portlet.PortletPreferences;
 public class SitesImpl implements Sites {
 
 	@Override
-	public void addMergeFailFriendlyURLLayout(Layout layout)
-		throws PortalException {
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout());
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		String oldMergeFailFriendlyURLLayouts =
-			settingsUnicodeProperties.getProperty(
-				MERGE_FAIL_FRIENDLY_URL_LAYOUTS, StringPool.BLANK);
-
-		String newMergeFailFriendlyURLLayouts = StringUtil.add(
-			oldMergeFailFriendlyURLLayouts, layout.getUuid());
-
-		if (!oldMergeFailFriendlyURLLayouts.equals(
-				newMergeFailFriendlyURLLayouts)) {
-
-			settingsUnicodeProperties.setProperty(
-				MERGE_FAIL_FRIENDLY_URL_LAYOUTS,
-				newMergeFailFriendlyURLLayouts);
-
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-		}
-	}
-
-	@Override
 	public void applyLayoutPrototype(
 			LayoutPrototype layoutPrototype, Layout targetLayout,
 			boolean linkEnabled)

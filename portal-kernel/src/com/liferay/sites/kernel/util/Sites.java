@@ -57,9 +57,6 @@ public interface Sites {
 
 	public static final String SHOW_SITE_NAME = "showSiteName";
 
-	public void addMergeFailFriendlyURLLayout(Layout layout)
-		throws PortalException;
-
 	public void applyLayoutPrototype(
 			LayoutPrototype layoutPrototype, Layout targetLayout,
 			boolean linkEnabled)

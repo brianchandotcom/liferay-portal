@@ -13,6 +13,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -445,8 +446,8 @@ public class LayoutSetPrototypePropagationTest
 
 	@Test
 	public void testResetLayoutTemplate() throws Exception {
-		_sites.resetPrototype(layout);
-		_sites.resetPrototype(_layout);
+		_layoutSetPrototypeHelper.resetPrototype(layout);
+		_layoutSetPrototypeHelper.resetPrototype(_layout);
 
 		propagateChanges(group);
 
@@ -462,7 +463,7 @@ public class LayoutSetPrototypePropagationTest
 
 		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-		_sites.resetPrototype(layout);
+		_layoutSetPrototypeHelper.resetPrototype(layout);
 
 		layout = propagateChanges(layout);
 
@@ -484,8 +485,8 @@ public class LayoutSetPrototypePropagationTest
 			prototypeLayout, portletId, "showAvailableLocales",
 			Boolean.FALSE.toString());
 
-		_sites.resetPrototype(layout);
-		_sites.resetPrototype(_layout);
+		_layoutSetPrototypeHelper.resetPrototype(layout);
+		_layoutSetPrototypeHelper.resetPrototype(_layout);
 
 		propagateChanges(group);
 
@@ -504,7 +505,7 @@ public class LayoutSetPrototypePropagationTest
 
 		layout = LayoutLocalServiceUtil.getLayout(layout.getPlid());
 
-		_sites.resetPrototype(layout);
+		_layoutSetPrototypeHelper.resetPrototype(layout);
 
 		layout = propagateChanges(layout);
 
@@ -543,7 +544,7 @@ public class LayoutSetPrototypePropagationTest
 			userGroup.getGroupId(), true);
 
 		try {
-			_sites.resetPrototype(layoutSet);
+			_layoutSetPrototypeHelper.resetPrototype(layoutSet);
 
 			Assert.fail(
 				"The user should not be able to reset another user's " +
@@ -574,7 +575,7 @@ public class LayoutSetPrototypePropagationTest
 		Group userGroup = GroupLocalServiceUtil.getUserGroup(
 			_user2.getCompanyId(), _user2.getUserId());
 
-		_sites.resetPrototype(
+		_layoutSetPrototypeHelper.resetPrototype(
 			LayoutSetLocalServiceUtil.getLayoutSet(
 				userGroup.getGroupId(), true));
 	}
@@ -587,7 +588,7 @@ public class LayoutSetPrototypePropagationTest
 		Group userGroup = GroupLocalServiceUtil.getUserGroup(
 			_user1.getCompanyId(), _user1.getUserId());
 
-		_sites.resetPrototype(
+		_layoutSetPrototypeHelper.resetPrototype(
 			LayoutSetLocalServiceUtil.getLayoutSet(
 				userGroup.getGroupId(), true));
 	}
@@ -995,6 +996,10 @@ public class LayoutSetPrototypePropagationTest
 	private LayoutSetPrototype _layoutSetPrototype;
 
 	private Group _layoutSetPrototypeGroup;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
 	private JournalArticle _layoutSetPrototypeJournalArticle;
 
 	@DeleteAfterTestRun

@@ -27,6 +27,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-seo-api")
+	compileOnly project(":apps:layout:layout-set-prototype-api")
 	compileOnly project(":apps:layout:layout-utility-page-api")
 	compileOnly project(":apps:map:map-api")
 	compileOnly project(":apps:map:map-taglib")

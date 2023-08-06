@@ -56,7 +56,7 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 		long layoutPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutPrototypeId");
 
-		_sites.setMergeFailCount(
+		_layoutSetPrototypeHelper.setMergeFailCount(
 			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId),
 			0);
 

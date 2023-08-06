@@ -34,6 +34,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-admin-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-page-template-item-selector-api")
+	compileOnly project(":apps:layout:layout-set-prototype-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:staging:staging-api")

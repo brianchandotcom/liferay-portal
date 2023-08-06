@@ -60,7 +60,7 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 			_layoutSetPrototypeService.getLayoutSetPrototype(
 				layoutSetPrototypeId);
 
-		_sites.setMergeFailCount(layoutSetPrototype, 0);
+		_layoutSetPrototypeHelper.setMergeFailCount(layoutSetPrototype, 0);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		boolean privateLayoutSet = ParamUtil.getBoolean(

@@ -6,11 +6,11 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.sites.kernel.util.Sites;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -38,7 +38,7 @@ public class ResetMergeFailCountMVCActionCommand extends BaseMVCActionCommand {
 		long layoutPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutPrototypeId");
 
-		_sites.setMergeFailCount(
+		_layoutSetPrototypeHelper.setMergeFailCount(
 			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId),
 			0);
 	}
@@ -47,6 +47,6 @@ public class ResetMergeFailCountMVCActionCommand extends BaseMVCActionCommand {
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
-	private Sites _sites;
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 }

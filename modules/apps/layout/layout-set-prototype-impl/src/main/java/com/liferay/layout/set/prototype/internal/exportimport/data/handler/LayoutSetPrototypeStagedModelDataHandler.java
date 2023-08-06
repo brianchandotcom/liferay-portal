@@ -17,6 +17,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
@@ -36,6 +37,9 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -43,8 +47,10 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.sites.kernel.util.Sites;
@@ -383,13 +389,111 @@ public class LayoutSetPrototypeStagedModelDataHandler
 				portletDataContext.getZipEntryAsInputStream(
 					layoutSetPrototypeLARPath)) {
 
-			_sites.importLayoutSetPrototype(
+			_importLayoutSetPrototype(
 				importedLayoutSetPrototype, inputStream, serviceContext);
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(ioException);
 			}
+		}
+	}
+
+	private void _importLayoutSetPrototype(
+			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
+
+		Map<String, String[]> parameterMap =
+			_sites.getLayoutSetPrototypeParameters(serviceContext);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
+			new String[] {Boolean.FALSE.toString()});
+
+		_setLayoutSetPrototypeLinkEnabledParameter(
+			parameterMap, layoutSet, serviceContext);
+
+		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+
+		if (user == null) {
+			BackgroundTask backgroundTask =
+				BackgroundTaskManagerUtil.fetchBackgroundTask(
+					BackgroundTaskThreadLocal.getBackgroundTaskId());
+
+			if (backgroundTask != null) {
+				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
+			}
+		}
+
+		if (user == null) {
+			user = UserLocalServiceUtil.getUser(
+				GetterUtil.getLong(PrincipalThreadLocal.getName()));
+		}
+
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildImportLayoutSettingsMap(
+					user.getUserId(), layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout(), null, parameterMap,
+					user.getLocale(), user.getTimeZone());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
+
+		ExportImportServiceUtil.importLayouts(
+			exportImportConfiguration, inputStream);
+	}
+
+	private void _setLayoutSetPrototypeLinkEnabledParameter(
+		Map<String, String[]> parameterMap, LayoutSet targetLayoutSet,
+		ServiceContext serviceContext) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) ||
+			!PortalPermissionUtil.contains(
+				permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
+
+			return;
+		}
+
+		if (targetLayoutSet.isPrivateLayout()) {
+			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "privateLayoutSetPrototypeLinkEnabled", true);
+
+			if (!privateLayoutSetPrototypeLinkEnabled) {
+				privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					serviceContext, "layoutSetPrototypeLinkEnabled");
+			}
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {
+					String.valueOf(privateLayoutSetPrototypeLinkEnabled)
+				});
+		}
+		else {
+			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "publicLayoutSetPrototypeLinkEnabled");
+
+			if (!publicLayoutSetPrototypeLinkEnabled) {
+				publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					serviceContext, "layoutSetPrototypeLinkEnabled", true);
+			}
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {
+					String.valueOf(publicLayoutSetPrototypeLinkEnabled)
+				});
 		}
 	}
 

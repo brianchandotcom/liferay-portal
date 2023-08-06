@@ -16,14 +16,12 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
-import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -54,7 +52,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -79,7 +76,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -106,7 +102,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -642,59 +637,6 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID}
 		).build();
-	}
-
-	@Override
-	public void importLayoutSetPrototype(
-			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
-
-		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
-			serviceContext);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
-			new String[] {Boolean.FALSE.toString()});
-
-		setLayoutSetPrototypeLinkEnabledParameter(
-			parameterMap, layoutSet, serviceContext);
-
-		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
-
-		if (user == null) {
-			BackgroundTask backgroundTask =
-				BackgroundTaskManagerUtil.fetchBackgroundTask(
-					BackgroundTaskThreadLocal.getBackgroundTaskId());
-
-			if (backgroundTask != null) {
-				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
-			}
-		}
-
-		if (user == null) {
-			user = UserLocalServiceUtil.getUser(
-				GetterUtil.getLong(PrincipalThreadLocal.getName()));
-		}
-
-		Map<String, Serializable> importLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildImportLayoutSettingsMap(
-					user.getUserId(), layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(), null, parameterMap,
-					user.getLocale(), user.getTimeZone());
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addDraftExportImportConfiguration(
-					user.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap);
-
-		ExportImportServiceUtil.importLayouts(
-			exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -1828,52 +1770,6 @@ public class SitesImpl implements Sites {
 		ExportImportLocalServiceUtil.mergeLayoutSetPrototypeInBackground(
 			user.getUserId(), layoutSet.getGroupId(),
 			exportImportConfiguration);
-	}
-
-	protected void setLayoutSetPrototypeLinkEnabledParameter(
-		Map<String, String[]> parameterMap, LayoutSet targetLayoutSet,
-		ServiceContext serviceContext) {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((permissionChecker == null) ||
-			!PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
-
-			return;
-		}
-
-		if (targetLayoutSet.isPrivateLayout()) {
-			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				serviceContext, "privateLayoutSetPrototypeLinkEnabled", true);
-
-			if (!privateLayoutSetPrototypeLinkEnabled) {
-				privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-					serviceContext, "layoutSetPrototypeLinkEnabled");
-			}
-
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-				new String[] {
-					String.valueOf(privateLayoutSetPrototypeLinkEnabled)
-				});
-		}
-		else {
-			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				serviceContext, "publicLayoutSetPrototypeLinkEnabled");
-
-			if (!publicLayoutSetPrototypeLinkEnabled) {
-				publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-					serviceContext, "layoutSetPrototypeLinkEnabled", true);
-			}
-
-			parameterMap.put(
-				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
-				new String[] {
-					String.valueOf(publicLayoutSetPrototypeLinkEnabled)
-				});
-		}
 	}
 
 	protected void updateLayoutSetPrototypeLink(

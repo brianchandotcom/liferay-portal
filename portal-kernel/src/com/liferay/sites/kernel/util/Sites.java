@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -131,11 +130,6 @@ public interface Sites {
 
 	public Map<String, String[]> getLayoutSetPrototypeParameters(
 		ServiceContext serviceContext);
-
-	public void importLayoutSetPrototype(
-			LayoutSetPrototype layoutSetPrototype, InputStream inputStream,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException;

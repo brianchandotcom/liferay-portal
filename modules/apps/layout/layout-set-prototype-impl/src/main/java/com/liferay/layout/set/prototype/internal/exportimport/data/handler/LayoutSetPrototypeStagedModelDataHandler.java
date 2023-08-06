@@ -6,11 +6,21 @@
 package com.liferay.layout.set.prototype.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -22,12 +32,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -38,8 +53,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -248,7 +265,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		File file = null;
 
 		try {
-			file = _sites.exportLayoutSetPrototype(
+			file = _exportLayoutSetPrototype(
 				layoutSetPrototype, new ServiceContext());
 
 			try (InputStream inputStream = new FileInputStream(file)) {
@@ -280,6 +297,60 @@ public class LayoutSetPrototypeStagedModelDataHandler
 				file.delete();
 			}
 		}
+	}
+
+	private File _exportLayoutSetPrototype(
+			LayoutSetPrototype layoutSetPrototype,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+
+		if (user == null) {
+			BackgroundTask backgroundTask =
+				BackgroundTaskManagerUtil.fetchBackgroundTask(
+					BackgroundTaskThreadLocal.getBackgroundTaskId());
+
+			if (backgroundTask != null) {
+				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
+			}
+		}
+
+		if (user == null) {
+			user = UserLocalServiceUtil.getUser(
+				GetterUtil.getLong(PrincipalThreadLocal.getName()));
+		}
+
+		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
+
+		List<Layout> layoutSetPrototypeLayouts =
+			LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
+
+		Map<String, String[]> parameterMap =
+			_sites.getLayoutSetPrototypeParameters(serviceContext);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
+			new String[] {Boolean.FALSE.toString()});
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+					ExportImportHelperUtil.getLayoutIds(
+						layoutSetPrototypeLayouts),
+					parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
 	}
 
 	private void _importLayoutPrototypes(

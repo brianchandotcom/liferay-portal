@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -127,11 +126,6 @@ public interface Sites {
 	public void deleteLayout(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception;
-
-	public File exportLayoutSetPrototype(
-			LayoutSetPrototype layoutSetPrototype,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	public Long[] filterGroups(List<Group> groups, String[] names);
 

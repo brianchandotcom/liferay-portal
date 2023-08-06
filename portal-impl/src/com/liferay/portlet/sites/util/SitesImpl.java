@@ -572,61 +572,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public File exportLayoutSetPrototype(
-			LayoutSetPrototype layoutSetPrototype,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
-
-		if (user == null) {
-			BackgroundTask backgroundTask =
-				BackgroundTaskManagerUtil.fetchBackgroundTask(
-					BackgroundTaskThreadLocal.getBackgroundTaskId());
-
-			if (backgroundTask != null) {
-				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
-			}
-		}
-
-		if (user == null) {
-			user = UserLocalServiceUtil.getUser(
-				GetterUtil.getLong(PrincipalThreadLocal.getName()));
-		}
-
-		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
-
-		List<Layout> layoutSetPrototypeLayouts =
-			LayoutLocalServiceUtil.getLayouts(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout());
-
-		Map<String, String[]> parameterMap = getLayoutSetPrototypeParameters(
-			serviceContext);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
-			new String[] {Boolean.FALSE.toString()});
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-					ExportImportHelperUtil.getLayoutIds(
-						layoutSetPrototypeLayouts),
-					parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addDraftExportImportConfiguration(
-					user.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap);
-
-		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
-	}
-
-	@Override
 	public Long[] filterGroups(List<Group> groups, String[] groupKeys) {
 		List<Long> groupIds = new ArrayList<>();
 

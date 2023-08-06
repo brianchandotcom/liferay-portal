@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetServiceUtil;
@@ -623,95 +622,6 @@ public class SitesImpl implements Sites {
 			settingsUnicodeProperties.remove(MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
 			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-		}
-	}
-
-	/**
-	 * Sets the number of failed merge attempts for the layout prototype to a
-	 * new value.
-	 *
-	 * @param layoutPrototype the page template of the counter being updated
-	 * @param newMergeFailCount the new value of the counter
-	 */
-	@Override
-	public void setMergeFailCount(
-			LayoutPrototype layoutPrototype, int newMergeFailCount)
-		throws PortalException {
-
-		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-		boolean updateLayoutPrototypeLayout = false;
-
-		UnicodeProperties prototypeTypeSettingsUnicodeProperties =
-			layoutPrototypeLayout.getTypeSettingsProperties();
-
-		if (newMergeFailCount == 0) {
-			if (prototypeTypeSettingsUnicodeProperties.containsKey(
-					MERGE_FAIL_COUNT)) {
-
-				prototypeTypeSettingsUnicodeProperties.remove(MERGE_FAIL_COUNT);
-
-				updateLayoutPrototypeLayout = true;
-			}
-		}
-		else {
-			prototypeTypeSettingsUnicodeProperties.setProperty(
-				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
-
-			updateLayoutPrototypeLayout = true;
-		}
-
-		if (updateLayoutPrototypeLayout) {
-			LayoutServiceUtil.updateLayout(
-				layoutPrototypeLayout.getGroupId(),
-				layoutPrototypeLayout.isPrivateLayout(),
-				layoutPrototypeLayout.getLayoutId(),
-				layoutPrototypeLayout.getTypeSettings());
-		}
-	}
-
-	/**
-	 * Sets the number of failed merge attempts for the layout set prototype to
-	 * a new value.
-	 *
-	 * @param layoutSetPrototype the site template of the counter being updated
-	 * @param newMergeFailCount the new value of the counter
-	 */
-	@Override
-	public void setMergeFailCount(
-			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
-		throws PortalException {
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		boolean updateLayoutSetPrototypeLayoutSet = false;
-
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		if (newMergeFailCount == 0) {
-			if (layoutSetPrototypeSettingsUnicodeProperties.containsKey(
-					MERGE_FAIL_COUNT)) {
-
-				layoutSetPrototypeSettingsUnicodeProperties.remove(
-					MERGE_FAIL_COUNT);
-
-				updateLayoutSetPrototypeLayoutSet = true;
-			}
-		}
-		else {
-			layoutSetPrototypeSettingsUnicodeProperties.setProperty(
-				MERGE_FAIL_COUNT, String.valueOf(newMergeFailCount));
-
-			updateLayoutSetPrototypeLayoutSet = true;
-		}
-
-		if (updateLayoutSetPrototypeLayoutSet) {
-			LayoutSetServiceUtil.updateSettings(
-				layoutSetPrototypeLayoutSet.getGroupId(),
-				layoutSetPrototypeLayoutSet.isPrivateLayout(),
-				layoutSetPrototypeLayoutSet.getSettings());
 		}
 	}
 

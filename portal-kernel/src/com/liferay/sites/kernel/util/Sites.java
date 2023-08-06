@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -109,14 +108,6 @@ public interface Sites {
 		throws Exception;
 
 	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws PortalException;
-
-	public void setMergeFailCount(
-			LayoutPrototype layoutPrototype, int newMergeFailCount)
-		throws PortalException;
-
-	public void setMergeFailCount(
-			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
 		throws PortalException;
 
 	public void updateLayoutSetPrototypesLinks(

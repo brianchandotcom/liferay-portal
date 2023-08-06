@@ -7,6 +7,7 @@ package com.liferay.layout.set.prototype.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
@@ -34,5 +35,13 @@ public interface LayoutSetPrototypeHelper {
 	public void resetPrototype(Layout layout) throws PortalException;
 
 	public void resetPrototype(LayoutSet layoutSet) throws PortalException;
+
+	public void setMergeFailCount(
+			LayoutPrototype layoutPrototype, int newMergeFailCount)
+		throws PortalException;
+
+	public void setMergeFailCount(
+			LayoutSetPrototype layoutSetPrototype, int newMergeFailCount)
+		throws PortalException;
 
 }

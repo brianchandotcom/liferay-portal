@@ -75,8 +75,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
-					"An API property must be related to an existing Object " +
-						"Field",
+					"An API property must be related to an existing object " +
+						"field",
 					"an-api-property-must-be-related-to-an-existing-object-" +
 						"field");
 			}

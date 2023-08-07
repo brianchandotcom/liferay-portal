@@ -9,7 +9,7 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
 		task ("Sign in") {
@@ -21,7 +21,7 @@ definition {
 		}
 
 		task ("Go to Pages Admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 		}
 	}
 
@@ -72,7 +72,7 @@ definition {
 		}
 
 		task ("Add a child page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.addChildPage(
 				childPageName = "Test Child Page",
@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("View order of the page actions") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 

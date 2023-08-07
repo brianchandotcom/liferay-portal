@@ -22,7 +22,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:connected-app:connected-app-api")
 	compileOnly project(":apps:document-library-opener:document-library-opener-api")
-	compileOnly project(":apps:document-library-opener:document-library-opener-google-drive-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:document-library:document-library-google-drive-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")

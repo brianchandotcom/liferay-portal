@@ -155,6 +155,14 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		return false;
 	}
 
+	public boolean isLinkedToObjectFolder(long objectFolderId) {
+		if (getObjectFolderId() == objectFolderId) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	public boolean isUnmodifiableSystemObject() {
 		if (FeatureFlagManagerUtil.isEnabled("LPS-167253")) {

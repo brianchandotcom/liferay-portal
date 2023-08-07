@@ -16,7 +16,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_PROJECT_ON_MODAL</td>
+	<td>MODAL_PLUS</td>
 	<td>//div[contains(@class, 'modal')]//button//*[contains(@class, 'icon-plus')]</td>
 	<td></td>
 </tr>

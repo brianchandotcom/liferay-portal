@@ -50,22 +50,10 @@ definition {
 			locator1 = "Pagination#ANY_PAGE");
 	}
 
-	macro assertProjectDescription {
-		AssertElementPresent(
-			key_value = ${value},
-			locator1 = "Testray#DESCRIPTION_PROJECT");
-	}
-
 	macro assertProjectTitleHeader {
 		AssertElementPresent(
 			key_projectName = ${projectName},
 			locator1 = "Testray#PROJECT_NAME_HEADER");
-	}
-
-	macro assertShowedItems {
-		AssertElementPresent(
-			key_text = ${itemsText},
-			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
 	}
 
 	macro backSectionBreadcrumb {
@@ -149,52 +137,6 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	macro createProject {
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${projectName});
-
-		Type(
-			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = ${description});
-
-		Button.clickSave();
-	}
-
-	macro createProjectByDropdown {
-		TestrayDropdown.selectOptionSidebar(
-			buttonOption = "Manage",
-			menuItem = "Add Project");
-
-		PortletEntry.inputName(name = ${projectName});
-
-		Type(
-			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = ${description});
-
-		Button.clickSave();
-	}
-
-	macro deleteAllProjects {
-		TestrayDropdown.goToResultSidebar();
-
-		Refresh();
-
-		Testray.changePagination(quantity = 150);
-
-		while (IsElementPresent(key_tableEntry = "Projects_", locator1 = "Testray#TABLE_ENTRY")) {
-			TestrayManage.selectTableRowOption(
-				rowOption = "Delete",
-				tableEntry = "Projects_");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
 	macro deleteItem {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Delete",
@@ -203,34 +145,6 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this item?");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro deleteProject {
-		TestrayDropdown.goToResultSidebar();
-
-		Testray.changePagination(quantity = 150);
-
-		TestrayManage.selectTableRowOption(
-			rowOption = "Delete",
-			tableEntry = ${projectName});
-
-		AssertConfirm(value1 = "Are you sure you want to delete this item?");
-	}
-
-	macro editProject {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${newName});
-
-		Type(
-			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = ${newDescription});
-
-		Button.clickSave();
-	}
-
-	macro gotoAddProject {
-		Click(locator1 = "Testray#ADD_PROJECT");
 	}
 
 	macro gotoBreadcrumb {
@@ -556,18 +470,6 @@ definition {
 		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 	}
 
-	macro typeProjectsField {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${projectName});
-
-		Type(
-			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
-			value1 = ${description});
-
-		Button.clickSave();
-	}
-
 	macro verifySpecificEnvironmentFactors {
 		if (isSet(listCategory)) {
 			for (var listboxItem : list ${listCategory}) {
@@ -600,12 +502,6 @@ definition {
 			key_fieldLabel = ${fieldLabel},
 			key_warningMessage = ${warningMessage},
 			locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
-	}
-
-	macro viewOverviewTab {
-		AssertElementPresent(
-			key_rowValue = ${rowValue},
-			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
 	}
 
 	macro viewTableDetails {

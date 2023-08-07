@@ -381,7 +381,7 @@ definition {
 		task ("When the user edit the project through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Project");
 
-			Testray.editProject(
+			TestrayProject.editProject(
 				newDescription = "Project Description Edited",
 				newName = "Project Edited");
 		}

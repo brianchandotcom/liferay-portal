@@ -1933,6 +1933,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#else>
 					public void add${referenceEntity.name}(${entity.PKClassName} pk, ${referenceEntity.apiPackagePath}.model.${referenceEntity.name} ${referenceEntity.variableName}) {
 				</#if>
+
 					${entity.name} ${entity.variableName} = fetchByPrimaryKey(pk);
 
 					if (${entity.variableName} == null) {
@@ -1966,6 +1967,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#else>
 					public void add${referenceEntity.pluralName}(${entity.PKClassName} pk, ${referenceEntity.PKClassName}[] ${referenceEntity.variableName}PKs) {
 				</#if>
+
 					long companyId = 0;
 
 					${entity.name} ${entity.variableName} = fetchByPrimaryKey(pk);

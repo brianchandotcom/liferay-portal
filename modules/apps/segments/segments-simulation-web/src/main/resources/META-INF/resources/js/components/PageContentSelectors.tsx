@@ -332,6 +332,18 @@ function PageContentSelectors({
 					</p>
 				) : (
 					<ExperienceSelector
+						onChangeExperience={(key: React.Key) => {
+							const selectedExperience = segmentsExperiences.find(
+								({segmentsExperienceId}) =>
+									segmentsExperienceId === key
+							);
+
+							if (selectedExperience) {
+								setSelectedSegmentsExperience(
+									selectedExperience
+								);
+							}
+						}}
 						segmentsExperiences={segmentsExperiences}
 						selectedSegmentsExperience={selectedSegmentsExperience}
 					/>

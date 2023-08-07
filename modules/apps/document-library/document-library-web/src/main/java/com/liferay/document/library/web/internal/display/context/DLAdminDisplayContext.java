@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.document.library.configuration.DLFileOrderConfigurationProvider;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -118,6 +119,7 @@ public class DLAdminDisplayContext {
 	public DLAdminDisplayContext(
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
 		DLFileOrderConfigurationProvider dlFileOrderConfigurationProvider,
+		DLSizeLimitConfigurationProvider dlSizeLimitConfigurationProvider,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, TrashHelper trashHelper,
@@ -125,6 +127,7 @@ public class DLAdminDisplayContext {
 
 		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
 		_dlFileOrderConfigurationProvider = dlFileOrderConfigurationProvider;
+		_dlSizeLimitConfigurationProvider = dlSizeLimitConfigurationProvider;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -1249,6 +1252,8 @@ public class DLAdminDisplayContext {
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
+	private final DLSizeLimitConfigurationProvider
+		_dlSizeLimitConfigurationProvider;
 	private String[] _extensions;
 	private Long _fileEntryTypeId;
 	private Folder _folder;

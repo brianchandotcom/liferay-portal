@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.configuration;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -21,6 +22,9 @@ public interface DLSizeLimitConfigurationProvider {
 
 	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId);
 
+	public String[] getCopyToFailInfo(
+		long companyId, long groupId, long size, Locale locale);
+
 	public long getGroupFileMaxSize(long groupId);
 
 	public long getGroupMaxSizeToCopy(long groupId);
@@ -32,6 +36,8 @@ public interface DLSizeLimitConfigurationProvider {
 	public long getSystemMaxSizeToCopy();
 
 	public Map<String, Long> getSystemMimeTypeSizeLimit();
+
+	public boolean isCopyToAllowed(long companyId, long groupId, long size);
 
 	public void updateCompanySizeLimit(
 			long companyId, long fileMaxSize, long maxSizeToCopy,

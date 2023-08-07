@@ -9,10 +9,12 @@ import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvid
 import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
@@ -46,6 +48,34 @@ public class DLSizeLimitConfigurationProviderImpl
 	}
 
 	@Override
+	public String[] getCopyToFailInfo(
+		long companyId, long groupId, long size, Locale locale) {
+
+		long companyMaxSizeToCopy = getCompanyMaxSizeToCopy(companyId);
+
+		if ((size > companyMaxSizeToCopy) && (companyMaxSizeToCopy != 0)) {
+			return new String[] {
+				_language.get(locale, "instance"),
+				_language.formatStorageSize(companyMaxSizeToCopy, locale)
+			};
+		}
+
+		long groupMaxSizeToCopy = getGroupMaxSizeToCopy(groupId);
+
+		if ((size > groupMaxSizeToCopy) && (groupMaxSizeToCopy != 0)) {
+			return new String[] {
+				_language.get(locale, "site"),
+				_language.formatStorageSize(groupMaxSizeToCopy, locale)
+			};
+		}
+
+		return new String[] {
+			_language.get(locale, "system"),
+			_language.formatStorageSize(getSystemMaxSizeToCopy(), locale)
+		};
+	}
+
+	@Override
 	public long getGroupFileMaxSize(long groupId) {
 		return _dlSizeLimitManagedServiceFactory.getGroupFileMaxSize(groupId);
 	}
@@ -74,6 +104,33 @@ public class DLSizeLimitConfigurationProviderImpl
 	@Override
 	public Map<String, Long> getSystemMimeTypeSizeLimit() {
 		return _dlSizeLimitManagedServiceFactory.getSystemMimeTypeSizeLimit();
+	}
+
+	@Override
+	public boolean isCopyToAllowed(long companyId, long groupId, long size) {
+		if (getGroupMaxSizeToCopy(groupId) != 0) {
+			if (size <= getGroupMaxSizeToCopy(groupId)) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (getCompanyMaxSizeToCopy(companyId) != 0) {
+			if (size <= getCompanyMaxSizeToCopy(companyId)) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (getSystemMaxSizeToCopy() != 0) {
+			if (size <= getSystemMaxSizeToCopy()) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -211,5 +268,8 @@ public class DLSizeLimitConfigurationProviderImpl
 
 	@Reference
 	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
+
+	@Reference
+	private Language _language;
 
 }

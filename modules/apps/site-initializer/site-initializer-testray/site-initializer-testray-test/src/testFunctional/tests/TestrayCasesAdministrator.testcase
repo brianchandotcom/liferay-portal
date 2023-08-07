@@ -78,7 +78,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("When I create a new case and select the option Add another") {
+		task ("When I create a new case and select the option Add another case") {
 			TestrayCases.createCases(
 				addAnotherCase = "Add Another",
 				caseName = ${caseName},
@@ -91,22 +91,14 @@ definition {
 		}
 
 		task ("Then I assert that a new Case was created and a copy of the new Case as well") {
-			Testray.viewTableEntryList(listEntry = "Component 1,Case 1,Copy - Case 1,3,");
+			Testray.viewTableEntryList(listEntry = "Component 1,Case 1,Copy - Case 1,3");
 		}
 	}
 
 	@description = "Story ID: LPS-146923 | Test Summary: Verify if as an Administrator I am able to add Cases without Subcomponents"
 	@priority = 4
 	test AdminCanAddCase {
-		task ("Given that I create a new Case via API") {
-			JSONTestray.addCases(
-				caseName = ${caseName},
-				caseType = ${caseType},
-				componentName = ${componentName},
-				projectName = ${projectName});
-		}
-
-		task ("When I go to the Cases page") {
+		task ("Given that I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -116,7 +108,18 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("Then the case is created with the new infos") {
+		task ("When I create a new Case") {
+			TestrayCases.createCases(
+				caseName = ${caseName},
+				caseType = "Manual Test",
+				component = "Component 1",
+				description = "Case Description",
+				duration = 60,
+				priority = 3,
+				steps = "Auto Test Steps");
+		}
+
+		task ("Then the case is created") {
 			Testray.viewTableEntryList(listEntry = "3,Case 1,Component 1");
 		}
 	}
@@ -142,7 +145,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("When the user delete a case") {
+		task ("When I delete a case") {
 			Testray.deleteItem(itemName = ${caseName});
 		}
 
@@ -198,7 +201,7 @@ definition {
 				projectName = ${projectName});
 		}
 
-		task ("When I go to the Cases page") {
+		task ("And I go to the Cases page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -208,7 +211,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("And the user edit a case") {
+		task ("When the user edit a case") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Edit",
 				tableEntry = ${caseName});
@@ -275,7 +278,7 @@ definition {
 				linkText = "Link Requirements");
 		}
 
-		task ("Then the requirement should be present") {
+		task ("And the requirement is present") {
 			Testray.viewTableEntryList(listEntry = "Requirement Summary");
 		}
 

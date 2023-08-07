@@ -226,6 +226,8 @@ definition {
 		task ("Edit Heading fragment") {
 			MenuItem.click(menuItem = "Edit");
 
+			PageEditor.assertFragmentSidebarLoaded();
+
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
 				id = "text",

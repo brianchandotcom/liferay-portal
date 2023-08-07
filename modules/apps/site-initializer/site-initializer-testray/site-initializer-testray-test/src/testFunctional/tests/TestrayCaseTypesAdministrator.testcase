@@ -41,21 +41,23 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Add Case Types"
 	@priority = 5
 	test AdminCanAddCaseTypes {
-		task ("When I create a Case Type") {
+		task ("Given that I go to the Case Type page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			TestrayDropdown.selectOptionSidebar(
 				buttonOption = "Manage",
 				menuItem = "Case Types");
-
-			TestrayManage.createCaseTypes(caseName = ${caseType});
 		}
 
-		task ("Then I assert that the newly created 'Case Type' is present in the list") {
+		task ("When I create a Case Type") {
+			TestrayManage.createCaseTypes(caseTypeName = ${caseType});
+		}
+
+		task ("Then assert that the newly created case type is present in the list") {
 			Testray.viewTableEntryList(listEntry = ${caseType});
 		}
 
-		task ("Delete object") {
+		task ("Delete the case type via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
 				objectName = ${caseType});
@@ -65,7 +67,7 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify that as an Administrator I can delete Case Types"
 	@priority = 5
 	test AdminCanDeleteCaseTypes {
-		task ("Given that I create a 'Case Type' via API") {
+		task ("Given that I create a case type via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 
@@ -93,7 +95,7 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Edit Case Types"
 	@priority = 5
 	test AdminCanEditCaseTypes {
-		task ("Given that I create a 'Case Type' via API") {
+		task ("Given that I create a Case Type via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 
@@ -119,7 +121,7 @@ definition {
 			Testray.viewTableEntryList(listEntry = "Case Type Edited");
 		}
 
-		task ("Delete object") {
+		task ("Delete the case type via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "casetypes",
 				objectName = "Case Type Edited");
@@ -129,7 +131,7 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate cases types"
 	@priority = 3
 	test AdminCanNotAddDuplicateCasesTypes {
-		task ("Given that I create a 'Case Type' via API") {
+		task ("Given that I create a Case Type via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 
@@ -146,7 +148,7 @@ definition {
 		}
 
 		task ("When I try to create a new Case Type with an existing title") {
-			TestrayManage.createCaseTypes(caseName = ${caseType});
+			TestrayManage.createCaseTypes(caseTypeName = ${caseType});
 		}
 
 		task ("Then an error message is shown") {
@@ -170,7 +172,7 @@ definition {
 		}
 
 		task ("When create a case type without the field fill") {
-			TestrayManage.createCaseTypes(caseName = "");
+			TestrayManage.createCaseTypes();
 		}
 
 		task ("Then can see the message of required field") {

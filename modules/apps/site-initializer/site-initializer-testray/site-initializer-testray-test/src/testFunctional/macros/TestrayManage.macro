@@ -32,7 +32,9 @@ definition {
 	macro createCaseTypes {
 		Click(locator1 = "TestrayManage#MODAL_PLUS");
 
-		PortletEntry.inputName(name = ${caseName});
+		if (isSet(caseTypeName)) {
+			PortletEntry.inputName(name = ${caseTypeName});
+		}
 
 		Button.clickSave();
 	}
@@ -188,7 +190,9 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		PortletEntry.inputName(name = ${newName});
+		if (isSet(newName)) {
+			PortletEntry.inputName(name = ${newName});
+		}
 
 		Button.clickSave();
 

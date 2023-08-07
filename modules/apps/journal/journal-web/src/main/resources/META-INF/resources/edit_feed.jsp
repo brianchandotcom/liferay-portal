@@ -25,7 +25,6 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 	enctype="multipart/form-data"
 	method="post"
 	name="fm"
-	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveFeed();" %>'
 >
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= editJournalFeedDisplayContext.getRedirect() %>" />
@@ -290,6 +289,17 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"isNewJournalFeed", editJournalFeedDisplayContext.getJournalFeed() == null
+		).put(
+			"renderedWebContent", JournalFeedConstants.RENDERED_WEB_CONTENT
+		).build()
+	%>'
+	module="js/EditFeed"
+/>
+
 <aui:script>
 	function <portlet:namespace />removeAssetCategory() {
 		document.<portlet:namespace />fm.<portlet:namespace />assetCategoryIds.value =
@@ -310,69 +320,5 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 			'<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
 		submitForm(document.<portlet:namespace />fm, null, false, false);
-	}
-
-	function <portlet:namespace />saveFeed() {
-		document.<portlet:namespace />fm[
-			'<portlet:namespace />javax-portlet-action'
-		].value =
-			'<%= (editJournalFeedDisplayContext.getJournalFeed() == null) ? "/journal/add_feed" : "/journal/update_feed" %>';
-
-		<c:if test="<%= editJournalFeedDisplayContext.getJournalFeed() == null %>">
-			document.<portlet:namespace />fm.<portlet:namespace />feedId.value =
-				document.<portlet:namespace />fm.<portlet:namespace />newFeedId.value;
-		</c:if>
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	var autoFeedInput = document.getElementById('<portlet:namespace />autoFeedId');
-	var newFeedCheckbox = document.getElementById('<portlet:namespace />newFeedId');
-
-	if (autoFeedInput && newFeedCheckbox) {
-		newFeedCheckbox.disabled = autoFeedInput.checked;
-
-		autoFeedInput.addEventListener('click', () => {
-			Liferay.Util.toggleDisabled(newFeedCheckbox, !newFeedCheckbox.disabled);
-		});
-	}
-</aui:script>
-
-<aui:script sandbox="<%= true %>">
-	var form = document.<portlet:namespace />fm;
-
-	var renderedWebContent = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
-
-	var contentFieldSelector = Liferay.Util.getFormElement(
-		form,
-		'contentFieldSelector'
-	);
-
-	if (contentFieldSelector) {
-		contentFieldSelector.addEventListener('change', () => {
-			var contentFieldValue = '';
-			var ddmRendererTemplateKeyValue = '';
-
-			var selectedFeedItemOption =
-				contentFieldSelector.options[contentFieldSelector.selectedIndex];
-
-			if (selectedFeedItemOption) {
-				contentFieldValue = selectedFeedItemOption.value || '';
-
-				if (
-					selectedFeedItemOption.dataset.contentfield ===
-					renderedWebContent
-				) {
-					ddmRendererTemplateKeyValue = contentFieldValue;
-
-					contentFieldValue = renderedWebContent;
-				}
-			}
-
-			Liferay.Util.setFormValues(form, {
-				contentField: contentFieldValue,
-				ddmRendererTemplateKey: ddmRendererTemplateKeyValue,
-			});
-		});
 	}
 </aui:script>

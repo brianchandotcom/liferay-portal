@@ -5,6 +5,11 @@
 
 package com.liferay.captcha.taglib.servlet.taglib;
 
+import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -76,6 +81,21 @@ public class CaptchaTag extends IncludeTag {
 
 		String url = themeDisplay.getPathMain() + "/portal/captcha/get_image";
 
+		try {
+			CaptchaConfiguration captchaConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					CaptchaConfiguration.class);
+
+			if (captchaConfiguration.enableSimpleCaptchaHeadlessAPI()) {
+				url = "/o/captcha/v1.0/simple";
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
 		String portletId = PortalUtil.getPortletId(httpServletRequest);
 
 		if (Validator.isNotNull(portletId)) {
@@ -86,6 +106,8 @@ public class CaptchaTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/captcha/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(CaptchaTag.class);
 
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(

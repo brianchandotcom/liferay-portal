@@ -186,8 +186,7 @@ definition {
 
 		task ("When I edit a run") {
 			TestrayRun.editRun(
-				categoryField = "Category 1",
-				listOption = "Option 2",
+				firstOption = "Option 2",
 				tableEntry = ${runName});
 		}
 

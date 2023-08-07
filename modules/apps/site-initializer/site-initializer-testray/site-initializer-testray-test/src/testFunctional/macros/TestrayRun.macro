@@ -27,16 +27,95 @@ definition {
 			rowOption = "Select Environment Factors",
 			tableEntry = ${tableEntry});
 
-		Select(
-			key_fieldLabel = ${categoryField},
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${listOption});
-
-		if (isSet(categoryField2)) {
+		if (isSet(firstOption)) {
 			Select(
-				key_fieldLabel = ${categoryField2},
+				key_fieldLabel = "Category 1",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${listOption2});
+				value1 = ${firstOption});
+		}
+
+		if (isSet(secondOption)) {
+			Select(
+				key_fieldLabel = "Category 2",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${secondOption});
+		}
+
+		if (isSet(applicationServer)) {
+			Select(
+				key_fieldLabel = "Application Server",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${applicationServer});
+		}
+
+		if (isSet(browser)) {
+			Select(
+				key_fieldLabel = "Browser",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${browser});
+		}
+
+		if (isSet(database)) {
+			Select(
+				key_fieldLabel = "Database",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${database});
+		}
+
+		if (isSet(javaJDK)) {
+			Select(
+				key_fieldLabel = "Java JDK",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${javaJDK});
+		}
+
+		if (isSet(liferayVersion)) {
+			Select(
+				key_fieldLabel = "Liferay Version",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${liferayVersion});
+		}
+
+		if (isSet(mobileBrowser)) {
+			Select(
+				key_fieldLabel = "Mobile Browser",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${mobileBrowser});
+		}
+
+		if (isSet(mobileDevice)) {
+			Select(
+				key_fieldLabel = "Mobile Device",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${mobileDevice});
+		}
+
+		if (isSet(mobileOperatingSystem)) {
+			Select(
+				key_fieldLabel = "Mobile Operating System",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${mobileOperatingSystem});
+		}
+
+		if (isSet(operatingSystem)) {
+			Select(
+				key_fieldLabel = "Operating System",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${operatingSystem});
+		}
+
+		if (isSet(portalEdition)) {
+			Select(
+				key_fieldLabel = "Portal Edition",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${portalEdition});
+		}
+
+		if (isSet(productEdition)) {
+			Select(
+				key_fieldLabel = "Product Edition",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${productEdition});
 		}
 
 		Button.click(button = "Save");

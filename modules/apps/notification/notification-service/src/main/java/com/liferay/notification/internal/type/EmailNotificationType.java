@@ -286,18 +286,16 @@ public class EmailNotificationType extends BaseNotificationType {
 		}
 
 		for (String emailAddress : StringUtil.split(validEmailAddresses)) {
-			User creatorUser = user;
+			User emailAddressUser = userLocalService.fetchUserByEmailAddress(
+				user.getCompanyId(), emailAddress);
 
-			if (Objects.isNull(
-					userLocalService.fetchUserByEmailAddress(
-						user.getCompanyId(), emailAddress))) {
-
-				creatorUser = userLocalService.getGuestUser(
+			if (emailAddressUser == null) {
+				emailAddressUser = userLocalService.getGuestUser(
 					CompanyThreadLocal.getCompanyId());
 			}
 
 			prepareNotificationContext(
-				creatorUser, body, notificationContext,
+				emailAddressUser, body, notificationContext,
 				HashMapBuilder.putAll(
 					evaluatedNotificationRecipientSettings
 				).put(

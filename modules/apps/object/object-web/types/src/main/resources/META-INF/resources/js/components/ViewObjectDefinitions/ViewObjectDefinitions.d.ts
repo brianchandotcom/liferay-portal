@@ -9,6 +9,7 @@ import {IFDSTableProps} from '../../utils/fds';
 import './ViewObjectDefinitions.scss';
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;
+	modelBuilderURL: string;
 	objectFolderPermissionsURL: string;
 	storages: LabelTypeObject[];
 }
@@ -29,6 +30,7 @@ export default function ViewObjectDefinitions({
 	baseResourceURL,
 	id,
 	items,
+	modelBuilderURL,
 	objectFolderPermissionsURL,
 	sorting,
 	storages,

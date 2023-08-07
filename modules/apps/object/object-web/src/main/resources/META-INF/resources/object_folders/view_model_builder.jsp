@@ -12,6 +12,8 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 %>
 
 <react:component

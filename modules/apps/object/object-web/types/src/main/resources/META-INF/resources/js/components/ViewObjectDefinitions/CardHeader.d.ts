@@ -9,12 +9,14 @@ interface CardHeaderProps {
 	externalReferenceCode?: string;
 	items: IItem[];
 	label?: LocalizedValue<string>;
+	modelBuilderURL: string;
 	name?: string;
 }
 export default function CardHeader({
 	externalReferenceCode,
 	items,
 	label,
+	modelBuilderURL,
 	name,
 }: CardHeaderProps): JSX.Element;
 export {};

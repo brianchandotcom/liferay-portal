@@ -25,6 +25,7 @@ describe('The CardHeader component should', () => {
 					}) as IItem[]
 				}
 				label={{en_US: 'Ticket'}}
+				modelBuilderURL=""
 			></CardHeader>
 		);
 
@@ -52,6 +53,7 @@ describe('The CardHeader component should', () => {
 					}) as IItem[]
 				}
 				label={{en_US: 'Uncategorized'}}
+				modelBuilderURL=""
 			></CardHeader>
 		);
 

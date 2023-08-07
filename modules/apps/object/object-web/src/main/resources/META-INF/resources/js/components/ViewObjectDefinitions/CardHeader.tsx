@@ -15,6 +15,7 @@ interface CardHeaderProps {
 	externalReferenceCode?: string;
 	items: IItem[];
 	label?: LocalizedValue<string>;
+	modelBuilderURL: string;
 	name?: string;
 }
 
@@ -22,6 +23,7 @@ export default function CardHeader({
 	externalReferenceCode,
 	items,
 	label,
+	modelBuilderURL,
 	name,
 }: CardHeaderProps) {
 	return (
@@ -72,6 +74,11 @@ export default function CardHeader({
 				aria-label={Liferay.Language.get('view-in-model-builder')}
 				className="lfr__object-web-view-object-definitions-view-in-model-builder-button"
 				displayType="secondary"
+				onClick={() => {
+					window.location.href =
+						`${modelBuilderURL}` +
+						`&folderERC=${externalReferenceCode}`;
+				}}
 			>
 				{Liferay.Language.get('view-in-model-builder')}
 			</ClayButton>

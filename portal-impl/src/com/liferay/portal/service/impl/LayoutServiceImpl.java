@@ -877,8 +877,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public int getLayoutsCount(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
-		return layoutPersistence.filterCountByG_P_P(
-			groupId, privateLayout, parentLayoutId);
+		try {
+			return getLayouts(
+				groupId, privateLayout, parentLayoutId
+			).size();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return 0;
 	}
 
 	@Override

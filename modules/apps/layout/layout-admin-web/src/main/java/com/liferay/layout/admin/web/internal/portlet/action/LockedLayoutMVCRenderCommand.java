@@ -8,6 +8,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LockedLayoutDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
@@ -33,6 +34,8 @@ public class LockedLayoutMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
+
+		SessionErrors.clear(renderRequest);
 
 		renderRequest.setAttribute(
 			LockedLayoutDisplayContext.class.getName(),

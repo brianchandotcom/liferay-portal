@@ -133,6 +133,19 @@ const ImageSelector = ({
 
 		const file = event.fileList[0];
 
+		if (file.get('size') > maxFileSize) {
+			setErrorMessage(
+				sub(
+					Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+					),
+					[formatStorage(parseInt(maxFileSize, 10))]
+				)
+			);
+
+			return;
+		}
+
 		setFileName(file.get('name'));
 
 		showImagePreview(file.get('file'));

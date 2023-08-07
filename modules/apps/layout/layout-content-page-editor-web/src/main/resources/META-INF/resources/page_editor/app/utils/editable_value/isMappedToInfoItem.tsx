@@ -26,8 +26,12 @@ interface MappedWithERC extends BaseMapped {
 type MappedEditable = MappedWithClassPK | MappedWithERC;
 
 export default function isMappedToInfoItem(
-	editable: Editable
+	editable: Editable | null
 ): editable is MappedEditable {
+	if (!editable) {
+		return false;
+	}
+
 	if (typeof editable !== 'object') {
 		return false;
 	}

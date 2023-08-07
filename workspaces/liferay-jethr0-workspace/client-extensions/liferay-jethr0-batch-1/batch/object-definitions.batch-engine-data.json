@@ -34,11 +34,11 @@
 					"type": "Clob"
 				}
 			],
-			"panelCategoryKey": "control_panel.object",
+			"panelCategoryKey": "",
 			"pluralLabel": {
 				"en_US": "Build Parameters"
 			},
-			"portlet": true,
+			"portlet": false,
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -502,11 +502,11 @@
 					"type": "oneToMany"
 				}
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Jenkins Servers"
 			},
-			"portlet": false,
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -662,11 +662,11 @@
 					"type": "oneToMany"
 				}
 			],
-			"panelCategoryKey": "",
+			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Jenkins Cohorts"
 			},
-			"portlet": false,
+			"portlet": true,
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -847,6 +847,16 @@
 					"name": "name",
 					"required": true,
 					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"label": {
+						"en_US": "Position"
+					},
+					"name": "position",
+					"required": false,
+					"type": "Integer"
 				},
 				{
 					"DBType": "Integer",

@@ -814,7 +814,7 @@ definition {
 				id = "image-square");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "${labelName} ${objectEntryId}",
+				entryTitle = ${objectEntryId},
 				navItem = "${labelName}s",
 				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
 
@@ -891,7 +891,7 @@ definition {
 				id = "image-square");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "${labelName} ${objectEntryId}",
+				entryTitle = ${objectEntryId},
 				navItem = "${labelName}s",
 				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
 

@@ -445,7 +445,7 @@ definition {
 				id = "element-text");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "University ${objectDefinitionEntryId}",
+				entryTitle = ${objectDefinitionEntryId},
 				navItem = "Universities",
 				rowItem = "//*[contains(@data-qa-id,'rowItemContent')]//*[contains(.,'${objectDefinitionEntryId}')]");
 

@@ -2639,7 +2639,7 @@ definition {
 			AssertTextEquals(
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "${labelName}2 ${objectEntryId}");
+				value1 = ${objectEntryId});
 
 			AssertElementPresent(
 				key_fieldLabel = "Action",

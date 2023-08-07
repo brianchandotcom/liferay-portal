@@ -96,18 +96,14 @@ public class AssetHelperTest {
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
-			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
-			serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
-			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
-			serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		assertCount(
 			1, assetEntryQuery, assetCategoryIds, assetTagNames, null,
@@ -142,9 +138,7 @@ public class AssetHelperTest {
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
-			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
-			serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		assertCount(
 			1, assetEntryQuery, assetCategoryIds, assetTagNames, null,
@@ -160,23 +154,17 @@ public class AssetHelperTest {
 		try {
 			_blogsEntryLocalService.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, StringPool.BLANK,
-				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
-				null, StringPool.BLANK, null, null,
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			_blogsEntryLocalService.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, StringPool.BLANK,
-				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
-				null, StringPool.BLANK, null, null,
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(group1.getGroupId()));
 
 			_blogsEntryLocalService.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, StringPool.BLANK,
-				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
-				null, StringPool.BLANK, null, null,
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
@@ -219,9 +207,7 @@ public class AssetHelperTest {
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
-			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
-			serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
@@ -230,14 +216,11 @@ public class AssetHelperTest {
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
-			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
-			serviceContext);
+			RandomTestUtil.randomString(), serviceContext);
 
 		_blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
-			1, 1, 1965, 0, 0, true, true, null, StringPool.BLANK, null, null,
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();

@@ -381,7 +381,7 @@ public interface ObjectRelationshipLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, long parameterObjectFieldId,
-			String deletionType, Map<Locale, String> labelMap)
+			String deletionType, boolean edge, Map<Locale, String> labelMap)
 		throws PortalException;
 
 	/**

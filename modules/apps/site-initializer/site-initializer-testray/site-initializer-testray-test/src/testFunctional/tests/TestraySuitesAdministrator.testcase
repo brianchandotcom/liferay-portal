@@ -270,10 +270,13 @@ definition {
 		}
 
 		task ("When I edit the newly created suite") {
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = ${suiteName});
+
 			TestraySuites.editSuite(
 				newDescription = "Suite Description Edited",
-				newName = "Suite Edited",
-				tableEntry = ${suiteName});
+				newName = "Suite Edited");
 		}
 
 		task ("Then I should be able to assert the new information") {

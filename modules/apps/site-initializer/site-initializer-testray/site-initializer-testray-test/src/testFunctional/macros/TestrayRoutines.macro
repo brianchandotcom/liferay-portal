@@ -41,10 +41,6 @@ definition {
 	}
 
 	macro editRoutine {
-		TestrayManage.selectTableRowOption(
-			rowOption = "Edit",
-			tableEntry = ${tableEntry});
-
 		PortletEntry.inputName(name = ${newName});
 
 		Button.clickSave();

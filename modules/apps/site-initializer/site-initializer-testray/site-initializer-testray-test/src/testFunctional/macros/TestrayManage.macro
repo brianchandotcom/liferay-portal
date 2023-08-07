@@ -44,7 +44,9 @@ definition {
 
 		Click(locator1 = "TestrayManage#MODAL_PLUS");
 
-		PortletEntry.inputName(name = ${componentName});
+		if (isSet(componentName)) {
+			PortletEntry.inputName(name = ${componentName});
+		}
 
 		if (isSet(teamName)) {
 			Select(
@@ -262,7 +264,9 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		PortletEntry.inputName(name = ${newName});
+		if (isSet(newName)) {
+			PortletEntry.inputName(name = ${newName});
+		}
 
 		Button.clickSave();
 	}

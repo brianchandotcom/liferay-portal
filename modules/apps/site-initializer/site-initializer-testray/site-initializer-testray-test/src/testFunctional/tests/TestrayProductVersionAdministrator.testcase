@@ -50,13 +50,7 @@ definition {
 	@description = "Story ID: LPS-159530 | Test Summary: Verify if As an Administrator I am able to add Product Versions"
 	@priority = 5
 	test AdminCanAddProductVersion {
-		task ("Given that I create a new 'Product Version' via API") {
-			JSONTestray.addProductVersion(
-				productVersion = ${productVersion},
-				projectName = ${projectName});
-		}
-
-		task ("When I go to Manage Product Version") {
+		task ("Given that I go to Manage Product Version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -66,7 +60,11 @@ definition {
 				tableEntry = ${projectName});
 		}
 
-		task ("Then I assert that the 'Product Version' was created") {
+		task ("When I create a new Product Version via API") {
+			TestrayManage.createProductVersion(productVersion = ${productVersion});
+		}
+
+		task ("Then I assert that the Product Version was created") {
 			Testray.viewTableEntryList(listEntry = ${productVersion});
 		}
 	}
@@ -74,13 +72,13 @@ definition {
 	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I am able to delete Product Versions"
 	@priority = 5
 	test AdminCanDeleteProductVersion {
-		task ("Given that I create a new 'Product Version' via API") {
+		task ("Given that I create a new Product Version via API") {
 			JSONTestray.addProductVersion(
 				productVersion = ${productVersion},
 				projectName = ${projectName});
 		}
 
-		task ("When I go to Manage Product Version and delete the created version") {
+		task ("And I go to Manage Product Version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -88,7 +86,9 @@ definition {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Manage Product Versions",
 				tableEntry = ${projectName});
+		}
 
+		task ("When I delete the created version") {
 			Testray.deleteItem(itemName = ${productVersion});
 		}
 
@@ -100,13 +100,13 @@ definition {
 	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I am able to Edit Product Versions"
 	@priority = 5
 	test AdminCanEditProductVersion {
-		task ("Given that I create a new 'Product Version' via API") {
+		task ("Given that I create a new Product Version via API") {
 			JSONTestray.addProductVersion(
 				productVersion = ${productVersion},
 				projectName = ${projectName});
 		}
 
-		task ("When I go to Manage Product Version") {
+		task ("And I go to Manage Product Version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -116,11 +116,13 @@ definition {
 				tableEntry = ${projectName});
 		}
 
-		task ("Then I should be able to edit an already created version") {
+		task ("When I edit the product version") {
 			TestrayManage.editProductVersion(
 				newName = "1.3.x",
 				tableEntry = ${productVersion});
+		}
 
+		task ("Then I should be able the created product version") {
 			Testray.viewTableEntryList(listEntry = "1.3.x");
 		}
 	}
@@ -128,7 +130,7 @@ definition {
 	@description = "Story ID: LPS-159530 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Product Versions"
 	@priority = 3
 	test AdminCanNotAddDuplicateProductVersion {
-		task ("Given that I create a new 'Product Version' via API") {
+		task ("Given that I create a new Product Version via API") {
 			JSONTestray.addProductVersion(
 				productVersion = ${productVersion},
 				projectName = ${projectName});

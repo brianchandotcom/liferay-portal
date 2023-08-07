@@ -55,14 +55,7 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I am able to add Components"
 	@priority = 5
 	test AdminCanAddComponent {
-		task ("Given that I create a new 'Component' via API") {
-			JSONTestray.addComponent(
-				componentName = ${componentName},
-				projectName = ${projectName},
-				teamName = ${teamName});
-		}
-
-		task ("When I go to Manage Component") {
+		task ("Given that I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -70,6 +63,12 @@ definition {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Manage Components",
 				tableEntry = ${projectName});
+		}
+
+		task ("When I create a Component") {
+			TestrayManage.createComponent(
+				componentName = ${componentName},
+				teamName = ${teamName});
 		}
 
 		task ("Then the component should appear on the list") {
@@ -104,7 +103,7 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I am able to edit Components while connecting a Team"
 	@priority = 5
 	test AdminCanAddTeamToComponent {
-		task ("Given that I create a new 'Component' via API") {
+		task ("Given that I create a new Component via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -120,8 +119,6 @@ definition {
 				tableEntry = ${projectName});
 
 			TestrayManage.createComponent(componentName = ${componentName});
-
-			Testray.viewTableEntryList(listEntry = ${componentName});
 		}
 
 		task ("Then I should be able to edit the component and add a Team") {
@@ -137,7 +134,7 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
 	@priority = 3
 	test AdminCanChangeTeamToComponent {
-		task ("Given that I create a new 'Team' and a new 'Component' via API") {
+		task ("Given that I create a new Team and a new Component via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = "Team 2");
@@ -185,8 +182,6 @@ definition {
 		task ("When I add a new component without adding a team") {
 			TestrayManage.createComponent(componentName = ${componentName});
 
-			Testray.viewTableEntryList(listEntry = ${componentName});
-
 			Testray.viewTableEntryListNotPresent(listEntry = ${teamName});
 		}
 
@@ -202,7 +197,7 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a Component that has a Team"
 	@priority = 5
 	test AdminCanDeleteComponentWithTeam {
-		task ("Given that I create a new 'Component' via API") {
+		task ("Given that I create a new Component via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
 				projectName = ${projectName},
@@ -233,7 +228,7 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I can edit Components"
 	@priority = 4
 	test AdminCanEditComponent {
-		task ("Given that I create a new 'Team' and a new 'Component' via API") {
+		task ("Given that I create a new Team and a new Component via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = ${teamName});
@@ -257,8 +252,6 @@ definition {
 		task ("When I go to Manage Components and edit the Component") {
 			Testray.viewTableEntryList(listEntry = ${componentName});
 
-			SelectFrameTop();
-
 			TestrayManage.editComponent(
 				newComponentName = "Component Edited",
 				tableEntry = ${componentName});
@@ -272,7 +265,7 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate component"
 	@priority = 3
 	test AdminCanNotAddDuplicatedComponent {
-		task ("Given that I create a new 'Component' via API") {
+		task ("Given that I create a new Component via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
 				projectName = ${projectName},
@@ -287,8 +280,6 @@ definition {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Manage Components",
 				tableEntry = ${projectName});
-
-			Testray.viewTableEntryList(listEntry = ${componentName});
 
 			TestrayManage.createComponent(componentName = ${componentName});
 		}
@@ -397,7 +388,7 @@ definition {
 		}
 
 		task ("When I try to add a component without a name") {
-			TestrayManage.createComponent(componentName = "");
+			TestrayManage.createComponent();
 		}
 
 		task ("Then I assert that the 'Name' field is required") {

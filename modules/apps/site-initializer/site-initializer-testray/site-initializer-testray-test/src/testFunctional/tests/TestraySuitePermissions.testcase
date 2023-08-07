@@ -207,10 +207,13 @@ definition {
 		}
 
 		task ("When the user edit the suite") {
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = ${suiteName});
+
 			TestraySuites.editSuite(
 				newDescription = "Suite Description Edited",
-				newName = "Suite Edited",
-				tableEntry = ${suiteName});
+				newName = "Suite Edited");
 		}
 
 		task ("Then the user can see the suite edited in the table") {

@@ -50,7 +50,7 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to add a Team"
 	@priority = 5
 	test AdminCanAddTeam {
-		task ("When the team are created") {
+		task ("When I create a team") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(quantity = 150);
@@ -62,7 +62,7 @@ definition {
 			TestrayManage.createTeam(teamName = ${teamName});
 		}
 
-		task ("Then I should be able to assert that the Team was created") {
+		task ("Then I should be able to see that the team has been created") {
 			Testray.viewTableEntryList(listEntry = ${teamName});
 		}
 	}
@@ -145,9 +145,7 @@ definition {
 		}
 
 		task ("When I try to create an existing Team") {
-			TestrayManage.createTeam(
-				tableEntry = ${projectName},
-				teamName = ${teamName});
+			TestrayManage.createTeam(teamName = ${teamName});
 		}
 
 		task ("Then I should be able to assert that an error message is shown") {

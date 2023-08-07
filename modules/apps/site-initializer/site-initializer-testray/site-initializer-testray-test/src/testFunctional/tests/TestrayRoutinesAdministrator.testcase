@@ -207,9 +207,11 @@ definition {
 		task ("When the user goes to edit the Routine and change the name") {
 			SelectFrameTop();
 
-			TestrayRoutines.editRoutine(
-				newName = "Routine 1 Edited",
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
 				tableEntry = ${routineName});
+
+			TestrayRoutines.editRoutine(newName = "Routine 1 Edited");
 		}
 
 		task ("Then the Routine should be updated on the list") {

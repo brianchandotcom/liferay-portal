@@ -42,25 +42,40 @@ definition {
 	}
 
 	macro editRequirement {
-		Type(
-			key_fieldLabel = "Summary",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${newName});
+		if (isSet(newName)) {
+			Type(
+				key_fieldLabel = "Summary",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${newName});
+		}
 
-		Type(
-			key_fieldLabel = "Link URL",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${linkURL});
+		if (isSet(linkURL)) {
+			Type(
+				key_fieldLabel = "Link URL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${linkURL});
+		}
 
-		Type(
-			key_fieldLabel = "Link Title",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${linkTitle});
+		if (isSet(linkTitle)) {
+			Type(
+				key_fieldLabel = "Link Title",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${linkTitle});
+		}
 
-		Select(
-			locator1 = "Select#SELECT_ID",
-			selectFieldId = "componentId",
-			value1 = ${componentId});
+		if (isSet(componentId)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "componentId",
+				value1 = ${componentId});
+		}
+
+		if (isSet(requirementDescription)) {
+			Type(
+				key_text = "description",
+				locator1 = "TextArea#ANY",
+				value1 = ${requirementDescription});
+		}
 
 		Button.clickSave();
 	}

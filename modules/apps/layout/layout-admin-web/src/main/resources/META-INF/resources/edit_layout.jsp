@@ -60,56 +60,60 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 
 <c:choose>
 	<c:when test="<%= incomplete %>">
-		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
+		<clay:container-fluid>
+			<clay:sheet>
+				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 
-		<aui:button-row>
-			<clay:button
-				displayType="secondary"
-				id='<%= liferayPortletResponse.getNamespace() + "enableLayoutButton" %>'
-				label='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>'
-			/>
+				<aui:button-row>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "enableLayoutButton" %>'
+						label='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>'
+					/>
 
-			<clay:button
-				displayType="secondary"
-				id='<%= liferayPortletResponse.getNamespace() + "deleteLayoutButton" %>'
-				label="delete-in-all-pages-variations"
-			/>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "deleteLayoutButton" %>'
+						label="delete-in-all-pages-variations"
+					/>
 
-			<script>
-				(function () {
-					var enableLayoutButton = document.getElementById(
-						'<portlet:namespace />enableLayoutButton'
-					);
+					<script>
+						(function () {
+							var enableLayoutButton = document.getElementById(
+								'<portlet:namespace />enableLayoutButton'
+							);
 
-					if (enableLayoutButton) {
-						enableLayoutButton.addEventListener('click', (event) => {
-							<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
-								<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-							</portlet:actionURL>
+							if (enableLayoutButton) {
+								enableLayoutButton.addEventListener('click', (event) => {
+									<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
+									<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+									<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+									</portlet:actionURL>
 
-							submitForm(document.hrefFm, '<%= enableLayoutURL %>');
-						});
-					}
+									submitForm(document.hrefFm, '<%= enableLayoutURL %>');
+								});
+							}
 
-					var deleteLayoutButton = document.getElementById(
-						'<portlet:namespace />deleteLayoutButton'
-					);
+							var deleteLayoutButton = document.getElementById(
+								'<portlet:namespace />deleteLayoutButton'
+							);
 
-					if (deleteLayoutButton) {
-						deleteLayoutButton.addEventListener('click', (event) => {
-							<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
-								<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-								<portlet:param name="layoutSetBranchId" value="0" />
-							</portlet:actionURL>
+							if (deleteLayoutButton) {
+								deleteLayoutButton.addEventListener('click', (event) => {
+									<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
+									<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+									<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+									<portlet:param name="layoutSetBranchId" value="0" />
+									</portlet:actionURL>
 
-							submitForm(document.hrefFm, '<%= deleteLayoutURL %>');
-						});
-					}
-				})();
-			</script>
-		</aui:button-row>
+									submitForm(document.hrefFm, '<%= deleteLayoutURL %>');
+								});
+							}
+						})();
+					</script>
+				</aui:button-row>
+			</clay:sheet>
+		</clay:container-fluid>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:success key='<%= portletResource + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-successfully") %>' />

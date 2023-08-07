@@ -214,7 +214,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-153323. View kebab icon of web content visible."
+	@description = "This is a test for LPS-153323 and LPS-155805. View kebab icon of web content visible and retainable."
 	@priority = 4
 	test ViewKebabIconOfWebContentVisible {
 		property testray.component.names = "Web Content Administration";
@@ -226,8 +226,12 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("Check kebab icon of the web content visible") {
+		task ("Check kebab icon of the web content visible and retainable") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			// We need this pause to view if kebab icon of the web content exists to test LPS-155805
+
+			Pause(locator1 = 3000);
 
 			AssertCssValue(
 				locator1 = "//dd//button[contains(@class, 'dropdown-toggle')]",

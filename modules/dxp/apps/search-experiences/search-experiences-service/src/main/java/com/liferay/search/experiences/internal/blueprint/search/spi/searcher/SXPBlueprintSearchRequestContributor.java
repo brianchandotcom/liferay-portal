@@ -62,26 +62,28 @@ public class SXPBlueprintSearchRequestContributor
 		if (object instanceof String) {
 			String string = (String)object;
 
-			if (!Validator.isBlank(string)) {
-				String[] sxpBlueprintExternalReferenceCodes = StringUtil.split(
-					string);
+			if (Validator.isBlank(string)) {
+				return;
+			}
 
-				for (String sxpBlueprintExternalReferenceCode :
-						sxpBlueprintExternalReferenceCodes) {
+			String[] sxpBlueprintExternalReferenceCodes = StringUtil.split(
+				string);
 
-					if (Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
-						continue;
-					}
+			for (String sxpBlueprintExternalReferenceCode :
+					sxpBlueprintExternalReferenceCodes) {
 
-					_enhance(
-						searchRequestBuilder,
-						_sxpBlueprintLocalService.
-							fetchSXPBlueprintByExternalReferenceCode(
-								sxpBlueprintExternalReferenceCode,
-								GetterUtil.getLong(
-									searchRequestBuilder.withSearchContextGet(
-										SearchContext::getCompanyId))));
+				if (Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
+					continue;
 				}
+
+				_enhance(
+					searchRequestBuilder,
+					_sxpBlueprintLocalService.
+						fetchSXPBlueprintByExternalReferenceCode(
+							sxpBlueprintExternalReferenceCode,
+							GetterUtil.getLong(
+								searchRequestBuilder.withSearchContextGet(
+									SearchContext::getCompanyId))));
 			}
 		}
 		else if (object != null) {
@@ -120,17 +122,18 @@ public class SXPBlueprintSearchRequestContributor
 				"Invalid search experiences blueprint ID " + object);
 		}
 
-		if (sxpBlueprintIds != null) {
-			for (long sxpBlueprintId : sxpBlueprintIds) {
-				if (sxpBlueprintId == 0) {
-					continue;
-				}
+		if (sxpBlueprintIds == null) {
+			return;
+		}
 
-				_enhance(
-					searchRequestBuilder,
-					_sxpBlueprintLocalService.fetchSXPBlueprint(
-						sxpBlueprintId));
+		for (long sxpBlueprintId : sxpBlueprintIds) {
+			if (sxpBlueprintId == 0) {
+				continue;
 			}
+
+			_enhance(
+				searchRequestBuilder,
+				_sxpBlueprintLocalService.fetchSXPBlueprint(sxpBlueprintId));
 		}
 	}
 

@@ -13,7 +13,7 @@ import java.util.List;
 public interface ObjectValidationRuleEngineRegistry {
 
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
-		String key);
+		long companyId, String key);
 
 	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines(
 		long companyId, String objectDefinitionName);

@@ -12,15 +12,18 @@ interface IProps extends InputGroup {
 	index: number;
 	onAccountRoleItemsChange: OnItemsChangeFn;
 	onEmailAddressItemsChange: OnItemsChangeFn;
+	onRemove: Function;
 	portletNamespace: string;
 }
 declare const InviteUserFormGroup: ({
 	accountRoles,
 	availableAccountRoles,
 	emailAddresses,
+	id,
 	index,
 	onAccountRoleItemsChange,
 	onEmailAddressItemsChange,
+	onRemove,
 	portletNamespace,
 }: IProps) => JSX.Element;
 export default InviteUserFormGroup;

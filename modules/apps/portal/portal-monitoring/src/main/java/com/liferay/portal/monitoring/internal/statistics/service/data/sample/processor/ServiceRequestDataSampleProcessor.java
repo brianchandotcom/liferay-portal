@@ -7,7 +7,7 @@ package com.liferay.portal.monitoring.internal.statistics.service.data.sample.pr
 
 import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.monitoring.internal.statistics.service.ServerStatistics;
+import com.liferay.portal.monitoring.internal.statistics.service.ServerStatisticsHelper;
 import com.liferay.portal.monitoring.internal.statistics.service.ServiceRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.service.ServiceStatistics;
 
@@ -34,12 +34,12 @@ public class ServiceRequestDataSampleProcessor
 		String className = methodSignature.getClassName();
 
 		ServiceStatistics serviceStatistics =
-			_serverStatistics.getServiceStatistics(className);
+			_serverStatisticsHelper.getServiceStatistics(className);
 
 		if (serviceStatistics == null) {
 			serviceStatistics = new ServiceStatistics(className);
 
-			_serverStatistics.setServiceStatistics(
+			_serverStatisticsHelper.setServiceStatistics(
 				className, serviceStatistics);
 		}
 
@@ -47,6 +47,6 @@ public class ServiceRequestDataSampleProcessor
 	}
 
 	@Reference
-	private ServerStatistics _serverStatistics;
+	private ServerStatisticsHelper _serverStatisticsHelper;
 
 }

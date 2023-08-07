@@ -19,17 +19,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
-		"mvc.command.name=/object_definitions/edit_object_folder"
+		"mvc.command.name=/object_definitions/view_model_builder"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditObjectFolderMVCRenderCommand implements MVCRenderCommand {
+public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/object_folders/edit_object_folder.jsp";
+		return "/object_folders/view_model_builder.jsp";
 	}
 
 }

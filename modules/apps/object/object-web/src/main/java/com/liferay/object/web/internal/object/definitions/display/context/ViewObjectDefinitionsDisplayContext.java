@@ -86,14 +86,6 @@ public class ViewObjectDefinitionsDisplayContext {
 		).buildString();
 	}
 
-	public String getEditObjectFolderURL() throws Exception {
-		return PortletURLBuilder.create(
-			getPortletURL()
-		).setMVCRenderCommandName(
-			"/object_definitions/edit_object_folder"
-		).buildString();
-	}
-
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
@@ -138,6 +130,14 @@ public class ViewObjectDefinitionsDisplayContext {
 				"delete", "delete", null));
 
 		return fdsActionDropdownItems;
+	}
+
+	public String getModelBuilderURL() throws Exception {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/object_definitions/view_model_builder"
+		).buildString();
 	}
 
 	public String getPermissionsURL(String modelResource) throws Exception {

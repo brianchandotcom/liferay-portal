@@ -486,6 +486,9 @@ public interface DLFolderLocalService
 		boolean includeMountfolders);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getFolderSize(long companyId, long groupId, String treePath);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getGroupFolderIds(long groupId, long parentFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -400,6 +400,15 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"CPDefinitionOptionRel", "typeSettings", "TEXT null"));
 
+		registry.register(
+			"5.9.0", "5.10.0",
+			UpgradeProcessFactory.alterColumnName(
+				"CPDefinitionOptionRel", "DDMFormFieldTypeName",
+				"commerceOptionTypeKey VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnName(
+				"CPOption", "DDMFormFieldTypeName",
+				"commerceOptionTypeKey VARCHAR(75) null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

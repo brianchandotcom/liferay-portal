@@ -32,6 +32,9 @@ import java.util.function.Function;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,6 +43,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OAuth2ControllerFactory.class)
 public class OAuth2ControllerFactory {
+
+	public static final String REDIRECTING_OAUTH2_ATTRIBUTE_NAME =
+		"REDIRECTING_OAUTH2_ATTRIBUTE_NAME";
 
 	public OAuth2Controller getJSONOAuth2Controller(
 		Function<PortletRequest, String> function) {
@@ -248,16 +254,23 @@ public class OAuth2ControllerFactory {
 				throw portalException;
 			}
 
-			JSONObject jsonObject = oAuth2Result.getResponseJSONObject();
-
-			for (String fieldName : jsonObject.keySet()) {
-				portletRequest.setAttribute(
-					fieldName, jsonObject.getString(fieldName));
-			}
-
 			String url = oAuth2Result.getRedirectURL();
 
 			if (url == null) {
+				JSONObject jsonObject = oAuth2Result.getResponseJSONObject();
+
+				if (jsonObject.length() > 0) {
+					HttpServletRequest httpServletRequest =
+						_portal.getOriginalServletRequest(
+							_portal.getHttpServletRequest(portletRequest));
+
+					HttpSession httpSession = httpServletRequest.getSession();
+
+					httpSession.setAttribute(
+						REDIRECTING_OAUTH2_ATTRIBUTE_NAME,
+						oAuth2Result.getResponseJSONObject());
+				}
+
 				url = _getRenderURL(portletRequest);
 			}
 

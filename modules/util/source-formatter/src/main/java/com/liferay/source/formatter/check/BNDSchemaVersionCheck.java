@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -41,7 +40,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException, ParseException {
+		throws IOException, ParseException {
 
 		String schemaVersion = BNDSourceUtil.getDefinitionValue(
 			content, "Liferay-Require-SchemaVersion");
@@ -190,10 +189,12 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private boolean _isAllEmptyEntity(File file)
-		throws DocumentException, IOException {
-
+	private boolean _isAllEmptyEntity(File file) throws IOException {
 		Document document = SourceUtil.readXML(FileUtil.read(file));
+
+		if (document == null) {
+			return true;
+		}
 
 		Element rootElement = document.getRootElement();
 

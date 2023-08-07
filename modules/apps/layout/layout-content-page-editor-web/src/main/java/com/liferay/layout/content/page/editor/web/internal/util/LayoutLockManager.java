@@ -30,36 +30,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutLockManager {
 
-	public static String getLockedLayoutURL(ActionRequest actionRequest) {
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/layout_admin/locked_layout"
-		).setBackURL(
-			() -> {
-				String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-				if (Validator.isNotNull(backURL)) {
-					return backURL;
-				}
-
-				HttpServletRequest httpServletRequest =
-					PortalUtil.getHttpServletRequest(actionRequest);
-
-				backURL = ParamUtil.getString(
-					httpServletRequest, "p_l_back_url");
-
-				if (Validator.isNotNull(backURL)) {
-					return backURL;
-				}
-
-				return ParamUtil.getString(httpServletRequest, "redirect");
-			}
-		).buildString();
-	}
-
 	public static void getLock(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -91,6 +61,36 @@ public class LayoutLockManager {
 		else if (lock.getUserId() != themeDisplay.getUserId()) {
 			throw new LockedLayoutException();
 		}
+	}
+
+	public static String getLockedLayoutURL(ActionRequest actionRequest) {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_admin/locked_layout"
+		).setBackURL(
+			() -> {
+				String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+				if (Validator.isNotNull(backURL)) {
+					return backURL;
+				}
+
+				HttpServletRequest httpServletRequest =
+					PortalUtil.getHttpServletRequest(actionRequest);
+
+				backURL = ParamUtil.getString(
+					httpServletRequest, "p_l_back_url");
+
+				if (Validator.isNotNull(backURL)) {
+					return backURL;
+				}
+
+				return ParamUtil.getString(httpServletRequest, "redirect");
+			}
+		).buildString();
 	}
 
 }

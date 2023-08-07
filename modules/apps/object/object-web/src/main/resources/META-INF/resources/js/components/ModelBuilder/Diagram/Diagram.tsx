@@ -8,6 +8,7 @@ import ReactFlow, {
 	Connection,
 	ConnectionMode,
 	Controls,
+	Edge,
 	MiniMap,
 	addEdge,
 } from 'react-flow-renderer';
@@ -31,20 +32,18 @@ const EDGE_TYPES = {
 };
 
 function DiagramBuilder() {
-	const [{objectDefinitionNodes}, dispatch] = useFolderContext();
-
-	// @ts-ignore
+	const [{elements}, dispatch] = useFolderContext();
 
 	const onConnect = useCallback(
-		(connection: Connection) => {
-			const elements = addEdge(connection, objectDefinitionNodes);
+		(connection: Connection | Edge) => {
+			const newElements = addEdge(connection, elements);
 
 			dispatch({
-				payload: {newElements: elements},
+				payload: {newElements},
 				type: TYPES.SET_ELEMENTS,
 			});
 		},
-		[dispatch, objectDefinitionNodes]
+		[dispatch, elements]
 	);
 
 	return (
@@ -52,12 +51,9 @@ function DiagramBuilder() {
 			<ReactFlow
 				connectionMode={ConnectionMode.Loose}
 				edgeTypes={EDGE_TYPES}
-				elements={objectDefinitionNodes}
+				elements={elements}
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
-
-				// @ts-ignore
-
 				onConnect={onConnect}
 			>
 				<Background size={1} />

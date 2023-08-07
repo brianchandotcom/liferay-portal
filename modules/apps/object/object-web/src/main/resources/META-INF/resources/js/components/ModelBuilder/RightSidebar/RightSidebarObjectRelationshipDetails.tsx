@@ -29,7 +29,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 	const readOnly =
 		!selectedDefinitionNode.data
-			.hasObjectDefinitionUpdateResourcePermission ||
+			?.hasObjectDefinitionUpdateResourcePermission ||
 		selectedObjectRelationship.reverse;
 
 	return (
@@ -86,7 +86,7 @@ export function RightSidebarObjectRelationshipDetails({
 					}
 					onChange={() => {}}
 					required
-					value={selectedDefinitionNode.data.name}
+					value={selectedDefinitionNode.data?.name}
 				/>
 
 				<Input

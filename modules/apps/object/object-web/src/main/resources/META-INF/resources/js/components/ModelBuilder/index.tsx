@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import {ReactFlowProvider} from 'react-flow-renderer';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
@@ -23,13 +24,15 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 	siteKeyValuePair,
 }) => {
 	return (
-		<FolderContextProvider value={{selectedFolderERC: 'uncategorized'}}>
-			<EditObjectFolder
-				companyKeyValuePair={companyKeyValuePair}
-				deletionTypes={deletionTypes}
-				siteKeyValuePair={siteKeyValuePair}
-			/>
-		</FolderContextProvider>
+		<ReactFlowProvider>
+			<FolderContextProvider value={{selectedFolderERC: 'uncategorized'}}>
+				<EditObjectFolder
+					companyKeyValuePair={companyKeyValuePair}
+					deletionTypes={deletionTypes}
+					siteKeyValuePair={siteKeyValuePair}
+				/>
+			</FolderContextProvider>
+		</ReactFlowProvider>
 	);
 };
 

@@ -6,16 +6,17 @@
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
+import {Node, useStore} from 'react-flow-renderer';
 
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
-
-import './RightSidebarObjectDefinitionDetails.scss';
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
 import {ConfigurationContainer} from '../../ObjectDetails/ConfigurationContainer';
 import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
 import {EntryDisplayContainer} from '../../ObjectDetails/EntryDisplayContainer';
 import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
+import {ObjectDefinitionNodeData} from '../types';
+
+import './RightSidebarObjectDefinitionDetails.scss';
 
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePair: KeyValuePair[];
@@ -25,11 +26,14 @@ export function RightSidebarObjectDefinitionDetails({
 	companyKeyValuePair,
 	siteKeyValuePair,
 }: RightSidebarObjectDefinitionDetailsProps) {
-	const [{objectDefinitionNodes}] = useFolderContext();
+	const store = useStore();
+	const {nodes} = store.getState();
 
-	const selectedNode = objectDefinitionNodes.find((objectDefinitionNode) => {
-		return objectDefinitionNode.data.nodeSelected;
-	});
+	const selectedNode = nodes.find(
+		(objectDefinitionNode: Node<ObjectDefinitionNodeData>) => {
+			return objectDefinitionNode.data?.nodeSelected;
+		}
+	);
 
 	return (
 		<>

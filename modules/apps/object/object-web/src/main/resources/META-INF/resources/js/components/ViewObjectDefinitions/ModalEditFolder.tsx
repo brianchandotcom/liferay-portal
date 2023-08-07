@@ -148,7 +148,7 @@ export function ModalEditFolder({
 						<Input
 							error={errors.externalReferenceCode}
 							feedbackMessage={Liferay.Language.get(
-								'unique-key-for-referencing-the-objects-folder'
+								'unique-key-for-referencing-the-object-folder'
 							)}
 							id="externalReferenceCode"
 							label={Liferay.Language.get(

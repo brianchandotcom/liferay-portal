@@ -60,7 +60,7 @@ export default function CardHeader({
 					<span
 						className="ml-3 text-secondary"
 						title={Liferay.Language.get(
-							'unique-key-for-referencing-the-objects-folder'
+							'unique-key-for-referencing-the-object-folder'
 						)}
 					>
 						<ClayIcon symbol="question-circle" />

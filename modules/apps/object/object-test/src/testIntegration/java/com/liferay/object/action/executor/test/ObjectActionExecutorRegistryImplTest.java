@@ -12,11 +12,12 @@ import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -52,18 +53,17 @@ public class ObjectActionExecutorRegistryImplTest {
 		try {
 			objectActionExecutorServiceRegistration1 =
 				_registerObjectActionExecutor(
-					new TestObjectActionExecutor(
-						1, ListUtil.fromString("abc")));
+					new TestObjectActionExecutor(1, Collections.emptyList()));
 
 			ObjectActionExecutor testObjectActionExecutor =
-				new TestObjectActionExecutor(2, ListUtil.fromString("abc"));
+				new TestObjectActionExecutor(2, Collections.emptyList());
 
 			objectActionExecutorServiceRegistration2 =
 				_registerObjectActionExecutor(testObjectActionExecutor);
 
 			List<ObjectActionExecutor> objectActionExecutors =
 				_objectActionExecutorRegistry.getObjectActionExecutors(
-					1, "abc");
+					1, StringUtil.randomId());
 
 			Assert.assertFalse(
 				objectActionExecutors.contains(testObjectActionExecutor));

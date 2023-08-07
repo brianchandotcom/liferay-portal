@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
+import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
@@ -703,6 +704,7 @@ public class ObjectRelationshipLocalServiceImpl
 				"Reverse object relationships cannot be updated");
 		}
 
+		_validateEdge(edge, objectRelationship);
 		_validateParameterObjectFieldId(
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1()),
@@ -1018,6 +1020,46 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);
+	}
+
+	private void _validateEdge(
+			boolean edge, ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		if (!edge) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		if (objectDefinition1.isUnmodifiableSystemObject() ||
+			objectDefinition2.isUnmodifiableSystemObject()) {
+
+			throw new ObjectRelationshipEdgeException(
+				"Object relationship must be between modifiable object " +
+					"definitions to be an edge of a root context");
+		}
+
+		if (!Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			throw new ObjectRelationshipEdgeException(
+				"Object relationship must be one to many to be an edge of a " +
+					"root context");
+		}
+
+		if (objectRelationship.isSelf()) {
+			throw new ObjectRelationshipEdgeException(
+				"Object relationship must not be a self-relationship to be " +
+					"an edge of a root context");
+		}
 	}
 
 	private void _validateName(long objectDefinitionId1, String name)

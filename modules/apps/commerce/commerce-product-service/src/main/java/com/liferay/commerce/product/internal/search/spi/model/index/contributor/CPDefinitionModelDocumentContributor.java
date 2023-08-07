@@ -76,7 +76,8 @@ public class CPDefinitionModelDocumentContributor
 	public void contribute(Document document, CPDefinition cpDefinition) {
 		try {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Indexing definition " + cpDefinition);
+				_log.debug(
+					"Indexing commerce product definition " + cpDefinition);
 			}
 
 			String cpDefinitionDefaultLanguageId =
@@ -507,7 +508,7 @@ public class CPDefinitionModelDocumentContributor
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to index cpDefinition" +
+					"Unable to index commerce product definition" +
 						cpDefinition.getCPDefinitionId(),
 					exception);
 			}

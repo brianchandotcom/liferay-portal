@@ -38,7 +38,7 @@ public class CPInstanceModelDocumentContributor
 	public void contribute(Document document, CPInstance cpInstance) {
 		try {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Indexing CPInstance " + cpInstance);
+				_log.debug("Indexing commerce product instance " + cpInstance);
 			}
 
 			CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -122,7 +122,8 @@ public class CPInstanceModelDocumentContributor
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to index document" + cpInstance.getCPInstanceId(),
+					"Unable to index commerce product instance" +
+						cpInstance.getCPInstanceId(),
 					exception);
 			}
 		}

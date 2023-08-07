@@ -244,7 +244,7 @@ public class ObjectRelationshipResourceImpl
 				objectRelationshipId,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
-				objectRelationship.getDeletionTypeAsString(),
+				objectRelationship.getDeletionTypeAsString(), false,
 				LocalizedMapUtil.getLocalizedMap(
 					objectRelationship.getLabel())));
 	}

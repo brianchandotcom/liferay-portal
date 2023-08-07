@@ -534,6 +534,7 @@ definition {
 			Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
 		}
 	}
+
 	macro selectGenerateActivationKeyOptionByField {
 		var key_label = ${field};
 

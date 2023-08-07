@@ -453,7 +453,6 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
-	
 
 	macro deactivateKoroneikiAccount {
 		ApplicationsMenu.gotoPortlet(

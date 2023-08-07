@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -93,7 +94,7 @@ public class FunctionObjectValidationRuleEngineImpl
 	}
 
 	@Override
-	public String getLabel() {
+	public String getLabel(Locale locale) {
 		return _name;
 	}
 

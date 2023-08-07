@@ -13,10 +13,12 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,8 +80,8 @@ public class DDMObjectValidationRuleEngineImpl
 	}
 
 	@Override
-	public String getLabel() {
-		return ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
+	public String getLabel(Locale locale) {
+		return _language.get(locale, getKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -87,5 +89,8 @@ public class DDMObjectValidationRuleEngineImpl
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
+	private Language _language;
 
 }

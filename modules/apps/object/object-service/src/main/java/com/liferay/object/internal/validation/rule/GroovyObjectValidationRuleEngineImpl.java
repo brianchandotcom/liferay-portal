@@ -8,8 +8,10 @@ package com.liferay.object.internal.validation.rule;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,9 +40,12 @@ public class GroovyObjectValidationRuleEngineImpl
 	}
 
 	@Override
-	public String getLabel() {
-		return ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY;
+	public String getLabel(Locale locale) {
+		return _language.get(locale, getKey());
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(scripting.language=groovy)")
 	private ObjectScriptingExecutor _objectScriptingExecutor;

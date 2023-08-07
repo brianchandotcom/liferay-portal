@@ -9,6 +9,7 @@ import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.scripting.ScriptingExecutorRegistry;
 
 import java.util.Collections;
@@ -64,6 +65,10 @@ public class GroovyObjectScriptingExecutor implements ObjectScriptingExecutor {
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
+
+		results.putIfAbsent(
+			"validationCriteriaMet",
+			!GetterUtil.getBoolean(results.get("invalidFields")));
 
 		return results;
 	}

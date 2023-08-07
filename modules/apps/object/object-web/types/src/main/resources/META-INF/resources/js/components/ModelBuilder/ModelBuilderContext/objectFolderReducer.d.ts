@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Node} from 'react-flow-renderer';
 import {
 	LeftSidebarItemType,
-	ObjectDefinitionNode,
+	ObjectDefinitionNodeData,
 	TAction,
 	TState,
 } from '../types';
@@ -13,7 +14,7 @@ export declare function objectFolderReducer(
 	state: TState,
 	action: TAction
 ): {
-	objectDefinitionNodes: any;
+	elements: any;
 	leftSidebarItems: LeftSidebarItemType[];
 	objectDefinitions: ObjectDefinition[];
 	objectFolders: ObjectFolder[];
@@ -21,7 +22,7 @@ export declare function objectFolderReducer(
 		| 'objectDefinitionDetails'
 		| 'objectRelationshipDetails'
 		| 'empty';
-	selectedDefinitionNode: ObjectDefinitionNode;
+	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
 };

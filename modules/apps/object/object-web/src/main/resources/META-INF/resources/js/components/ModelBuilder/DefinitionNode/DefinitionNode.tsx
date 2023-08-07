@@ -5,7 +5,7 @@
 
 import classNames from 'classnames';
 import React, {useState} from 'react';
-import {Handle, NodeProps, Position} from 'react-flow-renderer';
+import {Handle, NodeProps, Position, useStore} from 'react-flow-renderer';
 
 import './DefinitionNode.scss';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -31,6 +31,7 @@ export function DefinitionNode({
 }: NodeProps<ObjectDefinitionNodeData>) {
 	const [showAllFields, setShowAllFields] = useState<boolean>(false);
 	const [_, dispatch] = useFolderContext();
+	const store = useStore();
 
 	return (
 		<div
@@ -38,8 +39,12 @@ export function DefinitionNode({
 				'lfr-objects__model-builder-node-container--selected': nodeSelected,
 			})}
 			onClick={() => {
+				const {edges, nodes} = store.getState();
+
 				dispatch({
 					payload: {
+						edges,
+						nodes,
 						selectedObjectDefinitionName: name as string,
 					},
 					type: TYPES.SET_SELECTED_NODE,

@@ -58,15 +58,17 @@ export default function LeftSidebar() {
 					nestedKey="objectDefinitions"
 					onSelect={(item) => {
 						if (item.type === 'objectDefinition') {
+							const {edges, nodes} = store.getState();
+
 							dispatch({
 								payload: {
+									edges,
+									nodes,
 									selectedObjectDefinitionName: (item as LeftSidebarDefinitionItemType)
 										.definitionName,
 								},
 								type: TYPES.SET_SELECTED_NODE,
 							});
-
-							const {nodes} = store.getState();
 
 							const selectedNode = nodes.find(
 								(definitionNode) =>

@@ -4,10 +4,12 @@
  */
 
 import React, {createContext, useContext, useReducer} from 'react';
+import {Elements} from 'react-flow-renderer';
 
 import {
 	LeftSidebarItemType,
-	ObjectDefinitionNode,
+	ObjectDefinitionNodeData,
+	ObjectRelationshipEdgeData,
 	TAction,
 	TState,
 } from '../types';
@@ -26,8 +28,10 @@ interface IFolderContextProviderProps
 const FolderContext = createContext({} as IFolderContextProps);
 
 const initialState = {
+	elements: [] as Elements<
+		ObjectDefinitionNodeData | ObjectRelationshipEdgeData
+	>,
 	leftSidebarItems: [] as LeftSidebarItemType[],
-	objectDefinitionNodes: [] as ObjectDefinitionNode[],
 	objectDefinitions: [] as ObjectDefinition[],
 	objectFolders: [] as ObjectFolder[],
 	rightSidebarType: 'empty',

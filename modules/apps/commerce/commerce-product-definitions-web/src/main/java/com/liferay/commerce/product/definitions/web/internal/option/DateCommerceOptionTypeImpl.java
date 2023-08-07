@@ -57,6 +57,11 @@ public class DateCommerceOptionTypeImpl implements CommerceOptionType {
 	}
 
 	@Override
+	public boolean hasValues() {
+		return false;
+	}
+
+	@Override
 	public void render(
 			CPDefinitionOptionRel cpDefinitionOptionRel,
 			long defaultCPInstanceId, boolean forceRequired, String json,

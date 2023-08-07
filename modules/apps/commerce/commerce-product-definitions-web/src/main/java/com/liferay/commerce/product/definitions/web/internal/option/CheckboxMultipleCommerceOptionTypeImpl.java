@@ -57,6 +57,11 @@ public class CheckboxMultipleCommerceOptionTypeImpl
 	}
 
 	@Override
+	public boolean hasValues() {
+		return true;
+	}
+
+	@Override
 	public void render(
 			CPDefinitionOptionRel cpDefinitionOptionRel,
 			long defaultCPInstanceId, boolean forceRequired, String json,

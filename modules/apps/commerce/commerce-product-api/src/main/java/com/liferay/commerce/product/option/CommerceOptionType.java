@@ -21,6 +21,8 @@ public interface CommerceOptionType {
 
 	public String getLabel(Locale locale);
 
+	public boolean hasValues();
+
 	public void render(
 			CPDefinitionOptionRel cpDefinitionOptionRel,
 			long defaultCPInstanceId, boolean forceRequired, String json,

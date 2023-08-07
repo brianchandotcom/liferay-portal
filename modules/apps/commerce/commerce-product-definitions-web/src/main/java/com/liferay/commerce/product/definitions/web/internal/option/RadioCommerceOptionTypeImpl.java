@@ -71,6 +71,11 @@ public class RadioCommerceOptionTypeImpl implements CommerceOptionType {
 	}
 
 	@Override
+	public boolean hasValues() {
+		return true;
+	}
+
+	@Override
 	public void render(
 			CPDefinitionOptionRel cpDefinitionOptionRel,
 			long defaultCPInstanceId, boolean forceRequired, String json,

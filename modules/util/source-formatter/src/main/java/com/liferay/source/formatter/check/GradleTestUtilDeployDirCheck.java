@@ -67,13 +67,13 @@ public class GradleTestUtilDeployDirCheck extends BaseFileCheck {
 				return false;
 			}
 
-			String codeBlock = content.substring(matcher.end(2), x + 1);
+			String match = content.substring(matcher.end(2), x + 1);
 
-			if (ToolsUtil.getLevel(codeBlock, "{", "}") != 0) {
+			if (ToolsUtil.getLevel(match, "{", "}") != 0) {
 				continue;
 			}
 
-			if (codeBlock.contains(
+			if (match.contains(
 					"deployDir = file(\"${liferayHome}/osgi/test\")")) {
 
 				return true;

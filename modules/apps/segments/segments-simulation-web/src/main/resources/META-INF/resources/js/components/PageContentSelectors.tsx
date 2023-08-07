@@ -332,6 +332,7 @@ function PageContentSelectors({
 					</p>
 				) : (
 					<ExperienceSelector
+						label={Liferay.Language.get('experience')}
 						onChangeExperience={(key: React.Key) => {
 							const selectedExperience = segmentsExperiences.find(
 								({segmentsExperienceId}) =>

@@ -15,18 +15,15 @@ interface Props {
 	segmentsCompanyConfigurationURL: string;
 	segmentsEntries: SegmentEntry[];
 	segmentsExperiences: SegmentExperience[];
-	selectSegmentsEntryURL: string;
 	simulateSegmentsEntriesURL: string;
 }
 declare function PageContentSelectors({
 	deactivateSimulationURL,
 	namespace,
-	portletNamespace,
 	segmentationEnabled,
 	segmentsCompanyConfigurationURL,
 	segmentsEntries,
 	segmentsExperiences,
-	selectSegmentsEntryURL,
 	simulateSegmentsEntriesURL,
 }: Props): JSX.Element;
 export default PageContentSelectors;

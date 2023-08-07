@@ -6,17 +6,13 @@
 import React from 'react';
 import SegmentEntry from '../../types/SegmentEntry';
 interface Props {
-	maximumDropdownEntries: number;
 	namespace: string;
-	onMoreSegmentEntriesButtonClick: () => void;
-	onSelectSegmentEntry: React.Dispatch<SegmentEntry>;
+	onSelectSegmentEntry: (key: React.Key) => void;
 	segmentsEntries: SegmentEntry[];
 	selectedSegmentEntry: SegmentEntry;
 }
 declare function SegmentSelector({
-	maximumDropdownEntries,
 	namespace,
-	onMoreSegmentEntriesButtonClick,
 	onSelectSegmentEntry,
 	segmentsEntries,
 	selectedSegmentEntry,

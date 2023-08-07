@@ -11,9 +11,9 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -37,10 +37,10 @@ public class ResourceUtil {
 		}
 	}
 
-	public static Set<String> getResourcesAsStrings(
+	public static List<String> getResourcesAsStrings(
 		BundleContext bundleContext, String directory) {
 
-		Set<String> resources = new HashSet<>();
+		List<String> resources = new ArrayList<>();
 
 		Bundle bundle = bundleContext.getBundle();
 

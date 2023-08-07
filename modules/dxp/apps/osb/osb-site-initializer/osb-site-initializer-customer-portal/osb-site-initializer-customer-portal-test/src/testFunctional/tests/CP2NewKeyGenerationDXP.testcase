@@ -19,6 +19,10 @@ definition {
 			User.firstLoginPG();
 		}
 
+		task ("Login on OKTA") {
+			CustomerPortal.loginOktaToUpdateCP();
+		}
+
 		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
 		}
@@ -35,7 +39,7 @@ definition {
 
 		CustomerPortal.customerPortalApisTearDown();
 
-		if (${testLiferayVirtualInstance} == "true") {
+		if (${testLiferayVirtualInstance} == "false") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -135,6 +139,91 @@ definition {
 
 		task ("Then I should be able to view the success message with the text 'Activation Key was generated successfully'") {
 			CustomerPortal.viewAlert(alertText = "Activation Key was generated successfully");
+		}
+	}
+	@description = "Automation Ticket: LPS-151337 | Test Summary: Verify that after filling out all the fields the Next button is enabled."
+	@ignore = "true"
+	@priority = 4
+	test AssertComplimentaryDXPKeyCanBeCreated {
+		task ("Given Active the option in koroneiki 'Allow Self Provissioning'") {
+			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3809080");
+		}
+
+		task ("And the user Role is Changed") {
+			CP2Utils.assigneToRoleViaUsersTab(
+				accountRoleTitle = "Administrator",
+				accountUserName = "Test Test",
+				searchItem = "test",
+				testAccount = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		task ("And an user go to Customer Portal") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+		}
+
+		task ("And enter in test account") {
+			CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
+
+			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
+		}
+
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
+			CP2Utils.onboardingFlow();
+		}
+		else {
+			task ("And click on Portal product") {
+				CP2NavigationMenu.goToProductActivation();
+
+				CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+			}
+		}
+
+		task ("And go to generate a new key") {
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("When fulfill first form for Generate New License") {
+			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 6);
+
+			CustomerPortal.clickAtButton(text = "Next");
+
+			Click.clickAtNotVisible(locator1 = "CP2ActivationKeys#EXPIRATION_CHECKBOX");
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And when fulfill the Environment and Host name fields") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "1.1.1.1",
+				field = "IP Address");
+		}
+
+		task ("And the key is generated") {
+			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+
+			CustomerPortal.viewAlert(alertText = "Complimentary Key was generated successfully.");
+		}
+
+		task ("Then the key appears on table") {
+			CP2Utils.searchForKeyInTable(environmentName = "Environment Test Name");
+
+			AssertElementPresent(
+				key_text = "Environment Test Name",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
+
+		task ("And is deleted from the table") {
+			CP2Utils.deactivateExistingKey(environmentName = "Environment Test Name");
 		}
 	}
 

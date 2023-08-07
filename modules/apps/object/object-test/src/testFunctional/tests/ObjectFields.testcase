@@ -2076,6 +2076,8 @@ definition {
 	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property condition is true"
 	@priority = 5
 	test CannotEditConditionalReadOnlyFieldWhenConditionIsTrue {
+		property custom.properties = "feature.flag.LPS-170122=true";
+
 		task ("Given an object definition") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",

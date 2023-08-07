@@ -242,7 +242,7 @@
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String" />
-		<field name="DDMFormFieldTypeName" type="String">
+		<field name="commerceOptionTypeKey" type="String">
 			<validator name="required" />
 		</field>
 		<field name="infoItemServiceKey" type="String">
@@ -492,7 +492,7 @@
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="DDMFormFieldTypeName" type="String">
+		<field name="commerceOptionTypeKey" type="String">
 			<validator name="required" />
 		</field>
 		<field name="facetable" type="boolean" />

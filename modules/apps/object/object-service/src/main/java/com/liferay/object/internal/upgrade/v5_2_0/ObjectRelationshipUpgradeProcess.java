@@ -33,9 +33,9 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 					"ObjectDefinition inner join ObjectRelationship on ",
 					"ObjectRelationship.type_ = '",
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
-					"ObjectDefinition.active_ = [$TRUE$] and ",
 					"ObjectDefinition.objectDefinitionId = ",
-					"ObjectRelationship.objectDefinitionId1")),
+					"ObjectRelationship.objectDefinitionId1 and"
+					"ObjectDefinition.active_ = [$TRUE$]")),
 			resultSet -> new Object[] {
 				resultSet.getString(1), resultSet.getString(2),
 				resultSet.getLong(3), resultSet.getLong(4)

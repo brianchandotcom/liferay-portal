@@ -65,6 +65,7 @@ public class JournalArticleWrapper
 		attributes.put("indexable", isIndexable());
 		attributes.put("smallImage", isSmallImage());
 		attributes.put("smallImageId", getSmallImageId());
+		attributes.put("smallImageSource", getSmallImageSource());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
@@ -250,6 +251,12 @@ public class JournalArticleWrapper
 
 		if (smallImageId != null) {
 			setSmallImageId(smallImageId);
+		}
+
+		Integer smallImageSource = (Integer)attributes.get("smallImageSource");
+
+		if (smallImageSource != null) {
+			setSmallImageSource(smallImageSource);
 		}
 
 		String smallImageURL = (String)attributes.get("smallImageURL");
@@ -749,6 +756,16 @@ public class JournalArticleWrapper
 	@Override
 	public long getSmallImageId() {
 		return model.getSmallImageId();
+	}
+
+	/**
+	 * Returns the small image source of this journal article.
+	 *
+	 * @return the small image source of this journal article
+	 */
+	@Override
+	public int getSmallImageSource() {
+		return model.getSmallImageSource();
 	}
 
 	@Override
@@ -1340,6 +1357,16 @@ public class JournalArticleWrapper
 	@Override
 	public void setSmallImageId(long smallImageId) {
 		model.setSmallImageId(smallImageId);
+	}
+
+	/**
+	 * Sets the small image source of this journal article.
+	 *
+	 * @param smallImageSource the small image source of this journal article
+	 */
+	@Override
+	public void setSmallImageSource(int smallImageSource) {
+		model.setSmallImageSource(smallImageSource);
 	}
 
 	@Override

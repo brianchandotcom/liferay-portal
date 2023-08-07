@@ -43,6 +43,7 @@
 		</field>
 		<field name="smallImage" type="boolean" />
 		<field name="smallImageId" type="long" />
+		<field name="smallImageSource" type="int" />
 		<field name="smallImageURL" type="String">
 			<hint-collection name="URL" />
 		</field>

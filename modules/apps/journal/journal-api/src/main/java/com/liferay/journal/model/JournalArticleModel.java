@@ -542,6 +542,20 @@ public interface JournalArticleModel
 	public void setSmallImageId(long smallImageId);
 
 	/**
+	 * Returns the small image source of this journal article.
+	 *
+	 * @return the small image source of this journal article
+	 */
+	public int getSmallImageSource();
+
+	/**
+	 * Sets the small image source of this journal article.
+	 *
+	 * @param smallImageSource the small image source of this journal article
+	 */
+	public void setSmallImageSource(int smallImageSource);
+
+	/**
 	 * Returns the small image url of this journal article.
 	 *
 	 * @return the small image url of this journal article

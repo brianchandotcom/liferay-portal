@@ -70,9 +70,9 @@ definition {
 	test CanEditTitleOfDuplicatedProcess {
 		property test.liferay.virtual.instance = "false";
 
-		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver 2");
+		Workflow.duplicateSingleApproverWorkflow();
 
-		Alert.viewSuccessMessage();
+		Workflow.updateDefinition(workflowDefinitionTitle = "Single Approver 2");
 
 		Navigator.gotoBack();
 

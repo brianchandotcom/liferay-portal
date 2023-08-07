@@ -506,8 +506,6 @@ definition {
 	@description = "Order web contents by modified date in Asset Publisher."
 	@priority = 3
 	test OrderWebContentsByModifiedDate {
-		property timeout.explicit.wait = "10";
-
 		task ("Add three web contents") {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(

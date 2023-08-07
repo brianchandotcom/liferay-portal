@@ -112,7 +112,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API schema must be an existing Object Definition.",
+			"An API schema must be an existing object definition.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(

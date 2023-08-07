@@ -545,7 +545,6 @@ definition {
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-		property timeout.explicit.wait = "20";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(

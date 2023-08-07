@@ -28,7 +28,7 @@ definition {
 
 		var liferayLog = Clustering.getLogFileSpecificServer(nodePort = 0);
 
-		for (var logContent : list "Started dynamic bundles,Auto deploy scanner started for,System check is enabled") {
+		for (var logContent : list "Started dynamic bundles,Auto deploy scanner started for,Available checkers") {
 			if (!(contains(${liferayLog}, ${logContent}))) {
 				fail("Unable to find expected logging: ${logContent}");
 			}

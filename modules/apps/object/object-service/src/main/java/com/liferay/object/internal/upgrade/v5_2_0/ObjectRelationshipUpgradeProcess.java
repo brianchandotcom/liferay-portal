@@ -23,21 +23,18 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 
 		processConcurrently(
 			StringBundler.concat(
-				"select distinct ObjectDefinition.pkObjectFieldDBColumnName, ",
-				"ObjectRelationship.dbTableName, ",
-				"ObjectRelationship.objectDefinitionId1, ",
-				"ObjectRelationship.objectDefinitionId2 from ObjectDefinition ",
-				"inner join ObjectRelationship on ObjectRelationship.type_ = '",
+				"select ObjectDefinition.pkObjectFieldDBColumnName, ",
+				"ObjectRelationship.dbTableName from ObjectDefinition inner ",
+				"join ObjectRelationship on ObjectRelationship.type_ = '",
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
 				"ObjectDefinition.objectDefinitionId = ",
 				"ObjectRelationship.objectDefinitionId1"),
 			resultSet -> new Object[] {
-				resultSet.getString(1), resultSet.getString(2),
-				resultSet.getLong(3), resultSet.getLong(4)
+				resultSet.getString(1), resultSet.getString(2)
 			},
 			values -> _createIndex(
 				String.valueOf(values[0]), dbInspector,
-				String.valueOf(values[1]), (long)values[2], (long)values[3]),
+				String.valueOf(values[1])),
 			null);
 	}
 
@@ -51,20 +48,6 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 
 		if (!dbInspector.hasIndex(tableName, indexMetadata.getIndexName())) {
 			runSQL(indexMetadata.getCreateSQL(null));
-		}
-	}
-
-	private void _createIndex(
-			String columnName, DBInspector dbInspector, String tableName,
-			long objectDefinitionId1, long objectDefinitionId2)
-		throws Exception {
-
-		if (objectDefinitionId1 != objectDefinitionId2) {
-			_createIndex(columnName, dbInspector, tableName);
-		}
-		else {
-			_createIndex(columnName.concat("1"), dbInspector, tableName);
-			_createIndex(columnName.concat("2"), dbInspector, tableName);
 		}
 	}
 

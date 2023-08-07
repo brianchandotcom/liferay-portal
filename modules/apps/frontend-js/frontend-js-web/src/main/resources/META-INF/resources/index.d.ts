@@ -214,10 +214,12 @@ export function openAlertModal({message}: {message: string}): void;
 export function openConfirmModal({
 	message,
 	onConfirm,
+	status,
 	title,
 }: {
 	message: string;
 	onConfirm: (confirmed: boolean) => void;
+	status?: string;
 	title?: string;
 }): void;
 

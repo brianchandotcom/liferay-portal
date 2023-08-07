@@ -295,6 +295,18 @@ public class MirrorsGetTask extends Task {
 		_downloadFile(sourceURL, targetFile);
 	}
 
+	protected Process executeCommands(String[] commands)
+		throws InterruptedException, IOException, RuntimeException {
+
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+		Process process = processBuilder.start();
+
+		process.waitFor();
+
+		return process;
+	}
+
 	protected String getMirrorsHostname() {
 		if (_mirrorsHostname != null) {
 			return _mirrorsHostname;
@@ -335,13 +347,7 @@ public class MirrorsGetTask extends Task {
 		return path;
 	}
 
-	protected String getProcessOutput(String[] commands)
-		throws IOException, RuntimeException {
-
-		ProcessBuilder processBuilder = new ProcessBuilder(commands);
-
-		Process process = processBuilder.start();
-
+	protected String getProcessOutput(Process process) {
 		StringBuilder processOutput = new StringBuilder();
 
 		try {
@@ -351,11 +357,11 @@ public class MirrorsGetTask extends Task {
 			String line = bufferedReader.readLine();
 
 			while (line != null) {
-				processOutput.append(line + System.lineSeparator());
+				processOutput.append(line);
+				processOutput.append(System.lineSeparator());
+
 				line = bufferedReader.readLine();
 			}
-
-			process.waitFor();
 		}
 		catch (Exception exception) {
 			System.out.println("Unable to get process output.");
@@ -409,12 +415,12 @@ public class MirrorsGetTask extends Task {
 	}
 
 	protected boolean has7z() {
-		String[] command = {"/bin/bash", "-c", "type 7z"};
+		String[] commands = {"/bin/bash", "-c", "type 7z"};
 
 		try {
-			String processOutput = getProcessOutput(command);
+			Process process = executeCommands(commands);
 
-			if (processOutput.contains("not found")) {
+			if (process.exitValue() != 0) {
 				System.out.println("Unable to validate 7z file");
 
 				return false;
@@ -434,20 +440,12 @@ public class MirrorsGetTask extends Task {
 			return true;
 		}
 
-		String[] command = {"/bin/bash", "-c", "7z t " + file.toString()};
+		String[] commands = {"/bin/bash", "-c", "7z t " + file.toString()};
+
+		Process process = null;
 
 		try {
-			String processOutput = getProcessOutput(command);
-
-			if (!processOutput.contains("Everything is Ok") &&
-				processOutput.contains("Files: 0\n")) {
-
-				System.out.println(processOutput);
-
-				System.out.println(file + " archive file is not valid.");
-
-				return false;
-			}
+			process = executeCommands(commands);
 		}
 		catch (Exception exception) {
 			System.out.println(file + " archive file is not valid.");
@@ -455,7 +453,19 @@ public class MirrorsGetTask extends Task {
 			return false;
 		}
 
-		return true;
+		String processOutput = getProcessOutput(process);
+
+		int exitValue = process.exitValue();
+
+		if ((exitValue == 0) && !processOutput.contains("Files: 0\n")) {
+			return true;
+		}
+
+		System.out.println(processOutput);
+
+		System.out.println(file + " archive file is not valid.");
+
+		return false;
 	}
 
 	protected boolean is7ZFileName(String fileName) {

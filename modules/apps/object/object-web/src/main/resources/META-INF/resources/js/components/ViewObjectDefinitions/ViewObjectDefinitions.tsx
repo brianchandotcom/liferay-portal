@@ -323,7 +323,7 @@ export default function ViewObjectDefinitions({
 								<div className="lfr__object-web-view-object-definitions-folder-list-header">
 									<span className="lfr__object-web-view-object-definitions-folder-list-title mb-0">
 										{Liferay.Language.get(
-											'objects-folders'
+											'object-folders'
 										).toUpperCase()}
 									</span>
 

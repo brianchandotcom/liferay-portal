@@ -154,7 +154,7 @@ export default function ViewObjectDefinitions({
 		},
 		emptyState: {
 			description: Liferay.Language.get(
-				'create-your-first-object-or-import-an-existing-one-to-start-working-with-objects-model'
+				'create-your-first-object-or-import-an-existing-one-to-start-working-with-object-folder'
 			),
 			image: '/states/empty_state.gif',
 			title: Liferay.Language.get('no-objects-created-yet'),

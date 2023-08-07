@@ -9,6 +9,7 @@ import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.PropsUtil;
 
 import java.io.File;
@@ -22,6 +23,11 @@ import java.net.URLClassLoader;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -117,9 +123,22 @@ public abstract class BasePoshiResourcesTestCase {
 
 		Element versioningElement = rootElement.element("versioning");
 
-		Element releaseElement = versioningElement.element("release");
+		Element versionsElement = versioningElement.element("versions");
 
-		return releaseElement.getText();
+		Map<Integer, String> versions = new TreeMap<>();
+
+		for (Element versionElement :
+				Dom4JUtil.toElementList(versionsElement.elements("version"))) {
+
+			String version = versionElement.getText();
+
+			versions.put(
+				GetterUtil.getInteger(version.substring(0, 8)), version);
+		}
+
+		List<Integer> dates = new ArrayList<>(versions.keySet());
+
+		return versions.get(dates.get(dates.size() - 1));
 	}
 
 	private static final String _BASE_URL =

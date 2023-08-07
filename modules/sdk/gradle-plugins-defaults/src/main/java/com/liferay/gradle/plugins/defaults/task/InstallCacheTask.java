@@ -96,8 +96,7 @@ public class InstallCacheTask extends DefaultTask {
 		return _cacheFormat;
 	}
 
-	@InputDirectory
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getCacheRootDir() {
 		return GradleUtil.toFile(getProject(), _cacheRootDir);
 	}

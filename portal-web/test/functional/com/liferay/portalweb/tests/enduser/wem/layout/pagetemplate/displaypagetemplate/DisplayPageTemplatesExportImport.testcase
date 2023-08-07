@@ -590,7 +590,7 @@ definition {
 				value1 = "Specific Content");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = "${labelName}2 ${objectEntryId}",
+				entryTitle = ${objectEntryId},
 				navItem = "${labelName}2s",
 				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
 

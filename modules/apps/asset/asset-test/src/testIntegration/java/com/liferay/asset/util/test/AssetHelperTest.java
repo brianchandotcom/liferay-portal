@@ -160,19 +160,19 @@ public class AssetHelperTest {
 			_blogsEntryLocalService.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(group2.getGroupId()));
 
 			AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
 
-			assetEntryQuery1.setGroupIds(new long[] {_group.getGroupId()});
+			assetEntryQuery1.setGroupIds(new long[] {group1.getGroupId()});
 
 			AssetEntryQuery assetEntryQuery2 = new AssetEntryQuery();
 
-			assetEntryQuery2.setGroupIds(new long[] {_group.getGroupId()});
+			assetEntryQuery2.setGroupIds(new long[] {group2.getGroupId()});
 
 			SearchContext searchContext = new SearchContext();
 
-			searchContext.setCompanyId(_group.getCompanyId());
+			searchContext.setCompanyId(TestPropsValues.getCompanyId());
 
 			SearchHits searchHits = _assetHelper.search(
 				searchContext,

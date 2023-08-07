@@ -7,8 +7,6 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
-	finalizedBy formatSource
-
 	goalPrefix = "db-support"
 }
 

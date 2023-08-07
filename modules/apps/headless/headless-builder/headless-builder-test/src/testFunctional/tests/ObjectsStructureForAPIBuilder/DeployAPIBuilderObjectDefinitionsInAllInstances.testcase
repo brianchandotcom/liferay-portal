@@ -59,8 +59,7 @@ definition {
 		task ("When with postAPIApplication to create a published API application") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "test",
-				statusKey = "unpublished",
-				statusName = "unpublished",
+				status = "unpublished",
 				title = "test",
 				virtualHost = "www.able.com");
 		}
@@ -118,8 +117,7 @@ definition {
 		task ("And Given create an API application on default instance") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "test",
-				statusKey = "published",
-				statusName = "published",
+				status = "published",
 				title = "test");
 		}
 

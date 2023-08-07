@@ -31,8 +31,7 @@ definition {
 		task ("Given API application with applicationStatus 'unpublished', baseURL 'my-app', and title 'My App' created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				statusKey = "unpublished",
-				statusName = "unpublished",
+				status = "unpublished",
 				title = "My APP");
 		}
 
@@ -126,8 +125,7 @@ definition {
 		task ("Given API application with baseURL 'my-app', and title 'My App' created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				statusKey = "published",
-				statusName = "published",
+				status = "published",
 				title = "My APP");
 		}
 
@@ -208,8 +206,7 @@ definition {
 		task ("Given API application with applicationStatus 'unpublished', baseURL 'my-app', and title 'My App' created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				statusKey = "unpublished",
-				statusName = "unpublished",
+				status = "unpublished",
 				title = "My APP");
 		}
 

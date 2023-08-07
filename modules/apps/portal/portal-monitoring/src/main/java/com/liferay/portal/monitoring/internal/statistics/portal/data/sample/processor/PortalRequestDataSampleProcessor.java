@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.monitoring.internal.statistics.portal.CompanyStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
-import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatistics;
+import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatisticsHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,13 +32,13 @@ public class PortalRequestDataSampleProcessor
 		long companyId = portalRequestDataSample.getCompanyId();
 
 		CompanyStatistics companyStatistics =
-			_serverStatistics.getCompanyStatisticsByCompanyId(companyId);
+			_serverStatisticsHelper.getCompanyStatisticsByCompanyId(companyId);
 
 		if (companyStatistics == null) {
 			try {
 				Company company = _companyLocalService.getCompany(companyId);
 
-				companyStatistics = _serverStatistics.register(
+				companyStatistics = _serverStatisticsHelper.register(
 					company.getWebId());
 			}
 			catch (Exception exception) {
@@ -55,6 +55,6 @@ public class PortalRequestDataSampleProcessor
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private ServerStatistics _serverStatistics;
+	private ServerStatisticsHelper _serverStatisticsHelper;
 
 }

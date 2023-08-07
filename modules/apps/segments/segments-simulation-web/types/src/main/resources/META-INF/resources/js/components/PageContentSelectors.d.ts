@@ -16,7 +16,6 @@ interface Props {
 	segmentsEntries: SegmentEntry[];
 	segmentsExperiences: SegmentExperience[];
 	selectSegmentsEntryURL: string;
-	selectSegmentsExperienceURL: string;
 	simulateSegmentsEntriesURL: string;
 }
 declare function PageContentSelectors({
@@ -28,7 +27,6 @@ declare function PageContentSelectors({
 	segmentsEntries,
 	segmentsExperiences,
 	selectSegmentsEntryURL,
-	selectSegmentsExperienceURL,
 	simulateSegmentsEntriesURL,
 }: Props): JSX.Element;
 export default PageContentSelectors;

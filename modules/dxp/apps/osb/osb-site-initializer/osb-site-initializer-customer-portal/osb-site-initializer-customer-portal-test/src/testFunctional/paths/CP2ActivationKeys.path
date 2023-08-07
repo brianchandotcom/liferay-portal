@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRATION_CHECKBOX</td>
+	<td>//label//input[@id="expiration-checkbox" and @type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_BUTTON</td>
 	<td>//*[contains(@class, 'pagination-items-per-page')]</td>
 	<td></td>
@@ -195,7 +200,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIPTION_CHOICE</td>
-	<td>//div[contains(@class, 'cp-radio-card')][${key_position}]</td>
+	<td>xpath=(//div[contains(@class, 'cp-radio-card')])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>

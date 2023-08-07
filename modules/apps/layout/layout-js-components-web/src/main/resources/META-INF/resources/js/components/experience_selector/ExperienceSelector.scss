@@ -1,0 +1,8 @@
+@import 'atlas-variables';
+@import 'cadmin-variables';
+
+html#{$cadmin-selector}
+	.cadmin
+	.layout__experience-selector.btn:not(.btn-unstyled) {
+	padding-right: 2em;
+}

@@ -1890,7 +1890,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 * @param pk the primary key of the ${entity.humanName}
 				 * @param ${referenceEntity.variableName}PK the primary key of the ${referenceEntity.humanName}
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-				 * @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} was added; <code>false</code> if they were already associated
+				 * @return <code>true</code> if an association between the ${entity.humanName} and the ${referenceEntity.humanName} was added; <code>false</code> if they were already associated
 				</#if>
 				 */
 				@Override
@@ -1924,7 +1924,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 * @param pk the primary key of the ${entity.humanName}
 				 * @param ${referenceEntity.variableName} the ${referenceEntity.humanName}
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-				 * @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} was added; <code>false</code> if they were already associated
+				 * @return <code>true</code> if an association between the ${entity.humanName} and the ${referenceEntity.humanName} was added; <code>false</code> if they were already associated
 				</#if>
 				 */
 				@Override

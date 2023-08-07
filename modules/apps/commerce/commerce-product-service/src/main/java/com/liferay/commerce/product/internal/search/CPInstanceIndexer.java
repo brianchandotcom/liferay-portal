@@ -214,7 +214,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	@Override
 	protected Document doGetDocument(CPInstance cpInstance) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing definition " + cpInstance);
+			_log.debug("Indexing commerce product instance " + cpInstance);
 		}
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -273,7 +273,9 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + cpInstance + " indexed successfully");
+			_log.debug(
+				"Commerce product instance " + cpInstance +
+					" indexed successfully");
 		}
 
 		return document;

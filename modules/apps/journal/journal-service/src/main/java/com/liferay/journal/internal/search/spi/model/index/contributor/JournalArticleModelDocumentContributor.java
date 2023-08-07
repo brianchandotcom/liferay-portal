@@ -48,7 +48,7 @@ public class JournalArticleModelDocumentContributor
 	@Override
 	public void contribute(Document document, JournalArticle journalArticle) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing article " + journalArticle);
+			_log.debug("Indexing journal article " + journalArticle);
 		}
 
 		_uidFactory.setUID(journalArticle, document);
@@ -194,7 +194,8 @@ public class JournalArticleModelDocumentContributor
 		document.addKeyword(Field.UUID, journalArticle.getUuid());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + journalArticle + " indexed successfully");
+			_log.debug(
+				"Journal article " + journalArticle + " indexed successfully");
 		}
 	}
 

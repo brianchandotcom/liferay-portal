@@ -93,7 +93,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 	@Override
 	protected Document doGetDocument(CPOption cpOption) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing option " + cpOption);
+			_log.debug("Indexing commerce product option " + cpOption);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOption);
@@ -127,7 +127,9 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + cpOption + " indexed successfully");
+			_log.debug(
+				"Commerce product option " + cpOption +
+					" indexed successfully");
 		}
 
 		return document;

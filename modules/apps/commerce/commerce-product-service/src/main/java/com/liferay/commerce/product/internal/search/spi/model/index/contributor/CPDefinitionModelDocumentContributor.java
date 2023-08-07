@@ -502,14 +502,15 @@ public class CPDefinitionModelDocumentContributor
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Document " + cpDefinition + " indexed successfully");
+					"Commerce product definition " + cpDefinition +
+						" indexed successfully");
 			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to index commerce product definition" +
-						cpDefinition.getCPDefinitionId(),
+						cpDefinition,
 					exception);
 			}
 		}

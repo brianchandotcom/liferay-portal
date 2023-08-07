@@ -116,14 +116,15 @@ public class CPInstanceModelDocumentContributor
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Document " + cpInstance + " indexed successfully");
+				_log.debug(
+					"Commerce product instance " + cpInstance +
+						" indexed successfully");
 			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to index commerce product instance" +
-						cpInstance.getCPInstanceId(),
+					"Unable to index commerce product instance" + cpInstance,
 					exception);
 			}
 		}

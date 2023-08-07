@@ -102,7 +102,7 @@ public class CommerceShippingFixedOptionIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Indexing shipping fixed option " +
+				"Indexing commerce shipping fixed option " +
 					commerceShippingFixedOption);
 		}
 
@@ -119,8 +119,8 @@ public class CommerceShippingFixedOptionIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + commerceShippingFixedOption +
-					" indexed successfully");
+				"Commerce shipping fixed option " +
+					commerceShippingFixedOption + " indexed successfully");
 		}
 
 		return document;

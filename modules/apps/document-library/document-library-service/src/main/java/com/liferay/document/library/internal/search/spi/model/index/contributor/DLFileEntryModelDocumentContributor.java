@@ -70,7 +70,7 @@ public class DLFileEntryModelDocumentContributor
 	public void contribute(Document document, DLFileEntry dlFileEntry) {
 		try {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Indexing document " + dlFileEntry);
+				_log.debug("Indexing document file entry " + dlFileEntry);
 			}
 
 			Locale defaultLocale = _portal.getSiteDefaultLocale(
@@ -155,7 +155,9 @@ public class DLFileEntryModelDocumentContributor
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Document " + dlFileEntry + " indexed successfully");
+				_log.debug(
+					"Document file entry " + dlFileEntry +
+						" indexed successfully");
 			}
 		}
 		catch (Exception exception) {

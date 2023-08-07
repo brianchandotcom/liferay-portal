@@ -192,7 +192,9 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + cpDisplayLayout + " indexed successfully");
+			_log.debug(
+				"Commerce product display layout " + cpDisplayLayout +
+					" indexed successfully");
 		}
 
 		return document;

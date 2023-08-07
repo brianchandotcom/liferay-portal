@@ -119,7 +119,9 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 			"accountEntryId", commerceChannel.getAccountEntryId());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + commerceChannel + " indexed successfully");
+			_log.debug(
+				"Commerce channel " + commerceChannel +
+					" indexed successfully");
 		}
 
 		return document;

@@ -114,7 +114,8 @@ public class CommerceSubscriptionEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Indexing subscription entry " + commerceSubscriptionEntry);
+				"Indexing commerce subscription entry " +
+					commerceSubscriptionEntry);
 		}
 
 		Document document = getBaseModelDocument(
@@ -145,7 +146,7 @@ public class CommerceSubscriptionEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + commerceSubscriptionEntry +
+				"Commerce subscription entry " + commerceSubscriptionEntry +
 					" indexed successfully");
 		}
 

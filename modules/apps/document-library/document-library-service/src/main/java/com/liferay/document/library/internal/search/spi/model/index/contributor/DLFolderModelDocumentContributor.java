@@ -31,7 +31,7 @@ public class DLFolderModelDocumentContributor
 	@Override
 	public void contribute(Document document, DLFolder dlFolder) {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + dlFolder);
+			_log.debug("Indexing document library folder " + dlFolder);
 		}
 
 		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
@@ -53,7 +53,9 @@ public class DLFolderModelDocumentContributor
 			StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + dlFolder + " indexed successfully");
+			_log.debug(
+				"Document library folder " + dlFolder +
+					" indexed successfully");
 		}
 	}
 

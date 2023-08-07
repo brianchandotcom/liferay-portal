@@ -127,7 +127,8 @@ public class CPSpecificationOptionIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Indexing specification option " + cpSpecificationOption);
+				"Indexing commerce product specification option " +
+					cpSpecificationOption);
 		}
 
 		Document document = getBaseModelDocument(
@@ -172,7 +173,8 @@ public class CPSpecificationOptionIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + cpSpecificationOption + " indexed successfully");
+				"Commerce product specification option " +
+					cpSpecificationOption + " indexed successfully");
 		}
 
 		return document;

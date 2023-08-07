@@ -114,7 +114,9 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 			"accountEntryId", commerceCatalog.getAccountEntryId());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + commerceCatalog + " indexed successfully");
+			_log.debug(
+				"Commerce catalog " + commerceCatalog +
+					" indexed successfully");
 		}
 
 		return document;

@@ -83,7 +83,9 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing option " + cpOptionCategory);
+			_log.debug(
+				"Indexing commerce product option category " +
+					cpOptionCategory);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, cpOptionCategory);
@@ -117,7 +119,8 @@ public class CPOptionCategoryIndexer extends BaseIndexer<CPOptionCategory> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + cpOptionCategory + " indexed successfully");
+				"Commerce product option category " + cpOptionCategory +
+					" indexed successfully");
 		}
 
 		return document;

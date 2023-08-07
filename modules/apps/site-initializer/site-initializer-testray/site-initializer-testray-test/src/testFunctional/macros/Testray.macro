@@ -50,12 +50,6 @@ definition {
 			locator1 = "Pagination#ANY_PAGE");
 	}
 
-	macro assertProjectTitleHeader {
-		AssertElementPresent(
-			key_projectName = ${projectName},
-			locator1 = "Testray#PROJECT_NAME_HEADER");
-	}
-
 	macro backSectionBreadcrumb {
 		for (var n : list "1,2,3,4") {
 			KeyPress(

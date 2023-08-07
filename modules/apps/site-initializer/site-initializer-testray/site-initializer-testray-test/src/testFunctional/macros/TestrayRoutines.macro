@@ -1,61 +1,19 @@
 definition {
 
-	macro assertStatusBuildDisabled {
-		AssertElementPresent(
-			key_item = ${key_item},
-			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
-	}
-
-	macro clickStatusBuildHistory {
-		Click(
-			key_item = ${key_item},
-			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
-	}
-
 	macro createRoutine {
 		Click(locator1 = "Button#PLUS");
 
-		PortletEntry.inputName(name = ${routineName});
+		if (isSet(routineName)) {
+			PortletEntry.inputName(name = ${routineName});
+		}
 
 		Button.clickSave();
-	}
-
-	macro deleteRoutineSetup {
-		TestrayDropdown.goToResultSidebar();
-
-		Refresh();
-
-		Testray.changePagination(quantity = 150);
-
-		if (IsElementPresent(key_tableEntry = "Projects_", locator1 = "Testray#TABLE_ENTRY")) {
-			Testray.clickTableEntry(tableEntry = "Projects_1 Project");
-		}
-
-		if (IsElementPresent(key_tableEntry = "Routines_1 Routine", locator1 = "Testray#TABLE_ENTRY")) {
-			Testray.deleteItem(itemName = "Routines_1 Routine");
-
-			Alert.viewSuccessMessage();
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
-		}
 	}
 
 	macro editRoutine {
-		PortletEntry.inputName(name = ${newName});
-
-		Button.clickSave();
-	}
-
-	macro selectOptionDropdownRoutine {
-		Click(locator1 = "TestrayRoutines#DROPDOWN_ROUTINE");
-
-		MenuItem.clickNoError(menuItem = ${menuItem});
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro typeRoutineField {
-		PortletEntry.inputName(name = ${key_name});
+		if (isSet(newName)) {
+			PortletEntry.inputName(name = ${newName});
+		}
 
 		Button.clickSave();
 	}

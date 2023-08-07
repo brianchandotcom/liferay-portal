@@ -35,7 +35,7 @@ definition {
 
 		Click(
 			key_project = ${project},
-			locator1 = "TestrayDropdown#SELECT_PROJECT_DIRECTORY");
+			locator1 = "TestrayDropdown#PROJECT_DIRECTORY");
 	}
 
 }

@@ -16,7 +16,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_PROJECT_DIRECTORY</td>
+	<td>PROJECT_DIRECTORY</td>
 	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(text(),'${key_project}')]</td>
 	<td></td>
 </tr>

@@ -61,25 +61,25 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I should be able to add and delete a Routine with Default Environment Factors"
 	@priority = 3
 	test AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors {
-		task ("Given that the user add a new Routine") {
+		task ("Given that the administrator adds a new Routine") {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
 		}
 
-		task ("And that the user add default environments factors") {
+		task ("And that the administrator adds default environments factors") {
 			JSONTestray.addEnvironmentFactors(environmentFactorsName = "Environment Factors 1");
 
 			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
-		task ("Then the routine is deleted with predefined environment factors, they should not appear in the list") {
+		task ("Then the routine is deleted with default environment factors, which should not appear in the list") {
 			Testray.deleteItem(itemName = ${routineName});
 
 			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 
-		task ("Delete objects") {
+		task ("Delete the factor categories via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "factorcategories",
 				objectName = "Category 1");
@@ -89,7 +89,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to add a Routine"
 	@priority = 5
 	test AdminCanAddRoutine {
-		task ("When the user add a new Routine") {
+		task ("When the administrator adds a new Routine") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			TestrayRoutines.createRoutine(routineName = ${routineName});
@@ -103,7 +103,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to delete a Routine"
 	@priority = 5
 	test AdminCanDeleteRoutine {
-		task ("Given that the user add a new Routine") {
+		task ("Given that the administrator adds a new Routine via API") {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
@@ -111,11 +111,7 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
-		task ("Then the routine should appear on the list") {
-			Testray.viewTableEntryList(listEntry = ${routineName});
-		}
-
-		task ("And when a routine is deleted") {
+		task ("When a routine is deleted") {
 			Testray.deleteItem(itemName = ${routineName});
 		}
 
@@ -127,7 +123,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I should be able to delete a routine that contains builds"
 	@priority = 4
 	test AdminCanDeleteRoutineWithBuilds {
-		task ("Given that the user add a new Routine and a new Case") {
+		task ("Given that the administrator adds a new Routine and a new Case") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
 				teamName = "Team 1");
@@ -152,7 +148,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Routines");
 		}
 
-		task ("When the user goes add a new build with enviroments") {
+		task ("And the administrator adds a new build with enviroments") {
 			JSONTestray.addEnvironmentFactors(environmentFactorsName = "Environment Factors 1");
 
 			JSONTestray.addProductVersion(
@@ -172,7 +168,7 @@ definition {
 			TestrayDropdown.goToResultSidebar();
 		}
 
-		task ("And when a routine is deleted") {
+		task ("When a routine is deleted") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "routines",
 				objectName = ${routineName});
@@ -186,7 +182,7 @@ definition {
 			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 
-		task ("Delete objects") {
+		task ("Delete the factor categories via API") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "factorcategories",
 				objectName = "Category 1");
@@ -196,7 +192,7 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify if as an Administrator I am able to edit a Routine"
 	@priority = 5
 	test AdminCanEditRoutine {
-		task ("Given that the user add a new Routine") {
+		task ("Given that the administrator adds a new Routine") {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
@@ -204,9 +200,7 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
-		task ("When the user goes to edit the Routine and change the name") {
-			SelectFrameTop();
-
+		task ("When the administrator edit the Routine") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Edit",
 				tableEntry = ${routineName});
@@ -214,7 +208,7 @@ definition {
 			TestrayRoutines.editRoutine(newName = "Routine 1 Edited");
 		}
 
-		task ("Then the Routine should be updated on the list") {
+		task ("The routine should appear in the list with the new information") {
 			Testray.viewTableEntryList(listEntry = "Routine 1 Edited");
 		}
 	}
@@ -222,11 +216,13 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate routine"
 	@priority = 3
 	test AdminCanNotAddDuplicateRoutine {
-		task ("Given that the user add Routine with duplicated name") {
+		task ("Given that adds Routine via API") {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
+		}
 
+		task ("When the administrator adds Routine with duplicate name") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			TestrayRoutines.createRoutine(routineName = ${routineName});
@@ -240,10 +236,10 @@ definition {
 	@description = "Story ID: LPS-146913 | Test Summary: Verify that the user can not create a routine if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
-		task ("Given that the user add a new Routine without name") {
+		task ("Given that the administrator adds a new Routine without name") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.createRoutine(routineName = "");
+			TestrayRoutines.createRoutine();
 		}
 
 		task ("Then a warning message is displayed") {
@@ -256,25 +252,23 @@ definition {
 	@description = "Story ID: LPS-146908 | Test Summary: Verify the user can access a project on Project Directory"
 	@priority = 2
 	test CanGoToProjectDirectory {
-		task ("Given that the user add a new Project") {
+		task ("Given that the administrator adds a new Project via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 2",
 				projectName = "Project 2");
 		}
 
-		task ("And the user goes to the new Project from the project directory") {
+		task ("When the administrator go to the Project 2 by project directory") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
-
-			Testray.assertProjectTitleHeader(projectName = ${projectName});
 
 			TestrayDropdown.selectProjectDirectory(project = "Project 2");
 		}
 
-		task ("Then the user goes to another project") {
-			Testray.assertProjectTitleHeader(projectName = "Project 2");
+		task ("Then should be redirected to project 2") {
+			TestrayDropdown.assertBreadcrumbTitle(text = "Project 2");
 		}
 
-		task ("Delete project") {
+		task ("Delete the project via API") {
 			JSONTestrayAPI.deleteProject(projectName = "Project 2");
 		}
 	}

@@ -92,9 +92,8 @@ public class ObjectDefinitionsValidationsDisplayContext
 						objectDefinition.getName()),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
-					LanguageUtil.get(
-						objectRequestHelper.getLocale(),
-						objectValidationRuleEngine.getLabel())
+					objectValidationRuleEngine.getLabel(
+						objectRequestHelper.getLocale())
 				).put(
 					"name", objectValidationRuleEngine.getKey()
 				).build()),

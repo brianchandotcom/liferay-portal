@@ -129,7 +129,7 @@ interface ObjectDefinition {
 	objectFields: ObjectField[];
 	objectFolderExternalReferenceCode: string;
 	objectLayouts: [];
-	objectRelationships: [];
+	objectRelationships: ObjectRelationship[];
 	objectViews: [];
 	panelCategoryKey: string;
 	parameterRequired?: boolean;

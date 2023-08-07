@@ -16,6 +16,12 @@ export declare type TAction =
 				selectedObjectDefinitionName: string;
 			};
 			type: TYPES.SET_SELECTED_NODE;
+	  }
+	| {
+			payload: {
+				newElements: any;
+			};
+			type: TYPES.SET_ELEMENTS;
 	  };
 export declare type TState = {
 	leftSidebarItems: LeftSidebarItemType[];
@@ -58,6 +64,14 @@ export interface ObjectDefinitionNodeData
 	label: string;
 	nodeSelected: boolean;
 	objectFields: ObjectFieldNode[];
+}
+export interface EdgeData {
+	label: string;
+	markerEndId: string;
+	markerStartId: string;
+	sourceY: number;
+	targetY: number;
+	type: string;
 }
 export declare type ObjectDefinitionNode = {
 	data: ObjectDefinitionNodeData;

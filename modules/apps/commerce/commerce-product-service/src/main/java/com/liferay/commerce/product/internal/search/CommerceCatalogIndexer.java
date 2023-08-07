@@ -168,7 +168,7 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce catalog " +
-								commerceCatalog.getCommerceCatalogId(),
+								commerceCatalog,
 							portalException);
 					}
 				}

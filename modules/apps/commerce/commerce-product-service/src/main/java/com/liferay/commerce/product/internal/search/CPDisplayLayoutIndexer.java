@@ -246,7 +246,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product display layout " +
-								cpDisplayLayout.getCPDisplayLayoutId(),
+								cpDisplayLayout,
 							portalException);
 					}
 				}

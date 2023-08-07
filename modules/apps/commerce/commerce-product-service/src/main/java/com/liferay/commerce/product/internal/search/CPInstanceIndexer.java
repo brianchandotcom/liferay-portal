@@ -325,8 +325,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to index commerce product definition " +
-								cpInstance.getCPInstanceId(),
+							"Unable to index commerce product instance " +
+								cpInstance,
 							portalException);
 					}
 				}

@@ -232,12 +232,9 @@ public class CPSpecificationOptionIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						long cpSpecificationOptionId =
-							cpSpecificationOption.getCPSpecificationOptionId();
-
 						_log.warn(
 							"Unable to index commerce product specification " +
-								"option " + cpSpecificationOptionId,
+								"option " + cpSpecificationOption,
 							portalException);
 					}
 				}

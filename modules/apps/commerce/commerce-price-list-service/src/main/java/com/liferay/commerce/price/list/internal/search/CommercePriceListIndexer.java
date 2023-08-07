@@ -350,7 +350,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce price list " +
-								commercePriceList.getCommercePriceListId(),
+								commercePriceList,
 							portalException);
 					}
 				}

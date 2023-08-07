@@ -242,13 +242,10 @@ public class CPDefinitionOptionRelIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						long cpDefinitionOptionRelId =
-							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-
 						_log.warn(
 							"Unable to index commerce product definition " + 
 								"option relationship " +
-									cpDefinitionOptionRelId,
+									cpDefinitionOptionRel,
 							portalException);
 					}
 				}

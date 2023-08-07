@@ -190,13 +190,9 @@ public class CommerceShippingFixedOptionIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						long commerceShippingFixedOptionId =
-							commerceShippingFixedOption.
-								getCommerceShippingFixedOptionId();
-
 						_log.warn(
 							"Unable to index commerce shipping fixed option " +
-								commerceShippingFixedOptionId,
+								commerceShippingFixedOption,
 							portalException);
 					}
 				}

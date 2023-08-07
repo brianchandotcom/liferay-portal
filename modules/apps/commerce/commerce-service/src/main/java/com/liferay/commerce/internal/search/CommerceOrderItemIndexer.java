@@ -224,7 +224,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce order item " +
-								commerceOrderItem.getCommerceOrderItemId(),
+								commerceOrderItem,
 							portalException);
 					}
 				}

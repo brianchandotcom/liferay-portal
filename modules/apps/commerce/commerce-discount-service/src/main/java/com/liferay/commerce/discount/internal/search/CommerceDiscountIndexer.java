@@ -457,7 +457,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce discount " +
-								commerceDiscount.getCommerceDiscountId(),
+								commerceDiscount,
 							portalException);
 					}
 				}

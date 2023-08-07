@@ -181,7 +181,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce product option " +
-								cpOption.getCPOptionId(),
+								cpOption,
 							portalException);
 					}
 				}

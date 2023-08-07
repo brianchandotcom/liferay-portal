@@ -188,7 +188,7 @@ public class CommerceChannelIndexer extends BaseIndexer<CommerceChannel> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce channel " +
-								commerceChannel.getCommerceChannelId(),
+								commerceChannel,
 							portalException);
 					}
 				}

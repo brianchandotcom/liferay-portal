@@ -249,7 +249,7 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index commerce shipment " +
-								commerceShipment.getCommerceShipmentId(),
+								commerceShipment,
 							portalException);
 					}
 				}

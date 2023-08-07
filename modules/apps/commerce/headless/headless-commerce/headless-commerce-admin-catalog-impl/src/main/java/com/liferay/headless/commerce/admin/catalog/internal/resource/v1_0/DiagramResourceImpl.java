@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,11 +35,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/diagram.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {DiagramResource.class, NestedFieldSupport.class}
+	service = DiagramResource.class
 )
 @CTAware
-public class DiagramResourceImpl
-	extends BaseDiagramResourceImpl implements NestedFieldSupport {
+public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 
 	@Override
 	public Diagram getProductByExternalReferenceCodeDiagram(

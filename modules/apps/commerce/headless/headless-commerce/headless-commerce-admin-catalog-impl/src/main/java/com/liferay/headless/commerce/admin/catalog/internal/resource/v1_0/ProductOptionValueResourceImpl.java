@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -37,11 +36,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-option-value.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ProductOptionValueResource.class}
+	service = ProductOptionValueResource.class
 )
 @CTAware
 public class ProductOptionValueResourceImpl
-	extends BaseProductOptionValueResourceImpl implements NestedFieldSupport {
+	extends BaseProductOptionValueResourceImpl {
 
 	@NestedField(
 		parentClass = ProductOption.class, value = "productOptionValues"

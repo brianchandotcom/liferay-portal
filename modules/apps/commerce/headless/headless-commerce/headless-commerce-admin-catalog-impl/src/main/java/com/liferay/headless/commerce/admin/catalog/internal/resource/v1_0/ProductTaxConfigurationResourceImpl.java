@@ -17,7 +17,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import javax.ws.rs.core.Response;
 
@@ -31,12 +30,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-tax-configuration.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ProductTaxConfigurationResource.class}
+	service = ProductTaxConfigurationResource.class
 )
 @CTAware
 public class ProductTaxConfigurationResourceImpl
-	extends BaseProductTaxConfigurationResourceImpl
-	implements NestedFieldSupport {
+	extends BaseProductTaxConfigurationResourceImpl {
 
 	@Override
 	public ProductTaxConfiguration

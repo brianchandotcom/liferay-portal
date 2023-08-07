@@ -20,7 +20,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import javax.ws.rs.core.Response;
 
@@ -34,11 +33,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-configuration.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ProductConfigurationResource.class}
+	service = ProductConfigurationResource.class
 )
 @CTAware
 public class ProductConfigurationResourceImpl
-	extends BaseProductConfigurationResourceImpl implements NestedFieldSupport {
+	extends BaseProductConfigurationResourceImpl {
 
 	@Override
 	public ProductConfiguration getProductByExternalReferenceCodeConfiguration(

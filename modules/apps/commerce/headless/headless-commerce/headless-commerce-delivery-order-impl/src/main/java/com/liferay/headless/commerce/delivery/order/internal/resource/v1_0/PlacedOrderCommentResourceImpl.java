@@ -18,7 +18,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -32,10 +31,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/placed-order-comment.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PlacedOrderCommentResource.class}
+	service = PlacedOrderCommentResource.class
 )
 public class PlacedOrderCommentResourceImpl
-	extends BasePlacedOrderCommentResourceImpl implements NestedFieldSupport {
+	extends BasePlacedOrderCommentResourceImpl {
 
 	@Override
 	public PlacedOrderComment getPlacedOrderComment(Long placedOrderCommentId)

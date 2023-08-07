@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -49,10 +48,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-layout.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ObjectLayoutResource.class}
+	service = ObjectLayoutResource.class
 )
-public class ObjectLayoutResourceImpl
-	extends BaseObjectLayoutResourceImpl implements NestedFieldSupport {
+public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 
 	@Override
 	public void deleteObjectLayout(Long objectLayoutId) throws Exception {

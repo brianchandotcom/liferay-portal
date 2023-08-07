@@ -32,7 +32,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -52,10 +51,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-validation-rule.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ObjectValidationRuleResource.class}
+	service = ObjectValidationRuleResource.class
 )
 public class ObjectValidationRuleResourceImpl
-	extends BaseObjectValidationRuleResourceImpl implements NestedFieldSupport {
+	extends BaseObjectValidationRuleResourceImpl {
 
 	@Override
 	public void deleteObjectValidationRule(Long objectValidationRuleId)

@@ -17,7 +17,6 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductAccountG
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -33,11 +32,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-account-group.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ProductAccountGroupResource.class}
+	service = ProductAccountGroupResource.class
 )
 @CTAware
 public class ProductAccountGroupResourceImpl
-	extends BaseProductAccountGroupResourceImpl implements NestedFieldSupport {
+	extends BaseProductAccountGroupResourceImpl {
 
 	@Override
 	public void deleteProductAccountGroup(Long id) throws Exception {

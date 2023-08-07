@@ -23,7 +23,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -39,10 +38,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/price-list-order-type.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PriceListOrderTypeResource.class}
+	service = PriceListOrderTypeResource.class
 )
 public class PriceListOrderTypeResourceImpl
-	extends BasePriceListOrderTypeResourceImpl implements NestedFieldSupport {
+	extends BasePriceListOrderTypeResourceImpl {
 
 	@Override
 	public void deletePriceListOrderType(Long id) throws Exception {

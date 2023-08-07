@@ -25,7 +25,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -43,11 +42,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/price-list-account-group.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PriceListAccountGroupResource.class}
+	service = PriceListAccountGroupResource.class
 )
 public class PriceListAccountGroupResourceImpl
-	extends BasePriceListAccountGroupResourceImpl
-	implements NestedFieldSupport {
+	extends BasePriceListAccountGroupResourceImpl {
 
 	@Override
 	public void deletePriceListAccountGroup(Long id) throws Exception {

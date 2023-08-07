@@ -17,7 +17,6 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ChannelResource
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,10 +28,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/channel.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {ChannelResource.class, NestedFieldSupport.class}
+	service = ChannelResource.class
 )
-public class ChannelResourceImpl
-	extends BaseChannelResourceImpl implements NestedFieldSupport {
+public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	@NestedField(parentClass = DiscountChannel.class, value = "channel")
 	@Override

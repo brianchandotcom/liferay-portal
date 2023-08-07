@@ -34,7 +34,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -53,10 +52,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/order-type.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, OrderTypeResource.class}
+	service = OrderTypeResource.class
 )
-public class OrderTypeResourceImpl
-	extends BaseOrderTypeResourceImpl implements NestedFieldSupport {
+public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 	@Override
 	public void deleteOrderType(Long id) throws Exception {

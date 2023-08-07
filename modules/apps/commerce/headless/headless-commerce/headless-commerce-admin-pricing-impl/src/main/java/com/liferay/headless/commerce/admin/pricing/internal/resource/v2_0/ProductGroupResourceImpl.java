@@ -17,7 +17,6 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.ProductGroupRes
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,10 +28,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/product-group.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ProductGroupResource.class}
+	service = ProductGroupResource.class
 )
-public class ProductGroupResourceImpl
-	extends BaseProductGroupResourceImpl implements NestedFieldSupport {
+public class ProductGroupResourceImpl extends BaseProductGroupResourceImpl {
 
 	@NestedField(
 		parentClass = DiscountProductGroup.class, value = "productGroup"

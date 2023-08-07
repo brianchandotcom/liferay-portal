@@ -22,7 +22,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -38,10 +37,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/discount-sku.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {DiscountSkuResource.class, NestedFieldSupport.class}
+	service = DiscountSkuResource.class
 )
-public class DiscountSkuResourceImpl
-	extends BaseDiscountSkuResourceImpl implements NestedFieldSupport {
+public class DiscountSkuResourceImpl extends BaseDiscountSkuResourceImpl {
 
 	@Override
 	public void deleteDiscountSku(Long id) throws Exception {

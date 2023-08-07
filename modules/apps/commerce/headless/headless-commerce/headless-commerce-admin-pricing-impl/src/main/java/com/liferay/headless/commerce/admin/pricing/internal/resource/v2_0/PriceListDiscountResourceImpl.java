@@ -19,7 +19,6 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -36,10 +35,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/price-list-discount.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PriceListDiscountResource.class}
+	service = PriceListDiscountResource.class
 )
 public class PriceListDiscountResourceImpl
-	extends BasePriceListDiscountResourceImpl implements NestedFieldSupport {
+	extends BasePriceListDiscountResourceImpl {
 
 	@Override
 	public void deletePriceListDiscount(Long id) throws Exception {

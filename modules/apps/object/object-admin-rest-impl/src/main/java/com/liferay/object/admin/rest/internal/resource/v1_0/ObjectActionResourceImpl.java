@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -38,10 +37,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-action.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ObjectActionResource.class}
+	service = ObjectActionResource.class
 )
-public class ObjectActionResourceImpl
-	extends BaseObjectActionResourceImpl implements NestedFieldSupport {
+public class ObjectActionResourceImpl extends BaseObjectActionResourceImpl {
 
 	@Override
 	public void deleteObjectAction(Long objectActionId) throws Exception {

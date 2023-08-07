@@ -17,7 +17,6 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.SkuResource;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,10 +28,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/sku.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, SkuResource.class}
+	service = SkuResource.class
 )
-public class SkuResourceImpl
-	extends BaseSkuResourceImpl implements NestedFieldSupport {
+public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@NestedField(parentClass = DiscountSku.class, value = "sku")
 	@Override

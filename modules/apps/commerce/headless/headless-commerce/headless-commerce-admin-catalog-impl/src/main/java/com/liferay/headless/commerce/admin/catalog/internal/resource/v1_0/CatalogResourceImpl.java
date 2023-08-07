@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -50,11 +49,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/catalog.properties",
 	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = {CatalogResource.class, NestedFieldSupport.class}
+	service = CatalogResource.class
 )
 @CTAware
-public class CatalogResourceImpl
-	extends BaseCatalogResourceImpl implements NestedFieldSupport {
+public class CatalogResourceImpl extends BaseCatalogResourceImpl {
 
 	@Override
 	public Response deleteCatalog(Long id) throws Exception {

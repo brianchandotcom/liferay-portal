@@ -68,7 +68,8 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			return defaultInputFragmentEntryKeysJSONObject;
 		}
 
-		return _defaultInputFragmentEntryKeysJSONObject;
+		return _jsonFactory.createJSONObject(
+			_defaultInputFragmentEntryKeysJSONObject.toMap());
 	}
 
 	@Override

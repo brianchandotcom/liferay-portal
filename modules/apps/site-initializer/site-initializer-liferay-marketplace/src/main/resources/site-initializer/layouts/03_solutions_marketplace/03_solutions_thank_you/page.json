@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/solutions-thank-you",
+	"hidden": true,
+	"name": "Solutions Thank You",
+	"name_i18n": {
+		"en_US": "Solutions Thank You"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

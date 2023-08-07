@@ -27,7 +27,9 @@ public class RemoteExceptionSharepointExceptionMapper {
 
 			String faultMessage = axisFault.getMessage();
 
-			if (faultMessage.endsWith("401 Error: Unauthorized")) {
+			if ((faultMessage != null) &&
+				faultMessage.endsWith("401 Error: Unauthorized")) {
+
 				throw new AuthenticationRepositoryException(remoteException);
 			}
 		}

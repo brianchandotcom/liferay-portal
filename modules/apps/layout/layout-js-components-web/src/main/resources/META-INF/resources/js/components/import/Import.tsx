@@ -51,6 +51,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const fileInputId = useId();
+	const fileButtonDescriptionId = useId();
 
 	const validateFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files || event.target.files?.length === 0) {
@@ -214,7 +215,10 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 							{Liferay.Language.get('import-file')}
 						</h2>
 
-						<p className="c-mb-0 text-secondary">
+						<p
+							className="c-mb-0 text-secondary"
+							id={fileButtonDescriptionId}
+						>
 							{Liferay.Language.get(
 								'select-a-zip-file-containing-one-or-multiple-entries'
 							)}
@@ -250,6 +254,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 							/>
 
 							<ClayButton
+								aria-describedby={fileButtonDescriptionId}
 								className="d-block"
 								displayType="secondary"
 								onClick={() => fileInputRef.current?.click()}

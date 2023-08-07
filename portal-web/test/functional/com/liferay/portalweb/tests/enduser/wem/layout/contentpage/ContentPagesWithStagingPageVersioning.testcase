@@ -9,7 +9,7 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
 		task ("Sign in") {
@@ -21,7 +21,7 @@ definition {
 		}
 
 		task ("Activate local live staging with page versioning enabled") {
-			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Staging.activateStagingCP(
 				pageVersioningEnabled = "true",
@@ -35,7 +35,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a public content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			ContentPages.addPage(pageName = "Test Page Name");
 		}
@@ -154,7 +154,7 @@ definition {
 		}
 
 		task ("View the content page template shown in Page Templates admin") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -181,7 +181,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a public content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			ContentPages.addPage(pageName = "Test Page Name");
 		}
@@ -296,7 +296,7 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a public content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			ContentPages.addPublicPage(pageName = "Public Content Page Name");
 		}
@@ -358,7 +358,7 @@ definition {
 		}
 
 		task ("Add a private content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			ContentPages.addPrivatePage(pageName = "Private Content Page Name");
 		}
@@ -426,7 +426,7 @@ definition {
 	@priority = 4
 	test ViewSitePagesVariationOnlyShownInViewMode {
 		task ("Add a public content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			ContentPages.addPage(pageName = "Test Page Name");
 		}

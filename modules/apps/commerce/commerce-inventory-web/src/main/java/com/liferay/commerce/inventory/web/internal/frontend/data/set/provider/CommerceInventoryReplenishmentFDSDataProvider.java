@@ -80,6 +80,7 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 					getCommerceInventoryWarehouse();
 
 			int quantity = 0;
+
 			BigDecimal commerceInventoryWarehouseItemQuantity =
 				commerceInventoryReplenishmentItem.getQuantity();
 

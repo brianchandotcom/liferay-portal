@@ -937,9 +937,43 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test DisplayDueDateWithHyphenWhenSLANotStarted {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67729 DisplayDueDateWithHyphenWhenSLANotStarted pending implementation
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = 0,
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "00:01",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
+
+		AssertElementPresent(
+			key_columnName = "Due Date",
+			key_fieldName = "-",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSERT_ITEM");
 	}
 
 	@description = "LPS-92043 - Verify that the Due Date displays the next SLA in line when a SLA didn't start counting"

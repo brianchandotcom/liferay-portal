@@ -1,5 +1,6 @@
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
@@ -11,10 +12,13 @@ dependencies {
 	compileOnly project(":apps:captcha:captcha-api")
 	compileOnly project(":apps:captcha:captcha-rest-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
+	compileOnly project(":apps:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-executor")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

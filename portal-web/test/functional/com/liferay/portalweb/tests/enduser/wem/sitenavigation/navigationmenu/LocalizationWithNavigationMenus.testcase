@@ -86,6 +86,7 @@ definition {
 
 		task ("Add a Spanish translation for the submenu item") {
 			NavigationMenusAdmin.addTranslation(
+				item = "Submenu",
 				itemName = "Submenu Name",
 				locale = "es-ES",
 				translation = "Submenú Nombre");
@@ -93,6 +94,7 @@ definition {
 
 		task ("Add a Spanish translation for the URL item") {
 			NavigationMenusAdmin.addTranslation(
+				item = "URL",
 				itemName = "Liferay",
 				locale = "es-ES",
 				translation = "Liferay (Spanish)");

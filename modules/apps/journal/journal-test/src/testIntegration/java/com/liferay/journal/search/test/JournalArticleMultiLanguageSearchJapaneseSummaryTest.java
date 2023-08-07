@@ -82,7 +82,7 @@ public class JournalArticleMultiLanguageSearchJapaneseSummaryTest {
 			RandomTestUtil.randomString(), _group);
 
 		_summaryFixture = new SummaryFixture<>(
-			JournalArticle.class, _group, LocaleUtil.JAPAN, _user);
+			JournalArticle.class, _group, LocaleUtil.US, _user);
 	}
 
 	@After

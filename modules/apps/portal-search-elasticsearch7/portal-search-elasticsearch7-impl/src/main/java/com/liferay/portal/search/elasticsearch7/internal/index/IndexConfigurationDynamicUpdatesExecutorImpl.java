@@ -13,7 +13,8 @@ import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
-import java.util.Set;
+import java.util.Collection;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -36,7 +37,9 @@ public class IndexConfigurationDynamicUpdatesExecutorImpl
 	}
 
 	@Override
-	public void executePutMappings(String indexName, Set<String> mappings) {
+	public void executePutMappings(
+		String indexName, Collection<String> mappings) {
+
 		for (String mapping : mappings) {
 			PutMappingIndexRequest putMappingIndexRequest =
 				new PutMappingIndexRequest(
@@ -52,7 +55,9 @@ public class IndexConfigurationDynamicUpdatesExecutorImpl
 	}
 
 	@Override
-	public void executeUpdateSettings(String indexName, Set<String> settings) {
+	public void executeUpdateSettings(
+		String indexName, Collection<String> settings) {
+
 		for (String setting : settings) {
 			UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
 				new UpdateIndexSettingsIndexRequest(indexName);
@@ -74,14 +79,14 @@ public class IndexConfigurationDynamicUpdatesExecutorImpl
 	}
 
 	private void _executePutMappings(String indexName) {
-		Set<String> mappings = ResourceUtil.getResourcesAsStrings(
+		List<String> mappings = ResourceUtil.getResourcesAsStrings(
 			_bundleContext, _MAPPINGS_UPDATES_DIRECTORY_NAME);
 
 		executePutMappings(indexName, mappings);
 	}
 
 	private void _executeUpdateSettings(String indexName) {
-		Set<String> settings = ResourceUtil.getResourcesAsStrings(
+		List<String> settings = ResourceUtil.getResourcesAsStrings(
 			_bundleContext, _SETTINGS_UPDATES_DIRECTORY_NAME);
 
 		executeUpdateSettings(indexName, settings);

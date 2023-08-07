@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * @author Bryan Engler
@@ -14,8 +14,10 @@ public interface IndexConfigurationDynamicUpdatesExecutor {
 
 	public void execute(long companyId);
 
-	public void executePutMappings(String indexName, Set<String> mappings);
+	public void executePutMappings(
+		String indexName, Collection<String> mappings);
 
-	public void executeUpdateSettings(String indexName, Set<String> settings);
+	public void executeUpdateSettings(
+		String indexName, Collection<String> settings);
 
 }

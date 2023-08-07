@@ -9,6 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
@@ -48,6 +49,8 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	] = useState<ImportResultsData | null>(null);
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
+
+	const fileInputId = useId();
 
 	const validateFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files || event.target.files?.length === 0) {
@@ -233,14 +236,14 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 								'has-error': error,
 							})}
 						>
-							<label htmlFor={`${portletNamespace}file`}>
+							<label htmlFor={fileInputId}>
 								{Liferay.Language.get('file-upload')}
 							</label>
 
 							<input
 								accept={ZIP_EXTENSION}
 								hidden
-								id={`${portletNamespace}file`}
+								id={fileInputId}
 								onChange={validateFile}
 								ref={fileInputRef}
 								type="file"

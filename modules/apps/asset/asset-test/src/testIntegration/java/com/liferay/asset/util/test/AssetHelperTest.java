@@ -64,27 +64,19 @@ public class AssetHelperTest {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		_group = GroupTestUtil.addGroup();
-
-		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
-
-		_assetCategory = null;
-
-		_assetTag = null;
 	}
 
 	@Test
 	public void testFilterAssetEntriesByTagWithWhiteSpace() throws Exception {
-		_assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), _assetVocabulary.getVocabularyId());
-
-		_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "asset tag");
+		AssetTag assetTag = AssetTestUtil.addTag(
+			_group.getGroupId(), "asset tag");
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
 		long[] assetCategoryIds = new long[0];
-		String[] assetTagNames = {_assetTag.getName()};
+		String[] assetTagNames = {assetTag.getName()};
 
 		assertCount(
 			0, assetEntryQuery, assetCategoryIds, assetTagNames, null,
@@ -113,17 +105,20 @@ public class AssetHelperTest {
 
 	@Test
 	public void testSearchAssetEntries() throws Exception {
-		_assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), _assetVocabulary.getVocabularyId());
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
 
-		_assetTag = AssetTestUtil.addTag(_group.getGroupId());
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		AssetTag assetTag = AssetTestUtil.addTag(_group.getGroupId());
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
-		long[] assetCategoryIds = {_assetCategory.getCategoryId()};
-		String[] assetTagNames = {_assetTag.getName()};
+		long[] assetCategoryIds = {assetCategory.getCategoryId()};
+		String[] assetTagNames = {assetTag.getName()};
 
 		assertCount(
 			0, assetEntryQuery, assetCategoryIds, assetTagNames, null,
@@ -269,13 +264,8 @@ public class AssetHelperTest {
 			baseModelSearchResult.getLength());
 	}
 
-	private AssetCategory _assetCategory;
-
 	@Inject
 	private AssetHelper _assetHelper;
-
-	private AssetTag _assetTag;
-	private AssetVocabulary _assetVocabulary;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

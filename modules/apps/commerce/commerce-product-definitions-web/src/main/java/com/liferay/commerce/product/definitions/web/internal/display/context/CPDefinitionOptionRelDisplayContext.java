@@ -11,11 +11,11 @@ import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayCont
 import com.liferay.commerce.product.item.selector.criterion.CPOptionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.option.CommerceOptionType;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.commerce.product.util.CommerceOptionTypeUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectItem;
@@ -34,8 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -45,8 +43,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,8 +53,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -73,15 +67,15 @@ public class CPDefinitionOptionRelDisplayContext
 
 	public CPDefinitionOptionRelDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		CommerceOptionTypeRegistry commerceOptionTypeRegistry,
 		ConfigurationProvider configurationProvider,
-		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
+		_commerceOptionTypeRegistry = commerceOptionTypeRegistry;
 		_configurationProvider = configurationProvider;
-		_ddmFormFieldTypeServicesRegistry = ddmFormFieldTypeServicesRegistry;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 	}
@@ -129,6 +123,35 @@ public class CPDefinitionOptionRelDisplayContext
 		return multiselectItems;
 	}
 
+	public String getCommerceOptionTypeKeys() throws PortalException {
+		CPOptionConfiguration cpOptionConfiguration =
+			_configurationProvider.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
+
+		return StringUtil.merge(
+			cpOptionConfiguration.commerceOptionTypesAllowed(),
+			StringPool.COMMA);
+	}
+
+	public List<CommerceOptionType> getCommerceOptionTypes()
+		throws PortalException {
+
+		List<CommerceOptionType> commerceOptionTypes =
+			_commerceOptionTypeRegistry.getCommerceOptionTypes();
+
+		CPOptionConfiguration cpOptionConfiguration =
+			_configurationProvider.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
+
+		String[] commerceOptionTypesAllowed =
+			cpOptionConfiguration.commerceOptionTypesAllowed();
+
+		return CommerceOptionTypeUtil.getCommerceOptionTypesAllowed(
+			commerceOptionTypes, commerceOptionTypesAllowed);
+	}
+
 	public CPDefinitionOptionRel getCPDefinitionOptionRel()
 		throws PortalException {
 
@@ -174,59 +197,6 @@ public class CPDefinitionOptionRelDisplayContext
 				dropdownItem.setTarget("modal-lg");
 			}
 		).build();
-	}
-
-	public String getDDMFormFieldTypeLabel(
-		DDMFormFieldType ddmFormFieldType, Locale locale) {
-
-		String label = MapUtil.getString(
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
-				ddmFormFieldType.getName()),
-			"ddm.form.field.type.label");
-
-		try {
-			if (Validator.isNotNull(label)) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", locale, ddmFormFieldType.getClass());
-
-				return LanguageUtil.get(resourceBundle, label);
-			}
-		}
-		catch (MissingResourceException missingResourceException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(missingResourceException);
-			}
-		}
-
-		return ddmFormFieldType.getName();
-	}
-
-	public String getDDMFormFieldTypeNames() throws PortalException {
-		CPOptionConfiguration cpOptionConfiguration =
-			_configurationProvider.getConfiguration(
-				CPOptionConfiguration.class,
-				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
-
-		return StringUtil.merge(
-			cpOptionConfiguration.ddmFormFieldTypesAllowed(), StringPool.COMMA);
-	}
-
-	public List<DDMFormFieldType> getDDMFormFieldTypes()
-		throws PortalException {
-
-		List<DDMFormFieldType> ddmFormFieldTypes =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypes();
-
-		CPOptionConfiguration cpOptionConfiguration =
-			_configurationProvider.getConfiguration(
-				CPOptionConfiguration.class,
-				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
-
-		String[] ddmFormFieldTypesAllowed =
-			cpOptionConfiguration.ddmFormFieldTypesAllowed();
-
-		return DDMFormFieldTypeUtil.getDDMFormFieldTypesAllowed(
-			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
 	}
 
 	public String getItemSelectorUrl() {
@@ -361,13 +331,9 @@ public class CPDefinitionOptionRelDisplayContext
 			getCPDefinitionOptionRelId(), null);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionOptionRelDisplayContext.class);
-
+	private final CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 	private final ConfigurationProvider _configurationProvider;
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;
-	private final DDMFormFieldTypeServicesRegistry
-		_ddmFormFieldTypeServicesRegistry;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 

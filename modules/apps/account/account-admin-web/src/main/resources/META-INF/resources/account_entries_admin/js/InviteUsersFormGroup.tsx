@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButtonWithIcon from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -18,6 +19,7 @@ interface IProps extends InputGroup {
 	index: number;
 	onAccountRoleItemsChange: OnItemsChangeFn;
 	onEmailAddressItemsChange: OnItemsChangeFn;
+	onRemove: Function;
 	portletNamespace: string;
 }
 
@@ -96,9 +98,11 @@ const InviteUserFormGroup = ({
 	accountRoles,
 	availableAccountRoles,
 	emailAddresses,
+	id,
 	index,
 	onAccountRoleItemsChange,
 	onEmailAddressItemsChange,
+	onRemove,
 	portletNamespace,
 }: IProps) => {
 	const [showRequiredMessage, setShowRequiredMessage] = useState<boolean>(
@@ -118,7 +122,26 @@ const InviteUserFormGroup = ({
 	}
 
 	return (
-		<ClayLayout.Sheet size="lg">
+		<ClayLayout.Sheet
+			className={
+				Liferay.FeatureFlags['LPS-189430'] ? 'd-flex flex-column' : ''
+			}
+			size="lg"
+		>
+			{Liferay.FeatureFlags['LPS-189430'] && index !== 0 && (
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('remove-entry')}
+					borderless
+					className="align-self-end"
+					displayType="secondary"
+					monospaced
+					onClick={() => onRemove(id)}
+					size="sm"
+				>
+					<ClayIcon symbol="times-circle" />
+				</ClayButtonWithIcon>
+			)}
+
 			<MultiSelect
 				autoFocus={true}
 				errorMessages={emailAddressErrorMessages}

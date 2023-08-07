@@ -77,40 +77,27 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 						label="delete-in-all-pages-variations"
 					/>
 
-					<script>
-						(function () {
-							var enableLayoutButton = document.getElementById(
-								'<portlet:namespace />enableLayoutButton'
-							);
+					<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
+						<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+						<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+						<portlet:param name="layoutSetBranchId" value="0" />
+					</portlet:actionURL>
 
-							if (enableLayoutButton) {
-								enableLayoutButton.addEventListener('click', (event) => {
-									<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
-									<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
-									<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-									</portlet:actionURL>
+					<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
+						<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+						<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+					</portlet:actionURL>
 
-									submitForm(document.hrefFm, '<%= enableLayoutURL %>');
-								});
-							}
-
-							var deleteLayoutButton = document.getElementById(
-								'<portlet:namespace />deleteLayoutButton'
-							);
-
-							if (deleteLayoutButton) {
-								deleteLayoutButton.addEventListener('click', (event) => {
-									<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
-									<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
-									<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-									<portlet:param name="layoutSetBranchId" value="0" />
-									</portlet:actionURL>
-
-									submitForm(document.hrefFm, '<%= deleteLayoutURL %>');
-								});
-							}
-						})();
-					</script>
+					<liferay-frontend:component
+						context='<%=
+							HashMapBuilder.<String, Object>put(
+								"deleteLayoutURL", deleteLayoutURL
+							).put(
+								"enableLayoutURL", enableLayoutURL
+							).build()
+						%>'
+						module="js/layout/IncompleteLayoutEventListener"
+					/>
 				</aui:button-row>
 			</clay:sheet>
 		</clay:container-fluid>

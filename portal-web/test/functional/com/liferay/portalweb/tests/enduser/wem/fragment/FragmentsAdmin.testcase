@@ -1121,7 +1121,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,move-folder,trash");
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,export,copy,move-folder,trash");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of custom fragment set") {
@@ -1131,7 +1131,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment set") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,upload,import,trash");
+			DropdownMenuItem.viewIcon(iconList = "pencil,export,import,trash");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu on the Fragment Sets") {
@@ -1139,7 +1139,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu of Framents Sets") {
-			DropdownMenuItem.viewIcon(iconList = "upload,import,trash");
+			DropdownMenuItem.viewIcon(iconList = "export,import,trash");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of management toolbar after selecting the new fragment") {
@@ -1149,7 +1149,7 @@ definition {
 		}
 
 		task ("Then the Fragments creator can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "upload,copy,move-folder,trash");
+			DropdownMenuItem.viewIcon(iconList = "export,copy,move-folder,trash");
 		}
 	}
 

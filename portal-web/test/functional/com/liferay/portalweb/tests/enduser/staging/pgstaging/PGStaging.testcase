@@ -191,6 +191,10 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
+		WaitForElementPresent(
+			key_portletName = "Documents and Media",
+			locator1 = "Portlet#ICON_PLUS_SIGN");
+
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.docx",
 			dmDocumentTitle = "Document_1.docx",

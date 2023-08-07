@@ -101,8 +101,9 @@ public class ObjectValidationRuleServiceImpl
 			objectValidationRule.getObjectDefinitionId(), ActionKeys.UPDATE);
 
 		return objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			objectValidationRule.getCompanyId(), objectValidationRuleId, active,
+			engine, errorLabelMap, nameMap, outputType, script,
+			objectValidationRuleSettings);
 	}
 
 	@Reference(

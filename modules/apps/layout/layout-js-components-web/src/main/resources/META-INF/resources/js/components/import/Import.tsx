@@ -24,6 +24,16 @@ interface Props {
 	portletNamespace: string;
 }
 
+const FILE_TEXTS = {
+	imported: Liferay.Language.get(
+		'the-file-was-successfully-imported.-please-see-the-import-results'
+	),
+	initial: Liferay.Language.get('no-file-selected'),
+	loaded: Liferay.Language.get(
+		'the-file-has-been-loaded.-click-the-import-button-to-import-it'
+	),
+};
+
 const ZIP_EXTENSION = '.zip';
 
 function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
@@ -31,6 +41,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const [overwrite, setOverwrite] = useState<boolean>(true);
 	const [file, setFile] = useState<File | null>(null);
 	const [fileName, setFileName] = useState<string | null>(null);
+	const [fileText, setFileText] = useState<string>(FILE_TEXTS.initial);
 	const [
 		importResults,
 		setImportResults,
@@ -42,6 +53,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 		if (!event.target.files || event.target.files?.length === 0) {
 			setFile(null);
 			setFileName(null);
+			setFileText(FILE_TEXTS.initial);
 
 			return;
 		}
@@ -58,9 +70,11 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 
 		if (fileExtension === ZIP_EXTENSION) {
 			setError(null);
+			setFileText(FILE_TEXTS.loaded);
 		}
 		else {
 			setError(Liferay.Language.get('only-zip-files-are-allowed'));
+			setFileText(FILE_TEXTS.initial);
 		}
 	};
 
@@ -71,6 +85,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const importOtherFile = () => {
 		setImportResults(null);
 		setFileName(null);
+		setFileText(FILE_TEXTS.initial);
 	};
 
 	const importFile = () => {
@@ -106,7 +121,10 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 						type: 'danger',
 					});
 				}
+
 				setImportResults(importResults);
+				setFileText(FILE_TEXTS.imported);
+
 				setFile(null);
 			})
 			.catch(() => {
@@ -175,6 +193,10 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 			</ClayToolbar>
 
 			<ClayLayout.ContainerFluid view>
+				<span aria-live="assertive" className="sr-only">
+					{fileText}
+				</span>
+
 				{importResults ? (
 					<ImportResults
 						fileName={fileName}

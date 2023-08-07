@@ -6,12 +6,11 @@ definition {
 	property database.types = "mysql";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = 4
 	test DecrementCoreSchemaMajorVersion {
-		property test.liferay.virtual.instance = "false";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -48,8 +47,6 @@ definition {
 
 	@priority = 4
 	test DecrementCoreSchemaMicroVersion {
-		property test.liferay.virtual.instance = "false";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -97,8 +94,6 @@ definition {
 
 	@priority = 3
 	test DecrementCoreSchemaMinorVersion {
-		property test.liferay.virtual.instance = "false";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -187,7 +182,6 @@ definition {
 	@priority = 4
 	test RemoveModulesWithSchemaVersionChange {
 		property osgi.modules.includes = "revert-schema-version-api,revert-schema-version-service";
-		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 

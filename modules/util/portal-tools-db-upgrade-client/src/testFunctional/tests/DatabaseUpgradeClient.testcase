@@ -9,6 +9,7 @@ definition {
 	property portal.upstream = "true";
 	property portal.version = "6.2.10.21";
 	property skip.start.app.server = "true";
+	property test.liferay.virtual.instance = "false";
 	property testcase.url = "http://www.example.com";
 	property testray.main.component.name = "Database Upgrade Tool";
 
@@ -49,7 +50,6 @@ definition {
 	test CheckUpgradeClientGogoShellFailedUpgrade {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
-		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "490";
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell-failed-upgrade");
@@ -106,7 +106,6 @@ definition {
 	test CheckUpgradeClientUpgradeCoreOnly {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
-		property test.liferay.virtual.instance = "false";
 		property timeout.explicit.wait = "490";
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-upgrade-core-only");

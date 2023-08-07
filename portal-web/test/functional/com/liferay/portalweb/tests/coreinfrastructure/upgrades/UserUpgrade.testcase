@@ -4,6 +4,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Upgrades User and System Management";
 
 	@description = "This is a use case for LPS-73277."
@@ -13,7 +14,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -25,7 +25,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -37,7 +36,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -49,7 +47,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -61,7 +58,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -73,7 +69,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -84,7 +79,6 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -95,7 +89,6 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -106,7 +99,6 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.2.10";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -117,7 +109,6 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -128,7 +119,6 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.2.10.1";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -140,7 +130,6 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -152,7 +141,6 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 		property setup.wizard.enabled = "true";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateUsersUpgrade.resetTestUserPassword(administratorEmail = "test@liferay.com");
 	}
@@ -162,7 +150,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mysql";
 		property portal.version = "6.2.5";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -176,7 +163,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -190,7 +176,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -204,7 +189,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -218,7 +202,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -232,7 +215,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -246,7 +228,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -259,7 +240,6 @@ definition {
 	test ViewAndEditUserAfterUpgrade7110 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.1.10";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -272,7 +252,6 @@ definition {
 	test ViewAndEditUserAfterUpgrade7210 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.2.10";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -285,7 +264,6 @@ definition {
 	test ViewAndEditUserAfterUpgrade7413 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.4.13";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -298,7 +276,6 @@ definition {
 	test ViewAndEditUserAfterUpgrade70106 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.0.10.6";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -311,7 +288,6 @@ definition {
 	test ViewAndEditUserAfterUpgrade72101 {
 		property data.archive.type = "data-archive-user";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -325,7 +301,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "db2,mysql,oracle";
 		property portal.version = "6.2.10.15";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 
@@ -339,7 +314,6 @@ definition {
 		property data.archive.type = "data-archive-user";
 		property database.types = "db2,mysql,oracle,postgresql";
 		property portal.version = "6.2.10.21";
-		property test.liferay.virtual.instance = "false";
 
 		SignIn.signIn();
 

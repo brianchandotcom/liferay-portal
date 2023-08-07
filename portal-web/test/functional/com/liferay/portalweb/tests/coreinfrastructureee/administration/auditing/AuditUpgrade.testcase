@@ -5,6 +5,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.component.names = "Audit";
 	property testray.main.component.name = "Upgrades Security";
 
@@ -22,7 +23,6 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given get objectId and groupId and enable entry history") {
 			var objectId = JSONObject.getObjectId(objectName = "MyObject");

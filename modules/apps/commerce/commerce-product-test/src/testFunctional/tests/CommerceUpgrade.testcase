@@ -4,6 +4,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
@@ -19,7 +20,6 @@ definition {
 	test ViewCommerceAppsAfterUpgrade7310 {
 		property data.archive.type = "data-archive-commerce";
 		property portal.version = "7.3.10";
-		property test.liferay.virtual.instance = "false";
 
 		var shippingAddressAddress = "Test Address";
 		var shippingAddressCity = "Test City";

@@ -4,6 +4,7 @@ definition {
 	property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property test.assert.warning.exceptions = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.component.names = "Client Extensions";
 	property testray.main.component.name = "Upgrades Remote Apps";
 

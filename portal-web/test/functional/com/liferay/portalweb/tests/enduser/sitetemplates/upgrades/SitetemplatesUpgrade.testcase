@@ -5,6 +5,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Upgrades Staging";
 
 	setUp {
@@ -19,7 +20,6 @@ definition {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property data.archive.type = "data-archive-page-with-collision";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When: Navigate to page admin of the Site template") {
 			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
@@ -66,7 +66,6 @@ definition {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property data.archive.type = "data-archive-page-with-collision";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("When: Navigate to page admin of the Site template") {
 			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
@@ -113,7 +112,6 @@ definition {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -142,7 +140,6 @@ definition {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -171,7 +168,6 @@ definition {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -200,7 +196,6 @@ definition {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Change the new site template's name then verify it") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -229,7 +224,6 @@ definition {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -272,7 +266,6 @@ definition {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -315,7 +308,6 @@ definition {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(
@@ -356,7 +348,6 @@ definition {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.16";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
 			Navigator.gotoSitePage(

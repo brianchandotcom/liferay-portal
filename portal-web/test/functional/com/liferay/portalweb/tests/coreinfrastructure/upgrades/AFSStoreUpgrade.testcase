@@ -5,6 +5,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {
@@ -60,7 +61,6 @@ definition {
 		property portal.version = "6.2.10.21";
 		property skip.start.app.server = "true";
 		property skip.upgrade-legacy-database = "true";
-		property test.liferay.virtual.instance = "false";
 		property testcase.url = "http://www.example.com";
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell");

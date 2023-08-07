@@ -5,6 +5,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.component.names = "LDAP";
 	property testray.main.component.name = "Upgrades Security";
 
@@ -21,7 +22,6 @@ definition {
 		property data.archive.type = "data-archive-ldap";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
@@ -33,7 +33,6 @@ definition {
 		property data.archive.type = "data-archive-ldap";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
@@ -44,7 +43,6 @@ definition {
 	test ViewLDAPConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-ldap";
 		property portal.version = "7.1.10.3";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
@@ -55,7 +53,6 @@ definition {
 	test ViewLDAPConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-ldap";
 		property portal.version = "7.2.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
@@ -65,7 +62,6 @@ definition {
 	test ViewLDAPConfigurationAfterUpgrade73101 {
 		property data.archive.type = "data-archive-ldap";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}

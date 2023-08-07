@@ -7,6 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.component.names = "Depot";
 	property testray.main.component.name = "Upgrades Lima";
 
@@ -25,7 +26,6 @@ definition {
 	test CanPublishBlogSmallImageAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-remote-staging-with-image";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -68,7 +68,6 @@ definition {
 	test CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-remote-staging-with-image";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -114,7 +113,6 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-remote-staging-with-image";
 		property portal.version = "7.3.10.1";
-		property test.liferay.virtual.instance = "false";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -155,7 +153,6 @@ definition {
 		property data.archive.type = "data-archive-depot-remote-staging";
 		property portal.version = "7.3.10.1";
 		property test.assert.warning.exceptions = "false";
-		property test.liferay.virtual.instance = "false";
 
 		ValidateDepotUpgrade.publishDMsInRemoteStagingDepot();
 

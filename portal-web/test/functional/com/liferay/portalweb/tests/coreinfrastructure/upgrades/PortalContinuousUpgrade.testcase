@@ -7,6 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.smoke.upgrades = "false";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = 4
@@ -14,7 +15,6 @@ definition {
 		property database.bare.enabled = "true";
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
 		property testcase.url = "http://www.example.com";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
@@ -88,7 +88,6 @@ definition {
 		property database.types = "mysql";
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
@@ -172,7 +171,6 @@ definition {
 		property database.types = "mysql";
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
-		property test.liferay.virtual.instance = "false";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");

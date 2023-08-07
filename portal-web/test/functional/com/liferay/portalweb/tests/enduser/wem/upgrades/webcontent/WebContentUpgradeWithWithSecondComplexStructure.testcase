@@ -7,6 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portal.version = "7.3.10.1";
+	property test.liferay.virtual.instance = "false";
 	property testray.component.names = "Upgrades WEM,Web Content Administration";
 	property testray.main.component.name = "Upgrades WEM";
 
@@ -346,8 +347,6 @@ definition {
 	@description = "This is a use case for LRQA-61632. Can copy web content and web content structure. Set all fields to Required and check submission."
 	@priority = 3
 	test CanEditWebContentStructureFieldsToReqiredFields {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Copy Article successfully") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -397,8 +396,6 @@ definition {
 	@description = "This is a use case for LRQA-61632."
 	@priority = 3
 	test CanMoveWebContentToFolder {
-		property test.liferay.virtual.instance = "false";
-
 		JSONWebcontent.addFolder(
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name",
@@ -416,8 +413,6 @@ definition {
 	@description = "This is a use case for LRQA-61632. Preview fields entered."
 	@priority = 3
 	test CanPreviewWebContent {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Select WC Template Name as template, save as draft and publish.") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -489,8 +484,6 @@ definition {
 	@description = "This is a use case for LRQA-61632."
 	@priority = 3
 	test CanSelectAndViewWebContentInWCD {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Add a widget page and WCD to widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

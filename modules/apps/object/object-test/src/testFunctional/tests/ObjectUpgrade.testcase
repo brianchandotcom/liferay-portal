@@ -3,6 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "quarantine";
+	property test.liferay.virtual.instance = "false";
 	property testray.component.names = "Object";
 	property testray.main.component.name = "Upgrades Object";
 
@@ -141,7 +142,6 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View an Object Definition Details after Upgrade") {
 			ObjectAdmin.openObjectAdmin();
@@ -211,7 +211,6 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View Object Entry after Upgrade") {
 			Navigator.openURL();
@@ -317,7 +316,6 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		var index = 0;
 		var listLabelOriginal = ListUtil.newListFromString("Custom Field Long Integer,Custom Field Date,Custom Field Integer,Custom Field Precision Decimal,Custom Field Decimal,Custom Field Rich Text,Custom Field Boolean,Custom Field Long Text,Custom Field Picklist");
@@ -372,7 +370,6 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View Object Layout after Upgrade") {
 			ObjectAdmin.openObjectAdmin();
@@ -472,7 +469,6 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View Object Relationships after Upgrade") {
 			ObjectAdmin.openObjectAdmin();
@@ -548,7 +544,6 @@ definition {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.version = "7.4.13.u33";
-		property test.liferay.virtual.instance = "false";
 
 		task ("View a Picklist after Upgrade") {
 			Picklist.gotoPicklists();

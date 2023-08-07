@@ -20,6 +20,7 @@ interface BaseProps {
 
 interface ExperienceSelectorProps extends BaseProps {
 	disabled?: boolean;
+	onChangeExperience?: (key: React.Key) => void;
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
 }
@@ -68,6 +69,7 @@ const TriggerLabel = React.forwardRef(
 export default function ExperienceSelector({
 	disabled = false,
 	displayType = 'light',
+	onChangeExperience,
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
@@ -91,7 +93,7 @@ export default function ExperienceSelector({
 				displayType={displayType}
 				id="experience-picker"
 				items={segmentsExperiences}
-				onSelectionChange={handleExperienceChange}
+				onSelectionChange={onChangeExperience || handleExperienceChange}
 				selectedItem={selectedSegmentsExperience}
 				selectedKey={selectedSegmentsExperience.segmentsExperienceId}
 			>

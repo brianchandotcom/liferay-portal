@@ -25,8 +25,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen."
 	@priority = 4
 	test ApplicationCanBeAuthorizedWithoutUserSession {
 		property oauth2.application.enabled = "true";
@@ -91,8 +90,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed."
 	@priority = 5
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
 		property oauth2.application.enabled = "true";
@@ -439,8 +437,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129397 TC-1: User can revoke authorization via kebab menu on	the OAuth 2 administration page. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-129397 TC-1: User can revoke authorization via kebab menu on	the OAuth 2 administration page."
 	@priority = 5
 	test AuthorizationCanBeRevokedViaKebabMenu {
 		property oauth2.application.enabled = "true";
@@ -496,8 +493,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page."
 	@priority = 3
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
 		property oauth2.application.enabled = "true";
@@ -886,13 +882,14 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105156. Authorized application should be automatically removed from the User's connect table when it is expired. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-105156. Authorized application should be automatically removed from the User's connect table when it is expired."
 	@priority = 4
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
 		property oauth2.application.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=\"30\"${line.separator}refresh.token.expires.in=\"60\":oauth2.expired.authorizations.afterlife.duration=\"30\"${line.separator}oauth2.expired.authorizations.check.interval=\"1\"";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
@@ -1085,8 +1082,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-47381. User can authorize external applications. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LRQA-47381. User can authorize external applications."
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property oauth2.application.enabled = "true";
@@ -1118,8 +1114,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-126596. User can authorize trusted external applications. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-126596. User can authorize trusted external applications."
 	@priority = 3
 	test ExternalApplicationCanBeTrustedAndAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
@@ -1953,8 +1948,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked."
 	@priority = 4
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
 		property oauth2.application.enabled = "true";
@@ -2015,8 +2009,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered. Blocked by LPS-191344."
-	@ignore = "true"
+	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered."
 	@priority = 3
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
 		property oauth2.application.enabled = "true";

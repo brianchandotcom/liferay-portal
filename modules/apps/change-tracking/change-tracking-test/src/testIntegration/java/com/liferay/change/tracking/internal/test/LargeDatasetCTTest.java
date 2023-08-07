@@ -19,7 +19,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -441,9 +440,6 @@ public class LargeDatasetCTTest {
 
 	@DeleteAfterTestRun
 	private Layout _layoutContent;
-
-	@Inject
-	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Inject(
 		filter = "mvc.command.name=/fragment/propagate_group_fragment_entry_changes"

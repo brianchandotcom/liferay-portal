@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.validation.rule;
 
+import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
@@ -32,9 +33,22 @@ public class ObjectValidationRuleEngineRegistryImpl
 
 	@Override
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
-		String key) {
+		long companyId, String key) {
 
-		return _serviceTrackerMap.getService(key);
+		ObjectValidationRuleEngine objectValidationRuleEngine =
+			_serviceTrackerMap.getService(key);
+
+		if (objectValidationRuleEngine == null) {
+			objectValidationRuleEngine = _serviceTrackerMap.getService(
+				_getCompanyScopedKey(companyId, key));
+		}
+
+		if (objectValidationRuleEngine == null) {
+			throw new IllegalArgumentException(
+				"No object action executor found with key " + key);
+		}
+
+		return objectValidationRuleEngine;
 	}
 
 	@Override
@@ -101,9 +115,9 @@ public class ObjectValidationRuleEngineRegistryImpl
 						(CompanyScoped)objectValidationRuleEngine;
 
 					key = _getCompanyScopedKey(
-						key,
 						objectValidationRuleEngineCompanyScoped.
-							getAllowedCompanyId());
+							getAllowedCompanyId(), key
+					);
 				}
 
 				emitter.emit(key);
@@ -115,7 +129,7 @@ public class ObjectValidationRuleEngineRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private String _getCompanyScopedKey(String key, long company) {
+	private String _getCompanyScopedKey(long company, String key) {
 		return StringBundler.concat(key, StringPool.POUND, company);
 	}
 

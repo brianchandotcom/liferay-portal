@@ -1150,7 +1150,9 @@ definition {
 
 		if (isSet(click)) {
 			if ((${click} == "save") && (${notRefreshAttribute} == "true")) {
-				PortletEntry.save();
+				Button.clickSave();
+
+				WaitForElementNotPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
 			}
 			else if (${click} == "cancel") {
 				Button.clickCancel();

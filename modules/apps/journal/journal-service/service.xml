@@ -45,6 +45,7 @@
 		<column name="indexable" type="boolean" />
 		<column name="smallImage" type="boolean" />
 		<column name="smallImageId" type="long" />
+		<column name="smallImageSource" type="int" />
 		<column name="smallImageURL" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />

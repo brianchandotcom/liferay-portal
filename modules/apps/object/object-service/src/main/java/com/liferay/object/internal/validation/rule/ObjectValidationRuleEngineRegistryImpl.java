@@ -57,45 +57,35 @@ public class ObjectValidationRuleEngineRegistryImpl
 		Collection<ObjectValidationRuleEngine>
 			objectValidationRuleEnginesCollection = _serviceTrackerMap.values();
 
-		return ListUtil.sort(
-			ListUtil.filter(
-				ListUtil.fromCollection(objectValidationRuleEnginesCollection),
-				objectValidationRuleEngine -> {
-					boolean companyAllowed = true;
+		return ListUtil.filter(
+			ListUtil.fromCollection(objectValidationRuleEnginesCollection),
+			objectValidationRuleEngine -> {
+				boolean companyAllowed = true;
 
-					if (objectValidationRuleEngine instanceof CompanyScoped) {
-						CompanyScoped objectValidationRuleEngineCompanyScoped =
-							(CompanyScoped)objectValidationRuleEngine;
+				if (objectValidationRuleEngine instanceof CompanyScoped) {
+					CompanyScoped objectValidationRuleEngineCompanyScoped =
+						(CompanyScoped)objectValidationRuleEngine;
 
-						companyAllowed =
-							objectValidationRuleEngineCompanyScoped.
-								isAllowedCompany(companyId);
-					}
+					companyAllowed =
+						objectValidationRuleEngineCompanyScoped.
+							isAllowedCompany(companyId);
+				}
 
-					boolean objectDefinitionAllowed = true;
+				boolean objectDefinitionAllowed = true;
 
-					if (objectValidationRuleEngine instanceof
-							ObjectDefinitionScoped) {
+				if (objectValidationRuleEngine instanceof
+						ObjectDefinitionScoped) {
 
-						ObjectDefinitionScoped
-							objectValidationRuleEngineObjectDefinitionScoped =
-								(ObjectDefinitionScoped)
-									objectValidationRuleEngine;
+					ObjectDefinitionScoped
+						objectValidationRuleEngineObjectDefinitionScoped =
+							(ObjectDefinitionScoped)objectValidationRuleEngine;
 
-						objectDefinitionAllowed =
-							objectValidationRuleEngineObjectDefinitionScoped.
-								isAllowedObjectDefinition(objectDefinitionName);
-					}
+					objectDefinitionAllowed =
+						objectValidationRuleEngineObjectDefinitionScoped.
+							isAllowedObjectDefinition(objectDefinitionName);
+				}
 
-					return companyAllowed && objectDefinitionAllowed;
-				}),
-			(ObjectValidationRuleEngine objectValidationRuleEngine1,
-			 ObjectValidationRuleEngine objectValidationRuleEngine2) -> {
-
-				String name1 = objectValidationRuleEngine1.getLabel();
-				String name2 = objectValidationRuleEngine2.getLabel();
-
-				return name1.compareTo(name2);
+				return companyAllowed && objectDefinitionAllowed;
 			});
 	}
 
@@ -115,8 +105,8 @@ public class ObjectValidationRuleEngineRegistryImpl
 
 					key = _getCompanyScopedKey(
 						objectValidationRuleEngineCompanyScoped.
-							getAllowedCompanyId(), key
-					);
+							getAllowedCompanyId(),
+						key);
 				}
 
 				emitter.emit(key);

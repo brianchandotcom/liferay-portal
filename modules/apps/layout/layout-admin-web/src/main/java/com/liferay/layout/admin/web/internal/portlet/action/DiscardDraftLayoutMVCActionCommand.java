@@ -102,20 +102,32 @@ public class DiscardDraftLayoutMVCActionCommand
 			themeDisplay.getPermissionChecker(), layout.getPlid(),
 			ActionKeys.VIEW);
 
-		boolean published = layout.isPublished();
+		try {
+			boolean published = layout.isPublished();
 
-		draftLayout = _layoutCopyHelper.copyLayoutContent(layout, draftLayout);
+			draftLayout = _layoutCopyHelper.copyLayoutContent(
+				layout, draftLayout);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Layout.class.getName(), actionRequest);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Layout.class.getName(), actionRequest);
 
-		serviceContext.setAttribute("published", published);
+			serviceContext.setAttribute("published", published);
 
-		_layoutLocalService.updateStatus(
-			themeDisplay.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			_layoutLocalService.updateStatus(
+				themeDisplay.getUserId(), draftLayout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		sendRedirect(actionRequest, actionResponse);
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (Exception exception) {
+			if (!(exception instanceof LockedLayoutException) &&
+				!(exception.getCause() instanceof LockedLayoutException)) {
+
+				throw exception;
+			}
+
+			_redirectToBlockedPage(actionRequest, actionResponse);
+		}
 	}
 
 	private void _redirectToBlockedPage(

@@ -11,7 +11,7 @@ import {
 	ExperienceSelector,
 	SegmentExperience,
 } from '@liferay/layout-js-components-web';
-import {fetch, openSelectionModal, sub} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SegmentEntry from '../../types/SegmentEntry';
@@ -25,7 +25,6 @@ interface Props {
 	segmentsCompanyConfigurationURL: string;
 	segmentsEntries: SegmentEntry[];
 	segmentsExperiences: SegmentExperience[];
-	selectSegmentsEntryURL: string;
 	simulateSegmentsEntriesURL: string;
 }
 
@@ -43,17 +42,13 @@ const PREVIEW_OPTIONS = [
 
 const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
 
-const MAXIMUM_DROPDOWN_ENTRIES = 8;
-
 function PageContentSelectors({
 	deactivateSimulationURL,
 	namespace,
-	portletNamespace,
 	segmentationEnabled,
 	segmentsCompanyConfigurationURL,
 	segmentsEntries,
 	segmentsExperiences,
-	selectSegmentsEntryURL,
 	simulateSegmentsEntriesURL,
 }: Props) {
 	const [
@@ -133,24 +128,6 @@ function PageContentSelectors({
 		},
 		[selectedSegmentsExperience]
 	);
-
-	const handleMoreSegmentEntriesButtonClick = () => {
-		openSelectionModal({
-			onSelect: (selectedItem: {value: string}) => {
-				const valueJSON = JSON.parse(selectedItem.value);
-				setSelectedSegmentEntry({
-					id: valueJSON.segmentsEntryId,
-					name: valueJSON.segmentsEntryName,
-				});
-			},
-			selectEventName: `${portletNamespace}selectSegmentsEntry`,
-			title: sub(
-				Liferay.Language.get('select-x'),
-				Liferay.Language.get('segment')
-			),
-			url: selectSegmentsEntryURL,
-		});
-	};
 
 	useEffect(() => {
 		const deactivateSimulationEventHandler = Liferay.on(
@@ -312,12 +289,16 @@ function PageContentSelectors({
 
 			{selectedPreviewOption.value === 'segments' && (
 				<SegmentSelector
-					maximumDropdownEntries={MAXIMUM_DROPDOWN_ENTRIES}
 					namespace={namespace}
-					onMoreSegmentEntriesButtonClick={
-						handleMoreSegmentEntriesButtonClick
-					}
-					onSelectSegmentEntry={setSelectedSegmentEntry}
+					onSelectSegmentEntry={(key: React.Key) => {
+						const selectedSegment = segmentsEntries.find(
+							({id}) => id.toString() === key
+						);
+
+						if (selectedSegment) {
+							setSelectedSegmentEntry(selectedSegment);
+						}
+					}}
 					segmentsEntries={segmentsEntries}
 					selectedSegmentEntry={selectedSegmentEntry}
 				/>

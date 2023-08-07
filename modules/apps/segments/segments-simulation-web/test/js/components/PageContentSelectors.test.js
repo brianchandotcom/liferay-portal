@@ -38,7 +38,6 @@ const mockProps = {
 			segmentsExperienceStatusLabel: 'Active',
 		},
 	],
-	selectSegmentsEntryURL: 'http://test.com',
 	simulateSegmentsEntriesURL: 'http://test.com',
 };
 

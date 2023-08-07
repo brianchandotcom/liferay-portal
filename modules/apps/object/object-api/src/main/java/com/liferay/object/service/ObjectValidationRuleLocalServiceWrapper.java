@@ -426,8 +426,7 @@ public class ObjectValidationRuleLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectValidationRule
 			updateObjectValidationRule(
-				long companyId, long objectValidationRuleId, boolean active,
-				String engine,
+				long objectValidationRuleId, boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String outputType, String script,
@@ -437,8 +436,8 @@ public class ObjectValidationRuleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectValidationRuleLocalService.updateObjectValidationRule(
-			companyId, objectValidationRuleId, active, engine, errorLabelMap,
-			nameMap, outputType, script, objectValidationRuleSettings);
+			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	/**

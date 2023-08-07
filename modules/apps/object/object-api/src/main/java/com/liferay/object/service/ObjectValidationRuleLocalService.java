@@ -317,9 +317,9 @@ public interface ObjectValidationRuleLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectValidationRule updateObjectValidationRule(
-			long companyId, long objectValidationRuleId, boolean active,
-			String engine, Map<Locale, String> errorLabelMap,
-			Map<Locale, String> nameMap, String outputType, String script,
+			long objectValidationRuleId, boolean active, String engine,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String outputType, String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 

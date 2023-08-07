@@ -81,9 +81,10 @@ public class JournalArticleModelImpl
 		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"reviewDate", Types.TIMESTAMP}, {"indexable", Types.BOOLEAN},
 		{"smallImage", Types.BOOLEAN}, {"smallImageId", Types.BIGINT},
-		{"smallImageURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"smallImageSource", Types.INTEGER}, {"smallImageURL", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -119,6 +120,7 @@ public class JournalArticleModelImpl
 		TABLE_COLUMNS_MAP.put("indexable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("smallImage", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("smallImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("smallImageSource", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("smallImageURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
@@ -128,7 +130,7 @@ public class JournalArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,DDMStructureId LONG,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (id_, ctCollectionId))";
+		"create table JournalArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,DDMStructureId LONG,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageSource INTEGER,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (id_, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 
@@ -422,6 +424,8 @@ public class JournalArticleModelImpl
 			attributeGetterFunctions.put(
 				"smallImageId", JournalArticle::getSmallImageId);
 			attributeGetterFunctions.put(
+				"smallImageSource", JournalArticle::getSmallImageSource);
+			attributeGetterFunctions.put(
 				"smallImageURL", JournalArticle::getSmallImageURL);
 			attributeGetterFunctions.put(
 				"lastPublishDate", JournalArticle::getLastPublishDate);
@@ -556,6 +560,10 @@ public class JournalArticleModelImpl
 				"smallImageId",
 				(BiConsumer<JournalArticle, Long>)
 					JournalArticle::setSmallImageId);
+			attributeSetterBiConsumers.put(
+				"smallImageSource",
+				(BiConsumer<JournalArticle, Integer>)
+					JournalArticle::setSmallImageSource);
 			attributeSetterBiConsumers.put(
 				"smallImageURL",
 				(BiConsumer<JournalArticle, String>)
@@ -1297,6 +1305,21 @@ public class JournalArticleModelImpl
 
 	@JSON
 	@Override
+	public int getSmallImageSource() {
+		return _smallImageSource;
+	}
+
+	@Override
+	public void setSmallImageSource(int smallImageSource) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_smallImageSource = smallImageSource;
+	}
+
+	@JSON
+	@Override
 	public String getSmallImageURL() {
 		if (_smallImageURL == null) {
 			return "";
@@ -1608,6 +1631,7 @@ public class JournalArticleModelImpl
 		journalArticleImpl.setIndexable(isIndexable());
 		journalArticleImpl.setSmallImage(isSmallImage());
 		journalArticleImpl.setSmallImageId(getSmallImageId());
+		journalArticleImpl.setSmallImageSource(getSmallImageSource());
 		journalArticleImpl.setSmallImageURL(getSmallImageURL());
 		journalArticleImpl.setLastPublishDate(getLastPublishDate());
 		journalArticleImpl.setStatus(getStatus());
@@ -1681,6 +1705,8 @@ public class JournalArticleModelImpl
 			this.<Boolean>getColumnOriginalValue("smallImage"));
 		journalArticleImpl.setSmallImageId(
 			this.<Long>getColumnOriginalValue("smallImageId"));
+		journalArticleImpl.setSmallImageSource(
+			this.<Integer>getColumnOriginalValue("smallImageSource"));
 		journalArticleImpl.setSmallImageURL(
 			this.<String>getColumnOriginalValue("smallImageURL"));
 		journalArticleImpl.setLastPublishDate(
@@ -1936,6 +1962,8 @@ public class JournalArticleModelImpl
 
 		journalArticleCacheModel.smallImageId = getSmallImageId();
 
+		journalArticleCacheModel.smallImageSource = getSmallImageSource();
+
 		journalArticleCacheModel.smallImageURL = getSmallImageURL();
 
 		String smallImageURL = journalArticleCacheModel.smallImageURL;
@@ -2066,6 +2094,7 @@ public class JournalArticleModelImpl
 	private boolean _indexable;
 	private boolean _smallImage;
 	private long _smallImageId;
+	private int _smallImageSource;
 	private String _smallImageURL;
 	private Date _lastPublishDate;
 	private int _status;
@@ -2133,6 +2162,7 @@ public class JournalArticleModelImpl
 		_columnOriginalValues.put("indexable", _indexable);
 		_columnOriginalValues.put("smallImage", _smallImage);
 		_columnOriginalValues.put("smallImageId", _smallImageId);
+		_columnOriginalValues.put("smallImageSource", _smallImageSource);
 		_columnOriginalValues.put("smallImageURL", _smallImageURL);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
@@ -2221,17 +2251,19 @@ public class JournalArticleModelImpl
 
 		columnBitmasks.put("smallImageId", 268435456L);
 
-		columnBitmasks.put("smallImageURL", 536870912L);
+		columnBitmasks.put("smallImageSource", 536870912L);
 
-		columnBitmasks.put("lastPublishDate", 1073741824L);
+		columnBitmasks.put("smallImageURL", 1073741824L);
 
-		columnBitmasks.put("status", 2147483648L);
+		columnBitmasks.put("lastPublishDate", 2147483648L);
 
-		columnBitmasks.put("statusByUserId", 4294967296L);
+		columnBitmasks.put("status", 4294967296L);
 
-		columnBitmasks.put("statusByUserName", 8589934592L);
+		columnBitmasks.put("statusByUserId", 8589934592L);
 
-		columnBitmasks.put("statusDate", 17179869184L);
+		columnBitmasks.put("statusByUserName", 17179869184L);
+
+		columnBitmasks.put("statusDate", 34359738368L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

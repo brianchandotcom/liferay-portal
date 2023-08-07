@@ -68,7 +68,7 @@ public class JournalArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(71);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -128,6 +128,8 @@ public class JournalArticleCacheModel
 		sb.append(smallImage);
 		sb.append(", smallImageId=");
 		sb.append(smallImageId);
+		sb.append(", smallImageSource=");
+		sb.append(smallImageSource);
 		sb.append(", smallImageURL=");
 		sb.append(smallImageURL);
 		sb.append(", lastPublishDate=");
@@ -267,6 +269,7 @@ public class JournalArticleCacheModel
 		journalArticleImpl.setIndexable(indexable);
 		journalArticleImpl.setSmallImage(smallImage);
 		journalArticleImpl.setSmallImageId(smallImageId);
+		journalArticleImpl.setSmallImageSource(smallImageSource);
 
 		if (smallImageURL == null) {
 			journalArticleImpl.setSmallImageURL("");
@@ -349,6 +352,8 @@ public class JournalArticleCacheModel
 		smallImage = objectInput.readBoolean();
 
 		smallImageId = objectInput.readLong();
+
+		smallImageSource = objectInput.readInt();
 		smallImageURL = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
@@ -461,6 +466,8 @@ public class JournalArticleCacheModel
 
 		objectOutput.writeLong(smallImageId);
 
+		objectOutput.writeInt(smallImageSource);
+
 		if (smallImageURL == null) {
 			objectOutput.writeUTF("");
 		}
@@ -513,6 +520,7 @@ public class JournalArticleCacheModel
 	public boolean indexable;
 	public boolean smallImage;
 	public long smallImageId;
+	public int smallImageSource;
 	public String smallImageURL;
 	public long lastPublishDate;
 	public int status;

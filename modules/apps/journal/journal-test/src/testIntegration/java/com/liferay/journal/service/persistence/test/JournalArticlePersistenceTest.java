@@ -173,6 +173,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setSmallImageId(RandomTestUtil.nextLong());
 
+		newJournalArticle.setSmallImageSource(RandomTestUtil.nextInt());
+
 		newJournalArticle.setSmallImageURL(RandomTestUtil.randomString());
 
 		newJournalArticle.setLastPublishDate(RandomTestUtil.nextDate());
@@ -274,6 +276,9 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticle.getSmallImageId(),
 			newJournalArticle.getSmallImageId());
+		Assert.assertEquals(
+			existingJournalArticle.getSmallImageSource(),
+			newJournalArticle.getSmallImageSource());
 		Assert.assertEquals(
 			existingJournalArticle.getSmallImageURL(),
 			newJournalArticle.getSmallImageURL());
@@ -723,9 +728,9 @@ public class JournalArticlePersistenceTest {
 			"DDMStructureId", true, "DDMTemplateKey", true, "defaultLanguageId",
 			true, "layoutUuid", true, "displayDate", true, "expirationDate",
 			true, "reviewDate", true, "indexable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"smallImageId", true, "smallImageSource", true, "smallImageURL",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -1107,6 +1112,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setSmallImage(RandomTestUtil.randomBoolean());
 
 		journalArticle.setSmallImageId(RandomTestUtil.nextLong());
+
+		journalArticle.setSmallImageSource(RandomTestUtil.nextInt());
 
 		journalArticle.setSmallImageURL(RandomTestUtil.randomString());
 

@@ -91,6 +91,10 @@ public class JournalArticleTable extends BaseTable<JournalArticleTable> {
 		"smallImage", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, Long> smallImageId = createColumn(
 		"smallImageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<JournalArticleTable, Integer> smallImageSource =
+		createColumn(
+			"smallImageSource", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, String> smallImageURL =
 		createColumn(
 			"smallImageURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

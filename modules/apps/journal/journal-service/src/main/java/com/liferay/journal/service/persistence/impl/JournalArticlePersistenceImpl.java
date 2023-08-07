@@ -34354,6 +34354,7 @@ public class JournalArticlePersistenceImpl
 		ctStrictColumnNames.add("indexable");
 		ctStrictColumnNames.add("smallImage");
 		ctStrictColumnNames.add("smallImageId");
+		ctStrictColumnNames.add("smallImageSource");
 		ctStrictColumnNames.add("smallImageURL");
 		ctStrictColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("status");

@@ -39,7 +39,6 @@ const mockProps = {
 		},
 	],
 	selectSegmentsEntryURL: 'http://test.com',
-	selectSegmentsExperienceURL: 'http://test.com',
 	simulateSegmentsEntriesURL: 'http://test.com',
 };
 

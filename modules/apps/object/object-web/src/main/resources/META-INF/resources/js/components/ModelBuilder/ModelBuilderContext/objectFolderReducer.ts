@@ -4,9 +4,13 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {Edge} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
+import {manyMarkerId} from '../Edges/ManyMarkerEnd';
+import {oneMarkerId} from '../Edges/OneMarkerEnd';
 import {
+	EdgeData,
 	LeftSidebarItemType,
 	ObjectDefinitionNode,
 	ObjectFieldNode,
@@ -43,6 +47,45 @@ function fieldsCustomSort(objectFields: ObjectFieldNode[]) {
 	};
 
 	return objectFields.sort(compareFields);
+}
+
+function findEdgesWithSameSourceAndTarget(edges: Edge<EdgeData>[]) {
+	const duplicates = edges.filter((edge, index, self) => {
+		const foundIndex = self.findIndex(
+			(item) =>
+				(item.source === edge.source && item.target === edge.target) ||
+				(item.source === edge.target && item.target === edge.source)
+		);
+
+		return foundIndex !== -1 && foundIndex !== index;
+	});
+
+	return duplicates;
+}
+
+function getNonOverlappingEdges(allEdges: Edge<EdgeData>[]) {
+	const overlapEdges = findEdgesWithSameSourceAndTarget(allEdges);
+
+	const nonOverlappingEdges = overlapEdges.map((edge) => {
+		const newEdge = {
+			...edge,
+			data: {
+				...edge.data,
+				sourceY: 50,
+				targetY: 50,
+			},
+		} as Edge<EdgeData>;
+
+		return newEdge;
+	});
+
+	const filteredEdges: Edge<EdgeData>[] = allEdges.filter((edge) => {
+		return !nonOverlappingEdges.some(
+			(nonOverlappingEdge) => edge.id === nonOverlappingEdge.id
+		);
+	});
+
+	return [...filteredEdges, ...nonOverlappingEdges];
 }
 
 export function objectFolderReducer(state: TState, action: TAction) {
@@ -84,6 +127,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 			);
 
 			let newObjectDefinitionNodes: ObjectDefinitionNode[] = [];
+			const allEdges: Edge<EdgeData>[] = [];
 
 			if (currentFolder) {
 				const positionColumn = {x: 1, y: 0};
@@ -108,6 +152,39 @@ export function objectFolderReducer(state: TState, action: TAction) {
 								} as ObjectFieldNode;
 							}
 						);
+
+						if (objectDefinition.objectRelationships.length) {
+							objectDefinition.objectRelationships.forEach(
+								(relationship) => {
+									if (!relationship.reverse) {
+										allEdges.push({
+											data: {
+												label: getLocalizableLabel(
+													objectDefinition.defaultLanguageId,
+													relationship.label,
+													relationship.name
+												),
+												markerEndId: manyMarkerId,
+												markerStartId:
+													relationship.type ===
+													'manyToMany'
+														? manyMarkerId
+														: oneMarkerId,
+												sourceY: 0,
+												targetY: 0,
+												type: relationship.type,
+											},
+											id: `reactflow__edge-object-relationship-${relationship.name}-parent-${relationship.objectDefinitionExternalReferenceCode1}-child-${relationship.objectDefinitionExternalReferenceCode2}`,
+											source: `${objectDefinition.name}`,
+											sourceHandle: `${objectDefinition.name}`,
+											target: `${relationship.objectDefinitionName2}`,
+											targetHandle: `${relationship.objectDefinitionName2}`,
+											type: 'floating',
+										});
+									}
+								}
+							);
+						}
 
 						if (index % 4 === 0) {
 							positionColumn.y++;
@@ -147,10 +224,15 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				);
 			}
 
+			const newEdges = getNonOverlappingEdges(allEdges);
+
 			return {
 				...state,
 				leftSidebarItems: newLeftSidebar,
-				objectDefinitionNodes: newObjectDefinitionNodes,
+				objectDefinitionNodes: [
+					...newObjectDefinitionNodes,
+					...newEdges,
+				],
 			};
 		}
 		case TYPES.SET_SELECTED_NODE: {
@@ -164,7 +246,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 					data: {
 						...definitionNode.data,
 						nodeSelected:
-							definitionNode.data.name ===
+							definitionNode.data?.name ===
 							selectedObjectDefinitionName,
 					},
 				})
@@ -190,6 +272,14 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				...state,
 				leftSidebarItems: newLeftSidebarItems,
 				objectDefinitionNodes: newObjectDefinitionNodes,
+			};
+		}
+		case TYPES.SET_ELEMENTS: {
+			const {newElements} = action.payload;
+
+			return {
+				...state,
+				objectDefinitionNodes: newElements,
 			};
 		}
 		default:

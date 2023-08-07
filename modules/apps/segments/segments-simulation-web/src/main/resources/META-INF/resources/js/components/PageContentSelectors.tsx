@@ -4,8 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayLink from '@clayui/link';
 import {
 	ExperienceSelector,
@@ -15,6 +13,7 @@ import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SegmentEntry from '../../types/SegmentEntry';
+import PreviewSelector from './PreviewSelector';
 import SegmentSelector from './SegmentSelector';
 
 interface Props {
@@ -51,10 +50,6 @@ function PageContentSelectors({
 	segmentsExperiences,
 	simulateSegmentsEntriesURL,
 }: Props) {
-	const [
-		isSegmentOrExperienceSelectorActive,
-		setIsSegmentOrExperienceSelectorActive,
-	] = useState(false);
 	const [alertVisible, setAlertVisible] = useState(!segmentationEnabled);
 	const [selectedPreviewOption, setSelectedPreviewOption] = useState(
 		DEFAULT_PREVIEW_OPTION
@@ -234,58 +229,20 @@ function PageContentSelectors({
 				</ClayAlert>
 			)}
 
-			<div className="form-group">
-				<label htmlFor={`${namespace}segmentsOrExperiences`}>
-					{Liferay.Language.get('preview-by')}
-				</label>
+			<PreviewSelector
+				namespace={namespace}
+				onSelectPreviewOption={(key: React.Key) => {
+					const selectedOption = PREVIEW_OPTIONS.find(
+						({value}) => value === key
+					);
 
-				<input
-					id={`${namespace}segmentsOrExperiences`}
-					name={`${namespace}segmentsOrExperiences`}
-					type="hidden"
-					value={selectedPreviewOption.value}
-				/>
-
-				<ClayDropDown
-					active={isSegmentOrExperienceSelectorActive}
-					alignmentPosition={Align.BottomLeft}
-					menuElementAttrs={{
-						containerProps: {
-							className: 'cadmin',
-						},
-					}}
-					onActiveChange={setIsSegmentOrExperienceSelectorActive}
-					trigger={
-						<ClayButton
-							className="form-control-select text-left w-100"
-							displayType="secondary"
-							size="sm"
-							type="button"
-						>
-							{selectedPreviewOption.label}
-						</ClayButton>
+					if (selectedOption) {
+						setSelectedPreviewOption(selectedOption);
 					}
-				>
-					<ClayDropDown.ItemList>
-						{PREVIEW_OPTIONS.map((option) => (
-							<ClayDropDown.Item
-								active={
-									option.value === selectedPreviewOption.value
-								}
-								key={option.value}
-								onClick={() => {
-									setIsSegmentOrExperienceSelectorActive(
-										false
-									);
-									setSelectedPreviewOption(option);
-								}}
-							>
-								{option.label}
-							</ClayDropDown.Item>
-						))}
-					</ClayDropDown.ItemList>
-				</ClayDropDown>
-			</div>
+				}}
+				previewOptions={PREVIEW_OPTIONS}
+				selectedPreviewOption={selectedPreviewOption}
+			/>
 
 			{selectedPreviewOption.value === 'segments' && (
 				<SegmentSelector

@@ -36,18 +36,11 @@ public class ObjectValidationRule1RestController extends BaseRestController {
 
 		jsonObject.put("validationCriteriaMet", true);
 
-		JSONObject objectEntryJSONObject = jsonObject.getJSONObject(
-				"objectEntry");
-
-		if (objectEntryJSONObject == null) {
-			throw new IllegalArgumentException("Object entry is null");
-		}
-
-		if (!objectEntryJSONObject.get(
+		if (jsonObject.get(
 				"name"
-		).equals(
+			).equals(
 				"Invalid Name"
-		)) {
+			)) {
 
 			jsonObject.put("validationCriteriaMet", false);
 		}

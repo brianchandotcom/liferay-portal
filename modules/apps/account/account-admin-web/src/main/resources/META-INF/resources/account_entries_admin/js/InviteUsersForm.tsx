@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {sub} from 'frontend-js-web';
+import {openConfirmModal, sub} from 'frontend-js-web';
 import React, {FormEventHandler, useState} from 'react';
 
 import InviteUserFormGroup from './InviteUsersFormGroup';
@@ -160,6 +160,21 @@ function InviteUsersForm({
 		}
 	};
 
+	const onRemove = (id: string) => {
+		openConfirmModal({
+			message: Liferay.Language.get('do-you-want-to-remove-this-entry'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					setInputGroups((inputGroups) =>
+						inputGroups.filter((inputGroup) => inputGroup.id !== id)
+					);
+				}
+			},
+			status: 'warning',
+			title: Liferay.Language.get('remove-entry'),
+		});
+	};
+
 	return (
 		<ClayForm
 			className="lfr-form-content"
@@ -180,6 +195,7 @@ function InviteUsersForm({
 					onEmailAddressItemsChange={(items) =>
 						setEmailAddresses(inputGroup.id, items)
 					}
+					onRemove={onRemove}
 					portletNamespace={portletNamespace}
 				/>
 			))}

@@ -98,7 +98,7 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 			<ClayModal observer={observer}>
 				<ClayForm onSubmit={handleSubmit}>
 					<ClayModal.Header>
-						{Liferay.Language.get('new-objects-folder')}
+						{Liferay.Language.get('new-object-folder')}
 					</ClayModal.Header>
 
 					<ClayModal.Body>

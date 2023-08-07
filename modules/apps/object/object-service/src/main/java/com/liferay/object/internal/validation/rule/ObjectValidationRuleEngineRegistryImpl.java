@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.validation.rule;
 
-import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;

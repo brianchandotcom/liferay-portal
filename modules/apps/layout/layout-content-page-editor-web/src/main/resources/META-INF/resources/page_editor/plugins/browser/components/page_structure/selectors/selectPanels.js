@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionFilterFragmentEntryKey';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
@@ -198,9 +199,17 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			activeItemId.length
 		);
 
+		const editableType =
+			state.fragmentEntryLinks[fragmentEntryLinkId].editableTypes[
+				editableId
+			];
+
 		activeItem = {
 			editableId,
-			editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			editableValueNamespace:
+				editableType === EDITABLE_TYPES.backgroundImage
+					? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+					: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			fragmentEntryLinkId,
 			itemId: activeItemId,
 			parentId: getFragmentItem(state.layoutData, fragmentEntryLinkId)

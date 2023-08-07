@@ -211,7 +211,7 @@ public class CommerceSubscriptionEntryIndexer
 								getCommerceSubscriptionEntryId();
 
 						_log.warn(
-							"Unable to index subscription entry " +
+							"Unable to index commerce subscription entry " +
 								commerceSubscriptionEntryId,
 							portalException);
 					}

@@ -159,7 +159,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to index commerce product option " +
+							"Unable to index commerce product option value " +
 								cpOptionValue.getCPOptionValueId(),
 							portalException);
 					}

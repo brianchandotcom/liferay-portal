@@ -1890,7 +1890,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 * @param pk the primary key of the ${entity.humanName}
 				 * @param ${referenceEntity.variableName}PK the primary key of the ${referenceEntity.humanName}
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-				 	* @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
+				 * @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
 				</#if>
 				 */
 				@Override
@@ -1923,9 +1923,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 *
 				 * @param pk the primary key of the ${entity.humanName}
 				 * @param ${referenceEntity.variableName} the ${referenceEntity.humanName}
-				 <#if serviceBuilder.isVersionGTE_7_4_0()>
-				 	* @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
-				 </#if>
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
+				 * @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
+				</#if>
 				 */
 				@Override
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
@@ -1956,9 +1956,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 *
 				 * @param pk the primary key of the ${entity.humanName}
 				 * @param ${referenceEntity.variableName}PKs the primary keys of the ${referenceEntity.pluralHumanName}
-				 <#if serviceBuilder.isVersionGTE_7_4_0()>
-				 	* @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
-				 </#if>
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
+				 * @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
+				</#if>
 				 */
 				@Override
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
@@ -1993,9 +1993,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 *
 				 * @param pk the primary key of the ${entity.humanName}
 				 * @param ${referenceEntity.pluralVariableName} the ${referenceEntity.pluralHumanName}
-				 <#if serviceBuilder.isVersionGTE_7_4_0()>
-				 	* @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
-				 </#if>
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
+				 * @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
+				</#if>
 				 */
 				@Override
 				<#if serviceBuilder.isVersionGTE_7_4_0()>

@@ -10,8 +10,6 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
-	finalizedBy formatSource
-
 	goalPrefix = "theme-builder"
 }
 

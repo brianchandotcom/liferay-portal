@@ -5,8 +5,6 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
-	finalizedBy formatSource
-
 	goalPrefix = "soy-builder"
 }
 

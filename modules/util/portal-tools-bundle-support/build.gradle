@@ -5,8 +5,6 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
-	finalizedBy formatSource
-
 	goalPrefix = "bundle-support"
 	useSetterComments = false
 }

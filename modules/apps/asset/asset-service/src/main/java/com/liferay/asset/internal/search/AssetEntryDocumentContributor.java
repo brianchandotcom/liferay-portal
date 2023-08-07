@@ -52,12 +52,14 @@ public class AssetEntryDocumentContributor
 
 		Date displayDate = new Date();
 
-		try {
-			displayDate = document.getDate(Field.DISPLAY_DATE);
-		}
-		catch (ParseException parseException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to parse data ", parseException);
+		if (document.hasField(Field.DISPLAY_DATE)) {
+			try {
+				displayDate = document.getDate(Field.DISPLAY_DATE);
+			}
+			catch (ParseException parseException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to parse data ", parseException);
+				}
 			}
 		}
 

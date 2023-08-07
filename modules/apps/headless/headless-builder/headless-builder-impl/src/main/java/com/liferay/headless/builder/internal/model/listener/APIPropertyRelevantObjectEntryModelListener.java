@@ -54,38 +54,6 @@ public class APIPropertyRelevantObjectEntryModelListener
 		_validate(objectEntry);
 	}
 
-	private void _validate(ObjectEntry objectEntry) {
-		try {
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			long apiSchemaId = (long)values.get(
-				"r_apiSchemaToAPIProperties_c_apiSchemaId");
-
-			if (!_objectEntryHelper.isValidObjectEntry(
-					apiSchemaId, "L_API_SCHEMA")) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null, "An API property must be related to an API schema",
-					"an-api-property-must-be-related-to-an-api-schema");
-			}
-
-			if (!_validate(
-					apiSchemaId, (String)values.get("objectFieldERC"),
-					(String)values.get("objectRelationshipNames"))) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"An API property must be related to an existing object " +
-						"field",
-					"an-api-property-must-be-related-to-an-existing-object-" +
-						"field");
-			}
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-	}
-
 	private boolean _validate(
 			long apiSchemaId, String objectFieldExternalReferenceCode,
 			String objectRelationshipName)
@@ -127,6 +95,38 @@ public class APIPropertyRelevantObjectEntryModelListener
 		}
 
 		return true;
+	}
+
+	private void _validate(ObjectEntry objectEntry) {
+		try {
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			long apiSchemaId = (long)values.get(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId");
+
+			if (!_objectEntryHelper.isValidObjectEntry(
+					apiSchemaId, "L_API_SCHEMA")) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null, "An API property must be related to an API schema",
+					"an-api-property-must-be-related-to-an-api-schema");
+			}
+
+			if (!_validate(
+					apiSchemaId, (String)values.get("objectFieldERC"),
+					(String)values.get("objectRelationshipNames"))) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"An API property must be related to an existing object " +
+						"field",
+					"an-api-property-must-be-related-to-an-existing-object-" +
+						"field");
+			}
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
 	}
 
 	@Reference

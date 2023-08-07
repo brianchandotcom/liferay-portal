@@ -73,12 +73,12 @@ public class PriceCPContentContributor implements CPContentContributor {
 			return jsonObject;
 		}
 
-		String ddmFormValues = ParamUtil.getString(
-			httpServletRequest, "ddmFormValues");
+		String formFieldValues = ParamUtil.getString(
+			httpServletRequest, "formFieldValues");
 
 		List<CommerceOptionValue> commerceOptionValues =
 			_commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
-				cpInstance.getCPDefinitionId(), ddmFormValues);
+				cpInstance.getCPDefinitionId(), formFieldValues);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.

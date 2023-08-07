@@ -86,7 +86,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public CPInstance fetchCPInstance(
-			long cpDefinitionId, String serializedDDMFormValues)
+			long cpDefinitionId, String serializedFormFieldValues)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
@@ -96,11 +96,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			return getDefaultCPInstance(cpDefinitionId);
 		}
 
-		if (CPJSONUtil.isEmpty(serializedDDMFormValues)) {
+		if (CPJSONUtil.isEmpty(serializedFormFieldValues)) {
 			return null;
 		}
 
-		return _fetchCPInstance(cpDefinitionId, serializedDDMFormValues);
+		return _fetchCPInstance(cpDefinitionId, serializedFormFieldValues);
 	}
 
 	@Override
@@ -179,19 +179,19 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long commerceAccountId, long commerceChannelGroupId,
-			long cpDefinitionId, String serializedDDMFormValues, int type)
+			long cpDefinitionId, String serializedFormFieldValues, int type)
 		throws Exception {
 
 		return getCPAttachmentFileEntries(
 			commerceAccountId, commerceChannelGroupId, cpDefinitionId,
-			serializedDDMFormValues, type, QueryUtil.ALL_POS,
+			serializedFormFieldValues, type, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long commerceAccountId, long commerceChannelGroupId,
-			long cpDefinitionId, String serializedDDMFormValues, int type,
+			long cpDefinitionId, String serializedFormFieldValues, int type,
 			int start, int end)
 		throws Exception {
 
@@ -200,7 +200,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			commerceChannelGroupId, cpDefinitionId);
 
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			cpDefinitionId, serializedDDMFormValues, type, start, end);
+			cpDefinitionId, serializedFormFieldValues, type, start, end);
 	}
 
 	@Override

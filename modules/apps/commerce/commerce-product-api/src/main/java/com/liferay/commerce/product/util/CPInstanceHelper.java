@@ -35,7 +35,7 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public CPInstance fetchCPInstance(
-			long cpDefinitionId, String serializedDDMFormValues)
+			long cpDefinitionId, String serializedFormFieldValues)
 		throws PortalException;
 
 	public CPInstance fetchFirstAvailableReplacementCPInstance(
@@ -53,12 +53,12 @@ public interface CPInstanceHelper {
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long commerceAccountId, long commerceChannelGroupId,
-			long cpDefinitionId, String serializedDDMFormValues, int type)
+			long cpDefinitionId, String serializedFormFieldValues, int type)
 		throws Exception;
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long commerceAccountId, long commerceChannelGroupId,
-			long cpDefinitionId, String serializedDDMFormValues, int type,
+			long cpDefinitionId, String serializedFormFieldValues, int type,
 			int start, int end)
 		throws Exception;
 

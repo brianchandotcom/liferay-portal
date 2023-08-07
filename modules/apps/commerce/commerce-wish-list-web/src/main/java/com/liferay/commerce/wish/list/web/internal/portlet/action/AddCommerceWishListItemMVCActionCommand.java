@@ -64,8 +64,8 @@ public class AddCommerceWishListItemMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-		String ddmFormValues = ParamUtil.getString(
-			actionRequest, "ddmFormValues");
+		String formFieldValues = ParamUtil.getString(
+			actionRequest, "formFieldValues");
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
@@ -101,7 +101,7 @@ public class AddCommerceWishListItemMVCActionCommand
 						(CommerceContext)httpServletRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT)),
 					commerceWishList.getCommerceWishListId(), cpDefinitionId,
-					cpInstanceUuid, ddmFormValues, serviceContext);
+					cpInstanceUuid, formFieldValues, serviceContext);
 
 			jsonObject.put(
 				"commerceWishListItemId",

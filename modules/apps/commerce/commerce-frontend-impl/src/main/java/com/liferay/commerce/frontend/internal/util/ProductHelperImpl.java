@@ -174,10 +174,10 @@ public class ProductHelperImpl implements ProductHelper {
 	}
 
 	private List<CommerceOptionValue> _getCommerceOptionValues(
-			long cpInstanceId, String ddmFormValues)
+			long cpInstanceId, String formFieldValues)
 		throws PortalException {
 
-		if (Validator.isNull(ddmFormValues)) {
+		if (Validator.isNull(formFieldValues)) {
 			return Collections.emptyList();
 		}
 
@@ -185,7 +185,7 @@ public class ProductHelperImpl implements ProductHelper {
 			cpInstanceId);
 
 		return _commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
-			cpInstance.getCPDefinitionId(), ddmFormValues);
+			cpInstance.getCPDefinitionId(), formFieldValues);
 	}
 
 	private String[] _getFormattedDiscountPercentages(

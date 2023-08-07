@@ -43,12 +43,6 @@ public class ObjectActionExecutorRegistryImplTest {
 
 	@Test
 	public void testShouldNotReturnObjectActionExecutorScopedByAnotherCompany() {
-		ObjectActionExecutor testObjectActionExecutor1 =
-			new TestObjectActionExecutor(1, ListUtil.fromString("abc"));
-
-		ObjectActionExecutor testObjectActionExecutor2 =
-			new TestObjectActionExecutor(2, ListUtil.fromString("abc"));
-
 		ServiceRegistration<ObjectActionExecutor>
 			objectActionExecutorServiceRegistration1 = null;
 
@@ -57,17 +51,22 @@ public class ObjectActionExecutorRegistryImplTest {
 
 		try {
 			objectActionExecutorServiceRegistration1 =
-				_registerObjectActionExecutor(testObjectActionExecutor1);
+				_registerObjectActionExecutor(
+					new TestObjectActionExecutor(
+						1, ListUtil.fromString("abc")));
+
+			ObjectActionExecutor testObjectActionExecutor =
+				new TestObjectActionExecutor(2, ListUtil.fromString("abc"));
 
 			objectActionExecutorServiceRegistration2 =
-				_registerObjectActionExecutor(testObjectActionExecutor2);
+				_registerObjectActionExecutor(testObjectActionExecutor);
 
 			List<ObjectActionExecutor> objectActionExecutors =
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					1, "abc");
 
 			Assert.assertFalse(
-				objectActionExecutors.contains(testObjectActionExecutor2));
+				objectActionExecutors.contains(testObjectActionExecutor));
 		}
 		finally {
 			_unregisterObjectActionExecutor(

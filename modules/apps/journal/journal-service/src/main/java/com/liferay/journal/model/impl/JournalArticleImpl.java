@@ -6,6 +6,8 @@
 package com.liferay.journal.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -22,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -165,14 +168,49 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return null;
 		}
 
-		if (Validator.isNotNull(getSmallImageURL())) {
+		if (getSmallImageSource() ==
+				JournalArticleConstants.
+					SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA) {
+
+			long smallImageId = getSmallImageId();
+
+			if (smallImageId <= 0) {
+				return null;
+			}
+
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					smallImageId);
+
+				return DLURLHelperUtil.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+
+			return null;
+		}
+
+		if (getSmallImageSource() ==
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) {
+
 			return getSmallImageURL();
 		}
 
-		return StringBundler.concat(
-			themeDisplay.getPathImage(), "/journal/article?img_id=",
-			getSmallImageId(), "&t=",
-			WebServerServletTokenUtil.getToken(getSmallImageId()));
+		if (getSmallImageSource() ==
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) {
+
+			return StringBundler.concat(
+				themeDisplay.getPathImage(), "/journal/article?img_id=",
+				getSmallImageId(), "&t=",
+				WebServerServletTokenUtil.getToken(getSmallImageId()));
+		}
+
+		return null;
 	}
 
 	@Override

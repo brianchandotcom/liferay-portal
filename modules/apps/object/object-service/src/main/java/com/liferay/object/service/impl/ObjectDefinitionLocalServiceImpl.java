@@ -63,6 +63,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectLayoutTabLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -493,6 +494,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
+
+		_objectFolderItemLocalService.
+			deleteObjectFolderItemByObjectDefinitionId(
+				objectDefinition.getObjectDefinitionId());
 
 		_objectLayoutLocalService.deleteObjectLayouts(
 			objectDefinition.getObjectDefinitionId());
@@ -1053,9 +1058,19 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		objectDefinition.setObjectFolderId(objectFolderId);
+		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 
-		return objectDefinitionPersistence.update(objectDefinition);
+		objectDefinition.setObjectFolderId(
+			_getObjectFolderId(
+				objectDefinition.getCompanyId(), objectFolderId));
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
+			objectDefinitionId, objectDefinition.getObjectFolderId(),
+			oldObjectFolderId);
+
+		return objectDefinition;
 	}
 
 	@Override
@@ -1104,13 +1119,21 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.getName(), objectDefinition.isSystem());
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 
+		long oldObjectFolderId = objectDefinition.getObjectFolderId();
+
 		objectDefinition.setExternalReferenceCode(externalReferenceCode);
 		objectDefinition.setObjectFolderId(
 			_getObjectFolderId(
 				objectDefinition.getCompanyId(), objectFolderId));
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
 
-		return objectDefinitionPersistence.update(objectDefinition);
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
+			objectDefinitionId, objectDefinition.getObjectFolderId(),
+			oldObjectFolderId);
+
+		return objectDefinition;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1252,6 +1275,10 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setStatus(status);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		_objectFolderItemLocalService.addObjectFolderItem(
+			userId, objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectFolderId(), 0, 0);
 
 		_resourceLocalService.addResources(
 			objectDefinition.getCompanyId(), 0, objectDefinition.getUserId(),
@@ -1687,6 +1714,7 @@ public class ObjectDefinitionLocalServiceImpl
 			String scope)
 		throws PortalException {
 
+		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 		boolean originalActive = objectDefinition.isActive();
 
 		_validateExternalReferenceCode(
@@ -1763,7 +1791,14 @@ public class ObjectDefinitionLocalServiceImpl
 				_updateWorkflowInstances(objectDefinition);
 			}
 
-			return objectDefinitionPersistence.update(objectDefinition);
+			objectDefinition = objectDefinitionPersistence.update(
+				objectDefinition);
+
+			_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectFolderId(), oldObjectFolderId);
+
+			return objectDefinition;
 		}
 
 		name = _getName(name, objectDefinition.isSystem());
@@ -1808,6 +1843,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_objectFieldLocalService.updateObjectField(objectField);
 		}
+
+		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectFolderId(), oldObjectFolderId);
 
 		return objectDefinition;
 	}
@@ -2250,6 +2289,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectFolderItemLocalService _objectFolderItemLocalService;
 
 	@Reference
 	private ObjectFolderPersistence _objectFolderPersistence;

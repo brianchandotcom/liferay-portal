@@ -2,6 +2,7 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files="portal-instance-lifecycle-api/src/main/java/com/liferay/portal/instance/lifecycle/InitialRequestPortalInstanceLifecycleListener\.java" />
 		<suppress checks="EqualClauseIfStatementsCheck" files="portal-log4j-test/src/testIntegration/java/com/liferay/portal/log4j/test/PortalLog4jTest\.java" />
 		<suppress checks="MethodNameCheck" files="portal-http-impl/src/main/java/com/liferay/portal/http/internal/HttpImpl\.java" />
 		<suppress checks="MethodNamingCheck" files="portal-url-rewrite-filter/src/main/java/com/liferay/portal/url/rewrite/filter/internal/ServletContextDelegate\.java" />

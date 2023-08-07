@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.util;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.commerce.product.option.CommerceOptionType;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -14,16 +14,16 @@ import java.util.List;
 /**
  * @author Alessio Antonio Rendina
  */
-public class DDMFormFieldTypeUtil {
+public class CommerceOptionTypeUtil {
 
-	public static List<DDMFormFieldType> getDDMFormFieldTypesAllowed(
-		List<DDMFormFieldType> ddmFormFieldTypes,
-		String[] ddmFormFieldTypesAllowed) {
+	public static List<CommerceOptionType> getCommerceOptionTypesAllowed(
+		List<CommerceOptionType> commerceOptionTypes,
+		String[] commerceOptionTypesAllowed) {
 
 		return ListUtil.filter(
-			ddmFormFieldTypes,
-			fieldType -> ArrayUtil.contains(
-				ddmFormFieldTypesAllowed, fieldType.getName()));
+			commerceOptionTypes,
+			commerceOptionType -> ArrayUtil.contains(
+				commerceOptionTypesAllowed, commerceOptionType.getKey()));
 	}
 
 }

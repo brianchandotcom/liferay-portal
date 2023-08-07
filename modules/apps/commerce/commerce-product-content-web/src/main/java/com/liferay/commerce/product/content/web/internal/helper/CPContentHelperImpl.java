@@ -805,7 +805,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 			CommerceOptionType commerceOptionType =
 				_commerceOptionTypeRegistry.getCommerceOptionType(
-					cpDefinitionOptionRel.getDDMFormFieldTypeName());
+					cpDefinitionOptionRel.getCommerceOptionTypeKey());
 
 			commerceOptionType.render(
 				cpDefinitionOptionRel, cpInstanceId, false, null,

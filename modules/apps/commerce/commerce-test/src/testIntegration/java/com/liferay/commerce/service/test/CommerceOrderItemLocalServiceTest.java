@@ -920,7 +920,7 @@ public class CommerceOrderItemLocalServiceTest {
 				CPDefinitionOptionRelLocalServiceUtil.addCPDefinitionOptionRel(
 					cpDefinition.getCPDefinitionId(), cpOption.getCPOptionId(),
 					cpOption.getNameMap(), cpOption.getDescriptionMap(),
-					cpOption.getDDMFormFieldTypeName(), 0.0, false, false,
+					cpOption.getCommerceOptionTypeKey(), 0.0, false, false,
 					cpOption.isSkuContributor(), true,
 					commerceOptionValue.getPriceType(), _serviceContext);
 

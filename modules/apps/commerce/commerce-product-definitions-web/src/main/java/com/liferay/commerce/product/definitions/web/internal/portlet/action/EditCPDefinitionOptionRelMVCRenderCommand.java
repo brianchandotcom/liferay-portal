@@ -8,8 +8,8 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionOptionRelDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionRelException;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -50,8 +50,8 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 					new CPDefinitionOptionRelDisplayContext(
 						_actionHelper,
 						_portal.getHttpServletRequest(renderRequest),
+                        _commerceOptionTypeRegistry,
 						_configurationProvider,
-						_ddmFormFieldTypeServicesRegistry,
 						_infoItemServiceRegistry, _itemSelector);
 
 			renderRequest.setAttribute(
@@ -77,10 +77,10 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 
 	@Reference
-	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

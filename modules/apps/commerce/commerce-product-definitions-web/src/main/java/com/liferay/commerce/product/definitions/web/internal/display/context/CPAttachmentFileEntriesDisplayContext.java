@@ -288,7 +288,7 @@ public class CPAttachmentFileEntriesDisplayContext
 
 			CommerceOptionType commerceOptionType =
 				_commerceOptionTypeRegistry.getCommerceOptionType(
-					cpDefinitionOptionRel.getDDMFormFieldTypeName());
+					cpDefinitionOptionRel.getCommerceOptionTypeKey());
 
 			commerceOptionType.render(
 				cpDefinitionOptionRel, 0, false, json, httpServletRequest,

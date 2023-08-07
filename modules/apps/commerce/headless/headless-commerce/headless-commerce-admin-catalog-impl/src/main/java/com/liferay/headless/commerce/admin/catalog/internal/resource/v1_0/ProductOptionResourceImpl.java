@@ -256,7 +256,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 				LanguageUtils.getLocalizedMap(productOption.getDescription()),
 				GetterUtil.get(
 					productOption.getFieldType(),
-					cpDefinitionOptionRel.getDDMFormFieldTypeName()),
+					cpDefinitionOptionRel.getCommerceOptionTypeKey()),
 				GetterUtil.get(
 					productOption.getPriority(),
 					cpDefinitionOptionRel.getPriority()),

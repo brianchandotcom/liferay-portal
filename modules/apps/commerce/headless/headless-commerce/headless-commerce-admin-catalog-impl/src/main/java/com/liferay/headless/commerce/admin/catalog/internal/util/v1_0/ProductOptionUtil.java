@@ -42,7 +42,7 @@ public class ProductOptionUtil {
 						productOption.getDescription()),
 					GetterUtil.get(
 						productOption.getFieldType(),
-						cpOption.getDDMFormFieldTypeName()),
+						cpOption.getCommerceOptionTypeKey()),
 					GetterUtil.get(productOption.getPriority(), 0D),
 					GetterUtil.get(
 						productOption.getFacetable(), cpOption.isFacetable()),
@@ -63,7 +63,7 @@ public class ProductOptionUtil {
 						productOption.getDescription()),
 					GetterUtil.get(
 						productOption.getFieldType(),
-						cpDefinitionOptionRel.getDDMFormFieldTypeName()),
+						cpDefinitionOptionRel.getCommerceOptionTypeKey()),
 					GetterUtil.get(
 						productOption.getPriority(),
 						cpDefinitionOptionRel.getPriority()),

@@ -345,7 +345,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 			CommerceOptionType commerceOptionType =
 				_commerceOptionTypeRegistry.getCommerceOptionType(
-					cpDefinitionOptionRel.getDDMFormFieldTypeName());
+					cpDefinitionOptionRel.getCommerceOptionTypeKey());
 
 			commerceOptionType.render(
 				cpDefinitionOptionRel, 0, true, null, httpServletRequest,

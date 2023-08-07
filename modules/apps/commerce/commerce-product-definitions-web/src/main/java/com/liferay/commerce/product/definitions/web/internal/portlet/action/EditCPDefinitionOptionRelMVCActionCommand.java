@@ -139,8 +139,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
-		String ddmFormFieldTypeName = ParamUtil.getString(
-			actionRequest, "DDMFormFieldTypeName");
+		String commerceOptionTypeKey = ParamUtil.getString(
+			actionRequest, "commerceOptionTypeKey");
 		String infoItemServiceKey = ParamUtil.getString(
 			actionRequest, "infoItemServiceKey");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
@@ -170,7 +170,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, infoItemServiceKey, priority,
+            commerceOptionTypeKey, infoItemServiceKey, priority,
 			definedExternally, facetable, required, skuContributor, priceType,
 			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}

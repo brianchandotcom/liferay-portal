@@ -17,13 +17,13 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
 		<aui:input name="name" required="<%= true %>" type="text" />
 
-		<aui:select label="option-field-type" name="DDMFormFieldTypeName" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select label="option-field-type" name="commerceOptionTypeKey" required="<%= true %>" showEmptyOption="<%= true %>">
 
 			<%
-			for (DDMFormFieldType ddmFormFieldType : cpOptionDisplayContext.getDDMFormFieldTypes()) {
+			for (CommerceOptionType commerceOptionType : cpOptionDisplayContext.getCommerceOptionTypes()) {
 			%>
 
-				<aui:option label="<%= cpOptionDisplayContext.getDDMFormFieldTypeLabel(ddmFormFieldType, locale) %>" value="<%= ddmFormFieldType.getName() %>" />
+				<aui:option label="<%= commerceOptionType.getLabel(locale) %>" value="<%= commerceOptionType.getKey() %>" />
 
 			<%
 			}

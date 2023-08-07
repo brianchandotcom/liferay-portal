@@ -114,7 +114,7 @@ public class CPDefinitionOptionRelLocalServiceTest {
 				cpDefinitionOptionRel.getCPOptionId(),
 				cpDefinitionOptionRel.getNameMap(),
 				cpDefinitionOptionRel.getDescriptionMap(),
-				cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+				cpDefinitionOptionRel.getCommerceOptionTypeKey(),
 				cpDefinitionOptionRel.getPriority(),
 				cpDefinitionOptionRel.isFacetable(),
 				cpDefinitionOptionRel.isRequired(), true, _serviceContext);
@@ -169,7 +169,7 @@ public class CPDefinitionOptionRelLocalServiceTest {
 			cpDefinitionOptionRel.getCPOptionId(),
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
-			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getCommerceOptionTypeKey(),
 			cpDefinitionOptionRel.getPriority(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(), false, _serviceContext);
@@ -451,7 +451,7 @@ public class CPDefinitionOptionRelLocalServiceTest {
 			cpDefinitionOptionRel.getCPOptionId(),
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
-			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getCommerceOptionTypeKey(),
 			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
 			cpDefinitionOptionRel.isDefinedExternally(),

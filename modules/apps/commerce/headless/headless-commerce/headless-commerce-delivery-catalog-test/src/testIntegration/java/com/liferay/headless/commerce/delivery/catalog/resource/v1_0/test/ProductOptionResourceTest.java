@@ -127,7 +127,7 @@ public class ProductOptionResourceTest
 		return new ProductOption() {
 			{
 				description = cpDefinitionOptionRel.getDescription();
-				fieldType = cpOption.getDDMFormFieldTypeName();
+				fieldType = cpOption.getCommerceOptionTypeKey();
 				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 				key = cpDefinitionOptionRel.getKey();
 				name = cpDefinitionOptionRel.getName();

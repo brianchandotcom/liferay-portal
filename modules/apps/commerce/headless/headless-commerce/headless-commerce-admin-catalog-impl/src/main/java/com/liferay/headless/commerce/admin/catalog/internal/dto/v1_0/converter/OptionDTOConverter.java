@@ -44,7 +44,7 @@ public class OptionDTOConverter implements DTOConverter<CPOption, Option> {
 				externalReferenceCode = cpOption.getExternalReferenceCode();
 				facetable = cpOption.isFacetable();
 				fieldType = Option.FieldType.create(
-					cpOption.getDDMFormFieldTypeName());
+					cpOption.getCommerceOptionTypeKey());
 				id = cpOption.getCPOptionId();
 				key = cpOption.getKey();
 				name = LanguageUtils.getLanguageIdMap(cpOption.getNameMap());

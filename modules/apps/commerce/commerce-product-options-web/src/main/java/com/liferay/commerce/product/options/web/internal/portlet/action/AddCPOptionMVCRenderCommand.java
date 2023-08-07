@@ -5,13 +5,11 @@
 
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -42,9 +40,7 @@ public class AddCPOptionMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CPOptionDisplayContext cpOptionDisplayContext =
 				new CPOptionDisplayContext(
-					_configurationProvider, null,
-					_ddmFormFieldTypeServicesRegistry,
-					_portletResourcePermission,
+					_commerceOptionTypeRegistry, _configurationProvider, null,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -58,17 +54,12 @@ public class AddCPOptionMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
+	private CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
+
+	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

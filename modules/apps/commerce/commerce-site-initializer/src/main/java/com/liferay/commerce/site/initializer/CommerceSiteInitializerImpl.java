@@ -500,7 +500,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 					new ProductOption() {
 						{
 							facetable = cpOption.isFacetable();
-							fieldType = cpOption.getDDMFormFieldTypeName();
+							fieldType = cpOption.getCommerceOptionTypeKey();
 							key = cpOption.getKey();
 							name = LocalizedMapUtil.getI18nMap(
 								cpOption.getNameMap());

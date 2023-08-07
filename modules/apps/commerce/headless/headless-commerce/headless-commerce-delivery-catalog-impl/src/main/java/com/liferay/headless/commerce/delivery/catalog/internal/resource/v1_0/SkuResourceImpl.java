@@ -126,47 +126,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Override
 	public Sku postChannelProductSku(
-			Long channelId, Long productId, Long accountId, Integer quantity,
-			DDMOption[] ddmOptions)
-		throws Exception {
+		Long channelId, Long productId, Long accountId, Integer quantity,
+		DDMOption[] ddmOptions) {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
-
-		if (cpDefinition == null) {
-			throw new NoSuchCProductException();
-		}
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(channelId);
-
-		CommerceContext commerceContext = _getCommerceContext(
-			accountId, commerceChannel);
-
-		AccountEntry accountEntry = commerceContext.getAccountEntry();
-
-		_commerceProductViewPermission.check(
-			PermissionCheckerFactoryUtil.create(contextUser),
-			accountEntry.getAccountEntryId(), commerceChannel.getGroupId(),
-			cpDefinition.getCPDefinitionId());
-
-		JSONArray jsonArray = JSONUtil.toJSONArray(
-			ddmOptions,
-			ddmOption -> _jsonFactory.createJSONObject(ddmOption.toString()));
-
-		CPInstance cpInstance = _cpInstanceHelper.fetchCPInstance(
-			cpDefinition.getCPDefinitionId(), JSONUtil.toString(jsonArray));
-
-		if (cpInstance == null) {
-			throw new NoSuchCPInstanceException();
-		}
-
-		return _skuDTOConverter.toDTO(
-			new SkuDTOConverterContext(
-				commerceContext, contextCompany.getCompanyId(), cpDefinition,
-				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getInteger(quantity, 1),
-				cpInstance.getCPInstanceId(), contextUriInfo, contextUser));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

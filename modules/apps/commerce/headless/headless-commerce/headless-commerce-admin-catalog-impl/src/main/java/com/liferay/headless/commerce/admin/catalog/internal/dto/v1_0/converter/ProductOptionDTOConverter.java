@@ -55,7 +55,7 @@ public class ProductOptionDTOConverter
 				description = LanguageUtils.getLanguageIdMap(
 					cpDefinitionOptionRel.getDescriptionMap());
 				facetable = cpDefinitionOptionRel.isFacetable();
-				fieldType = cpDefinitionOptionRel.getDDMFormFieldTypeName();
+				fieldType = cpDefinitionOptionRel.getCommerceOptionTypeKey();
 				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 				key = cpDefinitionOptionRel.getKey();
 				name = LanguageUtils.getLanguageIdMap(

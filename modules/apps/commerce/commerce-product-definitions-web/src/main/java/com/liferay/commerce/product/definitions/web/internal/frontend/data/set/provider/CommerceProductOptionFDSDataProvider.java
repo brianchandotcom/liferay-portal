@@ -9,30 +9,23 @@ import com.liferay.commerce.product.definitions.web.internal.constants.CommerceP
 import com.liferay.commerce.product.definitions.web.internal.model.ProductOption;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.option.CommerceOptionType;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,12 +64,14 @@ public class CommerceProductOptionFDSDataProvider
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinitionOptionRels) {
 
+			CommerceOptionType commerceOptionType =
+				_commerceOptionTypeRegistry.getCommerceOptionType(
+					cpDefinitionOptionRel.getCommerceOptionTypeKey());
+
 			productOptions.add(
 				new ProductOption(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					_getDDMFormFieldTypeLabel(
-						cpDefinitionOptionRel.getDDMFormFieldTypeName(),
-						locale),
+					commerceOptionType.getLabel(locale),
 					cpDefinitionOptionRel.getName(
 						_language.getLanguageId(locale)),
 					cpDefinitionOptionRel.getPriority(),
@@ -135,46 +130,14 @@ public class CommerceProductOptionFDSDataProvider
 		return baseModelSearchResult.getBaseModels();
 	}
 
-	private String _getDDMFormFieldTypeLabel(
-		String ddmFormFieldTypeName, Locale locale) {
-
-		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
-				ddmFormFieldTypeName);
-
-		String label = MapUtil.getString(
-			_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeProperties(
-				ddmFormFieldType.getName()),
-			"ddm.form.field.type.label");
-
-		try {
-			if (Validator.isNotNull(label)) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", locale, ddmFormFieldType.getClass());
-
-				return _language.get(resourceBundle, label);
-			}
-		}
-		catch (MissingResourceException missingResourceException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(missingResourceException);
-			}
-		}
-
-		return ddmFormFieldType.getName();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceProductOptionFDSDataProvider.class);
+	@Reference
+	private CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
-
-	@Reference
-	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;
 
 	@Reference
 	private Language _language;

@@ -318,7 +318,7 @@ public class CPTestUtil {
 					cpDefinitionId, cpOptionId,
 					RandomTestUtil.randomLocaleStringMap(),
 					RandomTestUtil.randomLocaleStringMap(),
-					getDefaultDDMFormFieldType(true),
+					getDefaultCommerceOptionTypeKey(true),
 					RandomTestUtil.randomDouble(), false, required,
 					skuContributor, false, priceType, serviceContext);
 		}
@@ -614,7 +614,7 @@ public class CPTestUtil {
 		throws PortalException {
 
 		return addCPOption(
-			groupId, getDefaultDDMFormFieldType(skuContributor),
+			groupId, getDefaultCommerceOptionTypeKey(skuContributor),
 			skuContributor);
 	}
 
@@ -641,7 +641,7 @@ public class CPTestUtil {
 	}
 
 	public static CPOption addCPOption(
-			long groupId, String ddmFormFieldType, boolean skuContributor)
+			long groupId, String commerceOptionTypeKey, boolean skuContributor)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -650,7 +650,7 @@ public class CPTestUtil {
 		return CPOptionLocalServiceUtil.addCPOption(
 			null, serviceContext.getUserId(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), ddmFormFieldType,
+			RandomTestUtil.randomLocaleStringMap(), commerceOptionTypeKey,
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			skuContributor, RandomTestUtil.randomString(), serviceContext);
 	}
@@ -679,24 +679,24 @@ public class CPTestUtil {
 		CPOptionConfiguration cpOptionConfiguration =
 			_getCPOptionConfiguration();
 
-		return cpOptionConfiguration.ddmFormFieldTypesAllowed();
+		return cpOptionConfiguration.commerceOptionTypesAllowed();
 	}
 
-	public static String getDefaultDDMFormFieldType(boolean skuContributor)
+	public static String getDefaultCommerceOptionTypeKey(boolean skuContributor)
 		throws ConfigurationException {
 
 		CPOptionConfiguration cpOptionConfiguration =
 			_getCPOptionConfiguration();
 
-		String[] ddmFormFieldTypesAllowed =
-			cpOptionConfiguration.ddmFormFieldTypesAllowed();
+		String[] commerceOptionTypesAllowed =
+			cpOptionConfiguration.commerceOptionTypesAllowed();
 
 		if (skuContributor) {
-			ddmFormFieldTypesAllowed =
+			commerceOptionTypesAllowed =
 				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
 		}
 
-		return ddmFormFieldTypesAllowed[0];
+		return commerceOptionTypesAllowed[0];
 	}
 
 	public static CPDefinitionOptionValueRel
@@ -1213,7 +1213,7 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		CPOption priceableCPOption = addCPOption(
-			groupId, getDefaultDDMFormFieldType(true), true);
+			groupId, getDefaultCommerceOptionTypeKey(true), true);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			CPDefinitionOptionRelLocalServiceUtil.addCPDefinitionOptionRel(
@@ -1221,8 +1221,9 @@ public class CPTestUtil {
 				priceableCPOption.getCPOptionId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
-				getDefaultDDMFormFieldType(true), RandomTestUtil.nextDouble(),
-				false, false, false, false, priceType, serviceContext);
+				getDefaultCommerceOptionTypeKey(true),
+				RandomTestUtil.nextDouble(), false, false, false, false,
+				priceType, serviceContext);
 
 		for (CPInstance cpInstance : childCPInstances) {
 			CPDefinitionOptionValueRel cpInstanceOptionValueRel =

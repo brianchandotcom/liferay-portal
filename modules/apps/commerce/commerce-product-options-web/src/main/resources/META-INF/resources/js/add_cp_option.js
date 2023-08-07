@@ -36,7 +36,7 @@ export default function ({
 			};
 
 			formattedData.fieldType = document.getElementById(
-				namespace + 'DDMFormFieldTypeName'
+				namespace + 'commerceOptionTypeKey'
 			).value;
 			formattedData.key = keyInput.value;
 			formattedData.name[defaultLanguageId] = nameInput.value;

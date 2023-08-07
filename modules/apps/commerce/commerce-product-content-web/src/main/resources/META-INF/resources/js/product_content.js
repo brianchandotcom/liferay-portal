@@ -6,13 +6,7 @@
 AUI.add(
 	'liferay-commerce-product-content',
 	(A) => {
-		const CP_CONTENT_WEB_PORTLET_KEY =
-			'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';
-
 		const CP_INSTANCE_CHANGE_EVENT = 'CPInstance:change';
-
-		const DDM_FORM_HANDLER_MODULE =
-			'commerce-frontend-js/utilities/forms/DDMFormHandler';
 
 		const ProductContent = A.Component.create({
 			ATTRS: {
@@ -37,57 +31,29 @@ AUI.add(
 
 					const eventHandles = [];
 
-					const checkCPInstanceActionURL = instance.get(
-						'checkCPInstanceActionURL'
-					);
-
-					const cpDefinitionId = instance.get('cpDefinitionId');
-
-					const DDMFormInstance = Liferay.component(
-						'ProductOptions' + cpDefinitionId
-					);
-
-					if (DDMFormInstance) {
-						Liferay.Loader.require(
-							DDM_FORM_HANDLER_MODULE,
-							(module) => {
-								const DDMFormHandler = module.default;
-
-								const FormHandlerConfiguration = {
-									DDMFormInstance,
-									actionURL: checkCPInstanceActionURL,
-									addToCartId: 'addToCartId',
-									portletId: CP_CONTENT_WEB_PORTLET_KEY,
-								};
-
-								new DDMFormHandler(FormHandlerConfiguration);
-							}
-						);
-					}
-
 					eventHandles.push(
 						Liferay.on(
 							'product-instance-changed',
-							instance._ddmFormChange,
+							instance._formFieldsChange,
 							instance
 						)
 					);
 
 					instance._eventHandles = eventHandles;
 				},
-				_ddmFormChange(dispatchedPayload) {
+				_formFieldsChange(dispatchedPayload) {
 					const instance = this;
 
 					const cpDefinitionId = instance.get('cpDefinitionId');
 
 					const cpInstance = dispatchedPayload.cpInstance;
 
-					const ddmFormValues = dispatchedPayload.formFields;
+					const formFields = dispatchedPayload.formFields;
 
 					instance.set('cpInstanceId', cpInstance.cpInstanceId);
 
-					if (ddmFormValues) {
-						instance.set('ddmFormValues', ddmFormValues);
+					if (formFields) {
+						instance.set('formFields', formFields);
 					}
 
 					instance._renderImages();
@@ -254,13 +220,13 @@ AUI.add(
 				_renderImages() {
 					const instance = this;
 
-					const ddmFormValues = instance.get('ddmFormValues');
+					const formFields = instance.get('formFields');
 
 					const data = {};
 
 					data[
-						instance.get('namespace') + 'ddmFormValues'
-					] = JSON.stringify(ddmFormValues);
+						instance.get('namespace') + 'formFields'
+					] = JSON.stringify(formFields);
 					data.groupId = themeDisplay.getScopeGroupId();
 
 					// eslint-disable-next-line @liferay/aui/no-io
@@ -336,7 +302,7 @@ AUI.add(
 				getFormValues() {
 					const instance = this;
 
-					return instance.get('ddmFormValues');
+					return instance.get('formFields');
 				},
 				getProductContent() {
 					const instance = this;
@@ -351,22 +317,6 @@ AUI.add(
 
 					instance._bindUI();
 					instance._renderUI();
-				},
-				validateProduct(callback) {
-					const instance = this;
-
-					const cpDefinitionId = instance.get('cpDefinitionId');
-
-					const ddmForm = Liferay.component(
-						'ProductOptions' + cpDefinitionId + 'DDMForm'
-					);
-
-					if (!ddmForm) {
-						callback.call(instance, false);
-					}
-					else {
-						ddmForm.validate(callback);
-					}
 				},
 			},
 		});

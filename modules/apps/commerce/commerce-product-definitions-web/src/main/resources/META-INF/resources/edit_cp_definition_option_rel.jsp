@@ -14,7 +14,8 @@ CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRelDisplayContex
 
 String name = ParamUtil.getString(request, "name", cpDefinitionOptionRel.getName());
 String description = ParamUtil.getString(request, "description", cpDefinitionOptionRel.getDescription());
-String ddmFormFieldTypeName = ParamUtil.getString(request, "ddmFormFieldTypeName", cpDefinitionOptionRel.getDDMFormFieldTypeName());
+List<CommerceOptionType> commerceOptionTypes = cpDefinitionOptionRelDisplayContext.getCommerceOptionTypes();
+String commerceOptionTypeKey = ParamUtil.getString(request, "commerceOptionTypeKey", cpDefinitionOptionRel.getCommerceOptionTypeKey());
 String infoItemServiceKey = ParamUtil.getString(request, "infoItemServiceKey", cpDefinitionOptionRel.getInfoItemServiceKey());
 String priority = ParamUtil.getString(request, "priority", String.valueOf(cpDefinitionOptionRel.getPriority()));
 boolean facetable = ParamUtil.getBoolean(request, "facetable", cpDefinitionOptionRel.isFacetable());
@@ -24,10 +25,9 @@ String priceType = ParamUtil.getString(request, "priceType", cpDefinitionOptionR
 
 cpDefinitionOptionRel.setName(name);
 cpDefinitionOptionRel.setDescription(description);
-cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+cpDefinitionOptionRel.setCommerceOptionTypeKey(commerceOptionTypeKey);
 
 long cpDefinitionOptionRelId = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRelId();
-List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypes();
 String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefaultLanguageId();
 %>
 
@@ -93,13 +93,13 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				</div>
 
 				<div class="col-12">
-					<aui:select label="field-type" name="DDMFormFieldTypeName" showEmptyOption="<%= true %>">
+					<aui:select label="field-type" name="commerceOptionTypeKey" showEmptyOption="<%= true %>">
 
 						<%
-						for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
+						for (CommerceOptionType commerceOptionType : commerceOptionTypes) {
 						%>
 
-							<aui:option label="<%= cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypeLabel(ddmFormFieldType, locale) %>" selected="<%= ddmFormFieldTypeName.equals(ddmFormFieldType.getName()) %>" value="<%= ddmFormFieldType.getName() %>" />
+							<aui:option label="<%= commerceOptionType.getLabel(locale) %>" selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.getCommerceOptionTypeKey().equals(commerceOptionType.getKey()) %>" value="<%= commerceOptionType.getKey() %>" />
 
 						<%
 						}
@@ -197,7 +197,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				'<%= StringPool.COMMA %>'
 			);
 			var availableTypeNames =
-				'<%= cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypeNames() %>';
+				'<%= cpDefinitionOptionRelDisplayContext.getCommerceOptionTypeKeys() %>';
 			var availableFieldTypeSelectOptions = availableTypeNames.split(
 				'<%= StringPool.COMMA %>'
 			);
@@ -208,7 +208,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 			);
 
 			var formFieldTypeSelect = document.getElementById(
-				'<portlet:namespace />DDMFormFieldTypeName'
+				'<portlet:namespace />commerceOptionTypeKey'
 			);
 			var priceTypeSelect = document.getElementById('<portlet:namespace />priceType');
 			var skuContributorInput = document.getElementById(

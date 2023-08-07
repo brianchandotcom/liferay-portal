@@ -55,7 +55,7 @@ else {
 		>
 
 			<%
-			List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFieldTypes();
+			List<CommerceOptionType> commerceOptionTypes = cpOptionDisplayContext.getCommerceOptionTypes();
 			%>
 
 			<liferay-ui:error-marker
@@ -72,13 +72,13 @@ else {
 
 				<aui:input name="description" wrapperCssClass="commerce-product-option-description" />
 
-				<aui:select label="option-field-type" name="DDMFormFieldTypeName" showEmptyOption="<%= true %>">
+				<aui:select label="option-field-type" name="commerceOptionTypeKey" showEmptyOption="<%= true %>">
 
 					<%
-					for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
+					for (CommerceOptionType commerceOptionType : commerceOptionTypes) {
 					%>
 
-						<aui:option label="<%= cpOptionDisplayContext.getDDMFormFieldTypeLabel(ddmFormFieldType, locale) %>" selected="<%= (cpOption != null) && cpOption.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>" value="<%= ddmFormFieldType.getName() %>" />
+						<aui:option label="<%= commerceOptionType.getLabel(locale) %>" selected="<%= (cpOption != null) && cpOption.getCommerceOptionTypeKey().equals(commerceOptionType.getKey()) %>" value="<%= commerceOptionType.getKey() %>" />
 
 					<%
 					}

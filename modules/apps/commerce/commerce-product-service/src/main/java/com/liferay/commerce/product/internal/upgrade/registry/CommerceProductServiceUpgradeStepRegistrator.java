@@ -7,6 +7,7 @@ package com.liferay.commerce.product.internal.upgrade.registry;
 
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.product.internal.upgrade.v1_10_1.CommerceSiteTypeUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_0.CPAttachmentFileEntryGroupUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_1.CPDisplayLayoutUpgradeProcess;
@@ -384,6 +385,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"CPDefinitionOptionValueRel", "quantity", "BIGDECIMAL null"));
 
+		registry.register(
+			"5.6.0", "5.7.0",
+			new com.liferay.commerce.product.internal.upgrade.v5_7_0.
+				CPDefinitionLinkUpgradeProcess(_assetEntryLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}
@@ -397,6 +403,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

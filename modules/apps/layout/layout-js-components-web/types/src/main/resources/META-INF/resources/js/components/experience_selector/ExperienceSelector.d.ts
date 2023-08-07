@@ -12,6 +12,7 @@ interface BaseProps {
 }
 interface ExperienceSelectorProps extends BaseProps {
 	disabled?: boolean;
+	label?: string;
 	onChangeExperience?: (key: React.Key) => void;
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
@@ -19,6 +20,7 @@ interface ExperienceSelectorProps extends BaseProps {
 export default function ExperienceSelector({
 	disabled,
 	displayType,
+	label,
 	onChangeExperience,
 	segmentsExperiences,
 	selectedSegmentsExperience,

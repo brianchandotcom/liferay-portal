@@ -8,6 +8,7 @@ import Form from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
@@ -22,6 +23,7 @@ interface BaseProps {
 
 interface ExperienceSelectorProps extends BaseProps {
 	disabled?: boolean;
+	label?: string;
 	onChangeExperience?: (key: React.Key) => void;
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
@@ -71,11 +73,14 @@ const TriggerLabel = React.forwardRef(
 export default function ExperienceSelector({
 	disabled = false,
 	displayType = 'light',
+	label,
 	onChangeExperience,
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
 }: ExperienceSelectorProps) {
+	const selectorId = useId();
+
 	const handleExperienceChange = (key: React.Key) => {
 		const newSelectedExperience = segmentsExperiences.find(
 			(experience) => experience.segmentsExperienceId === key
@@ -88,12 +93,16 @@ export default function ExperienceSelector({
 
 	return (
 		<Form.Group {...otherProps}>
+			{label ? <label htmlFor={selectorId}>{label}</label> : null}
+
 			<Picker
-				aria-label={Liferay.Language.get('experience-selector')}
+				aria-label={
+					label || Liferay.Language.get('experience-selector')
+				}
 				as={TriggerLabel}
 				disabled={disabled}
 				displayType={displayType}
-				id="experience-picker"
+				id={selectorId}
 				items={segmentsExperiences}
 				onSelectionChange={onChangeExperience || handleExperienceChange}
 				selectedItem={selectedSegmentsExperience}

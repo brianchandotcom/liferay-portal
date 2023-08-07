@@ -81,6 +81,14 @@ public class SearchBarPortletDisplayContextFactory {
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
 
+		SearchBarPortletPreferences searchBarPortletPreferences =
+			new SearchBarPortletPreferencesImpl(
+				_renderRequest.getPreferences());
+
+		if (searchBarPortletPreferences.isInvisible()) {
+			searchBarPortletDisplayContext.setRenderNothing(true);
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -97,7 +105,6 @@ public class SearchBarPortletDisplayContextFactory {
 
 			if (destinationURL == null) {
 				searchBarPortletDisplayContext.setDestinationUnreachable(true);
-				searchBarPortletDisplayContext.setRenderNothing(true);
 
 				return searchBarPortletDisplayContext;
 			}
@@ -125,10 +132,6 @@ public class SearchBarPortletDisplayContextFactory {
 			_isEmptySearchEnabled(portletSharedSearchResponse));
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
-
-		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				_renderRequest.getPreferences());
 
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchBarPortletPreferences);
@@ -171,10 +174,6 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletDisplayContext, searchBarPrecedenceHelper,
 			searchBarPortletPreferences,
 			portletSharedSearchResponse.getSearchSettings(), themeDisplay);
-
-		if (searchBarPortletPreferences.isInvisible()) {
-			searchBarPortletDisplayContext.setRenderNothing(true);
-		}
 
 		searchBarPortletDisplayContext.setSearchExperiencesSupported(
 			searchCapabilities.isSearchExperiencesSupported());

@@ -523,15 +523,18 @@ definition {
 	}
 
 	macro selectFistActiveSubscriptionInput {
-		var key_index = 1;
 
 		if (isSet(index)) {
-			var key_index = ${index};
+			var key_position = ${index};
+			
+			Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
 		}
-
-		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_AVAILABLE");
+		else {
+			
+		var key_index = 1;
+		Click(locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
+		}
 	}
-
 	macro selectGenerateActivationKeyOptionByField {
 		var key_label = ${field};
 

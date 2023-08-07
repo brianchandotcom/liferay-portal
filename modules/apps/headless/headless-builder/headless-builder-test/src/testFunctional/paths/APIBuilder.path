@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTOMATED_URL</td>
+	<td>//input[(@placeholder='Automated URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_PUBLICATION_STATUS_BUTTON</td>
 	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Change Publication Status')]</td>
 	<td></td>
@@ -63,6 +68,11 @@
 <tr>
 	<td>CONTINUE_WITHOUT_SAVING_BUTTON</td>
 	<td>//button[contains(text(),'Continue Without Saving')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[(@placeholder='Add a short description that describes this API.')]</td>
 	<td></td>
 </tr>
 <tr>

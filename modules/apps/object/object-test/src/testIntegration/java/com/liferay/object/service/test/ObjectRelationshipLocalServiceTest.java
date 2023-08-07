@@ -281,7 +281,7 @@ public class ObjectRelationshipLocalServiceTest {
 		objectRelationship1 =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship1.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				LocalizedMapUtil.getLocalizedMap("Baker"));
 
 		Assert.assertEquals(
@@ -304,7 +304,7 @@ public class ObjectRelationshipLocalServiceTest {
 			"Reverse object relationships cannot be updated",
 			() -> _objectRelationshipLocalService.updateObjectRelationship(
 				reverseObjectRelationship.getObjectRelationshipId(), 0,
-				reverseObjectRelationship.getDeletionType(),
+				reverseObjectRelationship.getDeletionType(), false,
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString())));
 
@@ -326,7 +326,7 @@ public class ObjectRelationshipLocalServiceTest {
 		objectRelationship2 =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship2.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship2.getLabelMap());
 
 		objectField = _objectFieldLocalService.fetchObjectField(

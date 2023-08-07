@@ -1500,7 +1500,7 @@ public class ObjectFieldLocalServiceTest {
 		_objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship.getObjectRelationshipId(),
 			objectRelationship.getParameterObjectFieldId(),
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 			objectRelationship.getLabelMap());
 
 		objectField = _objectFieldLocalService.fetchObjectField(
@@ -1520,7 +1520,7 @@ public class ObjectFieldLocalServiceTest {
 		_objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship.getObjectRelationshipId(),
 			objectRelationship.getParameterObjectFieldId(),
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			objectRelationship.getLabelMap());
 
 		objectField = _objectFieldLocalService.updateRequired(

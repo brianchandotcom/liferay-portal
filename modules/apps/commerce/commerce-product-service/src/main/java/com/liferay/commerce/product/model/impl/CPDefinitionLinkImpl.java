@@ -26,4 +26,15 @@ public class CPDefinitionLinkImpl extends CPDefinitionLinkBaseImpl {
 		return CProductLocalServiceUtil.fetchCProduct(getCProductId());
 	}
 
+	@Override
+	public String getCProductName() {
+		CProduct cProduct = getCProduct();
+
+		CPDefinition cpDefinition =
+			CPDefinitionLocalServiceUtil.fetchCPDefinition(
+				cProduct.getPublishedCPDefinitionId());
+
+		return cpDefinition.getName();
+	}
+
 }

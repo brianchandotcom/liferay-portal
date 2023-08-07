@@ -431,7 +431,7 @@ public class MirrorsGetTask extends Task {
 
 	protected boolean is7ZArchiveValid(File file) {
 		if (!has7z()) {
-			return false;
+			return true;
 		}
 
 		String[] command = {"/bin/bash", "-c", "7z t " + file.toString()};

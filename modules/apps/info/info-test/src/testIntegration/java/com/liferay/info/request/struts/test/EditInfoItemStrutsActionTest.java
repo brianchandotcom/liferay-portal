@@ -26,7 +26,9 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -303,7 +305,7 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "-99999999999999.9999999999999999",
-			Boolean.TRUE.toString(), 0, "2023-03-01", null,
+			Boolean.TRUE.toString(), 0, "2023-03-01", "2023-03-01T11:08", null,
 			"-999.9999999999999", "-123456", "-9007199254740991",
 			Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey()),
 			listTypeEntry1.getKey(), "<p>TITLE</p>", null, null);
@@ -332,8 +334,8 @@ public class EditInfoItemStrutsActionTest {
 		uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "99999999999999.9999999999999999",
 			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(),
-			"2020-03-01", null, "999.9999999999999", "123456",
-			"9007199254740991",
+			"2020-03-01", "2023-03-01T11:11", null, "999.9999999999999",
+			"123456", "9007199254740991",
 			Arrays.asList(listTypeEntry2.getKey(), listTypeEntry3.getKey()),
 			listTypeEntry2.getKey(), "<p>SUBTITLE</p>", null, null);
 
@@ -355,6 +357,13 @@ public class EditInfoItemStrutsActionTest {
 			DateUtil.formatDate("yyyy-MM-dd", "2020-03-01", LocaleUtil.US),
 			DateUtil.formatDate(
 				"yyyy-MM-dd", String.valueOf(values.get("myDate")),
+				LocaleUtil.US));
+
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2023-03-01T11:11", LocaleUtil.US),
+			DateUtil.parseDate(
+				"yyyy-MM-dd HH:mm", String.valueOf(values.get("myDateTime")),
 				LocaleUtil.US));
 
 		DecimalFormat decimalFormat = new DecimalFormat(
@@ -544,6 +553,17 @@ public class EditInfoItemStrutsActionTest {
 					_createObjectFieldSetting("fileSource", "userComputer"),
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build(),
+			new DateTimeObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"myDateTime"
+			).objectFieldSettings(
+				Collections.singletonList(
+					_createObjectFieldSetting(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC))
+			).build(),
 			new PicklistObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
@@ -720,9 +740,9 @@ public class EditInfoItemStrutsActionTest {
 	private UploadPortletRequest _getUploadPortletRequest(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
 			String booleanValueInput, long classPK, String dateValueInput,
-			String displayPage, String doubleValueInput,
-			String integerValueInput, String longValueInput,
-			List<String> multiselectPicklistValueInput,
+			String dateTimeValueInput, String displayPage,
+			String doubleValueInput, String integerValueInput,
+			String longValueInput, List<String> multiselectPicklistValueInput,
 			String picklistValueInput, String richTextValueInput,
 			String stringValue, String redirect)
 		throws Exception {
@@ -801,6 +821,16 @@ public class EditInfoItemStrutsActionTest {
 					() -> {
 						if (Validator.isNotNull(dateValueInput)) {
 							return Collections.singletonList(dateValueInput);
+						}
+
+						return null;
+					}
+				).put(
+					"myDateTime",
+					() -> {
+						if (Validator.isNotNull(dateTimeValueInput)) {
+							return Collections.singletonList(
+								dateTimeValueInput);
 						}
 
 						return null;
@@ -940,7 +970,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			attachmentValue, backURL, bigDecimalValueInput, null, 0, null,
+			attachmentValue, backURL, bigDecimalValueInput, null, 0, null, null,
 			displayPage, doubleValueInput, integerValueInput, longValueInput,
 			null, null, null, stringValue, redirect);
 
@@ -1039,7 +1069,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			null, null, bigDecimalValueInput, null, 0, null, null, null,
+			null, null, bigDecimalValueInput, null, 0, null, null, null, null,
 			integerValueInput, longValueInput, null, null, null, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);

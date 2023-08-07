@@ -115,8 +115,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 			}
 
 			document.addText(
-				CPField.DDM_FORM_FIELD_TYPE_NAME,
-				cpOption.getDDMFormFieldTypeName());
+				CPField.COMMERCE_OPTION_TYPE_KEY,
+				cpOption.getCommerceOptionTypeKey());
 			document.addText(CPField.KEY, cpOption.getKey());
 			document.addText(Field.CONTENT, name);
 			document.addText(

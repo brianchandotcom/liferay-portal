@@ -39,6 +39,9 @@ public class CPField {
 	public static final String COMMERCE_CHANNEL_GROUP_IDS =
 		"commerceChannelGroupIds";
 
+	public static final String COMMERCE_OPTION_TYPE_KEY =
+		"commerceOptionTypeKey";
+
 	public static final String CP_DEFINITION_ID = "CPDefinitionId";
 
 	public static final String CP_DEFINITION_OPTION_REL_ID =
@@ -52,9 +55,6 @@ public class CPField {
 		"cpOptionCategoryTitle";
 
 	public static final String CP_OPTION_ID = "CPOptionId";
-
-	public static final String DDM_FORM_FIELD_TYPE_NAME =
-		"DDMFormFieldTypeName";
 
 	public static final String DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";

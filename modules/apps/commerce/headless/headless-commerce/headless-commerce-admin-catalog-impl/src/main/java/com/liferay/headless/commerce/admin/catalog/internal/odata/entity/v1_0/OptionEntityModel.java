@@ -24,7 +24,7 @@ public class OptionEntityModel implements EntityModel {
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName(Field.NAME)),
 			new StringEntityField(
-				"fieldType", locale -> CPField.DDM_FORM_FIELD_TYPE_NAME));
+				"fieldType", locale -> CPField.COMMERCE_OPTION_TYPE_KEY));
 	}
 
 	@Override

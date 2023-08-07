@@ -1157,6 +1157,8 @@ definition {
 
 		Staging.publishToLive();
 
+		Refresh();
+
 		DMNavigator.openToEditEntryInSite(
 			dmDocumentTitle = "Test YouTube Video",
 			groupName = "Site Name (Staging)",

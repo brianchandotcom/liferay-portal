@@ -4298,6 +4298,8 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
+		Refresh();
+
 		DepotNavigator.openToEditDMEntryInDepot(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "Test YouTube Video");

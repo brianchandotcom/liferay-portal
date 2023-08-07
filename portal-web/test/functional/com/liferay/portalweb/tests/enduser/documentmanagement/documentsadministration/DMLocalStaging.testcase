@@ -1325,6 +1325,8 @@ definition {
 
 		Staging.publishToLive();
 
+		Refresh();
+
 		DepotNavigator.openToEditDMEntryInDepot(
 			depotName = "Test Depot Name",
 			dmDocumentTitle = "Test YouTube Video",

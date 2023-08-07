@@ -36,9 +36,6 @@ public class PoshiRunnerResourcesPlugin implements Plugin<Project> {
 	public static final String POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME =
 		"poshiRunnerResources";
 
-	public static final String UPLOAD_POSHI_RUNNER_RESOURCES_TASK_NAME =
-		"uploadPoshiRunnerResources";
-
 	@Override
 	public void apply(Project project) {
 		final PoshiRunnerResourcesExtension poshiRunnerResourcesExtension =

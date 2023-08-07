@@ -119,4 +119,3 @@ The plugin adds a series of tasks to your project:
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
 `jarPoshiRunnerResources` | \- | [`Jar`](https://docs.gradle.org/6.6/dsl/org.gradle.api.tasks.bundling.Jar.html) | Creates a Poshi resource jar.
-`uploadPoshiRunnerResources` | \- | [`Upload`](https://docs.gradle.org/6.6/javadoc/org/gradle/api/tasks/Upload.html) | Uploads all Poshi resource artifacts.

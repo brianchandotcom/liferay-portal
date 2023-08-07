@@ -11,8 +11,6 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesPlugin;
 
-import java.io.File;
-
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -91,12 +89,6 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 				public void execute(
 					PublishToMavenRepository publishToMavenRepository) {
 
-					String name = publishToMavenRepository.getName();
-
-					if (!name.startsWith("publishMavenPoshiRunnerResources")) {
-						return;
-					}
-
 					publishToMavenRepository.onlyIf(
 						new Spec<Task>() {
 
@@ -132,16 +124,8 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 				public void execute(
 					ArchivePublishArtifact archivePublishArtifact) {
 
-					File file = archivePublishArtifact.getFile();
-
 					AbstractArchiveTask abstractArchiveTask =
 						archivePublishArtifact.getArchiveTask();
-
-					String name = abstractArchiveTask.getArchiveName();
-
-					if (!name.equals(file.getName())) {
-						return;
-					}
 
 					PublishingExtension publishingExtension =
 						GradleUtil.getExtension(
@@ -156,8 +140,7 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 
 								MavenPublication mavenPublication =
 									publicationContainer.create(
-										"mavenPoshiRunnerResources",
-										MavenPublication.class);
+										"maven", MavenPublication.class);
 
 								mavenPublication.artifact(abstractArchiveTask);
 

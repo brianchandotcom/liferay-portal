@@ -38,7 +38,7 @@ public class ResourceUtil {
 	}
 
 	public static Set<String> getResourcesAsStrings(
-		BundleContext bundleContext, Class<?> clazz, String directory) {
+		BundleContext bundleContext, String directory) {
 
 		Set<String> resources = new HashSet<>();
 
@@ -51,7 +51,13 @@ public class ResourceUtil {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				resources.add(getResourceAsString(clazz, url.getFile()));
+				try (InputStream inputStream = url.openStream()) {
+					resources.add(StringUtil.read(inputStream));
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(
+						"Unable to load resource: " + url, exception);
+				}
 			}
 		}
 

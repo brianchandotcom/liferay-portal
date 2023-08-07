@@ -687,7 +687,7 @@ public class ObjectRelationshipLocalServiceImpl
 	@Override
 	public ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, long parameterObjectFieldId,
-			String deletionType, Map<Locale, String> labelMap)
+			String deletionType, boolean edge, Map<Locale, String> labelMap)
 		throws PortalException {
 
 		if (Validator.isNull(deletionType)) {
@@ -718,7 +718,7 @@ public class ObjectRelationshipLocalServiceImpl
 				fetchReverseObjectRelationship(objectRelationship, true);
 
 			_updateObjectRelationship(
-				parameterObjectFieldId, deletionType, labelMap,
+				parameterObjectFieldId, deletionType, false, labelMap,
 				reverseObjectRelationship);
 
 			Indexer<ObjectRelationship> indexer =
@@ -729,7 +729,8 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		objectRelationship = _updateObjectRelationship(
-			parameterObjectFieldId, deletionType, labelMap, objectRelationship);
+			parameterObjectFieldId, deletionType, edge, labelMap,
+			objectRelationship);
 
 		if ((objectRelationship.getObjectFieldId2() != 0) &&
 			StringUtil.equals(
@@ -1008,11 +1009,12 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	private ObjectRelationship _updateObjectRelationship(
-		long parameterObjectFieldId, String deletionType,
+		long parameterObjectFieldId, String deletionType, boolean edge,
 		Map<Locale, String> labelMap, ObjectRelationship objectRelationship) {
 
 		objectRelationship.setParameterObjectFieldId(parameterObjectFieldId);
 		objectRelationship.setDeletionType(deletionType);
+		objectRelationship.setEdge(edge);
 		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);

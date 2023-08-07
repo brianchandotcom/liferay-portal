@@ -5,8 +5,8 @@
 
 /// <reference types="react" />
 
-import './RightSidebarObjectDefinitionDetails.scss';
 import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
+import './RightSidebarObjectDefinitionDetails.scss';
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePair: KeyValuePair[];
 	siteKeyValuePair: KeyValuePair[];

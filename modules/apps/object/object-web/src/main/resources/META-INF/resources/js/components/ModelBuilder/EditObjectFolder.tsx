@@ -5,7 +5,6 @@
 
 import {API} from '@liferay/object-js-components-web';
 import React, {useEffect} from 'react';
-import {ReactFlowProvider} from 'react-flow-renderer';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
@@ -64,28 +63,26 @@ export default function EditObjectFolder({
 				hasDraftObjectDefinitions={false}
 			/>
 			<div className="lfr-objects__model-builder-diagram-container">
-				<ReactFlowProvider>
-					<LeftSidebar />
+				<LeftSidebar />
 
-					<Diagram />
+				<Diagram />
 
-					<RightSideBar.Root>
-						{rightSidebarType === 'empty' && <RightSideBar.Empty />}
+				<RightSideBar.Root>
+					{rightSidebarType === 'empty' && <RightSideBar.Empty />}
 
-						{rightSidebarType === 'objectDefinitionDetails' && (
-							<RightSideBar.ObjectDefinitionDetails
-								companyKeyValuePair={companyKeyValuePair}
-								siteKeyValuePair={siteKeyValuePair}
-							/>
-						)}
+					{rightSidebarType === 'objectDefinitionDetails' && (
+						<RightSideBar.ObjectDefinitionDetails
+							companyKeyValuePair={companyKeyValuePair}
+							siteKeyValuePair={siteKeyValuePair}
+						/>
+					)}
 
-						{rightSidebarType === 'objectRelationshipDetails' && (
-							<RightSideBar.Relationship
-								deletionTypes={deletionTypes}
-							/>
-						)}
-					</RightSideBar.Root>
-				</ReactFlowProvider>
+					{rightSidebarType === 'objectRelationshipDetails' && (
+						<RightSideBar.Relationship
+							deletionTypes={deletionTypes}
+						/>
+					)}
+				</RightSideBar.Root>
 			</div>
 		</>
 	);

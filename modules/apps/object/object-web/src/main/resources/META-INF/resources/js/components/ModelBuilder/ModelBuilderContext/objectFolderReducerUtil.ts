@@ -5,7 +5,7 @@
 
 import {Edge} from 'react-flow-renderer';
 
-import {EdgeData, ObjectFieldNode} from '../types';
+import {ObjectFieldNode, ObjectRelationshipEdgeData} from '../types';
 
 export function fieldsCustomSort(objectFields: ObjectFieldNode[]) {
 	const fieldOrder = ['id', 'externalReferenceCode'];
@@ -40,7 +40,9 @@ export function fieldsCustomSort(objectFields: ObjectFieldNode[]) {
 	return objectFields.sort(compareFields);
 }
 
-function findEdgesWithSameSourceAndTarget(edges: Edge<EdgeData>[]) {
+function findEdgesWithSameSourceAndTarget(
+	edges: Edge<ObjectRelationshipEdgeData>[]
+) {
 	const duplicates = edges.filter((edge, index, self) => {
 		const foundIndex = self.findIndex(
 			(item) =>
@@ -54,7 +56,9 @@ function findEdgesWithSameSourceAndTarget(edges: Edge<EdgeData>[]) {
 	return duplicates;
 }
 
-export function getNonOverlappingEdges(allEdges: Edge<EdgeData>[]) {
+export function getNonOverlappingEdges(
+	allEdges: Edge<ObjectRelationshipEdgeData>[]
+) {
 	const overlapEdges = findEdgesWithSameSourceAndTarget(allEdges);
 
 	const nonOverlappingEdges = overlapEdges.map((edge) => {
@@ -65,16 +69,18 @@ export function getNonOverlappingEdges(allEdges: Edge<EdgeData>[]) {
 				sourceY: 50,
 				targetY: 50,
 			},
-		} as Edge<EdgeData>;
+		} as Edge<ObjectRelationshipEdgeData>;
 
 		return newEdge;
 	});
 
-	const filteredEdges: Edge<EdgeData>[] = allEdges.filter((edge) => {
-		return !nonOverlappingEdges.some(
-			(nonOverlappingEdge) => edge.id === nonOverlappingEdge.id
-		);
-	});
+	const filteredEdges: Edge<ObjectRelationshipEdgeData>[] = allEdges.filter(
+		(edge) => {
+			return !nonOverlappingEdges.some(
+				(nonOverlappingEdge) => edge.id === nonOverlappingEdge.id
+			);
+		}
+	);
 
 	return [...filteredEdges, ...nonOverlappingEdges];
 }

@@ -4,10 +4,10 @@
  */
 
 import {Edge} from 'react-flow-renderer';
-import {EdgeData, ObjectFieldNode} from '../types';
+import {ObjectFieldNode, ObjectRelationshipEdgeData} from '../types';
 export declare function fieldsCustomSort(
 	objectFields: ObjectFieldNode[]
 ): ObjectFieldNode[];
 export declare function getNonOverlappingEdges(
-	allEdges: Edge<EdgeData>[]
-): Edge<EdgeData>[];
+	allEdges: Edge<ObjectRelationshipEdgeData>[]
+): Edge<ObjectRelationshipEdgeData>[];

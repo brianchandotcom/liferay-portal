@@ -4,16 +4,16 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {Edge} from 'react-flow-renderer';
+import {Edge, Node} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarkerEnd';
 import {oneMarkerId} from '../Edges/OneMarkerEnd';
 import {
-	EdgeData,
 	LeftSidebarItemType,
-	ObjectDefinitionNode,
+	ObjectDefinitionNodeData,
 	ObjectFieldNode,
+	ObjectRelationshipEdgeData,
 	TAction,
 	TState,
 } from '../types';
@@ -61,8 +61,8 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				(folder) => folder.externalReferenceCode === selectedFolderERC
 			);
 
-			let newObjectDefinitionNodes: ObjectDefinitionNode[] = [];
-			const allEdges: Edge<EdgeData>[] = [];
+			let newObjectDefinitionNodes: Node<ObjectDefinitionNodeData>[] = [];
+			const allEdges: Edge<ObjectRelationshipEdgeData>[] = [];
 
 			if (currentFolder) {
 				const positionColumn = {x: 1, y: 0};
@@ -154,7 +154,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 								y: positionColumn.y * 400,
 							},
 							type: 'objectDefinition',
-						} as ObjectDefinitionNode;
+						} as Node<ObjectDefinitionNodeData>;
 					}
 				);
 			}
@@ -163,29 +163,24 @@ export function objectFolderReducer(state: TState, action: TAction) {
 
 			return {
 				...state,
+				elements: [...newObjectDefinitionNodes, ...newEdges],
 				leftSidebarItems: newLeftSidebar,
-				objectDefinitionNodes: [
-					...newObjectDefinitionNodes,
-					...newEdges,
-				],
 			};
 		}
 		case TYPES.SET_SELECTED_NODE: {
-			const {selectedObjectDefinitionName} = action.payload;
+			const {edges, nodes, selectedObjectDefinitionName} = action.payload;
 
-			const {leftSidebarItems, objectDefinitionNodes} = state;
+			const {leftSidebarItems} = state;
 
-			const newObjectDefinitionNodes = objectDefinitionNodes.map(
-				(definitionNode) => ({
-					...definitionNode,
-					data: {
-						...definitionNode.data,
-						nodeSelected:
-							definitionNode.data?.name ===
-							selectedObjectDefinitionName,
-					},
-				})
-			);
+			const newObjectDefinitionNodes = nodes.map((definitionNode) => ({
+				...definitionNode,
+				data: {
+					...definitionNode.data,
+					nodeSelected:
+						definitionNode.data?.name ===
+						selectedObjectDefinitionName,
+				},
+			}));
 
 			const newLeftSidebarItems = leftSidebarItems.map((sidebarItem) => {
 				const newLeftSidebarDefinitions = sidebarItem.objectDefinitions?.map(
@@ -205,8 +200,8 @@ export function objectFolderReducer(state: TState, action: TAction) {
 
 			return {
 				...state,
+				elements: [...edges, ...newObjectDefinitionNodes],
 				leftSidebarItems: newLeftSidebarItems,
-				objectDefinitionNodes: newObjectDefinitionNodes,
 			};
 		}
 		case TYPES.SET_ELEMENTS: {
@@ -214,7 +209,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 
 			return {
 				...state,
-				objectDefinitionNodes: newElements,
+				elements: newElements,
 			};
 		}
 		default:

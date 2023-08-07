@@ -1976,12 +1976,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					else {
 						companyId = ${entity.variableName}.getCompanyId();
 					}
+
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
 						long[] addedKeys = ${entity.variableName}To${referenceEntity.name}TableMapper.addTableMappings(companyId, pk, ${referenceEntity.variableName}PKs);
 
 						if (addedKeys.length > 0) {
 							return true;
 						}
+
 						return false;
 					<#else>
 						${entity.variableName}To${referenceEntity.name}TableMapper.addTableMappings(companyId, pk, ${referenceEntity.variableName}PKs);

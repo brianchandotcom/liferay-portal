@@ -75,14 +75,14 @@ public class IndexConfigurationDynamicUpdatesExecutorImpl
 
 	private void _executePutMappings(String indexName) {
 		Set<String> mappings = ResourceUtil.getResourcesAsStrings(
-			_bundleContext, getClass(), _MAPPINGS_UPDATES_DIRECTORY_NAME);
+			_bundleContext, _MAPPINGS_UPDATES_DIRECTORY_NAME);
 
 		executePutMappings(indexName, mappings);
 	}
 
 	private void _executeUpdateSettings(String indexName) {
 		Set<String> settings = ResourceUtil.getResourcesAsStrings(
-			_bundleContext, getClass(), _SETTINGS_UPDATES_DIRECTORY_NAME);
+			_bundleContext, _SETTINGS_UPDATES_DIRECTORY_NAME);
 
 		executeUpdateSettings(indexName, settings);
 	}

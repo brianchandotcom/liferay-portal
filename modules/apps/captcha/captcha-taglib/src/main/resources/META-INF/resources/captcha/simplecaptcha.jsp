@@ -57,8 +57,11 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 		</div>
 	</div>
 
-	<aui:script>
+	<aui:script position="inline">
 		var hasEventAttached = false;
+		var captcha = document.getElementById(
+			'<portlet:namespace />captcha'
+		);
 
 		function attachEvent() {
 			var refreshCaptcha = document.getElementById(
@@ -68,20 +71,43 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			if (refreshCaptcha && !hasEventAttached) {
 				hasEventAttached = true;
 				refreshCaptcha.addEventListener('click', () => {
-					var url = Liferay.Util.addParams(
+					if (<%= url.startsWith("/o/") %>) {
+						return getCaptchaSourceImage('<%= HtmlUtil.escapeJS(url) %>');
+					}
+
+					let url = Liferay.Util.addParams(
 						't=' + Date.now(),
 						'<%= HtmlUtil.escapeJS(url) %>'
 					);
 
-					var captcha = document.getElementById(
-						'<portlet:namespace />captcha'
-					);
-
-					if (captcha) {
-						captcha.setAttribute('src', url);
-					}
+					captcha.setAttribute('src', url);
 				});
 			}
+		}
+
+		function getCaptchaSourceImage(url) {
+			Liferay.Util.fetch(url, {
+				method: 'GET',
+			})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error();
+				}
+
+				return response.json();
+			})
+			.then((response) => {
+				captcha.setAttribute('src', response.image);
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			});
+		}
+
+		if (<%= url.startsWith("/o/") %>) {
+			getCaptchaSourceImage('<%= HtmlUtil.escapeJS(url) %>');
 		}
 
 		attachEvent();

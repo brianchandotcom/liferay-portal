@@ -55,4 +55,6 @@ public interface CPDefinitionLink
 
 	public CProduct getCProduct();
 
+	public String getCProductName();
+
 }

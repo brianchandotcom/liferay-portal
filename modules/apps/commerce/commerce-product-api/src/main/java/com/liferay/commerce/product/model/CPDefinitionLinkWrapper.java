@@ -245,6 +245,11 @@ public class CPDefinitionLinkWrapper
 		return model.getCProductId();
 	}
 
+	@Override
+	public String getCProductName() {
+		return model.getCProductName();
+	}
+
 	/**
 	 * Returns the create date of this cp definition link.
 	 *

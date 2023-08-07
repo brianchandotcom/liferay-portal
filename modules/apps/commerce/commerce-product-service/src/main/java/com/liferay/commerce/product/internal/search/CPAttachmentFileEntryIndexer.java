@@ -182,7 +182,8 @@ public class CPAttachmentFileEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Indexing attachment file entry " + cpAttachmentFileEntry);
+				"Indexing commerce product attachment file entry " +
+					cpAttachmentFileEntry);
 		}
 
 		Document document = getBaseModelDocument(
@@ -234,7 +235,8 @@ public class CPAttachmentFileEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + cpAttachmentFileEntry + " indexed successfully");
+				"Commerce product attachment file entry " +
+					cpAttachmentFileEntry + " indexed successfully");
 		}
 
 		return document;

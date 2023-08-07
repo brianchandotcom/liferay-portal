@@ -308,7 +308,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing discount " + commerceDiscount);
+			_log.debug("Indexing commerce discount " + commerceDiscount);
 		}
 
 		CommerceDiscountTarget commerceDiscountTarget =
@@ -386,7 +386,8 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + commerceDiscount + " indexed successfully");
+				"Commerce discount " + commerceDiscount +
+					" indexed successfully");
 		}
 
 		if (commerceDiscountTarget instanceof CommerceDiscountProductTarget) {

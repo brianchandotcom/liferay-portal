@@ -112,7 +112,8 @@ public class CommerceTierPriceEntryIndexer
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing tier price entry " + commerceTierPriceEntry);
+			_log.debug(
+				"Indexing commerce tier price entry " + commerceTierPriceEntry);
 		}
 
 		Document document = getBaseModelDocument(
@@ -127,7 +128,8 @@ public class CommerceTierPriceEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + commerceTierPriceEntry + " indexed successfully");
+				"Commerce tier price entry " + commerceTierPriceEntry +
+					" indexed successfully");
 		}
 
 		return document;

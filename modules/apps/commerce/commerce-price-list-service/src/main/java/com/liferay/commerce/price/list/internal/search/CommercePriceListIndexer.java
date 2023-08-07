@@ -210,7 +210,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing price list " + commercePriceList);
+			_log.debug("Indexing commerce price list " + commercePriceList);
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, commercePriceList);
@@ -277,7 +277,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + commercePriceList + " indexed successfully");
+				"Commerce price list " + commercePriceList +
+					" indexed successfully");
 		}
 
 		return document;

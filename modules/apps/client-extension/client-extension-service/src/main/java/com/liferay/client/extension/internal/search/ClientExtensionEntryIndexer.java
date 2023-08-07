@@ -70,7 +70,8 @@ public class ClientExtensionEntryIndexer
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing remote app entry " + clientExtensionEntry);
+			_log.debug(
+				"Indexing client extension entry " + clientExtensionEntry);
 		}
 
 		Document document = getBaseModelDocument(
@@ -98,7 +99,8 @@ public class ClientExtensionEntryIndexer
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + clientExtensionEntry + " indexed successfully");
+				"Client extension entry " + clientExtensionEntry +
+					" indexed successfully");
 		}
 
 		return document;

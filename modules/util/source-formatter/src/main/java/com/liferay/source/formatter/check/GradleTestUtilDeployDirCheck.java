@@ -54,31 +54,31 @@ public class GradleTestUtilDeployDirCheck extends BaseFileCheck {
 	private boolean _isDeployedToOSGiTestDir(String content) {
 		Matcher matcher = _liferayPattern.matcher(content);
 
-		if (matcher.find()) {
-			int x = matcher.start();
-
-			while (true) {
-				x = content.indexOf("}", x + 1);
-
-				if (x == -1) {
-					return false;
-				}
-
-				String codeBlock = content.substring(matcher.end(2), x + 1);
-
-				if (ToolsUtil.getLevel(codeBlock, "{", "}") != 0) {
-					continue;
-				}
-
-				if (codeBlock.contains(
-						"deployDir = file(\"${liferayHome}/osgi/test\")")) {
-
-					return true;
-				}
-			}
+		if (!matcher.find()) {
+			return false;
 		}
 
-		return false;
+		int x = matcher.start();
+
+		while (true) {
+			x = content.indexOf("}", x + 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			String codeBlock = content.substring(matcher.end(2), x + 1);
+
+			if (ToolsUtil.getLevel(codeBlock, "{", "}") != 0) {
+				continue;
+			}
+
+			if (codeBlock.contains(
+					"deployDir = file(\"${liferayHome}/osgi/test\")")) {
+
+				return true;
+			}
+		}
 	}
 
 	private static final Pattern _liferayPattern = Pattern.compile(

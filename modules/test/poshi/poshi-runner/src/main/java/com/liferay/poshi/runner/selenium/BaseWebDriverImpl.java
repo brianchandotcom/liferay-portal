@@ -4252,25 +4252,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			@Override
 			public boolean evaluate() throws Exception {
-				String metaCharactersRegex =
-					"[\\\\\\^\\$\\{\\}\\[\\]\\(\\)\\.\\*\\+\\?\\|" +
-						"\\<\\>\\-\\&\\%]";
-
-				String textMatchesPattern =
-					"(\\(\\?i\\))?(\\.\\*|\\^\\(\\(\\?\\!)?(.*?)(" +
-						"\\.\\*|\\)\\.\\)\\*\\$)?$";
-
 				String text = getText(locator);
 
-				String value = RegexUtil.getGroup(regex, textMatchesPattern, 3);
-
-				String escapedValue = StringUtil.regexReplaceAll(
-					value, metaCharactersRegex, "\\\\$0");
-
-				String formattedRegex = StringUtil.replace(
-					regex, value, escapedValue);
-
-				return text.matches(formattedRegex);
+				return text.matches(RegexUtil.escapeRegexChars(regex));
 			}
 
 		};

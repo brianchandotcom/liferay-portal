@@ -153,7 +153,7 @@
 </tr>
 <tr>
 	<td>VOCABULARY_ICON_INTERNAL_USE</td>
-	<td>//span[contains(text(), '${key_vocabularyName}')]/..//span[contains(@title, 'For Internal Use Only')]</td>
+	<td>//a[contains(text(), '${key_vocabularyName}')]//title[normalize-space(text())= 'For Internal Use Only']</td>
 	<td></td>
 </tr>
 <tr>

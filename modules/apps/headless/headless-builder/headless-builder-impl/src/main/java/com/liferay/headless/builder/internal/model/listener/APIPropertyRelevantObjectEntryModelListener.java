@@ -69,7 +69,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 					"an-api-property-must-be-related-to-an-api-schema");
 			}
 
-			if (!_validateAPIProperty(
+			if (!_validate(
 					apiSchemaId, (String)values.get("objectFieldERC"),
 					(String)values.get("objectRelationshipNames"))) {
 
@@ -86,7 +86,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 		}
 	}
 
-	private boolean _validateAPIProperty(
+	private boolean _validate(
 			long apiSchemaId, String objectFieldExternalReferenceCode,
 			String objectRelationshipName)
 		throws Exception {

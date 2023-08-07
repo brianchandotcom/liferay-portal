@@ -724,6 +724,12 @@ public class DLFolderLocalServiceWrapper
 	}
 
 	@Override
+	public long getFolderSize(String treePath, long companyId, long groupId) {
+		return _dlFolderLocalService.getFolderSize(
+			treePath, companyId, groupId);
+	}
+
+	@Override
 	public java.util.List<Long> getGroupFolderIds(
 		long groupId, long parentFolderId) {
 

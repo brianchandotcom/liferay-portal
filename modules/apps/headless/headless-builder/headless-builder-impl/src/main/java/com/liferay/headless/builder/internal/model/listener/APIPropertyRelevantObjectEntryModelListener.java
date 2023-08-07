@@ -55,12 +55,12 @@ public class APIPropertyRelevantObjectEntryModelListener
 	}
 
 	private void _validate(ObjectEntry objectEntry) {
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		long apiSchemaId = (long)values.get(
-			"r_apiSchemaToAPIProperties_c_apiSchemaId");
-
 		try {
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			long apiSchemaId = (long)values.get(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId");
+
 			if (!_objectEntryHelper.isValidObjectEntry(
 					apiSchemaId, "L_API_SCHEMA")) {
 

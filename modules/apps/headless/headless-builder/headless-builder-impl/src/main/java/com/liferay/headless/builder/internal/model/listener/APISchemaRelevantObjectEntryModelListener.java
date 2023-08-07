@@ -52,9 +52,9 @@ public class APISchemaRelevantObjectEntryModelListener
 	}
 
 	private void _validate(ObjectEntry objectEntry) {
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		try {
+			Map<String, Serializable> values = objectEntry.getValues();
+
 			if (!_objectEntryHelper.isValidObjectEntry(
 					(long)values.get(
 						"r_apiApplicationToAPISchemas_c_apiApplicationId"),

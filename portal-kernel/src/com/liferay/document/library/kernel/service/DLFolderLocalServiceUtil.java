@@ -621,6 +621,12 @@ public class DLFolderLocalServiceUtil {
 			groupId, parentFolderId, status, includeMountfolders);
 	}
 
+	public static long getFolderSize(
+		String treePath, long companyId, long groupId) {
+
+		return getService().getFolderSize(treePath, companyId, groupId);
+	}
+
 	public static List<Long> getGroupFolderIds(
 		long groupId, long parentFolderId) {
 

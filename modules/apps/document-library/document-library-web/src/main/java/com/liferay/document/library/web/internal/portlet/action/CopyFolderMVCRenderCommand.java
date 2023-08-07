@@ -5,14 +5,32 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.web.internal.exception.FolderSizeLimitExceededException;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,6 +48,51 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCRenderCommand.class
 )
 public class CopyFolderMVCRenderCommand extends BaseFolderMVCRenderCommand {
+
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			DLFolder dlFolder = _dlFolderLocalService.getDLFolder(
+				ParamUtil.getLong(renderRequest, "sourceFolderId"));
+
+			long dlFolderSize = _dlFolderLocalService.getFolderSize(
+				dlFolder.getTreePath(), dlFolder.getCompanyId(),
+				dlFolder.getGroupId());
+
+			if (_dlSizeLimitConfigurationProvider.isCopyToAllowed(
+					dlFolder.getCompanyId(), dlFolder.getGroupId(),
+					dlFolderSize)) {
+
+				return super.render(renderRequest, renderResponse);
+			}
+
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest));
+
+			SessionErrors.add(
+				originalHttpServletRequest.getSession(),
+				FolderSizeLimitExceededException.class,
+				new FolderSizeLimitExceededException(
+					_language.format(
+						originalHttpServletRequest,
+						"folder-cannot-be-copied-because-it-exceeds-the-" +
+							"limit-defined-in-x-Settings-x",
+						_dlSizeLimitConfigurationProvider.getCopyToFailInfo(
+							dlFolder.getCompanyId(), dlFolder.getGroupId(),
+							dlFolderSize, _portal.getLocale(renderRequest)))));
+
+			_sendRedirect(renderRequest, renderResponse);
+
+			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
+	}
 
 	@Override
 	protected void checkPermissions(
@@ -50,6 +113,28 @@ public class CopyFolderMVCRenderCommand extends BaseFolderMVCRenderCommand {
 		return "/document_library/copy_folder.jsp";
 	}
 
+	private void _sendRedirect(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(renderResponse);
+
+			httpServletResponse.sendRedirect(
+				ParamUtil.getString(renderRequest, "redirect"));
+		}
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
+		}
+	}
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
+
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
 
@@ -58,5 +143,11 @@ public class CopyFolderMVCRenderCommand extends BaseFolderMVCRenderCommand {
 	)
 	private volatile ModelResourcePermission<Folder>
 		_folderModelResourcePermission;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

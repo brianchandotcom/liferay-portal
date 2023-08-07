@@ -21,6 +21,7 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
@@ -31,9 +32,11 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -97,6 +100,18 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		buildLangTask.setLangDir(appLangFile.getParentFile());
 		buildLangTask.setLangFileName("bundle");
 
+		TaskOutputs taskOutputs = buildLangTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
+
 		return buildLangTask;
 	}
 
@@ -117,6 +132,18 @@ public class LangBuilderPlugin implements Plugin<Project> {
 				@Override
 				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
 					_configureTaskBuildLangForJavaLibraryPlugin(buildLangTask);
+				}
+
+			});
+
+		TaskOutputs taskOutputs = buildLangTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
 				}
 
 			});

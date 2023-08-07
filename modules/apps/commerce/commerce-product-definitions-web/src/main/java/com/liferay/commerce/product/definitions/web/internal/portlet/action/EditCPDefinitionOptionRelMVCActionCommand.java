@@ -170,7 +170,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-            commerceOptionTypeKey, infoItemServiceKey, priority,
+			commerceOptionTypeKey, infoItemServiceKey, priority,
 			definedExternally, facetable, required, skuContributor, priceType,
 			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}

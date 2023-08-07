@@ -50,8 +50,7 @@ public class EditCPDefinitionOptionRelMVCRenderCommand
 					new CPDefinitionOptionRelDisplayContext(
 						_actionHelper,
 						_portal.getHttpServletRequest(renderRequest),
-                        _commerceOptionTypeRegistry,
-						_configurationProvider,
+						_commerceOptionTypeRegistry, _configurationProvider,
 						_infoItemServiceRegistry, _itemSelector);
 
 			renderRequest.setAttribute(

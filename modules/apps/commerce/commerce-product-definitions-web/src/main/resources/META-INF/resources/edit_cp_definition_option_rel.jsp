@@ -10,11 +10,12 @@
 <%
 CPDefinitionOptionRelDisplayContext cpDefinitionOptionRelDisplayContext = (CPDefinitionOptionRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+List<CommerceOptionType> commerceOptionTypes = cpDefinitionOptionRelDisplayContext.getCommerceOptionTypes();
+
 CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRel();
 
 String name = ParamUtil.getString(request, "name", cpDefinitionOptionRel.getName());
 String description = ParamUtil.getString(request, "description", cpDefinitionOptionRel.getDescription());
-List<CommerceOptionType> commerceOptionTypes = cpDefinitionOptionRelDisplayContext.getCommerceOptionTypes();
 String commerceOptionTypeKey = ParamUtil.getString(request, "commerceOptionTypeKey", cpDefinitionOptionRel.getCommerceOptionTypeKey());
 String infoItemServiceKey = ParamUtil.getString(request, "infoItemServiceKey", cpDefinitionOptionRel.getInfoItemServiceKey());
 String priority = ParamUtil.getString(request, "priority", String.valueOf(cpDefinitionOptionRel.getPriority()));

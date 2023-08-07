@@ -709,9 +709,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-            commerceOptionTypeKey, cpDefinitionOptionRel.getInfoItemServiceKey(),
-			priority, cpDefinitionOptionRel.isDefinedExternally(), facetable,
-			required, skuContributor, cpDefinitionOptionRel.getPriceType(),
+			commerceOptionTypeKey,
+			cpDefinitionOptionRel.getInfoItemServiceKey(), priority,
+			cpDefinitionOptionRel.isDefinedExternally(), facetable, required,
+			skuContributor, cpDefinitionOptionRel.getPriceType(),
 			cpDefinitionOptionRel.getTypeSettings(), serviceContext);
 	}
 

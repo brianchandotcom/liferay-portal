@@ -89,9 +89,9 @@ public class CPDefinitionOptionsScreenNavigationEntry
 		CPDefinitionOptionRelDisplayContext
 			cpDefinitionOptionRelDisplayContext =
 				new CPDefinitionOptionRelDisplayContext(
-					_actionHelper, httpServletRequest, _commerceOptionTypeRegistry, _configurationProvider,
-                         _infoItemServiceRegistry,
-					_itemSelector);
+					_actionHelper, httpServletRequest,
+					_commerceOptionTypeRegistry, _configurationProvider,
+					_infoItemServiceRegistry, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

@@ -44,7 +44,7 @@ public abstract class BaseContentPageEditorMVCActionCommand
 
 			sendRedirect(
 				actionRequest, actionResponse,
-				LayoutLockManager.getBlockedPageURL(actionRequest));
+				LayoutLockManager.getLockedLayoutURL(actionRequest));
 		}
 	}
 

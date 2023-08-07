@@ -73,7 +73,7 @@ public class DiscardDraftLayoutMVCActionCommand
 		}
 
 		if (!draftLayout.isUnlocked(Constants.EDIT, themeDisplay.getUserId())) {
-			_redirectToBlockedPage(actionRequest, actionResponse);
+			_redirectToLockedLayout(actionRequest, actionResponse);
 
 			return;
 		}
@@ -126,11 +126,11 @@ public class DiscardDraftLayoutMVCActionCommand
 				throw exception;
 			}
 
-			_redirectToBlockedPage(actionRequest, actionResponse);
+			_redirectToLockedLayout(actionRequest, actionResponse);
 		}
 	}
 
-	private void _redirectToBlockedPage(
+	private void _redirectToLockedLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

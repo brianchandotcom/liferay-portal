@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class LayoutLockManager {
 
-	public static String getBlockedPageURL(ActionRequest actionRequest) {
+	public static String getLockedLayoutURL(ActionRequest actionRequest) {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,

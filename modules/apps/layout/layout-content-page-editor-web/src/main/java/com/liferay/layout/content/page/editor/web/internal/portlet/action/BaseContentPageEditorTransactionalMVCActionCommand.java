@@ -118,7 +118,7 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 		return JSONUtil.put(
 			"redirectURL",
-			() -> LayoutLockManager.getBlockedPageURL(actionRequest));
+			() -> LayoutLockManager.getLockedLayoutURL(actionRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

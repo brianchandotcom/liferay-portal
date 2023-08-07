@@ -248,6 +248,35 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-188364. Unable to configure header search bar or menu display on content pages."
+	@priority = 4
+	test ConfigureMenuDisplayWidget {
+		task ("Given a content page") {
+			var siteName = StringUtil.randomString(8);
+
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+		}
+
+		task ("When the user accesses to the Home page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = ${siteName});
+		}
+
+		task ("Then should be possible to configure the Menu Display widget") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.selectNavigation(menuType = "Secondary Navigation");
+
+			Portlet.saveAndCloseConfig();
+
+			Alert.viewWarningSpecific(warningMessage = "There is no Secondary Navigation available for the current site.");
+		}
+	}
+
 	@description = "This is a test for LPS-107833. Can edit Global Navigation Menu via Navigation Menu widget in normal site."
 	@priority = 4
 	test EditGlobalNavigationMenuViaNavigationMenuWidgetInNormalSite {

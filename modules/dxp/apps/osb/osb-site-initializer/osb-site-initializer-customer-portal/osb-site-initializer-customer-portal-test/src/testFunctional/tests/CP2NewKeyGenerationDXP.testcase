@@ -141,7 +141,8 @@ definition {
 			CustomerPortal.viewAlert(alertText = "Activation Key was generated successfully");
 		}
 	}
-	@description = "Automation Ticket: LPS-151337 | Test Summary: Verify that after filling out all the fields the Next button is enabled."
+
+	@description = "Story Ticket: LPS-148342 | Test Summary: Verify that after filling out the form the Complimentary Key can be generated"
 	@ignore = "true"
 	@priority = 4
 	test AssertComplimentaryDXPKeyCanBeCreated {

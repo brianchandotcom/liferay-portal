@@ -100,12 +100,12 @@ public class ObjectRelationshipServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, long parameterObjectFieldId,
-			String deletionType,
+			String deletionType, boolean edge,
 			java.util.Map<java.util.Locale, String> labelMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipService.updateObjectRelationship(
-			objectRelationshipId, parameterObjectFieldId, deletionType,
+			objectRelationshipId, parameterObjectFieldId, deletionType, edge,
 			labelMap);
 	}
 

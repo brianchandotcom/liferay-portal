@@ -83,7 +83,7 @@ public interface ObjectRelationshipService extends BaseService {
 
 	public ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, long parameterObjectFieldId,
-			String deletionType, Map<Locale, String> labelMap)
+			String deletionType, boolean edge, Map<Locale, String> labelMap)
 		throws PortalException;
 
 }

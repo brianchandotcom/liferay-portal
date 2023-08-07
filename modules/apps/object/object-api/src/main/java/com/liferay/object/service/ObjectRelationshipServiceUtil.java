@@ -90,11 +90,12 @@ public class ObjectRelationshipServiceUtil {
 
 	public static ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, long parameterObjectFieldId,
-			String deletionType, Map<java.util.Locale, String> labelMap)
+			String deletionType, boolean edge,
+			Map<java.util.Locale, String> labelMap)
 		throws PortalException {
 
 		return getService().updateObjectRelationship(
-			objectRelationshipId, parameterObjectFieldId, deletionType,
+			objectRelationshipId, parameterObjectFieldId, deletionType, edge,
 			labelMap);
 	}
 

@@ -26,7 +26,6 @@ interface Props {
 	segmentsEntries: SegmentEntry[];
 	segmentsExperiences: SegmentExperience[];
 	selectSegmentsEntryURL: string;
-	selectSegmentsExperienceURL: string;
 	simulateSegmentsEntriesURL: string;
 }
 
@@ -55,7 +54,6 @@ function PageContentSelectors({
 	segmentsEntries,
 	segmentsExperiences,
 	selectSegmentsEntryURL,
-	selectSegmentsExperienceURL,
 	simulateSegmentsEntriesURL,
 }: Props) {
 	const [
@@ -151,29 +149,6 @@ function PageContentSelectors({
 				Liferay.Language.get('segment')
 			),
 			url: selectSegmentsEntryURL,
-		});
-	};
-
-	const handleMoreSegmentExperiencesButtonClick = () => {
-		openSelectionModal({
-			onSelect: (selectedItem: {value: string}) => {
-				const valueJSON = JSON.parse(selectedItem.value);
-				const selectedExperience:
-					| SegmentExperience
-					| undefined = segmentsExperiences.find(
-					(exp) =>
-						exp.segmentsExperienceId ===
-						valueJSON.segmentsExperienceId
-				);
-
-				if (!selectedExperience) {
-					return;
-				}
-				setSelectedSegmentsExperience(selectedExperience);
-			},
-			selectEventName: `${portletNamespace}selectSegmentsExperience`,
-			title: Liferay.Language.get('select-experience'),
-			url: selectSegmentsExperienceURL,
 		});
 	};
 

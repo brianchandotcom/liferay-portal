@@ -92,8 +92,6 @@ public class SegmentsSimulationDisplayContext {
 		).put(
 			"selectSegmentsEntryURL", _getSelectSegmentsEntryURL()
 		).put(
-			"selectSegmentsExperienceURL", _getSelectSegmentsExperienceURL()
-		).put(
 			"simulateSegmentsEntriesURL", getSimulateSegmentsEntriesURL()
 		).build();
 	}
@@ -268,24 +266,6 @@ public class SegmentsSimulationDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				_liferayPortletResponse.getNamespace() + "selectSegmentsEntry",
 				segmentsEntryItemSelectorCriterion));
-	}
-
-	private String _getSelectSegmentsExperienceURL() {
-		SegmentsExperienceItemSelectorCriterion
-			segmentsExperienceItemSelectorCriterion =
-				new SegmentsExperienceItemSelectorCriterion();
-
-		segmentsExperienceItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-		segmentsExperienceItemSelectorCriterion.setPlid(
-			_themeDisplay.getPlid());
-
-		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_liferayPortletResponse.getNamespace() +
-					"selectSegmentsExperience",
-				segmentsExperienceItemSelectorCriterion));
 	}
 
 	private long _getStagingAwareGroupId() {

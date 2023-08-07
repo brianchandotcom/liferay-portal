@@ -13,6 +13,8 @@ import React from 'react';
 
 import SegmentExperience from '../../types/SegmentExperience';
 
+import './ExperienceSelector.scss';
+
 interface BaseProps {
 	displayType?: 'light' | 'dark';
 	selectedItem?: SegmentExperience;
@@ -38,7 +40,7 @@ const TriggerLabel = React.forwardRef(
 			<button
 				{...otherProps}
 				className={classNames(
-					'btn btn-block btn-sm form-control-select',
+					'btn btn-block btn-sm form-control-select layout__experience-selector',
 					{'btn-secondary': displayType === 'light'}
 				)}
 				ref={ref}

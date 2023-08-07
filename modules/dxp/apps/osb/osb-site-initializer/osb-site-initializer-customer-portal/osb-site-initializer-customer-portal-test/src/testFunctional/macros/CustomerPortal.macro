@@ -453,7 +453,6 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
-	
 
 	macro deactivateKoroneikiAccount {
 		ApplicationsMenu.gotoPortlet(
@@ -532,6 +531,7 @@ definition {
 	macro loginOktaToUpdateCP {
 		var userEmailAddress = "amos.fong@liferay.com.broken";
 		var oktaUserPassword = "wqd@NUX2jwv@bhp@gnz1";
+
 		Open.openInTheNewTab(locator1 = "https://login-dev.liferay.com/");
 
 		Type(

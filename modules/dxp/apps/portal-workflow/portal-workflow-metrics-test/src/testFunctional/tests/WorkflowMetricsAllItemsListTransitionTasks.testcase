@@ -743,7 +743,7 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",

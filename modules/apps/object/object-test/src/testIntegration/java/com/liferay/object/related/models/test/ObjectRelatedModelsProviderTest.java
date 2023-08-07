@@ -1136,7 +1136,7 @@ public class ObjectRelatedModelsProviderTest {
 		_objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				_objectRelationship.getObjectRelationshipId(), 0, deletionType,
-				_objectRelationship.getLabelMap());
+				false, _objectRelationship.getLabelMap());
 	}
 
 	private static PermissionChecker _originalPermissionChecker;

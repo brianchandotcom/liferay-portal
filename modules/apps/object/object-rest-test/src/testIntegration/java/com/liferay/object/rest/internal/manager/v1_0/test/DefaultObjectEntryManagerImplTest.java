@@ -1044,7 +1044,7 @@ public class DefaultObjectEntryManagerImplTest {
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship.getLabelMap());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
@@ -1084,7 +1084,7 @@ public class DefaultObjectEntryManagerImplTest {
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				objectRelationship.getLabelMap());
 
 		try {

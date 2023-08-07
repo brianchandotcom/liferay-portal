@@ -41,7 +41,7 @@ export function ModalDeleteFolder({
 					onClose();
 				}}
 				placeholder={Liferay.Language.get('confirm-folder-name')}
-				title={Liferay.Language.get('delete-objects-folder')}
+				title={Liferay.Language.get('delete-object-folder')}
 				token={folder.name}
 			>
 				<p>

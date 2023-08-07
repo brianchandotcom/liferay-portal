@@ -42,6 +42,14 @@ public class JournalArticleConstants {
 
 	public static final String PORTLET = "portlet";
 
+	public static final int SMALL_IMAGE_TYPE_DOCUMENTS_AND_MEDIA = 1;
+
+	public static final int SMALL_IMAGE_TYPE_NONE = 0;
+
+	public static final int SMALL_IMAGE_TYPE_URL = 2;
+
+	public static final int SMALL_IMAGE_TYPE_USER_COMPUTER = 3;
+
 	public static final String STAND_ALONE = "stand-alone";
 
 	public static final double VERSION_DEFAULT = 1.0;

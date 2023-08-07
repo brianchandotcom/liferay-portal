@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -67,7 +68,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.test.MockLiferayPortletContext;
 
 import java.time.LocalDateTime;
@@ -102,9 +102,7 @@ public class ContentDashboardAdminPortletTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -112,7 +110,11 @@ public class ContentDashboardAdminPortletTest {
 
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
+		_originalName = PrincipalThreadLocal.getName();
+
 		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+		PrincipalThreadLocal.setName(_user.getUserId());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
@@ -120,9 +122,10 @@ public class ContentDashboardAdminPortletTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
-
 		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
+		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 	}
 
 	@Before
@@ -1711,6 +1714,7 @@ public class ContentDashboardAdminPortletTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
+	private static String _originalName;
 	private static PermissionChecker _permissionChecker;
 	private static User _user;
 

@@ -61,7 +61,7 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			!Objects.equals(companyGroup.getGroupId(), groupId)) {
 
 			defaultInputFragmentEntryKeysJSONObject =
-				_getDefaultInputFragmentEntryKeysJSONObject(group);
+				_getDefaultInputFragmentEntryKeysJSONObject(companyGroup);
 		}
 
 		if (defaultInputFragmentEntryKeysJSONObject != null) {

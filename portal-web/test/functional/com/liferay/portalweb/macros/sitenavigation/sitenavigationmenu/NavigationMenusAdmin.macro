@@ -411,7 +411,7 @@ definition {
 	macro addTranslation {
 		NavigationMenusAdmin.openItemSidebar(itemName = ${itemName});
 
-		if (IsElementPresent(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX")) {
+		if ((${item} != "Submenu") && (${item} != "URL")) {
 			Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX");
 		}
 

@@ -9,7 +9,7 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
 		task ("Sign in") {
@@ -21,7 +21,7 @@ definition {
 		}
 
 		task ("Enable local live") {
-			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
@@ -31,7 +31,7 @@ definition {
 	@priority = 4
 	test Apply404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page and a static page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -61,7 +61,7 @@ definition {
 				layoutName = "Test Page Name",
 				site = "false");
 
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -80,7 +80,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to the Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 		}
@@ -107,7 +107,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to the Pages admin in live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -131,7 +131,7 @@ definition {
 	@priority = 4
 	test Publish500ErrorUtilityPageToLive {
 		task ("Given a page designer marks a new 500 error utility page as default in staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -160,13 +160,13 @@ definition {
 		}
 
 		task ("When the page designer publishes changes to live site") {
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication(rangeAll = "true");
 		}
 
 		task ("Then the page designer could see the 500 error utility page in staging and live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -174,7 +174,7 @@ definition {
 				card = "500 Error Utility Page",
 				cardLabel = "Approved");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 

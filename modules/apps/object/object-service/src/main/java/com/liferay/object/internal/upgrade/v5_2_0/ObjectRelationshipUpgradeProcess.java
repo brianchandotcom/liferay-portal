@@ -7,7 +7,6 @@ package com.liferay.object.internal.upgrade.v5_2_0;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
@@ -23,19 +22,15 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		processConcurrently(
-			SQLTransformer.transform(
-				StringBundler.concat(
-					"select distinct ",
-					"ObjectDefinition.pkObjectFieldDBColumnName, ",
-					"ObjectRelationship.dbTableName, ",
-					"ObjectRelationship.objectDefinitionId1, ",
-					"ObjectRelationship.objectDefinitionId2 from ",
-					"ObjectDefinition inner join ObjectRelationship on ",
-					"ObjectRelationship.type_ = '",
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
-					"ObjectDefinition.active_ = [$TRUE$] and ",
-					"ObjectDefinition.objectDefinitionId = ",
-					"ObjectRelationship.objectDefinitionId1")),
+			StringBundler.concat(
+				"select distinct ObjectDefinition.pkObjectFieldDBColumnName, ",
+				"ObjectRelationship.dbTableName, ",
+				"ObjectRelationship.objectDefinitionId1, ",
+				"ObjectRelationship.objectDefinitionId2 from ObjectDefinition ",
+				"inner join ObjectRelationship on ObjectRelationship.type_ = '",
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
+				"ObjectDefinition.objectDefinitionId = ",
+				"ObjectRelationship.objectDefinitionId1"),
 			resultSet -> new Object[] {
 				resultSet.getString(1), resultSet.getString(2),
 				resultSet.getLong(3), resultSet.getLong(4)

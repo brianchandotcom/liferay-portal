@@ -84,14 +84,15 @@ public class ObjectValidationRuleLocalServiceImpl
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
 		_validate(
-			engine, nameMap, outputType, script, objectValidationRuleSettings);
+			user.getCompanyId(), engine, nameMap, outputType, script,
+			objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.create(
 				counterLocalService.increment());
-
-		User user = _userLocalService.getUser(userId);
 
 		objectValidationRule.setCompanyId(user.getCompanyId());
 		objectValidationRule.setUserId(user.getUserId());
@@ -235,14 +236,15 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
+			long companyId, long objectValidationRuleId, boolean active,
+			String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
 		_validate(
-			engine, nameMap, outputType, script, objectValidationRuleSettings);
+			companyId, engine, nameMap, outputType, script,
+			objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.findByPrimaryKey(
@@ -305,6 +307,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			ObjectValidationRuleEngine objectValidationRuleEngine =
 				_objectValidationRuleEngineRegistry.
 					getObjectValidationRuleEngine(
+						objectValidationRule.getCompanyId(),
 						objectValidationRule.getEngine());
 
 			if (StringUtil.equals(
@@ -437,8 +440,8 @@ public class ObjectValidationRuleLocalServiceImpl
 	}
 
 	private void _validate(
-			String engine, Map<Locale, String> nameMap, String outputType,
-			String script,
+			long companyId, String engine, Map<Locale, String> nameMap,
+			String outputType, String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
@@ -448,7 +451,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		ObjectValidationRuleEngine objectValidationRuleEngine =
 			_objectValidationRuleEngineRegistry.getObjectValidationRuleEngine(
-				engine);
+				companyId, engine);
 
 		if (objectValidationRuleEngine == null) {
 			throw new ObjectValidationRuleEngineException.NoSuchEngine(engine);

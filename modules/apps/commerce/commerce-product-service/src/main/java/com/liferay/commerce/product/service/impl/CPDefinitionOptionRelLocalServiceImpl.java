@@ -101,15 +101,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionId, cpOptionId, cpOption.getNameMap(),
-			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(), 0,
-			cpOption.isFacetable(), cpOption.isRequired(),
+			cpOption.getDescriptionMap(), cpOption.getCommerceOptionTypeKey(),
+			0, cpOption.isFacetable(), cpOption.isRequired(),
 			cpOption.isSkuContributor(), importOptionValue, serviceContext);
 	}
 
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long cpDefinitionId, long cpOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			Map<Locale, String> descriptionMap, String commerceOptionTypeKey,
 			double priority, boolean facetable, boolean required,
 			boolean skuContributor, boolean importOptionValue,
 			ServiceContext serviceContext)
@@ -117,15 +117,15 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
 			cpDefinitionId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			importOptionValue, null, serviceContext);
+			commerceOptionTypeKey, priority, facetable, required,
+			skuContributor, importOptionValue, null, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long cpDefinitionId, long cpOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			Map<Locale, String> descriptionMap, String commerceOptionTypeKey,
 			double priority, boolean facetable, boolean required,
 			boolean skuContributor, boolean importOptionValue, String priceType,
 			ServiceContext serviceContext)
@@ -133,7 +133,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		// Commerce product definition option rel
 
-		_validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
+		_validateCommerceOptionTypeKey(commerceOptionTypeKey, skuContributor);
 
 		CPOption cpOption = _cpOptionLocalService.getCPOption(cpOptionId);
 
@@ -172,7 +172,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setCPOptionId(cpOptionId);
 		cpDefinitionOptionRel.setNameMap(nameMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
-		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+		cpDefinitionOptionRel.setCommerceOptionTypeKey(commerceOptionTypeKey);
 		cpDefinitionOptionRel.setPriority(priority);
 		cpDefinitionOptionRel.setFacetable(facetable);
 		cpDefinitionOptionRel.setRequired(required);
@@ -698,7 +698,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, double priority, boolean facetable,
+			String commerceOptionTypeKey, double priority, boolean facetable,
 			boolean required, boolean skuContributor,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -709,7 +709,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, cpDefinitionOptionRel.getInfoItemServiceKey(),
+            commerceOptionTypeKey, cpDefinitionOptionRel.getInfoItemServiceKey(),
 			priority, cpDefinitionOptionRel.isDefinedExternally(), facetable,
 			required, skuContributor, cpDefinitionOptionRel.getPriceType(),
 			cpDefinitionOptionRel.getTypeSettings(), serviceContext);
@@ -720,13 +720,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, String infoItemServiceKey,
+			String commerceOptionTypeKey, String infoItemServiceKey,
 			double priority, boolean definedExternally, boolean facetable,
 			boolean required, boolean skuContributor, String priceType,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
-		_validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
+		_validateCommerceOptionTypeKey(commerceOptionTypeKey, skuContributor);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelPersistence.findByPrimaryKey(
@@ -750,7 +750,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setCPOptionId(cpOptionId);
 		cpDefinitionOptionRel.setNameMap(nameMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
-		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+		cpDefinitionOptionRel.setCommerceOptionTypeKey(commerceOptionTypeKey);
 		cpDefinitionOptionRel.setInfoItemServiceKey(infoItemServiceKey);
 		cpDefinitionOptionRel.setPriority(priority);
 		cpDefinitionOptionRel.setDefinedExternally(definedExternally);
@@ -970,6 +970,34 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 	}
 
+	private void _validateCommerceOptionTypeKey(
+			String commerceOptionTypeKey, boolean skuContributor)
+		throws PortalException {
+
+		if (Validator.isNull(commerceOptionTypeKey)) {
+			throw new CPDefinitionOptionSKUContributorException();
+		}
+
+		CPOptionConfiguration cpOptionConfiguration =
+			_getCPOptionConfiguration();
+
+		String[] commerceOptionTypesAllowed =
+			cpOptionConfiguration.commerceOptionTypesAllowed();
+
+		if (skuContributor) {
+			commerceOptionTypesAllowed =
+				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
+		}
+
+		if (ArrayUtil.contains(
+				commerceOptionTypesAllowed, commerceOptionTypeKey)) {
+
+			return;
+		}
+
+		throw new CPDefinitionOptionSKUContributorException();
+	}
+
 	private void _validateCPDefinitionOptionKey(long cpDefinitionId, String key)
 		throws PortalException {
 
@@ -979,34 +1007,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		if (cpDefinitionOptionRel != null) {
 			throw new DuplicateCPDefinitionOptionRelKeyException();
 		}
-	}
-
-	private void _validateDDMFormFieldTypeName(
-			String ddmFormFieldTypeName, boolean skuContributor)
-		throws PortalException {
-
-		if (Validator.isNull(ddmFormFieldTypeName)) {
-			throw new CPDefinitionOptionSKUContributorException();
-		}
-
-		CPOptionConfiguration cpOptionConfiguration =
-			_getCPOptionConfiguration();
-
-		String[] ddmFormFieldTypesAllowed =
-			cpOptionConfiguration.ddmFormFieldTypesAllowed();
-
-		if (skuContributor) {
-			ddmFormFieldTypesAllowed =
-				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
-		}
-
-		if (ArrayUtil.contains(
-				ddmFormFieldTypesAllowed, ddmFormFieldTypeName)) {
-
-			return;
-		}
-
-		throw new CPDefinitionOptionSKUContributorException();
 	}
 
 	private void _validatePriceType(

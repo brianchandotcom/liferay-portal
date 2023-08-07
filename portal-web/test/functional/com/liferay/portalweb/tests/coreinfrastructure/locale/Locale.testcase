@@ -96,16 +96,18 @@ definition {
 
 		User.firstLoginPG();
 
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			layoutName = "Navigation Menu Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "Test Site Name",
 			layoutName = "Navigation Menu Page",
 			widgetName = "Menu Display");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/navigation-menu-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/test-site-name/navigation-menu-page");
 
 		task ("Assert preferred locale persists by asserting Widget name.") {
 			AssertElementPresent(
@@ -113,11 +115,11 @@ definition {
 				locator1 = "Portlet#TITLE");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "de/web/guest/navigation-menu-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "de/web/test-site-name/navigation-menu-page");
 
 		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Non trouvé");
+			locator1 = "//h1[contains(@class,'component-heading')]",
+			value1 = "Page introuvable");
 	}
 
 	@description = "This is a use case for LPS-112343."
@@ -171,8 +173,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = ${englishURL});
 
 		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Non trouvé");
+			locator1 = "//h1[contains(@class,'component-heading')]",
+			value1 = "Page introuvable");
 	}
 
 	@description = "This is a use case for LPS-113225. Verify a group can be updated when available languages differ between instances"

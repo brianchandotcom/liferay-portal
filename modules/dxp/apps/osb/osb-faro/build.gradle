@@ -6,7 +6,7 @@ import com.bmuschko.gradle.docker.tasks.container.extras.DockerWaitHealthyContai
 
 buildscript {
 	dependencies {
-		classpath group: "com.bmuschko", name: "gradle-docker-plugin", version: "3.4.4"
+		classpath group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
 		classpath group: "gradle.plugin.com.liferay", name: "gradle-plugins-app-docker", version: "latest.release"
 	}
 
@@ -61,7 +61,7 @@ createDocker {
 	dependsOn buildAppDockerImage, removeDocker
 
 	containerName = dockerContainerId
-	portBindings = ["8000:8000", "8080:8080", "11311:11311"]
+	hostConfig.portBindings = ["8000:8000", "8080:8080", "11311:11311"]
 
 	targetImageId {
 		dockerImageUser + "/" + dockerImageId

@@ -4268,7 +4268,7 @@ public class DLFileEntryTypePersistenceImpl
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolderPK the primary key of the document library folder
-	 * @return <code>true</code> if the association between the document library file entry type and the document library folder is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the document library file entry type and the document library folder was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addDLFolder(long pk, long dlFolderPK) {
@@ -4289,7 +4289,7 @@ public class DLFileEntryTypePersistenceImpl
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolder the document library folder
-	 * @return <code>true</code> if the association between the document library file entry type and the document library folder is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the document library file entry type and the document library folder was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addDLFolder(
@@ -4313,7 +4313,7 @@ public class DLFileEntryTypePersistenceImpl
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolderPKs the primary keys of the document library folders
-	 * @return <code>true</code> if at least an association between the document library file entry type and the document library folders is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the document library file entry type and the document library folders was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addDLFolders(long pk, long[] dlFolderPKs) {
@@ -4344,7 +4344,7 @@ public class DLFileEntryTypePersistenceImpl
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolders the document library folders
-	 * @return <code>true</code> if at least an association between the document library file entry type and the document library folders is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the document library file entry type and the document library folders was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addDLFolders(

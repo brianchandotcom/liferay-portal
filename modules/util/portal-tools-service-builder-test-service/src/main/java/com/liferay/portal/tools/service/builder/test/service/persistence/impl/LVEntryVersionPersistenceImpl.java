@@ -6548,7 +6548,7 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntryPK the primary key of the big decimal entry
-	 * @return <code>true</code> if the association between the lv entry version and the big decimal entry is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the lv entry version and the big decimal entry was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addBigDecimalEntry(long pk, long bigDecimalEntryPK) {
@@ -6569,7 +6569,7 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntry the big decimal entry
-	 * @return <code>true</code> if the association between the lv entry version and the big decimal entry is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the lv entry version and the big decimal entry was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addBigDecimalEntry(
@@ -6596,7 +6596,7 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntryPKs the primary keys of the big decimal entries
-	 * @return <code>true</code> if at least an association between the lv entry version and the big decimal entries is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the lv entry version and the big decimal entries was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addBigDecimalEntries(long pk, long[] bigDecimalEntryPKs) {
@@ -6627,7 +6627,7 @@ public class LVEntryVersionPersistenceImpl
 	 *
 	 * @param pk the primary key of the lv entry version
 	 * @param bigDecimalEntries the big decimal entries
-	 * @return <code>true</code> if at least an association between the lv entry version and the big decimal entries is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the lv entry version and the big decimal entries was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addBigDecimalEntries(

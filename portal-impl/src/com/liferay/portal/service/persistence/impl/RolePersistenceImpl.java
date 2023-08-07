@@ -10772,7 +10772,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param groupPK the primary key of the group
-	 * @return <code>true</code> if the association between the role and the group is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the role and the group was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addGroup(long pk, long groupPK) {
@@ -10793,7 +10793,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param group the group
-	 * @return <code>true</code> if the association between the role and the group is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the role and the group was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addGroup(
@@ -10816,7 +10816,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param groupPKs the primary keys of the groups
-	 * @return <code>true</code> if at least an association between the role and the groups is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the role and the groups was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addGroups(long pk, long[] groupPKs) {
@@ -10846,7 +10846,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param groups the groups
-	 * @return <code>true</code> if at least an association between the role and the groups is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the role and the groups was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addGroups(
@@ -11095,7 +11095,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param userPK the primary key of the user
-	 * @return <code>true</code> if the association between the role and the user is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the role and the user was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addUser(long pk, long userPK) {
@@ -11116,7 +11116,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param user the user
-	 * @return <code>true</code> if the association between the role and the user is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the role and the user was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addUser(long pk, com.liferay.portal.kernel.model.User user) {
@@ -11137,7 +11137,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param userPKs the primary keys of the users
-	 * @return <code>true</code> if at least an association between the role and the users is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the role and the users was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addUsers(long pk, long[] userPKs) {
@@ -11167,7 +11167,7 @@ public class RolePersistenceImpl
 	 *
 	 * @param pk the primary key of the role
 	 * @param users the users
-	 * @return <code>true</code> if at least an association between the role and the users is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the role and the users was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addUsers(

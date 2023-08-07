@@ -459,7 +459,7 @@ public interface OAuth2ScopeGrantPersistence
 	 *
 	 * @param pk the primary key of the o auth2 scope grant
 	 * @param oAuth2AuthorizationPK the primary key of the o auth2 authorization
-	 * @return <code>true</code> if the association between the o auth2 scope grant and the o auth2 authorization is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the o auth2 scope grant and the o auth2 authorization was added; <code>false</code> if they were already associated
 	 */
 	public boolean addOAuth2Authorization(long pk, long oAuth2AuthorizationPK);
 
@@ -468,7 +468,7 @@ public interface OAuth2ScopeGrantPersistence
 	 *
 	 * @param pk the primary key of the o auth2 scope grant
 	 * @param oAuth2Authorization the o auth2 authorization
-	 * @return <code>true</code> if the association between the o auth2 scope grant and the o auth2 authorization is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the o auth2 scope grant and the o auth2 authorization was added; <code>false</code> if they were already associated
 	 */
 	public boolean addOAuth2Authorization(
 		long pk,
@@ -480,7 +480,7 @@ public interface OAuth2ScopeGrantPersistence
 	 *
 	 * @param pk the primary key of the o auth2 scope grant
 	 * @param oAuth2AuthorizationPKs the primary keys of the o auth2 authorizations
-	 * @return <code>true</code> if at least an association between the o auth2 scope grant and the o auth2 authorizations is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the o auth2 scope grant and the o auth2 authorizations was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addOAuth2Authorizations(
 		long pk, long[] oAuth2AuthorizationPKs);
@@ -490,7 +490,7 @@ public interface OAuth2ScopeGrantPersistence
 	 *
 	 * @param pk the primary key of the o auth2 scope grant
 	 * @param oAuth2Authorizations the o auth2 authorizations
-	 * @return <code>true</code> if at least an association between the o auth2 scope grant and the o auth2 authorizations is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the o auth2 scope grant and the o auth2 authorizations was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addOAuth2Authorizations(
 		long pk,

@@ -1291,7 +1291,7 @@ public interface AssetTagPersistence
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntryPK the primary key of the asset entry
-	 * @return <code>true</code> if the association between the asset tag and the asset entry is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the asset tag and the asset entry was added; <code>false</code> if they were already associated
 	 */
 	public boolean addAssetEntry(long pk, long assetEntryPK);
 
@@ -1300,7 +1300,7 @@ public interface AssetTagPersistence
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntry the asset entry
-	 * @return <code>true</code> if the association between the asset tag and the asset entry is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the asset tag and the asset entry was added; <code>false</code> if they were already associated
 	 */
 	public boolean addAssetEntry(
 		long pk, com.liferay.asset.kernel.model.AssetEntry assetEntry);
@@ -1310,7 +1310,7 @@ public interface AssetTagPersistence
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntryPKs the primary keys of the asset entries
-	 * @return <code>true</code> if at least an association between the asset tag and the asset entries is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the asset tag and the asset entries was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addAssetEntries(long pk, long[] assetEntryPKs);
 
@@ -1319,7 +1319,7 @@ public interface AssetTagPersistence
 	 *
 	 * @param pk the primary key of the asset tag
 	 * @param assetEntries the asset entries
-	 * @return <code>true</code> if at least an association between the asset tag and the asset entries is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the asset tag and the asset entries was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addAssetEntries(
 		long pk,

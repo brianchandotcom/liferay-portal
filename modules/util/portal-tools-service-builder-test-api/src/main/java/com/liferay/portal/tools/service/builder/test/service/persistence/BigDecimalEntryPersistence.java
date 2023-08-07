@@ -671,7 +671,7 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntryPK the primary key of the lv entry
-	 * @return <code>true</code> if the association between the big decimal entry and the lv entry is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the big decimal entry and the lv entry was added; <code>false</code> if they were already associated
 	 */
 	public boolean addLVEntry(long pk, long lvEntryPK);
 
@@ -680,7 +680,7 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntry the lv entry
-	 * @return <code>true</code> if the association between the big decimal entry and the lv entry is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the big decimal entry and the lv entry was added; <code>false</code> if they were already associated
 	 */
 	public boolean addLVEntry(
 		long pk,
@@ -691,7 +691,7 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntryPKs the primary keys of the lv entries
-	 * @return <code>true</code> if at least an association between the big decimal entry and the lv entries is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the big decimal entry and the lv entries was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addLVEntries(long pk, long[] lvEntryPKs);
 
@@ -700,7 +700,7 @@ public interface BigDecimalEntryPersistence
 	 *
 	 * @param pk the primary key of the big decimal entry
 	 * @param lvEntries the lv entries
-	 * @return <code>true</code> if at least an association between the big decimal entry and the lv entries is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the big decimal entry and the lv entries was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addLVEntries(
 		long pk,

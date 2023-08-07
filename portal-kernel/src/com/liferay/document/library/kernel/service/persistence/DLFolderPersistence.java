@@ -3874,7 +3874,7 @@ public interface DLFolderPersistence
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypePK the primary key of the document library file entry type
-	 * @return <code>true</code> if the association between the document library folder and the document library file entry type is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the document library folder and the document library file entry type was added; <code>false</code> if they were already associated
 	 */
 	public boolean addDLFileEntryType(long pk, long dlFileEntryTypePK);
 
@@ -3883,7 +3883,7 @@ public interface DLFolderPersistence
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryType the document library file entry type
-	 * @return <code>true</code> if the association between the document library folder and the document library file entry type is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the document library folder and the document library file entry type was added; <code>false</code> if they were already associated
 	 */
 	public boolean addDLFileEntryType(
 		long pk,
@@ -3895,7 +3895,7 @@ public interface DLFolderPersistence
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypePKs the primary keys of the document library file entry types
-	 * @return <code>true</code> if at least an association between the document library folder and the document library file entry types is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the document library folder and the document library file entry types was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addDLFileEntryTypes(long pk, long[] dlFileEntryTypePKs);
 
@@ -3904,7 +3904,7 @@ public interface DLFolderPersistence
 	 *
 	 * @param pk the primary key of the document library folder
 	 * @param dlFileEntryTypes the document library file entry types
-	 * @return <code>true</code> if at least an association between the document library folder and the document library file entry types is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the document library folder and the document library file entry types was added; <code>false</code> if they were all already associated
 	 */
 	public boolean addDLFileEntryTypes(
 		long pk,

@@ -1923,7 +1923,7 @@ public class AssetEntryUtil {
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTagPK the primary key of the asset tag
-	 * @return <code>true</code> if the association between the asset entry and the asset tag is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the asset entry and the asset tag was added; <code>false</code> if they were already associated
 	 */
 	public static boolean addAssetTag(long pk, long assetTagPK) {
 		return getPersistence().addAssetTag(pk, assetTagPK);
@@ -1934,7 +1934,7 @@ public class AssetEntryUtil {
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTag the asset tag
-	 * @return <code>true</code> if the association between the asset entry and the asset tag is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the asset entry and the asset tag was added; <code>false</code> if they were already associated
 	 */
 	public static boolean addAssetTag(
 		long pk, com.liferay.asset.kernel.model.AssetTag assetTag) {
@@ -1947,7 +1947,7 @@ public class AssetEntryUtil {
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTagPKs the primary keys of the asset tags
-	 * @return <code>true</code> if at least an association between the asset entry and the asset tags is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the asset entry and the asset tags was added; <code>false</code> if they were all already associated
 	 */
 	public static boolean addAssetTags(long pk, long[] assetTagPKs) {
 		return getPersistence().addAssetTags(pk, assetTagPKs);
@@ -1958,7 +1958,7 @@ public class AssetEntryUtil {
 	 *
 	 * @param pk the primary key of the asset entry
 	 * @param assetTags the asset tags
-	 * @return <code>true</code> if at least an association between the asset entry and the asset tags is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the asset entry and the asset tags was added; <code>false</code> if they were all already associated
 	 */
 	public static boolean addAssetTags(
 		long pk, List<com.liferay.asset.kernel.model.AssetTag> assetTags) {

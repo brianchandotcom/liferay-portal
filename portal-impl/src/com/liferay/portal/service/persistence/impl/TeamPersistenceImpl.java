@@ -3954,7 +3954,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param userPK the primary key of the user
-	 * @return <code>true</code> if the association between the team and the user is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the team and the user was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addUser(long pk, long userPK) {
@@ -3975,7 +3975,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param user the user
-	 * @return <code>true</code> if the association between the team and the user is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the team and the user was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addUser(long pk, com.liferay.portal.kernel.model.User user) {
@@ -3996,7 +3996,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param userPKs the primary keys of the users
-	 * @return <code>true</code> if at least an association between the team and the users is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the team and the users was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addUsers(long pk, long[] userPKs) {
@@ -4026,7 +4026,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param users the users
-	 * @return <code>true</code> if at least an association between the team and the users is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the team and the users was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addUsers(
@@ -4273,7 +4273,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroupPK the primary key of the user group
-	 * @return <code>true</code> if the association between the team and the user group is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the team and the user group was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addUserGroup(long pk, long userGroupPK) {
@@ -4294,7 +4294,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroup the user group
-	 * @return <code>true</code> if the association between the team and the user group is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the team and the user group was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addUserGroup(
@@ -4318,7 +4318,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroupPKs the primary keys of the user groups
-	 * @return <code>true</code> if at least an association between the team and the user groups is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the team and the user groups was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addUserGroups(long pk, long[] userGroupPKs) {
@@ -4348,7 +4348,7 @@ public class TeamPersistenceImpl
 	 *
 	 * @param pk the primary key of the team
 	 * @param userGroups the user groups
-	 * @return <code>true</code> if at least an association between the team and the user groups is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the team and the user groups was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addUserGroups(

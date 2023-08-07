@@ -1313,7 +1313,7 @@ public class DLFileEntryTypeUtil {
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolderPK the primary key of the document library folder
-	 * @return <code>true</code> if the association between the document library file entry type and the document library folder is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the document library file entry type and the document library folder was added; <code>false</code> if they were already associated
 	 */
 	public static boolean addDLFolder(long pk, long dlFolderPK) {
 		return getPersistence().addDLFolder(pk, dlFolderPK);
@@ -1324,7 +1324,7 @@ public class DLFileEntryTypeUtil {
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolder the document library folder
-	 * @return <code>true</code> if the association between the document library file entry type and the document library folder is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the document library file entry type and the document library folder was added; <code>false</code> if they were already associated
 	 */
 	public static boolean addDLFolder(
 		long pk, com.liferay.document.library.kernel.model.DLFolder dlFolder) {
@@ -1337,7 +1337,7 @@ public class DLFileEntryTypeUtil {
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolderPKs the primary keys of the document library folders
-	 * @return <code>true</code> if at least an association between the document library file entry type and the document library folders is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the document library file entry type and the document library folders was added; <code>false</code> if they were all already associated
 	 */
 	public static boolean addDLFolders(long pk, long[] dlFolderPKs) {
 		return getPersistence().addDLFolders(pk, dlFolderPKs);
@@ -1348,7 +1348,7 @@ public class DLFileEntryTypeUtil {
 	 *
 	 * @param pk the primary key of the document library file entry type
 	 * @param dlFolders the document library folders
-	 * @return <code>true</code> if at least an association between the document library file entry type and the document library folders is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the document library file entry type and the document library folders was added; <code>false</code> if they were all already associated
 	 */
 	public static boolean addDLFolders(
 		long pk,

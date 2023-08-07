@@ -3486,7 +3486,7 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrantPK the primary key of the o auth2 scope grant
-	 * @return <code>true</code> if the association between the o auth2 authorization and the o auth2 scope grant is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the o auth2 authorization and the o auth2 scope grant was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addOAuth2ScopeGrant(long pk, long oAuth2ScopeGrantPK) {
@@ -3509,7 +3509,7 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 * @return <code>true</code> if the association between the o auth2 authorization and the o auth2 scope grant is added; <code>false</code> if it was already added
+	 * @return <code>true</code> if an association between the o auth2 authorization and the o auth2 scope grant was added; <code>false</code> if they were already associated
 	 */
 	@Override
 	public boolean addOAuth2ScopeGrant(
@@ -3536,7 +3536,7 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrantPKs the primary keys of the o auth2 scope grants
-	 * @return <code>true</code> if at least an association between the o auth2 authorization and the o auth2 scope grants is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the o auth2 authorization and the o auth2 scope grants was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addOAuth2ScopeGrants(long pk, long[] oAuth2ScopeGrantPKs) {
@@ -3567,7 +3567,7 @@ public class OAuth2AuthorizationPersistenceImpl
 	 *
 	 * @param pk the primary key of the o auth2 authorization
 	 * @param oAuth2ScopeGrants the o auth2 scope grants
-	 * @return <code>true</code> if at least an association between the o auth2 authorization and the o auth2 scope grants is added; <code>false</code> if all were already added
+	 * @return <code>true</code> if at least one association between the o auth2 authorization and the o auth2 scope grants was added; <code>false</code> if they were all already associated
 	 */
 	@Override
 	public boolean addOAuth2ScopeGrants(

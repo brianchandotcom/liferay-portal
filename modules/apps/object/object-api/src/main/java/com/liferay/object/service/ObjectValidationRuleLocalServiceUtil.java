@@ -367,8 +367,8 @@ public class ObjectValidationRuleLocalServiceUtil {
 	}
 
 	public static ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
-			Map<java.util.Locale, String> errorLabelMap,
+			long companyId, long objectValidationRuleId, boolean active,
+			String engine, Map<java.util.Locale, String> errorLabelMap,
 			Map<java.util.Locale, String> nameMap, String outputType,
 			String script,
 			List<com.liferay.object.model.ObjectValidationRuleSetting>
@@ -376,8 +376,8 @@ public class ObjectValidationRuleLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			companyId, objectValidationRuleId, active, engine, errorLabelMap,
+			nameMap, outputType, script, objectValidationRuleSettings);
 	}
 
 	/**

@@ -236,19 +236,19 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectValidationRule updateObjectValidationRule(
-			long companyId, long objectValidationRuleId, boolean active,
-			String engine, Map<Locale, String> errorLabelMap,
-			Map<Locale, String> nameMap, String outputType, String script,
+			long objectValidationRuleId, boolean active, String engine,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String outputType, String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
-
-		_validate(
-			companyId, engine, nameMap, outputType, script,
-			objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.findByPrimaryKey(
 				objectValidationRuleId);
+
+		_validate(
+			objectValidationRule.getCompanyId(), engine, nameMap, outputType,
+			script, objectValidationRuleSettings);
 
 		objectValidationRule.setActive(active);
 		objectValidationRule.setEngine(engine);

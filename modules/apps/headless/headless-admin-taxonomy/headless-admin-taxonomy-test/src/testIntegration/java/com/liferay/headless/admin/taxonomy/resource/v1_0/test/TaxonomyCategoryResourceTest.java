@@ -7,9 +7,11 @@ package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.depot.model.DepotEntry;
@@ -28,19 +30,26 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -168,6 +177,41 @@ public class TaxonomyCategoryResourceTest
 			Http.Method.GET);
 
 		Assert.assertNotNull(jsonObject.get("taxonomyCategoryUsageCount"));
+	}
+
+	@Override
+	@Test
+	public void testGetTaxonomyCategoryTaxonomyCategoriesPageWithSortDateTime()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (ListUtil.isEmpty(entityFields)) {
+			return;
+		}
+
+		AssetCategory parentAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				_assetVocabulary.getVocabularyId(),
+				ServiceContextTestUtil.getServiceContext());
+
+		AssetCategory assetCategory1 = _addAssetCategoryWithDate(
+			_assetVocabulary, DateUtils.addMinutes(new Date(), -2),
+			parentAssetCategory);
+		AssetCategory assetCategory2 = _addAssetCategoryWithDate(
+			_assetVocabulary, new Date(), parentAssetCategory);
+
+		for (EntityField entityField : entityFields) {
+			_assertTaxonomyCategoriesPageOrder(
+				entityField, assetCategory1, assetCategory2, "asc",
+				parentAssetCategory);
+			_assertTaxonomyCategoriesPageOrder(
+				entityField, assetCategory2, assetCategory1, "desc",
+				parentAssetCategory);
+		}
 	}
 
 	@Override
@@ -402,6 +446,24 @@ public class TaxonomyCategoryResourceTest
 		return testGetTaxonomyCategory_addTaxonomyCategory();
 	}
 
+	private AssetCategory _addAssetCategoryWithDate(
+			AssetVocabulary assetVocabulary, Date date,
+			AssetCategory parentAssetCategory)
+		throws Exception {
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			null, TestPropsValues.getUserId(), testGroup.getGroupId(),
+			parentAssetCategory.getCategoryId(),
+			RandomTestUtil.randomLocaleStringMap(), null,
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		assetCategory.setCreateDate(date);
+		assetCategory.setModifiedDate(date);
+
+		return _assetCategoryLocalService.updateAssetCategory(assetCategory);
+	}
+
 	private AssetVocabulary _addAssetVocabulary() throws Exception {
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
@@ -423,6 +485,38 @@ public class TaxonomyCategoryResourceTest
 
 		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
 			parentTaxonomyCategoryId, taxonomyCategory);
+	}
+
+	private void _assertTaxonomyCategoriesPageOrder(
+			EntityField entityField, AssetCategory firstAssetCategory,
+			AssetCategory secondAssetCategory, String orderBy,
+			AssetCategory parentAssetCategory)
+		throws Exception {
+
+		Page<TaxonomyCategory> taxonomyCategoriesPage =
+			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
+				String.valueOf(parentAssetCategory.getCategoryId()), null, null,
+				null, Pagination.of(1, 2),
+				entityField.getName() + ":" + orderBy);
+
+		Assert.assertEquals(
+			taxonomyCategoriesPage.toString(), 2,
+			taxonomyCategoriesPage.getTotalCount());
+
+		List<TaxonomyCategory> taxonomyCategories =
+			(List<TaxonomyCategory>)taxonomyCategoriesPage.getItems();
+
+		TaxonomyCategory taxonomyCategory = taxonomyCategories.get(0);
+
+		Assert.assertEquals(
+			String.valueOf(firstAssetCategory.getCategoryId()),
+			taxonomyCategory.getId());
+
+		taxonomyCategory = taxonomyCategories.get(1);
+
+		Assert.assertEquals(
+			String.valueOf(secondAssetCategory.getCategoryId()),
+			taxonomyCategory.getId());
 	}
 
 	private TaxonomyVocabulary _randomTaxonomyVocabulary() {
@@ -716,6 +810,9 @@ public class TaxonomyCategoryResourceTest
 					}));
 		}
 	}
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	private AssetVocabulary _assetVocabulary;
 	private AssetVocabulary _depotAssetVocabulary;

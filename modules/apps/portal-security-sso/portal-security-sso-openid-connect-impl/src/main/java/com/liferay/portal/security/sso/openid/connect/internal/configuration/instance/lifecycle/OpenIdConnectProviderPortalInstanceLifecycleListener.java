@@ -18,7 +18,6 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -33,13 +32,13 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
 
 import java.net.URI;
 
 import java.security.MessageDigest;
 
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -66,28 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenIdConnectProviderPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener
 	implements EveryNodeEveryStartup {
-
-	public long getOAuthClientEntryId(long companyId, String providerName) {
-		Map<String, Long> oAuthClientEntryIds = _getOAuthClientEntryIds(
-			companyId);
-
-		if (oAuthClientEntryIds.isEmpty()) {
-			oAuthClientEntryIds = _getOAuthClientEntryIds(
-				CompanyConstants.SYSTEM);
-		}
-
-		if (oAuthClientEntryIds.isEmpty()) {
-			return 0;
-		}
-
-		Long oAuthClientEntryId = oAuthClientEntryIds.get(providerName);
-
-		if (oAuthClientEntryId == null) {
-			return 0;
-		}
-
-		return oAuthClientEntryId;
-	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
@@ -172,7 +149,8 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 	private void _deleteOAuthClientEntry(
 		long companyId, Dictionary<String, ?> properties) {
 
-		_oAuthClientEntryIds.remove(companyId);
+		OpenIdConnectProviderUtil.removeOAuthClientEntryIdsByCompanyId(
+			companyId);
 
 		try {
 			String authServerWellKnownURI = _deleteOAuthClientASLocalMetadata(
@@ -354,41 +332,6 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		).toString();
 	}
 
-	private Map<String, Long> _getOAuthClientEntryIds(long companyId) {
-		return _oAuthClientEntryIds.computeIfAbsent(
-			companyId,
-			key -> {
-				Map<String, Long> oAuthClientEntryIds = new HashMap<>();
-
-				for (OAuthClientEntry oAuthClientEntry :
-						_oAuthClientEntryLocalService.
-							getCompanyOAuthClientEntries(companyId)) {
-
-					try {
-						JSONObject jsonObject = _jsonFactory.createJSONObject(
-							oAuthClientEntry.getInfoJSON());
-
-						String clientName = jsonObject.getString(
-							"client_name", null);
-
-						if (clientName != null) {
-							clientName = clientName.substring(
-								_CLIENT_TO.length());
-						}
-
-						oAuthClientEntryIds.put(
-							clientName,
-							oAuthClientEntry.getOAuthClientEntryId());
-					}
-					catch (JSONException jsonException) {
-						throw new RuntimeException(jsonException);
-					}
-				}
-
-				return oAuthClientEntryIds;
-			});
-	}
-
 	private JSONArray _getPropertyAsJSONArray(
 		String key, Dictionary<String, ?> properties) {
 
@@ -509,7 +452,8 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 				_addOAuthClientEntry(properties, guestUserId);
 			}
 
-			_oAuthClientEntryIds.remove(companyId);
+			OpenIdConnectProviderUtil.removeOAuthClientEntryIdsByCompanyId(
+				companyId);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -535,9 +479,6 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 	@Reference
 	private OAuthClientASLocalMetadataLocalService
 		_oAuthClientASLocalMetadataLocalService;
-
-	private final Map<Long, Map<String, Long>> _oAuthClientEntryIds =
-		new ConcurrentHashMap<>();
 
 	@Reference
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;

@@ -22,8 +22,8 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticatio
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.security.sso.openid.connect.internal.configuration.instance.lifecycle.OpenIdConnectProviderPortalInstanceLifecycleListener;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
+import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectRequestParametersUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
 
@@ -243,10 +243,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		throws PortalException {
 
 		requestAuthentication(
-			_openIdConnectProviderPortalInstanceLifecycleListener.
-				getOAuthClientEntryId(
-					_portal.getCompanyId(httpServletRequest),
-					openIdConnectProviderName),
+			OpenIdConnectProviderUtil.getOAuthClientEntryId(
+				_portal.getCompanyId(httpServletRequest),
+				openIdConnectProviderName, _oAuthClientEntryLocalService),
 			httpServletRequest, httpServletResponse);
 	}
 
@@ -466,10 +465,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 	@Reference
 	private OIDCUserInfoProcessor _oidcUserInfoProcessor;
-
-	@Reference
-	private OpenIdConnectProviderPortalInstanceLifecycleListener
-		_openIdConnectProviderPortalInstanceLifecycleListener;
 
 	@Reference
 	private Portal _portal;

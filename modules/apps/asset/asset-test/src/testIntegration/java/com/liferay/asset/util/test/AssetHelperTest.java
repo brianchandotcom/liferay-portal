@@ -208,9 +208,9 @@ public class AssetHelperTest {
 	@Test
 	public void testSearchWithMultipleAssetQueryByTags() throws Exception {
 		AssetTag assetTag1 = AssetTestUtil.addTag(
-			_group.getGroupId(), "asset tag1");
+			_group.getGroupId(), RandomTestUtil.randomString());
 		AssetTag assetTag2 = AssetTestUtil.addTag(
-			_group.getGroupId(), "asset tag2");
+			_group.getGroupId(), RandomTestUtil.randomString());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

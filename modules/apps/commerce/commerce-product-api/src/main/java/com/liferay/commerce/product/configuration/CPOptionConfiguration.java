@@ -24,6 +24,6 @@ public interface CPOptionConfiguration {
 		deflt = "select|radio|date|checkbox|checkbox_multiple|numeric|text",
 		name = "product-option-form-field-types-allowed", required = false
 	)
-	public String[] ddmFormFieldTypesAllowed();
+	public String[] commerceOptionTypesAllowed();
 
 }

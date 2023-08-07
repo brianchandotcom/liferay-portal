@@ -330,7 +330,7 @@ export default function ViewObjectDefinitions({
 									<div className="d-flex">
 										<ClayButton
 											aria-label={Liferay.Language.get(
-												'add-objects-folder'
+												'add-object-folder'
 											)}
 											className="component-action"
 											displayType="unstyled"

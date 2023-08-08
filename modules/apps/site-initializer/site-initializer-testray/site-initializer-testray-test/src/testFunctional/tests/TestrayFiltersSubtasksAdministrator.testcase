@@ -170,19 +170,17 @@ definition {
 	@priority = 4
 	test AdminCanFilterSubtasksByAssignee {
 		task ("Given that subtask 1 is assigned to user userfn userln") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
+				tableEntry = "Subtask_1",
+				userName = "userfn userln");
 		}
 
 		task ("And that subtask 2 is assigned to user Test") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_2");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+				tableEntry = "Subtask_2",
+				userName = "Test Test");
 		}
 
 		task ("When the user select the user userfn userln in the filter") {
@@ -269,32 +267,25 @@ definition {
 	@priority = 4
 	test AdminCanFilterSubtaskWithMultipleOptions {
 		task ("Given that subtask 1 is assigned to user userfn userln") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
+				tableEntry = "Subtask_1",
+				userName = "userfn userln");
 		}
 
 		task ("And that subtask 2 is assigned to user Test Test") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_2");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+				tableEntry = "Subtask_2",
+				userName = "Test Test");
 		}
 
 		task ("And that subtask 2 is completed with blocked") {
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
-				tableEntry = "Subtask_2");
-
-			TestrayTestflow.editStatus(
+			TestrayTestflow.editStatusByRightClick(
 				comment = "button does not work",
 				issues = "LPS-166191",
-				selectStatus = "Blocked");
-
-			WaitForPageLoad();
+				selectStatus = "Blocked",
+				tableEntry = "Subtask_2");
 		}
 
 		task ("When the user filter multiple options by: Assignee, user and status in the filter") {

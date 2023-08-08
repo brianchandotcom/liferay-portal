@@ -171,13 +171,9 @@ definition {
 				rowOption = "Assign to Me and Begin Analysis",
 				tableEntry = "Subtask_1");
 
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
+			TestrayTestflow.editStatusByRightClick(
+				selectStatus = "Passed",
 				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see the subtask edited") {
@@ -237,13 +233,9 @@ definition {
 				rowOption = "Assign to Me and Begin Analysis",
 				tableEntry = "Subtask_1");
 
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
+			TestrayTestflow.editStatusByRightClick(
+				selectStatus = "Passed",
 				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see the subtask edited") {

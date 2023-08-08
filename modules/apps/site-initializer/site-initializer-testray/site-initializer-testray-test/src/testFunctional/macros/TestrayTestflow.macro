@@ -62,11 +62,26 @@ definition {
 	}
 
 	macro assignUsers {
-		SelectFrame(locator1 = "Testray#MODAL_BODY");
+		if (isSet(assignButton)) {
+			Button.click(button = ${assignButton});
 
-		Testray.clickTableEntry(tableEntry = ${userName});
+			SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Alert.viewSuccessMessage();
+			Testray.clickTableEntry(tableEntry = ${userName});
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			TestrayManage.selectTableRowOption(
+				rowOption = ${rowOption},
+				tableEntry = ${tableEntry});
+
+			SelectFrame(locator1 = "Testray#MODAL_BODY");
+
+			Testray.clickTableEntry(tableEntry = ${userName});
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro editBreadcrumb {
@@ -98,19 +113,57 @@ definition {
 	}
 
 	macro editStatus {
+		WaitForElementPresent(
+			key_text = ${button},
+			locator1 = "Button#ANY");
+
+		Button.click(button = ${button});
+
+		WaitForPageLoad();
+
 		Select(
-			locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "dueStatus",
 			value1 = ${selectStatus});
 
 		if (isSet(issues)) {
-			Type(
-				locator1 = "TestrayTestflow#INPUT_ISSUES",
-				value1 = ${issues});
+			PortletEntry.inputText(
+				fieldLabel = "Issues",
+				text = ${issues});
 		}
 
 		if (isSet(comment)) {
 			Type(
-				locator1 = "TestrayTestflow#INPUT_COMMENT",
+				key_fieldId = "comment",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${comment});
+		}
+
+		Button.click(button = "Save");
+	}
+
+	macro editStatusByRightClick {
+		TestrayManage.selectTableRowOption(
+			rowOption = "Complete",
+			tableEntry = ${tableEntry});
+
+		WaitForPageLoad();
+
+		Select(
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "dueStatus",
+			value1 = ${selectStatus});
+
+		if (isSet(issues)) {
+			PortletEntry.inputText(
+				fieldLabel = "Issues",
+				text = ${issues});
+		}
+
+		if (isSet(comment)) {
+			Type(
+				key_fieldId = "comment",
+				locator1 = "TextArea#ANY_ID",
 				value1 = ${comment});
 		}
 
@@ -156,15 +209,11 @@ definition {
 	}
 
 	macro userAvatarNotPresent {
-		AssertElementNotPresent(
-			label = ${label},
-			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
+		AssertElementNotPresent(locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
 	macro userAvatarPresent {
-		AssertElementPresent(
-			label = ${label},
-			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
+		AssertElementPresent(locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
 }

@@ -338,7 +338,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			Select(
-				locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "dueStatus",
 				value1 = "Activated");
 
 			Button.click(button = "Apply");
@@ -392,7 +393,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			Select(
-				locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "dueStatus",
 				value1 = "Deactivated");
 
 			Button.click(button = "Apply");

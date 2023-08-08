@@ -167,17 +167,14 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
-
-			Button.click(button = "Complete Test");
 		}
 
 		task ("When the user edit the case result") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see Case Results edited with test fix") {
@@ -240,21 +237,14 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
-
-			WaitForElementPresent(
-				key_text = "Complete Test",
-				locator1 = "Button#ANY");
-
-			Button.click(button = "Complete Test");
 		}
 
 		task ("When the user edit the case result") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see Case Results edited with test fix") {

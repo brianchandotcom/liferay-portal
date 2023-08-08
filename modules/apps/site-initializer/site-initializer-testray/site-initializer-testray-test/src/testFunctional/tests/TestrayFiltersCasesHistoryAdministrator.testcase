@@ -185,9 +185,7 @@ definition {
 		task ("Given that the user assign to me a case result") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
-			TestrayTestflow.userAvatarNotPresent(
-				label = "Dates",
-				status = "Test Test");
+			TestrayTestflow.userAvatarNotPresent();
 
 			Button.click(button = "Assign to Me");
 		}
@@ -212,9 +210,7 @@ definition {
 		task ("And the user can see user avatar in the table") {
 			Navigator.gotoNavTab(navTab = "Result");
 
-			TestrayTestflow.userAvatarPresent(
-				label = "Dates",
-				status = "Test Test");
+			TestrayTestflow.userAvatarPresent();
 		}
 	}
 
@@ -226,14 +222,11 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			Button.click(button = "Complete Test");
-
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-123456",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 
 			Navigator.gotoNavTab(navTab = "History");
 		}
@@ -328,11 +321,9 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				selectStatus = "Passed");
 		}
 
 		task ("When the user filter a case result with passed status") {
@@ -494,11 +485,9 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				selectStatus = "Passed");
 		}
 
 		task ("When the user filter a case result history with multiple options") {

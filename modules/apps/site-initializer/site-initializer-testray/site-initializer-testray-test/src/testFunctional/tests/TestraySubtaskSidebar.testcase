@@ -195,9 +195,9 @@ definition {
 		task ("And the user assign a subtask") {
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
 			TestrayTestflow.goToTestflow();
 
@@ -257,23 +257,23 @@ definition {
 		task ("And the user assign two subtasks") {
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
 			Testray.clickBreadcrumb(text = ${taskName});
 
 			Testray.clickTableEntry(tableEntry = "Subtask_2");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 		}
 
 		task ("And the user complete the subtask") {
-			Button.click(button = "Complete");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
+			TestrayTestflow.editStatus(
+				button = "Complete",
+				selectStatus = "Passed");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtask Details",
@@ -281,9 +281,9 @@ definition {
 		}
 
 		task ("When the user reanalyze the subtask") {
-			Button.click(button = "Assign and Reanalyze");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Reanalyze",
+				userName = "Test Test");
 		}
 
 		task ("Then the subtask should appear on the sidebar") {

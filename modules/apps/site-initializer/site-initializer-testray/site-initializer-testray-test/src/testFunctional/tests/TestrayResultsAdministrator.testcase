@@ -117,7 +117,7 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Assign Tests directly to me through the context menu"
 	@priority = 3
 	test AdminCanAssignTestsDirectlyThroughTheContextMenu {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -125,21 +125,21 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("When the user goes to assign a case results") {
+		task ("When the user assigns himself a case results") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Assign to Me",
 				tableEntry = ${caseName});
 		}
 
 		task ("Then the user name appears") {
-			TestrayTestflow.userAvatarPresent(label = "Tests");
+			TestrayTestflow.userAvatarPresent();
 		}
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Delete Results"
 	@priority = 5
 	test AdminCanDeleteResults {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -147,7 +147,7 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("When the user goes to delete a case results") {
+		task ("When the user delete a case results") {
 			Testray.deleteItem(itemName = ${caseName});
 		}
 
@@ -159,7 +159,7 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to execute Tests and mark them as Failed"
 	@priority = 4
 	test AdminCanExecuteTestsAndMarkThemAsFailed {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -167,27 +167,23 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("When the user goes to assign a case results and edit test with Failed") {
-			TestrayManage.selectTableRowOption(
+		task ("And the user assigns the results of a case") {
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign",
-				tableEntry = ${caseName});
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+				tableEntry = ${caseName},
+				userName = "Test Test");
 
 			Testray.clickTableEntry(tableEntry = ${caseName});
-
-			TestrayTestflow.userAvatarPresent(label = "Dates");
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(
-				issues = "LPS-111111",
-				selectStatus = "Failed");
-
-			WaitForPageLoad();
 		}
 
-		task ("Then the Failed status appear in the list") {
+		task ("When editing the test as Failed") {
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				issues = "LPS-111111",
+				selectStatus = "Failed");
+		}
+
+		task ("Then the Failed status appears in the list") {
 			TestrayTestflow.assertStatus(
 				label = "Test Details",
 				status = "Failed");
@@ -197,32 +193,29 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Quick Edit Tests"
 	@priority = 4
 	test AdminCanQuickEditTests {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			Testray.clickTableEntry(tableEntry = ${buildName});
+
+			Testray.clickTableEntry(tableEntry = ${caseName});
 		}
 
-		task ("When the user goes to assign a case results and edit test with Test Fix") {
-			Testray.clickTableEntry(tableEntry = ${caseName});
-
+		task ("And the user assigns the results of a case") {
 			Button.click(button = "Assign to Me");
+		}
 
-			TestrayTestflow.userAvatarPresent(label = "Dates");
-
-			Button.click(button = "Complete Test");
-
+		task ("When editing the test as Test Fix") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 		}
 
-		task ("Then the Test Fix status appear in the list") {
+		task ("Then the Test Fix status appears in the list") {
 			TestrayTestflow.assertStatus(
 				label = "Test Details",
 				status = "Test Fix");
@@ -232,42 +225,35 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Reopen Tests"
 	@priority = 3
 	test AdminCanReopenTests {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			Testray.clickTableEntry(tableEntry = ${buildName});
-		}
 
-		task ("When the user goes to assign a case results and go to complete test") {
 			Testray.clickTableEntry(tableEntry = ${caseName});
-
-			Button.click(button = "Assign");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-
-			TestrayTestflow.userAvatarPresent(label = "Dates");
-
-			Button.click(button = "Complete Test");
 		}
 
-		task ("And the user edit test with Blocked status") {
+		task ("And the user assigns the results of a case") {
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign",
+				userName = "Test Test");
+		}
+
+		task ("And the user edit test as Blocked") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				comment = "button does not work",
 				issues = "LPS-111111",
 				selectStatus = "Blocked");
-
-			WaitForPageLoad();
-
-			TestrayTestflow.assertStatus(
-				label = "Test Details",
-				status = "Blocked");
 		}
 
-		task ("Then the user reopen test and in progress status appear in the list") {
+		task ("When the user reopen test") {
 			Button.click(button = "Reopen Test");
+		}
 
+		task ("Then the in progress status appears in the list") {
 			TestrayTestflow.assertStatus(
 				label = "Test Details",
 				status = "In Progress");
@@ -277,29 +263,25 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to reset Tests"
 	@priority = 4
 	test AdminCanResetTests {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			Testray.clickTableEntry(tableEntry = ${buildName});
-		}
 
-		task ("When the user goes to assign a case results with status in progress") {
 			Testray.clickTableEntry(tableEntry = ${caseName});
-
-			Button.click(button = "Assign to Me");
-
-			TestrayTestflow.userAvatarPresent(label = "Dates");
-
-			TestrayTestflow.assertStatus(
-				label = "Test Details",
-				status = "In Progress");
 		}
 
-		task ("Then the user reset test and Untested status appear in the list") {
-			Button.click(button = "Reset Test");
+		task ("And the user assigns the results of a case") {
+			Button.click(button = "Assign to Me");
+		}
 
+		task ("When the user reset test") {
+			Button.click(button = "Reset Test");
+		}
+
+		task ("Then the Untested status appears in the list") {
 			TestrayTestflow.assertStatus(
 				label = "Test Details",
 				status = "Untested");
@@ -309,7 +291,7 @@ definition {
 	@description = "Story ID: LPS-170820 | Test Summary: Verify that, as an Administrator, I should be able to see all the Problem Lists in the tables"
 	@priority = 4
 	test AdminCanSeeIssuesInAllTables {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -317,33 +299,29 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("And the user goes to assign a case results") {
-			TestrayManage.selectTableRowOption(
+		task ("And the user assigns the results of a case") {
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign",
-				tableEntry = ${caseName});
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+				tableEntry = ${caseName},
+				userName = "Test Test");
 		}
 
-		task ("When the user edit test with Failed and add thw issue") {
+		task ("When the user edit test as Failed with issue") {
 			Testray.clickTableEntry(tableEntry = ${caseName});
 
-			Button.click(button = "Complete Test");
-
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				issues = "LPS-111222",
 				selectStatus = "Failed");
-
-			WaitForPageLoad();
 		}
 
-		task ("Then the issue appear in the table in case result") {
+		task ("Then the issue appears in the table in case result") {
 			TestrayResults.assertIssue(
 				issue = "LPS-111222",
 				label = "Dates");
 		}
 
-		task ("Then the issue appear in the table in case result") {
+		task ("And the issue appears in the table in case history") {
 			Navigator.gotoNavTab(navTab = "History");
 
 			TestrayResults.assertIssue(
@@ -351,7 +329,7 @@ definition {
 				label = "Test History");
 		}
 
-		task ("Then the issue appear in the table in case result") {
+		task ("And the issue appears in the table in build history") {
 			Testray.clickBreadcrumb(text = "Build 1");
 
 			TestrayResults.assertIssue(
@@ -363,10 +341,12 @@ definition {
 				label = "Tests");
 		}
 
-		task ("Then the issue appear in the table in case result") {
+		task ("And the issue appears in the table in test history") {
 			Testray.clickTableEntry(tableEntry = ${caseName});
 
-			Click(locator1 = "TestrayResults#VIEW_CASE_LINK");
+			Click(
+				key_text = "View Case",
+				locator1 = "Link#ANY");
 
 			TestrayResults.assertIssue(
 				issue = "LPS-111222",
@@ -381,41 +361,40 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests"
 	@priority = 3
 	test AdminCanUnassignTests {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			Testray.clickTableEntry(tableEntry = ${buildName});
+
+			Testray.clickTableEntry(tableEntry = ${caseName});
 		}
 
-		task ("When the user goes to assign a case results and Unassign Myself a case results") {
-			Testray.clickTableEntry(tableEntry = ${caseName});
-
+		task ("And the user assigns the results of a case") {
 			Button.click(button = "Assign to Me");
+		}
 
-			TestrayTestflow.userAvatarPresent(label = "Dates");
-
-			Button.click(button = "Complete Test");
-
+		task ("And the user edit test as Failed") {
 			TestrayTestflow.editStatus(
+				button = "Complete Test",
 				issues = "LPS-111222",
 				selectStatus = "Failed");
+		}
 
-			WaitForPageLoad();
-
+		task ("When the user unassigns himself a case results") {
 			Button.click(button = "Unassign Myself");
 		}
 
-		task ("Then the user name does not appear in the list") {
-			TestrayTestflow.userAvatarNotPresent(label = "Tests");
+		task ("Then the user name does not appears in the list") {
+			TestrayTestflow.userAvatarNotPresent();
 		}
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to Unassign Tests through the context menu"
 	@priority = 2
 	test AdminCanUnassignTestsThroughTheContextMenu {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -423,27 +402,27 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("When the user goes to assign a case results and Unassign Myself a case results") {
+		task ("And the user assigns the results of a case") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Assign to Me",
 				tableEntry = ${caseName});
+		}
 
-			TestrayTestflow.userAvatarPresent(label = "Tests");
-
+		task ("When the user unassigns himself a case results by context menu") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Unassign Myself",
 				tableEntry = ${caseName});
 		}
 
-		task ("Then the user name does not appear in the list") {
-			TestrayTestflow.userAvatarNotPresent(label = "Tests");
+		task ("Then the user name does not appears in the list") {
+			TestrayTestflow.userAvatarNotPresent();
 		}
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to verify the accuracy of the Case Result Metrics Card"
 	@priority = 4
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -451,15 +430,15 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("Then can view test total in metrics of case results") {
-			TestrayResults.caseResultsMetrics(totalTestCases = 1);
+		task ("Then can view the total test in case results metrics") {
+			TestrayResults.assertGraphValue(number = 1);
 		}
 	}
 
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to view Results grouped by Component"
 	@priority = 3
 	test AdminCanViewResultsGroupedByComponent {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results page") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -467,7 +446,7 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("Then the user view results by component") {
+		task ("When the user goes to the 'components' tab") {
 			Navigator.gotoNavTab(navTab = "Components");
 
 			ScrollWebElementIntoView(
@@ -475,7 +454,9 @@ definition {
 				locator1 = "Testray#TABLE_ENTRY");
 
 			Testray.changePagination(quantity = 150);
+		}
 
+		task ("The user sees the results grouped by component") {
 			Testray.viewTableEntryList(listEntry = ${componentName});
 		}
 	}
@@ -483,7 +464,7 @@ definition {
 	@description = "Story ID: LPS-157164 | Test Summary: Verify if as an Administrator I am able to view Results grouped by Team"
 	@priority = 3
 	test AdminCanViewResultsGroupedByTeam {
-		task ("Given that the user go to case results") {
+		task ("Given that the user goes to the case results") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
@@ -491,11 +472,13 @@ definition {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
-		task ("Then the user view results by team") {
+		task ("When the user goes to the 'teams' tab") {
 			Navigator.gotoNavTab(navTab = "Teams");
 
 			Testray.changePagination(quantity = 150);
+		}
 
+		task ("The user sees the results grouped by team") {
 			Testray.viewTableEntryList(listEntry = ${teamName});
 		}
 	}

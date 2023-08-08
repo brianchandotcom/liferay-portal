@@ -1,16 +1,16 @@
 definition {
 
+	macro assertGraphValue {
+		AssertElementPresent(
+			locator1 = "TestrayResults#TOTAL_TEST",
+			value1 = ${number});
+	}
+
 	macro assertIssue {
 		AssertElementPresent(
 			key_issue = ${issue},
 			key_label = ${label},
 			locator1 = "TestrayResults#ISSUE_WITH_LABEL");
-	}
-
-	macro caseResultsMetrics {
-		AssertTextEquals(
-			locator1 = "TestrayResults#TOTAL_TEST_CASE_RESULTS",
-			value1 = ${totalTestCases});
 	}
 
 }

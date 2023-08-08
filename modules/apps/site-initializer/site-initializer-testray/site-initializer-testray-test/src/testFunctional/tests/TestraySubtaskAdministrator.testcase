@@ -177,25 +177,21 @@ definition {
 		task ("Given that the user different assign a subtask") {
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "userfn userln");
 
-			TestrayTestflow.assignUsers(userName = "userfn userln");
-
-			TestrayTestflow.userAvatarPresent(
-				label = "Subtask Details",
-				status = "userfn userln");
+			TestrayTestflow.userAvatarPresent();
 		}
 
 		task ("When the user logged in assign the subtask") {
-			Button.click(button = "Assign");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign",
+				userName = "Test Test");
 		}
 
 		task ("Then the user logged in should appear on the list") {
-			TestrayTestflow.userAvatarPresent(
-				label = "Subtask Details",
-				status = "Test Test");
+			TestrayTestflow.userAvatarPresent();
 		}
 	}
 
@@ -231,22 +227,16 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
+				tableEntry = "Subtask_1",
+				userName = "Test Test");
 
-			TestrayTestflow.assignUsers(userName = "Test Test");
-
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(
+			TestrayTestflow.editStatusByRightClick(
 				comment = "button does not work",
 				issues = "LPS-166191",
-				selectStatus = "Blocked");
-
-			WaitForPageLoad();
+				selectStatus = "Blocked",
+				tableEntry = "Subtask_1");
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
@@ -270,22 +260,16 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
+				tableEntry = "Subtask_1",
+				userName = "Test Test");
 
-			TestrayTestflow.assignUsers(userName = "Test Test");
-
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(
+			TestrayTestflow.editStatusByRightClick(
 				comment = "button does not work",
 				issues = "LPS-166191",
-				selectStatus = "Failed");
-
-			WaitForPageLoad();
+				selectStatus = "Failed",
+				tableEntry = "Subtask_1");
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
@@ -313,13 +297,9 @@ definition {
 				rowOption = "Assign to Me and Begin Analysis",
 				tableEntry = "Subtask_1");
 
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
+			TestrayTestflow.editStatusByRightClick(
+				selectStatus = "Passed",
 				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the complete status appears of the subtask") {
@@ -339,18 +319,15 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-
-			Button.click(button = "Complete");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
 			TestrayTestflow.editStatus(
+				button = "Complete",
 				comment = "button does not work",
 				issues = "LPS-166191",
 				selectStatus = "Test Fix");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
@@ -368,26 +345,25 @@ definition {
 	@priority = 5
 	test AdminCanCompleteSubtaskThatBeenMerged {
 		task ("Given that the user logged in assign a subtask") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+				tableEntry = "Subtask_1",
+				userName = "Test Test");
 		}
 
-		task ("When the user merging the subtask") {
+		task ("And the user merging the subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
 		}
 
-		task ("Then the alert message is displayed") {
+		task ("When edit the subtask merged") {
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Complete");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
+			TestrayTestflow.editStatus(
+				button = "Complete",
+				selectStatus = "Passed");
 		}
 
-		task ("Then the alert message is displayed") {
+		task ("Then can see the subtask merged completed") {
 			TestrayTestflow.assertStatus(
 				label = "Subtask Details",
 				status = "Complete");
@@ -402,17 +378,14 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1",
+				userName = "Test Test");
+
+			TestrayTestflow.editStatusByRightClick(
+				selectStatus = "Passed",
 				tableEntry = "Subtask_1");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
-
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -442,22 +415,16 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
+				tableEntry = "Subtask_1",
+				userName = "Test Test");
 
-			TestrayTestflow.assignUsers(userName = "Test Test");
-
-			TestrayManage.selectTableRowOption(
-				rowOption = "Complete",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.editStatus(
+			TestrayTestflow.editStatusByRightClick(
 				comment = "button does not work",
-				issues = "LPS-166193",
-				selectStatus = "Blocked");
-
-			WaitForPageLoad();
+				issues = "LPS-166191",
+				selectStatus = "Blocked",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -471,9 +438,9 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = "Subtask_2");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtask Details",
@@ -499,9 +466,9 @@ definition {
 		task ("Given that the user different assign a subtask") {
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "userfn userln");
 		}
 
 		task ("When the user different trying complete a subtask") {
@@ -531,19 +498,17 @@ definition {
 	@priority = 4
 	test AdminCanNotMergeSubtasksWithDifferentUsers {
 		task ("Given that the user different assign a subtask") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_1");
-
-			TestrayTestflow.assignUsers(userName = "userfn userln");
+				tableEntry = "Subtask_1",
+				userName = "userfn userln");
 		}
 
 		task ("And the user logged in assign a subtask") {
-			TestrayManage.selectTableRowOption(
+			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
-				tableEntry = "Subtask_2");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+				tableEntry = "Subtask_2",
+				userName = "Test Test");
 		}
 
 		task ("When the user trying merging the subtask assigned to different users") {
@@ -563,15 +528,15 @@ definition {
 		task ("Given that the user assign a subtask") {
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 		}
 
 		task ("And the user complete the subtask") {
-			Button.click(button = "Complete");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
+			TestrayTestflow.editStatus(
+				button = "Complete",
+				selectStatus = "Passed");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtask Details",
@@ -579,9 +544,9 @@ definition {
 		}
 
 		task ("When the user reanalyze the subtask") {
-			Button.click(button = "Assign and Reanalyze");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Reanalyze",
+				userName = "Test Test");
 		}
 
 		task ("Then the status in analysis should appear on the list") {
@@ -601,9 +566,9 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
-			Button.click(button = "Assign and Begin Analysis");
-
-			TestrayTestflow.assignUsers(userName = "Test Test");
+			TestrayTestflow.assignUsers(
+				assignButton = "Assign and Begin Analysis",
+				userName = "Test Test");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtask Details",

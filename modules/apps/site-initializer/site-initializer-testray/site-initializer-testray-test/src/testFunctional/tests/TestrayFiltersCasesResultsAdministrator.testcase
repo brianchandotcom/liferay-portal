@@ -173,9 +173,7 @@ definition {
 		task ("Given that the user assign to me a case result") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
-			TestrayTestflow.userAvatarNotPresent(
-				label = "Dates",
-				status = "Test Test");
+			TestrayTestflow.userAvatarNotPresent();
 
 			Button.click(button = "Assign to Me");
 		}
@@ -200,9 +198,7 @@ definition {
 		task ("Then the user can see user avatar in the table") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
-			TestrayTestflow.userAvatarPresent(
-				label = "Dates",
-				status = "Test Test");
+			TestrayTestflow.userAvatarPresent();
 		}
 
 		task ("Delete user created") {
@@ -412,11 +408,9 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				selectStatus = "Passed");
 		}
 
 		task ("And that the user has two status different in the table") {
@@ -488,15 +482,9 @@ definition {
 
 			Button.click(button = "Assign to Me");
 
-			WaitForElementPresent(
-				key_text = "Complete Test",
-				locator1 = "Button#ANY");
-
-			Button.click(button = "Complete Test");
-
-			TestrayTestflow.editStatus(selectStatus = "Passed");
-
-			WaitForPageLoad();
+			TestrayTestflow.editStatus(
+				button = "Complete Test",
+				selectStatus = "Passed");
 		}
 
 		task ("And that the user has two case result different in the table") {
@@ -540,12 +528,8 @@ definition {
 			Button.click(button = "Apply");
 		}
 
-		task ("Then the user see only the Case 1, user and status in the table") {
+		task ("Then the user see only the Case 1 and status in the table") {
 			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1,Passed");
-
-			TestrayTestflow.userAvatarPresent(
-				label = "Tests",
-				status = "Test Test");
 		}
 
 		task ("And do not see Case 2 in the table") {

@@ -31,28 +31,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INPUT_COMMENT</td>
-	<td>//textarea[@id='comment']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INPUT_ISSUES</td>
-	<td>//input[contains(@name,'issue')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_STATUS_CASE_RESULTS</td>
-	<td>//select[@id='dueStatus']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TESTFLOW_STATUS</td>
-	<td>//h5[normalize-space()='${key_label}']//following::*[contains (text(), '${key_status}')]</td>
+	<td>//div[normalize-space()='${key_label}']//following::*[contains (text(), '${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_AVATAR_IMAGE</td>
-	<td>//h5[normalize-space()='${label}']//following::span[@class='sticker-overlay']</td>
+	<td>//*[normalize-space()='Assignee']/following::span[@class='sticker-overlay']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -2,13 +2,13 @@
 	<div class="form-group [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
 		<div class="align-items-end input-group">
 			<div class="input-group-item input-group-prepend">
-				<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-select-from-list-input">
+				<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
 					${htmlUtil.escape(input.label)}
 
 					[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 				</label>
 
-				<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
+				<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" aria-labelledby="${fragmentEntryLinkNamespace}-select-from-list-input-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-select-from-list-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 
 				<input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
 				<input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
@@ -64,7 +64,7 @@
 		</div>
 
 		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-select-from-list-input-error-message">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />
 				</svg>

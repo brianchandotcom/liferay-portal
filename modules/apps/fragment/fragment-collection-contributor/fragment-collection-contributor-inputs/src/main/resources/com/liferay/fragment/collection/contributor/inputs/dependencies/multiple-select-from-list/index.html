@@ -1,10 +1,10 @@
 <div class="multiselect-list">
 	<div class="custom-checkbox custom-control [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
-		<fieldset aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" class="multiselect-list-fieldset">
-			<legend class="font-weight-semi-bold mb-1 text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]">
-				${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
-			</legend>
+		<span class="font-weight-semi-bold mb-1 text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-multiselect-list-label">
+			${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+		</span>
 
+		<div aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-multiselect-list-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">
 			[#assign options=(input.attributes.options)![]]
 			[#assign values=(input.value?split(","))]
 
@@ -27,11 +27,11 @@
 					${languageUtil.get(locale, "show-all")}
 				</button>
 			[/#if]
-		</fieldset>
+		</div>
 	</div>
 
 	[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
-		<p class="font-weight-semi-bold mt-1 text-danger">
+		<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-multiselect-list-error-message">
 			<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 				<use xlink:href="${siteSpritemap}#info-circle" />
 			</svg>

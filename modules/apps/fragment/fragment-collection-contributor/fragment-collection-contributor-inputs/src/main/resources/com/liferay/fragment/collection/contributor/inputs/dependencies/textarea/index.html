@@ -1,8 +1,8 @@
 <div class="textarea">
 	<div class="form-group [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-textarea">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-textarea-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
-		<textarea aria-describedby="${fragmentEntryLinkNamespace}-textarea-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-textarea" name="${input.name}" placeholder="${configuration.placeholder}" ${input.required?then('required', '')} [#if configuration.numberOfLines > 0]rows="${configuration.numberOfLines}"[/#if] type="text">[#if input.value??]${input.value}[/#if]</textarea>
+		<textarea aria-describedby="${fragmentEntryLinkNamespace}-textarea-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-textarea-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-textarea-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-textarea" name="${input.name}" placeholder="${configuration.placeholder}" ${input.required?then('required', '')} [#if configuration.numberOfLines > 0]rows="${configuration.numberOfLines}"[/#if] type="text">[#if input.value??]${input.value}[/#if]</textarea>
 
 		<p class="mt-1 text-secondary [#if !configuration.showCharactersCount]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-length-info">
 			<span class="sr-only" id="${fragmentEntryLinkNamespace}-length-warning">
@@ -16,7 +16,7 @@
 		</p>
 
 		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
-			<p class="font-weight-semi-bold mt-1 text-danger">
+			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-textarea-error-message">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />
 				</svg>

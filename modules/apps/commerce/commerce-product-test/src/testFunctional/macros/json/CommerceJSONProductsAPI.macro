@@ -1005,6 +1005,55 @@ definition {
 		return ${skuId};
 	}
 
+	macro _patchCommerceProductAttachmentUsingERC {
+		Variables.assertDefined(parameterList = ${productERC});
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(attachment))) {
+			var attachment = "";
+		}
+
+		if (!(isSet(attachmentTitle))) {
+			var attachmentTitle = "Simple Attachment Title API";
+		}
+
+		if (isSet(customFieldName)) {
+			var customFields = '''
+				{
+					"customValue": {
+						"data": "${customFieldContent}"
+					},
+					"dataType": "${customFieldType}",
+					"name": "${customFieldName}"
+				}
+			''';
+		}
+		else {
+			var customFields = "";
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${productERC}/attachments \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"attachment": "${attachment}",
+					"customFields": [${customFields}],
+					"title": {
+						"en_US": "${attachmentTitle}"
+					}
+				}'
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _patchCommerceProductConfiguration {
 		Variables.assertDefined(parameterList = ${productName});
 

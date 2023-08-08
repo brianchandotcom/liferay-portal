@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
@@ -28,9 +30,12 @@ public class JSBundleConfigPortalWebResources {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
+			ServletConfig servletConfig =
+				_jsBundleConfigServlet.getServletConfig();
+
 			PortalWebResources portalWebResources =
 				new InternalPortalWebResources(
-					_jsBundleConfigServlet.getServletContext());
+					servletConfig.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
 				PortalWebResources.class, portalWebResources, null);
@@ -50,8 +55,10 @@ public class JSBundleConfigPortalWebResources {
 	@Reference
 	private JSBundleConfigRegistry _jsBundleConfigRegistry;
 
-	@Reference
-	private JSBundleConfigServlet _jsBundleConfigServlet;
+	@Reference(
+		target = "(component.name=com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigServlet)"
+	)
+	private Servlet _jsBundleConfigServlet;
 
 	private ServiceRegistration<?> _serviceRegistration;
 

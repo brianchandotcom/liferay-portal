@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.http.whiteboard.servlet.pattern=/js_bundle_config",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
 	},
-	service = {JSBundleConfigServlet.class, Servlet.class}
+	service = Servlet.class
 )
 public class JSBundleConfigServlet extends HttpServlet {
 

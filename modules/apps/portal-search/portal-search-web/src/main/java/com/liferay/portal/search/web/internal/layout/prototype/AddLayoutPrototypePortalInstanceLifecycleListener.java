@@ -6,13 +6,11 @@
 package com.liferay.portal.search.web.internal.layout.prototype;
 
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,19 +22,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalInstanceLifecycleListener.class)
 public class AddLayoutPrototypePortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	protected void doPortalInstanceRegistered(long companyId) throws Exception {
 		Layout layout = searchLayoutFactory.createSearchLayoutPrototype(
-			company);
+			companyId);
 
 		if (layout == null) {
 			return;
 		}
 
 		Group guestGroup = groupLocalService.getGroup(
-			company.getCompanyId(), GroupConstants.GUEST);
+			companyId, GroupConstants.GUEST);
 
 		try {
 			MergeLayoutPrototypesThreadLocal.setInProgress(true);
@@ -53,8 +51,5 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 
 	@Reference
 	protected SearchLayoutFactory searchLayoutFactory;
-
-	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 }

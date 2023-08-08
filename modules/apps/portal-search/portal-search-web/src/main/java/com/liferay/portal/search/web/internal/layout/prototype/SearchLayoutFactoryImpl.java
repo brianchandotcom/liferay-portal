@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -57,9 +56,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	@Override
-	public Layout createSearchLayoutPrototype(Company company) {
-		long companyId = company.getCompanyId();
-
+	public Layout createSearchLayoutPrototype(long companyId) {
 		try {
 			return createSearchLayoutPrototype(
 				companyId, userLocalService.getGuestUserId(companyId));

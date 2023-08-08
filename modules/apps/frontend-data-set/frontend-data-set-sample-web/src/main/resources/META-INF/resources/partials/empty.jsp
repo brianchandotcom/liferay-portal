@@ -13,6 +13,6 @@ EmptyFDSDisplayContext emptyFDSDisplayContext = new EmptyFDSDisplayContext(reque
 
 <frontend-data-set:headless-display
 	apiURL="<%= emptyFDSDisplayContext.getAPIURL() %>"
-	emptyState='<%= emptyFDSDisplayContext.getEmptyState() %>'
+	emptyState="<%= emptyFDSDisplayContext.getEmptyState() %>"
 	id="<%= FDSSampleFDSNames.EMPTY %>"
 />

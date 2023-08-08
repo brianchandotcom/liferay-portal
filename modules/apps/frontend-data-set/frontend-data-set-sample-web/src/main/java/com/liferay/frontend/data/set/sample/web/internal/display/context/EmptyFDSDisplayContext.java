@@ -27,11 +27,14 @@ public class EmptyFDSDisplayContext {
 
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
-			"description", LanguageUtil.get(_httpServletRequest, "start-creating-one-to-show-your-data")
+			"description",
+			LanguageUtil.get(
+				_httpServletRequest, "start-creating-one-to-show-your-data")
 		).put(
 			"image", "/states/empty_state.gif"
 		).put(
-			"title", LanguageUtil.get(_httpServletRequest, "no-data-sets-created")
+			"title",
+			LanguageUtil.get(_httpServletRequest, "no-data-sets-created")
 		).build();
 	}
 

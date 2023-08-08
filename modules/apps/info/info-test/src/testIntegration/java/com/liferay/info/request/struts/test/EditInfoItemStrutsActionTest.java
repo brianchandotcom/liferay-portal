@@ -302,9 +302,10 @@ public class EditInfoItemStrutsActionTest {
 		ListTypeEntry listTypeEntry2 = _listTypeEntries.get(1);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			null, null, "-99999999999999.9999999999999999",
-			Boolean.TRUE.toString(), 0, "2023-03-01", null,
-			"-999.9999999999999", "-123456", "-9007199254740991",
+			RandomTestUtil.randomString(), null,
+			"-99999999999999.9999999999999999", Boolean.TRUE.toString(), 0,
+			"2023-03-01", null, "-999.9999999999999", "-123456",
+			"-9007199254740991",
 			Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey()),
 			listTypeEntry1.getKey(), "<p>TITLE</p>", null, null);
 
@@ -330,7 +331,7 @@ public class EditInfoItemStrutsActionTest {
 		ListTypeEntry listTypeEntry3 = _listTypeEntries.get(2);
 
 		uploadPortletRequest = _getUploadPortletRequest(
-			null, null, "99999999999999.9999999999999999",
+			"file", null, "99999999999999.9999999999999999",
 			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(),
 			"2020-03-01", null, "999.9999999999999", "123456",
 			"9007199254740991",
@@ -348,6 +349,17 @@ public class EditInfoItemStrutsActionTest {
 			objectEntry.getObjectEntryId());
 
 		Map<String, Serializable> values = objectEntry.getValues();
+
+		long fileEntryId = GetterUtil.getLong(values.get("myAttachment"));
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			fileEntryId);
+
+		Assert.assertEquals(
+			"file",
+			StringUtil.removeSubstring(
+				_textExtractor.extractText(dlFileEntry.getContentStream(), -1),
+				StringPool.NEW_LINE));
 
 		Assert.assertEquals(
 			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));

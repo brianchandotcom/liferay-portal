@@ -1007,11 +1007,15 @@ definition {
 
 		Check.checkNotVisible(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+		Click(
+			key_pageNumber = 2,
+			locator1 = "Pagination#ANY_PAGE_MODAL");
 
 		WorkflowMetrics.assertCheckboxUnchecked(taskListUnchecked = ${taskListUnchecked});
 
-		Click(locator1 = "Pagination#PREVIOUS_LINK");
+		Click(
+			key_pageNumber = 1,
+			locator1 = "Pagination#ANY_PAGE_MODAL");
 
 		WorkflowMetrics.assertCheckboxChecked(taskList = ${taskList});
 

@@ -120,7 +120,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"dependencies/allowedSingleWords.txt");
+			"dependencies/allowed-single-word-language-keys.txt");
 
 		if (inputStream == null) {
 			return Collections.emptyList();

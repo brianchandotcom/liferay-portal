@@ -261,8 +261,8 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 								size="sm"
 							>
 								{file
-									? Liferay.Language.get('replace-files')
-									: Liferay.Language.get('select-files')}
+									? Liferay.Language.get('replace-file')
+									: Liferay.Language.get('select-file')}
 							</ClayButton>
 
 							{error && (

@@ -1619,3 +1619,24 @@ Implement `com.liferay.portal.kernel.security.permission.resource.ModelResourceP
 ### Why was this change made?
 
 Interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` was deprecated since 7.1 and no longer used by Liferay internally.
+
+---------------------------------------
+
+## Removal of `com.liferay.document.library.kernel.util.DLProcessor` registration support from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+- **Date:** 2023-August-17
+- **JIRA Ticket:** [LPS-188559](https://liferay.atlassian.net/browse/LPS-188559)
+
+### What changed?
+The register/unregister methods were removed from the `DLProcessorRegistry` API. Also, the classes `DLProcessorRegistry` and `DLProcessorRegistryUtil` were renamed to `DLProcessorHelper` and `DLProcessorHelperUtil`, respectively.
+
+### Who is affected?
+
+This affects anyone providing its own `DLProcessor` implementation via hook.
+
+### How should I update my code?
+
+If you are providing your own `DLProcessor` implementation via a hook, convert it to an OSGi service.
+
+### Why was this change made?
+
+There were some registration logic duplicated between the `DLProcessorRegistryImpl` and `HookHotDeployListener`. Also, it was a preparation step to make the `DLProcessorRegistryImpl` an OSGi delayed service.

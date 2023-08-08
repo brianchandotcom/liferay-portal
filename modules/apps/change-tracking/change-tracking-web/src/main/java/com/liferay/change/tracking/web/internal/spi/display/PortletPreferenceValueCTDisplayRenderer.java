@@ -107,7 +107,8 @@ public class PortletPreferenceValueCTDisplayRenderer
 		if ((layout == null) ||
 			layout.isPortletEmbedded(
 				portletPreferences.getPortletId(), layout.getGroupId()) ||
-			layout.isSystem() || layout.isTypeControlPanel()) {
+			layout.isSystem() || layout.isTypeControlPanel() ||
+			layout.isTypePortlet()) {
 
 			return true;
 		}

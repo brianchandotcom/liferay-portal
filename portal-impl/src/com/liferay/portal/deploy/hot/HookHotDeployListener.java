@@ -5,8 +5,6 @@
 
 package com.liferay.portal.deploy.hot;
 
-import com.liferay.document.library.kernel.util.DLProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -167,9 +165,9 @@ public class HookHotDeployListener
 		"company.settings.form.miscellaneous", "company.settings.form.social",
 		"control.panel.entry.class.default", "default.landing.page.path",
 		"default.regular.color.scheme.id", "default.regular.theme.id",
-		"dl.file.entry.drafts.enabled", "dl.file.entry.processors",
-		"dl.repository.impl", "dl.store.antivirus.enabled",
-		"dl.store.antivirus.impl", "dl.store.impl",
+		"dl.file.entry.drafts.enabled", "dl.repository.impl",
+		"dl.store.antivirus.enabled", "dl.store.antivirus.impl",
+		"dl.store.impl",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
 		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"field.enable.com.liferay.portal.kernel.model.Organization.status",
@@ -349,13 +347,6 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, false);
-
-		if (portalProperties.containsKey(PropsKeys.DL_FILE_ENTRY_PROCESSORS)) {
-			DLFileEntryProcessorContainer dlFileEntryProcessorContainer =
-				_dlFileEntryProcessorContainerMap.remove(servletContextName);
-
-			dlFileEntryProcessorContainer.unregisterDLProcessors();
-		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_REPOSITORY_IMPL)) {
 			DLRepositoryContainer dlRepositoryContainer =
@@ -1298,32 +1289,6 @@ public class HookHotDeployListener
 				1000);
 		}
 
-		if (portalProperties.containsKey(PropsKeys.DL_FILE_ENTRY_PROCESSORS)) {
-			String[] dlProcessorClassNames = StringUtil.split(
-				portalProperties.getProperty(
-					PropsKeys.DL_FILE_ENTRY_PROCESSORS));
-
-			DLFileEntryProcessorContainer dlFileEntryProcessorContainer =
-				new DLFileEntryProcessorContainer();
-
-			_dlFileEntryProcessorContainerMap.put(
-				servletContextName, dlFileEntryProcessorContainer);
-
-			for (String dlProcessorClassName : dlProcessorClassNames) {
-				DLProcessor dlProcessor =
-					(DLProcessor)InstanceFactory.newInstance(
-						portletClassLoader, dlProcessorClassName);
-
-				dlProcessor = (DLProcessor)newInstance(
-					portletClassLoader,
-					ReflectionUtil.getInterfaces(
-						dlProcessor, portletClassLoader),
-					dlProcessorClassName);
-
-				dlFileEntryProcessorContainer.registerDLProcessor(dlProcessor);
-			}
-		}
-
 		if (portalProperties.containsKey(PropsKeys.DL_REPOSITORY_IMPL)) {
 			String[] dlRepositoryClassNames = StringUtil.split(
 				portalProperties.getProperty(PropsKeys.DL_REPOSITORY_IMPL));
@@ -2255,8 +2220,6 @@ public class HookHotDeployListener
 		_strutsActionProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
 			StrutsAction.class);
 
-	private final Map<String, DLFileEntryProcessorContainer>
-		_dlFileEntryProcessorContainerMap = new HashMap<>();
 	private final Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
 		new HashMap<>();
 	private final Map<String, HotDeployListenersContainer>
@@ -2274,26 +2237,6 @@ public class HookHotDeployListener
 	private final Map<String, Map<Object, ServiceRegistration<?>>>
 		_serviceRegistrations = newMap();
 	private final Set<String> _servletContextNames = new HashSet<>();
-
-	private static class DLFileEntryProcessorContainer {
-
-		public void registerDLProcessor(DLProcessor dlProcessor) {
-			DLProcessorRegistryUtil.register(dlProcessor);
-
-			_dlProcessors.add(dlProcessor);
-		}
-
-		public void unregisterDLProcessors() {
-			for (DLProcessor dlProcessor : _dlProcessors) {
-				DLProcessorRegistryUtil.unregister(dlProcessor);
-			}
-
-			_dlProcessors.clear();
-		}
-
-		private final List<DLProcessor> _dlProcessors = new ArrayList<>();
-
-	}
 
 	private static class DLRepositoryContainer {
 

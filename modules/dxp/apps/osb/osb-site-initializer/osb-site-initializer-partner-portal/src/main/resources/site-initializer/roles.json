@@ -24,6 +24,30 @@
 		"type": 1
 	},
 	{
+		"name": "[Organization] Channel Account Manager (CAM)",
+		"type": 3
+	},
+	{
+		"name": "[Organization] Channel Operations Manager (COM)",
+		"type": 3
+	},
+	{
+		"name": "[Organization] Channel Marketing Manager (CMM)",
+		"type": 3
+	},
+	{
+		"name": "[Organization] Channel Marketing Director (CMD)",
+		"type": 3
+	},
+	{
+		"name": "[Organization] Channel Finance Manager (CFM)",
+		"type": 3
+	},
+	{
+		"name": "[Organization] Channel Enablement Manager (CEM)",
+		"type": 3
+	},
+	{
 		"name": "Partner Manager (PM)",
 		"type": 1
 	},

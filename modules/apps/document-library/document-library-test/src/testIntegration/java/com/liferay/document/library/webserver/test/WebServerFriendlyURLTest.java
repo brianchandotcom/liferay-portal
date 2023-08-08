@@ -88,7 +88,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
-
 		Assert.assertFalse(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
@@ -100,7 +99,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 		String nameBase = RandomTestUtil.randomString();
 
 		String fileURL = nameBase + "+.txt";
-		String alternativeFileURL = nameBase + "%20.txt";
 		String fileName = nameBase + " .txt";
 
 		Assert.assertFalse(
@@ -114,12 +112,12 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
-
 		Assert.assertTrue(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format(
-						"/%s/0/%s", group.getGroupId(), alternativeFileURL))));
+						"/%s/0/%s", group.getGroupId(),
+						nameBase + "%20.txt"))));
 	}
 
 	@Test

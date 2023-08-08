@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-173655. Verify if virtual instances can be created via OSGI config file."
-	@ignore = "true"
 	@priority = 4
 	test CanCreateVirtualInstanceViaConfig {
 		property osgi.module.configuration.file.names = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration~www.able.com.config";

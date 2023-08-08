@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/smc-open-square-crm",
+	"hidden": true,
+	"name": "Open Square CRM",
+	"name_i18n": {
+		"en_US": "Open Square CRM"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.base.ObjectFolderLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
@@ -122,6 +123,10 @@ public class ObjectFolderLocalServiceImpl
 			objectFolder, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
+			_objectFolderItemLocalService.
+				deleteObjectFolderItemByObjectFolderId(
+					objectFolder.getObjectFolderId());
+
 			return objectFolder;
 		}
 
@@ -167,9 +172,16 @@ public class ObjectFolderLocalServiceImpl
 		ObjectFolder objectFolder = objectFolderPersistence.findByPrimaryKey(
 			objectFolderId);
 
+		for (ObjectFolderItem objectFolderItem : objectFolderItems) {
+			_objectFolderItemLocalService.updateObjectFolderItem(
+				objectFolderItem.getObjectDefinitionId(),
+				objectFolder.getObjectFolderId(),
+				objectFolderItem.getPositionX(),
+				objectFolderItem.getPositionY());
+		}
+
 		if (objectFolder.isUncategorized()) {
-			throw new UnsupportedOperationException(
-				"Uncategorized cannot be updated");
+			return objectFolder;
 		}
 
 		objectFolder.setExternalReferenceCode(externalReferenceCode);
@@ -233,6 +245,9 @@ public class ObjectFolderLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectFolderItemLocalService _objectFolderItemLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

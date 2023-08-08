@@ -229,8 +229,12 @@
 																							"value": {
 																								"fragmentImage": {
 																									"url": {
-																										"value_i18n": {
-																											"en_US": "/documents/d/[$GROUP_KEY$]/17_open_square_crm-png?imagePreview=1"
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/open-square-crm/17_open_square_crm.png#]"
+																											}
 																										}
 																									}
 																								},
@@ -331,14 +335,13 @@
 																											"id": "image-square",
 																											"value": {
 																												"fragmentImage": {
-																													"description": {
-																														"value_i18n": {
-																															"en_US": ""
-																														}
-																													},
 																													"url": {
-																														"value_i18n": {
-																															"en_US": "/documents/d/[$GROUP_KEY$]/17_smc_logo_new-png?imagePreview=1"
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/open-square-crm/17_smc_logo_new.png#]"
+																															}
 																														}
 																													}
 																												},
@@ -890,8 +893,12 @@
 																						"fragmentLink": {
 																						},
 																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"title\":\"17_open_square_crm_slider01-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/17_open_square_crm_slider01-png?imagePreview=1\"}"
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/open-square-crm/17_open_square_crm_slider01.png#]"
+																								}
 																							}
 																						}
 																					}
@@ -902,8 +909,12 @@
 																						"fragmentLink": {
 																						},
 																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"title\":\"17_open_square_crm_slider02-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/17_open_square_crm_slider02-png?imagePreview=1\"}"
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/open-square-crm/17_open_square_crm_slider02.png#]"
+																								}
 																							}
 																						}
 																					}

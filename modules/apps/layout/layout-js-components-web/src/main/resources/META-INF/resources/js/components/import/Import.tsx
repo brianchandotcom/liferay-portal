@@ -4,15 +4,17 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
+import {useModal} from '@clayui/modal';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
+import ImportOptionsModal, {OverwriteStrategy} from './ImportOptionsModal';
 import ImportResults, {Results, getResultsText} from './ImportResults';
 
 interface Props {
@@ -36,16 +38,20 @@ const ZIP_EXTENSION = '.zip';
 
 function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const [error, setError] = useState<string | null>(null);
-	const [overwrite, setOverwrite] = useState<boolean>(true);
 	const [file, setFile] = useState<File | null>(null);
 	const [fileName, setFileName] = useState<string | null>(null);
 	const [fileText, setFileText] = useState<string>(FILE_TEXTS.initial);
 	const [importResults, setImportResults] = useState<Results | null>(null);
+	const [importOptionsModalVisible, setImportOptionsModalVisible] = useState<
+		boolean
+	>(false);
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const fileInputId = useId();
 	const fileButtonDescriptionId = useId();
+
+	const {observer, onOpenChange} = useModal();
 
 	const validateFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files || event.target.files?.length === 0) {
@@ -82,7 +88,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 		setFileText(FILE_TEXTS.initial);
 	};
 
-	const importFile = () => {
+	const importFile = (overwriteStrategy?: OverwriteStrategy) => {
 		const formData = new FormData();
 
 		if (!file) {
@@ -90,14 +96,24 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 		}
 
 		formData.append(`${portletNamespace}file`, file);
-		formData.append(`${portletNamespace}overwrite`, overwrite.toString());
+
+		if (overwriteStrategy) {
+			setImportOptionsModalVisible(false);
+			formData.append(`${portletNamespace}importType`, overwriteStrategy);
+		}
 
 		fetch(importURL, {
 			body: formData,
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({importResults = {}}) => {
+			.then(({importResults, valid}) => {
+				if (typeof valid !== 'undefined' && !valid) {
+					setImportOptionsModalVisible(true);
+
+					return;
+				}
+
 				if (!Object.keys(importResults).length) {
 					navigate(backURL);
 					openToast({
@@ -169,7 +185,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 								<ClayToolbar.Item>
 									<ClayButton
 										disabled={!!error || !file}
-										onClick={importFile}
+										onClick={() => importFile()}
 										size="sm"
 									>
 										{Liferay.Language.get('import')}
@@ -261,17 +277,6 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 							)}
 						</ClayForm.Group>
 
-						<ClayCheckbox
-							checked={overwrite}
-							containerProps={{
-								className: 'c-mb-0',
-							}}
-							label={Liferay.Language.get(
-								'overwrite-existing-entries'
-							)}
-							onChange={() => setOverwrite((val) => !val)}
-						/>
-
 						{fileName && (
 							<p className="c-mb-0 font-weight-semi-bold small">
 								{fileName}
@@ -280,6 +285,14 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 					</ClayLayout.Sheet>
 				)}
 			</ClayLayout.ContainerFluid>
+
+			{importOptionsModalVisible && (
+				<ImportOptionsModal
+					observer={observer}
+					onImport={importFile}
+					onOpenChange={onOpenChange}
+				/>
+			)}
 		</>
 	);
 }

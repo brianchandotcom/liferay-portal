@@ -679,14 +679,14 @@ public class SourceFormatterUtil {
 				"**/.gitrepo"),
 			baseDirName, null, false,
 			filePath -> {
-				filePath = filePath.replace(
-					StringPool.BACK_SLASH, StringPool.SLASH);
-
 				if (filePath.endsWith("/source_formatter.ignore")) {
 					File file = new File(baseDirName, filePath);
 
 					if (file.exists()) {
-						_sfIgnoreDirectories.add(file.getParent());
+						_sfIgnoreDirectories.add(
+							StringUtil.replace(
+								file.getParent(), CharPool.BACK_SLASH,
+								CharPool.SLASH));
 					}
 				}
 
@@ -705,7 +705,10 @@ public class SourceFormatterUtil {
 					if ((content != null) &&
 						content.contains("autopull = true")) {
 
-						_subrepoIgnoreDirectories.add(file.getParent());
+						_subrepoIgnoreDirectories.add(
+							StringUtil.replace(
+								file.getParent(), CharPool.BACK_SLASH,
+								CharPool.SLASH));
 					}
 				}
 			});

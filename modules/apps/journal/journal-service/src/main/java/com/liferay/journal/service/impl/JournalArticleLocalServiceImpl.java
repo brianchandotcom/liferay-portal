@@ -6200,9 +6200,8 @@ public class JournalArticleLocalServiceImpl
 					"between ", previousCheckDate, " and ", reviewDate));
 		}
 
-		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, reviewDate,
-			previousCheckDate);
+		List<JournalArticle> articles = getArticlesByReviewDate(
+			previousCheckDate, reviewDate);
 
 		for (JournalArticle article : articles) {
 			if (article.isInTrash() ||

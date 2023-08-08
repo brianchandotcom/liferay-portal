@@ -13,11 +13,12 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.util.AssetVocabularyUtil;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,6 +33,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,10 +43,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalInstanceLifecycleListener.class)
 public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+	extends InitialRequestPortalInstanceLifecycleListener {
+
+	@Activate
+	@Override
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+	}
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	protected void doPortalInstanceRegistered(long companyId) throws Exception {
+		Company company = _companyLocalService.getCompany(companyId);
+
 		_addAssetVocabulary(company);
 
 		Set<Long> searchClassNameIds = new HashSet<>();
@@ -110,6 +121,9 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ContentDashboardItemFactoryRegistry

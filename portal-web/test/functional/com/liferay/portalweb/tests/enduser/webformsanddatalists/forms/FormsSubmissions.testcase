@@ -47,6 +47,8 @@ definition {
 
 		FormFields.enableSwitch(fieldName = "Required Field");
 
+		WaitForVisible(locator1 = "FormFields#SIDEBAR_BASIC_DEFAULT_ERROR_MESSAGE");
+
 		Form.closeSidebar();
 
 		Form.gotoAddField(

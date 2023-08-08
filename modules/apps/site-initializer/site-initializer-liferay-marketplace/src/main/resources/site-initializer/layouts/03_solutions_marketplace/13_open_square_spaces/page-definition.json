@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -67,21 +69,22 @@
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
-										"boxShadow": "",
-										"showIconBoxShadow": false,
-										"moveIcon": "-75px 0 0 0",
-										"containerWidth": "container",
-										"backgroundDarkOrLight": "light",
-										"borderRadius": "border-radius-none",
-										"lazyLoadingImage": true,
 										"background": "",
-										"backgroundSize": "cover",
-										"backgroundPosition": "center",
-										"showIcon": false,
+										"backgroundDarkOrLight": "light",
 										"backgroundImageUrl": "",
-										"blockAlignment": ""
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "container",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
@@ -95,7 +98,8 @@
 								},
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"pageElements": [
 											{
 												"definition": {
@@ -103,8 +107,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"hidden": true,
 														"paddingBottom": "4",
@@ -121,7 +127,8 @@
 														"paddingTop": "4"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 													}
 												},
@@ -143,11 +150,13 @@
 														},
 														{
 															"id": "portraitMobile",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "top"
@@ -163,11 +172,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -182,12 +193,13 @@
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
-																		"flexWrap": "",
 																		"flexDirection": "",
+																		"flexWrap": "",
 																		"items": 3,
 																		"justifyContent": "justify-content-start"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -200,7 +212,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -225,7 +238,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -242,7 +256,8 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -259,7 +274,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Open Square Spaces"
@@ -284,17 +300,19 @@
 																					},
 																					"fragmentConfig": {
 																						"alignItems": "align-items-start",
-																						"flexWrap": "",
 																						"flexDirection": "",
+																						"flexWrap": "",
 																						"items": 2,
 																						"justifyContent": "justify-content-start"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -319,7 +337,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -334,7 +353,8 @@
 																						"type": "FragmentDropZone"
 																					},
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"type": "FragmentDropZone"
 																					}
 																				],
@@ -355,7 +375,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": ""
@@ -376,7 +397,8 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	}
 																],
@@ -395,11 +417,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -414,12 +438,13 @@
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
-																		"flexWrap": "",
 																		"flexDirection": "",
+																		"flexWrap": "",
 																		"items": 1,
 																		"justifyContent": "justify-content-center"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -432,7 +457,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -440,15 +466,16 @@
 																						"key": "BASIC_COMPONENT-button"
 																					},
 																					"fragmentConfig": {
+																						"buttonSize": "nm",
 																						"buttonType": "primary",
-																						"type": "link",
-																						"buttonSize": "nm"
+																						"type": "link"
 																					},
 																					"fragmentFields": [
 																						{
 																							"id": "link",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Contact Partner"
@@ -479,11 +506,13 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	}
 																],
@@ -501,8 +530,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"paddingBottom": "6",
 														"paddingTop": "6"
@@ -561,7 +592,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -585,21 +618,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -613,7 +647,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -632,11 +667,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -652,11 +689,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -669,8 +708,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -694,7 +735,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Team up. Enterprise.<br />\nTransformation."
@@ -717,8 +759,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -742,7 +786,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Open Square Spaces is the ready-to-use collaboration and information portal. This out-of-the-box solution is compatible with your entire information ecosystem. It allows you to manage collaborative processes between users within the same organization as well as external collaborators."
@@ -764,8 +809,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -787,11 +834,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -804,8 +853,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -821,17 +872,18 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "2",
+																				"colorScheme": "dark",
 																				"imageAspectRatio": "aspect-ratio-4-to-3",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": "dark"
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "2"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "{\"title\":\"13_open_square_1-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/13_open_square_1-png?download=true\"}"
@@ -842,7 +894,8 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "{\"title\":\"13_open_square_2-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/13_open_square_2-png??download=true\"}"
@@ -853,7 +906,8 @@
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -903,7 +957,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -926,8 +982,10 @@
 												"key": "spacer",
 												"siteKey": "[$GROUP_KEY$]"
 											},
-											"fragmentConfig": {},
-											"fragmentFields": [],
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"paddingBottom": "6",
 												"paddingTop": "6"
@@ -943,21 +1001,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "container",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -971,7 +1030,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1011,11 +1071,13 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
 																			"id": "tablet",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		}
 																	],
 																	"verticalAlignment": "top"
@@ -1031,11 +1093,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -1048,8 +1112,10 @@
 																						"key": "spacer",
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
-																					"fragmentConfig": {},
-																					"fragmentFields": [],
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"paddingTop": "4"
 																					},
@@ -1072,7 +1138,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "The Enterprise Collaboration tool for your company"
@@ -1103,7 +1170,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "&nbsp;<br />\nOpen Square Spaces is the solution dedicated to sharing content that allows work teams to collaborate in real time.<br />\n<br />\nCreate shared spaces, Wiki and Forums and improve personal and business productivity.<br />\n<br />\n<a href=\"https://www.smc.it/solutions/open-square-spaces\" target=\"_blank\">Learn More</a>"
@@ -1129,11 +1197,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -1146,16 +1216,17 @@
 																						"key": "BASIC_COMPONENT-video"
 																					},
 																					"fragmentConfig": {
+																						"align": "flex-start",
+																						"autoPlay": false,
 																						"hideControls": false,
-																						"videoWidth": "",
 																						"loop": false,
 																						"mute": true,
-																						"autoPlay": false,
-																						"align": "flex-start",
 																						"url": "https://youtu.be/bTKgXTUksoo",
-																						"videoHeight": ""
+																						"videoHeight": "",
+																						"videoWidth": ""
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1175,8 +1246,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "6",
 																"paddingTop": "6"
@@ -1221,7 +1294,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1245,21 +1320,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "container",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1273,7 +1349,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1281,8 +1358,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"
@@ -1308,11 +1387,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -1328,11 +1409,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1345,8 +1428,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingTop": "4"
 																			},
@@ -1369,7 +1454,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Solution Highlights:"
@@ -1400,7 +1486,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<ul>\n\t<li>Create a personal area</li>\n\t<li>Manage collaborative spaces with other colleagues independently</li>\n\t<li>Access the various company workspaces, projects, products and much more</li>\n\t<li>Create and modify documents via browser even in co-editing mode</li>\n\t<li>Read and publish communications on specific digital bulletin boards</li>\n\t<li>Use calendars, forums, wikis and much more by seizing the opportunity to work remotely to optimize productivity</li>\n\t<li>Deliverable on Saas and on Premises.</li>\n</ul>\n"
@@ -1419,8 +1506,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -1444,7 +1533,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Feature List:"
@@ -1475,7 +1565,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<ul>\n\t<li><strong>Personal Productivity:</strong>\n\t<ul>\n\t\t<li>Personal Workspace</li>\n\t\t<li>Document Management and Sharing</li>\n\t\t<li>Calendar</li>\n\t\t<li>Real Time Online Editing</li>\n\t\t<li>Mail/Chat Videoconferencing</li>\n\t</ul>\n\t</li>\n\t<li><strong>Sharing:</strong>\n\t<ul>\n\t\t<li>Collaboration Spaces</li>\n\t\t<li>Newsfeed</li>\n\t\t<li>Collaborative Editing</li>\n\t\t<li>Calendar</li>\n\t\t<li>Contact Book</li>\n\t</ul>\n\t</li>\n\t<li><strong>Professional Productivity:</strong>\n\t<ul>\n\t\t<li>Project Sites</li>\n\t\t<li>Community</li>\n\t\t<li>Approval Workflow</li>\n\t</ul>\n\t</li>\n</ul>\n"
@@ -1494,8 +1585,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -1519,7 +1612,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Company Profile"
@@ -1550,10 +1644,11 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "SMC was established more than 40 years ago to improve our customers' performance.&nbsp;We create real solutions, not just software. We do it using always the most advanced open source developing technologies.\n<p><br />\nWe pay great attention to the user experience and make it easy for our solutions to be introduced and integrated into your company. We are Liferay Platinum Partner,&nbsp;the most reliable and evolved platform for creating business portals.</p>\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.smc.it/\" target=\"_blank\">https://www.smc.it/</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:smc@smc.it\">smc@smc.it</a><br />\n<br />\n<strong>Phone</strong><br />\n+39.0422.608043<br />\n "
+																								"en_US": "SMC was established more than 40 years ago to improve our customers' performance.&nbsp;We create real solutions, not just software. We do it using always the most advanced open source developing technologies.\n<p><br />\nWe pay great attention to the user experience and make it easy for our solutions to be introduced and integrated into your company. We are Liferay Platinum Partner,&nbsp;the most reliable and evolved platform for creating business portals.</p>\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.smc.it/\" target=\"_blank\">https://www.smc.it/</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:smc@smc.it\">smc@smc.it</a><br />\n<br />\n<strong>Phone</strong><br />\n+39.0422.608043<br />\n "
 																							}
 																						}
 																					}
@@ -1575,8 +1670,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "3"
@@ -1621,7 +1718,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1645,26 +1744,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "container",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1672,8 +1773,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"
@@ -1697,7 +1800,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Contact Us"
@@ -1729,8 +1833,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "2"
@@ -1745,8 +1851,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"

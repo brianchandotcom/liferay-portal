@@ -8,7 +8,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 
-	@ignore = "true"
 	@priority = 4
 	test CompareLatest7413PartitionedUpgradedAndFreshDBSchemas {
 		property database.bare.enabled = "true";

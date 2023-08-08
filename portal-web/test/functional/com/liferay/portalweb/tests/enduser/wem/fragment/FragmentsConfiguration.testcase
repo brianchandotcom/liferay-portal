@@ -1423,6 +1423,118 @@ main();
 		}
 	}
 
+	@description = "This is a test for LPS-191007. The fragment developer can define the maximum number of items to display."
+	@priority = 4
+	test DefineMaximumNumberOfItemsToDisplay {
+		task ("Given a fragment developer has a fragment with a maximum number of items to display") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''<div class="fragment-name">
+    <h1>
+        List of Items:
+    </h1>
+    <ul>
+        [#if collectionObjectList??]
+        [#list collectionObjectList as item]
+        <li>${item.title}</li>
+        [/#list]
+        [/#if]
+    </ul>
+</div>''';
+
+			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''{
+    "fieldSets": [
+        {
+        "label": "Collection",
+        "fields": [
+            {
+                "name": "collection",
+                "type": "collectionSelector",
+                typeOptions: {
+                    "numberOfItems": 2
+                }
+            }
+        ]
+        }
+    ]
+}''';
+
+			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("When the fragment developer selects a dynamic collection in the fragment on a content page") {
+			for (var i : list "1,2,3") {
+				HeadlessBlog.addBlogEntry(
+					content = "Blog Test Content ${i}",
+					groupName = "Test Site Name",
+					title = "Blog Test Title ${i}");
+			}
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
+
+			PortletEntry.save();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+
+			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			NavItem.click(navItem = "Collections");
+
+			LexiconCard.clickCard(card = "Dynamic Collection");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Then the fragment developer sees the number of displayed assets is 2") {
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Blog Test Title 3']",
+				key_fragmentName = "Fragment Name",
+				key_position = 1,
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Blog Test Title 2']",
+				key_fragmentName = "Fragment Name",
+				key_position = 2,
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+			AssertElementNotPresent(
+				key_entryContent = "[normalize-space(text())='Blog Test Title 1']",
+				key_fragmentName = "Fragment Name",
+				key_position = 3,
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+		}
+	}
+
 	@description = "This is a test for LPS-147897. The page designer could map the date field in specific date format to date fragment."
 	@priority = 5
 	test MapDateFieldToFragmentWithDateEditableField {

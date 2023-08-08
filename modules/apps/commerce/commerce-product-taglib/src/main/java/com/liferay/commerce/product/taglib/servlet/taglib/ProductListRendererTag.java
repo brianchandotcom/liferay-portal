@@ -5,9 +5,9 @@
 
 package com.liferay.commerce.product.taglib.servlet.taglib;
 
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
-import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.Validator;

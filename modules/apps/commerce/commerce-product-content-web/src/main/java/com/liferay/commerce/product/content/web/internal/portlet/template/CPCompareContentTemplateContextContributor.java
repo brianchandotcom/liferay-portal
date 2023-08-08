@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.template;
 
-import com.liferay.commerce.product.content.util.CPCompareContentHelper;
+import com.liferay.commerce.product.content.helper.CPCompareContentHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;

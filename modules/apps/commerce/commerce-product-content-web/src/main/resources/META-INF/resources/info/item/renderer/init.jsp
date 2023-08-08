@@ -18,7 +18,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.product.catalog.CPSku" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
-page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
+page import="com.liferay.commerce.product.content.helper.CPContentHelper" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@

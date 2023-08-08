@@ -11,7 +11,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
-page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
+page import="com.liferay.commerce.product.content.helper.CPContentHelper" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 

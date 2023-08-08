@@ -6,7 +6,7 @@
 package com.liferay.commerce.product.content.web.internal.portlet.display.template;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.content.web.internal.portlet.CPContentPortlet;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;

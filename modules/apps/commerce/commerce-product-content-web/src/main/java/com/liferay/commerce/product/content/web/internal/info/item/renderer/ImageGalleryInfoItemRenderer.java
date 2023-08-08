@@ -6,7 +6,7 @@
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.info.item.renderer.InfoItemRenderer;

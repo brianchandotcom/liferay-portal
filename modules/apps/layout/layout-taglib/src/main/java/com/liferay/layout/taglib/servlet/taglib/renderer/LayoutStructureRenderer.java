@@ -914,7 +914,10 @@ public class LayoutStructureRenderer {
 						LayoutDisplayPageWebKeys.
 							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-			if (layoutDisplayPageObjectProvider != null) {
+			if ((layoutDisplayPageObjectProvider != null) &&
+				(layoutDisplayPageObjectProvider.getClassNameId() ==
+					formStyledLayoutStructureItem.getClassNameId())) {
+
 				jspWriter.write(
 					"\"><input name=\"classPK\" type=\"hidden\" value=\"");
 				jspWriter.write(

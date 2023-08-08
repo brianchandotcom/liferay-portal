@@ -253,11 +253,6 @@
 	<bean class="com.liferay.portal.kernel.uuid.PortalUUIDUtil" id="com.liferay.portal.kernel.uuid.PortalUUIDUtil">
 		<property name="portalUUID" ref="com.liferay.portal.kernel.uuid.PortalUUID" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.webcache.WebCachePoolUtil" id="com.liferay.portal.kernel.webcache.WebCachePoolUtil">
-		<property name="webCachePool">
-			<bean class="com.liferay.portal.webcache.WebCachePoolImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl" id="com.liferay.portal.kernel.webserver.WebServerServletToken" />
 	<bean class="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" id="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken" ref="com.liferay.portal.kernel.webserver.WebServerServletToken" />

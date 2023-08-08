@@ -175,7 +175,7 @@ export function ImageSelectorSize({
 
 			{imageSize.width ? (
 				<p className="m-0 small text-secondary">
-					<b>{Liferay.Language.get('width')}:</b>
+					<strong>{Liferay.Language.get('width')}:</strong>
 
 					<span className="ml-1">{imageSize.width}px</span>
 				</p>
@@ -183,7 +183,7 @@ export function ImageSelectorSize({
 
 			{imageSize.size ? (
 				<p className="m-0 small text-secondary">
-					<b>{Liferay.Language.get('file-size')}:</b>
+					<strong>{Liferay.Language.get('file-size')}:</strong>
 
 					<span className="ml-1">
 						{Number(imageSize.size).toFixed(2)}kB

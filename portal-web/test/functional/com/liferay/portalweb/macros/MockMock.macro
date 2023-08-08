@@ -226,7 +226,9 @@ definition {
 
 		var bodyContent = StringUtil.extractLast(${bodyContent}, "href=\"");
 
-		var bodyURL = StringUtil.extractFirst(${bodyContent}, "\"");
+		var bodyURLaml = StringUtil.extractFirst(${bodyContent}, "\"");
+
+		var bodyURL = StringUtil.replace(${bodyURLaml}, "amp;", "");
 
 		Navigator.openSpecificURL(url = ${bodyURL});
 	}

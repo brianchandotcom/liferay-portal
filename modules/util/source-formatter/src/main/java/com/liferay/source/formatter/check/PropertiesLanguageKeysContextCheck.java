@@ -8,13 +8,14 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
@@ -112,8 +113,14 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private List<String> _getAllowedSingleWordLanguageKeys()
+	private synchronized List<String> _getAllowedSingleWordLanguageKeys()
 		throws IOException {
+
+		if (_allowedSingleWordLanguageKeys != null) {
+			return _allowedSingleWordLanguageKeys;
+		}
+
+		_allowedSingleWordLanguageKeys = new ArrayList<>();
 
 		Class<?> clazz = getClass();
 
@@ -126,9 +133,10 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			return Collections.emptyList();
 		}
 
-		String[] lines = StringUtil.splitLines(StringUtil.read(inputStream));
+		_allowedSingleWordLanguageKeys = ListUtil.fromString(
+			StringUtil.read(inputStream));
 
-		return Arrays.asList(lines);
+		return _allowedSingleWordLanguageKeys;
 	}
 
 	private static final String _CONTEXT_DEPTH_KEY = "contextDepth";
@@ -138,5 +146,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 
 	private static final Pattern _languageKeyPattern = Pattern.compile(
 		"([\\s\\S]+)\\[([\\s\\S]*)\\]");
+
+	private List<String> _allowedSingleWordLanguageKeys;
 
 }

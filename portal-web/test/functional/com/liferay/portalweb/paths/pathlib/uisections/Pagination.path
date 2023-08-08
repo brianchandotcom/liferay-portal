@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_PAGE_MODAL</td>
+	<td>//*[contains(@class,'modal-body')]//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PAGE_MENU</td>
 	<td>//div[contains(@class,'current-page-menu')]/a[contains(@class,'toggle')]</td>
 	<td></td>

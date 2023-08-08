@@ -10,7 +10,7 @@ import '../../css/main.scss';
 interface IProps {
 	portletNamespace: string;
 }
-declare function App({portletNamespace: namespace}: IProps): JSX.Element;
+declare function App({portletNamespace: namespace}: IProps): JSX.Element | null;
 declare namespace App {
 	var propTypes: {
 		portletNamespace: PropTypes.Validator<string>;

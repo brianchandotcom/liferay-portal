@@ -1021,6 +1021,7 @@ const FDSEntries = ({
 					{
 						data: {
 							id: 'edit',
+							permissionKey: 'get',
 						},
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
@@ -1031,6 +1032,9 @@ const FDSEntries = ({
 						type: 'group',
 					},
 					{
+						data: {
+							permissionKey: 'update',
+						},
 						icon: 'blank',
 						label: Liferay.Language.get('rename'),
 						onClick: onRenameClick,
@@ -1040,14 +1044,25 @@ const FDSEntries = ({
 						type: 'group',
 					},
 					{
+						data: {
+							permissionKey: 'permissions',
+						},
+						href: permissionsURL,
+						icon: 'password-policies',
+						label: Liferay.Language.get('permissions'),
+						target: 'modal-permissions',
+					},
+					{
+						separator: true,
+						type: 'group',
+					},
+					{
+						data: {
+							permissionKey: 'delete',
+						},
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
 						onClick: onDeleteClick,
-					},
-					{
-						href: permissionsURL,
-						label: Liferay.Language.get('permissions'),
-						target: 'modal-permissions',
 					},
 				]}
 				sorting={[{direction: 'desc', key: 'dateCreated'}]}

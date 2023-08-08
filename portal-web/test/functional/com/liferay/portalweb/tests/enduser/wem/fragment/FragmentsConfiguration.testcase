@@ -1486,8 +1486,6 @@ main();
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 
-			PortletEntry.save();
-
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",

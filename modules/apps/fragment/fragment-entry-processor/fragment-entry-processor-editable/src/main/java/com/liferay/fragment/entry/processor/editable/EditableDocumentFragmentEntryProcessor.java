@@ -14,6 +14,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,7 +63,7 @@ public class EditableDocumentFragmentEntryProcessor
 				clazz.getName(), _getDefaultEditableValuesJSONObject(document));
 		}
 
-		Map<Long, InfoItemFieldValues> infoDisplaysFieldValues =
+		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
 			new HashMap<>();
 
 		for (Element element :

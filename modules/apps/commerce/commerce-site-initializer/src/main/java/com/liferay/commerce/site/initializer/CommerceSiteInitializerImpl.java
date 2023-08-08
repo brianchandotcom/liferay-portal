@@ -140,9 +140,9 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	}
 
 	public void addCPDefinitions(
-			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext, ServletContext servletContext)
+			Bundle bundle,
+			ServiceContext serviceContext, ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		Channel channel = _addOrUpdateCommerceChannel(
@@ -157,9 +157,8 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			_addCommerceInventoryWarehouses(serviceContext, servletContext),
 			serviceContext, servletContext);
 		_addCommerceNotificationTemplates(
-			bundle, channel.getId(), documentsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
-			servletContext);
+			bundle, channel.getId(), serviceContext,
+			servletContext, stringUtilReplaceValues);
 		_addOrUpdateCommerceOrderTypes(serviceContext, servletContext);
 	}
 
@@ -248,11 +247,10 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	}
 
 	private void _addCommerceNotificationTemplate(
-			Bundle bundle, long commerceChannelId,
-			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			String resourcePath, ServiceContext serviceContext,
-			ServletContext servletContext)
+		Bundle bundle, long commerceChannelId,
+		String resourcePath, ServiceContext serviceContext,
+		ServletContext servletContext,
+		Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
@@ -283,7 +281,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 						FileUtil.stripExtension(url.getPath())),
 					StringUtil.replace(
 						StringUtil.read(url.openStream()), "[$", "$]",
-						documentsStringUtilReplaceValues));
+						stringUtilReplaceValues));
 			}
 		}
 
@@ -301,7 +299,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				commerceNotificationTemplateJSONObject.getString("bcc"),
 				StringUtil.replace(
 					commerceNotificationTemplateJSONObject.getString("type"),
-					"[$", "$]", objectDefinitionIdsStringUtilReplaceValues),
+					"[$", "$]", stringUtilReplaceValues),
 				commerceNotificationTemplateJSONObject.getBoolean("enabled"),
 				SiteInitializerUtil.toMap(
 					commerceNotificationTemplateJSONObject.getString(
@@ -312,9 +310,8 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 	private void _addCommerceNotificationTemplates(
 			Bundle bundle, long commerceChannelId,
-			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext, ServletContext servletContext)
+			ServiceContext serviceContext, ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
@@ -326,9 +323,8 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
-				bundle, commerceChannelId, documentsStringUtilReplaceValues,
-				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
-				serviceContext, servletContext);
+				bundle, commerceChannelId, resourcePath,
+				serviceContext, servletContext, stringUtilReplaceValues);
 		}
 	}
 

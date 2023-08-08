@@ -189,6 +189,14 @@ public class ProjectQueue {
 				Comparator.comparingInt(ProjectComparator::getPosition));
 
 			_projects.sort(new PrioritizedProjectComparator());
+
+			for (int i = 0; i < _projects.size(); i++) {
+				Project project = _projects.get(i);
+
+				project.setPosition(i + 1);
+
+				_projectRepository.update(project);
+			}
 		}
 	}
 

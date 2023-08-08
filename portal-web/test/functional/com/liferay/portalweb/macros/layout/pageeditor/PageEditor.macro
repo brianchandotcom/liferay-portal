@@ -4802,7 +4802,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "IFrame#MODAL_ANY");
 
 		Click(
-			key_objectLabel = ${objectLabel},
+			key_entryValue = ${entryValue},
 			locator1 = "PageEditor#PREVIEW_WITH_CUSTOM_OBJECT_ITEM");
 
 		IFrame.selectTopFrame();

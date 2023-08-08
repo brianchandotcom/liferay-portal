@@ -927,13 +927,13 @@ public class ModulesStructureTest {
 		String configuration, boolean hasSrcTestDir,
 		boolean hasSrcTestIntegrationDir) {
 
-		if (configuration.equals("testCompile") && !hasSrcTestDir &&
+		if (configuration.equals("testImplementation") && !hasSrcTestDir &&
 			!hasSrcTestIntegrationDir) {
 
 			return true;
 		}
 
-		if (configuration.equals("testRuntime") && !hasSrcTestDir &&
+		if (configuration.equals("testRuntimeOnly") && !hasSrcTestDir &&
 			!hasSrcTestIntegrationDir) {
 
 			return true;
@@ -1412,19 +1412,19 @@ public class ModulesStructureTest {
 		}
 
 		Map<String, Boolean> allowedConfigurationsMap = TreeMapBuilder.put(
-			"compile", mainConfigurationsAllowed
+			"api", mainConfigurationsAllowed
 		).put(
 			"compileOnly", mainConfigurationsAllowed
 		).put(
 			"provided", mainConfigurationsAllowed
 		).put(
-			"testCompile", hasSrcTestDir
+			"testImplementation", hasSrcTestDir
 		).put(
-			"testIntegrationCompile", hasSrcTestIntegrationDir
+			"testIntegrationImplementation", hasSrcTestIntegrationDir
 		).put(
-			"testIntegrationRuntime", hasSrcTestIntegrationDir
+			"testIntegrationRuntimeOnly", hasSrcTestIntegrationDir
 		).put(
-			"testRuntime", hasSrcTestDir
+			"testRuntimeOnly", hasSrcTestDir
 		).build();
 
 		for (GradleDependency gradleDependency : gradleDependencies) {
@@ -1696,8 +1696,8 @@ public class ModulesStructureTest {
 				"org.gradle.parallel", "pom.scm.connection",
 				"pom.scm.developerConnection", "pom.scm.url"));
 	private static final List<String> _gradleConfigurations = Arrays.asList(
-		"compileOnly", "provided", "compile", "runtime", "testCompile",
-		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");
+		"compileOnly", "provided", "api", "runtimeOnly", "testImplementation",
+		"testRuntimeOnly", "testIntegrationImplementation", "testIntegrationRuntimeOnly");
 	private static final Pattern _jsonVersionPattern = Pattern.compile(
 		"\\n(\\t|  )\"version\": \"(.+)\"");
 	private static boolean _masterBranch;

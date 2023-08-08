@@ -5,12 +5,6 @@
 
 /// <reference types="react" />
 
-export default function SearchForm({
-	className,
-	label,
-	onChange,
-}: {
-	className?: string;
-	label?: string;
-	onChange: Function;
-}): JSX.Element;
+export default function useControlledState<T>(
+	value: T
+): readonly [T, import('react').Dispatch<import('react').SetStateAction<T>>];

@@ -1,5 +1,5 @@
 {
-	"@generated": "c7697a2a27098842704f8d911e4723b559f80dde",
+	"@generated": "02e5ccfb52bf8477b9708219c4d0c3cd3d326345",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -17,7 +17,7 @@
 				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/layout-js-components-web": [
-				"../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
+				"../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-js-web": [
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"

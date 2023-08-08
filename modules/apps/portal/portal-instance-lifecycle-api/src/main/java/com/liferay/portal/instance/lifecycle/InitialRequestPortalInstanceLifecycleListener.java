@@ -127,7 +127,7 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to write company ids", exception);
+				_log.warn("Unable to write company IDs", exception);
 			}
 		}
 	}

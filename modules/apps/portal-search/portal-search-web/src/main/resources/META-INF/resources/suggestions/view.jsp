@@ -10,7 +10,8 @@
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext" %>
 
@@ -32,7 +33,7 @@ SuggestionsPortletDisplayContext suggestionsPortletDisplayContext = (Suggestions
 
 				<clay:link
 					href="<%= suggestionDisplayContext.getURL() %>"
-					label="<%= suggestionDisplayContext.getSuggestedKeywordsFormatted() %>"
+					label="<%= HtmlUtil.stripHtml(suggestionDisplayContext.getSuggestedKeywordsFormatted()) %>"
 				/>
 			</li>
 		</ul>
@@ -51,7 +52,7 @@ SuggestionsPortletDisplayContext suggestionsPortletDisplayContext = (Suggestions
 				<li>
 					<clay:link
 						href="<%= suggestionDisplayContext.getURL() %>"
-						label="<%= suggestionDisplayContext.getSuggestedKeywordsFormatted() %>"
+						label="<%= HtmlUtil.stripHtml(suggestionDisplayContext.getSuggestedKeywordsFormatted()) %>"
 					/>
 				</li>
 

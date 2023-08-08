@@ -95,30 +95,12 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public int countByG_ST(
-		long groupId, int status,
-		QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doCountByG_ST(groupId, status, queryDefinition, false);
-	}
-
-	@Override
 	public int countByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_F_C(
 			groupId, folderIds, classNameId, queryDefinition, false);
-	}
-
-	@Override
-	public int countByG_F_C_S(
-		long groupId, List<Long> folderIds, long classNameId,
-		long ddmStructureId, QueryDefinition<JournalArticle> queryDefinition) {
-
-		return doCountByG_F_C_S(
-			groupId, folderIds, classNameId, ddmStructureId, queryDefinition,
-			false);
 	}
 
 	@Override

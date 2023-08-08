@@ -25,8 +25,8 @@ public interface CommerceSiteInitializer {
 		throws Exception;
 
 	public void addCPDefinitions(
-			Bundle bundle,
-			ServiceContext serviceContext, ServletContext servletContext,
+			Bundle bundle, ServiceContext serviceContext,
+			ServletContext servletContext,
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception;
 

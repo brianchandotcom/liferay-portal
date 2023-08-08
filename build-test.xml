@@ -9568,6 +9568,16 @@ org.apache.catalina.tribes.level = FINE]]>
 					</then>
 				</if>
 
+				<get-testcase-property property.name="delete.temp.dir" />
+
+				<if>
+					<equals arg1="${delete.temp.dir}" arg2="true" />
+
+					<then>
+						<delete dir="${app.server.tomcat.temp.dir}" />
+					</then>
+				</if>
+
 				<get-testcase-property property.name="portal.version" />
 
 				<if>

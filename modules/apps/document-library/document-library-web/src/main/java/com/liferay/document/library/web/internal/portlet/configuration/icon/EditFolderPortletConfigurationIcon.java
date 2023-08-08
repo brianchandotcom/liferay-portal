@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
@@ -157,10 +156,6 @@ public class EditFolderPortletConfigurationIcon
 	}
 
 	private boolean _isDLWorkflowEnabled() {
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return false;
-		}
-
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				DLFileEntry.class.getName());

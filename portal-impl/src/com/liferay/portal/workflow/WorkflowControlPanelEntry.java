@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 
 /**
  * @author Jorge Ferrer
@@ -21,9 +20,7 @@ public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
-			!WorkflowEngineManagerUtil.isDeployed()) {
-
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
 			return true;
 		}
 

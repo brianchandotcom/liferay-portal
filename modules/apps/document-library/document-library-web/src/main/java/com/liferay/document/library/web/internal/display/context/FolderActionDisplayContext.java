@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.util.RepositoryUtil;
@@ -1032,10 +1031,6 @@ public class FolderActionDisplayContext {
 	}
 
 	private boolean _isWorkflowEnabled() {
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return false;
-		}
-
 		WorkflowHandler<Object> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				DLFileEntry.class.getName());

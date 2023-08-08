@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.document.Document;
@@ -1040,7 +1039,6 @@ public class AccountEntryLocalServiceImpl
 					AccountEntry.class.getName(), 0, 0);
 
 		if (WorkflowThreadLocal.isEnabled() &&
-			WorkflowEngineManagerUtil.isDeployed() &&
 			(workflowDefinitionLinkSupplier.get() != null)) {
 
 			return true;

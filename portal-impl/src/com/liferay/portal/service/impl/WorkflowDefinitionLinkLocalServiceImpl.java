@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.service.base.WorkflowDefinitionLinkLocalServiceBaseImpl;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,10 +84,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
 		long companyId, String className, long classPK, long typePK) {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return null;
-		}
-
 		return workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId,
 			_classNameLocalService.getClassNameId(className), classPK, typePK);
@@ -108,10 +102,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public WorkflowDefinitionLink fetchWorkflowDefinitionLink(
 		long companyId, long groupId, String className, long classPK,
 		long typePK, boolean strict) {
-
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return null;
-		}
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
@@ -142,10 +132,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public List<WorkflowDefinitionLink> fetchWorkflowDefinitionLinks(
 		long companyId, long groupId, String className, long classPK) {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return Collections.emptyList();
-		}
-
 		return workflowDefinitionLinkPersistence.findByG_C_C_C(
 			StagingUtil.getLiveGroupId(groupId), companyId,
 			_classNameLocalService.getClassNameId(className), classPK);
@@ -155,10 +141,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 			long companyId, String className, long classPK, long typePK)
 		throws PortalException {
-
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			throw new NoSuchWorkflowDefinitionLinkException();
-		}
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C_T(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId,
@@ -181,10 +163,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			long typePK, boolean strict)
 		throws PortalException {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			throw new NoSuchWorkflowDefinitionLinkException();
-		}
-
 		WorkflowDefinitionLink workflowDefinitionLink =
 			fetchWorkflowDefinitionLink(
 				companyId, groupId, className, classPK, typePK, strict);
@@ -205,10 +183,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			long companyId, long groupId, long classPK)
 		throws PortalException {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			throw new NoSuchWorkflowDefinitionLinkException();
-		}
-
 		return workflowDefinitionLinkPersistence.findByG_C_CPK(
 			groupId, companyId, classPK);
 	}
@@ -217,10 +191,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
-
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			throw new NoSuchWorkflowDefinitionLinkException();
-		}
 
 		return workflowDefinitionLinkPersistence.findByG_C_C_C(
 			companyId, StagingUtil.getLiveGroupId(groupId),
@@ -233,10 +203,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			int workflowDefinitionVersion)
 		throws PortalException {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			throw new NoSuchWorkflowDefinitionLinkException();
-		}
-
 		return workflowDefinitionLinkPersistence.findByC_W_W(
 			companyId, workflowDefinitionName, workflowDefinitionVersion);
 	}
@@ -244,10 +210,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	@Override
 	public int getWorkflowDefinitionLinksCount(
 		long companyId, long groupId, String className) {
-
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return 0;
-		}
 
 		return workflowDefinitionLinkPersistence.countByG_C_C(
 			StagingUtil.getLiveGroupId(groupId), companyId,
@@ -259,10 +221,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion) {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return 0;
-		}
-
 		return workflowDefinitionLinkPersistence.countByC_W_W(
 			companyId, workflowDefinitionName, workflowDefinitionVersion);
 	}
@@ -271,10 +229,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	@Transactional(enabled = false)
 	public boolean hasWorkflowDefinitionLink(
 		long companyId, long groupId, String className) {
-
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return false;
-		}
 
 		int count =
 			workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount(
@@ -307,10 +261,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public boolean hasWorkflowDefinitionLink(
 		long companyId, long groupId, String className, long classPK) {
 
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return false;
-		}
-
 		int count = workflowDefinitionLinkPersistence.countByG_C_C_C(
 			StagingUtil.getLiveGroupId(groupId), companyId,
 			_classNameLocalService.getClassNameId(className), classPK);
@@ -342,10 +292,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public boolean hasWorkflowDefinitionLink(
 		long companyId, long groupId, String className, long classPK,
 		long typePK) {
-
-		if (!WorkflowEngineManagerUtil.isDeployed()) {
-			return false;
-		}
 
 		int count = workflowDefinitionLinkPersistence.countByG_C_C_C_T(
 			StagingUtil.getLiveGroupId(groupId), companyId,

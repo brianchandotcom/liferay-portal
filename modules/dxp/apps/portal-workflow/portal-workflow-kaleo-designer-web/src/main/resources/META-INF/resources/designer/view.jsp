@@ -35,13 +35,4 @@ if (cur > 0) {
 }
 %>
 
-<c:choose>
-	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
-		<liferay-util:include page="/designer/view_workflow_definitions.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<div class="portlet-msg-info">
-			<liferay-ui:message key="no-workflow-engine-is-deployed" />
-		</div>
-	</c:otherwise>
-</c:choose>
+<liferay-util:include page="/designer/view_workflow_definitions.jsp" servletContext="<%= application %>" />

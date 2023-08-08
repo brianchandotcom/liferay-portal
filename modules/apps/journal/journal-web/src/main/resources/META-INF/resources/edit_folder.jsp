@@ -18,7 +18,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", J
 
 boolean rootFolder = ParamUtil.getBoolean(request, "rootFolder");
 
-boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(JournalArticle.class.getName()) != null);
+boolean workflowEnabled = WorkflowHandlerRegistryUtil.getWorkflowHandler(JournalArticle.class.getName()) != null;
 
 List<WorkflowDefinition> workflowDefinitions = null;
 

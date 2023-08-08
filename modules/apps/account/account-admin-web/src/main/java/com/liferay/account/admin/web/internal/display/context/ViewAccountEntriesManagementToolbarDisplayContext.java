@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.util.ArrayList;
@@ -328,7 +327,6 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 				AccountEntry.class.getName(), 0, 0);
 
 		if (WorkflowThreadLocal.isEnabled() &&
-			WorkflowEngineManagerUtil.isDeployed() &&
 			(workflowDefinitionLinkSupplier.get() != null)) {
 
 			return true;

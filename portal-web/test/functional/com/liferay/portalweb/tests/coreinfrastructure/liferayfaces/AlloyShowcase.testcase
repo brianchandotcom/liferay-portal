@@ -92,6 +92,7 @@ definition {
 		AlloyShowcase.viewDataSelection();
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test DataTableSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/lazy");

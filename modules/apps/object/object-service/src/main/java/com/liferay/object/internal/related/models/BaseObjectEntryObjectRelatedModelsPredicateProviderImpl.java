@@ -9,7 +9,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
@@ -41,8 +41,9 @@ public abstract class BaseObjectEntryObjectRelatedModelsPredicateProviderImpl
 			ObjectRelationship objectRelationship, Predicate predicate)
 		throws PortalException {
 
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			objectRelationship);
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition, objectRelationship);
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			throw new InvalidFilterException(
@@ -89,26 +90,5 @@ public abstract class BaseObjectEntryObjectRelatedModelsPredicateProviderImpl
 
 	protected final ObjectDefinition objectDefinition;
 	protected final ObjectFieldLocalService objectFieldLocalService;
-
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectRelationship objectRelationship)
-		throws PortalException {
-
-		long relatedObjectDefinitionId = 0;
-
-		if (objectDefinition.getObjectDefinitionId() !=
-				objectRelationship.getObjectDefinitionId1()) {
-
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId1();
-		}
-		else {
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId2();
-		}
-
-		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-			relatedObjectDefinitionId);
-	}
 
 }

@@ -26,7 +26,7 @@ definition {
 	macro createAPISchema {
 		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${apiApplicationId}");
 
-		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
+		var curl = SchemaAPI._curlAPISchema(virtualHost = ${virtualHost});
 		var body = '''
 			-d {
 				"mainObjectDefinitionERC": "${mainObjectDefinitionERC}",
@@ -40,6 +40,21 @@ definition {
 		var response = JSONCurlUtil.post(${curl});
 
 		return ${response};
+	}
+
+	macro createNAPISchemas {
+		Variables.assertDefined(parameterList = "${numberOfSchemas},${mainObjectDefinitionERC},${name},${apiApplicationId}");
+
+		var i = 0;
+
+		while (${i} != ${numberOfSchemas}) {
+			var i = ${i} + 1;
+
+			SchemaAPI.createAPISchema(
+				apiApplicationId = ${apiApplicationId},
+				mainObjectDefinitionERC = ${mainObjectDefinitionERC},
+				name = "${name}${i}");
+		}
 	}
 
 	macro getAPISchemas {

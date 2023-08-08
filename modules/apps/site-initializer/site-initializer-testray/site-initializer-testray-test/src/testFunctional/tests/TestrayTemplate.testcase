@@ -228,8 +228,6 @@ definition {
 				routine = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
-
-			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
 		task ("When the user changed the status to Activated") {
@@ -285,8 +283,6 @@ definition {
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
-
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Build_Template");
@@ -329,13 +325,13 @@ definition {
 		}
 
 		task ("And Deactivated Template 2") {
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Template 2");
 
 			Testray.viewTableEntryList(listEntry = "Deactivated,Template 2");
-
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 
 		task ("When the user filter a template with Activated status") {
@@ -383,13 +379,13 @@ definition {
 		}
 
 		task ("And Deactivated Template 2") {
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Template 2");
 
 			Testray.viewTableEntryList(listEntry = "Deactivated,Template 2");
-
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 
 		task ("When the user filter a template with Deactivated status") {

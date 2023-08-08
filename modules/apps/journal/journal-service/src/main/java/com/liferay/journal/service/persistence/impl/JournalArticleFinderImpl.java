@@ -20,20 +20,15 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.sql.Timestamp;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -61,15 +56,6 @@ public class JournalArticleFinderImpl
 
 	public static final String COUNT_BY_G_F_C_S =
 		JournalArticleFinder.class.getName() + ".countByG_F_C_S";
-
-	public static final String FIND_BY_NO_ASSETS =
-		JournalArticleFinder.class.getName() + ".findByNoAssets";
-
-	public static final String FIND_BY_NO_PERMISSIONS =
-		JournalArticleFinder.class.getName() + ".findByNoPermissions";
-
-	public static final String FIND_BY_REVIEW_DATE =
-		JournalArticleFinder.class.getName() + ".findByReviewDate";
 
 	public static final String FIND_BY_G_ST_L =
 		JournalArticleFinder.class.getName() + ".findByG_ST_L";
@@ -172,95 +158,6 @@ public class JournalArticleFinderImpl
 		return doFindByG_C_S_L(
 			groupId, folderIds, classNameId, ddmStructureId, locale,
 			queryDefinition, true);
-	}
-
-	@Override
-	public List<JournalArticle> findByNoAssets() {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("JournalArticle", JournalArticleImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(_portal.getClassNameId(JournalArticle.class));
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<JournalArticle> findByNoPermissions() {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_NO_PERMISSIONS);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("JournalArticle", JournalArticleImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(ResourceConstants.SCOPE_INDIVIDUAL);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<JournalArticle> findByReviewDate(
-		long classNameId, Date reviewDateLT, Date reviewDateGT) {
-
-		Timestamp reviewDateLT_TS = CalendarUtil.getTimestamp(reviewDateLT);
-		Timestamp reviewDateGT_TS = CalendarUtil.getTimestamp(reviewDateGT);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_REVIEW_DATE);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity(
-				JournalArticleImpl.TABLE_NAME, JournalArticleImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classNameId);
-			queryPos.add(reviewDateGT_TS);
-			queryPos.add(reviewDateLT_TS);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override

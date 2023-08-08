@@ -39,7 +39,6 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -385,8 +385,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		BigDecimal promoPrice = commerceOrderItem.getPromoPrice();
 
 		if ((promoPrice != null) &&
-			CommerceBigDecimalUtil.gt(promoPrice, BigDecimal.ZERO) &&
-			CommerceBigDecimalUtil.lte(promoPrice, activePrice)) {
+			BigDecimalUtil.gt(promoPrice, BigDecimal.ZERO) &&
+			BigDecimalUtil.lte(promoPrice, activePrice)) {
 
 			activePrice = promoPrice;
 			activePriceWithTaxAmount =
@@ -413,9 +413,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		BigDecimal discountAmount = commerceOrderItem.getDiscountAmount();
 
-		if ((discountAmount == null) ||
-			CommerceBigDecimalUtil.isZero(discountAmount)) {
-
+		if ((discountAmount == null) || BigDecimalUtil.isZero(discountAmount)) {
 			return commerceProductPriceImpl;
 		}
 

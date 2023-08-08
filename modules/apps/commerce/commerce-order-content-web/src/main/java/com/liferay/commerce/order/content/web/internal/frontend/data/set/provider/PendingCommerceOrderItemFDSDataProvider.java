@@ -24,7 +24,6 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -223,10 +223,10 @@ public class PendingCommerceOrderItemFDSDataProvider
 		CommerceMoney promoPriceCommerceMoney =
 			commerceOrderItemPrice.getPromoPrice();
 
-		if (CommerceBigDecimalUtil.eq(
+		if (BigDecimalUtil.eq(
 				unitPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
 			(promoPriceCommerceMoney != null) &&
-			CommerceBigDecimalUtil.gt(
+			BigDecimalUtil.gt(
 				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO)) {
 
 			return _language.get(

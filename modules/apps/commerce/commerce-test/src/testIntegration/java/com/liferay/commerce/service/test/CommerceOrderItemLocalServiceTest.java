@@ -51,7 +51,6 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -63,6 +62,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -557,7 +557,7 @@ public class CommerceOrderItemLocalServiceTest {
 			bundleOrderItem.getCommerceOrderItemId());
 
 		Assert.assertTrue(
-			CommerceBigDecimalUtil.eq(quantity, bundleOrderItem.getQuantity()));
+			BigDecimalUtil.eq(quantity, bundleOrderItem.getQuantity()));
 
 		Assert.assertEquals(option2Price, bundleOrderItem.getFinalPrice());
 
@@ -701,7 +701,7 @@ public class CommerceOrderItemLocalServiceTest {
 			originalQuantity2, commerceOrderItem2.getQuantity());
 
 		Assert.assertTrue(
-			CommerceBigDecimalUtil.eq(
+			BigDecimalUtil.eq(
 				BigDecimal.valueOf(2), commerceOrderItem3.getQuantity()));
 
 		_commerceOrderItemLocalService.deleteCommerceOrderItem(

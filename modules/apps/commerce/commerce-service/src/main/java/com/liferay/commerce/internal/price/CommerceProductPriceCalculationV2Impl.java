@@ -35,7 +35,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
@@ -121,9 +121,9 @@ public class CommerceProductPriceCalculationV2Impl
 			commercePromoPriceListId, cpInstanceId, quantity, commerceContext);
 
 		if (!promoPriceCommerceMoney.isEmpty() &&
-			CommerceBigDecimalUtil.gt(
+			BigDecimalUtil.gt(
 				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
-			(CommerceBigDecimalUtil.lt(
+			(BigDecimalUtil.lt(
 				promoPriceCommerceMoney.getPrice(),
 				unitPriceCommerceMoney.getPrice()) ||
 			 unitPriceCommerceMoney.isPriceOnApplication())) {
@@ -358,7 +358,7 @@ public class CommerceProductPriceCalculationV2Impl
 				commerceContext.getCommerceCurrency(), secure, commerceContext);
 
 			if (commerceMoney.isEmpty() ||
-				CommerceBigDecimalUtil.lt(
+				BigDecimalUtil.lt(
 					commerceMoney.getPrice(),
 					cpInstanceCommerceMoney.getPrice())) {
 
@@ -399,7 +399,7 @@ public class CommerceProductPriceCalculationV2Impl
 				commerceMoney = cpInstanceCommerceMoney;
 			}
 			else if (!cpInstanceCommerceMoney.isPriceOnApplication() &&
-					 CommerceBigDecimalUtil.gt(
+					 BigDecimalUtil.gt(
 						 commerceMoney.getPrice(),
 						 cpInstanceCommerceMoney.getPrice())) {
 
@@ -575,7 +575,7 @@ public class CommerceProductPriceCalculationV2Impl
 		throws PortalException {
 
 		if ((finalPrice == null) ||
-			CommerceBigDecimalUtil.lte(finalPrice, BigDecimal.ZERO)) {
+			BigDecimalUtil.lte(finalPrice, BigDecimal.ZERO)) {
 
 			return null;
 		}

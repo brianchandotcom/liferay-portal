@@ -11,12 +11,12 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderThreadLocal;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 
 import java.math.BigDecimal;
 
@@ -98,7 +98,7 @@ public class CommerceOrderItemModelListener
 
 				BigDecimal newQuantity = commerceOrderItem.getQuantity();
 
-				if (!CommerceBigDecimalUtil.eq(
+				if (!BigDecimalUtil.eq(
 						newQuantity, originalCommerceOrderItem.getQuantity())) {
 
 					customerCommerceOrderItem.setQuantity(newQuantity);

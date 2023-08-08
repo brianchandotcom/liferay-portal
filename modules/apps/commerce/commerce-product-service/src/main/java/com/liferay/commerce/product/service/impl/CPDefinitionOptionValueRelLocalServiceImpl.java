@@ -33,7 +33,6 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -65,6 +64,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -987,7 +987,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 					curCPDefinitionOptionValueRel.getCPInstanceUuid()) &&
 				(cpDefinitionOptionValueRel.getCProductId() ==
 					curCPDefinitionOptionValueRel.getCProductId()) &&
-				CommerceBigDecimalUtil.eq(
+				BigDecimalUtil.eq(
 					cpDefinitionOptionValueRel.getQuantity(),
 					curCPDefinitionOptionValueRel.getQuantity())) {
 
@@ -1052,7 +1052,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			throw new CPDefinitionOptionValueRelCPInstanceException();
 		}
 
-		if (CommerceBigDecimalUtil.lte(
+		if (BigDecimalUtil.lte(
 				cpDefinitionOptionValueRel.getQuantity(), BigDecimal.ZERO)) {
 
 			throw new CPDefinitionOptionValueRelQuantityException();

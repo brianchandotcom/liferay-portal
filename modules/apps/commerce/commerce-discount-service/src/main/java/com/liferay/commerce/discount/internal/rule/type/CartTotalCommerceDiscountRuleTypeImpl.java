@@ -12,9 +12,9 @@ import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
@@ -65,7 +65,7 @@ public class CartTotalCommerceDiscountRuleTypeImpl
 
 		BigDecimal cartTotal = new BigDecimal(settingsProperty);
 
-		if (CommerceBigDecimalUtil.gt(orderPrice, cartTotal)) {
+		if (BigDecimalUtil.gt(orderPrice, cartTotal)) {
 			return true;
 		}
 

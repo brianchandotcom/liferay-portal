@@ -30,7 +30,6 @@ import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -43,6 +42,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -551,12 +551,12 @@ public class CPDefinitionModelDocumentContributor
 			BigDecimal promoPrice = cpInstance.getPromoPrice();
 
 			if ((promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-				CommerceBigDecimalUtil.lt(promoPrice, price)) {
+				BigDecimalUtil.lt(promoPrice, price)) {
 
 				price = promoPrice;
 			}
 
-			if (CommerceBigDecimalUtil.lt(price, lowestPrice)) {
+			if (BigDecimalUtil.lt(price, lowestPrice)) {
 				lowestPrice = price;
 			}
 		}

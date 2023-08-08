@@ -22,10 +22,10 @@ import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -118,9 +118,9 @@ public class PriceCPContentContributor implements CPContentContributor {
 			return jsonObject;
 		}
 
-		if (CommerceBigDecimalUtil.gt(
+		if (BigDecimalUtil.gt(
 				unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) &&
-			CommerceBigDecimalUtil.lte(
+			BigDecimalUtil.lte(
 				unitPromoPriceCommerceMoney.getPrice(),
 				unitPriceCommerceMoney.getPrice())) {
 

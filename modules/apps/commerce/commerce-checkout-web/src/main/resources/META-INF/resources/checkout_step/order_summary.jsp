@@ -176,7 +176,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 								<div class="value-section">
 									<span class="price">
 										<c:choose>
-											<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && CommerceBigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) && CommerceBigDecimalUtil.lt(unitPromoPriceCommerceMoney.getPrice(), unitPriceCommerceMoney.getPrice()) %>">
+											<c:when test="<%= !unitPromoPriceCommerceMoney.isEmpty() && BigDecimalUtil.gt(unitPromoPriceCommerceMoney.getPrice(), BigDecimal.ZERO) && BigDecimalUtil.lt(unitPromoPriceCommerceMoney.getPrice(), unitPriceCommerceMoney.getPrice()) %>">
 												<span class="price-value price-value-promo">
 													<%= HtmlUtil.escape(unitPromoPriceCommerceMoney.format(locale)) %>
 												</span>

@@ -52,6 +52,98 @@ public class BigDecimalUtil {
 		return resultBigDecimal.doubleValue();
 	}
 
+	public static boolean eq(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) == 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static BigDecimal get(Object newValue, BigDecimal defaultValue) {
+		if (newValue != null) {
+			if (newValue instanceof Integer) {
+				return BigDecimal.valueOf((Integer)newValue);
+			}
+
+			if (newValue instanceof Double) {
+				return BigDecimal.valueOf((Double)newValue);
+			}
+
+			if (newValue instanceof BigDecimal) {
+				return (BigDecimal)newValue;
+			}
+		}
+
+		return defaultValue;
+	}
+
+	public static boolean gt(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) || (value2 == null)) {
+			return false;
+		}
+
+		if (value1.compareTo(value2) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean gte(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) >= 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isZero(BigDecimal value) {
+		if ((value == null) || (value.compareTo(BigDecimal.ZERO) == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean lt(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) || (value2 == null)) {
+			return false;
+		}
+
+		if (value1.compareTo(value2) < 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean lte(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) <= 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static double multiply(Number x, Number y) {
 		if (x == null) {
 			x = 0;

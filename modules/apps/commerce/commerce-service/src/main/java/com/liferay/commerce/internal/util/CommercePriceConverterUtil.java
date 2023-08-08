@@ -10,8 +10,8 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.tax.CommerceTaxValue;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -45,7 +45,7 @@ public class CommercePriceConverterUtil {
 
 		BigDecimal discountPercentage = _ONE_HUNDRED;
 
-		if (CommerceBigDecimalUtil.gt(discountedPrice, BigDecimal.ZERO)) {
+		if (BigDecimalUtil.gt(discountedPrice, BigDecimal.ZERO)) {
 			discountPercentage = _getDiscountPercentage(
 				discountedPrice, initialPrice, roundingMode);
 		}
@@ -66,7 +66,7 @@ public class CommercePriceConverterUtil {
 			CommerceTaxCalculation commerceTaxCalculation)
 		throws PortalException {
 
-		if (CommerceBigDecimalUtil.isZero(price) && includeTax) {
+		if (BigDecimalUtil.isZero(price) && includeTax) {
 			return price;
 		}
 
@@ -116,8 +116,8 @@ public class CommercePriceConverterUtil {
 		BigDecimal[] percentages, RoundingMode roundingMode) {
 
 		if ((currentPercentage == null) ||
-			CommerceBigDecimalUtil.isZero(currentPercentage) ||
-			(percentage == null) || CommerceBigDecimalUtil.isZero(percentage)) {
+			BigDecimalUtil.isZero(currentPercentage) || (percentage == null) ||
+			BigDecimalUtil.isZero(percentage)) {
 
 			return new BigDecimal[] {
 				BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
@@ -130,7 +130,7 @@ public class CommercePriceConverterUtil {
 
 		for (int i = 0; i < percentages.length; i++) {
 			if ((percentages[i] != null) &&
-				!CommerceBigDecimalUtil.isZero(percentages[i])) {
+				!BigDecimalUtil.isZero(percentages[i])) {
 
 				percentages[i] = percentages[i].multiply(percentageRatio);
 			}

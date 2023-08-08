@@ -9,9 +9,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 
 import java.math.BigDecimal;
 
@@ -55,7 +55,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		if (commerceOrderItems.size() == 1) {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
-			if (CommerceBigDecimalUtil.eq(
+			if (BigDecimalUtil.eq(
 					commerceOrderItem.getQuantity(), BigDecimal.ONE)) {
 
 				return getDimensions(commerceOrderItem);

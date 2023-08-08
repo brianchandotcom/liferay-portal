@@ -23,7 +23,6 @@ import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMin
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -50,6 +49,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1093,7 +1093,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			return;
 		}
 
-		if (CommerceBigDecimalUtil.lte(minQuantity, BigDecimal.ZERO)) {
+		if (BigDecimalUtil.lte(minQuantity, BigDecimal.ZERO)) {
 			throw new CommerceTierPriceEntryMinQuantityException(
 				"The min quantity must be greater than zero");
 		}

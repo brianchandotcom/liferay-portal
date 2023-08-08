@@ -41,7 +41,6 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
@@ -54,6 +53,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -332,9 +332,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		CommerceMoney orderPriceTotalCommerceMoney =
 			commerceOrderPrice.getTotal();
 
-		if (CommerceBigDecimalUtil.isZero(
-				orderPriceTotalCommerceMoney.getPrice())) {
-
+		if (BigDecimalUtil.isZero(orderPriceTotalCommerceMoney.getPrice())) {
 			return false;
 		}
 
@@ -612,7 +610,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (CommerceBigDecimalUtil.isZero(commerceOrder.getTotal())) {
+		if (BigDecimalUtil.isZero(commerceOrder.getTotal())) {
 			return true;
 		}
 

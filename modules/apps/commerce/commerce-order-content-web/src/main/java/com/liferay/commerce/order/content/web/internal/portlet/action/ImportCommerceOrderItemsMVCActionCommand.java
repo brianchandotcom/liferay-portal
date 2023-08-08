@@ -20,7 +20,6 @@ import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistr
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -200,7 +200,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 
 			BigDecimal quantity = commerceOrderImporterItem.getQuantity();
 
-			if (CommerceBigDecimalUtil.lt(quantity, BigDecimal.ONE)) {
+			if (BigDecimalUtil.lt(quantity, BigDecimal.ONE)) {
 				counts[1]++;
 
 				continue;

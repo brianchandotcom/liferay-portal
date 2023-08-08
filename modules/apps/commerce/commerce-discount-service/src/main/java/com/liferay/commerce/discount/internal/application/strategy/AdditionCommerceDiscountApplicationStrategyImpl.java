@@ -7,8 +7,8 @@ package com.liferay.commerce.discount.internal.application.strategy;
 
 import com.liferay.commerce.discount.application.strategy.CommerceDiscountApplicationStrategy;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 
 import java.math.BigDecimal;
 
@@ -31,7 +31,7 @@ public class AdditionCommerceDiscountApplicationStrategyImpl
 
 		for (BigDecimal commerceDiscountLevel : commerceDiscountLevels) {
 			if ((commerceDiscountLevel == null) ||
-				CommerceBigDecimalUtil.isZero(commerceDiscountLevel)) {
+				BigDecimalUtil.isZero(commerceDiscountLevel)) {
 
 				continue;
 			}

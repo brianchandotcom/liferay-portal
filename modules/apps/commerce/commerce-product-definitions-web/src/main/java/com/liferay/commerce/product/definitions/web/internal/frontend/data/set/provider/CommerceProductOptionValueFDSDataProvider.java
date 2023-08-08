@@ -17,7 +17,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,7 +155,7 @@ public class CommerceProductOptionValueFDSDataProvider
 			return BigDecimal.ZERO;
 		}
 
-		if (CommerceBigDecimalUtil.eq(
+		if (BigDecimalUtil.eq(
 				cpDefinitionOptionValueRel.getQuantity(), BigDecimal.ZERO)) {
 
 			return cpDefinitionOptionValueRel.getPrice();

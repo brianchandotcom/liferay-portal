@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/order-type.properties",
-	scope = ServiceScope.PROTOTYPE,
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, OrderTypeResource.class}
 )
 public class OrderTypeResourceImpl

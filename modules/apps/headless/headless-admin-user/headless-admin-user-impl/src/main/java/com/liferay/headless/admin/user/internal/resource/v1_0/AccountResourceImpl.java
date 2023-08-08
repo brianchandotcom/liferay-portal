@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account.properties",
-	scope = ServiceScope.PROTOTYPE,
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = {AccountResource.class, NestedFieldSupport.class}
 )
 public class AccountResourceImpl

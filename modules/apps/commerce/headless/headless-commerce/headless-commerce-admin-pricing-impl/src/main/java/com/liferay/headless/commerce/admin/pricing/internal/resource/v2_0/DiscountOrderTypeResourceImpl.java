@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/discount-order-type.properties",
-	scope = ServiceScope.PROTOTYPE,
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = {DiscountOrderTypeResource.class, NestedFieldSupport.class}
 )
 public class DiscountOrderTypeResourceImpl

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/discount-account-group.properties",
-	scope = ServiceScope.PROTOTYPE,
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = {DiscountAccountGroupResource.class, NestedFieldSupport.class}
 )
 public class DiscountAccountGroupResourceImpl

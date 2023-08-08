@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/sku.properties",
-	scope = ServiceScope.PROTOTYPE,
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, SkuResource.class}
 )
 public class SkuResourceImpl

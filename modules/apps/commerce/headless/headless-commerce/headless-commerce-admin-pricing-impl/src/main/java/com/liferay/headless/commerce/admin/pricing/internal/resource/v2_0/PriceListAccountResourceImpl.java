@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/price-list-account.properties",
-	scope = ServiceScope.PROTOTYPE,
+	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
 	service = {NestedFieldSupport.class, PriceListAccountResource.class}
 )
 public class PriceListAccountResourceImpl

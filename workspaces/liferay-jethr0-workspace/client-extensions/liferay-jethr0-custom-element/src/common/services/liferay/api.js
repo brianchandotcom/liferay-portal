@@ -7,10 +7,20 @@ import {Liferay} from './liferay.js';
 
 const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 
-const baseFetch = async (url, params, options = {}) => {
+const baseFetch = async (url, filter, sort, options = {}) => {
 	const urlObject = new URL(REACT_APP_LIFERAY_HOST + url);
 
-	urlObject.search = params.toString();
+	const urlSearchParams = new URLSearchParams(urlObject.search);
+
+	if (filter != null) {
+		urlSearchParams.append('filter', filter);
+	}
+
+	if (sort != null) {
+		urlSearchParams.append('sort', sort);
+	}
+
+	urlObject.search = urlSearchParams.toString();
 
 	return fetch(urlObject, {
 		headers: {

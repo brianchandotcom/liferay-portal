@@ -5,12 +5,8 @@
 
 import api from './liferay/api.js';
 
-const entities = async (name, filter, options = {}) => {
-	const params = new URLSearchParams();
-
-	params.append('filter', filter);
-
-	const response = await api('/o/c/' + name, params, options);
+const entities = async (name, filter, sort, options = {}) => {
+	const response = await api('/o/c/' + name, filter, sort, options);
 
 	if (!response.ok) {
 		throw new Error(response.statusText);

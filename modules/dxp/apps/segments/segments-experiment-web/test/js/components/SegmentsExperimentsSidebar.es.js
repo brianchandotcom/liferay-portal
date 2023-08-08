@@ -528,6 +528,18 @@ describe('Experiment History Tab', () => {
 		getByText(experimentHistory[1].description);
 		getByText(experimentHistory[1].status.label);
 	});
+
+	it('not contains history tab if FF is enabled', () => {
+		Liferay.FeatureFlags['LRAC-14055'] = true;
+
+		const {queryByText} = renderApp();
+
+		const historyTab = queryByText('history[record]');
+
+		expect(historyTab).toBeFalsy();
+
+		Liferay.FeatureFlags['LRAC-14055'] = false;
+	});
 });
 
 describe('No Winner Declared', () => {

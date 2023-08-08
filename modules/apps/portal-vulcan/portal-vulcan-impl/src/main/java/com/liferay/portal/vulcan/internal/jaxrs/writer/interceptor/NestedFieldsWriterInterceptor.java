@@ -8,13 +8,13 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
-import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapper;
@@ -59,6 +59,8 @@ import org.apache.cxf.message.Exchange;
 import org.apache.cxf.message.Message;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceObjects;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -120,9 +122,17 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		_nestedFieldServiceTrackerCustomizer =
 			nestedFieldServiceTrackerCustomizer;
 
+		Filter filter = null;
+
+		try {
+			filter = bundleContext.createFilter("(nested.field.support=true)");
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			ReflectionUtil.throwException(invalidSyntaxException);
+		}
+
 		_serviceTracker = new ServiceTracker<>(
-			bundleContext, NestedFieldSupport.class.getName(),
-			_nestedFieldServiceTrackerCustomizer);
+			bundleContext, filter, _nestedFieldServiceTrackerCustomizer);
 
 		_serviceTracker.open();
 	}

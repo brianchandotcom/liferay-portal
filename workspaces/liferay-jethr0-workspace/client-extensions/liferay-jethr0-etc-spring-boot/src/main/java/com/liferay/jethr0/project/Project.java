@@ -52,6 +52,8 @@ public interface Project extends Entity {
 
 	public String getName();
 
+	public int getPosition();
+
 	public int getPriority();
 
 	public Date getStartDate();
@@ -85,6 +87,8 @@ public interface Project extends Entity {
 	public void removeTestSuites(Set<TestSuite> testSuites);
 
 	public void setName(String name);
+
+	public void setPosition(int position);
 
 	public void setPriority(int priority);
 

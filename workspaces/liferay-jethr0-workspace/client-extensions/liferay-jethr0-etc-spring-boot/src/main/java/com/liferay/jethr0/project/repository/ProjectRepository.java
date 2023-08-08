@@ -26,13 +26,15 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectRepository extends BaseEntityRepository<Project> {
 
 	public Project add(
-		String name, int priority, Date startDate, Project.State state,
-		Project.Type type) {
+		String name, int position, int priority, Date startDate,
+		Project.State state, Project.Type type) {
 
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"name", name
+		).put(
+			"position", position
 		).put(
 			"priority", priority
 		).put(

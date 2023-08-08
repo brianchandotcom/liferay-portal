@@ -41,37 +41,25 @@ function drop(props, monitor) {
 function EmptyDropZone({canDrop, connectDropTarget, emptyContributors, hover}) {
 	const displayEmptyDropZone = canDrop || !emptyContributors;
 
-	return (
-		<div
-			className={classNames('empty-drop-zone-root', {
-				'empty-drop-zone-dashed border-primary rounded':
-					displayEmptyDropZone && (!canDrop || !hover),
-			})}
-		>
-			{connectDropTarget(
-				displayEmptyDropZone ? (
-					<div
-						className={classNames(
-							emptyContributors
-								? 'empty-drop-zone-target'
-								: 'drop-zone-target p-5',
-							{
-								'empty-drop-zone-target-solid dnd-hover border-primary rounded':
-									canDrop && hover,
-							}
-						)}
-					>
-						<div className="empty-drop-zone-indicator w-100" />
-					</div>
-				) : (
-					<div>
-						<EmptyPlaceholder />
-					</div>
-				)
-			)}
-		</div>
+	return connectDropTarget(
+		displayEmptyDropZone ? (
+			<div
+				className={classNames('empty-drop-zone p-6 rounded', {
+					'border-primary': canDrop || hover,
+					'border-secondary': !canDrop,
+					'empty-drop-zone-dashed':
+						!emptyContributors || (canDrop && !hover),
+					'empty-drop-zone-target': hover,
+				})}
+			/>
+		) : (
+			<div>
+				<EmptyPlaceholder />
+			</div>
+		)
 	);
 }
+
 EmptyDropZone.propTypes = {
 	canDrop: PropTypes.bool,
 	connectDropTarget: PropTypes.func,

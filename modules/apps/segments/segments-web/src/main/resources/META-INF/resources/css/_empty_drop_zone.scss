@@ -1,31 +1,14 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
-.empty-drop-zone-root {
-	background: $light-l1;
+.empty-drop-zone {
 	border-width: 2px;
 
-	.empty-drop-zone-target {
-		height: 50vh;
-
-		.empty-drop-zone-indicator {
-			visibility: hidden;
-		}
-
-		&.dnd-hover {
-			background: $primary-l3;
-
-			.empty-drop-zone-indicator {
-				visibility: visible;
-			}
-		}
+	&-dashed {
+		border-style: dashed;
 	}
-}
 
-.empty-drop-zone-dashed {
-	border-style: dashed;
-}
-
-.empty-drop-zone-target-solid {
-	border-style: solid;
-	border-width: 2px;
+	&-target {
+		background: $cadmin-primary-l3;
+		border-style: solid;
+	}
 }

@@ -9,7 +9,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -53,6 +53,9 @@ const SidebarPanelInfoView = ({
 	const handleError = useCallback(() => {
 		setError(true);
 	}, []);
+
+	const hasCategorization =
+		!!tags.length || !!Object.keys(vocabularies).length;
 
 	return (
 		<>
@@ -116,7 +119,7 @@ const SidebarPanelInfoView = ({
 							) : (
 								<>
 									<ClaySticker
-										className={classnames(
+										className={classNames(
 											'sticker-user-icon',
 											{
 												[`user-icon-color-${stickerColor}`]: !user.url,
@@ -147,7 +150,9 @@ const SidebarPanelInfoView = ({
 			<div className="c-mb-4 sidebar-section">
 				{showTabs && activeTabKeyValue !== null && (
 					<ClayTabs
-						className="flex-nowrap justify-content-center"
+						className={classNames('d-flex flex-nowrap', {
+							'justify-content-center': hasCategorization,
+						})}
 						modern
 					>
 						<ClayTabs.Item
@@ -161,26 +166,28 @@ const SidebarPanelInfoView = ({
 							{Liferay.Language.get('details')}
 						</ClayTabs.Item>
 
-						<ClayTabs.Item
-							active={activeTabKeyValue === 1}
-							className="flex-shrink-0"
-							innerProps={{
-								'aria-controls': 'versions',
-							}}
-							onClick={() => setActiveTabKeyValue(1)}
-						>
-							{Liferay.Language.get('versions')}
-						</ClayTabs.Item>
+						{hasCategorization && (
+							<ClayTabs.Item
+								active={activeTabKeyValue === 1}
+								className="flex-shrink-0"
+								innerProps={{
+									'aria-controls': 'categorization',
+								}}
+								onClick={() => setActiveTabKeyValue(1)}
+							>
+								{Liferay.Language.get('categorization')}
+							</ClayTabs.Item>
+						)}
 
 						<ClayTabs.Item
 							active={activeTabKeyValue === 2}
 							className="flex-shrink-0"
 							innerProps={{
-								'aria-controls': 'categorization',
+								'aria-controls': 'versions',
 							}}
 							onClick={() => setActiveTabKeyValue(2)}
 						>
-							{Liferay.Language.get('categorization')}
+							{Liferay.Language.get('versions')}
 						</ClayTabs.Item>
 					</ClayTabs>
 				)}
@@ -208,7 +215,21 @@ const SidebarPanelInfoView = ({
 							/>
 						</ClayTabs.TabPane>
 
-						{showTabs && activeTabKeyValue === 1 && (
+						{hasCategorization &&
+							showTabs &&
+							activeTabKeyValue === 1 && (
+								<ClayTabs.TabPane
+									aria-labelledby="tab-2"
+									className="flex-shrink-0"
+								>
+									<Categorization
+										tags={tags}
+										vocabularies={vocabularies}
+									/>
+								</ClayTabs.TabPane>
+							)}
+
+						{showTabs && activeTabKeyValue === 2 && (
 							<ClayTabs.TabPane
 								aria-labelledby="tab-2"
 								className="flex-shrink-0"
@@ -218,18 +239,6 @@ const SidebarPanelInfoView = ({
 									getItemVersionsURL={getItemVersionsURL}
 									languageTag={languageTag}
 									onError={handleError}
-								/>
-							</ClayTabs.TabPane>
-						)}
-
-						{showTabs && activeTabKeyValue === 2 && (
-							<ClayTabs.TabPane
-								aria-labelledby="tab-2"
-								className="flex-shrink-0"
-							>
-								<Categorization
-									tags={tags}
-									vocabularies={vocabularies}
 								/>
 							</ClayTabs.TabPane>
 						)}

@@ -81,10 +81,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		return _creationMenu;
 	}
 
-	public Map<String, Object> getEmptyState() {
-		return _emptyState;
-	}
-
 	public List<FDSActionDropdownItem> getFdsActionDropdownItems() {
 		return _fdsActionDropdownItems;
 	}
@@ -159,10 +155,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 
 	public void setCustomViewsEnabled(boolean customViewsEnabled) {
 		_customViewsEnabled = customViewsEnabled;
-	}
-
-	public void setEmptyState(Map<String, Object> emptyState) {
-		_emptyState = emptyState;
 	}
 
 	public void setFdsActionDropdownItems(
@@ -241,7 +233,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_bulkActionDropdownItems = new ArrayList<>();
 		_creationMenu = new CreationMenu();
 		_customViewsEnabled = false;
-		_emptyState = null;
 		_fdsActionDropdownItems = new ArrayList<>();
 		_fdsFilters = new ArrayList<>();
 		_fdsFiltersContext = null;
@@ -283,8 +274,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				"currentURL", PortalUtil.getCurrentURL(getRequest())
 			).put(
 				"customViewsEnabled", _customViewsEnabled
-			).put(
-				"emptyState", _emptyState
 			).put(
 				"filters", _fdsFiltersContext
 			).put(
@@ -362,7 +351,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private List<DropdownItem> _bulkActionDropdownItems = new ArrayList<>();
 	private CreationMenu _creationMenu = new CreationMenu();
 	private boolean _customViewsEnabled;
-	private Map<String, Object> _emptyState;
 	private List<FDSActionDropdownItem> _fdsActionDropdownItems =
 		new ArrayList<>();
 	private List<FDSFilter> _fdsFilters = new ArrayList<>();

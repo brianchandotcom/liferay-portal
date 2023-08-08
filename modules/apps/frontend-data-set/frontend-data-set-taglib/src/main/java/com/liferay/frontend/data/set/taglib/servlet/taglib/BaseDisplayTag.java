@@ -81,6 +81,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		return _additionalProps;
 	}
 
+	public Map<String, Object> getEmptyState() {
+		return _emptyState;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -131,6 +135,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_additionalProps = additionalProps;
 	}
 
+	public void setEmptyState(Map<String, Object> emptyState) {
+		_emptyState = emptyState;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -179,6 +187,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	protected void cleanUp() {
 		_additionalProps = null;
+		_emptyState = null;
 		_fdsPaginationEntries = null;
 		_id = null;
 		_itemsPerPage = 0;
@@ -222,6 +231,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 			}
 		).put(
 			"customViews", _getCustomViews()
+		).put(
+			"emptyState", _emptyState
 		).put(
 			"namespace", getNamespace()
 		).put(
@@ -296,6 +307,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 	private static final Log _log = LogFactoryUtil.getLog(BaseDisplayTag.class);
 
 	private Map<String, Object> _additionalProps;
+	private Map<String, Object> _emptyState;
 	private List<FDSPaginationEntry> _fdsPaginationEntries;
 	private String _id;
 	private int _itemsPerPage;

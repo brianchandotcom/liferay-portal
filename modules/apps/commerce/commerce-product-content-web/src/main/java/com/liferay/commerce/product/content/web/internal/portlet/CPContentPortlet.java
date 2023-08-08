@@ -7,8 +7,8 @@ package com.liferay.commerce.product.content.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
-import com.liferay.commerce.product.content.util.CPContentHelper;
-import com.liferay.commerce.product.content.util.CPContentSkuOptionsHelper;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
+import com.liferay.commerce.product.content.helper.CPContentSkuOptionsHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

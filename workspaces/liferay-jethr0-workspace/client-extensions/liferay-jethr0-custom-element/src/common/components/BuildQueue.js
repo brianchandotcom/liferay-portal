@@ -104,7 +104,7 @@ const projects = async () => {
 	await entities(
 		'projects',
 		"((state eq 'opened') or (state eq 'queued') or (state eq 'running'))",
-		"position:asc"
+		'position:asc'
 	).then(async (data) => {
 		for (const project of data.items) {
 			await entities(

@@ -6,20 +6,11 @@
 package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.internal.odata.entity.APISchemaEntityModel;
-import com.liferay.headless.builder.internal.odata.filter.expression.APISchemaTranslatorExpressionVisitor;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
-import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
-import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -44,7 +35,7 @@ public class EndpointHelper {
 
 	public Page<Map<String, Object>> getResponseEntityMapsPage(
 			long companyId, APIApplication.Endpoint endpoint,
-			String filterString, Pagination pagination, String scopeKey,
+			Expression filterExpression, Pagination pagination, String scopeKey,
 			Sort[] sorts)
 		throws Exception {
 
@@ -62,8 +53,7 @@ public class EndpointHelper {
 
 		Page<ObjectEntry> objectEntriesPage =
 			_objectEntryHelper.getObjectEntriesPage(
-				companyId,
-				_getFilterExpression(companyId, endpoint, filterString),
+				companyId, filterExpression,
 				ListUtil.fromCollection(relationshipsNames), pagination,
 				responseSchema.getMainObjectDefinitionExternalReferenceCode(),
 				scopeKey, sorts);
@@ -100,61 +90,6 @@ public class EndpointHelper {
 
 		return Page.of(
 			responseEntityMaps, pagination, objectEntriesPage.getTotalCount());
-	}
-
-	private Expression _getFilterExpression(
-			long companyId, APIApplication.Endpoint endpoint,
-			String filterString)
-		throws Exception {
-
-		APIApplication.Filter filter = endpoint.getFilter();
-
-		if ((filter == null) && (filterString == null)) {
-			return null;
-		}
-
-		APIApplication.Schema schema = endpoint.getResponseSchema();
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					schema.getMainObjectDefinitionExternalReferenceCode(),
-					companyId);
-
-		EntityModel entityModel = _entityModelProvider.getEntityModel(
-			objectDefinition);
-
-		Expression endpointFilterExpression = null;
-
-		if (filter != null) {
-			endpointFilterExpression = _objectDefinitionFilterParser.parse(
-				entityModel, filter.getODataFilterString(), objectDefinition);
-		}
-
-		Expression requestFilterExpression = null;
-
-		if (filterString != null) {
-			EntityModel apiSchemaEntityModel = new APISchemaEntityModel(
-				entityModel, endpoint.getResponseSchema());
-
-			Expression expression = _objectDefinitionFilterParser.parse(
-				apiSchemaEntityModel, filterString, objectDefinition);
-
-			requestFilterExpression = expression.accept(
-				new APISchemaTranslatorExpressionVisitor(
-					apiSchemaEntityModel, _expressionFactory));
-		}
-
-		if (endpointFilterExpression == null) {
-			return requestFilterExpression;
-		}
-		else if (requestFilterExpression == null) {
-			return endpointFilterExpression;
-		}
-
-		return _expressionFactory.createBinaryExpression(
-			endpointFilterExpression, BinaryExpression.Operation.AND,
-			requestFilterExpression);
 	}
 
 	private Map<String, Object> _getObjectEntryProperties(
@@ -204,18 +139,6 @@ public class EndpointHelper {
 
 		return values;
 	}
-
-	@Reference
-	private EntityModelProvider _entityModelProvider;
-
-	@Reference
-	private ExpressionFactory _expressionFactory;
-
-	@Reference
-	private ObjectDefinitionFilterParser _objectDefinitionFilterParser;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;

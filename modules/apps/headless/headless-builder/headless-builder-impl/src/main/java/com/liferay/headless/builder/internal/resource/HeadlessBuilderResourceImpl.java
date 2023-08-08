@@ -11,6 +11,7 @@ import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
@@ -21,7 +22,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
@@ -38,13 +38,13 @@ public class HeadlessBuilderResourceImpl {
 	@Path("/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
-			@QueryParam("filter") String filterString,
+			@Context Expression filterExpression,
 			@Context Pagination pagination, @PathParam("path") String path,
 			@Context Sort[] sorts)
 		throws Exception {
 
 		return _get(
-			filterString, pagination, path,
+			filterExpression, pagination, path,
 			APIApplication.Endpoint.Scope.COMPANY, null, sorts);
 	}
 
@@ -52,14 +52,14 @@ public class HeadlessBuilderResourceImpl {
 	@Path(HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX + "/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
-			@QueryParam("filter") String filterString,
+			@Context Expression filterExpression,
 			@Context Pagination pagination, @PathParam("path") String path,
 			@PathParam("scopeKey") String scopeKey, @Context Sort[] sorts)
 		throws Exception {
 
 		return _get(
-			filterString, pagination, path, APIApplication.Endpoint.Scope.GROUP,
-			scopeKey, sorts);
+			filterExpression, pagination, path,
+			APIApplication.Endpoint.Scope.GROUP, scopeKey, sorts);
 	}
 
 	@Context
@@ -72,7 +72,7 @@ public class HeadlessBuilderResourceImpl {
 	protected HttpServletRequest contextHttpServletRequest;
 
 	private Response _get(
-			String filterString, Pagination pagination, String path,
+			Expression filterExpression, Pagination pagination, String path,
 			APIApplication.Endpoint.Scope scope, String scopeKey, Sort[] sorts)
 		throws Exception {
 
@@ -92,7 +92,7 @@ public class HeadlessBuilderResourceImpl {
 
 			return Response.ok(
 				_endpointHelper.getResponseEntityMapsPage(
-					contextCompany.getCompanyId(), endpoint, filterString,
+					contextCompany.getCompanyId(), endpoint, filterExpression,
 					pagination, scopeKey, sorts)
 			).build();
 		}

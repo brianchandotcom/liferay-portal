@@ -490,6 +490,36 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public void deployInactiveObjectDefinition(
+		ObjectDefinition objectDefinition) {
+
+		undeployObjectDefinition(objectDefinition);
+
+		for (Map.Entry
+				<InactiveObjectDefinitionDeployer,
+				 Map<Long, List<ServiceRegistration<?>>>> entry :
+					_inactiveObjectDefinitionsServiceRegistrationsMaps.
+						entrySet()) {
+
+			InactiveObjectDefinitionDeployer inactiveObjectDefinitionDeployer =
+				entry.getKey();
+			Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
+				entry.getValue();
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(
+						objectDefinition.getCompanyId())) {
+
+				serviceRegistrationsMap.computeIfAbsent(
+					objectDefinition.getObjectDefinitionId(),
+					objectDefinitionId ->
+						inactiveObjectDefinitionDeployer.deploy(
+							objectDefinition));
+			}
+		}
+	}
+
+	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
 		undeployObjectDefinition(objectDefinition);
 
@@ -1568,6 +1598,9 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition.isApproved()) {
 			if (!active && originalActive) {
 				objectDefinitionLocalService.undeployObjectDefinition(
+					objectDefinition);
+
+				objectDefinitionLocalService.deployInactiveObjectDefinition(
 					objectDefinition);
 			}
 			else if (active) {

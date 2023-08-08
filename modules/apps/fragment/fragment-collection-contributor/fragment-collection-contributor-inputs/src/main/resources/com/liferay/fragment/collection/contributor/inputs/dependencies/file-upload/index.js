@@ -55,4 +55,8 @@ else {
 	if (input.attributes.selectFromDocumentLibrary) {
 		selectButton.addEventListener('click', onSelectFile);
 	}
+
+	if (fileName.innerText !== '') {
+		showRemoveButton();
+	}
 }

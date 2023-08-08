@@ -65,6 +65,12 @@ public class Jethr0SpringBootApplication {
 
 		buildQueue.initialize();
 
+		JmsListenerEndpointRegistry jmsListenerEndpointRegistry =
+			configurableApplicationContext.getBean(
+				JmsListenerEndpointRegistry.class);
+
+		jmsListenerEndpointRegistry.start();
+
 		JenkinsQueue jenkinsQueue = configurableApplicationContext.getBean(
 			JenkinsQueue.class);
 
@@ -72,12 +78,6 @@ public class Jethr0SpringBootApplication {
 			configurableApplicationContext.getBean(JMSEventHandler.class));
 
 		jenkinsQueue.initialize();
-
-		JmsListenerEndpointRegistry jmsListenerEndpointRegistry =
-			configurableApplicationContext.getBean(
-				JmsListenerEndpointRegistry.class);
-
-		jmsListenerEndpointRegistry.start();
 	}
 
 	@Bean

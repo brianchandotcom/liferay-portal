@@ -10,6 +10,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -31,64 +35,70 @@ public class UpgradeJavaSearchVocabulariesMethodCheck extends BaseFileCheck {
 
 		String newContent = content;
 
-		boolean failedValidation = false;
-		boolean replaced = false;
+		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
-		Matcher matcher = _searchVocabulariesPattern.matcher(content);
-
-		while (matcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				content, matcher.start());
-
-			if (!hasClassOrVariableName(
-					"AssetVocabularyService", content, content, methodCall) &&
-				!hasClassOrVariableName(
-					"AssetVocabularyLocalService", content, content,
-					methodCall)) {
-
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.isJavaMethod()) {
 				continue;
 			}
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
+			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
 
-			if (parameterList.size() != 5) {
-				continue;
+			String javaMethodContent = javaMethod.getContent();
+
+			Matcher matcher = _searchVocabulariesPattern.matcher(
+				javaMethodContent);
+
+			while (matcher.find()) {
+				String methodCall = JavaSourceUtil.getMethodCall(
+					javaMethodContent, matcher.start());
+
+				if (!hasClassOrVariableName(
+						"AssetVocabularyService", content, content,
+						methodCall) &&
+					!hasClassOrVariableName(
+						"AssetVocabularyLocalService", content, content,
+						methodCall)) {
+
+					continue;
+				}
+
+				List<String> parameterList = JavaSourceUtil.getParameterList(
+					methodCall);
+
+				if (parameterList.size() != 5) {
+					continue;
+				}
+
+				String[] parameterTypes = {
+					"long", "long", "String", "int", "int"
+				};
+
+				if (!hasParameterTypes(
+						javaMethodContent, javaMethodContent,
+						ArrayUtil.toStringArray(parameterList),
+						parameterTypes)) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Unable to format searchVocabularies method from ",
+							"AssetVocabularyService and AssetVocabulary",
+							"LocalService. Fill the new parameters manually, ",
+							"see LPS-189866"));
+
+					continue;
+				}
+
+				String newMethod = _addOrReplaceParameters(
+					matcher.group(0), methodCall, parameterList);
+
+				newContent = StringUtil.replace(
+					newContent, methodCall, newMethod);
+
+				newContent = JavaSourceUtil.addImports(
+					newContent, "com.liferay.portal.kernel.search.Sort");
 			}
-
-			String[] parameterTypes = {"long", "long", "String", "int", "int"};
-
-			if (!hasParameterTypes(
-					content, content, ArrayUtil.toStringArray(parameterList),
-					parameterTypes)) {
-
-				failedValidation = true;
-
-				continue;
-			}
-
-			String newMethod = _addOrReplaceParameters(
-				matcher.group(0), methodCall, parameterList);
-
-			newContent = StringUtil.replace(newContent, methodCall, newMethod);
-
-			replaced = true;
-		}
-
-		if (replaced) {
-			newContent = JavaSourceUtil.addImports(
-				newContent, "com.liferay.portal.kernel.search.Sort");
-		}
-
-		if (failedValidation) {
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Could not resolve types of searchVocabularies method. ",
-					"The method signature has changed to searchVocabularies(",
-					"long companyId, long[] groupIds, String title, int[] ",
-					"visibilityTypes, int start, int end, Sort sort). Fill ",
-					"the new parameters manually."));
 		}
 
 		return newContent;

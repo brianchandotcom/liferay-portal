@@ -43,19 +43,9 @@ function SegmentsExperiments({
 	onEditSegmentsExperimentStatus,
 	onTargetChange,
 }) {
-	const [dropdown, setDropdown] = useState(false);
 	const [activeTab, setActiveTab] = useState(TABS_STATES.ACTIVE);
-	const {
-		experiment,
-		experimentHistory,
-		selectedExperienceId,
-		variants,
-	} = useContext(StateContext);
-	const {APIService, imagesPath} = useContext(SegmentsExperimentsContext);
-	const dispatch = useContext(DispatchContext);
+	const {experiment, experimentHistory} = useContext(StateContext);
 
-	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
-	const winnerVariant = variants.find((variant) => variant.winner === true);
 	const goalTarget = experiment?.goal?.target?.replace('#', '');
 	const isGoalTargetInDOM = document.getElementById(goalTarget);
 
@@ -63,6 +53,20 @@ function SegmentsExperiments({
 
 	if (goalTarget && !isGoalTargetInDOM) {
 		onTargetChange('');
+	}
+
+	if (Liferay.FeatureFlags['LRAC-14055']) {
+		return (
+			<Experiments
+				experiment={experiment}
+				goalTarget={goalTarget}
+				onCreateSegmentsExperiment={onCreateSegmentsExperiment}
+				onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
+				onEditSegmentsExperiment={onEditSegmentsExperiment}
+				onEditSegmentsExperimentStatus={onEditSegmentsExperimentStatus}
+				onTargetChange={onTargetChange}
+			/>
+		);
 	}
 
 	return (
@@ -93,174 +97,17 @@ function SegmentsExperiments({
 				fade={false}
 			>
 				<ClayTabs.TabPane>
-					{experiment && (
-						<>
-							<div className="align-items-center d-flex justify-content-between">
-								<h4 className="mb-0 text-dark text-truncate">
-									{experiment.name}
-								</h4>
-
-								{experiment.editable && (
-									<ClayDropDown
-										active={dropdown}
-										data-testid="segments-experiments-drop-down"
-										onActiveChange={setDropdown}
-										trigger={
-											<ClayButton
-												aria-label={Liferay.Language.get(
-													'show-actions'
-												)}
-												borderless
-												className="btn-monospaced"
-												displayType="secondary"
-											>
-												<ClayIcon symbol="ellipsis-v" />
-											</ClayButton>
-										}
-									>
-										<ClayDropDown.ItemList>
-											<ClayDropDown.Item
-												onClick={_handleEditExperiment}
-											>
-												<ClayIcon
-													className="c-mr-3 text-4"
-													symbol="pencil"
-												/>
-
-												{Liferay.Language.get('edit')}
-											</ClayDropDown.Item>
-
-											<ClayDropDown.Item
-												onClick={
-													_handleDeleteActiveExperiment
-												}
-											>
-												<ClayIcon
-													className="c-mr-3 text-4"
-													symbol="trash"
-												/>
-
-												{Liferay.Language.get('delete')}
-											</ClayDropDown.Item>
-										</ClayDropDown.ItemList>
-									</ClayDropDown>
-								)}
-							</div>
-
-							<ClayLabel
-								displayType={statusToLabelDisplayType(
-									experiment.status.value
-								)}
-							>
-								{experiment.status.label}
-							</ClayLabel>
-
-							{experiment.status.value ===
-								STATUS_FINISHED_WINNER && (
-								<ClayAlert
-									className="mt-3"
-									displayType="success"
-								>
-									<div
-										className="d-inline"
-										dangerouslySetInnerHTML={{
-											__html: sub(
-												Liferay.Language.get(
-													'x-is-the-winner-variant'
-												),
-												'<strong>',
-												winnerVariant.name,
-												'</strong>'
-											),
-										}}
-									/>
-
-									<ClayAlert.Footer>
-										<ClayButton.Group>
-											<ClayButton
-												alert
-												onClick={() =>
-													_handlePublishVariant(
-														winnerVariant.segmentsExperienceId
-													)
-												}
-											>
-												{Liferay.Language.get(
-													'publish-winner'
-												)}
-											</ClayButton>
-										</ClayButton.Group>
-									</ClayAlert.Footer>
-								</ClayAlert>
-							)}
-
-							<SegmentsExperimentsDetails
-								segmentsExperiment={experiment}
-							/>
-
-							{experiment.goal.value === 'click' && (
-								<ClickGoalPicker
-									allowEdit={
-										experiment.status.value === STATUS_DRAFT
-									}
-									onSelectClickGoalTarget={(selector) => {
-										onTargetChange(selector);
-									}}
-									target={goalTarget}
-								/>
-							)}
-
-							<Variants
-								onVariantPublish={_handlePublishVariant}
-								selectedSegmentsExperienceId={
-									selectedExperienceId
-								}
-							/>
-
-							<SegmentsExperimentsActions
-								onEditSegmentsExperimentStatus={
-									onEditSegmentsExperimentStatus
-								}
-							/>
-						</>
-					)}
-
-					{!experiment && (
-						<div className="segments-experiments-empty-state text-center">
-							<img
-								alt={Liferay.Language.get(
-									'create-test-help-message'
-								)}
-								className="mb-3 mt-4 segments-experiments-empty-state__image"
-								height="185"
-								src={noExperimentIllustration}
-								width="185"
-							/>
-
-							<h4 className="text-dark">
-								{Liferay.Language.get(
-									'no-active-tests-were-found-for-the-selected-experience'
-								)}
-							</h4>
-
-							<p>
-								{Liferay.Language.get(
-									'create-test-help-message'
-								)}
-							</p>
-
-							<ClayButton
-								displayType="secondary"
-								onClick={() =>
-									onCreateSegmentsExperiment(
-										selectedExperienceId
-									)
-								}
-							>
-								{Liferay.Language.get('create-test')}
-							</ClayButton>
-						</div>
-					)}
+					<Experiments
+						experiment={experiment}
+						goalTarget={goalTarget}
+						onCreateSegmentsExperiment={onCreateSegmentsExperiment}
+						onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
+						onEditSegmentsExperiment={onEditSegmentsExperiment}
+						onEditSegmentsExperimentStatus={
+							onEditSegmentsExperimentStatus
+						}
+						onTargetChange={onTargetChange}
+					/>
 				</ClayTabs.TabPane>
 
 				<ClayTabs.TabPane>
@@ -272,6 +119,27 @@ function SegmentsExperiments({
 			</ClayTabs.Content>
 		</>
 	);
+}
+
+function Experiments({
+	experiment,
+	goalTarget,
+	onCreateSegmentsExperiment,
+	onDeleteSegmentsExperiment,
+	onEditSegmentsExperiment,
+	onEditSegmentsExperimentStatus,
+	onTargetChange,
+}) {
+	const [dropdown, setDropdown] = useState(false);
+	const {APIService, imagesPath} = useContext(SegmentsExperimentsContext);
+	const dispatch = useContext(DispatchContext);
+	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
+	const {selectedExperienceId, variants} = useContext(StateContext);
+	const winnerVariant = variants.find((variant) => variant.winner === true);
+
+	function _handleEditExperiment() {
+		onEditSegmentsExperiment();
+	}
 
 	function _handleDeleteActiveExperiment() {
 		openConfirmModal({
@@ -286,10 +154,6 @@ function SegmentsExperiments({
 				}
 			},
 		});
-	}
-
-	function _handleEditExperiment() {
-		onEditSegmentsExperiment();
 	}
 
 	function _handlePublishVariant(experienceId) {
@@ -323,6 +187,159 @@ function SegmentsExperiments({
 			},
 		});
 	}
+
+	return (
+		<>
+			{experiment && (
+				<>
+					<div className="align-items-center d-flex justify-content-between">
+						<h4 className="mb-0 text-dark text-truncate">
+							{experiment.name}
+						</h4>
+
+						{experiment.editable && (
+							<ClayDropDown
+								active={dropdown}
+								data-testid="segments-experiments-drop-down"
+								onActiveChange={setDropdown}
+								trigger={
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'show-actions'
+										)}
+										borderless
+										className="btn-monospaced"
+										displayType="secondary"
+									>
+										<ClayIcon symbol="ellipsis-v" />
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Item
+										onClick={_handleEditExperiment}
+									>
+										<ClayIcon
+											className="c-mr-3 text-4"
+											symbol="pencil"
+										/>
+
+										{Liferay.Language.get('edit')}
+									</ClayDropDown.Item>
+
+									<ClayDropDown.Item
+										onClick={_handleDeleteActiveExperiment}
+									>
+										<ClayIcon
+											className="c-mr-3 text-4"
+											symbol="trash"
+										/>
+
+										{Liferay.Language.get('delete')}
+									</ClayDropDown.Item>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						)}
+					</div>
+
+					<ClayLabel
+						displayType={statusToLabelDisplayType(
+							experiment.status.value
+						)}
+					>
+						{experiment.status.label}
+					</ClayLabel>
+
+					{experiment.status.value === STATUS_FINISHED_WINNER && (
+						<ClayAlert className="mt-3" displayType="success">
+							<div
+								className="d-inline"
+								dangerouslySetInnerHTML={{
+									__html: sub(
+										Liferay.Language.get(
+											'x-is-the-winner-variant'
+										),
+										'<strong>',
+										winnerVariant.name,
+										'</strong>'
+									),
+								}}
+							/>
+
+							<ClayAlert.Footer>
+								<ClayButton.Group>
+									<ClayButton
+										alert
+										onClick={() =>
+											_handlePublishVariant(
+												winnerVariant.segmentsExperienceId
+											)
+										}
+									>
+										{Liferay.Language.get('publish-winner')}
+									</ClayButton>
+								</ClayButton.Group>
+							</ClayAlert.Footer>
+						</ClayAlert>
+					)}
+
+					<SegmentsExperimentsDetails
+						segmentsExperiment={experiment}
+					/>
+
+					{experiment.goal.value === 'click' && (
+						<ClickGoalPicker
+							allowEdit={experiment.status.value === STATUS_DRAFT}
+							onSelectClickGoalTarget={(selector) => {
+								onTargetChange(selector);
+							}}
+							target={goalTarget}
+						/>
+					)}
+
+					<Variants
+						onVariantPublish={_handlePublishVariant}
+						selectedSegmentsExperienceId={selectedExperienceId}
+					/>
+
+					<SegmentsExperimentsActions
+						onEditSegmentsExperimentStatus={
+							onEditSegmentsExperimentStatus
+						}
+					/>
+				</>
+			)}
+
+			{!experiment && (
+				<div className="segments-experiments-empty-state text-center">
+					<img
+						alt={Liferay.Language.get('create-test-help-message')}
+						className="mb-3 mt-4 segments-experiments-empty-state__image"
+						height="185"
+						src={noExperimentIllustration}
+						width="185"
+					/>
+
+					<h4 className="text-dark">
+						{Liferay.Language.get(
+							'no-active-tests-were-found-for-the-selected-experience'
+						)}
+					</h4>
+
+					<p>{Liferay.Language.get('create-test-help-message')}</p>
+
+					<ClayButton
+						displayType="secondary"
+						onClick={() =>
+							onCreateSegmentsExperiment(selectedExperienceId)
+						}
+					>
+						{Liferay.Language.get('create-test')}
+					</ClayButton>
+				</div>
+			)}
+		</>
+	);
 }
 
 SegmentsExperiments.propTypes = {

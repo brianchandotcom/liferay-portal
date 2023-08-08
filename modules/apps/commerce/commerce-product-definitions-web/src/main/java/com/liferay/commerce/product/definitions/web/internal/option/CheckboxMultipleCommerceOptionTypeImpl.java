@@ -68,18 +68,18 @@ public class CheckboxMultipleCommerceOptionTypeImpl
 			return;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
 			"@liferay/commerce-product-definitions-web");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(

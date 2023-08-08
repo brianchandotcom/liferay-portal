@@ -342,8 +342,8 @@ const FDSViews = ({
 			id={`${namespace}FDSViews`}
 			itemsActions={[
 				{
-					icon: 'view',
-					label: Liferay.Language.get('view'),
+					icon: 'pencil',
+					label: Liferay.Language.get('edit'),
 					onClick: onViewClick,
 				},
 				{

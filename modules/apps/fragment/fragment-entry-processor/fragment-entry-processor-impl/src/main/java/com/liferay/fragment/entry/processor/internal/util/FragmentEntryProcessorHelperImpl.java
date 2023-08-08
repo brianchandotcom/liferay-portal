@@ -137,7 +137,7 @@ public class FragmentEntryProcessorHelperImpl
 			infoItemReference = new InfoItemReference(
 				className, infoItemIdentifier);
 
-			object = _getInfoItem(className, infoItemIdentifier);
+			object = _getInfoItem(infoItemReference);
 		}
 		else if (isMappedCollection(editableValueJSONObject)) {
 			infoItemReference =
@@ -473,21 +473,12 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	private Object _getInfoItem(InfoItemReference infoItemReference) {
-		if (infoItemReference == null) {
-			return null;
-		}
-
-		return _getInfoItem(
-			infoItemReference.getClassName(),
-			infoItemReference.getInfoItemIdentifier());
-	}
-
-	private Object _getInfoItem(
-		String className, InfoItemIdentifier infoItemIdentifier) {
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
 		if (infoItemObjectProvider == null) {

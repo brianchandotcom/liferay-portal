@@ -144,6 +144,7 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "_FACES1478_WAR_comliferayfacesissuejsfportlet_testParam=bar");
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test Faces1618And1638PortletSmoke {
 

@@ -9,6 +9,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
@@ -186,7 +187,8 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 		defaultObjectEntryManager.getObjectEntry(
 			_getDTOConverterContext(relatedObjectEntryId),
-			_getRelatedObjectDefinition(
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				_objectDefinition,
 				_objectRelationshipLocalService.getObjectRelationship(
 					_objectDefinition.getObjectDefinitionId(),
 					objectRelationshipName)),
@@ -212,21 +214,6 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			contextHttpServletRequest, objectEntryId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
-	}
-
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-
-		if (objectDefinitionId1 != _objectDefinition.getObjectDefinitionId()) {
-			return _objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		}
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
 	}
 
 	private ObjectEntry _getRelatedObjectEntry(

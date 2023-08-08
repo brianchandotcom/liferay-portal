@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
@@ -223,20 +224,9 @@ public class RelatedObjectEntryResourceImpl
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		ObjectDefinition relatedObjectDefinition = null;
-
-		if (objectRelationship.getObjectDefinitionId1() !=
-				objectDefinition.getObjectDefinitionId()) {
-
-			relatedObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-		}
-		else {
-			relatedObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
-		}
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition, objectRelationship);
 
 		if (!relatedObjectDefinition.isActive()) {
 			throw new NoSuchObjectDefinitionException(

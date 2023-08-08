@@ -235,18 +235,18 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 			_ddmStructureLocalService.deleteDDMStructure(_ddmStructure);
 
-			List<DLFileEntryMetadata> currentFileEntryMetadatas =
+			List<DLFileEntryMetadata> currentDLFileEntryMetadatas =
 				_dlFileEntryMetadataLocalService.
 					getNoStructuresFileEntryMetadatas();
 
 			Assert.assertEquals(
-				currentFileEntryMetadatas.toString(),
+				currentDLFileEntryMetadatas.toString(),
 				dlFileEntryMetadatas.size() + 1,
-				currentFileEntryMetadatas.size());
+				currentDLFileEntryMetadatas.size());
 
 			Assert.assertTrue(
 				ListUtil.exists(
-					currentFileEntryMetadatas,
+					currentDLFileEntryMetadatas,
 					dlFileEntryMetadata1 -> Objects.equals(
 						dlFileEntryMetadata1, dlFileEntryMetadata)));
 		}

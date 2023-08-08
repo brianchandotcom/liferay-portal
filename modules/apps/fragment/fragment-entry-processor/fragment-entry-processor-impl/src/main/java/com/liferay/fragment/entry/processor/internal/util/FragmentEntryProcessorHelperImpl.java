@@ -99,8 +99,8 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		InfoItemReference infoItemReference = null;
 		String fieldName = StringPool.BLANK;
+		InfoItemReference infoItemReference = null;
 		Object object = null;
 
 		if (isMapped(editableValueJSONObject)) {

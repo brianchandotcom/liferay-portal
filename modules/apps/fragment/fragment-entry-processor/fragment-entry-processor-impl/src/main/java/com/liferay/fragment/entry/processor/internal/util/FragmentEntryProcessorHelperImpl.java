@@ -88,7 +88,7 @@ public class FragmentEntryProcessorHelperImpl
 	@Override
 	public Object getFieldValue(
 			JSONObject editableValueJSONObject,
-			Map<Long, InfoItemFieldValues> infoDisplaysFieldValues,
+			Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
@@ -99,15 +99,13 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		long classPK = 0;
-		String className = StringPool.BLANK;
+		InfoItemReference infoItemReference = null;
 		String fieldName = StringPool.BLANK;
 		Object object = null;
 
 		if (isMapped(editableValueJSONObject)) {
-			className = _portal.getClassName(
+			String className = _portal.getClassName(
 				editableValueJSONObject.getLong("classNameId"));
-			classPK = editableValueJSONObject.getLong("classPK");
 			String externalReferenceCode = editableValueJSONObject.getString(
 				"externalReferenceCode");
 
@@ -120,7 +118,8 @@ public class FragmentEntryProcessorHelperImpl
 					externalReferenceCode);
 			}
 			else {
-				infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(
+					editableValueJSONObject.getLong("classPK"));
 			}
 
 			if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
@@ -135,31 +134,18 @@ public class FragmentEntryProcessorHelperImpl
 				}
 			}
 
+			infoItemReference = new InfoItemReference(
+				className, infoItemIdentifier);
+
 			object = _getInfoItem(className, infoItemIdentifier);
 		}
 		else if (isMappedCollection(editableValueJSONObject)) {
-			InfoItemReference infoItemReference =
+			infoItemReference =
 				fragmentEntryProcessorContext.getContextInfoItemReference();
 
 			if (infoItemReference == null) {
 				return null;
 			}
-
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					(ClassPKInfoItemIdentifier)
-						infoItemReference.getInfoItemIdentifier();
-
-				classPK = classPKInfoItemIdentifier.getClassPK();
-			}
-			else if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
-				return null;
-			}
-
-			className = infoItemReference.getClassName();
 
 			fieldName = editableValueJSONObject.getString("collectionFieldId");
 
@@ -183,8 +169,23 @@ public class FragmentEntryProcessorHelperImpl
 				return null;
 			}
 
-			className = layoutDisplayPageObjectProvider.getClassName();
-			classPK = layoutDisplayPageObjectProvider.getClassPK();
+			InfoItemIdentifier infoItemIdentifier = null;
+
+			if (Validator.isNotNull(
+					layoutDisplayPageObjectProvider.
+						getExternalReferenceCode())) {
+
+				infoItemIdentifier = new ERCInfoItemIdentifier(
+					layoutDisplayPageObjectProvider.getExternalReferenceCode());
+			}
+			else {
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(
+					layoutDisplayPageObjectProvider.getClassPK());
+			}
+
+			infoItemReference = new InfoItemReference(
+				layoutDisplayPageObjectProvider.getClassName(),
+				infoItemIdentifier);
 
 			fieldName = editableValueJSONObject.getString("mappedField");
 
@@ -192,27 +193,39 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			className);
+			infoItemReference.getClassName());
 
-		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
-			return null;
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if ((trashHandler != null) &&
+			(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+			if (trashHandler.isInTrash(
+					classPKInfoItemIdentifier.getClassPK())) {
+
+				return null;
+			}
 		}
 
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider =
-			_getInfoItemFieldValuesProvider(className);
+			_getInfoItemFieldValuesProvider(infoItemReference.getClassName());
 
 		if (infoItemFieldValuesProvider == null) {
 			return null;
 		}
 
 		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
-			classPK);
+			infoItemReference);
 
 		if ((object != null) && (infoItemFieldValues == null)) {
 			infoItemFieldValues =
 				infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
-			infoDisplaysFieldValues.put(classPK, infoItemFieldValues);
+			infoDisplaysFieldValues.put(infoItemReference, infoItemFieldValues);
 		}
 
 		return _getMappedInfoItemFieldValue(

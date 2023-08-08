@@ -48,7 +48,7 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
-		Map<Long, InfoItemFieldValues> infoDisplaysFieldValues =
+		Map<InfoItemReference, InfoItemFieldValues> infoDisplaysFieldValues =
 			new HashMap<>();
 
 		for (Element element :

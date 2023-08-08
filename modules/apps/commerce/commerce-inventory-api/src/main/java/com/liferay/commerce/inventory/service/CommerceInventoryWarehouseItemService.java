@@ -168,8 +168,8 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 		throws PortalException;
 
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, BigDecimal quantity,
-			long mvccVersion)
+			long commerceInventoryWarehouseItemId, long mvccVersion,
+			BigDecimal quantity, String unitOfMeasureKey)
 		throws PortalException;
 
 }

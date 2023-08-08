@@ -560,11 +560,13 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 	public static CommerceInventoryWarehouseItem
 			updateCommerceInventoryWarehouseItem(
 				long userId, long commerceInventoryWarehouseItemId,
-				java.math.BigDecimal quantity, long mvccVersion)
+				long mvccVersion, java.math.BigDecimal quantity,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().updateCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseItemId, quantity, mvccVersion);
+			userId, commerceInventoryWarehouseItemId, mvccVersion, quantity,
+			unitOfMeasureKey);
 	}
 
 	public static CommerceInventoryWarehouseItemLocalService getService() {

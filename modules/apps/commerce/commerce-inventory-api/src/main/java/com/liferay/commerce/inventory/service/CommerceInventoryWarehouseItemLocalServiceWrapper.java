@@ -658,13 +658,14 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			updateCommerceInventoryWarehouseItem(
 				long userId, long commerceInventoryWarehouseItemId,
-				java.math.BigDecimal quantity, long mvccVersion)
+				long mvccVersion, java.math.BigDecimal quantity,
+				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseItemId, quantity,
-				mvccVersion);
+				userId, commerceInventoryWarehouseItemId, mvccVersion, quantity,
+				unitOfMeasureKey);
 	}
 
 	@Override

@@ -248,6 +248,12 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static List<CPInstanceUnitOfMeasure> fetchCPInstanceUnitOfMeasures(
+		long companyId, String sku) {
+
+		return getService().fetchCPInstanceUnitOfMeasures(companyId, sku);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -329,6 +335,12 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 
 	public static int getCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
 		return getService().getCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
+	public static int getCPInstanceUnitOfMeasuresCount(
+		long companyId, String sku) {
+
+		return getService().getCPInstanceUnitOfMeasuresCount(companyId, sku);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

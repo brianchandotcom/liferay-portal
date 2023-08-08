@@ -52,6 +52,7 @@ import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.object.util.comparator.ObjectFieldCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -993,7 +994,9 @@ public class ObjectDefinitionResourceImpl
 					ObjectAction.class);
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId()),
+						objectDefinition.getObjectDefinitionId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						new ObjectFieldCreateDateComparator(true)),
 					objectField -> _objectFieldDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
 							false, null, null, null,

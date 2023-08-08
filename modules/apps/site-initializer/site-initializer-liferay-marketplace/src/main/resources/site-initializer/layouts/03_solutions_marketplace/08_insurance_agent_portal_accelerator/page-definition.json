@@ -229,7 +229,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/insurance_logo.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/insurance_logo.png#]"
 																											}
 																										}
 																									}
@@ -315,7 +315,7 @@
 																													"fieldKey": "FileEntry_previewImage",
 																													"itemReference": {
 																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/liferay_logo.png#]"
+																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/liferay_logo.png#]"
 																													}
 																												}
 																											}
@@ -765,7 +765,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/reclaim_profits.jpg$]"
+																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/reclaim_profits.jpg$]"
 																								}
 																							}
 																						}
@@ -781,7 +781,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/position_your_agents.jpg$]"
+																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/position_your_agents.jpg$]"
 																								}
 																							}
 																						}
@@ -797,7 +797,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/accelerate_existing_channels.jpg$]"
+																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/accelerate_existing_channels.jpg$]"
 																								}
 																							}
 																						}
@@ -1012,7 +1012,7 @@
 															},
 															"fragmentConfig": {
 																"align": "flex-start",
-																"video": "{\"html\":\"<iframe data-video-liferay height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"[$DOCUMENT_URL:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/raylife.mp4$]?version=1.0&t=1691429807115&videoEmbed=true\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"raylife\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
+																"video": "{\"html\":\"<iframe data-video-liferay height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"[$DOCUMENT_URL:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/raylife.mp4$]?version=1.0&t=1691429807115&videoEmbed=true\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"raylife\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
 																"videoHeight": "",
 																"videoWidth": ""
 															},
@@ -1249,7 +1249,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/streamline_workflows.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/streamline_workflows.png#]"
 																											}
 																										}
 																									}
@@ -1412,7 +1412,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/digitalize_the_producer_experience.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/digitalize_the_producer_experience.png#]"
 																											}
 																										}
 																									}
@@ -1567,7 +1567,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/reduce_application_complexity.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/reduce_application_complexity.png#]"
 																											}
 																										}
 																									}
@@ -1875,7 +1875,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/manage_multiple_insurance_lines.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/manage_multiple_insurance_lines.png#]"
 																											}
 																										}
 																									}
@@ -2043,7 +2043,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/easily_cross-sell_and_upsell.jpg#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/easily_cross-sell_and_upsell.jpg#]"
 																											}
 																										}
 																									}
@@ -2197,7 +2197,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/find_revenue_expansion_opportunities.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/08-insurance-agent-portal-accelerator/find_revenue_expansion_opportunities.png#]"
 																											}
 																										}
 																									}

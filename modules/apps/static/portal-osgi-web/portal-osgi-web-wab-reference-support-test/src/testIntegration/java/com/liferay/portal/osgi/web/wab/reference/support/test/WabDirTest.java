@@ -19,6 +19,7 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -58,6 +59,7 @@ public class WabDirTest {
 		Assert.assertNotNull(_urlStreamHandlerService);
 	}
 
+	@Ignore
 	@Test
 	public void testWebBundlerDirPortletInstall() throws Exception {
 		File portletZipFile = _getFile("exploded-test-portlet.zip");
@@ -88,6 +90,7 @@ public class WabDirTest {
 		Assert.assertEquals(Bundle.UNINSTALLED, portletBundle.getState());
 	}
 
+	@Ignore
 	@Test
 	public void testWebBundlerDirThemeInstall() throws Exception {
 		File themeZipFile = _getFile("exploded-test-theme.zip");

@@ -639,6 +639,12 @@ public class AssetCategoryLocalServiceImpl
 
 		validate(categoryId, parentCategoryId, name, vocabularyId);
 
+		if (categoryId == parentCategoryId) {
+			throw new InvalidAssetCategoryException(
+				parentCategoryId,
+				InvalidAssetCategoryException.CANNOT_MOVE_INTO_ITSELF);
+		}
+
 		AssetCategory parentCategory = null;
 
 		if (parentCategoryId > 0) {

@@ -10,15 +10,19 @@ import com.liferay.headless.builder.application.publisher.APIApplicationPublishe
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationContextProvider;
+import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationFilterContextProvider;
 import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationProvider;
 import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationSortContextProvider;
+import com.liferay.headless.builder.internal.jaxrs.context.resolver.APIApplicationFilterContextResolver;
 import com.liferay.headless.builder.internal.jaxrs.context.resolver.APIApplicationSortContextResolver;
 import com.liferay.headless.builder.internal.resource.HeadlessBuilderResourceImpl;
 import com.liferay.headless.builder.internal.resource.OpenAPIResourceImpl;
+import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
@@ -88,8 +92,21 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 							osgiJaxRsName));
 					add(
 						_registerContextProvider(
+							() -> new APIApplicationFilterContextProvider(
+								_apiApplicationProvider),
+							osgiJaxRsName));
+					add(
+						_registerContextProvider(
 							() -> new APIApplicationSortContextProvider(
 								_apiApplicationProvider),
+							osgiJaxRsName));
+					add(
+						_registerContextResolver(
+							() -> new APIApplicationFilterContextResolver(
+								_entityModelProvider,
+								_objectDefinitionLocalService,
+								_objectDefinitionFilterParser,
+								_expressionFactory),
 							osgiJaxRsName));
 					add(
 						_registerContextResolver(
@@ -278,6 +295,12 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Reference
 	private EntityModelProvider _entityModelProvider;
+
+	@Reference
+	private ExpressionFactory _expressionFactory;
+
+	@Reference
+	private ObjectDefinitionFilterParser _objectDefinitionFilterParser;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

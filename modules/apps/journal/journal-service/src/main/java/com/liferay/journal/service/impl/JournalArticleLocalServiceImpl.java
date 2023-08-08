@@ -2750,6 +2750,15 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByResourcePrimKey(resourcePrimKey);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesByReviewDate(
+		Date previousCheckDate, Date reviewDate) {
+
+		return journalArticleFinder.findByReviewDate(
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, reviewDate,
+			previousCheckDate);
+	}
+
 	/**
 	 * Returns all the web content articles matching the small image ID.
 	 *

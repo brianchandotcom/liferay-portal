@@ -1,10 +1,23 @@
 @component-name = "core-infrastructure"
 definition {
 
+	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Deployment";
+
+	@description = "This is a usecase for LPS-100962. Verify no exception is thrown when starting up without a temp folder."
+	@priority = 4
+	test StartupWithoutTempDir {
+		property delete.temp.dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+
+		SignIn.signInTestSetup();
+
+		Smoke.viewWelcomeContentPage();
+	}
 
 	@description = "Check the temp folder after portal shutdown."
 	@priority = 4

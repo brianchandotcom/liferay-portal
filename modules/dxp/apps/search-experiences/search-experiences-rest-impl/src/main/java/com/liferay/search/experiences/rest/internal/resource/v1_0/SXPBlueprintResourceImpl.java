@@ -207,39 +207,12 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 					).put(
 						"update",
 						() -> addAction(
-							ActionKeys.UPDATE, "patchSXPBlueprint",
+							ActionKeys.UPDATE, "putSXPBlueprint",
 							permissionName, sxpBlueprintId)
 					).build());
 
 				return sxpBlueprint;
 			});
-	}
-
-	@Override
-	public SXPBlueprint patchSXPBlueprint(
-			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		SXPBlueprintUtil.unpack(sxpBlueprint);
-
-		return _sxpBlueprintDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
-				_dtoConverterRegistry, contextHttpServletRequest,
-				sxpBlueprint.getId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			_sxpBlueprintService.updateSXPBlueprint(
-				sxpBlueprintId, _getConfigurationJSON(sxpBlueprint),
-				LocalizedMapUtil.getLocalizedMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpBlueprint.getDescription(),
-					sxpBlueprint.getDescription_i18n()),
-				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
-				LocalizedMapUtil.getLocalizedMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Override
@@ -302,6 +275,33 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	}
 
 	@Override
+	public SXPBlueprint putSXPBlueprint(
+			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		SXPBlueprintUtil.unpack(sxpBlueprint);
+
+		return _sxpBlueprintDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpBlueprint.getId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			_sxpBlueprintService.updateSXPBlueprint(
+				sxpBlueprintId, _getConfigurationJSON(sxpBlueprint),
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpBlueprint.getDescription(),
+					sxpBlueprint.getDescription_i18n()),
+				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+	}
+
+	@Override
 	public SXPBlueprint putSXPBlueprintByExternalReferenceCode(
 			String externalReferenceCode, SXPBlueprint sxpBlueprint)
 		throws Exception {
@@ -314,7 +314,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
 
 		if (serviceBuilderSxpBlueprint != null) {
-			return patchSXPBlueprint(
+			return putSXPBlueprint(
 				serviceBuilderSxpBlueprint.getSXPBlueprintId(), sxpBlueprint);
 		}
 

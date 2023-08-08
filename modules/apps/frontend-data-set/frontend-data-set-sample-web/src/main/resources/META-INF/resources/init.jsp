@@ -23,7 +23,6 @@ page import="com.liferay.frontend.data.set.sample.web.internal.display.context.E
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.FDSSampleDisplayContext" %><%@
 page import="com.liferay.frontend.data.set.sample.web.internal.display.context.ReactFDSDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>

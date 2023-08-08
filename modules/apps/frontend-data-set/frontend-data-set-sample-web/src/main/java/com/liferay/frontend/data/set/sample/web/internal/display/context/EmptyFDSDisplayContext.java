@@ -5,6 +5,11 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.display.context;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -18,6 +23,16 @@ public class EmptyFDSDisplayContext {
 
 	public String getAPIURL() {
 		return "/o/c/fdssamples?filter=('color' eq 'empty')";
+	}
+
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description", LanguageUtil.get(_httpServletRequest, "start-creating-one-to-show-your-data")
+		).put(
+			"image", "/states/empty_state.gif"
+		).put(
+			"title", LanguageUtil.get(_httpServletRequest, "no-data-sets-created")
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

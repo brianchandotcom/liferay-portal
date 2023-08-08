@@ -13,14 +13,6 @@ EmptyFDSDisplayContext emptyFDSDisplayContext = new EmptyFDSDisplayContext(reque
 
 <frontend-data-set:headless-display
 	apiURL="<%= emptyFDSDisplayContext.getAPIURL() %>"
-	emptyState='<%=
-		HashMapBuilder.<String, Object>put(
-			"description", LanguageUtil.get(request, "start-creating-one-to-show-your-data")
-		).put(
-			"image", "/states/empty_state.gif"
-		).put(
-			"title", LanguageUtil.get(request, "no-data-sets-created")
-		).build()
-	%>'
+	emptyState='<%= emptyFDSDisplayContext.getEmptyState() %>'
 	id="<%= FDSSampleFDSNames.EMPTY %>"
 />

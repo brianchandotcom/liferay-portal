@@ -34,7 +34,7 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 					"ObjectRelationship.type_ = '",
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
 					"ObjectDefinition.objectDefinitionId = ",
-					"ObjectRelationship.objectDefinitionId1 and"
+					"ObjectRelationship.objectDefinitionId1 and ",
 					"ObjectDefinition.active_ = [$TRUE$]")),
 			resultSet -> new Object[] {
 				resultSet.getString(1), resultSet.getString(2),

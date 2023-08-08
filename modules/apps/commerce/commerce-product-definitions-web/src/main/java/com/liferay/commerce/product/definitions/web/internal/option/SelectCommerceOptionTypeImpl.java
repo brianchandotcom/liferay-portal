@@ -147,9 +147,9 @@ public class SelectCommerceOptionTypeImpl implements CommerceOptionType {
 			}
 		}
 
-		PrintWriter writer = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		writer.write("<div>");
+		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
 			"@liferay/commerce-product-definitions-web");
@@ -182,9 +182,9 @@ public class SelectCommerceOptionTypeImpl implements CommerceOptionType {
 			).put(
 				"sku", sku
 			).build(),
-			httpServletRequest, writer);
+			httpServletRequest, printWriter);
 
-		writer.write("</div>");
+		printWriter.write("</div>");
 	}
 
 	private long _getSelectedCPDefinitionOptionValueRelId(

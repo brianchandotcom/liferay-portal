@@ -74,9 +74,9 @@ public class DateCommerceOptionTypeImpl implements CommerceOptionType {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PrintWriter writer = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		writer.write("<div>");
+		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
 			"@liferay/commerce-product-definitions-web");
@@ -98,9 +98,9 @@ public class DateCommerceOptionTypeImpl implements CommerceOptionType {
 						_portal.getLocale(httpServletRequest), null,
 						_portal.getUser(httpServletRequest)))
 			).build(),
-			httpServletRequest, writer);
+			httpServletRequest, printWriter);
 
-		writer.write("</div>");
+		printWriter.write("</div>");
 	}
 
 	@Reference

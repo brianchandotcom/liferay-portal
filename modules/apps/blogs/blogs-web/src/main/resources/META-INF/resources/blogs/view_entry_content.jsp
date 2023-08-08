@@ -153,7 +153,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						%>
 
 						<p>
-							<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH) %>
+							<%= StringUtil.shorten(StringUtil.removeSubstring(HtmlUtil.stripHtml(summary), StringPool.NEW_LINE + StringPool.SPACE), PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH) %>
 						</p>
 					</c:when>
 					<c:when test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) %>">

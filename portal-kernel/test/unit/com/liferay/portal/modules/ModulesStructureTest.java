@@ -1696,8 +1696,9 @@ public class ModulesStructureTest {
 				"org.gradle.parallel", "pom.scm.connection",
 				"pom.scm.developerConnection", "pom.scm.url"));
 	private static final List<String> _gradleConfigurations = Arrays.asList(
-		"compileOnly", "provided", "api", "runtimeOnly", "testImplementation",
-		"testRuntimeOnly", "testIntegrationImplementation", "testIntegrationRuntimeOnly");
+		"api", "compileOnly", "provided", "runtimeOnly", "testImplementation",
+		"testIntegrationImplementation", "testIntegrationRuntimeOnly",
+		"testRuntimeOnly");
 	private static final Pattern _jsonVersionPattern = Pattern.compile(
 		"\\n(\\t|  )\"version\": \"(.+)\"");
 	private static boolean _masterBranch;

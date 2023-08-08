@@ -2457,6 +2457,552 @@ public class ObjectRelationshipPersistenceImpl
 	private static final String _FINDER_COLUMN_OBJECTFIELDID2_OBJECTFIELDID2_2 =
 		"objectRelationship.objectFieldId2 = ?";
 
+	private FinderPath _finderPathWithPaginationFindByODI1_E;
+	private FinderPath _finderPathWithoutPaginationFindByODI1_E;
+	private FinderPath _finderPathCountByODI1_E;
+
+	/**
+	 * Returns all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @return the matching object relationships
+	 */
+	@Override
+	public List<ObjectRelationship> findByODI1_E(
+		long objectDefinitionId1, boolean edge) {
+
+		return findByODI1_E(
+			objectDefinitionId1, edge, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @return the range of matching object relationships
+	 */
+	@Override
+	public List<ObjectRelationship> findByODI1_E(
+		long objectDefinitionId1, boolean edge, int start, int end) {
+
+		return findByODI1_E(objectDefinitionId1, edge, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object relationships
+	 */
+	@Override
+	public List<ObjectRelationship> findByODI1_E(
+		long objectDefinitionId1, boolean edge, int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		return findByODI1_E(
+			objectDefinitionId1, edge, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param start the lower bound of the range of object relationships
+	 * @param end the upper bound of the range of object relationships (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object relationships
+	 */
+	@Override
+	public List<ObjectRelationship> findByODI1_E(
+		long objectDefinitionId1, boolean edge, int start, int end,
+		OrderByComparator<ObjectRelationship> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByODI1_E;
+				finderArgs = new Object[] {objectDefinitionId1, edge};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByODI1_E;
+			finderArgs = new Object[] {
+				objectDefinitionId1, edge, start, end, orderByComparator
+			};
+		}
+
+		List<ObjectRelationship> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectRelationship>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectRelationship objectRelationship : list) {
+					if ((objectDefinitionId1 !=
+							objectRelationship.getObjectDefinitionId1()) ||
+						(edge != objectRelationship.isEdge())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_OBJECTRELATIONSHIP_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI1_E_OBJECTDEFINITIONID1_2);
+
+			sb.append(_FINDER_COLUMN_ODI1_E_EDGE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectRelationshipModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId1);
+
+				queryPos.add(edge);
+
+				list = (List<ObjectRelationship>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship findByODI1_E_First(
+			long objectDefinitionId1, boolean edge,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = fetchByODI1_E_First(
+			objectDefinitionId1, edge, orderByComparator);
+
+		if (objectRelationship != null) {
+			return objectRelationship;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectDefinitionId1=");
+		sb.append(objectDefinitionId1);
+
+		sb.append(", edge=");
+		sb.append(edge);
+
+		sb.append("}");
+
+		throw new NoSuchObjectRelationshipException(sb.toString());
+	}
+
+	/**
+	 * Returns the first object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByODI1_E_First(
+		long objectDefinitionId1, boolean edge,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		List<ObjectRelationship> list = findByODI1_E(
+			objectDefinitionId1, edge, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship
+	 * @throws NoSuchObjectRelationshipException if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship findByODI1_E_Last(
+			long objectDefinitionId1, boolean edge,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = fetchByODI1_E_Last(
+			objectDefinitionId1, edge, orderByComparator);
+
+		if (objectRelationship != null) {
+			return objectRelationship;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectDefinitionId1=");
+		sb.append(objectDefinitionId1);
+
+		sb.append(", edge=");
+		sb.append(edge);
+
+		sb.append("}");
+
+		throw new NoSuchObjectRelationshipException(sb.toString());
+	}
+
+	/**
+	 * Returns the last object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object relationship, or <code>null</code> if a matching object relationship could not be found
+	 */
+	@Override
+	public ObjectRelationship fetchByODI1_E_Last(
+		long objectDefinitionId1, boolean edge,
+		OrderByComparator<ObjectRelationship> orderByComparator) {
+
+		int count = countByODI1_E(objectDefinitionId1, edge);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ObjectRelationship> list = findByODI1_E(
+			objectDefinitionId1, edge, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the object relationships before and after the current object relationship in the ordered set where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectRelationshipId the primary key of the current object relationship
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object relationship
+	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
+	 */
+	@Override
+	public ObjectRelationship[] findByODI1_E_PrevAndNext(
+			long objectRelationshipId, long objectDefinitionId1, boolean edge,
+			OrderByComparator<ObjectRelationship> orderByComparator)
+		throws NoSuchObjectRelationshipException {
+
+		ObjectRelationship objectRelationship = findByPrimaryKey(
+			objectRelationshipId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectRelationship[] array = new ObjectRelationshipImpl[3];
+
+			array[0] = getByODI1_E_PrevAndNext(
+				session, objectRelationship, objectDefinitionId1, edge,
+				orderByComparator, true);
+
+			array[1] = objectRelationship;
+
+			array[2] = getByODI1_E_PrevAndNext(
+				session, objectRelationship, objectDefinitionId1, edge,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectRelationship getByODI1_E_PrevAndNext(
+		Session session, ObjectRelationship objectRelationship,
+		long objectDefinitionId1, boolean edge,
+		OrderByComparator<ObjectRelationship> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_OBJECTRELATIONSHIP_WHERE);
+
+		sb.append(_FINDER_COLUMN_ODI1_E_OBJECTDEFINITIONID1_2);
+
+		sb.append(_FINDER_COLUMN_ODI1_E_EDGE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ObjectRelationshipModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(objectDefinitionId1);
+
+		queryPos.add(edge);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						objectRelationship)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectRelationship> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the object relationships where objectDefinitionId1 = &#63; and edge = &#63; from the database.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 */
+	@Override
+	public void removeByODI1_E(long objectDefinitionId1, boolean edge) {
+		for (ObjectRelationship objectRelationship :
+				findByODI1_E(
+					objectDefinitionId1, edge, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(objectRelationship);
+		}
+	}
+
+	/**
+	 * Returns the number of object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
+	 *
+	 * @param objectDefinitionId1 the object definition id1
+	 * @param edge the edge
+	 * @return the number of matching object relationships
+	 */
+	@Override
+	public int countByODI1_E(long objectDefinitionId1, boolean edge) {
+		FinderPath finderPath = _finderPathCountByODI1_E;
+
+		Object[] finderArgs = new Object[] {objectDefinitionId1, edge};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTRELATIONSHIP_WHERE);
+
+			sb.append(_FINDER_COLUMN_ODI1_E_OBJECTDEFINITIONID1_2);
+
+			sb.append(_FINDER_COLUMN_ODI1_E_EDGE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectDefinitionId1);
+
+				queryPos.add(edge);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ODI1_E_OBJECTDEFINITIONID1_2 =
+		"objectRelationship.objectDefinitionId1 = ? AND ";
+
+	private static final String _FINDER_COLUMN_ODI1_E_EDGE_2 =
+		"objectRelationship.edge = ?";
+
 	private FinderPath _finderPathWithPaginationFindByODI1_N;
 	private FinderPath _finderPathWithoutPaginationFindByODI1_N;
 	private FinderPath _finderPathCountByODI1_N;
@@ -8486,6 +9032,25 @@ public class ObjectRelationshipPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectFieldId2",
 			new String[] {Long.class.getName()},
 			new String[] {"objectFieldId2"}, false);
+
+		_finderPathWithPaginationFindByODI1_E = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_E",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"objectDefinitionId1", "edge"}, true);
+
+		_finderPathWithoutPaginationFindByODI1_E = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_E",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"objectDefinitionId1", "edge"}, true);
+
+		_finderPathCountByODI1_E = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_E",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"objectDefinitionId1", "edge"}, false);
 
 		_finderPathWithPaginationFindByODI1_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_N",

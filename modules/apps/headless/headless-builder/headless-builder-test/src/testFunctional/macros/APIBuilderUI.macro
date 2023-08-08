@@ -45,7 +45,7 @@ definition {
 
 		Click.pauseClickAt(locator1 = "Dropdown#FILTER");
 
-		Click.pauseClickAt(locator1 = "APIBuilder#LAST_UPDATED");
+		Click.pauseClickAt(locator1 = "APIBuilder#LAST_UPDATED_IN_FILTER");
 
 		var date = DateUtil.getDateOffsetByDays("-2", "MM/dd/yyyy");
 

@@ -35,6 +35,7 @@ import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.Produc
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuSubscriptionConfigurationResourceImpl;
+import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuUnitOfMeasureResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SkuVirtualSettingsResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0.SpecificationResourceImpl;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.AttachmentResource;
@@ -65,6 +66,7 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductVirtualS
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.RelatedProductResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuSubscriptionConfigurationResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuUnitOfMeasureResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuVirtualSettingsResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SpecificationResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -143,6 +145,8 @@ public class ServletDataImpl implements ServletData {
 			_relatedProductResourceComponentServiceObjects);
 		Mutation.setSkuResourceComponentServiceObjects(
 			_skuResourceComponentServiceObjects);
+		Mutation.setSkuUnitOfMeasureResourceComponentServiceObjects(
+			_skuUnitOfMeasureResourceComponentServiceObjects);
 		Mutation.setSpecificationResourceComponentServiceObjects(
 			_specificationResourceComponentServiceObjects);
 
@@ -203,6 +207,8 @@ public class ServletDataImpl implements ServletData {
 			_skuResourceComponentServiceObjects);
 		Query.setSkuSubscriptionConfigurationResourceComponentServiceObjects(
 			_skuSubscriptionConfigurationResourceComponentServiceObjects);
+		Query.setSkuUnitOfMeasureResourceComponentServiceObjects(
+			_skuUnitOfMeasureResourceComponentServiceObjects);
 		Query.setSkuVirtualSettingsResourceComponentServiceObjects(
 			_skuVirtualSettingsResourceComponentServiceObjects);
 		Query.setSpecificationResourceComponentServiceObjects(
@@ -869,6 +875,36 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SkuResourceImpl.class, "patchSku"));
 					put(
+						"mutation#deleteSkuUnitOfMeasure",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"deleteSkuUnitOfMeasure"));
+					put(
+						"mutation#deleteSkuUnitOfMeasureBatch",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"deleteSkuUnitOfMeasureBatch"));
+					put(
+						"mutation#patchSkuUnitOfMeasure",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"patchSkuUnitOfMeasure"));
+					put(
+						"mutation#createSkuByExternalReferenceCodeSkuUnitOfMeasure",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"postSkuByExternalReferenceCodeSkuUnitOfMeasure"));
+					put(
+						"mutation#createSkuIdSkuUnitOfMeasure",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"postSkuIdSkuUnitOfMeasure"));
+					put(
+						"mutation#createSkuIdSkuUnitOfMeasureBatch",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"postSkuIdSkuUnitOfMeasureBatch"));
+					put(
 						"mutation#createSpecificationsPageExportBatch",
 						new ObjectValuePair<>(
 							SpecificationResourceImpl.class,
@@ -1254,6 +1290,21 @@ public class ServletDataImpl implements ServletData {
 							SkuSubscriptionConfigurationResourceImpl.class,
 							"getSkuIdSkuSubscriptionConfiguration"));
 					put(
+						"query#skuUnitOfMeasure",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"getSkuUnitOfMeasure"));
+					put(
+						"query#skuByExternalReferenceCodeSkuUnitOfMeasures",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage"));
+					put(
+						"query#skuIdSkuUnitOfMeasures",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"getSkuIdSkuUnitOfMeasuresPage"));
+					put(
 						"query#skuByExternalReferenceCodeSkuVirtualSettings",
 						new ObjectValuePair<>(
 							SkuVirtualSettingsResourceImpl.class,
@@ -1420,6 +1471,11 @@ public class ServletDataImpl implements ServletData {
 							ProductSubscriptionConfigurationResourceImpl.class,
 							"getProductByExternalReferenceCodeSubscriptionConfiguration"));
 					put(
+						"query#Catalog.skuByExternalReferenceCodeSkuUnitOfMeasures",
+						new ObjectValuePair<>(
+							SkuUnitOfMeasureResourceImpl.class,
+							"getSkuByExternalReferenceCodeSkuUnitOfMeasuresPage"));
+					put(
 						"query#Catalog.productByExternalReferenceCodeProductVirtualSettings",
 						new ObjectValuePair<>(
 							ProductVirtualSettingsResourceImpl.class,
@@ -1526,6 +1582,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SkuResource>
 		_skuResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SkuUnitOfMeasureResource>
+		_skuUnitOfMeasureResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SpecificationResource>

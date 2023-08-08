@@ -781,6 +781,36 @@ public class Sku implements Serializable {
 
 	@Schema
 	@Valid
+	public SkuUnitOfMeasure[] getSkuUnitOfMeasures() {
+		return skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(SkuUnitOfMeasure[] skuUnitOfMeasures) {
+		this.skuUnitOfMeasures = skuUnitOfMeasures;
+	}
+
+	@JsonIgnore
+	public void setSkuUnitOfMeasures(
+		UnsafeSupplier<SkuUnitOfMeasure[], Exception>
+			skuUnitOfMeasuresUnsafeSupplier) {
+
+		try {
+			skuUnitOfMeasures = skuUnitOfMeasuresUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
+
+	@Schema
+	@Valid
 	public SkuVirtualSettings getSkuVirtualSettings() {
 		return skuVirtualSettings;
 	}
@@ -1225,6 +1255,26 @@ public class Sku implements Serializable {
 			sb.append("\"skuSubscriptionConfiguration\": ");
 
 			sb.append(String.valueOf(skuSubscriptionConfiguration));
+		}
+
+		if (skuUnitOfMeasures != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuUnitOfMeasures\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < skuUnitOfMeasures.length; i++) {
+				sb.append(String.valueOf(skuUnitOfMeasures[i]));
+
+				if ((i + 1) < skuUnitOfMeasures.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (skuVirtualSettings != null) {

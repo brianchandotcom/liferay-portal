@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
 
 import java.math.BigDecimal;
@@ -357,6 +358,26 @@ public class SkuSerDes {
 			sb.append(String.valueOf(sku.getSkuSubscriptionConfiguration()));
 		}
 
+		if (sku.getSkuUnitOfMeasures() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuUnitOfMeasures\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sku.getSkuUnitOfMeasures().length; i++) {
+				sb.append(String.valueOf(sku.getSkuUnitOfMeasures()[i]));
+
+				if ((i + 1) < sku.getSkuUnitOfMeasures().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (sku.getSkuVirtualSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -612,6 +633,15 @@ public class SkuSerDes {
 				String.valueOf(sku.getSkuSubscriptionConfiguration()));
 		}
 
+		if (sku.getSkuUnitOfMeasures() == null) {
+			map.put("skuUnitOfMeasures", null);
+		}
+		else {
+			map.put(
+				"skuUnitOfMeasures",
+				String.valueOf(sku.getSkuUnitOfMeasures()));
+		}
+
 		if (sku.getSkuVirtualSettings() == null) {
 			map.put("skuVirtualSettings", null);
 		}
@@ -824,6 +854,23 @@ public class SkuSerDes {
 					sku.setSkuSubscriptionConfiguration(
 						SkuSubscriptionConfigurationSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "skuUnitOfMeasures")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					SkuUnitOfMeasure[] skuUnitOfMeasuresArray =
+						new SkuUnitOfMeasure[jsonParserFieldValues.length];
+
+					for (int i = 0; i < skuUnitOfMeasuresArray.length; i++) {
+						skuUnitOfMeasuresArray[i] =
+							SkuUnitOfMeasureSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					sku.setSkuUnitOfMeasures(skuUnitOfMeasuresArray);
 				}
 			}
 			else if (Objects.equals(

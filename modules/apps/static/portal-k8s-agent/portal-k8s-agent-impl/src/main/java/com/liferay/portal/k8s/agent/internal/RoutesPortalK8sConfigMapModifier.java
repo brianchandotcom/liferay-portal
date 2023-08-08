@@ -113,8 +113,7 @@ public class RoutesPortalK8sConfigMapModifier
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Unable to delete routes for " + configMapName,
-					exception);
+					"Unable to delete routes for " + configMapName, exception);
 			}
 
 			return Result.DELETED;
@@ -417,10 +416,10 @@ public class RoutesPortalK8sConfigMapModifier
 		"(.*)-lxc-ext-init-metadata$");
 
 	@Reference
-	private Portal _portal;
+	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
-	private com.liferay.portal.kernel.util.File _file;
+	private Portal _portal;
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();

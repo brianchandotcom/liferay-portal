@@ -251,10 +251,10 @@ public class CommercePriceEntryServiceImpl
 
 	@Override
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType) {
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey) {
 
-		return _commercePriceListFinder.findBasePriceEntry(
-			cpInstanceUuid, priceListType, true);
+		return commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
+			cpInstanceUuid, priceListType, unitOfMeasureKey);
 	}
 
 	@Override

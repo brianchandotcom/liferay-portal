@@ -15,6 +15,7 @@ import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.model.CommercePriceListTable;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
@@ -536,10 +537,39 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Override
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType) {
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey) {
 
-		return _commercePriceListFinder.findBasePriceEntry(
-			cpInstanceUuid, priceListType);
+		List<CommercePriceEntry> commercePriceEntries = dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommercePriceEntryTable.INSTANCE
+			).from(
+				CommercePriceEntryTable.INSTANCE
+			).innerJoinON(
+				CommercePriceListTable.INSTANCE,
+				CommercePriceListTable.INSTANCE.commercePriceListId.eq(
+					CommercePriceEntryTable.INSTANCE.commercePriceListId)
+			).where(
+				CommercePriceEntryTable.INSTANCE.CPInstanceUuid.eq(
+					cpInstanceUuid
+				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommercePriceEntryTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
+				).and(
+					CommercePriceListTable.INSTANCE.type.eq(priceListType)
+				)
+			));
+
+		if (commercePriceEntries.isEmpty()) {
+			return null;
+		}
+
+		return commercePriceEntries.get(0);
 	}
 
 	@Override

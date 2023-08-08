@@ -55,6 +55,37 @@ public class CPInstanceUnitOfMeasureServiceImpl
 	}
 
 	@Override
+	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision, boolean primary,
+			double priority, BigDecimal rate, String sku)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpInstanceId, ActionKeys.UPDATE);
+
+		return cpInstanceUnitOfMeasureLocalService.
+			addOrUpdateCPInstanceUnitOfMeasure(
+				getUserId(), cpInstanceId, active, incrementalOrderQuantity,
+				key, nameMap, precision, primary, priority, rate, sku);
+	}
+
+	public CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasure(
+				cpInstanceUnitOfMeasureId);
+
+		_checkCommerceCatalog(
+			cpInstanceUnitOfMeasure.getCPInstanceId(), ActionKeys.UPDATE);
+
+		return cpInstanceUnitOfMeasureLocalService.
+			deleteCPInstanceUnitOfMeasure(cpInstanceUnitOfMeasure);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
@@ -63,6 +94,21 @@ public class CPInstanceUnitOfMeasureServiceImpl
 
 		return cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
 			cpInstanceId, key);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasure(
+				cpInstanceUnitOfMeasureId);
+
+		_checkCommerceCatalog(
+			cpInstanceUnitOfMeasure.getCPInstanceId(), ActionKeys.VIEW);
+
+		return cpInstanceUnitOfMeasure;
 	}
 
 	@Override
@@ -76,6 +122,7 @@ public class CPInstanceUnitOfMeasureServiceImpl
 			cpInstanceId, key);
 	}
 
+	@Override
 	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
 			long cpInstanceId, int start, int end,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
@@ -85,6 +132,16 @@ public class CPInstanceUnitOfMeasureServiceImpl
 
 		return cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasures(
 			cpInstanceId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpInstanceId, ActionKeys.VIEW);
+
+		return cpInstanceUnitOfMeasureLocalService.
+			getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 	}
 
 	public CPInstanceUnitOfMeasure updateCPInstanceUnitOfMeasure(

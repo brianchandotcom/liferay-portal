@@ -226,7 +226,7 @@ function EditSXPBlueprintForm({
 						),
 					}),
 					headers: DEFAULT_HEADERS,
-					method: 'PATCH',
+					method: 'PUT',
 				}
 			).then((response) => {
 				if (!response.ok) {

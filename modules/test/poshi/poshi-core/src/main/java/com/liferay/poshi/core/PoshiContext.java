@@ -667,6 +667,12 @@ public class PoshiContext {
 		}
 
 		for (String testDirName : testDirNames) {
+			testDirName = testDirName.trim();
+
+			if (testDirName.isEmpty()) {
+				continue;
+			}
+
 			poshiURLs.addAll(
 				_getPoshiURLs(
 					poshiFileIncludes.toArray(new String[0]), testDirName));

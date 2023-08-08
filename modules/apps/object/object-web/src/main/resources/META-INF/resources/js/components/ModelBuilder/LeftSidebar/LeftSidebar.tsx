@@ -9,9 +9,10 @@ import Icon from '@clayui/icon';
 import {
 	CustomVerticalBar,
 	ManagementToolbarSearch,
+	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useStore, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
@@ -29,6 +30,24 @@ export default function LeftSidebar() {
 	const [{leftSidebarItems}, dispatch] = useFolderContext();
 	const {setCenter} = useZoomPanHelper();
 	const store = useStore();
+
+	const filteredItems = useMemo(() => {
+		return leftSidebarItems.map((sidebarItem) => {
+			if (!sidebarItem.objectDefinitions) {
+				return sidebarItem;
+			}
+
+			const newObjectDefinitions = sidebarItem.objectDefinitions.filter(
+				(objectDefinition) =>
+					stringIncludesQuery(objectDefinition.name, query)
+			);
+
+			return {
+				...sidebarItem,
+				objectDefinitions: newObjectDefinitions,
+			};
+		});
+	}, [query, leftSidebarItems]);
 
 	return (
 		<CustomVerticalBar
@@ -54,7 +73,7 @@ export default function LeftSidebar() {
 				/>
 
 				<TreeView<LeftSidebarItemType | LeftSidebarDefinitionItemType>
-					items={leftSidebarItems}
+					items={filteredItems}
 					nestedKey="objectDefinitions"
 					onSelect={(item) => {
 						if (

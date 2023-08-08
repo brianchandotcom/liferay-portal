@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ManyToOneObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
@@ -1190,22 +1191,9 @@ public class DefaultObjectEntryManagerImpl
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		long relatedObjectDefinitionId = 0;
-
-		if (objectRelationship.getObjectDefinitionId1() ==
-				objectDefinition.getObjectDefinitionId()) {
-
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId2();
-		}
-		else {
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId1();
-		}
-
 		ObjectDefinition relatedObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				relatedObjectDefinitionId);
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition, objectRelationship);
 
 		if (!relatedObjectDefinition.isActive()) {
 			throw new BadRequestException(

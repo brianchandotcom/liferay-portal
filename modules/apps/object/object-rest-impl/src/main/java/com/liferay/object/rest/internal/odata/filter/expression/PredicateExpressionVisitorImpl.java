@@ -14,10 +14,10 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.odata.filter.expression.field.predicate.provider.FieldPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.internal.odata.filter.expression.field.predicate.provider.FieldPredicateProviderTracker;
 import com.liferay.object.rest.internal.util.BinaryExpressionConverterUtil;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.function.UnsafeBiFunction;
@@ -492,7 +492,7 @@ public class PredicateExpressionVisitorImpl
 				objectValuePair.getKey(),
 				unsafeBiFunction.apply(
 					leftParts.get(leftParts.size() - 1),
-					_getRelatedObjectDefinition(
+					ObjectRelationshipUtil.getRelatedObjectDefinition(
 						objectValuePair.getValue(), objectValuePair.getKey())));
 		}
 		catch (InvalidFilterException invalidFilterException) {
@@ -551,8 +551,9 @@ public class PredicateExpressionVisitorImpl
 			objectValuePairs.add(
 				new ObjectValuePair<>(objectRelationship, objectDefinition));
 
-			objectDefinition = _getRelatedObjectDefinition(
-				objectDefinition, objectRelationship);
+			objectDefinition =
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
+					objectDefinition, objectRelationship);
 		}
 
 		if (objectValuePairs.isEmpty()) {
@@ -620,21 +621,6 @@ public class PredicateExpressionVisitorImpl
 		return BinaryExpressionConverterUtil.getExpressionPredicate(
 			_getColumn(left, objectDefinition), operation,
 			_getValue(left, objectDefinition, right));
-	}
-
-	private ObjectDefinition _getRelatedObjectDefinition(
-		ObjectDefinition objectDefinition,
-		ObjectRelationship objectRelationship) {
-
-		if (objectRelationship.getObjectDefinitionId1() !=
-				objectDefinition.getObjectDefinitionId()) {
-
-			return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		}
-
-		return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
 	}
 
 	private Object _getValue(

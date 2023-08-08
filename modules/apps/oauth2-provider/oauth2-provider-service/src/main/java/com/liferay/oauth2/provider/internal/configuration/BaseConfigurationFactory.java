@@ -100,28 +100,26 @@ public abstract class BaseConfigurationFactory {
 
 		_extensionProperties = extensionProperties;
 
+		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
+			_portalK8sConfigMapModifierSnapshot.get();
+
 		String projectName = GetterUtil.getString(
 			properties.get("ext.lxc.liferay.com.projectName"),
 			(String)properties.get("projectName"));
 
-		String serviceOrProjectName = GetterUtil.getString(
+		String serviceIdOrProjectName = GetterUtil.getString(
 			properties.get("ext.lxc.liferay.com.serviceId"), projectName);
 
-		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-			_portalK8sConfigMapModifierSnapshot.get();
-
 		if ((portalK8sConfigMapModifier == null) ||
-			Validator.isNull(serviceOrProjectName)) {
+			Validator.isNull(serviceIdOrProjectName)) {
 
 			return;
 		}
 
 		_configMapName = StringBundler.concat(
-			serviceOrProjectName, StringPool.DASH, company.getWebId(),
+			serviceIdOrProjectName, StringPool.DASH, company.getWebId(),
 			"-lxc-ext-init-metadata");
-
 		_projectName = projectName;
-
 		_virtualInstanceId = company.getWebId();
 
 		portalK8sConfigMapModifier.modifyConfigMap(

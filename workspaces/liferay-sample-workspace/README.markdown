@@ -88,11 +88,11 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-fds-cell-renderer*
 
-	Build a custom cell display in a frontend data set table.
+	Build a custom cell display in a frontend data set configured for table mode.
 
 - *liferay-sample-fds-filter*
 
-	Build a custom filter in a frontend data set table.
+	Build a custom filter in a frontend data set.
 
 - *liferay-sample-global-css*
 

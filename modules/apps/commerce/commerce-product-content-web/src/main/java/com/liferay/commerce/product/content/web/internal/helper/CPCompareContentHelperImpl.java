@@ -8,7 +8,7 @@ package com.liferay.commerce.product.content.web.internal.helper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.util.CPCompareContentHelper;
+import com.liferay.commerce.product.content.helper.CPCompareContentHelper;
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentMiniPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;

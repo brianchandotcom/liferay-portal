@@ -7,7 +7,7 @@ package com.liferay.commerce.product.content.web.internal.helper;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.product.content.util.CPContentSkuOptionsHelper;
+import com.liferay.commerce.product.content.helper.CPContentSkuOptionsHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;

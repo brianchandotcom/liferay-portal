@@ -172,7 +172,7 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 
 		if (fieldNames.contains("childItem") && (item.getChildItem() != null)) {
 			sb.append("\"childItem\": ");
-			sb.append(getItemJSONContent(fieldNames, item.getChildItem()));
+			sb.append(getItemJSONContent(jsonFieldNames, item.getChildItem()));
 			sb.append(StringPool.COMMA);
 		}
 

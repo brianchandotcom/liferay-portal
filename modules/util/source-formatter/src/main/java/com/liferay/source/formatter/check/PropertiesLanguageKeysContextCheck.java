@@ -11,8 +11,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -33,8 +36,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			return content;
 		}
 
-		List<String> allowedSingleWordLanguageKeys = getAttributeValues(
-			_ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY, absolutePath);
+		List<String> allowedSingleWordLanguageKeys =
+			_getAllowedSingleWordLanguageKeys();
 
 		int contextDepth = GetterUtil.getInteger(
 			getAttributeValue(_CONTEXT_DEPTH_KEY, absolutePath));
@@ -109,8 +112,24 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String _ALLOWED_SINGLE_WORD_LANGUAGE_KEYS_KEY =
-		"allowedSingleWordLanguageKeys";
+	private List<String> _getAllowedSingleWordLanguageKeys()
+		throws IOException {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"dependencies/allowedSingleWords.txt");
+
+		if (inputStream == null) {
+			return Collections.emptyList();
+		}
+
+		String[] lines = StringUtil.splitLines(StringUtil.read(inputStream));
+
+		return Arrays.asList(lines);
+	}
 
 	private static final String _CONTEXT_DEPTH_KEY = "contextDepth";
 

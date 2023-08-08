@@ -55,8 +55,6 @@ definition {
 			fieldPositionNumber = 1,
 			fieldType = "Numeric");
 
-		Form.save();
-
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();

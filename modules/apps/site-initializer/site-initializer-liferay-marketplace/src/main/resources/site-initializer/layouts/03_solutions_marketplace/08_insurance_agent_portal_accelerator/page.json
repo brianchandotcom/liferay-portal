@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/liferay-insurance-agent-portal-accelerator",
+	"hidden": true,
+	"name": "Insurance Agent Portal Accelerator",
+	"name_i18n": {
+		"en_US": "Insurance Agent Portal Accelerator"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -4968,7 +4968,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldLabel = "Custom Field");
 
-		PageEditor.selectItemToPreviewWithObject(objectLabel = "Custom Object 116");
+		PageEditor.selectItemToPreviewWithObject(entryValue = "Test Entry");
 
 		AssertElementPresent(
 			key_entry = "Test Entry",

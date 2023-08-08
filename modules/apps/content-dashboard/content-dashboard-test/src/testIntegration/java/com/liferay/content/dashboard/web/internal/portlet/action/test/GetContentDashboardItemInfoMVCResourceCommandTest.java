@@ -28,6 +28,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -242,23 +245,48 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 	@Test
 	public void testServeResourceWithoutSharingButtonAction() throws Exception {
-		JSONObject jsonObject = _serveResource(
-			_createContentDashboardFileItem());
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						"com.liferay.sharing.internal.configuration." +
+							"SharingGroupConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", false
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
 
-		Assert.assertEquals(
-			StringPool.BLANK, jsonObject.getString("fetchSharingButtonURL"));
+			JSONObject jsonObject = _serveResource(
+				_createContentDashboardFileItem());
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				jsonObject.getString("fetchSharingButtonURL"));
+		}
 	}
 
 	@Test
 	public void testServeResourceWithoutSharingCollaboratorsAction()
 		throws Exception {
 
-		JSONObject jsonObject = _serveResource(
-			_createContentDashboardFileItem());
+		try (GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(),
+						"com.liferay.sharing.internal.configuration." +
+							"SharingGroupConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", false
+						).build(),
+						SettingsFactoryUtil.getSettingsFactory())) {
 
-		Assert.assertEquals(
-			StringPool.BLANK,
-			jsonObject.getString("fetchSharingCollaboratorsURL"));
+			JSONObject jsonObject = _serveResource(
+				_createContentDashboardFileItem());
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				jsonObject.getString("fetchSharingCollaboratorsURL"));
+		}
 	}
 
 	@Test

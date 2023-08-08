@@ -435,6 +435,7 @@
 		<exception>CommerceBasePriceListCannotDelete</exception>
 		<exception>CommercePriceEntryDisplayDate</exception>
 		<exception>CommercePriceEntryExpirationDate</exception>
+		<exception>CommercePriceEntryPrice</exception>
 		<exception>CommercePriceEntryUnitOfMeasureKey</exception>
 		<exception>CommercePriceListCurrency</exception>
 		<exception>CommercePriceListDisplayDate</exception>

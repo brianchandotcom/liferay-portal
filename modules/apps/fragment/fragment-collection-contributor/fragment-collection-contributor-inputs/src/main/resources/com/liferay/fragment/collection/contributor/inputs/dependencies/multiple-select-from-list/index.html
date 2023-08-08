@@ -1,6 +1,6 @@
 <div class="multiselect-list">
 	<div class="custom-checkbox custom-control [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
-		<span class="font-weight-semi-bold mb-1 text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-multiselect-list-label">
+		<span class="font-weight-semi-bold mb-1 multiselect-list-label text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-multiselect-list-label">
 			${htmlUtil.escape(input.label)} [#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</span>
 

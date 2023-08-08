@@ -377,6 +377,12 @@ public class RoutesPortalK8sConfigMapModifier
 
 			Files.createDirectories(dxpRoutesPath);
 
+			int portalLocalPort = _getPortalLocalPort();
+
+			if (portalLocalPort > 0) {
+				_updatePortalLocalPort(data, portalLocalPort);
+			}
+
 			_write(dxpRoutesPath, data);
 		}
 		else if (Objects.equals(metadataType, "ext-init")) {

@@ -9,7 +9,6 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {IClientExtensionRenderer, fetch, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import '../css/FDSView.scss';
 import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 import Actions from './fds_view/Actions';

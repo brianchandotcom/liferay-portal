@@ -161,7 +161,7 @@ const AddFDSSortModalContent = ({
 	};
 
 	return (
-		<div className="fds-view-fields-modal">
+		<>
 			<ClayModal.Header>
 				{Liferay.Language.get('new-default-sort')}
 			</ClayModal.Header>
@@ -234,7 +234,7 @@ const AddFDSSortModalContent = ({
 					</ClayButton.Group>
 				}
 			/>
-		</div>
+		</>
 	);
 };
 

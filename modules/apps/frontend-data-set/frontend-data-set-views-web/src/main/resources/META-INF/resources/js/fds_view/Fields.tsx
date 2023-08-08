@@ -266,7 +266,7 @@ const SaveFDSFieldsModalContent = ({
 	const visibleFields = fields?.filter((field) => field.visible) ?? [];
 
 	return (
-		<div className="fds-view-fields-modal">
+		<>
 			<ClayModal.Header>
 				{Liferay.Language.get('add-fields')}
 			</ClayModal.Header>
@@ -326,7 +326,7 @@ const SaveFDSFieldsModalContent = ({
 							</ManagementToolbar.ItemList>
 						</ManagementToolbar.Container>
 
-						<div className="fields pb-2 pt-2">
+						<div className="bg-light fields pb-2 pt-2">
 							{visibleFields.length ? (
 								visibleFields.map(({name, selected}) => (
 									<div
@@ -377,7 +377,7 @@ const SaveFDSFieldsModalContent = ({
 					</ClayButton.Group>
 				}
 			/>
-		</div>
+		</>
 	);
 };
 

@@ -6,7 +6,6 @@
 /// <reference types="react" />
 
 import {IClientExtensionRenderer} from 'frontend-js-web';
-import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';
 interface IFDSViewSectionInterface {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];

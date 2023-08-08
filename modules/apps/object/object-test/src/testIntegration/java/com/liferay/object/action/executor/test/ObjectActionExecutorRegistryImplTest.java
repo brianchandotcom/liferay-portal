@@ -46,39 +46,34 @@ public class ObjectActionExecutorRegistryImplTest {
 	public void testShouldNotReturnObjectActionExecutorScopedByAnotherCompany() {
 		ServiceRegistration<ObjectActionExecutor>
 			objectActionExecutorServiceRegistration1 = null;
-
 		ServiceRegistration<ObjectActionExecutor>
 			objectActionExecutorServiceRegistration2 = null;
 
 		try {
-			objectActionExecutorServiceRegistration1 =
-				_registerObjectActionExecutor(
-					new TestObjectActionExecutor(1, Collections.emptyList()));
+			objectActionExecutorServiceRegistration1 = _register(
+				new TestObjectActionExecutor(1, Collections.emptyList()));
 
-			ObjectActionExecutor testObjectActionExecutor =
+			ObjectActionExecutor objectActionExecutor =
 				new TestObjectActionExecutor(2, Collections.emptyList());
 
-			objectActionExecutorServiceRegistration2 =
-				_registerObjectActionExecutor(testObjectActionExecutor);
+			objectActionExecutorServiceRegistration2 = _register(
+				objectActionExecutor);
 
 			List<ObjectActionExecutor> objectActionExecutors =
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					1, StringUtil.randomId());
 
 			Assert.assertFalse(
-				objectActionExecutors.contains(testObjectActionExecutor));
+				objectActionExecutors.contains(objectActionExecutor));
 		}
 		finally {
-			_unregisterObjectActionExecutor(
-				objectActionExecutorServiceRegistration1);
-			_unregisterObjectActionExecutor(
-				objectActionExecutorServiceRegistration2);
+			_unregister(objectActionExecutorServiceRegistration1);
+			_unregister(objectActionExecutorServiceRegistration2);
 		}
 	}
 
-	private ServiceRegistration<ObjectActionExecutor>
-		_registerObjectActionExecutor(
-			ObjectActionExecutor objectActionExecutor) {
+	private ServiceRegistration<ObjectActionExecutor> _register(
+		ObjectActionExecutor objectActionExecutor) {
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			ObjectActionExecutorRegistryImplTest.class);
@@ -89,7 +84,7 @@ public class ObjectActionExecutorRegistryImplTest {
 			ObjectActionExecutor.class, objectActionExecutor, null);
 	}
 
-	private void _unregisterObjectActionExecutor(
+	private void _unregister(
 		ServiceRegistration<ObjectActionExecutor>
 			objectActionExecutorServiceRegistration) {
 

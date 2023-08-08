@@ -670,6 +670,8 @@ definition {
 		}
 		else {
 			Alert.viewSuccessMessage();
+
+			Click(locator1 = "PageEditor#EXPERIENCE_SELECTOR");
 		}
 	}
 

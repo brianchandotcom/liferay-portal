@@ -12,8 +12,12 @@ definition {
 
 		User.firstLoginUI();
 
-		task ("Given an API application is created through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(title = "My-app");
+		task ("Given an API application is created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "My-app",
+				statusKey = "unpublished",
+				statusName = "unpublished",
+				title = "My-app");
 
 			ApplicationAPI.setUpGlobalAPIApplicationId();
 		}

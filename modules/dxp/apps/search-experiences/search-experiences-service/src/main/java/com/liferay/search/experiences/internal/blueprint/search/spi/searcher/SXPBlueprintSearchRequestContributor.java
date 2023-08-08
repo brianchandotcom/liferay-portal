@@ -40,8 +40,8 @@ public class SXPBlueprintSearchRequestContributor
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(searchRequest);
 
-		_contributeSXPBlueprintId(searchRequestBuilder);
 		_contributeSXPBlueprintExternalReferenceCode(searchRequestBuilder);
+		_contributeSXPBlueprintId(searchRequestBuilder);
 
 		return searchRequestBuilder.build();
 	}

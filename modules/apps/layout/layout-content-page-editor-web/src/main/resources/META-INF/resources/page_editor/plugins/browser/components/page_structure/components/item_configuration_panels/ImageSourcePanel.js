@@ -121,6 +121,11 @@ export default function ImageSourcePanel({item}) {
 				<CheckboxField
 					field={{
 						defaultValue: false,
+						description: Liferay.FeatureFlags['LPS-187285']
+							? Liferay.Language.get(
+									'lazy-loading-can-help-to-improve-page-performance'
+							  )
+							: undefined,
 						label: Liferay.Language.get('enable-lazy-loading'),
 						name: 'lazyLoading',
 					}}

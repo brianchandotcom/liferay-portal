@@ -1272,6 +1272,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTION_CATEGORY</td>
+	<td>//div[contains(@class,'form-group')]/label[contains(.,'Category')]/..//span[contains(@class,'label label-secondary')]/span[contains(.,'${key_category}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_OPTION_CATEGORY</td>
+	<td>//div[contains(@class,'form-group')]/label[contains(.,'Category')]/..//span[contains(@class,'label label-secondary')]/span[contains(.,'${key_category}')]/..//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_DROPDOWN_MENU</td>
 	<td>//div[contains(@class,'filters')]/button</td>
 	<td></td>

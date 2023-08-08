@@ -1143,13 +1143,17 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "BASIC_COMPONENT-external-video"
+																						"key": "BASIC_COMPONENT-video"
 																					},
 																					"fragmentConfig": {
+																						"hideControls": false,
+																						"videoWidth": "",
+																						"loop": false,
+																						"mute": true,
+																						"autoPlay": false,
 																						"align": "flex-start",
-																						"video": "{\"html\":\"<iframe data-video-liferay height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"[$DOCUMENT_URL:/site-initializer/documents/group/solutions-details/intranet-8020/14_intranet_demo_8020.mp4$]?version=1.0&t=1691429807115&videoEmbed=true\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"14_intranet_demo_8020\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
-																						"videoHeight": "",
-																						"videoWidth": ""
+																						"url": "documents/d/[$GROUP_KEY$]/intranet_demo_8020",
+																						"videoHeight": ""
 																					},
 																					"fragmentFields": [],
 																					"indexed": true
@@ -1476,7 +1480,7 @@
 																									"fragmentStyle": {
 																										"marginLeft": "10",
 																										"marginRight": "10",
-																										"width": "120px"
+																										"width": "100px"
 																									},
 																									"indexed": true
 																								},
@@ -1652,7 +1656,7 @@
 																									"fragmentStyle": {
 																										"marginLeft": "10",
 																										"marginRight": "10",
-																										"width": "120px"
+																										"width": "100px"
 																									},
 																									"indexed": true
 																								},
@@ -1828,7 +1832,7 @@
 																									"fragmentStyle": {
 																										"marginLeft": "10",
 																										"marginRight": "10",
-																										"width": "120px"
+																										"width": "100px"
 																									},
 																									"indexed": true
 																								},

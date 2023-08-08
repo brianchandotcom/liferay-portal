@@ -53,9 +53,9 @@ import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
-import com.liferay.object.service.persistence.ObjectValidationRuleSettingUtil;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
+import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
@@ -125,6 +125,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
 
@@ -668,27 +669,20 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "time");
 
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
+		ObjectValidationRule objectValidationRule1 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Date time must be in the future"),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
 			String.format(
 				"futureDates(%s, \"%s\")", objectField.getName(),
 				dateTimeFormatter.format(LocalDateTime.now())),
 			Collections.singletonList(
-				_createObjectValidationRuleSetting(
-					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID,
-					String.valueOf(objectField.getObjectFieldId()))));
-
-		List<ObjectValidationRuleResult> expectedObjectValidationRuleResults =
-			new ArrayList<>();
-
-		expectedObjectValidationRuleResults.add(
-			new ObjectValidationRuleResult(
-				"Date time must be in the future", objectField.getName()));
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(objectField.getObjectFieldId())
+				).build()));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -703,17 +697,10 @@ public class ObjectEntryLocalServiceTest {
 
 		// Field must be an email address
 
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
+		ObjectValidationRule objectValidationRule2 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Field must be an email address"),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-			"isEmailAddress(emailAddress)", Collections.emptyList());
-
-		expectedObjectValidationRuleResults.add(
-			new ObjectValidationRuleResult("Field must be an email address"));
+			"isEmailAddress(emailAddress)");
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -732,22 +719,14 @@ public class ObjectEntryLocalServiceTest {
 
 		Class<?> clazz = getClass();
 
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
+		ObjectValidationRule objectValidationRule3 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 			LocalizedMapUtil.getLocalizedMap("Must be over 18 years old"),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
 			StringUtil.read(
 				clazz,
 				StringBundler.concat(
 					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), ".groovy")),
-			Collections.emptyList());
-
-		expectedObjectValidationRuleResults.add(
-			new ObjectValidationRuleResult("Must be over 18 years old"));
+					testName.getMethodName(), ".groovy")));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -764,18 +743,10 @@ public class ObjectEntryLocalServiceTest {
 
 		// Names must be equals
 
-		ObjectValidationRule objectValidationRule =
-			_objectValidationRuleLocalService.addObjectValidationRule(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap("Names must be equals"),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-				"equals(lastName, middleName)", Collections.emptyList());
-
-		expectedObjectValidationRuleResults.add(
-			new ObjectValidationRuleResult("Names must be equals"));
+		ObjectValidationRule objectValidationRule4 = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
+			"equals(lastName, middleName)");
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -817,11 +788,6 @@ public class ObjectEntryLocalServiceTest {
 			Assert.fail();
 		}
 		catch (ModelListenerException modelListenerException) {
-			Assert.assertEquals(
-				modelListenerException.getCause(
-				).getClass(),
-				ObjectValidationRuleEngineException.class);
-
 			ObjectValidationRuleEngineException
 				objectValidationRuleEngineException =
 					(ObjectValidationRuleEngineException)
@@ -832,36 +798,29 @@ public class ObjectEntryLocalServiceTest {
 					getObjectValidationRuleResults();
 
 			Assert.assertEquals(
-				objectValidationRuleResults.toString(),
-				expectedObjectValidationRuleResults.size(),
+				objectValidationRuleResults.toString(), 4,
 				objectValidationRuleResults.size());
 
-			for (int i = 0; i < objectValidationRuleResults.size(); i++) {
-				ObjectValidationRuleResult expectedObjectValidationRuleResult =
-					expectedObjectValidationRuleResults.get(i);
-
-				ObjectValidationRuleResult objectValidationRuleResult =
-					objectValidationRuleResults.get(i);
-
-				Assert.assertEquals(
-					expectedObjectValidationRuleResult.getErrorMessage(),
-					objectValidationRuleResult.getErrorMessage());
-				Assert.assertEquals(
-					expectedObjectValidationRuleResult.getObjectFieldName(),
-					objectValidationRuleResult.getObjectFieldName());
-			}
+			_assertObjectValidationRuleResult(
+				objectValidationRule1.getErrorLabel(LocaleUtil.getDefault()),
+				objectField.getName(), objectValidationRuleResults.get(0));
+			_assertObjectValidationRuleResult(
+				objectValidationRule2.getErrorLabel(LocaleUtil.getDefault()),
+				null, objectValidationRuleResults.get(1));
+			_assertObjectValidationRuleResult(
+				objectValidationRule3.getErrorLabel(LocaleUtil.getDefault()),
+				null, objectValidationRuleResults.get(2));
+			_assertObjectValidationRuleResult(
+				objectValidationRule4.getErrorLabel(LocaleUtil.getDefault()),
+				null, objectValidationRuleResults.get(3));
 		}
 
 		// Deactivate object validation rule
 
+		objectValidationRule4.setActive(false);
+
 		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule.getObjectValidationRuleId(), false,
-			objectValidationRule.getEngine(),
-			objectValidationRule.getErrorLabelMap(),
-			objectValidationRule.getNameMap(),
-			objectValidationRule.getOutputType(),
-			objectValidationRule.getScript(),
-			objectValidationRule.getObjectValidationRuleSettings());
+			objectValidationRule4);
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -2229,6 +2188,30 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	private ObjectValidationRule _addObjectValidationRule(
+			String engine, Map<Locale, String> errorLabelMap, String script)
+		throws Exception {
+
+		return _addObjectValidationRule(
+			engine, errorLabelMap,
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION, script,
+			Collections.emptyList());
+	}
+
+	private ObjectValidationRule _addObjectValidationRule(
+			String engine, Map<Locale, String> errorLabelMap, String outputType,
+			String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
+		throws Exception {
+
+		return _objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true, engine,
+			errorLabelMap,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			outputType, script, objectValidationRuleSettings);
+	}
+
 	private ObjectEntry _addOrUpdateObjectEntry(
 			String externalReferenceCode, long groupId,
 			Map<String, Serializable> values)
@@ -2294,6 +2277,17 @@ public class ObjectEntryLocalServiceTest {
 			actualValues.toString(), expectedValuesSize, actualValues.size());
 	}
 
+	private void _assertObjectValidationRuleResult(
+		String expectedErrorMessage, String expectedObjectFieldName,
+		ObjectValidationRuleResult objectValidationRuleResult) {
+
+		Assert.assertEquals(
+			expectedErrorMessage, objectValidationRuleResult.getErrorMessage());
+		Assert.assertEquals(
+			expectedObjectFieldName,
+			objectValidationRuleResult.getObjectFieldName());
+	}
+
 	private void _assertTimestamp(Date date, Timestamp timestamp) {
 		Calendar calendar = Calendar.getInstance();
 
@@ -2350,18 +2344,6 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return listTypeEntries;
-	}
-
-	private ObjectValidationRuleSetting _createObjectValidationRuleSetting(
-		String name, String value) {
-
-		ObjectValidationRuleSetting objectValidationRuleSetting =
-			ObjectValidationRuleSettingUtil.create(0L);
-
-		objectValidationRuleSetting.setName(name);
-		objectValidationRuleSetting.setValue(value);
-
-		return objectValidationRuleSetting;
 	}
 
 	private BigDecimal _getBigDecimal(long value) {

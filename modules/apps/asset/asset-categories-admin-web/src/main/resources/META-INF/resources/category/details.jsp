@@ -200,10 +200,16 @@ renderResponse.setTitle(title);
 				/>
 
 				<clay:button
+					additionalProps='<%=
+						HashMapBuilder.<String, Object>put(
+							"redirect", assetCategoriesDisplayContext.getAddCategoryRedirect()
+						).build()
+					%>'
+					className="mr-3"
 					disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>"
 					displayType="secondary"
 					label="save-and-add-a-new-one"
-					onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>'
+					propsTransformer="js/SaveAndAddNewPropsTransformer"
 				/>
 
 				<clay:link
@@ -230,12 +236,3 @@ renderResponse.setTitle(title);
 		</c:otherwise>
 	</c:choose>
 </liferay-frontend:edit-form>
-
-<aui:script>
-	function <portlet:namespace />saveAndAddNew() {
-		document.querySelector('#<portlet:namespace />redirect').value =
-			'<%= assetCategoriesDisplayContext.getAddCategoryRedirect() %>';
-
-		submitForm(document.querySelector('#<portlet:namespace />fm'));
-	}
-</aui:script>

@@ -54,6 +54,12 @@ public class JenkinsQueue {
 		_jenkinsServerRepository.initializeRelationships();
 
 		invoke();
+
+		_initialized = true;
+	}
+
+	public boolean initialized() {
+		return _initialized;
 	}
 
 	public void invoke() {
@@ -117,6 +123,8 @@ public class JenkinsQueue {
 
 	@Autowired
 	private BuildRunRepository _buildRunRepository;
+
+	private boolean _initialized;
 
 	@Autowired
 	private JenkinsCohortRepository _jenkinsCohortRepository;

@@ -29,15 +29,12 @@ task startDocker(type: DockerStartContainer)
 task stopDocker(type: DockerStopContainer)
 
 def dockerContainerId = "faro"
-def dockerImageUser = "liferay"
-def dockerImageId = "com-liferay-osb-faro"
 
 ext.faroEnvironmentName = System.getenv().get("FARO_ENVIRONMENT_NAME") ?: "local"
 ext.faroImageTag = project.hasProperty("docker.image.tag") ? project.getProperty("docker.image.tag") : "latest"
 
 appDocker {
-	imageName dockerImageId
-	imageUser dockerImageUser
+	imageName "liferay/com-liferay-osb-faro"
 	imageTags = [faroEnvironmentName.equals("prd") ? "prd-" + new Date().format("yyyyMMdd") : faroImageTag]
 	inputDir "osb-faro-docker/" + faroEnvironmentName
 
@@ -64,7 +61,7 @@ createDocker {
 	hostConfig.portBindings = ["8000:8000", "8080:8080", "11311:11311"]
 
 	targetImageId {
-		dockerImageUser + "/" + dockerImageId
+		appDocker.imageName
 	}
 
 	def envFile = file("${rootDir}/local.env")
@@ -83,6 +80,8 @@ createDocker {
 }
 
 buildAppDockerImage {
+	images.add(appDocker.imageName + ":" + appDocker.imageTags[0])
+
 	def LABEL_BUILD_DATE = ('git log -1 --format=%cd').execute().text.trim()
 	def LABEL_VCS_REF = ('git rev-parse --short=7 HEAD').execute().text.trim()
 	buildArgs = ['LABEL_BUILD_DATE': LABEL_BUILD_DATE, 'LABEL_VCS_REF': LABEL_VCS_REF]

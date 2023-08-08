@@ -358,7 +358,6 @@ public class EditInfoItemStrutsActionTest {
 			DateUtil.formatDate(
 				"yyyy-MM-dd", String.valueOf(values.get("myDate")),
 				LocaleUtil.US));
-
 		Assert.assertEquals(
 			DateUtil.parseDate(
 				"yyyy-MM-dd'T'HH:mm", "2023-03-01T11:11", LocaleUtil.US),

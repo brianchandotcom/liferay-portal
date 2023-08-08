@@ -63,12 +63,6 @@ export default function getDigitalMarketFields(
 	else {
 		digitalMarketingFields.push(
 			{
-				title: 'Overall message, content or CTA',
-				value:
-					mdfRequestActivity.activityDescription
-						?.overallMessageContentCTA,
-			},
-			{
 				title: 'Specific sites to be used',
 				value: mdfRequestActivity.activityDescription?.specificSites,
 			},

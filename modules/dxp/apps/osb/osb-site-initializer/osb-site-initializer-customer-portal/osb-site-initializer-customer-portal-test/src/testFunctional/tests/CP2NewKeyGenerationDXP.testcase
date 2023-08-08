@@ -142,11 +142,11 @@ definition {
 		}
 	}
 
-	@description = "Story Ticket: LPS-148342 | Test Summary: Verify that after filling out the form the Complimentary Key can be generated"
+	@description = "LPS-148342 | Test Summary: Verify that after filling out the form the Complimentary Key can be generated"
 	@ignore = "true"
 	@priority = 4
 	test AssertComplimentaryDXPKeyCanBeCreated {
-		task ("Given Active the option in koroneiki 'Allow Self Provissioning'") {
+		task ("Given Koroneiki's 'Allow Self Provisioning' option is active") {
 			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3809080");
 		}
 
@@ -158,7 +158,7 @@ definition {
 				testAccount = "2022 FIFA World Cup Qatar - FAN ID");
 		}
 
-		task ("And an user go to Customer Portal") {
+		task ("And the user goes to Customer Portal") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 		}
 
@@ -183,7 +183,7 @@ definition {
 			CP2ActivationKeys.generateNewKey();
 		}
 
-		task ("When fulfill first form for Generate New License") {
+		task ("When filling in the first form to Generate New License") {
 			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 6);
 
 			CustomerPortal.clickAtButton(text = "Next");
@@ -193,7 +193,7 @@ definition {
 			CustomerPortal.clickAtButton(text = "Next");
 		}
 
-		task ("And when fulfill the Environment and Host name fields") {
+		task ("And filling in the Environment and Host name fields") {
 			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
 				content = "Environment Test Name",
 				field = "Environment Name");
@@ -207,7 +207,7 @@ definition {
 				field = "IP Address");
 		}
 
-		task ("And the key is generated") {
+		task ("Then the key is generated") {
 			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
 
 			CustomerPortal.clickAtButton(text = "Generate 1 Key");
@@ -215,7 +215,7 @@ definition {
 			CustomerPortal.viewAlert(alertText = "Complimentary Key was generated successfully.");
 		}
 
-		task ("Then the key appears on table") {
+		task ("And the key appears on table") {
 			CP2Utils.searchForKeyInTable(environmentName = "Environment Test Name");
 
 			AssertElementPresent(

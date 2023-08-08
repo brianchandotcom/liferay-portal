@@ -203,7 +203,7 @@ export function ImageSelectorSize({
 			)}
 
 			{imageSize.width ? (
-				<p className="m-0 small text-secondary">
+				<p className="m-0 text-2 text-secondary">
 					<strong>{Liferay.Language.get('width')}:</strong>
 
 					<span className="ml-1">{imageSize.width}px</span>
@@ -211,7 +211,7 @@ export function ImageSelectorSize({
 			) : null}
 
 			{imageSize.size ? (
-				<p className="m-0 small text-secondary">
+				<p className="m-0 text-2 text-secondary">
 					<strong>{Liferay.Language.get('file-size')}:</strong>
 
 					<span className="ml-1">
@@ -222,7 +222,7 @@ export function ImageSelectorSize({
 
 			{showImageSizeWarning ? (
 				<ClayForm.FeedbackGroup>
-					<ClayForm.FeedbackItem className="font-weight-normal">
+					<ClayForm.FeedbackItem className="font-weight-normal text-2">
 						<ClayForm.FeedbackIndicator symbol="warning-full" />
 
 						{Liferay.Language.get(

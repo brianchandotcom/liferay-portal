@@ -12,8 +12,12 @@ definition {
 
 		User.firstLoginUI();
 
-		task ("Given an API application is created through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(title = "My-app");
+		task ("Given an API application is created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "My-app",
+				statusKey = "unpublished",
+				statusName = "unpublished",
+				title = "My-app");
 
 			ApplicationAPI.setUpGlobalAPIApplicationId();
 		}
@@ -40,13 +44,9 @@ definition {
 		}
 
 		task ("Then Add New Schema buttons are editable") {
-			AssertElementPresent(
-				key_name = "mySchema",
-				locator1 = "Button#PLUS");
+			AssertElementPresent(locator1 = "Button#PLUS");
 
-			AssertElementPresent(
-				key_name = "mySchema",
-				locator1 = "APIBuilder#ADD_NEW_SCHEMA");
+			AssertElementPresent(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
 		}
 
 		task ("And Then no error in console") {

@@ -50,7 +50,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
-import javax.portlet.RenderRequest;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
@@ -214,14 +213,6 @@ public interface Portal {
 	public String addPreservedParameters(
 		ThemeDisplay themeDisplay, String url, boolean typeControlPanel,
 		boolean doAsUser);
-
-	/**
-	 * Clears the render parameters in the request if the portlet is in the
-	 * action phase.
-	 *
-	 * @param renderRequest the render request
-	 */
-	public void clearRequestParameters(RenderRequest renderRequest);
 
 	/**
 	 * Copies the request parameters to the render parameters, unless a

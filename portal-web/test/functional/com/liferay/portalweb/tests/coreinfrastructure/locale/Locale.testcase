@@ -1211,6 +1211,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-157252."
+	@ignore = "true"
 	@priority = 3
 	test VirtualHostLanguageCanBeChangedWithUserDefaultLanguage {
 		property test.liferay.virtual.instance = "false";

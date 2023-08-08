@@ -114,6 +114,52 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a test for COMMERCE-11447. The admin can post an attachment with a custom field to a product via API"
+	@priority = 3
+	test CanUploadProductAttachmentWithCustomFieldViaAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a custom field for Commerce Product Attachments is added") {
+			CustomFields.addCP(
+				customFieldName = "Text Field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				modelResource = "com.liferay.commerce.product.model.CPAttachmentFileEntry");
+		}
+
+		task ("When an attachment with custom field value for the product ABS Sensor is posted via API") {
+			var attachment = CommerceUtilities.getConvertedBase64File(file = "Commerce_Black.jpg");
+
+			CommerceJSONProductsAPI._patchCommerceProductAttachmentUsingERC(
+				attachment = ${attachment},
+				attachmentTitle = "Commerce_Black.jpg",
+				customFieldContent = "Yes",
+				customFieldName = "Text Field",
+				customFieldType = "Text",
+				productERC = "MIN93015minium-initializer");
+		}
+
+		task ("Then a new attachment with a custom field value is present on the product ABS Sensor Media tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceEntry.clickTableEntryEditButton(entryName = "Commerce_Black.jpg");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "Yes");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
 	@priority = 3
 	test EditAnAttachment {

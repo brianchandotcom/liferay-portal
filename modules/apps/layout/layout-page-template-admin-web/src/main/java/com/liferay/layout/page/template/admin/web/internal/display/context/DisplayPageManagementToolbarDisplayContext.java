@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -173,13 +172,11 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	private String _getExportDisplayPageURL() {
-		ResourceURL exportDisplayPageURL =
-			liferayPortletResponse.createResourceURL();
-
-		exportDisplayPageURL.setResourceID(
-			"/layout_page_template_admin/export_display_pages");
-
-		return exportDisplayPageURL.toString();
+		return ResourceURLBuilder.createResourceURL(
+			liferayPortletResponse
+		).setResourceID(
+			"/layout_page_template_admin/export_display_pages"
+		).buildString();
 	}
 
 	private final ThemeDisplay _themeDisplay;

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -192,22 +191,19 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 	}
 
 	private String _getExportLayoutPageTemplateEntryURL() {
-		ResourceURL exportLayoutPageTemplateURL =
-			liferayPortletResponse.createResourceURL();
-
 		String.valueOf(
 			_layoutPageTemplateDisplayContext.
 				getLayoutPageTemplateCollectionId());
 
-		exportLayoutPageTemplateURL.setParameter(
+		return ResourceURLBuilder.createResourceURL(
+			liferayPortletResponse
+		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				_layoutPageTemplateDisplayContext.
-					getLayoutPageTemplateCollectionId()));
-		exportLayoutPageTemplateURL.setResourceID(
-			"/layout_page_template_admin/export_layout_page_template_entries");
-
-		return exportLayoutPageTemplateURL.toString();
+			_layoutPageTemplateDisplayContext.
+				getLayoutPageTemplateCollectionId()
+		).setResourceID(
+			"/layout_page_template_admin/export_layout_page_template_entries"
+		).buildString();
 	}
 
 	private String _getSelectMasterLayoutURL() {

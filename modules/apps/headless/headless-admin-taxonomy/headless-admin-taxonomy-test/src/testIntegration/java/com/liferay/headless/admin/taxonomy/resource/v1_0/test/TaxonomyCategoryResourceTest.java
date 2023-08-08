@@ -198,10 +198,10 @@ public class TaxonomyCategoryResourceTest
 				_assetVocabulary.getVocabularyId(),
 				ServiceContextTestUtil.getServiceContext());
 
-		AssetCategory assetCategory1 = _addAssetCategoryWithDate(
+		AssetCategory assetCategory1 = _addAssetCategory(
 			_assetVocabulary, DateUtils.addMinutes(new Date(), -2),
 			parentAssetCategory);
-		AssetCategory assetCategory2 = _addAssetCategoryWithDate(
+		AssetCategory assetCategory2 = _addAssetCategory(
 			_assetVocabulary, new Date(), parentAssetCategory);
 
 		for (EntityField entityField : entityFields) {
@@ -446,7 +446,7 @@ public class TaxonomyCategoryResourceTest
 		return testGetTaxonomyCategory_addTaxonomyCategory();
 	}
 
-	private AssetCategory _addAssetCategoryWithDate(
+	private AssetCategory _addAssetCategory(
 			AssetVocabulary assetVocabulary, Date date,
 			AssetCategory parentAssetCategory)
 		throws Exception {

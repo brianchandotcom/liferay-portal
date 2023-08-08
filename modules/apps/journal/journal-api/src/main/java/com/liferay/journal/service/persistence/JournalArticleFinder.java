@@ -19,19 +19,8 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
-	public int countByG_ST(
-		long groupId, int status,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.journal.model.JournalArticle> queryDefinition);
-
 	public int countByG_F_C(
 		long groupId, java.util.List<Long> folderIds, long classNameId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.journal.model.JournalArticle> queryDefinition);
-
-	public int countByG_F_C_S(
-		long groupId, java.util.List<Long> folderIds, long classNameId,
-		long ddmStructureId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition
 			<com.liferay.journal.model.JournalArticle> queryDefinition);
 
@@ -82,17 +71,6 @@ public interface JournalArticleFinder {
 			long ddmStructureId, java.util.Locale locale,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.journal.model.JournalArticle> queryDefinition);
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
-		findByNoAssets();
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
-		findByNoPermissions();
-
-	public java.util.List<com.liferay.journal.model.JournalArticle>
-		findByReviewDate(
-			long classNameId, java.util.Date reviewDateLT,
-			java.util.Date reviewDateGT);
 
 	public java.util.List<com.liferay.journal.model.JournalArticle> findByG_F_L(
 		long groupId, java.util.List<Long> folderIds, java.util.Locale locale,

@@ -1531,6 +1531,13 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesByResourcePrimKey(resourcePrimKey);
 	}
 
+	public static List<JournalArticle> getArticlesByReviewDate(
+		java.util.Date previousCheckDate, java.util.Date reviewDate) {
+
+		return getService().getArticlesByReviewDate(
+			previousCheckDate, reviewDate);
+	}
+
 	/**
 	 * Returns all the web content articles matching the small image ID.
 	 *

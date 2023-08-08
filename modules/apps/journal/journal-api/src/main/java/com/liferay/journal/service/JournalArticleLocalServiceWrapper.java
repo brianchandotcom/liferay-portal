@@ -1629,6 +1629,14 @@ public class JournalArticleLocalServiceWrapper
 			resourcePrimKey);
 	}
 
+	@Override
+	public java.util.List<JournalArticle> getArticlesByReviewDate(
+		java.util.Date previousCheckDate, java.util.Date reviewDate) {
+
+		return _journalArticleLocalService.getArticlesByReviewDate(
+			previousCheckDate, reviewDate);
+	}
+
 	/**
 	 * Returns all the web content articles matching the small image ID.
 	 *

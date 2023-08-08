@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1300,6 +1301,10 @@ public interface JournalArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByResourcePrimKey(
 		long resourcePrimKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByReviewDate(
+		Date previousCheckDate, Date reviewDate);
 
 	/**
 	 * Returns all the web content articles matching the small image ID.

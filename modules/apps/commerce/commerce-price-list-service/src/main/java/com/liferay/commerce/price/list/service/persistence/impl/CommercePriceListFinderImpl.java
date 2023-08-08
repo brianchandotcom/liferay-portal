@@ -48,9 +48,6 @@ public class CommercePriceListFinderImpl
 	public static final String COUNT_BY_CPINSTANCE_UUID =
 		CommercePriceListFinder.class.getName() + ".countByCPInstanceUuid";
 
-	public static final String FIND_BASE_PRICE_ENTRY =
-		CommercePriceListFinder.class.getName() + ".findBasePriceEntry";
-
 	public static final String FIND_BY_EXPIRATION_DATE =
 		CommercePriceListFinder.class.getName() + ".findByExpirationDate";
 
@@ -202,58 +199,6 @@ public class CommercePriceListFinderImpl
 			}
 
 			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public CommercePriceEntry findBasePriceEntry(
-		String cpInstanceUuid, String priceListType) {
-
-		return findBasePriceEntry(cpInstanceUuid, priceListType, false);
-	}
-
-	@Override
-	public CommercePriceEntry findBasePriceEntry(
-		String cpInstanceUuid, String priceListType, boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BASE_PRICE_ENTRY);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, CommercePriceList.class.getName(),
-					"CommercePriceEntry.commercePriceListId", null, null,
-					new long[] {0}, null);
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity(
-				CommercePriceEntryImpl.TABLE_NAME,
-				CommercePriceEntryImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(cpInstanceUuid);
-			queryPos.add(priceListType);
-
-			List<CommercePriceEntry> commercePriceEntries = sqlQuery.list();
-
-			if (!commercePriceEntries.isEmpty()) {
-				return commercePriceEntries.get(0);
-			}
-
-			return null;
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

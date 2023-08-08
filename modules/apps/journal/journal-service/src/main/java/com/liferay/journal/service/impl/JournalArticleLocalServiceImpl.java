@@ -2754,9 +2754,21 @@ public class JournalArticleLocalServiceImpl
 	public List<JournalArticle> getArticlesByReviewDate(
 		Date previousCheckDate, Date reviewDate) {
 
-		return journalArticleFinder.findByReviewDate(
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, reviewDate,
-			previousCheckDate);
+		return journalArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				JournalArticleTable.INSTANCE
+			).from(
+				JournalArticleTable.INSTANCE
+			).where(
+				JournalArticleTable.INSTANCE.classNameId.eq(
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT
+				).and(
+					JournalArticleTable.INSTANCE.reviewDate.gte(
+						previousCheckDate)
+				).and(
+					JournalArticleTable.INSTANCE.reviewDate.lte(reviewDate)
+				)
+			));
 	}
 
 	/**

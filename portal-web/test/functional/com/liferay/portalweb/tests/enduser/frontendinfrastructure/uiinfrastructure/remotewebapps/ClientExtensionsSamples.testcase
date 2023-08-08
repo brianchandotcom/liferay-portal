@@ -27,8 +27,8 @@ definition {
 		property workspaces.client.extension.names = "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1";
 
 		task ("Assert the Portal server console has startup verbiage for each deployed Client Extension sample ") {
-			for (var clientExtension : list "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1") {
-				AssertConsoleTextPresent(value1 = "STARTED ${clientExtension}");
+			for (var clientExtensionId : list "liferaysamplecustomelement1,liferaysamplecustomelement2,liferaysampleglobalcss,liferaysampleglobaljs,liferaysampleiframe1,liferaysamplethemecss1,liferaysamplethemefavicon,liferaysamplethemespritemap1") {
+				AssertConsoleTextPresent(value1 = "STARTED ${clientExtensionId}");
 			}
 		}
 
@@ -161,7 +161,7 @@ definition {
 	test LiferaySampleEtcCronSmoke {
 		property workspaces.client.extension.names = "liferay-sample-etc-cron";
 
-		task ("Get the Sample Etc Cron Client Secret") {
+		task ("Assert the Sample Etc Cron OAuth Application") {
 			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
@@ -175,12 +175,10 @@ definition {
 				rowEntry = "Liferay Sample Etc Cron OAuth Application Headless Server");
 
 			OAuth2.assertPortletHeader(header = "Liferay Sample Etc Cron OAuth Application Headless Server");
-
-			var clientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
 		}
 
 		task ("Assert the Message Board Thread Count of 0") {
-			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron");
 
 			var projectDir = PropsUtil.get("project.dir");
 
@@ -203,7 +201,7 @@ definition {
 		}
 
 		task ("Assert the Message Board Thread Count of 1") {
-			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron");
 
 			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
 

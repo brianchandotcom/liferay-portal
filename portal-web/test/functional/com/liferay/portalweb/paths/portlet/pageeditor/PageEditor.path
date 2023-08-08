@@ -918,7 +918,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_WITH_CUSTOM_OBJECT_ITEM</td>
-	<td>//dd[contains(@data-value,'${key_objectLabel}')]</td>
+	<td>//dd[contains(@data-value,'${key_entryValue}')]</td>
 	<td></td>
 </tr>
 <tr>

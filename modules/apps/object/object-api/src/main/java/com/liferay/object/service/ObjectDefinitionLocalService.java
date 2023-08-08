@@ -165,6 +165,9 @@ public interface ObjectDefinitionLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deployInactiveObjectDefinition(
+		ObjectDefinition objectDefinition);
+
 	public void deployObjectDefinition(ObjectDefinition objectDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

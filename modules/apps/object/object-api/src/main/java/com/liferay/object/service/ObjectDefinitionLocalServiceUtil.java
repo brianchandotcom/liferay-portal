@@ -179,6 +179,12 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deployInactiveObjectDefinition(
+		ObjectDefinition objectDefinition) {
+
+		getService().deployInactiveObjectDefinition(objectDefinition);
+	}
+
 	public static void deployObjectDefinition(
 		ObjectDefinition objectDefinition) {
 

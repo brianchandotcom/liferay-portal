@@ -193,6 +193,14 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public void deployInactiveObjectDefinition(
+		com.liferay.object.model.ObjectDefinition objectDefinition) {
+
+		_objectDefinitionLocalService.deployInactiveObjectDefinition(
+			objectDefinition);
+	}
+
+	@Override
 	public void deployObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 

@@ -1519,7 +1519,7 @@ main();
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
 
 			AssertElementNotPresent(
-				key_entryContent = "[normalize-space(text())='Blog Test Title 1']",
+				key_entryContent = "",
 				key_fragmentName = "Fragment Name",
 				key_position = 3,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");

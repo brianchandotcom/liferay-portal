@@ -63,6 +63,44 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
+	@Override
+	public JournalArticle addArticle(
+			String externalReferenceCode, long groupId, long folderId,
+			long classNameId, long classPK, String articleId,
+			boolean autoArticleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> friendlyURLMap, String content,
+			long ddmStructureId, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			int smallImageSource, String smallImageURL, File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.ADD_ARTICLE);
+
+		return journalArticleLocalService.addArticle(
+			externalReferenceCode, getUserId(), groupId, folderId, classNameId,
+			classPK, articleId, autoArticleId,
+			JournalArticleConstants.VERSION_DEFAULT, titleMap, descriptionMap,
+			friendlyURLMap, content, ddmStructureId, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageSource, smallImageURL, smallFile, images,
+			articleURL, serviceContext);
+	}
+
 	/**
 	 * Adds a web content article with additional parameters. All scheduling
 	 * parameters (display date, expiration date, and review date) use the
@@ -224,6 +262,40 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.addArticle(
 			externalReferenceCode, getUserId(), groupId, folderId, titleMap,
 			descriptionMap, content, ddmStructureId, ddmTemplateKey,
+			serviceContext);
+	}
+
+	@Override
+	public JournalArticle addArticleDefaultValues(
+			long groupId, long classNameId, long classPK,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, long ddmStructureId, String ddmTemplateKey,
+			String layoutUuid, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
+			int reviewDateDay, int reviewDateYear, int reviewDateHour,
+			int reviewDateMinute, boolean neverReview, boolean indexable,
+			boolean smallImage, int smallImageSource, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			ddmStructureId);
+
+		_ddmStructureModelResourcePermission.contains(
+			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.addArticleDefaultValues(
+			getUserId(), groupId, classNameId, classPK, titleMap,
+			descriptionMap, content, ddmStructureId, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageSource, smallImageURL, smallImageFile,
 			serviceContext);
 	}
 
@@ -1955,6 +2027,42 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			descriptionMap, content, layoutUuid, serviceContext);
 	}
 
+	@Override
+	public JournalArticle updateArticle(
+			long groupId, long folderId, String articleId, double version,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> friendlyURLMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			int smallImageSource, String smallImageURL, File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JournalArticle article = journalArticlePersistence.findByG_A_V(
+			groupId, articleId, version);
+
+		_journalArticleModelResourcePermission.check(
+			getPermissionChecker(), article, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.updateArticle(
+			getUserId(), groupId, folderId, articleId, version, titleMap,
+			descriptionMap, friendlyURLMap, content, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageSource, smallImageURL, smallFile, images,
+			articleURL, serviceContext);
+	}
+
 	/**
 	 * Updates the web content article with additional parameters. All
 	 * scheduling parameters (display date, expiration date, and review date)
@@ -2065,6 +2173,41 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			reviewDateHour, reviewDateMinute, neverReview, indexable,
 			smallImage, smallImageURL, smallFile, images, articleURL,
 			serviceContext);
+	}
+
+	@Override
+	public JournalArticle updateArticle(
+			long groupId, long folderId, String articleId, double version,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, String ddmTemplateKey, String layoutUuid,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			int smallImageSource, String smallImageURL, File smallFile,
+			Map<String, byte[]> images, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JournalArticle article = journalArticlePersistence.findByG_A_V(
+			groupId, articleId, version);
+
+		_journalArticleModelResourcePermission.check(
+			getPermissionChecker(), article, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.updateArticle(
+			getUserId(), groupId, folderId, articleId, version, titleMap,
+			descriptionMap, content, ddmTemplateKey, layoutUuid,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+			reviewDateHour, reviewDateMinute, neverReview, indexable,
+			smallImage, smallImageSource, smallImageURL, smallFile, images,
+			articleURL, serviceContext);
 	}
 
 	/**
@@ -2230,6 +2373,42 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return journalArticleLocalService.updateArticle(
 			getUserId(), groupId, folderId, articleId, version, content,
 			serviceContext);
+	}
+
+	@Override
+	public JournalArticle updateArticleDefaultValues(
+			long groupId, String articleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String content,
+			String ddmTemplateKey, String layoutUuid, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
+			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
+			boolean neverReview, boolean indexable, boolean smallImage,
+			int smallImageSource, String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JournalArticle journalArticle = journalArticleLocalService.getArticle(
+			groupId, articleId);
+
+		DDMStructure ddmStructure = _ddmStructureService.getStructure(
+			journalArticle.getDDMStructureId());
+
+		_ddmStructureModelResourcePermission.contains(
+			getPermissionChecker(), ddmStructure, ActionKeys.UPDATE);
+
+		return journalArticleLocalService.updateArticleDefaultValues(
+			getUserId(), groupId, articleId, titleMap, descriptionMap, content,
+			ddmTemplateKey, layoutUuid, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
+			reviewDateMinute, neverReview, indexable, smallImage,
+			smallImageSource, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	@Override

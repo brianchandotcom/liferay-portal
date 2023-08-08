@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
@@ -77,7 +78,7 @@ public class ObjectRelationshipExtensionProvider
 				}
 
 				ObjectDefinition relatedObjectDefinition =
-					_getRelatedObjectDefinition(
+					ObjectRelationshipUtil.getRelatedObjectDefinition(
 						objectDefinition, objectRelationship);
 
 				if (!relatedObjectDefinition.isActive() ||
@@ -146,7 +147,7 @@ public class ObjectRelationshipExtensionProvider
 			}
 
 			ObjectDefinition relatedObjectDefinition =
-				_getRelatedObjectDefinition(
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
 			if (!relatedObjectDefinition.isActive() ||
@@ -199,7 +200,7 @@ public class ObjectRelationshipExtensionProvider
 						entry.getKey());
 
 			ObjectDefinition relatedObjectDefinition =
-				_getRelatedObjectDefinition(
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
 					objectDefinition, objectRelationship);
 
 			ObjectEntryManager objectEntryManager =
@@ -276,25 +277,6 @@ public class ObjectRelationshipExtensionProvider
 		}
 
 		return PropertyDefinition.PropertyType.MULTIPLE_ELEMENT;
-	}
-
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		long relatedObjectDefinitionId =
-			objectRelationship.getObjectDefinitionId1();
-
-		if (objectDefinition.getObjectDefinitionId() ==
-				objectRelationship.getObjectDefinitionId1()) {
-
-			relatedObjectDefinitionId =
-				objectRelationship.getObjectDefinitionId2();
-		}
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			relatedObjectDefinitionId);
 	}
 
 	private boolean _isManyToOneObjectRelationship(

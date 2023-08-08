@@ -12,7 +12,7 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -142,22 +142,6 @@ public class ObjectEntryEntityModel implements EntityModel {
 			"Unable to get entity field for bject field " + objectField);
 	}
 
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship)
-		throws Exception {
-
-		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
-
-		if (objectDefinitionId1 != objectDefinition.getObjectDefinitionId()) {
-			return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		}
-
-		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
-	}
-
 	private List<EntityField> _getRelatedObjectDefinitionEntityFields(
 			ObjectRelationship objectRelationship,
 			ObjectDefinition objectDefinition)
@@ -165,8 +149,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		_handledObjectDefinitions.add(objectDefinition.getObjectDefinitionId());
 
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			objectDefinition, objectRelationship);
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition, objectRelationship);
 
 		Map<String, EntityField> relatedObjectDefinitionEntityFieldsMap =
 			_getStringEntityFieldsMap(
@@ -320,8 +305,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 			ObjectRelationship relatedObjectRelationship)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _getRelatedObjectDefinition(
-			relatedObjectDefinition, relatedObjectRelationship);
+		ObjectDefinition objectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				relatedObjectDefinition, relatedObjectRelationship);
 
 		return _handledObjectDefinitions.contains(
 			objectDefinition.getObjectDefinitionId());

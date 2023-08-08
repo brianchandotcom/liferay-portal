@@ -3,67 +3,55 @@
 exports[`EmptyDropZone renders 1`] = `
 <DocumentFragment>
   <div
-    class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
-  >
-    <div
-      class="drop-zone-target p-5"
-    >
-      <div
-        class="empty-drop-zone-indicator w-100"
-      />
-    </div>
-  </div>
+    class="empty-drop-zone p-6 rounded border-secondary empty-drop-zone-dashed"
+  />
 </DocumentFragment>
 `;
 
 exports[`EmptyDropZone renders illustration when empty contributors 1`] = `
 <DocumentFragment>
-  <div
-    class="empty-drop-zone-root"
-  >
-    <div>
+  <div>
+    <div
+      class="c-mb-0 c-p-4 empty-contributors rounded"
+    >
       <div
-        class="c-mb-0 c-p-4 empty-contributors rounded"
+        class="c-empty-state c-empty-state-animation"
       >
         <div
-          class="c-empty-state c-empty-state-animation"
+          class="c-empty-state-image"
         >
           <div
-            class="c-empty-state-image"
+            class="c-empty-state-aspect-ratio"
           >
-            <div
-              class="c-empty-state-aspect-ratio"
-            >
-              <img
-                alt=""
-                class="aspect-ratio-item aspect-ratio-item-fluid d-none-c-prefers-reduced-motion"
-                src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
-              />
-              <img
-                alt=""
-                class="aspect-ratio-item aspect-ratio-item-fluid d-block-c-prefers-reduced-motion"
-                src="/o/admin-theme/images/states/empty_state_reduced_motion.gif"
-              />
-            </div>
+            <img
+              alt=""
+              class="aspect-ratio-item aspect-ratio-item-fluid d-none-c-prefers-reduced-motion"
+              src="http://localhost:8080/o/admin-theme/images/states/empty_state.gif"
+            />
+            <img
+              alt=""
+              class="aspect-ratio-item aspect-ratio-item-fluid d-block-c-prefers-reduced-motion"
+              src="/o/admin-theme/images/states/empty_state_reduced_motion.gif"
+            />
           </div>
-          <div
-            class="c-empty-state-title"
+        </div>
+        <div
+          class="c-empty-state-title"
+        >
+          <span
+            class="text-truncate-inline"
           >
             <span
-              class="text-truncate-inline"
+              class="text-truncate"
             >
-              <span
-                class="text-truncate"
-              >
-                no-x-yet
-              </span>
+              no-x-yet
             </span>
-          </div>
-          <div
-            class="c-empty-state-text"
-          >
-            empty-conditions-message
-          </div>
+          </span>
+        </div>
+        <div
+          class="c-empty-state-text"
+        >
+          empty-conditions-message
         </div>
       </div>
     </div>

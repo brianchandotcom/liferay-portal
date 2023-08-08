@@ -14,16 +14,8 @@ exports[`CriteriaBuilder renders 1`] = `
       class="color--user criteria-group-item-root"
     >
       <div
-        class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
-      >
-        <div
-          class="drop-zone-target p-5"
-        >
-          <div
-            class="empty-drop-zone-indicator w-100"
-          />
-        </div>
-      </div>
+        class="empty-drop-zone p-6 rounded border-secondary empty-drop-zone-dashed"
+      />
     </div>
   </div>
 </DocumentFragment>

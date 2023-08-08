@@ -39,7 +39,9 @@ import com.liferay.journal.exception.DuplicateArticleExternalReferenceCodeExcept
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -110,6 +112,8 @@ import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -524,6 +528,40 @@ public class JournalArticleLocalServiceTest {
 			article.getExternalReferenceCode(), _group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			article.getArticleId(), true);
+	}
+
+	@Test
+	public void testFindByReviewDate() throws Exception {
+		long userId = RandomTestUtil.randomLong();
+
+		JournalFolder folder = JournalTestUtil.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(), folder.getFolderId());
+
+		article.setUserId(userId);
+
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.add(Calendar.DATE, -1);
+
+		article.setExpirationDate(calendar.getTime());
+		article.setReviewDate(calendar.getTime());
+
+		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
+
+		JournalTestUtil.addArticle(_group.getGroupId(), folder.getFolderId());
+
+		calendar.add(Calendar.DATE, -1);
+
+		List<JournalArticle> articles =
+			_journalArticleLocalService.getArticlesByReviewDate(
+				calendar.getTime(), new Date());
+
+		Assert.assertEquals(articles.toString(), 1, articles.size());
+
+		Assert.assertEquals(article, articles.get(0));
 	}
 
 	@Test

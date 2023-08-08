@@ -46,7 +46,6 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -217,23 +216,6 @@ public class JournalArticleFinderTest {
 		Assert.assertEquals(articles.toString(), 1, articles.size());
 
 		Assert.assertEquals(articles.get(0), _article);
-	}
-
-	@Test
-	public void testFindByReviewDate() throws Exception {
-		Calendar calendar = new GregorianCalendar();
-
-		calendar.add(Calendar.DATE, -2);
-
-		List<JournalArticle> articles = _journalArticleFinder.findByReviewDate(
-			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, new Date(),
-			calendar.getTime());
-
-		Assert.assertEquals(articles.toString(), 1, articles.size());
-
-		JournalArticle article = articles.get(0);
-
-		Assert.assertEquals(_USER_ID, article.getUserId());
 	}
 
 	@Test

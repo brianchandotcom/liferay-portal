@@ -3,2283 +3,2599 @@
 		"pageElements": [
 			{
 				"definition": {
-				  "fragmentStyle": { "borderWidth": "0" },
-				  "indexed": true,
-				  "layout": {
-					"borderWidth": 0,
-					"marginBottom": 0,
-					"marginLeft": 0,
-					"marginRight": 0,
-					"marginTop": 0,
-					"opacity": 100,
-					"paddingBottom": 0,
-					"paddingLeft": 0,
-					"paddingRight": 0,
-					"paddingTop": 0,
-					"widthType": "Fluid"
-				  }
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
 				},
 				"pageElements": [
-				  {
-					"definition": {
-					  "fragmentStyle": { "backgroundColor": "#F4F6F9", "borderWidth": "0" },
-					  "indexed": true,
-					  "layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					  }
-					},
-					"pageElements": [
-					  {
+					{
 						"definition": {
-						  "fragmentStyle": { "borderWidth": "0" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 0,
-							"opacity": 100,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fixed"
-						  }
+							"fragmentStyle": {
+								"backgroundColor": "#F4F6F9",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "content-container", "siteKey": "[$GROUP_KEY$]" },
-							  "fragmentConfig": {
-								"boxShadow": "",
-								"showIconBoxShadow": false,
-								"moveIcon": "-75px 0 0 0",
-								"containerWidth": "",
-								"backgroundDarkOrLight": "light",
-								"borderRadius": "border-radius-none",
-								"lazyLoadingImage": true,
-								"background": "",
-								"backgroundSize": "cover",
-								"backgroundPosition": "center",
-								"showIcon": false,
-								"backgroundImageUrl": "",
-								"blockAlignment": ""
-							  },
-							  "fragmentFields": [],
-							  "fragmentViewports": [
-								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "5",
-									"paddingRight": "5"
-								  },
-								  "id": "tablet"
-								}
-							  ],
-							  "indexed": true
-							},
-							"pageElements": [
-							  {
-								"definition": {},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-									  "fragmentConfig": { "height": "py-1" },
-									  "fragmentFields": [],
-									  "fragmentViewports": [
-										{
-										  "fragmentViewportStyle": {
-											"paddingBottom": "4",
-											"paddingTop": "4"
-										  },
-										  "id": "landscapeMobile"
-										}
-									  ],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  },
-								  {
-									"definition": {
-									  "widgetInstance": {
-										"widgetConfig": {},
-										"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
-									  }
-									},
-									"type": "Widget"
-								  },
-								  {
-									"definition": {
-									  "gutters": true,
-									  "indexed": true,
-									  "modulesPerRow": 2,
-									  "numberOfColumns": 2,
-									  "reverseOrder": false,
-									  "rowViewports": [
-										{
-										  "id": "landscapeMobile",
-										  "rowViewportDefinition": { "modulesPerRow": 1 }
-										},
-										{
-										  "id": "portraitMobile",
-										  "rowViewportDefinition": {}
-										},
-										{ "id": "tablet", "rowViewportDefinition": {} }
-									  ],
-									  "verticalAlignment": "top"
-									},
-									"pageElements": [
-									  {
+									{
 										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
 											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 9
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
 										},
 										"pageElements": [
-										  {
-											"definition": {
-											  "indexed": true,
-											  "layout": {
-												"align": "Start",
-												"borderWidth": 0,
-												"contentDisplay": "FlexRow",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
+											{
 												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "title": {
-															"value": "insurance_logo"
-														  },
-														  "url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/insurance_logo.png#]"
-																	}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragmentStyle": { "marginLeft": "4" },
-												  "indexed": true,
-												  "layout": {
-													"borderWidth": 0,
-													"marginBottom": 0,
-													"marginLeft": 2,
-													"marginRight": 0,
-													"marginTop": 0,
-													"opacity": 100,
-													"paddingBottom": 0,
-													"paddingLeft": 0,
-													"paddingRight": 0,
-													"paddingTop": 0,
-													"widthType": "Fluid"
-												  }
 												},
 												"pageElements": [
-												  {
-													"definition": {
-													  "fragment": {
-														"key": "dialect-dialect-text",
-														"siteKey": "[$COMPANY_ID$]"
-													  },
-													  "fragmentConfig": { "textType": "h1" },
-													  "fragmentFields": [
-														{
-														  "id": "element-text",
-														  "value": {
-															"fragmentLink": {},
-															"text": {
-															  "value_i18n": {
-																"en_US": "Insurance Agent Portal Accelerator"
-															  }
-															}
-														  }
-														}
-													  ],
-													  "fragmentStyle": {
-														"fontWeight": "fontWeightBold"
-													  },
-													  "indexed": true
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-1"
+															},
+															"fragmentFields": [
+															],
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "4",
+																		"paddingTop": "4"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
 													},
-													"type": "Fragment"
-												  },
-												  {
-													"definition": {
-													  "fragment": {
-														"key": "BASIC_COMPONENT-image"
-													  },
-													  "fragmentConfig": {
-														"imageSize": "w-100"
-													  },
-													  "fragmentFields": [
-														{
-														  "id": "image-square",
-														  "value": {
-															"fragmentImage": {
-															  "title": {
-																"value": "liferay_logo.png"
-															  },
-															  "url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/liferay_logo.png#]"
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
 																	}
 																}
-															  }
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 9
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"indexed": true,
+																			"layout": {
+																				"align": "Start",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexRow",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"title": {
+																										"value": "insurance_logo"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/insurance_logo.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragmentStyle": {
+																						"marginLeft": "4"
+																					},
+																					"indexed": true,
+																					"layout": {
+																						"borderWidth": 0,
+																						"marginBottom": 0,
+																						"marginLeft": 2,
+																						"marginRight": 0,
+																						"marginTop": 0,
+																						"opacity": 100,
+																						"paddingBottom": 0,
+																						"paddingLeft": 0,
+																						"paddingRight": 0,
+																						"paddingTop": 0,
+																						"widthType": "Fluid"
+																					}
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "dialect-dialect-text",
+																								"siteKey": "[$COMPANY_ID$]"
+																							},
+																							"fragmentConfig": {
+																								"textType": "h1"
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "element-text",
+																									"value": {
+																										"fragmentLink": {
+																										},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "Insurance Agent Portal Accelerator"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"fontWeight": "fontWeightBold"
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-image"
+																							},
+																							"fragmentConfig": {
+																								"imageSize": "w-100"
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "image-square",
+																									"value": {
+																										"fragmentImage": {
+																											"title": {
+																												"value": "liferay_logo.png"
+																											},
+																											"url": {
+																												"mapping": {
+																													"fieldKey": "FileEntry_previewImage",
+																													"itemReference": {
+																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/liferay_logo.png#]"
+																													}
+																												}
+																											}
+																										},
+																										"fragmentLink": {
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"height": "32px",
+																								"marginBottom": "2",
+																								"marginTop": "2",
+																								"width": "96px"
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Section"
+																			}
+																		],
+																		"type": "Section"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-base",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"defaultFragmentInlineValue": {
+																								"value": "<style>\n\t.solution-category-container {\n\t  font-size: 1rem;\n    line-height: 1.5;\n\t\tdisplay: flex;\n\t}\n\t\n\t.solution-category-container .solution-category {\n\t\tborder-radius: 2px;\n\t\tbackground-color: #ebeef2;\n\t}\n</style>\n\n\n\n\n\t\t<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tCustomer Data Management\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tData Modeling, Process & Business Logic\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExtensibility and Integration\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tNavigation and Discovery\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tOrders and Fulfillment\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tPersonalization and Segmentation\n\t\t\t\t\t</div>\n\t\t</div>"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginLeft": "8",
+																				"paddingLeft": "2"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
 															},
-															"fragmentLink": {}
-														  }
-														}
-													  ],
-													  "fragmentStyle": {
-														"height": "32px",
-														"marginBottom": "2",
-														"marginTop": "2",
-														"width": "96px"
-													  },
-													  "indexed": true
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 3
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonSize": "nm",
+																				"buttonType": "primary",
+																				"type": "link"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "link",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "#solutions-details-form"
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Contact Partner"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
 													},
-													"type": "Fragment"
-												  }
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-3"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
 												],
-												"type": "Section"
-											  }
-											],
-											"type": "Section"
-										  },
-										  {
-											"definition": {
-											  "fragment": { "key": "text", "siteKey": "[$GROUP_KEY$]" },
-											  "fragmentConfig": {
-												"fontSize": "font-size-paragraph-base",
-												"smallCaps": false,
-												"tabletScreenCenter": false
-											  },
-											  "fragmentFields": [
-												{
-												  "id": "text",
-												  "value": {
-													"fragmentLink": {},
-													"text": {
-													  "defaultFragmentInlineValue": {
-														"value": "<style>\n\t.solution-category-container {\n\t  font-size: 1rem;\n    line-height: 1.5;\n\t\tdisplay: flex;\n\t}\n\t\n\t.solution-category-container .solution-category {\n\t\tborder-radius: 2px;\n\t\tbackground-color: #ebeef2;\n\t}\n</style>\n\n\n\n\n\t\t<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tCustomer Data Management\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tData Modeling, Process & Business Logic\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExtensibility and Integration\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tNavigation and Discovery\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tOrders and Fulfillment\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tPersonalization and Segmentation\n\t\t\t\t\t</div>\n\t\t</div>"
-													  }
-													}
-												  }
-												}
-											  ],
-											  "fragmentStyle": {
-												"marginLeft": "8",
-												"paddingLeft": "2"
-											  },
-											  "indexed": true
-											},
-											"type": "Fragment"
-										  }
+												"type": "FragmentDropZone"
+											}
 										],
-										"type": "Column"
-									  },
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 3
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragment": { "key": "BASIC_COMPONENT-button" },
-											  "fragmentConfig": {
-												"buttonType": "primary",
-												"type": "link",
-												"buttonSize": "nm"
-											  },
-											  "fragmentFields": [
-												{
-												  "id": "link",
-												  "value": {
-													"fragmentLink": {
-													  "value": {
-														"href": {
-														  "value_i18n": {
-															"en_US": "#solutions-details-form"
-														  }
-														}
-													  }
-													},
-													"text": {
-													  "value_i18n": {
-														"en_US": "Contact Partner"
-													  }
-													}
-												  }
-												}
-											  ],
-											  "fragmentStyle": { "textAlign": "center" },
-											  "indexed": true
-											},
-											"type": "Fragment"
-										  }
-										],
-										"type": "Column"
-									  }
-									],
-									"type": "Row"
-								  },
-								  {
-									"definition": {
-									  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-									  "fragmentConfig": { "height": "py-3" },
-									  "fragmentFields": [],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  }
+										"type": "Fragment"
+									}
 								],
-								"type": "FragmentDropZone"
-							  }
-							],
-							"type": "Fragment"
-						  }
-						],
-						"type": "Section"
-					  },
-					  {
-						"definition": {
-						  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-						  "fragmentConfig": { "height": "py-3" },
-						  "fragmentFields": [],
-						  "indexed": true
-						},
-						"type": "Fragment"
-					  }
-					],
-					"type": "Section"
-				  },
-				  {
-					"definition": {
-					  "fragmentStyle": { "backgroundColor": "#0b5fff", "borderWidth": "0" },
-					  "indexed": true,
-					  "layout": {
-						"borderWidth": 0,
-						"contentDisplay": "FlexRow",
-						"justify": "Center",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					  }
-					},
-					"pageElements": [
-					  {
-						"definition": {
-						  "fragmentStyle": { "borderWidth": "0" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 0,
-							"opacity": 100,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fixed"
-						  }
-						},
-						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "content-container", "siteKey": "[$GROUP_KEY$]" },
-							  "fragmentConfig": {
-								"boxShadow": "",
-								"showIconBoxShadow": false,
-								"moveIcon": "-75px 0 0 0",
-								"containerWidth": "",
-								"backgroundDarkOrLight": "dark",
-								"borderRadius": "border-radius-none",
-								"lazyLoadingImage": true,
-								"background": "",
-								"backgroundSize": "cover",
-								"backgroundPosition": "center",
-								"showIcon": false,
-								"backgroundImageUrl": "",
-								"blockAlignment": ""
-							  },
-							  "fragmentFields": [],
-							  "fragmentViewports": [
-								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "5",
-									"paddingRight": "5"
-								  },
-								  "id": "tablet"
-								}
-							  ],
-							  "indexed": true
+								"type": "Section"
 							},
-							"pageElements": [
-							  {
-								"definition": {},
-								"pageElements": [
-								  {
-									"definition": {
-									  "fragmentStyle": { "paddingTop": "7" },
-									  "gutters": true,
-									  "indexed": true,
-									  "modulesPerRow": 2,
-									  "numberOfColumns": 2,
-									  "reverseOrder": false,
-									  "rowViewports": [
-										{
-										  "id": "landscapeMobile",
-										  "rowViewportDefinition": {
-											"modulesPerRow": 1,
-											"verticalAlignment": "middle"
-										  }
-										},
-										{
-										  "id": "portraitMobile",
-										  "rowViewportDefinition": {}
-										},
-										{ "id": "tablet", "rowViewportDefinition": {} }
-									  ],
-									  "verticalAlignment": "top"
-									},
-									"pageElements": [
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 6
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragmentViewports": [
-												{
-												  "fragmentViewportStyle": {
-													"marginBottom": "2"
-												  },
-												  "id": "portraitMobile"
-												}
-											  ],
-											  "indexed": true,
-											  "layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "dialect-dialect-text",
-													"siteKey": "[$COMPANY_ID$]"
-												  },
-												  "fragmentConfig": {
-													"textType": "display-4"
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "element-text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Streamlined experiences for agent success"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"fontWeight": "fontWeightBold",
-													"marginBottom": "6",
-													"textColor": "whiteColor"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "dialect-dialect-text",
-													"siteKey": "[$COMPANY_ID$]"
-												  },
-												  "fragmentConfig": { "textType": "h1" },
-												  "fragmentFields": [
-													{
-													  "id": "element-text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Increase productivity with an intuitive agent portal solution built on Liferay. Enable agents, brokers, and partners to share and collect data to deliver personalized quotes and increased operational efficiency through a consolidated location."
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"fontWeight": "fontWeightNormal",
-													"textColor": "whiteColor"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
-										],
-										"type": "Column"
-									  },
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 6
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragment": {
-												"key": "image-carousel",
-												"siteKey": "[$GROUP_KEY$]"
-											  },
-											  "fragmentConfig": {
-												"numberOfImages": "3",
-												"imageAspectRatio": "aspect-ratio",
-												"lazyLoadingImage": true,
-												"imageCarouselMaxWidth": "1280px",
-												"colorScheme": ""
-											  },
-											  "fragmentFields": [
-												{
-												  "id": "imageCarousel0",
-												  "value": {
-													"fragmentLink": {},
-													"text": {
-														"mapping": {
-															"fieldKey": "FileEntry_previewImage",
-															"itemReference": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/reclaim_profits.jpg$]"
-															}
-														}
-													}
-												  }
-												},
-												{
-												  "id": "imageCarousel1",
-												  "value": {
-													"fragmentLink": {},
-													"text": {
-														"mapping": {
-															"fieldKey": "FileEntry_previewImage",
-															"itemReference": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/position_your_agents.jpg$]"
-															}
-														}
-													}
-												  }
-												},
-												{
-												  "id": "imageCarousel2",
-												  "value": {
-													"fragmentLink": {},
-													"text": {
-														"mapping": {
-															"fieldKey": "FileEntry_previewImage",
-															"itemReference": {
-																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/accelerate_existing_channels.jpg$]"
-															}
-														}
-													}
-												  }
-												}
-											  ],
-											  "indexed": true
-											},
-											"type": "Fragment"
-										  }
-										],
-										"type": "Column"
-									  }
-									],
-									"type": "Row"
-								  }
-								],
-								"type": "FragmentDropZone"
-							  }
-							],
-							"type": "Fragment"
-						  },
-						  {
-							"definition": {
-							  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-							  "fragmentConfig": { "height": "py-3" },
-							  "fragmentFields": [],
-							  "indexed": true
-							},
-							"type": "Fragment"
-						  }
-						],
-						"type": "Section"
-					  }
-					],
-					"type": "Section"
-				  },
-				  {
-					"definition": {
-					  "fragmentStyle": { "backgroundColor": "#EBEEF2", "borderWidth": "0" },
-					  "indexed": true,
-					  "layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					  }
-					},
-					"pageElements": [
-					  {
-						"definition": {
-						  "fragmentStyle": {
-							"backgroundColor": "#EBEEF2",
-							"borderWidth": "0",
-							"paddingBottom": "5",
-							"paddingTop": "5"
-						  },
-						  "fragmentViewports": [
 							{
-							  "fragmentViewportStyle": {
-								"paddingLeft": "5",
-								"paddingRight": "5"
-							  },
-							  "id": "portraitMobile"
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-spacer"
+									},
+									"fragmentConfig": {
+										"height": "py-3"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
 							}
-						  ],
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 0,
-							"opacity": 100,
-							"paddingBottom": 4,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 4,
-							"widthType": "Fixed"
-						  }
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#0b5fff",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragmentStyle": { "marginBottom": "6", "marginTop": "6" },
-							  "gutters": true,
-							  "indexed": true,
-							  "modulesPerRow": 2,
-							  "numberOfColumns": 2,
-							  "reverseOrder": false,
-							  "rowViewports": [
-								{
-								  "id": "landscapeMobile",
-								  "rowViewportDefinition": { "modulesPerRow": 1 }
-								},
-								{ "id": "portraitMobile", "rowViewportDefinition": {} },
-								{ "id": "tablet", "rowViewportDefinition": {} }
-							  ],
-							  "verticalAlignment": "top"
-							},
-							"pageElements": [
-							  {
+							{
 								"definition": {
-								  "columnViewports": [
-									{
-									  "columnViewportDefinition": { "size": 12 },
-									  "id": "landscapeMobile"
+									"fragmentStyle": {
+										"borderWidth": "0"
 									},
-									{
-									  "columnViewportDefinition": {},
-									  "id": "portraitMobile"
-									},
-									{ "columnViewportDefinition": {}, "id": "tablet" }
-								  ],
-								  "size": 6
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
 								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": { "key": "text", "siteKey": "[$GROUP_KEY$]" },
-									  "fragmentConfig": {
-										"fontSize": "font-size-paragraph-base",
-										"smallCaps": false,
-										"tabletScreenCenter": false
-									  },
-									  "fragmentFields": [
-										{
-										  "id": "text",
-										  "value": {
-											"fragmentLink": {},
-											"text": {
-											  "value_i18n": {
-												"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Jumpstart Your Solution</h1>\n<br />\nLiferay helps you jumpstart the creation of an agent portal solution with our Agent Portal Service Provider Package, then further tailor according to your needs with our Global Services team’s years of expertise."
-											  }
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "dark",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"paddingTop": "7"
+															},
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1,
+																		"verticalAlignment": "middle"
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 6
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "2"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "dialect-dialect-text",
+																						"siteKey": "[$COMPANY_ID$]"
+																					},
+																					"fragmentConfig": {
+																						"textType": "display-4"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Streamlined experiences for agent success"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBold",
+																						"marginBottom": "6",
+																						"textColor": "whiteColor"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "dialect-dialect-text",
+																						"siteKey": "[$COMPANY_ID$]"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h1"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Increase productivity with an intuitive agent portal solution built on Liferay. Enable agents, brokers, and partners to share and collect data to deliver personalized quotes and increased operational efficiency through a consolidated location."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightNormal",
+																						"textColor": "whiteColor"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 6
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"colorScheme": "",
+																				"imageAspectRatio": "aspect-ratio",
+																				"imageCarouselMaxWidth": "1280px",
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "3"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "imageCarousel0",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/reclaim_profits.jpg$]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel1",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/position_your_agents.jpg$]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel2",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/accelerate_existing_channels.jpg$]"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
 											}
-										  }
-										}
-									  ],
-									  "indexed": true
+										],
+										"type": "Fragment"
 									},
-									"type": "Fragment"
-								  }
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-spacer"
+											},
+											"fragmentConfig": {
+												"height": "py-3"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
 								],
-								"type": "Column"
-							  },
-							  {
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#EBEEF2",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
 								"definition": {
-								  "columnViewports": [
-									{
-									  "columnViewportDefinition": { "size": 12 },
-									  "id": "landscapeMobile"
+									"fragmentStyle": {
+										"backgroundColor": "#EBEEF2",
+										"borderWidth": "0",
+										"paddingBottom": "5",
+										"paddingTop": "5"
 									},
-									{
-									  "columnViewportDefinition": {},
-									  "id": "portraitMobile"
-									},
-									{ "columnViewportDefinition": {}, "id": "tablet" }
-								  ],
-								  "size": 6
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 4,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 4,
+										"widthType": "Fixed"
+									}
 								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": { "key": "BASIC_COMPONENT-external-video" },
-									  "fragmentConfig": {
-										"videoWidth": "",
-										"video": "{\"html\":\"<iframe data-video-liferay height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"[$DOCUMENT_URL:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/raylife.mp4$]?version=1.0&t=1691429807115&videoEmbed=true\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"raylife\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
-										"align": "flex-start",
-										"videoHeight": ""
-									  },
-									  "fragmentFields": [],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  }
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "6",
+												"marginTop": "6"
+											},
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {
+													}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {
+													}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Jumpstart Your Solution</h1>\n<br />\nLiferay helps you jumpstart the creation of an agent portal solution with our Agent Portal Service Provider Package, then further tailor according to your needs with our Global Services team’s years of expertise."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {
+															},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-external-video"
+															},
+															"fragmentConfig": {
+																"align": "flex-start",
+																"video": "{\"html\":\"<iframe data-video-liferay height=\\\"315\\\" frameborder=\\\"0\\\" src=\\\"[$DOCUMENT_URL:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/raylife.mp4$]?version=1.0&t=1691429807115&videoEmbed=true\\\" width=\\\"560\\\"><\\/iframe>\",\"title\":\"raylife\",\"type\":\"com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType\"}",
+																"videoHeight": "",
+																"videoWidth": ""
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									}
 								],
-								"type": "Column"
-							  }
-							],
-							"type": "Row"
-						  }
+								"type": "Section"
+							}
 						],
 						"type": "Section"
-					  }
-					],
-					"type": "Section"
-				  },
-				  {
-					"definition": {
-					  "fragmentStyle": {
-						"backgroundColor": "#f7f8f9",
-						"borderWidth": "0",
-						"paddingTop": "7"
-					  },
-					  "indexed": true,
-					  "layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 8,
-						"widthType": "Fluid"
-					  }
 					},
-					"pageElements": [
-					  {
+					{
 						"definition": {
-						  "fragmentStyle": { "borderWidth": "0" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 0,
-							"opacity": 100,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fixed"
-						  }
+							"fragmentStyle": {
+								"backgroundColor": "#f7f8f9",
+								"borderWidth": "0",
+								"paddingTop": "7"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 8,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "content-container", "siteKey": "[$GROUP_KEY$]" },
-							  "fragmentConfig": {
-								"boxShadow": "",
-								"showIconBoxShadow": false,
-								"moveIcon": "-75px 0 0 0",
-								"containerWidth": "",
-								"backgroundDarkOrLight": "light",
-								"borderRadius": "border-radius-none",
-								"lazyLoadingImage": true,
-								"background": "",
-								"backgroundSize": "cover",
-								"backgroundPosition": "center",
-								"showIcon": false,
-								"backgroundImageUrl": "",
-								"blockAlignment": ""
-							  },
-							  "fragmentFields": [],
-							  "fragmentViewports": [
-								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "5",
-									"paddingRight": "5"
-								  },
-								  "id": "tablet"
-								}
-							  ],
-							  "indexed": true
-							},
-							"pageElements": [
-							  {
-								"definition": {},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": {
-										"key": "dialect-dialect-text",
-										"siteKey": "[$COMPANY_ID$]"
-									  },
-									  "fragmentConfig": { "textType": "h1" },
-									  "fragmentFields": [
-										{
-										  "id": "element-text",
-										  "value": {
-											"fragmentLink": {},
-											"text": {
-											  "value_i18n": {
-												"en_US": "Reclaim Lost Profit Margins"
-											  }
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-text",
+																"siteKey": "[$COMPANY_ID$]"
+															},
+															"fragmentConfig": {
+																"textType": "h1"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Reclaim Lost Profit Margins"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "5"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 3,
+															"numberOfColumns": 3,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "1"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
+																				"justify": "Center",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"title": {
+																										"value": "streamline_workflows"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/streamline_workflows.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"height": "56px",
+																						"width": "56px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-display-large",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Streamline Workflows"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3",
+																						"marginTop": "3",
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Increase producer distribution efficiency with streamlined policy application and administration workflows."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "1"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
+																				"justify": "Center",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"title": {
+																										"value": "digitalize_the_producer_experience"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/digitalize_the_producer_experience.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"height": "56px",
+																						"width": "56px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-display-large",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Digitalize the Producer Experience"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3",
+																						"marginTop": "3",
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Drive adoption and usage of digital tools with a modern and intuitive producer experience.&nbsp;"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
+																				"justify": "Center",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"title": {
+																										"value": "reduce_application_complexity"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/reduce_application_complexity.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"height": "56px",
+																						"width": "56px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-display-large",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Reduce Application Complexity"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3",
+																						"marginTop": "3",
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Reduce upfront complexity with simplified forms and applications, and see everything in one place on a unified dashboard with relevant KPIs for agents."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
 											}
-										  }
-										}
-									  ],
-									  "fragmentStyle": {
-										"fontWeight": "fontWeightBold",
-										"marginBottom": "5"
-									  },
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  },
-								  {
-									"definition": {
-									  "gutters": true,
-									  "indexed": true,
-									  "modulesPerRow": 3,
-									  "numberOfColumns": 3,
-									  "reverseOrder": false,
-									  "rowViewports": [
-										{
-										  "id": "landscapeMobile",
-										  "rowViewportDefinition": { "modulesPerRow": 1 }
-										},
-										{
-										  "id": "portraitMobile",
-										  "rowViewportDefinition": {}
-										},
-										{ "id": "tablet", "rowViewportDefinition": {} }
-									  ],
-									  "verticalAlignment": "top"
-									},
-									"pageElements": [
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 4
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragmentViewports": [
-												{
-												  "fragmentViewportStyle": {
-													"marginBottom": "1"
-												  },
-												  "id": "portraitMobile"
-												}
-											  ],
-											  "indexed": true,
-											  "layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"justify": "Center",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "title": {
-															"value": "streamline_workflows"
-														  },
-														  "url": {
-															"mapping": {
-																"fieldKey": "FileEntry_previewImage",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/streamline_workflows.png#]"
-																}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"height": "56px",
-													"width": "56px"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-display-large",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Streamline Workflows"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"marginBottom": "3",
-													"marginTop": "3",
-													"textAlign": "center"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-paragraph-base",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Increase producer distribution efficiency with streamlined policy application and administration workflows."
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": { "textAlign": "center" },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
 										],
-										"type": "Column"
-									  },
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 4
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragmentViewports": [
-												{
-												  "fragmentViewportStyle": {
-													"marginBottom": "1"
-												  },
-												  "id": "portraitMobile"
-												}
-											  ],
-											  "indexed": true,
-											  "layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"justify": "Center",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "title": {
-															"value": "digitalize_the_producer_experience"
-														  },
-														  "url": {
-															"mapping": {
-																"fieldKey": "FileEntry_previewImage",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/digitalize_the_producer_experience.png#]"
-																}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"height": "56px",
-													"width": "56px"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-display-large",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Digitalize the Producer Experience"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"marginBottom": "3",
-													"marginTop": "3",
-													"textAlign": "center"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-paragraph-base",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Drive adoption and usage of digital tools with a modern and intuitive producer experience.&nbsp;"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": { "textAlign": "center" },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
-										],
-										"type": "Column"
-									  },
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 4
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "indexed": true,
-											  "layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"justify": "Center",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "title": {
-															"value": "reduce_application_complexity"
-														  },
-														  "url": {
-															"mapping": {
-																"fieldKey": "FileEntry_previewImage",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/reduce_application_complexity.png#]"
-																}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"height": "56px",
-													"width": "56px"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-display-large",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Reduce Application Complexity"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"marginBottom": "3",
-													"marginTop": "3",
-													"textAlign": "center"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-paragraph-base",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Reduce upfront complexity with simplified forms and applications, and see everything in one place on a unified dashboard with relevant KPIs for agents."
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": { "textAlign": "center" },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
-										],
-										"type": "Column"
-									  }
-									],
-									"type": "Row"
-								  }
+										"type": "Fragment"
+									}
 								],
-								"type": "FragmentDropZone"
-							  }
-							],
-							"type": "Fragment"
-						  }
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"marginTop": "7"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 8,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-text",
+																"siteKey": "[$COMPANY_ID$]"
+															},
+															"fragmentConfig": {
+																"textType": "h1"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Accelerate Existing Channels and Retain Competitive Edge"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "5"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"textAlign": "center"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 3,
+															"numberOfColumns": 3,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {
+																	}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {
+																	}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "1"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
+																				"justify": "Center",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"description": {
+																										"value_i18n": {
+																											"en_US": ""
+																										}
+																									},
+																									"title": {
+																										"value": "manage_multiple_insurance_lines"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/manage_multiple_insurance_lines.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"height": "56px",
+																						"width": "56px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-display-large",
+																						"smallCaps": false,
+																						"tabletScreenCenter": true
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Manage Multiple Insurance Lines</h4>\n"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3",
+																						"marginTop": "3",
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": true
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Effectively manage multiple insurance lines and books of businesses with a contextualized dashboard and policy administration analytics and data."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "1"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
+																				"justify": "Center",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"description": {
+																										"value_i18n": {
+																											"en_US": ""
+																										}
+																									},
+																									"title": {
+																										"value": "easily_cross-sell_and_upsell"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/easily_cross-sell_and_upsell.jpg#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"height": "56px",
+																						"width": "56px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-display-large",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Easily Cross-sell and Upsell"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3",
+																						"marginTop": "3"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": true
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Easily identify cross-sell/upsell opportunities with real-time notifications and in-context analytics.&nbsp;"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 4
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"indexed": true,
+																			"layout": {
+																				"align": "Center",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexColumn",
+																				"justify": "Center",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"title": {
+																										"value": "find_revenue_expansion_opportunities"
+																									},
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/find_revenue_expansion_opportunities.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"height": "56px",
+																						"width": "56px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-display-large",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Find Revenue Expansion Opportunities"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginBottom": "3",
+																						"marginTop": "3",
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Quickly understand opportunities for revenue expansion with integrations back to other core insurance platforms that support functions like underwriting and risk/ratings."
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"textAlign": "center"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
 						],
 						"type": "Section"
-					  },
-					  {
-						"definition": {
-						  "fragmentStyle": { "borderWidth": "0", "marginTop": "7" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 8,
-							"opacity": 100,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fixed"
-						  }
-						},
-						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "content-container", "siteKey": "[$GROUP_KEY$]" },
-							  "fragmentConfig": {
-								"boxShadow": "",
-								"showIconBoxShadow": false,
-								"moveIcon": "-75px 0 0 0",
-								"containerWidth": "",
-								"backgroundDarkOrLight": "light",
-								"borderRadius": "border-radius-none",
-								"lazyLoadingImage": true,
-								"background": "",
-								"backgroundSize": "cover",
-								"backgroundPosition": "center",
-								"showIcon": false,
-								"backgroundImageUrl": "",
-								"blockAlignment": ""
-							  },
-							  "fragmentFields": [],
-							  "fragmentViewports": [
-								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "5",
-									"paddingRight": "5"
-								  },
-								  "id": "tablet"
-								}
-							  ],
-							  "indexed": true
-							},
-							"pageElements": [
-							  {
-								"definition": {},
-								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": {
-										"key": "dialect-dialect-text",
-										"siteKey": "[$COMPANY_ID$]"
-									  },
-									  "fragmentConfig": { "textType": "h1" },
-									  "fragmentFields": [
-										{
-										  "id": "element-text",
-										  "value": {
-											"fragmentLink": {},
-											"text": {
-											  "value_i18n": {
-												"en_US": "Accelerate Existing Channels and Retain Competitive Edge"
-											  }
-											}
-										  }
-										}
-									  ],
-									  "fragmentStyle": {
-										"fontWeight": "fontWeightBold",
-										"marginBottom": "5"
-									  },
-									  "fragmentViewports": [
-										{
-										  "fragmentViewportStyle": { "textAlign": "center" },
-										  "id": "portraitMobile"
-										}
-									  ],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  },
-								  {
-									"definition": {
-									  "gutters": true,
-									  "indexed": true,
-									  "modulesPerRow": 3,
-									  "numberOfColumns": 3,
-									  "reverseOrder": false,
-									  "rowViewports": [
-										{
-										  "id": "landscapeMobile",
-										  "rowViewportDefinition": { "modulesPerRow": 1 }
-										},
-										{
-										  "id": "portraitMobile",
-										  "rowViewportDefinition": {}
-										},
-										{ "id": "tablet", "rowViewportDefinition": {} }
-									  ],
-									  "verticalAlignment": "top"
-									},
-									"pageElements": [
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 4
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragmentViewports": [
-												{
-												  "fragmentViewportStyle": {
-													"marginBottom": "1"
-												  },
-												  "id": "portraitMobile"
-												}
-											  ],
-											  "indexed": true,
-											  "layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"justify": "Center",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "description": {
-															"value_i18n": { "en_US": "" }
-														  },
-														  "title": {
-															"value": "manage_multiple_insurance_lines"
-														  },
-														  "url": {
-															"mapping": {
-																"fieldKey": "FileEntry_previewImage",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/manage_multiple_insurance_lines.png#]"
-																}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"height": "56px",
-													"width": "56px"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-display-large",
-													"smallCaps": false,
-													"tabletScreenCenter": true
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Manage Multiple Insurance Lines</h4>\n"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"marginBottom": "3",
-													"marginTop": "3",
-													"textAlign": "center"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-paragraph-base",
-													"smallCaps": false,
-													"tabletScreenCenter": true
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Effectively manage multiple insurance lines and books of businesses with a contextualized dashboard and policy administration analytics and data."
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": { "textAlign": "center" },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
-										],
-										"type": "Column"
-									  },
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 4
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "fragmentViewports": [
-												{
-												  "fragmentViewportStyle": {
-													"marginBottom": "1"
-												  },
-												  "id": "portraitMobile"
-												}
-											  ],
-											  "indexed": true,
-											  "layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"justify": "Center",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "description": {
-															"value_i18n": { "en_US": "" }
-														  },
-														  "title": {
-															"value": "easily_cross-sell_and_upsell"
-														  },
-														  "url": {
-															"mapping": {
-																"fieldKey": "FileEntry_previewImage",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/easily_cross-sell_and_upsell.jpg#]"
-																}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"height": "56px",
-													"width": "56px"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-display-large",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Easily Cross-sell and Upsell"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"marginBottom": "3",
-													"marginTop": "3"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-paragraph-base",
-													"smallCaps": false,
-													"tabletScreenCenter": true
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Easily identify cross-sell/upsell opportunities with real-time notifications and in-context analytics.&nbsp;"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": { "textAlign": "center" },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
-										],
-										"type": "Column"
-									  },
-									  {
-										"definition": {
-										  "columnViewports": [
-											{
-											  "columnViewportDefinition": { "size": 12 },
-											  "id": "landscapeMobile"
-											},
-											{
-											  "columnViewportDefinition": {},
-											  "id": "portraitMobile"
-											},
-											{ "columnViewportDefinition": {}, "id": "tablet" }
-										  ],
-										  "size": 4
-										},
-										"pageElements": [
-										  {
-											"definition": {
-											  "indexed": true,
-											  "layout": {
-												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexColumn",
-												"justify": "Center",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
-											  }
-											},
-											"pageElements": [
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "BASIC_COMPONENT-image"
-												  },
-												  "fragmentConfig": { "imageSize": "w-100" },
-												  "fragmentFields": [
-													{
-													  "id": "image-square",
-													  "value": {
-														"fragmentImage": {
-														  "title": {
-															"value": "find_revenue_expansion_opportunities"
-														  },
-														  "url": {
-															"mapping": {
-																"fieldKey": "FileEntry_previewImage",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions_details/08_insurance_agent_portal_accelerator/find_revenue_expansion_opportunities.png#]"
-																}
-															}
-														  }
-														},
-														"fragmentLink": {}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"height": "56px",
-													"width": "56px"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-display-large",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Find Revenue Expansion Opportunities"
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": {
-													"marginBottom": "3",
-													"marginTop": "3",
-													"textAlign": "center"
-												  },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  },
-											  {
-												"definition": {
-												  "fragment": {
-													"key": "text",
-													"siteKey": "[$GROUP_KEY$]"
-												  },
-												  "fragmentConfig": {
-													"fontSize": "font-size-paragraph-base",
-													"smallCaps": false,
-													"tabletScreenCenter": false
-												  },
-												  "fragmentFields": [
-													{
-													  "id": "text",
-													  "value": {
-														"fragmentLink": {},
-														"text": {
-														  "value_i18n": {
-															"en_US": "Quickly understand opportunities for revenue expansion with integrations back to other core insurance platforms that support functions like underwriting and risk/ratings."
-														  }
-														}
-													  }
-													}
-												  ],
-												  "fragmentStyle": { "textAlign": "center" },
-												  "indexed": true
-												},
-												"type": "Fragment"
-											  }
-											],
-											"type": "Section"
-										  }
-										],
-										"type": "Column"
-									  }
-									],
-									"type": "Row"
-								  }
-								],
-								"type": "FragmentDropZone"
-							  }
-							],
-							"type": "Fragment"
-						  }
-						],
-						"type": "Section"
-					  }
-					],
-					"type": "Section"
-				  },
-				  {
-					"definition": {
-					  "fragmentStyle": { "backgroundColor": "#F7F8F9", "borderWidth": "0" },
-					  "indexed": true,
-					  "layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					  }
 					},
-					"pageElements": [
-					  {
+					{
 						"definition": {
-						  "fragmentStyle": { "borderWidth": "0", "marginTop": "7" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 8,
-							"opacity": 100,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fixed"
-						  }
+							"fragmentStyle": {
+								"backgroundColor": "#F7F8F9",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "content-container", "siteKey": "[$GROUP_KEY$]" },
-							  "fragmentConfig": {
-								"boxShadow": "",
-								"showIconBoxShadow": false,
-								"moveIcon": "-75px 0 0 0",
-								"containerWidth": "",
-								"backgroundDarkOrLight": "light",
-								"borderRadius": "border-radius-none",
-								"lazyLoadingImage": true,
-								"background": "",
-								"backgroundSize": "cover",
-								"backgroundPosition": "center",
-								"showIcon": false,
-								"backgroundImageUrl": "",
-								"blockAlignment": ""
-							  },
-							  "fragmentFields": [],
-							  "fragmentViewports": [
-								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "5",
-									"paddingRight": "5"
-								  },
-								  "id": "tablet"
-								}
-							  ],
-							  "indexed": true
-							},
-							"pageElements": [
-							  {
-								"definition": {},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"marginTop": "7"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 8,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-									  "fragmentConfig": { "height": "py-3" },
-									  "fragmentFields": [],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  },
-								  {
-									"definition": {
-									  "fragment": { "key": "text", "siteKey": "[$GROUP_KEY$]" },
-									  "fragmentConfig": {
-										"fontSize": "font-size-paragraph-base",
-										"smallCaps": false,
-										"tabletScreenCenter": false
-									  },
-									  "fragmentFields": [
-										{
-										  "id": "text",
-										  "value": {
-											"fragmentLink": {},
-											"text": {
-											  "value_i18n": {
-												"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Position Your Agents to be the Future of Customer Experience</h1>\n<br />\n<strong>Equip Agents:</strong><br />\nGive agents the information and data they need to work alongside carriers effectively.<br />\n<br />\n<strong>Get In-Context Analytics and KPIs:</strong><br />\nIn-context agent and producer analytics and KPIs help agents quickly see actions to take for applications, claims, and policies at a glance.<br />\n<br />\n<strong>Maintain and Grow Partnerships:</strong><br />\nMaintain long-term distribution partnership by improving communication channels with your agents.<br />\n<br />\n<strong>Reduce Cost of Supporting Partners:</strong><br />\nConsolidated access to insurer’s marketing materials, information, and help through tools like a live chat, reduce the cost of supporting your partners.\n<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n<br />\nLiferay helps organizations meet their unique challenges by creating innovative, customer-centered experiences on our cloud-powered digital experience platform (DXP). Our platform is open source, which makes it more reliable and secure. Over a thousand organizations in financial services, insurance, manufacturing, healthcare and government use Liferay worldwide.<br />\n<br />\nOur goal is to help companies reach their full potential to serve others, and we try to leave a positive mark on the world through our business and technology.<br />\n<br />\nEngage with us at&nbsp;&nbsp;<a data-remove-tab-index=\"true\" data-sk=\"tooltip_parent\" data-stringify-link=\"http://www.liferay.com\" delay=\"150\" href=\"http://www.liferay.com/\" rel=\"noopener noreferrer\" tabindex=\"-1\" target=\"_blank\">www.liferay.com</a>.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"http://www.liferay.com/\" target=\"_blank\">https://www.liferay.com</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@liferay.com\" target=\"_blank\">sales@liferay.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+1-877-LIFERAY"
-											  }
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "light",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-3"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Position Your Agents to be the Future of Customer Experience</h1>\n<br />\n<strong>Equip Agents:</strong><br />\nGive agents the information and data they need to work alongside carriers effectively.<br />\n<br />\n<strong>Get In-Context Analytics and KPIs:</strong><br />\nIn-context agent and producer analytics and KPIs help agents quickly see actions to take for applications, claims, and policies at a glance.<br />\n<br />\n<strong>Maintain and Grow Partnerships:</strong><br />\nMaintain long-term distribution partnership by improving communication channels with your agents.<br />\n<br />\n<strong>Reduce Cost of Supporting Partners:</strong><br />\nConsolidated access to insurer’s marketing materials, information, and help through tools like a live chat, reduce the cost of supporting your partners.\n<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n<br />\nLiferay helps organizations meet their unique challenges by creating innovative, customer-centered experiences on our cloud-powered digital experience platform (DXP). Our platform is open source, which makes it more reliable and secure. Over a thousand organizations in financial services, insurance, manufacturing, healthcare and government use Liferay worldwide.<br />\n<br />\nOur goal is to help companies reach their full potential to serve others, and we try to leave a positive mark on the world through our business and technology.<br />\n<br />\nEngage with us at&nbsp;&nbsp;<a data-remove-tab-index=\"true\" data-sk=\"tooltip_parent\" data-stringify-link=\"http://www.liferay.com\" delay=\"150\" href=\"http://www.liferay.com/\" rel=\"noopener noreferrer\" tabindex=\"-1\" target=\"_blank\">www.liferay.com</a>.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"http://www.liferay.com/\" target=\"_blank\">https://www.liferay.com</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@liferay.com\" target=\"_blank\">sales@liferay.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+1-877-LIFERAY"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-5"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
 											}
-										  }
-										}
-									  ],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  },
-								  {
-									"definition": {
-									  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-									  "fragmentConfig": { "height": "py-5" },
-									  "fragmentFields": [],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  }
+										],
+										"type": "Fragment"
+									}
 								],
-								"type": "FragmentDropZone"
-							  }
-							],
-							"type": "Fragment"
-						  }
+								"type": "Section"
+							}
 						],
 						"type": "Section"
-					  }
-					],
-					"type": "Section"
-				  },
-				  {
-					"definition": {
-					  "cssClasses": ["#solutions-details-form"],
-					  "fragmentStyle": { "borderWidth": "0" },
-					  "indexed": true,
-					  "layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					  }
 					},
-					"pageElements": [
-					  {
+					{
 						"definition": {
-						  "fragmentStyle": { "borderWidth": "0" },
-						  "indexed": true,
-						  "layout": {
-							"borderWidth": 0,
-							"marginBottom": 0,
-							"marginLeft": 0,
-							"marginRight": 0,
-							"marginTop": 0,
-							"opacity": 100,
-							"paddingBottom": 0,
-							"paddingLeft": 0,
-							"paddingRight": 0,
-							"paddingTop": 0,
-							"widthType": "Fixed"
-						  }
+							"cssClasses": [
+								"#solutions-details-form"
+							],
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
-						  {
-							"definition": {
-							  "fragment": { "key": "content-container", "siteKey": "[$GROUP_KEY$]" },
-							  "fragmentConfig": {
-								"boxShadow": "",
-								"showIconBoxShadow": false,
-								"moveIcon": "-75px 0 0 0",
-								"containerWidth": "",
-								"backgroundDarkOrLight": "dark",
-								"borderRadius": "border-radius-none",
-								"lazyLoadingImage": true,
-								"background": "",
-								"backgroundSize": "cover",
-								"backgroundPosition": "center",
-								"showIcon": false,
-								"backgroundImageUrl": "",
-								"blockAlignment": ""
-							  },
-							  "fragmentFields": [],
-							  "fragmentViewports": [
-								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "5",
-									"paddingRight": "5"
-								  },
-								  "id": "tablet"
-								}
-							  ],
-							  "indexed": true
-							},
-							"pageElements": [
-							  {
-								"definition": {},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
 								"pageElements": [
-								  {
-									"definition": {
-									  "fragment": { "key": "BASIC_COMPONENT-spacer" },
-									  "fragmentConfig": { "height": "py-4" },
-									  "fragmentFields": [],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  },
-								  {
-									"definition": {
-									  "fragment": { "key": "text", "siteKey": "[$GROUP_KEY$]" },
-									  "fragmentConfig": {
-										"fontSize": "font-size-paragraph-base",
-										"smallCaps": false,
-										"tabletScreenCenter": false
-									  },
-									  "fragmentFields": [
-										{
-										  "id": "text",
-										  "value": {
-											"fragmentLink": {},
-											"text": {
-											  "value_i18n": {
-												"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h1>\n\n<p>Find out more about&nbsp;Insurance Agent Portal Accelerator</p>\n"
-											  }
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"background": "",
+												"backgroundDarkOrLight": "dark",
+												"backgroundImageUrl": "",
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-4"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h1>\n\n<p>Find out more about&nbsp;Insurance Agent Portal Accelerator</p>\n"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
 											}
-										  }
-										}
-									  ],
-									  "indexed": true
-									},
-									"type": "Fragment"
-								  }
+										],
+										"type": "Fragment"
+									}
 								],
-								"type": "FragmentDropZone"
-							  }
-							],
-							"type": "Fragment"
-						  }
+								"type": "Section"
+							}
 						],
 						"type": "Section"
-					  }
-					],
-					"type": "Section"
-				  }
+					}
 				],
 				"type": "Section"
-			  }
+			}
 		],
 		"type": "Root"
 	},

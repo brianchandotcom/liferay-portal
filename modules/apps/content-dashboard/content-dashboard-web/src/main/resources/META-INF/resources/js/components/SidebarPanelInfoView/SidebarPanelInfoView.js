@@ -20,6 +20,12 @@ import ManageCollaborators from './ManageCollaborators';
 import Subscribe from './Subscribe';
 import VersionsContent from './VersionsContent';
 
+const TABS = {
+	categorization: 1,
+	details: 0,
+	version: 2,
+};
+
 const SidebarPanelInfoView = ({
 	classPK,
 	createDate,
@@ -42,7 +48,7 @@ const SidebarPanelInfoView = ({
 	viewURLs = [],
 	vocabularies = {},
 }) => {
-	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState(TABS.details);
 
 	const showTabs = !!getItemVersionsURL;
 
@@ -156,36 +162,40 @@ const SidebarPanelInfoView = ({
 						modern
 					>
 						<ClayTabs.Item
-							active={activeTabKeyValue === 0}
+							active={activeTabKeyValue === TABS.details}
 							className="flex-shrink-0"
 							innerProps={{
 								'aria-controls': 'details',
 							}}
-							onClick={() => setActiveTabKeyValue(0)}
+							onClick={() => setActiveTabKeyValue(TABS.details)}
 						>
 							{Liferay.Language.get('details')}
 						</ClayTabs.Item>
 
 						{hasCategorization && (
 							<ClayTabs.Item
-								active={activeTabKeyValue === 1}
+								active={
+									activeTabKeyValue === TABS.categorization
+								}
 								className="flex-shrink-0"
 								innerProps={{
 									'aria-controls': 'categorization',
 								}}
-								onClick={() => setActiveTabKeyValue(1)}
+								onClick={() =>
+									setActiveTabKeyValue(TABS.categorization)
+								}
 							>
 								{Liferay.Language.get('categorization')}
 							</ClayTabs.Item>
 						)}
 
 						<ClayTabs.Item
-							active={activeTabKeyValue === 2}
+							active={activeTabKeyValue === TABS.version}
 							className="flex-shrink-0"
 							innerProps={{
 								'aria-controls': 'versions',
 							}}
-							onClick={() => setActiveTabKeyValue(2)}
+							onClick={() => setActiveTabKeyValue(TABS.version)}
 						>
 							{Liferay.Language.get('versions')}
 						</ClayTabs.Item>
@@ -217,7 +227,7 @@ const SidebarPanelInfoView = ({
 
 						{hasCategorization &&
 							showTabs &&
-							activeTabKeyValue === 1 && (
+							activeTabKeyValue === TABS.categorization && (
 								<ClayTabs.TabPane
 									aria-labelledby="tab-2"
 									className="flex-shrink-0"
@@ -229,13 +239,13 @@ const SidebarPanelInfoView = ({
 								</ClayTabs.TabPane>
 							)}
 
-						{showTabs && activeTabKeyValue === 2 && (
+						{showTabs && activeTabKeyValue === TABS.version && (
 							<ClayTabs.TabPane
 								aria-labelledby="tab-2"
 								className="flex-shrink-0"
 							>
 								<VersionsContent
-									active={activeTabKeyValue === 1}
+									active={activeTabKeyValue === TABS.version}
 									getItemVersionsURL={getItemVersionsURL}
 									languageTag={languageTag}
 									onError={handleError}

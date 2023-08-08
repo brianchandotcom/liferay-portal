@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
@@ -109,7 +108,7 @@ public class RoutesPortalK8sConfigMapModifier
 			}
 
 			try {
-				_deleteLiferayRoutesData(configMapName, labels);
+				_deleteRoutes(configMapName, labels);
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -118,8 +117,6 @@ public class RoutesPortalK8sConfigMapModifier
 
 			return Result.DELETED;
 		}
-
-		_updatePortalLocalPort(data, _getPortalLocalPort());
 
 		try {
 			_writeRoutes(data, labels);
@@ -165,8 +162,7 @@ public class RoutesPortalK8sConfigMapModifier
 		}
 	}
 
-	private void _deleteLiferayRoutesData(
-			String configMapName, Map<String, String> labels)
+	private void _deleteRoutes(String configMapName, Map<String, String> labels)
 		throws Exception {
 
 		Path liferayRoutesPath = _getLiferayRoutesPath();
@@ -187,7 +183,7 @@ public class RoutesPortalK8sConfigMapModifier
 		Path virtualInstanceIdPath = liferayRoutesPath.resolve(
 			virtualInstanceId);
 
-		Matcher matcher = _lxcDxpMetadataPattern.matcher(configMapName);
+		Matcher matcher = _lxcDXPMetadataPattern.matcher(configMapName);
 
 		if (matcher.matches()) {
 			_file.deltree(virtualInstanceIdPath.toFile());
@@ -208,19 +204,13 @@ public class RoutesPortalK8sConfigMapModifier
 	}
 
 	private Path _getLiferayRoutesPath() {
-		String liferayHome = PropsValues.LIFERAY_HOME;
-
-		if (!FileUtil.exists(liferayHome)) {
-			return null;
-		}
-
-		Path liferayRoutesPath = Paths.get(liferayHome, "routes");
+		Path liferayRoutesPath = Paths.get(PropsValues.LIFERAY_HOME, "routes");
 
 		try {
 			liferayRoutesPath = Files.createDirectories(liferayRoutesPath);
 		}
 		catch (IOException ioException) {
-			_log.error("Could not create Liferay routes path", ioException);
+			_log.error("Unable to create routes directory", ioException);
 		}
 
 		return liferayRoutesPath;
@@ -252,42 +242,39 @@ public class RoutesPortalK8sConfigMapModifier
 							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						if (Objects.equals(
+						if (!Objects.equals(
 								String.valueOf(path.getFileName()), "dxp")) {
 
-							File dir = path.toFile();
-
-							Map<String, String> data = new HashMap<>();
-
-							for (File file : dir.listFiles()) {
-								data.put(
-									file.getName(),
-									new String(
-										Files.readAllBytes(file.toPath())));
-							}
-
-							_updatePortalLocalPort(
-								data, _portal.getPortalLocalPort(secure));
-
-							data.forEach(
-								(key, value) -> {
-									Path file = path.resolve(key);
-
-									try {
-										Files.write(file, value.getBytes());
-									}
-									catch (IOException ioException) {
-										_log.error(
-											"Unable to write file " +
-												file.toString(),
-											ioException);
-									}
-								});
-
-							return FileVisitResult.SKIP_SUBTREE;
+							return FileVisitResult.CONTINUE;
 						}
 
-						return FileVisitResult.CONTINUE;
+						Map<String, String> data = new HashMap<>();
+
+						File dir = path.toFile();
+
+						for (File file : dir.listFiles()) {
+							data.put(
+								file.getName(),
+								new String(Files.readAllBytes(file.toPath())));
+						}
+
+						_updatePortalLocalPort(
+							data, _portal.getPortalLocalPort(secure));
+
+						data.forEach(
+							(key, value) -> {
+								try {
+									Path keyPath = path.resolve(key);
+
+									_file.write(
+										keyPath.toFile(), value.getBytes());
+								}
+								catch (IOException ioException) {
+									ReflectionUtil.throwException(ioException);
+								}
+							});
+
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
 				});
@@ -406,7 +393,7 @@ public class RoutesPortalK8sConfigMapModifier
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoutesPortalK8sConfigMapModifier.class);
 
-	private static final Pattern _lxcDxpMetadataPattern = Pattern.compile(
+	private static final Pattern _lxcDXPMetadataPattern = Pattern.compile(
 		"(.*)-lxc-dxp-metadata$");
 	private static final Pattern _lxcExtInitMetadataPattern = Pattern.compile(
 		"(.*)-lxc-ext-init-metadata$");

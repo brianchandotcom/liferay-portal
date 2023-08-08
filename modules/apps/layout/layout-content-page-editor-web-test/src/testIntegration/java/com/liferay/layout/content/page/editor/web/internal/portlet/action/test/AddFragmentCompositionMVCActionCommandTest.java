@@ -195,9 +195,13 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		Assert.assertNotNull(jsonObject);
 
+		JSONObject fragmentCompositionJSONObject = jsonObject.getJSONObject(
+			"fragmentComposition");
+
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionLocalService.fetchFragmentComposition(
-				_group.getGroupId(), jsonObject.getString("fragmentEntryKey"));
+				_group.getGroupId(),
+				fragmentCompositionJSONObject.getString("fragmentEntryKey"));
 
 		Assert.assertNotNull(fragmentComposition);
 

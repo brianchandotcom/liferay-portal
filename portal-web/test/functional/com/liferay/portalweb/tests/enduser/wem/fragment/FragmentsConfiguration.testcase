@@ -1430,16 +1430,16 @@ main();
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 
 			var htmlSnippet = '''<div class="fragment-name">
-    <h1>
-        List of Items:
-    </h1>
-    <ul>
-        [#if collectionObjectList??]
-        [#list collectionObjectList as item]
-        <li>${item.title}</li>
-        [/#list]
-        [/#if]
-    </ul>
+	<h1>
+		List of Items:
+	</h1>
+	<ul>
+		[#if collectionObjectList??]
+			[#list collectionObjectList as item]
+				<li>${item.title}</li>
+			[/#list]
+		[/#if]
+	</ul>
 </div>''';
 
 			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
@@ -1449,20 +1449,21 @@ main();
 			FragmentsEditor.gotoConfigurationTab();
 
 			var jsonSnippet = '''{
-    "fieldSets": [
-        {
-        "label": "Collection",
-        "fields": [
-            {
-                "name": "collection",
-                "type": "collectionSelector",
-                typeOptions: {
-                    "numberOfItems": 2
-                }
-            }
-        ]
-        }
-    ]
+	"fieldSets": [
+		{
+			"label": "Collection",
+			"fields": [
+				{
+					"name": "collection",
+					"label": "Collection",
+					"type": "collectionSelector",
+					typeOptions: {
+						"numberOfItems": 2
+					}
+				}
+			]
+		}
+	]
 }''';
 
 			FragmentsEditor.typeConfigurationEditor(content = ${jsonSnippet});
@@ -1499,17 +1500,9 @@ main();
 				collectionName = "Collection Name",
 				fragmentName = "Fragment Name");
 
-			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
-
-			Click(locator1 = "Button#PLUS");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			NavItem.click(navItem = "Collections");
-
-			LexiconCard.clickCard(card = "Dynamic Collection");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Fragment Name");
 		}
 
 		task ("Then the fragment developer sees the number of displayed assets is 2") {

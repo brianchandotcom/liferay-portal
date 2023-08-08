@@ -33,4 +33,5 @@ Export-Package:\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence,\
 	com.liferay.object.system,\
-	com.liferay.object.validation.rule
+	com.liferay.object.validation.rule,\
+	com.liferay.object.validation.rule.setting.builder

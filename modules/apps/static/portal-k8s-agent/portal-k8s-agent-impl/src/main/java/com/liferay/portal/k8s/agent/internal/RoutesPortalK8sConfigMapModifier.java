@@ -105,7 +105,7 @@ public class RoutesPortalK8sConfigMapModifier
 
 		if (binaryData.isEmpty() && data.isEmpty()) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Deleting routes data for " + configMapName);
+				_log.info("Deleting routes for " + configMapName);
 			}
 
 			try {
@@ -113,7 +113,7 @@ public class RoutesPortalK8sConfigMapModifier
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Could not delete routes data for " + configMapName,
+					"Unable to delete routes for " + configMapName,
 					exception);
 			}
 
@@ -126,7 +126,8 @@ public class RoutesPortalK8sConfigMapModifier
 			_writeLiferayRoutesData(data, labels);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to write routes data", exception);
+			_log.error(
+				"Unable to write routes for " + configMapName, exception);
 		}
 
 		return Result.CREATED;
@@ -136,25 +137,24 @@ public class RoutesPortalK8sConfigMapModifier
 	public void portalLocalInetSocketAddressConfigured(
 		InetSocketAddress localInetSocketAddress, boolean secure) {
 
-		_updateDxpRoutes(secure);
+		_updateDXPRoutes(secure);
 	}
 
 	@Override
 	public void portalServerInetSocketAddressConfigured(
 		InetSocketAddress serverInetSocketAddress, boolean secure) {
 
-		_updateDxpRoutes(secure);
+		_updateDXPRoutes(secure);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistrations.add(
 			bundleContext.registerService(
-				PortalInetSocketAddressEventListener.class, this, null));
-
+				ModelListener.class, new CompanyModelListener(), null));
 		_serviceRegistrations.add(
 			bundleContext.registerService(
-				ModelListener.class, new CompanyModelListener(), null));
+				PortalInetSocketAddressEventListener.class, this, null));
 	}
 
 	@Deactivate
@@ -164,42 +164,6 @@ public class RoutesPortalK8sConfigMapModifier
 
 			serviceRegistration.unregister();
 		}
-	}
-
-	private void _deleteFolder(Path folderPath) throws Exception {
-		if (!Files.exists(folderPath)) {
-			return;
-		}
-
-		Files.walkFileTree(
-			folderPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult postVisitDirectory(
-						Path dirPath, IOException ioException)
-					throws IOException {
-
-					if (ioException != null) {
-						throw ioException;
-					}
-
-					Files.delete(dirPath);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-						Path filePath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Files.delete(filePath);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
 	}
 
 	private void _deleteLiferayRoutesData(
@@ -227,9 +191,7 @@ public class RoutesPortalK8sConfigMapModifier
 		Matcher matcher = _lxcDxpMetadataPattern.matcher(configMapName);
 
 		if (matcher.matches()) {
-			if (Files.exists(virtualInstanceIdPath)) {
-				_deleteFolder(virtualInstanceIdPath);
-			}
+			_file.deltree(virtualInstanceIdPath.toFile());
 		}
 		else {
 			matcher = _lxcExtInitMetadataPattern.matcher(configMapName);
@@ -240,7 +202,7 @@ public class RoutesPortalK8sConfigMapModifier
 				Path projectPath = virtualInstanceIdPath.resolve(projectName);
 
 				if (Files.exists(projectPath)) {
-					_deleteFolder(projectPath);
+					_file.deltree(projectPath.toFile());
 				}
 			}
 		}
@@ -280,7 +242,7 @@ public class RoutesPortalK8sConfigMapModifier
 		return webServerProtocol;
 	}
 
-	private void _updateDxpRoutes(boolean secure) {
+	private void _updateDXPRoutes(boolean secure) {
 		try {
 			Files.walkFileTree(
 				_getLiferayRoutesPath(),
@@ -456,6 +418,9 @@ public class RoutesPortalK8sConfigMapModifier
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private com.liferay.portal.kernel.util.File _file;
 
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();

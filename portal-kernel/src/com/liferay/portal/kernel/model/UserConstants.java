@@ -36,6 +36,8 @@ public class UserConstants {
 
 	public static final int TYPE_GUEST = 0;
 
+	public static final int TYPE_ON_DEMAND_USER = 4;
+
 	public static final int TYPE_REGULAR = 1;
 
 	public static final int TYPE_SERVICE_ACCOUNT = 3;

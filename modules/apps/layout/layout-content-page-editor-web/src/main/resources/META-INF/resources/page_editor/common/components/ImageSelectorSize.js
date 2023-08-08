@@ -173,15 +173,15 @@ export function ImageSelectorSize({
 				</ClayForm.Group>
 			)}
 
-			{!!imageSize.width && (
+			{imageSize.width ? (
 				<p className="m-0 small text-secondary">
 					<b>{Liferay.Language.get('width')}:</b>
 
 					<span className="ml-1">{imageSize.width}px</span>
 				</p>
-			)}
+			) : null}
 
-			{!!imageSize.size && (
+			{imageSize.size ? (
 				<p className="m-0 small text-secondary">
 					<b>{Liferay.Language.get('file-size')}:</b>
 
@@ -189,7 +189,7 @@ export function ImageSelectorSize({
 						{Number(imageSize.size).toFixed(2)}kB
 					</span>
 				</p>
-			)}
+			) : null}
 		</ClayForm.Group>
 	);
 }

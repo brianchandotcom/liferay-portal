@@ -52,7 +52,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Gregory Amerson
  */
 @RunWith(Arquillian.class)
-public class LiferayRoutesEmmitterTest {
+public class RoutesPortalK8sConfigMapModifierTest {
 
 	@ClassRule
 	@Rule
@@ -62,7 +62,8 @@ public class LiferayRoutesEmmitterTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_bundle = FrameworkUtil.getBundle(LiferayRoutesEmmitterTest.class);
+		_bundle = FrameworkUtil.getBundle(
+			RoutesPortalK8sConfigMapModifierTest.class);
 
 		_bundleContext = _bundle.getBundleContext();
 

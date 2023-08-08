@@ -78,7 +78,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
-public class PortalK8sAgentImplTest {
+public class AgentPortalK8sConfigMapModifierTest {
 
 	@ClassRule
 	@Rule
@@ -88,7 +88,8 @@ public class PortalK8sAgentImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_bundle = FrameworkUtil.getBundle(PortalK8sAgentImplTest.class);
+		_bundle = FrameworkUtil.getBundle(
+			AgentPortalK8sConfigMapModifierTest.class);
 
 		_bundleContext = _bundle.getBundleContext();
 
@@ -151,7 +152,8 @@ public class PortalK8sAgentImplTest {
 			).put(
 				"caCertData",
 				StringUtil.read(
-					PortalK8sAgentImplTest.class, "dependencies/ca.crt")
+					AgentPortalK8sConfigMapModifierTest.class,
+					"dependencies/ca.crt")
 			).put(
 				"namespace", "test"
 			).put(
@@ -462,7 +464,7 @@ public class PortalK8sAgentImplTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalK8sAgentImplTest.class);
+		AgentPortalK8sConfigMapModifierTest.class);
 
 	private static Configuration _agentConfiguration;
 	private static Bundle _bundle;

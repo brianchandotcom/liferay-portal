@@ -68,10 +68,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	property = "portalK8sConfigurationPropertiesMutators.cardinality.minimum:Integer=3",
 	service = PortalK8sConfigMapModifier.class
 )
-public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
+public class AgentPortalK8sConfigMapModifier
+	implements PortalK8sConfigMapModifier {
 
 	@Activate
-	public PortalK8sAgentImpl(
+	public AgentPortalK8sConfigMapModifier(
 			BundleContext bundleContext,
 			@Reference ConfigurationAdmin configurationAdmin,
 			@Reference(
@@ -848,7 +849,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		".client-extension-config.json";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalK8sAgentImpl.class);
+		AgentPortalK8sConfigMapModifier.class);
 
 	private final Bundle _bundle;
 	private final ConfigurationAdmin _configurationAdmin;

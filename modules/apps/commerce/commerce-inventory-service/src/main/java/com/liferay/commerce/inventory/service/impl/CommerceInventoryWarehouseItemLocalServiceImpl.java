@@ -856,8 +856,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 			if (cpInstanceUnitOfMeasuresCount > 0) {
 				throw new CPInstanceUnitOfMeasureKeyException(
-					"You must specify the Unit of Measure in order to set " +
-						"the inventory for this SKU");
+					"You must specify the Unit of Measure to set the " +
+						"inventory for this SKU");
 			}
 		}
 		else {
@@ -870,8 +870,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 				}
 
 				throw new NoSuchCPInstanceUnitOfMeasureException(
-					"No commerce product instance unit of measure exists " +
-						"with the primary key " + unitOfMeasureKey);
+					"No Unit of Measure exists with key " + unitOfMeasureKey);
 			}
 
 			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
@@ -887,8 +886,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			}
 
 			throw new NoSuchCPInstanceUnitOfMeasureException(
-				"No commerce product instance unit of measure exists with " +
-					"the primary key " + unitOfMeasureKey);
+				"No Unit of Measure exists with key " + unitOfMeasureKey);
 		}
 	}
 

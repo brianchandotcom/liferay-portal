@@ -1270,38 +1270,14 @@ public class PortalUtil {
 		return _portal.getPortletId(portletRequest);
 	}
 
-	public static String getPortletLongTitle(Portlet portlet, Locale locale) {
-		return _portal.getPortletLongTitle(portlet, locale);
-	}
-
 	public static String getPortletLongTitle(
 		Portlet portlet, ServletContext servletContext, Locale locale) {
 
 		return _portal.getPortletLongTitle(portlet, servletContext, locale);
 	}
 
-	public static String getPortletLongTitle(
-		Portlet portlet, String languageId) {
-
-		return _portal.getPortletLongTitle(portlet, languageId);
-	}
-
-	public static String getPortletLongTitle(Portlet portlet, User user) {
-		return _portal.getPortletLongTitle(portlet, user);
-	}
-
 	public static String getPortletLongTitle(String portletId, Locale locale) {
 		return _portal.getPortletLongTitle(portletId, locale);
-	}
-
-	public static String getPortletLongTitle(
-		String portletId, String languageId) {
-
-		return _portal.getPortletLongTitle(portletId, languageId);
-	}
-
-	public static String getPortletLongTitle(String portletId, User user) {
-		return _portal.getPortletLongTitle(portletId, user);
 	}
 
 	public static String getPortletNamespace(String portletId) {

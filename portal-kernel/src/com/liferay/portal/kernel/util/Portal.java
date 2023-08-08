@@ -821,20 +821,10 @@ public interface Portal {
 
 	public String getPortletId(PortletRequest portletRequest);
 
-	public String getPortletLongTitle(Portlet portlet, Locale locale);
-
 	public String getPortletLongTitle(
 		Portlet portlet, ServletContext servletContext, Locale locale);
 
-	public String getPortletLongTitle(Portlet portlet, String languageId);
-
-	public String getPortletLongTitle(Portlet portlet, User user);
-
 	public String getPortletLongTitle(String portletId, Locale locale);
-
-	public String getPortletLongTitle(String portletId, String languageId);
-
-	public String getPortletLongTitle(String portletId, User user);
 
 	public String getPortletNamespace(String portletId);
 

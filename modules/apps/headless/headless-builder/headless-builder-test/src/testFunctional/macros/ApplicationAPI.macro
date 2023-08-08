@@ -75,6 +75,16 @@ definition {
 		return ${response};
 	}
 
+	macro setUpGlobalAPIApplicationId {
+		var response = ApplicationAPI.getAPIApplications();
+
+		var applicationId = JSONUtil.getWithJSONPath(${response}, "$.items[0].id");
+
+		static var staticApplicationId = ${applicationId};
+
+		return ${staticApplicationId};
+	}
+
 	macro updateAPIApplication {
 		Variables.assertDefined(parameterList = "${aPIApplicationId},${parameter},${parameterValue}");
 

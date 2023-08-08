@@ -11,8 +11,38 @@
 
 <tbody>
 <tr>
+	<td>DND_TR_WITH_TEXT</td>
+	<td>//div[contains(@class,'dnd-tr')]/div[contains(text(),'${text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FROM_DATE</td>
+	<td>//input[contains(@id,'from-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TO_DATE</td>
+	<td>//input[contains(@id,'to-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TR_BUTTON</td>
+	<td>//div[contains(@class,'dnd-tr')]//button[contains(.,'${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_UPDATED_IN_FILTER</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'Last updated')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_NEW_API_APPLICATION</td>
 	<td>//button[contains(.,'Add New API Application')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_SCHEMA</td>
+	<td>//button[contains(.,'Add New Schema')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_IN_DROPDOWN_MENU</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTER_TITLE</td>
 	<td>//input[(@placeholder='Enter title.')]</td>
 	<td></td>
@@ -58,6 +93,11 @@
 <tr>
 	<td>UNPUBLISH_API_APPLICATION_WARNING_DIALOG_TITLE</td>
 	<td>//h1[@class='modal-title' and contains(text(),'Unpublish API Application')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LIST</td>
+	<td>xpath=(//div[(@class='table-list-title')])[${index}]</td>
 	<td></td>
 </tr>
 </tbody>

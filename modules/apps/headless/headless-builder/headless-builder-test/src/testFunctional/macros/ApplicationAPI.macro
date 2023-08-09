@@ -15,9 +15,6 @@ definition {
 		if (isSet(aPIApplicationId)) {
 			var api = "headless-builder/applications/${aPIApplicationId}";
 		}
-		else if (isSet(externalReferenceCode)) {
-			var api = "headless-builder/applications/by-external-reference-code/${externalReferenceCode}";
-		}
 		else {
 			var api = "headless-builder/applications";
 		}
@@ -99,45 +96,6 @@ definition {
 		var curl = StringUtil.add(${curl}, " \ ${body}", "");
 
 		var response = JSONCurlUtil.patch(${curl});
-
-		return ${response};
-	}
-
-	macro updateAPIApplicationByErc {
-		Variables.assertDefined(parameterList = "${baseURL},${externalReferenceCode},${status},${title}");
-
-		var curl = ApplicationAPI._curlAPIApplication(externalReferenceCode = ${externalReferenceCode});
-		var body = '''
-			-d {
-				"applicationStatus": "${status}",
-				"baseURL": "${baseURL}",
-				"externalReferenceCode": "${externalReferenceCode}",
-				"title": "${title}"
-			}
-		''';
-
-		var curl = StringUtil.add(${curl}, " \ ${body}", "");
-
-		var response = JSONCurlUtil.put(${curl});
-
-		return ${response};
-	}
-
-	macro updateAPIApplicationById {
-		Variables.assertDefined(parameterList = "${aPIApplicationId},${baseURL},${status},${title}");
-
-		var curl = ApplicationAPI._curlAPIApplication(aPIApplicationId = ${aPIApplicationId});
-		var body = '''
-			-d {
-				"applicationStatus": "${status}",
-				"baseURL": "${baseURL}",
-				"title": "${title}"
-			}
-		''';
-
-		var curl = StringUtil.add(${curl}, " \ ${body}", "");
-
-		var response = JSONCurlUtil.put(${curl});
 
 		return ${response};
 	}

@@ -167,100 +167,6 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	private void _execute() throws IOException {
-		if (_src.startsWith("file:")) {
-			File srcFile = new File(_src.substring("file:".length()));
-
-			File targetFile = _dest;
-
-			if (_dest.exists() && _dest.isDirectory()) {
-				targetFile = new File(_dest, srcFile.getName());
-			}
-
-			_copyFile(srcFile, targetFile);
-
-			return;
-		}
-
-		Matcher matcher = _mirrorsHostNamePattern.matcher(_path);
-
-		if (_tryLocalNetwork && matcher.find()) {
-			String hostname = matcher.group();
-
-			System.out.println(
-				"The src attribute has an unnecessary reference to " +
-					hostname);
-
-			_path = _path.substring(hostname.length());
-
-			while (_path.startsWith("/")) {
-				_path = _path.substring(1);
-			}
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(System.getProperty("user.home"));
-		sb.append(File.separator);
-		sb.append(".liferay");
-		sb.append(File.separator);
-		sb.append("mirrors");
-		sb.append(File.separator);
-		sb.append(_getPlatformIndependentPath(_path));
-
-		File localCacheDir = new File(sb.toString());
-
-		File localCacheFile = new File(localCacheDir, _fileName);
-
-		if (localCacheFile.exists() && !_force && _isZipFileName(_fileName)) {
-			_force = !_isValidZip(localCacheFile);
-		}
-
-		if (localCacheFile.exists() && _force) {
-			localCacheFile.delete();
-		}
-
-		if (!localCacheFile.exists()) {
-			String mirrorsHostname = _getMirrorsHostname();
-
-			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
-				sb = new StringBuilder();
-
-				sb.append(_getURLScheme());
-				sb.append(mirrorsHostname);
-				sb.append("/");
-				sb.append(_path);
-				sb.append("/");
-				sb.append(_fileName);
-
-				URL sourceURL = new URL(sb.toString());
-
-				try {
-					_downloadFile(sourceURL, localCacheFile, _retries);
-				}
-				catch (IOException ioException) {
-					URL defaultURL = new URL(_src);
-
-					System.out.println(
-						"Unable to connect to " + sourceURL +
-							", defaulting to " + defaultURL);
-
-					_downloadFile(defaultURL, localCacheFile, 0);
-				}
-			}
-			else {
-				_downloadFile(new URL(_src), localCacheFile, 0);
-			}
-		}
-
-		if (_dest.exists() && _dest.isDirectory()) {
-			_copyFile(localCacheFile, new File(_dest, _fileName));
-		}
-		else {
-			_copyFile(localCacheFile, _dest);
-		}
-	}
-
 	private void _downloadFile(URL sourceURL, File targetFile)
 		throws IOException {
 
@@ -357,6 +263,100 @@ public class MirrorsGetTask extends Task {
 		}
 
 		_downloadFile(sourceURL, targetFile);
+	}
+
+	private void _execute() throws IOException {
+		if (_src.startsWith("file:")) {
+			File srcFile = new File(_src.substring("file:".length()));
+
+			File targetFile = _dest;
+
+			if (_dest.exists() && _dest.isDirectory()) {
+				targetFile = new File(_dest, srcFile.getName());
+			}
+
+			_copyFile(srcFile, targetFile);
+
+			return;
+		}
+
+		Matcher matcher = _mirrorsHostNamePattern.matcher(_path);
+
+		if (_tryLocalNetwork && matcher.find()) {
+			String hostname = matcher.group();
+
+			System.out.println(
+				"The src attribute has an unnecessary reference to " +
+					hostname);
+
+			_path = _path.substring(hostname.length());
+
+			while (_path.startsWith("/")) {
+				_path = _path.substring(1);
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(System.getProperty("user.home"));
+		sb.append(File.separator);
+		sb.append(".liferay");
+		sb.append(File.separator);
+		sb.append("mirrors");
+		sb.append(File.separator);
+		sb.append(_getPlatformIndependentPath(_path));
+
+		File localCacheDir = new File(sb.toString());
+
+		File localCacheFile = new File(localCacheDir, _fileName);
+
+		if (localCacheFile.exists() && !_force && _isZipFileName(_fileName)) {
+			_force = !_isValidZip(localCacheFile);
+		}
+
+		if (localCacheFile.exists() && _force) {
+			localCacheFile.delete();
+		}
+
+		if (!localCacheFile.exists()) {
+			String mirrorsHostname = _getMirrorsHostname();
+
+			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
+				sb = new StringBuilder();
+
+				sb.append(_getURLScheme());
+				sb.append(mirrorsHostname);
+				sb.append("/");
+				sb.append(_path);
+				sb.append("/");
+				sb.append(_fileName);
+
+				URL sourceURL = new URL(sb.toString());
+
+				try {
+					_downloadFile(sourceURL, localCacheFile, _retries);
+				}
+				catch (IOException ioException) {
+					URL defaultURL = new URL(_src);
+
+					System.out.println(
+						"Unable to connect to " + sourceURL +
+							", defaulting to " + defaultURL);
+
+					_downloadFile(defaultURL, localCacheFile, 0);
+				}
+			}
+			else {
+				_downloadFile(new URL(_src), localCacheFile, 0);
+			}
+		}
+
+		if (_dest.exists() && _dest.isDirectory()) {
+			_copyFile(localCacheFile, new File(_dest, _fileName));
+		}
+		else {
+			_copyFile(localCacheFile, _dest);
+		}
 	}
 
 	private Process _executeCommands(String[] commands)

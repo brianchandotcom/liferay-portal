@@ -119,7 +119,7 @@ export default function useSubmitLXCEnvironment(
 					})
 				);
 
-				await Promise.all(
+				await Promise.allSettled(
 					removeHighPriorityContactList?.map((item) => {
 						return client.mutate({
 							context: {
@@ -134,7 +134,7 @@ export default function useSubmitLXCEnvironment(
 					})
 				);
 
-				await Promise.all(
+				await Promise.allSettled(
 					addHighPriorityContactList?.map((item) => {
 						return client.mutate({
 							context: {

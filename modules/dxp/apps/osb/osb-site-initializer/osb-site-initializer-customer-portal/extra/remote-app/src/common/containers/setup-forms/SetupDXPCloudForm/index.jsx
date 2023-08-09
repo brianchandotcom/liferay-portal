@@ -72,6 +72,7 @@ const SetupDXPCloudPage = ({
 		removeHighPriorityContactList,
 		setRemoveHighPriorityContactList,
 	] = useState([]);
+	const [isMultiSelectEmpty, setIsMultiSelectEmpty] = useState(false);
 
 	const [step, setStep] = useState(1);
 
@@ -324,6 +325,9 @@ const SetupDXPCloudPage = ({
 		const contactsList = contactList.map(({objectId}) => objectId);
 		setRemoveHighPriorityContactList(contactsList);
 	};
+	const updateMultiSelectEmpty = (error) => {
+		setIsMultiSelectEmpty(error);
+	};
 
 	return (
 		<Layout
@@ -342,7 +346,9 @@ const SetupDXPCloudPage = ({
 				),
 				middleButton: (
 					<Button
-						disabled={baseButtonDisabled}
+						disabled={
+							step === 1 ? baseButtonDisabled : isMultiSelectEmpty
+						}
 						displayType="primary"
 						onClick={step === 1 ? handleNextStep : handleSubmit}
 					>
@@ -523,6 +529,7 @@ const SetupDXPCloudPage = ({
 				<div>
 					<SetupHighPriorityContactForm
 						addContactList={addContactList}
+						disableSubmit={updateMultiSelectEmpty}
 						filter={
 							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
 						}

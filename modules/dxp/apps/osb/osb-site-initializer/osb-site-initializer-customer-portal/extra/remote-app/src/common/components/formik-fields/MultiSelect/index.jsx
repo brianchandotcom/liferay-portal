@@ -9,29 +9,22 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {useField, useFormikContext} from 'formik';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {Badge} from '../..';
 import {required, validateEmailsArray} from '../../../utils/validations.form';
-import '../../../containers/setup-forms/SetupAnalyticsCloudForm/index.scss';
 
 const MultiSelect = ({
-	disableError,
 	groupStyle,
-	helper,
 	items,
 	label,
-	onChanges,
+	metaErrorCallback,
+	onChange,
 	sourceItems,
 	validations,
 	values,
 	...props
 }) => {
-	const handleChange = (item) => {
-		return onChanges(item);
-	};
-	const [emailsAvailable] = useState(sourceItems);
 	const formik = useFormikContext();
-
 	if (props.required) {
 		validations = validations
 			? [...validations, () => required(values.length)]
@@ -45,7 +38,7 @@ const MultiSelect = ({
 
 		const emailErrors = validateEmailsArray(
 			values.map((item) => item?.email || item?.label),
-			emailsAvailable
+			sourceItems
 		);
 
 		return unfilledField.length ? unfilledField[0] : emailErrors;
@@ -62,8 +55,13 @@ const MultiSelect = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values]);
 
+	useEffect(() => {
+		metaErrorCallback(meta.error);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [meta.error]);
+
 	return (
-		<>
+		<div className="multi-select-container">
 			<ClayForm.Group
 				className={classNames('w-100', {
 					groupStyle,
@@ -85,7 +83,7 @@ const MultiSelect = ({
 					{...field}
 					{...props}
 					items={items}
-					onChange={() => handleChange(window.event?.target?.value)}
+					onChange={(event) => onChange(event?.target?.value)}
 					sourceItems={sourceItems}
 					value={items?.value}
 				>
@@ -116,20 +114,13 @@ const MultiSelect = ({
 
 				{(typeof meta.error === 'string' ||
 					meta.error instanceof String) &&
-				meta.touched &&
-				!disableError ? (
-					<Badge>
-						<span className="pl-1">{meta.error}</span>
-					</Badge>
-				) : (
-					helper && (
-						<div className="ml-3 pr-2 text-neutral-6 text-paragraph-sm">
-							{helper}
-						</div>
-					)
-				)}
+					meta.touched && (
+						<Badge>
+							<span className="pl-1">{meta.error}</span>
+						</Badge>
+					)}
 			</ClayForm.Group>
-		</>
+		</div>
 	);
 };
 

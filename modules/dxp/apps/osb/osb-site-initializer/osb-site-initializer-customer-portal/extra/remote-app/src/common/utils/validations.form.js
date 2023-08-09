@@ -125,9 +125,11 @@ const validateEmailsArray = (emailArray, emailsAvailable) => {
 	for (const email of emailArray) {
 		if (!emailsAvailable.find((item) => item.email === email)) {
 			invalidEmails.push(email);
-		} else if (seenEmails.has(email)) {
+		}
+		else if (seenEmails.has(email)) {
 			repeatedEmails.push(email);
-		} else {
+		}
+		else {
 			seenEmails.add(email);
 		}
 	}

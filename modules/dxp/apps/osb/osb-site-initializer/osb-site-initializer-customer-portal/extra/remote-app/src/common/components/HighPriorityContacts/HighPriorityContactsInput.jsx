@@ -8,13 +8,16 @@ import ClayForm from '@clayui/form';
 import {useEffect, useState} from 'react';
 import useUserAccountsByAccountExternalReferenceCode from '../../../routes/customer-portal/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
 import i18n from '../../I18n';
+import getKebabCase from '../../utils/getKebabCase';
 
 const HighPriorityContactsInput = ({
 	currentHighPriorityContacts,
+	disableSubmit,
+	inputName,
 	koroneikiAccount,
 	setContactList,
 }) => {
-	const [sourceItems, setSourceItems] = useState('');
+	const [sourceItems, setSourceItems] = useState([]);
 	const [loaded, setLoaded] = useState(false);
 	const [items, setItems] = useState([]);
 	const [
@@ -23,6 +26,10 @@ const HighPriorityContactsInput = ({
 	] = useUserAccountsByAccountExternalReferenceCode(
 		koroneikiAccount?.accountKey
 	);
+
+	const handleMetaErrorChange = (error) => {
+		disableSubmit(error, inputName);
+	};
 
 	const handleMultiSelectChange = (value) => {
 		search(value);
@@ -36,28 +43,33 @@ const HighPriorityContactsInput = ({
 	useEffect(() => {
 		setCriticalIncidentContactList(items);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [items]);
+	}, [items, sourceItems]);
 
 	const setCriticalIncidentContactList = (contactList) => {
 		return setContactList(contactList);
 	};
 
 	useEffect(() => {
-		const teamMembersList = userAccountsData?.accountUserAccountsByExternalReferenceCode?.items.map(
-			(account, index) => {
+		const teamMembers = userAccountsData?.accountUserAccountsByExternalReferenceCode?.items.map(
+			(account) => {
 				const {emailAddress, id, name} = account;
 
 				return {
 					email: emailAddress,
 					id,
 					label: name,
-					value: (index + 1).toString(),
+					value: id,
 				};
 			}
 		);
-		setSourceItems(teamMembersList);
-		setLoaded(true);
+		setSourceItems(teamMembers);
 	}, [userAccountsData]);
+
+	useEffect(() => {
+		if (sourceItems.length) {
+			setLoaded(true);
+		}
+	}, [sourceItems]);
 
 	return loaded ? (
 		<ClayForm>
@@ -65,9 +77,10 @@ const HighPriorityContactsInput = ({
 				groupStyle="pb-1"
 				helper={i18n.translate('please-enter-name-or-email-address')}
 				items={items}
-				label={i18n.translate('critical-incident-contact')}
-				name="criticalIncedentContact"
-				onChanges={handleMultiSelectChange}
+				label={i18n.translate(`${getKebabCase(inputName)}-contact`)}
+				metaErrorCallback={handleMetaErrorChange}
+				name={`${inputName}Contact`}
+				onChange={handleMultiSelectChange}
 				onItemsChange={setItems}
 				placeholder={i18n.translate('enter-name-or-email-address')}
 				required

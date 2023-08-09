@@ -6,6 +6,7 @@
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import useCurrentKoroneikiAccount from '../../hooks/useCurrentKoroneikiAccount';
 import {getHighPriorityContacts} from '../../services/liferay/api';
 import HighPriorityContactsInput from './HighPriorityContactsInput';
@@ -18,6 +19,7 @@ export const HIGH_PRIORITY_CONTACT_CATEGORIES = {
 
 const SetupHighPriorityContact = ({
 	addContactList,
+	disableSubmit,
 	filter,
 	removedContactList,
 }) => {
@@ -29,57 +31,46 @@ const SetupHighPriorityContact = ({
 	] = useState([]);
 
 	const mapFilterToContactsCategory = (filter) => {
-		const lowerCaseFirstLetter =
-			filter.charAt(0).toLowerCase() + filter.slice(1);
+		const _filter = (
+			filter.charAt(0).toLowerCase() + filter.slice(1)
+		).replace(/\s/g, '');
 
 		return {
 			contactsCategory: {
-				key: lowerCaseFirstLetter.replace(/\s/g, ''),
+				key: _filter,
 				name: `${filter}`,
 			},
-			filterRequest: `contactsCategory eq '${lowerCaseFirstLetter.replace(
-				/\s/g,
-				''
-			)}'`,
+			filterRequest: SearchBuilder.eq('contactsCategory', _filter),
 		};
 	};
 
-	const HighPriorityContactsCategory = mapFilterToContactsCategory(filter);
+	const highPriorityContactsCategory = mapFilterToContactsCategory(filter);
 
 	async function getContacts() {
-		try {
-			const response = await getHighPriorityContacts(
-				HighPriorityContactsCategory.filterRequest
-			);
+		const response = await getHighPriorityContacts(
+			highPriorityContactsCategory.filterRequest
+		);
 
-			return response.items;
-		} catch (error) {
-			console.error('Error getting notifications:', error);
-			throw error;
-		}
+		return response.items;
 	}
 
 	useEffect(() => {
 		async function fetchHighPriorityContacts() {
 			try {
-				const highPriorityContactsFiltered = await getContacts();
-				const mappedContacts = highPriorityContactsFiltered.map(
-					(contact, index) => {
-						const {r_userToHighPriorityContacts_user} = contact;
+				const highPriorityContacts = await getContacts();
+				const contacts = highPriorityContacts.map((contact, index) => {
+					const {r_userToHighPriorityContacts_user} = contact;
 
-						return {
-							email:
-								r_userToHighPriorityContacts_user?.emailAddress,
-							filter:
-								HighPriorityContactsCategory.contactsCategory,
-							id: r_userToHighPriorityContacts_user?.id,
-							label: `${r_userToHighPriorityContacts_user?.givenName} ${r_userToHighPriorityContacts_user?.familyName}`,
-							objectId: contact.id,
-							value: (index + 1).toString(),
-						};
-					}
-				);
-				setCurrentHighPriorityContacts(mappedContacts);
+					return {
+						email: r_userToHighPriorityContacts_user?.emailAddress,
+						filter: highPriorityContactsCategory.contactsCategory,
+						id: r_userToHighPriorityContacts_user?.id,
+						label: `${r_userToHighPriorityContacts_user?.givenName} ${r_userToHighPriorityContacts_user?.familyName}`,
+						objectId: contact.id,
+						value: (index + 1).toString(),
+					};
+				});
+				setCurrentHighPriorityContacts(contacts);
 			} catch (error) {
 				console.error('Error fetching high priority contacts', error);
 			}
@@ -88,17 +79,17 @@ const SetupHighPriorityContact = ({
 		fetchHighPriorityContacts();
 	}, []);
 
-	const addContacts = (newContactsList, currentContactsList) => {
-		const newContactsListWithoutCategory = newContactsList.filter(
+	const addContacts = (contacts, currentContacts) => {
+		const contactsWithoutCategory = contacts.filter(
 			(newContact) =>
-				!currentContactsList.some(
+				!currentContacts.some(
 					(currentContact) => currentContact.id === newContact?.id
 				)
 		);
-		const contactsWithCategory = newContactsListWithoutCategory.map(
+		const contactsWithCategory = contactsWithoutCategory.map(
 			(newContact) => ({
 				...newContact,
-				category: HighPriorityContactsCategory.contactsCategory,
+				category: highPriorityContactsCategory.contactsCategory,
 			})
 		);
 
@@ -114,33 +105,37 @@ const SetupHighPriorityContact = ({
 		);
 	};
 
-	const updateContactList = (contactList) => {
+	const updateContacts = (contacts) => {
 		const addedContacts = addContacts(
-			contactList,
+			contacts,
 			currentHighPriorityContacts
 		);
 		const removedContacts = deleteContacts(
 			currentHighPriorityContacts,
-			contactList
+			contacts
 		);
 		addContactList(addedContacts);
 		removedContactList(removedContacts);
 	};
 
+	const handleMetaErrorChange = (error, inputName) => {
+		disableSubmit(error, inputName);
+	};
+
 	return (
-		<FieldArray name="activations.criticalIncedentContact">
+		<FieldArray>
 			{() => (
-				<>
-					<ClayForm.Group className="pb-1">
-						<HighPriorityContactsInput
-							currentHighPriorityContacts={
-								currentHighPriorityContacts
-							}
-							koroneikiAccount={koroneikiAccount}
-							setContactList={updateContactList}
-						/>
-					</ClayForm.Group>
-				</>
+				<ClayForm.Group className="pb-1">
+					<HighPriorityContactsInput
+						currentHighPriorityContacts={
+							currentHighPriorityContacts
+						}
+						disableSubmit={handleMetaErrorChange}
+						inputName={filter}
+						koroneikiAccount={koroneikiAccount}
+						setContactList={updateContacts}
+					/>
+				</ClayForm.Group>
 			)}
 		</FieldArray>
 	);
@@ -148,6 +143,7 @@ const SetupHighPriorityContact = ({
 
 const SetupHighPriorityContactForm = ({
 	addContactList,
+	disableSubmit,
 	removedContactList,
 	...props
 }) => {
@@ -156,6 +152,9 @@ const SetupHighPriorityContactForm = ({
 	};
 	const removeContactList = (contactList) => {
 		return removedContactList(contactList);
+	};
+	const handleMetaErrorChange = (error, inputName) => {
+		disableSubmit(error, inputName);
 	};
 
 	return (
@@ -169,6 +168,7 @@ const SetupHighPriorityContactForm = ({
 			{(formikProps) => (
 				<SetupHighPriorityContact
 					addContactList={addedContactList}
+					disableSubmit={handleMetaErrorChange}
 					removedContactList={removeContactList}
 					{...props}
 					{...formikProps}

@@ -33,7 +33,7 @@ import useBannedDomains from '../../../hooks/useBannedDomains';
 import NotificationQueueService from '../../../services/actions/notificationAction';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
-import './index.scss';
+
 const BLANK_TEXT = '< none >';
 const FETCH_DELAY_AFTER_TYPING = 500;
 const MAX_LENGTH = 255;
@@ -68,6 +68,8 @@ const SetupAnalyticsCloudPage = ({
 	const handleNextStep = () => {
 		setStep(step + 1);
 	};
+	const [isMultiSelectEmpty, setIsMultiSelectEmpty] = useState(false);
+
 	const bannedDomainsOwnerEmail = useBannedDomains(
 		values?.activations?.ownerEmailAddress,
 		FETCH_DELAY_AFTER_TYPING
@@ -279,6 +281,10 @@ const SetupAnalyticsCloudPage = ({
 		setRemoveHighPriorityContactList(contactsList);
 	};
 
+	const updateMultiSelectEmpty = (error) => {
+		setIsMultiSelectEmpty(error);
+	};
+
 	return (
 		<>
 			<Layout
@@ -299,7 +305,11 @@ const SetupAnalyticsCloudPage = ({
 					),
 					middleButton: (
 						<Button
-							disabled={baseButtonDisabled}
+							disabled={
+								step === 1
+									? baseButtonDisabled
+									: isMultiSelectEmpty
+							}
 							displayType="primary"
 							onClick={step === 1 ? handleNextStep : handleSubmit}
 						>
@@ -456,6 +466,7 @@ const SetupAnalyticsCloudPage = ({
 					<div>
 						<SetupHighPriorityContactForm
 							addContactList={addHighPriorityContacts}
+							disableSubmit={updateMultiSelectEmpty}
 							filter={
 								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
 							}

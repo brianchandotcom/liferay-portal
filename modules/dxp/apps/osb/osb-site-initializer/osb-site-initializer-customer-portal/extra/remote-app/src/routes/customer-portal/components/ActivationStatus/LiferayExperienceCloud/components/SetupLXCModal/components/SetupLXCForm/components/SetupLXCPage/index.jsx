@@ -42,6 +42,7 @@ const SetupLiferayExperienceCloudPage = ({
 		removeHighPriorityContactList,
 		setRemoveHighPriorityContactList,
 	] = useState([]);
+	const [inputErrors, setInputErrors] = useState({});
 	const [step, setStep] = useState(1);
 
 	const handlePreviousStep = () => {
@@ -108,6 +109,17 @@ const SetupLiferayExperienceCloudPage = ({
 		values
 	);
 
+	const updateMultiSelectEmpty = (error, inputName) => {
+		setInputErrors((prevErrors) => ({
+			...prevErrors,
+			[inputName]: error,
+		}));
+	};
+
+	const isSubmitDisable = () => {
+		return Object.values(inputErrors).some((error) => !!error);
+	};
+
 	return (
 		<Layout
 			className="pt-1 px-3"
@@ -125,7 +137,9 @@ const SetupLiferayExperienceCloudPage = ({
 				),
 				middleButton: (
 					<Button
-						disabled={baseButtonDisabled}
+						disabled={
+							step === 1 ? baseButtonDisabled : isSubmitDisable()
+						}
 						displayType="primary"
 						onClick={
 							step === 1
@@ -236,6 +250,7 @@ const SetupLiferayExperienceCloudPage = ({
 				<div>
 					<SetupHighPriorityContactForm
 						addContactList={addHighPriorityContacts}
+						disableSubmit={updateMultiSelectEmpty}
 						filter={
 							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
 						}
@@ -244,6 +259,7 @@ const SetupLiferayExperienceCloudPage = ({
 
 					<SetupHighPriorityContactForm
 						addContactList={addHighPriorityContacts}
+						disableSubmit={updateMultiSelectEmpty}
 						filter={
 							HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreachContact
 						}
@@ -252,6 +268,7 @@ const SetupLiferayExperienceCloudPage = ({
 
 					<SetupHighPriorityContactForm
 						addContactList={addHighPriorityContacts}
+						disableSubmit={updateMultiSelectEmpty}
 						filter={
 							HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreachContact
 						}

@@ -5,6 +5,7 @@
 
 package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -64,8 +65,13 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		try {
 			Path projectPathRootDirPath = rootDirPath;
 
-			if (_isPortalRootDirPath(rootDirPath)) {
-				projectPathRootDirPath = rootDirPath.resolve("modules");
+			File portalRootDir = GradleUtil.getRootDir(
+				rootDirPath.toFile(), "portal-impl");
+
+			if (portalRootDir != null) {
+				File modulesDir = new File(portalRootDir, "modules");
+
+				projectPathRootDirPath = modulesDir.toPath();
 			}
 
 			_includeProjects(
@@ -162,8 +168,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 	}
 
 	private void _includeProject(
-		Settings settings, Path projectDirPath, Path projectPathRootDirPath,
-		String projectPathPrefix) {
+			Settings settings, Path projectDirPath, Path projectPathRootDirPath,
+			String projectPathPrefix)
+		throws IOException {
 
 		String projectPath = String.valueOf(
 			projectPathRootDirPath.relativize(projectDirPath));
@@ -172,11 +179,32 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			projectPathPrefix + ":" +
 				projectPath.replace(File.separatorChar, ':');
 
+		File projectDir = projectDirPath.toFile();
+
+		if (Boolean.parseBoolean(System.getProperty("skip.read.only"))) {
+			boolean publicBranch = GradleUtil.getProperty(
+				settings, "liferay.releng.public", false);
+
+			if (publicBranch && projectPath.startsWith(":private:")) {
+				return;
+			}
+
+			File gitRepoDir = GradleUtil.getRootDir(projectDir, ".gitrepo");
+
+			if (gitRepoDir != null) {
+				File gitRepoFile = new File(gitRepoDir, ".gitrepo");
+
+				if (FileUtil.contains(gitRepoFile, "mode = pull")) {
+					return;
+				}
+			}
+		}
+
 		settings.include(new String[] {projectPath});
 
 		ProjectDescriptor projectDescriptor = settings.findProject(projectPath);
 
-		projectDescriptor.setProjectDir(projectDirPath.toFile());
+		projectDescriptor.setProjectDir(projectDir);
 	}
 
 	private void _includeProjects(
@@ -265,24 +293,19 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						}
 					}
 
-					_includeProject(
-						settings, dirPath, projectPathRootDirPath,
-						projectPathPrefix);
+					try {
+						_includeProject(
+							settings, dirPath, projectPathRootDirPath,
+							projectPathPrefix);
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
 
 					return FileVisitResult.SKIP_SUBTREE;
 				}
 
 			});
-	}
-
-	private boolean _isPortalRootDirPath(Path dirPath) {
-		if (!Files.exists(dirPath.resolve("modules")) ||
-			!Files.exists(dirPath.resolve("portal-impl"))) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _startsWith(Path path, Iterable<Path> parentPaths) {

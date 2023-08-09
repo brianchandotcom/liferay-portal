@@ -69,7 +69,7 @@ JSPLogFileNameCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates the valu
 [JSPSendRedirectCheck](check/jsp_send_redirect_check.markdown#jspsendredirectcheck) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that there are no calls to `HttpServletResponse.sendRedirect` from `jsp` files. |
 JSPSessionKeysCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions. |
 JSPTagAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks on tag attributes. |
-JSPTaglibAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks on taglib attributes. |
+JSPTaglibMissingAttributesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing taglib attributes. |
 JavaAbstractMethodCheck | .java | Finds incorrect `abstract` methods in `interface`. |
 JavaAnnotationsCheck | .java | Performs several checks on annotations. |
 [JavaAnonymousInnerClassCheck](check/java_anonymous_inner_class_check.markdown#javaanonymousinnerclasscheck) | .java | Performs several checks on anonymous classes. |

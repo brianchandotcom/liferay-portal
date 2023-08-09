@@ -157,7 +157,7 @@ JSPRedirectBackURLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscella
 JSPSessionKeysCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions. |
 JSPStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Applies rules to enforce consistency in code style. |
 JSPTagAttributesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks on tag attributes. |
-JSPTaglibAttributesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks on taglib attributes. |
+JSPTaglibMissingAttributesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing taglib attributes. |
 [JSPTaglibVariableCheck](check/jsp_taglib_variable_check.markdown#jsptaglibvariablecheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks if variable names follow naming conventions. |
 [JSPUnusedJSPFCheck](check/jsp_unused_jspf_check.markdown#jspunusedjspfcheck) | [Performance](performance_checks.markdown#performance-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds `.jspf` files that are not used. |
 JSPUnusedTermsCheck | [Performance](performance_checks.markdown#performance-checks) | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds taglibs, variables and imports that are unused. |

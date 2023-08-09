@@ -28,9 +28,9 @@ export default function CardHeader({
 		<div className="lfr__object-web-view-object-definitions-card-header">
 			<div>
 				<div className="d-flex lfr__object-web-view-object-definitions-title-kebab">
-					<h3 className="mb-0">
+					<span className="lfr__object-web-view-object-definitions-title mb-0">
 						{getLocalizableLabel(defaultLanguageId, label, name)}
-					</h3>
+					</span>
 
 					<ClayDropDownWithItems
 						className="lfr__object-web-view-object-definitions-actions"

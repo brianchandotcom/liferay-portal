@@ -10,8 +10,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.store.Store;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageTool;
@@ -25,8 +24,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -47,14 +48,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PortalInstanceLifecycleListener.class)
 public class PortalInstanceLifecycleListenerImpl
-	extends BasePortalInstanceLifecycleListener {
+	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	protected void doPortalInstanceRegistered(long companyId) throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(null);
+
 		try {
 			List<CommerceCatalog> commerceCatalogs =
 				_commerceCatalogLocalService.getCommerceCatalogs(
-					company.getCompanyId(), true);
+					companyId, true);
 
 			if (commerceCatalogs.isEmpty()) {
 				Message message = new Message();
@@ -65,8 +71,7 @@ public class PortalInstanceLifecycleListenerImpl
 						() -> {
 							CommerceCatalog commerceCatalog =
 								_commerceCatalogLocalService.
-									addDefaultCommerceCatalog(
-										company.getCompanyId());
+									addDefaultCommerceCatalog(companyId);
 
 							return commerceCatalog.getCommerceCatalogId();
 						}));
@@ -74,6 +79,8 @@ public class PortalInstanceLifecycleListenerImpl
 				MessageBusUtil.sendMessage(
 					DestinationNames.COMMERCE_BASE_PRICE_LIST, message);
 			}
+
+			Company company = _companyLocalService.getCompany(companyId);
 
 			FileEntry fileEntry =
 				_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
@@ -119,6 +126,9 @@ public class PortalInstanceLifecycleListenerImpl
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -126,6 +136,9 @@ public class PortalInstanceLifecycleListenerImpl
 
 	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -136,23 +149,10 @@ public class PortalInstanceLifecycleListenerImpl
 	@Reference
 	private ImageTool _imageTool;
 
-	@Reference(
-		target = "(class.name=com.liferay.portal.repository.liferayrepository.LiferayRepository)"
-	)
-	private RepositoryFactory _liferayRepositoryFactory;
-
 	@Reference
 	private Portal _portal;
 
-	@Reference(
-		target = "(class.name=com.liferay.portal.repository.portletrepository.PortletRepository)"
-	)
-	private RepositoryFactory _portletRepositoryFactory;
-
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;
-
-	@Reference(target = "(default=true)")
-	private Store _store;
 
 }

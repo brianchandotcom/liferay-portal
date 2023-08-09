@@ -13886,6 +13886,18 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</antcall>
 		<antcall target="prepare-portlet-ext-properties" />
 		<antcall target="prepare-system-ext-properties" />
+
+		<get-testcase-property property.name="aws.store.enabled" />
+
+		<if>
+			<equals arg1="${aws.store.enabled}" arg2="true" />
+			<then>
+				<copy
+					file="${test.release.bundle.parent.dir}/bundles-original/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config"
+					tofile="${test.release.bundle.parent.dir}/bundles/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">

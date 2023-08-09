@@ -43,7 +43,7 @@ public @interface Details {
 	)
 	public String logLevel();
 
-	@Meta.AD(deflt = "7", name = "wait-timeout", required = false)
+	@Meta.AD(deflt = "60", name = "wait-timeout", required = false)
 	public int waitTimeout();
 
 }

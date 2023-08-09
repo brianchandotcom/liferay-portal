@@ -6235,6 +6235,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return false;
 		}
+		else if (user.isOnDemandUser()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Authentication is disabled for the on-demand user");
+			}
+
+			return false;
+		}
 		else if (user.isServiceAccountUser()) {
 			if (_log.isInfoEnabled()) {
 				_log.info(

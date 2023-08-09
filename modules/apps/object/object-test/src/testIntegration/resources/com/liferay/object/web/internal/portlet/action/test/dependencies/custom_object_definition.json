@@ -81,23 +81,6 @@
 	],
 	"objectFields": [
 		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Create Date"
-			},
-			"name": "createDate",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Date"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Text",
 			"indexed": false,
@@ -113,6 +96,23 @@
 			"state": false,
 			"system": true,
 			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
 		},
 		{
 			"DBType": "String",

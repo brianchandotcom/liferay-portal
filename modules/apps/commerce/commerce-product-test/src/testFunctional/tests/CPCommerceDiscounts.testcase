@@ -535,6 +535,157 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12099 | As a Discount Manager, I want the field Last Modified in the Discounts table to be localized"
+	@priority = 3
+	test CanAssertDiscountEntryModifiedDateFieldIsLocalized {
+		property portal.acceptance = "false";
+
+		task ("Given a discount is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				target = "products",
+				title = "Test Discount",
+				usePercentage = "true");
+
+			CommerceNavigator.goToDiscountAdmin();
+
+			var modifiedDate = CommerceJSONDiscountsAPI.getCommerceDiscountsFieldValuesList(jsonPath = "$..['modifiedDate']");
+
+			var modifiedDate = CommerceUtilities.getLocaleDate(date = ${modifiedDate});
+
+			var modifiedDate = DateUtil.format(${modifiedDate}, "M/d/yyyy, h:mm:ss a", "MMM d, yyyy, h:mm:ss a");
+
+			CommerceEntry.assertTableRowSpecificColumnValue(
+				column = 6,
+				entryName = "Test Discount",
+				row = 1,
+				value = ${modifiedDate});
+		}
+
+		task ("When the user changes the language selected") {
+			MyAccount.configureDisplaySettingsLanguage(languageName = "español (España)");
+		}
+
+		task ("Then the Last Modified field is localized") {
+			CommerceNavigator.goToDiscountAdmin();
+
+			var localizedDate = CommerceUtilities.getLocaleDateLocalized(
+				date = ${modifiedDate},
+				lang = "es-ES",
+				options = '''{"dateStyle": "medium", "timeStyle": "medium"}''');
+
+			CommerceEntry.assertTableRowSpecificColumnValue(
+				column = 6,
+				entryName = "Test Discount",
+				row = 1,
+				value = ${localizedDate});
+
+			UserBar.gotoDropdownItem(dropdownItem = "Mi cuenta");
+
+			Select(
+				locator1 = "MyAccount#LANGUAGE_SELECT",
+				value1 = "English (United States)");
+
+			AssertClick(
+				key_saveButton = "Guardar",
+				locator1 = "Button#SAVE_LOCALIZED",
+				value1 = "Guardar");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+		}
+	}
+
+	@description = "COMMERCE-12099 | As a Discount Manager, I want the discounts table to be sorted by Last Modified Date/Time"
+	@priority = 5
+	test CanAssertDiscountsAreSortedByModifiedDate {
+		property portal.acceptance = "true";
+
+		task ("Given discount entries are created") {
+			for (var num : list "1,2,3") {
+				CommerceJSONDiscountsAPI._addDiscount(
+					active = "true",
+					level = "L1",
+					percentageLevel1 = 10,
+					target = "products",
+					title = "TestDiscount${num}",
+					usePercentage = "true");
+			}
+		}
+
+		task ("When the user navigates to Discounts admin page") {
+			CommerceNavigator.goToDiscountAdmin();
+		}
+
+		task ("Then discounts table is sorted by Last Modified Date/Time") {
+			var modifiedDateList = CommerceJSONDiscountsAPI.getCommerceDiscountsFieldValuesList(jsonPath = "$..['modifiedDate']");
+			var discountCount = 1;
+			var rowCount = 3;
+
+			for (var modifiedDate : list ${modifiedDateList}) {
+				var modifiedDate = CommerceUtilities.getLocaleDate(date = ${modifiedDate});
+
+				var modifiedDate = DateUtil.format(${modifiedDate}, "M/d/yyyy, h:mm:ss a", "MMM d, yyyy, h:mm:ss a");
+
+				CommerceEntry.assertTableRowSpecificColumnValue(
+					column = 6,
+					entryName = "TestDiscount${discountCount}",
+					row = ${rowCount},
+					value = ${modifiedDate});
+
+				var discountCount = ${discountCount} + 1;
+				var rowCount = ${rowCount} - 1;
+			}
+		}
+
+		task ("When one of the discount entries is modified") {
+			CommerceNavigator.gotoEntry(entryName = "TestDiscount2");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the sorting of the entries is changed based on the latest discounts entry modified") {
+			CommerceNavigator.goToDiscountAdmin();
+
+			var modifiedDateList = "";
+
+			for (var discount : list "1,3,2") {
+				var modifiedDate = CommerceJSONDiscountsAPI.getCommerceDiscountFieldById(
+					discountTitle = "TestDiscount${discount}",
+					jsonPath = "$..['modifiedDate']");
+
+				var modifiedDateList = "${modifiedDateList}${modifiedDate},";
+			}
+
+			echo("Values: ${modifiedDateList}");
+
+			var discountCount = 1;
+			var rowCount = 3;
+
+			for (var modifiedDate : list ${modifiedDateList}) {
+				var modifiedDate = CommerceUtilities.getLocaleDate(date = ${modifiedDate});
+
+				var modifiedDate = DateUtil.format(${modifiedDate}, "M/d/yyyy, h:mm:ss a", "MMM d, yyyy, h:mm:ss a");
+
+				CommerceEntry.assertTableRowSpecificColumnValue(
+					column = 6,
+					entryName = "TestDiscount${discountCount}",
+					row = ${rowCount},
+					value = ${modifiedDate});
+
+				if (${discountCount} == 1) {
+					var discountCount = 3;
+				}
+				else if (${discountCount} == 3) {
+					var discountCount = 2;
+				}
+
+				var rowCount = ${rowCount} - 1;
+			}
+		}
+	}
+
 	@description = "COMMERCE-9789 | Apply coupon code discount to not eligible account group and assert the coupon is not applicable"
 	@priority = 5
 	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {

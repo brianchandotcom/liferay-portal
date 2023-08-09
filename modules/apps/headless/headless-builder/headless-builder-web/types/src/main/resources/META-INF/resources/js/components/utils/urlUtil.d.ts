@@ -17,6 +17,11 @@ export declare function getFilterRelatedItemURL({
 	apiURLPath: string;
 	filterQuery: string;
 }): string;
+export declare function getCurrentNavFromURL({
+	portletId,
+}: {
+	portletId: string;
+}): ActiveNav;
 export declare function openEditURL({
 	editURL,
 	id,

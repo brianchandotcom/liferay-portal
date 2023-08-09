@@ -342,19 +342,33 @@ function SpacingSelectorButton({
 									triggerElement?.focus();
 								}}
 							>
-								<span className="text-truncate w-50">
-									{tokenValues[`spacer${option.value}`]
-										?.label || option.label}
-								</span>
+								<Layout.ContentRow>
+									<Layout.ContentCol expand>
+										<Text size={3} truncate>
+											{tokenValues[
+												`spacer${option.value}`
+											]?.label || option.label}
+										</Text>
+									</Layout.ContentCol>
 
-								<strong className="flex-grow-1 pl-2 text-right text-truncate">
-									<SpacingOptionValue
-										position={position}
-										tokenValues={tokenValues}
-										type={type}
-										value={option.value}
-									/>
-								</strong>
+									<Layout.ContentCol
+										className="text-right"
+										expand
+									>
+										<Text
+											size={3}
+											truncate
+											weight="semi-bold"
+										>
+											<SpacingOptionValue
+												position={position}
+												tokenValues={tokenValues}
+												type={type}
+												value={option.value}
+											/>
+										</Text>
+									</Layout.ContentCol>
+								</Layout.ContentRow>
 							</ClayDropDown.Item>
 						))}
 					</ClayDropDown.Group>

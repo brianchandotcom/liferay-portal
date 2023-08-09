@@ -28,16 +28,16 @@ public interface StoreAreaConfiguration {
 	public int cleanUpInterval();
 
 	@Meta.AD(
-		deflt = "100", description = "store-area-eviction-quota-help",
-		name = "store-area-eviction-quota", required = false
-	)
-	public int evictionQuota();
-
-	@Meta.AD(
 		deflt = "31", description = "store-area-eviction-age-help",
 		name = "store-area-eviction-age", required = false
 	)
 	public int evictionAge();
+
+	@Meta.AD(
+		deflt = "100", description = "store-area-eviction-quota-help",
+		name = "store-area-eviction-quota", required = false
+	)
+	public int evictionQuota();
 
 	@Meta.AD(
 		deflt = "-1", description = "max-deletion-queue-size-help",

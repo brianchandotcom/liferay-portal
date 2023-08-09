@@ -31,6 +31,7 @@ function AddResult({fetchDocumentsSearchUrl, onAddResultSubmit}) {
 	return (
 		<>
 			<ClayButton
+				aria-label={Liferay.Language.get('add-result')}
 				key="ADD_RESULT_BUTTON"
 				onClick={_handleAddResultButton}
 			>

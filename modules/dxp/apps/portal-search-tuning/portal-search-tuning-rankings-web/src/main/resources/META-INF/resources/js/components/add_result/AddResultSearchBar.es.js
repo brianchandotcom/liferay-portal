@@ -41,6 +41,7 @@ const AddResultSearchBar = ({
 
 						<div className="input-group-inset-item input-group-inset-item-after">
 							<ClayButton
+								aria-label={Liferay.Language.get('search')}
 								displayType="unstyled"
 								onClick={onSearchSubmit}
 							>

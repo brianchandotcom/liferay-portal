@@ -51,8 +51,8 @@ const FormValueDebugger = ({values}) => (
 			</thead>
 
 			<tbody>
-				{values.map(({name, value}) => (
-					<tr key={name}>
+				{values.map(({name, value}, index) => (
+					<tr key={`${index}-${name}`}>
 						<td>{name}</td>
 
 						<td>

@@ -464,7 +464,8 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 
 		if (Validator.isNull(script)) {
-			throw new ObjectValidationRuleScriptException("required");
+			throw new ObjectValidationRuleScriptException(
+				"The script is required", "required");
 		}
 
 		try {
@@ -493,10 +494,12 @@ public class ObjectValidationRuleLocalServiceImpl
 					(ObjectScriptingException)portalException;
 
 				throw new ObjectValidationRuleScriptException(
+					objectScriptingException.getMessage(),
 					objectScriptingException.getMessageKey());
 			}
 
-			throw new ObjectValidationRuleScriptException("syntax-error");
+			throw new ObjectValidationRuleScriptException(
+				"The script syntax is invalid", "syntax-error");
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {

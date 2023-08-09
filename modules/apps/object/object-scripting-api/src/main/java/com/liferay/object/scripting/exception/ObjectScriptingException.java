@@ -12,7 +12,9 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectScriptingException extends PortalException {
 
-	public ObjectScriptingException(String messageKey) {
+	public ObjectScriptingException(String message, String messageKey) {
+		super(message);
+
 		_messageKey = messageKey;
 	}
 

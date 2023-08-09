@@ -28,6 +28,7 @@ public class ObjectScriptingValidatorImpl implements ObjectScriptingValidator {
 
 		if (StringUtil.count(script, _NEW_LINE) > _MAXIMUM_NUMBER_OF_LINES) {
 			throw new ObjectScriptingException(
+				"The script exceeds the maximum number of lines",
 				"the-maximum-number-of-lines-available-is-2987");
 		}
 
@@ -47,7 +48,8 @@ public class ObjectScriptingValidatorImpl implements ObjectScriptingValidator {
 				_log.debug(scriptingException);
 			}
 
-			throw new ObjectScriptingException("syntax-error");
+			throw new ObjectScriptingException(
+				"The script syntax is invalid", "syntax-error");
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

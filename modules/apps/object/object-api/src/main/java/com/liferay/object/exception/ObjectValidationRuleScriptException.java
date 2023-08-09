@@ -12,7 +12,11 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleScriptException extends PortalException {
 
-	public ObjectValidationRuleScriptException(String messageKey) {
+	public ObjectValidationRuleScriptException(
+		String message, String messageKey) {
+
+		super(message);
+
 		_messageKey = messageKey;
 	}
 

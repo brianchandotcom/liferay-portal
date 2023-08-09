@@ -614,6 +614,12 @@ public class SourceFormatterUtil {
 		}
 	}
 
+	private static List<String> _getDeletedFiles(String baseDirName) {
+		return git(
+			Arrays.asList("ls-files", "-d", "-z", "--full-name"), baseDirName,
+			null, false);
+	}
+
 	private static String _getDocumentationURLString(String checkName) {
 		String markdownFileName = getMarkdownFileName(checkName);
 
@@ -679,7 +685,9 @@ public class SourceFormatterUtil {
 				if (filePath.endsWith("/source_formatter.ignore")) {
 					File file = new File(baseDirName, filePath);
 
-					_sfIgnoreDirectories.add(file.getParent());
+					if (file.exists()) {
+						_sfIgnoreDirectories.add(file.getParent());
+					}
 				}
 
 				if (filePath.endsWith("/.gitrepo")) {
@@ -694,7 +702,9 @@ public class SourceFormatterUtil {
 						throw new RuntimeException(ioException);
 					}
 
-					if (content.contains("autopull = true")) {
+					if ((content != null) &&
+						content.contains("autopull = true")) {
+
 						_subrepoIgnoreDirectories.add(file.getParent());
 					}
 				}
@@ -724,16 +734,25 @@ public class SourceFormatterUtil {
 							lines.get(0), CharPool.BACK_SLASH, CharPool.SLASH));
 				}
 
+				List<String> deletedFiles = _getDeletedFiles(baseDirName);
+
 				List<String> gitFiles = new ArrayList<>();
 
 				git(
 					Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
 					pathMatchers, includeSubrepositories,
-					line -> gitFiles.add(
-						StringBundler.concat(
-							_gitTopLevelFolder, StringPool.FORWARD_SLASH,
-							StringUtil.replace(
-								line, CharPool.BACK_SLASH, CharPool.SLASH))));
+					line -> {
+						if (deletedFiles.contains(line)) {
+							return;
+						}
+
+						gitFiles.add(
+							StringBundler.concat(
+								_gitTopLevelFolder, StringPool.FORWARD_SLASH,
+								StringUtil.replace(
+									line, CharPool.BACK_SLASH,
+									CharPool.SLASH)));
+					});
 
 				return gitFiles;
 			}

@@ -357,10 +357,7 @@ definition {
 
 		Workflow.updateDefinition(workflowDefinitionTitle = "New Process Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Navigator.gotoBack();
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Process Title");
 	}

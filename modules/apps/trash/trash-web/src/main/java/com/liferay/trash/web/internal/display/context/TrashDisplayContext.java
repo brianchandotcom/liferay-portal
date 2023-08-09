@@ -173,19 +173,15 @@ public class TrashDisplayContext {
 		String rootContainerModelTitle = LanguageUtil.get(
 			themeDisplay.getLocale(), trashHandler.getRootContainerModelName());
 
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(rootContainerModelTitle);
+
 		if (classPK == 0) {
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			breadcrumbEntry.setTitle(rootContainerModelTitle);
-
 			breadcrumbEntries.add(breadcrumbEntry);
 
 			return breadcrumbEntries;
 		}
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(rootContainerModelTitle);
 
 		containerModelURL.setParameter("containerModelId", "0");
 

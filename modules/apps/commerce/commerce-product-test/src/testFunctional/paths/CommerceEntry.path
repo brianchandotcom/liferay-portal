@@ -826,6 +826,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ASSERT_SPECIFIC_ROW_ANY_COLUMN_VALUE</td>
+	<td>//div[@class='dnd-tbody']/div[${key_row}]//div//a[text()='${key_entryName}']/../../../div[${key_column}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERIC_TABLE_ROW_VALUE</td>
 	<td>//div[contains(@class,'dnd-th') and contains(string(), '${key_firstRowValue}')]/..//div[contains(@class,'dnd-td') and contains(string(), '${key_secondRowValue}')]</td>
 	<td></td>

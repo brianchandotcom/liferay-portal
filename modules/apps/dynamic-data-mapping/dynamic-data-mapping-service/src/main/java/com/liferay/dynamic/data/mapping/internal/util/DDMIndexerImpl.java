@@ -67,6 +67,7 @@ import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -665,6 +666,18 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else if (value instanceof Object[]) {
 			String[] valuesString = ArrayUtil.toStringArray((Object[])value);
 
+			String type = field.getType();
+
+			if (type.equals(DDMFormFieldTypeConstants.DATE) ||
+				type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
+
+				Date[] dateValues = _getDateValues(type, valuesString);
+
+				if (dateValues.length > 0) {
+					document.addDate(name.concat("_date"), dateValues);
+				}
+			}
+
 			if (indexType.equals("keyword")) {
 				document.addKeywordSortable(name, valuesString);
 			}
@@ -704,24 +717,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 					 type.equals(DDMFormFieldTypeConstants.DATE_TIME)) &&
 					Validator.isNotNull(valueString)) {
 
-					String pattern = "yyyy-MM-dd";
+					Date[] dateValues = _getDateValues(
+						type, new String[] {valueString});
 
-					if (type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
-						pattern = "yyyy-MM-dd hh:mm";
-					}
-
-					DateFormat dateFormat =
-						_dateFormatFactory.getSimpleDateFormat(pattern);
-
-					try {
-						document.addDate(
-							name.concat("_date"),
-							dateFormat.parse(valueString));
-					}
-					catch (ParseException parseException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(parseException);
-						}
+					if (dateValues.length > 0) {
+						document.addDate(name.concat("_date"), dateValues);
 					}
 				}
 				else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
@@ -832,6 +832,35 @@ public class DDMIndexerImpl implements DDMIndexer {
 					ddmStructure, defaultLocale, locale, sb);
 			}
 		}
+	}
+
+	private Date[] _getDateValues(String type, String[] values) {
+		List<Date> dateValues = new ArrayList<>(values.length);
+
+		String pattern = "yyyy-MM-dd";
+
+		if (type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
+			pattern = "yyyy-MM-dd hh:mm";
+		}
+
+		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(pattern);
+
+		for (String value : values) {
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			try {
+				dateValues.add(dateFormat.parse(value));
+			}
+			catch (ParseException parseException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(parseException);
+				}
+			}
+		}
+
+		return dateValues.toArray(new Date[0]);
 	}
 
 	private String _getSortableFieldName(String name) {

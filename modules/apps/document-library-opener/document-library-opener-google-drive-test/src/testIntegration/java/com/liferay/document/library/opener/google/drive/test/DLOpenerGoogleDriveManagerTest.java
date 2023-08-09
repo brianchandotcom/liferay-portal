@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -41,6 +40,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.File;
 
 import java.util.Dictionary;
 
@@ -94,17 +95,18 @@ public class DLOpenerGoogleDriveManagerTest {
 			() -> {
 				FileEntry fileEntry = _addFileEntry();
 
-				DLOpenerGoogleDriveFileReference
-					dlOpenerGoogleDriveFileReference =
-						ReflectionTestUtil.invoke(
-							_dlOpenerGoogleDriveManager, "create",
-							new Class<?>[] {long.class, FileEntry.class},
-							_user.getUserId(), fileEntry);
+				Object dlOpenerGoogleDriveFileReference =
+					ReflectionTestUtil.invoke(
+						_dlOpenerGoogleDriveManager, "create",
+						new Class<?>[] {long.class, FileEntry.class},
+						_user.getUserId(), fileEntry);
 
 				Assert.assertEquals(
 					"\ufeff",
 					FileUtil.read(
-						dlOpenerGoogleDriveFileReference.getContentFile()));
+						(File)ReflectionTestUtil.invoke(
+							dlOpenerGoogleDriveFileReference, "getContentFile",
+							new Class<?>[0])));
 
 				_dlAppService.checkInFileEntry(
 					fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
@@ -123,17 +125,18 @@ public class DLOpenerGoogleDriveManagerTest {
 			() -> {
 				FileEntry fileEntry = _addFileEntry();
 
-				DLOpenerGoogleDriveFileReference
-					dlOpenerGoogleDriveFileReference =
-						ReflectionTestUtil.invoke(
-							_dlOpenerGoogleDriveManager, "checkOut",
-							new Class<?>[] {long.class, FileEntry.class},
-							_user.getUserId(), fileEntry);
+				Object dlOpenerGoogleDriveFileReference =
+					ReflectionTestUtil.invoke(
+						_dlOpenerGoogleDriveManager, "checkOut",
+						new Class<?>[] {long.class, FileEntry.class},
+						_user.getUserId(), fileEntry);
 
 				Assert.assertEquals(
 					"\ufeff" + StringUtil.read(fileEntry.getContentStream()),
 					FileUtil.read(
-						dlOpenerGoogleDriveFileReference.getContentFile()));
+						(File)ReflectionTestUtil.invoke(
+							dlOpenerGoogleDriveFileReference, "getContentFile",
+							new Class<?>[0])));
 
 				Assert.assertTrue(_isGoogleDriveFile(fileEntry));
 
@@ -153,17 +156,18 @@ public class DLOpenerGoogleDriveManagerTest {
 			() -> {
 				FileEntry fileEntry = _addFileEntry();
 
-				DLOpenerGoogleDriveFileReference
-					dlOpenerGoogleDriveFileReference =
-						ReflectionTestUtil.invoke(
-							_dlOpenerGoogleDriveManager, "create",
-							new Class<?>[] {long.class, FileEntry.class},
-							_user.getUserId(), fileEntry);
+				Object dlOpenerGoogleDriveFileReference =
+					ReflectionTestUtil.invoke(
+						_dlOpenerGoogleDriveManager, "create",
+						new Class<?>[] {long.class, FileEntry.class},
+						_user.getUserId(), fileEntry);
 
 				Assert.assertEquals(
 					"\ufeff",
 					FileUtil.read(
-						dlOpenerGoogleDriveFileReference.getContentFile()));
+						(File)ReflectionTestUtil.invoke(
+							dlOpenerGoogleDriveFileReference, "getContentFile",
+							new Class<?>[0])));
 
 				Assert.assertTrue(_isGoogleDriveFile(fileEntry));
 

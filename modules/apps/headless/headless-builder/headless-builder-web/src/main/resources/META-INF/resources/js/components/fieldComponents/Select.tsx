@@ -5,7 +5,7 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayIcon from '@clayui/icon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface Option {
 	label: string;
@@ -14,12 +14,21 @@ interface Option {
 
 interface SelectProps {
 	cleanUp?: voidReturn;
+	disabled?: boolean;
 	onClick: (value: string) => void;
 	options: Option[];
 	placeholder?: string;
+	selectedOption?: string;
 }
 
-export function Select({cleanUp, onClick, options, placeholder}: SelectProps) {
+export function Select({
+	cleanUp,
+	disabled,
+	onClick,
+	options,
+	placeholder,
+	selectedOption,
+}: SelectProps) {
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 
@@ -47,6 +56,18 @@ export function Select({cleanUp, onClick, options, placeholder}: SelectProps) {
 		setDropdownActive(false);
 	};
 
+	useEffect(() => {
+		if (disabled && options && selectedOption) {
+			const selectedObjectLabel = options.find(
+				(option) => option.value === selectedOption
+			)?.label;
+
+			if (selectedObjectLabel) {
+				setInputValue(selectedObjectLabel);
+			}
+		}
+	}, [disabled, options, selectedOption]);
+
 	return (
 		<ClayAutocomplete>
 			<ClayIcon
@@ -56,6 +77,7 @@ export function Select({cleanUp, onClick, options, placeholder}: SelectProps) {
 			/>
 
 			<ClayAutocomplete.Input
+				disabled={disabled}
 				onBlur={handleBlur}
 				onChange={({target: {value}}) => handleInputChange(value)}
 				onFocus={() => setDropdownActive((active) => !active)}

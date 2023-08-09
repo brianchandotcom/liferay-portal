@@ -10,12 +10,13 @@ declare type DataError = {
 	name: boolean;
 };
 interface BaseAPIApplicationFieldsProps {
-	data: Partial<APIApplicationSchemaItem>;
+	disableObjectSelect?: boolean;
 	displayError: DataError;
 	setData: Dispatch<SetStateAction<Partial<APIApplicationSchemaItem>>>;
 }
 export default function BaseAPISchemaFields({
 	data,
+	disableObjectSelect,
 	displayError,
 	setData,
 }: BaseAPIApplicationFieldsProps): JSX.Element;

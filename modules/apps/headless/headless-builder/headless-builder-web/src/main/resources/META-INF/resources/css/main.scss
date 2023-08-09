@@ -74,6 +74,15 @@
 	padding: 0 !important;
 }
 
+.select-field-icon {
+	bottom: 0;
+	color: $secondary !important;
+	margin: auto !important;
+	pointer-events: none;
+	position: absolute;
+	right: 1rem;
+	top: 0;
+}
 
 .api-builder-navigation-breadcrum {
 	.breadcrumb-item {

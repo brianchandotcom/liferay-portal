@@ -38,6 +38,17 @@ import org.osgi.annotation.versioning.ProviderType;
 		@DDMFormRule(
 			actions = "setValue('expirationDate', '')",
 			condition = "equals(getValue('neverExpire'), TRUE)"
+		),
+		@DDMFormRule(
+			actions = {
+				"setEnabled('autosaveEnabled', FALSE)",
+				"setValue('autosaveEnabled', FALSE)"
+			},
+			condition = "contains(getValue('storageType'), \"object\")"
+		),
+		@DDMFormRule(
+			actions = "setEnabled('autosaveEnabled', TRUE)",
+			condition = "not(contains(getValue('storageType'), \"object\"))"
 		)
 	}
 )

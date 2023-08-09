@@ -5,6 +5,9 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+
 import com.liferay.gradle.plugins.poshi.runner.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
@@ -655,9 +658,34 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private String _getChromeDriverURL(String chromeDriverVersion) {
-		StringBuilder sb = new StringBuilder();
+		Integer chromeMajorVersion = Integer.parseInt(
+			chromeDriverVersion.substring(0, 3));
 
-		sb.append(_CHROME_DRIVER_BASE_URL);
+		if (chromeMajorVersion >= 115) {
+			sb.append(
+				"https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/");
+			sb.append(chromeDriverVersion);
+			sb.append("/");
+
+			String osType = "";
+
+			if (OSDetector.isApple()) {
+				osType = "mac-x64";
+			}
+			else if (OSDetector.isWindows()) {
+				osType = "win" + OSDetector.getBitmode();
+			}
+			else {
+				osType = "linux64";
+			}
+
+			sb.append(osType);
+			sb.append("/chromedriver-");
+			sb.append(osType);
+			sb.append(".zip");
+
+			return sb.toString();
+		}
 
 		sb.append(chromeDriverVersion);
 
@@ -759,16 +787,35 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Matcher matcher = _browserVersionPattern.matcher(chromeVersionOutput);
 
 		if (matcher.find()) {
-			String chromeMajorVersion = matcher.group("majorVersion");
+			Integer chromeMajorVersion = Integer.parseInt(
+				matcher.group("majorVersion"));
 
 			if (_chromeDriverVersions.containsKey(chromeMajorVersion)) {
 				return _chromeDriverVersions.get(chromeMajorVersion);
 			}
 
 			try {
+				if (chromeMajorVersion >= 115) {
+					URL url = new URL(
+						"https://googlechromelabs.github.io" +
+							"/chrome-for-testing/latest-versions-per-" +
+								"milestone-with-downloads.json");
+
+					String jsonString = StringUtil.read(url.openStream());
+
+					DocumentContext documentContext = JsonPath.parse(
+						jsonString);
+
+					Object object = documentContext.read(
+						"milestones." + chromeMajorVersion.toString() +
+							".version");
+
+					return object.toString();
+				}
+
 				URL url = new URL(
 					_CHROME_DRIVER_BASE_URL + "LATEST_RELEASE_" +
-						chromeMajorVersion);
+						chromeMajorVersion.toString());
 
 				String chromeDriverVersion = StringUtil.read(url.openStream());
 
@@ -780,7 +827,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				if (logger.isWarnEnabled()) {
 					logger.warn(
 						"Unable to get driver version for Chrome {}: {}",
-						chromeMajorVersion, ioException.getMessage());
+						chromeMajorVersion.toString(),
+						ioException.getMessage());
 				}
 			}
 		}
@@ -1199,33 +1247,39 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	private static final Pattern _browserVersionPattern = Pattern.compile(
 		"[A-z=\\s]+(?<fullVersion>(?<majorVersion>[0-9]+)\\.[0-9\\.]+)");
-	private static final Map<String, String> _chromeDriverVersions =
-		new HashMap<String, String>() {
+	private static final Map<Integer, String> _chromeDriverVersions =
+		new HashMap<Integer, String>() {
 			{
-				put("86", "86.0.4240.22");
-				put("87", "87.0.4280.20");
-				put("88", "88.0.4324.96");
-				put("89", "89.0.4389.23");
-				put("90", "90.0.4430.24");
-				put("91", "91.0.4472.101");
-				put("92", "92.0.4515.107");
-				put("93", "93.0.4577.63");
-				put("94", "94.0.4606.61");
-				put("95", "95.0.4638.17");
-				put("96", "96.0.4664.45");
-				put("97", "97.0.4692.71");
-				put("98", "98.0.4758.102");
-				put("99", "99.0.4844.51");
-				put("100", "100.0.4896.60");
-				put("101", "101.0.4951.41");
-				put("102", "102.0.5005.61");
-				put("103", "103.0.5060.134");
-				put("104", "104.0.5112.79");
-				put("105", "105.0.5195.52");
-				put("106", "106.0.5249.61");
-				put("107", "107.0.5304.62");
-				put("108", "108.0.5359.71");
-				put("109", "109.0.5414.74");
+				put(86, "86.0.4240.22");
+				put(87, "87.0.4280.20");
+				put(88, "88.0.4324.96");
+				put(89, "89.0.4389.23");
+				put(90, "90.0.4430.24");
+				put(91, "91.0.4472.101");
+				put(92, "92.0.4515.107");
+				put(93, "93.0.4577.63");
+				put(94, "94.0.4606.61");
+				put(95, "95.0.4638.17");
+				put(96, "96.0.4664.45");
+				put(97, "97.0.4692.71");
+				put(98, "98.0.4758.102");
+				put(99, "99.0.4844.51");
+				put(100, "100.0.4896.60");
+				put(101, "101.0.4951.41");
+				put(102, "102.0.5005.61");
+				put(103, "103.0.5060.134");
+				put(104, "104.0.5112.79");
+				put(105, "105.0.5195.52");
+				put(106, "106.0.5249.61");
+				put(107, "107.0.5304.62");
+				put(108, "108.0.5359.71");
+				put(109, "109.0.5414.74");
+				put(110, "110.0.5481.77");
+				put(111, "111.0.5563.64");
+				put(112, "112.0.5615.49");
+				put(113, "113.0.5672.63");
+				put(114, "114.0.5735.90");
+				put(115, "115.0.5790.170");
 			}
 		};
 	private static final Map<String, String> _webDriverBrowserBinaryNames =

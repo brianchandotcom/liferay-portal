@@ -20,10 +20,6 @@ function changeResource(resource: RequestInfo) {
 	const getIsResourceFromAPI = (apis: string[]) =>
 		apis.some((api) => resource.toString().includes(api));
 
-	if (resource.toString().includes('jira')) {
-		return `http://localhost:3333${resource}`;
-	}
-
 	if (resource.toString().startsWith('http')) {
 		return resource;
 	}

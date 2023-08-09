@@ -1533,9 +1533,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_choose_design-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-054-png?imagePreview=1"
 																												}
 																											}
 																										},
@@ -1664,9 +1669,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_on_prem-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-028-png?imagePreview=1"
 																												}
 																											}
 																										},
@@ -1795,9 +1805,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_customizations-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-057-png?imagePreview=1"
 																												}
 																											}
 																										},
@@ -1926,9 +1941,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_simple_secured-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-011-png?imagePreview=1"
 																												}
 																											}
 																										},
@@ -2057,9 +2077,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_smart_devices-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-109-png?imagePreview=1"
 																												}
 																											}
 																										},
@@ -2188,9 +2213,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_documentation-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-114-png?imagePreview=1"
 																												}
 																											}
 																										},
@@ -2354,9 +2384,14 @@
 																									"id": "image-square",
 																									"value": {
 																										"fragmentImage": {
+																											"description": {
+																												"value_i18n": {
+																													"en_US": ""
+																												}
+																											},
 																											"url": {
 																												"value_i18n": {
-																													"en_US": "/documents/d/[$GROUP_KEY$]/27_eservice-png?imagePreview=1"
+																													"en_US": "/documents/d/[$GROUP_KEY$]/lr-icon-071-png?imagePreview=1"
 																												}
 																											}
 																										},

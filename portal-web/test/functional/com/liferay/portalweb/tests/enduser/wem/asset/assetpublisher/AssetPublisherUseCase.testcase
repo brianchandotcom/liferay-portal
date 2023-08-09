@@ -2578,8 +2578,6 @@ catch (Exception e) {
 	@description = "This is a test for LPS-129012. View web content in associated public content page."
 	@priority = 4
 	test ViewWebContentInAssociatedPublicContentPage {
-		property timeout.explicit.wait = "10";
-
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},

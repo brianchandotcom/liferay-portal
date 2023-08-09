@@ -257,7 +257,7 @@ const Wrapper = ({
 					description={Liferay.Language.get(
 						'try-again-with-a-different-search'
 					)}
-					imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
 					small
 					title={Liferay.Language.get('no-results-found')}
 				/>

@@ -7,11 +7,16 @@ import Pusher from 'pusher-js';
 import {useContext, useEffect, useState} from 'react';
 import {ApplicationPropertiesContext} from '~/context/ApplicationPropertiesContext';
 
-const getPusherClient = (pusherKey: string, pusherRegion: string): Pusher => {
-	return new Pusher(pusherKey, {
-		cluster: pusherRegion,
-		forceTLS: true,
-	});
+const getPusherClient = (
+	pusherKey: string,
+	pusherRegion: string
+): Pusher | undefined => {
+	if (pusherKey && pusherRegion) {
+		return new Pusher(pusherKey, {
+			cluster: pusherRegion,
+			forceTLS: true,
+		});
+	}
 };
 
 /**
@@ -27,7 +32,9 @@ const usePusher = (): Pusher | null => {
 	useEffect(() => {
 		const _pusherClient = getPusherClient(pusherKey, pusherRegion);
 
-		setPusherClient(_pusherClient);
+		if (_pusherClient) {
+			setPusherClient(_pusherClient);
+		}
 
 		return () => _pusherClient?.disconnect();
 	}, [pusherKey, pusherRegion]);

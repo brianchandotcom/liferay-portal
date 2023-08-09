@@ -23,6 +23,7 @@ import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {Liferay} from '../../../services/liferay';
 import {
+	JiraClientExtensionRestImpl,
 	UserAccount,
 	UserActions,
 	liferayUserAccountsImpl,
@@ -116,8 +117,7 @@ const UserForm = () => {
 			mutateUser(_userAccount);
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -149,6 +149,14 @@ const UserForm = () => {
 			: [...rolesWatch, value];
 
 		setValue('roles', rolesFiltered);
+	};
+
+	const onClickJiraAuthorize = async () => {
+		await JiraClientExtensionRestImpl.preauthorize();
+
+		window.open(
+			`${JiraClientExtensionRestImpl.oAuth2Client.homePageURL}/jira/authorize/${myUserAccount?.id}`
+		);
 	};
 
 	const inputProps = {
@@ -330,14 +338,11 @@ const UserForm = () => {
 								<ClayForm.Group className="align-items-center d-flex form-group-sm">
 									<ClayButton
 										className="align-items-center d-flex mr-4"
-										disabled={
-											myUserAccount?.jiraAuthorization
-										}
-										onClick={() =>
-											window.open(
-												`http://localhost:3333/jira/authorize/${myUserAccount.id}`
-											)
-										}
+										// disabled={
+										// 	myUserAccount?.jiraAuthorization
+										// }
+
+										onClick={onClickJiraAuthorize}
 									>
 										{i18n.translate('jira-authorization')}
 									</ClayButton>

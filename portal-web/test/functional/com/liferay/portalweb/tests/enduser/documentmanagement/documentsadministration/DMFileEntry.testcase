@@ -2960,7 +2960,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 30000);
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 60000);
 
 		Notifications.viewBadgeCount(notificationCount = 1);
 

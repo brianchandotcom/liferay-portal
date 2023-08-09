@@ -25,6 +25,7 @@ import com.liferay.message.boards.web.internal.security.permission.MBMessagePerm
 import com.liferay.message.boards.web.internal.util.MBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -248,9 +249,11 @@ public class MBEntriesManagementToolbarDisplayContext {
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
-			() -> Objects.equals(_getEntriesNavigation(), "all"),
+			() ->
+				Objects.equals(_getEntriesNavigation(), "all") &&
+				!FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -291,6 +294,28 @@ public class MBEntriesManagementToolbarDisplayContext {
 			"modified-date");
 
 		return _orderByCol;
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "title"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "title");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "title"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "modified-date"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "modified-date");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "modified-date"));
+			}
+		).build();
 	}
 
 	public String getOrderByType() {
@@ -488,28 +513,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "categories"));
-			}
-		).build();
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), "title"));
-				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "title");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "title"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), "modified-date"));
-				dropdownItem.setHref(
-					_getCurrentSortingURL(), "orderByCol", "modified-date");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "modified-date"));
 			}
 		).build();
 	}

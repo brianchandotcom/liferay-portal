@@ -13,6 +13,9 @@ describe('HtmlScreen', () => {
 		window.Liferay.DOMTaskRunner = {
 			runTasks: jest.fn(),
 		};
+		window.Liferay.CSP = {
+			nonce: '',
+		};
 	});
 
 	beforeEach(() => {

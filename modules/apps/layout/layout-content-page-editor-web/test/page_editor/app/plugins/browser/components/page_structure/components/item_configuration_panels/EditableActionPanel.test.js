@@ -47,6 +47,11 @@ jest.mock(
 	})
 );
 
+const MAPPED_ACTION = {
+	classNameId: 'classNameId',
+	classPK: 'classPK',
+};
+
 function getStateWithConfig(config = {}) {
 	return {
 		fragmentEntryLinks: {
@@ -118,7 +123,7 @@ describe('EditableActionPanel', () => {
 	it('renders interaction and reload selectors when an action is selected', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {fieldId: 'actionFieldId'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 			}),
 		});
 
@@ -131,7 +136,7 @@ describe('EditableActionPanel', () => {
 		expect(screen.getByText('reload-page-after-error')).toBeInTheDocument();
 	});
 
-	it('renders interaction and reload selectors when an action is selected in DPTs', () => {
+	it('renders interaction and reload selectors when an action is mapped to structure', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
 				mappedAction: {mappedField: 'mappedField'},
@@ -147,10 +152,26 @@ describe('EditableActionPanel', () => {
 		expect(screen.getByText('reload-page-after-error')).toBeInTheDocument();
 	});
 
+	it('renders interaction and reload selectors when an action is mapped inside a collection', () => {
+		renderActionPanel({
+			state: getStateWithConfig({
+				mappedAction: {collectionFieldId: 'collectionFieldId'},
+			}),
+		});
+
+		expect(screen.getByText('success-interaction')).toBeInTheDocument();
+		expect(
+			screen.getByText('reload-page-after-success')
+		).toBeInTheDocument();
+
+		expect(screen.getByText('error-interaction')).toBeInTheDocument();
+		expect(screen.getByText('reload-page-after-error')).toBeInTheDocument();
+	});
+
 	it('renders text and preview selectors when selecting notification', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {fieldId: 'actionFieldId'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 				onSuccess: {interaction: 'notification'},
 			}),
 		});
@@ -164,7 +185,7 @@ describe('EditableActionPanel', () => {
 	it('renders layout selector and does not allow to reload when selecting Go to page', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {fieldId: 'actionFieldId'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 				onSuccess: {interaction: 'page'},
 			}),
 		});
@@ -178,7 +199,7 @@ describe('EditableActionPanel', () => {
 	it('renders url input and does not allow to reload when selecting External URL', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {fieldId: 'actionFieldId'},
+				mappedAction: {...MAPPED_ACTION, fieldId: 'actionFieldId'},
 				onSuccess: {interaction: 'url'},
 			}),
 		});

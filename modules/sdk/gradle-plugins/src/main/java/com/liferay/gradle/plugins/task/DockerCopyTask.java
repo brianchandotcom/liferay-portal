@@ -17,9 +17,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Exec;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFile;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
+import org.gradle.api.tasks.Internal;
 import org.gradle.util.CollectionUtils;
 
 /**
@@ -34,7 +32,6 @@ public class DockerCopyTask extends Exec {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void exec() {
 		Logger logger = getLogger();
 
@@ -69,8 +66,7 @@ public class DockerCopyTask extends Exec {
 		return GradleUtil.toString(_liferayHome);
 	}
 
-	@InputFile
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getSourceFile() {
 		return GradleUtil.toFile(getProject(), _sourceFile);
 	}

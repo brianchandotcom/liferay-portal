@@ -1020,14 +1020,22 @@ const FDSEntries = ({
 						data: {
 							id: 'view',
 						},
-						icon: 'view',
-						label: Liferay.Language.get('view'),
+						icon: 'pencil',
+						label: Liferay.Language.get('edit'),
 						onClick: onViewClick,
 					},
 					{
-						icon: 'pencil',
+						type: "group",
+						separator: true,
+					},
+					{
+						icon: 'blank',
 						label: Liferay.Language.get('rename'),
 						onClick: onRenameClick,
+					},
+					{
+						type: "group",
+						separator: true,
 					},
 					{
 						icon: 'trash',

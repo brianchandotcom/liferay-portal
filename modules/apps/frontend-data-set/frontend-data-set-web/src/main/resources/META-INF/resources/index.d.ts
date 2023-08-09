@@ -89,6 +89,8 @@ export interface IItemsActions {
 	label?: string;
 	onClick?: Function;
 	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
+	type?: string;
+	separator?: boolean;
 }
 
 type TSorting = {

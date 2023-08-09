@@ -24,8 +24,11 @@
 		&:hover,
 		&.open,
 		&.focus {
-			a.visible-interaction {
-				display: inline-flex;
+			a,
+			button {
+				&.visible-interaction {
+					display: inline-flex;
+				}
 			}
 		}
 	}

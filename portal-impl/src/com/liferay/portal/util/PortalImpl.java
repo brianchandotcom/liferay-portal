@@ -4490,15 +4490,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getPortletXmlFileName() {
-		if (PropsValues.AUTO_DEPLOY_CUSTOM_PORTLET_XML) {
-			return PORTLET_XML_FILE_NAME_CUSTOM;
-		}
-
-		return PORTLET_XML_FILE_NAME_STANDARD;
-	}
-
-	@Override
 	public PortletPreferences getPreferences(
 		HttpServletRequest httpServletRequest) {
 

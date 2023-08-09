@@ -6,5 +6,6 @@
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 export declare function getAPISchemasFDSProps(
 	urlPath: string,
-	portletId: string
+	portletId: string,
+	setMainSchemaNav: ({edit}: {edit: number}) => void
 ): IFrontendDataSetProps;

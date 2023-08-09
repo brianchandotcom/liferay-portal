@@ -9,7 +9,8 @@ import {baseFDSProps} from './baseFDSProps';
 
 export function getAPISchemasFDSProps(
 	urlPath: string,
-	portletId: string
+	portletId: string,
+	setMainSchemaNav: ({edit}: {edit: number}) => void
 ): IFrontendDataSetProps {
 	return {
 		...baseFDSProps,
@@ -27,6 +28,9 @@ export function getAPISchemasFDSProps(
 				},
 				icon: 'pencil',
 				label: Liferay.Language.get('edit'),
+				onClick: ({itemData}: FDSItem<APIApplicationSchemaItem>) => {
+					setMainSchemaNav({edit: itemData.id});
+				},
 			},
 			{
 				icon: 'trash',

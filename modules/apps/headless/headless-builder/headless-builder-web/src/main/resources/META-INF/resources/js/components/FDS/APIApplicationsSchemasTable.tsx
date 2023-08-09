@@ -7,6 +7,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useContext, useEffect} from 'react';
 
+import {EditAPIApplicationContext} from '../EditAPIApplicationContext';
 import {CreateAPISchemaModalContent} from '../modals/CreateAPISchemaModalContent';
 import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPISchemaModalContent';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
@@ -16,12 +17,14 @@ interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
 	currentAPIApplicationId: string | null;
 	portletId: string;
+	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
 }
 
 export default function APIApplicationsSchemasTable({
 	apiURLPaths,
 	currentAPIApplicationId,
 	portletId,
+	setMainSchemaNav,
 }: APIApplicationsTableProps) {
 	const {setHideManagementButtons} = useContext(EditAPIApplicationContext);
 
@@ -36,6 +39,7 @@ export default function APIApplicationsSchemasTable({
 						closeModal,
 						currentAPIApplicationId,
 						loadData,
+						setMainSchemaNav,
 					}),
 				id: 'createAPISchemaModal',
 				size: 'md',
@@ -74,6 +78,10 @@ export default function APIApplicationsSchemasTable({
 		if (action.id === 'deleteAPIApplicationSchema') {
 			deleteAPISchema(itemData, loadData);
 		}
+
+		if (action.id === 'editAPIApplicationSchema') {
+			setMainSchemaNav({edit: itemData.id});
+		}
 	}
 
 	useEffect(() => {
@@ -83,7 +91,11 @@ export default function APIApplicationsSchemasTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPISchemasFDSProps(schemaAPIURLPath, portletId)}
+			{...getAPISchemasFDSProps(
+				schemaAPIURLPath,
+				portletId,
+				setMainSchemaNav
+			)}
 			creationMenu={{
 				primaryItems: [createAPIApplicationSchema],
 			}}

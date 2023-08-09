@@ -97,7 +97,7 @@ public abstract class BaseJournalTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public String getRootContainerModelName() {
-		return "folder";
+		return "home";
 	}
 
 	@Override

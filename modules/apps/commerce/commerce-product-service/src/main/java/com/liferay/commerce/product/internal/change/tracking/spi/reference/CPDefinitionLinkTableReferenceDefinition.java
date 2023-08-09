@@ -8,6 +8,7 @@ package com.liferay.commerce.product.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionLinkTable;
 import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.product.model.CProductTable;
@@ -29,9 +30,13 @@ public class CPDefinitionLinkTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<CPDefinitionLinkTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.singleColumnReference(
+		childTableReferenceInfoBuilder.assetEntryReference(
+			CPDefinitionLinkTable.INSTANCE.CPDefinitionLinkId,
+			CPDefinitionLink.class
+		).singleColumnReference(
 			CPDefinitionLinkTable.INSTANCE.CPDefinitionId,
-			CPDefinitionTable.INSTANCE.CPDefinitionId);
+			CPDefinitionTable.INSTANCE.CPDefinitionId
+		);
 	}
 
 	@Override

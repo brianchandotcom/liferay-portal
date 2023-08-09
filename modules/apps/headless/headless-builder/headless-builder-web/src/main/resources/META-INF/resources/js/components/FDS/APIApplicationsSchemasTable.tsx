@@ -5,7 +5,7 @@
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-web';
-import React from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect} from 'react';
 
 import {CreateAPISchemaModalContent} from '../modals/CreateAPISchemaModalContent';
 import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPISchemaModalContent';
@@ -23,6 +23,8 @@ export default function APIApplicationsSchemasTable({
 	currentAPIApplicationId,
 	portletId,
 }: APIApplicationsTableProps) {
+	const {setHideManagementButtons} = useContext(EditAPIApplicationContext);
+
 	const createAPIApplicationSchema = {
 		label: Liferay.Language.get('add-new-schema'),
 		onClick: ({loadData}: {loadData: voidReturn}) => {
@@ -73,6 +75,11 @@ export default function APIApplicationsSchemasTable({
 			deleteAPISchema(itemData, loadData);
 		}
 	}
+
+	useEffect(() => {
+		setHideManagementButtons(true);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<FrontendDataSet

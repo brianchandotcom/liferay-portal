@@ -12,6 +12,7 @@
 			<supports>
 				<action-key>ADD_ACCOUNT_ROLE</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>INVITE_USER</action-key>
 				<action-key>MANAGE_ADDRESSES</action-key>
 				<action-key>MANAGE_DOMAINS</action-key>
 				<action-key>MANAGE_ORGANIZATIONS</action-key>

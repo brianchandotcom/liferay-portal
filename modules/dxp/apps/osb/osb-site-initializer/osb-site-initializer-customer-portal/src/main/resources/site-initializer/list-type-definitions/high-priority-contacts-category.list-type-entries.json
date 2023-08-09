@@ -1,0 +1,26 @@
+[
+	{
+		"key": "criticalIncident",
+		"name": "Critical Incident",
+		"name_i18n": {
+			"en-US": "Critical Incident"
+		},
+		"type": "string"
+	},
+	{
+		"key": "privacyBreach",
+		"name": "Privacy Breach",
+		"name_i18n": {
+			"en-US": "Privacy Breach"
+		},
+		"type": "string"
+	},
+	{
+		"key": "securityBreach",
+		"name": "Security Breach",
+		"name_i18n": {
+			"en-US": "Security Breach"
+		},
+		"type": "string"
+	}
+]

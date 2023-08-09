@@ -1,0 +1,28 @@
+{
+	"label": {
+		"en-US": "High Priority Contacts"
+	},
+	"name": "HighPriorityContacts",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Contacts Category"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:High Priority Contacts Category$]",
+			"name": "contactsCategory",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "High Priority Contacts"
+	},
+	"portlet": true,
+	"scope": "company",
+	"system": false
+}

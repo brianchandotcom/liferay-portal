@@ -7,7 +7,7 @@ import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import useCurrentKoroneikiAccount from '../../hooks/useCurrentKoroneikiAccount';
-import {getHighPriorityContacts} from '../../services/liferay/graphql/queries';
+import {getHighPriorityContacts} from '../../services/liferay/api';
 import HighPriorityContactsInput from './HighPriorityContactsInput';
 
 export const HIGH_PRIORITY_CONTACT_CATEGORIES = {

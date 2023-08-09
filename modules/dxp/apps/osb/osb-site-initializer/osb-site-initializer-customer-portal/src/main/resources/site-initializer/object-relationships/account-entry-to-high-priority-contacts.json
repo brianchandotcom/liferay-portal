@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "High Priority Contacts"
+	},
+	"name": "userToHighPriorityContacts",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:HighPriorityContacts$]",
+	"objectDefinitionName2": "HighPriorityContacts",
+	"type": "oneToMany"
+}

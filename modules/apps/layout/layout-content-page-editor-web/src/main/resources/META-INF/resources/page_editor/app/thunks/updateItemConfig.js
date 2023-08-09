@@ -6,7 +6,11 @@
 import updateItemConfigAction from '../actions/updateItemConfig';
 import LayoutService from '../services/LayoutService';
 
-export default function updateItemConfig({itemConfig, itemId}) {
+export default function updateItemConfig({
+	itemConfig,
+	itemId,
+	overridePreviousConfig = false,
+}) {
 	return (dispatch, getState) => {
 		const {segmentsExperienceId} = getState();
 
@@ -17,7 +21,12 @@ export default function updateItemConfig({itemConfig, itemId}) {
 			segmentsExperienceId,
 		}).then(({layoutData, pageContents}) => {
 			dispatch(
-				updateItemConfigAction({itemId, layoutData, pageContents})
+				updateItemConfigAction({
+					itemId,
+					layoutData,
+					overridePreviousConfig,
+					pageContents,
+				})
 			);
 		});
 	};

@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {fetch, openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import BaseAPISchemaFields from '../baseComponents/BaseAPISchemaFields';
 
@@ -21,6 +21,7 @@ interface CreateAPISchemaModalProps {
 	closeModal: voidReturn;
 	currentAPIApplicationId: string | null;
 	loadData: voidReturn;
+	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
 }
 
 const headers = new Headers({
@@ -34,10 +35,12 @@ export function CreateAPISchemaModalContent({
 	closeModal,
 	currentAPIApplicationId,
 	loadData,
+	setMainSchemaNav,
 }: CreateAPISchemaModalProps) {
-	const [data, setData] = useState<Partial<APIApplicationSchemaItem>>({
-		r_apiApplicationToAPISchemas_c_apiApplicationId:
-			currentAPIApplicationId ?? undefined,
+	const [localUIData, setLocalUIData] = useState<APISchemaUIData>({
+		description: '',
+		mainObjectDefinitionERC: '',
+		name: '',
 	});
 	const [displayError, setDisplayError] = useState<DataError>({
 		description: false,
@@ -46,21 +49,22 @@ export function CreateAPISchemaModalContent({
 	});
 
 	useEffect(() => {
-		for (const key in data) {
-			if (data[key as keyof APIApplicationSchemaItem] !== '') {
+		for (const key in localUIData) {
+			if (localUIData[key as keyof APISchemaUIData] !== '') {
 				setDisplayError((previousErrors) => ({
 					...previousErrors,
 					[key]: false,
 				}));
 			}
 		}
-	}, [data]);
+	}, [localUIData]);
 
 	async function postData() {
 		fetch(apiSchemasURLPath, {
 			body: JSON.stringify({
-				...data,
+				...localUIData,
 				applicationStatus: {key: 'unpublished'},
+				r_apiApplicationToAPISchemas_c_apiApplicationId: currentAPIApplicationId,
 				version: '1.0',
 			}),
 			headers,
@@ -68,28 +72,31 @@ export function CreateAPISchemaModalContent({
 		})
 			.then((response) => {
 				if (response.ok) {
-					closeModal();
-					loadData();
-					openToast({
-						message: Liferay.Language.get(
-							'new-api-application-schema-was-created'
-						),
-						type: 'success',
-					});
-				}
-				else {
 					return response.json();
 				}
-			})
-			.then((responseJson) => {
-				if (responseJson) {
-					throw new Error(responseJson.title);
+				else {
+					throw response.json();
 				}
 			})
-			.catch((error) => {
+			.then((responseJSON) => {
+				loadData();
+				closeModal();
+				setMainSchemaNav({edit: responseJSON.id});
 				openToast({
-					message: error.message,
-					type: 'danger',
+					message: Liferay.Language.get(
+						'new-api-application-schema-was-created'
+					),
+					type: 'success',
+				});
+			})
+			.catch((error) => {
+				error.then((response: {message: string; title: string}) => {
+					{
+						openToast({
+							message: response.title ?? response.message,
+							type: 'danger',
+						});
+					}
 				});
 			});
 	}
@@ -98,7 +105,7 @@ export function CreateAPISchemaModalContent({
 		let isDataValid = true;
 		const mandatoryFields = ['mainObjectDefinitionERC', 'name'];
 
-		if (!Object.keys(data).length) {
+		if (!Object.keys(localUIData).length) {
 			const errors = mandatoryFields.reduce(
 				(errors, field) => ({...errors, [field]: true}),
 				{}
@@ -109,7 +116,7 @@ export function CreateAPISchemaModalContent({
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data[field as keyof APIApplicationSchemaItem]) {
+				if (localUIData[field as keyof APISchemaUIData]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,
@@ -147,9 +154,9 @@ export function CreateAPISchemaModalContent({
 
 			<div className="modal-body">
 				<BaseAPISchemaFields
-					data={data}
+					data={localUIData}
 					displayError={displayError}
-					setData={setData}
+					setData={setLocalUIData}
 				/>
 			</div>
 

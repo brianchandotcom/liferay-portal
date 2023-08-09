@@ -217,6 +217,21 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+		long groupId, int type, int start, int end,
+		OrderByComparator<Object> orderByComparator) {
+
+		return null;
+	}
+	@Override
+	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+		long groupId, String name, int type, int start, int end,
+		OrderByComparator<Object> orderByComparator) {
+
+		return null;
+	}
+
+	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {

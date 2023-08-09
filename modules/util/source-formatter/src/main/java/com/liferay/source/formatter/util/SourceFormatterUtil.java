@@ -735,7 +735,6 @@ public class SourceFormatterUtil {
 				}
 
 				List<String> deletedFiles = _getDeletedFiles(baseDirName);
-
 				List<String> gitFiles = new ArrayList<>();
 
 				git(

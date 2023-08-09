@@ -331,13 +331,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 						ProductNavigationControlMenuEntryConstants.
 							SESSION_CLICKS_KEY)
 				).put(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
-							return "layoutReportsDataURL";
-						}
-
-						return "layoutReportsTabsURL";
-					},
+					"layoutReportsDataURL",
 					() -> {
 						ThemeDisplay themeDisplay =
 							(ThemeDisplay)httpServletRequest.getAttribute(

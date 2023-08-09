@@ -1382,6 +1382,11 @@ public class UserWrapper
 		return model.isMale();
 	}
 
+	@Override
+	public boolean isOnDemandUser() {
+		return model.isOnDemandUser();
+	}
+
 	/**
 	 * Returns <code>true</code> if this user is password encrypted.
 	 *

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -86,6 +88,10 @@ public class SynonymSearchTest {
 					_CONFIGURATION_PID_SYNONYMS,
 					setUpSynonymsProperties())) {
 
+			_originalName = PrincipalThreadLocal.getName();
+
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 			_company = CompanyTestUtil.addCompany();
 
 			addSynonymSet("dxp,portal");
@@ -100,6 +106,8 @@ public class SynonymSearchTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -296,6 +304,7 @@ public class SynonymSearchTest {
 	)
 	private static MVCActionCommand _mvcActionCommand;
 
+	private static String _originalName;
 	private static ServiceContext _serviceContext;
 	private static User _user;
 

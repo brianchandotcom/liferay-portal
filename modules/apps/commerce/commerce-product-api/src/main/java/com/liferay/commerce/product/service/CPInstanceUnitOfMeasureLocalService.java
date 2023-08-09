@@ -86,6 +86,13 @@ public interface CPInstanceUnitOfMeasureLocalService
 			double priority, BigDecimal rate, String sku)
 		throws PortalException;
 
+	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long userId, long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision, boolean primary,
+			double priority, BigDecimal rate, String sku)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp instance unit of measure with the primary key. Does not add the cp instance unit of measure to the database.
 	 *

@@ -56,9 +56,25 @@ public interface CPInstanceUnitOfMeasureService extends BaseService {
 			double priority, BigDecimal rate, String sku)
 		throws PortalException;
 
+	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long cpInstanceId, boolean active,
+			BigDecimal incrementalOrderQuantity, String key,
+			Map<Locale, String> nameMap, int precision, boolean primary,
+			double priority, BigDecimal rate, String sku)
+		throws PortalException;
+
+	public CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -70,6 +86,10 @@ public interface CPInstanceUnitOfMeasureService extends BaseService {
 	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
 			long cpInstanceId, int start, int end,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId)
 		throws PortalException;
 
 	/**

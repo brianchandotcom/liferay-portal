@@ -386,7 +386,7 @@ public interface CommercePriceEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType);
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid);

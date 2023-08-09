@@ -567,7 +567,7 @@ public class CommercePriceEntryServiceHttp {
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 		getInstanceBaseCommercePriceEntry(
 			HttpPrincipal httpPrincipal, String cpInstanceUuid,
-			String priceListType) {
+			String priceListType, String unitOfMeasureKey) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -576,7 +576,7 @@ public class CommercePriceEntryServiceHttp {
 				_getInstanceBaseCommercePriceEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpInstanceUuid, priceListType);
+				methodKey, cpInstanceUuid, priceListType, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -986,7 +986,7 @@ public class CommercePriceEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_getInstanceBaseCommercePriceEntryParameterTypes11 = new Class[] {
-			String.class, String.class
+			String.class, String.class, String.class
 		};
 	private static final Class<?>[]
 		_getInstanceCommercePriceEntriesParameterTypes12 = new Class[] {

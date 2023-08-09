@@ -66,6 +66,19 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 			nameMap, precision, primary, priority, rate, sku);
 	}
 
+	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long userId, long cpInstanceId, boolean active,
+			java.math.BigDecimal incrementalOrderQuantity, String key,
+			Map<java.util.Locale, String> nameMap, int precision,
+			boolean primary, double priority, java.math.BigDecimal rate,
+			String sku)
+		throws PortalException {
+
+		return getService().addOrUpdateCPInstanceUnitOfMeasure(
+			userId, cpInstanceId, active, incrementalOrderQuantity, key,
+			nameMap, precision, primary, priority, rate, sku);
+	}
+
 	/**
 	 * Creates a new cp instance unit of measure with the primary key. Does not add the cp instance unit of measure to the database.
 	 *

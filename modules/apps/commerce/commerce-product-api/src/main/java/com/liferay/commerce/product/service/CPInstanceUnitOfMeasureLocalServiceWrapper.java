@@ -66,6 +66,21 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 			nameMap, precision, primary, priority, rate, sku);
 	}
 
+	@Override
+	public CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long userId, long cpInstanceId, boolean active,
+			java.math.BigDecimal incrementalOrderQuantity, String key,
+			java.util.Map<java.util.Locale, String> nameMap, int precision,
+			boolean primary, double priority, java.math.BigDecimal rate,
+			String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureLocalService.
+			addOrUpdateCPInstanceUnitOfMeasure(
+				userId, cpInstanceId, active, incrementalOrderQuantity, key,
+				nameMap, precision, primary, priority, rate, sku);
+	}
+
 	/**
 	 * Creates a new cp instance unit of measure with the primary key. Does not add the cp instance unit of measure to the database.
 	 *

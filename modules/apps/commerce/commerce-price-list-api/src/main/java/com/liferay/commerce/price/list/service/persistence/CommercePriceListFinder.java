@@ -25,14 +25,6 @@ public interface CommercePriceListFinder {
 	public int countByCPInstanceUuid(
 		String cpInstanceUuid, boolean inlineSQLHelper);
 
-	public com.liferay.commerce.price.list.model.CommercePriceEntry
-		findBasePriceEntry(String cpInstanceUuid, String priceListType);
-
-	public com.liferay.commerce.price.list.model.CommercePriceEntry
-		findBasePriceEntry(
-			String cpInstanceUuid, String priceListType,
-			boolean inlineSQLHelper);
-
 	public java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceList>
 			findByCommerceAccountAndChannelId(

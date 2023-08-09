@@ -483,10 +483,10 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType) {
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey) {
 
 		return getService().getInstanceBaseCommercePriceEntry(
-			cpInstanceUuid, priceListType);
+			cpInstanceUuid, priceListType, unitOfMeasureKey);
 	}
 
 	public static int getInstanceCommercePriceEntriesCount(

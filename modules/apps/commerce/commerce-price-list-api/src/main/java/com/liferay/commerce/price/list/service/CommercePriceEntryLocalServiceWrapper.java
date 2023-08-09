@@ -547,10 +547,11 @@ public class CommercePriceEntryLocalServiceWrapper
 
 	@Override
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType) {
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey) {
 
 		return _commercePriceEntryLocalService.
-			getInstanceBaseCommercePriceEntry(cpInstanceUuid, priceListType);
+			getInstanceBaseCommercePriceEntry(
+				cpInstanceUuid, priceListType, unitOfMeasureKey);
 	}
 
 	@Override

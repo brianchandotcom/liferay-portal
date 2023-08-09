@@ -44,11 +44,40 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 			precision, primary, priority, rate, sku);
 	}
 
+	public static CPInstanceUnitOfMeasure addOrUpdateCPInstanceUnitOfMeasure(
+			long cpInstanceId, boolean active,
+			java.math.BigDecimal incrementalOrderQuantity, String key,
+			Map<java.util.Locale, String> nameMap, int precision,
+			boolean primary, double priority, java.math.BigDecimal rate,
+			String sku)
+		throws PortalException {
+
+		return getService().addOrUpdateCPInstanceUnitOfMeasure(
+			cpInstanceId, active, incrementalOrderQuantity, key, nameMap,
+			precision, primary, priority, rate, sku);
+	}
+
+	public static CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		return getService().deleteCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
 	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
 
 		return getService().fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
+	}
+
+	public static CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		return getService().getCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
 	}
 
 	public static CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
@@ -65,6 +94,12 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 
 		return getService().getCPInstanceUnitOfMeasures(
 			cpInstanceId, start, end, orderByComparator);
+	}
+
+	public static int getCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws PortalException {
+
+		return getService().getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 	}
 
 	/**

@@ -177,10 +177,10 @@ public class CommercePriceEntryServiceWrapper
 
 	@Override
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType) {
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey) {
 
 		return _commercePriceEntryService.getInstanceBaseCommercePriceEntry(
-			cpInstanceUuid, priceListType);
+			cpInstanceUuid, priceListType, unitOfMeasureKey);
 	}
 
 	@Override

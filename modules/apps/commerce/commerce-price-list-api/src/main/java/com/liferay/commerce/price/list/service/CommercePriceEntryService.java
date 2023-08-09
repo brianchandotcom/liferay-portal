@@ -125,7 +125,7 @@ public interface CommercePriceEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry getInstanceBaseCommercePriceEntry(
-		String cpInstanceUuid, String priceListType);
+		String cpInstanceUuid, String priceListType, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(

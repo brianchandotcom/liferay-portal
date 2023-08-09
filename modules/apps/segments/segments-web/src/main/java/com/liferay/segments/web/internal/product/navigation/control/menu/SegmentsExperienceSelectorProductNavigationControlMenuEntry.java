@@ -91,19 +91,19 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 						_segmentsExperimentLocalService,
 						_segmentsExperimentRelLocalService);
 
-			PrintWriter writer = httpServletResponse.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			writer.write("<div class=\"border-left border-secondary ");
-			writer.write("control-menu-nav-item ml-3 pl-3\">");
+			printWriter.write("<div class=\"border-left border-secondary ");
+			printWriter.write("control-menu-nav-item ml-3 pl-3\">");
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
 					_npmResolver.resolveModuleName("segments-web") +
 						"/js/components/ExperiencePicker"),
 				segmentsExperienceSelectorDisplayContext.getData(),
-				httpServletRequest, writer);
+				httpServletRequest, printWriter);
 
-			writer.write("</div>");
+			printWriter.write("</div>");
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

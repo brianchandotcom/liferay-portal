@@ -132,7 +132,7 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 };
 
 const Requirements = () => {
-	const {actions} = useRequirementActions();
+	const {actions, forceRefetch} = useRequirementActions();
 	const {projectId} = useParams();
 	const formModal = useFormModal();
 
@@ -141,6 +141,7 @@ const Requirements = () => {
 			<RequirementListView
 				actions={actions}
 				formModal={formModal}
+				listViewProps={{forceRefetch}}
 				variables={{
 					filter: SearchBuilder.eq('projectId', projectId as string),
 				}}

@@ -228,6 +228,11 @@ export type TestrayIssue = {
 	name: string;
 };
 
+export type TestrayJiraImportRequirement = {
+	actions: ObjectActionsItems;
+	issues: string;
+};
+
 export type TestrayProductVersion = {
 	id: number;
 	name: string;

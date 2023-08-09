@@ -14,11 +14,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentEntryLinkFinder {
 
-	public int countByG_F(long groupId, long fragmentEntryId);
-
-	public int countByG_F_P_L(
-		long groupId, long fragmentEntryId, int layoutPageTemplateEntryType);
-
 	public java.util.List<com.liferay.fragment.model.FragmentEntryLink>
 		findByG_F(
 			long groupId, long fragmentEntryId, int start, int end,

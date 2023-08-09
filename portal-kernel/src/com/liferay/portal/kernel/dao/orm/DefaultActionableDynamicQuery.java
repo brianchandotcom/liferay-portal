@@ -269,13 +269,17 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 					return -1L;
 				}
 
-				if (_parallel) {
+				ExecutorService executorService =
+					_portalExecutorManager.getPortalExecutor(
+						DefaultActionableDynamicQuery.class.getName());
+
+				if (_parallel && (executorService != null)) {
 					List<Future<Void>> futures = new ArrayList<>(
 						objects.size());
 
 					for (final Object object : objects) {
 						futures.add(
-							_executorService.submit(
+							executorService.submit(
 								new Callable<Void>() {
 
 									@Override
@@ -389,7 +393,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, DefaultActionableDynamicQuery.class,
-			"_portalExecutorManager", true);
+			"_portalExecutorManager", false);
 
 	private AddCriteriaMethod _addCriteriaMethod;
 	private AddOrderCriteriaMethod _addOrderCriteriaMethod;
@@ -398,9 +402,6 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private long _companyId;
 	private Method _dynamicQueryCountMethod;
 	private Method _dynamicQueryMethod;
-	private final ExecutorService _executorService =
-		_portalExecutorManager.getPortalExecutor(
-			DefaultActionableDynamicQuery.class.getName());
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;

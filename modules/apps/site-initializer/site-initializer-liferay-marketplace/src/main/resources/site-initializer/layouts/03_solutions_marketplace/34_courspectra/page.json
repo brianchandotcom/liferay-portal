@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/courspectra",
+	"hidden": true,
+	"name": "Courspectra",
+	"name_i18n": {
+		"en_US": "Courspectra"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

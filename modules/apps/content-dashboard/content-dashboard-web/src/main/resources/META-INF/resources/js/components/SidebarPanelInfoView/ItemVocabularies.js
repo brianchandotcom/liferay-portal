@@ -7,9 +7,10 @@ import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 
+import CollapsibleSection from './CollapsibleSection';
 import {groupVocabulariesBy, sortByStrings} from './utils/taxonomiesUtils';
 
-const ItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
+const ItemVocabularies = ({title, vocabularies}) => {
 	const [global, nonGlobal] = groupVocabulariesBy({
 		array: vocabularies,
 		key: 'groupName',
@@ -25,13 +26,7 @@ const ItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
 	const groupedAndSortedVocabularies = nonGlobalSorted.concat(globalSorted);
 
 	return (
-		<div
-			className={`c-mb-4 item-vocabularies sidebar-section ${cssClassNames}`}
-		>
-			<h6 className="font-weight-semi-bold sidebar-section-subtitle-sm text-2 text-secondary text-uppercase">
-				{title}
-			</h6>
-
+		<CollapsibleSection expanded title={title}>
 			<div>
 				{groupedAndSortedVocabularies.map(
 					({categories, groupName, vocabularyName}) => (
@@ -60,7 +55,7 @@ const ItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
 					)
 				)}
 			</div>
-		</div>
+		</CollapsibleSection>
 	);
 };
 ItemVocabularies.defaultProps = {

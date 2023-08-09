@@ -36,10 +36,7 @@ const Categorization = ({tags, vocabularies}: IProps): JSX.Element | null => {
 	}
 
 	return (
-		<CollapsibleSection
-			expanded
-			title={Liferay.Language.get('categorization')}
-		>
+		<>
 			{!!publicCategoriesCount && (
 				<ItemVocabularies
 					title={Liferay.Language.get('public-categories')}
@@ -49,18 +46,16 @@ const Categorization = ({tags, vocabularies}: IProps): JSX.Element | null => {
 
 			{!!internalCategoriesCount && (
 				<ItemVocabularies
-					cssClassNames="c-mt-4"
 					title={Liferay.Language.get('internal-categories')}
 					vocabularies={internalVocabularies}
 				/>
 			)}
 
 			{!!tags.length && (
-				<div className="c-mb-4 sidebar-section">
-					<h5 className="c-mb-1 font-weight-semi-bold">
-						{Liferay.Language.get('tags')}
-					</h5>
-
+				<CollapsibleSection
+					expanded
+					title={Liferay.Language.get('tags')}
+				>
 					<p>
 						{tags.map((tag) => (
 							<ClayLabel
@@ -73,9 +68,9 @@ const Categorization = ({tags, vocabularies}: IProps): JSX.Element | null => {
 							</ClayLabel>
 						))}
 					</p>
-				</div>
+				</CollapsibleSection>
 			)}
-		</CollapsibleSection>
+		</>
 	);
 };
 

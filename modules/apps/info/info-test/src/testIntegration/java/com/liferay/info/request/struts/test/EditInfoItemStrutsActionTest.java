@@ -505,7 +505,7 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "-99999999999999.9999999999999999",
-			Boolean.TRUE.toString(), 0, "2023-03-01", null,
+			Boolean.TRUE.toString(), 0, "2023-03-01", null, null,
 			"-999.9999999999999", "-123456", "-9007199254740991", null,
 			listTypeEntry.getKey(), "<p>TITLE</p>", null, null);
 
@@ -530,7 +530,7 @@ public class EditInfoItemStrutsActionTest {
 
 		uploadPortletRequest = _getUploadPortletRequest(
 			null, null, StringPool.BLANK, StringPool.BLANK,
-			objectEntry.getObjectEntryId(), StringPool.BLANK, null,
+			objectEntry.getObjectEntryId(), StringPool.BLANK, null, null,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, null,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, null);
 

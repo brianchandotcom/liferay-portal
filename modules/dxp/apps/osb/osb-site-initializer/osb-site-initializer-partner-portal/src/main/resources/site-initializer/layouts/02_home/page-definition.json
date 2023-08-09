@@ -964,19 +964,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Deals",
-																		"ca_ES": "Deals",
-																		"de_DE": "Deals",
-																		"en_US": "Deals",
-																		"es_ES": "Deals",
-																		"fi_FI": "Deals",
-																		"fr_FR": "Deals",
-																		"hu_HU": "Deals",
-																		"ja_JP": "Deals",
-																		"nl_NL": "Deals",
-																		"pt_BR": "Deals",
-																		"sv_SE": "Deals",
-																		"zh_CN": "Deals"
+																		"ar_SA": "Deal Registration",
+																		"ca_ES": "Deal Registration",
+																		"de_DE": "Deal Registration",
+																		"en_US": "Deal Registration",
+																		"es_ES": "Deal Registration",
+																		"fi_FI": "Deal Registration",
+																		"fr_FR": "Deal Registration",
+																		"hu_HU": "Deal Registration",
+																		"ja_JP": "Deal Registration",
+																		"nl_NL": "Deal Registration",
+																		"pt_BR": "Deal Registration",
+																		"sv_SE": "Deal Registration",
+																		"zh_CN": "Deal Registration"
 																	}
 																}
 															}

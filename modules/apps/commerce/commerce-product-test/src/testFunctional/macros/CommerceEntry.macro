@@ -790,6 +790,15 @@ definition {
 			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
 	}
 
+	macro assertTableRowSpecificColumnValue {
+		AssertTextEquals(
+			key_column = ${column},
+			key_entryName = ${entryName},
+			key_row = ${row},
+			locator1 = "CommerceEntry#TABLE_ASSERT_SPECIFIC_ROW_ANY_COLUMN_VALUE",
+			value1 = ${value});
+	}
+
 	macro assertUniqueTaxCategoryErc {
 		Click(
 			key_entry = ${keyName},

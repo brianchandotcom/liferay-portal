@@ -139,7 +139,7 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 								PublicationContainer publicationContainer) {
 
 								MavenPublication mavenPublication =
-									publicationContainer.create(
+									publicationContainer.maybeCreate(
 										"maven", MavenPublication.class);
 
 								mavenPublication.artifact(abstractArchiveTask);

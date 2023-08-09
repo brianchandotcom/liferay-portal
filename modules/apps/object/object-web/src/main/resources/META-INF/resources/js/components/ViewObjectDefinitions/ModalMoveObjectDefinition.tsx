@@ -204,15 +204,7 @@ export function ModalMoveObjectDefinition({
 
 								<ClayButton
 									displayType="primary"
-									onClick={() => {
-										handleMoveObject();
-
-										setTimeout(
-											() => window.location.reload(),
-											1500
-										);
-										onClose();
-									}}
+									onClick={() => handleMoveObject()}
 									type="submit"
 								>
 									{Liferay.Language.get('move')}

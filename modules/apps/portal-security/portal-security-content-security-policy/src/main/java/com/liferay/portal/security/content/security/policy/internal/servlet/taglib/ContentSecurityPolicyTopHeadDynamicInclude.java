@@ -5,10 +5,15 @@
 
 package com.liferay.portal.security.content.security.policy.internal.servlet.taglib;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,7 +53,16 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 		printWriter.print(
 			" type=\"text/javascript\">window.Liferay = window.Liferay || ");
 		printWriter.print("{}; window.Liferay.CSP = {nonce: '");
-		printWriter.print(nonce);
+
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
+			_getContentSecurityPolicyConfiguration(httpServletRequest);
+
+		String policy = contentSecurityPolicyConfiguration.policy();
+
+		if (!policy.contains("'strict-dynamic'")) {
+			printWriter.print(nonce);
+		}
+
 		printWriter.println("'};</script>");
 	}
 
@@ -57,8 +71,35 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
+	private ContentSecurityPolicyConfiguration
+		_getContentSecurityPolicyConfiguration(
+			HttpServletRequest httpServletRequest) {
+
+		try {
+			long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+			if (groupId > 0) {
+				return _configurationProvider.getGroupConfiguration(
+					ContentSecurityPolicyConfiguration.class, groupId);
+			}
+
+			return _configurationProvider.getCompanyConfiguration(
+				ContentSecurityPolicyConfiguration.class,
+				_portal.getCompanyId(httpServletRequest));
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	@Reference
 	private ContentSecurityPolicyNonceProvider
 		_contentSecurityPolicyNonceProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

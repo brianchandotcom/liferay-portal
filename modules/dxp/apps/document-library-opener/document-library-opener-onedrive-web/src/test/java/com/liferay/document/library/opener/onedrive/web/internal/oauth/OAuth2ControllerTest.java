@@ -200,7 +200,7 @@ public class OAuth2ControllerTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		JSONObject jsonObject = JSONUtil.put("key", "value");
+		JSONObject jsonObject1 = JSONUtil.put("key", "value");
 
 		OAuth2Controller oAuth2Controller =
 			_oAuth2ControllerFactory.getRedirectingOAuth2Controller();
@@ -208,14 +208,22 @@ public class OAuth2ControllerTest {
 		oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
 			_getMockPortletResponse(mockHttpServletResponse),
-			portletRequest -> jsonObject);
+			portletRequest -> jsonObject1);
 
 		Assert.assertEquals(
 			_liferayPortletURL.toString(),
 			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
 
-		Assert.assertEquals(
-			mockHttpServletRequest.getAttribute("key"), jsonObject.get("key"));
+		HttpSession httpSession = mockHttpServletRequest.getSession();
+
+		Assert.assertNotNull(httpSession);
+
+		JSONObject jsonObject2 = (JSONObject)httpSession.getAttribute(
+			DLOpenerOneDriveWebKeys.
+				DL_OPENER_ONE_DRIVE_REDIRECTING_OAUTH2_JSON_OBJECT);
+
+		Assert.assertNotNull(jsonObject2);
+		Assert.assertEquals(jsonObject1.get("key"), jsonObject2.get("key"));
 	}
 
 	@Test

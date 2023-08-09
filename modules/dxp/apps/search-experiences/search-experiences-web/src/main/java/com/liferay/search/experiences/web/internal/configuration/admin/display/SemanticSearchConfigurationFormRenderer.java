@@ -88,9 +88,9 @@ public class SemanticSearchConfigurationFormRenderer
 		throws IOException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-122920")) {
-			PrintWriter writer = httpServletResponse.getWriter();
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			writer.print(
+			printWriter.print(
 				"<div class=\"alert alert-info\">This feature is not " +
 					"available.</div>");
 

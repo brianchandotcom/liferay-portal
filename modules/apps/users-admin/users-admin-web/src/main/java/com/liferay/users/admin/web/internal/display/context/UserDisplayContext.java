@@ -158,7 +158,11 @@ public class UserDisplayContext {
 	public List<Organization> getOrganizations() throws PortalException {
 		if (_selUser != null) {
 			if (!_initDisplayContext.isFilterManageableOrganizations()) {
-				return _selUser.getOrganizations();
+				List<Organization> organizations = _selUser.getOrganizations();
+
+				organizations.addAll(_getParentOrganizations(organizations));
+
+				return organizations;
 			}
 
 			return UsersAdminUtil.filterOrganizations(
@@ -314,8 +318,10 @@ public class UserDisplayContext {
 
 		allGroups.addAll(getGroups());
 		allGroups.addAll(getInheritedSiteGroups());
+
 		allGroups.addAll(
 			GroupLocalServiceUtil.getOrganizationsGroups(getOrganizations()));
+
 		allGroups.addAll(
 			GroupLocalServiceUtil.getUserGroupsGroups(getUserGroups()));
 
@@ -331,6 +337,26 @@ public class UserDisplayContext {
 
 		return GroupLocalServiceUtil.getOrganizationsRelatedGroups(
 			organizations);
+	}
+
+	private List<Organization> _getParentOrganizations(
+			List<Organization> organizations)
+		throws PortalException {
+
+		List<Organization> parentOrganizations = new ArrayList<>();
+
+		for (Organization organization : organizations) {
+			Organization parentOrganization =
+				organization.getParentOrganization();
+
+			if ((parentOrganization != null) &&
+				!organizations.contains(parentOrganization)) {
+
+				parentOrganizations.add(parentOrganization);
+			}
+		}
+
+		return parentOrganizations;
 	}
 
 	private long[] _getSelectedOrganizationIds() throws PortalException {

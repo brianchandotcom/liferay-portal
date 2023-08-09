@@ -1817,6 +1817,245 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12118. As buyer user, I can view the image related to the option that I selected."
+	@priority = 5
+	test CanViewProductImageWithOptionSelected {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a option is created") {
+			CommerceNavigator.goToProductOptionsAdminViaURL();
+
+			CPCommerceCatalog.newOptionsEntry(
+				facetable = "true",
+				optionDescription = "Test Description",
+				optionFieldType = "Select from List",
+				optionName = "Colour",
+				required = "true",
+				skuContributor = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And two values are added to the option") {
+			CPCommerceCatalog.addOptionValues(optionValuesList = "Black:1,White:2");
+		}
+
+		task ("And an option is added to ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			Search.searchCP(searchTerm = "ABS Sensor");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Colour",
+				title = "Add Option");
+		}
+
+		task ("And the SKUs for the options are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the options images are added") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Black,White",
+				optionValues = "Black,White",
+				validationImage = "true");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer user logs in Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the buyer places the order with the product") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+
+			Select(
+				key_optionName = "Colour",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "White");
+
+			AssertElementPresent(
+				key_fsProductImage = "White",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12118. As buyer user, I can view the image related to the option using the Image Gallery."
+	@priority = 5
+	test CanViewProductWithImageUsingImageGallery {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a option is created") {
+			CommerceNavigator.goToProductOptionsAdminViaURL();
+
+			CPCommerceCatalog.newOptionsEntry(
+				facetable = "true",
+				optionDescription = "Test Description",
+				optionFieldType = "Select from List",
+				optionName = "Colour",
+				required = "true",
+				skuContributor = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And two values are added to the option") {
+			CPCommerceCatalog.addOptionValues(optionValuesList = "Black:1,White:2");
+		}
+
+		task ("And an option is added to ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			Search.searchCP(searchTerm = "ABS Sensor");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Colour",
+				title = "Add Option");
+		}
+
+		task ("And the SKUs for the options are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the options images are added") {
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Black,White",
+				optionValues = "Black,White",
+				validationImage = "true");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And a new default Commerce Product type display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And given an Image Gallery fragment and Option Selector fragment are deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Image Gallery",
+				publish = "false",
+				siteURLKey = "minium");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Option Selector");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And given the page is marked as Default") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer logs in and clicks on the ABS Sensor product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "ABS Sensor");
+		}
+
+		task ("And the Image Gallery fragment is present") {
+			WaitForElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+		}
+
+		task ("Then the buyer can view the image options") {
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+
+			Click(
+				key_fsProductImage = "White",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+
+			AssertElementPresent(
+				key_fsProductImage = "White",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11553. If a product with variants follows a product without stock, only the product without stock shows the unavailable label"
 	@priority = 5
 	test CanViewProductWithStockAvailableWhenItFollowsAProductWithoutStock {

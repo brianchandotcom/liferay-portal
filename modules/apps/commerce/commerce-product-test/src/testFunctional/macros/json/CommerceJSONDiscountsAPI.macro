@@ -291,6 +291,30 @@ definition {
 		}
 	}
 
+	macro _getCommerceDiscountById {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(discountId)) && isSet(discountTitle)) {
+			var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 	macro _getCommerceDiscountIds {
 		var baseURL = ${baseURL};
 
@@ -316,6 +340,33 @@ definition {
 		var discountIds = JSONCurlUtil.get(${curl}, "$..['id']");
 
 		return ${discountIds};
+	}
+
+	macro _getCommerceDiscounts {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(discountCount)) {
+			var discountsCount = ${discountCount};
+		}
+		else {
+			var discountsCount = 100;
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts?pageSize=${discountsCount} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
 	}
 
 	macro _getCommerceDiscountsCount {
@@ -367,6 +418,120 @@ definition {
 		var discountId = JSONCurlUtil.get(${curl}, "$.items[?(@['title'] == '${discountTitle}')].['id']");
 
 		return ${discountId};
+	}
+
+	macro _patchCommerceDiscount {
+		Variables.assertDefined(parameterList = ${discountTitle});
+
+		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
+		var fieldsList = ListUtil.newList();
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(active)) {
+			var active = '''"active": ${active}''';
+
+			ListUtil.add(${fieldsList}, ${active});
+		}
+
+		if (isSet(couponCode)) {
+			var couponCode = '''"couponCode": "${couponCode}"''';
+
+			ListUtil.add(${fieldsList}, ${couponCode});
+		}
+
+		if (!(isSet(limitationType))) {
+			var limitationType = '''"limitationType": "unlimited"''';
+		}
+		else {
+			var limitationType = '''"limitationType": "${limitationType}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${limitationType});
+
+		if (!(isSet(target))) {
+			var target = '''"target": "products"''';
+		}
+		else {
+			var target = '''"target": "${target}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${target});
+
+		if (!(isSet(newTitle))) {
+			var title = '''"title": "${newTitle}"''';
+		}
+		else {
+			var title = '''"title": "${discountTitle}"''';
+		}
+
+		ListUtil.add(${fieldsList}, ${title});
+
+		if (isSet(useCouponCode)) {
+			var useCouponCode = '''"useCouponCode": "${useCouponCode}"''';
+
+			ListUtil.add(${fieldsList}, ${useCouponCode});
+		}
+
+		if (isSet(usePercentage)) {
+			var usePercentage = '''"usePercentage": "${usePercentage}"''';
+
+			ListUtil.add(${fieldsList}, ${usePercentage});
+		}
+
+		var fieldsList = ListUtil.toString(${fieldsList});
+
+		echo("Fieldlist: ${fieldsList}");
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+
+		echo("payload: ${payload}");
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/discounts/${discountId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
+
+		var responseBody = JSONCurlUtil.patch(${curl});
+
+		return ${responseBody};
+	}
+
+	macro getCommerceDiscountFieldById {
+		Variables.assertDefined(parameterList = ${jsonPath});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommerceJSONDiscountsAPI._getCommerceDiscountById(
+				discountId = ${discountId},
+				discountTitle = ${discountTitle});
+		}
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Value: ${fieldValue}");
+
+		return ${fieldValue};
+	}
+
+	macro getCommerceDiscountsFieldValuesList {
+		Variables.assertDefined(parameterList = ${jsonPath});
+
+		if (!(isSet(responseBody))) {
+			var responseBody = CommerceJSONDiscountsAPI._getCommerceDiscounts(discountCount = ${discountCount});
+		}
+
+		var fieldValuesList = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Values: ${fieldValuesList}");
+
+		return ${fieldValuesList};
 	}
 
 }

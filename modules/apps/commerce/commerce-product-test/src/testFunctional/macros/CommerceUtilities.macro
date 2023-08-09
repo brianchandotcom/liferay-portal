@@ -150,6 +150,44 @@ definition {
 		return ${futureDate};
 	}
 
+	macro getLocaleDate {
+		Variables.assertDefined(parameterList = ${date});
+
+		var javaScript = '''
+			date = new Date(arguments[0]);
+
+			localeDate = date.toLocaleString();
+
+			return localeDate;
+		''';
+
+		var localeDate = selenium.getJavaScriptResult(${javaScript}, ${date}, "");
+
+		return ${localeDate};
+	}
+
+	macro getLocaleDateLocalized {
+		Variables.assertDefined(parameterList = ${date});
+
+		var javaScript = '''
+			date = new Date(arguments[0]);
+
+			options = '${options}';
+
+			optionsJSON = JSON.parse(options);
+
+			lang = '${lang}';
+
+  			localizedDate = new Intl.DateTimeFormat(lang, optionsJSON).format(date);
+
+			return localizedDate;
+		''';
+
+		var localizedDate = selenium.getJavaScriptResult(${javaScript}, ${date}, "");
+
+		return ${localizedDate};
+	}
+
 	@description = "Create ${payload} from a list of fields passed for an API call and returns it"
 	macro getPayloadFromFieldsList {
 		Variables.assertDefined(parameterList = ${fieldsList});

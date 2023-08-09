@@ -497,7 +497,12 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(0);
 		}
 
+		if (smallImageSource <= 0) {
+			smallImageSource = _getSmallImageSource(smallImage, smallImageURL);
+		}
+
 		article.setSmallImageSource(smallImageSource);
+
 		article.setSmallImageURL(smallImageURL);
 
 		Date date = new Date();
@@ -751,7 +756,13 @@ public class JournalArticleLocalServiceImpl
 		article.setIndexable(indexable);
 		article.setSmallImage(smallImage);
 		article.setSmallImageId(counterLocalService.increment());
+
+		if (smallImageSource <= 0) {
+			smallImageSource = _getSmallImageSource(smallImage, smallImageURL);
+		}
+
 		article.setSmallImageSource(smallImageSource);
+
 		article.setSmallImageURL(smallImageURL);
 		article.setStatus(WorkflowConstants.STATUS_APPROVED);
 		article.setStatusByUserId(userId);
@@ -4815,7 +4826,12 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(0);
 		}
 
+		if (smallImageSource <= 0) {
+			smallImageSource = _getSmallImageSource(smallImage, smallImageURL);
+		}
+
 		article.setSmallImageSource(smallImageSource);
+
 		article.setSmallImageURL(smallImageURL);
 
 		if (latestArticle.isPending()) {
@@ -5354,7 +5370,12 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(0);
 		}
 
+		if (smallImageSource <= 0) {
+			smallImageSource = _getSmallImageSource(smallImage, smallImageURL);
+		}
+
 		article.setSmallImageSource(smallImageSource);
+
 		article.setSmallImageURL(smallImageURL);
 		article.setStatus(WorkflowConstants.STATUS_APPROVED);
 
@@ -7835,6 +7856,18 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+	}
+
+	private int _getSmallImageSource(boolean smallImage, String smallImageURL) {
+		if (!smallImage) {
+			return JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
+		}
+
+		if (Validator.isNotNull(smallImageURL)) {
+			return JournalArticleConstants.SMALL_IMAGE_SOURCE_URL;
+		}
+
+		return JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER;
 	}
 
 	private int _getUniqueUrlTitleCount(

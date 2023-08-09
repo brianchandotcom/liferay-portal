@@ -343,6 +343,8 @@ public interface User extends PersistedModel, UserModel {
 	public boolean isMale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isOnDemandUser();
+
 	public boolean isPasswordModified();
 
 	public boolean isReminderQueryComplete();

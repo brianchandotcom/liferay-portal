@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.db.partition;
 
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -19,7 +20,8 @@ public class DBPartition {
 	public static boolean isPartitionedModel(Class<?> clazz) {
 		if (isPartitionEnabled() &&
 			(ClassName.class.isAssignableFrom(clazz) ||
-			 ShardedModel.class.isAssignableFrom(clazz))) {
+			 ShardedModel.class.isAssignableFrom(clazz) ||
+			 ResourceAction.class.isAssignableFrom(clazz))) {
 
 			return true;
 		}

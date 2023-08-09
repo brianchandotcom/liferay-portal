@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/fansysoft-electronic-procurement-system",
+	"hidden": true,
+	"name": "Electronic Procurement System",
+	"name_i18n": {
+		"en_US": "Electronic Procurement System"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

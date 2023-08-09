@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/cognizant-shared-investigator-platform-sip",
+	"hidden": true,
+	"name": "Cognizant Shared Investigator Platform (SIP)",
+	"name_i18n": {
+		"en_US": "Cognizant Shared Investigator Platform (SIP)"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

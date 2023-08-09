@@ -1640,7 +1640,7 @@
 																									},
 																									"url": {
 																										"value_i18n": {
-																											"en_US": "/documents/d/[$GROUP_KEY$]/26_digital-agent-png?download=true"
+																											"en_US": "/documents/d/[$GROUP_KEY$]/26_digital_agent-png?download=true"
 																										}
 																									}
 																								},
@@ -1802,7 +1802,7 @@
 																									},
 																									"url": {
 																										"value_i18n": {
-																											"en_US": "/documents/d/[$GROUP_KEY$]/26_digital-agent-compliance-png?download=true"
+																											"en_US": "/documents/d/[$GROUP_KEY$]/26_digital_agent_compliance-png?download=true"
 																										}
 																									}
 																								},

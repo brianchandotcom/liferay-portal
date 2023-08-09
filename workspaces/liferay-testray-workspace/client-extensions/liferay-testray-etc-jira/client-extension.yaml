@@ -1,23 +1,38 @@
 assemble:
-    - include: ".env"
-    - include: "Dockerfile"
-    - include: "LCP.json"
-    - include: "package.json"
-    - include: "src/index.ts"
-    - include: "src/lib/*"
-    - include: "src/services/*"
-jira-action:
-    name: Jira Action Service
-    oAuth2ApplicationExternalReferenceCode: jira-user-agent
-    resourcePath: /jira
-    type: objectAction
-jira-server:
-    homePageURL: https://solutions-uat.lxc.liferay.com
-    scopes:
-        - Liferay.Object.Admin.REST.everything.read
-        - liferay-json-web-services.everything.read
-    type: oAuthApplicationHeadlessServer
-    userAccountScreenName: test@liferay.com
-jira-user-agent:
-    homePageURL: https://solutions-uat.lxc.liferay.com
-    type: oAuthApplicationUserAgent
+  - include: ".env"
+  - include: "Dockerfile"
+  - include: "LCP.json"
+  - include: "package.json"
+  - include: "src/index.ts"
+  - include: "src/lib/*"
+  - include: "src/services/*"
+testray-jira-etc-bun-oauth-application-user-agent:
+  .serviceAddress: 127.0.0.1:3333
+  .serviceScheme: http
+  name: Testray Jira OAuth Integration User Agent
+  scopes:
+    - C_Issue.everything.read
+    - C_Requirement.everything
+    - C_TestrayJiraOAuths.everything
+    - Liferay.Headless.Admin.User.everything
+  type: oAuthApplicationUserAgent
+testray-jira-preauthorize:
+  name: Testray Jira PreAuthorize
+  oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+  resourcePath: /jira/preauthorize
+  type: objectAction
+testray-resync-jira-ticket:
+  name: Testray Resync Jira Ticket
+  oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+  resourcePath: /jira/resync
+  type: objectAction
+testray-jira-update-ticket:
+  name: Testray Jira Update Tickets
+  oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+  resourcePath: /jira/update-tickets
+  type: objectAction
+testray-jira-import-requirement-tickets:
+  name: Testray Jira Import Requirement Tickets
+  oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+  resourcePath: /jira/import-requirement-tickets
+  type: objectAction

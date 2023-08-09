@@ -3,12 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Cache from '../lib/Cache';
 import logger from '../lib/Logger';
 import Jira from '../services/jira/Jira';
 import { RequestSet } from '../services/jira/JiraAuth';
 import JiraEngine from '../services/jira/JiraEngine';
 import Testray from '../services/liferay/Testray';
 import { getPusherClient } from '../services/pusher';
+
+const jiraBaseURL = 'https://liferay.atlassian.net';
+const cacheInstance = Cache.getInstance();
 
 const {
     LIFERAY_BASE_URL,
@@ -34,25 +38,24 @@ const actions = {
             await testray.setTestrayOAuthJiraCode(response, state as string);
         }, 1000);
 
-        return (set.redirect = `${LIFERAY_BASE_URL}${LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION}`);
+        set.redirect = `${LIFERAY_BASE_URL}${LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION}`;
     },
-    preauthorize: (userId: string, set: RequestSet) =>
-        jira.authorize(userId, set),
-    updateTickets: ({ body, request }: { body: unknown; request: Request }) => {
+    importRequirementFromIssues: async ({
+        body,
+        request,
+    }: {
+        body: unknown;
+        request: Request;
+    }) => {
         const {
             objectEntry: {
-                id: caseResultId,
                 statusByUserId: userId,
-                values: { issues },
-            },
-            originalObjectEntry: {
-                values: { issues: oldIssues },
+                values: {
+                    issues: _issues,
+                    r_projectJiraImportRequirements_c_projectId: projectId,
+                },
             },
         } = body as any;
-
-        if (!issues?.length || oldIssues?.trim() === issues?.trim()) {
-            logger.info(`No issues to update on ${caseResultId} caseResultId`);
-        }
 
         const httpContext = {
             authorization: request.headers.get('authorization'),
@@ -60,18 +63,37 @@ const actions = {
         };
 
         setTimeout(async () => {
-            const _issues = issues
+            const jiraIssues = ((_issues ?? '') as string)
                 .split(',')
-                .map((issue: string) => issue.trim()) as string[];
+                .map((issue) => issue.trim());
 
-            await jiraEngine.updateIssues(_issues, httpContext);
+            const issues = await jira.getIssues(jiraIssues, httpContext);
 
-            logger.info(
-                `Success to update ${_issues.join(
-                    ', '
-                )} on Case Result ${caseResultId}`
-            );
+            for (const issue in issues) {
+                if (issues[issue]) {
+                    const jiraIssue = issues[issue];
+
+                    await testray.createRequirement(
+                        {
+                            components: jiraIssue.jiraComponents.join(', '),
+                            description: jiraIssue.description,
+                            descriptionType: 'markdown',
+                            key: `R-${Math.ceil(Math.random() * 1000)}`,
+                            linkTitle: jiraIssue.key,
+                            linkURL: `${jiraBaseURL}/${jiraIssue.key}`,
+                            r_projectToRequirements_c_projectId: projectId,
+                            summary: jiraIssue.summary,
+                        },
+                        httpContext
+                    );
+                }
+            }
         }, 1000);
+
+        return 'ok';
+    },
+    preauthorize: (userId: string, authorization: string) => {
+        cacheInstance.set(`preauthorize-${userId}`, authorization);
 
         return 'ok';
     },
@@ -111,6 +133,43 @@ const actions = {
                 });
             }
         }, 2000);
+
+        return 'ok';
+    },
+    updateTickets: ({ body, request }: { body: unknown; request: Request }) => {
+        const {
+            objectEntry: {
+                id: caseResultId,
+                statusByUserId: userId,
+                values: { issues },
+            },
+            originalObjectEntry: {
+                values: { issues: oldIssues },
+            },
+        } = body as any;
+
+        if (!issues?.length || oldIssues?.trim() === issues?.trim()) {
+            logger.info(`No issues to update on ${caseResultId} caseResultId`);
+        }
+
+        const httpContext = {
+            authorization: request.headers.get('authorization'),
+            userId,
+        };
+
+        setTimeout(async () => {
+            const _issues = issues
+                .split(',')
+                .map((issue: string) => issue.trim()) as string[];
+
+            await jiraEngine.updateIssues(_issues, httpContext);
+
+            logger.info(
+                `Success to update ${_issues.join(
+                    ', '
+                )} on Case Result ${caseResultId}`
+            );
+        }, 1000);
 
         return 'ok';
     },

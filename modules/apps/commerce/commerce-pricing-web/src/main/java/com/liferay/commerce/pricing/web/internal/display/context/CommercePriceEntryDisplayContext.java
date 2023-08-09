@@ -78,7 +78,8 @@ public class CommercePriceEntryDisplayContext
 		CommercePriceEntry instanceBaseCommercePriceEntry =
 			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
 				commercePriceEntry.getCPInstanceUuid(),
-				commercePriceList.getType());
+				commercePriceList.getType(),
+				commercePriceEntry.getUnitOfMeasureKey());
 
 		if (instanceBaseCommercePriceEntry == null) {
 			return StringPool.DASH;

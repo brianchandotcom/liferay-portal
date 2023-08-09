@@ -110,7 +110,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 		return _commercePriceEntryService.getInstanceBaseCommercePriceEntry(
 			cpInstance.getCPInstanceUuid(),
-			CommercePriceListConstants.TYPE_PRICE_LIST);
+			CommercePriceListConstants.TYPE_PRICE_LIST, StringPool.BLANK);
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()

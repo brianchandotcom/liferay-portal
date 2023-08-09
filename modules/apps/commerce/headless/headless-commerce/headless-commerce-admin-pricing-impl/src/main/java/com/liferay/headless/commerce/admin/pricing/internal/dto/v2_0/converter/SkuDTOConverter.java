@@ -15,6 +15,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -47,12 +48,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		CommercePriceEntry commerceBasePriceListPriceEntry =
 			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(),
-				CommercePriceListConstants.TYPE_PRICE_LIST);
+				CommercePriceListConstants.TYPE_PRICE_LIST, StringPool.BLANK);
 
 		CommercePriceEntry commerceBasePromotionPriceEntry =
 			_commercePriceEntryLocalService.getInstanceBaseCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(),
-				CommercePriceListConstants.TYPE_PROMOTION);
+				CommercePriceListConstants.TYPE_PROMOTION, StringPool.BLANK);
 
 		Locale locale = dtoConverterContext.getLocale();
 

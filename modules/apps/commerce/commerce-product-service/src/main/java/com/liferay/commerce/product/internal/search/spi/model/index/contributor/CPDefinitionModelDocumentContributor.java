@@ -35,6 +35,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -541,7 +542,8 @@ public class CPDefinitionModelDocumentContributor
 				_commercePriceEntryLocalService.
 					getInstanceBaseCommercePriceEntry(
 						cpInstance.getCPInstanceUuid(),
-						CommercePriceListConstants.TYPE_PRICE_LIST);
+						CommercePriceListConstants.TYPE_PRICE_LIST,
+						StringPool.BLANK);
 
 			if ((commercePriceEntry == null) ||
 				commercePriceEntry.isPriceOnApplication()) {

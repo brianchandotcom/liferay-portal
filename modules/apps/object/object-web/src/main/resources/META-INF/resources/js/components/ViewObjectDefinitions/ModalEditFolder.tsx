@@ -23,7 +23,7 @@ import React, {useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
-interface ModalAddFolderProps {
+interface ModalEditFolderProps {
 	externalReferenceCode: string;
 	folderID: number;
 	handleOnClose: () => void;
@@ -43,7 +43,7 @@ export function ModalEditFolder({
 	handleOnClose,
 	initialLabel,
 	name,
-}: ModalAddFolderProps) {
+}: ModalEditFolderProps) {
 	const [error, setError] = useState<string>('');
 
 	const [selectedLocale, setSelectedLocale] = useState<

@@ -46,7 +46,7 @@ export function ModalDeleteFolder({
 			>
 				<p>
 					{Liferay.Language.get(
-						'deleting-an-objects-folder-will-move-its-object-definitions'
+						'deleting-an-object-folder-will-move-its-object-definitions'
 					)}
 				</p>
 

@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-interface ModalAddFolderProps {
+interface ModalEditFolderProps {
 	externalReferenceCode: string;
 	folderID: number;
 	handleOnClose: () => void;
@@ -18,5 +18,5 @@ export declare function ModalEditFolder({
 	handleOnClose,
 	initialLabel,
 	name,
-}: ModalAddFolderProps): JSX.Element;
+}: ModalEditFolderProps): JSX.Element;
 export {};

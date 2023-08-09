@@ -16,6 +16,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.model.JournalArticle;
@@ -302,19 +303,30 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 		boolean indexable = ParamUtil.getBoolean(
 			uploadPortletRequest, "indexable");
 
-		String smallImageSource = ParamUtil.getString(
-			uploadPortletRequest, "smallImageSource", "none");
+		int smallImageSource = ParamUtil.getInteger(
+			uploadPortletRequest, "smallImageSource",
+			JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE);
 
-		boolean smallImage = !Objects.equals(smallImageSource, "none");
+		boolean smallImage = false;
+
+		if (smallImageSource !=
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE) {
+
+			smallImage = true;
+		}
 
 		String smallImageURL = StringPool.BLANK;
 		File smallFile = null;
 
-		if (Objects.equals(smallImageSource, "url")) {
+		if (smallImageSource ==
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) {
+
 			smallImageURL = ParamUtil.getString(
 				uploadPortletRequest, "smallImageURL");
 		}
-		else if (Objects.equals(smallImageSource, "file")) {
+		else if (smallImageSource ==
+					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) {
+
 			smallFile = uploadPortletRequest.getFile("smallFile");
 		}
 
@@ -346,8 +358,8 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageURL, smallFile,
-				null, articleURL, serviceContext);
+				neverReview, indexable, smallImage, smallImageSource,
+				smallImageURL, smallFile, null, articleURL, serviceContext);
 		}
 		else {
 
@@ -369,8 +381,8 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 					expirationDateHour, expirationDateMinute, neverExpire,
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, neverReview, indexable,
-					smallImage, smallImageURL, smallFile, null, articleURL,
-					serviceContext);
+					smallImage, smallImageSource, smallImageURL, smallFile,
+					null, articleURL, serviceContext);
 			}
 		}
 

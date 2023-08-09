@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ArticleContentSizeException;
 import com.liferay.journal.model.JournalArticle;
@@ -41,7 +42,6 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -235,19 +235,30 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 		boolean indexable = ParamUtil.getBoolean(
 			uploadPortletRequest, "indexable");
 
-		String smallImageSource = ParamUtil.getString(
-			uploadPortletRequest, "smallImageSource", "none");
+		int smallImageSource = ParamUtil.getInteger(
+			uploadPortletRequest, "smallImageSource",
+			JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE);
 
-		boolean smallImage = !Objects.equals(smallImageSource, "none");
+		boolean smallImage = false;
+
+		if (smallImageSource !=
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE) {
+
+			smallImage = true;
+		}
 
 		String smallImageURL = StringPool.BLANK;
 		File smallFile = null;
 
-		if (Objects.equals(smallImageSource, "url")) {
+		if (smallImageSource ==
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) {
+
 			smallImageURL = ParamUtil.getString(
 				uploadPortletRequest, "smallImageURL");
 		}
-		else if (Objects.equals(smallImageSource, "file")) {
+		else if (smallImageSource ==
+					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) {
+
 			smallFile = uploadPortletRequest.getFile("smallFile");
 		}
 
@@ -269,8 +280,8 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageURL, smallFile,
-				serviceContext);
+				neverReview, indexable, smallImage, smallImageSource,
+				smallImageURL, smallFile, serviceContext);
 		}
 		else if (actionName.equals(
 					"/journal/update_data_engine_default_values")) {
@@ -285,7 +296,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 				expirationDateHour, expirationDateMinute, neverExpire,
 				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
 				reviewDateMinute, neverReview, indexable, smallImage,
-				smallImageURL, smallFile, serviceContext);
+				smallImageSource, smallImageURL, smallFile, serviceContext);
 		}
 
 		return article;

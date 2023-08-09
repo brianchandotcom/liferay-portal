@@ -911,34 +911,35 @@ public class JournalEditArticleDisplayContext {
 		return _defaultLanguageId;
 	}
 
-	public String getSmallImageSource() {
-		if (Validator.isNotNull(_smallImageSource)) {
+	public int getSmallImageSource() {
+		if (_smallImageSource != null) {
 			return _smallImageSource;
 		}
 
 		if (_article == null) {
-			_smallImageSource = "none";
+			_smallImageSource = JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
 
 			return _smallImageSource;
 		}
 
-		_smallImageSource = ParamUtil.getString(
+		_smallImageSource = ParamUtil.getInteger(
 			_httpServletRequest, "smallImageSource");
 
-		if (Validator.isNotNull(_smallImageSource)) {
+		if (_smallImageSource <= 0) {
 			return _smallImageSource;
 		}
 
 		if (!_article.isSmallImage()) {
-			_smallImageSource = "none";
+			_smallImageSource = JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
 		}
 		else if (Validator.isNotNull(_article.getSmallImageURL())) {
-			_smallImageSource = "url";
+			_smallImageSource = JournalArticleConstants.SMALL_IMAGE_SOURCE_URL;
 		}
 		else if ((_article.getSmallImageId() > 0) &&
 				 Validator.isNull(_article.getSmallImageURL())) {
 
-			_smallImageSource = "file";
+			_smallImageSource =
+				JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER;
 		}
 
 		return _smallImageSource;
@@ -1540,7 +1541,7 @@ public class JournalEditArticleDisplayContext {
 	private String _referringPortletResource;
 	private Boolean _showHeader;
 	private Boolean _showSelectFolder;
-	private String _smallImageSource;
+	private Integer _smallImageSource;
 	private final ThemeDisplay _themeDisplay;
 	private Double _version;
 

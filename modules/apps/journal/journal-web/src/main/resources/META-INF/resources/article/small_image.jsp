@@ -12,7 +12,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
-String smallImageSource = journalEditArticleDisplayContext.getSmallImageSource();
+int smallImageSource = journalEditArticleDisplayContext.getSmallImageSource();
 %>
 
 <liferay-ui:error-marker
@@ -35,12 +35,12 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 </liferay-ui:error>
 
 <aui:select ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageSource" value="<%= smallImageSource %>" wrapperCssClass="mb-3">
-	<aui:option label="no-image" value="none" />
-	<aui:option label="from-url" value="url" />
-	<aui:option label="from-your-computer" value="file" />
+	<aui:option label="no-image" value="<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE %>" />
+	<aui:option label="from-url" value="<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_URL %>" />
+	<aui:option label="from-your-computer" value="<%= JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER %>" />
 </aui:select>
 
-<div class="<%= Objects.equals(smallImageSource, "url") ? "" : "hide" %>" id="<portlet:namespace />smallImageURLContainer">
+<div class="<%= (smallImageSource == JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) ? "" : "hide" %>" id="<portlet:namespace />smallImageURLContainer">
 	<c:if test="<%= (article != null) && Validator.isNotNull(article.getArticleImageURL(themeDisplay)) %>">
 		<div class="aspect-ratio aspect-ratio-16-to-9">
 			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="aspect-ratio-item-fluid" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" />
@@ -50,7 +50,7 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 	<aui:input ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" label="" name="smallImageURL" title="small-image-url" wrapperCssClass="mb-3" />
 </div>
 
-<div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallFileContainer">
+<div class="<%= (smallImageSource == JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) ? "" : "hide" %>" id="<portlet:namespace />smallFileContainer">
 	<div>
 
 		<%

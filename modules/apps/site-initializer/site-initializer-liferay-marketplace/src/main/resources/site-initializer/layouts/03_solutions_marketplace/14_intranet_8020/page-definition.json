@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -67,21 +69,22 @@
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
-										"boxShadow": "",
-										"showIconBoxShadow": false,
-										"moveIcon": "-75px 0 0 0",
-										"containerWidth": "container",
-										"backgroundDarkOrLight": "light",
-										"borderRadius": "border-radius-none",
-										"lazyLoadingImage": true,
 										"background": "",
-										"backgroundSize": "cover",
-										"backgroundPosition": "center",
-										"showIcon": false,
+										"backgroundDarkOrLight": "light",
 										"backgroundImageUrl": "",
-										"blockAlignment": ""
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "container",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
@@ -95,7 +98,8 @@
 								},
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"pageElements": [
 											{
 												"definition": {
@@ -103,8 +107,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"hidden": true,
 														"paddingBottom": "4",
@@ -121,7 +127,8 @@
 														"paddingTop": "4"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 													}
 												},
@@ -143,11 +150,13 @@
 														},
 														{
 															"id": "portraitMobile",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "top"
@@ -163,11 +172,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -182,12 +193,13 @@
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
-																		"flexWrap": "",
 																		"flexDirection": "",
+																		"flexWrap": "",
 																		"items": 3,
 																		"justifyContent": "justify-content-start"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -200,7 +212,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -225,7 +238,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -242,7 +256,8 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -259,7 +274,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Intranet 80.20"
@@ -284,17 +300,19 @@
 																					},
 																					"fragmentConfig": {
 																						"alignItems": "align-items-start",
-																						"flexWrap": "",
 																						"flexDirection": "",
+																						"flexWrap": "",
 																						"items": 2,
 																						"justifyContent": "justify-content-start"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -319,7 +337,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -334,7 +353,8 @@
 																						"type": "FragmentDropZone"
 																					},
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"type": "FragmentDropZone"
 																					}
 																				],
@@ -355,7 +375,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": ""
@@ -376,7 +397,8 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	}
 																],
@@ -395,11 +417,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -414,12 +438,13 @@
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
-																		"flexWrap": "",
 																		"flexDirection": "",
+																		"flexWrap": "",
 																		"items": 1,
 																		"justifyContent": "justify-content-center"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -432,7 +457,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -440,15 +466,16 @@
 																						"key": "BASIC_COMPONENT-button"
 																					},
 																					"fragmentConfig": {
+																						"buttonSize": "nm",
 																						"buttonType": "primary",
-																						"type": "link",
-																						"buttonSize": "nm"
+																						"type": "link"
 																					},
 																					"fragmentFields": [
 																						{
 																							"id": "link",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Contact Partner"
@@ -479,11 +506,13 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	}
 																],
@@ -501,8 +530,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"paddingBottom": "6",
 														"paddingTop": "6"
@@ -561,7 +592,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -585,21 +618,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -613,7 +647,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -632,11 +667,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -652,11 +689,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -669,8 +708,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -694,7 +735,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Intranet Packaged Solution</h1>\n"
@@ -717,8 +759,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -742,7 +786,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "A state-of-the-art intranet solution, designed on the basis of international experience and best practices by the leading Italian specialist in the field, Giacomo Mason."
@@ -764,8 +809,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -787,11 +834,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -804,8 +853,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -821,17 +872,18 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "2",
+																				"colorScheme": "dark",
 																				"imageAspectRatio": "aspect-ratio-4-to-3",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": "dark"
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "2"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "{\"title\":\"13_open_square_1-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/14_image_01-png?download=true\"}"
@@ -842,7 +894,8 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "{\"title\":\"13_open_square_2-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/14_image_02-png??download=true\"}"
@@ -853,7 +906,8 @@
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -903,7 +957,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -926,8 +982,10 @@
 												"key": "spacer",
 												"siteKey": "[$GROUP_KEY$]"
 											},
-											"fragmentConfig": {},
-											"fragmentFields": [],
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"paddingBottom": "6",
 												"paddingTop": "6"
@@ -943,21 +1001,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "container",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -971,7 +1030,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1011,11 +1071,13 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
 																			"id": "tablet",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		}
 																	],
 																	"verticalAlignment": "top"
@@ -1031,11 +1093,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -1048,8 +1112,10 @@
 																						"key": "spacer",
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
-																					"fragmentConfig": {},
-																					"fragmentFields": [],
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"paddingTop": "4"
 																					},
@@ -1072,7 +1138,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">80% of the features.<br />\n20% of the time.</h2>\n"
@@ -1103,7 +1170,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "<br />\n<br />\nIntranet 80.20 is an ideal synthesis of functionality and design that represents a \"significant shortcut\" towards a final result of excellence: an 80% ready that needs only 20% customization and integration.<br />\n<br />\n<a href=\"https://www.intranet8020.it/\" target=\"_blank\">Learn More</a>"
@@ -1129,11 +1197,13 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "tablet"
 																				}
 																			],
@@ -1146,16 +1216,17 @@
 																						"key": "BASIC_COMPONENT-video"
 																					},
 																					"fragmentConfig": {
+																						"align": "flex-start",
+																						"autoPlay": false,
 																						"hideControls": false,
-																						"videoWidth": "",
 																						"loop": false,
 																						"mute": true,
-																						"autoPlay": false,
-																						"align": "flex-start",
 																						"url": "documents/d/[$GROUP_KEY$]/intranet_demo_8020",
-																						"videoHeight": ""
+																						"videoHeight": "",
+																						"videoWidth": ""
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1175,8 +1246,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "6",
 																"paddingTop": "6"
@@ -1221,7 +1294,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1245,21 +1320,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "container",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1273,7 +1349,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1281,8 +1358,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"
@@ -1308,11 +1387,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -1328,11 +1409,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1354,7 +1437,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Solution Highlights:"
@@ -1376,8 +1460,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingTop": "4"
 																			},
@@ -1401,11 +1487,13 @@
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {}
+																					"rowViewportDefinition": {
+																					}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {}
+																					"rowViewportDefinition": {
+																					}
 																				}
 																			],
 																			"verticalAlignment": "top"
@@ -1421,11 +1509,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -1473,7 +1563,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -1492,8 +1583,10 @@
 																										"key": "spacer",
 																										"siteKey": "[$GROUP_KEY$]"
 																									},
-																									"fragmentConfig": {},
-																									"fragmentFields": [],
+																									"fragmentConfig": {
+																									},
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"paddingBottom": "2",
 																										"paddingTop": "2"
@@ -1517,7 +1610,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "Top Design"
@@ -1540,8 +1634,10 @@
 																										"key": "spacer",
 																										"siteKey": "[$GROUP_KEY$]"
 																									},
-																									"fragmentConfig": {},
-																									"fragmentFields": [],
+																									"fragmentConfig": {
+																									},
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"paddingBottom": "2",
 																										"paddingTop": "2"
@@ -1565,7 +1661,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "The “intranet in a box” solution conceived and designed by Giacomo Mason, expert in internal communications, intranets and digital workplaces, who has brought together in this product domain experience and the best practices of the sector."
@@ -1597,11 +1694,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -1649,7 +1748,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -1668,8 +1768,10 @@
 																										"key": "spacer",
 																										"siteKey": "[$GROUP_KEY$]"
 																									},
-																									"fragmentConfig": {},
-																									"fragmentFields": [],
+																									"fragmentConfig": {
+																									},
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"paddingBottom": "2",
 																										"paddingTop": "2"
@@ -1693,7 +1795,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Multi-Platform</h4>\n"
@@ -1716,8 +1819,10 @@
 																										"key": "spacer",
 																										"siteKey": "[$GROUP_KEY$]"
 																									},
-																									"fragmentConfig": {},
-																									"fragmentFields": [],
+																									"fragmentConfig": {
+																									},
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"paddingBottom": "2",
 																										"paddingTop": "2"
@@ -1741,7 +1846,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "The only plug &amp; play intranet built on the native back-office of both global market reference platforms: Liferay (Java) and Microsoft 365."
@@ -1773,11 +1879,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -1825,7 +1933,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -1844,8 +1953,10 @@
 																										"key": "spacer",
 																										"siteKey": "[$GROUP_KEY$]"
 																									},
-																									"fragmentConfig": {},
-																									"fragmentFields": [],
+																									"fragmentConfig": {
+																									},
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"paddingBottom": "2",
 																										"paddingTop": "2"
@@ -1869,7 +1980,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">No Intermediaries</h4>\n"
@@ -1892,8 +2004,10 @@
 																										"key": "spacer",
 																										"siteKey": "[$GROUP_KEY$]"
 																									},
-																									"fragmentConfig": {},
-																									"fragmentFields": [],
+																									"fragmentConfig": {
+																									},
+																									"fragmentFields": [
+																									],
 																									"fragmentStyle": {
 																										"paddingBottom": "2",
 																										"paddingTop": "2"
@@ -1917,7 +2031,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "The implementation at the customer’s premises is handled directly by the Intranet 80.20 developers, not by third parties, guaranteeing the very best final result."
@@ -1948,8 +2063,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -1973,7 +2090,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<strong>COMMUNICATION</strong>\n<ul>\n\t<li>News</li>\n\t<li>Announcements</li>\n\t<li>Events</li>\n\t<li>Multimedia</li>\n</ul>\n<br />\n<strong>COMPANY</strong>\n\n<ul>\n\t<li>Branches</li>\n\t<li>Business Units / Sectors</li>\n\t<li>Address Book</li>\n\t<li>Organization Chart</li>\n\t<li>Procedures / Documents</li>\n\t<li>Training Paths</li>\n</ul>\n<br />\n<strong>PERSONAL AREA</strong>\n\n<ul>\n\t<li>Personal Profile</li>\n\t<li>My page</li>\n\t<li>Targeting</li>\n\t<li>Personalization</li>\n\t<li>My app</li>\n\t<li>Notifications</li>\n</ul>\n<br />\n<strong>SOCIAL</strong>\n\n<ul>\n\t<li>Comments</li>\n\t<li>Like</li>\n\t<li>Bulletin Board</li>\n\t<li>Gamification</li>\n</ul>\n<br />\n<strong>SUPPORT</strong>\n\n<ul>\n\t<li>FAQ</li>\n\t<li>How-to’s</li>\n\t<li>A-Z index</li>\n</ul>\n<br />\n<strong>SEARCH</strong>\n\n<ul>\n\t<li>Search Engine</li>\n\t<li>Contextual Search</li>\n\t<li>Facet Filters</li>\n</ul>\n<br />\n<strong>COLLABORATION</strong>\n\n<ul>\n\t<li>Unified Communication</li>\n\t<li>Communication</li>\n\t<li>Teams</li>\n\t<li>Community</li>\n</ul>\n"
@@ -1992,8 +2110,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -2017,7 +2137,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Company Profile"
@@ -2048,7 +2169,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<p _msthash=\"821678\" _msttexthash=\"13669266\">Ariadne is a company specialized in the creation of advanced digital platforms through the use of technologies and methodologies in continuous development.<br />\n<br />\nSince the nineties, the company has created over 350 portals and is able to offer a consolidated expertise in Digital Engineering and in the development of enterprise-class systems with Liferay technology, Cloud Applications, AWS Cloud Native Apps.<br />\n<br />\nAriadne is a Liferay Platinum Partner.&nbsp;Through constant updating and decades of experience, the Ariadne team is able to support customer projects with portals, apps and platforms of excellence.<br />\n<br />\n<strong>Website</strong></p>\n<a href=\"https://www.intranet8020.it/\" target=\"_blank\">https://www.intranet8020.it</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@ariadne.it\" target=\"_blank\">sales@ariadne.it</a>"
@@ -2073,8 +2195,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "3"
@@ -2119,7 +2243,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -2143,26 +2269,28 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "container",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "container",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -2170,8 +2298,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"
@@ -2195,7 +2325,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Contact Us"
@@ -2227,8 +2358,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "2"
@@ -2243,8 +2376,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"

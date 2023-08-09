@@ -1,0 +1,2053 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {"borderWidth": "0"},
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#F4F6F9",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {"borderWidth": "0"},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"boxShadow": "",
+												"showIconBoxShadow": false,
+												"moveIcon": "-75px 0 0 0",
+												"containerWidth": "",
+												"backgroundDarkOrLight": "light",
+												"borderRadius": "border-radius-none",
+												"lazyLoadingImage": true,
+												"background": "",
+												"backgroundSize": "cover",
+												"backgroundPosition": "center",
+												"showIcon": false,
+												"backgroundImageUrl": "",
+												"blockAlignment": ""
+											},
+											"fragmentFields": [],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-1"
+															},
+															"fragmentFields": [],
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingBottom": "4",
+																		"paddingTop": "4"
+																	},
+																	"id": "landscapeMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {},
+																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 9
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"align": "Start",
+																				"borderWidth": 0,
+																				"contentDisplay": "FlexRow",
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/app_logo.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"width": "100px"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragmentStyle": {
+																						"borderWidth": "0",
+																						"marginLeft": "4"
+																					},
+																					"indexed": true,
+																					"layout": {
+																						"borderWidth": 0,
+																						"marginBottom": 0,
+																						"marginLeft": 2,
+																						"marginRight": 0,
+																						"marginTop": 0,
+																						"opacity": 100,
+																						"paddingBottom": 0,
+																						"paddingLeft": 0,
+																						"paddingRight": 0,
+																						"paddingTop": 0,
+																						"widthType": "Fluid"
+																					}
+																				},
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "dialect-dialect-text",
+																								"siteKey": "[$COMPANY_ID$]"
+																							},
+																							"fragmentConfig": {
+																								"textType": "h1"
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "element-text",
+																									"value": {
+																										"fragmentLink": {},
+																										"text": {
+																											"value_i18n": {
+																												"en_US": "Digital Place for Communities"
+																											}
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"fontWeight": "fontWeightBold"
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "BASIC_COMPONENT-image"
+																							},
+																							"fragmentConfig": {
+																								"imageSize": "w-100"
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "image-square",
+																									"value": {
+																										"fragmentImage": {
+																											"url": {
+																												"mapping": {
+																													"fieldKey": "FileEntry_previewImage",
+																													"itemReference": {
+																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/placecube_logo.png#]"
+																													}
+																												}
+																											}
+																										},
+																										"fragmentLink": {}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"height": "32px",
+																								"marginBottom": "2",
+																								"marginTop": "2",
+																								"width": "96px"
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
+																					}
+																				],
+																				"type": "Section"
+																			}
+																		],
+																		"type": "Section"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-base",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"defaultFragmentInlineValue": {
+																								"value": "<style>\n\t.solution-category-container {\n\t  font-size: 1rem;\n    line-height: 1.5;\n\t\tdisplay: flex;\n\t}\n\t\n\t.solution-category-container .solution-category {\n\t\tborder-radius: 2px;\n\t\tbackground-color: #ebeef2;\n\t}\n</style>\n\n\n\n\n\t\t<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExtensibility and Integration\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tIdentity Management and Governance\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tNavigation and Discovery\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tOrders and Fulfillment\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tPersonalization and Segmentation\n\t\t\t\t\t</div>\n\t\t</div>"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginLeft": "8",
+																				"paddingLeft": "2"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 3
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-button"
+																			},
+																			"fragmentConfig": {
+																				"buttonType": "primary",
+																				"type": "link",
+																				"buttonSize": "nm"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "link",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Contact Partner"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"textAlign": "center"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																					  "marginTop": "4"
+																					},
+																					"id": "landscapeMobile"
+																				  },
+																				{
+																					"fragmentViewportStyle": {
+																						"marginTop": "4"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-3"
+															},
+															"fragmentFields": [],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-spacer"
+									},
+									"fragmentConfig": {"height": "py-3"},
+									"fragmentFields": [],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#0b5fff",
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {"borderWidth": "0"},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"boxShadow": "",
+												"showIconBoxShadow": false,
+												"moveIcon": "-75px 0 0 0",
+												"containerWidth": "",
+												"backgroundDarkOrLight": "dark",
+												"borderRadius": "border-radius-none",
+												"lazyLoadingImage": true,
+												"background": "",
+												"backgroundSize": "cover",
+												"backgroundPosition": "center",
+												"showIcon": false,
+												"backgroundImageUrl": "",
+												"blockAlignment": ""
+											},
+											"fragmentFields": [],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"paddingTop": "7"
+															},
+															"gutters": true,
+															"indexed": true,
+															"modulesPerRow": 2,
+															"numberOfColumns": 2,
+															"reverseOrder": false,
+															"rowViewports": [
+																{
+																	"id": "landscapeMobile",
+																	"rowViewportDefinition": {
+																		"modulesPerRow": 1,
+																		"verticalAlignment": "middle"
+																	}
+																},
+																{
+																	"id": "portraitMobile",
+																	"rowViewportDefinition": {}
+																},
+																{
+																	"id": "tablet",
+																	"rowViewportDefinition": {}
+																}
+															],
+															"verticalAlignment": "top"
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 6
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "2"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "dialect-dialect-text",
+																						"siteKey": "[$COMPANY_ID$]"
+																					},
+																					"fragmentConfig": {
+																						"textType": "display-4"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Your open knowledge platform for sharing knowledge beyond your organisation"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightBold",
+																						"marginBottom": "6",
+																						"textColor": "whiteColor"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			},
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "dialect-dialect-text",
+																						"siteKey": "[$COMPANY_ID$]"
+																					},
+																					"fragmentConfig": {
+																						"textType": "h1"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "element-text",
+																							"value": {
+																								"fragmentLink": {},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Digital Place for Communities is your open knowledge platform for sharing knowledge beyond your organisation. Now it’s easy for you to collaborate and share knowledge with teams, organisations and communities everywhere. Multi-agency use comes as standard!"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"fontWeight": "fontWeightNormal",
+																						"textColor": "whiteColor"
+																					},
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	}
+																],
+																"type": "Column"
+															},
+															{
+																"definition": {
+																	"columnViewports": [
+																		{
+																			"columnViewportDefinition": {
+																				"size": 12
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"columnViewportDefinition": {},
+																			"id": "tablet"
+																		}
+																	],
+																	"size": 6
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "image-carousel",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"numberOfImages": "2",
+																				"imageAspectRatio": "aspect-ratio-4-to-3",
+																				"lazyLoadingImage": true,
+																				"imageCarouselMaxWidth": "1280px",
+																				"colorScheme": ""
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "imageCarousel0",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/app_logo.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel1",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/local_services.png#]"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginRight": "0"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Column"
+															}
+														],
+														"type": "Row"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-spacer"
+											},
+											"fragmentConfig": {
+												"height": "py-3"
+											},
+											"fragmentFields": [],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"paddingBottom": "7",
+								"paddingTop": "7"
+							},
+							"fragmentViewports": [
+								{
+								  "fragmentViewportStyle": {
+									"paddingLeft": "4",
+									"paddingRight": "4"
+								  },
+								  "id": "tablet"
+								}
+							  ],
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 8,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 8,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {"paddingBottom": "5"},
+									"fragmentViewports": [
+										{
+										  "fragmentViewportStyle": {
+											"paddingLeft": "4",
+											"paddingRight": "4"
+										  },
+										  "id": "landscapeMobile"
+										}
+									  ],
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 4,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "DIALECT-dialect-text",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"textType": "h1",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Description"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightBold",
+												"marginBottom": "5"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "4",
+														"marginRight": "4"
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"fontSize": "font-size-paragraph-base",
+												"smallCaps": false,
+												"tabletScreenCenter": false
+											},
+											"fragmentFields": [
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Enable citizens and business to self-serve when they choose on their preferred device and browser. Drive efficiency by replacing expensive engagement channels with digital.<br />\n<br />\nDigital Place presents you with over £5m of public service investment in proven reusable digital services to accelerate your digital transformation at less cost and less risk than building from scratch.<br />\n<br />\n<a href=\"https://www.placecube.com/platforms/digital-place-for-local-public-services/\" target=\"_blank\">Learn more</a>"
+															}
+														}
+													}
+												}
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "4",
+														"marginRight": "4"
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginTop": "5",
+										"paddingLeft": "8"
+									},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"contentDisplay": "FlexColumn",
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 4,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 10,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/info_icon.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginRight": "2",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "text",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"fontSize": "font-size-paragraph-base",
+														"smallCaps": false,
+														"tabletScreenCenter": false
+													},
+													"fragmentFields": [
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "<a href=\"https://www.placecube.com/what-is-a-cube/\" target=\"_blank\"><b>So, what is a cube?</b></a>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginLeft": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/info_icon.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginRight": "2",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "text",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"fontSize": "font-size-paragraph-base",
+														"smallCaps": false,
+														"tabletScreenCenter": false
+													},
+													"fragmentFields": [
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "<a href=\"https://www.placecube.com/how-can-open-standards-and-reusable-cubes-help-solve-problems-for-local-places/\" target=\"_blank\"><strong>How can open standards and reusable cubes help solve problems for local places?</strong></a>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginLeft": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#F7F8F9",
+								"borderWidth": "0",
+								"paddingBottom": "5",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 4,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 4,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"paddingBottom": "4",
+										"paddingTop": "4"
+									},
+									"fragmentViewports": [
+										{
+										  "fragmentViewportStyle": {
+											"paddingLeft": "4",
+											"paddingRight": "4"
+										  },
+										  "id": "landscapeMobile"
+										},
+										{
+										  "fragmentViewportStyle": {
+											"paddingLeft": "4",
+											"paddingRight": "4"
+										  },
+										  "id": "tablet"
+										}
+									  ],
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 2,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 2,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-text",
+												"siteKey": "[$COMPANY_ID$]"
+											},
+											"fragmentConfig": {
+												"textType": "h1"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Accelerate your public service transformation with Digital Place -- designed by public service for public service."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightBold"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "4",
+														"marginRight": "4"
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {"marginTop": "5"},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "4",
+														"marginRight": "4"
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 4,
+											"numberOfColumns": 4,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 3
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/placecube_numbers.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"height": "64px",
+																		"marginBottom": "4",
+																		"width": "64px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-base",
+																		"smallCaps": false,
+																		"tabletScreenCenter": true
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Benefits from over £5m investment in well designed, reusable digital components (Cubes)"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "center"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 3
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/placecube_gear.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"height": "64px",
+																		"marginBottom": "4",
+																		"width": "64px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-base",
+																		"smallCaps": false,
+																		"tabletScreenCenter": true
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Drive transformation faster while removing the cost and risk of starting from scratch"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "center"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 3
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/increase_logo.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"height": "64px",
+																		"marginBottom": "4",
+																		"width": "64px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-base",
+																		"smallCaps": false,
+																		"tabletScreenCenter": true
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Achieve continuous ROI through a conveyor belt of new features at no additional subscription fee"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "center"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 3
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-communities/customer_icon.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"height": "64px",
+																		"marginBottom": "4",
+																		"width": "64px"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-base",
+																		"smallCaps": false,
+																		"tabletScreenCenter": true
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Improve customer engagement and increase self-service to create efficienciescontent here."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "center"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "#F7F8F9",
+												"borderWidth": "0"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"paddingTop": "7"
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"opacity": 100,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 8,
+														"widthType": "Fixed"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "content-container",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"boxShadow": "",
+																"showIconBoxShadow": false,
+																"moveIcon": "-75px 0 0 0",
+																"containerWidth": "",
+																"backgroundDarkOrLight": "light",
+																"borderRadius": "border-radius-none",
+																"lazyLoadingImage": true,
+																"background": "",
+																"backgroundSize": "cover",
+																"backgroundPosition": "center",
+																"showIcon": false,
+																"backgroundImageUrl": "",
+																"blockAlignment": ""
+															},
+															"fragmentFields": [],
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true
+														},
+														"pageElements": [
+															{
+																"definition": {},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-base",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Key Features:</h2>\n\n<ul>\n\t<li>Website and Microsite Templates</li>\n\t<li>Content Management System</li>\n\t<li>MyAccount (Citizen and Business Portal)</li>\n\t<li>Case Management</li>\n\t<li>Customer Contact Management (aka CRM)</li>\n\t<li>Multiple Local Service Transactions</li>\n\t<li>Multiple 3rd Party Connectors</li>\n\t<li>Extensive Low Code Functionality</li>\n\t<li>Responsive, Accessible, and Secure</li>\n</ul>\n"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-base",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n<br />\nPlacecube builds open digital platforms that make your life simpler with cubes. Now your digital journey is easier, faster and better connected.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.placecube.com/\" target=\"_blank\">https://www.placecube.com/</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:enquiries@placecube.com\" target=\"_blank\">enquiries@placecube.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+44(0)20 8895 6756"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "FragmentDropZone"
+															}
+														],
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"cssClasses": ["#solutions-details-form"],
+							"fragmentStyle": {
+								"backgroundColor": "#ebeef2",
+								"borderWidth": "0",
+								"paddingTop": "4"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 2,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {"borderWidth": "0"},
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "content-container",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"boxShadow": "",
+												"showIconBoxShadow": false,
+												"moveIcon": "-75px 0 0 0",
+												"containerWidth": "",
+												"backgroundDarkOrLight": "dark",
+												"borderRadius": "border-radius-none",
+												"lazyLoadingImage": true,
+												"background": "",
+												"backgroundSize": "cover",
+												"backgroundPosition": "center",
+												"showIcon": false,
+												"backgroundImageUrl": "",
+												"blockAlignment": ""
+											},
+											"fragmentFields": [],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "5",
+														"paddingRight": "5"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h2>\n<br />\nFind out more about&nbsp;Digital Place for Local Public Services"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"paddingTop": "5"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

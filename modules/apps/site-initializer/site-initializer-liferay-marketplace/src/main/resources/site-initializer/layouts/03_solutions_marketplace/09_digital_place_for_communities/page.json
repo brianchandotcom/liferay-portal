@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/placecube-digital-place-communities",
+	"hidden": true,
+	"name": "Digital Place for Communities",
+	"name_i18n": {
+		"en_US": "Digital Place for Communities"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

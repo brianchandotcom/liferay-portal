@@ -51,12 +51,9 @@ export default class Gallery extends React.Component {
 	}
 
 	_handleImagesUpdate({cpInstance}) {
-		const {namespace, viewCPAttachmentURL} = this.props;
-
 		updateGallery(
 			cpInstance.skuOptions,
-			namespace,
-			viewCPAttachmentURL
+			this.props.viewCPAttachmentURL
 		).then((selectedImage) => {
 			const selectedImageIndex =
 				this.state.images.length > 1

@@ -17,11 +17,14 @@ export function fetchImage(url) {
 	});
 }
 
-export function updateGallery(formFields, namespace, viewCPAttachmentURL) {
+export function updateGallery(formFields, viewCPAttachmentURL) {
 	const skuOptions = JSON.stringify(formFields);
 	const formData = new FormData();
 
-	formData.append(`${namespace}skuOptions`, skuOptions);
+	formData.append(
+		'_com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet_skuOptions',
+		skuOptions
+	);
 	formData.append('groupId', themeDisplay.getScopeGroupId());
 
 	return fetch(viewCPAttachmentURL, {

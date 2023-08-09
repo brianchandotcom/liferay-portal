@@ -26,6 +26,7 @@ import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
+import isMapped from '../../../../../../app/utils/editable_value/isMapped';
 import {updateIn} from '../../../../../../app/utils/updateIn';
 import useCache from '../../../../../../app/utils/useCache';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
@@ -107,7 +108,8 @@ export default function EditableActionPanel({item}) {
 		);
 	};
 
-	const {classNameId, fieldId} = editableValue.config.mappedAction || {};
+	const {mappedAction = {}} = editableValue.config;
+	const {classNameId, fieldId} = mappedAction;
 
 	const defaultError = useCache({
 		fetcher: () =>
@@ -124,14 +126,13 @@ export default function EditableActionPanel({item}) {
 				fieldSelectorLabel={Liferay.Language.get('action')}
 				fieldType={EDITABLE_TYPES.action}
 				itemSelectorURL={config.actionableInfoItemSelectorURL}
-				mappedItem={editableValue.config.mappedAction || {}}
+				mappedItem={mappedAction}
 				onMappingSelect={(action) => {
 					onValueSelect('mappedAction', action);
 				}}
 			/>
 
-			{(editableValue.config.mappedAction?.fieldId ||
-				editableValue.config.mappedAction?.mappedField) && (
+			{isMapped(mappedAction) && (
 				<>
 					<InteractionSelector
 						config={editableValue.config}

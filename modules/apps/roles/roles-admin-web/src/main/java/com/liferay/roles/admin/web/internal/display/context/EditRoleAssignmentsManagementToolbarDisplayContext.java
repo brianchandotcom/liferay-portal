@@ -7,10 +7,10 @@ package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.organizations.search.OrganizationSearch;
@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -160,31 +161,29 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		return DropdownItemList.of(
-			DropdownGroupItemBuilder.setDropdownItems(
-				DropdownItemList.of(
-					DropdownItemBuilder.setActive(
-						true
-					).setHref(
-						StringPool.BLANK
-					).setLabel(
-						LanguageUtil.get(_httpServletRequest, "all")
-					).build())
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "filter-by-navigation")
-			).build(),
-			DropdownGroupItemBuilder.setDropdownItems(
-				DropdownItemList.of(
-					DropdownItemBuilder.setActive(
-						Objects.equals(getOrderByCol(), "name")
-					).setHref(
-						getPortletURL(), "orderByCol", "name"
-					).setLabel(
-						LanguageUtil.get(_httpServletRequest, "name")
-					).build())
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "order-by")
-			).build());
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemList.of(
+						DropdownItemBuilder.setActive(
+							true
+						).setHref(
+							StringPool.BLANK
+						).setLabel(
+							LanguageUtil.get(_httpServletRequest, "all")
+						).build()));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "filter-by-navigation"));
+			}
+		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(getOrderByDropDownItems());
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "order-by"));
+			}
+		).build();
 	}
 
 	public SearchContainer<Group> getGroupSearchContainer() {
@@ -240,6 +239,17 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 			"edit-role-order-by-col", "name");
 
 		return _orderByCol;
+	}
+
+	public List<DropdownItem> getOrderByDropDownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(Objects.equals(getOrderByCol(), "name"));
+				dropdownItem.setHref(getPortletURL(), "orderByCol", "name");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "name"));
+			}
+		).build();
 	}
 
 	public String getOrderByType() {

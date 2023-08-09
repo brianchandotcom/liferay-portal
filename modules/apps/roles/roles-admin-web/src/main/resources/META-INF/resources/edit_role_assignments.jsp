@@ -81,6 +81,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	orderDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getOrderByDropDownItems() %>"
 	propsTransformer="js/EditRoleAssignmentsManagementToolbarPropsTransformer"
 	searchActionURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assigneesSearch"

@@ -514,7 +514,7 @@ definition {
 
 		// The alert message will update until LPS-188910 fixed
 
-		Alert.viewInfoMessageSpecific(infoMessage = "Filters only apply to documents in local repositories.");
+		Alert.viewInfoMessageSpecific(infoMessage = "Filters only apply to documents in the local repository.");
 
 		AssertElementPresent(
 			key_text = "There are no documents or media files that matched the filters in this repository.",

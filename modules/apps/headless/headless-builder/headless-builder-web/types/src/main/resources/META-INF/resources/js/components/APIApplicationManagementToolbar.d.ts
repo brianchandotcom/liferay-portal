@@ -6,17 +6,15 @@
 /// <reference types="react" />
 
 interface APIApplicationManagementToolbarProps {
-	hideButtons: boolean;
-	itemData: APIApplicationItem;
-	onPublish: voidReturn;
-	onSave: voidReturn;
+	applicationStatusKey: 'published' | 'unpublished';
+	hideManagementButtons: boolean;
+	managementButtonsProps: ManagementButtonsProps;
 	title: string;
 }
 export declare function APIApplicationManagementToolbar({
-	hideButtons,
-	itemData,
-	onPublish,
-	onSave,
+	applicationStatusKey,
+	hideManagementButtons,
+	managementButtonsProps: buttons,
 	title,
 }: APIApplicationManagementToolbarProps): JSX.Element;
 export {};

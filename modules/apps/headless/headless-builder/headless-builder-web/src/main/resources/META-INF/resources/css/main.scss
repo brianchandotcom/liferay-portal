@@ -68,14 +68,15 @@
 			max-height: 200px !important;
 		}
 	}
+}
 
-	.select-field-icon {
-		bottom: 0;
-		color: $secondary !important;
-		margin: auto !important;
-		pointer-events: none;
-		position: absolute;
-		right: 1rem;
-		top: 0;
+.info-tab {
+	padding: 0 !important;
+}
+
+
+.api-builder-navigation-breadcrum {
+	.breadcrumb-item {
+		cursor: pointer;
 	}
 }

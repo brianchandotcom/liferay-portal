@@ -5,11 +5,12 @@
 
 import {Liferay} from '.';
 
-const HEADLESS_BASE_URL = `${window.location.origin}/o/headless-delivery/v1.0`;
+const HEADLESS_BASE_URL_HEADLESS = `${window.location.origin}/o/headless-delivery/v1.0`;
+const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
 
 const fetchHeadless = async ({resolveAsJson = true, url}) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${HEADLESS_BASE_URL}${url}`, {
+	const response = await fetch(`${HEADLESS_BASE_URL_HEADLESS}${url}`, {
 		headers: {
 			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 			'Cache-Control': 'max-age=30, stale-while-revalidate=30',
@@ -24,4 +25,20 @@ const fetchHeadless = async ({resolveAsJson = true, url}) => {
 	return response;
 };
 
-export {fetchHeadless};
+const getHighPriorityContacts = async (filter) => {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${HEADLESS_BASE_URL}${`c/highprioritycontactses/?nestedFields='user'&filter=${filter}`}`,
+		{
+			headers: {
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
+				'x-csrf-token': Liferay.authToken,
+			},
+		}
+	);
+
+	return response.json();
+};
+
+export {getHighPriorityContacts, fetchHeadless};

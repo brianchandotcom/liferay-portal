@@ -255,6 +255,37 @@ export const addIncidentReportAnalyticsCloud = gql`
 	}
 `;
 
+export const addHighPriorityContact = gql`
+	mutation addHighPriorityContact(
+		$HighPriorityContacts: InputC_HighPriorityContacts!
+	) {
+		createHighPriorityContacts(input: $HighPriorityContacts)
+			@rest(
+				method: "POST"
+				type: "C_HighPriorityContactsPage"
+				path: "/c/highprioritycontactses/"
+			) {
+			contactsCategory
+			r_userToHighPriorityContacts_userId
+		}
+	}
+`;
+
+export const deleteHighPriorityContacts = gql`
+	mutation deleteHighPriorityContacts($highPriorityContactsId: Long!) {
+		deleteHighPriorityContacts(
+			highPriorityContactsId: $highPriorityContactsId
+		)
+			@rest(
+				type: "Boolean"
+				path: "/c/highprioritycontactses/{args.highPriorityContactsId}"
+				method: "DELETE"
+			) {
+			NoResponse
+		}
+	}
+`;
+
 export const getAnalyticsCloudWorkspace = gql`
 	query getAnalyticsCloudWorkspace($filter: String) {
 		c {

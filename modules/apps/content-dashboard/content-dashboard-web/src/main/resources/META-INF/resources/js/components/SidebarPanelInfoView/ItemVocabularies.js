@@ -41,7 +41,7 @@ const ItemVocabularies = ({title, vocabularies}) => {
 								{sortByStrings({array: categories}).map(
 									(category) => (
 										<ClayLabel
-											className="c-mb-2 c-mr-2"
+											className="c-mr-2"
 											displayType="secondary"
 											key={category}
 											large

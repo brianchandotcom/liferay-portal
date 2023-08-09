@@ -153,7 +153,7 @@ const SidebarPanelInfoView = ({
 				</ClayLayout.ContentRow>
 			</Sidebar.Header>
 
-			<div className="c-mb-4 sidebar-section">
+			<div className="c-mb-3 sidebar-section">
 				{showTabs && activeTabKeyValue !== null && (
 					<ClayTabs
 						className={classNames('d-flex flex-nowrap', {

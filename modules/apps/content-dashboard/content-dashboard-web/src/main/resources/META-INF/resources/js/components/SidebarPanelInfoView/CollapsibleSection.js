@@ -11,6 +11,7 @@ import React from 'react';
 const SidebarPanelInfoCollapsibleSection = ({children, title}) => {
 	return (
 		<ClayPanel
+			className="c-mb-1"
 			collapsable
 			defaultExpanded
 			displayTitle={

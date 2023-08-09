@@ -18,9 +18,10 @@ type DataError = {
 };
 
 interface BaseAPIApplicationFieldsProps {
+	data: Partial<APISchemaUIData>;
 	disableObjectSelect?: boolean;
 	displayError: DataError;
-	setData: Dispatch<SetStateAction<Partial<APIApplicationSchemaItem>>>;
+	setData: Dispatch<SetStateAction<APISchemaUIData>>;
 }
 
 export default function BaseAPISchemaFields({

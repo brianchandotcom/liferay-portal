@@ -38,7 +38,7 @@ public class MirrorsGetTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		try {
-			doExecute();
+			_execute();
 		}
 		catch (IOException ioException) {
 			throw new BuildException(ioException);
@@ -109,7 +109,7 @@ public class MirrorsGetTask extends Task {
 		_path = matcher.group(1);
 
 		if (_path.startsWith("mirrors/")) {
-			_path = _path.replaceFirst("mirrors", getMirrorsHostname());
+			_path = _path.replaceFirst("mirrors", _getMirrorsHostname());
 		}
 
 		while (_path.endsWith("/")) {
@@ -135,7 +135,7 @@ public class MirrorsGetTask extends Task {
 		_verbose = verbose;
 	}
 
-	protected void copyFile(File sourceFile, File targetFile)
+	private void _copyFile(File sourceFile, File targetFile)
 		throws IOException {
 
 		StringBuilder sb = new StringBuilder();
@@ -152,7 +152,7 @@ public class MirrorsGetTask extends Task {
 
 		long time = System.currentTimeMillis();
 
-		int size = toFile(sourceFileURI.toURL(), targetFile);
+		int size = _toFile(sourceFileURI.toURL(), targetFile);
 
 		if (_verbose) {
 			sb = new StringBuilder();
@@ -167,7 +167,7 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	protected void doExecute() throws IOException {
+	private void _execute() throws IOException {
 		if (_src.startsWith("file:")) {
 			File srcFile = new File(_src.substring("file:".length()));
 
@@ -177,7 +177,7 @@ public class MirrorsGetTask extends Task {
 				targetFile = new File(_dest, srcFile.getName());
 			}
 
-			copyFile(srcFile, targetFile);
+			_copyFile(srcFile, targetFile);
 
 			return;
 		}
@@ -206,14 +206,14 @@ public class MirrorsGetTask extends Task {
 		sb.append(File.separator);
 		sb.append("mirrors");
 		sb.append(File.separator);
-		sb.append(getPlatformIndependentPath(_path));
+		sb.append(_getPlatformIndependentPath(_path));
 
 		File localCacheDir = new File(sb.toString());
 
 		File localCacheFile = new File(localCacheDir, _fileName);
 
-		if (localCacheFile.exists() && !_force && isZipFileName(_fileName)) {
-			_force = !isValidZip(localCacheFile);
+		if (localCacheFile.exists() && !_force && _isZipFileName(_fileName)) {
+			_force = !_isValidZip(localCacheFile);
 		}
 
 		if (localCacheFile.exists() && _force) {
@@ -221,12 +221,12 @@ public class MirrorsGetTask extends Task {
 		}
 
 		if (!localCacheFile.exists()) {
-			String mirrorsHostname = getMirrorsHostname();
+			String mirrorsHostname = _getMirrorsHostname();
 
 			if (_tryLocalNetwork && !mirrorsHostname.isEmpty()) {
 				sb = new StringBuilder();
 
-				sb.append(getURLScheme());
+				sb.append(_getURLScheme());
 				sb.append(mirrorsHostname);
 				sb.append("/");
 				sb.append(_path);
@@ -236,7 +236,7 @@ public class MirrorsGetTask extends Task {
 				URL sourceURL = new URL(sb.toString());
 
 				try {
-					downloadFile(sourceURL, localCacheFile, _retries);
+					_downloadFile(sourceURL, localCacheFile, _retries);
 				}
 				catch (IOException ioException) {
 					URL defaultURL = new URL(_src);
@@ -245,29 +245,93 @@ public class MirrorsGetTask extends Task {
 						"Unable to connect to " + sourceURL +
 							", defaulting to " + defaultURL);
 
-					downloadFile(defaultURL, localCacheFile);
+					_downloadFile(defaultURL, localCacheFile, 0);
 				}
 			}
 			else {
-				downloadFile(new URL(_src), localCacheFile);
+				_downloadFile(new URL(_src), localCacheFile, 0);
 			}
 		}
 
 		if (_dest.exists() && _dest.isDirectory()) {
-			copyFile(localCacheFile, new File(_dest, _fileName));
+			_copyFile(localCacheFile, new File(_dest, _fileName));
 		}
 		else {
-			copyFile(localCacheFile, _dest);
+			_copyFile(localCacheFile, _dest);
 		}
 	}
 
-	protected void downloadFile(URL sourceURL, File targetFile)
+	private void _downloadFile(URL sourceURL, File targetFile)
 		throws IOException {
 
-		downloadFile(sourceURL, targetFile, 0);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Downloading ");
+		sb.append(sourceURL.toExternalForm());
+		sb.append(" to ");
+		sb.append(targetFile.getPath());
+		sb.append(".");
+
+		System.out.println(sb.toString());
+
+		long time = System.currentTimeMillis();
+
+		int size = 0;
+
+		try {
+			size = _toFile(sourceURL, targetFile);
+		}
+		catch (IOException ioException) {
+			targetFile.delete();
+
+			if (!_ignoreErrors) {
+				throw ioException;
+			}
+
+			ioException.printStackTrace();
+		}
+
+		if (_verbose) {
+			sb = new StringBuilder();
+
+			sb.append("Downloaded ");
+			sb.append(sourceURL.toExternalForm());
+			sb.append(". ");
+			sb.append(size);
+			sb.append(" bytes in ");
+			sb.append(System.currentTimeMillis() - time);
+			sb.append(" milliseconds.");
+
+			System.out.println(sb.toString());
+		}
+
+		if (!_isValidMD5(
+				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
+
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " failed checksum.");
+		}
+
+		if (_isZipFileName(targetFile.getName()) && !_isValidZip(targetFile)) {
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid zip file.");
+		}
+
+		if (_is7ZFileName(targetFile.getName()) &&
+			!_is7ZArchiveValid(targetFile)) {
+
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is an invalid 7z file.");
+		}
 	}
 
-	protected void downloadFile(URL sourceURL, File targetFile, int retries)
+	private void _downloadFile(URL sourceURL, File targetFile, int retries)
 		throws IOException {
 
 		if (retries > 0) {
@@ -295,7 +359,19 @@ public class MirrorsGetTask extends Task {
 		_downloadFile(sourceURL, targetFile);
 	}
 
-	protected String getMirrorsHostname() {
+	private Process _executeCommands(String[] commands)
+		throws InterruptedException, IOException, RuntimeException {
+
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+		Process process = processBuilder.start();
+
+		process.waitFor();
+
+		return process;
+	}
+
+	private String _getMirrorsHostname() {
 		if (_mirrorsHostname != null) {
 			return _mirrorsHostname;
 		}
@@ -311,7 +387,7 @@ public class MirrorsGetTask extends Task {
 		return _mirrorsHostname;
 	}
 
-	protected String getPassword() {
+	private String _getPassword() {
 		if (_password != null) {
 			return _password;
 		}
@@ -323,7 +399,7 @@ public class MirrorsGetTask extends Task {
 		return _password;
 	}
 
-	protected String getPlatformIndependentPath(String path) {
+	private String _getPlatformIndependentPath(String path) {
 		String[] separators = {"/", "\\"};
 
 		for (String separator : separators) {
@@ -333,347 +409,6 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return path;
-	}
-
-	protected String getURLScheme() {
-		Project project = getProject();
-
-		boolean ssl = _ssl;
-
-		String mirrorsSSL = project.getProperty("mirrors.ssl");
-
-		if ((mirrorsSSL != null) && !mirrorsSSL.isEmpty()) {
-			ssl = Boolean.parseBoolean(mirrorsSSL);
-		}
-
-		if (ssl) {
-			return "https://";
-		}
-
-		return "http://";
-	}
-
-	protected String getUserAgent() {
-		if (_userAgent != null) {
-			return _userAgent;
-		}
-
-		Project project = getProject();
-
-		_userAgent = project.getProperty("mirrors.user.agent");
-
-		return _userAgent;
-	}
-
-	protected String getUsername() {
-		if (_username != null) {
-			return _username;
-		}
-
-		Project project = getProject();
-
-		_username = project.getProperty("mirrors.username");
-
-		return _username;
-	}
-
-	protected boolean isValidMD5(File file, URL url) throws IOException {
-		if (_skipChecksum) {
-			return true;
-		}
-
-		if ((file == null) || !file.exists()) {
-			return false;
-		}
-
-		String remoteMD5 = null;
-
-		try {
-			remoteMD5 = toString(url);
-		}
-		catch (Exception exception) {
-			if (_verbose) {
-				System.out.println("Unable to access MD5 file");
-			}
-
-			return true;
-		}
-
-		Checksum checksum = new Checksum();
-
-		checksum.setAlgorithm("MD5");
-		checksum.setFile(file);
-		checksum.setProject(new Project());
-		checksum.setProperty("md5");
-
-		checksum.execute();
-
-		Project project = checksum.getProject();
-
-		String localMD5 = project.getProperty("md5");
-
-		return remoteMD5.contains(localMD5);
-	}
-
-	protected boolean isValidZip(File file) throws IOException {
-		if (!file.exists()) {
-			return false;
-		}
-
-		ZipFile zipFile = null;
-
-		try {
-			zipFile = new ZipFile(file, ZipFile.OPEN_READ);
-
-			int count = 0;
-
-			Enumeration<?> enumeration = zipFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				enumeration.nextElement();
-
-				count++;
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(file.getPath());
-			sb.append(" is a valid zip file with ");
-			sb.append(count);
-			sb.append(" entries.");
-
-			System.out.println(sb.toString());
-
-			return true;
-		}
-		catch (IOException ioException) {
-			System.out.println(file.getPath() + " is an invalid zip file.");
-
-			return false;
-		}
-		finally {
-			if (zipFile != null) {
-				zipFile.close();
-			}
-		}
-	}
-
-	protected boolean isZipFileName(String fileName) {
-		if (fileName.endsWith(".ear") || fileName.endsWith(".jar") ||
-			fileName.endsWith(".war") || fileName.endsWith(".zip")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected URLConnection openConnection(URL url) throws IOException {
-		URLConnection urlConnection = null;
-
-		while (true) {
-			urlConnection = url.openConnection();
-
-			if (!(urlConnection instanceof HttpURLConnection)) {
-				break;
-			}
-
-			HttpURLConnection httpURLConnection =
-				(HttpURLConnection)urlConnection;
-
-			String password = getPassword();
-			String username = getUsername();
-
-			if ((password != null) && (username != null)) {
-				String auth = username + ":" + password;
-				Base64.Encoder encoder = Base64.getEncoder();
-
-				httpURLConnection.setRequestProperty(
-					"Authorization",
-					"Basic " + encoder.encodeToString(auth.getBytes()));
-			}
-
-			if (getUserAgent() != null) {
-				httpURLConnection.setRequestProperty(
-					"User-Agent", getUserAgent());
-			}
-
-			int responseCode = httpURLConnection.getResponseCode();
-
-			if ((responseCode != HttpURLConnection.HTTP_MOVED_PERM) &&
-				(responseCode != HttpURLConnection.HTTP_MOVED_TEMP)) {
-
-				break;
-			}
-
-			url = new URL(httpURLConnection.getHeaderField("Location"));
-		}
-
-		return urlConnection;
-	}
-
-	protected int toFile(URL url, File file) throws IOException {
-		if (file.exists()) {
-			file.delete();
-		}
-
-		File dir = file.getParentFile();
-
-		if ((dir != null) && !dir.exists()) {
-			dir.mkdirs();
-		}
-
-		OutputStream outputStream = new FileOutputStream(file);
-
-		try {
-			return toOutputStream(url, outputStream);
-		}
-		catch (IOException ioException) {
-			if (file.exists()) {
-				file.delete();
-			}
-
-			throw ioException;
-		}
-		finally {
-			if (outputStream != null) {
-				outputStream.close();
-			}
-		}
-	}
-
-	protected int toOutputStream(URL url, OutputStream outputStream)
-		throws IOException {
-
-		URLConnection urlConnection = openConnection(url);
-
-		InputStream inputStream = urlConnection.getInputStream();
-
-		try {
-			byte[] bytes = new byte[1024 * 16];
-			int read = 0;
-			int size = 0;
-			long time = System.currentTimeMillis();
-
-			while ((read = inputStream.read(bytes)) > 0) {
-				outputStream.write(bytes, 0, read);
-				size += read;
-
-				if (_verbose && ((System.currentTimeMillis() - time) > 100)) {
-					System.out.print(".");
-
-					time = System.currentTimeMillis();
-				}
-			}
-
-			if (_verbose) {
-				System.out.println("\n");
-			}
-
-			return size;
-		}
-		finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
-	}
-
-	protected String toString(URL url) throws IOException {
-		OutputStream outputStream = new ByteArrayOutputStream();
-
-		try {
-			toOutputStream(url, outputStream);
-
-			return outputStream.toString();
-		}
-		finally {
-			if (outputStream != null) {
-				outputStream.close();
-			}
-		}
-	}
-
-	private void _downloadFile(URL sourceURL, File targetFile)
-		throws IOException {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Downloading ");
-		sb.append(sourceURL.toExternalForm());
-		sb.append(" to ");
-		sb.append(targetFile.getPath());
-		sb.append(".");
-
-		System.out.println(sb.toString());
-
-		long time = System.currentTimeMillis();
-
-		int size = 0;
-
-		try {
-			size = toFile(sourceURL, targetFile);
-		}
-		catch (IOException ioException) {
-			targetFile.delete();
-
-			if (!_ignoreErrors) {
-				throw ioException;
-			}
-
-			ioException.printStackTrace();
-		}
-
-		if (_verbose) {
-			sb = new StringBuilder();
-
-			sb.append("Downloaded ");
-			sb.append(sourceURL.toExternalForm());
-			sb.append(". ");
-			sb.append(size);
-			sb.append(" bytes in ");
-			sb.append(System.currentTimeMillis() - time);
-			sb.append(" milliseconds.");
-
-			System.out.println(sb.toString());
-		}
-
-		if (!isValidMD5(
-				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
-
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " failed checksum.");
-		}
-
-		if (isZipFileName(targetFile.getName()) && !isValidZip(targetFile)) {
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " is an invalid zip file.");
-		}
-
-		if (_is7ZFileName(targetFile.getName()) &&
-			!_is7ZArchiveValid(targetFile)) {
-
-			targetFile.delete();
-
-			throw new IOException(
-				targetFile.getAbsolutePath() + " is an invalid 7z file.");
-		}
-	}
-
-	private Process _executeCommands(String[] commands)
-		throws InterruptedException, IOException, RuntimeException {
-
-		ProcessBuilder processBuilder = new ProcessBuilder(commands);
-
-		Process process = processBuilder.start();
-
-		process.waitFor();
-
-		return process;
 	}
 
 	private String _getProcessOutput(Process process) {
@@ -699,6 +434,48 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return processOutput.toString();
+	}
+
+	private String _getURLScheme() {
+		Project project = getProject();
+
+		boolean ssl = _ssl;
+
+		String mirrorsSSL = project.getProperty("mirrors.ssl");
+
+		if ((mirrorsSSL != null) && !mirrorsSSL.isEmpty()) {
+			ssl = Boolean.parseBoolean(mirrorsSSL);
+		}
+
+		if (ssl) {
+			return "https://";
+		}
+
+		return "http://";
+	}
+
+	private String _getUserAgent() {
+		if (_userAgent != null) {
+			return _userAgent;
+		}
+
+		Project project = getProject();
+
+		_userAgent = project.getProperty("mirrors.user.agent");
+
+		return _userAgent;
+	}
+
+	private String _getUsername() {
+		if (_username != null) {
+			return _username;
+		}
+
+		Project project = getProject();
+
+		_username = project.getProperty("mirrors.username");
+
+		return _username;
 	}
 
 	private boolean _has7z() {
@@ -761,6 +538,223 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return false;
+	}
+
+	private boolean _isValidMD5(File file, URL url) throws IOException {
+		if (_skipChecksum) {
+			return true;
+		}
+
+		if ((file == null) || !file.exists()) {
+			return false;
+		}
+
+		String remoteMD5 = null;
+
+		try {
+			remoteMD5 = _toString(url);
+		}
+		catch (Exception exception) {
+			if (_verbose) {
+				System.out.println("Unable to access MD5 file");
+			}
+
+			return true;
+		}
+
+		Checksum checksum = new Checksum();
+
+		checksum.setAlgorithm("MD5");
+		checksum.setFile(file);
+		checksum.setProject(new Project());
+		checksum.setProperty("md5");
+
+		checksum.execute();
+
+		Project project = checksum.getProject();
+
+		String localMD5 = project.getProperty("md5");
+
+		return remoteMD5.contains(localMD5);
+	}
+
+	private boolean _isValidZip(File file) throws IOException {
+		if (!file.exists()) {
+			return false;
+		}
+
+		ZipFile zipFile = null;
+
+		try {
+			zipFile = new ZipFile(file, ZipFile.OPEN_READ);
+
+			int count = 0;
+
+			Enumeration<?> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				enumeration.nextElement();
+
+				count++;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(file.getPath());
+			sb.append(" is a valid zip file with ");
+			sb.append(count);
+			sb.append(" entries.");
+
+			System.out.println(sb.toString());
+
+			return true;
+		}
+		catch (IOException ioException) {
+			System.out.println(file.getPath() + " is an invalid zip file.");
+
+			return false;
+		}
+		finally {
+			if (zipFile != null) {
+				zipFile.close();
+			}
+		}
+	}
+
+	private boolean _isZipFileName(String fileName) {
+		if (fileName.endsWith(".ear") || fileName.endsWith(".jar") ||
+			fileName.endsWith(".war") || fileName.endsWith(".zip")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private URLConnection _openConnection(URL url) throws IOException {
+		URLConnection urlConnection = null;
+
+		while (true) {
+			urlConnection = url.openConnection();
+
+			if (!(urlConnection instanceof HttpURLConnection)) {
+				break;
+			}
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlConnection;
+
+			String password = _getPassword();
+			String username = _getUsername();
+
+			if ((password != null) && (username != null)) {
+				String auth = username + ":" + password;
+				Base64.Encoder encoder = Base64.getEncoder();
+
+				httpURLConnection.setRequestProperty(
+					"Authorization",
+					"Basic " + encoder.encodeToString(auth.getBytes()));
+			}
+
+			if (_getUserAgent() != null) {
+				httpURLConnection.setRequestProperty(
+					"User-Agent", _getUserAgent());
+			}
+
+			int responseCode = httpURLConnection.getResponseCode();
+
+			if ((responseCode != HttpURLConnection.HTTP_MOVED_PERM) &&
+				(responseCode != HttpURLConnection.HTTP_MOVED_TEMP)) {
+
+				break;
+			}
+
+			url = new URL(httpURLConnection.getHeaderField("Location"));
+		}
+
+		return urlConnection;
+	}
+
+	private int _toFile(URL url, File file) throws IOException {
+		if (file.exists()) {
+			file.delete();
+		}
+
+		File dir = file.getParentFile();
+
+		if ((dir != null) && !dir.exists()) {
+			dir.mkdirs();
+		}
+
+		OutputStream outputStream = new FileOutputStream(file);
+
+		try {
+			return _toOutputStream(url, outputStream);
+		}
+		catch (IOException ioException) {
+			if (file.exists()) {
+				file.delete();
+			}
+
+			throw ioException;
+		}
+		finally {
+			if (outputStream != null) {
+				outputStream.close();
+			}
+		}
+	}
+
+	private int _toOutputStream(URL url, OutputStream outputStream)
+		throws IOException {
+
+		URLConnection urlConnection = _openConnection(url);
+
+		InputStream inputStream = urlConnection.getInputStream();
+
+		try {
+			byte[] bytes = new byte[1024 * 16];
+			int read = 0;
+			int size = 0;
+			long time = System.currentTimeMillis();
+
+			while ((read = inputStream.read(bytes)) > 0) {
+				outputStream.write(bytes, 0, read);
+				size += read;
+
+				if (_verbose && ((System.currentTimeMillis() - time) > 100)) {
+					System.out.print(".");
+
+					time = System.currentTimeMillis();
+				}
+			}
+
+			if (_verbose) {
+				System.out.println("\n");
+			}
+
+			return size;
+		}
+		finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
+	}
+
+	private String _toString(URL url) throws IOException {
+		OutputStream outputStream = new ByteArrayOutputStream();
+
+		try {
+			_toOutputStream(url, outputStream);
+
+			return outputStream.toString();
+		}
+		finally {
+			if (outputStream != null) {
+				outputStream.close();
+			}
+		}
 	}
 
 	private static final Pattern _basicAuthenticationURLPattern =

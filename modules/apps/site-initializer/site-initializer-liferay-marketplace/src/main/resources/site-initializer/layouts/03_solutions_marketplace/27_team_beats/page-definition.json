@@ -889,7 +889,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"27_carrossel1.png\",\"fileEntryId\":\"46520\",\"url\":\"/documents/d/[$GROUP_KEY$]/27_carrossel1-png?imagePreview=1\"}"
+																								"en_US": "{\"title\":\"27_carrossel1.png\",\"url\":\"/documents/d/[$GROUP_KEY$]/27_carrossel1-png?imagePreview=1\"}"
 																							}
 																						}
 																					}
@@ -901,7 +901,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"27_carrossel2.png\",\"fileEntryId\":\"46526\",\"url\":\"/documents/d/[$GROUP_KEY$]/27_carrossel2-png?imagePreview=1\"}"
+																								"en_US": "{\"title\":\"27_carrossel2.png\",\"url\":\"/documents/d/[$GROUP_KEY$]/27_carrossel2-png?imagePreview=1\"}"
 																							}
 																						}
 																					}
@@ -913,7 +913,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"27_carrossel3.png\",\"fileEntryId\":\"46532\",\"url\":\"/documents/d/[$GROUP_KEY$]/27_carrossel3-png?imagePreview=1\"}"
+																								"en_US": "{\"title\":\"27_carrossel3.png\",\"url\":\"/documents/d/[$GROUP_KEY$]/27_carrossel3-png?imagePreview=1\"}"
 																							}
 																						}
 																					}

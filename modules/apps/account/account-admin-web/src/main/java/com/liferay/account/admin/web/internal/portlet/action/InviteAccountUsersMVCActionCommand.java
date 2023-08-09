@@ -7,7 +7,7 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -91,7 +91,7 @@ public class InviteAccountUsersMVCActionCommand
 		throws PortalException {
 
 		for (String emailAddress : emailAddresses) {
-			_accountEntryUserRelLocalService.inviteUser(
+			_accountEntryUserRelService.inviteUser(
 				accountEntryId, accountRoleIds, emailAddress, user,
 				serviceContext);
 		}
@@ -101,7 +101,7 @@ public class InviteAccountUsersMVCActionCommand
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -44,7 +46,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -68,21 +72,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -96,7 +101,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -106,7 +112,8 @@
 															"fragmentConfig": {
 																"height": "py-1"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -123,7 +130,8 @@
 													{
 														"definition": {
 															"widgetInstance": {
-																"widgetConfig": {},
+																"widgetConfig": {
+																},
 																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 															}
 														},
@@ -145,11 +153,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -165,11 +175,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -222,7 +234,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -268,7 +281,8 @@
 																								{
 																									"id": "element-text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Digital Place for Communities"
@@ -307,7 +321,8 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								}
 																							],
@@ -342,7 +357,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"defaultFragmentInlineValue": {
 																								"value": "<style>\n\t.solution-category-container {\n\t  font-size: 1rem;\n    line-height: 1.5;\n\t\tdisplay: flex;\n\t}\n\t\n\t.solution-category-container .solution-category {\n\t\tborder-radius: 2px;\n\t\tbackground-color: #ebeef2;\n\t}\n</style>\n\n\n\n\n\t\t<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExtensibility and Integration\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tIdentity Management and Governance\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tNavigation and Discovery\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tOrders and Fulfillment\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tPersonalization and Segmentation\n\t\t\t\t\t</div>\n\t\t</div>"
@@ -372,11 +388,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -389,15 +407,16 @@
 																				"key": "BASIC_COMPONENT-button"
 																			},
 																			"fragmentConfig": {
+																				"buttonSize": "nm",
 																				"buttonType": "primary",
-																				"type": "link",
-																				"buttonSize": "nm"
+																				"type": "link"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "link",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Contact Partner"
@@ -412,10 +431,10 @@
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
-																					  "marginTop": "4"
+																						"marginTop": "4"
 																					},
 																					"id": "landscapeMobile"
-																				  },
+																				},
 																				{
 																					"fragmentViewportStyle": {
 																						"marginTop": "4"
@@ -441,7 +460,8 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -460,8 +480,11 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-spacer"
 									},
-									"fragmentConfig": {"height": "py-3"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"height": "py-3"
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -495,7 +518,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -519,21 +544,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -547,7 +573,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -569,11 +596,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -589,11 +618,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -642,7 +673,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Your open knowledge platform for sharing knowledge beyond your organisation"
@@ -673,7 +705,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Digital Place for Communities is your open knowledge platform for sharing knowledge beyond your organisation. Now it’s easy for you to collaborate and share knowledge with teams, organisations and communities everywhere. Multi-agency use comes as standard!"
@@ -706,11 +739,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -724,17 +759,18 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "2",
+																				"colorScheme": "",
 																				"imageAspectRatio": "aspect-ratio-4-to-3",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "1280px",
-																				"colorScheme": ""
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "2"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -749,7 +785,8 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -794,7 +831,8 @@
 											"fragmentConfig": {
 												"height": "py-3"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -814,13 +852,13 @@
 							},
 							"fragmentViewports": [
 								{
-								  "fragmentViewportStyle": {
-									"paddingLeft": "4",
-									"paddingRight": "4"
-								  },
-								  "id": "tablet"
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "tablet"
 								}
-							  ],
+							],
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -839,16 +877,18 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"paddingBottom": "5"},
+									"fragmentStyle": {
+										"paddingBottom": "5"
+									},
 									"fragmentViewports": [
 										{
-										  "fragmentViewportStyle": {
-											"paddingLeft": "4",
-											"paddingRight": "4"
-										  },
-										  "id": "landscapeMobile"
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "landscapeMobile"
 										}
-									  ],
+									],
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -879,7 +919,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Description"
@@ -920,7 +961,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Enable citizens and business to self-serve when they choose on their preferred device and browser. Drive efficiency by replacing expensive engagement channels with digital.<br />\n<br />\nDigital Place presents you with over £5m of public service investment in proven reusable digital services to accelerate your digital transformation at less cost and less risk than building from scratch.<br />\n<br />\n<a href=\"https://www.placecube.com/platforms/digital-place-for-local-public-services/\" target=\"_blank\">Learn more</a>"
@@ -1011,7 +1053,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -1039,7 +1082,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "<a href=\"https://www.placecube.com/what-is-a-cube/\" target=\"_blank\"><b>So, what is a cube?</b></a>"
@@ -1101,7 +1145,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -1129,7 +1174,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "<a href=\"https://www.placecube.com/how-can-open-standards-and-reusable-cubes-help-solve-problems-for-local-places/\" target=\"_blank\"><strong>How can open standards and reusable cubes help solve problems for local places?</strong></a>"
@@ -1187,20 +1233,20 @@
 									},
 									"fragmentViewports": [
 										{
-										  "fragmentViewportStyle": {
-											"paddingLeft": "4",
-											"paddingRight": "4"
-										  },
-										  "id": "landscapeMobile"
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "landscapeMobile"
 										},
 										{
-										  "fragmentViewportStyle": {
-											"paddingLeft": "4",
-											"paddingRight": "4"
-										  },
-										  "id": "tablet"
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "tablet"
 										}
-									  ],
+									],
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1230,7 +1276,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Accelerate your public service transformation with Digital Place -- designed by public service for public service."
@@ -1257,7 +1304,9 @@
 									},
 									{
 										"definition": {
-											"fragmentStyle": {"marginTop": "5"},
+											"fragmentStyle": {
+												"marginTop": "5"
+											},
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1281,11 +1330,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -1301,11 +1352,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1356,7 +1409,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1384,7 +1438,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Benefits from over £5m investment in well designed, reusable digital components (Cubes)"
@@ -1416,11 +1471,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1471,7 +1528,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1499,7 +1557,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Drive transformation faster while removing the cost and risk of starting from scratch"
@@ -1531,11 +1590,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1586,7 +1647,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1614,7 +1676,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Achieve continuous ROI through a conveyor belt of new features at no additional subscription fee"
@@ -1646,11 +1709,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1701,7 +1766,8 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1729,7 +1795,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Improve customer engagement and increase self-service to create efficienciescontent here."
@@ -1805,21 +1872,22 @@
 																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
-																"boxShadow": "",
-																"showIconBoxShadow": false,
-																"moveIcon": "-75px 0 0 0",
-																"containerWidth": "",
-																"backgroundDarkOrLight": "light",
-																"borderRadius": "border-radius-none",
-																"lazyLoadingImage": true,
 																"background": "",
-																"backgroundSize": "cover",
-																"backgroundPosition": "center",
-																"showIcon": false,
+																"backgroundDarkOrLight": "light",
 																"backgroundImageUrl": "",
-																"blockAlignment": ""
+																"backgroundPosition": "center",
+																"backgroundSize": "cover",
+																"blockAlignment": "",
+																"borderRadius": "border-radius-none",
+																"boxShadow": "",
+																"containerWidth": "",
+																"lazyLoadingImage": true,
+																"moveIcon": "-75px 0 0 0",
+																"showIcon": false,
+																"showIconBoxShadow": false
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -1833,7 +1901,8 @@
 														},
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"pageElements": [
 																	{
 																		"definition": {
@@ -1850,7 +1919,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Key Features:</h2>\n\n<ul>\n\t<li>Website and Microsite Templates</li>\n\t<li>Content Management System</li>\n\t<li>MyAccount (Citizen and Business Portal)</li>\n\t<li>Case Management</li>\n\t<li>Customer Contact Management (aka CRM)</li>\n\t<li>Multiple Local Service Transactions</li>\n\t<li>Multiple 3rd Party Connectors</li>\n\t<li>Extensive Low Code Functionality</li>\n\t<li>Responsive, Accessible, and Secure</li>\n</ul>\n"
@@ -1881,7 +1951,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n<br />\nPlacecube builds open digital platforms that make your life simpler with cubes. Now your digital journey is easier, faster and better connected.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.placecube.com/\" target=\"_blank\">https://www.placecube.com/</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:enquiries@placecube.com\" target=\"_blank\">enquiries@placecube.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+44(0)20 8895 6756"
@@ -1917,7 +1988,9 @@
 					},
 					{
 						"definition": {
-							"cssClasses": ["#solutions-details-form"],
+							"cssClasses": [
+								"#solutions-details-form"
+							],
 							"fragmentStyle": {
 								"backgroundColor": "#ebeef2",
 								"borderWidth": "0",
@@ -1941,7 +2014,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1965,21 +2040,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1993,7 +2069,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -2010,7 +2087,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h2>\n<br />\nFind out more about&nbsp;Digital Place for Local Public Services"

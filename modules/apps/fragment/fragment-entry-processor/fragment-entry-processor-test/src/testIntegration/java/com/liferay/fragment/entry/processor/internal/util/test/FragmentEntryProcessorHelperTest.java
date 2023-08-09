@@ -555,7 +555,7 @@ public class FragmentEntryProcessorHelperTest {
 			displayCalendar.get(Calendar.YEAR),
 			displayCalendar.get(Calendar.HOUR_OF_DAY),
 			displayCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-			0, 0, true, true, false, null, null, null, null, serviceContext);
+			0, 0, true, true, false, 0, null, null, null, null, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

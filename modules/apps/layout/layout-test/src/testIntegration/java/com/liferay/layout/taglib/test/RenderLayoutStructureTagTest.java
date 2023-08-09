@@ -671,7 +671,7 @@ public class RenderLayoutStructureTagTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			DDMStructureTestUtil.getSampleStructuredContent(),
 			ddmStructure.getStructureId(), StringPool.BLANK, null, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
+			0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, null,
 			null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}

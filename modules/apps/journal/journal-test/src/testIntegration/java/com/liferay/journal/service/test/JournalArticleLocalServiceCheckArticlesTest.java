@@ -219,7 +219,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 			expirationDateCalendar.get(Calendar.YEAR),
 			expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
 			expirationDateCalendar.get(Calendar.MINUTE), neverExpires, 0, 0, 0,
-			0, 0, true, true, false, null, null, null, null, serviceContext);
+			0, 0, true, true, false, 0, null, null, null, null, serviceContext);
 	}
 
 	protected Calendar getExpirationCalendar(long timeUnit, int timeValue)
@@ -308,7 +308,8 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 				expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
 				expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0,
 				0, true, article.isIndexable(), article.isSmallImage(),
-				article.getSmallImageURL(), null, null, null, serviceContext);
+				article.getSmallImageSource(), article.getSmallImageURL(), null,
+				null, null, serviceContext);
 		}
 
 		return article;

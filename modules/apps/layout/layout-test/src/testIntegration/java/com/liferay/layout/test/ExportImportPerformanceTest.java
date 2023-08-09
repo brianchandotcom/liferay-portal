@@ -432,7 +432,7 @@ public class ExportImportPerformanceTest {
 			RandomTestUtil.randomLocaleStringMap(defaultLocale), content,
 			_ddmStructure.getStructureId(), _ddmTemplate.getTemplateKey(),
 			StringPool.BLANK, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
-			true, true, false, null, null, null, null, _serviceContext);
+			true, true, false, 0, null, null, null, null, _serviceContext);
 	}
 
 	private void _addLayouts() throws Exception {

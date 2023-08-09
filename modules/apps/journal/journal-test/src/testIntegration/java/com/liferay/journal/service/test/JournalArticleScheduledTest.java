@@ -137,7 +137,8 @@ public class JournalArticleScheduledTest {
 			displayDateCalendar.get(Calendar.YEAR),
 			displayDateCalendar.get(Calendar.HOUR_OF_DAY),
 			displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0,
-			0, 0, 0, true, true, false, null, null, null, null, serviceContext);
+			0, 0, 0, true, true, false, 0, null, null, null, null,
+			serviceContext);
 	}
 
 	protected Calendar getCalendar(Date date, int when) {

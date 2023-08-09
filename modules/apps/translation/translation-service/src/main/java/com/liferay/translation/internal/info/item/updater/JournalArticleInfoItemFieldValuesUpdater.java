@@ -186,6 +186,7 @@ public class JournalArticleInfoItemFieldValuesUpdater
 			reviewDateArray[1], reviewDateArray[2], reviewDateArray[3],
 			reviewDateArray[4], _isNeverReview(latestArticle),
 			latestArticle.isIndexable(), latestArticle.isSmallImage(),
+			latestArticle.getSmallImageSource(),
 			latestArticle.getSmallImageURL(), null, null, null, serviceContext);
 	}
 

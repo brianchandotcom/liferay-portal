@@ -919,6 +919,7 @@ public class JournalArticleStagedModelDataHandler
 						reviewDateMonth, reviewDateDay, reviewDateYear,
 						reviewDateHour, reviewDateMinute, neverReview,
 						article.isIndexable(), article.isSmallImage(),
+						article.getSmallImageSource(),
 						article.getSmallImageURL(), smallFile, null, articleURL,
 						serviceContext);
 				}
@@ -936,6 +937,7 @@ public class JournalArticleStagedModelDataHandler
 						reviewDateMonth, reviewDateDay, reviewDateYear,
 						reviewDateHour, reviewDateMinute, neverReview,
 						article.isIndexable(), article.isSmallImage(),
+						article.getSmallImageSource(),
 						article.getSmallImageURL(), smallFile, null, articleURL,
 						serviceContext);
 
@@ -978,6 +980,7 @@ public class JournalArticleStagedModelDataHandler
 						reviewDateMonth, reviewDateDay, reviewDateYear,
 						reviewDateHour, reviewDateMinute, neverReview,
 						article.isIndexable(), article.isSmallImage(),
+						article.getSmallImageSource(),
 						article.getSmallImageURL(), smallFile, null, articleURL,
 						serviceContext);
 				}
@@ -994,6 +997,7 @@ public class JournalArticleStagedModelDataHandler
 						reviewDateMonth, reviewDateDay, reviewDateYear,
 						reviewDateHour, reviewDateMinute, neverReview,
 						article.isIndexable(), article.isSmallImage(),
+						article.getSmallImageSource(),
 						article.getSmallImageURL(), smallFile, null, articleURL,
 						serviceContext);
 				}
@@ -1043,8 +1047,8 @@ public class JournalArticleStagedModelDataHandler
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, neverReview,
 					article.isIndexable(), article.isSmallImage(),
-					article.getSmallImageURL(), smallFile, null, articleURL,
-					serviceContext);
+					article.getSmallImageSource(), article.getSmallImageURL(),
+					smallFile, null, articleURL, serviceContext);
 			}
 
 			_journalArticleLocalService.updateAsset(

@@ -820,8 +820,8 @@ public class JournalArticleLocalServiceTest {
 				_readFileToString("journal_content_with_different_locales.xml"),
 				"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 			ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0, 0,
-			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-			null,
+			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, null, null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -893,8 +893,8 @@ public class JournalArticleLocalServiceTest {
 					"journal_content_nested_fields_with_different_locales.xml"),
 				"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
 			ddmStructure.getStructureId(), null, null, 1, 1, 1965, 0, 0, 0, 0,
-			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-			null,
+			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, null, null,
+			null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -1170,7 +1170,7 @@ public class JournalArticleLocalServiceTest {
 				).build(),
 				null, content, ddmStructure.getStructureId(),
 				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+				0, true, 0, 0, 0, 0, 0, true, true, false, 0, null, null,
 				serviceContext);
 
 		return new Tuple(article, ddmStructure);
@@ -1272,7 +1272,7 @@ public class JournalArticleLocalServiceTest {
 			journalArticle.getContent(), journalArticle.getDDMTemplateKey(),
 			journalArticle.getLayoutUuid(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
-			true, 0, 0, 0, 0, 0, true, journalArticle.isIndexable(), false,
+			true, 0, 0, 0, 0, 0, true, journalArticle.isIndexable(), false, 0,
 			null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				journalArticle.getGroupId(), TestPropsValues.getUserId()));

@@ -448,7 +448,7 @@ public class JournalTestUtil {
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0, 0,
-			0, true, true, false, null, null, null, null, serviceContext);
+			0, true, true, false, 0, null, null, null, null, serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -627,7 +627,7 @@ public class JournalTestUtil {
 			).build(),
 			xml, ddmStructure.getStructureId(), ddmTemplateKey, null, 1, 1,
 			1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
-			null, null, images, null, serviceContext);
+			0, null, null, images, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -1034,8 +1034,8 @@ public class JournalTestUtil {
 			article.getLayoutUuid(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0, 0,
 			true, 0, 0, 0, 0, 0, true, article.isIndexable(),
-			article.isSmallImage(), article.getSmallImageURL(), null, null,
-			null, serviceContext);
+			article.isSmallImage(), article.getSmallImageSource(),
+			article.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
 	public static JournalArticle updateArticleWithWorkflow(

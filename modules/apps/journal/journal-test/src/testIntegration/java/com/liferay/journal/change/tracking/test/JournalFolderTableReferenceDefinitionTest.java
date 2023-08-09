@@ -115,7 +115,7 @@ public class JournalFolderTableReferenceDefinitionTest
 			displayCalendar.get(Calendar.YEAR),
 			displayCalendar.get(Calendar.HOUR_OF_DAY),
 			displayCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-			0, 0, true, true, false, null, null, null, null,
+			0, 0, true, true, false, 0, null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		return parentJournalFolder;

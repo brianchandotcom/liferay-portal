@@ -460,25 +460,10 @@
 																													"id": "text",
 																													"value": {
 																														"fragmentLink": {
-																														},
-																														"text": {
-																															"defaultFragmentInlineValue": {
-																																"value": "<style>\n\t.solution-category-container {\n\t  font-size: 1rem;\n    line-height: 1.5;\n\t\tdisplay: flex;\n\t}\n\t\n\t.solution-category-container .solution-category {\n\t\tborder-radius: 2px;\n\t\tbackground-color: #ebeef2;\n\t}\n</style>\n\n\n\n\n\t\t<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tCollaboration & Knowledge Sharing\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tContent Management & Operations\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tData Modeling, Process & Business Logic\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExtensibility and Integration\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tIdentity Management and Governance\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tNavigation and Discovery\n\t\t\t\t\t</div>\n\t\t</div>"
-																															},
-																															"mapping": {
-																																"fieldKey": "ddmTemplate__ddmTemplate_151123",
-																																"itemReference": {
-																																	"className": "com.liferay.commerce.product.model.CPDefinition",
-																																	"classPK": 48260
-																																}
-																															}
 																														}
 																													}
 																												}
 																											],
-																											"fragmentStyle": {
-																												"paddingLeft": "4"
-																											},
 																											"indexed": true
 																										},
 																										"type": "Fragment"

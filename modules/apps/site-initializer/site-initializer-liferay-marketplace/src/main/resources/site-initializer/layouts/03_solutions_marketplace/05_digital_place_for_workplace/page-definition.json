@@ -460,22 +460,10 @@
 																													"id": "text",
 																													"value": {
 																														"fragmentLink": {
-																														},
-																														"text": {
-																															"mapping": {
-																																"fieldKey": "ddmTemplate__ddmTemplate_130576",
-																																"itemReference": {
-																																	"className": "com.liferay.commerce.product.model.CPDefinition",
-																																	"classPK": 48260
-																																}
-																															}
 																														}
 																													}
 																												}
 																											],
-																											"fragmentStyle": {
-																												"paddingLeft": "4"
-																											},
 																											"indexed": true
 																										},
 																										"type": "Fragment"

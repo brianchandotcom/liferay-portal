@@ -12,6 +12,7 @@
 		"@clayui/label": "^3.32.0",
 		"@clayui/layout": "^3.65.1",
 		"@clayui/loading-indicator": "^3.56.0",
+		"@clayui/multi-select": "^3.100.0",
 		"@clayui/nav": "^3.71.0",
 		"@clayui/pagination-bar": "^3.41.0",
 		"@clayui/popover": "^3.93.0",

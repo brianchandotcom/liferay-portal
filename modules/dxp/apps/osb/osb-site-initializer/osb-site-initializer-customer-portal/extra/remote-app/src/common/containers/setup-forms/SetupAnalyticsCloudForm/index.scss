@@ -1,0 +1,65 @@
+.dropdown-menu {
+	z-index: 1050;
+	padding: 10px 0px 10px;
+	overflow: none;
+	height: 35%;
+}
+
+.form-group {
+	margin-bottom: 0;
+}
+
+.form-control {
+	margin-bottom: 0 !important;
+}
+
+.label-secondary {
+	color: var(--neutral-neutral-10, #272833);
+	border-color: #6c6c76;
+}
+
+.label.label-secondary :hover {
+	color: var(--neutral-neutral-10, #272833);
+	border-color: #6c6c76;
+}
+
+.label[href],
+.label[type],
+.label[tabindex] :hover {
+	cursor: pointer;
+	text-decoration: none;
+	border-color: #6c6c76;
+}
+
+[href].hover.label-secondary,
+[href].label-secondary:hover,
+[type].hover.label-secondary,
+[type].label-secondary:hover,
+[tabindex].hover.label-secondary,
+[tabindex].label-secondary :hover {
+	color: var(--neutral-neutral-10, #272833);
+	border-color: #6c6c76;
+}
+
+.lexicon-icon.lexicon-icon-times-circle {
+	color: #272833;
+}
+
+.lexicon-icon.lexicon-icon-times-circle :hover {
+	cursor: pointer;
+	color: #6c6c76;
+}
+
+.component-action
+	.btn
+	.btn-monospaced
+	.btn-outline-borderless
+	.btn-outline-secondary
+	:hover {
+	color: #6c6c76;
+}
+
+.input-group-item .input-group-item-shrink :hover {
+	color: #6c6c76;
+	border-color: #6c6c76;
+}

@@ -11,3 +11,4 @@ export {default as Select} from './formik-fields/Select';
 export {default as Skeleton} from './Skeleton';
 export {default as Table} from './Table';
 export {default as StatusTag} from './StatusTag';
+export {default as MultiSelect} from './formik-fields/MultiSelect';

@@ -116,6 +116,40 @@ const validate = (validations, value) => {
 	return error;
 };
 
+const validateEmailsArray = (emailArray, emailsAvailable) => {
+	const seenEmails = new Set();
+	const invalidEmails = [];
+	const repeatedEmails = [];
+	const errorMessages = [];
+
+	for (const email of emailArray) {
+		if (!emailsAvailable.find((item) => item.email === email)) {
+			invalidEmails.push(email);
+		} else if (seenEmails.has(email)) {
+			repeatedEmails.push(email);
+		} else {
+			seenEmails.add(email);
+		}
+	}
+
+	if (invalidEmails.length) {
+		errorMessages.push(
+			`${i18n.translate(
+				'please-insert-a-valid-email'
+			)} ${invalidEmails.join(', ')}`
+		);
+	}
+	if (repeatedEmails.length) {
+		errorMessages.push(
+			`${i18n.translate(
+				'please-remove-duplicate-emails'
+			)} ${repeatedEmails.join(', ')}`
+		);
+	}
+
+	return errorMessages.join(' | ') || undefined;
+};
+
 export {
 	isLowercaseAndNumbers,
 	isValidEmail,
@@ -127,4 +161,5 @@ export {
 	isValidHost,
 	isValidIp,
 	isValidMac,
+	validateEmailsArray,
 };

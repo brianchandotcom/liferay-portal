@@ -46,6 +46,17 @@ class Testray extends LiferayAuth {
         throw new Error(`No Jira accessToken for ${userId}`);
     }
 
+    public async createRequirement(requirement: any, httpContext: HttpContext) {
+        return this.fetcher('/o/c/requirements', {
+            body: JSON.stringify(requirement),
+            headers: {
+                Authorization: httpContext.authorization as string,
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+        });
+    }
+
     public async setTestrayOAuthJiraCode(
         { access_token, expires_in, refresh_token }: JiraAuthorizePayload,
         state: string

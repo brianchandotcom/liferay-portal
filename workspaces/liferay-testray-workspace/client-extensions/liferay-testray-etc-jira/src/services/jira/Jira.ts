@@ -83,7 +83,7 @@ class Jira extends JiraAuth {
     public async getIssues(
         issues: string[],
         httpContext: HttpContext
-    ): Promise<any> {
+    ): Promise<any[]> {
         const jiraIssues: {
             [key: string]: any;
         } = {};

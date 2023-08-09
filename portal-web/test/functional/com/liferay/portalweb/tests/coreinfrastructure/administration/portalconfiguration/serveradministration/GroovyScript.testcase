@@ -21,6 +21,71 @@ definition {
 	}
 
 	@priority = 3
+	test ExecuteAssetLinkScriptDoesNotGenerateException {
+		property portal.release = "false";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Site Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Site Page",
+			widgetName = "Asset Publisher");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content",
+			entryTitle = "Test Title",
+			groupName = "Test Site Name");
+
+		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+		var templateScript = '''
+<#if entries?has_content>
+	<#list entries as curEntry>
+		<#assign assetRenderer=curEntry.getAssetRenderer() 
+			viewURL=assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, assetRenderer, curEntry,
+			!stringUtil.equals(assetLinkBehavior, "showFullContent" ))
+			curBlogEntry=assetRenderer.getAssetObject() /> ${curEntry.title}
+			<@liferay_ratings["ratings"]
+			className="com.liferay.blogs.model.BlogsEntry"
+			classPK=curBlogEntry.getEntryId()
+		/>
+		''';
+
+		ApplicationDisplayTemplates.addCP(
+			adtType = "Asset Publisher",
+			templateScript = ${templateScript});
+
+		Navigator.gotoSitePage(
+			pageName = "Test Site Page",
+			siteName = "Test Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration");
+
+		AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Asset Publisher Test ADT");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Site Page",
+			siteName = "Test Site Name");
+
+		var projectDir = PropsUtil.get("project.dir");
+		var moduleBaseDir = "modules/apps/ratings/ratings-taglib/src/main/java/com/liferay/ratings/taglib/servlet/taglib/RatingsTag.java";
+
+		var replaceFile = "${projectDir}/${moduleBaseDir}";
+
+		FileUtil.replaceStringInFile(${replaceFile}, "@author", "@author Test ");
+
+		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/apps/ratings/ratings-taglib");
+	}
+
+	@priority = 3
 	test ExecuteScriptWithEmbeddedHTML {
 		property test.liferay.virtual.instance = "false";
 

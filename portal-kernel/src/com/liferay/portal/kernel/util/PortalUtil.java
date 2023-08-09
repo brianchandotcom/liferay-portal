@@ -820,12 +820,6 @@ public class PortalUtil {
 			httpServletRequest, name, type, displayType);
 	}
 
-	public static String getFirstPageLayoutTypes(
-		HttpServletRequest httpServletRequest) {
-
-		return _portal.getFirstPageLayoutTypes(httpServletRequest);
-	}
-
 	public static String getForwardedHost(
 		HttpServletRequest httpServletRequest) {
 

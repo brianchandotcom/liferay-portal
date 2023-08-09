@@ -4,7 +4,9 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
+import Layout from '@clayui/layout';
 import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import {
@@ -327,7 +329,11 @@ function SpacingSelectorButton({
 									Liferay.Language.get('set-x-to-x'),
 									[field.label, option.label]
 								)}
-								className="d-flex"
+								className={classNames({
+									active:
+										value === option.value ||
+										(!value && option.value === '0'),
+								})}
 								data-value={option.value}
 								key={option.value}
 								onClick={() => {

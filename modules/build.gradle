@@ -718,26 +718,6 @@ gradle.taskGraph.whenReady {
 	taskExecutionGraph.allTasks.each {
 		Task task ->
 
-		boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
-
-		if (skipReadOnly) {
-			boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
-
-			if (publicBranch && task.project.path.startsWith(":private:")) {
-				task.setEnabled(false)
-			}
-
-			File gitRepoDir = _getRootDir(task.project.projectDir, ".gitrepo")
-
-			if (gitRepoDir != null) {
-				File gitRepoFile = new File(gitRepoDir, ".gitrepo")
-
-				if (gitRepoFile.text.contains("mode = pull")) {
-					task.setEnabled(false)
-				}
-			}
-		}
-
 		if (task.name == "compileJSP") {
 			FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
 
@@ -761,22 +741,6 @@ gradle.taskGraph.whenReady {
 			if (!_hasTestClasses(task, "src/testIntegration/java")) {
 				task.setEnabled(false)
 			}
-		}
-	}
-}
-
-private File _getRootDir(File dir, String markerFileName) {
-	while (true) {
-		File markerFile = new File(dir, markerFileName);
-
-		if (markerFile.exists()) {
-			return dir;
-		}
-
-		dir = dir.getParentFile();
-
-		if (dir == null) {
-			return null;
 		}
 	}
 }

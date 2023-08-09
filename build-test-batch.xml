@@ -7620,7 +7620,7 @@ ${output.content}</echo>
 
 								<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.rest.task}">
 									<arg value="-DbuildREST.forceClientVersionDescription=false" />
-									<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
+									<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
 									<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
 								</gradle-execute>
 							</sequential>
@@ -7631,7 +7631,7 @@ ${output.content}</echo>
 
 						<gradle-execute dir="modules" forcedcacheenabled="false" task="buildREST">
 							<arg value="-DbuildREST.forceClientVersionDescription=false" />
-							<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
+							<arg value="-Dskip.read.only=${build.rest.skip.read.only}" />
 							<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
 						</gradle-execute>
 					</else>
@@ -7882,7 +7882,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 										<echo>Executing Gradle tasks: @{modules.build.service.task}</echo>
 
 										<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.service.task}">
-											<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
+											<arg value="-Dskip.read.only=${build.services.skip.read.only}" />
 											<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=false" />
 										</gradle-execute>
 									</sequential>

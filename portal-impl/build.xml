@@ -334,7 +334,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="--continue" />
 			<arg unless:true="${build.services.baseline.enabled}" value="--exclude-task" />
 			<arg unless:true="${build.services.baseline.enabled}" value="baseline" />
-			<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
+			<arg value="-Dskip.read.only=${build.services.skip.read.only}" />
 		</gradle-execute>
 	</target>
 

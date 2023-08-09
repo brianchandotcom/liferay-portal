@@ -7,7 +7,7 @@ type Key = string;
 type Value = string | number | boolean;
 
 export interface SearchBuilderConstructor {
-    useURIEncode?: boolean;
+	useURIEncode?: boolean;
 }
 
 /**
@@ -16,22 +16,22 @@ export interface SearchBuilderConstructor {
  */
 
 export default class SearchBuilder {
-    static eq(key: Key, value: Value) {
-        return `${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`;
-    }
+	static eq(key: Key, value: Value) {
+		return `${key} eq ${typeof value === 'boolean' ? value : `'${value}'`}`;
+	}
 
-    static in(key: Key, values: Value[]) {
-        if (values) {
-            const operator = `${key} in ({values})`;
+	static in(key: Key, values: Value[]) {
+		if (values) {
+			const operator = `${key} in ({values})`;
 
-            return operator
-                .replace(
-                    '{values}',
-                    values.map((value) => `'${value}'`).join(',')
-                )
-                .trim();
-        }
+			return operator
+				.replace(
+					'{values}',
+					values.map((value) => `'${value}'`).join(',')
+				)
+				.trim();
+		}
 
-        return '';
-    }
+		return '';
+	}
 }

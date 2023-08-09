@@ -11,7 +11,6 @@
 		"externalReferenceCode": "TESTRAYUSER-001",
 		"familyName": "User",
 		"givenName": "Administrator",
-		"jiraAuthorization": false,
 		"name": "Administrator User",
 		"password": "test"
 	},
@@ -27,7 +26,6 @@
 		"externalReferenceCode": "TESTRAYUSER-002",
 		"familyName": "User",
 		"givenName": "Analyst",
-		"jiraAuthorization": false,
 		"name": "Analyst User",
 		"password": "test"
 	},
@@ -43,7 +41,6 @@
 		"externalReferenceCode": "TESTRAYUSER-003",
 		"familyName": "User",
 		"givenName": "Lead",
-		"jiraAuthorization": false,
 		"name": "Lead User",
 		"password": "test"
 	},
@@ -59,7 +56,6 @@
 		"externalReferenceCode": "TESTRAYUSER-004",
 		"familyName": "User",
 		"givenName": "User",
-		"jiraAuthorization": false,
 		"name": "User User",
 		"password": "test"
 	}

@@ -5,134 +5,134 @@
 
 import Cache from '../../lib/Cache';
 import logger from '../../lib/Logger';
-import { HttpContext } from '../../lib/Types';
+import {HttpContext} from '../../lib/Types';
 import JiraAuth from './JiraAuth';
 
 const {
-    JIRA_API_BASE_URL,
-    JIRA_APP_NAME,
-    JIRA_AUTH_BASE_URL,
-    JIRA_AUTH_CLIENT_ID,
-    JIRA_AUTH_CLIENT_SECRET,
-    JIRA_AUTH_GRANT_TYPE,
-    JIRA_AUTH_GRANT_TYPE_REFRESH_TOKEN,
-    JIRA_AUTH_REDIRECT_URI,
-    JIRA_AUTH_SCOPES,
-    JIRA_AUTH_STATE_PREFIX,
-    LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION,
+	JIRA_API_BASE_URL,
+	JIRA_APP_NAME,
+	JIRA_AUTH_BASE_URL,
+	JIRA_AUTH_CLIENT_ID,
+	JIRA_AUTH_CLIENT_SECRET,
+	JIRA_AUTH_GRANT_TYPE,
+	JIRA_AUTH_GRANT_TYPE_REFRESH_TOKEN,
+	JIRA_AUTH_REDIRECT_URI,
+	JIRA_AUTH_SCOPES,
+	JIRA_AUTH_STATE_PREFIX,
+	LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION,
 } = Bun.env;
 
 const cacheInstance = Cache.getInstance();
 
 logger.debug({
-    JIRA_API_BASE_URL,
-    JIRA_APP_NAME,
-    JIRA_AUTH_BASE_URL,
-    JIRA_AUTH_CLIENT_ID,
-    JIRA_AUTH_CLIENT_SECRET,
-    JIRA_AUTH_GRANT_TYPE,
-    JIRA_AUTH_GRANT_TYPE_REFRESH_TOKEN,
-    JIRA_AUTH_REDIRECT_URI,
-    JIRA_AUTH_SCOPES,
-    JIRA_AUTH_STATE_PREFIX,
-    LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION,
-    cacheInstance,
+	JIRA_API_BASE_URL,
+	JIRA_APP_NAME,
+	JIRA_AUTH_BASE_URL,
+	JIRA_AUTH_CLIENT_ID,
+	JIRA_AUTH_CLIENT_SECRET,
+	JIRA_AUTH_GRANT_TYPE,
+	JIRA_AUTH_GRANT_TYPE_REFRESH_TOKEN,
+	JIRA_AUTH_REDIRECT_URI,
+	JIRA_AUTH_SCOPES,
+	JIRA_AUTH_STATE_PREFIX,
+	LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION,
+	cacheInstance,
 });
 
 class FetcherError extends Error {
-    public info: any;
-    public status?: number;
+	public info: any;
+	public status?: number;
 
-    constructor(message: string) {
-        super(message);
-    }
+	constructor(message: string) {
+		super(message);
+	}
 }
 
 class Jira extends JiraAuth {
-    public async getIssue(
-        ticket: string,
-        httpContext: HttpContext
-    ): Promise<any> {
-        const { cloudId, token } = await this.getTokenAndCloudId(httpContext);
+	public async getIssue(
+		ticket: string,
+		httpContext: HttpContext
+	): Promise<any> {
+		const {cloudId, token} = await this.getTokenAndCloudId(httpContext);
 
-        const response = await fetch(
-            `${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
-            {
-                headers: {
-                    // eslint-disable-next-line quote-props
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
+		const response = await fetch(
+			`${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
+			{
+				headers: {
+					// eslint-disable-next-line quote-props
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
-        if (!response.ok) {
-            const error = new FetcherError(
-                'An error occurred while fetching the data.'
-            );
+		if (!response.ok) {
+			const error = new FetcherError(
+				'An error occurred while fetching the data.'
+			);
 
-            error.info = await response.json();
-            error.status = response.status;
+			error.info = await response.json();
+			error.status = response.status;
 
-            throw error;
-        }
+			throw error;
+		}
 
-        return response.json();
-    }
+		return response.json();
+	}
 
-    public async getIssues(
-        issues: string[],
-        httpContext: HttpContext
-    ): Promise<any[]> {
-        const jiraIssues: {
-            [key: string]: any;
-        } = {};
+	public async getIssues(
+		issues: string[],
+		httpContext: HttpContext
+	): Promise<any> {
+		const jiraIssues: {
+			[key: string]: any;
+		} = {};
 
-        const _issues = await Promise.allSettled(
-            issues.map((issue) => this.getIssue(issue, httpContext))
-        );
+		const _issues = await Promise.allSettled(
+			issues.map((issue) => this.getIssue(issue, httpContext))
+		);
 
-        _issues.forEach((issue, index) => {
-            const issueKey = issues[index];
+		_issues.forEach((issue, index) => {
+			const issueKey = issues[index];
 
-            const _issue = (issue as any)?.value;
+			const _issue = (issue as any)?.value;
 
-            jiraIssues[issueKey] =
-                issue.status === 'rejected' || issue.value?.errorMessages
-                    ? null
-                    : {
-                          description: _issue.fields.description,
-                          jiraComponents: _issue.fields.labels,
-                          key: _issue.key,
-                          summary: _issue.fields.summary,
-                      };
-        });
+			jiraIssues[issueKey] =
+				issue.status === 'rejected' || issue.value?.errorMessages
+					? null
+					: {
+							description: _issue.fields.description,
+							jiraComponents: _issue.fields.labels,
+							key: _issue.key,
+							summary: _issue.fields.summary,
+					  };
+		});
 
-        return jiraIssues;
-    }
+		return jiraIssues;
+	}
 
-    public async updateIssue(
-        ticket: string,
-        body: unknown,
-        httpContext: HttpContext
-    ) {
-        const { cloudId, token } = await this.getTokenAndCloudId(httpContext);
+	public async updateIssue(
+		ticket: string,
+		body: unknown,
+		httpContext: HttpContext
+	) {
+		const {cloudId, token} = await this.getTokenAndCloudId(httpContext);
 
-        const response = await fetch(
-            `${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
-            {
-                body: JSON.stringify(body),
-                headers: {
-                    // eslint-disable-next-line quote-props
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                method: 'PUT',
-            }
-        );
+		const response = await fetch(
+			`${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
+			{
+				body: JSON.stringify(body),
+				headers: {
+					// eslint-disable-next-line quote-props
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				method: 'PUT',
+			}
+		);
 
-        return response.json();
-    }
+		return response.json();
+	}
 }
 
 export default Jira;

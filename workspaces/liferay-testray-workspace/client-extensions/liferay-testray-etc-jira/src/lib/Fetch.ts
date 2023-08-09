@@ -6,32 +6,28 @@
 import logger from './Logger';
 
 export async function fetcher<T = any>(
-    url: string | URL,
-    options?: RequestInit
+	url: string | URL,
+	options?: RequestInit
 ): Promise<T> {
-    const response = await fetch(url, options);
+	const response = await fetch(url, options);
 
-    if (!response.ok) {
-        const cause = await response.text();
+	if (!response.ok) {
+		const cause = await response.text();
 
-        logger.error(
-            cause,
-            response,
-            JSON.stringify({ options, url }, null, 2)
-        );
+		logger.error(cause, response, JSON.stringify({options, url}, null, 2));
 
-        throw new Error('Error...');
-    }
+		throw new Error('Error...');
+	}
 
-    return response.json();
+	return response.json();
 }
 
 const baseFetcher =
-    <T = any>(baseURL: string | URL, baseOptions?: RequestInit) =>
-    (url: string | URL, options?: RequestInit) =>
-        fetcher<T>(`${baseURL}${url}`, {
-            ...baseOptions,
-            ...options,
-        });
+	<T = any>(baseURL: string | URL, baseOptions?: RequestInit) =>
+	(url: string | URL, options?: RequestInit) =>
+		fetcher<T>(`${baseURL}${url}`, {
+			...baseOptions,
+			...options,
+		});
 
-export { baseFetcher };
+export {baseFetcher};

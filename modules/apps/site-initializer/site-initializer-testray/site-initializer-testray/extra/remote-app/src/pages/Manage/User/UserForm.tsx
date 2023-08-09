@@ -117,7 +117,8 @@ const UserForm = () => {
 			mutateUser(_userAccount);
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};
@@ -338,10 +339,9 @@ const UserForm = () => {
 								<ClayForm.Group className="align-items-center d-flex form-group-sm">
 									<ClayButton
 										className="align-items-center d-flex mr-4"
-										// disabled={
-										// 	myUserAccount?.jiraAuthorization
-										// }
-
+										disabled={
+											myUserAccount?.jiraAuthorization
+										}
 										onClick={onClickJiraAuthorize}
 									>
 										{i18n.translate('jira-authorization')}

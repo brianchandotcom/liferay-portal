@@ -38,6 +38,7 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	creationMenu="<%= viewUserGroupsManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	orderDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="js/ViewUserGroupsManagementToolbarPropsTransformer"
 	searchActionURL="<%= viewUserGroupsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"

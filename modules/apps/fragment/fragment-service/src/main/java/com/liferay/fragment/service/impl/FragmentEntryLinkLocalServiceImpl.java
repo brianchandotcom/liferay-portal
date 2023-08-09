@@ -13,12 +13,17 @@ import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -322,7 +328,27 @@ public class FragmentEntryLinkLocalServiceImpl
 	public int getAllFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId) {
 
-		return fragmentEntryLinkFinder.countByG_F(groupId, fragmentEntryId);
+		return fragmentEntryLinkPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				DSLQueryFactoryUtil.selectDistinct(
+					FragmentEntryLinkTable.INSTANCE.classNameId,
+					FragmentEntryLinkTable.INSTANCE.classPK
+				).from(
+					FragmentEntryLinkTable.INSTANCE
+				).where(
+					FragmentEntryLinkTable.INSTANCE.groupId.eq(
+						groupId
+					).and(
+						FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
+							fragmentEntryId)
+					).and(
+						FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+					)
+				).as(
+					"tempFragmentEntryLinkTable"
+				)
+			));
 	}
 
 	/**
@@ -494,8 +520,43 @@ public class FragmentEntryLinkLocalServiceImpl
 	public int getLayoutFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId) {
 
-		return fragmentEntryLinkFinder.countByG_F_P_L(
-			groupId, fragmentEntryId, -1);
+		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
+			LayoutTable.INSTANCE.plid
+		).from(
+			LayoutTable.INSTANCE
+		).leftJoinOn(
+			LayoutPageTemplateEntryTable.INSTANCE,
+			LayoutTable.INSTANCE.plid.eq(
+				LayoutPageTemplateEntryTable.INSTANCE.plid
+			).or(
+				LayoutTable.INSTANCE.classPK.eq(
+					LayoutPageTemplateEntryTable.INSTANCE.plid)
+			)
+		).where(
+			LayoutPageTemplateEntryTable.INSTANCE.plid.isNull()
+		).as(
+			"tempLayoutTable", LayoutTable.INSTANCE
+		);
+
+		return fragmentEntryLinkPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				FragmentEntryLinkTable.INSTANCE.plid
+			).from(
+				FragmentEntryLinkTable.INSTANCE
+			).innerJoinON(
+				tempLayoutTableTable,
+				FragmentEntryLinkTable.INSTANCE.plid.eq(
+					(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
+			).where(
+				FragmentEntryLinkTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
+						fragmentEntryId)
+				).and(
+					FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+				)
+			));
 	}
 
 	@Override
@@ -514,8 +575,44 @@ public class FragmentEntryLinkLocalServiceImpl
 	public int getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
 		long groupId, long fragmentEntryId, int layoutPageTemplateType) {
 
-		return fragmentEntryLinkFinder.countByG_F_P_L(
-			groupId, fragmentEntryId, layoutPageTemplateType);
+		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
+			LayoutTable.INSTANCE.plid
+		).from(
+			LayoutTable.INSTANCE
+		).innerJoinON(
+			LayoutPageTemplateEntryTable.INSTANCE,
+			LayoutTable.INSTANCE.plid.eq(
+				LayoutPageTemplateEntryTable.INSTANCE.plid
+			).or(
+				LayoutTable.INSTANCE.classPK.eq(
+					LayoutPageTemplateEntryTable.INSTANCE.plid)
+			)
+		).where(
+			LayoutPageTemplateEntryTable.INSTANCE.type.eq(
+				layoutPageTemplateType)
+		).as(
+			"tempLayoutTable", LayoutTable.INSTANCE
+		);
+
+		return fragmentEntryLinkPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				FragmentEntryLinkTable.INSTANCE.plid
+			).from(
+				FragmentEntryLinkTable.INSTANCE
+			).innerJoinON(
+				tempLayoutTableTable,
+				FragmentEntryLinkTable.INSTANCE.plid.eq(
+					(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
+			).where(
+				FragmentEntryLinkTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryId.eq(
+						fragmentEntryId)
+				).and(
+					FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+				)
+			));
 	}
 
 	@Override

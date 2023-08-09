@@ -263,7 +263,9 @@ const RequestList: React.FC<IRequestListProps> = ({
 						emailAddresses,
 						fileName,
 						ownerId: currentUser.id,
-						types
+						types,
+						userId: currentUser.userId,
+						userName: currentUser.name
 					}
 				})
 					.then(() => {

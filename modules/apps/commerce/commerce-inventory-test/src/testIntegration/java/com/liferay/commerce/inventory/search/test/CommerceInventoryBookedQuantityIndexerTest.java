@@ -179,7 +179,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-				_user.getUserId(), null, 2, cpInstance.getSku(),
+				_user.getUserId(), null, new BigDecimal(2), cpInstance.getSku(),
 				StringPool.BLANK, Collections.emptyMap());
 
 		commerceOrderItem =
@@ -235,7 +235,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-				_user.getUserId(), null, 2, cpInstance.getSku(),
+				_user.getUserId(), null, new BigDecimal(2), cpInstance.getSku(),
 				StringPool.BLANK, Collections.emptyMap());
 
 		commerceOrderItem =

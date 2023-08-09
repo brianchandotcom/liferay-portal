@@ -91,8 +91,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
-			commerceInventoryAuditType.getLog(context),
-			BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
+			commerceInventoryAuditType.getLog(context), quantity, sku,
+			StringPool.BLANK);
 
 		return commerceInventoryBookedQuantityPersistence.update(
 			commerceInventoryBookedQuantity);
@@ -113,11 +113,24 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			commerceInventoryBookedQuantityPersistence.findByPrimaryKey(
 				commerceBookedQuantityId);
 
-		if (quantity < commerceInventoryBookedQuantity.getQuantity()) {
-			int newQuantity =
-				commerceInventoryBookedQuantity.getQuantity() - quantity;
+		int bookedQuantity = 0;
 
-			commerceInventoryBookedQuantity.setQuantity(newQuantity);
+		if (quantity != null) {
+			bookedQuantity = quantity.intValue();
+		}
+
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryBookedQuantity.getQuantity();
+
+		if (bookedQuantity <
+				commerceInventoryWarehouseItemQuantity.intValue()) {
+
+			int newQuantity =
+				commerceInventoryWarehouseItemQuantity.intValue() -
+					bookedQuantity;
+
+			commerceInventoryBookedQuantity.setQuantity(
+				BigDecimal.valueOf(newQuantity));
 
 			return commerceInventoryBookedQuantityPersistence.update(
 				commerceInventoryBookedQuantity);
@@ -128,10 +141,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceBookedQuantity(
+	public BigDecimal getCommerceBookedQuantity(
 		long companyId, long commerceChannelGroupId, String sku) {
 
-		List<Integer> result = dslQuery(
+		List<BigDecimal> result = dslQuery(
 			DSLQueryFactoryUtil.select(
 				DSLFunctionFactoryUtil.sum(
 					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
@@ -164,15 +177,15 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			));
 
 		if (result.get(0) == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		return result.get(0);
 	}
 
 	@Override
-	public int getCommerceBookedQuantity(long companyId, String sku) {
-		List<Integer> result = dslQuery(
+	public BigDecimal getCommerceBookedQuantity(long companyId, String sku) {
+		List<BigDecimal> result = dslQuery(
 			DSLQueryFactoryUtil.select(
 				DSLFunctionFactoryUtil.sum(
 					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
@@ -190,7 +203,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			));
 
 		if (result.get(0) == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		return result.get(0);
@@ -265,10 +278,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			commerceBookedQuantity.setSku(sku);
 		}
 		else {
-			quantity = commerceBookedQuantity.getQuantity() + quantity;
+			quantity = quantity.add(commerceBookedQuantity.getQuantity());
 
-			if (quantity < 0) {
-				quantity = 0;
+			if (quantity.compareTo(BigDecimal.ZERO) == -1) {
+				quantity = BigDecimal.ZERO;
 			}
 		}
 
@@ -280,8 +293,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
-			commerceInventoryAuditType.getLog(context),
-			BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
+			commerceInventoryAuditType.getLog(context), quantity, sku,
+			StringPool.BLANK);
 
 		return commerceInventoryBookedQuantityPersistence.update(
 			commerceBookedQuantity);
@@ -305,7 +318,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context),
-			BigDecimal.valueOf(commerceInventoryBookedQuantity.getQuantity()),
+			commerceInventoryBookedQuantity.getQuantity(),
 			commerceInventoryBookedQuantity.getSku(), StringPool.BLANK);
 
 		return commerceInventoryBookedQuantity;
@@ -374,8 +387,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
-			commerceInventoryAuditType.getLog(context),
-			BigDecimal.valueOf(quantity),
+			commerceInventoryAuditType.getLog(context), quantity,
 			commerceInventoryBookedQuantity.getSku(),
 			commerceInventoryBookedQuantity.getUnitOfMeasureKey());
 

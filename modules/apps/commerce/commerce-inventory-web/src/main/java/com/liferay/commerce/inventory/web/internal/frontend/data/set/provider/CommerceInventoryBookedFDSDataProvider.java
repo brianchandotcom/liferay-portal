@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -76,11 +78,19 @@ public class CommerceInventoryBookedFDSDataProvider
 						commerceInventoryBookedQuantity.
 							getCommerceInventoryBookedQuantityId());
 
+			int bookedQuantity = 0;
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryBookedQuantity.getQuantity();
+
+			if (commerceInventoryWarehouseItemQuantity != null) {
+				bookedQuantity =
+					commerceInventoryWarehouseItemQuantity.intValue();
+			}
+
 			bookedQuantities.add(
 				new BookedQuantity(
 					_getAccountName(commerceOrderItem),
-					_getCommerceOrderId(commerceOrderItem),
-					commerceInventoryBookedQuantity.getQuantity(),
+					_getCommerceOrderId(commerceOrderItem), bookedQuantity,
 					_getExpirationDate(
 						commerceInventoryBookedQuantity.getExpirationDate(),
 						httpServletRequest)));

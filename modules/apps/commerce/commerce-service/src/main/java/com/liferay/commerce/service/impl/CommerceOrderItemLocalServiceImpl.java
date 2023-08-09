@@ -2149,7 +2149,7 @@ public class CommerceOrderItemLocalServiceImpl
 						userId,
 						commerceInventoryBookedQuantity.
 							getCommerceInventoryBookedQuantityId(),
-						quantity.intValue(),
+						quantity,
 						HashMapBuilder.put(
 							CommerceInventoryAuditTypeConstants.ORDER_ID,
 							String.valueOf(

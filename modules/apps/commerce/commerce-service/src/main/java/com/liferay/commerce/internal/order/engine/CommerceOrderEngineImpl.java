@@ -280,14 +280,12 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		AccountEntry accountEntry = commerceOrder.getAccountEntry();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			BigDecimal quantity = commerceOrderItem.getQuantity();
-
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
 					addCommerceBookedQuantity(
 						commerceOrderItem.getUserId(), null,
-						quantity.intValue(), commerceOrderItem.getSku(),
-						StringPool.BLANK,
+						commerceOrderItem.getQuantity(),
+						commerceOrderItem.getSku(), StringPool.BLANK,
 						HashMapBuilder.put(
 							CommerceInventoryAuditTypeConstants.ACCOUNT_NAME,
 							accountEntry.getName()

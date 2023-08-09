@@ -60,7 +60,7 @@ public class DefaultCommerceInventoryMethodImpl
 
 		if (bookedQuantityId > 0) {
 			_commerceBookedQuantityLocalService.consumeCommerceBookedQuantity(
-				bookedQuantityId, quantity);
+				bookedQuantityId, BigDecimal.valueOf(quantity));
 		}
 
 		decreaseStockQuantity(
@@ -154,11 +154,11 @@ public class DefaultCommerceInventoryMethodImpl
 			_commerceInventoryWarehouseItemService.getStockQuantity(
 				companyId, commerceChannelGroupId, sku);
 
-		int commerceBookedQuantity =
+		BigDecimal subtract = stockQuantity.subtract(
 			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
-				companyId, commerceChannelGroupId, sku);
+				companyId, commerceChannelGroupId, sku));
 
-		return stockQuantity.intValue() - commerceBookedQuantity;
+		return subtract.intValue();
 	}
 
 	@Override
@@ -167,11 +167,11 @@ public class DefaultCommerceInventoryMethodImpl
 			_commerceInventoryWarehouseItemService.getStockQuantity(
 				companyId, sku);
 
-		int commerceBookedQuantity =
+		BigDecimal subtract = stockQuantity.subtract(
 			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
-				companyId, sku);
+				companyId, sku));
 
-		return stockQuantity.intValue() - commerceBookedQuantity;
+		return subtract.intValue();
 	}
 
 	@Override

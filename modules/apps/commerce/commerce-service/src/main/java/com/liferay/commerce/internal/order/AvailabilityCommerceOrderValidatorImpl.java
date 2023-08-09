@@ -15,6 +15,7 @@ import com.liferay.commerce.product.availability.CPAvailabilityChecker;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
@@ -103,13 +104,25 @@ public class AvailabilityCommerceOrderValidatorImpl
 		}
 
 		if ((commerceInventoryBookedQuantity != null) &&
-			(quantity.intValue() !=
-				commerceInventoryBookedQuantity.getQuantity())) {
+			!BigDecimalUtil.eq(
+				quantity, commerceInventoryBookedQuantity.getQuantity())) {
 
-			return new CommerceOrderValidatorResult(
-				commerceOrderItem.getCommerceOrderItemId(), false,
-				_getLocalizedMessage(
-					locale, "the-specified-quantity-is-not-allowed"));
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryBookedQuantity.getQuantity();
+			BigDecimal bookedQuantity = BigDecimal.ZERO;
+
+			if (commerceInventoryWarehouseItemQuantity != null) {
+				bookedQuantity = commerceInventoryWarehouseItemQuantity;
+			}
+
+			if (!BigDecimalUtil.eq(
+					commerceOrderItem.getQuantity(), bookedQuantity)) {
+
+				return new CommerceOrderValidatorResult(
+					commerceOrderItem.getCommerceOrderItemId(), false,
+					_getLocalizedMessage(
+						locale, "the-specified-quantity-is-not-allowed"));
+			}
 		}
 
 		return new CommerceOrderValidatorResult(true);

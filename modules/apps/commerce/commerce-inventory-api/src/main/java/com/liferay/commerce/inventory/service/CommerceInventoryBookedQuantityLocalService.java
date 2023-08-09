@@ -220,11 +220,11 @@ public interface CommerceInventoryBookedQuantityLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceBookedQuantity(
+	public BigDecimal getCommerceBookedQuantity(
 		long companyId, long commerceChannelGroupId, String sku);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceBookedQuantity(long companyId, String sku);
+	public BigDecimal getCommerceBookedQuantity(long companyId, String sku);
 
 	/**
 	 * Returns a range of all the commerce inventory booked quantities.

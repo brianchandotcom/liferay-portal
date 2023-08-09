@@ -526,6 +526,9 @@
 																															}
 																														}
 																													],
+																													"fragmentStyle": {
+																														"hidden": true
+																													},
 																													"indexed": true
 																												},
 																												"type": "Fragment"

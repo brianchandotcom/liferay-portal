@@ -6,6 +6,7 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.oauth.OAuth2State;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -31,6 +32,9 @@ import java.util.function.Function;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -248,16 +252,24 @@ public class OAuth2ControllerFactory {
 				throw portalException;
 			}
 
-			JSONObject jsonObject = oAuth2Result.getResponseJSONObject();
-
-			for (String fieldName : jsonObject.keySet()) {
-				portletRequest.setAttribute(
-					fieldName, jsonObject.getString(fieldName));
-			}
-
 			String url = oAuth2Result.getRedirectURL();
 
 			if (url == null) {
+				JSONObject jsonObject = oAuth2Result.getResponseJSONObject();
+
+				if (jsonObject.length() > 0) {
+					HttpServletRequest httpServletRequest =
+						_portal.getOriginalServletRequest(
+							_portal.getHttpServletRequest(portletRequest));
+
+					HttpSession httpSession = httpServletRequest.getSession();
+
+					httpSession.setAttribute(
+						DLOpenerOneDriveWebKeys.
+							DL_OPENER_ONE_DRIVE_REDIRECTING_OAUTH2_JSON_OBJECT,
+						oAuth2Result.getResponseJSONObject());
+				}
+
 				url = _getRenderURL(portletRequest);
 			}
 

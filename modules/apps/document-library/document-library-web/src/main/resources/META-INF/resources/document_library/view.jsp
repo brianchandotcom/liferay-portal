@@ -136,7 +136,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					<c:if test="<%= dlAdminDisplayContext.hasFilterParameters() && ListUtil.isNotEmpty(dlAdminDisplayContext.getMountFolders()) %>">
 						<clay:alert
 							displayType="info"
-							message="filters-only-apply-to-documents-in-local-repositories"
+							message="filters-only-apply-to-documents-in-the-local-repository"
 						/>
 					</c:if>
 

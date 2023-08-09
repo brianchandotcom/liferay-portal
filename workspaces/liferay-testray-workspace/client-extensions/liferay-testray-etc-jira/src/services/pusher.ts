@@ -6,22 +6,22 @@
 import Pusher from 'pusher';
 
 const {
-    PUSHER_APP_ID,
-    PUSHER_APP_KEY,
-    PUSHER_APP_REGION = 'sa1',
-    PUSHER_APP_SECRET,
+	PUSHER_APP_ID,
+	PUSHER_APP_KEY,
+	PUSHER_APP_REGION = 'sa1',
+	PUSHER_APP_SECRET,
 } = Bun.env;
 
 const getPusherClient = () => {
-    if (PUSHER_APP_KEY && PUSHER_APP_ID && PUSHER_APP_SECRET) {
-        return new Pusher({
-            appId: PUSHER_APP_ID,
-            cluster: PUSHER_APP_REGION,
-            key: PUSHER_APP_KEY,
-            secret: PUSHER_APP_SECRET,
-            useTLS: true,
-        });
-    }
+	if (PUSHER_APP_KEY && PUSHER_APP_ID && PUSHER_APP_SECRET) {
+		return new Pusher({
+			appId: PUSHER_APP_ID,
+			cluster: PUSHER_APP_REGION,
+			key: PUSHER_APP_KEY,
+			secret: PUSHER_APP_SECRET,
+			useTLS: true,
+		});
+	}
 };
 
-export { getPusherClient };
+export {getPusherClient};

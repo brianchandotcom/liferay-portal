@@ -371,9 +371,15 @@ AUI.add(
 						fieldPrefixSeparator: inputLocalized.get(
 							'fieldPrefixSeparator'
 						),
-						frontendJsComponentsWebModule: inputLocalized.get('frontendJsComponentsWebModule'),
-						frontendJsReactWebModule: inputLocalized.get('frontendJsReactWebModule'),
-						frontendJsStateWebModule: inputLocalized.get('frontendJsStateWebModule'),
+						frontendJsComponentsWebModule: inputLocalized.get(
+							'frontendJsComponentsWebModule'
+						),
+						frontendJsReactWebModule: inputLocalized.get(
+							'frontendJsReactWebModule'
+						),
+						frontendJsStateWebModule: inputLocalized.get(
+							'frontendJsStateWebModule'
+						),
 						helpMessage: inputLocalized.get('helpMessage'),
 						id: inputLocalizedId,
 						inputBox: `#${inputLocalizedNamespaceId}BoundingBox`,

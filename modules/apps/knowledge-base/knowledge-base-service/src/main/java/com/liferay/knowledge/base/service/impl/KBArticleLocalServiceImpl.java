@@ -2358,12 +2358,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		if ((expirationDate != null) &&
-			(expirationDate.before(now) ||
-			 expirationDate.before(displayDate))) {
+		if (expirationDate != null) {
+			if (expirationDate.before(now)) {
+				throw new KBArticleExpirationDateException(
+					"Expiration date " + expirationDate + " is in the past");
+			}
 
-			throw new KBArticleExpirationDateException(
-				"Expiration date " + expirationDate + " is in the past");
+			if (expirationDate.before(displayDate)) {
+				throw new KBArticleExpirationDateException(
+					StringBundler.concat(
+						"Expiration date ", expirationDate,
+						" is prior to display date ", displayDate));
+			}
 		}
 
 		if ((reviewDate != null) && reviewDate.before(now)) {

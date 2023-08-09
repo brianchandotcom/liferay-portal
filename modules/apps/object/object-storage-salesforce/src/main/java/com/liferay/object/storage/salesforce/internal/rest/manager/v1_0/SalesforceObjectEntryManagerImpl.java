@@ -263,7 +263,7 @@ public class SalesforceObjectEntryManagerImpl
 			return HttpComponentsUtil.addParameter(
 				"search", "q",
 				StringBundler.concat(
-					"FIND {", search, "} IN ALL FIELDS RETURNING ",
+					"FIND {`", search, "`} IN ALL FIELDS RETURNING ",
 					objectDefinition.getExternalReferenceCode(), "(FIELDS(ALL)",
 					predicateString,
 					_getSorts(objectDefinition.getObjectDefinitionId(), sorts),

@@ -909,15 +909,6 @@ public class PortalUtil {
 
 	public static String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
-		throws PortalException {
-
-		return _portal.getLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL);
-	}
-
-	public static String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {

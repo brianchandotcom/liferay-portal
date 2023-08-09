@@ -644,11 +644,6 @@ public interface Portal {
 
 	public String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
-		throws PortalException;
-
-	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException;

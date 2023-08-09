@@ -2728,16 +2728,6 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
-		throws PortalException {
-
-		return getLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL, null, null);
-	}
-
-	@Override
-	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {

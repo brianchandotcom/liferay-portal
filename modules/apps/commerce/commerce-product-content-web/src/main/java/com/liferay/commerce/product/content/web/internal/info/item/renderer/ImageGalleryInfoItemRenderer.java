@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -114,14 +114,14 @@ public class ImageGalleryInfoItemRenderer
 					}
 				).put(
 					"viewCPAttachmentURL",
-					() -> PortletURLBuilder.create(
+					() -> ResourceURLBuilder.createResourceURL(
 						_portletURLFactory.create(
 							httpServletRequest, CPPortletKeys.CP_CONTENT_WEB,
 							PortletRequest.RESOURCE_PHASE)
-					).setMVCRenderCommandName(
-						"/cp_content_web/view_cp_attachments"
 					).setParameter(
 						"cpDefinitionId", cpDefinition.getCPDefinitionId()
+					).setResourceID(
+						"/cp_content_web/view_cp_attachments"
 					).buildString()
 				).build(),
 				httpServletRequest, httpServletResponse.getWriter());

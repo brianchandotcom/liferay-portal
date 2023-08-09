@@ -252,6 +252,28 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-113685"
+	@priority = 4
+	test NoXSSVulnerabilityInGroovyScript {
+		property test.liferay.virtual.instance = "false";
+
+		ServerAdministration.openServerAdmin();
+
+		var script = '''
+			<script>alert(123)</script>
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = ${script});
+
+		AssertElementPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Your request failed to complete.");
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "This is a use case for LRQA-10563. View JSONWS."
 	@priority = 3
 	test NoXSSVulnerabilityInJSONWS {

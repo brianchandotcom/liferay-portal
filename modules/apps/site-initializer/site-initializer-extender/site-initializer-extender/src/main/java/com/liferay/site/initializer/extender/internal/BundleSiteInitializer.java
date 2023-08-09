@@ -36,6 +36,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
@@ -246,6 +247,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
+		ExpandoValueLocalService expandoValueLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
@@ -325,6 +327,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
+		_expandoValueLocalService = expandoValueLocalService;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
@@ -596,6 +599,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _setPLOEntries(serviceContext));
 
+			_invoke(
+				() -> _addExpandoValues(
+					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _updateGroupSiteInitializerKey(groupId));
 		}
 		catch (Exception exception) {
@@ -845,6 +851,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_commerceSiteInitializer.addCPDefinitions(
 			_bundle, serviceContext, _servletContext, stringUtilReplaceValues);
+	}
+
+	private void _addExpandoValues(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/expando-values.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_replace(json, stringUtilReplaceValues));
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			_expandoValueLocalService.addValue(
+				serviceContext.getCompanyId(),
+				jsonObject.getString("className"), "CUSTOM_FIELDS",
+				jsonObject.getString("columnName"),
+				jsonObject.getLong("classPk"), jsonObject.get("data"));
+		}
 	}
 
 	private void _addFragmentEntries(
@@ -4944,6 +4976,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
+	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;

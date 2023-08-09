@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/sugarcrm-customer-portal",
+	"hidden": true,
+	"name": "SugarCRM Customer Portal",
+	"name_i18n": {
+		"en_US": "SugarCRM Customer Portal"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

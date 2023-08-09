@@ -5,10 +5,11 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, localStorage, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import BaseAPIApplicationField from '../baseComponents/BaseAPIApplicationFields';
+import {openEditURL} from '../utils/urlUtil';
 
 type DataError = {
 	baseURL: boolean;
@@ -19,7 +20,9 @@ interface HandleCreateInModal {
 	apiApplicationsURLPath: string;
 	basePath: string;
 	closeModal: voidReturn;
+	editURL: string;
 	loadData: voidReturn;
+	portletId: string;
 }
 
 const headers = new Headers({
@@ -32,29 +35,35 @@ export function CreateAPIApplicationModalContent({
 	apiApplicationsURLPath,
 	basePath,
 	closeModal,
+	editURL,
 	loadData,
+	portletId,
 }: HandleCreateInModal) {
-	const [data, setData] = useState<Partial<APIApplicationItem>>({});
+	const [localUIData, setLocalUIData] = useState<APIApplicationUIData>({
+		baseURL: '',
+		description: '',
+		title: '',
+	});
 	const [displayError, setDisplayError] = useState<DataError>({
 		baseURL: false,
 		title: false,
 	});
 
 	useEffect(() => {
-		for (const key in data) {
-			if (data[key as keyof APIApplicationItem] !== '') {
+		for (const key in localUIData) {
+			if (localUIData[key as keyof APIApplicationUIData] !== '') {
 				setDisplayError((previousErrors) => ({
 					...previousErrors,
 					[key]: false,
 				}));
 			}
 		}
-	}, [data]);
+	}, [localUIData]);
 
 	async function postData() {
 		fetch(apiApplicationsURLPath, {
 			body: JSON.stringify({
-				...data,
+				...localUIData,
 				applicationStatus: {key: 'unpublished'},
 				version: '1.0',
 			}),
@@ -63,28 +72,30 @@ export function CreateAPIApplicationModalContent({
 		})
 			.then((response) => {
 				if (response.ok) {
-					closeModal();
-					loadData();
-					openToast({
-						message: Liferay.Language.get(
-							'new-api-application-was-created'
-						),
-						type: 'success',
-					});
-				}
-				else {
 					return response.json();
 				}
-			})
-			.then((responseJson) => {
-				if (responseJson) {
-					throw new Error(responseJson.title);
+				else {
+					throw response.json();
 				}
 			})
+			.then((responseJSON) => {
+				loadData();
+				closeModal();
+				openEditURL({editURL, id: responseJSON.id, portletId});
+				localStorage.setItem(
+					'justCreated',
+					true,
+					localStorage.TYPES.FUNCTIONAL
+				);
+			})
 			.catch((error) => {
-				openToast({
-					message: error.message,
-					type: 'danger',
+				error.then((response: {message: string; title: string}) => {
+					{
+						openToast({
+							message: response.title ?? response.message,
+							type: 'danger',
+						});
+					}
 				});
 			});
 	}
@@ -93,7 +104,7 @@ export function CreateAPIApplicationModalContent({
 		let isDataValid = true;
 		const mandatoryFields = ['baseURL', 'title'];
 
-		if (!Object.keys(data).length) {
+		if (!Object.keys(localUIData).length) {
 			const errors = mandatoryFields.reduce(
 				(errors, field) => ({...errors, [field]: true}),
 				{}
@@ -104,7 +115,7 @@ export function CreateAPIApplicationModalContent({
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data[field as keyof APIApplicationItem]) {
+				if (localUIData[field as keyof APIApplicationUIData]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,
@@ -143,9 +154,9 @@ export function CreateAPIApplicationModalContent({
 			<div className="modal-body">
 				<BaseAPIApplicationField
 					basePath={basePath}
-					data={data}
+					data={localUIData}
 					displayError={displayError}
-					setData={setData}
+					setData={setLocalUIData}
 				/>
 			</div>
 

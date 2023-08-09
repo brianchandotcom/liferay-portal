@@ -35,11 +35,6 @@ public class SalesforceFilterFactoryImpl
 			objectDefinition.getObjectDefinitionId(), _objectFieldLocalService);
 	}
 
-	@Override
-	protected EntityModel getEntityModel(ObjectDefinition objectDefinition) {
-		return null;
-	}
-
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 

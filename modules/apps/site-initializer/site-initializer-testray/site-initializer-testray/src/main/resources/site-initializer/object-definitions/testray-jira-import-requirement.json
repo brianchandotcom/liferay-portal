@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Testray Jira Import Requirement"
+	},
+	"name": "JiraImportRequirement",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Issues"
+			},
+			"name": "issues",
+			"required": true,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Jira Import Requirements"
+	},
+	"scope": "company"
+}

@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -44,7 +46,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -68,21 +72,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -96,7 +101,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -106,7 +112,8 @@
 															"fragmentConfig": {
 																"height": "py-1"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -123,7 +130,8 @@
 													{
 														"definition": {
 															"widgetInstance": {
-																"widgetConfig": {},
+																"widgetConfig": {
+																},
 																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 															}
 														},
@@ -145,11 +153,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -165,11 +175,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -184,17 +196,19 @@
 																			},
 																			"fragmentConfig": {
 																				"alignItems": "align-items-start",
-																				"flexWrap": "",
 																				"flexDirection": "",
+																				"flexWrap": "",
 																				"items": 2,
 																				"justifyContent": "justify-content-start"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {},
+																				"definition": {
+																				},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -219,7 +233,8 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								}
 																							],
@@ -235,7 +250,8 @@
 																				"type": "FragmentDropZone"
 																			},
 																			{
-																				"definition": {},
+																				"definition": {
+																				},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -252,7 +268,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Enterprise Information Portal</h4>\n"
@@ -273,12 +290,13 @@
 																							},
 																							"fragmentConfig": {
 																								"alignItems": "align-items-start",
-																								"flexWrap": "",
 																								"flexDirection": "",
+																								"flexWrap": "",
 																								"items": 2,
 																								"justifyContent": "justify-content-start"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"marginBottom": "4"
 																							},
@@ -286,7 +304,8 @@
 																						},
 																						"pageElements": [
 																							{
-																								"definition": {},
+																								"definition": {
+																								},
 																								"pageElements": [
 																									{
 																										"definition": {
@@ -295,10 +314,10 @@
 																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
-																												"lazyLoadingImage": true,
+																												"alignment": "",
 																												"iconType": "large",
-																												"useHtml": false,
-																												"alignment": ""
+																												"lazyLoadingImage": true,
+																												"useHtml": false
 																											},
 																											"fragmentFields": [
 																												{
@@ -315,7 +334,8 @@
 																																}
 																															}
 																														},
-																														"fragmentLink": {}
+																														"fragmentLink": {
+																														}
 																													}
 																												}
 																											],
@@ -327,7 +347,8 @@
 																								"type": "FragmentDropZone"
 																							},
 																							{
-																								"definition": {},
+																								"definition": {
+																								},
 																								"type": "FragmentDropZone"
 																							}
 																						],
@@ -349,11 +370,13 @@
 																								},
 																								{
 																									"id": "portraitMobile",
-																									"rowViewportDefinition": {}
+																									"rowViewportDefinition": {
+																									}
 																								},
 																								{
 																									"id": "tablet",
-																									"rowViewportDefinition": {}
+																									"rowViewportDefinition": {
+																									}
 																								}
 																							],
 																							"verticalAlignment": "top"
@@ -369,11 +392,13 @@
 																											"id": "landscapeMobile"
 																										},
 																										{
-																											"columnViewportDefinition": {},
+																											"columnViewportDefinition": {
+																											},
 																											"id": "portraitMobile"
 																										},
 																										{
-																											"columnViewportDefinition": {},
+																											"columnViewportDefinition": {
+																											},
 																											"id": "tablet"
 																										}
 																									],
@@ -395,7 +420,8 @@
 																												{
 																													"id": "text",
 																													"value": {
-																														"fragmentLink": {}
+																														"fragmentLink": {
+																														}
 																													}
 																												}
 																											],
@@ -428,11 +454,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -445,9 +473,9 @@
 																				"key": "BASIC_COMPONENT-button"
 																			},
 																			"fragmentConfig": {
+																				"buttonSize": "nm",
 																				"buttonType": "primary",
-																				"type": "link",
-																				"buttonSize": "nm"
+																				"type": "link"
 																			},
 																			"fragmentFields": [
 																				{
@@ -499,7 +527,8 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -518,8 +547,11 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-spacer"
 									},
-									"fragmentConfig": {"height": "py-3"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"height": "py-3"
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -553,7 +585,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -577,21 +611,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -605,7 +640,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -624,7 +660,8 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
@@ -646,7 +683,8 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -667,7 +705,8 @@
 																			"fragmentConfig": {
 																				"height": "py-5"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -687,7 +726,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Enterprise Information Portal (EIP) is an unlimited number, unlimited modular platform</h1>\n"
@@ -711,7 +751,8 @@
 																			"fragmentConfig": {
 																				"height": "py-3"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -731,7 +772,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Digital Place for Communities is your open knowledge platform for sharing knowledge beyond your organisation. Now it’s easy for you to collaborate and share knowledge with teams, organisations and communities everywhere. Multi-agency use comes as standard!"
@@ -756,7 +798,8 @@
 																			"fragmentConfig": {
 																				"height": "py-5"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -774,7 +817,8 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
@@ -795,7 +839,8 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -807,17 +852,18 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
-																				"numberOfImages": "2",
+																				"colorScheme": "",
 																				"imageAspectRatio": "aspect-ratio-4-to-3",
-																				"lazyLoadingImage": true,
 																				"imageCarouselMaxWidth": "517px",
-																				"colorScheme": ""
+																				"lazyLoadingImage": true,
+																				"numberOfImages": "2"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -832,7 +878,8 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -869,7 +916,8 @@
 											"fragmentConfig": {
 												"height": "py-3"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -913,7 +961,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -938,7 +988,8 @@
 											"fragmentConfig": {
 												"height": "py-4"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -958,7 +1009,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Description</h4>\n"
@@ -982,7 +1034,8 @@
 											"fragmentConfig": {
 												"height": "py-2"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -1002,7 +1055,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "<strong>Enterprise Informatin Portal (EIP)</strong>&nbsp;is an enterprise information portal/employee portal that guides the direction of your organization and employees. It makes complete functional planning and construction according to the development goals of the enterprise. Based on Liferay's powerful platform features, it has a continuously scalable architecture that complies with various software standards and protocols, and enjoys a world-class enterprise entry platform system with a high ROI. &nbsp;At the same time, it has an integrated cloud office with an activity-oriented design page and mobile app operation. &nbsp;<br />\n<br />\nEIP is the information integration entry center within the enterprise, which needs to pay attention to system integration, authority control, and providing friendly interfaces among other aspects.&nbsp;<br />\n<br />\nAs an internal staff service network, it is necessary to provide a platform system that can serve different units. The EIP system provides an ever-expanding marketplace of available tools, including e-checker, form tools, education and training, project execution, calendar integration, system control, and management statistics. It also offers ready-to-use integrations with Google, Microsoft Office, and Salesforce. &nbsp;<br />\n<br />\nEIP utilizes the latest network protocols to ensure the security of data transfer and file storage.&nbsp; Role control allows subsidiaries, departments, and positions in all levels to accurately have access to functions exclusive to them. &nbsp;Actions such as viewing and editing digital content can be further controlled and tracked.<br />\n<br />\n<a href=\"https://www.placecube.com/platforms/digital-place-for-communities/\" target=\"_blank\">Learn more</a>"
@@ -1026,7 +1080,8 @@
 											"fragmentConfig": {
 												"height": "py-4"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -1069,11 +1124,13 @@
 														},
 														{
 															"id": "portraitMobile",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "top"
@@ -1089,11 +1146,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1107,10 +1166,10 @@
 																		"siteKey": "[$GROUP_KEY$]"
 																	},
 																	"fragmentConfig": {
-																		"lazyLoadingImage": true,
+																		"alignment": "",
 																		"iconType": "large",
-																		"useHtml": false,
-																		"alignment": ""
+																		"lazyLoadingImage": true,
+																		"useHtml": false
 																	},
 																	"fragmentFields": [
 																		{
@@ -1118,10 +1177,12 @@
 																			"value": {
 																				"fragmentImage": {
 																					"url": {
-																						"value_i18n": {}
+																						"value_i18n": {
+																						}
 																					}
 																				},
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1142,11 +1203,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1168,7 +1231,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "<a href=\"https://www.placecube.com/communities-product-guide/\" target=\"_blank\"><b>Product Guide</b></a>"
@@ -1201,7 +1265,9 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {"borderWidth": "0"},
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -1220,7 +1286,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1244,22 +1312,25 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
-											"fragmentStyle": {"hidden": true},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"hidden": true
+											},
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1273,7 +1344,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"type": "FragmentDropZone"
 											}
 										],
@@ -1287,8 +1359,11 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-spacer"
 									},
-									"fragmentConfig": {"height": "py-5"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"height": "py-5"
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -1305,7 +1380,9 @@
 							},
 							"fragmentViewports": [
 								{
-									"fragmentViewportStyle": {"hidden": false},
+									"fragmentViewportStyle": {
+										"hidden": false
+									},
 									"id": "landscapeMobile"
 								}
 							],
@@ -1332,21 +1409,22 @@
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
-										"boxShadow": "",
-										"showIconBoxShadow": false,
-										"moveIcon": "-75px 0 0 0",
-										"containerWidth": "",
-										"backgroundDarkOrLight": "dark",
-										"borderRadius": "border-radius-none",
-										"lazyLoadingImage": true,
 										"background": "",
-										"backgroundSize": "cover",
-										"backgroundPosition": "center",
-										"showIcon": false,
+										"backgroundDarkOrLight": "dark",
 										"backgroundImageUrl": "",
-										"blockAlignment": ""
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
@@ -1366,7 +1444,8 @@
 								},
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"pageElements": [
 											{
 												"definition": {
@@ -1406,11 +1485,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -1426,11 +1507,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1445,7 +1528,8 @@
 																			"fragmentConfig": {
 																				"height": "py-5"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1465,7 +1549,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1484,7 +1569,8 @@
 																			"fragmentConfig": {
 																				"height": "py-3"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1504,7 +1590,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1528,11 +1615,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1547,7 +1636,8 @@
 																			"fragmentConfig": {
 																				"height": "py-5"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1558,16 +1648,17 @@
 																				"key": "BASIC_COMPONENT-video"
 																			},
 																			"fragmentConfig": {
+																				"align": "flex-start",
+																				"autoPlay": false,
 																				"hideControls": false,
-																				"videoWidth": "",
 																				"loop": false,
 																				"mute": true,
-																				"autoPlay": false,
-																				"align": "flex-start",
 																				"url": "",
-																				"videoHeight": ""
+																				"videoHeight": "",
+																				"videoWidth": ""
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1586,7 +1677,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1599,7 +1691,8 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1640,7 +1733,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1664,21 +1759,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "light",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "light",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1692,7 +1788,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1702,7 +1799,8 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1722,10 +1820,11 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "<h3 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Features:</h3>\n\n<ul>\n\t<li><u><strong>Application functions</strong></u>\n\n\t<ul>\n\t\t<li><strong>Personal tools&nbsp;</strong>(To-do lists, message notifications, directory services, email, cloud drives, Post-it notes)</li>\n\t\t<li><strong>Content management</strong>&nbsp;(Bulletin module, file center, multimedia center, knowledge base, e-newsletter, FAQ)</li>\n\t\t<li><strong>Business tools</strong>&nbsp;(Schedule management, work management, meeting management, project management, business implementation, personnel assessment)</li>\n\t\t<li><strong>Coordinated operation</strong>&nbsp;(Calendar, event registration, poll, equipment borrowing, delivery management, Wikipedia)&nbsp;&nbsp;</li>\n\t\t<li><strong>Form processing</strong>&nbsp;(Sign and form, purchase request application, expense application, common form, form tool)</li>\n\t\t<li><strong>Community interaction</strong>&nbsp;(Discussion forum, expert yellow pages, community pages, file sharing, comment response, chat/im, gathering)</li>\n\t\t<li><strong>Personal life tools</strong>&nbsp;(Bookmark links, map location, weather, shopping, currency exchange, stock information)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>User experience</strong></u>\n\t<ul>\n\t\t<li><strong>Interface experience</strong>&nbsp;(Theme style suite, user dashboard, drag layout)</li>\n\t\t<li><strong>Content experience</strong>&nbsp;(Targeted content, content sharing, personalized pages, personalized experiences)</li>\n\t\t<li><strong>Action experience</strong>&nbsp;(Mobile office app, mobile webpage RWD, message pushing and broadcasting)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>Platform functions</strong></u>\n\t<ul>\n\t\t<li><strong>System deployment&nbsp;</strong>(Cross-platform construction, cloud deployment, high availability, information security, performance monitoring)</li>\n\t\t<li><strong>Basic management&nbsp;</strong>(Multi-organization location, multi-language time zone, platform management, account organization, authority control)</li>\n\t\t<li><strong>Record tracking&nbsp;</strong>(Online monitoring, activity record, activity KPI, user statistics)</li>\n\t\t<li><strong>Platform applications&nbsp;</strong>(Site-wide search, check tools, report tools)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>Integration and expansion</strong></u>\n\t<ul>\n\t\t<li><strong>Application development&nbsp;</strong>(Development extension, portlet development, theme development, ext development, extension application)</li>\n\t\t<li><strong>System integration&nbsp;</strong>&nbsp;(Single sign-on, Google integration, Microsoft integration, business system integration, community platform integration, office software integration)</li>\n\t\t<li> </li>\n\t</ul>\n\t</li>\n</ul>\n\n<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n \n\n<div data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">FansySoft is based on Java technology and adopts a mature Open Source system for system design and module development, system construction, and project program development. Good at using related system architectures such as Java EE . Provide software as a service (SaaS) technical support in the cloud service industry chain.<br />\n<br />\nFansySoft's mission is to become a leading consulting, technology and outsourcing service company in the information industry with the concept of \"local technical services, global R&amp;D support\", and the most competitive software technology, to provide local information technology services, to help improve Taiwan's strength in software.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.fansysoft.com/\" target=\"_blank\">https://www.fansysoft.com</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@fansysoft.com\" target=\"_blank\">sales@fansysoft.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+886-7-742-4012</div>\n"
+																				"en_US": "<h3 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Features:</h3>\n\n<ul>\n\t<li><u><strong>Application functions</strong></u>\n\n\t<ul>\n\t\t<li><strong>Personal tools&nbsp;</strong>(To-do lists, message notifications, directory services, email, cloud drives, Post-it notes)</li>\n\t\t<li><strong>Content management</strong>&nbsp;(Bulletin module, file center, multimedia center, knowledge base, e-newsletter, FAQ)</li>\n\t\t<li><strong>Business tools</strong>&nbsp;(Schedule management, work management, meeting management, project management, business implementation, personnel assessment)</li>\n\t\t<li><strong>Coordinated operation</strong>&nbsp;(Calendar, event registration, poll, equipment borrowing, delivery management, Wikipedia)&nbsp;&nbsp;</li>\n\t\t<li><strong>Form processing</strong>&nbsp;(Sign and form, purchase request application, expense application, common form, form tool)</li>\n\t\t<li><strong>Community interaction</strong>&nbsp;(Discussion forum, expert yellow pages, community pages, file sharing, comment response, chat/im, gathering)</li>\n\t\t<li><strong>Personal life tools</strong>&nbsp;(Bookmark links, map location, weather, shopping, currency exchange, stock information)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>User experience</strong></u>\n\t<ul>\n\t\t<li><strong>Interface experience</strong>&nbsp;(Theme style suite, user dashboard, drag layout)</li>\n\t\t<li><strong>Content experience</strong>&nbsp;(Targeted content, content sharing, personalized pages, personalized experiences)</li>\n\t\t<li><strong>Action experience</strong>&nbsp;(Mobile office app, mobile webpage RWD, message pushing and broadcasting)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>Platform functions</strong></u>\n\t<ul>\n\t\t<li><strong>System deployment&nbsp;</strong>(Cross-platform construction, cloud deployment, high availability, information security, performance monitoring)</li>\n\t\t<li><strong>Basic management&nbsp;</strong>(Multi-organization location, multi-language time zone, platform management, account organization, authority control)</li>\n\t\t<li><strong>Record tracking&nbsp;</strong>(Online monitoring, activity record, activity KPI, user statistics)</li>\n\t\t<li><strong>Platform applications&nbsp;</strong>(Site-wide search, check tools, report tools)</li>\n\t</ul>\n\t</li>\n\t<li><u><strong>Integration and expansion</strong></u>\n\t<ul>\n\t\t<li><strong>Application development&nbsp;</strong>(Development extension, portlet development, theme development, ext development, extension application)</li>\n\t\t<li><strong>System integration&nbsp;</strong>&nbsp;(Single sign-on, Google integration, Microsoft integration, business system integration, community platform integration, office software integration)</li>\n\t\t<li> </li>\n\t</ul>\n\t</li>\n</ul>\n\n<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n \n\n<div data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">FansySoft is based on Java technology and adopts a mature Open Source system for system design and module development, system construction, and project program development. Good at using related system architectures such as Java EE . Provide software as a service (SaaS) technical support in the cloud service industry chain.<br />\n<br />\nFansySoft's mission is to become a leading consulting, technology and outsourcing service company in the information industry with the concept of \"local technical services, global R&amp;D support\", and the most competitive software technology, to provide local information technology services, to help improve Taiwan's strength in software.<br />\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.fansysoft.com/\" target=\"_blank\">https://www.fansysoft.com</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:sales@fansysoft.com\" target=\"_blank\">sales@fansysoft.com</a><br />\n<br />\n<strong>Phone</strong><br />\n+886-7-742-4012</div>\n"
 																			}
 																		}
 																	}
@@ -1743,7 +1842,8 @@
 															"fragmentConfig": {
 																"height": "py-5"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1762,8 +1862,12 @@
 					},
 					{
 						"definition": {
-							"cssClasses": ["#solutions-details-form"],
-							"fragmentStyle": {"borderWidth": "0"},
+							"cssClasses": [
+								"#solutions-details-form"
+							],
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -1782,7 +1886,9 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"borderWidth": "0"},
+									"fragmentStyle": {
+										"borderWidth": "0"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -1806,21 +1912,22 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"boxShadow": "",
-												"showIconBoxShadow": false,
-												"moveIcon": "-75px 0 0 0",
-												"containerWidth": "",
-												"backgroundDarkOrLight": "dark",
-												"borderRadius": "border-radius-none",
-												"lazyLoadingImage": true,
 												"background": "",
-												"backgroundSize": "cover",
-												"backgroundPosition": "center",
-												"showIcon": false,
+												"backgroundDarkOrLight": "dark",
 												"backgroundImageUrl": "",
-												"blockAlignment": ""
+												"backgroundPosition": "center",
+												"backgroundSize": "cover",
+												"blockAlignment": "",
+												"borderRadius": "border-radius-none",
+												"boxShadow": "",
+												"containerWidth": "",
+												"lazyLoadingImage": true,
+												"moveIcon": "-75px 0 0 0",
+												"showIcon": false,
+												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1834,7 +1941,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1844,7 +1952,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1864,7 +1973,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h2>\n<br />\nFind out more about Digital Place for Communities"

@@ -322,6 +322,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new UpgradePartitionedControlTable("ClassName_"),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.comment.web"}, null));
+
+		upgradeVersionTreeMap.put(
+			new Version(28, 0, 0),
+			new UpgradePartitionedControlTable("ResourceAction"));
 	}
 
 }

@@ -16,7 +16,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +24,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -44,6 +45,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Crescenzo Rega
  */
+@FeatureFlags("COMMERCE-11287")
 @RunWith(Arquillian.class)
 public class CPInstanceUnitOfMeasureModelListenerTest {
 
@@ -171,8 +173,7 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 				commercePriceEntry.getCommercePriceEntryId());
 
 		Assert.assertTrue(
-			CommerceBigDecimalUtil.eq(
-				quantity, commercePriceEntry.getQuantity()));
+			BigDecimalUtil.eq(quantity, commercePriceEntry.getQuantity()));
 		Assert.assertEquals(
 			unitOfMeasureKey, commercePriceEntry.getUnitOfMeasureKey());
 	}
@@ -342,8 +343,7 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 				commercePriceEntry.getCommercePriceEntryId());
 
 		Assert.assertTrue(
-			CommerceBigDecimalUtil.eq(
-				quantity, commercePriceEntry.getQuantity()));
+			BigDecimalUtil.eq(quantity, commercePriceEntry.getQuantity()));
 		Assert.assertEquals(
 			unitOfMeasureKey, commercePriceEntry.getUnitOfMeasureKey());
 	}

@@ -13,6 +13,7 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 
 import java.math.BigDecimal;
 
@@ -22,6 +23,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@FeatureFlags("COMMERCE-11287")
 @RunWith(Arquillian.class)
 public class SkuUnitOfMeasureResourceTest
 	extends BaseSkuUnitOfMeasureResourceTestCase {

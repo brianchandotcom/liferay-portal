@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mikel Lorza
  */
 @Component(
-	property = "path=/layout_reports/get_layout_reports_tabs",
+	property = "path=/layout_reports/get_layout_reports_data",
 	service = StrutsAction.class
 )
-public class GetLayoutReportTabsStrutsAction implements StrutsAction {
+public class GetLayoutReportDataStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

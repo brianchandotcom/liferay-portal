@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import ClayAlert from '@clayui/alert';
@@ -22,10 +13,9 @@ import {useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import {MultiSelectCreatable} from '~/components/Form/MultiSelect';
 import Tooltip from '~/components/Tooltip';
-import {ApplicationPropertiesContext} from '~/context/ApplicationPropertiesContext';
 import {TestrayContext} from '~/context/TestrayContext';
 import yupSchema from '~/schema/yup';
-import {testrayRequirementsImpl} from '~/services/rest';
+import {testrayJiraImportRequirementImpl} from '~/services/rest/TestrayJiraImportRequirement';
 
 import Form from '../../../components/Form';
 import Modal from '../../../components/Modal';
@@ -44,7 +34,6 @@ type ImportJiraIssuesFormModalProps = {
 };
 
 const ImportJiraIssuesFormModal: React.FC<ImportJiraIssuesFormModalProps> = ({
-	forceRefetch,
 	modal,
 }) => {
 	const [{myUserAccount}] = useContext(TestrayContext);
@@ -52,7 +41,6 @@ const ImportJiraIssuesFormModal: React.FC<ImportJiraIssuesFormModalProps> = ({
 		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
-		setError,
 		setValue,
 		watch,
 	} = useForm<ImportJiraIssuesFormModal>({
@@ -60,39 +48,21 @@ const ImportJiraIssuesFormModal: React.FC<ImportJiraIssuesFormModalProps> = ({
 		resolver: yupResolver(yupSchema.jiraIssues),
 	});
 
-	const {jiraBaseURL} = useContext(ApplicationPropertiesContext);
-
 	const {projectId} = useParams();
 
 	const issues = watch('issues');
 
 	const _onSubmit = async (form: any) => {
-		form.jiraBaseURL = jiraBaseURL;
 		form.projectId = projectId;
 
-		await testrayRequirementsImpl
-			.importJiraIssue(form)
-			.then((response) => {
-				if (response.errors.length) {
-					setError('issues', {
-						message: `${response.errors.join(', ')}`,
-					});
-
-					const errorsResponse = response.errors.map(
-						(issue: string) => ({
-							label: issue,
-							value: issue,
-						})
-					);
-
-					setValue('issues', errorsResponse as any);
-
-					return;
-				}
-
-				return modal.onSave(response.createdIssues);
+		await testrayJiraImportRequirementImpl
+			.create({
+				...form,
+				issues: form.issues
+					.map((issue: {value: string}) => issue.value)
+					.join(','),
 			})
-			.then(() => forceRefetch)
+			.then(modal.onSave)
 			.catch(modal.onError);
 	};
 

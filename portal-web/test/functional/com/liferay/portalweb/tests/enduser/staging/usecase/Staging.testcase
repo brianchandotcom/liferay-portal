@@ -589,6 +589,62 @@ definition {
 			selectedAsset = "Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-189191. TC-1: Verify that the admin could configure staging to ignore previews and thumbnails during the local staging publish process."
+	@priority = 4
+	test ConfigureIgnorePreviewsAndThumbnails {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Verify that the checkbox Include Thumbnails And Previews During Staging is checked by default") {
+			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Include Thumbnails And Previews During Staging",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewSettingsText(settingsText = "If checked, then the generated previews and thumbnails will be included during staging process.");
+
+			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Include Thumbnails And Previews During Staging",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewSettingsText(settingsText = "If checked, then the generated previews and thumbnails will be included during staging process.");
+		}
+
+		task ("And: Enable local staging and add a new file to DM") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name-staging",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("When: Create a new publish process") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("Then: Assert the Previews and Thumbnails are displayed under DM item") {
+			Staging.configurePublishToLive(
+				checkContentNameList = "Documents and Media",
+				includeThumbnailsAndPreviewsDuringStaging = "true");
+
+			Staging.publishToLive();
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-92039 and LPS-92636."
 	@priority = 3
 	test CreateWidgetTemplateWhenNotStagedADT {
@@ -800,6 +856,70 @@ definition {
 			larFileName = "7.0.10.14_webcontent.lar",
 			portletName = "Web Content",
 			uploadFrom = "dependencies");
+	}
+
+	@description = "This is a use case for LPS-189191. TC-2 and TC-4: Verify that the instance setting is able to overwrite the system setting via osgi file to ignore previews and thumbnails during the local staging publish process."
+	@priority = 4
+	test InstanceSettingOfPreviewsAndThumbnailsCanOverwriteSystemSetting {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Instance setting overwrite system setting via osgi file") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration.scoped~companyId.config",
+				osgiConfigs = "companyId=L\"${companyId}\",includeThumbnailsAndPreviewsDuringStaging=B\"false\"");
+
+			OSGiConfig.waitForOSGiConfig();
+
+			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Include Thumbnails And Previews During Staging",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Include Thumbnails And Previews During Staging",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		}
+
+		task ("And: Enable local staging and add a new file to DM") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name-staging",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("When: Create a new publish process") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("Then: Assert the Previews and Thumbnails are not displayed under DM item") {
+			Staging.configurePublishToLive(
+				checkContentNameList = "Documents and Media",
+				includeThumbnailsAndPreviewsDuringStaging = "false");
+
+			Staging.publishToLive();
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("And: Verify the new LAR does not contain adaptive-media folder") {
+			Staging.validateFolderNotExist();
+		}
 	}
 
 	@priority = 5

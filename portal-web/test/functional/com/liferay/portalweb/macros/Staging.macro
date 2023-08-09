@@ -430,6 +430,53 @@ definition {
 			ContentConfiguration.uncheckPages();
 		}
 
+		if (${includeThumbnailsAndPreviewsDuringStaging} == "true") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Staging#STAGING_CONTENT_INFO",
+				value1 = "Previews and Thumbnails");
+
+			WaitForElementPresent(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
+
+			AssertClick.assertTextClickNoMouseOver(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
+				value1 = "Change");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_contentName = ${checkContentNameList},
+				key_subContent = "Previews and Thumbnails",
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
+
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+		else if (${includeThumbnailsAndPreviewsDuringStaging} == "false") {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "Staging#STAGING_CONTENT_INFO",
+				value1 = "Previews and Thumbnails");
+
+			WaitForElementPresent(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
+
+			AssertClick.assertTextClickNoMouseOver(
+				key_contentName = ${checkContentNameList},
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",
+				value1 = "Change");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_contentName = ${checkContentNameList},
+				key_subContent = "Previews and Thumbnails",
+				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
+
+			AssertClick.assertTextClickNoMouseOver(
+				locator1 = "Button#CANCEL",
+				value1 = "Cancel");
+		}
+
 		if (isSet(uncheckSubContent)) {
 			Check.checkHiddenToggleSwitch(
 				key_contentName = ${mainContent},

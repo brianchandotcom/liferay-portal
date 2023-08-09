@@ -382,6 +382,67 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-189191. TC-3: Verify that the instance setting is able to overwrite the system setting via UI to ignore previews and thumbnails during the remote staging publish process."
+	@priority = 4
+	test InstanceSettingOfPreviewsAndThumbnailsCanOverwriteSystemSetting {
+		property custom.properties = "feature.flag.LPS-189187=true${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Instance setting overwrite system setting via UI") {
+			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
+
+			Uncheck.uncheckNotVisible(
+				key_settingFieldName = "Include Thumbnails And Previews During Staging",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Include Thumbnails And Previews During Staging",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		}
+
+		task ("And: Add a new file to DM") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("When: Create a new publish process") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("Then: Assert the Previews and Thumbnails are not displayed under DM item") {
+			Staging.configurePublishToLive(
+				checkContentNameList = "Documents and Media",
+				includeThumbnailsAndPreviewsDuringStaging = "false");
+
+			Staging.publishToLive(remoteStaging = "true");
+
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			DMNavigator.openDocumentsAndMediaAdmin(
+				baseURL = "http://localhost:9080",
+				siteURLKey = "remote-site");
+
+			DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-146399. In the publish summary of a remote staging site only the previously published pages should be present."
 	@priority = 3
 	test OnlyPublishedPagesShouldBePresentInSummary {

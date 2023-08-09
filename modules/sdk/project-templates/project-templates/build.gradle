@@ -70,7 +70,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.187"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.layout.template", version: "1.0.184"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.modules.ext", version: "1.0.171"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet", version: "1.0.185"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet", version: "1.0.186"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.angular.portlet", version: "1.0.183"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.react.portlet", version: "1.0.184"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.npm.vuejs.portlet", version: "1.0.183"

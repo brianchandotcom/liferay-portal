@@ -380,6 +380,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
 		mockLiferayResourceRequest.setAttribute(WebKeys.LOCALE, LocaleUtil.US);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -388,9 +391,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		ThemeDisplay themeDisplay = ContentDashboardTestUtil.getThemeDisplay(
 			_group);
 
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE,
-			new MockLiferayPortletRenderResponse());
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

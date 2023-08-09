@@ -295,18 +295,6 @@ public class MirrorsGetTask extends Task {
 		_downloadFile(sourceURL, targetFile);
 	}
 
-	protected Process executeCommands(String[] commands)
-		throws InterruptedException, IOException, RuntimeException {
-
-		ProcessBuilder processBuilder = new ProcessBuilder(commands);
-
-		Process process = processBuilder.start();
-
-		process.waitFor();
-
-		return process;
-	}
-
 	protected String getMirrorsHostname() {
 		if (_mirrorsHostname != null) {
 			return _mirrorsHostname;
@@ -345,31 +333,6 @@ public class MirrorsGetTask extends Task {
 		}
 
 		return path;
-	}
-
-	protected String getProcessOutput(Process process) {
-		StringBuilder processOutput = new StringBuilder();
-
-		try {
-			BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(process.getInputStream()));
-
-			String line = bufferedReader.readLine();
-
-			while (line != null) {
-				processOutput.append(line);
-				processOutput.append(System.lineSeparator());
-
-				line = bufferedReader.readLine();
-			}
-		}
-		catch (Exception exception) {
-			System.out.println("Unable to get process output.");
-
-			exception.printStackTrace();
-		}
-
-		return processOutput.toString();
 	}
 
 	protected String getURLScheme() {
@@ -412,68 +375,6 @@ public class MirrorsGetTask extends Task {
 		_username = project.getProperty("mirrors.username");
 
 		return _username;
-	}
-
-	protected boolean has7z() {
-		String[] commands = {"/bin/bash", "-c", "type 7z"};
-
-		try {
-			Process process = executeCommands(commands);
-
-			if (process.exitValue() != 0) {
-				System.out.println("Unable to validate 7z file");
-
-				return false;
-			}
-		}
-		catch (Exception exception) {
-			System.out.println("Unable to validate 7z file");
-
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean is7ZArchiveValid(File file) {
-		if (!has7z()) {
-			return true;
-		}
-
-		String[] commands = {"/bin/bash", "-c", "7z t " + file.toString()};
-
-		Process process = null;
-
-		try {
-			process = executeCommands(commands);
-		}
-		catch (Exception exception) {
-			System.out.println(file + " archive file is not valid.");
-
-			return false;
-		}
-
-		String processOutput = getProcessOutput(process);
-
-		int exitValue = process.exitValue();
-
-		if ((exitValue == 0) && !processOutput.contains("Files: 0\n")) {
-			return true;
-		}
-
-		System.out.println(processOutput);
-
-		System.out.println(file + " archive file is not valid.");
-
-		return false;
-	}
-
-	protected boolean is7ZFileName(String fileName) {
-		if (fileName.endsWith(".7z")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected boolean isValidMD5(File file, URL url) throws IOException {
@@ -753,14 +654,113 @@ public class MirrorsGetTask extends Task {
 				targetFile.getAbsolutePath() + " is an invalid zip file.");
 		}
 
-		if (is7ZFileName(targetFile.getName()) &&
-			!is7ZArchiveValid(targetFile)) {
+		if (_is7ZFileName(targetFile.getName()) &&
+			!_is7ZArchiveValid(targetFile)) {
 
 			targetFile.delete();
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is an invalid 7z file.");
 		}
+	}
+
+	private Process _executeCommands(String[] commands)
+		throws InterruptedException, IOException, RuntimeException {
+
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
+
+		Process process = processBuilder.start();
+
+		process.waitFor();
+
+		return process;
+	}
+
+	private String _getProcessOutput(Process process) {
+		StringBuilder processOutput = new StringBuilder();
+
+		try {
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(process.getInputStream()));
+
+			String line = bufferedReader.readLine();
+
+			while (line != null) {
+				processOutput.append(line);
+				processOutput.append(System.lineSeparator());
+
+				line = bufferedReader.readLine();
+			}
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to get process output.");
+
+			exception.printStackTrace();
+		}
+
+		return processOutput.toString();
+	}
+
+	private boolean _has7z() {
+		String[] commands = {"/bin/bash", "-c", "type 7z"};
+
+		try {
+			Process process = _executeCommands(commands);
+
+			if (process.exitValue() != 0) {
+				System.out.println("Unable to validate 7z file");
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to validate 7z file");
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _is7ZArchiveValid(File file) {
+		if (!_has7z()) {
+			return true;
+		}
+
+		String[] commands = {"/bin/bash", "-c", "7z t " + file.toString()};
+
+		Process process = null;
+
+		try {
+			process = _executeCommands(commands);
+		}
+		catch (Exception exception) {
+			System.out.println(file + " archive file is not valid.");
+
+			return false;
+		}
+
+		String processOutput = _getProcessOutput(process);
+
+		int exitValue = process.exitValue();
+
+		if ((exitValue == 0) && !processOutput.contains("Files: 0\n")) {
+			return true;
+		}
+
+		System.out.println(processOutput);
+
+		System.out.println(file + " archive file is not valid.");
+
+		return false;
+	}
+
+	private boolean _is7ZFileName(String fileName) {
+		if (fileName.endsWith(".7z")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Pattern _basicAuthenticationURLPattern =

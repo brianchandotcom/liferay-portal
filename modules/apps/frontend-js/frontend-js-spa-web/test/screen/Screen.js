@@ -13,6 +13,9 @@ describe('Screen', () => {
 		window.Liferay.DOMTaskRunner = {
 			runTasks: jest.fn(),
 		};
+		window.Liferay.CSP = {
+			nonce: '',
+		};
 	});
 
 	it('exposes lifecycle activate', () => {

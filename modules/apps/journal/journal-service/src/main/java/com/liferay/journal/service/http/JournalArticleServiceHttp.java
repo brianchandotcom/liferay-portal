@@ -56,8 +56,9 @@ public class JournalArticleServiceHttp {
 			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
 			int reviewDateDay, int reviewDateYear, int reviewDateHour,
 			int reviewDateMinute, boolean neverReview, boolean indexable,
-			boolean smallImage, String smallImageURL, java.io.File smallFile,
-			java.util.Map<String, byte[]> images, String articleURL,
+			boolean smallImage, int smallImageSource, String smallImageURL,
+			java.io.File smallFile, java.util.Map<String, byte[]> images,
+			String articleURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -76,7 +77,8 @@ public class JournalArticleServiceHttp {
 				expirationDateHour, expirationDateMinute, neverExpire,
 				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
 				reviewDateMinute, neverReview, indexable, smallImage,
-				smallImageURL, smallFile, images, articleURL, serviceContext);
+				smallImageSource, smallImageURL, smallFile, images, articleURL,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -166,8 +168,8 @@ public class JournalArticleServiceHttp {
 				int expirationDateMinute, boolean neverExpire,
 				int reviewDateMonth, int reviewDateDay, int reviewDateYear,
 				int reviewDateHour, int reviewDateMinute, boolean neverReview,
-				boolean indexable, boolean smallImage, String smallImageURL,
-				java.io.File smallImageFile,
+				boolean indexable, boolean smallImage, int smallImageSource,
+				String smallImageURL, java.io.File smallImageFile,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -184,8 +186,8 @@ public class JournalArticleServiceHttp {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageURL,
-				smallImageFile, serviceContext);
+				neverReview, indexable, smallImage, smallImageSource,
+				smallImageURL, smallImageFile, serviceContext);
 
 			Object returnObj = null;
 
@@ -2806,7 +2808,7 @@ public class JournalArticleServiceHttp {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallFile,
+			int smallImageSource, String smallImageURL, java.io.File smallFile,
 			java.util.Map<String, byte[]> images, String articleURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2824,8 +2826,8 @@ public class JournalArticleServiceHttp {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageURL, smallFile,
-				images, articleURL, serviceContext);
+				neverReview, indexable, smallImage, smallImageSource,
+				smallImageURL, smallFile, images, articleURL, serviceContext);
 
 			Object returnObj = null;
 
@@ -2868,7 +2870,7 @@ public class JournalArticleServiceHttp {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallFile,
+			int smallImageSource, String smallImageURL, java.io.File smallFile,
 			java.util.Map<String, byte[]> images, String articleURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2886,8 +2888,8 @@ public class JournalArticleServiceHttp {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageURL, smallFile,
-				images, articleURL, serviceContext);
+				neverReview, indexable, smallImage, smallImageSource,
+				smallImageURL, smallFile, images, articleURL, serviceContext);
 
 			Object returnObj = null;
 
@@ -2973,8 +2975,8 @@ public class JournalArticleServiceHttp {
 				int expirationDateMinute, boolean neverExpire,
 				int reviewDateMonth, int reviewDateDay, int reviewDateYear,
 				int reviewDateHour, int reviewDateMinute, boolean neverReview,
-				boolean indexable, boolean smallImage, String smallImageURL,
-				java.io.File smallImageFile,
+				boolean indexable, boolean smallImage, int smallImageSource,
+				String smallImageURL, java.io.File smallImageFile,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -2991,7 +2993,8 @@ public class JournalArticleServiceHttp {
 				expirationDateYear, expirationDateHour, expirationDateMinute,
 				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
 				reviewDateHour, reviewDateMinute, neverReview, indexable,
-				smallImage, smallImageURL, smallImageFile, serviceContext);
+				smallImage, smallImageSource, smallImageURL, smallImageFile,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -3120,8 +3123,8 @@ public class JournalArticleServiceHttp {
 		String.class, int.class, int.class, int.class, int.class, int.class,
 		int.class, int.class, int.class, int.class, int.class, boolean.class,
 		int.class, int.class, int.class, int.class, int.class, boolean.class,
-		boolean.class, boolean.class, String.class, java.io.File.class,
-		java.util.Map.class, String.class,
+		boolean.class, boolean.class, int.class, String.class,
+		java.io.File.class, java.util.Map.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addArticleParameterTypes1 = new Class[] {
@@ -3136,7 +3139,7 @@ public class JournalArticleServiceHttp {
 			String.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class,
 			boolean.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class, boolean.class, boolean.class,
+			int.class, boolean.class, boolean.class, boolean.class, int.class,
 			String.class, java.io.File.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -3392,7 +3395,7 @@ public class JournalArticleServiceHttp {
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, boolean.class,
-			boolean.class, String.class, java.io.File.class,
+			boolean.class, int.class, String.class, java.io.File.class,
 			java.util.Map.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -3404,8 +3407,8 @@ public class JournalArticleServiceHttp {
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class, boolean.class, boolean.class,
-			String.class, java.io.File.class, java.util.Map.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, String.class, java.io.File.class, java.util.Map.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateArticleParameterTypes72 =
 		new Class[] {
@@ -3419,7 +3422,7 @@ public class JournalArticleServiceHttp {
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, boolean.class,
-			boolean.class, String.class, java.io.File.class,
+			boolean.class, int.class, String.class, java.io.File.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateArticleTranslationParameterTypes74 =

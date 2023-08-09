@@ -124,6 +124,7 @@ public class JournalArticleLocalServiceUtil {
 	 * @param neverReview whether the web content article is not set for review
 	 * @param indexable whether the web content article is searchable
 	 * @param smallImage whether the web content article has a small image
+	 * @param smallImageSource the web content article's small image source
 	 * @param smallImageURL the web content article's small image URL
 	 * @param smallImageFile the web content article's small image file
 	 * @param images the web content's images
@@ -152,8 +153,9 @@ public class JournalArticleLocalServiceUtil {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
+			int smallImageSource, String smallImageURL,
+			java.io.File smallImageFile, Map<String, byte[]> images,
+			String articleURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -166,8 +168,9 @@ public class JournalArticleLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
-			smallImageFile, images, articleURL, serviceContext);
+			reviewDateMinute, neverReview, indexable, smallImage,
+			smallImageSource, smallImageURL, smallImageFile, images, articleURL,
+			serviceContext);
 	}
 
 	/**
@@ -184,10 +187,10 @@ public class JournalArticleLocalServiceUtil {
 	 * @param content the HTML content wrapped in XML. For more information,
 	 see the content example in the {@link #addArticle(String, long,
 	 long, long, long, long, String, boolean, double, Map, Map, Map,
-	 String, long, String, String, int, int, int, int, int, int,
-	 int, int, int, int, boolean, int, int, int, int, int, boolean,
-	 boolean, boolean, String, File, Map, String, ServiceContext)}
-	 description.
+	 String, long, String, String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, int, String, File, Map, String,
+	 ServiceContext)} description.
 	 * @param ddmStructureId the primary key of the web content article's DDM
 	 structure, if the article is related to a DDM structure, or
 	 <code>0</code> otherwise
@@ -228,7 +231,8 @@ public class JournalArticleLocalServiceUtil {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallImageFile,
+			int smallImageSource, String smallImageURL,
+			java.io.File smallImageFile,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -240,7 +244,8 @@ public class JournalArticleLocalServiceUtil {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
 			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+			smallImage, smallImageSource, smallImageURL, smallImageFile,
+			serviceContext);
 	}
 
 	/**
@@ -2651,10 +2656,10 @@ public class JournalArticleLocalServiceUtil {
 	 * @param content the HTML content wrapped in XML. For more information,
 	 see the content example in the {@link #addArticle(String, long,
 	 long, long, long, long, String, boolean, double, Map, Map, Map,
-	 String, long, String, String, int, int, int, int, int, int,
-	 int, int, int, int, boolean, int, int, int, int, int, boolean,
-	 boolean, boolean, String, File, Map, String, ServiceContext)}
-	 description.
+	 String, long, String, String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, int, String, File, Map, String,
+	 ServiceContext)} description.
 	 * @param ddmTemplateKey the primary key of the web content article's DDM
 	 template
 	 * @param layoutUuid the unique string identifying the web content
@@ -2694,6 +2699,8 @@ public class JournalArticleLocalServiceUtil {
 	 * @param smallImage whether to update web content article's a small image.
 	 A file must be passed in as <code>smallImageFile</code> value,
 	 otherwise the current small image is deleted.
+	 * @param smallImageSource the web content article's small image source
+	 (optionally <code>null</code>)
 	 * @param smallImageURL the web content article's small image URL
 	 (optionally <code>null</code>)
 	 * @param smallImageFile the web content article's new small image file
@@ -2728,8 +2735,9 @@ public class JournalArticleLocalServiceUtil {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
+			int smallImageSource, String smallImageURL,
+			java.io.File smallImageFile, Map<String, byte[]> images,
+			String articleURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2741,8 +2749,8 @@ public class JournalArticleLocalServiceUtil {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
 			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			smallImage, smallImageURL, smallImageFile, images, articleURL,
-			serviceContext);
+			smallImage, smallImageSource, smallImageURL, smallImageFile, images,
+			articleURL, serviceContext);
 	}
 
 	/**
@@ -2761,10 +2769,10 @@ public class JournalArticleLocalServiceUtil {
 	 * @param content the HTML content wrapped in XML. For more information,
 	 see the content example in the {@link #addArticle(String, long,
 	 long, long, long, long, String, boolean, double, Map, Map, Map,
-	 String, long, String, String, int, int, int, int, int, int,
-	 int, int, int, int, boolean, int, int, int, int, int, boolean,
-	 boolean, boolean, String, File, Map, String, ServiceContext)}
-	 description.
+	 String, long, String, String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, int, String, File, Map, String,
+	 ServiceContext)} description.
 	 * @param layoutUuid the unique string identifying the web content
 	 article's display page
 	 * @param serviceContext the service context to be applied. Can set the
@@ -2809,10 +2817,10 @@ public class JournalArticleLocalServiceUtil {
 	 * @param content the HTML content wrapped in XML. For more information,
 	 see the content example in the {@link #addArticle(String, long,
 	 long, long, long, long, String, boolean, double, Map, Map, Map,
-	 String, long, String, String, int, int, int, int, int, int,
-	 int, int, int, int, boolean, int, int, int, int, int, boolean,
-	 boolean, boolean, String, File, Map, String, ServiceContext)}
-	 description.
+	 String, long, String, String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, int, String, File, Map, String,
+	 ServiceContext)} description.
 	 * @param ddmTemplateKey the primary key of the web content article's DDM
 	 template
 	 * @param layoutUuid the unique string identifying the web content
@@ -2852,6 +2860,8 @@ public class JournalArticleLocalServiceUtil {
 	 * @param smallImage whether to update web content article's a small image.
 	 A file must be passed in as <code>smallImageFile</code> value,
 	 otherwise the current small image is deleted.
+	 * @param smallImageSource the web content article's small image source
+	 (optionally <code>null</code>)
 	 * @param smallImageURL the web content article's small image URL
 	 (optionally <code>null</code>)
 	 * @param smallImageFile the web content article's new small image file
@@ -2885,8 +2895,9 @@ public class JournalArticleLocalServiceUtil {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
+			int smallImageSource, String smallImageURL,
+			java.io.File smallImageFile, Map<String, byte[]> images,
+			String articleURL,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2898,8 +2909,8 @@ public class JournalArticleLocalServiceUtil {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
 			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			smallImage, smallImageURL, smallImageFile, images, articleURL,
-			serviceContext);
+			smallImage, smallImageSource, smallImageURL, smallImageFile, images,
+			articleURL, serviceContext);
 	}
 
 	/**
@@ -2915,10 +2926,10 @@ public class JournalArticleLocalServiceUtil {
 	 * @param content the HTML content wrapped in XML. For more information,
 	 see the content example in the {@link #addArticle(String, long,
 	 long, long, long, long, String, boolean, double, Map, Map, Map,
-	 String, long, String, String, int, int, int, int, int, int,
-	 int, int, int, int, boolean, int, int, int, int, int, boolean,
-	 boolean, boolean, String, File, Map, String, ServiceContext)}
-	 description.
+	 String, long, String, String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, int, String, File, Map, String,
+	 ServiceContext)} description.
 	 * @param serviceContext the service context to be applied. Can set the
 	 modification date, expando bridge attributes, asset category IDs,
 	 asset tag names, asset link entry IDs, asset priority, workflow
@@ -2968,7 +2979,8 @@ public class JournalArticleLocalServiceUtil {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			String smallImageURL, java.io.File smallImageFile,
+			int smallImageSource, String smallImageURL,
+			java.io.File smallImageFile,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2979,8 +2991,8 @@ public class JournalArticleLocalServiceUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage, smallImageURL,
-			smallImageFile, serviceContext);
+			reviewDateMinute, neverReview, indexable, smallImage,
+			smallImageSource, smallImageURL, smallImageFile, serviceContext);
 	}
 
 	/**
@@ -2995,10 +3007,10 @@ public class JournalArticleLocalServiceUtil {
 	 * @param content the HTML content wrapped in XML. For more information,
 	 see the content example in the {@link #addArticle(String, long,
 	 long, long, long, long, String, boolean, double, Map, Map, Map,
-	 String, long, String, String, int, int, int, int, int, int,
-	 int, int, int, int, boolean, int, int, int, int, int, boolean,
-	 boolean, boolean, String, File, Map, String, ServiceContext)}
-	 description.
+	 String, long, String, String, int, int, int, int, int, int, int,
+	 int, int, int, boolean, int, int, int, int, int, boolean,
+	 boolean, boolean, int, String, File, Map, String,
+	 ServiceContext)} description.
 	 * @param images the web content's images
 	 * @param serviceContext the service context to be applied. Can set the
 	 modification date and URL title for the web content article.

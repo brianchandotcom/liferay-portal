@@ -212,8 +212,6 @@ definition {
 			workflowDefinition = "CSingle Approver",
 			workflowResourceValue = "User");
 
-		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
-
 		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Workflow");
 
 		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Translation,Comment,User");

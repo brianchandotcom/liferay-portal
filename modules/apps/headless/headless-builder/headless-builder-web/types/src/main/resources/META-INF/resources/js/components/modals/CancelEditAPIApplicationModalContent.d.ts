@@ -7,6 +7,8 @@
 
 export declare function CancelEditAPIApplicationModalContent({
 	closeModal,
+	onConfirm,
 }: {
 	closeModal: voidReturn;
+	onConfirm: voidReturn;
 }): JSX.Element;

@@ -189,6 +189,24 @@ public class FunctionObjectEntryManagerImpl
 	}
 
 	@Override
+	public ObjectEntry partialUpdateObjectEntry(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, scopeKey);
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return updateObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, existingObjectEntry, scopeKey);
+	}
+
+	@Override
 	public ObjectEntry updateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,

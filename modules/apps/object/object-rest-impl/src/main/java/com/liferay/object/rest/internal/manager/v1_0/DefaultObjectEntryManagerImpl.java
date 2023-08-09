@@ -756,6 +756,41 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public ObjectEntry partialUpdateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntryId);
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return updateObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntryId,
+			existingObjectEntry);
+	}
+
+	@Override
+	public ObjectEntry partialUpdateObjectEntry(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, scopeKey);
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return updateObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, existingObjectEntry, scopeKey);
+	}
+
+	@Override
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,

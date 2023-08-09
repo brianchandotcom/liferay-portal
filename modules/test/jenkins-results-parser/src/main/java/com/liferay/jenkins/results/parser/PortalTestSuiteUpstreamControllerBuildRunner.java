@@ -225,10 +225,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		StringBuilder sb = new StringBuilder();
 
-		String portalSHA = buildData.getPortalBranchSHA();
-
-		String abbreviatedSHA = portalSHA.substring(0, 7);
-
 		sb.append(JenkinsResultsParserUtil.join(", ", _invokedTestSuiteNames));
 
 		sb.append(",");
@@ -238,9 +234,17 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		sb.append("/");
 		sb.append(buildData.getPortalGitHubRepositoryName());
 		sb.append("/commit/");
-		sb.append(buildData.getPortalBranchSHA());
+
+		String portalSHA = buildData.getPortalBranchSHA();
+
+		sb.append(portalSHA);
+
 		sb.append("\">");
+
+		String abbreviatedSHA = portalSHA.substring(0, 7);
+
 		sb.append(abbreviatedSHA);
+
 		sb.append("</a>");
 
 		buildData.setBuildDescription(sb.toString());

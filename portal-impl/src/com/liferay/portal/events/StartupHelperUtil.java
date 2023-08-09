@@ -7,6 +7,7 @@ package com.liferay.portal.events;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -43,15 +44,17 @@ import java.util.List;
 public class StartupHelperUtil {
 
 	public static void initResourceActions() {
-		ResourceActionLocalServiceUtil.checkResourceActions();
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			ResourceActionsUtil.populateModelResources(
-				StartupHelperUtil.class.getClassLoader(),
-				PropsValues.RESOURCE_ACTIONS_CONFIGS);
+		if (_dbNew) {
+			_initResourceActions();
 		}
-		catch (ResourceActionsException resourceActionsException) {
-			ReflectionUtil.throwException(resourceActionsException);
+		else {
+			try {
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> _initResourceActions());
+			}
+			catch (Exception exception) {
+				ReflectionUtil.throwException(exception);
+			}
 		}
 	}
 
@@ -171,6 +174,19 @@ public class StartupHelperUtil {
 			System.out.println(msg);
 
 			throw new RuntimeException(msg);
+		}
+	}
+
+	private static void _initResourceActions() {
+		ResourceActionLocalServiceUtil.checkResourceActions();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ResourceActionsUtil.populateModelResources(
+				StartupHelperUtil.class.getClassLoader(),
+				PropsValues.RESOURCE_ACTIONS_CONFIGS);
+		}
+		catch (ResourceActionsException resourceActionsException) {
+			ReflectionUtil.throwException(resourceActionsException);
 		}
 	}
 

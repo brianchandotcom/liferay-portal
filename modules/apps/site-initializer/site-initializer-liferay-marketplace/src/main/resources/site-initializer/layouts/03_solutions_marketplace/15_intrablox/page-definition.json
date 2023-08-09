@@ -886,7 +886,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"15_intrablox_image_01-png\",\"url\":\"/documents/d/Marketplace/15_intrablox_image_01-png?download=true\"}"
+																								"en_US": "{\"title\":\"15_intrablox_image_01-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/15_intrablox_image_01-png?download=true\"}"
 																							}
 																						}
 																					}
@@ -898,7 +898,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"15_intrablox_image_02-png\",\"url\":\"/documents/d/Marketplace/15_intrablox_image_02-png??download=true\"}"
+																								"en_US": "{\"title\":\"15_intrablox_image_02-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/15_intrablox_image_02-png??download=true\"}"
 																							}
 																						}
 																					}
@@ -910,7 +910,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"15_intrablox_image_03-png\",\"url\":\"/documents/d/Marketplace/15_intrablox_image_03-png??download=true\"}"
+																								"en_US": "{\"title\":\"15_intrablox_image_03-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/15_intrablox_image_03-png??download=true\"}"
 																							}
 																						}
 																					}
@@ -922,7 +922,7 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "{\"title\":\"15_intrablox_image_04-png\",\"url\":\"/documents/d/Marketplace/15_intrablox_image_04-png??download=true\"}"
+																								"en_US": "{\"title\":\"15_intrablox_image_04-png\",\"url\":\"/documents/d/[$GROUP_KEY$]/15_intrablox_image_04-png??download=true\"}"
 																							}
 																						}
 																					}
@@ -2197,7 +2197,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "marketplace-master"
+			"key": "[$GROUP_KEY$]-master"
 		}
 	},
 	"version": 1.1

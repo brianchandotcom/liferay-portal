@@ -14,6 +14,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Gabriel Albuquerque
@@ -48,6 +49,43 @@ public interface ObjectEntryManager {
 	public String getStorageLabel(Locale locale);
 
 	public String getStorageType();
+
+	public ObjectEntry partialUpdateObjectEntry(
+			long companyId, DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey)
+		throws Exception;
+
+	public default void preparePatch(
+			ObjectEntry objectEntry, ObjectEntry existingObjectEntry)
+		throws Exception {
+
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			Map<String, Object> properties =
+				existingObjectEntry.getProperties();
+
+			properties.putAll(objectEntry.getProperties());
+
+			existingObjectEntry.setProperties(properties);
+		}
+
+		if (objectEntry.getTaxonomyCategoryIds() != null) {
+			existingObjectEntry.setTaxonomyCategoryIds(
+				objectEntry.getTaxonomyCategoryIds());
+		}
+	}
 
 	public ObjectEntry updateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,

@@ -103,6 +103,12 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception;
 
+	public ObjectEntry partialUpdateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ObjectEntry objectEntry)
+		throws Exception;
+
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,

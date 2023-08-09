@@ -17,10 +17,11 @@ export default function EditObjectFolder() {
 				folderName="Uncategorized"
 				hasDraftObjectDefinitions={false}
 			/>
+			<div className="lfr-objects__model-builder-diagram-container">
+				<LeftSidebar />
 
-			<LeftSidebar />
-
-			<Diagram />
+				<Diagram />
+			</div>
 		</>
 	);
 }

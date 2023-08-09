@@ -1,3 +1,11 @@
 .lfr-objects__model-builder-diagram {
-	height: 88.5vh;
+	&-area {
+		width: 100%;
+	}
+
+	&-container {
+		display: flex;
+		height: calc(100vh - 129px);
+		width: 100%;
+	}
 }

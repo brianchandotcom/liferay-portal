@@ -6,5 +6,5 @@
 /// <reference types="react" />
 
 import './Diagram.scss';
-declare function Diagram(): JSX.Element;
-export default Diagram;
+declare function DiagramBuilder(): JSX.Element;
+export default DiagramBuilder;

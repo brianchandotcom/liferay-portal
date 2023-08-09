@@ -1123,6 +1123,26 @@ definition {
 			searchTerm = "Second");
 	}
 
+	@description = "This is a use case for LPS-163126."
+	@priority = 3
+	test SearchBarPresentWithNoDestinationPage {
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "nothing");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
+
+		AssertVisible(
+			key_infoMessage = "This search bar is not visible to users yet. Set up its destination to make it visible.",
+			locator1 = "Message#INFO_SPECIFIC");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+	}
+
 	@priority = 4
 	test SearchBlogsEntry {
 		JSONBlog.addEntry(

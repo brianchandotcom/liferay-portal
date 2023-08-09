@@ -17,6 +17,7 @@ import com.liferay.knowledge.base.web.internal.security.permission.resource.Admi
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -122,8 +123,9 @@ public class KBTemplatesManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -133,6 +135,41 @@ public class KBTemplatesManagementToolbarDisplayContext
 	@Override
 	public int getItemsTotal() {
 		return searchContainer.getTotal();
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				final Map<String, String> orderColumnsMap = HashMapBuilder.put(
+					"create-date", "create-date"
+				).put(
+					"modified-date", "modified-date"
+				).put(
+					"title", "title"
+				).put(
+					"user-name", "user-name"
+				).build();
+
+				for (Map.Entry<String, String> orderByColEntry :
+						orderColumnsMap.entrySet()) {
+
+					add(
+						dropdownItem -> {
+							String orderByCol = orderByColEntry.getKey();
+
+							dropdownItem.setActive(
+								orderByCol.equals(_getOrderByCol()));
+
+							dropdownItem.setHref(
+								_getCurrentSortingURL(), "orderByCol",
+								orderByColEntry.getValue());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest, orderByCol));
+						});
+				}
+			}
+		};
 	}
 
 	@Override
@@ -190,41 +227,6 @@ public class KBTemplatesManagementToolbarDisplayContext
 
 	private String _getOrderByCol() {
 		return searchContainer.getOrderByCol();
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				final Map<String, String> orderColumnsMap = HashMapBuilder.put(
-					"create-date", "create-date"
-				).put(
-					"modified-date", "modified-date"
-				).put(
-					"title", "title"
-				).put(
-					"user-name", "user-name"
-				).build();
-
-				for (Map.Entry<String, String> orderByColEntry :
-						orderColumnsMap.entrySet()) {
-
-					add(
-						dropdownItem -> {
-							String orderByCol = orderByColEntry.getKey();
-
-							dropdownItem.setActive(
-								orderByCol.equals(_getOrderByCol()));
-
-							dropdownItem.setHref(
-								_getCurrentSortingURL(), "orderByCol",
-								orderByColEntry.getValue());
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									httpServletRequest, orderByCol));
-						});
-				}
-			}
-		};
 	}
 
 	private final PortletURL _currentURLObj;

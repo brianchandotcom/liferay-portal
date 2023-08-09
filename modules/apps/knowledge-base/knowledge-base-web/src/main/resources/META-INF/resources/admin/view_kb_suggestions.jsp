@@ -62,6 +62,7 @@ request.setAttribute("view_kb_suggestions.jsp-searchContainer", kbCommentsSearch
 		filterDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 		filterLabelItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterLabelItems() %>"
 		itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
+		orderDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 		propsTransformer="admin/js/SuggestionsManagementToolbarPropsTransformer"
 		searchContainerId="kbComments"
 		selectable="<%= true %>"

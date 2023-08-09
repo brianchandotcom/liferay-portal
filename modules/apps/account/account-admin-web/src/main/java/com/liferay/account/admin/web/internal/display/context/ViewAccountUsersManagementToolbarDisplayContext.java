@@ -7,6 +7,7 @@ package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -18,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -96,6 +98,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-188798") ||
+					_hasManageUsersPermission()) {
+
+					return true;
+				}
+
+				return false;
+			},
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
 				dropdownItem.putData(
@@ -124,6 +135,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "assign-users"));
 			}
 		).addDropdownItem(
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-188798") ||
+					_hasInviteUserPermission() || _hasManageUsersPermission()) {
+
+					return true;
+				}
+
+				return false;
+			},
 			dropdownItem -> {
 				dropdownItem.putData("action", "inviteAccountUsers");
 				dropdownItem.putData(
@@ -207,7 +227,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return _hasManageUsersPermission();
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-188798")) {
+			return _hasManageUsersPermission();
+		}
+
+		if (_hasInviteUserPermission() || _hasManageUsersPermission()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -234,6 +262,16 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	private long _getAccountEntryId() {
 		return ParamUtil.getLong(liferayPortletRequest, "accountEntryId");
+	}
+
+	private boolean _hasInviteUserPermission() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return AccountEntryPermission.contains(
+			themeDisplay.getPermissionChecker(), _getAccountEntryId(),
+			AccountActionKeys.INVITE_USER);
 	}
 
 	private boolean _hasManageUsersPermission() {

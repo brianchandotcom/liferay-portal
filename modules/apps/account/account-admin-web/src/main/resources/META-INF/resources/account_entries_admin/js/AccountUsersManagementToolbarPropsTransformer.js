@@ -12,6 +12,35 @@ import {
 	sub,
 } from 'frontend-js-web';
 
+function openInviteAccountUsersModal(
+	accountEntryName,
+	requestInvitationsURL,
+	portletNamespace
+) {
+	openModal({
+		buttons: [
+			{
+				displayType: 'secondary',
+				label: Liferay.Language.get('cancel'),
+				type: 'cancel',
+			},
+			{
+				formId: `${portletNamespace}inviteUserForm`,
+				label: Liferay.Language.get('invite'),
+				type: 'submit',
+			},
+		],
+		containerProps: {
+			className: 'modal-height-xl',
+		},
+		id: `${portletNamespace}inviteUsersDialog`,
+		iframeBodyCssClass: '',
+		size: 'lg',
+		title: sub(Liferay.Language.get('invite-users-to-x'), accountEntryName),
+		url: requestInvitationsURL,
+	});
+}
+
 function openSelectAccountUsersModal(
 	accountEntryName,
 	assignAccountUsersURL,
@@ -90,7 +119,14 @@ export default function propsTransformer({
 		onCreateButtonClick: (event, {item}) => {
 			const data = item.data;
 
-			if (data?.action === 'selectAccountUsers') {
+			if (data?.action === 'inviteAccountUsers') {
+				openInviteAccountUsersModal(
+					accountEntryName,
+					data?.requestInvitationsURL,
+					portletNamespace
+				);
+			}
+			else if (data?.action === 'selectAccountUsers') {
 				openSelectAccountUsersModal(
 					accountEntryName,
 					data?.assignAccountUsersURL,
@@ -105,31 +141,11 @@ export default function propsTransformer({
 			const action = data?.action;
 
 			if (action === 'inviteAccountUsers') {
-				openModal({
-					buttons: [
-						{
-							displayType: 'secondary',
-							label: Liferay.Language.get('cancel'),
-							type: 'cancel',
-						},
-						{
-							formId: `${portletNamespace}inviteUserForm`,
-							label: Liferay.Language.get('invite'),
-							type: 'submit',
-						},
-					],
-					containerProps: {
-						className: 'modal-height-xl',
-					},
-					id: `${portletNamespace}inviteUsersDialog`,
-					iframeBodyCssClass: '',
-					size: 'lg',
-					title: sub(
-						Liferay.Language.get('invite-users-to-x'),
-						accountEntryName
-					),
-					url: data?.requestInvitationsURL,
-				});
+				openInviteAccountUsersModal(
+					accountEntryName,
+					data?.requestInvitationsURL,
+					portletNamespace
+				);
 			}
 			else if (action === 'selectAccountUsers') {
 				openSelectAccountUsersModal(

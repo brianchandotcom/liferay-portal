@@ -5271,7 +5271,12 @@ public class ServiceBuilder {
 				sb.append("LONG");
 			}
 			else if (type.equals("BigDecimal")) {
-				sb.append("BIGDECIMAL");
+				if (isVersionGTE_7_4_0()) {
+					sb.append("BIGDECIMAL");
+				}
+				else {
+					sb.append("DECIMAL(30, 16)");
+				}
 			}
 			else if (type.equals("Blob")) {
 				sb.append("BLOB");

@@ -12,14 +12,14 @@ import {
 	Input,
 	Select,
 } from '../../../../../../../../../../../common/components';
+import SetupHighPriorityContactForm, {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
+} from '../../../../../../../../../../../common/components/HighPriorityContacts/SetupHighPriorityContact';
 import Layout from '../../../../../../../../../../../common/containers/setup-forms/Layout';
-import useBannedDomains from '../../../../../../../../../../../common/hooks/useBannedDomains';
-import {isValidEmail} from '../../../../../../../../../../../common/utils/validations.form';
 import getInitialLxcAdmins from '../../utils/getInitialLxcAdmins';
 import AdminInputs from './components/AdminsInput';
 import useGetPrimaryRegionList from './hooks/useGetPrimaryRegionList';
 import useSubmitLXCEnvironment from './hooks/useSubmitLXCEnvironment';
-
 const INITIAL_SETUP_ADMIN_COUNT = 1;
 
 const SetupLiferayExperienceCloudPage = ({
@@ -34,10 +34,60 @@ const SetupLiferayExperienceCloudPage = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
-	const bannedDomains = useBannedDomains(
-		values?.lxc?.incidentManagementEmail,
-		500
-	);
+	const [
+		addHighPriorityContactList,
+		setAddHighPriorityContactList,
+	] = useState([]);
+	const [
+		removeHighPriorityContactList,
+		setRemoveHighPriorityContactList,
+	] = useState([]);
+	const [step, setStep] = useState(1);
+
+	const handlePreviousStep = () => {
+		setStep(step - 1);
+	};
+
+	const handleNextStep = () => {
+		setStep(step + 1);
+	};
+
+	const handleButtonClick = () => {
+		// eslint-disable-next-line no-unused-expressions
+		step === 1 ? handleOnLeftButtonClick() : handlePreviousStep();
+	};
+
+	const addHighPriorityContacts = (contactList) => {
+		setAddHighPriorityContactList((oldList) => {
+			const uniqueContacts = [
+				...oldList,
+				...contactList.filter(
+					(contact) =>
+						!oldList.some(
+							(oldContact) => oldContact.id === contact.id
+						)
+				),
+			];
+
+			return uniqueContacts;
+		});
+	};
+
+	const removeHighPriorityContacts = (contactList) => {
+		setRemoveHighPriorityContactList((oldList) => {
+			const uniqueContacts = [
+				...oldList,
+				...contactList.filter(
+					(contact) =>
+						!oldList.some(
+							(oldContact) => oldContact.id === contact.id
+						)
+				),
+			];
+
+			return uniqueContacts;
+		});
+	};
 
 	const primaryRegionList = useGetPrimaryRegionList();
 
@@ -52,6 +102,8 @@ const SetupLiferayExperienceCloudPage = ({
 		handleChangeForm,
 		project,
 		setFormAlreadySubmitted,
+		addHighPriorityContactList,
+		removeHighPriorityContactList,
 		subscriptionGroupLxcId,
 		values
 	);
@@ -63,18 +115,27 @@ const SetupLiferayExperienceCloudPage = ({
 				leftButton: (
 					<Button
 						borderless
-						onClick={() => handleOnLeftButtonClick()}
+						className="text-neutral-10"
+						onClick={() => {
+							handleButtonClick();
+						}}
 					>
-						{leftButton}
+						{step === 1 ? leftButton : i18n.translate('previous')}
 					</Button>
 				),
 				middleButton: (
 					<Button
 						disabled={baseButtonDisabled}
 						displayType="primary"
-						onClick={() => handleSubmitLxcEnvironment()}
+						onClick={
+							step === 1
+								? handleNextStep
+								: handleSubmitLxcEnvironment
+						}
 					>
-						{i18n.translate('submit')}
+						{step === 1
+							? i18n.translate('next')
+							: i18n.translate('submit')}
 					</Button>
 				),
 			}}
@@ -85,116 +146,119 @@ const SetupLiferayExperienceCloudPage = ({
 				title: i18n.translate('set-up-liferay-experience-cloud'),
 			}}
 		>
-			<FieldArray
-				name="lxc.admins"
-				render={({pop, push}) => (
-					<>
-						<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
-							<div className="mr-4 pr-2">
-								<label>
-									{i18n.translate('organization-name')}
-								</label>
+			{step === 1 && (
+				<FieldArray
+					name="lxc.admins"
+					render={({pop, push}) => (
+						<>
+							<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
+								<div className="mr-4 pr-2">
+									<label>
+										{i18n.translate('organization-name')}
+									</label>
 
-								<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
-									<strong>{project.name}</strong>
-								</p>
+									<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
+										<strong>{project.name}</strong>
+									</p>
+								</div>
 							</div>
-						</div>
-						<ClayForm.Group className="mb-0">
-							<ClayForm.Group className="mb-0 pb-1">
-								<Input
-									groupStyle="pb-1"
-									helper={i18n.translate(
-										'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-									)}
-									label={i18n.translate('project-id')}
-									name="lxc.projectId"
-									required
-									type="text"
-								/>
-
-								<Select
-									groupStyle="mb-0"
-									key={primaryRegionList}
-									label={i18n.translate('primary-region')}
-									name="lxc.primaryRegion"
-									options={primaryRegionList}
-									required
-								/>
-							</ClayForm.Group>
-
 							<ClayForm.Group className="mb-0">
-								{values.lxc.admins.map((admin, index) => (
-									<AdminInputs
-										admin={admin}
-										id={index}
-										key={index}
+								<ClayForm.Group className="mb-0 pb-1">
+									<Input
+										groupStyle="pb-1"
+										helper={i18n.translate(
+											'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
+										)}
+										label={i18n.translate('project-id')}
+										name="lxc.projectId"
+										required
+										type="text"
 									/>
-								))}
-							</ClayForm.Group>
-						</ClayForm.Group>
 
-						{values?.lxc?.admins?.length >
-							INITIAL_SETUP_ADMIN_COUNT && (
+									<Select
+										groupStyle="mb-0"
+										key={primaryRegionList}
+										label={i18n.translate('primary-region')}
+										name="lxc.primaryRegion"
+										options={primaryRegionList}
+										required
+									/>
+								</ClayForm.Group>
+
+								<ClayForm.Group className="mb-0">
+									{values.lxc.admins.map((admin, index) => (
+										<AdminInputs
+											admin={admin}
+											id={index}
+											key={index}
+										/>
+									))}
+								</ClayForm.Group>
+							</ClayForm.Group>
+
+							{values?.lxc?.admins?.length >
+								INITIAL_SETUP_ADMIN_COUNT && (
+								<Button
+									className="ml-3 my-2 text-brandy-secondary"
+									displayType="secondary"
+									onClick={() => {
+										pop();
+										setBaseButtonDisabled(false);
+									}}
+									prependIcon="hr"
+									small
+								>
+									{i18n.translate('remove-project-admin')}
+								</Button>
+							)}
+
 							<Button
-								className="ml-3 my-2 text-brandy-secondary"
-								displayType="secondary"
+								className="cp-btn-add-dxp-cloud ml-3 my-2 rounded-xs"
 								onClick={() => {
-									pop();
-									setBaseButtonDisabled(false);
+									push(
+										getInitialLxcAdmins(values?.lxc?.admins)
+									);
+									setBaseButtonDisabled(true);
 								}}
-								prependIcon="hr"
+								prependIcon="plus"
 								small
 							>
-								{i18n.translate('remove-project-admin')}
+								{i18n.translate('add-another-admin')}
 							</Button>
-						)}
 
-						<Button
-							className="cp-btn-add-dxp-cloud ml-3 my-2 rounded-xs"
-							onClick={() => {
-								push(getInitialLxcAdmins(values?.lxc?.admins));
-								setBaseButtonDisabled(true);
-							}}
-							prependIcon="plus"
-							small
-						>
-							{i18n.translate('add-another-admin')}
-						</Button>
+							<hr />
+						</>
+					)}
+				/>
+			)}
 
-						<hr />
+			{step === 2 && (
+				<div>
+					<SetupHighPriorityContactForm
+						addContactList={addHighPriorityContacts}
+						filter={
+							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
+						}
+						removedContactList={removeHighPriorityContacts}
+					/>
 
-						<ClayForm.Group className="mb-0">
-							<Input
-								groupStyle="pb-1"
-								label={i18n.translate(
-									'incident-management-contacts-first-and-last-name'
-								)}
-								name="lxc.incidentManagementFullName"
-								required
-								type="text"
-							/>
+					<SetupHighPriorityContactForm
+						addContactList={addHighPriorityContacts}
+						filter={
+							HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreachContact
+						}
+						removedContactList={removeHighPriorityContacts}
+					/>
 
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-								)}
-								label={i18n.translate(
-									'incident-management-contacts-email-address'
-								)}
-								name="lxc.incidentManagementEmail"
-								required
-								type="text"
-								validations={[
-									(value) =>
-										isValidEmail(value, bannedDomains),
-								]}
-							/>
-						</ClayForm.Group>
-					</>
-				)}
-			/>
+					<SetupHighPriorityContactForm
+						addContactList={addHighPriorityContacts}
+						filter={
+							HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreachContact
+						}
+						removedContactList={removeHighPriorityContacts}
+					/>
+				</div>
+			)}
 		</Layout>
 	);
 };

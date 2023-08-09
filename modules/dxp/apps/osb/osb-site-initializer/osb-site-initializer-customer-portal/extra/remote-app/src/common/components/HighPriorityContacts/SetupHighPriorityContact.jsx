@@ -123,7 +123,6 @@ const SetupHighPriorityContact = ({
 			currentHighPriorityContacts,
 			contactList
 		);
-
 		addContactList(addedContacts);
 		removedContactList(removedContacts);
 	};
@@ -147,14 +146,14 @@ const SetupHighPriorityContact = ({
 	);
 };
 
-const SetupHighPriorityContactForm = (
-	props,
-	{addContactList, removedContactList}
-) => {
+const SetupHighPriorityContactForm = ({
+	addContactList,
+	removedContactList,
+	...props
+}) => {
 	const addedContactList = (contactList) => {
 		return addContactList(contactList);
 	};
-
 	const removeContactList = (contactList) => {
 		return removedContactList(contactList);
 	};
@@ -178,5 +177,4 @@ const SetupHighPriorityContactForm = (
 		</Formik>
 	);
 };
-
 export default SetupHighPriorityContactForm;

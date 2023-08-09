@@ -9,11 +9,13 @@ import {useEffect, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import {
 	addAnalyticsCloudWorkspace,
-	addIncidentReportAnalyticsCloud,
+	addHighPriorityContact,
+	deleteHighPriorityContacts,
 	getAnalyticsCloudPageInfo,
 	getAnalyticsCloudWorkspace,
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
+
 import {
 	isLowercaseAndNumbers,
 	isValidEmail,
@@ -24,15 +26,15 @@ import {
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
+import SetupHighPriorityContactForm, {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
+} from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import NotificationQueueService from '../../../services/actions/notificationAction';
-import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
-import IncidentReportInput from './IncidentReportInput';
-
+import './index.scss';
 const BLANK_TEXT = '< none >';
-const INITIAL_SETUP_ADMIN_COUNT = 1;
 const FETCH_DELAY_AFTER_TYPING = 500;
 const MAX_LENGTH = 255;
 
@@ -49,7 +51,23 @@ const SetupAnalyticsCloudPage = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
+	const [
+		addHighPriorityContactList,
+		setAddHighPriorityContactList,
+	] = useState([]);
+	const [
+		removeHighPriorityContactList,
+		setRemoveHighPriorityContactList,
+	] = useState([]);
+	const [step, setStep] = useState(1);
 
+	const handlePreviousStep = () => {
+		setStep(step - 1);
+	};
+
+	const handleNextStep = () => {
+		setStep(step + 1);
+	};
 	const bannedDomainsOwnerEmail = useBannedDomains(
 		values?.activations?.ownerEmailAddress,
 		FETCH_DELAY_AFTER_TYPING
@@ -156,9 +174,6 @@ const SetupAnalyticsCloudPage = ({
 			});
 
 			if (data) {
-				const analyticsCloudWorkspaceId =
-					data?.createAnalyticsCloudWorkspace?.id;
-
 				await client.mutate({
 					context: {
 						displaySuccess: false,
@@ -177,19 +192,36 @@ const SetupAnalyticsCloudPage = ({
 				});
 
 				await Promise.all(
-					analyticsCloud?.incidentReportContact?.map(({email}) => {
+					removeHighPriorityContactList?.map((item) => {
 						return client.mutate({
 							context: {
 								displaySuccess: false,
 								type: 'liferay-rest',
 							},
-							mutation: addIncidentReportAnalyticsCloud,
+							mutation: deleteHighPriorityContacts,
 							variables: {
-								IncidentReportContactAnalyticsCloud: {
-									analyticsCloudWorkspaceId,
-									emailAddress: email,
-									r_accountEntryToIncidentReportContactAC_accountEntryId:
-										project.id,
+								highPriorityContactsId: item.objectId,
+							},
+						});
+					})
+				);
+
+				await Promise.all(
+					addHighPriorityContactList?.map((item) => {
+						return client.mutate({
+							context: {
+								displaySuccess: false,
+								type: 'liferay-rest',
+							},
+							mutation: addHighPriorityContact,
+							variables: {
+								HighPriorityContacts: {
+									contactsCategory: {
+										key: item.category.key,
+										name: item.category.name,
+									},
+									r_userToHighPriorityContacts_userId:
+										item.id,
 								},
 							},
 						});
@@ -233,190 +265,206 @@ const SetupAnalyticsCloudPage = ({
 			handlePage(true);
 		}
 	};
+	const handleButtonClick = () => {
+		// eslint-disable-next-line no-unused-expressions
+		step === 1 ? handlePage(false) : handlePreviousStep();
+	};
+	const addHighPriorityContacts = (contactList) => {
+		const contactsList = contactList.map((item) => item);
+
+		setAddHighPriorityContactList(contactsList);
+	};
+	const removeHighPriorityContacts = (contactList) => {
+		const contactsList = contactList.map(({objectId}) => objectId);
+		setRemoveHighPriorityContactList(contactsList);
+	};
 
 	return (
-		<Layout
-			className="pt-1 px-3"
-			footerProps={{
-				leftButton: (
-					<Button
-						borderless
-						className="text-neutral-10"
-						onClick={() => handlePage(false)}
-					>
-						{leftButton}
-					</Button>
-				),
-				middleButton: (
-					<Button
-						disabled={baseButtonDisabled}
-						displayType="primary"
-						onClick={handleSubmit}
-					>
-						{i18n.translate('submit')}
-					</Button>
-				),
-			}}
-			headerProps={{
-				helper: i18n.translate(
-					'we-ll-need-a-few-details-to-finish-creating-your-analytics-cloud-workspace'
-				),
-				title: i18n.translate('set-up-analytics-cloud'),
-			}}
-		>
-			<FieldArray
-				name="activations.incidentReportContact"
-				render={({pop, push}) => (
-					<>
-						<ClayForm.Group className="pb-1">
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-via-a-support-ticket-if-needed'
-								)}
-								label={i18n.translate('owner-email')}
-								name="activations.ownerEmailAddress"
-								placeholder="user@company.com"
-								required
-								type="email"
-								validations={[
-									(value) =>
-										isValidEmail(
-											value,
-											bannedDomainsOwnerEmail
-										),
-								]}
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-								)}
-								label={i18n.translate('workspace-name')}
-								name="activations.workspaceName"
-								placeholder="superbank1"
-								required
-								type="text"
-								validations={[
-									(value) => maxLength(value, MAX_LENGTH),
-									(value) => isLowercaseAndNumbers(value),
-								]}
-							/>
-
-							<Select
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'select-a-server-location-for-your-data-to-be-stored'
-								)}
-								key={analyticsDataCenterLocations}
-								label={i18n.translate('data-center-location')}
-								name="activations.dataCenterLocation"
-								options={analyticsDataCenterLocations}
-								required
-							/>
-
-							{hasDisasterRecovery && (
-								<Select
-									groupStyle="mb-0 pt-2"
-									label={i18n.translate(
-										'Disaster Recovery Data Center Location'
-									)}
-									name="activations.disasterDataCenterLocation"
-									options={analyticsDataCenterLocations}
-									required
-								/>
-							)}
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'please-note-that-the-friendly-url-cannot-be-changed-once-added'
-								)}
-								label={i18n.translate('workspace-friendly-url')}
-								name="activations.workspaceFriendlyUrl"
-								placeholder="/myurl"
-								type="text"
-								validations={[
-									(value) => isValidFriendlyURL(value),
-								]}
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'anyone-with-an-email-address-at-the-provided-domains-can-request-access-to-your-workspace-if-multiple-separate-domains-by-commas'
-								)}
-								label={i18n.translate('allowed-email-domains')}
-								name="activations.allowedEmailDomains"
-								placeholder="@mycompany.com"
-								type="text"
-								validations={[
-									() =>
-										isValidEmailDomain(
-											bannedDomainsAllowedDomains
-										),
-								]}
-							/>
-
-							<Input
-								groupStyle="pb-1"
-								helper={i18n.translate(
-									'enter-the-timezone-to-be-used-for-all-data-reporting-in-your-workspace'
-								)}
-								label={i18n.translate('time-zone')}
-								name="activations.timeZone"
-								placeholder="UTC-04:00"
-								type="text"
-							/>
-
-							<ClayForm.Group>
-								{values?.activations?.incidentReportContact?.map(
-									(activation, index) => (
-										<IncidentReportInput
-											activation={activation}
-											id={index}
-											key={index}
-										/>
-									)
-								)}
-							</ClayForm.Group>
-						</ClayForm.Group>
-
-						{values?.activations?.incidentReportContact.length >
-							INITIAL_SETUP_ADMIN_COUNT && (
-							<Button
-								className="ml-3 my-2 text-brandy-secondary"
-								displayType="secondary"
-								onClick={() => pop()}
-								prependIcon="hr"
-								small
-							>
-								{i18n.translate(
-									'remove-incident-report-contact'
-								)}
-							</Button>
-						)}
-
+		<>
+			<Layout
+				className="pt-1 px-3"
+				footerProps={{
+					leftButton: (
 						<Button
-							className="btn-outline-primary ml-3 my-2 rounded-xs"
+							borderless
+							className="text-neutral-10"
 							onClick={() => {
-								push(
-									getInitialAnalyticsInvite(
-										values?.activations
-											?.incidentReportContact
-									)
-								);
+								handleButtonClick();
 							}}
-							prependIcon="plus"
-							small
 						>
-							{i18n.translate('add-incident-report-contact')}
+							{step === 1
+								? leftButton
+								: i18n.translate('previous')}
 						</Button>
-					</>
+					),
+					middleButton: (
+						<Button
+							disabled={baseButtonDisabled}
+							displayType="primary"
+							onClick={step === 1 ? handleNextStep : handleSubmit}
+						>
+							{step === 1
+								? i18n.translate('next')
+								: i18n.translate('submit')}
+						</Button>
+					),
+				}}
+				headerProps={{
+					helper: i18n.translate(
+						'we-ll-need-a-few-details-to-finish-creating-your-analytics-cloud-workspace'
+					),
+					title: i18n.translate('set-up-analytics-cloud'),
+				}}
+			>
+				{step === 1 && (
+					<div>
+						<FieldArray
+							name="activations.incidentReportContact"
+							render={() => (
+								<>
+									<ClayForm.Group className="pb-1">
+										<Input
+											groupStyle="pb-1"
+											helper={i18n.translate(
+												'this-user-will-create-and-manage-the-analytics-cloud-workspace-and-must-have-a-liferay-com-account-the-owner-email-can-be-updated-via-a-support-ticket-if-needed'
+											)}
+											label={i18n.translate(
+												'owner-email'
+											)}
+											name="activations.ownerEmailAddress"
+											placeholder="user@company.com"
+											required
+											type="email"
+											validations={[
+												(value) =>
+													isValidEmail(
+														value,
+														bannedDomainsOwnerEmail
+													),
+											]}
+										/>
+
+										<Input
+											groupStyle="pb-1"
+											helper={i18n.translate(
+												'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
+											)}
+											label={i18n.translate(
+												'workspace-name'
+											)}
+											name="activations.workspaceName"
+											placeholder="superbank1"
+											required
+											type="text"
+											validations={[
+												(value) =>
+													maxLength(
+														value,
+														MAX_LENGTH
+													),
+												(value) =>
+													isLowercaseAndNumbers(
+														value
+													),
+											]}
+										/>
+
+										<Select
+											groupStyle="pb-1"
+											helper={i18n.translate(
+												'select-a-server-location-for-your-data-to-be-stored'
+											)}
+											key={analyticsDataCenterLocations}
+											label={i18n.translate(
+												'data-center-location'
+											)}
+											name="activations.dataCenterLocation"
+											options={
+												analyticsDataCenterLocations
+											}
+											required
+										/>
+
+										{hasDisasterRecovery && (
+											<Select
+												groupStyle="mb-0 pt-2"
+												label={i18n.translate(
+													'Disaster Recovery Data Center Location'
+												)}
+												name="activations.disasterDataCenterLocation"
+												options={
+													analyticsDataCenterLocations
+												}
+												required
+											/>
+										)}
+
+										<Input
+											groupStyle="pb-1"
+											helper={i18n.translate(
+												'please-note-that-the-friendly-url-cannot-be-changed-once-added'
+											)}
+											label={i18n.translate(
+												'workspace-friendly-url'
+											)}
+											name="activations.workspaceFriendlyUrl"
+											placeholder="/myurl"
+											type="text"
+											validations={[
+												(value) =>
+													isValidFriendlyURL(value),
+											]}
+										/>
+
+										<Input
+											groupStyle="pb-1"
+											helper={i18n.translate(
+												'anyone-with-an-email-address-at-the-provided-domains-can-request-access-to-your-workspace-if-multiple-separate-domains-by-commas'
+											)}
+											label={i18n.translate(
+												'allowed-email-domains'
+											)}
+											name="activations.allowedEmailDomains"
+											placeholder="@mycompany.com"
+											type="text"
+											validations={[
+												() =>
+													isValidEmailDomain(
+														bannedDomainsAllowedDomains
+													),
+											]}
+										/>
+
+										<Input
+											groupStyle="pb-1"
+											helper={i18n.translate(
+												'enter-the-timezone-to-be-used-for-all-data-reporting-in-your-workspace'
+											)}
+											label={i18n.translate('time-zone')}
+											name="activations.timeZone"
+											placeholder="UTC-04:00"
+											type="text"
+										/>
+									</ClayForm.Group>
+								</>
+							)}
+						/>
+					</div>
 				)}
-			/>
-		</Layout>
+
+				{step === 2 && (
+					<div>
+						<SetupHighPriorityContactForm
+							addContactList={addHighPriorityContacts}
+							filter={
+								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
+							}
+							removedContactList={removeHighPriorityContacts}
+						/>
+					</div>
+				)}
+			</Layout>
+		</>
 	);
 };
 
@@ -428,7 +476,6 @@ const SetupAnalyticsCloudForm = (props) => {
 					allowedEmailDomains: '',
 					dataCenterLocation: '',
 					disasterDataCenterLocation: '',
-					incidentReportContact: [getInitialAnalyticsInvite()],
 					ownerEmailAddress: '',
 					timeZone: '',
 					workspaceName: '',

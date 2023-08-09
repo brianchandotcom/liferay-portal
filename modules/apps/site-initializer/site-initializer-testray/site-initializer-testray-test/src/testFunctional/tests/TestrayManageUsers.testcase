@@ -24,14 +24,6 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Add a user via API") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
 		task ("Go to Testray") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
@@ -40,9 +32,7 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		task ("Delete user via API, Testray Site and Client Extensions") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
-
+		task ("Delete Testray Site and Client Extensions") {
 			Testray.testrayApisTearDown();
 		}
 
@@ -102,7 +92,7 @@ definition {
 		}
 
 		task ("And assert that have two users present in the table") {
-			Testray.viewTableEntryList(listEntry = "userfn userln,Test Test");
+			Testray.viewTableEntryList(listEntry = "User User,Test Test");
 		}
 
 		task ("When the user filter a user by name") {
@@ -110,14 +100,14 @@ definition {
 
 			TestrayFilter.typeFilter(
 				label = "Name",
-				value = "userfn userln");
+				value = "User User");
 		}
 
-		task ("Then can see the user named test test in the table") {
-			Testray.viewTableEntryList(listEntry = "userfn userln");
+		task ("Then can see the user in the table") {
+			Testray.viewTableEntryList(listEntry = "User User");
 		}
 
-		task ("And can not longer see the userfn userln in the table") {
+		task ("And can not longer see the user 'Test' in the table") {
 			Testray.viewTableEntryListNotPresent(listEntry = "Test Test");
 		}
 	}
@@ -156,12 +146,12 @@ definition {
 				buttonOption = "Manage",
 				menuItem = "Manage Users");
 
-			Testray.clickTableEntry(tableEntry = "user@liferay.com");
+			Testray.clickTableEntry(tableEntry = "user@testray.com");
 		}
 
 		task ("When the user change the account informations") {
 			TestrayManageUser.editUserInformation(
-				userEmailAddressEdit = "user@liferay.com",
+				userEmailAddressEdit = "user@testray.com",
 				userFirstNameEdit = "changedfirstname",
 				userLastNameEdit = "Updateln",
 				userScreenNameEdit = "testscreen");
@@ -175,7 +165,7 @@ definition {
 
 		task ("Then can see the new informations to the account") {
 			TestrayManageUser.viewUserInfomation(
-				emailAddress = "user@liferay.com",
+				emailAddress = "user@testray.com",
 				firstName = "changedfirstname",
 				lastName = "Updateln",
 				screenName = "testscreen");

@@ -162,14 +162,6 @@ definition {
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
 	@priority = 3
 	test CanFilterByAssignee {
-		task ("Adding a user") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
 		task ("Given that the user assign to me a case result") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
@@ -199,10 +191,6 @@ definition {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			TestrayTestflow.userAvatarPresent();
-		}
-
-		task ("Delete user created") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 		}
 	}
 

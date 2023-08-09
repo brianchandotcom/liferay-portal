@@ -36,14 +36,6 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Add a user via API") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
 		task ("create project, routine, team, component, case, case type, enviroment factor, product version, build, category, option, run, case result, task and subtask via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -160,9 +152,7 @@ definition {
 			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 		}
 
-		task ("Delete user via API, Testray Site and Client Extensions") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
-
+		task ("Delete Testray Site and Client Extensions") {
 			Testray.testrayApisTearDown();
 		}
 
@@ -179,7 +169,7 @@ definition {
 
 			TestrayTestflow.assignUsers(
 				assignButton = "Assign and Begin Analysis",
-				userName = "userfn userln");
+				userName = "User User");
 
 			TestrayTestflow.userAvatarPresent();
 		}
@@ -468,7 +458,7 @@ definition {
 
 			TestrayTestflow.assignUsers(
 				assignButton = "Assign and Begin Analysis",
-				userName = "userfn userln");
+				userName = "User User");
 		}
 
 		task ("When the user different trying complete a subtask") {
@@ -501,7 +491,7 @@ definition {
 			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
 				tableEntry = "Subtask_1",
-				userName = "userfn userln");
+				userName = "User User");
 		}
 
 		task ("And the user logged in assign a subtask") {

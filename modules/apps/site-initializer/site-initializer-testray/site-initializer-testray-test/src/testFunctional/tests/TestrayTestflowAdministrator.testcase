@@ -124,12 +124,6 @@ definition {
 	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
 		task ("Given the user add a user and UserGroups") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
 			JSONUserGroup.addUserGroup(
 				userGroupDescription = "UG UserGroup Name Description",
 				userGroupName = "UG UserGroup Name");
@@ -176,8 +170,8 @@ definition {
 				userName = "Test Test");
 
 			TestrayTestflow.assertAssignTask(
-				email = "userea@liferay.com",
-				userName = "userfn userln");
+				email = "user@testray.com",
+				userName = "User User");
 
 			Button.clickSave();
 

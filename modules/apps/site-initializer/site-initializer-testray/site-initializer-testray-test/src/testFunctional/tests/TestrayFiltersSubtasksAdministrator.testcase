@@ -36,14 +36,6 @@ definition {
 				templateType = "Site Initializer");
 		}
 
-		task ("Add user via API") {
-			JSONUser.addUser(
-				userEmailAddress = "user@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
 		task ("create project, routine, team, component, case, case type, enviroment factor, product version, build, category, option, run, case result, task and subtask via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -131,10 +123,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		task ("Delete user via API") {
-			JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
-		}
-
 		task ("Delete task, routine, component, case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "tasks",
@@ -169,21 +157,21 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by assignee"
 	@priority = 4
 	test AdminCanFilterSubtasksByAssignee {
-		task ("Given that subtask 1 is assigned to user userfn userln") {
+		task ("Given that subtask 1 is assigned to user 'User User'") {
 			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
 				tableEntry = "Subtask_1",
-				userName = "userfn userln");
+				userName = "User User");
 		}
 
-		task ("And that subtask 2 is assigned to user Test") {
+		task ("And that subtask 2 is assigned to user 'Test'") {
 			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
 				tableEntry = "Subtask_2",
 				userName = "Test Test");
 		}
 
-		task ("When the user select the user userfn userln in the filter") {
+		task ("When the user select the user 'User User' in the filter") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
@@ -193,13 +181,13 @@ definition {
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
 				selectFieldLabel = "Assignee",
-				value1 = "userfn");
+				value1 = "User");
 
 			Button.click(button = "Apply");
 		}
 
-		task ("Then can see only user userfn userln in the table") {
-			Testray.viewTableEntryList(listEntry = "userfn userln");
+		task ("Then can see only user 'User User' in the table") {
+			Testray.viewTableEntryList(listEntry = "User User");
 		}
 
 		task ("And do not see the user Test in the table") {
@@ -266,11 +254,11 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtask using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterSubtaskWithMultipleOptions {
-		task ("Given that subtask 1 is assigned to user userfn userln") {
+		task ("Given that subtask 1 is assigned to user 'User User'") {
 			TestrayTestflow.assignUsers(
 				rowOption = "Assign and Begin Analysis",
 				tableEntry = "Subtask_1",
-				userName = "userfn userln");
+				userName = "User User");
 		}
 
 		task ("And that subtask 2 is assigned to user Test Test") {
@@ -310,7 +298,7 @@ definition {
 				value = "Subtask_2");
 		}
 
-		task ("Then can see only user userfn userln and complete status in the table") {
+		task ("Then can see only user 'User User' and complete status in the table") {
 			Testray.viewTableEntryList(listEntry = "Test Test");
 
 			TestrayTestflow.assertStatus(
@@ -319,7 +307,7 @@ definition {
 		}
 
 		task ("And do not see the Subtask_2 and user test test in the table") {
-			Testray.viewTableEntryListNotPresent(listEntry = "userfn userln,Subtask_1");
+			Testray.viewTableEntryListNotPresent(listEntry = "User User,Subtask_1");
 		}
 	}
 

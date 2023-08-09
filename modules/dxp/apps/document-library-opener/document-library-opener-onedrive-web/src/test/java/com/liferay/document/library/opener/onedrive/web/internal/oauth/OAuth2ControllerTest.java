@@ -249,7 +249,8 @@ public class OAuth2ControllerTest {
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
 		Assert.assertNotNull(
-			httpSession.getAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE));
+			httpSession.getAttribute(
+				DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_OAUTH2_STATE));
 	}
 
 	private PortletRequest _getMockPortletRequest(

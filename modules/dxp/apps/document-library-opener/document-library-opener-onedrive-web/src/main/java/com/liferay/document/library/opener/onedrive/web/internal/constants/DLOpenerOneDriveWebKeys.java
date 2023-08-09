@@ -10,13 +10,11 @@ package com.liferay.document.library.opener.onedrive.web.internal.constants;
  */
 public class DLOpenerOneDriveWebKeys {
 
-	public static final String DL_OPENER_ONE_DRIVE_FILE_REFERENCE =
-		"DL_OPENER_ONE_DRIVE_FILE_REFERENCE";
+	public static final String DL_OPENER_ONE_DRIVE_OAUTH2_STATE =
+		"DL_OPENER_ONE_DRIVE_OAUTH2_STATE";
 
 	public static final String
 		DL_OPENER_ONE_DRIVE_REDIRECTING_OAUTH2_JSON_OBJECT =
 			"DL_OPENER_ONE_DRIVE_REDIRECTING_OAUTH2_JSON_OBJECT";
-
-	public static final String OAUTH2_STATE = "OAUTH2_STATE";
 
 }

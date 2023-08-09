@@ -31,7 +31,7 @@ const ItemVocabularies = ({title, vocabularies}) => {
 				{groupedAndSortedVocabularies.map(
 					({categories, groupName, vocabularyName}) => (
 						<Fragment key={vocabularyName}>
-							<h5 className="c-mb-2 font-weight-semi-bold">
+							<h5 className="c-mb-2 font-weight-semi-bold vocabulary">
 								{vocabularyName}
 
 								{groupName ? ` (${groupName})` : ''}

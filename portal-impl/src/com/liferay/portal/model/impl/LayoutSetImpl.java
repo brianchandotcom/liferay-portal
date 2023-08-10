@@ -5,7 +5,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -120,7 +120,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		FileEntry fileEntry = null;
 
 		try {
-			fileEntry = DLAppServiceUtil.getFileEntry(getFaviconFileEntryId());
+			fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				getFaviconFileEntryId());
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

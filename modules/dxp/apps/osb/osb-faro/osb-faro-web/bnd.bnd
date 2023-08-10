@@ -12,6 +12,7 @@ Import-Package:\
 	com.liferay.expando.kernel.model;version="[6.0.0,9999.0.0)",\
 	com.liferay.expando.kernel.service;version="[1.8.0,9999.0.0)",\
 	com.liferay.oauth2.provider.service;version="[3.0.0,9999.0.0)",\
+	com.liferay.portal.instance.lifecycle;version="[3.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.dao.orm;version="[12.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.dao.search;version="[9.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.events;version="[6.3.0,9999.0.0)",\

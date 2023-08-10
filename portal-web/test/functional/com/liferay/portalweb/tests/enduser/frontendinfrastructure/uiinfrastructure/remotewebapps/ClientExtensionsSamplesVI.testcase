@@ -46,8 +46,8 @@ definition {
 		}
 
 		task ("Assert the Portal server console has startup verbiage for each deployed Client Extension sample ") {
-			for (var clientExtensionId : list "liferaysamplecustomelement1,liferaysamplecustomelement2,liferaysampleglobalcss,liferaysampleglobaljs,liferaysampleiframe1,liferaysamplethemecss1,liferaysamplethemefavicon,liferaysamplethemespritemap1") {
-				AssertConsoleTextPresent(value1 = "STARTED ${clientExtensionId}");
+			for (var clientExtension : list "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1") {
+				AssertConsoleTextPresent(value1 = "STARTED ${clientExtension}");
 			}
 		}
 
@@ -186,15 +186,13 @@ definition {
 	@description = "Smoke test Liferay Sample Etc Cron"
 	@priority = 4
 	test LiferaySampleEtcCronSmoke {
-		var clientExtensionSamples = "liferay-sample-etc-cron";
-
 		task ("Deploy Liferay Sample Etc Cron into the current virtual instance") {
-			for (var clientExtension : list ${clientExtensionSamples}) {
-				AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
-			}
+			var clientExtensionName = "liferay-sample-etc-cron";
+
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionName}");
 		}
 
-		task ("Assert the Sample Etc Cron OAuth Application") {
+		task ("Get the Sample Etc Cron Client Secret") {
 			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
@@ -208,10 +206,12 @@ definition {
 				rowEntry = "Liferay Sample Etc Cron OAuth Application Headless Server");
 
 			OAuth2.assertPortletHeader(header = "Liferay Sample Etc Cron OAuth Application Headless Server");
+
+			var clientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
 		}
 
 		task ("Assert the Message Board Thread Count of 0") {
-			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Dvirtual.instance.id=${companyWebId}");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret} -Dvirtual.instance.id=${companyWebId}");
 
 			var projectDir = PropsUtil.get("project.dir");
 
@@ -234,7 +234,7 @@ definition {
 		}
 
 		task ("Assert the Message Board Thread Count of 1") {
-			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Dvirtual.instance.id=${companyWebId}");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret} -Dvirtual.instance.id=${companyWebId}");
 
 			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
 

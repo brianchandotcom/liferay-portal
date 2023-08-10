@@ -4,19 +4,10 @@
 	<import file="build-test.xml" />
 
 	<macrodef name="deploy-workspace-client-extension">
-		<attribute default="default" name="virtual.instance.id" />
+		<attribute default="" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
 
 		<sequential>
-			<var name="client.extension.deployed.id" unset="true" />
-
-			<propertyregex
-				input="@{workspace.client.extension.name}"
-				property="client.extension.deployed.id"
-				regexp="[^a-zA-Z0-9\\s]"
-				replace=""
-			/>
-
 			<var name="workspace.name" unset="true" />
 
 			<propertyregex
@@ -34,7 +25,7 @@
 
 			<if>
 				<not>
-					<equals arg1="@{virtual.instance.id}" arg2="default" />
+					<equals arg1="@{virtual.instance.id}" arg2="" />
 				</not>
 				<then>
 					<beanshell>
@@ -83,34 +74,30 @@
 			<if>
 				<available file="${workspace.client.extension.dir}" />
 				<then>
-					<gradle-execute dir="${workspace.client.extension.dir}" task="clean">
-						<arg value="-Pliferay.virtual.instance.id=@{virtual.instance.id}" />
-						<arg value="-Pliferay.workspace.home.dir=${liferay.home}" />
-					</gradle-execute>
+					<gradle-execute dir="${workspace.client.extension.dir}" task="clean" />
 
 					<if>
 						<available file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
 						<then>
-							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deployPoshi">
-								<arg value="-Pliferay.virtual.instance.id=@{virtual.instance.id}" />
-								<arg value="-Pliferay.workspace.home.dir=${liferay.home}" />
-							</gradle-execute>
+							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deployPoshi" />
 						</then>
 						<else>
-							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deploy">
-								<arg value="-Pliferay.virtual.instance.id=@{virtual.instance.id}" />
-								<arg value="-Pliferay.workspace.home.dir=${liferay.home}" />
-							</gradle-execute>
+							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deploy" />
 						</else>
 					</if>
 
+					<copy
+						file="${workspace.client.extension.dir}/dist/@{workspace.client.extension.name}.zip"
+						todir="${liferay.home}/deploy"
+					/>
+
 					<if>
 						<not>
-							<equals arg1="@{virtual.instance.id}" arg2="default" />
+							<equals arg1="@{virtual.instance.id}" arg2="" />
 						</not>
 						<then>
 							<wait-for-client-extension-deployment
-								client.extension.deploy.log="STARTED ${client.extension.deployed.id}_"
+								client.extension.deploy.log="STARTED @{workspace.client.extension.name}_"
 							/>
 						</then>
 					</if>
@@ -135,7 +122,7 @@
 
 	<macrodef name="start-spring-boot-client-extension">
 		<attribute name="spring.boot.application.name" />
-		<attribute default="default" name="virtual.instance.id" />
+		<attribute default="" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
 
 		<text default="" name="application.properties" />
@@ -162,16 +149,25 @@
 				logging.file.path=${workspace.client.extension.dir}/logs
 			</echo>
 
+			<if>
+				<not>
+					<equals arg1="@{virtual.instance.id}" arg2="" />
+				</not>
+				<then>
+					<echo append="true" file="${workspace.client.extension.dir}/application.properties">
+						com.liferay.lxc.dxp.domains=@{virtual.instance.id}:8080
+						com.liferay.lxc.dxp.mainDomain=@{virtual.instance.id}:8080
+					</echo>
+				</then>
+			</if>
+
 			<print-file file.name="${workspace.client.extension.dir}/application.properties" />
 
 			<delete file="${workspace.client.extension.dir}/logs/spring.log" />
 
 			<parallel>
 				<daemons>
-					<gradle-execute dir="${workspace.client.extension.dir}" task="bootRun">
-						<arg value="-Pliferay.workspace.home.dir=${liferay.home}" />
-						<arg value="-Pliferay.virtual.instance.id=@{virtual.instance.id}" />
-					</gradle-execute>
+					<gradle-execute dir="${workspace.client.extension.dir}" task="bootRun" />
 				</daemons>
 
 				<sequential>
@@ -266,19 +262,10 @@
 	</macrodef>
 
 	<macrodef name="undeploy-workspace-client-extension">
-		<attribute default="default" name="virtual.instance.id" />
+		<attribute default="" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
 
 		<sequential>
-			<var name="client.extension.deployed.id" unset="true" />
-
-			<propertyregex
-				input="@{workspace.client.extension.name}"
-				property="client.extension.deployed.id"
-				regexp="[^a-zA-Z0-9\\s]"
-				replace=""
-			/>
-
 			<var name="workspace.name" unset="true" />
 
 			<propertyregex
@@ -288,18 +275,22 @@
 				replace="\1-workspace"
 			/>
 
+			<var name="workspace.client.extension.dir" unset="true" />
+
+			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
+
 			<if>
-				<available file="${liferay.home}/osgi/client-extensions/@{workspace.client.extension.name}.zip" />
+				<available file="${liferay.home}/osgi/modules/@{workspace.client.extension.name}.zip" />
 				<then>
-					<delete file="${liferay.home}/osgi/client-extensions/@{workspace.client.extension.name}.zip" />
+					<delete file="${liferay.home}/osgi/modules/@{workspace.client.extension.name}.zip" />
 
 					<if>
 						<not>
-							<equals arg1="@{virtual.instance.id}" arg2="default" />
+							<equals arg1="@{virtual.instance.id}" arg2="" />
 						</not>
 						<then>
 							<wait-for-client-extension-deployment
-								client.extension.deploy.log="STOPPED ${client.extension.deployed.id}_"
+								client.extension.deploy.log="STOPPED @{workspace.client.extension.name}_"
 							/>
 						</then>
 					</if>
@@ -355,7 +346,7 @@
 	<target name="deploy-workspace-client-extension">
 		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
 
-		<condition else="default" property="virtual.instance.id" value="${virtual.instance.id}">
+		<condition else="" property="virtual.instance.id" value="${virtual.instance.id}">
 			<isset property="virtual.instance.id" />
 		</condition>
 
@@ -397,7 +388,7 @@
 	<target name="undeploy-workspace-client-extension">
 		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
 
-		<condition else="default" property="virtual.instance.id" value="${virtual.instance.id}">
+		<condition else="" property="virtual.instance.id" value="${virtual.instance.id}">
 			<isset property="virtual.instance.id" />
 		</condition>
 

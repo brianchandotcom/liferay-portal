@@ -6,7 +6,9 @@
 	<import file="build-test-workspace.xml" />
 
 	<target name="start-liferay-sample-etc-cron">
-		<condition else="default" property="virtual.instance.id" value="${virtual.instance.id}">
+		<fail message="Please set the property ${oauth2.headless.server.client.secret}." unless="oauth2.headless.server.client.secret" />
+
+		<condition else="" property="virtual.instance.id" value="${virtual.instance.id}">
 			<isset property="virtual.instance.id" />
 		</condition>
 
@@ -14,11 +16,13 @@
 			spring.boot.application.name="SampleSpringBootApplication"
 			virtual.instance.id="${virtual.instance.id}"
 			workspace.client.extension.name="liferay-sample-etc-cron"
-		/>
+		>
+			liferay-sample-etc-cron-oauth-application-headless-server.oauth2.headless.server.client.secret=${oauth2.headless.server.client.secret}
+		</start-spring-boot-client-extension>
 	</target>
 
 	<target name="start-liferay-sample-etc-spring-boot">
-		<condition else="default" property="virtual.instance.id" value="${virtual.instance.id}">
+		<condition else="" property="virtual.instance.id" value="${virtual.instance.id}">
 			<isset property="virtual.instance.id" />
 		</condition>
 

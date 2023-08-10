@@ -5927,26 +5927,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public boolean isControlPanelPortlet(
-		String portletId, ThemeDisplay themeDisplay) {
-
-		try {
-			return PortletPermissionUtil.hasControlPanelAccessPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), portletId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to check control panel access permission",
-					portalException);
-			}
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isCustomPortletMode(PortletMode portletMode) {
 		if (LiferayPortletMode.ABOUT.equals(portletMode) ||
 			LiferayPortletMode.CONFIG.equals(portletMode) ||

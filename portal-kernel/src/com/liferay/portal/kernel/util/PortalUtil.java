@@ -1662,12 +1662,6 @@ public class PortalUtil {
 		return _portal.isCompanyAdmin(user);
 	}
 
-	public static boolean isControlPanelPortlet(
-		String portletId, ThemeDisplay themeDisplay) {
-
-		return _portal.isControlPanelPortlet(portletId, themeDisplay);
-	}
-
 	public static boolean isCustomPortletMode(PortletMode portletMode) {
 		return _portal.isCustomPortletMode(portletMode);
 	}

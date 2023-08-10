@@ -7,6 +7,7 @@ package com.liferay.commerce.product.internal.search.spi.model.query.contributor
 
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -14,9 +15,11 @@ import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
@@ -46,6 +49,8 @@ public class CPDefinitionKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, CPField.ASSET_CATEGORY_NAMES, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, CPField.EXTERNAL_REFERENCE_CODE,
 			false);
@@ -89,6 +94,11 @@ public class CPDefinitionKeywordQueryContributor
 			try {
 				keywords = StringUtil.toLowerCase(keywords);
 
+				booleanQuery.add(
+					_getTrailingWildcardQuery(
+						CPField.ASSET_CATEGORY_NAMES, keywords),
+					BooleanClauseOccur.SHOULD);
+
 				BooleanQuery searchQuery = new BooleanQueryImpl();
 
 				searchQuery.add(
@@ -114,6 +124,12 @@ public class CPDefinitionKeywordQueryContributor
 				throw new SystemException(parseException);
 			}
 		}
+	}
+
+	private WildcardQuery _getTrailingWildcardQuery(
+		String field, String value) {
+
+		return new WildcardQueryImpl(field, value + StringPool.STAR);
 	}
 
 	@Reference

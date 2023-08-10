@@ -27,7 +27,7 @@ bootRun {
 }
 
 dependencies {
-	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "1.0.9"
+	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "latest.release"
 	implementation group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"
 	implementation group: "org.json", name: "json", version: "20230227"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-activemq", version: "2.7.9"

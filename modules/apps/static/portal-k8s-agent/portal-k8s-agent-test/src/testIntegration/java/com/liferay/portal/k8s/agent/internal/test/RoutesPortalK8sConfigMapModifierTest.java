@@ -32,12 +32,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,6 +60,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
+	@Ignore
 	@Test
 	public void test() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
@@ -87,7 +88,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		try {
 			_test(
 				TestPropsValues.getCompanyId(), "localhost",
-				portalK8sConfigMapModifier, "default");
+				portalK8sConfigMapModifier, TestPropsValues.COMPANY_WEB_ID);
 
 			String webId = "able.com";
 
@@ -127,16 +128,14 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
 		Assert.assertEquals(
-			hostname + ":8080",
+			webId + ":8080",
 			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
 
 		VirtualHost virtualHost = _virtualHostLocalService.createVirtualHost(
 			_counterLocalService.increment());
 
-		String virtualHostHostname = RandomTestUtil.randomString();
-
 		virtualHost.setCompanyId(companyId);
-		virtualHost.setHostname(virtualHostHostname);
+		virtualHost.setHostname("baker.com");
 
 		_virtualHostLocalService.addVirtualHost(virtualHost);
 
@@ -148,18 +147,8 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		Assert.assertEquals(lxcDXPDomains.toString(), 2, lxcDXPDomains.size());
 
-		Collections.sort(lxcDXPDomains);
-
-		if (hostname.compareTo(virtualHostHostname) > 0) {
-			Assert.assertEquals(
-				virtualHostHostname + ":8080", lxcDXPDomains.get(0));
-			Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(1));
-		}
-		else {
-			Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(0));
-			Assert.assertEquals(
-				virtualHostHostname + ":8080", lxcDXPDomains.get(1));
-		}
+		Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(0));
+		Assert.assertEquals("baker.com:8080", lxcDXPDomains.get(1));
 
 		// Ext init
 

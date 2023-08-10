@@ -216,14 +216,15 @@ public class RoutesPortalK8sConfigMapModifier
 	}
 
 	private int _getPortalLocalPort() {
-		String webServerProtocol = PropsValues.WEB_SERVER_PROTOCOL;
+		boolean secure = false;
 
-		if (Validator.isNull(webServerProtocol)) {
-			webServerProtocol = Http.HTTP;
+		if (Validator.isNull(PropsValues.WEB_SERVER_PROTOCOL) ||
+			PropsValues.WEB_SERVER_PROTOCOL.equals(Http.HTTPS)) {
+
+			secure = true;
 		}
 
-		return _portal.getPortalLocalPort(
-			Objects.equals(webServerProtocol, "https"));
+		return _portal.getPortalLocalPort(secure);
 	}
 
 	private void _updateDXPRoutes(boolean secure) {

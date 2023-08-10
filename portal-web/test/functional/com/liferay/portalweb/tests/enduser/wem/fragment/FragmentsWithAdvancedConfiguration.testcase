@@ -118,7 +118,7 @@ definition {
 		task ("View the Advanced Config Field grouped in collapsable Advancd Config Fieldset") {
 			Panel.collapsePanel(panel = "Advanced Config Fieldset");
 
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_fieldLabel = "Advanced Config Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD");
 		}

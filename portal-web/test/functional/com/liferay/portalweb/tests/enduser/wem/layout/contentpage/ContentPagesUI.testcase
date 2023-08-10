@@ -693,7 +693,7 @@ definition {
 
 			Panel.collapsePanel(panel = "Frame");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
+			AssertNotVisible(locator1 = "//div[contains(@class,'fieldset')]");
 
 			Panel.expandPanel(panel = "Dropdown Options");
 
@@ -707,7 +707,7 @@ definition {
 				Panel.collapsePanel(panel = ${key_panel});
 			}
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
+			AssertNotVisible(locator1 = "//div[contains(@class,'fieldset')]");
 
 			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
 				Panel.expandPanel(panel = ${key_panel});

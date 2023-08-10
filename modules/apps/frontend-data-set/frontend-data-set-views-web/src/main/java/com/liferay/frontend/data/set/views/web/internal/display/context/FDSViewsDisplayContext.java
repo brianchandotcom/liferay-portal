@@ -9,9 +9,7 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -39,11 +37,12 @@ import javax.portlet.ResourceURL;
 public class FDSViewsDisplayContext {
 
 	public FDSViewsDisplayContext(
-		CETManager cetManager, RenderRequest renderRequest,
-		RenderResponse renderResponse,
+		CETManager cetManager, ObjectDefinition fdsEntryObjectDefinition,
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		ServiceTrackerList<String> serviceTrackerList) {
 
 		_cetManager = cetManager;
+		_fdsEntryObjectDefinition = fdsEntryObjectDefinition;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_serviceTrackerList = serviceTrackerList;
@@ -113,10 +112,6 @@ public class FDSViewsDisplayContext {
 	}
 
 	public String getPermissionsURL() {
-		ObjectDefinition fdsEntryObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
-				_themeDisplay.getCompanyId(), "FDSEntry");
-
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_renderRequest,
@@ -128,10 +123,10 @@ public class FDSViewsDisplayContext {
 		).setRedirect(
 			PortletURLUtil.getCurrent(_renderRequest, _renderResponse)
 		).setParameter(
-			"modelResource", fdsEntryObjectDefinition.getClassName()
+			"modelResource", _fdsEntryObjectDefinition.getClassName()
 		).setParameter(
 			"modelResourceDescription",
-			fdsEntryObjectDefinition.getLabel(_themeDisplay.getLocale())
+			_fdsEntryObjectDefinition.getLabel(_themeDisplay.getLocale())
 		).setParameter(
 			"resourcePrimKey", "{id}"
 		).setWindowState(
@@ -166,6 +161,7 @@ public class FDSViewsDisplayContext {
 	}
 
 	private final CETManager _cetManager;
+	private final ObjectDefinition _fdsEntryObjectDefinition;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ServiceTrackerList<String> _serviceTrackerList;

@@ -85,37 +85,32 @@ public class FDSViewsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			_generate(
-				themeDisplay.getCompanyId(), themeDisplay.getLocale(),
-				themeDisplay.getUserId());
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+		ObjectDefinition fdsEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				themeDisplay.getCompanyId(), "FDSEntry");
+
+		if (fdsEntryObjectDefinition == null) {
+			try {
+				_generate(themeDisplay.getLocale(), themeDisplay.getUserId());
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
 		}
 
 		renderRequest.setAttribute(
 			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
 			new FDSViewsDisplayContext(
-				_cetManager, renderRequest, renderResponse,
-				_serviceTrackerList));
+				_cetManager, fdsEntryObjectDefinition, renderRequest,
+				renderResponse, _serviceTrackerList));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private synchronized void _generate(
-			long companyId, Locale locale, long userId)
+	private synchronized void _generate(Locale locale, long userId)
 		throws Exception {
 
 		ObjectDefinition fdsEntryObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "FDSEntry");
-
-		if (fdsEntryObjectDefinition != null) {
-			return;
-		}
-
-		fdsEntryObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				"FDSEntry", userId, 0, "FDSEntry", "FDSEntry", false,
 				LocalizedMapUtil.getLocalizedMap("FDS Entry"), true, "FDSEntry",

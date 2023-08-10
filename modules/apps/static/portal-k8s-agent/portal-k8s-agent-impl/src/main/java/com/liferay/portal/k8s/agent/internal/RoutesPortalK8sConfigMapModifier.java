@@ -6,7 +6,6 @@
 package com.liferay.portal.k8s.agent.internal;
 
 import com.liferay.osgi.util.service.Snapshot;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -34,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
@@ -119,10 +119,10 @@ public class RoutesPortalK8sConfigMapModifier
 			return Result.DELETED;
 		}
 
-		_updatePortalLocalPort(data, _getPortalLocalPort());
+		_updateForPortalLocalPort(data, _getPortalLocalPort());
 
 		try {
-			_writeRoutes(data, labels);
+			_writeLiferayRoutesData(data, labels);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -266,7 +266,7 @@ public class RoutesPortalK8sConfigMapModifier
 										Files.readAllBytes(file.toPath())));
 							}
 
-							_updatePortalLocalPort(
+							_updateForPortalLocalPort(
 								data, _portal.getPortalLocalPort(secure));
 
 							data.forEach(
@@ -297,7 +297,7 @@ public class RoutesPortalK8sConfigMapModifier
 		}
 	}
 
-	private void _updatePortalLocalPort(
+	private void _updateForPortalLocalPort(
 		Map<String, String> labels, int portalLocalPort) {
 
 		if (portalLocalPort <= 0) {
@@ -314,6 +314,7 @@ public class RoutesPortalK8sConfigMapModifier
 			labels.put(
 				"com.liferay.lxc.dxp.main.domain",
 				lxcDXPMainDomain + ":" + portalLocalPort);
+
 			labels.put(
 				"com.liferay.lxc.dxp.mainDomain",
 				lxcDXPMainDomain + ":" + portalLocalPort);
@@ -323,41 +324,27 @@ public class RoutesPortalK8sConfigMapModifier
 			labels.get("com.liferay.lxc.dxp.domains"), CharPool.NEW_LINE);
 
 		if (!lxcDXPDomains.isEmpty()) {
-			List<String> updatedLXCDXPDomains = new ArrayList<>();
+			List<String> updatedLxcDXPDomains = new ArrayList<>();
 
 			for (String lxcDXPDomain : lxcDXPDomains) {
 				if ((lxcDXPDomain != null) &&
 					(lxcDXPDomain.indexOf(":") == -1)) {
 
-					updatedLXCDXPDomains.add(
+					updatedLxcDXPDomains.add(
 						lxcDXPDomain + ":" + portalLocalPort);
 				}
 				else {
-					updatedLXCDXPDomains.add(lxcDXPDomain);
+					updatedLxcDXPDomains.add(lxcDXPDomain);
 				}
 			}
 
 			labels.put(
 				"com.liferay.lxc.dxp.domains",
-				StringUtil.merge(updatedLXCDXPDomains, StringPool.NEW_LINE));
+				StringUtil.merge(updatedLxcDXPDomains, StringPool.NEW_LINE));
 		}
 	}
 
-	private void _write(Path path, Map<String, String> data) {
-		data.forEach(
-			(key, value) -> {
-				try {
-					Path keyPath = path.resolve(key);
-
-					_file.write(keyPath.toFile(), value.getBytes());
-				}
-				catch (IOException ioException) {
-					ReflectionUtil.throwException(ioException);
-				}
-			});
-	}
-
-	private void _writeRoutes(
+	private void _writeLiferayRoutesData(
 			Map<String, String> data, Map<String, String> labels)
 		throws Exception {
 
@@ -368,6 +355,7 @@ public class RoutesPortalK8sConfigMapModifier
 		}
 
 		String metadataType = labels.get("lxc.liferay.com/metadataType");
+
 		String virtualInstanceId = labels.get(
 			"dxp.lxc.liferay.com/virtualInstanceId");
 
@@ -391,7 +379,7 @@ public class RoutesPortalK8sConfigMapModifier
 
 			Files.createDirectories(dxpRoutesPath);
 
-			_write(dxpRoutesPath, data);
+			_writeRoutesData(dxpRoutesPath, data);
 		}
 		else if (Objects.equals(metadataType, "ext-init")) {
 			String projectName = labels.get("ext.lxc.liferay.com/projectName");
@@ -400,8 +388,23 @@ public class RoutesPortalK8sConfigMapModifier
 
 			Files.createDirectories(projectPath);
 
-			_write(projectPath, data);
+			_writeRoutesData(projectPath, data);
 		}
+	}
+
+	private void _writeRoutesData(Path dataPath, Map<String, String> data) {
+		data.forEach(
+			(key, value) -> {
+				Path keyPath = dataPath.resolve(key);
+
+				try {
+					Files.write(
+						keyPath, value.getBytes(), StandardOpenOption.CREATE);
+				}
+				catch (IOException ioException) {
+					_log.error("Unable to write routes data", ioException);
+				}
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

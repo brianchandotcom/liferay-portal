@@ -243,8 +243,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
 			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 
-		_addAPISort(
-			_API_ENDPOINT_ERC_1, String.format("%s:asc", "textProperty"));
+		_addAPISort(_API_ENDPOINT_ERC_1, String.format("%s:asc", "textField"));
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -261,25 +260,67 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", "value1"
+					"integerProperty", 1
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value1"
 				),
 				JSONUtil.put(
-					"name", "value2"
+					"integerProperty", 2
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value2"
 				),
 				JSONUtil.put(
-					"name", "value3"
+					"integerProperty", 3
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value3"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -288,7 +329,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			null,
 			StringBundler.concat(
 				"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?sort=",
-				URLCodec.encodeURL("name:desc")),
+				URLCodec.encodeURL("textProperty:desc")),
 			Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
@@ -296,25 +337,67 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", "value3"
+					"integerProperty", 3
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value3"
 				),
 				JSONUtil.put(
-					"name", "value2"
+					"integerProperty", 2
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value2"
 				),
 				JSONUtil.put(
-					"name", "value1"
+					"integerProperty", 1
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value1"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -328,8 +411,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
 			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
 
-		_addAPISort(
-			_API_ENDPOINT_ERC_1, String.format("%s:desc", "textProperty"));
+		_addAPISort(_API_ENDPOINT_ERC_1, String.format("%s:desc", "textField"));
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -346,25 +428,67 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", "value3"
+					"integerProperty", 3
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value3"
 				),
 				JSONUtil.put(
-					"name", "value2"
+					"integerProperty", 2
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value2"
 				),
 				JSONUtil.put(
-					"name", "value1"
+					"integerProperty", 1
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value1"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -373,7 +497,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			null,
 			StringBundler.concat(
 				"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?sort=",
-				URLCodec.encodeURL("name:asc")),
+				URLCodec.encodeURL("textProperty:asc")),
 			Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
@@ -381,25 +505,67 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"name", "value1"
+					"integerProperty", 1
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value1"
 				),
 				JSONUtil.put(
-					"name", "value2"
+					"integerProperty", 2
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value2"
 				),
 				JSONUtil.put(
-					"name", "value3"
+					"integerProperty", 3
 				).put(
-					"relatedFieldName1", Collections.emptyList()
+					"multiselectPicklistProperty", Collections.emptyList()
 				).put(
-					"relatedFieldName2", Collections.emptyList()
+					"relatedIntegerProperty1", Collections.emptyList()
+				).put(
+					"relatedIntegerProperty2", Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty1",
+					Collections.emptyList()
+				).put(
+					"relatedMultiselectPicklistProperty2",
+					Collections.emptyList()
+				).put(
+					"relatedTextProperty1", Collections.emptyList()
+				).put(
+					"relatedTextProperty2", Collections.emptyList()
+				).put(
+					"textProperty", "value3"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);

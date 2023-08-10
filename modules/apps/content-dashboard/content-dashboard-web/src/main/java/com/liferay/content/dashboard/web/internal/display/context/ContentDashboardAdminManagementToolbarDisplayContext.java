@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -554,19 +553,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	}
 
 	private PortletURL _getAssetTagSelectorURL() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
 			new AssetTagsItemSelectorCriterion();
 
 		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetTagsItemSelectorReturnType());
-		assetTagsItemSelectorCriterion.setGroupIds(
-			ArrayUtil.toLongArray(
-				_groupLocalService.getGroupIds(
-					themeDisplay.getCompanyId(), true)));
+		assetTagsItemSelectorCriterion.setAllCompanyGroupIds(true);
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
 		return _itemSelector.getItemSelectorURL(

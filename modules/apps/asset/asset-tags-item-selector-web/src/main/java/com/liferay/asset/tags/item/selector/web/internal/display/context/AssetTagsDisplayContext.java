@@ -10,9 +10,13 @@ import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import javax.portlet.PortletURL;
@@ -62,8 +66,8 @@ public class AssetTagsDisplayContext {
 
 		tagsSearchContainer.setResultsAndTotal(
 			() -> AssetTagServiceUtil.getTags(
-				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords(),
-				tagsSearchContainer.getStart(), tagsSearchContainer.getEnd(),
+				_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
+				tagsSearchContainer.getEnd(),
 				tagsSearchContainer.getOrderByComparator()),
 			AssetTagServiceUtil.getTagsCount(
 				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords()));
@@ -79,6 +83,20 @@ public class AssetTagsDisplayContext {
 		_tagsSearchContainer = tagsSearchContainer;
 
 		return _tagsSearchContainer;
+	}
+
+	private long[] _getGroupIds() {
+		if (_assetTagsItemSelectorCriterion.isAllCompanyGroupIds()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return ArrayUtil.toLongArray(
+				GroupLocalServiceUtil.getGroupIds(
+					themeDisplay.getCompanyId(), true));
+		}
+
+		return _assetTagsItemSelectorCriterion.getGroupIds();
 	}
 
 	private String _getKeywords() {

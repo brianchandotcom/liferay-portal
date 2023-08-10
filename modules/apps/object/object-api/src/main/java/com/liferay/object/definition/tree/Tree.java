@@ -8,6 +8,7 @@ package com.liferay.object.definition.tree;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +25,10 @@ public class Tree {
 
 	public List<Edge> getAncestorsPath(long objectDefinitionId) {
 		Node node = getNode(objectDefinitionId);
+
+		if (node.isRoot()) {
+			return Collections.emptyList();
+		}
 
 		List<Edge> edges = new ArrayList<>();
 

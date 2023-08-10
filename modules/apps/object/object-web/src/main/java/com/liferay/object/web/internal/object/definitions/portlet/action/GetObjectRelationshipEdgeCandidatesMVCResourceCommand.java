@@ -1,0 +1,213 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.object.web.internal.object.definitions.portlet.action;
+
+import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.tree.Edge;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Feliphe Marinho
+ */
+@Component(
+	property = {
+		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
+		"mvc.command.name=/object_definitions/get_object_relationship_edge_candidates"
+	},
+	service = MVCResourceCommand.class
+)
+public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
+	extends BaseMVCResourceCommand {
+
+	@Override
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		int depth = ParamUtil.getInteger(resourceRequest, "depth");
+
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.
+				getObjectRelationshipsByObjectDefinitionId2(
+					_getObjectDefinitionId(resourceRequest));
+
+		JSONArray objectRelationshipsJSONArray = jsonFactory.createJSONArray();
+
+		Locale locale = _portal.getLocale(resourceRequest);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition parentObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (!_meetsEdgeCriteria(objectRelationship)) {
+				continue;
+			}
+
+			if (parentObjectDefinition.getRootObjectDefinitionId() == 0) {
+				objectRelationshipsJSONArray.put(
+					JSONUtil.put(
+						"label",
+						StringUtil.appendParentheticalSuffix(
+							parentObjectDefinition.getLabel(locale),
+							objectRelationship.getLabel(locale))
+					).put(
+						"objectRelationshipId",
+						objectRelationship.getObjectRelationshipId()
+					));
+
+				continue;
+			}
+
+			Tree tree = _treeFactory.create(
+				parentObjectDefinition.getRootObjectDefinitionId());
+
+			if (!_meetsTreeMaxHeight(depth, parentObjectDefinition, tree)) {
+				continue;
+			}
+
+			List<Edge> edges = tree.getAncestorsPath(
+				parentObjectDefinition.getObjectDefinitionId());
+
+			JSONArray ancestorsJSONArray = jsonFactory.createJSONArray();
+
+			for (Edge edge : edges) {
+				ancestorsJSONArray.put(
+					JSONUtil.put(
+						"label",
+						() -> {
+							ObjectRelationship edgeObjectRelationship =
+								_objectRelationshipLocalService.
+									getObjectRelationship(
+										edge.getObjectRelationshipId());
+
+							ObjectDefinition objectDefinition =
+								_objectDefinitionLocalService.
+									getObjectDefinition(
+										edgeObjectRelationship.
+											getObjectDefinitionId1());
+
+							return StringUtil.appendParentheticalSuffix(
+								objectDefinition.getLabel(locale),
+								edgeObjectRelationship.getLabel(locale));
+						}
+					).put(
+						"objectRelationshipId", edge.getObjectRelationshipId()
+					));
+			}
+
+			objectRelationshipsJSONArray.put(
+				JSONUtil.put(
+					"ancestors", ancestorsJSONArray
+				).put(
+					"label",
+					StringUtil.appendParentheticalSuffix(
+						parentObjectDefinition.getLabel(locale),
+						objectRelationship.getLabel(locale))
+				).put(
+					"objectRelationshipId",
+					objectRelationship.getObjectRelationshipId()
+				).put(
+					"root",
+					parentObjectDefinition.getObjectDefinitionId() ==
+						parentObjectDefinition.getRootObjectDefinitionId()
+				));
+		}
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse, objectRelationshipsJSONArray);
+	}
+
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	private long _getObjectDefinitionId(ResourceRequest resourceRequest)
+		throws Exception {
+
+		long objectRelationshipId = ParamUtil.getLong(
+			resourceRequest, "objectRelationshipId");
+
+		if (objectRelationshipId != 0) {
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					ParamUtil.getLong(resourceRequest, "objectRelationshipId"));
+
+			return objectRelationship.getObjectDefinitionId1();
+		}
+
+		return ParamUtil.getLong(resourceRequest, "objectDefinitionId");
+	}
+
+	private boolean _meetsEdgeCriteria(ObjectRelationship objectRelationship)
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (objectRelationship.isSelf() ||
+			!Objects.equals(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+				objectRelationship.getType()) ||
+			parentObjectDefinition.isUnmodifiableSystemObject()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _meetsTreeMaxHeight(
+		int depth, ObjectDefinition objectDefinition, Tree tree) {
+
+		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+
+		if ((node.getDepth() + depth) > 4) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private TreeFactory _treeFactory;
+
+}

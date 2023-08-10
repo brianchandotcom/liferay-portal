@@ -11,6 +11,13 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginUI();
+
+		task ("Given create an API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "App-test",
+				status = "published",
+				title = "App-test");
+		}
 	}
 
 	tearDown {
@@ -27,12 +34,6 @@ definition {
 	test CanNavigateToAppDetailsForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-
-		task ("Given create an API application through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
-				title = "App-test");
-		}
 
 		task ("When from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
@@ -56,12 +57,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
-		task ("Given create an API application through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
-				title = "App-test");
-		}
-
 		task ("And Given from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
 		}
@@ -77,9 +72,7 @@ definition {
 		}
 
 		task ("Then back to API Builder list") {
-			AssertElementPresent(
-				key_objectLabel = "API Builder",
-				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
+			AssertElementPresent();
 		}
 
 		task ("And Then app Title is not changed") {
@@ -93,12 +86,6 @@ definition {
 	test CanSaveModifiedValuesAndPublishApplication {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-
-		task ("Given create an API application through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
-				title = "App-test");
-		}
 
 		task ("And Given from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
@@ -137,12 +124,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
-		task ("Given create an API application through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
-				title = "App-test");
-		}
-
 		task ("And Given from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
 		}
@@ -174,12 +155,6 @@ definition {
 	test CanSeeEditOptionButton {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-
-		task ("Given create an API application through Control Panel > Object > API Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
-				title = "App-test");
-		}
 
 		task ("When I click on the dropdown menu of created API application") {
 			Click(

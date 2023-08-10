@@ -145,8 +145,15 @@ export const formatYAxis: FormatYAxisFn = metricUnit => value => {
 	return `${value.toFixed(1)}${metricUnit}`;
 };
 
-export const getExperimentLink: GetLinkFn = (pageURL, id) =>
-	`${pageURL}?segmentsExperimentKey=${id}`;
+export const getExperimentLink: GetLinkFn = ({action, id, pageURL}) => {
+	const experimentLink = `${pageURL}?segmentsExperimentKey=${id}`;
+
+	if (action) {
+		return `${experimentLink}&segmentExperimentAction=${action}`;
+	}
+
+	return experimentLink;
+};
 
 export const getFormattedHistogram: GetFormattedHistogramFn = histogram => ({
 	key: histogram.map(({key}) => getDateUtil(key)),
@@ -218,7 +225,7 @@ export const getStep: GetStepFn = ({
 	};
 };
 
-export const getVariantLink: GetLinkFn = (pageURL, id) =>
+export const getVariantLink: GetLinkFn = ({id, pageURL}) =>
 	`${pageURL}?segmentsExperienceKey=${id}`;
 
 export const mergedVariants: MergedVariantsFn = (variants, variantMetrics) =>

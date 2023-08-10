@@ -27,7 +27,7 @@ const PublishVariantModal = ({
 			}
 		});
 
-	const variantLink = getVariantLink(pageURL, dxpVariantId);
+	const variantLink = getVariantLink({id: dxpVariantId, pageURL});
 
 	return (
 		<BaseModal

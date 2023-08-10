@@ -62,7 +62,7 @@ export default ({
 					label: dxpExperienceName
 						? Liferay.Language.get('change-target')
 						: Liferay.Language.get('set-target'),
-					link: getExperimentLink(pageURL, id),
+					link: getExperimentLink({id, pageURL}),
 					title: Liferay.Language.get('test-target')
 				}),
 				getStep({
@@ -80,7 +80,7 @@ export default ({
 					label: goal
 						? Liferay.Language.get('change-metric')
 						: Liferay.Language.get('set-metric'),
-					link: getExperimentLink(pageURL, id),
+					link: getExperimentLink({id, pageURL}),
 					title: Liferay.Language.get('test-metric')
 				}),
 				getStep({
@@ -107,7 +107,7 @@ export default ({
 					label: dxpVariants
 						? Liferay.Language.get('edit-variants')
 						: Liferay.Language.get('create-variants'),
-					link: getExperimentLink(pageURL, id),
+					link: getExperimentLink({id, pageURL}),
 					title: Liferay.Language.get('variants')
 				}),
 				getStep({

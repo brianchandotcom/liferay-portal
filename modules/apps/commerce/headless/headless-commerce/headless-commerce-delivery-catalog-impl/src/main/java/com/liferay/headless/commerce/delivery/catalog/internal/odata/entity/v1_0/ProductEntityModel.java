@@ -26,6 +26,9 @@ public class ProductEntityModel implements EntityModel {
 				new StringEntityField(
 					"categoryIds", locale -> "assetCategoryIds")),
 			new CollectionEntityField(
+				new StringEntityField(
+					"categoryNames", locale -> "assetCategoryNames")),
+			new CollectionEntityField(
 				new StringEntityField("tags", locale -> "assetTagNames")),
 			new IntegerEntityField("catalogId", locale -> "commerceCatalogId"),
 			new DateTimeEntityField(

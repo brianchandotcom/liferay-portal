@@ -32,6 +32,9 @@ public class ProductEntityModel implements EntityModel {
 				new StringEntityField(
 					"categoryIds", locale -> "assetCategoryIds")),
 			new CollectionEntityField(
+				new StringEntityField(
+					"categoryNames", locale -> "assetCategoryNames")),
+			new CollectionEntityField(
 				new EntityField(
 					"channelId", EntityField.Type.INTEGER,
 					locale -> Field.getSortableFieldName(

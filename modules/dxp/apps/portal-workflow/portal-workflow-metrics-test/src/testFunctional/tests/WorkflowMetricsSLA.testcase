@@ -368,7 +368,6 @@ definition {
 	@description = "LPS-89082 - Verify and click (if possible) the error messages (at metrics, SLA list, and SLA defintion page) when SLA is blocked due to workflow changes"
 	@priority = 4
 	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		SearchAdministration.executeReindex();

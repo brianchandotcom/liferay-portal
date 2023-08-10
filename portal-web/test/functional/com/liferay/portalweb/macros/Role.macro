@@ -113,6 +113,33 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro addAssigneeInKaleoForms {
+		Role._goToRoleAssigneeType(
+			assigneeType = ${assigneeType},
+			roleTitle = ${roleTitle});
+
+		LexiconEntry.gotoAdd();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
+
+		var key_userScreenName = ${assigneeName};
+		var key_assigneeName = ${assigneeName};
+
+		AssertTextEquals(
+			locator1 = "RolesAssignMembers#USER_TABLE_SCREEN_NAME",
+			value1 = ${assigneeName});
+
+		Check(locator1 = "RolesAssignMembers#ADD_ASSIGNEE_TABLE_CHECKBOX");
+
+		SelectFrameTop(value1 = "relative=top");
+
+		Button.clickAdd();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro definePermissionPG {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 

@@ -127,6 +127,19 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 	}
 
 	@Override
+	public List<CPInstanceUnitOfMeasure> getActiveCPInstanceUnitOfMeasures(
+		long cpInstanceId) {
+
+		return cpInstanceUnitOfMeasurePersistence.findByC_A(cpInstanceId, true);
+	}
+
+	@Override
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
+		return cpInstanceUnitOfMeasurePersistence.countByC_A(
+			cpInstanceId, true);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {

@@ -1407,8 +1407,6 @@ definition {
 		}
 
 		task ("Edit the default values of new structure") {
-			NavItem.gotoStructures();
-
 			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(

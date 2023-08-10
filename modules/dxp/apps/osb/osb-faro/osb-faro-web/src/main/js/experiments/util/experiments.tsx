@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import DeleteExperimentModal from 'experiments/components/modals/DeleteExperimentModal';
 import ImprovementTooltip from 'experiments/components/variant-card/ImprovementTooltip';
 import moment from 'moment';
 import PublishOtherVariantModal from 'experiments/components/modals/PublishOtherVariantModal';
@@ -27,7 +26,6 @@ import {
 	MakeAllRefetchFn,
 	MergedVariantsFn,
 	ModalCompleteFn,
-	ModalDeleteFn,
 	ModalPublishOtherVariantFn,
 	ModalPublishVariantFn,
 	NormalizeHistogramFn,
@@ -202,7 +200,6 @@ export const getStatusName: GetStatusNameFn = status =>
 
 export const getStep: GetStepFn = ({
 	disabled,
-	label,
 	showIcon = true,
 	tooltip,
 	...otherProps
@@ -215,8 +212,7 @@ export const getStep: GetStepFn = ({
 		...(tooltip && {
 			['data-tooltip']: true,
 			title: tooltip
-		}),
-		label
+		})
 	};
 
 	return {
@@ -266,14 +262,6 @@ export const modalComplete: ModalCompleteFn = (
 		title: Liferay.Language.get('complete-test')
 	},
 	title: Liferay.Language.get('complete-test')
-});
-
-export const modalDelete: ModalDeleteFn = experimentId => ({
-	Component: DeleteExperimentModal,
-	props: {
-		experimentId
-	},
-	title: Liferay.Language.get('delete-test')
 });
 
 export const modalPublishVariant: ModalPublishVariantFn = (

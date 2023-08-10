@@ -11,22 +11,6 @@ exports[`SummaryCardDraft StepBody should render "active card" when status is ac
       StepBody title
     </h4>
     StepBody description
-    <button
-      class="button-root btn btn-sm btn-primary"
-      label="button label"
-      symbol="home"
-      type="button"
-    >
-      <svg
-        class="lexicon-icon lexicon-icon-home icon-root mr-2"
-        role="presentation"
-      >
-        <use
-          xlink:href="#home"
-        />
-      </svg>
-      button label
-    </button>
   </div>
 </div>
 `;
@@ -43,23 +27,6 @@ exports[`SummaryCardDraft StepBody should render component 1`] = `
         StepBody title
       </h4>
       StepBody description
-      <button
-        class="button-root btn btn-sm btn-primary"
-        disabled=""
-        label="button label"
-        symbol="home"
-        type="button"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-home icon-root mr-2"
-          role="presentation"
-        >
-          <use
-            xlink:href="#home"
-          />
-        </svg>
-        button label
-      </button>
     </div>
   </div>
 </div>

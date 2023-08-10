@@ -143,16 +143,6 @@ export type ModalCompleteFn = (
 	title: string;
 };
 
-export type ModalDeleteFn = (
-	experimentId: string
-) => {
-	Component: React.ReactNode;
-	props: {
-		experimentId: string;
-	};
-	title: string;
-};
-
 export type ModalPublishOtherVariantFn = (
 	dxpVariants: Array<Variant>,
 	experimentId: string,
@@ -211,8 +201,6 @@ export type StepInputs = {
 	disabled?: boolean;
 	Description: React.FC<React.HTMLAttributes<HTMLElement>>;
 	modal?: Modal;
-	label: string;
-	link?: string;
 	showIcon?: boolean;
 	title: string;
 	tooltip?: string;

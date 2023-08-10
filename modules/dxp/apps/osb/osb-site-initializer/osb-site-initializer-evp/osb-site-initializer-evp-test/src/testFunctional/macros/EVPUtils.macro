@@ -261,6 +261,24 @@ definition {
 			value1 = ${nextDayDate});
 	}
 
+	macro managerApproval {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "manager@liferay.com",
+			userLoginFullName = "Manager User");
+
+		EVPUtils.gotoEVP();
+
+		EVPNavigator.goToNavItem(navItem = ${listingPage});
+
+		EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+		MenuItem.click(menuItem = "Review");
+
+		EVPUtils.changeStatus(
+			button = "Approve",
+			typeMessage = "Your organization has been approved!");
+	}
+
 	macro viewNotPresentStatus {
 		AssertElementNotPresent(
 			key_organizationName = ${organizationName},

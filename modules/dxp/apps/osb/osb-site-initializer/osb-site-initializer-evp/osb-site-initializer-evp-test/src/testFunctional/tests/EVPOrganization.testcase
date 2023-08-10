@@ -98,8 +98,8 @@ definition {
 	@description = "LPS-180358 - Verify that the status follow the correct workflow after a finance user request more info"
 	@priority = 5
 	test CanFinanceUserVerifyStatusAfterRequestMoreInfo {
-		task ("Given there is a  organization is 'Awaiting finance Approval' status") {
-			EVPUtils.managerApproval(listingPage="Organization");
+		task ("Given there is a organization is 'Awaiting finance Approval' status") {
+			EVPUtils.managerApproval(listingPage = "Organization");
 
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",

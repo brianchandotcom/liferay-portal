@@ -684,7 +684,7 @@ definition {
 
 			Segmentation.fillProperty(selectEntry = "Segment With User1");
 
-			Segmentation.addProperties(propertyOption = "Segment");
+			Segmentation.addSecondProperty(propertyOption = "Segment");
 
 			Segmentation.fillProperty(
 				indexNumber = 2,
@@ -770,7 +770,7 @@ definition {
 
 			Segmentation.fillProperty(selectEntry = "Segment With User1");
 
-			Segmentation.addProperties(propertyOption = "Segment");
+			Segmentation.addSecondProperty(propertyOption = "Segment");
 
 			Segmentation.fillProperty(
 				indexNumber = 2,

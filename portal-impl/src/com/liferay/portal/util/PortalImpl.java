@@ -138,7 +138,6 @@ import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
@@ -6036,20 +6035,6 @@ public class PortalImpl implements Portal {
 			 !httpServletRequest.isSecure()) ||
 			SSOUtil.isLoginRedirectRequired(getCompanyId(httpServletRequest))) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isMethodGet(PortletRequest portletRequest) {
-		HttpServletRequest httpServletRequest = getHttpServletRequest(
-			portletRequest);
-
-		String method = GetterUtil.getString(httpServletRequest.getMethod());
-
-		if (StringUtil.equalsIgnoreCase(method, HttpMethods.GET)) {
 			return true;
 		}
 

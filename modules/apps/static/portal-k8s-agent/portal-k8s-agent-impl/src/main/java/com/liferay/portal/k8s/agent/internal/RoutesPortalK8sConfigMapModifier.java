@@ -17,8 +17,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -214,8 +216,14 @@ public class RoutesPortalK8sConfigMapModifier
 	}
 
 	private int _getPortalLocalPort() {
+		String webServerProtocol = PropsValues.WEB_SERVER_PROTOCOL;
+
+		if (Validator.isNull(webServerProtocol)) {
+			webServerProtocol = Http.HTTP;
+		}
+
 		return _portal.getPortalLocalPort(
-			Objects.equals(PropsValues.WEB_SERVER_PROTOCOL, "https"));
+			Objects.equals(webServerProtocol, "https"));
 	}
 
 	private void _updateDXPRoutes(boolean secure) {

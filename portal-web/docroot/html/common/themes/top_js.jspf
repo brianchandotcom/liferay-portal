@@ -239,6 +239,9 @@
 			getDoAsUserIdEncoded: function() {
 				return '<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>';
 			},
+			getDoAsUserLanguageId: function() {
+				return '<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserLanguageId()) %>';
+			},
 			getLanguageId: function() {
 				return '<%= LanguageUtil.getLanguageId(request) %>';
 			},

@@ -1042,12 +1042,12 @@
 </tr>
 <tr>
 	<td>TEXT_ALIGN_ICON</td>
-	<td>//div[contains(@class,'page-editor__collapse')][button[normalize-space()='Text']]//button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td>//button[contains(@class,'collapse-icon-middle')][span[normalize-space()='Text']]//..//button[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIVE_TEXT_ALIGN_ICON</td>
-	<td>//div[contains(@class,'page-editor__collapse')][button[normalize-space()='Text']]//button[@aria-pressed='true'][*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td>//button[contains(@class,'collapse-icon-middle')][span[normalize-space()='Text']]//..//button[@aria-pressed='true'][*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
 	<td></td>
 </tr>
 </tbody>

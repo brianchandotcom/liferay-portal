@@ -229,9 +229,9 @@ public class SybaseDB extends BaseDB {
 
 					line = StringUtil.replace(line, " ;", ";");
 
-					String defaults = template[template.length - 2];
+					String defaultValue = template[template.length - 2];
 
-					if (!Validator.isBlank(defaults)) {
+					if (!Validator.isBlank(defaultValue)) {
 						line = line.concat(
 							StringUtil.replace(
 								"alter table @table@ replace @old-column@ " +

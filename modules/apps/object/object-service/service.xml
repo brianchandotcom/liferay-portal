@@ -583,6 +583,10 @@
 		<finder name="ObjectFieldId2" return-type="ObjectRelationship">
 			<finder-column name="objectFieldId2" />
 		</finder>
+		<finder name="ODI1_E" return-type="Collection">
+			<finder-column name="objectDefinitionId1" />
+			<finder-column name="edge" />
+		</finder>
 		<finder name="ODI1_N" return-type="Collection">
 			<finder-column name="objectDefinitionId1" />
 			<finder-column name="name" />

@@ -11,11 +11,20 @@
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
+<portlet:actionURL name="viewContainerModel" var="viewContainerModelURL">
+	<portlet:param name="mvcPath" value="/view_container_model.jsp" />
+</portlet:actionURL>
+
 <p class="p-3 text-secondary">
 	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-of-this-file-does-not-exist-anymore" translateArguments="<%= false %>" />
 </p>
 
-<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectContainerFm">
+<liferay-frontend:edit-form
+	action="<%= viewContainerModelURL %>"
+	cssClass="c-px-3 container-fluid container-fluid-max-xl"
+	method="post"
+	name="selectContainerFm"
+>
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>"
 	/>
@@ -106,4 +115,4 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 			/>
 		</aui:button-row>
 	</liferay-ui:search-container>
-</aui:form>
+</liferay-frontend:edit-form>

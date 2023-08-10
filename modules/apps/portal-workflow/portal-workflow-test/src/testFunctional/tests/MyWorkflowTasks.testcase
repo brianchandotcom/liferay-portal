@@ -418,6 +418,10 @@ definition {
 	@description = "Verify that when there are no pending tasks Assigned to My Roles, the page is displaying -There are no pending tasks assigned to your roles.-"
 	@priority = 2
 	test AssignedToMyRolesShowsMessageWhenNoPendingTasks {
+		property test.liferay.virtual.instance = "false";
+
+		SearchAdministration.executeReindex();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");

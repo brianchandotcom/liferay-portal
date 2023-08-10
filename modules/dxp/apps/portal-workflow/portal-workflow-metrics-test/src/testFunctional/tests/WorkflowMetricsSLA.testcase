@@ -371,6 +371,8 @@ definition {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
+		SearchAdministration.executeReindex();
+
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
 			slaJobInterval = 1);
@@ -896,6 +898,8 @@ definition {
 	@priority = 3
 	test SLAProcessingDateIsDisplayedUnderAlertMessage {
 		property test.liferay.virtual.instance = "false";
+
+		SearchAdministration.executeReindex();
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,

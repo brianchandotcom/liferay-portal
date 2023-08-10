@@ -2392,6 +2392,8 @@ definition {
 	test ReorderEntriesClickingDueDateColumn {
 		property test.liferay.virtual.instance = "false";
 
+		SearchAdministration.executeReindex();
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(

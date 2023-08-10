@@ -236,6 +236,8 @@ definition {
 	test StatusIsPendingAfterSubmitForWorkflow {
 		property test.liferay.virtual.instance = "false";
 
+		SearchAdministration.executeReindex();
+
 		Navigator.gotoStagedSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});

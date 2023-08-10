@@ -1663,12 +1663,6 @@ public class PortalUtil {
 	}
 
 	public static boolean isControlPanelPortlet(
-		String portletId, String category, ThemeDisplay themeDisplay) {
-
-		return _portal.isControlPanelPortlet(portletId, category, themeDisplay);
-	}
-
-	public static boolean isControlPanelPortlet(
 		String portletId, ThemeDisplay themeDisplay) {
 
 		return _portal.isControlPanelPortlet(portletId, themeDisplay);

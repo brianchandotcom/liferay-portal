@@ -5928,26 +5928,6 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isControlPanelPortlet(
-		String portletId, String category, ThemeDisplay themeDisplay) {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			themeDisplay.getCompanyId(), portletId);
-
-		String controlPanelEntryCategory =
-			portlet.getControlPanelEntryCategory();
-
-		if (controlPanelEntryCategory.equals(category) ||
-			(category.endsWith(StringPool.PERIOD) &&
-			 StringUtil.startsWith(controlPanelEntryCategory, category))) {
-
-			return isControlPanelPortlet(portletId, themeDisplay);
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isControlPanelPortlet(
 		String portletId, ThemeDisplay themeDisplay) {
 
 		try {

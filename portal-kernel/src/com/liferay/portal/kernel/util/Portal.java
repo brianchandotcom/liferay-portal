@@ -1028,9 +1028,6 @@ public interface Portal {
 	public boolean isCompanyAdmin(User user) throws Exception;
 
 	public boolean isControlPanelPortlet(
-		String portletId, String category, ThemeDisplay themeDisplay);
-
-	public boolean isControlPanelPortlet(
 		String portletId, ThemeDisplay themeDisplay);
 
 	public boolean isCustomPortletMode(PortletMode portletMode);

@@ -17,8 +17,10 @@ import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -80,7 +82,25 @@ public class FieldProvider {
 		Map<String, Field> fields = objectEntryOpenAPIResource.getFields(
 			uriInfo);
 
-		return new ArrayList<>(fields.values());
+		Map<String, Field> filteredFields = new HashMap<>();
+
+		for (Map.Entry<String, Field> entry : fields.entrySet()) {
+			Field field = entry.getValue();
+
+			if (Objects.equals(field.getType(), "object") ||
+				Objects.equals(field.getType(), "array")) {
+
+				String ref = field.getRef();
+
+				if ((ref != null) && ref.startsWith("#/components/schemas/"))
+
+					continue;
+			}
+
+			filteredFields.put(entry.getKey(), entry.getValue());
+		}
+
+		return new ArrayList<>(filteredFields.values());
 	}
 
 	@Reference

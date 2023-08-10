@@ -119,7 +119,8 @@ public class ObjectEntryOpenAPIResourceImpl
 					GetterUtil.getBoolean(propertySchema.getReadOnly()),
 					requiredPropertySchemaNames.contains(propertyName),
 					propertySchema.getType(),
-					GetterUtil.getBoolean(propertySchema.getWriteOnly())));
+					GetterUtil.getBoolean(propertySchema.getWriteOnly()),
+					propertySchema.get$ref()));
 		}
 
 		return fields;

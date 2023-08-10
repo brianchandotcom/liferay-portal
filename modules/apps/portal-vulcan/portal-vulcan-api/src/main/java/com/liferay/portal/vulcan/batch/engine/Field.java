@@ -16,7 +16,16 @@ public class Field {
 
 		return new Field(
 			_toAccessType(readOnly, writeOnly), description, name, required,
-			type);
+			type, null);
+	}
+
+	public static Field of(
+		String description, String name, boolean readOnly, boolean required,
+		String type, boolean writeOnly, String ref) {
+
+		return new Field(
+			_toAccessType(readOnly, writeOnly), description, name, required,
+			type, ref);
 	}
 
 	public AccessType getAccessType() {
@@ -29,6 +38,10 @@ public class Field {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getRef() {
+		return _ref;
 	}
 
 	public String getType() {
@@ -60,18 +73,20 @@ public class Field {
 
 	private Field(
 		AccessType accessType, String description, String name,
-		boolean required, String type) {
+		boolean required, String type, String ref) {
 
 		_accessType = accessType;
 		_description = description;
 		_name = name;
 		_required = required;
 		_type = type;
+		_ref = ref;
 	}
 
 	private final AccessType _accessType;
 	private final String _description;
 	private final String _name;
+	private final String _ref;
 	private final boolean _required;
 	private final String _type;
 

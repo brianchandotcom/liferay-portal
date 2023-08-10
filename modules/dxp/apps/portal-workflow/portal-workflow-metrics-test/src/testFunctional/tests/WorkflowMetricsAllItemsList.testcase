@@ -1501,7 +1501,7 @@ definition {
 			slaDefinitionDays = 1,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "00:05",
+			slaDefinitionHours = 0005,
 			slaDefinitionName = "SLA Definition",
 			slaDefinitionStart = "Process Begins");
 
@@ -1564,7 +1564,7 @@ definition {
 			slaDefinitionDays = 0,
 			slaDefinitionDescription = "SLA Description",
 			slaDefinitionEnd = "Process Ends: Approved",
-			slaDefinitionHours = "00:01",
+			slaDefinitionHours = 0001,
 			slaDefinitionName = "SLA Definition",
 			slaDefinitionStart = "Process Begins");
 

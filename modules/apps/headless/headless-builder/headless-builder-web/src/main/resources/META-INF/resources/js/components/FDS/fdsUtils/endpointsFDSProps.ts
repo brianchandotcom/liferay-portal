@@ -8,7 +8,7 @@ import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 import {baseFDSProps} from './baseFDSProps';
 import {itemMethodRenderer, itemPathRenderer} from './fdsRenderers';
 
-export function getAPIApplicationsEndpointsFDSProps(
+export function getAPIEndpointsFDSProps(
 	urlPath: string,
 	portletId: string
 ): IFrontendDataSetProps {
@@ -28,7 +28,7 @@ export function getAPIApplicationsEndpointsFDSProps(
 		itemsActions: [
 			{
 				data: {
-					id: 'editAPIApplicationEndpoint',
+					id: 'editAPIEndpoint',
 				},
 				icon: 'pencil',
 				label: Liferay.Language.get('edit'),
@@ -44,7 +44,7 @@ export function getAPIApplicationsEndpointsFDSProps(
 				: []),
 			{
 				icon: 'trash',
-				id: 'deleteAPIApplicationEndpoint',
+				id: 'deleteAPIEndpoint',
 				label: Liferay.Language.get('delete'),
 			},
 		],
@@ -62,7 +62,7 @@ export function getAPIApplicationsEndpointsFDSProps(
 							localizeLabel: true,
 						},
 						{
-							actionId: 'editAPIApplicationEndpoint',
+							actionId: 'editAPIEndpoint',
 							contentRenderer: 'itemPathRenderer',
 							expand: false,
 							fieldName: 'path',

@@ -16,7 +16,7 @@ export declare function itemMethodRenderer({
 }): JSX.Element;
 export declare function itemPathRenderer({
 	itemData,
-}: FDSItem<APIApplicationEndpointItem>): JSX.Element;
+}: FDSItem<APIEndpointItem>): JSX.Element;
 export declare function itemStatusRenderer({
 	itemData,
 }: FDSItem<APIApplicationItem>): JSX.Element;

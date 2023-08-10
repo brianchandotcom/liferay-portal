@@ -8,7 +8,7 @@ import React, {useContext, useEffect} from 'react';
 
 import {EditAPIApplicationContext} from '../EditAPIApplicationContext';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
-import {getAPIApplicationsEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
+import {getAPIEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
 
 interface APIApplicationsTableProps {
 	apiApplicationBaseURL: string;
@@ -18,7 +18,7 @@ interface APIApplicationsTableProps {
 	readOnly: boolean;
 }
 
-export default function APIApplicationsEndpointsTable({
+export default function APIEndpointsTable({
 	apiApplicationBaseURL,
 	apiURLPaths,
 	currentAPIApplicationId,
@@ -26,7 +26,7 @@ export default function APIApplicationsEndpointsTable({
 }: APIApplicationsTableProps) {
 	const {setHideManagementButtons} = useContext(EditAPIApplicationContext);
 
-	const createAPIApplicationEndpoint = {
+	const createAPIEndpoint = {
 		label: Liferay.Language.get('add-api-endpoint'),
 	};
 
@@ -38,7 +38,7 @@ export default function APIApplicationsEndpointsTable({
 	function onActionDropdownItemClick({
 		action,
 		itemData,
-	}: FDSItem<APIApplicationEndpointItem>) {
+	}: FDSItem<APIEndpointItem>) {
 		if (action.id === 'copyEndpointURL') {
 			navigator.clipboard.writeText(
 				`${window.location.origin}/o/${apiApplicationBaseURL}${itemData.path}/`
@@ -53,12 +53,9 @@ export default function APIApplicationsEndpointsTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsEndpointsFDSProps(
-				endpointAPIURLPath,
-				portletId
-			)}
+			{...getAPIEndpointsFDSProps(endpointAPIURLPath, portletId)}
 			creationMenu={{
-				primaryItems: [createAPIApplicationEndpoint],
+				primaryItems: [createAPIEndpoint],
 			}}
 			onActionDropdownItemClick={onActionDropdownItemClick}
 		/>

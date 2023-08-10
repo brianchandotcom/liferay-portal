@@ -12,7 +12,7 @@ interface APIApplicationsTableProps {
 	portletId: string;
 	readOnly: boolean;
 }
-export default function APIApplicationsEndpointsTable({
+export default function APIEndpointsTable({
 	apiApplicationBaseURL,
 	apiURLPaths,
 	currentAPIApplicationId,

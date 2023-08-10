@@ -19,9 +19,7 @@ export function itemMethodRenderer({
 	return <ClayLabel displayType="info">{itemData.httpMethod.name}</ClayLabel>;
 }
 
-export function itemPathRenderer({
-	itemData,
-}: FDSItem<APIApplicationEndpointItem>) {
+export function itemPathRenderer({itemData}: FDSItem<APIEndpointItem>) {
 	const path = wrapStringInForwardSlashes(itemData.path);
 
 	return (

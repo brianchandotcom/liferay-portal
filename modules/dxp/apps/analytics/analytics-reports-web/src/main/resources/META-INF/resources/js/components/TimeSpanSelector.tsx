@@ -5,18 +5,29 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {ChartDispatchContext} from '../context/ChartStateContext';
+import {ChartDispatchContext, TimeSpan} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
+
+interface TimeSpanOption {
+	key: TimeSpan;
+	label: string;
+}
+
+interface Props {
+	disabledNextTimeSpan: boolean;
+	disabledPreviousPeriodButton: boolean;
+	timeSpanKey: TimeSpan;
+	timeSpanOptions: TimeSpanOption[];
+}
 
 export default function TimeSpanSelector({
 	disabledNextTimeSpan,
 	disabledPreviousPeriodButton,
 	timeSpanKey,
 	timeSpanOptions,
-}) {
+}: Props) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const dispatch = useContext(ChartDispatchContext);
@@ -31,18 +42,18 @@ export default function TimeSpanSelector({
 					const {value} = event.target;
 
 					dispatch({
-						payload: {key: value},
+						payload: {key: (value as unknown) as TimeSpan},
 						type: 'CHANGE_TIME_SPAN_KEY',
 					});
 				}}
-				value={timeSpanKey}
+				value={timeSpanKey || undefined}
 			>
 				{timeSpanOptions.map((option) => {
 					return (
 						<ClaySelect.Option
-							key={option.key}
+							key={option.key?.toString()}
 							label={option.label}
-							value={option.key}
+							value={option.key?.toString()}
 						/>
 					);
 				})}
@@ -82,15 +93,3 @@ export default function TimeSpanSelector({
 		</div>
 	);
 }
-
-TimeSpanSelector.propTypes = {
-	disabledNextTimeSpan: PropTypes.bool.isRequired,
-	disabledPreviousPeriodButton: PropTypes.bool.isRequired,
-	timeSpanKey: PropTypes.string.isRequired,
-	timeSpanOptions: PropTypes.arrayOf(
-		PropTypes.shape({
-			key: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired,
-		})
-	).isRequired,
-};

@@ -4,7 +4,7 @@
  */
 
 import React, {createContext, useContext, useReducer} from 'react';
-type TimeSpan = 'last-7-days' | 'last-30-days' | null;
+export type TimeSpan = 'last-7-days' | 'last-30-days' | null;
 type Histogram = Array<Record<string, string | number | null>>;
 
 interface DataSet {

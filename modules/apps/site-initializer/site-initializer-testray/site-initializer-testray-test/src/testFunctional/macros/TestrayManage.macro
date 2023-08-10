@@ -29,6 +29,12 @@ definition {
 		Button.clickSave();
 	}
 
+	macro clickOptionSidebar {
+		Click(
+			key_button = ${optionSidebar},
+			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
+	}
+
 	macro createCaseTypes {
 		Click(locator1 = "TestrayManage#MODAL_PLUS");
 

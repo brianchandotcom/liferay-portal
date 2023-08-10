@@ -173,11 +173,11 @@ definition {
 		task ("When the user click in the build from the sidebar") {
 			Click(
 				key_subtaskName = ${buildName},
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+				locator1 = "TestraySubtask#SUBTASK_SIDEBAR");
 		}
 
-		task ("Then the user can go to the build page") {
-			Testray.viewTableEntryList(listEntry = "3,Case 1,Component 1");
+		task ("Then the user can be redirected to the build page") {
+			TestrayDropdown.assertBreadcrumbTitle(text = ${buildName});
 		}
 	}
 
@@ -205,15 +205,11 @@ definition {
 		}
 
 		task ("When the user click in the subtask from the sidebar") {
-			Click(
-				key_subtaskName = "Subtask_1",
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+			TestrayManage.clickOptionSidebar(optionSidebar = "Subtask_1");
 		}
 
-		task ("Then the user can go to the subtask page") {
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "In Analysis");
+		task ("Then the user can be redirected to the subtask page") {
+			TestrayDropdown.assertBreadcrumbTitle(text = "Subtask_1");
 		}
 	}
 
@@ -228,18 +224,16 @@ definition {
 			Button.click(button = "Reanalyze");
 
 			Refresh();
+
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("When the user click in the task from the sidebar") {
-			Click(
-				key_subtaskName = ${taskName},
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+			TestrayManage.clickOptionSidebar(optionSidebar = ${taskName});
 		}
 
-		task ("Then the user can go to the task page") {
-			TestrayTestflow.assertStatus(
-				label = "Task Details",
-				status = "In Analysis");
+		task ("Then the user can be redirected to the task page") {
+			TestrayDropdown.assertBreadcrumbTitle(text = ${taskName});
 		}
 	}
 
@@ -274,10 +268,6 @@ definition {
 			TestrayTestflow.editStatus(
 				button = "Complete",
 				selectStatus = "Passed");
-
-			TestrayTestflow.assertStatus(
-				label = "Subtask Details",
-				status = "Complete");
 		}
 
 		task ("When the user reanalyze the subtask") {

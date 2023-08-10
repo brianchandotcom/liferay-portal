@@ -1,21 +1,21 @@
 definition {
 
 	macro assertMergedSubtasks {
-		for (var subtaskMerged : list ${listSubtaskMerged}) {
+		for (var subtaskName : list ${listSubtaskName}) {
 			AssertElementPresent(
-				key_subtaskMerged = ${subtaskMerged},
-				locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
+				key_subtaskName = ${subtaskName},
+				locator1 = "TestraySubtask#SUBTASK_MERGED");
 		}
 	}
 
 	macro assertNotMergedSubtasks {
 		AssertElementNotPresent(
-			key_subtaskMerged = ${subtask},
-			locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
+			key_subtaskName = ${subtaskName},
+			locator1 = "TestraySubtask#SUBTASK_MERGED");
 	}
 
 	macro mergeSubtasks {
-		for (var subtaskName : list ${wcsubtaskName}) {
+		for (var subtaskName : list ${listSubtaskName}) {
 			Check.checkToggleSwitch(
 				key_checkboxOption = ${subtaskName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
@@ -46,7 +46,7 @@ definition {
 		for (var subtaskName : list ${listsubtaskName}) {
 			AssertElementPresent(
 				key_subtaskName = ${subtaskName},
-				locator1 = "TestraySubtask#VIEW_SUBTASK_SIDEBAR");
+				locator1 = "TestraySubtask#SUBTASK_SIDEBAR");
 		}
 	}
 

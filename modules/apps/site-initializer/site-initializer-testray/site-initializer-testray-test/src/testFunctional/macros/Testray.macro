@@ -493,12 +493,6 @@ definition {
 		}
 	}
 
-	macro viewAlert {
-		var key_alertText = ${alertText};
-
-		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
-	}
-
 	macro viewErrorMessage {
 		AssertElementPresent(
 			key_fieldLabel = ${fieldLabel},

@@ -176,10 +176,8 @@ definition {
 				tableEntry = "Subtask_1");
 		}
 
-		task ("Then the user can see the subtask edited") {
-			TestrayTestflow.assertStatus(
-				label = "Subtasks",
-				status = "Complete");
+		task ("Then the user can see the subtask completed") {
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Complete");
 		}
 	}
 
@@ -201,13 +199,13 @@ definition {
 		}
 
 		task ("When the user merge a Subtask") {
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+			TestraySubtask.mergeSubtasks(listSubtaskName = "Subtask_1,Subtask_2");
 
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 		}
 
 		task ("Then the user can see a merged subtask") {
-			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
+			TestraySubtask.assertMergedSubtasks(listSubtaskName = "Subtask_2");
 		}
 	}
 
@@ -238,10 +236,8 @@ definition {
 				tableEntry = "Subtask_1");
 		}
 
-		task ("Then the user can see the subtask edited") {
-			TestrayTestflow.assertStatus(
-				label = "Subtasks",
-				status = "Complete");
+		task ("Then the user can see the subtask Completed") {
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Complete");
 		}
 	}
 
@@ -263,13 +259,13 @@ definition {
 		}
 
 		task ("When the user merge a Subtask") {
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+			TestraySubtask.mergeSubtasks(listSubtaskName = "Subtask_1,Subtask_2");
 
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 		}
 
 		task ("Then the user can see a merged subtask") {
-			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
+			TestraySubtask.assertMergedSubtasks(listSubtaskName = "Subtask_2");
 		}
 	}
 
@@ -293,9 +289,7 @@ definition {
 		}
 
 		task ("Then the user can not edit the subtask") {
-			AssertElementNotPresent(
-				key_text = "Assign and Begin Analysis",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Assign and Begin Analysis");
 		}
 	}
 
@@ -315,13 +309,13 @@ definition {
 		}
 
 		task ("When the user tries merge a Subtask") {
-			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+			TestraySubtask.mergeSubtasks(listSubtaskName = "Subtask_1,Subtask_2");
 
 			Testray.clickTableEntry(tableEntry = "Subtask_1");
 		}
 
 		task ("Then the user can not see a merged subtask") {
-			TestraySubtask.assertNotMergedSubtasks(subtask = "Subtask_2");
+			TestraySubtask.assertNotMergedSubtasks(subtaskName = "Subtask_2");
 		}
 	}
 

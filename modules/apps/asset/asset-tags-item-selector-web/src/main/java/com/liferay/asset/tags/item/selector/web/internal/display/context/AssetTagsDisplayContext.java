@@ -6,11 +6,11 @@
 package com.liferay.asset.tags.item.selector.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetTagServiceUtil;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -32,10 +32,13 @@ public class AssetTagsDisplayContext {
 
 	public AssetTagsDisplayContext(
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion,
+		AssetTagService assetTagService, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_assetTagsItemSelectorCriterion = assetTagsItemSelectorCriterion;
+		_assetTagService = assetTagService;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
@@ -65,11 +68,11 @@ public class AssetTagsDisplayContext {
 		tagsSearchContainer.setOrderByType(orderByType);
 
 		tagsSearchContainer.setResultsAndTotal(
-			() -> AssetTagServiceUtil.getTags(
+			() -> _assetTagService.getTags(
 				_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
 				tagsSearchContainer.getEnd(),
 				tagsSearchContainer.getOrderByComparator()),
-			AssetTagServiceUtil.getTagsCount(_getGroupIds(), _getKeywords()));
+			_assetTagService.getTagsCount(_getGroupIds(), _getKeywords()));
 
 		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			String[] selectedTagNames = StringUtil.split(
@@ -95,7 +98,7 @@ public class AssetTagsDisplayContext {
 					WebKeys.THEME_DISPLAY);
 
 			_groupIds = ArrayUtil.toLongArray(
-				GroupLocalServiceUtil.getGroupIds(
+				_groupLocalService.getGroupIds(
 					themeDisplay.getCompanyId(), true));
 		}
 		else {
@@ -125,9 +128,11 @@ public class AssetTagsDisplayContext {
 		return _orderByType;
 	}
 
+	private final AssetTagService _assetTagService;
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
 	private long[] _groupIds;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByType;

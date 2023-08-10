@@ -5,6 +5,7 @@
 
 package com.liferay.asset.tags.item.selector.web.internal;
 
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.display.context.AssetTagsDisplayContext;
@@ -13,6 +14,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
@@ -76,7 +78,8 @@ public class AssetTagsItemSelectorView
 
 		AssetTagsDisplayContext assetTagsDisplayContext =
 			new AssetTagsDisplayContext(
-				assetTagsItemSelectorCriterion, httpServletRequest, portletURL,
+				assetTagsItemSelectorCriterion, _assetTagService,
+				_groupLocalService, httpServletRequest, portletURL,
 				renderRequest, renderResponse);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
@@ -89,6 +92,12 @@ public class AssetTagsItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new AssetTagsItemSelectorReturnType());
+
+	@Reference
+	private AssetTagService _assetTagService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -56,7 +56,15 @@ export type MetricHistogram = {
 	variantMetrics: Array<VariantMetric>;
 };
 
-export type GetLinkFn = (pageURL: string, id: string) => string;
+export type GetLinkFn = ({
+	action,
+	id,
+	pageURL
+}: {
+	action?: string;
+	id: string;
+	pageURL: string;
+}) => string;
 
 export type GetFormattedVariantHistogramFn = (
 	histogram: Array<VariantHistogram>

@@ -1319,7 +1319,7 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
 
-			Click(locator1 = "xpath=(//label[contains(.,'Select File')])[2]");
+			Click(locator1 = "xpath=(//button[contains(.,'Select File')])[2]");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

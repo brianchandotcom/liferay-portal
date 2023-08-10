@@ -75,20 +75,14 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 			<liferay-ui:search-container-column-text
 				cssClass="table-column-text-end"
 			>
-				<aui:button
+				<clay:button
 					cssClass="selector-button"
-					data='<%=
-						HashMapBuilder.<String, Object>put(
-							"classname", trashContainerModelDisplayContext.getClassName()
-						).put(
-							"classpk", trashContainerModelDisplayContext.getClassPK()
-						).put(
-							"containermodelid", curContainerModelId
-						).put(
-							"redirect", trashContainerModelDisplayContext.getRedirect()
-						).build()
-					%>'
-					value="select"
+					data-classname='<%= trashContainerModelDisplayContext.getClassName() %>'
+					data-classpk='<%= trashContainerModelDisplayContext.getClassPK() %>'
+					data-containermodelid='<%= curContainerModelId %>'
+					data-redirect='<%= trashContainerModelDisplayContext.getRedirect() %>'
+					displayType="secondary"
+					label= "select"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -98,20 +92,14 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 		/>
 
 		<aui:button-row>
-			<aui:button
+			<clay:button
 				cssClass="selector-button"
-				data='<%=
-					HashMapBuilder.<String, Object>put(
-						"classname", trashContainerModelDisplayContext.getClassName()
-					).put(
-						"classpk", trashContainerModelDisplayContext.getClassPK()
-					).put(
-						"containermodelid", trashContainerModelDisplayContext.getContainerModelId()
-					).put(
-						"redirect", trashContainerModelDisplayContext.getRedirect()
-					).build()
-				%>'
-				value='<%= LanguageUtil.format(request, "select-x", StringUtil.upperCaseFirstLetter(trashContainerModelDisplayContext.getContainerModelName())) %>'
+				data-classname='<%= trashContainerModelDisplayContext.getClassName() %>'
+				data-classpk='<%= trashContainerModelDisplayContext.getClassPK() %>'
+				data-containermodelid='<%= trashContainerModelDisplayContext.getContainerModelId() %>'
+				data-redirect='<%= trashContainerModelDisplayContext.getRedirect() %>'
+				displayType="secondary"
+				label='<%= LanguageUtil.format(request, "select-x", StringUtil.upperCaseFirstLetter(trashContainerModelDisplayContext.getContainerModelName())) %>'
 			/>
 		</aui:button-row>
 	</liferay-ui:search-container>

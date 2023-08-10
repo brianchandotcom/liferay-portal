@@ -7,7 +7,7 @@ liferay-sample-etc-spring-boot-notification-type-1:
     type: notificationType
 liferay-sample-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
-    .serviceScheme: http
+    .serviceScheme: httpA
     name: Liferay Sample Etc Spring Boot OAuth Application User Agent
     scopes:
         - Liferay.Headless.Admin.Workflow.everything

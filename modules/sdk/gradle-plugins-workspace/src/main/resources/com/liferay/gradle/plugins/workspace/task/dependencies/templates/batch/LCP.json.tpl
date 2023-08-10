@@ -1,9 +1,7 @@
 {
 	"cpu": 0.2,
 	"env": {
-		"LIFERAY_BATCH_OAUTH_APP_ERC": "__batch.oAuthApplicationHeadlessServer__",
-		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
-		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
+		"LIFERAY_BATCH_OAUTH_APP_ERC": "__batch.oAuthApplicationHeadlessServer__"
 	},
 	"environments": {
 		"infra": {

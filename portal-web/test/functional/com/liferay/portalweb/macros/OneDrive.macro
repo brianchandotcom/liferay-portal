@@ -211,7 +211,7 @@ definition {
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Edit in Office 365");
+		MenuItem.clickNoError(menuItem = "Edit in Office 365");
 	}
 
 	macro goToOneDrive {

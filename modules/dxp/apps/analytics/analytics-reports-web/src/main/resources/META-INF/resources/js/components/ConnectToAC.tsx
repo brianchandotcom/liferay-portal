@@ -5,8 +5,15 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
+
+interface Props {
+	analyticsURL: string;
+	hideAnalyticsReportsPanelURL: string;
+	isAnalyticsConnected: boolean;
+	onHideAnalyticsReportsPanelClick: MouseEventHandler;
+	pathToAssets: string;
+}
 
 export default function ConnectToAC({
 	analyticsURL,
@@ -17,11 +24,16 @@ export default function ConnectToAC({
 	onHideAnalyticsReportsPanelClick = (event) => {
 		event.preventDefault();
 
+		// @ts-ignore
+
 		if (document.hrefFm && typeof submitForm !== 'undefined') {
+
+			// @ts-ignore
+
 			submitForm(document.hrefFm, hideAnalyticsReportsPanelURL);
 		}
 	},
-}) {
+}: Props) {
 	return (
 		<div className="p-3 pt-4 text-center">
 			<img
@@ -71,7 +83,7 @@ export default function ConnectToAC({
 					<ClayLink
 						className="d-block font-weight-bold mb-2 mt-5"
 						onClick={onHideAnalyticsReportsPanelClick}
-						tabIndex="0"
+						tabIndex={0}
 					>
 						{Liferay.Language.get('do-not-show-me-this-again')}
 					</ClayLink>
@@ -84,10 +96,3 @@ export default function ConnectToAC({
 		</div>
 	);
 }
-
-ConnectToAC.propTypes = {
-	analyticsURL: PropTypes.string,
-	hideAnalyticsReportsPanelURL: PropTypes.string.isRequired,
-	isAnalyticsConnected: PropTypes.bool.isRequired,
-	pathToAssets: PropTypes.string.isRequired,
-};

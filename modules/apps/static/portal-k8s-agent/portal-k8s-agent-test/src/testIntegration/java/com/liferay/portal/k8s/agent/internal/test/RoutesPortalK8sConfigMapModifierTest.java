@@ -119,6 +119,14 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			null, webId, webId, webId, 0, true, null, null, null, null, null,
 			null);
 
+		_virtualHost = _virtualHostLocalService.createVirtualHost(
+			_counterLocalService.increment());
+
+		_virtualHost.setCompanyId(_company.getCompanyId());
+		_virtualHost.setHostname("foobar.com");
+
+		_virtualHostLocalService.addVirtualHost(_virtualHost);
+
 		Path dxpPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
 
@@ -137,14 +145,6 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		Assert.assertEquals(
 			webId + ":8080",
 			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
-
-		_virtualHost = _virtualHostLocalService.createVirtualHost(
-			_counterLocalService.increment());
-
-		_virtualHost.setCompanyId(_company.getCompanyId());
-		_virtualHost.setHostname("foobar.com");
-
-		_virtualHostLocalService.addVirtualHost(_virtualHost);
 
 		List<String> lxcDXPDomains = StringUtil.split(
 			new String(
@@ -212,6 +212,34 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			fizzPath.toString() + " does not exist", Files.exists(fooPath));
 
 		Assert.assertEquals("buzz", new String(Files.readAllBytes(fizzPath)));
+	}
+
+	@Test
+	public void testVirtualInstanceDxpRoutes() throws Exception {
+		String webId = "foo.lxc.com";
+
+		_companyLocalService.addCompany(
+			null, webId, webId, webId, 0, true, null, null, null, null, null,
+			null);
+
+		Path dxpPath = Paths.get(
+			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
+
+		Assert.assertTrue(Files.exists(dxpPath));
+
+		File dxpDir = dxpPath.toFile();
+
+		String[] fileNames = dxpDir.list();
+
+		Assert.assertEquals(Arrays.toString(fileNames), 4, fileNames.length);
+
+		Path lxcDXPMainDomainPath = dxpPath.resolve(
+			"com.liferay.lxc.dxp.main.domain");
+
+		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
+		Assert.assertEquals(
+			webId + ":8080",
+			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
 	}
 
 	private static Bundle _bundle;

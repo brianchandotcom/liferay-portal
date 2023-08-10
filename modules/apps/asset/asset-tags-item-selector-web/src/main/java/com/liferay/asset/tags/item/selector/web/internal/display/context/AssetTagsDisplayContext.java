@@ -86,7 +86,7 @@ public class AssetTagsDisplayContext {
 	}
 
 	private long[] _getGroupIds() {
-		if (_assetTagsItemSelectorCriterion.isAllCompanyGroupIds()) {
+		if (_assetTagsItemSelectorCriterion.isAllGroupIds()) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

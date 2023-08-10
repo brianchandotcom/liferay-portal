@@ -131,23 +131,27 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/default",
 			projectName);
 
-		Assert.assertTrue(Files.exists(projectPath));
+		Assert.assertTrue(
+			projectPath.toString() + " should exist",
+			Files.exists(projectPath));
 
-		File projectDir = projectPath.toFile();
+		File projectMetadataDir = projectPath.toFile();
 
-		String[] fileNames = projectDir.list();
+		String[] fileNames = projectMetadataDir.list();
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
 		Path fooPath = projectPath.resolve("foo");
 
-		Assert.assertTrue(Files.exists(fooPath));
+		Assert.assertTrue(
+			fooPath.toString() + " does not exist", Files.exists(fooPath));
 
 		Assert.assertEquals("bar", new String(Files.readAllBytes(fooPath)));
 
 		Path fizzPath = projectPath.resolve("fizz");
 
-		Assert.assertTrue(Files.exists(fooPath));
+		Assert.assertTrue(
+			fizzPath.toString() + " does not exist", Files.exists(fooPath));
 
 		Assert.assertEquals("buzz", new String(Files.readAllBytes(fizzPath)));
 	}

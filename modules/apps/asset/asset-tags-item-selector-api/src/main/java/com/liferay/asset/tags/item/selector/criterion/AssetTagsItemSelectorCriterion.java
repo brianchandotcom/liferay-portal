@@ -29,7 +29,6 @@ public class AssetTagsItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public void setGroupIds(long[] groupIds) {
-		_allCompanyGroupIds = false;
 		_groupIds = groupIds;
 	}
 

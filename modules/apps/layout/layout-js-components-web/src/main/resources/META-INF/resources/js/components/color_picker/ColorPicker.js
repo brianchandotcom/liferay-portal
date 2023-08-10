@@ -7,11 +7,11 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
-import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 import {
 	useDeleteStyleError,
@@ -24,11 +24,6 @@ import {parseColorValue} from './parseColorValue';
 import './ColorPicker.scss';
 
 export const DEFAULT_TOKEN_LABEL = Liferay.Language.get('inherited');
-
-const debouncedOnValueSelect = debounce(
-	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
-	300
-);
 
 function usePropsFirst(value, {forceProp = false}) {
 	const [nextValue, setNextValue] = useState(value);
@@ -78,6 +73,22 @@ export default function ColorPicker({
 		value: styleErrors[activeItemId]?.[field.name]?.value,
 	});
 	const inputRef = useRef(null);
+	const isMounted = useIsMounted();
+
+	const debouncedOnValueSelect = useMemo(() => {
+		let timeoutId;
+
+		return (fieldName, value) => {
+			clearTimeout(timeoutId);
+
+			timeoutId = setTimeout(() => {
+				if (isMounted()) {
+					onValueSelect(fieldName, value);
+				}
+			}, 300);
+		};
+	}, [isMounted, onValueSelect]);
+
 	const [tokenLabel, setTokenLabel] = usePropsFirst(
 		value
 			? tokenValues[value]?.label
@@ -247,7 +258,6 @@ export default function ColorPicker({
 								onColorsChange={setCustomColors}
 								onValueChange={(color) => {
 									debouncedOnValueSelect(
-										onValueSelect,
 										field.name,
 										`#${color}`
 									);

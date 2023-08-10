@@ -573,6 +573,28 @@ public class Sku implements Cloneable, Serializable {
 
 	protected SkuOption[] skuOptions;
 
+	public SkuUnitOfMeasure[] getSkuUnitOfMeasures() {
+		return skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(SkuUnitOfMeasure[] skuUnitOfMeasures) {
+		this.skuUnitOfMeasures = skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(
+		UnsafeSupplier<SkuUnitOfMeasure[], Exception>
+			skuUnitOfMeasuresUnsafeSupplier) {
+
+		try {
+			skuUnitOfMeasures = skuUnitOfMeasuresUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
+
 	public Double getWeight() {
 		return weight;
 	}

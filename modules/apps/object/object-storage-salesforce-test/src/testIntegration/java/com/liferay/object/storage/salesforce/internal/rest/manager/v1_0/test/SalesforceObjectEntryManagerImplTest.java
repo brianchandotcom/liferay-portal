@@ -241,10 +241,77 @@ public class SalesforceObjectEntryManagerImplTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
+	@Test
+	public void testPartialUpdateObjectEntry() throws Exception {
+		DTOConverterContext dtoConverterContext = _getDTOConverterContext();
+
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"title", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_partialUpdateObjectEntry(
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			_objectDefinition,
+			HashMapBuilder.<String, Object>put(
+				"title", "Able"
+			).build());
+
+		Map<String, Object> properties = _getObjectEntryProperties(
+			dtoConverterContext, objectEntry.getExternalReferenceCode());
+
+		Assert.assertEquals("Able", properties.get("title"));
+
+		_partialUpdateObjectEntry(
+			dtoConverterContext, objectEntry.getExternalReferenceCode(),
+			_objectDefinition, Collections.emptyMap());
+
+		properties = _getObjectEntryProperties(
+			dtoConverterContext, objectEntry.getExternalReferenceCode());
+
+		Assert.assertEquals("Able", properties.get("title"));
+	}
+
 	private DTOConverterContext _getDTOConverterContext() throws Exception {
 		return new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, _user);
+	}
+
+	private Map<String, Object> _getObjectEntryProperties(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			externalReferenceCode, _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		return objectEntry.getProperties();
+	}
+
+	private void _partialUpdateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Map<String, Object> values)
+		throws Exception {
+
+		_objectEntryManager.partialUpdateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			externalReferenceCode, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = values;
+				}
+			},
+			null);
 	}
 
 	@Inject

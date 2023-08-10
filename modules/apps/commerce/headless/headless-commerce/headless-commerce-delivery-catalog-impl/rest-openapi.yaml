@@ -775,6 +775,10 @@ components:
                     items:
                         $ref: "#/components/schemas/SkuOption"
                     type: array
+                skuUnitOfMeasures:
+                    items:
+                        $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    type: array
                 weight:
                     example: 1.1
                     format: double
@@ -825,6 +829,36 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
+            type: object
+        SkuUnitOfMeasure:
+            properties:
+                incrementalOrderQuantity:
+                    example: 1.5
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                key:
+                    example: pl
+                    type: string
+                name:
+                    example: Pallet
+                    type: string
+                precision:
+                    example: 3
+                    type: integer
+                primary:
+                    example: true
+                    type: boolean
+                priority:
+                    example: 1.1
+                    format: double
+                    minimum: 0
+                    type: number
+                rate:
+                    example: 202.1
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
             type: object
         WishList:
             properties:

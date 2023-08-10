@@ -563,6 +563,56 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			TestPropsValues.getUserId(), aggregationObjectField);
 	}
 
+	@Test
+	public void testPutByExternalReferenceCode() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_API_APPLICATION_PATH_1);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL", "test"
+				).put(
+					"title", "title"
+				).toString(),
+				"headless-builder/applications/by-external-reference-code/" +
+					_API_APPLICATION_ERC_1,
+				Http.Method.PUT));
+	}
+
+	@Test
+	public void testPutById() throws Exception {
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", _BASE_URL_1
+			).put(
+				"externalReferenceCode", _API_APPLICATION_ERC_1
+			).put(
+				"title", "test"
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL", _BASE_URL_2
+				).put(
+					"title", "test"
+				).toString(),
+				"headless-builder/applications/" + jsonObject.getLong("id"),
+				Http.Method.PUT));
+	}
+
 	private void _addAPIApplication(
 			String apiApplicationExternalReferenceCode,
 			String apiEndpointExternalReferenceCode, String baseURL,

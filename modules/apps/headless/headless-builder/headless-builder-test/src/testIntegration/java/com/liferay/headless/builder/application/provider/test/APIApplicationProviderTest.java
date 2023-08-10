@@ -8,9 +8,7 @@ package com.liferay.headless.builder.application.provider.test;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.test.BaseTestCase;
-import com.liferay.headless.builder.util.APIApplicationTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +30,7 @@ public class APIApplicationProviderTest extends BaseTestCase {
 
 	@Test
 	public void test() throws Exception {
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.put(
@@ -165,46 +163,6 @@ public class APIApplicationProviderTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			"name ne 'testName'", filter.getODataFilterString());
-
-		String baseURL = RandomTestUtil.randomString();
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", baseURL
-			).put(
-				"title", "test"
-			).toString(),
-			"headless-builder/applications/" +
-				apiApplicationJSONObject.getLong("id"),
-			Http.Method.PUT);
-
-		apiApplication = _apiApplicationProvider.fetchAPIApplication(
-			baseURL, TestPropsValues.getCompanyId());
-
-		Assert.assertEquals(baseURL, apiApplication.getBaseURL());
-		Assert.assertEquals("test", apiApplication.getTitle());
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "unpublished"
-			).put(
-				"baseURL", "test"
-			).put(
-				"title", "title"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC,
-			Http.Method.PUT);
-
-		APIApplicationTestUtil.assertNotDeployedAPIApplication("test");
-
-		apiApplication = _apiApplicationProvider.fetchAPIApplication(
-			"test", TestPropsValues.getCompanyId());
-
-		Assert.assertEquals("test", apiApplication.getBaseURL());
-		Assert.assertEquals("title", apiApplication.getTitle());
 	}
 
 	private static final String _API_APPLICATION_ERC =

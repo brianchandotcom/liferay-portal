@@ -1,18 +1,13 @@
 import React from 'react';
 import SummarySection from 'experiments/components/summary-section';
 import {formatDateToTimeZone} from 'shared/util/date';
-import {
-	getMetricName,
-	mergedVariants,
-	modalDelete
-} from 'experiments/util/experiments';
+import {getMetricName, mergedVariants} from 'experiments/util/experiments';
 import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
 import {toThousandsABTesting} from 'experiments/util/experiments';
 
 export default ({
 	dxpVariants,
-	experimentId,
 	finishedDate,
 	goal,
 	metrics: {completion, elapsedDays, variantMetrics},
@@ -48,7 +43,6 @@ export default ({
 						)
 				  },
 		header: {
-			cardModals: [modalDelete(experimentId)],
 			Description: () => (
 				<div className='date'>
 					<div>

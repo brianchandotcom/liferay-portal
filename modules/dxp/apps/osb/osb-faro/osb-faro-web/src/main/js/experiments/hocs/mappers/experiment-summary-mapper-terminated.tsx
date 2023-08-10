@@ -1,7 +1,7 @@
 import React from 'react';
 import SummarySection from 'experiments/components/summary-section';
 import {formatDateToTimeZone} from 'shared/util/date';
-import {getMetricName, modalDelete} from 'experiments/util/experiments';
+import {getMetricName} from 'experiments/util/experiments';
 import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
 import {toThousandsABTesting} from 'experiments/util/experiments';
@@ -97,7 +97,6 @@ const getAlertValues = ({dxpVariants, metrics, winnerDXPVariantId}) => {
 export default ({
 	bestVariant,
 	dxpVariants,
-	experimentId,
 	finishedDate,
 	goal,
 	metrics: {completion, elapsedDays, estimatedDaysLeft, variantMetrics},
@@ -117,7 +116,6 @@ export default ({
 		winnerDXPVariantId
 	}),
 	header: {
-		cardModals: [modalDelete(experimentId)],
 		Description: () => (
 			<div className='date'>
 				<div>

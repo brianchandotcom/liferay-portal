@@ -1,11 +1,6 @@
 import React from 'react';
 import RunExperimentModal from 'experiments/components/modals/RunExperimentModal';
-import {
-	getExperimentLink,
-	getMetricName,
-	getStep,
-	modalDelete
-} from 'experiments/util/experiments';
+import {getMetricName, getStep} from 'experiments/util/experiments';
 import {sub} from 'shared/util/lang';
 
 export default ({
@@ -13,16 +8,13 @@ export default ({
 	dxpSegmentName,
 	dxpVariants,
 	experimentId,
-	goal,
-	id,
-	pageURL
+	goal
 }) => {
 	const currentStep = dxpVariants ? 3 : goal ? 2 : 1;
 	const showTooltip = goal && goal.metric === 'CLICK_RATE' && !goal.target;
 
 	return {
 		header: {
-			cardModals: [modalDelete(experimentId)],
 			Description: () =>
 				Liferay.Language.get('finish-the-setup-to-run-the-test'),
 			title: Liferay.Language.get('test-is-in-draft-mode')
@@ -59,10 +51,6 @@ export default ({
 							)}
 						</span>
 					),
-					label: dxpExperienceName
-						? Liferay.Language.get('change-target')
-						: Liferay.Language.get('set-target'),
-					link: getExperimentLink({id, pageURL}),
 					title: Liferay.Language.get('test-target')
 				}),
 				getStep({
@@ -77,10 +65,6 @@ export default ({
 							)}
 						</span>
 					),
-					label: goal
-						? Liferay.Language.get('change-metric')
-						: Liferay.Language.get('set-metric'),
-					link: getExperimentLink({id, pageURL}),
 					title: Liferay.Language.get('test-metric')
 				}),
 				getStep({
@@ -104,10 +88,6 @@ export default ({
 							</span>
 						);
 					},
-					label: dxpVariants
-						? Liferay.Language.get('edit-variants')
-						: Liferay.Language.get('create-variants'),
-					link: getExperimentLink({id, pageURL}),
 					title: Liferay.Language.get('variants')
 				}),
 				getStep({
@@ -119,7 +99,6 @@ export default ({
 						</span>
 					),
 					disabled: showTooltip,
-					label: Liferay.Language.get('review'),
 					modal: {
 						Component: RunExperimentModal,
 						props: {

@@ -3,9 +3,8 @@
 exports[`getStep should get formatted step 1`] = `
 Object {
   "Description": [Function],
-  "buttonProps": Object {
-    "label": "Step label",
-  },
+  "buttonProps": Object {},
+  "label": "Step label",
   "title": "Step title",
 }
 `;

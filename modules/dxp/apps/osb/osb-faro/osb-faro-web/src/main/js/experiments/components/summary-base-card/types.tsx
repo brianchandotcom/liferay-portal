@@ -15,7 +15,6 @@ export type Alert = {
 export type ButtonProps = {
 	['data-tooltip']?: boolean;
 	disabled?: boolean;
-	label: string;
 	symbol?: string;
 	title?: string;
 };

@@ -79,15 +79,6 @@ Object {
   },
   "header": Object {
     "Description": [Function],
-    "cardModals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-        },
-        "title": "Delete Test",
-      },
-    ],
     "title": "Test Complete",
   },
   "sections": Array [
@@ -122,15 +113,6 @@ Object {
   },
   "header": Object {
     "Description": [Function],
-    "cardModals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-        },
-        "title": "Delete Test",
-      },
-    ],
     "title": "Test Complete",
   },
   "sections": Array [
@@ -165,15 +147,6 @@ Object {
   },
   "header": Object {
     "Description": [Function],
-    "cardModals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-        },
-        "title": "Delete Test",
-      },
-    ],
     "title": "Test Complete",
   },
   "sections": Array [
@@ -203,15 +176,6 @@ exports[`Summary Mapper for status in DRAFT should display empty state 1`] = `
 Object {
   "header": Object {
     "Description": [Function],
-    "cardModals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-        },
-        "title": "Delete Test",
-      },
-    ],
     "title": "Test Is in Draft Mode",
   },
   "setup": Object {
@@ -220,28 +184,22 @@ Object {
       Object {
         "Description": [Function],
         "buttonProps": Object {
-          "label": "Change Target",
           "symbol": "dxp-logo",
         },
-        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
         "title": "Test Target",
       },
       Object {
         "Description": [Function],
         "buttonProps": Object {
-          "label": "Change Metric",
           "symbol": "dxp-logo",
         },
-        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
         "title": "Test Metric",
       },
       Object {
         "Description": [Function],
         "buttonProps": Object {
-          "label": "Edit Variants",
           "symbol": "dxp-logo",
         },
-        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
         "title": "Variants",
       },
       Object {
@@ -249,7 +207,6 @@ Object {
         "buttonProps": Object {
           "data-tooltip": true,
           "disabled": true,
-          "label": "Review",
           "title": "Select the target element on Liferay DXP to run the test.",
         },
         "modal": Object {
@@ -337,15 +294,6 @@ exports[`Summary Mapper for status in DRAFT should return formatted data 1`] = `
 Object {
   "header": Object {
     "Description": [Function],
-    "cardModals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-        },
-        "title": "Delete Test",
-      },
-    ],
     "title": "Test Is in Draft Mode",
   },
   "setup": Object {
@@ -354,28 +302,22 @@ Object {
       Object {
         "Description": [Function],
         "buttonProps": Object {
-          "label": "Change Target",
           "symbol": "dxp-logo",
         },
-        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
         "title": "Test Target",
       },
       Object {
         "Description": [Function],
         "buttonProps": Object {
-          "label": "Change Metric",
           "symbol": "dxp-logo",
         },
-        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
         "title": "Test Metric",
       },
       Object {
         "Description": [Function],
         "buttonProps": Object {
-          "label": "Edit Variants",
           "symbol": "dxp-logo",
         },
-        "link": "http://localhost/web/guest/content-page?segmentsExperimentKey=370220349949814900",
         "title": "Variants",
       },
       Object {
@@ -383,7 +325,6 @@ Object {
         "buttonProps": Object {
           "data-tooltip": true,
           "disabled": true,
-          "label": "Review",
           "title": "Select the target element on Liferay DXP to run the test.",
         },
         "modal": Object {
@@ -565,15 +506,6 @@ Object {
   },
   "header": Object {
     "Description": [Function],
-    "cardModals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-        },
-        "title": "Delete Test",
-      },
-    ],
     "title": "Test Was Terminated",
   },
   "sections": Array [

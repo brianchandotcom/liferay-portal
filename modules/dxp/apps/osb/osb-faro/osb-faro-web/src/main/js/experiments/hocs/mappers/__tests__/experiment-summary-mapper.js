@@ -433,11 +433,6 @@ describe('Summary Mapper for status in COMPLETED', () => {
 		);
 	});
 
-	it('should return formatted cardModals', () => {
-		expect(mapper.header.cardModals.length).toBe(1);
-		expect(mapper.header.cardModals[0].title).toEqual('Delete Test');
-	});
-
 	it('should return formatted header', () => {
 		const {getByText} = render(mapper.header.Description());
 
@@ -502,11 +497,6 @@ describe('Summary Mapper for status in COMPLETED and a variant published', () =>
 		);
 		expect(mapper.alert.symbol).toEqual('check-circle');
 		expect(mapper.alert.title).toEqual('Variant 01 has been published.');
-	});
-
-	it('should return formatted cardModals', () => {
-		expect(mapper.header.cardModals.length).toBe(1);
-		expect(mapper.header.cardModals[0].title).toEqual('Delete Test');
 	});
 
 	it('should return formatted header', () => {
@@ -702,11 +692,6 @@ describe('Summary Mapper for status in TERMINATED', () => {
 
 		expect(getByText('Test Metric'));
 		expect(getByText('Bounce Rate'));
-	});
-
-	it('should return formatted cardModals', () => {
-		expect(mapper.header.cardModals.length).toBe(1);
-		expect(mapper.header.cardModals[0].title).toEqual('Delete Test');
 	});
 
 	it('should return formatted header', () => {

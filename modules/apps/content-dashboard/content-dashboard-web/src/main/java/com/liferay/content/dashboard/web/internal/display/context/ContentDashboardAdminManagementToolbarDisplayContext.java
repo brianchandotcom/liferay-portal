@@ -556,9 +556,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
 			new AssetTagsItemSelectorCriterion();
 
+		assetTagsItemSelectorCriterion.setAllGroupIds(true);
 		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetTagsItemSelectorReturnType());
-		assetTagsItemSelectorCriterion.setAllGroupIds(true);
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
 		return _itemSelector.getItemSelectorURL(

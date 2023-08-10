@@ -70,16 +70,7 @@ public class DBTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME_1, " (id LONG not null primary ",
-				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
-				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
-				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
-				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
-				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
-				"default 'testValue' not null);"));
+		_createTestTable(_TABLE_NAME_1);
 	}
 
 	@After
@@ -439,16 +430,7 @@ public class DBTest {
 
 	@Test
 	public void testCopyTableRows() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME_2, " (id LONG not null primary ",
-				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
-				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
-				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
-				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
-				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
-				"default 'testValue' not null);"));
+		_createTestTable(_TABLE_NAME_2);
 
 		_db.runSQL(
 			StringBundler.concat(
@@ -595,16 +577,7 @@ public class DBTest {
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testValueA')"));
 
-		_db.runSQL(
-			StringBundler.concat(
-				"create table ", _TABLE_NAME_2, " (id LONG not null primary ",
-				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
-				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
-				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
-				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
-				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
-				"default 'testValue' not null);"));
+		_createTestTable(_TABLE_NAME_2);
 
 		_db.runSQL(
 			StringBundler.concat(
@@ -718,6 +691,19 @@ public class DBTest {
 		ReflectionTestUtil.invoke(
 			_db, "addIndexes", new Class<?>[] {Connection.class, List.class},
 			_connection, indexMetadatas);
+	}
+
+	private void _createTestTable(String tableName) throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", tableName, " (id LONG not null primary key, ",
+				"notNilColumn VARCHAR(75) not null, nilColumn VARCHAR(75) ",
+				"null , typeBlob BLOB, typeBoolean BOOLEAN, typeDate DATE ",
+				"null, typeDouble DOUBLE, typeInteger INTEGER, typeLong LONG ",
+				"null, typeLongDefault LONG default 10 not null, typeSBlob ",
+				"SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 	}
 
 	private List<IndexMetadata> _getIndexes(

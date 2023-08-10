@@ -368,6 +368,8 @@ definition {
 		}
 
 		task ("When the page editor cancels the experience editing") {
+			PageEditor.openExperienceMenu();
+
 			Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
 
 			Type(

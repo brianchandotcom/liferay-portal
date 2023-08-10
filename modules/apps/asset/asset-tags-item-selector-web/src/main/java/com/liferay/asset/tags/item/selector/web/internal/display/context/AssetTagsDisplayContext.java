@@ -85,17 +85,24 @@ public class AssetTagsDisplayContext {
 	}
 
 	private long[] _getGroupIds() {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
 		if (_assetTagsItemSelectorCriterion.isAllGroupIds()) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			return ArrayUtil.toLongArray(
+			_groupIds = ArrayUtil.toLongArray(
 				GroupLocalServiceUtil.getGroupIds(
 					themeDisplay.getCompanyId(), true));
 		}
+		else {
+			_groupIds = _assetTagsItemSelectorCriterion.getGroupIds();
+		}
 
-		return _assetTagsItemSelectorCriterion.getGroupIds();
+		return _groupIds;
 	}
 
 	private String _getKeywords() {
@@ -120,6 +127,7 @@ public class AssetTagsDisplayContext {
 
 	private final AssetTagsItemSelectorCriterion
 		_assetTagsItemSelectorCriterion;
+	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByType;

@@ -20,6 +20,10 @@ import org.json.JSONException;
  */
 public class ListUtil {
 
+	public static void add(List<Object> list, Object item) {
+		list.add(item);
+	}
+
 	public static void add(List<String> list, String item) {
 		list.add(item);
 	}
@@ -93,6 +97,10 @@ public class ListUtil {
 		}
 
 		return list;
+	}
+
+	public static List<Object> newObjectList() {
+		return new ArrayList<>();
 	}
 
 	public static void remove(List<String> list, String item) {

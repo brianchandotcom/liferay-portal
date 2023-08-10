@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_SELECTED_VIEW_MODE</td>
-	<td>//button[contains(@id, 'experience-picker')]//*[contains(text(),'${experienceName}')]</td>
+	<td>//button[contains(@class, 'experience-selector')]//*[contains(text(),'${experienceName}')]</td>
 	<td></td>
 </tr>
 <tr>

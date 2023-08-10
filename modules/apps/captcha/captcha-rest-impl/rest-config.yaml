@@ -1,0 +1,9 @@
+apiDir: "../captcha-rest-api/src/main/java"
+apiPackagePath: "com.liferay.captcha.rest"
+application:
+    baseURI: "/captcha"
+    className: "CaptchaRESTApplication"
+    name: "Liferay.Captcha.REST"
+author: "Loc Pham"
+clientDir: "../captcha-rest-client/src/main/java"
+testDir: "../captcha-rest-test/src/testIntegration/java"

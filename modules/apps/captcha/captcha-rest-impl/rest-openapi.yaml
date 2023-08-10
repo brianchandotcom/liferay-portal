@@ -1,0 +1,119 @@
+components:
+    schemas:
+        Captcha:
+            properties:
+                captchaToken:
+                    type: string
+                image:
+                    type: string
+        CaptchaForm:
+            properties:
+                answer:
+                    type: string
+                captchaToken:
+                    type: string
+            required:
+                - captchaToken
+        GenericError:
+            description:
+                https://www.schema.org/GenericError
+            properties:
+                message:
+                    type: string
+            type: object
+info:
+    description:
+        "CaptchaRest REST API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.captcha.rest.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "Liferay Captcha REST"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /simple:
+        get:
+            operationId: getSimpleCaptcha
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Captcha"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Captcha"
+                    description:
+                        Send a captcha token and image.
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Unexpected error
+            tags: ["Captcha"]
+        post:
+            operationId: postSimpleCaptcha
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CaptchaForm"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CaptchaForm"
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CaptchaForm"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CaptchaForm"
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Bad request response
+                403:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Forbidden access to Simple Captcha Headless API
+                406:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Captcha"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Captcha"
+                    description:
+                        Validate captcha is failed and send a new captcha
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description:
+                        Server does not support Headless API Captcha
+            tags: ["Captcha"]

@@ -68,6 +68,7 @@ describe('updateItemConfig', () => {
 				items: {},
 				version: 1,
 			},
+			overridePreviousConfig: false,
 			pageContents: [
 				{
 					classPK: 'pk',

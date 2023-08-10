@@ -25,7 +25,11 @@ definition {
 			EVPUtils.addLiferayManagerUserRole();
 		}
 
-		task ("Create an organization") {
+		task ("Employee user creates an organization") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
 			EVPUtils.gotoEVP();
 
 			EVPOrganization.goToCreateOrganization();
@@ -100,12 +104,6 @@ definition {
 	@description = "LPS-164733 - Verify that Only the Employee user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
 	@priority = 5
 	test EmployeeCanNotSeeReviewInAwaitingEVPStatus {
-		task ("Given that login with Employee user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "employee@liferay.com",
-				userLoginFullName = "Employee User");
-		}
-
 		task ("When the Employee goes to organization page") {
 			EVPUtils.gotoEVP();
 

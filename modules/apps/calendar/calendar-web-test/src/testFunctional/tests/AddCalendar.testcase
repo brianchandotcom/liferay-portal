@@ -468,7 +468,9 @@ definition {
 			key_roleTitle = "site-member",
 			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX");
 
-		PortletEntry.save();
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 
 		Navigator.openURL();
 

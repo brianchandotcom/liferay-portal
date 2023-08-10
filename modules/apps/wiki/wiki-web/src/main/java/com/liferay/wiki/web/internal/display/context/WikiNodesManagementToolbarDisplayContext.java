@@ -14,6 +14,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -157,8 +158,9 @@ public class WikiNodesManagementToolbarDisplayContext {
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -175,6 +177,36 @@ public class WikiNodesManagementToolbarDisplayContext {
 			"nodes-order-by-col", "lastPostDate");
 
 		return _orderByCol;
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				final Map<String, String> orderColumns = HashMapBuilder.put(
+					"lastPostDate", "last-post-date"
+				).put(
+					"name", "name"
+				).build();
+
+				for (Map.Entry<String, String> orderByColEntry :
+						orderColumns.entrySet()) {
+
+					String orderByCol = orderByColEntry.getKey();
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								orderByCol.equals(getOrderByCol()));
+							dropdownItem.setHref(
+								getPortletURL(), "orderByCol", orderByCol);
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									orderByColEntry.getValue()));
+						});
+				}
+			}
+		};
 	}
 
 	public String getOrderByType() {
@@ -280,36 +312,6 @@ public class WikiNodesManagementToolbarDisplayContext {
 
 	public boolean isShowSearch() {
 		return false;
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				final Map<String, String> orderColumns = HashMapBuilder.put(
-					"lastPostDate", "last-post-date"
-				).put(
-					"name", "name"
-				).build();
-
-				for (Map.Entry<String, String> orderByColEntry :
-						orderColumns.entrySet()) {
-
-					String orderByCol = orderByColEntry.getKey();
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								orderByCol.equals(getOrderByCol()));
-							dropdownItem.setHref(
-								getPortletURL(), "orderByCol", orderByCol);
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest,
-									orderByColEntry.getValue()));
-						});
-				}
-			}
-		};
 	}
 
 	private boolean _isTrashEnabled() {

@@ -1,41 +1,27 @@
 {
 	"cpu": 1,
-	"deploy": true,
-	"id": "LXCExtensionJiraCloud",
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferay-testray-etc-jira",
 	"kind": "Deployment",
 	"livenessProbe": {
-		"failureThreshold": 3,
 		"httpGet": {
 			"path": "/",
-			"port": 3333
-		},
-		"initialDelaySeconds": 20,
-		"periodSeconds": 10,
-		"successThreshold": 1,
-		"timeoutSeconds": 4
+			"port": 3001
+		}
 	},
 	"loadBalancer": {
-		"cdn": false,
-		"targetPort": 3333
+		"targetPort": 3001
 	},
 	"memory": 512,
-	"ports": [
-		{
-			"external": true,
-			"port": 3333,
-			"protocol": "TCP",
-			"targetPort": 3333
-		}
-	],
 	"readinessProbe": {
-		"failureThreshold": 3,
 		"httpGet": {
 			"path": "/",
-			"port": 3333
-		},
-		"initialDelaySeconds": 30,
-		"periodSeconds": 10,
-		"successThreshold": 1,
-		"timeoutSeconds": 4
-	}
+			"port": 3001
+		}
+	},
+	"scale": 1
 }

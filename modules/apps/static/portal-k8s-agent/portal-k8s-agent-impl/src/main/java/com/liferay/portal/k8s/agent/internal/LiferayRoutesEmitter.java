@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "service.ranking:Integer=-1",
 	service = PortalK8sConfigMapModifier.class
 )
-public class RoutesPortalK8sConfigMapModifier
+public class LiferayRoutesEmitter
 	implements PortalInetSocketAddressEventListener,
 			   PortalK8sConfigMapModifier {
 
@@ -447,7 +447,7 @@ public class RoutesPortalK8sConfigMapModifier
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RoutesPortalK8sConfigMapModifier.class);
+		LiferayRoutesEmitter.class);
 
 	private static final Pattern _lxcDxpMetadataPattern = Pattern.compile(
 		"(.*)-lxc-dxp-metadata$");

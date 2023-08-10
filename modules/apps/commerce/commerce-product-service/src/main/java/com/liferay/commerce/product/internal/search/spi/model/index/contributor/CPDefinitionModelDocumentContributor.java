@@ -8,6 +8,7 @@ package com.liferay.commerce.product.internal.search.spi.model.index.contributor
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -105,6 +106,13 @@ public class CPDefinitionModelDocumentContributor
 			document.addKeyword(
 				CPField.ACCOUNT_GROUP_FILTER_ENABLED,
 				cpDefinition.isAccountGroupFilterEnabled());
+
+			document.addKeyword(
+				CPField.ASSET_CATEGORY_NAMES,
+				_toLowerCaseStringArray(
+					_assetCategoryLocalService.getCategoryNames(
+						CPDefinition.class.getName(),
+						cpDefinition.getCPDefinitionId())));
 
 			BigDecimal basePrice = _getBasePrice(cpDefinition.getCPInstances());
 
@@ -646,11 +654,22 @@ public class CPDefinitionModelDocumentContributor
 		return false;
 	}
 
+	private String[] _toLowerCaseStringArray(String[] categoryNames) {
+		for (int i = 0; i < categoryNames.length; i++) {
+			categoryNames[i] = categoryNames[i].toLowerCase();
+		}
+
+		return categoryNames;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionModelDocumentContributor.class);
 
 	@Reference
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

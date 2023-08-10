@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {config} from 'dotenv';
+
 import Cache from '../../lib/Cache';
 import logger from '../../lib/Logger';
 import {HttpContext} from '../../lib/Types';
-import JiraAuth from './JiraAuth';
-
-const {
+import {
 	JIRA_API_BASE_URL,
 	JIRA_APP_NAME,
 	JIRA_AUTH_BASE_URL,
@@ -20,7 +20,10 @@ const {
 	JIRA_AUTH_SCOPES,
 	JIRA_AUTH_STATE_PREFIX,
 	LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION,
-} = Bun.env;
+} from '../../utils/env';
+import JiraAuth from './JiraAuth';
+
+config();
 
 const cacheInstance = Cache.getInstance();
 
@@ -118,7 +121,7 @@ class Jira extends JiraAuth {
 	) {
 		const {cloudId, token} = await this.getTokenAndCloudId(httpContext);
 
-		const response = await fetch(
+		await fetch(
 			`${JIRA_API_BASE_URL}/ex/jira/${cloudId}/rest/api/latest/issue/${ticket}`,
 			{
 				body: JSON.stringify(body),
@@ -130,8 +133,6 @@ class Jira extends JiraAuth {
 				method: 'PUT',
 			}
 		);
-
-		return response.json();
 	}
 }
 

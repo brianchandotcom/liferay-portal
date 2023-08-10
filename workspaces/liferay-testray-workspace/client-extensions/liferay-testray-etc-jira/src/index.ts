@@ -3,12 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cors} from '@elysiajs/cors';
-import {Elysia} from 'elysia';
+import cors from 'cors';
+import Express from 'express';
+import morgan from 'morgan';
 
 import actions from './actions';
 import Cache from './lib/Cache';
 import logger from './lib/Logger';
+import {APP_DEBUG_CACHE_ROUTER, PORT} from './utils/env';
+
+const app = Express();
 
 const {
 	authorize,
@@ -19,42 +23,56 @@ const {
 	updateTickets,
 } = actions;
 
-const {APP_DEBUG_CACHE_ROUTER = '/cache', PORT} = Bun.env;
-
 const cacheInstance = Cache.getInstance();
 
-new Elysia()
-	.get('/', () => 'Testray LXC Jira Integration')
-	.get(APP_DEBUG_CACHE_ROUTER, () => {
-		logger.debug(cacheInstance);
+app.use(Express.json());
+app.use(Express.text());
+app.use(morgan('dev'));
+app.use(cors());
 
-		return JSON.stringify([...cacheInstance.cache]);
-	})
-	.get('/jira/authorize/:liferay-user-id', ({params, set}) =>
-		authorize(params['liferay-user-id'], set)
-	)
-	.get('/jira/preauthorize/:liferay-user-id', ({params, request}) =>
-		preauthorize(
-			params['liferay-user-id'],
-			request.headers.get('authorization') as string
-		)
-	)
-	.get('/jira/authorize/callback', ({query: {code, state}, set}) =>
-		authorizeCallback({code: code as string, state: state as string}, set)
-	)
-	.post('/jira/update-tickets', ({body, request}) =>
-		updateTickets({body, request})
-	)
-	.post('/jira/import-requirement-tickets', ({body, request}) =>
-		importRequirementFromIssues({
-			body,
-			request,
-		})
-	)
-	.post('/jira/resync', async ({body, request}) => resync({body, request}))
-	.use(cors())
-	.listen(Number(PORT), ({hostname, port}) =>
-		logger.info(
-			`🦊 Testray LXC Integration with Elysia is running at ${hostname}:${port}`
-		)
+app.get('/', (request, response) =>
+	response.send('Testray LXC Jira Integration')
+);
+
+app.get(APP_DEBUG_CACHE_ROUTER, (request, response) => {
+	logger.debug(cacheInstance);
+
+	response.send(JSON.stringify([...cacheInstance.cache]));
+});
+
+app.get('/jira/preauthorize/:userId', (request, response) => {
+	preauthorize(
+		request.params.userId,
+		request.headers['authorization'] as string
 	);
+
+	response.send('ok');
+});
+
+app.get('/jira/authorize/callback', (request, response) => {
+	const {code, state} = request.query;
+
+	authorizeCallback({code: code as string, state: state as string});
+
+	response.send('ok');
+});
+
+app.get('/jira/authorize/:userId', (request, response) => {
+	const authorizeURL = authorize(request.params.userId);
+
+	response.redirect(authorizeURL);
+});
+
+app.post('/jira/update-tickets', (request, response) =>
+	updateTickets(request, response)
+);
+
+app.post('/jira/import-requirement-tickets', (request, response) =>
+	importRequirementFromIssues(request, response)
+);
+
+app.post('/jira/resync', (request, response) => resync(request, response));
+
+app.listen(PORT, () => {
+	logger.info(`Testray LXC Integration running at ${PORT}`);
+});

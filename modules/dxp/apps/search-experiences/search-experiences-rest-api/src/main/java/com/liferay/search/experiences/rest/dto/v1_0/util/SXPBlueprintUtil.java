@@ -27,6 +27,8 @@ public class SXPBlueprintUtil {
 			ConfigurationUtil.toConfiguration(configuration));
 		sxpBlueprint2.setDescription(sxpBlueprint1.getDescription());
 		sxpBlueprint2.setDescription_i18n(sxpBlueprint1.getDescription_i18n());
+		sxpBlueprint2.setExternalReferenceCode(
+			sxpBlueprint1.getExternalReferenceCode());
 		sxpBlueprint2.setElementInstances(sxpBlueprint1.getElementInstances());
 		sxpBlueprint2.setId(sxpBlueprint1.getId());
 		sxpBlueprint2.setTitle(sxpBlueprint1.getTitle());

@@ -5,7 +5,13 @@
 
 package com.liferay.portal.kernel.theme;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.internal.portlet.decorator.PortletDecoratorImpl;
 import com.liferay.portal.kernel.model.PortletDecorator;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
  * @author Eduardo García
@@ -13,44 +19,35 @@ import com.liferay.portal.kernel.model.PortletDecorator;
 public class PortletDecoratorFactoryUtil {
 
 	public static PortletDecorator getDefaultPortletDecorator() {
-		return _portletDecoratorFactory.getDefaultPortletDecorator();
+		return new PortletDecoratorImpl(
+			getDefaultPortletDecoratorId(), StringPool.BLANK,
+			getDefaultPortletDecoratorCssClass());
 	}
 
 	public static String getDefaultPortletDecoratorCssClass() {
-		return _portletDecoratorFactory.getDefaultPortletDecoratorCssClass();
+		return PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_CSS_CLASS);
 	}
 
 	public static String getDefaultPortletDecoratorId() {
-		return _portletDecoratorFactory.getDefaultPortletDecoratorId();
+		return PrefsPropsUtil.getString(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
 	}
 
 	public static PortletDecorator getPortletDecorator() {
-		return _portletDecoratorFactory.getPortletDecorator();
+		return new PortletDecoratorImpl();
 	}
 
 	public static PortletDecorator getPortletDecorator(
 		String portletDecoratorId) {
 
-		return _portletDecoratorFactory.getPortletDecorator(portletDecoratorId);
+		return new PortletDecoratorImpl(portletDecoratorId);
 	}
 
 	public static PortletDecorator getPortletDecorator(
 		String portletDecoratorId, String name, String cssClass) {
 
-		return _portletDecoratorFactory.getPortletDecorator(
-			portletDecoratorId, name, cssClass);
+		return new PortletDecoratorImpl(portletDecoratorId, name, cssClass);
 	}
-
-	public static PortletDecoratorFactory getPortletDecoratorFactory() {
-		return _portletDecoratorFactory;
-	}
-
-	public void setPortletDecoratorFactory(
-		PortletDecoratorFactory portletDecoratorFactory) {
-
-		_portletDecoratorFactory = portletDecoratorFactory;
-	}
-
-	private static PortletDecoratorFactory _portletDecoratorFactory;
 
 }

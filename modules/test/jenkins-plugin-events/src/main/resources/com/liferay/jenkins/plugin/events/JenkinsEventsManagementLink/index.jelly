@@ -1,7 +1,7 @@
 <?jelly escape-by-default="true"?>
 
 <j:jelly xmlns:f="/lib/form" xmlns:j="jelly:core" xmlns:l="/lib/layout">
-	<l:layout>
+	<l:layout title="jenkins-events">
 		<l:side-panel>
 			<l:tasks>
 				<l:task href="${rootURL}/" icon="icon-md icon-up" title="Back to Dashboard" />
@@ -14,97 +14,73 @@
 					<h1>Jenkins Events</h1>
 				</div>
 
-				<div>
-					<h2>Jenkins Publishers</h2>
-
-					<p>The specified events occur, a POST wil be made the specified URLs provided.</p>
-				</div>
-
 				<f:form action="jenkinsEventsConfiguration" method="post" name="jenkinsEventsConfiguration">
-					<f:entry>
-						<f:repeatable items="${it.jenkinsEventsDescriptor.jenkinsPublishers}" var="jenkinsPublishers">
-							<h3>Jenkins Publisher</h3>
-
-							<f:entry>
-								<div align="right">
-									<f:repeatableDeleteButton />
-								</div>
-							</f:entry>
-							<f:entry title="Name">
-								<f:textbox name="name" value="${jenkinsPublishers.name}" />
-							</f:entry>
-							<f:entry title="URL">
-								<f:textbox name="url" value="${jenkinsPublishers.url}" />
-							</f:entry>
-							<f:optionalBlock checked="${jenkinsPublishers.jmsRequest}" inline="false" name="jmsRequest" title="JMS Request">
-								<f:entry title="Inbound JMS Queue Name">
-									<f:textbox name="inboundJMSQueueName" value="${jenkinsPublishers.inboundJMSQueueName}" />
-								</f:entry>
-								<f:entry title="Outbound JMS Queue Name">
-									<f:textbox name="outboundJMSQueueName" value="${jenkinsPublishers.outboundJMSQueueName}" />
-								</f:entry>
-							</f:optionalBlock>
-							<f:entry title="User Name">
-								<f:textbox name="userName" value="${jenkinsPublishers.userName}" />
-							</f:entry>
-							<f:entry title="User Password">
-								<f:textbox name="userPassword" value="${jenkinsPublishers.userPassword}" />
-							</f:entry>
-							<f:advanced title="Event Configurations">
-								<f:section title="Build Events">
-									<f:entry title="BUILD_COMPLETED">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('BUILD_COMPLETED')}" name="buildCompleted" />
-									</f:entry>
-									<f:entry title="BUILD_STARTED">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('BUILD_STARTED')}" name="buildStarted" />
-									</f:entry>
-								</f:section>
-								<f:section title="Computer Events">
-									<f:entry title="COMPUTER_BUSY">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_BUSY')}" name="computerBusy" />
-									</f:entry>
-									<f:entry title="COMPUTER_IDLE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_IDLE')}" name="computerIdle" />
-									</f:entry>
-									<f:entry title="COMPUTER_OFFLINE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_OFFLINE')}" name="computerOffline" />
-									</f:entry>
-									<f:entry title="COMPUTER_ONLINE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_ONLINE')}" name="computerOnline" />
-									</f:entry>
-									<f:entry title="COMPUTER_TEMPORARILY_OFFLINE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_TEMPORARILY_OFFLINE')}" name="computerTemporarilyOffline" />
-									</f:entry>
-									<f:entry title="COMPUTER_TEMPORARILY_ONLINE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('COMPUTER_TEMPORARILY_ONLINE')}" name="computerTemporarilyOnline" />
-									</f:entry>
-								</f:section>
-								<f:section title="Queue Events">
-									<f:entry title="QUEUE_ITEM_ENTER_BLOCKED">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_ENTER_BLOCKED')}" name="queueItemEnterBlocked" />
-									</f:entry>
-									<f:entry title="QUEUE_ITEM_ENTER_BUILDABLE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_ENTER_BUILDABLE')}" name="queueItemEnterBuildable" />
-									</f:entry>
-									<f:entry title="QUEUE_ITEM_ENTER_WAITING">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_ENTER_WAITING')}" name="queueItemEnterWaiting" />
-									</f:entry>
-									<f:entry title="QUEUE_ITEM_LEAVE_BLOCKED">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEAVE_BLOCKED')}" name="queueItemLeaveBlocked" />
-									</f:entry>
-									<f:entry title="QUEUE_ITEM_LEAVE_BUILDABLE">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEAVE_BUILDABLE')}" name="queueItemLeaveBuildable" />
-									</f:entry>
-									<f:entry title="QUEUE_ITEM_LEAVE_WAITING">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEAVE_WAITING')}" name="queueItemLeaveWaiting" />
-									</f:entry>
-									<f:entry title="QUEUE_ITEM_LEFT">
-										<f:checkbox checked="${jenkinsPublishers.containsEventTrigger('QUEUE_ITEM_LEFT')}" name="queueItemLeft" />
-									</f:entry>
-								</f:section>
-							</f:advanced>
-						</f:repeatable>
+					<f:entry title="URL">
+						<f:textbox name="url" value="${it.jenkinsEventsDescriptor.getUrl()}" />
 					</f:entry>
+					<f:entry title="Inbound Queue Name">
+						<f:textbox name="inboundQueueName" value="${it.jenkinsEventsDescriptor.getInboundQueueName()}" />
+					</f:entry>
+					<f:entry title="Outbound Queue Name">
+						<f:textbox name="outboundQueueName" value="${it.jenkinsEventsDescriptor.getOutboundQueueName()}" />
+					</f:entry>
+					<f:entry title="User Name">
+						<f:textbox name="userName" value="${it.jenkinsEventsDescriptor.getUserName()}" />
+					</f:entry>
+					<f:entry title="User Password">
+						<f:textbox name="userPassword" value="${it.jenkinsEventsDescriptor.getUserPassword()}" />
+					</f:entry>
+					<f:section title="Build Events">
+						<f:entry title="BUILD_COMPLETED">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('BUILD_COMPLETED')}" name="BUILD_COMPLETED" />
+						</f:entry>
+						<f:entry title="BUILD_STARTED">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('BUILD_STARTED')}" name="BUILD_STARTED" />
+						</f:entry>
+					</f:section>
+					<f:section title="Computer Events">
+						<f:entry title="COMPUTER_BUSY">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('COMPUTER_BUSY')}" name="COMPUTER_BUSY" />
+						</f:entry>
+						<f:entry title="COMPUTER_IDLE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('COMPUTER_IDLE')}" name="COMPUTER_IDLE" />
+						</f:entry>
+						<f:entry title="COMPUTER_OFFLINE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('COMPUTER_OFFLINE')}" name="COMPUTER_OFFLINE" />
+						</f:entry>
+						<f:entry title="COMPUTER_ONLINE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('COMPUTER_ONLINE')}" name="COMPUTER_ONLINE" />
+						</f:entry>
+						<f:entry title="COMPUTER_TEMPORARILY_OFFLINE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('COMPUTER_TEMPORARILY_OFFLINE')}" name="COMPUTER_TEMPORARILY_OFFLINE" />
+						</f:entry>
+						<f:entry title="COMPUTER_TEMPORARILY_ONLINE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('COMPUTER_TEMPORARILY_ONLINE')}" name="COMPUTER_TEMPORARILY_ONLINE" />
+						</f:entry>
+					</f:section>
+					<f:section title="Queue Events">
+						<f:entry title="QUEUE_ITEM_ENTER_BLOCKED">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_ENTER_BLOCKED')}" name="QUEUE_ITEM_ENTER_BLOCKED" />
+						</f:entry>
+						<f:entry title="QUEUE_ITEM_ENTER_BUILDABLE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_ENTER_BUILDABLE')}" name="QUEUE_ITEM_ENTER_BUILDABLE" />
+						</f:entry>
+						<f:entry title="QUEUE_ITEM_ENTER_WAITING">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_ENTER_WAITING')}" name="QUEUE_ITEM_ENTER_WAITING" />
+						</f:entry>
+						<f:entry title="QUEUE_ITEM_LEAVE_BLOCKED">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_LEAVE_BLOCKED')}" name="QUEUE_ITEM_LEAVE_BLOCKED" />
+						</f:entry>
+						<f:entry title="QUEUE_ITEM_LEAVE_BUILDABLE">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_LEAVE_BUILDABLE')}" name="QUEUE_ITEM_LEAVE_BUILDABLE" />
+						</f:entry>
+						<f:entry title="QUEUE_ITEM_LEAVE_WAITING">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_LEAVE_WAITING')}" name="QUEUE_ITEM_LEAVE_WAITING" />
+						</f:entry>
+						<f:entry title="QUEUE_ITEM_LEFT">
+							<f:checkbox checked="${it.jenkinsEventsDescriptor.containsEventTrigger('QUEUE_ITEM_LEFT')}" name="QUEUE_ITEM_LEFT" />
+						</f:entry>
+					</f:section>
 					<f:entry>
 						<f:submit value="Save" />
 					</f:entry>

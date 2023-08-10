@@ -5,7 +5,6 @@
 
 package com.liferay.jenkins.plugin.events;
 
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
 import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
 
 import hudson.Extension;
@@ -20,7 +19,6 @@ import javax.servlet.ServletException;
 
 import jenkins.model.Jenkins;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;
@@ -42,35 +40,26 @@ public class JenkinsEventsManagementLink extends ManagementLink {
 			StaplerRequest staplerRequest, StaplerResponse staplerResponse)
 		throws IOException, ServletException {
 
-		jenkinsEventsDescriptor.jenkinsPublishers.clear();
-
 		JSONObject jsonObject = new JSONObject(
 			staplerRequest.getParameter("json"));
 
-		Object jenkinsPublishersObject = jsonObject.opt("jenkinsPublishers");
+		jenkinsEventsDescriptor.setInboundQueueName(
+			jsonObject.getString("inboundQueueName"));
+		jenkinsEventsDescriptor.setOutboundQueueName(
+			jsonObject.getString("outboundQueueName"));
+		jenkinsEventsDescriptor.setUrl(jsonObject.getString("url"));
+		jenkinsEventsDescriptor.setUserName(jsonObject.getString("userName"));
+		jenkinsEventsDescriptor.setUserPassword(
+			jsonObject.getString("userPassword"));
 
-		if (jenkinsPublishersObject instanceof JSONArray) {
-			JSONArray jenkinsPublishersJSONArray =
-				(JSONArray)jenkinsPublishersObject;
+		jenkinsEventsDescriptor.clearEventTriggers();
 
-			for (int i = 0; i < jenkinsPublishersJSONArray.length(); i++) {
-				JSONObject jenkinsPublisherJSONObject =
-					jenkinsPublishersJSONArray.optJSONObject(i);
+		for (JenkinsEventsDescriptor.EventTrigger eventTrigger :
+				JenkinsEventsDescriptor.EventTrigger.values()) {
 
-				if (jenkinsPublisherJSONObject == null) {
-					continue;
-				}
-
-				jenkinsEventsDescriptor.jenkinsPublishers.add(
-					new JenkinsPublisher(jenkinsPublisherJSONObject));
+			if (jsonObject.optBoolean(eventTrigger.toString())) {
+				jenkinsEventsDescriptor.addEventTrigger(eventTrigger);
 			}
-		}
-		else if (jenkinsPublishersObject instanceof JSONObject) {
-			jenkinsEventsDescriptor.jenkinsPublishers.add(
-				new JenkinsPublisher((JSONObject)jenkinsPublishersObject));
-		}
-		else {
-			jenkinsEventsDescriptor.jenkinsPublishers.clear();
 		}
 
 		jenkinsEventsDescriptor.save();

@@ -111,8 +111,8 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			configMapModel -> {
 				Map<String, String> data = configMapModel.data();
 
-				data.put("testKey1", "testValue1");
-				data.put("testKey2", "testValue2");
+				data.put("foo", "bar");
+				data.put("fizz", "buzz");
 
 				Map<String, String> labels = configMapModel.labels();
 
@@ -139,19 +139,17 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
-		Path testKey1Path = projectPath.resolve("testKey1");
+		Path fooPath = projectPath.resolve("foo");
 
-		Assert.assertTrue(Files.exists(testKey1Path));
+		Assert.assertTrue(Files.exists(fooPath));
 
-		Assert.assertEquals(
-			"testValue1", new String(Files.readAllBytes(testKey1Path)));
+		Assert.assertEquals("bar", new String(Files.readAllBytes(fooPath)));
 
-		Path testKey2Path = projectPath.resolve("testKey2");
+		Path fizzPath = projectPath.resolve("fizz");
 
-		Assert.assertTrue(Files.exists(testKey1Path));
+		Assert.assertTrue(Files.exists(fooPath));
 
-		Assert.assertEquals(
-			"testValue2", new String(Files.readAllBytes(testKey2Path)));
+		Assert.assertEquals("buzz", new String(Files.readAllBytes(fizzPath)));
 	}
 
 	private void _testDXPRoutes(long companyId, String hostname, String webId)

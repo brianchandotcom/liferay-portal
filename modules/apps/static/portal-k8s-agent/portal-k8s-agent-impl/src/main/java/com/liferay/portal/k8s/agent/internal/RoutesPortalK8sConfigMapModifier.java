@@ -322,24 +322,25 @@ public class RoutesPortalK8sConfigMapModifier
 		List<String> lxcDXPDomains = StringUtil.split(
 			labels.get("com.liferay.lxc.dxp.domains"), CharPool.NEW_LINE);
 
-		if (lxcDXPDomains.isEmpty()) {
-			return;
-		}
+		if (!lxcDXPDomains.isEmpty()) {
+			List<String> updatedLXCDXPDomains = new ArrayList<>();
 
-		List<String> updatedLXCDXPDomains = new ArrayList<>();
+			for (String lxcDXPDomain : lxcDXPDomains) {
+				if ((lxcDXPDomain != null) &&
+					(lxcDXPDomain.indexOf(":") == -1)) {
 
-		for (String lxcDXPDomain : lxcDXPDomains) {
-			if ((lxcDXPDomain != null) && (lxcDXPDomain.indexOf(":") == -1)) {
-				updatedLXCDXPDomains.add(lxcDXPDomain + ":" + portalLocalPort);
+					updatedLXCDXPDomains.add(
+						lxcDXPDomain + ":" + portalLocalPort);
+				}
+				else {
+					updatedLXCDXPDomains.add(lxcDXPDomain);
+				}
 			}
-			else {
-				updatedLXCDXPDomains.add(lxcDXPDomain);
-			}
-		}
 
-		labels.put(
-			"com.liferay.lxc.dxp.domains",
-			StringUtil.merge(updatedLXCDXPDomains, StringPool.NEW_LINE));
+			labels.put(
+				"com.liferay.lxc.dxp.domains",
+				StringUtil.merge(updatedLXCDXPDomains, StringPool.NEW_LINE));
+		}
 	}
 
 	private void _write(Path path, Map<String, String> data) {

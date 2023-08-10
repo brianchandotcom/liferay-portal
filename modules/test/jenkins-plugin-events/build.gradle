@@ -16,5 +16,5 @@ dependencies {
 }
 
 jenkinsPlugin {
-	jenkinsVersion = "2.85"
+	jenkinsVersion = "2.164.2"
 }

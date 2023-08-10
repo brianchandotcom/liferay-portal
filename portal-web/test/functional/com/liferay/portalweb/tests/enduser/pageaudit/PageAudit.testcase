@@ -299,7 +299,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "PageAudit#CACHE_ALERT",
-				value1 = "Relaunch to update data.");
+				value1 = "Reload to update data.");
 		}
 	}
 

@@ -11,17 +11,12 @@
 
 <tbody>
 <tr>
-	<td>ASSIGN_INFORMATIONS</td>
-	<td>//td[normalize-space()='${key_userName}']//following::td[normalize-space()='${key_email}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BREADCRUMB_EDIT</td>
+	<td>BREADCRUMB_INPUT_NAME</td>
 	<td>//input[@name='breadcrumbInputEdit']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_SELECT_OPTIONS</td>
+	<td>BREADCRUMB_MENU_ITEM</td>
 	<td>//div[@class='dropdown-menu autocomplete-dropdown-menu show']//button[@role='menuitem']</td>
 	<td></td>
 </tr>

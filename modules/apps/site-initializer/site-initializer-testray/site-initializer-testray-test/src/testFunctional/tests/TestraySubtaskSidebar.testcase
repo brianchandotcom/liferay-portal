@@ -163,9 +163,7 @@ definition {
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.reanalyzeTask();
 
 			Refresh();
 		}
@@ -187,9 +185,7 @@ definition {
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.reanalyzeTask();
 		}
 
 		task ("And the user assign a subtask") {
@@ -219,13 +215,11 @@ definition {
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
-
-			Refresh();
+			TestrayTestflow.reanalyzeTask();
 
 			TestrayTestflow.goToTestflow();
+
+			Refresh();
 		}
 
 		task ("When the user click in the task from the sidebar") {
@@ -243,9 +237,7 @@ definition {
 		task ("Given that the user reanalyze a task") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Button.click(button = "Abandon");
-
-			Button.click(button = "Reanalyze");
+			TestrayTestflow.reanalyzeTask();
 		}
 
 		task ("And the user assign two subtasks") {

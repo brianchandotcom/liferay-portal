@@ -168,7 +168,7 @@ definition {
 
 		task ("When the user search a specific project through Breadcrumb") {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "Project 1");
 		}
 

@@ -53,17 +53,17 @@ definition {
 	macro backSectionBreadcrumb {
 		for (var n : list "1,2,3,4") {
 			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "\BACK_SPACE");
 		}
 
 		if (isSet(value)) {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${value});
 
 			AssertTextEquals(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${value});
 		}
 	}
@@ -127,7 +127,7 @@ definition {
 
 	macro confirmBreadcrumb {
 		KeyPress.keyPressNoError(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 			value1 = "\ENTER");
 	}
 
@@ -180,75 +180,75 @@ definition {
 	macro nextSectionBreadcrumb {
 		if (isSet(project)) {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${project});
 
 			AssertTextEquals(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${project});
 		}
 
 		if (isSet(project)) {
 			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "\TAB");
 		}
 
 		if (isSet(routine)) {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${routine});
 
 			AssertTextEquals(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${routine});
 		}
 
 		if (isSet(routine)) {
 			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "\TAB");
 		}
 
 		if (isSet(build)) {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${build});
 
 			AssertTextEquals(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${build});
 		}
 
 		if (isSet(build)) {
 			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "\TAB");
 		}
 
 		if (isSet(run)) {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${run});
 
 			AssertTextEquals(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${run});
 		}
 
 		if (isSet(run)) {
 			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = "\TAB");
 		}
 
 		if (isSet(caseResult)) {
 			Type(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${caseResult});
 
 			AssertTextEquals(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
 				value1 = ${caseResult});
 		}
 

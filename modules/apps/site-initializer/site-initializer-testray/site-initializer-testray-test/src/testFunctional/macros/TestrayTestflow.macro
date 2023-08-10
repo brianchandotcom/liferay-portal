@@ -1,7 +1,7 @@
 definition {
 
 	macro addTask {
-		Click(locator1 = "Button#PLUS");
+		LexiconEntry.gotoAdd();
 
 		TestrayTestflow.editBreadcrumb(
 			build = ${selectBuild},
@@ -14,34 +14,44 @@ definition {
 			PortletEntry.inputName(name = ${taskName});
 		}
 
-		if (isSet(checkCaseType)) {
-			Click(
-				key_checkboxOption = ${checkCaseType},
-				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
-		}
-
-		Button.click(button = "Assign Users");
-
-		if (isSet(userList)) {
-			for (var userName : list ${userList}) {
-				Check.checkToggleSwitch(
-					key_checkboxOption = ${userName},
-					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		if (isSet(caseTypeList)) {
+			for (var caseType : list ${caseTypeList}) {
+				Click.clickAtNotVisible(
+					key_checkboxOption = ${caseType},
+					locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
 			}
 		}
 
-		Button.click(button = "Select Users");
+		if (${userGroups} == "true") {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select User Groups",
+				checkboxNameList = ${userList},
+				linkText = "Assign User Groups");
+		}
 
-		Testray.checkSuccessAlertAppearsAndDisappears();
+		if (${userGroups} == "false") {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Users",
+				checkboxNameList = ${userList},
+				linkText = "Assign Users");
+		}
 
-		Button.click(button = "Save");
-	}
+		if (isSet(fieldRequired)) {
+			Button.click(button = "Save");
+		}
+		else {
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
-	macro assertAssignTask {
-		AssertElementPresent(
-			key_email = ${email},
-			key_userName = ${userName},
-			locator1 = "TestrayTestflow#ASSIGN_INFORMATIONS");
+			Button.click(button = "Save");
+
+			Click(
+				key_text = "Refresh",
+				locator1 = "Button#ANY");
+
+			WaitForElementNotPresent(
+				key_text = "Refresh",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	macro assertStatus {
@@ -85,30 +95,14 @@ definition {
 	}
 
 	macro editBreadcrumb {
-		Click(locator1 = "TestrayTestflow#BREADCRUMB_EDIT");
+		Click(locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME");
 
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${project});
+		for (var text : list "${project},${routine},${build}") {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
+				value1 = ${text});
 
-		if (isSet(project)) {
-			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
-		}
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${routine});
-
-		if (isSet(routine)) {
-			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
-		}
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${build});
-
-		if (isSet(build)) {
-			Click(locator1 = "TestrayTestflow#BREADCRUMB_SELECT_OPTIONS");
+			Click(locator1 = "TestrayTestflow#BREADCRUMB_MENU_ITEM");
 		}
 	}
 
@@ -177,21 +171,28 @@ definition {
 			PortletEntry.inputName(name = ${taskName});
 		}
 
-		if (isSet(userList)) {
-			Button.click(button = "Assign Users");
-
-			for (var userName : list ${userList}) {
-				Check.checkToggleSwitch(
-					key_checkboxOption = ${userName},
-					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-			}
-
-			Button.click(button = "Select Users");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+		if (isSet(userNameList)) {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Users",
+				checkboxNameList = ${userNameList},
+				linkText = "Assign Users");
 		}
 
 		Button.click(button = "Save");
+	}
+
+	macro goToTaskByBuild {
+		TestrayDropdown.goToResultSidebar();
+
+		Testray.changePagination(quantity = 150);
+
+		Testray.clickTableEntry(tableEntry = ${projectName});
+
+		Testray.clickTableEntry(tableEntry = ${routineName});
+
+		Testray.clickTableEntry(tableEntry = ${buildName});
+
+		Button.click(button = "View Task");
 	}
 
 	macro goToTestflow {
@@ -200,12 +201,10 @@ definition {
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
 	}
 
-	macro taskOptions {
-		if (isSet(taskName)) {
-			PortletEntry.inputName(name = ${taskName});
-		}
+	macro reanalyzeTask {
+		Button.click(button = "Abandon");
 
-		Button.click(button = "Save");
+		Button.click(button = "Reanalyze");
 	}
 
 	macro userAvatarNotPresent {

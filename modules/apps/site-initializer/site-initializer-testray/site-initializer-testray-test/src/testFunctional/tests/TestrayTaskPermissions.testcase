@@ -98,11 +98,12 @@ definition {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.addTask(
-				checkCaseType = ${caseType},
+				caseTypeList = ${caseType},
 				selectBuild = ${buildName},
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = ${taskName},
+				userGroups = "false",
 				userList = "Test Test");
 		}
 	}
@@ -161,7 +162,7 @@ definition {
 		task ("When the user edit a task") {
 			TestrayTestflow.editTask(
 				taskName = "Task_2",
-				userName = "Analyst User");
+				userNameList = "Analyst User");
 
 			TestrayTestflow.goToTestflow();
 		}
@@ -211,9 +212,7 @@ definition {
 		}
 
 		task ("Then the user can not delete task") {
-			AssertElementNotPresent(
-				key_text = "Delete",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete");
 		}
 	}
 
@@ -232,14 +231,13 @@ definition {
 
 		task ("When the user created a task") {
 			TestrayTestflow.addTask(
-				checkCaseType = "Compile",
+				caseTypeList = "Compile",
 				selectBuild = "Build 2",
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_2",
+				userGroups = "false",
 				userList = "Test Test");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the user can see the Task created") {
@@ -297,10 +295,10 @@ definition {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
-		task ("When the user edit a task") {
+		task ("When the user edit the task") {
 			TestrayTestflow.editTask(
 				taskName = "Task_2",
-				userName = "Lead User");
+				userNameList = "Lead User");
 		}
 
 		task ("Then the user can see the Task edited") {
@@ -353,9 +351,7 @@ definition {
 		}
 
 		task ("Then the user can not delete task") {
-			AssertElementNotPresent(
-				key_text = "Delete",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete");
 		}
 	}
 
@@ -377,9 +373,7 @@ definition {
 		}
 
 		task ("Then the user can not edit a task") {
-			AssertElementNotPresent(
-				key_text = "Edit Task",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Edit Task");
 		}
 	}
 

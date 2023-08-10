@@ -73,9 +73,7 @@ definition {
 		}
 
 		task ("Then can not see the Delete user button") {
-			AssertElementNotPresent(
-				key_text = "Delete User",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete User");
 		}
 
 		task ("And can see the roles disabled") {
@@ -115,9 +113,7 @@ definition {
 		}
 
 		task ("Then can not see the Delete user button") {
-			AssertElementNotPresent(
-				key_text = "Delete User",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete User");
 		}
 
 		task ("And can see the roles disabled") {
@@ -143,7 +139,7 @@ definition {
 				buttonOption = "Manage",
 				menuItem = "Manage Users");
 
-			Click(locator1 = "Button#PLUS");
+			LexiconEntry.gotoAdd();
 
 			TestrayManageUser.addUser(
 				listRoles = "Testray User",
@@ -210,9 +206,7 @@ definition {
 		}
 
 		task ("Then can not see the Delete user button") {
-			AssertElementNotPresent(
-				key_text = "Delete User",
-				locator1 = "Button#ANY");
+			Button.viewNotPresent(button = "Delete User");
 		}
 
 		task ("And can see the roles disabled") {

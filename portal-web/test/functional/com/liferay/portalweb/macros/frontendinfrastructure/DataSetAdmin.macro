@@ -121,6 +121,10 @@ definition {
 
 			DataSetAdmin.selectProvider(key_type = ${key_type});
 
+			WaitForVisible(
+				locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
+				value1 = "REST Schema");
+
 			PortletEntry.save();
 		}
 	}

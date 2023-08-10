@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_WITH_NAME</td>
+	<td>//input[@name='${name}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_PRIORITY</td>
 	<td>//input[contains(@id,'assetPriority')]</td>
 	<td></td>

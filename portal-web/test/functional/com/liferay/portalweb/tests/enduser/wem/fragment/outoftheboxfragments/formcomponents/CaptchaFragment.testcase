@@ -148,8 +148,8 @@ definition {
 
 		task ("Then the site member could submit text verification via clicking submit") {
 			Type(
-				inputFieldId = "captchaText",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#ANY_WITH_NAME",
+				name = "captchaText",
 				value1 = "Fake");
 
 			Button.clickSubmitButton();
@@ -218,13 +218,13 @@ definition {
 
 		task ("Then the site member could submit text verification via pressing enter") {
 			Type(
-				inputFieldId = "captchaText",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#ANY_WITH_NAME",
+				name = "captchaText",
 				value1 = "Fake");
 
 			KeyPress(
-				inputFieldId = "captchaText",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#ANY_WITH_NAME",
+				name = "captchaText",
 				value1 = "\ENTER");
 
 			Alert.viewErrorMessage(errorMessage = "CAPTCHA verification failed. Please try again.");

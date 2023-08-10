@@ -6,7 +6,7 @@ assemble:
     - include: "src/index.ts"
     - include: "src/lib/*"
     - include: "src/services/*"
-testray-jira-etc-bun-oauth-application-user-agent:
+liferay-testray-etc-jira-node-oauth-application-user-agent:
     .serviceAddress: 127.0.0.1:3333
     .serviceScheme: http
     name: Testray Jira OAuth Integration User Agent
@@ -18,21 +18,21 @@ testray-jira-etc-bun-oauth-application-user-agent:
     type: oAuthApplicationUserAgent
 testray-jira-import-requirement-tickets:
     name: Testray Jira Import Requirement Tickets
-    oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
     resourcePath: /jira/import-requirement-tickets
     type: objectAction
 testray-jira-preauthorize:
     name: Testray Jira PreAuthorize
-    oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
     resourcePath: /jira/preauthorize
     type: objectAction
 testray-jira-update-ticket:
     name: Testray Jira Update Tickets
-    oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
     resourcePath: /jira/update-tickets
     type: objectAction
 testray-resync-jira-ticket:
     name: Testray Resync Jira Ticket
-    oAuth2ApplicationExternalReferenceCode: testray-jira-etc-bun-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
     resourcePath: /jira/resync
     type: objectAction

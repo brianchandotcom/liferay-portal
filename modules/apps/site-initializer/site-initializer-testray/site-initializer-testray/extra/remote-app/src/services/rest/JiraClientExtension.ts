@@ -12,7 +12,7 @@ class JiraClientExtensionRest {
 	public headers = {'liferay-user-id': Liferay.ThemeDisplay.getUserId()};
 
 	public oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-		'testray-jira-etc-bun-oauth-application-user-agent'
+		'liferay-testray-etc-jira-node-oauth-application-user-agent'
 	);
 
 	public async preauthorize() {

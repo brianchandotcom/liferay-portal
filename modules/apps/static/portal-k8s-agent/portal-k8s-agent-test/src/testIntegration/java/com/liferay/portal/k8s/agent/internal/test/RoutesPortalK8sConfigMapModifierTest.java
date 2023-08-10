@@ -90,8 +90,8 @@ public class RoutesPortalK8sConfigMapModifierTest {
 	}
 
 	@Test
-	public void test() throws Exception {
-		_test(
+	public void testDXPRoutes() throws Exception {
+		_testDXPRoutes(
 			TestPropsValues.getCompanyId(), "localhost",
 			TestPropsValues.COMPANY_WEB_ID);
 
@@ -101,13 +101,75 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			null, webId, webId, webId, 0, true, null, null, null, null, null,
 			null);
 
-		_test(company.getCompanyId(), webId, webId);
+		_testDXPRoutes(company.getCompanyId(), webId, webId);
 	}
 
-	private void _test(long companyId, String hostname, String webId)
-		throws Exception {
+	@Test
+	public void testExtInitRoutes() throws Exception {
+		_testExtInitRoutes(TestPropsValues.COMPANY_WEB_ID);
 
-		// DXP
+		String webId = "able.com";
+
+		Company company = _companyLocalService.addCompany(
+			null, webId, webId, webId, 0, true, null, null, null, null, null,
+			null);
+
+		_testExtInitRoutes(webId);
+	}
+
+	private void _testExtInitRoutes(String webId) throws Exception {
+		String projectName = RandomTestUtil.randomString();
+		String serviceId = RandomTestUtil.randomString();
+
+		_portalK8sConfigMapModifier.modifyConfigMap(
+			configMapModel -> {
+				Map<String, String> data = configMapModel.data();
+
+				data.put("testKey1", "testValue1");
+				data.put("testKey2", "testValue2");
+
+				Map<String, String> labels = configMapModel.labels();
+
+				labels.put("lxc.liferay.com/metadataType", "ext-init");
+				labels.put("ext.lxc.liferay.com/projectName", projectName);
+				labels.put("ext.lxc.liferay.com/serviceId", serviceId);
+				labels.put(
+					"dxp.lxc.liferay.com/virtualInstanceId",
+					webId);
+			},
+			StringBundler.concat(
+				projectName, StringPool.DASH, webId,
+				"-lxc-ext-init-metadata"));
+
+		Path projectPath = Paths.get(
+			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/" + webId,
+			projectName);
+
+		Assert.assertTrue(Files.exists(projectPath));
+
+		File projectDir = projectPath.toFile();
+
+		String[] fileNames = projectDir.list();
+
+		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
+
+		Path testKey1Path = projectPath.resolve("testKey1");
+
+		Assert.assertTrue(Files.exists(testKey1Path));
+
+		Assert.assertEquals(
+			"testValue1", new String(Files.readAllBytes(testKey1Path)));
+
+		Path testKey2Path = projectPath.resolve("testKey2");
+
+		Assert.assertTrue(Files.exists(testKey1Path));
+
+		Assert.assertEquals(
+			"testValue2", new String(Files.readAllBytes(testKey2Path)));
+	}
+
+	private void _testDXPRoutes(long companyId, String hostname, String webId)
+		throws Exception {
 
 		Path dxpPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
@@ -146,57 +208,6 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(0));
 		Assert.assertEquals("baker.com:8080", lxcDXPDomains.get(1));
-
-		// Ext init
-
-		String projectName = RandomTestUtil.randomString();
-		String serviceId = RandomTestUtil.randomString();
-
-		_portalK8sConfigMapModifier.modifyConfigMap(
-			configMapModel -> {
-				Map<String, String> data = configMapModel.data();
-
-				data.put("testKey1", "testValue1");
-				data.put("testKey2", "testValue2");
-
-				Map<String, String> labels = configMapModel.labels();
-
-				labels.put("lxc.liferay.com/metadataType", "ext-init");
-				labels.put("ext.lxc.liferay.com/projectName", projectName);
-				labels.put("ext.lxc.liferay.com/serviceId", serviceId);
-				labels.put(
-					"dxp.lxc.liferay.com/virtualInstanceId",
-					webId);
-			},
-			StringBundler.concat(
-				projectName, StringPool.DASH, webId,
-				"-lxc-ext-init-metadata"));
-
-		Path projectPath = Paths.get(
-			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/" + webId,
-			projectName);
-
-		Assert.assertTrue(Files.exists(projectPath));
-
-		File projectDir = projectPath.toFile();
-
-		fileNames = projectDir.list();
-
-		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
-
-		Path testKey1Path = projectPath.resolve("testKey1");
-
-		Assert.assertTrue(Files.exists(testKey1Path));
-
-		Assert.assertEquals(
-			"testValue1", new String(Files.readAllBytes(testKey1Path)));
-
-		Path testKey2Path = projectPath.resolve("testKey2");
-
-		Assert.assertTrue(Files.exists(testKey1Path));
-
-		Assert.assertEquals(
-			"testValue2", new String(Files.readAllBytes(testKey2Path)));
 	}
 
 	private static Bundle _bundle;

@@ -914,6 +914,8 @@ definition {
 			scheduleProcess = ${scheduleProcess},
 			validateErrorMessage = ${validateErrorMessage});
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {

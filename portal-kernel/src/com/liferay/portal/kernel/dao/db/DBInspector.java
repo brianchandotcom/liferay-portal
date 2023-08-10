@@ -60,16 +60,6 @@ public class DBInspector {
 		return _connection.getCatalog();
 	}
 
-	public String getColumnDefaultValue(String columnType) {
-		Matcher matcher = _columnDefaultClausePattern.matcher(columnType);
-
-		if (matcher.find()) {
-			return StringUtil.unquote(matcher.group(1));
-		}
-
-		return null;
-	}
-
 	public ResultSet getColumnsResultSet(String tableName) throws SQLException {
 		return _getColumnsResultSet(tableName, null);
 	}
@@ -185,7 +175,7 @@ public class DBInspector {
 			}
 
 			if (!expectedColumnNullable) {
-				String expectedColumnDefaultValue = getColumnDefaultValue(
+				String expectedColumnDefaultValue = _getColumnDefaultValue(
 					columnType);
 
 				String actualColumnDefaultValue = _getColumnDefaultValue(
@@ -338,6 +328,16 @@ public class DBInspector {
 		}
 
 		return biFunction.apply(DBManagerUtil.getDB(), matcher.group(1));
+	}
+
+	private String _getColumnDefaultValue(String columnType) {
+		Matcher matcher = _columnDefaultClausePattern.matcher(columnType);
+
+		if (matcher.find()) {
+			return StringUtil.unquote(matcher.group(1));
+		}
+
+		return null;
 	}
 
 	private String _getColumnDefaultValue(

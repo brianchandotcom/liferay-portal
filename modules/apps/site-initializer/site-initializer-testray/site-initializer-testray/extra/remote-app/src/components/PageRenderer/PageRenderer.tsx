@@ -27,7 +27,7 @@ const PageRenderer: React.FC<PageRendererProps> = ({
 	if (error) {
 		return (
 			<EmptyState
-				description={error?.info.title}
+				description={error?.info?.title}
 				title={error.message}
 				type="EMPTY_SEARCH"
 			/>

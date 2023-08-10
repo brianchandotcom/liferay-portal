@@ -43,11 +43,11 @@ const useRequirementActions = ({
 			`${Liferay.ThemeDisplay.getUserId()}-requirements`
 		);
 
-		channel.bind('processed', () => {
+		channel.bind('processed', ({message}: {message: string}) => {
 			setForceRefetch(new Date().getTime());
 
 			Liferay.Util.openToast({
-				message: `Requirement was sync with success.`,
+				message,
 			});
 		});
 

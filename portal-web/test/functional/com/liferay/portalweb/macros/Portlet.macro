@@ -106,8 +106,6 @@ definition {
 
 		var key_portletName = ${portletName};
 
-		LiferayEvent.waitForPortletReady();
-
 		AssertElementPresent(locator1 = "Portlet#LOADED");
 	}
 

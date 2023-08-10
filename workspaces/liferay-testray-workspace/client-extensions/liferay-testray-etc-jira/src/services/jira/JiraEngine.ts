@@ -4,14 +4,15 @@
  */
 
 import {HttpContext} from '../../lib/Types';
+import {
+	JIRA_APP_FIELD_ID_QA_TEST_NAME,
+	JIRA_APP_FIELD_ID_QA_TEST_SCORE,
+} from '../../utils/env';
 import Testray from '../liferay/Testray';
 import Jira from './Jira';
 
 const jira = new Jira();
 const testray = new Testray();
-
-const {JIRA_APP_FIELD_ID_QA_TEST_NAME, JIRA_APP_FIELD_ID_QA_TEST_SCORE} =
-	Bun.env;
 
 class JiraEngine {
 	public async updateIssues(issues: string[], httpContext: HttpContext) {

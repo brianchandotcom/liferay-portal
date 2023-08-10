@@ -4,17 +4,17 @@
  */
 
 import {baseFetcher} from '../../lib/Fetch';
-
-const {
+import {
 	LIFERAY_AUTH_CLIENT_ID,
 	LIFERAY_AUTH_CLIENT_SECRET,
 	LIFERAY_AUTH_TOKEN,
 	LIFERAY_BASE_URL,
-} = Bun.env;
+} from '../../utils/env';
 
 class LiferayAuth {
 	protected fetcher = baseFetcher(LIFERAY_BASE_URL as string, {
 		headers: {
+			// eslint-disable-next-line quote-props
 			'Authorization': LIFERAY_AUTH_TOKEN as string,
 			'Content-Type': 'application/json',
 		},

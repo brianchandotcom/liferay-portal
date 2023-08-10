@@ -12,11 +12,7 @@ import {
 	JiraAuthorizeCallback,
 	JiraAuthorizePayload,
 } from '../../lib/Types';
-import Testray from '../liferay/Testray';
-
-const cacheInstance = Cache.getInstance();
-
-const {
+import {
 	JIRA_APP_NAME,
 	JIRA_AUTH_BASE_URL,
 	JIRA_AUTH_CLIENT_ID,
@@ -26,7 +22,10 @@ const {
 	JIRA_AUTH_REDIRECT_URI,
 	JIRA_AUTH_SCOPES,
 	JIRA_AUTH_STATE_PREFIX,
-} = Bun.env;
+} from '../../utils/env';
+import Testray from '../liferay/Testray';
+
+const cacheInstance = Cache.getInstance();
 
 export type RequestSet = {
 	headers: Record<string, string>;
@@ -53,7 +52,7 @@ class JiraAuth {
 
 	private testray = new Testray();
 
-	public async authorize(userId: string, set: RequestSet) {
+	public authorize(userId: string) {
 		const searchParams = new URLSearchParams();
 		const authorizeParamsCopy = {
 			...this.AUTHORIZE_PARAMS,
@@ -64,7 +63,7 @@ class JiraAuth {
 			searchParams.set(param, (authorizeParamsCopy as any)[param]);
 		}
 
-		set.redirect = `${JIRA_AUTH_BASE_URL}/authorize?${decodeURIComponent(
+		return `${JIRA_AUTH_BASE_URL}/authorize?${decodeURIComponent(
 			searchParams.toString()
 		)}`;
 	}

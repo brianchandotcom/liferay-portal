@@ -5,12 +5,12 @@
 
 import Pusher from 'pusher';
 
-const {
+import {
 	PUSHER_APP_ID,
 	PUSHER_APP_KEY,
-	PUSHER_APP_REGION = 'sa1',
+	PUSHER_APP_REGION,
 	PUSHER_APP_SECRET,
-} = Bun.env;
+} from '../utils/env';
 
 const getPusherClient = () => {
 	if (PUSHER_APP_KEY && PUSHER_APP_ID && PUSHER_APP_SECRET) {

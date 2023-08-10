@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {JIRA_AUTH_CLOUD_ID} from '../utils/env';
 import logger from './Logger';
-
-const {JIRA_AUTH_CLOUD_ID} = Bun.env;
 
 class Cache {
 	public cache = new Map<string, any>();

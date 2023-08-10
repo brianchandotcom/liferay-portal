@@ -13,7 +13,7 @@ const colors = {
 };
 
 const getLoggerPrefix = (type: keyof typeof colors) =>
-	`🦊 ${new Date().toISOString()} - ${colors[type](`${type}:`)}`;
+	`🔹 ${new Date().toISOString()} - ${colors[type](`${type}:`)}`;
 
 const logger = {
 	...console,

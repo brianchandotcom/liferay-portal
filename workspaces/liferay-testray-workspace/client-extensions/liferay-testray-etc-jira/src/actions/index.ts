@@ -3,50 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Request, Response} from 'express';
+
 import Cache from '../lib/Cache';
 import logger from '../lib/Logger';
 import Jira from '../services/jira/Jira';
-import {RequestSet} from '../services/jira/JiraAuth';
 import JiraEngine from '../services/jira/JiraEngine';
 import Testray from '../services/liferay/Testray';
 import {getPusherClient} from '../services/pusher';
+import {runAsyncAction} from '../utils';
 
 const jiraBaseURL = 'https://liferay.atlassian.net';
 const cacheInstance = Cache.getInstance();
-
-const {
-	LIFERAY_BASE_URL,
-	LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION = '/web/testray?p_l_mode=preview',
-} = Bun.env;
 
 const jira = new Jira();
 const jiraEngine = new JiraEngine();
 const testray = new Testray();
 
 const actions = {
-	authorize: (userId: string, set: RequestSet) => jira.authorize(userId, set),
-	authorizeCallback: (
-		{code, state}: {code: string; state: string},
-		set: RequestSet
-	) => {
-		setTimeout(async () => {
+	authorize: (userId: string) => jira.authorize(userId),
+	authorizeCallback: ({code, state}: {code: string; state: string}) => {
+		runAsyncAction(async () => {
 			const response = await jira.exchangeAuthorizationCode({
 				code: code as string,
 				state: state as string,
 			});
 
 			await testray.setTestrayOAuthJiraCode(response, state as string);
-		}, 1000);
-
-		set.redirect = `${LIFERAY_BASE_URL}${LIFERAY_TESTRAY_REDIRECT_AUTHORIZATION}`;
+		});
 	},
-	importRequirementFromIssues: async ({
-		body,
-		request,
-	}: {
-		body: unknown;
-		request: Request;
-	}) => {
+	importRequirementFromIssues: async (
+		request: Request,
+		response: Response
+	) => {
 		const {
 			objectEntry: {
 				statusByUserId: userId,
@@ -55,14 +44,14 @@ const actions = {
 					r_projectJiraImportRequirements_c_projectId: projectId,
 				},
 			},
-		} = body as any;
+		} = request.body;
 
 		const httpContext = {
-			authorization: request.headers.get('authorization'),
+			authorization: request.headers['authorization'] as string,
 			userId,
 		};
 
-		setTimeout(async () => {
+		runAsyncAction(async () => {
 			const jiraIssues = ((_issues ?? '') as string)
 				.split(',')
 				.map((issue) => issue.trim());
@@ -88,17 +77,26 @@ const actions = {
 					);
 				}
 			}
-		}, 1000);
 
-		return 'ok';
+			const pusherClient = getPusherClient();
+
+			if (pusherClient) {
+				pusherClient.trigger(`${userId}-requirements`, 'processed', {
+					message: `${Object.keys(issues)
+						.filter((issue) => issue)
+						.join(', ')} was imported`,
+				});
+			}
+		}, response);
 	},
 	preauthorize: (userId: string, authorization: string) => {
 		cacheInstance.set(`preauthorize-${userId}`, authorization);
-
-		return 'ok';
 	},
-	resync: ({body, request}: {body: unknown; request: Request}) => {
-		const payload = typeof body === 'string' ? JSON.parse(body) : body;
+	resync: (request: Request, response: Response) => {
+		const payload =
+			typeof request.body === 'string'
+				? JSON.parse(request.body)
+				: request.body;
 
 		const {
 			objectEntry: {
@@ -109,11 +107,11 @@ const actions = {
 		} = payload as any;
 
 		const httpContext = {
-			authorization: request.headers.get('authorization'),
+			authorization: request.headers['authorization'] as string,
 			userId,
 		};
 
-		setTimeout(async () => {
+		runAsyncAction(async () => {
 			const issue = await jira.getIssue(ticket, httpContext);
 
 			await testray.resyncWithJira(issue, {
@@ -129,14 +127,12 @@ const actions = {
 
 			if (pusherClient) {
 				pusherClient.trigger(`${userId}-requirements`, 'processed', {
-					requirementId,
+					message: `Resync completed ${requirementId}`,
 				});
 			}
-		}, 2000);
-
-		return 'ok';
+		}, response);
 	},
-	updateTickets: ({body, request}: {body: unknown; request: Request}) => {
+	updateTickets: (request: Request, response: Response) => {
 		const {
 			objectEntry: {
 				id: caseResultId,
@@ -146,18 +142,18 @@ const actions = {
 			originalObjectEntry: {
 				values: {issues: oldIssues},
 			},
-		} = body as any;
+		} = request.body;
 
 		if (!issues?.length || oldIssues?.trim() === issues?.trim()) {
 			logger.info(`No issues to update on ${caseResultId} caseResultId`);
 		}
 
 		const httpContext = {
-			authorization: request.headers.get('authorization'),
+			authorization: request.headers['authorization'] as string,
 			userId,
 		};
 
-		setTimeout(async () => {
+		runAsyncAction(async () => {
 			const _issues = issues
 				.split(',')
 				.map((issue: string) => issue.trim()) as string[];
@@ -169,9 +165,7 @@ const actions = {
 					', '
 				)} on Case Result ${caseResultId}`
 			);
-		}, 1000);
-
-		return 'ok';
+		}, response);
 	},
 };
 

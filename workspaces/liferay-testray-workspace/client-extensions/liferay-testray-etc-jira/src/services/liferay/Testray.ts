@@ -14,11 +14,10 @@ import {
 	TestrayIssue,
 	TestrayJiraOAuth,
 } from '../../lib/Types';
+import {JIRA_AUTH_STATE_PREFIX, LIFERAY_AUTH_TOKEN} from '../../utils/env';
 import LiferayAuth from './LiferayAuth';
 
 const cacheInstance = Cache.getInstance();
-
-const {JIRA_AUTH_STATE_PREFIX, LIFERAY_AUTH_TOKEN} = Bun.env;
 
 class Testray extends LiferayAuth {
 	public async getOAuthJira(

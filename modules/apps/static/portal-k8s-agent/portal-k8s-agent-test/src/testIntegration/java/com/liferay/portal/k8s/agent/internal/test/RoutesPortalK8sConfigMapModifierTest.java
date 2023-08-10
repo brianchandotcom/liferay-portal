@@ -103,7 +103,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 	}
 
 	@Test
-	public void testExtInitRoutes() throws Exception {
+	public void testProjectRoutes() throws Exception {
 		String projectName = RandomTestUtil.randomString();
 		String serviceId = RandomTestUtil.randomString();
 

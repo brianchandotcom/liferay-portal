@@ -146,6 +146,16 @@ interface ITitleSectionProps extends React.HTMLAttributes<HTMLDivElement> {
 	title?: string;
 }
 
+interface IActionProps extends React.HTMLAttributes<HTMLDivElement> {
+	displayType: string;
+	label: string;
+	redirectURL: string;
+}
+
+interface IActionsProps extends React.HTMLAttributes<HTMLDivElement> {
+	actions: IActionProps[];
+}
+
 const TitleSection: React.FC<ITitleSectionProps> = ({
 	children,
 	className,
@@ -165,6 +175,22 @@ const TitleSection: React.FC<ITitleSectionProps> = ({
 	</Section>
 );
 
+const Actions: React.FC<IActionsProps> = ({actions = []}) => (
+	<div className='header-actions'>
+		{actions.map(({displayType, label, redirectURL}, index) => (
+			<a
+				className={getCN(`btn btn-${displayType}`, 'ml-2')}
+				href={redirectURL}
+				key={index}
+				target='_blank'
+			>
+				<ClayIcon className='mr-2' symbol='shortcut' />
+				{label}
+			</a>
+		))}
+	</div>
+);
+
 interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 	breadcrumbs: IBreadcrumbArgs[];
 	groupId: string;
@@ -173,6 +199,7 @@ interface IHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 const Header: React.FC<IHeaderProps> & {
 	NavBar: typeof NavBar;
 	PageActions: typeof PageActions;
+	Actions: typeof Actions;
 	Section: typeof Section;
 	TitleSection: typeof TitleSection;
 } = ({breadcrumbs, children, groupId}) => {
@@ -201,6 +228,7 @@ const Header: React.FC<IHeaderProps> & {
 
 Header.NavBar = NavBar;
 Header.PageActions = PageActions;
+Header.Actions = Actions;
 Header.Section = Section;
 Header.TitleSection = TitleSection;
 

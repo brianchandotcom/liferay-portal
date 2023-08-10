@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
+import com.liferay.search.experiences.exception.DuplicateSXPBlueprintExternalReferenceCodeException;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
@@ -38,6 +39,7 @@ import com.liferay.search.experiences.service.SXPBlueprintService;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -292,7 +294,11 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 	@Override
 	public SXPBlueprint postSXPBlueprintValidate(String json) throws Exception {
-		return SXPBlueprintUtil.toSXPBlueprint(json);
+		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(json);
+
+		_validateSXPBlueprintExternalReferenceCode(sxpBlueprint);
+
+		return sxpBlueprint;
 	}
 
 	@Override
@@ -336,6 +342,30 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 		return "1.0";
 	}
 
+	private void _validateSXPBlueprintExternalReferenceCode(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		if (Validator.isBlank(sxpBlueprint.getExternalReferenceCode())) {
+			return;
+		}
+
+		com.liferay.search.experiences.model.SXPBlueprint
+			serviceBuilderSXPBlueprint =
+				_sxpBlueprintLocalService.
+					fetchSXPBlueprintByExternalReferenceCode(
+						sxpBlueprint.getExternalReferenceCode(),
+						contextCompany.getCompanyId());
+
+		if ((serviceBuilderSXPBlueprint != null) &&
+			!Objects.equals(
+				serviceBuilderSXPBlueprint.getSXPBlueprintId(),
+				sxpBlueprint.getId())) {
+
+			throw new DuplicateSXPBlueprintExternalReferenceCodeException();
+		}
+	}
+
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
@@ -351,6 +381,9 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	private DTOConverter
 		<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
 			_sxpBlueprintDTOConverter;
+
+	@Reference
+	private SXPBlueprintService _sxpBlueprintLocalService;
 
 	@Reference
 	private SXPBlueprintService _sxpBlueprintService;

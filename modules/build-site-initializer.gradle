@@ -15,12 +15,6 @@ configurations {
 	extraRemoteApp
 }
 
-publishing {
-	publications {
-		extraRemoteApp(MavenPublication)
-	}
-}
-
 task buildExtraRemoteApp
 task forceDeploy
 task uploadExtraRemoteApp
@@ -47,6 +41,42 @@ if (GUtil.loadProperties(file("bnd.bnd"))["Web-ContextPath"] != null) {
 
 	if (webContextPath.startsWith("/")) {
 		webContextPath = webContextPath.substring(1)
+	}
+}
+
+if (gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
+	publishing {
+		publications {
+			extraRemoteApp(MavenPublication) {
+				artifact zipExtraRemoteApp
+
+				pom {
+					artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra.remote.app"
+					groupId = "com.liferay"
+					version = dateString
+				}
+			}
+		}
+	}
+
+	publishExtraRemoteAppPublicationToReleasesRepository {
+		doFirst {
+			File buildGradleFile = file("build.gradle")
+
+			String content = buildGradleFile.getText("UTF-8")
+
+			content = content.replaceFirst(~/ext.extraRemoteAppVersion = "(\w+\.\w+)"/) {
+				String all, String versionString ->
+
+				all.replace versionString, dateString
+			}
+
+			buildGradleFile.setText content, "UTF-8"
+		}
+	}
+
+	uploadExtraRemoteApp {
+		finalizedBy publishExtraRemoteAppPublicationToReleasesRepository
 	}
 }
 
@@ -80,8 +110,9 @@ processResources {
 	ResolvedConfiguration resolvedConfiguration = configurations.extraRemoteApp.getResolvedConfiguration()
 
 	if (gradle.startParameter.taskNames.any {
-			it.equals("forceDeploy") || it.equals("uploadExtraRemoteApp") || it.startsWith("publish")
+			it.equals("forceDeploy") || it.equals("uploadExtraRemoteApp")
 		} || resolvedConfiguration.hasError()) {
+
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {
@@ -140,40 +171,6 @@ processResources {
 			}
 		}
 	}
-}
-
-publishExtraRemoteAppPublicationToReleasesRepository {
-	doFirst {
-		File buildGradleFile = file("build.gradle")
-
-		String content = buildGradleFile.getText("UTF-8")
-
-		content = content.replaceFirst(~/ext.extraRemoteAppVersion = "(\w+\.\w+)"/) {
-			String all, String versionString ->
-
-			all.replace versionString, dateString
-		}
-
-		buildGradleFile.setText content, "UTF-8"
-	}
-}
-
-publishing {
-	publications {
-		extraRemoteApp(MavenPublication) {
-			artifact zipExtraRemoteApp
-
-			pom {
-				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra.remote.app"
-				groupId = "com.liferay"
-				version = dateString
-			}
-		}
-	}
-}
-
-uploadExtraRemoteApp {
-	finalizedBy publishExtraRemoteAppPublicationToReleasesRepository
 }
 
 zipExtraRemoteApp {

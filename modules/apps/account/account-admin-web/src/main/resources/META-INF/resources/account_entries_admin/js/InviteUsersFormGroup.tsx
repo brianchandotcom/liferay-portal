@@ -34,7 +34,7 @@ const MultiSelect = ({
 	onItemsChangeFn,
 	placeholder,
 	required = false,
-	sourceItems = [],
+	sourceItems,
 }: {
 	autoFocus?: boolean;
 	errorMessages: string[];

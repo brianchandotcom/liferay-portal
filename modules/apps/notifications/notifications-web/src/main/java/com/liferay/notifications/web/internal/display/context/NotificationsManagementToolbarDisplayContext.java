@@ -11,6 +11,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
@@ -121,8 +122,9 @@ public class NotificationsManagementToolbarDisplayContext {
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -147,6 +149,17 @@ public class NotificationsManagementToolbarDisplayContext {
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, navigation));
+			}
+		).build();
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(true);
+				dropdownItem.setHref(getSortingURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "date"));
 			}
 		).build();
 	}
@@ -217,17 +230,6 @@ public class NotificationsManagementToolbarDisplayContext {
 
 	private String _getNavigation() {
 		return ParamUtil.getString(_httpServletRequest, "navigation", "all");
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(true);
-				dropdownItem.setHref(getSortingURL());
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "date"));
-			}
-		).build();
 	}
 
 	private boolean _isActionRequired() {

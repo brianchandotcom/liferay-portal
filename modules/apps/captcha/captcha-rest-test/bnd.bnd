@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Captcha REST Test
+Bundle-SymbolicName: com.liferay.captcha.rest.test
+Bundle-Version: 1.0.0
+-includeresource: com.liferay.captcha.rest.client.jar=../captcha-rest-client/build/libs/com.liferay.captcha.rest.client-[0-9]*.jar;lib:=true
+-provider-policy:\
+	${replacestring;${range;[==,\
+	==]};.*,\
+	(.*)];$1}

@@ -21,7 +21,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = TempImageBlogsUploadFileEntryHandler.class)
+@Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
+	service = TempImageBlogsUploadFileEntryHandler.class
+)
 public class TempImageBlogsUploadFileEntryHandler
 	extends ImageBlogsUploadFileEntryHandler {
 

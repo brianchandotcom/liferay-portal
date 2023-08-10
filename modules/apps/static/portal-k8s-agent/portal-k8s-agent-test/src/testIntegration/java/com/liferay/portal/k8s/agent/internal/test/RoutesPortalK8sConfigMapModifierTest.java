@@ -35,9 +35,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,8 +61,8 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_bundle = FrameworkUtil.getBundle(
 			RoutesPortalK8sConfigMapModifierTest.class);
 
@@ -84,8 +84,8 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			-1, serviceReference.getProperty("service.ranking"));
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		_serviceTracker.close();
 	}
 
@@ -164,10 +164,13 @@ public class RoutesPortalK8sConfigMapModifierTest {
 				labels.put("lxc.liferay.com/metadataType", "ext-init");
 				labels.put("ext.lxc.liferay.com/projectName", projectName);
 				labels.put("ext.lxc.liferay.com/serviceId", serviceId);
-				labels.put("dxp.lxc.liferay.com/virtualInstanceId", webId);
+				labels.put(
+					"dxp.lxc.liferay.com/virtualInstanceId",
+					webId);
 			},
 			StringBundler.concat(
-				projectName, StringPool.DASH, webId, "-lxc-ext-init-metadata"));
+				projectName, StringPool.DASH, webId,
+				"-lxc-ext-init-metadata"));
 
 		Path projectPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/" + webId,

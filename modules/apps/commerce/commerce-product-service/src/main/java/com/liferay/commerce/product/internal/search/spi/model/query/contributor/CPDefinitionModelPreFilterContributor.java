@@ -231,12 +231,12 @@ public class CPDefinitionModelPreFilterContributor
 	private void _filterByExcludedCPDefinitionId(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		String excludedCPDefinitionId = GetterUtil.getString(
+		long excludedCPDefinitionId = GetterUtil.getLong(
 			searchContext.getAttribute("excludedCPDefinitionId"));
 
-		if (Validator.isNotNull(excludedCPDefinitionId)) {
+		if (excludedCPDefinitionId > 0) {
 			booleanFilter.addTerm(
-				Field.ENTRY_CLASS_PK, excludedCPDefinitionId,
+				Field.ENTRY_CLASS_PK, String.valueOf(excludedCPDefinitionId),
 				BooleanClauseOccur.MUST_NOT);
 		}
 	}

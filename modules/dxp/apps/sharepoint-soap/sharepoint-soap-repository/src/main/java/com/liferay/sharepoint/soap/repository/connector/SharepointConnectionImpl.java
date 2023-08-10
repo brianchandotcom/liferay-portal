@@ -348,6 +348,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		HttpTransportPropertiesImpl.Authenticator authenticator =
 			new HttpTransportPropertiesImpl.Authenticator();
 
+		authenticator.setAllowedRetry(true);
 		authenticator.setAuthSchemes(
 			Collections.singletonList(AuthSchemes.NTLM));
 		authenticator.setDomain(url.getHost());

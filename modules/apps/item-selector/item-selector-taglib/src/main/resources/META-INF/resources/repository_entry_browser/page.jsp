@@ -69,6 +69,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	filterDropdownItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= repositoryEntriesCount %>"
+	orderDropdownItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	searchActionURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchFormMethod="POST"
 	searchFormName="searchFm"

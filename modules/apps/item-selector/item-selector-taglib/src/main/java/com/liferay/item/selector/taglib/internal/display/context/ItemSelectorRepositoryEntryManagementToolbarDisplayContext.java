@@ -21,6 +21,7 @@ import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrows
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -191,8 +192,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 						_httpServletRequest, "filter-by-location"));
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -226,6 +228,40 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 						_getScopeLabel(scope)));
 			}
 		).build();
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				Map<String, String> orderColumnsMap = HashMapBuilder.put(
+					"modifiedDate", "modified-date"
+				).put(
+					"size", "size"
+				).put(
+					"title", "title"
+				).build();
+
+				for (Map.Entry<String, String> orderByColEntry :
+						orderColumnsMap.entrySet()) {
+
+					add(
+						dropdownItem -> {
+							String orderByCol = orderByColEntry.getKey();
+
+							dropdownItem.setActive(
+								orderByCol.equals(_getOrderByCol()));
+							dropdownItem.setHref(
+								getCurrentSortingURL(), "orderByCol",
+								orderByCol);
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									orderByColEntry.getValue()));
+						});
+				}
+			}
+		};
 	}
 
 	public String getOrderByType() {
@@ -374,40 +410,6 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 			_httpServletRequest, _portalPreferences);
 
 		return _orderByCol;
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				Map<String, String> orderColumnsMap = HashMapBuilder.put(
-					"modifiedDate", "modified-date"
-				).put(
-					"size", "size"
-				).put(
-					"title", "title"
-				).build();
-
-				for (Map.Entry<String, String> orderByColEntry :
-						orderColumnsMap.entrySet()) {
-
-					add(
-						dropdownItem -> {
-							String orderByCol = orderByColEntry.getKey();
-
-							dropdownItem.setActive(
-								orderByCol.equals(_getOrderByCol()));
-							dropdownItem.setHref(
-								getCurrentSortingURL(), "orderByCol",
-								orderByCol);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest,
-									orderByColEntry.getValue()));
-						});
-				}
-			}
-		};
 	}
 
 	private PortletURL _getPortletURL() {

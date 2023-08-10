@@ -10,16 +10,26 @@ export default function propsTransformer({
 		deleteNotificationsURL,
 		markNotificationsAsReadURL,
 		markNotificationsAsUnreadURL,
+		searchContainerId,
 	},
 	portletNamespace,
 	...otherProps
 }) {
+	let searchContainer;
+
+	Liferay.componentReady(`${portletNamespace}${searchContainerId}`).then(
+		(searchContainerComponent) => {
+			searchContainer = searchContainerComponent;
+		}
+	);
+
 	const processAction = (url) => {
 		const form = document.getElementById(`${portletNamespace}fm`);
 
 		if (form) {
 			postForm(form, {
 				data: {
+					selectAll: searchContainer.select?.get('bulkSelection'),
 					selectedEntryIds: getCheckedCheckboxes(
 						form,
 						`${portletNamespace}allRowIds`

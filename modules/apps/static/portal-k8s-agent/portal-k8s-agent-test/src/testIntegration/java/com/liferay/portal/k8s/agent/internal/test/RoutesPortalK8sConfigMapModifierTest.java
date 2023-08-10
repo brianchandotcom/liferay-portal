@@ -102,6 +102,48 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		_testDXPRoutes(company.getCompanyId(), webId, webId);
 	}
 
+	private void _testDXPRoutes(long companyId, String hostname, String webId)
+		throws Exception {
+
+		Path dxpPath = Paths.get(
+			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
+
+		Assert.assertTrue(Files.exists(dxpPath));
+
+		File dxpDir = dxpPath.toFile();
+
+		String[] fileNames = dxpDir.list();
+
+		Assert.assertEquals(Arrays.toString(fileNames), 4, fileNames.length);
+
+		Path lxcDXPMainDomainPath = dxpPath.resolve(
+			"com.liferay.lxc.dxp.main.domain");
+
+		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
+		Assert.assertEquals(
+			webId + ":8080",
+			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
+
+		VirtualHost virtualHost = _virtualHostLocalService.createVirtualHost(
+			_counterLocalService.increment());
+
+		virtualHost.setCompanyId(companyId);
+		virtualHost.setHostname("baker.com");
+
+		_virtualHostLocalService.addVirtualHost(virtualHost);
+
+		List<String> lxcDXPDomains = StringUtil.split(
+			new String(
+				Files.readAllBytes(
+					dxpPath.resolve("com.liferay.lxc.dxp.domains"))),
+			CharPool.NEW_LINE);
+
+		Assert.assertEquals(lxcDXPDomains.toString(), 2, lxcDXPDomains.size());
+
+		Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(0));
+		Assert.assertEquals("baker.com:8080", lxcDXPDomains.get(1));
+	}
+
 	@Test
 	public void testProjectRoutes() throws Exception {
 		String projectName = RandomTestUtil.randomString();
@@ -156,48 +198,6 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			fizzPath.toString() + " does not exist", Files.exists(fooPath));
 
 		Assert.assertEquals("buzz", new String(Files.readAllBytes(fizzPath)));
-	}
-
-	private void _testDXPRoutes(long companyId, String hostname, String webId)
-		throws Exception {
-
-		Path dxpPath = Paths.get(
-			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
-
-		Assert.assertTrue(Files.exists(dxpPath));
-
-		File dxpDir = dxpPath.toFile();
-
-		String[] fileNames = dxpDir.list();
-
-		Assert.assertEquals(Arrays.toString(fileNames), 4, fileNames.length);
-
-		Path lxcDXPMainDomainPath = dxpPath.resolve(
-			"com.liferay.lxc.dxp.main.domain");
-
-		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
-		Assert.assertEquals(
-			webId + ":8080",
-			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
-
-		VirtualHost virtualHost = _virtualHostLocalService.createVirtualHost(
-			_counterLocalService.increment());
-
-		virtualHost.setCompanyId(companyId);
-		virtualHost.setHostname("baker.com");
-
-		_virtualHostLocalService.addVirtualHost(virtualHost);
-
-		List<String> lxcDXPDomains = StringUtil.split(
-			new String(
-				Files.readAllBytes(
-					dxpPath.resolve("com.liferay.lxc.dxp.domains"))),
-			CharPool.NEW_LINE);
-
-		Assert.assertEquals(lxcDXPDomains.toString(), 2, lxcDXPDomains.size());
-
-		Assert.assertEquals(hostname + ":8080", lxcDXPDomains.get(0));
-		Assert.assertEquals("baker.com:8080", lxcDXPDomains.get(1));
 	}
 
 	private static Bundle _bundle;

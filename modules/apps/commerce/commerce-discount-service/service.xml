@@ -324,6 +324,7 @@
 		<exception>CommerceDiscountLimitationType</exception>
 		<exception>CommerceDiscountMaxPriceValue</exception>
 		<exception>CommerceDiscountRuleType</exception>
+		<exception>CommerceDiscountRuleTypeSettings</exception>
 		<exception>CommerceDiscountTarget</exception>
 		<exception>CommerceDiscountTitle</exception>
 		<exception>CommerceDiscountValidator</exception>

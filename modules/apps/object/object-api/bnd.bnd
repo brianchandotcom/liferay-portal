@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.object.configuration,\
 	com.liferay.object.constants,\
 	com.liferay.object.definition.notification.term.util,\
+	com.liferay.object.definition.tree,\
 	com.liferay.object.deployer,\
 	com.liferay.object.display.context,\
 	com.liferay.object.dynamic.data.mapping.expression,\

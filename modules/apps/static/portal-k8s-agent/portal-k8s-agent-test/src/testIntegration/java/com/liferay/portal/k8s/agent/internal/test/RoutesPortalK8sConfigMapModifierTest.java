@@ -6,7 +6,6 @@
 package com.liferay.portal.k8s.agent.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -119,8 +118,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			null, webId, webId, webId, 0, true, null, null, null, null, null,
 			null);
 
-		_virtualHost = _virtualHostLocalService.createVirtualHost(
-			_counterLocalService.increment());
+		_virtualHost = _virtualHostLocalService.createVirtualHost(-1);
 
 		_virtualHost.setCompanyId(_company.getCompanyId());
 		_virtualHost.setHostname("foobar.com");
@@ -256,10 +254,6 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			_serviceTracker;
 
 	private Company _company;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
-
 	private VirtualHost _virtualHost;
 
 	@Inject

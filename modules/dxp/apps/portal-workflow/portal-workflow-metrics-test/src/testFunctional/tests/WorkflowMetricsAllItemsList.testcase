@@ -1489,6 +1489,10 @@ definition {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -1547,6 +1551,10 @@ definition {
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOverdue {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -1764,6 +1772,10 @@ definition {
 	test ItemModalPlacesIconReferringToSlaStatusOnTime {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+
+		WorkflowMetrics.setSLADefinitionsJobInterval(
+			definitionsJobInterval = 1,
+			slaJobInterval = 1);
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

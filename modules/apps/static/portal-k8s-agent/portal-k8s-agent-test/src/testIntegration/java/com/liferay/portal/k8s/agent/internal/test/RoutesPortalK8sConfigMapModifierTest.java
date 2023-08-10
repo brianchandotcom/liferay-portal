@@ -89,29 +89,33 @@ public class RoutesPortalK8sConfigMapModifierTest {
 	}
 
 	@Test
-	public void testDefaultDXPRoutes() throws Exception {
-		Path dxpPath = Paths.get(
+	public void testDefaultDxpRoutes() throws Exception {
+		Path dxpMetadataPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/default/dxp");
 
-		Assert.assertTrue(Files.exists(dxpPath));
+		Assert.assertTrue(
+			dxpMetadataPath.toString() + " does not exist",
+			Files.exists(dxpMetadataPath));
 
-		File dxpDir = dxpPath.toFile();
+		File dxpMetadataDir = dxpMetadataPath.toFile();
 
-		String[] fileNames = dxpDir.list();
+		String[] files = dxpMetadataDir.list();
 
-		Assert.assertEquals(Arrays.toString(fileNames), 4, fileNames.length);
+		Assert.assertEquals(Arrays.toString(files), 4, files.length);
 
-		Path lxcDXPMainDomainPath = dxpPath.resolve(
+		Path mainDomainPath = dxpMetadataPath.resolve(
 			"com.liferay.lxc.dxp.main.domain");
 
-		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
+		Assert.assertTrue(
+			mainDomainPath.toString() + " does not exist",
+			Files.exists(mainDomainPath));
+
 		Assert.assertEquals(
-			"localhost:8080",
-			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
+			"localhost:8080", new String(Files.readAllBytes(mainDomainPath)));
 	}
 
 	@Test
-	public void testMultipleVirtualHostsInNondefaultCompany() throws Exception {
+	public void testMultipleVirtualHostsInVirtualInstance() throws Exception {
 		String webId = "fizzbuzz.com";
 
 		_company = _companyLocalService.addCompany(
@@ -121,38 +125,44 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		_virtualHost = _virtualHostLocalService.createVirtualHost(-1);
 
 		_virtualHost.setCompanyId(_company.getCompanyId());
+
 		_virtualHost.setHostname("foobar.com");
 
 		_virtualHostLocalService.addVirtualHost(_virtualHost);
 
-		Path dxpPath = Paths.get(
+		Path dxpMetadataPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
 
-		Assert.assertTrue(Files.exists(dxpPath));
+		Assert.assertTrue(
+			dxpMetadataPath.toString() + " does not exist",
+			Files.exists(dxpMetadataPath));
 
-		File dxpDir = dxpPath.toFile();
+		File dxpMetadataDir = dxpMetadataPath.toFile();
 
-		String[] fileNames = dxpDir.list();
+		String[] files = dxpMetadataDir.list();
 
-		Assert.assertEquals(Arrays.toString(fileNames), 4, fileNames.length);
+		Assert.assertEquals(Arrays.toString(files), 4, files.length);
 
-		Path lxcDXPMainDomainPath = dxpPath.resolve(
+		Path mainDomainPath = dxpMetadataPath.resolve(
 			"com.liferay.lxc.dxp.main.domain");
 
-		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
+		Assert.assertTrue(
+			mainDomainPath.toString() + " does not exist",
+			Files.exists(mainDomainPath));
+
 		Assert.assertEquals(
-			webId + ":8080",
-			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
+			webId + ":8080", new String(Files.readAllBytes(mainDomainPath)));
+
+		Path domainsPath = dxpMetadataPath.resolve(
+			"com.liferay.lxc.dxp.domains");
 
 		List<String> lxcDXPDomains = StringUtil.split(
-			new String(
-				Files.readAllBytes(
-					dxpPath.resolve("com.liferay.lxc.dxp.domains"))),
-			CharPool.NEW_LINE);
+			new String(Files.readAllBytes(domainsPath)), CharPool.NEW_LINE);
 
 		Assert.assertEquals(lxcDXPDomains.toString(), 2, lxcDXPDomains.size());
 
 		Assert.assertEquals("fizzbuzz.com:8080", lxcDXPDomains.get(0));
+
 		Assert.assertEquals("foobar.com:8080", lxcDXPDomains.get(1));
 	}
 
@@ -193,9 +203,9 @@ public class RoutesPortalK8sConfigMapModifierTest {
 
 		File projectMetadataDir = projectMetadataPath.toFile();
 
-		String[] fileNames = projectMetadataDir.list();
+		String[] files = projectMetadataDir.list();
 
-		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
+		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
 		Path fooPath = projectMetadataPath.resolve("foo");
 
@@ -220,24 +230,28 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			null, webId, webId, webId, 0, true, null, null, null, null, null,
 			null);
 
-		Path dxpPath = Paths.get(
+		Path dxpMetadataPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
 
-		Assert.assertTrue(Files.exists(dxpPath));
+		Assert.assertTrue(
+			dxpMetadataPath.toString() + " does not exist",
+			Files.exists(dxpMetadataPath));
 
-		File dxpDir = dxpPath.toFile();
+		File dxpMetadataDir = dxpMetadataPath.toFile();
 
-		String[] fileNames = dxpDir.list();
+		String[] files = dxpMetadataDir.list();
 
-		Assert.assertEquals(Arrays.toString(fileNames), 4, fileNames.length);
+		Assert.assertEquals(Arrays.toString(files), 4, files.length);
 
-		Path lxcDXPMainDomainPath = dxpPath.resolve(
+		Path mainDomainPath = dxpMetadataPath.resolve(
 			"com.liferay.lxc.dxp.main.domain");
 
-		Assert.assertTrue(Files.exists(lxcDXPMainDomainPath));
+		Assert.assertTrue(
+			mainDomainPath.toString() + " does not exist",
+			Files.exists(mainDomainPath));
+
 		Assert.assertEquals(
-			webId + ":8080",
-			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
+			webId + ":8080", new String(Files.readAllBytes(mainDomainPath)));
 	}
 
 	private static Bundle _bundle;

@@ -86,8 +86,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -101,8 +100,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -112,8 +110,7 @@
 															"fragmentConfig": {
 																"height": "py-1"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -130,8 +127,7 @@
 													{
 														"definition": {
 															"widgetInstance": {
-																"widgetConfig": {
-																},
+																"widgetConfig": {},
 																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 															}
 														},
@@ -153,13 +149,11 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																}
 															],
 															"verticalAlignment": "top"
@@ -175,13 +169,11 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "tablet"
 																		}
 																	],
@@ -201,19 +193,16 @@
 																				"items": 2,
 																				"justifyContent": "justify-content-start"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"indexed": true
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {
-																				},
+																				"definition": {},
 																				"type": "FragmentDropZone"
 																			},
 																			{
-																				"definition": {
-																				},
+																				"definition": {},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -228,8 +217,7 @@
 																								"items": 2,
 																								"justifyContent": "justify-content-start"
 																							},
-																							"fragmentFields": [
-																							],
+																							"fragmentFields": [],
 																							"fragmentStyle": {
 																								"hidden": true,
 																								"paddingBottom": "4"
@@ -238,8 +226,7 @@
 																						},
 																						"pageElements": [
 																							{
-																								"definition": {
-																								},
+																								"definition": {},
 																								"pageElements": [
 																									{
 																										"definition": {
@@ -264,8 +251,7 @@
 																																}
 																															}
 																														},
-																														"fragmentLink": {
-																														}
+																														"fragmentLink": {}
 																													}
 																												}
 																											],
@@ -281,8 +267,7 @@
 																								"type": "FragmentDropZone"
 																							},
 																							{
-																								"definition": {
-																								},
+																								"definition": {},
 																								"type": "FragmentDropZone"
 																							}
 																						],
@@ -304,13 +289,11 @@
 																								},
 																								{
 																									"id": "portraitMobile",
-																									"rowViewportDefinition": {
-																									}
+																									"rowViewportDefinition": {}
 																								},
 																								{
 																									"id": "tablet",
-																									"rowViewportDefinition": {
-																									}
+																									"rowViewportDefinition": {}
 																								}
 																							],
 																							"verticalAlignment": "top"
@@ -326,13 +309,11 @@
 																											"id": "landscapeMobile"
 																										},
 																										{
-																											"columnViewportDefinition": {
-																											},
+																											"columnViewportDefinition": {},
 																											"id": "portraitMobile"
 																										},
 																										{
-																											"columnViewportDefinition": {
-																											},
+																											"columnViewportDefinition": {},
 																											"id": "tablet"
 																										}
 																									],
@@ -354,8 +335,7 @@
 																												{
 																													"id": "text",
 																													"value": {
-																														"fragmentLink": {
-																														},
+																														"fragmentLink": {},
 																														"text": {
 																															"value_i18n": {
 																																"en_US": "Code Engine Studio Loan and Credit Portal"
@@ -381,14 +361,12 @@
 																												"items": 2,
 																												"justifyContent": "justify-content-start"
 																											},
-																											"fragmentFields": [
-																											],
+																											"fragmentFields": [],
 																											"indexed": true
 																										},
 																										"pageElements": [
 																											{
-																												"definition": {
-																												},
+																												"definition": {},
 																												"pageElements": [
 																													{
 																														"definition": {
@@ -413,8 +391,7 @@
 																																				}
 																																			}
 																																		},
-																																		"fragmentLink": {
-																																		}
+																																		"fragmentLink": {}
 																																	}
 																																}
 																															],
@@ -430,8 +407,7 @@
 																												"type": "FragmentDropZone"
 																											},
 																											{
-																												"definition": {
-																												},
+																												"definition": {},
 																												"type": "FragmentDropZone"
 																											}
 																										],
@@ -452,8 +428,7 @@
 																												{
 																													"id": "text",
 																													"value": {
-																														"fragmentLink": {
-																														}
+																														"fragmentLink": {}
 																													}
 																												}
 																											],
@@ -486,13 +461,11 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "tablet"
 																		}
 																	],
@@ -559,8 +532,7 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -582,8 +554,7 @@
 									"fragmentConfig": {
 										"height": "py-3"
 									},
-									"fragmentFields": [
-									],
+									"fragmentFields": [],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -657,8 +628,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -672,8 +642,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -692,13 +661,11 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {
-																	}
+																	"rowViewportDefinition": {}
 																}
 															],
 															"verticalAlignment": "top"
@@ -714,13 +681,11 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "tablet"
 																		}
 																	],
@@ -735,8 +700,7 @@
 																			"fragmentConfig": {
 																				"height": "py-5"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -756,8 +720,7 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\"><b id=\"docs-internal-guid-e2500739-7fff-5cd5-7e25-0daa4b3f9ad9\">The perfect loan and credit portal to complement your online banking presence</b></h1>\n"
@@ -781,8 +744,7 @@
 																			"fragmentConfig": {
 																				"height": "py-3"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -802,8 +764,7 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<b id=\"docs-internal-guid-7eae0230-7fff-e6e7-da01-0b7aa33cf47e\">Customer intelligence is a key indicator of the profitability of a financial organization.&nbsp; It’s not enough to offer traditional financial services. Today’s customers want a better digital experience along with convenient banking options and transparent communication channels. Banks that want to compete in this space need the infrastructure in place to support these services and protect their customers’ personal information.</b>"
@@ -827,8 +788,7 @@
 																			"fragmentConfig": {
 																				"height": "py-5"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -846,13 +806,11 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {
-																			},
+																			"columnViewportDefinition": {},
 																			"id": "tablet"
 																		}
 																	],
@@ -867,8 +825,7 @@
 																			"fragmentConfig": {
 																				"height": "py-4"
 																			},
-																			"fragmentFields": [
-																			],
+																			"fragmentFields": [],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -881,7 +838,7 @@
 																			},
 																			"fragmentConfig": {
 																				"colorScheme": "",
-																				"imageAspectRatio": "auto",
+																				"imageAspectRatio": "aspect-ratio",
 																				"imageCarouselMaxWidth": "517px",
 																				"lazyLoadingImage": true,
 																				"numberOfImages": "3"
@@ -890,8 +847,7 @@
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -906,8 +862,7 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -922,8 +877,7 @@
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -960,8 +914,7 @@
 											"fragmentConfig": {
 												"height": "py-3"
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -1035,8 +988,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1050,8 +1002,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -1061,8 +1012,7 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1082,8 +1032,7 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Our Digital Loan Portal is the Solution That Customers Want</h4>\n<br />\nFinTech may be driving the model, but the customer experience is fueling the transition.<br />\n<br />\nCustomer satisfaction surveys don’t tell the entire story. According to a recent consumer survey,&nbsp;<a href=\"https://www.fico.com/blogs/what-do-customers-really-want-their-banks\">86% of respondents</a>&nbsp;are satisfied or very satisfied with their current bank. Nearly half of all banking customers plan to keep their deposit accounts with their current banks.<br />\n<br />\nThat doesn’t mean they can’t be lured away by better services. 75% of Millennials are willing to move their accounts to a new financial services provider if it comes with a better banking experience. Even more telling, 85% of Millennials and 71% of Gen-Xers would consider using a non-traditional financial services provider like PayPal or Amazon.<br />\n<br />\nOur&nbsp;<strong>Loan and Credit Portal</strong>&nbsp;helps you meet your customers with the experience they desire and are able to more quickly get the services that they need.&nbsp;"
@@ -1104,8 +1053,7 @@
 															"fragmentConfig": {
 																"height": "py-5"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1186,8 +1134,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1201,8 +1148,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -1212,8 +1158,7 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1241,8 +1186,7 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {
-																		}
+																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -1258,8 +1202,7 @@
 															"fragmentConfig": {
 																"height": "py-5"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1339,8 +1282,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1354,8 +1296,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -1387,8 +1328,7 @@
 																	"fragmentConfig": {
 																		"height": "py-4"
 																	},
-																	"fragmentFields": [
-																	],
+																	"fragmentFields": [],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -1408,8 +1348,7 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Description</h4>\n"
@@ -1433,8 +1372,7 @@
 																	"fragmentConfig": {
 																		"height": "py-2"
 																	},
-																	"fragmentFields": [
-																	],
+																	"fragmentFields": [],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -1454,8 +1392,7 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {
-																				},
+																				"fragmentLink": {},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "makeSEA lets your business use AR/VR (XR) technology for selling, training and influencing like no other medium can, and features tools for creating live and prerecorded product demos, lessons, exhibits, custom apps and more, with no/low-code publishing, using content that is relevant to your audience.<br />\n<br />\nmakeSEA reduces application creation and update effort by 10x-100x as compared to traditional XR publishing tools. It enables co-presence, remote hands support, geo-referenced inspection and audits, parts order and repair, and other universal workflows in AR and VR that apply to most any business and discipline."
@@ -1479,8 +1416,7 @@
 																	"fragmentConfig": {
 																		"height": "py-4"
 																	},
-																	"fragmentFields": [
-																	],
+																	"fragmentFields": [],
 																	"fragmentStyle": {
 																		"hidden": true
 																	},
@@ -1526,13 +1462,11 @@
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {
-																					}
+																					"rowViewportDefinition": {}
 																				}
 																			],
 																			"verticalAlignment": "middle"
@@ -1548,13 +1482,11 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -1608,8 +1540,7 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {
-																												}
+																												"fragmentLink": {}
 																											}
 																										}
 																									],
@@ -1637,13 +1568,11 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {
-																							},
+																							"columnViewportDefinition": {},
 																							"id": "tablet"
 																						}
 																					],
@@ -1665,8 +1594,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<a href=\"https://www.placecube.com/communities-product-guide/\" target=\"_blank\"><b>Product Guide</b></a>"
@@ -1706,8 +1634,7 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Key Features"
@@ -1761,13 +1688,11 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {
-																			}
+																			"rowViewportDefinition": {}
 																		},
 																		{
 																			"id": "tablet",
-																			"rowViewportDefinition": {
-																			}
+																			"rowViewportDefinition": {}
 																		}
 																	],
 																	"verticalAlignment": "top"
@@ -1783,13 +1708,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -1846,8 +1769,7 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {
-																										}
+																										"fragmentLink": {}
 																									}
 																								}
 																							],
@@ -1875,8 +1797,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Loan Comparison"
@@ -1907,8 +1828,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<div style=\"text-align:center\">Use our easy to use widget to compare different loans and find out the loan that best suits your financial needs. &nbsp;Showcase your products and services online and help your visitors find relevant options faster with powerful search capabilities and personalized search results.</div>\n"
@@ -1940,13 +1860,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -2003,8 +1921,7 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {
-																										}
+																										"fragmentLink": {}
 																									}
 																								}
 																							],
@@ -2032,8 +1949,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Loan Calculator"
@@ -2064,8 +1980,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<div style=\"text-align:center\">Our loan calculator helps you to easily compare the benefits of different loans which you qualify for and determine your interest rate, monthly and annual payments in an easy to use customer experience. &nbsp;</div>\n"
@@ -2097,13 +2012,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -2155,8 +2068,7 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {
-																										}
+																										"fragmentLink": {}
 																									}
 																								}
 																							],
@@ -2184,8 +2096,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Credit Card Catalog"
@@ -2216,8 +2127,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<div style=\"text-align:center\">Our credit card catalog helps your customers to easily identify and filter which type of credit card best fits their individual needs based on their income, annual fee limits and much more. &nbsp;You can also add different card types depending on the services you offer.&nbsp;</div>\n"
@@ -2249,13 +2159,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -2307,8 +2215,7 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {
-																										}
+																										"fragmentLink": {}
 																									}
 																								}
 																							],
@@ -2336,8 +2243,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Integrate Legacy Systems"
@@ -2368,8 +2274,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<div style=\"text-align:center\">Overcome integration difficulties with a platform unparalleled for its interoperability and flexibility. Unite existing core financial services systems and technology to work alongside emerging FinTech and future innovation.</div>\n"
@@ -2401,13 +2306,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -2459,8 +2362,7 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {
-																										}
+																										"fragmentLink": {}
 																									}
 																								}
 																							],
@@ -2488,8 +2390,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Integration and Extensibility"
@@ -2520,8 +2421,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<div style=\"text-align:center\">Stay ahead of changing risks and an evolving market with a flexible platform built to adapt for change. OpenAPI compliance and a wide range of development tools help accelerate future innovations and changing business models.</div>\n"
@@ -2558,13 +2458,11 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "portraitMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {
-																					},
+																					"columnViewportDefinition": {},
 																					"id": "tablet"
 																				}
 																			],
@@ -2616,8 +2514,7 @@
 																												}
 																											}
 																										},
-																										"fragmentLink": {
-																										}
+																										"fragmentLink": {}
 																									}
 																								}
 																							],
@@ -2645,8 +2542,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Connect with your Customers"
@@ -2677,8 +2573,7 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {
-																										},
+																										"fragmentLink": {},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<div style=\"text-align:center\">Deliver intuitive experiences that increase wealth manager and financial advisor productivity and satisfaction. Jumpstart the creation of an advisor portal by tailoring pre-built capabilities to your needs with our experienced Global Services and Partner network.</div>\n"
@@ -2720,8 +2615,7 @@
 									"fragmentConfig": {
 										"height": "py-5"
 									},
-									"fragmentFields": [
-									],
+									"fragmentFields": [],
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -2792,8 +2686,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -2807,8 +2700,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -2818,8 +2710,7 @@
 															"fragmentConfig": {
 																"height": "py-3"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -2839,8 +2730,7 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\"><b id=\"docs-internal-guid-25ec69d0-7fff-4fca-e913-1a360e586ba3\">Help Your Customers Help Themselves<br />\nwith Code Engine's Loan and Credit Portal</b>:</h2>\n<br />\nEach financial portal may look slightly different depending on your organizational goals and needs, but the majority are likely to enable or contribute to the following benefit:<br />\n<br />\n<strong>1. Empower Customers to Find Their Own Answers</strong><br />\n<br />\nFinancial portals are a great way to address common needs of your clients. These resources can include community forums, a FAQ section, or troubleshooting guides.<br />\n<br />\nToday, a significant number of customers, particularly those in younger age groups, have a preference for self-service. The younger generation is more likely to make use of FAQ pages to try and find solutions to their problems before they get in touch with customer service. As a result, self-service portals will be of particular appeal to this demographic.<br />\n<br />\nCustomers who are particularly impressed are also much more likely to leave positive reviews, discuss a company, and recommend it to the people they know.<br />\n<br />\n<strong>2. Reduce the Number of Customer Service Tickets</strong><br />\n<br />\nEach time a customer interacts 1:1 with an employee, your business spends both time and money on that interaction. Our portals allow the customer to immediately address their challenges, helping to reduce significant investments of time from your employees.<br />\n<br />\n<strong>3. Consistently Deliver Content For Customers</strong><br />\n<br />\nOur financial portals have a unified channel to deliver content, ensuring customers know exactly where to go when looking for useful content.<br />\n<br />\nWhen customers are able to easily navigate and find the content that solves their issue or answers their question, it will encourage greater levels of interaction with your business and help them to gain a greater understanding of the nature of the products and services that your company provides.\n<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Company Profile</h4>\n<br />\nCode Engine Studio is a system implementation agency with a focus in the Asia Pacific region. &nbsp;They have a team of experts on both the technical and business side having extensive experience on Liferay solutions in the areas of Finances, Commerce, Manufacturing, Logistics, non-profit and Education. &nbsp;They have customer base that they service globally ranging from the size of SME’s to Enterprises. &nbsp;<br />\n<br />\nWebsite<br />\n<b id=\"docs-internal-guid-07fb6d3c-7fff-8e20-f2e3-37dee4434907\"><a href=\"https://www.codeenginestudio.com/\">https://www.codeenginestudio.com/</a></b><br />\n<br />\nEmail<br />\n<b id=\"docs-internal-guid-4017dff4-7fff-d8a9-58ae-480b3f105c08\"><a href=\"mailto:lan.luu@codeenginestudio.com\">newbusiness@codeenginestudio.com</a></b><br />\n<br />\nPhone<br />\n<a href=\"tel:15169004080\">1-516-900-4080</a>"
@@ -2861,8 +2751,7 @@
 															"fragmentConfig": {
 																"height": "py-5"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -2881,9 +2770,7 @@
 					},
 					{
 						"definition": {
-							"cssClasses": [
-								"#solutions-details-form"
-							],
+							"cssClasses": ["#solutions-details-form"],
 							"fragmentStyle": {
 								"backgroundColor": "#f4f6f9",
 								"borderWidth": "0"
@@ -2946,8 +2833,7 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -2961,8 +2847,7 @@
 										},
 										"pageElements": [
 											{
-												"definition": {
-												},
+												"definition": {},
 												"pageElements": [
 													{
 														"definition": {
@@ -2972,8 +2857,7 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -2993,8 +2877,7 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h2>\n<br />\nFind out more about&nbsp;Code Engine Studio Loan and Credit Portal"

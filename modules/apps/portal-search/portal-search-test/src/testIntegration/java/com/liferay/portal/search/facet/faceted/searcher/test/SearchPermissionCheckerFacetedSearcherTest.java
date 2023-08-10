@@ -14,11 +14,9 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -31,7 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.facet.user.UserFacetFactory;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -108,8 +106,7 @@ public class SearchPermissionCheckerFacetedSearcherTest
 
 		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits,
-			Collections.singletonMap(
-				StringUtil.toLowerCase(user2.getFullName()), 1));
+			Collections.singletonMap(String.valueOf(user2.getUserId()), 1));
 	}
 
 	protected void addJournalArticle(User user, Group group, String title)
@@ -158,11 +155,7 @@ public class SearchPermissionCheckerFacetedSearcherTest
 	}
 
 	protected Facet createUserFacet(SearchContext searchContext) {
-		Facet facet = new MultiValueFacet(searchContext);
-
-		facet.setFieldName(Field.USER_NAME);
-
-		return facet;
+		return userFacetFactory.newInstance(searchContext);
 	}
 
 	@Inject
@@ -176,6 +169,9 @@ public class SearchPermissionCheckerFacetedSearcherTest
 
 	@Inject
 	protected static Portal portal;
+
+	@Inject
+	protected static UserFacetFactory userFacetFactory;
 
 	@DeleteAfterTestRun
 	private final List<JournalArticle> _articles = new ArrayList<>();

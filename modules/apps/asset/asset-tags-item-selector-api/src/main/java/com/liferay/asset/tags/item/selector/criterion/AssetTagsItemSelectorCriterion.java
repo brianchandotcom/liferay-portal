@@ -16,8 +16,16 @@ public class AssetTagsItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _groupIds;
 	}
 
+	public boolean isAllCompanyGroupIds() {
+		return _allCompanyGroupIds;
+	}
+
 	public boolean isMultiSelection() {
 		return _multiSelection;
+	}
+
+	public void setAllCompanyGroupIds(boolean allCompanyGroupIds) {
+		_allCompanyGroupIds = allCompanyGroupIds;
 	}
 
 	public void setGroupIds(long[] groupIds) {
@@ -28,6 +36,7 @@ public class AssetTagsItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_multiSelection = multiSelection;
 	}
 
+	private boolean _allCompanyGroupIds;
 	private long[] _groupIds;
 	private boolean _multiSelection;
 

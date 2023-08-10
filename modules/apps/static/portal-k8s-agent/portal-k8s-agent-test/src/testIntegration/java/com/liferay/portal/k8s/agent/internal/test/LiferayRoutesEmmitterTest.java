@@ -90,7 +90,7 @@ public class LiferayRoutesEmmitterTest {
 	@Test
 	public void testDefaultDxpRoutes() throws Exception {
 		Path dxpMetadataPath = Paths.get(
-			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/default/dxp");
+			PropsUtil.get(PropsKeys.LIFERAY_HOME), "default/dxp");
 
 		Assert.assertTrue(
 			dxpMetadataPath.toString() + " does not exist",
@@ -130,7 +130,8 @@ public class LiferayRoutesEmmitterTest {
 		_virtualHostLocalService.addVirtualHost(_virtualHost);
 
 		Path dxpMetadataPath = Paths.get(
-			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
+			StringBundler.concat(
+				PropsUtil.get(PropsKeys.LIFERAY_HOME), "/routes/", webId, "/dxp"));
 
 		Assert.assertTrue(
 			dxpMetadataPath.toString() + " does not exist",
@@ -193,8 +194,7 @@ public class LiferayRoutesEmmitterTest {
 			configMapName);
 
 		Path projectMetadataPath = Paths.get(
-			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/default",
-			projectName);
+			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/default", projectName);
 
 		Assert.assertTrue(
 			projectMetadataPath.toString() + " should exist",
@@ -230,7 +230,8 @@ public class LiferayRoutesEmmitterTest {
 			null);
 
 		Path dxpMetadataPath = Paths.get(
-			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes", webId, "dxp");
+			StringBundler.concat(
+				PropsUtil.get(PropsKeys.LIFERAY_HOME), "/routes/", webId, "/dxp"));
 
 		Assert.assertTrue(
 			dxpMetadataPath.toString() + " does not exist",

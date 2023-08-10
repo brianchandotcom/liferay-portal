@@ -636,18 +636,20 @@ public class FragmentDisplayContext {
 					verticalNavItem.setActive(
 						fragmentCollection.getFragmentCollectionId() ==
 							getFragmentCollectionId());
+
+					Long fragmentCollectionId =
+						fragmentCollection.getFragmentCollectionId();
+
 					verticalNavItem.setHref(
 						PortletURLBuilder.createRenderURL(
 							_renderResponse
 						).setParameter(
-							"fragmentCollectionId",
-							fragmentCollection.getFragmentCollectionId()
+							"fragmentCollectionId", fragmentCollectionId
 						).buildString());
+					verticalNavItem.setId(String.valueOf(fragmentCollectionId));
 
-					String name = HtmlUtil.escape(fragmentCollection.getName());
-
-					verticalNavItem.setId(name);
-					verticalNavItem.setLabel(name);
+					verticalNavItem.setLabel(
+						HtmlUtil.escape(fragmentCollection.getName()));
 				});
 		}
 
@@ -673,21 +675,23 @@ public class FragmentDisplayContext {
 							fragmentCollectionContributor.
 								getFragmentCollectionKey(),
 							getFragmentCollectionKey()));
+
+					String fragmentCollectionKey =
+						fragmentCollectionContributor.
+							getFragmentCollectionKey();
+
 					verticalNavItem.setHref(
 						PortletURLBuilder.createRenderURL(
 							_renderResponse
 						).setParameter(
-							"fragmentCollectionKey",
-							fragmentCollectionContributor.
-								getFragmentCollectionKey()
+							"fragmentCollectionKey", fragmentCollectionKey
 						).buildString());
+					verticalNavItem.setId(fragmentCollectionKey);
 
-					String name = HtmlUtil.escape(
-						fragmentCollectionContributor.getName(
-							_themeDisplay.getLocale()));
-
-					verticalNavItem.setId(name);
-					verticalNavItem.setLabel(name);
+					verticalNavItem.setLabel(
+						HtmlUtil.escape(
+							fragmentCollectionContributor.getName(
+								_themeDisplay.getLocale())));
 				});
 		}
 

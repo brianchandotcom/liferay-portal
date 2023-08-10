@@ -227,16 +227,16 @@ public class SalesforceObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		objectEntry = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		Assert.assertEquals(
-			title, MapUtil.getString(objectEntry.getProperties(), "title"));
+			title,
+			MapUtil.getString(
+				_getObjectEntryProperties(
+					dtoConverterContext,
+					objectEntry.getExternalReferenceCode()),
+				"title"));
 
 		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), _getDTOConverterContext(),
+			TestPropsValues.getCompanyId(), dtoConverterContext,
 			objectEntry.getExternalReferenceCode(), _objectDefinition,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}

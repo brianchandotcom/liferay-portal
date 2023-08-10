@@ -32,6 +32,8 @@ import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
@@ -64,6 +66,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -843,6 +846,39 @@ public class ViewChangesDisplayContext {
 		).build();
 
 		return _reactData;
+	}
+
+	public List<NavigationItem> getViewNavigationItems() {
+		boolean relationshipsActive = GetterUtil.getBoolean(
+			_httpServletRequest.getParameter("relationships"));
+
+		List<CTMappingTableInfo> ctMappingTableInfosList =
+			_ctCollectionLocalService.getCTMappingTableInfos(
+				_ctCollection.getCtCollectionId());
+
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(!relationshipsActive);
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/view_changes", "ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+				navigationItem.setLabel(
+					_language.get(_httpServletRequest, "data"));
+			}
+		).add(
+			() -> !ctMappingTableInfosList.isEmpty(),
+			navigationItem -> {
+				navigationItem.setActive(relationshipsActive);
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/view_changes", "ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()),
+					"relationships", true);
+				navigationItem.setLabel(
+					_language.get(_httpServletRequest, "relationships"));
+			}
+		).build();
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

@@ -1,6 +1,6 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
@@ -14,13 +14,8 @@ Map<String, Object> reactData = viewChangesDisplayContext.getReactData();
 
 renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 
-if (!user.isOnDemandUser()) {
-	portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
-	portletDisplay.setShowBackIcon(true);
-}
-else {
-	portletDisplay.setShowBackIcon(false);
-}
+portletDisplay.setURLBack(viewChangesDisplayContext.getBackURL());
+portletDisplay.setShowBackIcon(true);
 %>
 
 <div class="publications-view-changes-wrapper">
@@ -36,19 +31,9 @@ else {
 	/>
 
 	<clay:container-fluid>
-		<frontend-data-set:headless-display
-			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
-			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
-			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
-			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
-			style="stacked"
-		/>
-	</clay:container-fluid>
-
-	<div class="sidenav-content">
 		<react:component
-			module="publications/js/views/ChangeTrackingChangesView"
+			module="publications/js/views/ChangeTrackingRelationshipsView"
 			props="<%= reactData %>"
 		/>
-	</div>
+	</clay:container-fluid>
 </div>

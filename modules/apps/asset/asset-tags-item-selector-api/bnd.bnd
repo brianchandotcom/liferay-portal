@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Tags Item Selector API
 Bundle-SymbolicName: com.liferay.asset.tags.item.selector.api
-Bundle-Version: 1.0.3
+Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.asset.tags.item.selector,\
 	com.liferay.asset.tags.item.selector.criterion

@@ -234,7 +234,9 @@ describe('SpacingBox', () => {
 
 		jest.useRealTimers();
 
-		expect(screen.getByText('Spacer 10').parentElement).toHaveFocus();
+		expect(
+			screen.getByRole('menuitem', {name: /set-margin-top-to-10/i})
+		).toHaveFocus();
 	});
 
 	it('gets the corresponding value if the token value does not exist', () => {

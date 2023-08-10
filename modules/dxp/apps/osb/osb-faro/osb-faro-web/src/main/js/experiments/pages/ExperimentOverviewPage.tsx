@@ -8,12 +8,12 @@ import TextTruncate from 'shared/components/TextTruncate';
 import VariantCard from 'experiments/components/variant-card/index';
 import {connect, ConnectedProps} from 'react-redux';
 import {EXPERIMENT_ROOT_QUERY} from 'experiments/queries/ExperimentQuery';
+import {getExperimentLink, useAddRefetch} from 'experiments/util/experiments';
 import {RootState} from 'shared/store';
 import {Router} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
 import {SafeResults} from 'shared/hoc/util';
 import {StateProvider} from 'experiments/state';
-import {useAddRefetch} from 'experiments/util/experiments';
 import {useChannelContext} from 'shared/context/channel';
 import {useQuery} from '@apollo/react-hooks';
 
@@ -52,6 +52,47 @@ interface IExperimentOverviewPage
 	router: Router;
 }
 
+interface IExperimentActionsProps extends React.HTMLAttributes<HTMLElement> {
+	experiment: {
+		id: string;
+		pageURL: string;
+		status: string;
+	};
+}
+
+const ExperimentActions: React.FC<IExperimentActionsProps> = ({
+	experiment: {id, pageURL, status}
+}) => {
+	const actions = [];
+
+	if (status === 'DRAFT') {
+		actions.push(
+			...[
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('review'),
+					redirectURL: getExperimentLink({
+						action: 'reviewAndRun',
+						id,
+						pageURL
+					})
+				},
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('delete'),
+					redirectURL: getExperimentLink({
+						action: 'delete',
+						id,
+						pageURL
+					})
+				}
+			]
+		);
+	}
+
+	return <BasePage.Header.Actions actions={actions} />;
+};
+
 const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 	router,
 	timeZoneId
@@ -67,7 +108,6 @@ const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 	const {selectedChannel} = useChannelContext();
 
 	useAddRefetch(refetch);
-
 	return (
 		<SafeResults {...result}>
 			{({experiment}) =>
@@ -101,6 +141,8 @@ const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 								}
 								title={experiment.name}
 							/>
+
+							<ExperimentActions experiment={experiment} />
 
 							<BasePage.Header.NavBar
 								items={NAV_ITEMS}

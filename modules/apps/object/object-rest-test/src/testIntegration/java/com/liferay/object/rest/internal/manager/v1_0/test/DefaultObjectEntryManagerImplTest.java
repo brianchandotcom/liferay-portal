@@ -129,6 +129,8 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import java.sql.Timestamp;
+
 import java.text.DateFormat;
 
 import java.time.LocalDateTime;
@@ -138,9 +140,11 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1973,6 +1977,77 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	@Test
+	public void testPartialUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+			_dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"dateObjectFieldName", "2023-08-10"
+					).put(
+						"decimalObjectFieldName", 2.7
+					).put(
+						"integerObjectFieldName", 50
+					).put(
+						"longIntegerObjectFieldName", 30000L
+					).put(
+						"precisionDecimalObjectFieldName",
+						new BigDecimal(
+							0.9876543217654321, MathContext.DECIMAL64)
+					).put(
+						"richTextObjectFieldName",
+						StringBundler.concat(
+							"<i>", RandomTestUtil.randomString(), "</i>")
+					).put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_partialUpdateObjectEntryValues(
+			_objectDefinition2, objectEntry.getId(),
+			HashMapBuilder.<String, Object>put(
+				"integerObjectFieldName", 25
+			).put(
+				"longIntegerObjectFieldName", 200L
+			).put(
+				"precisionDecimalObjectFieldName",
+				new BigDecimal(0.8755445767, MathContext.DECIMAL64)
+			).put(
+				"richTextObjectFieldName", "<i>richText</i>"
+			).put(
+				"textObjectFieldName", "john"
+			).build());
+
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.set(Calendar.YEAR, 2023);
+		calendar.set(Calendar.MONTH, Calendar.AUGUST);
+		calendar.set(Calendar.DAY_OF_MONTH, 10);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
+
+		_assertObjectEntryProperties(
+			timestamp, new BigDecimal(0.8755445767, MathContext.DECIMAL64), 2.7,
+			25, 200L, objectEntry.getId(), "<i>richText</i>", "john");
+
+		_partialUpdateObjectEntryValues(
+			_objectDefinition2, objectEntry.getId(),
+			HashMapBuilder.<String, Object>put(
+				"textObjectFieldName", "peter"
+			).build());
+
+		_assertObjectEntryProperties(
+			timestamp, new BigDecimal(0.8755445767, MathContext.DECIMAL64), 2.7,
+			25, 200L, objectEntry.getId(), "<i>richText</i>", "peter");
+	}
+
+	@Test
 	public void testUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
 			_dtoConverterContext, _objectDefinition2,
@@ -2726,6 +2801,35 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntries.toString(), size, objectEntries.size());
 	}
 
+	private void _assertObjectEntryProperties(
+			Timestamp expectedDate, BigDecimal expectedBigDecimal,
+			double expectedDecimal, int expectedInteger,
+			long expectedLongInteger, long objectEntryId,
+			String expectedRichText, String expectedText)
+		throws Exception {
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition2, objectEntryId);
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		Assert.assertEquals(
+			expectedDate, properties.get("dateObjectFieldName"));
+		Assert.assertEquals(
+			expectedDecimal, properties.get("decimalObjectFieldName"));
+		Assert.assertEquals(
+			expectedInteger, properties.get("integerObjectFieldName"));
+		Assert.assertEquals(
+			expectedLongInteger, properties.get("longIntegerObjectFieldName"));
+		Assert.assertEquals(
+			expectedBigDecimal,
+			properties.get("precisionDecimalObjectFieldName"));
+		Assert.assertEquals(
+			expectedRichText, properties.get("richTextObjectFieldName"));
+		Assert.assertEquals(
+			expectedText, properties.get("textObjectFieldName"));
+	}
+
 	private void _assertPicklistOjectField(
 			ListEntry expectedListEntry, Object picklistObjectFieldValue)
 		throws Exception {
@@ -2893,6 +2997,20 @@ public class DefaultObjectEntryManagerImplTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();
+	}
+
+	private void _partialUpdateObjectEntryValues(
+			ObjectDefinition objectDefinition, long objectEntryId,
+			Map<String, Object> values)
+		throws Exception {
+
+		_defaultObjectEntryManager.partialUpdateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntryId,
+			new ObjectEntry() {
+				{
+					properties = values;
+				}
+			});
 	}
 
 	private void _removeResourcePermission(String actionId, Role role)

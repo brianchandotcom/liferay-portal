@@ -83,7 +83,8 @@
 										"showIcon": false,
 										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
@@ -97,7 +98,8 @@
 								},
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"pageElements": [
 											{
 												"definition": {
@@ -105,8 +107,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"hidden": true,
 														"paddingBottom": "4",
@@ -123,7 +127,8 @@
 														"paddingTop": "4"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 													}
 												},
@@ -145,11 +150,13 @@
 														},
 														{
 															"id": "portraitMobile",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "top"
@@ -165,11 +172,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -189,7 +198,8 @@
 																		"items": 3,
 																		"justifyContent": "justify-content-start"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -202,7 +212,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -227,7 +238,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -244,7 +256,8 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -261,7 +274,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "OpenK9"
@@ -299,12 +313,14 @@
 																						"items": 2,
 																						"justifyContent": "justify-content-start"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"pageElements": [
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"pageElements": [
 																							{
 																								"definition": {
@@ -329,7 +345,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -344,7 +361,8 @@
 																						"type": "FragmentDropZone"
 																					},
 																					{
-																						"definition": {},
+																						"definition": {
+																						},
 																						"type": "FragmentDropZone"
 																					}
 																				],
@@ -365,7 +383,8 @@
 																						{
 																							"id": "text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": ""
@@ -386,7 +405,8 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	}
 																],
@@ -405,11 +425,13 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -429,7 +451,8 @@
 																		"items": 1,
 																		"justifyContent": "justify-content-center"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -442,7 +465,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -458,7 +482,8 @@
 																						{
 																							"id": "link",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Contact Partner"
@@ -489,11 +514,13 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"type": "FragmentDropZone"
 																	}
 																],
@@ -511,8 +538,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"paddingBottom": "6",
 														"paddingTop": "6"
@@ -611,7 +640,8 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -625,7 +655,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -644,11 +675,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -664,11 +697,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -681,8 +716,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -715,7 +752,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Search. Everywhere.</h1>\n"
@@ -738,8 +776,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -772,7 +812,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "OpenK9 is a complete Cognitive Enterprise Search solution that fits all your needs. Powerful, Modern and Flexible, it employs Machine Learning to enrich your data and give the best experience possible."
@@ -794,8 +835,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -817,11 +860,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -834,8 +879,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -861,7 +908,8 @@
 																				{
 																					"id": "imageCarousel0",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -876,7 +924,8 @@
 																				{
 																					"id": "imageCarousel1",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -891,7 +940,8 @@
 																				{
 																					"id": "imageCarousel2",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "FileEntry_previewImage",
@@ -989,7 +1039,8 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1009,7 +1060,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1069,8 +1121,10 @@
 																				"key": "spacer",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"fragmentStyle": {
 																				"paddingBottom": "5",
 																				"paddingTop": "5"
@@ -1116,11 +1170,13 @@
 																						},
 																						{
 																							"id": "portraitMobile",
-																							"rowViewportDefinition": {}
+																							"rowViewportDefinition": {
+																							}
 																						},
 																						{
 																							"id": "tablet",
-																							"rowViewportDefinition": {}
+																							"rowViewportDefinition": {
+																							}
 																						}
 																					],
 																					"verticalAlignment": "top"
@@ -1136,11 +1192,13 @@
 																									"id": "landscapeMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "portraitMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "tablet"
 																								}
 																							],
@@ -1162,7 +1220,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "The intelligent Open Source Search Engine"
@@ -1208,7 +1267,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "OpenK9, thanks to its open architecture, offers a set of powerful features to build your own customized search system.<br />\n<br />\nOur modern and scalable architecture provides a pipeline for data ingestion, enrichment and indexing. Every part of the pipeline can easily scale to handle massive amount of data.<br />\n<br />\n<a href=\"https://www.openk9.io/\" target=\"_blank\">Learn More</a>"
@@ -1247,11 +1307,13 @@
 																									"id": "landscapeMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "portraitMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "tablet"
 																								}
 																							],
@@ -1269,7 +1331,8 @@
 																										"videoHeight": "",
 																										"videoWidth": ""
 																									},
-																									"fragmentFields": [],
+																									"fragmentFields": [
+																									],
 																									"indexed": true
 																								},
 																								"type": "Fragment"
@@ -1294,7 +1357,8 @@
 																	"fragmentConfig": {
 																		"height": "py-5"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -1319,11 +1383,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -1339,11 +1405,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1358,7 +1426,8 @@
 																			"fragmentConfig": {
 																				"height": "py-3"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -1393,7 +1462,8 @@
 																					"fragmentConfig": {
 																						"height": "py-3"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1443,7 +1513,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Feature List:"
@@ -1476,7 +1547,8 @@
 																							"fragmentConfig": {
 																								"height": "py-3"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"indexed": true
 																						},
 																						"type": "Fragment"
@@ -1496,7 +1568,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "<strong>Multi-tenant</strong><br />\nOpenK9 is a multi-tenant solution. This allows you to consolidate and allocate resources efficiently and access additional capacity when needed. It reduces the need for individual users to manage upgrades and maintenance.<br />\n<br />\n<strong>Pluggable</strong><br />\nOur solution leverages OSGi to build a pluggable architecture to ingest data from multiple sources, enrich data with domain–specific knowledge and build a searchable knowledge graph.<br />\n<br />\n<strong>Customizable</strong><br />\nOur Enterprise Search Experience solution is fully extendable and customizable to fit all your needs, through ready-for-use plugins and reusable UI components.<br />\n<br />\n<strong>Headless</strong><br />\nUsing our headless API, OpenK9 allows easy development of every type of custom application, such as mobile apps, speech interfaces and even analytics and data visualization.<br />\n<br />\n<strong>Fine UX</strong><br />\nYou are going to love OpenK9 from the very first use: enjoy the refined and polished design, the simple and intuitive interface and live a satisfying experience, whether you’re a beginner or an expert user.<br />\n<br />\n<strong>Polyglot</strong><br />\nDon't like Java? TypeScript or Python fan? We got you covered. With our open architecture you are free to develop plugins in your language of choice, using also our examples as starting point."
@@ -1520,7 +1593,8 @@
 																							"fragmentConfig": {
 																								"height": "py-3"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"indexed": true
 																						},
 																						"type": "Fragment"
@@ -1540,7 +1614,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Company Profile"
@@ -1586,7 +1661,8 @@
 																								{
 																									"id": "text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "SMC was established more than 40 years ago to improve our customers' performance.&nbsp;We create real solutions, not just software. We do it using always the most advanced open source developing technologies.\n<p><br />\nWe pay great attention to the user experience and make it easy for our solutions to be introduced and integrated into your company. We are Liferay Platinum Partner,&nbsp;the most reliable and evolved platform for creating business portals.</p>\n<br />\n<strong>Website</strong><br />\n<a href=\"https://www.smc.it/\" target=\"_blank\">https://www.smc.it/</a><br />\n<br />\n<strong>Email</strong><br />\n<a href=\"mailto:smc@smc.it\">smc@smc.it</a><br />\n<br />\n<strong>Phone</strong><br />\n+39.0422.608043"
@@ -1619,7 +1695,8 @@
 																					"fragmentConfig": {
 																						"height": "py-5"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1709,7 +1786,8 @@
 												"showIcon": false,
 												"showIconBoxShadow": false
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
 												"backgroundColor": "gray200Color"
 											},
@@ -1717,7 +1795,8 @@
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1727,7 +1806,8 @@
 															"fragmentConfig": {
 																"height": "py-4"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -1774,7 +1854,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Contact Us"
@@ -1822,7 +1903,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Find out more about OpenK9"
@@ -1844,8 +1926,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "2"
@@ -1860,8 +1944,10 @@
 																"key": "spacer",
 																"siteKey": "[$GROUP_KEY$]"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"paddingBottom": "2",
 																"paddingTop": "9"

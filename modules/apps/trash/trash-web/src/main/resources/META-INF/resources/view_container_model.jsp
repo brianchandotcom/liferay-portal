@@ -11,7 +11,7 @@
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<p class="p-3">
+<p class="p-3 text-secondary">
 	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-of-this-file-does-not-exist-anymore" translateArguments="<%= false %>" />
 </p>
 
@@ -19,24 +19,6 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>"
 	/>
-
-	<aui:button-row>
-		<aui:button
-			cssClass="selector-button"
-			data='<%=
-				HashMapBuilder.<String, Object>put(
-					"classname", trashContainerModelDisplayContext.getClassName()
-				).put(
-					"classpk", trashContainerModelDisplayContext.getClassPK()
-				).put(
-					"containermodelid", trashContainerModelDisplayContext.getContainerModelId()
-				).put(
-					"redirect", trashContainerModelDisplayContext.getRedirect()
-				).build()
-			%>'
-			value='<%= LanguageUtil.format(request, "choose-this-x", trashContainerModelDisplayContext.getContainerModelName()) %>'
-		/>
-	</aui:button-row>
 
 	<liferay-ui:search-container
 		searchContainer="<%= trashContainerModelDisplayContext.getSearchContainer() %>"
@@ -60,8 +42,6 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 			).setParameter(
 				"containerModelId", curContainerModelId
 			).buildPortletURL();
-
-			TrashHandler curContainerTrashHandler = TrashHandlerRegistryUtil.getTrashHandler(curContainerModel.getModelClassName());
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -70,8 +50,11 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 				<c:choose>
 					<c:when test="<%= curContainerModel.getContainerModelId() > 0 %>">
 						<clay:link
+							cssClass="text-dark"
+							displayType="primary"
 							href="<%= containerURL.toString() %>"
 							label="<%= curContainerModel.getContainerModelName() %>"
+							weight="semi-bold"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -81,11 +64,8 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name='<%= LanguageUtil.format(request, "num-of-x", trashContainerModelDisplayContext.getContainerModelName()) %>'
-				value="<%= String.valueOf(curContainerTrashHandler.getContainerModelsCount(curContainerModelId, curContainerModel.getParentContainerModelId())) %>"
-			/>
-
-			<liferay-ui:search-container-column-text>
+				cssClass="table-column-text-end"
+			>
 				<aui:button
 					cssClass="selector-button"
 					data='<%=
@@ -99,7 +79,7 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 							"redirect", trashContainerModelDisplayContext.getRedirect()
 						).build()
 					%>'
-					value="choose"
+					value="select"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -107,5 +87,23 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 		<liferay-ui:search-iterator
 			markupView="lexicon"
 		/>
+
+		<aui:button-row>
+			<aui:button
+				cssClass="selector-button"
+				data='<%=
+					HashMapBuilder.<String, Object>put(
+						"classname", trashContainerModelDisplayContext.getClassName()
+					).put(
+						"classpk", trashContainerModelDisplayContext.getClassPK()
+					).put(
+						"containermodelid", trashContainerModelDisplayContext.getContainerModelId()
+					).put(
+						"redirect", trashContainerModelDisplayContext.getRedirect()
+					).build()
+				%>'
+				value='<%= LanguageUtil.format(request, "select-x", StringUtil.upperCaseFirstLetter(trashContainerModelDisplayContext.getContainerModelName())) %>'
+			/>
+		</aui:button-row>
 	</liferay-ui:search-container>
 </aui:form>

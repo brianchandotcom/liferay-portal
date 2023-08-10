@@ -64,7 +64,7 @@ const ACTIONS = {
 				}
 			},
 			selectEventName: `${portletNamespace}selectContainer`,
-			size: 'lg',
+			size: 'md',
 			title: Liferay.Language.get('select-restore-folder'),
 			url: itemData.moveEntryURL,
 		});

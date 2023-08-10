@@ -6,10 +6,30 @@
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import className from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-export default function Hint({message, position = 'top', secondary, title}) {
+export type Position =
+	| 'top'
+	| 'top-left'
+	| 'top-right'
+	| 'bottom'
+	| 'bottom-left'
+	| 'bottom-right'
+	| 'left'
+	| 'left-top'
+	| 'left-bottom'
+	| 'right'
+	| 'right-top'
+	| 'right-bottom';
+
+interface Props {
+	message: string;
+	position?: Position;
+	secondary?: boolean;
+	title: string;
+}
+
+export function Hint({message, position = 'top', secondary, title}: Props) {
 	const [showPopover, setShowPopover] = useState(false);
 
 	return (
@@ -27,7 +47,7 @@ export default function Hint({message, position = 'top', secondary, title}) {
 					onMouseEnter={() => setShowPopover(true)}
 					onMouseLeave={() => setShowPopover(false)}
 				>
-					<ClayIcon small="true" symbol="question-circle" />
+					<ClayIcon symbol="question-circle" />
 				</span>
 			}
 		>
@@ -36,9 +56,4 @@ export default function Hint({message, position = 'top', secondary, title}) {
 	);
 }
 
-Hint.propTypes = {
-	message: PropTypes.string.isRequired,
-	position: PropTypes.string,
-	secondary: PropTypes.bool,
-	title: PropTypes.string.isRequired,
-};
+export default Hint;

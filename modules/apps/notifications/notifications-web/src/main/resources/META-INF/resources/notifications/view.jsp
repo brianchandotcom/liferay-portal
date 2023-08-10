@@ -105,6 +105,8 @@ if (Validator.isNotNull(backURL)) {
 
 <clay:container-fluid>
 	<aui:form action="<%= currentURL %>" method="get" name="fm">
+		<aui:input name="selectedEntryIds" type="hidden" />
+
 		<div class="user-notifications">
 			<liferay-ui:search-container
 				rowChecker="<%= actionRequired ? null : new UserNotificationEventRowChecker(renderResponse) %>"

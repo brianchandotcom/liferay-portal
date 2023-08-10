@@ -14,39 +14,19 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
-	const deleteNotifications = () => {
+	const processAction = (url) => {
 		const form = document.getElementById(`${portletNamespace}fm`);
 
 		if (form) {
 			postForm(form, {
 				data: {
-					deleteEntryIds: getCheckedCheckboxes(
+					selectedEntryIds: getCheckedCheckboxes(
 						form,
 						`${portletNamespace}allRowIds`
 					),
 				},
-				url: deleteNotificationsURL,
+				url,
 			});
-		}
-	};
-
-	const markNotificationsAsRead = () => {
-		const form = document.getElementById(`${portletNamespace}fm`);
-
-		if (form) {
-			form.setAttribute('method', 'post');
-
-			submitForm(form, markNotificationsAsReadURL);
-		}
-	};
-
-	const markNotificationsAsUnread = () => {
-		const form = document.getElementById(`${portletNamespace}fm`);
-
-		if (form) {
-			form.setAttribute('method', 'post');
-
-			submitForm(form, markNotificationsAsUnreadURL);
 		}
 	};
 
@@ -56,13 +36,13 @@ export default function propsTransformer({
 			const action = item?.data?.action;
 
 			if (action === 'deleteNotifications') {
-				deleteNotifications();
+				processAction(deleteNotificationsURL);
 			}
 			else if (action === 'markNotificationsAsRead') {
-				markNotificationsAsRead();
+				processAction(markNotificationsAsReadURL);
 			}
 			else if (action === 'markNotificationsAsUnread') {
-				markNotificationsAsUnread();
+				processAction(markNotificationsAsUnreadURL);
 			}
 		},
 	};

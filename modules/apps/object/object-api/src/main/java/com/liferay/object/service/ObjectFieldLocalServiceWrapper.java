@@ -186,6 +186,15 @@ public class ObjectFieldLocalServiceWrapper
 			objectDefinitionId);
 	}
 
+	@Override
+	public void deleteObjectFieldByObjectRelationship(
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFieldLocalService.deleteObjectFieldByObjectRelationship(
+			objectRelationship);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

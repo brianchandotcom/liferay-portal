@@ -8,6 +8,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -163,6 +164,10 @@ public interface ObjectFieldLocalService
 		throws PortalException;
 
 	public void deleteObjectFieldByObjectDefinitionId(Long objectDefinitionId)
+		throws PortalException;
+
+	public void deleteObjectFieldByObjectRelationship(
+			ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	/**

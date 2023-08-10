@@ -177,6 +177,13 @@ public class ObjectFieldLocalServiceUtil {
 		getService().deleteObjectFieldByObjectDefinitionId(objectDefinitionId);
 	}
 
+	public static void deleteObjectFieldByObjectRelationship(
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		getService().deleteObjectFieldByObjectRelationship(objectRelationship);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

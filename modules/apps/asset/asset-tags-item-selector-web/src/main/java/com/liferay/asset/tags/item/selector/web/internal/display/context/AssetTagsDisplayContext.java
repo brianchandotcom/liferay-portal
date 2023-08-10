@@ -69,8 +69,7 @@ public class AssetTagsDisplayContext {
 				_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
 				tagsSearchContainer.getEnd(),
 				tagsSearchContainer.getOrderByComparator()),
-			AssetTagServiceUtil.getTagsCount(
-				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords()));
+			AssetTagServiceUtil.getTagsCount(_getGroupIds(), _getKeywords()));
 
 		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
 			String[] selectedTagNames = StringUtil.split(

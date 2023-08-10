@@ -19,6 +19,13 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
+bootRun {
+	String liferayVirtualInstanceId = project.hasProperty("liferay.virtual.instance.id") ? project.getProperty("liferay.virtual.instance.id") : "default"
+
+	environment "LIFERAY_ROUTES_CLIENT_EXTENSION", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/${project.name}"
+	environment "LIFERAY_ROUTES_DXP", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/dxp"
+}
+
 dependencies {
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot", version: "1.0.9"
 	implementation group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"

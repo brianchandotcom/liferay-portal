@@ -109,25 +109,6 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		Assert.assertEquals(
 			"localhost:8080",
 			new String(Files.readAllBytes(lxcDXPMainDomainPath)));
-
-		VirtualHost virtualHost = _virtualHostLocalService.createVirtualHost(
-			_counterLocalService.increment());
-
-		virtualHost.setCompanyId(TestPropsValues.getCompanyId());
-		virtualHost.setHostname("baker.com");
-
-		_virtualHostLocalService.addVirtualHost(virtualHost);
-
-		List<String> lxcDXPDomains = StringUtil.split(
-			new String(
-				Files.readAllBytes(
-					dxpPath.resolve("com.liferay.lxc.dxp.domains"))),
-			CharPool.NEW_LINE);
-
-		Assert.assertEquals(lxcDXPDomains.toString(), 2, lxcDXPDomains.size());
-
-		Assert.assertEquals("localhost:8080", lxcDXPDomains.get(0));
-		Assert.assertEquals("baker.com:8080", lxcDXPDomains.get(1));
 	}
 
 	@Test

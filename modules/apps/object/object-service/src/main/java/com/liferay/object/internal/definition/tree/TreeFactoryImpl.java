@@ -9,8 +9,11 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.LinkedList;
@@ -27,7 +30,15 @@ import org.osgi.service.component.annotations.Reference;
 public class TreeFactoryImpl implements TreeFactory {
 
 	@Override
-	public Tree create(long objectDefinitionId) {
+	public Tree create(long objectDefinitionId) throws PortalException {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		if (objectDefinition.getRootObjectDefinitionId() == 0) {
+			return null;
+		}
+
 		Node rootNode = new Node(null, objectDefinitionId, null);
 
 		Queue<Node> queue = new LinkedList<>();
@@ -57,6 +68,9 @@ public class TreeFactoryImpl implements TreeFactory {
 				new Edge(objectRelationship.getObjectRelationshipId()),
 				objectRelationship.getObjectDefinitionId2(), node));
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

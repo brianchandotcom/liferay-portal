@@ -22,4 +22,8 @@ public interface FragmentsImporter {
 			boolean overwrite)
 		throws Exception;
 
+	public boolean validateFragmentEntries(
+			long userId, long groupId, long fragmentCollectionId, File file)
+		throws Exception;
+
 }

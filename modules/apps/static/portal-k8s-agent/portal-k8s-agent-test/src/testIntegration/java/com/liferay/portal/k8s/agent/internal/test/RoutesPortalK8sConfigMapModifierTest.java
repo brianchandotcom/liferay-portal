@@ -127,28 +127,28 @@ public class RoutesPortalK8sConfigMapModifierTest {
 				projectName, StringPool.DASH, TestPropsValues.COMPANY_WEB_ID,
 				"-lxc-ext-init-metadata"));
 
-		Path projectPath = Paths.get(
+		Path projectMetadataPath = Paths.get(
 			PropsUtil.get(PropsKeys.LIFERAY_HOME), "routes/default",
 			projectName);
 
 		Assert.assertTrue(
-			projectPath.toString() + " should exist",
-			Files.exists(projectPath));
+			projectMetadataPath.toString() + " should exist",
+			Files.exists(projectMetadataPath));
 
-		File projectMetadataDir = projectPath.toFile();
+		File projectMetadataDir = projectMetadataPath.toFile();
 
 		String[] fileNames = projectMetadataDir.list();
 
 		Assert.assertEquals(Arrays.toString(fileNames), 2, fileNames.length);
 
-		Path fooPath = projectPath.resolve("foo");
+		Path fooPath = projectMetadataPath.resolve("foo");
 
 		Assert.assertTrue(
 			fooPath.toString() + " does not exist", Files.exists(fooPath));
 
 		Assert.assertEquals("bar", new String(Files.readAllBytes(fooPath)));
 
-		Path fizzPath = projectPath.resolve("fizz");
+		Path fizzPath = projectMetadataPath.resolve("fizz");
 
 		Assert.assertTrue(
 			fizzPath.toString() + " does not exist", Files.exists(fooPath));

@@ -25,11 +25,13 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
@@ -41,6 +43,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ReplacementSku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -58,6 +61,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +151,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				published = cpInstance.isPublished();
 				purchasable = cpInstance.isPurchasable();
 				sku = cpInstance.getSku();
+				skuUnitOfMeasures = TransformUtil.transformToArray(
+					_cpInstanceUnitOfMeasureLocalService.
+						getActiveCPInstanceUnitOfMeasures(
+							cpInstance.getCPInstanceId()),
+					cpInstanceUnitOfMeasure -> _toSkuUnitOfMeasure(
+						cpInstanceUnitOfMeasure,
+						cpSkuDTOConverterConvertContext.getLocale()),
+					SkuUnitOfMeasure.class);
 				weight = cpInstance.getWeight();
 				width = cpInstance.getWidth();
 
@@ -457,6 +469,47 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		return price;
 	}
 
+	private SkuUnitOfMeasure _toSkuUnitOfMeasure(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, Locale locale) {
+
+		return new SkuUnitOfMeasure() {
+			{
+				key = cpInstanceUnitOfMeasure.getKey();
+				name = cpInstanceUnitOfMeasure.getName(locale);
+				precision = cpInstanceUnitOfMeasure.getPrecision();
+				primary = cpInstanceUnitOfMeasure.isPrimary();
+				priority = cpInstanceUnitOfMeasure.getPriority();
+
+				setIncrementalOrderQuantity(
+					() -> {
+						BigDecimal incrementalOrderQuantity =
+							cpInstanceUnitOfMeasure.
+								getIncrementalOrderQuantity();
+
+						if (incrementalOrderQuantity == null) {
+							return null;
+						}
+
+						return incrementalOrderQuantity.setScale(
+							cpInstanceUnitOfMeasure.getPrecision(),
+							RoundingMode.HALF_UP);
+					});
+				setRate(
+					() -> {
+						BigDecimal rate = cpInstanceUnitOfMeasure.getRate();
+
+						if (rate == null) {
+							return null;
+						}
+
+						return rate.setScale(
+							cpInstanceUnitOfMeasure.getPrecision(),
+							RoundingMode.HALF_UP);
+					});
+			}
+		};
+	}
+
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
 
@@ -498,6 +551,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

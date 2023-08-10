@@ -67,6 +67,10 @@ public class Tree {
 		return new BreadthFirstIterator(rootNode);
 	}
 
+	public Iterator<Node> iterator(long objectDefinitionId) {
+		return new BreadthFirstIterator(getNode(objectDefinitionId));
+	}
+
 	protected final Node rootNode;
 
 	private static class BreadthFirstIterator implements Iterator<Node> {

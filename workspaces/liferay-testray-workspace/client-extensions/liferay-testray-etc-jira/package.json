@@ -17,7 +17,7 @@
 		"typescript": "^5.1.6"
 	},
 	"module": "src/index.ts",
-	"name": "testray-lxc-jira-integration",
+	"name": "liferay-testray-etc-jira",
 	"private": true,
 	"scripts": {
 		"dev": "tsx watch src/index.ts",

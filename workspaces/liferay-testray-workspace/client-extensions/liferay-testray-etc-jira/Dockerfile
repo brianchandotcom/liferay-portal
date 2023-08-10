@@ -1,13 +1,5 @@
-FROM node:18
+FROM liferay/node-runner:latest
 
-WORKDIR /usr/src/app
-
-COPY package*.json ./
+COPY . /opt/liferay
 
 RUN npm install
-
-COPY . .
-
-EXPOSE 3333
-
-CMD [ "npm", "start" ]

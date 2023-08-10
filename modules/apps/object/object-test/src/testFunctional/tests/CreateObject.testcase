@@ -5889,7 +5889,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_LABEL_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#GENERIC_LABEL_COLUMN");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
 	}

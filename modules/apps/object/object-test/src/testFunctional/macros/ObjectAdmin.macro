@@ -566,7 +566,7 @@ definition {
 	}
 
 	macro assertObjectColumnsAreDisplayed {
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_COLUMN");
+		AssertElementPresent(locator1 = "ObjectAdmin#GENERIC_LABEL_COLUMN");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_SYSTEM_COLUMN");
 

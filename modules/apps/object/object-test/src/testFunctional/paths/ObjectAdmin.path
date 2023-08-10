@@ -396,11 +396,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELDS_LABEL_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th') and contains(text(),'Label')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>FIELDS_RADIO_OPTION</td>
 		<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
 		<td></td>

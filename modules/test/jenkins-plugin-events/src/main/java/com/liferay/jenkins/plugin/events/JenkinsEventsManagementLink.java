@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.plugin.events;
 
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
-
 import hudson.Extension;
 
 import hudson.model.ManagementLink;
@@ -64,13 +62,14 @@ public class JenkinsEventsManagementLink extends ManagementLink {
 
 		jenkinsEventsDescriptor.save();
 
-		JenkinsPublisherUtil.setJenkinsEventsDescriptor(
-			jenkinsEventsDescriptor);
+		JenkinsEventsUtil.setJenkinsEventsDescriptor(jenkinsEventsDescriptor);
+
+		jenkinsEventsDescriptor.subscribe();
 
 		Jenkins jenkins = Jenkins.getInstanceOrNull();
 
 		if (jenkins != null) {
-			staplerResponse.sendRedirect(jenkins.getRootUrl() + "/manage");
+			staplerResponse.sendRedirect(jenkins.getRootUrl());
 		}
 	}
 

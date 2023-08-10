@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.plugin.events.publisher;
-
-import com.liferay.jenkins.plugin.events.JenkinsEventsDescriptor;
+package com.liferay.jenkins.plugin.events;
 
 import hudson.model.Action;
 import hudson.model.Build;
@@ -29,10 +27,10 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JenkinsPublisherUtil {
+public class JenkinsEventsUtil {
 
 	public static void publish(
-		JenkinsPublisher.EventTrigger eventTrigger, Object eventObject) {
+		JenkinsEventsDescriptor.EventTrigger eventTrigger, Object eventObject) {
 
 		if (_jenkinsEventsDescriptor == null) {
 			return;
@@ -60,16 +58,8 @@ public class JenkinsPublisherUtil {
 			"queueItem", _getQueueItemJSONObject(eventObject)
 		);
 
-		for (JenkinsPublisher jenkinsPublisher :
-				_jenkinsEventsDescriptor.getJenkinsPublishers()) {
-
-			if (!jenkinsPublisher.containsEventTrigger(eventTrigger)) {
-				continue;
-			}
-
-			jenkinsPublisher.publish(
-				payloadJSONObject.toString(), eventTrigger);
-		}
+		_jenkinsEventsDescriptor.publish(
+			payloadJSONObject.toString(), eventTrigger);
 	}
 
 	public static void setJenkinsEventsDescriptor(
@@ -142,7 +132,7 @@ public class JenkinsPublisherUtil {
 	}
 
 	private static JSONObject _getComputerJSONObject(
-		Object eventObject, JenkinsPublisher.EventTrigger eventTrigger) {
+		Object eventObject, JenkinsEventsDescriptor.EventTrigger eventTrigger) {
 
 		Computer computer = _getComputer(eventObject);
 
@@ -152,10 +142,14 @@ public class JenkinsPublisherUtil {
 
 		JSONObject jsonObject = new JSONObject();
 
-		if (eventTrigger == JenkinsPublisher.EventTrigger.COMPUTER_IDLE) {
+		if (eventTrigger ==
+				JenkinsEventsDescriptor.EventTrigger.COMPUTER_IDLE) {
+
 			jsonObject.put("busy", false);
 		}
-		else if (eventTrigger == JenkinsPublisher.EventTrigger.COMPUTER_BUSY) {
+		else if (eventTrigger ==
+					JenkinsEventsDescriptor.EventTrigger.COMPUTER_BUSY) {
+
 			jsonObject.put("busy", true);
 		}
 		else {

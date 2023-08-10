@@ -5,8 +5,8 @@
 
 package com.liferay.jenkins.plugin.events.listener;
 
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisher;
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
+import com.liferay.jenkins.plugin.events.JenkinsEventsDescriptor;
+import com.liferay.jenkins.plugin.events.JenkinsEventsUtil;
 
 import hudson.Extension;
 
@@ -28,29 +28,29 @@ public class JenkinsComputerListener extends ComputerListener {
 	public void onOffline(
 		@Nonnull Computer computer, OfflineCause offlineCause) {
 
-		JenkinsPublisherUtil.publish(
-			JenkinsPublisher.EventTrigger.COMPUTER_OFFLINE, computer);
+		JenkinsEventsUtil.publish(
+			JenkinsEventsDescriptor.EventTrigger.COMPUTER_OFFLINE, computer);
 	}
 
 	@Override
 	public void onOnline(Computer computer, TaskListener taskListener) {
-		JenkinsPublisherUtil.publish(
-			JenkinsPublisher.EventTrigger.COMPUTER_ONLINE, computer);
+		JenkinsEventsUtil.publish(
+			JenkinsEventsDescriptor.EventTrigger.COMPUTER_ONLINE, computer);
 	}
 
 	@Override
 	public void onTemporarilyOffline(
 		Computer computer, OfflineCause offlineCause) {
 
-		JenkinsPublisherUtil.publish(
-			JenkinsPublisher.EventTrigger.COMPUTER_TEMPORARILY_OFFLINE,
+		JenkinsEventsUtil.publish(
+			JenkinsEventsDescriptor.EventTrigger.COMPUTER_TEMPORARILY_OFFLINE,
 			computer);
 	}
 
 	@Override
 	public void onTemporarilyOnline(Computer computer) {
-		JenkinsPublisherUtil.publish(
-			JenkinsPublisher.EventTrigger.COMPUTER_TEMPORARILY_ONLINE,
+		JenkinsEventsUtil.publish(
+			JenkinsEventsDescriptor.EventTrigger.COMPUTER_TEMPORARILY_ONLINE,
 			computer);
 	}
 

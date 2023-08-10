@@ -5,8 +5,11 @@
 
 package com.liferay.jenkins.plugin.events;
 
-import com.liferay.jenkins.plugin.events.publisher.JenkinsPublisherUtil;
+import com.liferay.jenkins.plugin.events.jms.JMSConnection;
+import com.liferay.jenkins.plugin.events.jms.JMSFactory;
+import com.liferay.jenkins.plugin.events.jms.JMSQueue;
 
+import com.liferay.jenkins.plugin.events.listener.JMSMessageListener;
 import hudson.Extension;
 
 import hudson.model.Describable;
@@ -29,7 +32,28 @@ public class JenkinsEventsDescriptor
 
 		load();
 
-		JenkinsPublisherUtil.setJenkinsEventsDescriptor(this);
+		subscribe();
+
+		JenkinsEventsUtil.setJenkinsEventsDescriptor(this);
+	}
+
+	public void subscribe() {
+		if (((_inboundQueueName == null) || _inboundQueueName.isEmpty()) &&
+			((_url == null) || _url.isEmpty())) {
+
+			return;
+		}
+
+		if ((_url == null) || _url.isEmpty()) {
+			return;
+		}
+
+		JMSConnection jmsConnection = JMSFactory.newJMSConnection(_url);
+
+		JMSQueue jmsQueue = JMSFactory.newJMSQueue(
+			jmsConnection, _inboundQueueName);
+
+		jmsQueue.subscribe(new JMSMessageListener());
 	}
 
 	public void addEventTrigger(EventTrigger eventTrigger) {
@@ -90,6 +114,23 @@ public class JenkinsEventsDescriptor
 
 	public String getUserPassword() {
 		return _userPassword;
+	}
+
+	public void publish(String payload, EventTrigger eventTrigger) {
+		String outboundQueueName = getOutboundQueueName();
+
+		if (!containsEventTrigger(eventTrigger) ||
+			(outboundQueueName == null) || outboundQueueName.isEmpty()) {
+
+			return;
+		}
+
+		JMSConnection jmsConnection = JMSFactory.newJMSConnection(getUrl());
+
+		JMSQueue jmsQueue = JMSFactory.newJMSQueue(
+			jmsConnection, outboundQueueName);
+
+		jmsQueue.publish(payload);
 	}
 
 	public void setInboundQueueName(String inboundQueueName) {

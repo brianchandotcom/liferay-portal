@@ -97,6 +97,28 @@ public class CPInstanceUnitOfMeasureServiceImpl
 	}
 
 	@Override
+	public List<CPInstanceUnitOfMeasure> getActiveCPInstanceUnitOfMeasures(
+			long cpInstanceId, boolean active)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpInstanceId, ActionKeys.VIEW);
+
+		return cpInstanceUnitOfMeasureLocalService.
+			getActiveCPInstanceUnitOfMeasures(cpInstanceId, active);
+	}
+
+	@Override
+	public int getActiveCPInstanceUnitOfMeasuresCount(
+			long cpInstanceId, boolean active)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpInstanceId, ActionKeys.VIEW);
+
+		return cpInstanceUnitOfMeasureLocalService.
+			getActiveCPInstanceUnitOfMeasuresCount(cpInstanceId, active);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId)
 		throws PortalException {

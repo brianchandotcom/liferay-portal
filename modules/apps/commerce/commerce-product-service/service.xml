@@ -923,6 +923,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
 		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+			<finder-column name="active" />
+		</finder>
 		<finder name="C_K" return-type="CPInstanceUnitOfMeasure" unique="true">
 			<finder-column name="CPInstanceId" />
 			<finder-column name="key" />

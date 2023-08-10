@@ -35,7 +35,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -60,54 +62,51 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
-	@Ignore
-	@Test
-	public void test() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(
+	@Before
+	public void setUp() throws Exception {
+		_bundle = FrameworkUtil.getBundle(
 			RoutesPortalK8sConfigMapModifierTest.class);
 
-		BundleContext bundleContext = bundle.getBundleContext();
+		_bundleContext = _bundle.getBundleContext();
 
-		ServiceTracker<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>
-			serviceTracker = new ServiceTracker<>(
-				bundleContext, PortalK8sConfigMapModifier.class, null);
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, PortalK8sConfigMapModifier.class, null);
 
-		serviceTracker.open();
+		_serviceTracker.open();
 
-		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
-			serviceTracker.waitForService(2000);
+		_portalK8sConfigMapModifier = _serviceTracker.waitForService(2000);
 
-		Assert.assertNotNull(portalK8sConfigMapModifier);
+		Assert.assertNotNull(_portalK8sConfigMapModifier);
 
 		ServiceReference<PortalK8sConfigMapModifier> serviceReference =
-			serviceTracker.getServiceReference();
+			_serviceTracker.getServiceReference();
 
 		Assert.assertEquals(
 			-1, serviceReference.getProperty("service.ranking"));
-
-		try {
-			_test(
-				TestPropsValues.getCompanyId(), "localhost",
-				portalK8sConfigMapModifier, TestPropsValues.COMPANY_WEB_ID);
-
-			String webId = "able.com";
-
-			Company company = _companyLocalService.addCompany(
-				null, webId, webId, webId, 0, true, null, null, null, null,
-				null, null);
-
-			_test(
-				company.getCompanyId(), webId, portalK8sConfigMapModifier,
-				webId);
-		}
-		finally {
-			serviceTracker.close();
-		}
 	}
 
-	private void _test(
-			long companyId, String hostname,
-			PortalK8sConfigMapModifier portalK8sConfigMapModifier, String webId)
+	@After
+	public void tearDown() throws Exception {
+		_serviceTracker.close();
+	}
+
+	@Ignore
+	@Test
+	public void test() throws Exception {
+		_test(
+			TestPropsValues.getCompanyId(), "localhost",
+			TestPropsValues.COMPANY_WEB_ID);
+
+		String webId = "able.com";
+
+		Company company = _companyLocalService.addCompany(
+			null, webId, webId, webId, 0, true, null, null, null, null, null,
+			null);
+
+		_test(company.getCompanyId(), webId, webId);
+	}
+
+	private void _test(long companyId, String hostname, String webId)
 		throws Exception {
 
 		// DXP
@@ -155,7 +154,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 		String projectName = RandomTestUtil.randomString();
 		String serviceId = RandomTestUtil.randomString();
 
-		portalK8sConfigMapModifier.modifyConfigMap(
+		_portalK8sConfigMapModifier.modifyConfigMap(
 			configMapModel -> {
 				Map<String, String> data = configMapModel.data();
 
@@ -199,8 +198,18 @@ public class RoutesPortalK8sConfigMapModifierTest {
 			"testValue2", new String(Files.readAllBytes(testKey2Path)));
 	}
 
+	private static Bundle _bundle;
+	private static BundleContext _bundleContext;
+
 	@Inject
 	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static PortalK8sConfigMapModifier _portalK8sConfigMapModifier;
+
+	private static ServiceTracker
+		<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>
+			_serviceTracker;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

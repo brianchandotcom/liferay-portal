@@ -316,10 +316,6 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutListRetriever, listObjectReference,
 				segmentsExperience.getSegmentsEntryId()));
 
-		if (activePage < 1) {
-			activePage = 1;
-		}
-
 		int listCount = layoutListRetriever.getListCount(
 			listObjectReference, defaultLayoutListRetrieverContext);
 

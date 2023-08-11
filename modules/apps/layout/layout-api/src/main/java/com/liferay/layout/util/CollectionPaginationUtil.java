@@ -37,6 +37,10 @@ public class CollectionPaginationUtil {
 					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 			}
 
+			if (activePage < 1) {
+				activePage = 1;
+			}
+
 			int start = (activePage - 1) * numberOfItemsPerPage;
 
 			return Pagination.of(start + numberOfItemsPerPage, start);

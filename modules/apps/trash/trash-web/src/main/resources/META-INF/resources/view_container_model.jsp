@@ -9,6 +9,10 @@
 
 <%
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
+List<BreadcrumbEntry> breadcrumbEntries = trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL());
+
+String lastElementBreadcrumbTitle = StringUtil.upperCaseFirstLetter(trashDisplayContext.getLastElementBreadcrumbTitle(breadcrumbEntries));
 %>
 
 <portlet:actionURL name="viewContainerModel" var="viewContainerModelURL">
@@ -26,7 +30,7 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 	name="selectContainerFm"
 >
 	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= trashDisplayContext.getContainerModelBreadcrumbEntries(trashContainerModelDisplayContext.getContainerModelClassName(), trashContainerModelDisplayContext.getContainerModelId(), trashContainerModelDisplayContext.getContainerURL()) %>"
+		breadcrumbEntries="<%= breadcrumbEntries %>"
 	/>
 
 	<liferay-ui:search-container
@@ -99,7 +103,7 @@ TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashC
 				data-containermodelid='<%= trashContainerModelDisplayContext.getContainerModelId() %>'
 				data-redirect='<%= trashContainerModelDisplayContext.getRedirect() %>'
 				displayType="secondary"
-				label='<%= LanguageUtil.format(request, "select-x", StringUtil.upperCaseFirstLetter(trashContainerModelDisplayContext.getContainerModelName())) %>'
+				label='<%= LanguageUtil.format(request, "select-x", lastElementBreadcrumbTitle) %>'
 			/>
 		</aui:button-row>
 	</liferay-ui:search-container>

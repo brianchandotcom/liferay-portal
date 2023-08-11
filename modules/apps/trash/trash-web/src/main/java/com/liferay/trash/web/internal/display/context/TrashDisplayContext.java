@@ -318,6 +318,15 @@ public class TrashDisplayContext {
 		return _keywords;
 	}
 
+	public String getLastElementBreadcrumbTitle(
+		List<BreadcrumbEntry> breadcrumbEntries) {
+
+		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(
+			breadcrumbEntries.size() - 1);
+
+		return breadcrumbEntry.getTitle();
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;

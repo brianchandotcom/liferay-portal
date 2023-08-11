@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -134,11 +136,32 @@ public class SelectLayoutTag extends IncludeTag {
 		}
 	}
 
+	private Map<String, Object> _getConfigData() {
+		return HashMapBuilder.<String, Object>put(
+			"loadMoreItemsURL",
+			() -> {
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getPathMain() + "/portal/get_layouts";
+			}
+		).put(
+			"maxPageSize",
+			GetterUtil.getInteger(
+				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
+		).build();
+	}
+
 	private Map<String, Object> _getData() throws Exception {
 		String[] selectedLayoutIds = ParamUtil.getStringValues(
 			getRequest(), "layoutUuid");
 
 		return HashMapBuilder.<String, Object>put(
+			"config", this::_getConfigData
+		).put(
 			"itemSelectorSaveEvent", _itemSelectorSaveEvent
 		).put(
 			"multiSelection", _multiSelection

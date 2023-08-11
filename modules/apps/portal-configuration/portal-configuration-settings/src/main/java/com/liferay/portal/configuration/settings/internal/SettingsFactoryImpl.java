@@ -5,23 +5,18 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletItem;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
-import com.liferay.portal.kernel.settings.FallbackKeys;
-import com.liferay.portal.kernel.settings.FallbackSettings;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 
 import java.util.ArrayList;
@@ -29,10 +24,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -79,10 +71,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException {
 
-		return SettingsFactoryUtil.getSettings(
-			settingsLocator);
+		return FallbackKeysSettingsUtil.getSettings(settingsLocator);
 	}
-
 
 	private PortletItem _getPortletItem(
 			long groupId, String portletId, String name)
@@ -112,7 +102,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsFactoryImpl.class);
-
 
 	@Reference
 	private PortletItemLocalService _portletItemLocalService;

@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -459,7 +459,7 @@ public class AMImageConfigurationHelperImpl
 				(ArrayList<AMImageConfigurationEntry>)
 					TransformUtil.transformToList(
 						_getImageVariants(
-							SettingsFactoryUtil.getSettings(
+							FallbackKeysSettingsUtil.getSettings(
 								new CompanyServiceSettingsLocator(
 									companyId,
 									AMImageCompanyConfiguration.class.
@@ -526,7 +526,7 @@ public class AMImageConfigurationHelperImpl
 		throws IOException {
 
 		try {
-			Settings settings = SettingsFactoryUtil.getSettings(
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
 				new CompanyServiceSettingsLocator(
 					companyId, AMImageCompanyConfiguration.class.getName()));
 

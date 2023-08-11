@@ -8,11 +8,11 @@ package com.liferay.message.boards.settings;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -29,7 +29,7 @@ public class MBGroupServiceSettings {
 	public static MBGroupServiceSettings getInstance(long groupId)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 
 		return new MBGroupServiceSettings(settings);
@@ -39,7 +39,7 @@ public class MBGroupServiceSettings {
 			long groupId, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Settings settings = SettingsFactoryUtil.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 
 		ParameterMapSettings parameterMapSettings = new ParameterMapSettings(

@@ -16,10 +16,10 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -165,7 +165,7 @@ public class TemplateProcessor implements ColumnProcessor {
 
 				String defaultPreferences = portlet.getDefaultPreferences();
 
-				Settings currentSettings = SettingsFactoryUtil.getSettings(
+				Settings currentSettings = FallbackKeysSettingsUtil.getSettings(
 					new PortletInstanceSettingsLocator(layout, portletId));
 
 				ModifiableSettings currentModifiableSettings =
@@ -214,7 +214,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 
 		if (defaultSettingsMap != null) {
-			Settings settings = SettingsFactoryUtil.getSettings(
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
 				new PortletInstanceSettingsLocator(layout, portletId));
 
 			ModifiableSettings modifiableSettings =

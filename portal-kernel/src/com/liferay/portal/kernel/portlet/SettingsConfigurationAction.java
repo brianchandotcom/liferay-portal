@@ -14,12 +14,12 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -243,12 +243,12 @@ public abstract class SettingsConfigurationAction
 			actionRequest, "settingsScope");
 
 		if (settingsScope.equals("company")) {
-			return SettingsFactoryUtil.getSettings(
+			return FallbackKeysSettingsUtil.getSettings(
 				new CompanyServiceSettingsLocator(
 					themeDisplay.getCompanyId(), serviceName));
 		}
 		else if (settingsScope.equals("group")) {
-			return SettingsFactoryUtil.getSettings(
+			return FallbackKeysSettingsUtil.getSettings(
 				new GroupServiceSettingsLocator(
 					themeDisplay.getScopeGroupId(), serviceName));
 		}
@@ -256,7 +256,7 @@ public abstract class SettingsConfigurationAction
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");
 
-			return SettingsFactoryUtil.getSettings(
+			return FallbackKeysSettingsUtil.getSettings(
 				new PortletInstanceSettingsLocator(
 					themeDisplay.getLayout(), portletResource));
 		}

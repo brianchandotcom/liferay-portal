@@ -9,8 +9,8 @@ import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,7 +27,7 @@ public class JournalArticleTermsOfUseDisplayContext {
 
 		_journalServiceConfiguration = journalServiceConfiguration;
 
-		_settings = SettingsFactoryUtil.getSettings(
+		_settings = FallbackKeysSettingsUtil.getSettings(
 			new CompanyServiceSettingsLocator(
 				themeDisplay.getCompanyId(),
 				JournalServiceConfiguration.class.getName()));

@@ -75,7 +75,7 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.servlet.DirectServletRegistry;
+import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -285,7 +285,7 @@ public class EditServerMVCActionCommand
 	}
 
 	private void _cacheServlet() throws Exception {
-		_directServletRegistry.clearServlets();
+		DirectServletRegistryUtil.clearServlets();
 	}
 
 	private void _cacheSingle() throws Exception {
@@ -883,9 +883,6 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Reference
-	private DirectServletRegistry _directServletRegistry;
 
 	@Reference
 	private Ghostscript _ghostscript;

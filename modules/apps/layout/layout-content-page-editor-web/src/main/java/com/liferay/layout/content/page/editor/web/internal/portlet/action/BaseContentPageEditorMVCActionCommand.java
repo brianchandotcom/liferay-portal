@@ -5,7 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.layout.content.page.editor.web.internal.util.LayoutLockManager;
+import com.liferay.layout.util.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -31,7 +33,7 @@ public abstract class BaseContentPageEditorMVCActionCommand
 		throws Exception {
 
 		try {
-			LayoutLockManager.getLock(actionRequest);
+			layoutLockManager.getLock(actionRequest);
 
 			doCommand(actionRequest, actionResponse);
 
@@ -44,9 +46,12 @@ public abstract class BaseContentPageEditorMVCActionCommand
 
 			sendRedirect(
 				actionRequest, actionResponse,
-				LayoutLockManager.getLockedLayoutURL(actionRequest));
+				layoutLockManager.getLockedLayoutURL(actionRequest));
 		}
 	}
+
+	@Reference
+	protected LayoutLockManager layoutLockManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContentPageEditorMVCActionCommand.class);

@@ -8,7 +8,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.LayoutLockManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -121,7 +120,7 @@ public class PublishLayoutMVCActionCommand
 				Layout.class.getName(), layout.getPlid(), layout,
 				serviceContext, Collections.emptyMap());
 
-			LayoutLockManager.unlock(draftLayout, userId);
+			layoutLockManager.unlock(draftLayout, userId);
 		}
 		else {
 			UnicodeProperties originalTypeSettingsUnicodeProperties =

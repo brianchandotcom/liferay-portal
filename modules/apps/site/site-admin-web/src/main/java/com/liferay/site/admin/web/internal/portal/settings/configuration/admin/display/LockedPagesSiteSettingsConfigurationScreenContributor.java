@@ -5,7 +5,9 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -45,6 +47,15 @@ public class LockedPagesSiteSettingsConfigurationScreenContributor
 	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Override
+	public boolean isVisible(Group group) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

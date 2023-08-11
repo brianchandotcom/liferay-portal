@@ -4,9 +4,11 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-web';
 import React, {useContext, useEffect} from 'react';
 
 import {EditAPIApplicationContext} from '../EditAPIApplicationContext';
+import {DeleteAPIEndpointModalContent} from '../modals/DeleteAPIEndpointModalContent';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPIEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
 
@@ -35,14 +37,37 @@ export default function APIEndpointsTable({
 		filterQuery: `r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
+	const deleteAPIEnpoint = (
+		itemData: APIEndpointItem,
+		loadData: voidReturn
+	) => {
+		openModal({
+			center: true,
+			contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+				DeleteAPIEndpointModalContent({
+					closeModal,
+					itemData,
+					loadData,
+				}),
+			id: 'deleteAPIEnpointModal',
+			size: 'md',
+			status: 'danger',
+		});
+	};
+
 	function onActionDropdownItemClick({
 		action,
 		itemData,
+		loadData,
 	}: FDSItem<APIEndpointItem>) {
 		if (action.id === 'copyEndpointURL') {
 			navigator.clipboard.writeText(
 				`${window.location.origin}/o/${apiApplicationBaseURL}${itemData.path}/`
 			);
+		}
+
+		if (action.id === 'deleteAPIEndpoint') {
+			deleteAPIEnpoint(itemData, loadData);
 		}
 	}
 

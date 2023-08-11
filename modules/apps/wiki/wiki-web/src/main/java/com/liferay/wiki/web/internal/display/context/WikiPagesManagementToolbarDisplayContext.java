@@ -179,6 +179,12 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
+		if (Validator.isNotNull(
+				ParamUtil.getString(_httpServletRequest, "keywords"))) {
+
+			return null;
+		}
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -188,8 +194,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
-			() -> Validator.isNull(
-				ParamUtil.getString(_httpServletRequest, "keywords")),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
@@ -294,12 +298,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems()
 		throws PortletException {
-
-		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			return null;
-		}
 
 		return new DropdownItemList() {
 			{

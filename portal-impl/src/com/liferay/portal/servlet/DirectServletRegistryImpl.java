@@ -64,7 +64,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 				}
 			}
 			else {
-				servlet = _reloadDependants(path, servlet, servletInfo);
+				servlet = _reloadDependants(path, servlet);
 			}
 		}
 
@@ -119,9 +119,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		return -1;
 	}
 
-	private Servlet _reloadDependants(
-		String path, Servlet servlet, ServletInfo servletInfo) {
-
+	private Servlet _reloadDependants(String path, Servlet servlet) {
 		if (!_reloadDependants) {
 			return servlet;
 		}

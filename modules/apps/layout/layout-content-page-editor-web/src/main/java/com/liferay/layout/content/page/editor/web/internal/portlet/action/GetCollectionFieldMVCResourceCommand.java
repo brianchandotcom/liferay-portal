@@ -165,12 +165,16 @@ public class GetCollectionFieldMVCResourceCommand
 
 	private long[] _filterSegmentsEntryIds(
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
-		ListObjectReference listObjectReference, long segmentsEntryId) {
+		ListObjectReference listObjectReference, long segmentsExperienceId) {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
 
 		if (!(layoutListRetriever instanceof
 				SegmentsEntryLayoutListRetriever)) {
 
-			return new long[] {segmentsEntryId};
+			return new long[] {segmentsExperience.getSegmentsEntryId()};
 		}
 
 		SegmentsEntryLayoutListRetriever<ListObjectReference>
@@ -179,9 +183,9 @@ public class GetCollectionFieldMVCResourceCommand
 					layoutListRetriever;
 
 		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-				listObjectReference, segmentsEntryId)) {
+				listObjectReference, segmentsExperience.getSegmentsEntryId())) {
 
-			return new long[] {segmentsEntryId};
+			return new long[] {segmentsExperience.getSegmentsEntryId()};
 		}
 
 		return new long[] {
@@ -306,20 +310,14 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutObjectReferenceJSONObject));
 		defaultLayoutListRetrieverContext.setContextObject(
 			_getInfoItem(httpServletRequest));
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_filterSegmentsEntryIds(
-				layoutListRetriever, listObjectReference,
-				segmentsExperience.getSegmentsEntryId()));
-
 		defaultLayoutListRetrieverContext.setPagination(
 			CollectionPaginationUtil.getPagination(
 				activePage, displayAllItems, numberOfItems,
 				numberOfItemsPerPage, paginationType));
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_filterSegmentsEntryIds(
+				layoutListRetriever, listObjectReference,
+				segmentsExperienceId));
 
 		List<Object> list = layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);

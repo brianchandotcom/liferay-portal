@@ -135,13 +135,14 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				JSONArray mdfClaimActivitiesJSONArray =
 					itemJSONObject.getJSONArray("actToMDFClmActs");
 
-				JSONArray claimedMdfClaimActivityJSONArray = new JSONArray();
-
 				if (mdfClaimActivitiesJSONArray.length() == 0) {
 					_sendNotification(
 						activityId, zonedActivityExpirationDate, zonedDateTime);
 				}
 				else {
+					JSONArray claimedMdfClaimActivityJSONArray =
+						new JSONArray();
+
 					for (int j = 0; j < mdfClaimActivitiesJSONArray.length();
 						 j++) {
 
@@ -181,11 +182,12 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 							}
 						}
 					}
-				}
 
-				if (claimedMdfClaimActivityJSONArray.length() == 0) {
-					_sendNotification(
-						activityId, zonedActivityExpirationDate, zonedDateTime);
+					if (claimedMdfClaimActivityJSONArray.length() == 0) {
+						_sendNotification(
+							activityId, zonedActivityExpirationDate,
+							zonedDateTime);
+					}
 				}
 			}
 		}

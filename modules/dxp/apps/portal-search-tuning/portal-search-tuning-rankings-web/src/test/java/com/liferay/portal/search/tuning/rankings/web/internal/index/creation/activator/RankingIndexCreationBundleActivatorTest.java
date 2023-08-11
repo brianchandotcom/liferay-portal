@@ -5,13 +5,20 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.activator;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
-import com.liferay.portal.search.tuning.rankings.web.internal.background.task.RankingIndexCreationBackgroundTaskExecutor;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.SingleIndexToMultipleIndexImporter;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -36,14 +43,17 @@ public class RankingIndexCreationBundleActivatorTest {
 			new RankingIndexCreationBundleActivator();
 
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreationBundleActivator, "_backgroundTaskManager",
-			_backgroundTaskManager);
+			_rankingIndexCreationBundleActivator, "_rankingIndexCreator",
+			_rankingIndexCreator);
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreationBundleActivator, "_portalUUID", _portalUUID);
+			_rankingIndexCreationBundleActivator, "_companyLocalService",
+			_companyLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreationBundleActivator,
-			"_rankingIndexRenameBackgroundTaskExecutor",
-			_rankingIndexRenameBackgroundTaskExecutor);
+			_rankingIndexCreationBundleActivator, "_rankingIndexReader",
+			_rankingIndexReader);
+		ReflectionTestUtil.setFieldValue(
+			_rankingIndexCreationBundleActivator, "_rankingIndexNameBuilder",
+			_rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_rankingIndexCreationBundleActivator, "_searchEngineInformation",
 			_searchEngineInformation);
@@ -51,6 +61,21 @@ public class RankingIndexCreationBundleActivatorTest {
 			_rankingIndexCreationBundleActivator,
 			"_singleIndexToMultipleIndexImporter",
 			_singleIndexToMultipleIndexImporter);
+
+		Mockito.doReturn(
+			new RankingIndexName() {
+
+				@Override
+				public String getIndexName() {
+					return null;
+				}
+
+			}
+		).when(
+			_rankingIndexNameBuilder
+		).getRankingIndexName(
+			Mockito.anyLong()
+		);
 	}
 
 	@Test
@@ -64,11 +89,11 @@ public class RankingIndexCreationBundleActivatorTest {
 		Mockito.verify(
 			_singleIndexToMultipleIndexImporter, Mockito.times(1)
 		).needImport();
+
 		Mockito.verify(
-			_backgroundTaskManager, Mockito.times(0)
-		).addBackgroundTask(
-			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString(),
-			Mockito.anyString(), Mockito.anyMap(), Mockito.any()
+			_rankingIndexCreator, Mockito.times(0)
+		).create(
+			Mockito.any(RankingIndexName.class)
 		);
 	}
 
@@ -77,18 +102,41 @@ public class RankingIndexCreationBundleActivatorTest {
 		throws Exception {
 
 		_setUpSingleIndexToMultipleIndexImporter(true);
+		_setUpCompanyLocalService(1);
 
 		_rankingIndexCreationBundleActivator.activate();
 
 		Mockito.verify(
 			_singleIndexToMultipleIndexImporter, Mockito.times(1)
 		).needImport();
+
 		Mockito.verify(
-			_backgroundTaskManager, Mockito.times(1)
-		).addBackgroundTask(
-			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString(),
-			Mockito.anyString(), Mockito.anyMap(), Mockito.any()
+			_rankingIndexCreator, Mockito.times(1)
+		).create(
+			Mockito.any(RankingIndexName.class)
 		);
+	}
+
+	private void _setUpCompanyLocalService(int numberOfCompanies) {
+		List<Company> companies = new ArrayList<>();
+		Company company;
+
+		for (int i = 0; i < numberOfCompanies; i++) {
+			company = Mockito.mock(Company.class);
+
+			Mockito.doReturn(
+				RandomTestUtil.randomLong()
+			).when(
+				company
+			).getCompanyId();
+			companies.add(company);
+		}
+
+		Mockito.doReturn(
+			companies
+		).when(
+			_companyLocalService
+		).getCompanies();
 	}
 
 	private void _setUpSingleIndexToMultipleIndexImporter(boolean exist) {
@@ -99,14 +147,16 @@ public class RankingIndexCreationBundleActivatorTest {
 		).needImport();
 	}
 
-	private final BackgroundTaskManager _backgroundTaskManager = Mockito.mock(
-		BackgroundTaskManager.class);
-	private final PortalUUID _portalUUID = Mockito.mock(PortalUUID.class);
+	private final CompanyLocalService _companyLocalService = Mockito.mock(
+		CompanyLocalService.class);
 	private RankingIndexCreationBundleActivator
 		_rankingIndexCreationBundleActivator;
-	private final RankingIndexCreationBackgroundTaskExecutor
-		_rankingIndexRenameBackgroundTaskExecutor = Mockito.mock(
-			RankingIndexCreationBackgroundTaskExecutor.class);
+	private final RankingIndexCreator _rankingIndexCreator = Mockito.mock(
+		RankingIndexCreator.class);
+	private final RankingIndexNameBuilder _rankingIndexNameBuilder =
+		Mockito.mock(RankingIndexNameBuilder.class);
+	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
+		RankingIndexReader.class);
 	private final SearchEngineInformation _searchEngineInformation =
 		Mockito.mock(SearchEngineInformation.class);
 	private final SingleIndexToMultipleIndexImporter

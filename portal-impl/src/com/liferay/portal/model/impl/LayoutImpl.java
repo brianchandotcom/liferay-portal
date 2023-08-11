@@ -691,6 +691,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public String getHTMLTitle(String localeLanguageId) {
+		if (isTypeContent() && isDraftLayout()) {
+			return getName(localeLanguageId);
+		}
+
 		String htmlTitle = getTitle(localeLanguageId);
 
 		if (Validator.isNull(htmlTitle)) {

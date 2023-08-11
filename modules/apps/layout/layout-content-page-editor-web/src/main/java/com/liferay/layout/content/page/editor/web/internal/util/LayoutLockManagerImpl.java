@@ -6,6 +6,7 @@
 package com.liferay.layout.content.page.editor.web.internal.util;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.util.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -26,14 +27,16 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Lourdes Fernández Besada
  */
-public class LayoutLockManager {
+@Component(service = LayoutLockManager.class)
+public class LayoutLockManagerImpl implements LayoutLockManager {
 
-	public static void getLock(ActionRequest actionRequest)
-		throws PortalException {
-
+	@Override
+	public void getLock(ActionRequest actionRequest) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -64,7 +67,8 @@ public class LayoutLockManager {
 		}
 	}
 
-	public static String getLockedLayoutURL(ActionRequest actionRequest) {
+	@Override
+	public String getLockedLayoutURL(ActionRequest actionRequest) {
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -94,7 +98,8 @@ public class LayoutLockManager {
 		).buildString();
 	}
 
-	public static String getUnlockDraftLayoutURL(
+	@Override
+	public String getUnlockDraftLayoutURL(
 			LiferayPortletResponse liferayPortletResponse,
 			PortletURLBuilder.UnsafeSupplier<Object, Exception>
 				redirectUnsafeSupplier)
@@ -113,7 +118,8 @@ public class LayoutLockManager {
 		).buildString();
 	}
 
-	public static void unlock(Layout layout, long userId) {
+	@Override
+	public void unlock(Layout layout, long userId) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
 			!layout.isDraftLayout()) {
 

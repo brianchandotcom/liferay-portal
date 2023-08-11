@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -66,8 +67,9 @@ public class CommerceInventoryWarehouseManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "filter-by-country"));
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -97,6 +99,24 @@ public class CommerceInventoryWarehouseManagementToolbarDisplayContext
 						LanguageUtil.get(httpServletRequest, "country"),
 						_commerceInventoryWarehouseItemSelectorViewDisplayContext.
 							getCountryName()));
+			}
+		).build();
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setActive(Objects.equals(getOrderByCol(), "city"));
+				dropdownItem.setHref(getPortletURL(), "orderByCol", "city");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "city"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(Objects.equals(getOrderByCol(), "name"));
+				dropdownItem.setHref(getPortletURL(), "orderByCol", "name");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "name"));
 			}
 		).build();
 	}
@@ -143,24 +163,6 @@ public class CommerceInventoryWarehouseManagementToolbarDisplayContext
 				}
 			}
 		};
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(Objects.equals(getOrderByCol(), "city"));
-				dropdownItem.setHref(getPortletURL(), "orderByCol", "city");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "city"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(Objects.equals(getOrderByCol(), "name"));
-				dropdownItem.setHref(getPortletURL(), "orderByCol", "name");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "name"));
-			}
-		).build();
 	}
 
 	private final CommerceInventoryWarehouseItemSelectorViewDisplayContext

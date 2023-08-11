@@ -1,0 +1,458 @@
+@component-name = "portal-feature-flag"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Feature Flag";
+	property testray.main.component.name = "Feature Flag";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-188590 Confirm that Cell Renderer is not displayed in Client extension, without enabling FF Data Set"
+	@priority = 5
+	test AssertCellRendererIsNotDisplayed {
+		task ("When acess Client Extension Admin Page") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Applications");
+
+			Click(
+				key_category = "Custom Apps",
+				key_portlet = "Client Extensions",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("And clicks plus button") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Then the option Frontend Data Set Cell Renderer is not present.") {
+			AssertElementNotPresent(
+				key_menuItem = "Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that Data Set Fragment can be enabled on a created page"
+	@priority = 4
+	test CanAssertDataSetFragmentInPage {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When the user go to Add and edit the page") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Page");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+		}
+
+		task ("Then the Data Set fragment widget is present") {
+			PageEditor.expandFragmentCollection(collectionName = "Content Display");
+
+			AssertElementPresent(
+				key_collectionName = "Content Display",
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that Cell Renderer is displayed in Client extension, when FF is enabled"
+	@priority = 5
+	test CanAsserTheDataSetCellRendererIsPresent {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When acess Client Extension Admin Page") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Applications");
+
+			Click(
+				key_category = "Custom Apps",
+				key_portlet = "Client Extensions",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("And clicks plus button") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Then the option Frontend Data Set Cell Renderer is present.") {
+			AssertElementPresent(
+				key_menuItem = "Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that the Data Set Fragment is not displayed on the page, if FF Data Set is not enabled"
+	@priority = 5
+	test CanAssertTheDataSetFragmentIsNotPresent {
+		task ("When the user go to edit the home page") {
+			Click(
+				key_documentName = "Edit",
+				locator1 = "DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE");
+		}
+
+		task ("Then the Data Set fragment is not present.") {
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Content Display");
+
+			AssertElementNotPresent(
+				key_collectionName = "Content Display",
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that the Data Set fragment is displayed on the page, when FF is enabled"
+	@priority = 5
+	test CanAssertTheDataSetFragmentIsPresent {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When the user go to edit the home page") {
+			Navigator.openURL();
+
+			Click(
+				key_documentName = "Edit",
+				locator1 = "DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Content Display");
+		}
+
+		task ("Then the Data Set fragment is present") {
+			AssertElementPresent(
+				key_collectionName = "Content Display",
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that the Data Set is present in OBJECTS, when FF is enabled"
+	@priority = 5
+	test CanAssertTheDataSetIsEnabled {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When go to Control panel inside Portlet Menu") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+		}
+
+		task ("Then the option Data Set is visible above OBJECT") {
+			AssertElementPresent(
+				key_category = "Object",
+				key_portlet = "Data Sets",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+	}
+
+	@description = "LPS-188590 Confirm the description in the FF Data Set"
+	@priority = 5
+	test CanConfirmTextInDataSetFF {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("When the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And The description of the feature is displayed") {
+			AssertElementPresent(
+				key_listEntry = "Create tables to show data coming from headless resources. Choose the columns to show as well as how data will be paginated. Use a frontend data set cell renderer client extension to customize how data is rendered.",
+				key_listEntrySubtitle = "Create tables to show data coming from headless resources. Choose the columns to show as well as how data will be paginated. Use a frontend data set cell renderer client extension to customize how data is rendered.",
+				locator1 = "LexiconList#LIST_ENTRY_SUBTITLE");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that Data Set Fragment can be enabled and disabled in Client Extension"
+	@priority = 3
+	test ConfirmEnableAndDisabledFFDataSetClientExtension {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When acess Client Extension Admin Page") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Applications");
+
+			Click(
+				key_category = "Custom Apps",
+				key_portlet = "Client Extensions",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("And clicks plus button") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Then the option Frontend Data Set Cell Renderer is present.") {
+			AssertElementPresent(
+				key_menuItem = "Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+
+		task ("Given the Instance Settings Admin page") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Enabled");
+		}
+
+		task ("When acess Client Extension Admin Page again") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Applications");
+
+			Click(
+				key_category = "Custom Apps",
+				key_portlet = "Client Extensions",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("And clicks plus button") {
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("Then the option Frontend Data Set Cell Renderer is present.") {
+			AssertElementNotPresent(
+				key_menuItem = "Frontend Data Set Cell Renderer",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-188590 Confirm that the Data Set Fragment can be enabled and disabled on the page"
+	@priority = 3
+	test ConfirmEnableAndDisabledFFDataSetInFragments {
+		task ("Given the Instance Settings Admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Disabled");
+		}
+
+		task ("When the user go to edit the home page") {
+			Navigator.openURL();
+
+			Click(
+				key_documentName = "Edit",
+				locator1 = "DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Content Display");
+		}
+
+		task ("Then the Data Set fragment is present") {
+			AssertElementPresent(
+				key_collectionName = "Content Display",
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+
+		task ("Given the Instance Settings Admin page") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+		}
+
+		task ("And the user accesses the Feature Flag option") {
+			Click(
+				key_itemName = "Feature Flags",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("And enabled the Dataset management Feature Flag") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Data Set Manager",
+				toggle_state = "Enabled");
+		}
+
+		Navigator.openURL();
+
+		task ("When the user go to edit the home page again") {
+			Navigator.openURL();
+
+			Click(
+				key_documentName = "Edit",
+				locator1 = "DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			PageEditor.expandFragmentCollection(collectionName = "Content Display");
+		}
+
+		task ("Then the Data Set fragment is present") {
+			AssertElementNotPresent(
+				key_collectionName = "Content Display",
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+		}
+	}
+
+	@description = "LPS-188590 Confirm Data Set is not present if FF is not enabled"
+	@priority = 5
+	test DataSetNotDisplayedInObject {
+		task ("When acess Control panel inside Portlet Menu") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+		}
+
+		task ("Then the option Data Set is not visible above OBJECT") {
+			AssertElementNotPresent(
+				key_category = "Object",
+				key_portlet = "Data Sets",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+	}
+
+}

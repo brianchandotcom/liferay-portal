@@ -155,11 +155,11 @@ definition {
 			value1 = "/");
 	}
 
-	macro goToLink {
+	macro goToHomepage {
 		WaitForPageLoad();
 
 		Click.clickAtNotVisible(
-			key_text = ${text},
+			key_text = "Go to homepage",
 			locator1 = "Testray#LINK_TO_HOME");
 	}
 
@@ -255,6 +255,15 @@ definition {
 		Testray.confirmBreadcrumb();
 	}
 
+	macro openPageViaURL {
+		var portalURL = PropsUtil.get("portal.url");
+		var projectName = ${projectName};
+
+		Navigator.openSpecificURL(url = ${url});
+
+		WaitForPageLoad();
+	}
+
 	macro openTestrayViaURL {
 		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 	}
@@ -269,6 +278,12 @@ definition {
 		Click(
 			key_pageNumber = ${pageNumber},
 			locator1 = "Testray#PAGE_NUMBER_MODAL");
+	}
+
+	macro pageRestrictionMessage {
+		AssertElementPresent(
+			key_title = "Sorry, this page does not exist",
+			locator1 = "Header#H1_TITLE");
 	}
 
 	macro selectCheckboxOptions {

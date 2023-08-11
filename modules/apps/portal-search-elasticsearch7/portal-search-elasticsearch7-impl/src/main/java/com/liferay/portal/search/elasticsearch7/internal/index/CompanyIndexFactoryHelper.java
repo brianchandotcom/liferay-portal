@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -301,12 +302,6 @@ public class CompanyIndexFactoryHelper {
 	private void _processContributions(
 		IndexConfigurationContributor indexConfigurationContributor) {
 
-		if (Validator.isNotNull(
-				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
-
-			return;
-		}
-
 		RestHighLevelClient restHighLevelClient = null;
 
 		try {
@@ -319,6 +314,47 @@ public class CompanyIndexFactoryHelper {
 			if (_log.isInfoEnabled()) {
 				_log.info("Skipping index settings contributor");
 			}
+
+			return;
+		}
+
+		SettingsBuilder settingsBuilder = new SettingsBuilder(
+			Settings.builder());
+
+		indexConfigurationContributor.contributeSettings(settingsBuilder::put);
+
+		Settings settings = settingsBuilder.build();
+
+		if (!settings.isEmpty()) {
+			IndicesClient indicesClient = restHighLevelClient.indices();
+
+			for (Long companyId :
+					IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
+
+				String indexName = getIndexName(companyId);
+
+				UpdateSettingsRequest updateSettingsRequest =
+					new UpdateSettingsRequest(indexName);
+
+				updateSettingsRequest.settings(settings);
+
+				try {
+					indicesClient.putSettings(
+						updateSettingsRequest, RequestOptions.DEFAULT);
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Unable to put settings for index ", indexName,
+							" with contributor ",
+							indexConfigurationContributor),
+						exception);
+				}
+			}
+		}
+
+		if (Validator.isNotNull(
+				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
 
 			return;
 		}

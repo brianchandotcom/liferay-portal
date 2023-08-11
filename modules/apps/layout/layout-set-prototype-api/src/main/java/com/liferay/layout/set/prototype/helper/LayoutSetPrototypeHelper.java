@@ -5,6 +5,8 @@
 
 package com.liferay.layout.set.prototype.helper;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -16,6 +18,7 @@ import java.util.List;
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface LayoutSetPrototypeHelper {
 
 	public List<Layout> getDuplicatedFriendlyURLLayouts(Layout layout)

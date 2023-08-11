@@ -91,7 +91,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 		if (fdsEntryObjectDefinition == null) {
 			try {
-				_generate(themeDisplay.getLocale(), themeDisplay.getUserId());
+				fdsEntryObjectDefinition = _generate(
+					themeDisplay.getLocale(), themeDisplay.getUserId());
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -107,7 +108,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private synchronized void _generate(Locale locale, long userId)
+	private synchronized ObjectDefinition _generate(Locale locale, long userId)
 		throws Exception {
 
 		ObjectDefinition fdsEntryObjectDefinition =
@@ -374,6 +375,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 			LocalizedMapUtil.getLocalizedMap("FDSView FDSSort Relationship"),
 			"fdsViewFDSSortRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		return fdsEntryObjectDefinition;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

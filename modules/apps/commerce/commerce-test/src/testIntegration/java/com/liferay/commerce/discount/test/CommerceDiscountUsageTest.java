@@ -179,7 +179,8 @@ public class CommerceDiscountUsageTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -232,7 +233,8 @@ public class CommerceDiscountUsageTest {
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		finalPriceCommerceMoney = commerceProductPrice.getFinalPrice();
 
@@ -259,7 +261,8 @@ public class CommerceDiscountUsageTest {
 			commerceOrder);
 
 		_commerceProductPriceCalculation.getCommerceProductPrice(
-			cpInstance.getCPInstanceId(), 1, commerceContext);
+			cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+			commerceContext);
 
 		_commerceOrderEngine.checkoutCommerceOrder(
 			commerceOrder, _user.getUserId());
@@ -272,7 +275,8 @@ public class CommerceDiscountUsageTest {
 		Assert.assertEquals(1, commerceDiscountUsageCount);
 
 		_commerceProductPriceCalculation.getCommerceProductPrice(
-			cpInstance.getCPInstanceId(), 1, commerceContext);
+			cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+			commerceContext);
 
 		commerceDiscountUsageCount =
 			_commerceDiscountUsageEntryLocalService.
@@ -593,7 +597,8 @@ public class CommerceDiscountUsageTest {
 
 			CommerceProductPrice commerceProductPrice =
 				_commerceProductPriceCalculation.getCommerceProductPrice(
-					cpInstance.getCPInstanceId(), 1, commerceContext);
+					cpInstance.getCPInstanceId(), BigDecimal.ONE,
+					StringPool.BLANK, commerceContext);
 
 			if (commerceProductPrice != null) {
 				CommerceMoney finalPriceCommerceMoney =
@@ -659,7 +664,8 @@ public class CommerceDiscountUsageTest {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
 
 		if (commerceProductPrice != null) {
 			CommerceMoney finalPriceCommerceMoney =

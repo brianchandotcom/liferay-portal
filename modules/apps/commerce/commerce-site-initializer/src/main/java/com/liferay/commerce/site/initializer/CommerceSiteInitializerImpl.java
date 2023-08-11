@@ -48,6 +48,7 @@ import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -840,7 +841,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		BigDecimal price = cpInstance.getPrice();
 

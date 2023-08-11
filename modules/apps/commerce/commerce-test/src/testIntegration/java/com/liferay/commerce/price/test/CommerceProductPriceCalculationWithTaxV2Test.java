@@ -33,6 +33,7 @@ import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.test.util.CommerceTaxTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -152,22 +153,14 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
 			null);
 
-		int quantity = 1;
-
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCalculateTax(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(quantity);
-		commerceProductPriceRequest.setSecure(false);
+		BigDecimal quantity = BigDecimal.ONE;
 
 		_assertCommerceProductPrice(
 			quantity, rate, price, true,
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest),
+				_createCommerceProductPriceRequest(
+					true, commerceContext, cpInstance.getCPInstanceId(),
+					quantity, false, StringPool.BLANK)),
 			RoundingMode.valueOf(_commerceCurrency.getRoundingMode()));
 	}
 
@@ -241,22 +234,14 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 			_accountEntry, _commerceCurrency, commerceTaxIncludedChannel, _user,
 			_group, null);
 
-		int quantity = 1;
-
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCalculateTax(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(quantity);
-		commerceProductPriceRequest.setSecure(false);
+		BigDecimal quantity = BigDecimal.ONE;
 
 		_assertCommerceProductPrice(
 			quantity, rate, price, false,
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest),
+				_createCommerceProductPriceRequest(
+					true, commerceContext, cpInstance.getCPInstanceId(),
+					quantity, false, StringPool.BLANK)),
 			RoundingMode.valueOf(_commerceCurrency.getRoundingMode()));
 	}
 
@@ -264,7 +249,7 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	private void _assertCommerceProductPrice(
-		int quantity, double rate, BigDecimal price, boolean includeTax,
+		BigDecimal quantity, double rate, BigDecimal price, boolean includeTax,
 		CommerceProductPrice commerceProductPrice, RoundingMode roundingMode) {
 
 		BigDecimal taxRate = BigDecimal.valueOf(rate);
@@ -343,11 +328,29 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 				price, taxRate, roundingMode);
 		}
 
-		expectedPrice = expectedPrice.multiply(BigDecimal.valueOf(quantity));
+		expectedPrice = expectedPrice.multiply(quantity);
 
 		Assert.assertEquals(
 			expectedPrice.stripTrailingZeros(),
 			finalPrice.stripTrailingZeros());
+	}
+
+	private CommerceProductPriceRequest _createCommerceProductPriceRequest(
+		boolean calculateTax, CommerceContext commerceContext,
+		long cpInstanceId, BigDecimal quantity, boolean secure,
+		String unitOfMeasureKey) {
+
+		CommerceProductPriceRequest commerceProductPriceRequest =
+			new CommerceProductPriceRequest();
+
+		commerceProductPriceRequest.setCalculateTax(calculateTax);
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
+		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
+		commerceProductPriceRequest.setQuantity(quantity);
+		commerceProductPriceRequest.setSecure(secure);
+		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
+
+		return commerceProductPriceRequest;
 	}
 
 	private static User _user;

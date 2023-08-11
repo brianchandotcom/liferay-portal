@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -427,11 +429,11 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 		return cpInstance.getCPInstanceId();
 	}
 
-	private int _getMinOrderQuantity(CPInstance cpInstance)
+	private BigDecimal _getMinOrderQuantity(CPInstance cpInstance)
 		throws PortalException {
 
 		if (cpInstance == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -443,7 +445,8 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		return cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+		return BigDecimal.valueOf(
+			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
 	}
 
 	private long _getParameter(
@@ -526,10 +529,14 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 							_getCPInstanceId(cpInstance)
 						).cpInstanceMinQuantity(
 							_getMinOrderQuantity(cpInstance)
+						).cpInstanceUnitOfMeasureKey(
+							cpDefinitionOptionValueRel.getUnitOfMeasureKey()
 						).selectedCPInstanceId(
 							_getCPInstanceId(selectedCPInstance)
 						).selectedCPInstanceMinQuantity(
 							_getMinOrderQuantity(selectedCPInstance)
+						).selectedCPInstanceUnitOfMeasureKey(
+							cpDefinitionOptionValueRel.getUnitOfMeasureKey()
 						).build());
 
 			keyValuePairs.add(

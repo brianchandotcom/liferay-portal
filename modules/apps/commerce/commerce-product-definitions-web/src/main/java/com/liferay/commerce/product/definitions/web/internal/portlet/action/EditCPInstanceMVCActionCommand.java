@@ -494,7 +494,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 

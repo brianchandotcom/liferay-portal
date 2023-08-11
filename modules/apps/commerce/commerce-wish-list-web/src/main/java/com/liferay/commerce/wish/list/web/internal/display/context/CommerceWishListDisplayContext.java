@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -197,7 +199,7 @@ public class CommerceWishListDisplayContext {
 
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getFinalPrice(
-				cpInstance.getCPInstanceId(), 1,
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
 				_commerceWishListRequestHelper.getCommerceContext());
 
 		if (commerceMoney.isEmpty()) {

@@ -101,7 +101,7 @@ public class CommerceDiscountCalculationV2Impl
 
 	@Override
 	public CommerceDiscountValue getProductCommerceDiscountValue(
-			long cpInstanceId, int quantity, BigDecimal productUnitPrice,
+			long cpInstanceId, BigDecimal quantity, BigDecimal productUnitPrice,
 			CommerceContext commerceContext)
 		throws PortalException {
 
@@ -111,7 +111,7 @@ public class CommerceDiscountCalculationV2Impl
 
 	@Override
 	public CommerceDiscountValue getProductCommerceDiscountValue(
-			long cpInstanceId, long commercePriceListId, int quantity,
+			long cpInstanceId, long commercePriceListId, BigDecimal quantity,
 			BigDecimal productUnitPrice, CommerceContext commerceContext)
 		throws PortalException {
 
@@ -380,7 +380,7 @@ public class CommerceDiscountCalculationV2Impl
 	}
 
 	private CommerceDiscountValue _getCommerceDiscountValues(
-			BigDecimal commercePrice, int quantity,
+			BigDecimal commercePrice, BigDecimal quantity,
 			CommerceContext commerceContext,
 			List<CommerceDiscount> commerceDiscounts)
 		throws PortalException {
@@ -415,8 +415,7 @@ public class CommerceDiscountCalculationV2Impl
 
 		CommerceMoney discountAmountCommerceMoney =
 			_commerceMoneyFactory.create(
-				commerceCurrency,
-				currentDiscountAmount.multiply(new BigDecimal(quantity)));
+				commerceCurrency, currentDiscountAmount.multiply(quantity));
 
 		return new CommerceDiscountValue(
 			0, discountAmountCommerceMoney,

@@ -19,10 +19,13 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+
+import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,8 +71,8 @@ public class WishListItemDTOConverter
 
 						CommerceMoney finalPriceCommerceMoney =
 							_commerceProductPriceCalculation.getFinalPrice(
-								cpInstance.getCPInstanceId(), 1,
-								commerceContext);
+								cpInstance.getCPInstanceId(), BigDecimal.ONE,
+								StringPool.BLANK, commerceContext);
 
 						if (finalPriceCommerceMoney.isEmpty()) {
 							return null;

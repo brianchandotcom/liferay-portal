@@ -20,6 +20,7 @@ import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMin
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,7 +54,7 @@ public class TierPriceTag extends IncludeTag {
 				CommercePriceEntry commercePriceEntry =
 					CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
 						commercePriceList.getCommercePriceListId(),
-						_cpInstance.getCPInstanceUuid());
+						_cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 				if ((commercePriceEntry != null) &&
 					commercePriceEntry.isHasTierPrice() &&

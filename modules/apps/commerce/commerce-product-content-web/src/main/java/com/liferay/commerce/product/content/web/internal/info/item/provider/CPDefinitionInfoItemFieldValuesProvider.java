@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -530,7 +532,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getFinalPrice(
-				cpInstance.getCPInstanceId(), 1,
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
 				CommerceContextThreadLocal.get());
 
 		if (commerceMoney.isEmpty()) {

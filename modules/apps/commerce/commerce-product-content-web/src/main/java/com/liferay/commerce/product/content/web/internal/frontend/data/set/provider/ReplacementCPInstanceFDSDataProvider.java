@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -81,7 +83,7 @@ public class ReplacementCPInstanceFDSDataProvider
 					cpDefinition.getName(LocaleUtil.toLanguageId(locale)),
 					_getPriceModel(
 						commerceContext, cpDefinition.getCPDefinitionId(),
-						cpInstance.getCPInstanceId(), locale),
+						cpInstance.getCPInstanceId(), StringPool.BLANK, locale),
 					cpInstance.getCPInstanceId(), cpInstance.getSku());
 			});
 	}
@@ -102,12 +104,13 @@ public class ReplacementCPInstanceFDSDataProvider
 
 	private PriceModel _getPriceModel(
 			CommerceContext commerceContext, long cpDefinitionId,
-			long cpInstanceId, Locale locale)
+			long cpInstanceId, String unitOfMeasureKey, Locale locale)
 		throws PortalException {
 
 		if (cpInstanceId > 0) {
 			return _productHelper.getPriceModel(
-				cpInstanceId, 1, commerceContext, StringPool.BLANK, locale);
+				cpInstanceId, StringPool.BLANK, BigDecimal.ONE,
+				unitOfMeasureKey, commerceContext, locale);
 		}
 
 		return _productHelper.getMinPriceModel(

@@ -163,7 +163,8 @@ public class CommerceProductInstanceFDSDataProvider
 				cpInstance.getCPInstanceId(),
 				_commerceCurrencyLocalService.getCommerceCurrency(
 					cpInstance.getCompanyId(),
-					commerceCatalog.getCommerceCurrencyCode()));
+					commerceCatalog.getCommerceCurrencyCode()),
+				StringPool.BLANK);
 
 		return commerceMoney.format(locale);
 	}

@@ -259,7 +259,8 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getBasePrice(
-				cpInstance.getCPInstanceId(), getCommerceCurrency());
+				cpInstance.getCPInstanceId(), getCommerceCurrency(),
+				StringPool.BLANK);
 
 		return round(commerceMoney.getPrice());
 	}
@@ -273,7 +274,8 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 		CommerceMoney commerceMoney =
 			_commerceProductPriceCalculation.getBasePromoPrice(
-				cpInstance.getCPInstanceId(), getCommerceCurrency());
+				cpInstance.getCPInstanceId(), getCommerceCurrency(),
+				StringPool.BLANK);
 
 		return round(commerceMoney.getPrice());
 	}

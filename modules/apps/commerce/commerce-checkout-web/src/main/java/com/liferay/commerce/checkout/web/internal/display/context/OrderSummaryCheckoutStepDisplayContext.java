@@ -356,16 +356,18 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
-		BigDecimal quantity = commerceOrderItem.getQuantity();
 
-		commerceProductPriceRequest.setCpInstanceId(
-			commerceOrderItem.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(quantity.intValue());
-		commerceProductPriceRequest.setSecure(false);
+		commerceProductPriceRequest.setCalculateTax(true);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCommerceOptionValues(
 			cpDefinitionCommerceOptionValues);
-		commerceProductPriceRequest.setCalculateTax(true);
+		commerceProductPriceRequest.setCpInstanceId(
+			commerceOrderItem.getCPInstanceId());
+		commerceProductPriceRequest.setQuantity(
+			commerceOrderItem.getQuantity());
+		commerceProductPriceRequest.setSecure(false);
+		commerceProductPriceRequest.setUnitOfMeasureKey(
+			commerceOrderItem.getUnitOfMeasureKey());
 
 		return _commerceProductPriceCalculation.getCommerceProductPrice(
 			commerceProductPriceRequest);
@@ -397,11 +399,9 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceOrderItem.getFinalPriceMoney());
 		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
 			commerceOrderItem.getFinalPriceWithTaxAmountMoney());
-
-		BigDecimal quantity = commerceOrderItem.getQuantity();
-
-		commerceProductPriceImpl.setQuantity(quantity.intValue());
-
+		commerceProductPriceImpl.setQuantity(commerceOrderItem.getQuantity());
+		commerceProductPriceImpl.setUnitOfMeasureKey(
+			commerceOrderItem.getUnitOfMeasureKey());
 		commerceProductPriceImpl.setUnitPrice(
 			commerceOrderItem.getUnitPriceMoney());
 		commerceProductPriceImpl.setUnitPriceWithTaxAmount(

@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -392,7 +393,7 @@ public class CPDefinitionLocalServiceTest {
 		CommercePriceEntry duplicateCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				duplicateCPInstance.getCPInstanceUuid());
+				duplicateCPInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		duplicateCommercePriceEntry =
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
@@ -402,7 +403,7 @@ public class CPDefinitionLocalServiceTest {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		Assert.assertEquals(
 			BigDecimal.TEN, duplicateCommercePriceEntry.getPrice());
@@ -490,7 +491,7 @@ public class CPDefinitionLocalServiceTest {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				duplicateCPInstance.getCPInstanceUuid());
+				duplicateCPInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		BigDecimal newPrice = new BigDecimal(10);
 
@@ -503,7 +504,7 @@ public class CPDefinitionLocalServiceTest {
 		CommercePriceEntry parentPriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		BigDecimal priceEntry = commercePriceEntry.getPrice();
 

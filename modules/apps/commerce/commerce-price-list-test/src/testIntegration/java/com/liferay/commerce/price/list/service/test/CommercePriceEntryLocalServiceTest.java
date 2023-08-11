@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -746,7 +747,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		Assert.assertThat(
 			commercePriceEntry.getCommercePriceEntryId(),
@@ -782,7 +783,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		Assert.assertNull(
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(), cpInstanceUuid));
+				commercePriceList.getCommercePriceListId(), cpInstanceUuid,
+				StringPool.BLANK));
 	}
 
 	@Test
@@ -829,7 +831,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				childCommercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), true);
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK, true);
 
 		Assert.assertThat(
 			commercePriceEntry.getCommercePriceEntryId(),
@@ -888,7 +890,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				childCommercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), true);
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK, true);
 
 		Assert.assertThat(
 			childCommercePriceEntry.getCommercePriceEntryId(),
@@ -939,7 +941,7 @@ public class CommercePriceEntryLocalServiceTest {
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				childCommercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid(), false);
+				cpInstance.getCPInstanceUuid(), StringPool.BLANK, false);
 
 		Assert.assertNull(fetchedCommercePriceEntry);
 	}

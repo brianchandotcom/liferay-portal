@@ -91,8 +91,8 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceOrderItem.getCPInstanceId(), quantity.intValue(),
-				commerceContext);
+				commerceOrderItem.getCPInstanceId(), quantity,
+				commerceOrderItem.getUnitOfMeasureKey(), commerceContext);
 
 		if (commerceProductPrice != null) {
 			CommerceMoney unitPriceCommerceMoney =

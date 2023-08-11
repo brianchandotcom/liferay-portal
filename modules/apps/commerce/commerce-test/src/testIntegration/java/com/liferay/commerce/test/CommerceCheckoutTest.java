@@ -773,7 +773,8 @@ public class CommerceCheckoutTest {
 			CommercePriceEntry commercePriceEntry =
 				_commercePriceEntryLocalService.fetchCommercePriceEntry(
 					commercePriceList.getCommercePriceListId(),
-					cpInstance.getCPInstanceUuid());
+					cpInstance.getCPInstanceUuid(),
+					commerceOrderItem.getUnitOfMeasureKey());
 
 			BigDecimal price = commercePriceEntry.getPrice();
 

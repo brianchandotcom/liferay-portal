@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -207,8 +209,9 @@ public class PriceTag extends IncludeTag {
 						cpInstanceId));
 
 			return _productHelper.getPriceModel(
-				cpInstanceId, _quantity, commerceContext, jsonArray.toString(),
-				themeDisplay.getLocale());
+				cpInstanceId, jsonArray.toString(),
+				BigDecimal.valueOf(_quantity), StringPool.BLANK,
+				commerceContext, themeDisplay.getLocale());
 		}
 
 		return _productHelper.getMinPriceModel(

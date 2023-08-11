@@ -2669,7 +2669,8 @@ public class CPDefinitionLocalServiceImpl
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(), cpInstanceUuid);
+				commercePriceList.getCommercePriceListId(), cpInstanceUuid,
+				StringPool.BLANK);
 
 		if (commercePriceEntry == null) {
 			return;
@@ -2681,7 +2682,7 @@ public class CPDefinitionLocalServiceImpl
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(),
 			commercePriceEntry.getPrice(),
-			commercePriceEntry.isPriceOnApplication(), null, null,
+			commercePriceEntry.isPriceOnApplication(), null, StringPool.BLANK,
 			serviceContext);
 	}
 

@@ -128,7 +128,8 @@ public class MappedProductDTOConverter
 				id = csDiagramEntry.getCSDiagramEntryId();
 				price = _getPrice(
 					commerceContext, cpInstance,
-					mappedProductDTOConverterContext.getLocale(), 1);
+					mappedProductDTOConverterContext.getLocale(),
+					BigDecimal.ONE, StringPool.BLANK);
 				quantity = csDiagramEntry.getQuantity();
 				sequence = csDiagramEntry.getSequence();
 
@@ -438,7 +439,7 @@ public class MappedProductDTOConverter
 
 	private Price _getPrice(
 			CommerceContext commerceContext, CPInstance cpInstance,
-			Locale locale, int quantity)
+			Locale locale, BigDecimal quantity, String unitOfMeasureKey)
 		throws Exception {
 
 		if (cpInstance == null) {
@@ -447,7 +448,8 @@ public class MappedProductDTOConverter
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				cpInstance.getCPInstanceId(), quantity, true, commerceContext);
+				cpInstance.getCPInstanceId(), quantity, true, unitOfMeasureKey,
+				commerceContext);
 
 		if (commerceProductPrice == null) {
 			return new Price();

@@ -22,6 +22,7 @@ import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -95,8 +96,8 @@ public class PriceCPContentContributor implements CPContentContributor {
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
 				_getCommerceProductPriceRequest(
-					cpInstance, cpDefinitionInventoryEngine, commerceContext,
-					commerceOptionValues));
+					cpInstance, cpDefinitionInventoryEngine,
+					commerceOptionValues, StringPool.BLANK, commerceContext));
 
 		CommerceMoney unitPriceCommerceMoney =
 			commerceProductPrice.getUnitPrice();
@@ -135,21 +136,23 @@ public class PriceCPContentContributor implements CPContentContributor {
 	private CommerceProductPriceRequest _getCommerceProductPriceRequest(
 			CPInstance cpInstance,
 			CPDefinitionInventoryEngine cpDefinitionInventoryEngine,
-			CommerceContext commerceContext,
-			List<CommerceOptionValue> commerceOptionValues)
+			List<CommerceOptionValue> commerceOptionValues,
+			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException {
 
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(
-			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
-		commerceProductPriceRequest.setSecure(false);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCommerceOptionValues(
 			commerceOptionValues);
+		commerceProductPriceRequest.setCpInstanceId(
+			cpInstance.getCPInstanceId());
+		commerceProductPriceRequest.setQuantity(
+			BigDecimal.valueOf(
+				cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance)));
+		commerceProductPriceRequest.setSecure(false);
+		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceProductPriceRequest;
 	}

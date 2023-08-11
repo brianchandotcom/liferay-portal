@@ -206,20 +206,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -352,20 +344,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -493,20 +477,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -651,20 +627,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -809,20 +777,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -961,20 +921,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1156,20 +1108,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1304,20 +1248,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1437,20 +1373,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1541,20 +1469,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1646,20 +1566,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1752,20 +1664,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1874,20 +1778,12 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance1.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, commerceOptionValues,
+					cpInstance1.getCPInstanceId(), BigDecimal.ONE, true,
+					StringPool.BLANK));
 
 		CommerceMoney finalPriceCommerceMoney =
 			commerceProductPrice.getFinalPrice();
@@ -1958,18 +1854,11 @@ public class CommerceProductPriceCalculationV2Test {
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCpInstanceId(
-			cpInstance.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(1);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
+				_createCommerceProductPriceRequest(
+					commerceContext, null, cpInstance.getCPInstanceId(),
+					BigDecimal.ONE, true, StringPool.BLANK));
 
 		Assert.assertEquals(
 			parentPriceList.getCommercePriceListId(),
@@ -2004,6 +1893,29 @@ public class CommerceProductPriceCalculationV2Test {
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 			calendar.get(Calendar.MINUTE), neverExpire, serviceContext);
+	}
+
+	private CommerceProductPriceRequest _createCommerceProductPriceRequest(
+		CommerceContext commerceContext,
+		List<CommerceOptionValue> commerceOptionValues, long cpInstanceId,
+		BigDecimal quantity, boolean secure, String unitOfMeasureKey) {
+
+		CommerceProductPriceRequest commerceProductPriceRequest =
+			new CommerceProductPriceRequest();
+
+		commerceProductPriceRequest.setCommerceContext(commerceContext);
+
+		if (commerceOptionValues != null) {
+			commerceProductPriceRequest.setCommerceOptionValues(
+				commerceOptionValues);
+		}
+
+		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
+		commerceProductPriceRequest.setQuantity(quantity);
+		commerceProductPriceRequest.setSecure(secure);
+		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
+
+		return commerceProductPriceRequest;
 	}
 
 	private static final BigDecimal _HUNDRED = BigDecimal.valueOf(100);

@@ -146,12 +146,18 @@ public class ProductOptionValueDTOConverter
 											cpInstance.getCPInstanceId()
 									).cpInstanceMinQuantity(
 										_getMinOrderQuantity(cpInstance)
+									).cpInstanceUnitOfMeasureKey(
+										cpDefinitionOptionValueRel.
+											getUnitOfMeasureKey()
 									).selectedCPInstanceId(
 										selectedCPInstance.getCPInstanceId()
 									).selectedCPInstanceMinQuantity(
 										_getMinOrderQuantity(selectedCPInstance)
 									).selectedCPDefinitionOptionValueRel(
 										selectedCPDefinitionOptionValueRel
+									).selectedCPInstanceUnitOfMeasureKey(
+										selectedCPDefinitionOptionValueRel.
+											getUnitOfMeasureKey()
 									).build());
 
 						return commerceMoney.format(
@@ -224,11 +230,11 @@ public class ProductOptionValueDTOConverter
 		return null;
 	}
 
-	private int _getMinOrderQuantity(CPInstance cpInstance)
+	private BigDecimal _getMinOrderQuantity(CPInstance cpInstance)
 		throws PortalException {
 
 		if (cpInstance == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -240,7 +246,8 @@ public class ProductOptionValueDTOConverter
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		return cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+		return BigDecimal.valueOf(
+			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
 	}
 
 	private boolean _updateJSONArray(

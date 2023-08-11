@@ -222,7 +222,7 @@ public class SalesforceObjectEntryManagerImpl
 
 						return accountEntry.getExternalReferenceCode();
 					}),
-				", '"),
+				"', '"),
 			"')");
 	}
 

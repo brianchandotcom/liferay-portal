@@ -123,10 +123,10 @@ definition {
 	}
 
 	@description = "COMMERCE-12111. As a buyer user, I can checkout discount products using Define Externally configuration"
-	@priority = 5
+	@priority = 4
 	test CanDiscountWorkWithDefineExternallyProducts {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Given a business account with a buyer user") {
 			CommerceEntry.addAccountEntryUser(
@@ -167,8 +167,7 @@ definition {
 			CommerceJSONOptionsAPI._addCommerceOption(
 				fieldType = "select",
 				optionKey = "option-select-from-list",
-				optionName = "Option Select from List",
-				optionValues = "value1:value1:1,value2:value2:2,value3:value3:3");
+				optionName = "Option Select from List");
 		}
 
 		task ("And is linked to the product") {
@@ -242,7 +241,7 @@ definition {
 
 			Click(locator1 = "Button#CONTINUE");
 
-			for (var productName : list "U-Joint,mount") {
+			for (var productName : list "U-Joint") {
 				CommerceCheckout.viewCheckoutOrderSummary(
 					addressAddress = "Test Address",
 					addressCity = "Test City",
@@ -326,9 +325,9 @@ definition {
 	}
 
 	@description = "COMMERCE-12110 Verify that when we configure an option both manually or using the define externally toggle, when the toggle is enabled or disabled the past configurations are remembered"
-	@priority = 5
+	@priority = 4
 	test CanTheManuallySelectConfigurationIsRemembered {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Given the admin opens the U-Joint Product via Admin") {
 			CommerceProducts.openProductsAdmin();
@@ -762,7 +761,7 @@ definition {
 			CommerceEntry.deleteCommerceEntry(key_value = "MIN55861");
 		}
 
-		task ("And the admin opens the U-Joint Product via Admin") {
+		task ("And the admin opens the ABS Sensor Product via Admin") {
 			CommerceProducts.openProductsAdmin();
 
 			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");

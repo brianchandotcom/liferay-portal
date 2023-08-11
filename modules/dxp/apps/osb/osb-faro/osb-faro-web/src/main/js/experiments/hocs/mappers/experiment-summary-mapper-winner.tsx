@@ -29,7 +29,9 @@ export default ({
 	timeZoneId,
 	winnerDXPVariantId
 }) => {
-	const winnerVariant = mergedVariants(dxpVariants, variantMetrics).find(
+	const variants = mergedVariants(dxpVariants, variantMetrics);
+
+	const winnerVariant = variants.find(
 		({dxpVariantId}) => dxpVariantId === winnerDXPVariantId
 	);
 
@@ -41,12 +43,14 @@ export default ({
 
 	if (winnerVariant) {
 		if (winnerVariant.control) {
-			const variants = dxpVariants.filter(({control}) => !control);
-
 			modals = [
 				modalComplete(experimentId, winnerVariant.dxpVariantId),
 				modalPublishOtherVariant(variants, experimentId, pageURL)
 			];
+
+			const secondPlaceVariant = variants.find(
+				({dxpVariantId}) => dxpVariantId !== winnerDXPVariantId
+			);
 
 			alert = {
 				...alert,
@@ -57,7 +61,12 @@ export default ({
 					Liferay.Language.get(
 						'control-has-outperformed-all-variants-by-at-least-x'
 					),
-					[`${toRounded(winnerVariant.improvement, 2)}%`]
+					[
+						`${toRounded(
+							Math.abs(secondPlaceVariant.improvement),
+							2
+						)}%`
+					]
 				)
 			};
 		} else {

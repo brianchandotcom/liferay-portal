@@ -933,7 +933,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			String orderSymbol = "order-list-down";
 
-			if (getSortingOrder().equals("asc")) {
+			if (Objects.equals(getSortingOrder(), "asc")) {
 				orderSymbol = "order-list-up";
 			}
 

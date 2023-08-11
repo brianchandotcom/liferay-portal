@@ -74,10 +74,28 @@ else {
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="mb-0" />
 				</li>
 				<li class="tbar-item">
-					<div class="tbar-section text-right">
-						<aui:button cssClass="btn-outline-borderless btn-outline-secondary btn-sm mr-3" href="<%= redirect %>" type="cancel" />
-						<aui:button cssClass="btn-sm mr-3 save-and-continue-button" primary="<%= false %>" type="submit" value="save-and-continue" />
-						<aui:button cssClass="btn-sm save-button" type="submit" value="save" />
+					<div class="c-gap-3 c-mb-0 form-group-sm tbar-section text-right">
+						<clay:link
+							borderless="<%= true %>"
+							displayType="secondary"
+							href="<%= redirect %>"
+							label="cancel"
+							type="button"
+						/>
+
+						<clay:button
+							displayType="secondary"
+							id='<%= liferayPortletResponse.getNamespace() + "saveAndContinueButton" %>'
+							label="save-and-continue"
+							type="submit"
+						/>
+
+						<clay:button
+							displayType="primary"
+							id='<%= liferayPortletResponse.getNamespace() + "saveButton" %>'
+							label="save"
+							type="submit"
+						/>
 					</div>
 				</li>
 			</ul>

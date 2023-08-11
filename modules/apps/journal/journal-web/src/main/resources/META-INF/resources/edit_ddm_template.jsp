@@ -48,7 +48,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />
 				</li>
 				<li class="tbar-item">
-					<div class="c-gap-3 form-group-sm journal-article-button-row tbar-section text-right">
+					<div class="c-gap-3 c-mb-0 form-group-sm journal-article-button-row tbar-section text-right">
 						<clay:link
 							borderless="<%= true %>"
 							displayType="secondary"
@@ -58,15 +58,15 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 						/>
 
 						<clay:button
-							cssClass="save-and-continue-button"
 							displayType="secondary"
+							id='<%= liferayPortletResponse.getNamespace() + "saveAndContinueButton" %>'
 							label="save-and-continue"
 							type="submit"
 						/>
 
 						<clay:button
-							cssClass="save-button"
 							displayType="primary"
+							id='<%= liferayPortletResponse.getNamespace() + "saveButton" %>'
 							label="save"
 							type="submit"
 						/>

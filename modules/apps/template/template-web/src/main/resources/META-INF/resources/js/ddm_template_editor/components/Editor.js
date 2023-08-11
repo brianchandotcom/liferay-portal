@@ -77,6 +77,14 @@ export function Editor({autocompleteData, initialScript, mode}) {
 	}, [initialScript, portletNamespace]);
 
 	useEffect(() => {
+		const saveAndContinueButton = document.getElementById(
+			`${portletNamespace}saveAndContinueButton`
+		);
+
+		const saveButton = document.getElementById(
+			`${portletNamespace}saveButton`
+		);
+
 		const saveTemplate = (redirect) => {
 			const form = document.getElementById(`${portletNamespace}fm`);
 
@@ -88,12 +96,9 @@ export function Editor({autocompleteData, initialScript, mode}) {
 				saveAndContinueInput.value = true;
 			}
 
-			const saveButtons = document.querySelectorAll('save-button');
-
 			const changeDisabled = (disabled) => {
-				saveButtons.forEach((button) => {
-					button.disabled = disabled;
-				});
+				saveButton.disabled = disabled;
+				saveAndContinueButton.disabled = disabled;
 			};
 
 			const formData = new FormData(form);
@@ -114,6 +119,9 @@ export function Editor({autocompleteData, initialScript, mode}) {
 
 				if (validator.hasErrors()) {
 					validator.focusInvalidField();
+					changeDisabled(false);
+
+					return;
 				}
 			}
 
@@ -146,15 +154,9 @@ export function Editor({autocompleteData, initialScript, mode}) {
 					}
 				})
 				.catch(() => {
-					changeDisabled(true);
+					changeDisabled(false);
 				});
 		};
-
-		const saveAndContinueButton = document.querySelector(
-			'.save-and-continue-button'
-		);
-
-		const saveButton = document.querySelector('.save-button');
 
 		const onSaveAndContinueButtonClick = (event) => {
 			event.preventDefault();
@@ -168,18 +170,27 @@ export function Editor({autocompleteData, initialScript, mode}) {
 			saveTemplate(true);
 		};
 
-		saveAndContinueButton.addEventListener(
-			'click',
-			onSaveAndContinueButtonClick
-		);
-		saveButton.addEventListener('click', onSaveButtonClick);
-
-		return () => {
-			saveAndContinueButton.removeEventListener(
+		if (saveAndContinueButton) {
+			saveAndContinueButton.addEventListener(
 				'click',
 				onSaveAndContinueButtonClick
 			);
-			saveButton.removeEventListener('click', onSaveButtonClick);
+		}
+
+		if (saveButton) {
+			saveButton.addEventListener('click', onSaveButtonClick);
+		}
+
+		return () => {
+			if (saveAndContinueButton) {
+				saveAndContinueButton.removeEventListener(
+					'click',
+					onSaveAndContinueButtonClick
+				);
+			}
+			if (saveButton) {
+				saveButton.removeEventListener('click', onSaveButtonClick);
+			}
 		};
 	}, [portletNamespace, script]);
 

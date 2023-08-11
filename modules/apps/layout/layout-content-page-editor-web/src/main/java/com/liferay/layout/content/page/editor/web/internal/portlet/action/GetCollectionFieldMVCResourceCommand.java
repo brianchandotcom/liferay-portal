@@ -321,54 +321,64 @@ public class GetCollectionFieldMVCResourceCommand
 				activePage, displayAllItems, numberOfItems,
 				numberOfItemsPerPage, paginationType));
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
 		List<Object> list = layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
-
-		for (Object object : list) {
-			jsonArray.put(
-				_getDisplayObjectJSONObject(
-					httpServletRequest, httpServletResponse,
-					infoItemFieldValuesProvider, object,
-					LocaleUtil.fromLanguageId(languageId)));
-		}
-
-		InfoListRenderer<Object> infoListRenderer =
-			(InfoListRenderer<Object>)
-				_infoListRendererRegistry.getInfoListRenderer(listStyle);
-
-		if (infoListRenderer != null) {
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			HttpServletResponse pipingHttpServletResponse =
-				new PipingServletResponse(
-					httpServletResponse, unsyncStringWriter);
-
-			DefaultInfoListRendererContext defaultInfoListRendererContext =
-				new DefaultInfoListRendererContext(
-					httpServletRequest, pipingHttpServletResponse);
-
-			defaultInfoListRendererContext.setListItemRendererKey(
-				listItemStyle);
-			defaultInfoListRendererContext.setTemplateKey(templateKey);
-
-			infoListRenderer.render(list, defaultInfoListRendererContext);
-
-			jsonObject.put("content", unsyncStringWriter.toString());
-		}
 
 		int listCount = layoutListRetriever.getListCount(
 			listObjectReference, defaultLayoutListRetrieverContext);
 
 		jsonObject.put(
+			"content",
+			() -> {
+				InfoListRenderer<Object> infoListRenderer =
+					(InfoListRenderer<Object>)
+						_infoListRendererRegistry.getInfoListRenderer(
+							listStyle);
+
+				if (infoListRenderer == null) {
+					return null;
+				}
+
+				UnsyncStringWriter unsyncStringWriter =
+					new UnsyncStringWriter();
+
+				HttpServletResponse pipingHttpServletResponse =
+					new PipingServletResponse(
+						httpServletResponse, unsyncStringWriter);
+
+				DefaultInfoListRendererContext defaultInfoListRendererContext =
+					new DefaultInfoListRendererContext(
+						httpServletRequest, pipingHttpServletResponse);
+
+				defaultInfoListRendererContext.setListItemRendererKey(
+					listItemStyle);
+				defaultInfoListRendererContext.setTemplateKey(templateKey);
+
+				infoListRenderer.render(list, defaultInfoListRendererContext);
+
+				return unsyncStringWriter.toString();
+			}
+		).put(
 			"customCollectionSelectorURL",
 			_getCustomCollectionSelectorURL(
 				httpServletRequest, itemType, namespace)
 		).put(
 			"isRestricted", false
 		).put(
-			"items", jsonArray
+			"items",
+			() -> {
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+				for (Object object : list) {
+					jsonArray.put(
+						_getDisplayObjectJSONObject(
+							httpServletRequest, httpServletResponse,
+							infoItemFieldValuesProvider, object,
+							LocaleUtil.fromLanguageId(languageId)));
+				}
+
+				return jsonArray;
+			}
 		).put(
 			"itemSubtype",
 			() -> {

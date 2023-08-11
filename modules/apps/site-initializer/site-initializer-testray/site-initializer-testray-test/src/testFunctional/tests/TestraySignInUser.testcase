@@ -23,12 +23,20 @@ definition {
 				templateName = "Testray",
 				templateType = "Site Initializer");
 		}
+
+		task ("Logs out and goes to the Testray login page") {
+			User.logoutPG();
+
+			Testray.openTestrayViaURL();
+		}
 	}
 
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		task ("Delete Testray Site and Client Extensions") {
+			User.firstLoginPG();
+
 			Testray.testrayApisTearDown();
 		}
 
@@ -43,24 +51,18 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("When the user fills in all required fields correctly") {
+			Type(
+				locator1 = "TextInput#TEXT",
+				value1 = "test@liferay.com");
 
-			var portalURL = PropsUtil.get("portal.url");
-
-			Testray.signOutTestray();
+			Type(
+				locator1 = "TextInput#PASSWORD_TYPE",
+				value1 = "test");
 		}
 
-		task ("Sign in New Account and assert the name field label is Green") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
-
-			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
-
-			TestraySignIn.addPasswordTestray(key_itemvalue = "test");
-
+		task ("Then can see the green label in the 'email address' field.") {
 			TestraySignIn.assertTitleSucess(key_title = "Email Address");
-
-			User.firstLoginPG();
 		}
 	}
 
@@ -70,26 +72,18 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
+		task ("When the user does not fill in all required fields correctly") {
+			Type(
+				locator1 = "TextInput#TEXT",
+				value1 = "");
 
-			var portalURL = PropsUtil.get("portal.url");
-
-			Testray.signOutTestray();
+			Type(
+				locator1 = "TextInput#PASSWORD_TYPE",
+				value1 = "test");
 		}
 
-		task ("Sign in New Account and assert the name field label is Red") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
-
-			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
-
-			TestraySignIn.addEmailTestray(key_itemvalue = "");
-
-			TestraySignIn.addPasswordTestray(key_itemvalue = "test");
-
+		task ("Then can see the red label in the 'email address' field.") {
 			TestraySignIn.assertTitleFailed(key_title = "Email Address");
-
-			User.firstLoginPG();
 		}
 	}
 
@@ -99,26 +93,14 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			var portalURL = PropsUtil.get("portal.url");
-
-			Testray.signOutTestray();
+		task ("When the user logs in to Testray") {
+			TestraySignIn.loginUserTestrayPG(
+				emailAddress = "test@liferay.com",
+				password = "test");
 		}
 
-		task ("Sign in New Account and assert the user can enter with an valid email") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
-
-			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
-
-			TestraySignIn.addPasswordTestray(key_itemvalue = "test");
-
-			TestraySignIn.buttonSignInTestray();
-
+		task ("Then the user sees the initial session on the Testray Site") {
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
-
-			User.firstLoginPG();
 		}
 	}
 
@@ -128,26 +110,24 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Go to Testray and exit Testray") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			var portalURL = PropsUtil.get("portal.url");
-
-			Testray.signOutTestray();
+		task ("Given that the user does not fill in all required fields correctly") {
+			TestraySignIn.loginUserTestrayPG(emailAddress = "test@liferay.com");
 		}
 
-		task ("Sign in New Account and assert the user can enter with an valid email after getting the password wrong") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		task ("And the user sees the required field message") {
+			AssertElementPresent(
+				key_alertMessage = "The Password field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE");
+		}
 
-			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
+		task ("When the user logs in to Testray correctly") {
+			TestraySignIn.loginUserTestrayPG(
+				emailAddress = "test@liferay.com",
+				password = "test");
+		}
 
-			TestraySignIn.addPasswordTestray(key_itemvalue = "");
-
-			TestraySignIn.buttonSignInTestray();
-
-			TestrayLayout.assertTabPageTitleIsNotPresent(pageTabTitle = "Projects");
-
-			User.firstLoginPG();
+		task ("Then the user sees the initial session on the Testray Site") {
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
 		}
 	}
 

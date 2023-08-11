@@ -1,17 +1,5 @@
 definition {
 
-	macro addEmailTestray {
-		Type(
-			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = ${key_itemvalue});
-	}
-
-	macro addPasswordTestray {
-		Type(
-			locator1 = "TestrayUser#FIELD_PASSWORD",
-			value1 = ${key_itemvalue});
-	}
-
 	macro assertTitleFailed {
 		AssertElementPresent(
 			key_fieldName = ${key_title},
@@ -24,33 +12,46 @@ definition {
 			locator1 = "TestrayUser#TITLE_SUCCESS");
 	}
 
-	macro buttonSignInTestray {
-		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
-	}
+	macro changePassword {
+		if (isSet(currentPassword)) {
+			Type(
+				locator1 = "TextInput#CURRENT_PASSWORD",
+				value1 = ${currentPassword});
+		}
 
-	macro enableChangePassword {
-		PasswordPolicies.openPasswordPoliciesAdmin();
+		if (isSet(newPassword)) {
+			Type(
+				locator1 = "TextInput#NEW_PASSWORD",
+				value1 = ${newPassword});
+		}
 
-		PasswordPolicies.enableChangeable(
-			passwordPolicyName = "Default Password Policy",
-			passwordPolicyPanel = "Password Changes");
-
-		PortletEntry.save();
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		Uncheck(
-			checkboxName = "Allow strangers to create accounts with a company email address?",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Uncheck(
-			checkboxName = "Require strangers to verify their email address?",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		if (isSet(confirmPassword)) {
+			Type(
+				locator1 = "TestrayUser#CONFIRM_PASSWORD",
+				value1 = ${confirmPassword});
+		}
 
 		Button.clickSave();
+	}
+
+	macro loginUserTestrayPG {
+		if (isSet(emailAddress)) {
+			Type(
+				locator1 = "TextInput#TEXT",
+				value1 = ${emailAddress});
+		}
+
+		if (isSet(password)) {
+			Type(
+				locator1 = "TextInput#PASSWORD_TYPE",
+				value1 = ${password});
+		}
+
+		if (isSet(rememberMe)) {
+			Check(locator1 = "Checkbox#REMEMBER_ME");
+		}
+
+		Button.click(button = "Sign In");
 	}
 
 }

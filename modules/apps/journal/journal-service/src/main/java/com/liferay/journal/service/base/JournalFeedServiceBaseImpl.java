@@ -8,7 +8,6 @@ package com.liferay.journal.service.base;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedService;
 import com.liferay.journal.service.JournalFeedServiceUtil;
-import com.liferay.journal.service.persistence.JournalFeedFinder;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -116,9 +115,6 @@ public abstract class JournalFeedServiceBaseImpl
 
 	@Reference
 	protected JournalFeedPersistence journalFeedPersistence;
-
-	@Reference
-	protected JournalFeedFinder journalFeedFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

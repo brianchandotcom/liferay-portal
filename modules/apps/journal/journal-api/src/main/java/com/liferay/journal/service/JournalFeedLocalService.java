@@ -366,18 +366,7 @@ public interface JournalFeedLocalService
 		OrderByComparator<JournalFeed> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFeed> search(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator, int start, int end,
-		OrderByComparator<JournalFeed> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId, String keywords);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator);
 
 	public JournalFeed updateFeed(
 			long groupId, String feedId, String name, String description,

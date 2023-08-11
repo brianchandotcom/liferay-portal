@@ -13,7 +13,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
-import com.liferay.journal.service.persistence.JournalFeedFinder;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -591,9 +590,6 @@ public abstract class JournalFeedLocalServiceBaseImpl
 
 	@Reference
 	protected JournalFeedPersistence journalFeedPersistence;
-
-	@Reference
-	protected JournalFeedFinder journalFeedFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

@@ -492,30 +492,9 @@ public class JournalFeedLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<JournalFeed> search(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<JournalFeed>
-			orderByComparator) {
-
-		return _journalFeedLocalService.search(
-			companyId, groupId, feedId, name, description, andOperator, start,
-			end, orderByComparator);
-	}
-
-	@Override
 	public int searchCount(long companyId, long groupId, String keywords) {
 		return _journalFeedLocalService.searchCount(
 			companyId, groupId, keywords);
-	}
-
-	@Override
-	public int searchCount(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator) {
-
-		return _journalFeedLocalService.searchCount(
-			companyId, groupId, feedId, name, description, andOperator);
 	}
 
 	@Override

@@ -428,28 +428,10 @@ public class JournalFeedLocalServiceUtil {
 			companyId, groupId, keywords, start, end, orderByComparator);
 	}
 
-	public static List<JournalFeed> search(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator, int start, int end,
-		OrderByComparator<JournalFeed> orderByComparator) {
-
-		return getService().search(
-			companyId, groupId, feedId, name, description, andOperator, start,
-			end, orderByComparator);
-	}
-
 	public static int searchCount(
 		long companyId, long groupId, String keywords) {
 
 		return getService().searchCount(companyId, groupId, keywords);
-	}
-
-	public static int searchCount(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator) {
-
-		return getService().searchCount(
-			companyId, groupId, feedId, name, description, andOperator);
 	}
 
 	public static JournalFeed updateFeed(

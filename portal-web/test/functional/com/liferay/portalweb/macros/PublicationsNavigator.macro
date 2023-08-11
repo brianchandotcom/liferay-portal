@@ -20,6 +20,8 @@ definition {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
+			WaitForPageLoad();
+
 			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Publish",
 				publicationName = ${publicationName});

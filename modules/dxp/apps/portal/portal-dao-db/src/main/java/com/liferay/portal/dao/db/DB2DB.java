@@ -134,7 +134,8 @@ public class DB2DB extends BaseDB {
 			String tempColumnName = "temp" + columnName;
 
 			if (StringUtil.endsWith(newColumnType, "not null") &&
-				!StringUtil.containsIgnoreCase(newColumnType, " default ")) {
+				!StringUtil.containsIgnoreCase(
+					newColumnType, "default", StringPool.SPACE)) {
 
 				runSQL(
 					StringBundler.concat(

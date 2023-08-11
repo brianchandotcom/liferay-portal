@@ -1,6 +1,6 @@
 <%--
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 --%>
@@ -41,24 +41,56 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 		searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
-			keyProperty="layoutPageTemplateEntryId"
-			modelVar="layoutPageTemplateEntry"
+			className="Object"
+			modelVar="object"
 		>
 
 			<%
-			row.setData(
-				HashMapBuilder.<String, Object>put(
-					"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)
-				).build());
+			LayoutPageTemplateEntry curLayoutPageTemplateEntry = null;
+			LayoutPageTemplateCollection curLayoutPageTemplateCollection = null;
+
+			Object result = row.getObject();
+
+			if (result instanceof LayoutPageTemplateEntry) {
+				curLayoutPageTemplateEntry = (LayoutPageTemplateEntry)result;
+			}
+			else {
+				curLayoutPageTemplateCollection = (LayoutPageTemplateCollection)result;
+			}
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
-					verticalCard="<%= new DisplayPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-				/>
-			</liferay-ui:search-container-column-text>
+			<c:choose>
+				<c:when test="<%= curLayoutPageTemplateEntry != null %>">
+
+					<%
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(curLayoutPageTemplateEntry)
+						).build());
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<clay:vertical-card
+							propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
+							verticalCard="<%= new DisplayPageVerticalCard(curLayoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test="<%= curLayoutPageTemplateCollection != null %>">
+
+					<%
+					row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
+					%>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<clay:horizontal-card
+							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, searchContainer.getRowChecker()) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

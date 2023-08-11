@@ -216,6 +216,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaPortletIdMethodCheck() throws Exception {
+		test("upgrade/UpgradeJavaPortletIdMethodCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaPortletSharedSearchSettingsCheck()
 		throws Exception {
 

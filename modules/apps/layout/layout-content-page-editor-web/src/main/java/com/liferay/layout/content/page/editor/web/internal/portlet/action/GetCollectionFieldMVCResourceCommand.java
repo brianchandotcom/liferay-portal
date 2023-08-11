@@ -325,9 +325,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 		defaultLayoutListRetrieverContext.setPagination(
 			CollectionPaginationUtil.getPagination(
-				activePage, listCount, displayAllPages, displayAllItems,
-				numberOfItems, numberOfItemsPerPage, numberOfPages,
-				paginationType));
+				activePage, displayAllItems, numberOfItems,
+				numberOfItemsPerPage, paginationType));
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 

@@ -120,12 +120,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		defaultLayoutListRetrieverContext.setPagination(
 			CollectionPaginationUtil.getPagination(
-				getActivePage(), _getCollectionCount(),
-				_collectionStyledLayoutStructureItem.isDisplayAllPages(),
+				getActivePage(),
 				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
 				_collectionStyledLayoutStructureItem.getNumberOfItems(),
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
-				_collectionStyledLayoutStructureItem.getNumberOfPages(),
 				_collectionStyledLayoutStructureItem.getPaginationType()));
 
 		return layoutListRetriever.getList(

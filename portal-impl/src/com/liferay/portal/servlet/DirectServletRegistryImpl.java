@@ -163,7 +163,9 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 			if (reloadServlet) {
 				_servletInfos.remove(path);
 
-				updateFileLastModified(path, servlet);
+				File file = _getFile(path, servlet);
+
+				file.setLastModified(System.currentTimeMillis());
 
 				servlet = null;
 			}
@@ -183,12 +185,6 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		}
 
 		return servlet;
-	}
-
-	protected void updateFileLastModified(String path, Servlet servlet) {
-		File file = _getFile(path, servlet);
-
-		file.setLastModified(System.currentTimeMillis());
 	}
 
 	private File _getFile(String path, Servlet servlet) {

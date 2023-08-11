@@ -117,6 +117,24 @@ public class RankingIndexCreationBundleActivatorTest {
 		);
 	}
 
+	@Test
+	public void testActivatorWithMoreThanOneCompany() throws Exception {
+		_setUpSingleIndexToMultipleIndexImporter(true);
+		_setUpCompanyLocalService(3);
+
+		_rankingIndexCreationBundleActivator.activate();
+
+		Mockito.verify(
+			_singleIndexToMultipleIndexImporter, Mockito.times(1)
+		).needImport();
+
+		Mockito.verify(
+			_rankingIndexCreator, Mockito.times(3)
+		).create(
+			Mockito.any(RankingIndexName.class)
+		);
+	}
+
 	private void _setUpCompanyLocalService(int numberOfCompanies) {
 		List<Company> companies = new ArrayList<>();
 		Company company;

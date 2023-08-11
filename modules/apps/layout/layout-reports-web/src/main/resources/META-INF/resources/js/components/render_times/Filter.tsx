@@ -4,19 +4,32 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
+
+import {
+	Entries,
+	FILTER_NAMES,
+	FILTER_TYPE_NAMES,
+	FRAGMENT_FILTERS,
+	FragmentFilter,
+} from '../../constants/fragments';
+
+interface Props {
+	filters: FragmentFilter;
+	isAscendingSort: boolean;
+	onSearchValue: Dispatch<SetStateAction<string>>;
+	onSort: Dispatch<SetStateAction<boolean>>;
+}
 
 export default function Filter({
+	filters,
 	isAscendingSort,
 	onSearchValue,
 	onSort,
-}: {
-	isAscendingSort: boolean;
-	onSearchValue: Function;
-	onSort: Function;
-}) {
+}: Props) {
 	const sortLabel = sub(
 		Liferay.Language.get('x-sort-fragments-by-render-time'),
 		isAscendingSort
@@ -24,12 +37,39 @@ export default function Filter({
 			: Liferay.Language.get('ascending')
 	);
 
+	const items = (Object.entries(FRAGMENT_FILTERS) as Entries<
+		typeof FRAGMENT_FILTERS
+	>).map(([filterType, filterValues]) => ({
+		items: filterValues.map((filterValue) => ({
+			active: filters[filterType] === filterValue,
+			label: FILTER_NAMES[filterValue],
+			value: filterValue,
+		})),
+		label: FILTER_TYPE_NAMES[filterType],
+		type: 'group' as const,
+	}));
+
 	return (
 		<div className="d-flex pt-1">
 			<SearchForm
 				className="flex-grow-1"
 				label={Liferay.Language.get('search-fragments')}
 				onChange={onSearchValue}
+			/>
+
+			<ClayDropDownWithItems
+				items={items}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('filter')}
+						borderless
+						className="ml-2 mt-0"
+						displayType="secondary"
+						size="sm"
+						symbol="filter"
+						title={Liferay.Language.get('filter')}
+					/>
+				}
 			/>
 
 			<ClayButtonWithIcon

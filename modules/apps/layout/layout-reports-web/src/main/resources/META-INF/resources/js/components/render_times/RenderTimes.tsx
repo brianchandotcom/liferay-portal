@@ -9,14 +9,19 @@ import {SearchResultsMessage} from '@liferay/layout-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {Fragment} from '../../constants/fragments';
+import {Fragment, FragmentFilter} from '../../constants/fragments';
 import Filter from './Filter';
 import FragmentList from './FragmentList';
 
 export default function RenderTimes({url}: {url: string}) {
 	const [ascending, setAscending] = useState(false);
+	const [filters] = useState<FragmentFilter>({
+		origin: null,
+		status: null,
+		type: null,
+	});
 	const [fragments, setFragments] = useState<Fragment[]>([]);
-	const [searchValue, setSearchValue] = useState(null);
+	const [searchValue, setSearchValue] = useState('');
 	const [visibleInfo, setVisibleInfo] = useState<boolean>(true);
 
 	const filteredFragments = useMemo(
@@ -41,6 +46,7 @@ export default function RenderTimes({url}: {url: string}) {
 	return (
 		<>
 			<Filter
+				filters={filters}
 				isAscendingSort={ascending}
 				onSearchValue={setSearchValue}
 				onSort={setAscending}

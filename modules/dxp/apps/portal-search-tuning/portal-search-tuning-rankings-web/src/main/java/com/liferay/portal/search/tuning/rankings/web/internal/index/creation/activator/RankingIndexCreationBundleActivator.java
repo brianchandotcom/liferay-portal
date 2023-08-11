@@ -5,8 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.activator;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
@@ -15,6 +14,7 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.Sin
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
@@ -37,28 +37,21 @@ public class RankingIndexCreationBundleActivator {
 		}
 
 		if (_singleIndexToMultipleIndexImporter.needImport()) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> {
-					try {
-						RankingIndexName rankingIndexName =
-							_rankingIndexNameBuilder.getRankingIndexName(
-								companyId);
+			List<Company> companies = _companyLocalService.getCompanies();
 
-						if (_rankingIndexReader.isExists(rankingIndexName)) {
-							return;
-						}
+			for (Company company : companies) {
+				RankingIndexName rankingIndexName =
+					_rankingIndexNameBuilder.getRankingIndexName(
+						company.getCompanyId());
 
-						_rankingIndexCreator.create(rankingIndexName);
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-					}
-				});
+				if (_rankingIndexReader.isExists(rankingIndexName)) {
+					continue;
+				}
+
+				_rankingIndexCreator.create(rankingIndexName);
+			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RankingIndexCreationBundleActivator.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -20,6 +20,7 @@ OAuthClientEntriesManagementToolbarDisplayContext oAuthClientEntriesManagementTo
 	disabled="<%= oAuthClientEntriesCount == 0 %>"
 	filterDropdownItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuthClientEntriesCount %>"
+	orderDropdownItems="<%= oAuthClientEntriesManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	searchContainerId="oAuthClientEntrySearchContainer"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"

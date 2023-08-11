@@ -20,6 +20,7 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 	disabled="<%= oAuthClientASLocalMetadatasCount == 0 %>"
 	filterDropdownItems="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuthClientASLocalMetadatasCount %>"
+	orderDropdownItems="<%= oAuthClientASLocalMetadataManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	searchContainerId="oAuthClientASLocalMetadataSearchContainer"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"

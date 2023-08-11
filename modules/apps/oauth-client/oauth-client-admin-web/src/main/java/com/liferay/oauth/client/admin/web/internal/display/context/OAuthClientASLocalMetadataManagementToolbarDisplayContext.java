@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -81,14 +82,9 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getOrderByDropdownItems(
-						HashMapBuilder.put(
-							"createDate", "createDate"
-						).put(
-							"localWellKnownURI", "localWellKnownURI"
-						).build()));
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -109,6 +105,15 @@ public class OAuthClientASLocalMetadataManagementToolbarDisplayContext
 		return OrderByComparatorFactoryUtil.create(
 			"OAuthClientASLocalMetadata", columnName,
 			Objects.equals(getOrderByType(), "asc"));
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return getOrderByDropdownItems(
+			HashMapBuilder.put(
+				"createDate", "createDate"
+			).put(
+				"localWellKnownURI", "localWellKnownURI"
+			).build());
 	}
 
 }

@@ -37,7 +37,10 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 					"localized_label_".concat(
 						LocaleUtil.toLanguageId(locale)))),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName("name")));
+				"name", locale -> Field.getSortableFieldName("name")),
+			new StringEntityField(
+				"objectFolderExternalReferenceCode",
+				locale -> "objectFolderExternalReferenceCode"));
 	}
 
 	@Override

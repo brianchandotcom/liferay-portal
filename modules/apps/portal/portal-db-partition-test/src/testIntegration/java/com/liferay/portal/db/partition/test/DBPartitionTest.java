@@ -31,7 +31,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
@@ -169,6 +171,22 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		Assert.assertTrue(
 			!dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
+	}
+
+	@Test
+	public void testGetClassName() throws Exception {
+		Set<ClassName> classNames = new LinkedHashSet<>();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				int count = classNames.size();
+
+				classNames.add(
+					_classNameLocalService.getClassName("class.name.test"));
+
+				Assert.assertEquals(
+					classNames.toString(), count + 1, classNames.size());
+			});
 	}
 
 	@Test

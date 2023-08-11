@@ -44,74 +44,7 @@ public class InfoCollectionProviderLayoutListRetriever
 		<InfoListProviderItemSelectorReturnType, KeyListObjectReference> {
 
 	@Override
-	public List<Object> getList(
-		KeyListObjectReference keyListObjectReference,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		InfoCollectionProvider<Object> infoCollectionProvider =
-			_infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class, keyListObjectReference.getKey());
-
-		if (infoCollectionProvider == null) {
-			infoCollectionProvider =
-				_infoItemServiceRegistry.getInfoItemService(
-					RelatedInfoItemCollectionProvider.class,
-					keyListObjectReference.getKey());
-		}
-
-		if (infoCollectionProvider == null) {
-			return Collections.emptyList();
-		}
-
-		CollectionQuery collectionQuery = new CollectionQuery();
-
-		if (infoCollectionProvider instanceof
-				ConfigurableInfoCollectionProvider) {
-
-			collectionQuery.setConfiguration(
-				layoutListRetrieverContext.getConfiguration());
-		}
-
-		if (infoCollectionProvider instanceof
-				RelatedInfoItemCollectionProvider) {
-
-			Object relatedItem = layoutListRetrieverContext.getContextObject();
-
-			if (relatedItem == null) {
-				return Collections.emptyList();
-			}
-
-			RelatedInfoItemCollectionProvider<Object, ?>
-				relatedInfoItemCollectionProvider =
-					(RelatedInfoItemCollectionProvider<Object, ?>)
-						infoCollectionProvider;
-
-			if (Objects.equals(
-					relatedInfoItemCollectionProvider.getSourceItemClass(),
-					AssetEntry.class)) {
-
-				relatedItem = _getAssetEntryOptional(relatedItem);
-			}
-
-			collectionQuery.setRelatedItemObject(relatedItem);
-		}
-
-		collectionQuery.setPagination(
-			layoutListRetrieverContext.getPagination());
-
-		if (infoCollectionProvider instanceof FilteredInfoCollectionProvider) {
-			collectionQuery.setInfoFilters(
-				layoutListRetrieverContext.getInfoFilters());
-		}
-
-		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
-			collectionQuery);
-
-		return (List<Object>)infoPage.getPageItems();
-	}
-
-	@Override
-	public int getListCount(
+	public InfoPage<?> getInfoPage(
 		KeyListObjectReference keyListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
@@ -127,7 +60,9 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		if (infoCollectionProvider == null) {
-			return 0;
+			return InfoPage.of(
+				Collections.emptyList(),
+				layoutListRetrieverContext.getPagination(), 0);
 		}
 
 		CollectionQuery collectionQuery = new CollectionQuery();
@@ -145,7 +80,9 @@ public class InfoCollectionProviderLayoutListRetriever
 			Object relatedItem = layoutListRetrieverContext.getContextObject();
 
 			if (relatedItem == null) {
-				return 0;
+				return InfoPage.of(
+					Collections.emptyList(),
+					layoutListRetrieverContext.getPagination(), 0);
 			}
 
 			RelatedInfoItemCollectionProvider<Object, ?>
@@ -168,8 +105,27 @@ public class InfoCollectionProviderLayoutListRetriever
 				layoutListRetrieverContext.getInfoFilters());
 		}
 
-		InfoPage<?> infoPage = infoCollectionProvider.getCollectionInfoPage(
-			collectionQuery);
+		return infoCollectionProvider.getCollectionInfoPage(collectionQuery);
+	}
+
+	@Override
+	public List<Object> getList(
+		KeyListObjectReference keyListObjectReference,
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		InfoPage<?> infoPage = getInfoPage(
+			keyListObjectReference, layoutListRetrieverContext);
+
+		return (List<Object>)infoPage.getPageItems();
+	}
+
+	@Override
+	public int getListCount(
+		KeyListObjectReference keyListObjectReference,
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		InfoPage<?> infoPage = getInfoPage(
+			keyListObjectReference, layoutListRetrieverContext);
 
 		return infoPage.getTotalCount();
 	}

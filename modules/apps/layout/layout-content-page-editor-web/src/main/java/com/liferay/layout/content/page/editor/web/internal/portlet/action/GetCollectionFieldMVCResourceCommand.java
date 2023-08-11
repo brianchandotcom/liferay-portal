@@ -221,8 +221,6 @@ public class GetCollectionFieldMVCResourceCommand
 			long segmentsExperienceId, String templateKey)
 		throws PortalException {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		JSONObject layoutObjectReferenceJSONObject =
 			_jsonFactory.createJSONObject(layoutObjectReference);
 
@@ -233,14 +231,14 @@ public class GetCollectionFieldMVCResourceCommand
 				_layoutListRetrieverRegistry.getLayoutListRetriever(type);
 
 		if (layoutListRetriever == null) {
-			return jsonObject;
+			return _jsonFactory.createJSONObject();
 		}
 
 		ListObjectReferenceFactory<?> listObjectReferenceFactory =
 			_listObjectReferenceFactoryRegistry.getListObjectReference(type);
 
 		if (listObjectReferenceFactory == null) {
-			return jsonObject;
+			return _jsonFactory.createJSONObject();
 		}
 
 		ListObjectReference listObjectReference =
@@ -259,7 +257,7 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		if (!_hasViewPermission(httpServletRequest, listObjectReference)) {
-			jsonObject.put(
+			return JSONUtil.put(
 				"customCollectionSelectorURL", StringPool.BLANK
 			).put(
 				"isRestricted", true
@@ -281,8 +279,6 @@ public class GetCollectionFieldMVCResourceCommand
 			).put(
 				"totalNumberOfItems", 0
 			);
-
-			return jsonObject;
 		}
 
 		String itemType = _infoSearchClassMapperRegistry.getClassName(
@@ -323,7 +319,7 @@ public class GetCollectionFieldMVCResourceCommand
 		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			listObjectReference, defaultLayoutListRetrieverContext);
 
-		jsonObject.put(
+		return JSONUtil.put(
 			"content",
 			() -> {
 				InfoListRenderer<Object> infoListRenderer =
@@ -397,8 +393,6 @@ public class GetCollectionFieldMVCResourceCommand
 				numberOfItems, numberOfItemsPerPage, numberOfPages,
 				paginationType)
 		);
-
-		return jsonObject;
 	}
 
 	private String _getCustomCollectionSelectorURL(

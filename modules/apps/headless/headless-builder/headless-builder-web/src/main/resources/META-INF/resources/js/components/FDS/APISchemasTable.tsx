@@ -9,7 +9,7 @@ import React, {Dispatch, SetStateAction, useContext, useEffect} from 'react';
 
 import {EditAPIApplicationContext} from '../EditAPIApplicationContext';
 import {CreateAPISchemaModalContent} from '../modals/CreateAPISchemaModalContent';
-import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPISchemaModalContent';
+import {DeleteAPISchemaModalContent} from '../modals/DeleteAPISchemaModalContent';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPISchemasFDSProps} from './fdsUtils/schemasFDSProps';
 
@@ -20,7 +20,7 @@ interface APIApplicationsTableProps {
 	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
 }
 
-export default function APIApplicationsSchemasTable({
+export default function APISchemasTable({
 	apiURLPaths,
 	currentAPIApplicationId,
 	portletId,
@@ -28,7 +28,7 @@ export default function APIApplicationsSchemasTable({
 }: APIApplicationsTableProps) {
 	const {setHideManagementButtons} = useContext(EditAPIApplicationContext);
 
-	const createAPIApplicationSchema = {
+	const createAPISchema = {
 		label: Liferay.Language.get('add-new-schema'),
 		onClick: ({loadData}: {loadData: voidReturn}) => {
 			openModal({
@@ -52,14 +52,11 @@ export default function APIApplicationsSchemasTable({
 		filterQuery: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
-	const deleteAPISchema = (
-		itemData: APIApplicationSchemaItem,
-		loadData: voidReturn
-	) => {
+	const deleteAPISchema = (itemData: APISchemaItem, loadData: voidReturn) => {
 		openModal({
 			center: true,
 			contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
-				DeleteAPIApplicationModalContent({
+				DeleteAPISchemaModalContent({
 					closeModal,
 					itemData,
 					loadData,
@@ -74,12 +71,12 @@ export default function APIApplicationsSchemasTable({
 		action,
 		itemData,
 		loadData,
-	}: FDSItem<APIApplicationSchemaItem>) {
-		if (action.id === 'deleteAPIApplicationSchema') {
+	}: FDSItem<APISchemaItem>) {
+		if (action.id === 'deleteAPISchema') {
 			deleteAPISchema(itemData, loadData);
 		}
 
-		if (action.id === 'editAPIApplicationSchema') {
+		if (action.id === 'editAPISchema') {
 			setMainSchemaNav({edit: itemData.id});
 		}
 	}
@@ -97,7 +94,7 @@ export default function APIApplicationsSchemasTable({
 				setMainSchemaNav
 			)}
 			creationMenu={{
-				primaryItems: [createAPIApplicationSchema],
+				primaryItems: [createAPISchema],
 			}}
 			onActionDropdownItemClick={onActionDropdownItemClick}
 		/>

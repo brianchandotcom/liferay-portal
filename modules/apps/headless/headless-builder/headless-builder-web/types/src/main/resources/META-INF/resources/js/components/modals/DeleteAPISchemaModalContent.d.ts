@@ -5,14 +5,14 @@
 
 /// <reference types="react" />
 
-interface DeleteAPIApplicationModal {
+interface DeleteAPISchemaModal {
 	closeModal: voidReturn;
-	itemData: APIApplicationSchemaItem;
+	itemData: APISchemaItem;
 	loadData: voidReturn;
 }
-export declare function DeleteAPIApplicationModalContent({
+export declare function DeleteAPISchemaModalContent({
 	closeModal,
 	itemData,
 	loadData,
-}: DeleteAPIApplicationModal): JSX.Element;
+}: DeleteAPISchemaModal): JSX.Element;
 export {};

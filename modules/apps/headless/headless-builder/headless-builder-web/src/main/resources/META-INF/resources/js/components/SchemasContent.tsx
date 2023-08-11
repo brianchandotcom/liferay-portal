@@ -5,8 +5,8 @@
 
 import React, {Dispatch, SetStateAction, useState} from 'react';
 
-import EditAPIApplicationSchema from '../components/EditAPIApplicationSchema';
-import APIApplicationsSchemasTable from '../components/FDS/APIApplicationsSchemasTable';
+import EditAPISchema from '../components/EditAPISchema';
+import APISchemasTable from '../components/FDS/APISchemasTable';
 
 interface SchemasContentProps {
 	apiURLPaths: APIURLPaths;
@@ -30,7 +30,7 @@ export default function SchemasContent({
 	return (
 		<>
 			{mainSchemaNav === 'list' ? (
-				<APIApplicationsSchemasTable
+				<APISchemasTable
 					apiURLPaths={apiURLPaths}
 					currentAPIApplicationId={currentAPIApplicationId}
 					portletId={portletId}
@@ -38,7 +38,7 @@ export default function SchemasContent({
 				/>
 			) : (
 				mainSchemaNav.edit && (
-					<EditAPIApplicationSchema
+					<EditAPISchema
 						apiURLPaths={apiURLPaths}
 						currentAPIApplicationId={currentAPIApplicationId}
 						schemaId={mainSchemaNav.edit}

@@ -8,17 +8,17 @@ import ClayModal from '@clayui/modal';
 import {fetch, openToast} from 'frontend-js-web';
 import React from 'react';
 
-interface DeleteAPIApplicationModal {
+interface DeleteAPISchemaModal {
 	closeModal: voidReturn;
-	itemData: APIApplicationSchemaItem;
+	itemData: APISchemaItem;
 	loadData: voidReturn;
 }
 
-export function DeleteAPIApplicationModalContent({
+export function DeleteAPISchemaModalContent({
 	closeModal,
 	itemData,
 	loadData,
-}: DeleteAPIApplicationModal) {
+}: DeleteAPISchemaModal) {
 	async function handleDelete() {
 		const deleteURL = itemData.actions.delete.href;
 

@@ -24,7 +24,7 @@ import {fetchJSON, updateData} from './utils/fetchUtil';
 
 import '../../css/main.scss';
 
-interface EditAPIApplicationSchemaProps {
+interface EditAPISchemaProps {
 	apiURLPaths: APIURLPaths;
 	currentAPIApplicationId: string;
 	schemaId: number;
@@ -40,7 +40,7 @@ type DataError = {
 	name: boolean;
 };
 
-export default function EditAPIApplicationSchema({
+export default function EditAPISchema({
 	apiURLPaths,
 	currentAPIApplicationId,
 	schemaId,
@@ -48,7 +48,7 @@ export default function EditAPIApplicationSchema({
 	setManagementButtonsProps,
 	setStatus,
 	setTitle,
-}: EditAPIApplicationSchemaProps) {
+}: EditAPISchemaProps) {
 	const {
 		fetchedData,
 		setFetchedData,
@@ -69,7 +69,7 @@ export default function EditAPIApplicationSchema({
 	});
 
 	const fetchAPISchema = () => {
-		fetchJSON<APIApplicationSchemaItem>({
+		fetchJSON<APISchemaItem>({
 			input: apiURLPaths.schemas + schemaId,
 		}).then((response) => {
 			if (response.id === schemaId) {
@@ -86,7 +86,7 @@ export default function EditAPIApplicationSchema({
 	const resetLocalUIData = () => {
 		if (fetchedData.apiSchema) {
 			setLocalUIData(
-				resetToFetched<APIApplicationSchemaItem, APISchemaUIData>({
+				resetToFetched<APISchemaItem, APISchemaUIData>({
 					fetchedEntityData: fetchedData.apiSchema,
 					localUIData,
 				})
@@ -133,7 +133,7 @@ export default function EditAPIApplicationSchema({
 			const isDataValid = validateData();
 
 			if (localUIData && isDataValid && fetchedData?.apiSchema) {
-				updateData<APIApplicationSchemaItem>({
+				updateData<APISchemaItem>({
 					dataToUpdate: {
 						description: localUIData.description,
 						name: localUIData.name,

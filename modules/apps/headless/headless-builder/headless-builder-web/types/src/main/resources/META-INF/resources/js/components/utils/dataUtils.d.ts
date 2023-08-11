@@ -8,7 +8,7 @@ export declare function hasDataChanged({
 	fetchedEntityData,
 	localUIData,
 }: {
-	fetchedEntityData: APIApplicationItem | APIApplicationSchemaItem;
+	fetchedEntityData: APIApplicationItem | APISchemaItem;
 	localUIData: LocalUIData;
 }): boolean;
 export declare function resetToFetched<FT extends LT, LT extends {}>({

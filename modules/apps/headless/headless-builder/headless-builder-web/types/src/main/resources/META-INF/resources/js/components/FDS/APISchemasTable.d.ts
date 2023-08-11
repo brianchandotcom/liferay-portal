@@ -10,7 +10,7 @@ interface APIApplicationsTableProps {
 	portletId: string;
 	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
 }
-export default function APIApplicationsSchemasTable({
+export default function APISchemasTable({
 	apiURLPaths,
 	currentAPIApplicationId,
 	portletId,

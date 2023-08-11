@@ -43,7 +43,7 @@ interface FDSItem<T> {
 interface FetchedData {
 	apiApplication?: APIApplicationItem;
 	apiEndpoint?: APIEndpointItem;
-	apiSchema?: APIApplicationSchemaItem;
+	apiSchema?: APISchemaItem;
 }
 
 interface BaseItem {
@@ -84,14 +84,14 @@ interface APIEndpointItem extends BaseItem {
 	path: string;
 }
 
-interface APIApplicationSchemaItem extends BaseItem {
+interface APISchemaItem extends BaseItem {
 	mainObjectDefinitionERC: string;
 	name: string;
 	r_apiApplicationToAPISchemas_c_apiApplicationId: string;
 }
 
 type APISchemaUIData = Pick<
-	APIApplicationSchemaItem,
+	APISchemaItem,
 	'description' | 'name' | 'mainObjectDefinitionERC'
 >;
 

@@ -9,7 +9,7 @@ export function hasDataChanged({
 	fetchedEntityData,
 	localUIData,
 }: {
-	fetchedEntityData: APIApplicationItem | APIApplicationSchemaItem;
+	fetchedEntityData: APIApplicationItem | APISchemaItem;
 	localUIData: LocalUIData;
 }) {
 	for (const [key, value] of Object.entries(localUIData)) {

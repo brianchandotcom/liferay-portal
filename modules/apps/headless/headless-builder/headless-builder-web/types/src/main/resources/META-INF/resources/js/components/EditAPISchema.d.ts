@@ -5,7 +5,7 @@
 
 import {Dispatch, SetStateAction} from 'react';
 import '../../css/main.scss';
-interface EditAPIApplicationSchemaProps {
+interface EditAPISchemaProps {
 	apiURLPaths: APIURLPaths;
 	currentAPIApplicationId: string;
 	schemaId: number;
@@ -14,7 +14,7 @@ interface EditAPIApplicationSchemaProps {
 	setStatus: Dispatch<SetStateAction<ApplicationStatusKeys>>;
 	setTitle: Dispatch<SetStateAction<string>>;
 }
-export default function EditAPIApplicationSchema({
+export default function EditAPISchema({
 	apiURLPaths,
 	currentAPIApplicationId,
 	schemaId,
@@ -22,5 +22,5 @@ export default function EditAPIApplicationSchema({
 	setManagementButtonsProps,
 	setStatus,
 	setTitle,
-}: EditAPIApplicationSchemaProps): JSX.Element;
+}: EditAPISchemaProps): JSX.Element;
 export {};

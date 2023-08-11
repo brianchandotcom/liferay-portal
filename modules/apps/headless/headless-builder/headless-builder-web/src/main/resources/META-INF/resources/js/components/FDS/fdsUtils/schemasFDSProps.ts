@@ -24,17 +24,17 @@ export function getAPISchemasFDSProps(
 		itemsActions: [
 			{
 				data: {
-					id: 'editAPIApplicationSchema',
+					id: 'editAPISchema',
 				},
 				icon: 'pencil',
 				label: Liferay.Language.get('edit'),
-				onClick: ({itemData}: FDSItem<APIApplicationSchemaItem>) => {
+				onClick: ({itemData}: FDSItem<APISchemaItem>) => {
 					setMainSchemaNav({edit: itemData.id});
 				},
 			},
 			{
 				icon: 'trash',
-				id: 'deleteAPIApplicationSchema',
+				id: 'deleteAPISchema',
 				label: Liferay.Language.get('delete'),
 			},
 		],
@@ -46,7 +46,7 @@ export function getAPISchemasFDSProps(
 				schema: {
 					fields: [
 						{
-							actionId: 'editAPIApplicationSchema',
+							actionId: 'editAPISchema',
 							contentRenderer: 'actionLink',
 							fieldName: 'name',
 							label: Liferay.Language.get('name'),

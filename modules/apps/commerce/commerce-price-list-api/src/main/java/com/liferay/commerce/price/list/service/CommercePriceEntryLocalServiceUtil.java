@@ -313,24 +313,27 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid) {
+		long commercePriceListId, String cpInstanceUuid, int status,
+		String unitOfMeasureKey) {
 
 		return getService().fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid);
+			commercePriceListId, cpInstanceUuid, status, unitOfMeasureKey);
 	}
 
 	public static CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid, boolean useAncestor) {
+		long commercePriceListId, String cpInstanceUuid,
+		String unitOfMeasureKey) {
 
 		return getService().fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid, useAncestor);
+			commercePriceListId, cpInstanceUuid, unitOfMeasureKey);
 	}
 
 	public static CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid, int status) {
+		long commercePriceListId, String cpInstanceUuid,
+		String unitOfMeasureKey, boolean useAncestor) {
 
 		return getService().fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid, status);
+			commercePriceListId, cpInstanceUuid, unitOfMeasureKey, useAncestor);
 	}
 
 	public static CommercePriceEntry

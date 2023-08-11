@@ -353,26 +353,29 @@ public class CommercePriceEntryLocalServiceWrapper
 
 	@Override
 	public CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid) {
+		long commercePriceListId, String cpInstanceUuid, int status,
+		String unitOfMeasureKey) {
 
 		return _commercePriceEntryLocalService.fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid);
+			commercePriceListId, cpInstanceUuid, status, unitOfMeasureKey);
 	}
 
 	@Override
 	public CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid, boolean useAncestor) {
+		long commercePriceListId, String cpInstanceUuid,
+		String unitOfMeasureKey) {
 
 		return _commercePriceEntryLocalService.fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid, useAncestor);
+			commercePriceListId, cpInstanceUuid, unitOfMeasureKey);
 	}
 
 	@Override
 	public CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceListId, String cpInstanceUuid, int status) {
+		long commercePriceListId, String cpInstanceUuid,
+		String unitOfMeasureKey, boolean useAncestor) {
 
 		return _commercePriceEntryLocalService.fetchCommercePriceEntry(
-			commercePriceListId, cpInstanceUuid, status);
+			commercePriceListId, cpInstanceUuid, unitOfMeasureKey, useAncestor);
 	}
 
 	@Override

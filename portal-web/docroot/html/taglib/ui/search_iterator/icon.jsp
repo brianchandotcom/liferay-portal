@@ -51,6 +51,8 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 		for (int j = 0; j < curResultRows.size(); j++) {
 			com.liferay.portal.kernel.dao.search.ResultRow row = curResultRows.get(j);
 
+			String rowElementId = _getRowElementId(liferayPortletResponse.getNamespace(), id, portletRequest, portletResponse, row);
+
 			primaryKeysJSONArray.put(row.getPrimaryKey());
 
 			request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, row);
@@ -59,6 +61,8 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 
 			boolean rowIsChecked = false;
 			boolean rowIsDisabled = false;
+
+			Map<String, Object> data = row.getData();
 
 			if (rowChecker != null) {
 				rowIsChecked = rowChecker.isChecked(row.getObject());
@@ -71,33 +75,20 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 				String rowSelector = rowChecker.getRowSelector();
 
 				if (Validator.isNull(rowSelector)) {
-					Map<String, Object> rowData = row.getData();
-
-					if (rowData == null) {
-						rowData = new HashMap<String, Object>();
-					}
-
-					rowData.put("selectable", !rowIsDisabled);
-
-					row.setData(rowData);
+					data.put("selectable", !rowIsDisabled);
 				}
 			}
 
 			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 
-			Map<String, Object> data = row.getData();
 			String rowCssClass = row.getCssClass();
-
-			if (data == null) {
-				data = new HashMap<String, Object>();
-			}
 
 			if (Validator.isNull(rowCssClass)) {
 				rowCssClass = "card-page-item card-page-item-asset";
 			}
 		%>
 
-			<dd class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowCssClass %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+			<dd class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowCssClass %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
 
 				<%
 				for (int k = 0; k < entries.size(); k++) {

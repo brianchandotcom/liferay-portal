@@ -216,6 +216,8 @@ if (iteratorURL != null) {
 		for (int i = 0; i < resultRows.size(); i++) {
 			com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)resultRows.get(i);
 
+			String rowElementId = _getRowElementId(liferayPortletResponse.getNamespace(), id, portletRequest, portletResponse, row);
+
 			primaryKeysJSONArray.put(row.getPrimaryKey());
 
 			request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, row);
@@ -247,14 +249,7 @@ if (iteratorURL != null) {
 			Map<String, Object> data = row.getData();
 		%>
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(rowIdProperty) %>">
-					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" id="<portlet:namespace /><%= id %>_<%= row.getRowId() %>" <%= AUIUtil.buildData(data) %>>
-				</c:when>
-				<c:otherwise>
-					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-				</c:otherwise>
-			</c:choose>
+			<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {

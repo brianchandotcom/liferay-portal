@@ -61,6 +61,8 @@
 			for (int i = 0; i < curResultRows.size(); i++) {
 				com.liferay.portal.kernel.dao.search.ResultRow row = curResultRows.get(i);
 
+				String rowElementId = _getRowElementId(liferayPortletResponse.getNamespace(), id, portletRequest, portletResponse, row);
+
 				primaryKeysJSONArray.put(row.getPrimaryKey());
 
 				request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW, row);
@@ -69,6 +71,8 @@
 
 				boolean rowIsChecked = false;
 				boolean rowIsDisabled = false;
+
+				Map<String, Object> data = row.getData();
 
 				if (rowChecker != null) {
 					rowIsChecked = rowChecker.isChecked(row.getObject());
@@ -81,28 +85,14 @@
 					String rowSelector = rowChecker.getRowSelector();
 
 					if (Validator.isNull(rowSelector)) {
-						Map<String, Object> rowData = row.getData();
-
-						if (rowData == null) {
-							rowData = new HashMap<String, Object>();
-						}
-
-						rowData.put("selectable", !rowIsDisabled);
-
-						row.setData(rowData);
+						data.put("selectable", !rowIsDisabled);
 					}
 				}
 
 				request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
-
-				Map<String, Object> data = row.getData();
-
-				if (data == null) {
-					data = new HashMap<String, Object>();
-				}
 			%>
 
-				<dd class="list-group-item list-group-item-flex <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+				<dd class="list-group-item list-group-item-flex <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
 					<c:if test="<%= rowChecker != null %>">
 						<div class="autofit-col">
 							<div class="checkbox">

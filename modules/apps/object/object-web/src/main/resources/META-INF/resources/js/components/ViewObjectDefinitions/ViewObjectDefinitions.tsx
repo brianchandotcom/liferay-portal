@@ -9,6 +9,7 @@ import {
 	API,
 	Card,
 	getLocalizableLabel,
+	stringToURLParameterFormat,
 } from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -123,7 +124,9 @@ export default function ViewObjectDefinitions({
 		let url: string = '';
 
 		if (selectedFolder.externalReferenceCode) {
-			url = `/o/object-admin/v1.0/object-folders/by-external-reference-code/${selectedFolder.externalReferenceCode}/object-definitions`;
+			url = `/o/object-admin/v1.0/object-definitions?${stringToURLParameterFormat(
+				`filter=objectFolderExternalReferenceCode eq '${selectedFolder.externalReferenceCode}'`
+			)}`;
 		}
 
 		return url;

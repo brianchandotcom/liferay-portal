@@ -47,8 +47,6 @@ definition {
 
 		Click.pauseClickAt(locator1 = "APIBuilder#LAST_UPDATED_IN_FILTER");
 
-		var date = DateUtil.getDateOffsetByDays("-2", "MM/dd/yyyy");
-
 		Type(
 			locator1 = "APIBuilder#FROM_DATE",
 			value1 = ${fromDate});

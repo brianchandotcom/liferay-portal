@@ -20,6 +20,7 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import updateSetsOrder from '../../app/thunks/updateSetsOrder';
+import {config} from '../config/index';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../thunks/loadWidgets';
@@ -362,7 +363,11 @@ function useDragItem(item) {
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
-		item: {...item, type: ACCEPTING_ITEM_TYPE},
+		item: {
+			...item,
+			namespace: config.portletNamespace,
+			type: ACCEPTING_ITEM_TYPE,
+		},
 	});
 
 	useEffect(() => {

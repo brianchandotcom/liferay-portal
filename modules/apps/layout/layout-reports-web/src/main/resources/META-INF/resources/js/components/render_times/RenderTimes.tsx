@@ -12,10 +12,11 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Fragment, FragmentFilter} from '../../constants/fragments';
 import Filter from './Filter';
 import FragmentList from './FragmentList';
+import getFragmentsByFilterValue from './getFragmentsByFilterValue';
 
 export default function RenderTimes({url}: {url: string}) {
 	const [ascending, setAscending] = useState(false);
-	const [filters] = useState<FragmentFilter>({
+	const [filters, setFilters] = useState<FragmentFilter>({
 		origin: null,
 		status: null,
 		type: null,
@@ -24,17 +25,21 @@ export default function RenderTimes({url}: {url: string}) {
 	const [searchValue, setSearchValue] = useState('');
 	const [visibleInfo, setVisibleInfo] = useState<boolean>(true);
 
-	const filteredFragments = useMemo(
-		() =>
-			searchValue
-				? fragments.filter(
-						(fragment) =>
-							fragment.name.toLowerCase().indexOf(searchValue) !==
-							-1
-				  )
-				: fragments,
-		[fragments, searchValue]
-	);
+	const filteredFragments = useMemo(() => {
+		const fragmentsByFilterValue = getFragmentsByFilterValue(
+			filters,
+			fragments
+		);
+
+		const fragmentsBySearchValue = searchValue
+			? fragmentsByFilterValue.filter(
+					(fragment) =>
+						fragment.name.toLowerCase().indexOf(searchValue) !== -1
+			  )
+			: fragmentsByFilterValue;
+
+		return fragmentsBySearchValue;
+	}, [fragments, searchValue, filters]);
 
 	useEffect(() => {
 		fetch(url, {method: 'GET'})
@@ -48,6 +53,7 @@ export default function RenderTimes({url}: {url: string}) {
 			<Filter
 				filters={filters}
 				isAscendingSort={ascending}
+				onFilterValue={setFilters}
 				onSearchValue={setSearchValue}
 				onSort={setAscending}
 			/>

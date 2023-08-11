@@ -20,6 +20,7 @@ import {
 interface Props {
 	filters: FragmentFilter;
 	isAscendingSort: boolean;
+	onFilterValue: Dispatch<SetStateAction<FragmentFilter>>;
 	onSearchValue: Dispatch<SetStateAction<string>>;
 	onSort: Dispatch<SetStateAction<boolean>>;
 }
@@ -27,6 +28,7 @@ interface Props {
 export default function Filter({
 	filters,
 	isAscendingSort,
+	onFilterValue,
 	onSearchValue,
 	onSort,
 }: Props) {
@@ -43,6 +45,12 @@ export default function Filter({
 		items: filterValues.map((filterValue) => ({
 			active: filters[filterType] === filterValue,
 			label: FILTER_NAMES[filterValue],
+			onClick: () => {
+				onFilterValue((previousFilter) => ({
+					...previousFilter,
+					[filterType]: filterValue,
+				}));
+			},
 			value: filterValue,
 		})),
 		label: FILTER_TYPE_NAMES[filterType],

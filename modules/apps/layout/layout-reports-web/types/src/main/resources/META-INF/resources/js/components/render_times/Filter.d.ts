@@ -8,12 +8,14 @@ import {FragmentFilter} from '../../constants/fragments';
 interface Props {
 	filters: FragmentFilter;
 	isAscendingSort: boolean;
+	onFilterValue: Dispatch<SetStateAction<FragmentFilter>>;
 	onSearchValue: Dispatch<SetStateAction<string>>;
 	onSort: Dispatch<SetStateAction<boolean>>;
 }
 export default function Filter({
 	filters,
 	isAscendingSort,
+	onFilterValue,
 	onSearchValue,
 	onSort,
 }: Props): JSX.Element;

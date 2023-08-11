@@ -160,21 +160,26 @@ export default function PageContent({
 	]);
 
 	const handleOnClick = () => {
-		Object.values(layoutData.items).forEach((item) => {
-			if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-				const collectionConfig = item.config?.collection;
+		if (dropdownItems?.length) {
+			Object.values(layoutData.items).forEach((item) => {
+				if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
+					const collectionConfig = item.config?.collection;
 
-				if (
-					collectionConfig.classNameId === classNameId &&
-					collectionConfig.classPK === classPK
-				) {
-					selectItem(item.itemId, {
-						itemType: ITEM_TYPES.layoutDataItem,
-						origin: ITEM_ACTIVATION_ORIGINS.sidebar,
-					});
+					if (
+						collectionConfig.classNameId === classNameId &&
+						collectionConfig.classPK === classPK
+					) {
+						selectItem(item.itemId, {
+							itemType: ITEM_TYPES.layoutDataItem,
+							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+						});
+					}
 				}
-			}
-		});
+			});
+		}
+		else {
+			onClickEditInlineText();
+		}
 	};
 
 	const handleMouseOver = () => {
@@ -330,7 +335,6 @@ export default function PageContent({
 								)}
 								disabled={isBeingEdited || !canUpdateEditables}
 								displayType="unstyled"
-								onClick={onClickEditInlineText}
 								size="sm"
 							>
 								<ClayIcon symbol="pencil" />

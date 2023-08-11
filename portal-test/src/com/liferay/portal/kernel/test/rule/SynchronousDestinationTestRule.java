@@ -136,6 +136,8 @@ public class SynchronousDestinationTestRule
 				DestinationNames.COMMERCE_SUBSCRIPTION_STATUS);
 			Filter ddmStructureReindexFilter = _registerDestinationFilter(
 				"liferay/ddm_structure_reindex");
+			Filter deletionProcessorFilter = _registerDestinationFilter(
+				DestinationNames.DOCUMENT_LIBRARY_DELETION);
 			Filter mailFilter = _registerDestinationFilter(
 				DestinationNames.MAIL);
 			Filter pdfProcessorFilter = _registerDestinationFilter(
@@ -156,10 +158,10 @@ public class SynchronousDestinationTestRule
 				backgroundTaskStatusFilter, commerceBasePriceListFilter,
 				commerceOrderFilter, commercePaymentFilter,
 				commerceShipmentFilter, commerceSubscriptionFilter,
-				ddmStructureReindexFilter, mailFilter, pdfProcessorFilter,
-				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
-				subscrpitionSenderFilter, tensorflowModelDownloadFilter,
-				videoProcessorFilter);
+				ddmStructureReindexFilter, deletionProcessorFilter, mailFilter,
+				pdfProcessorFilter, rawMetaDataProcessorFilter,
+				segmentsEntryReindexFilter, subscrpitionSenderFilter,
+				tensorflowModelDownloadFilter, videoProcessorFilter);
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -177,6 +179,7 @@ public class SynchronousDestinationTestRule
 			replaceDestination(DestinationNames.COMMERCE_SUBSCRIPTION_STATUS);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
+			replaceDestination(DestinationNames.DOCUMENT_LIBRARY_DELETION);
 			replaceDestination(DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);

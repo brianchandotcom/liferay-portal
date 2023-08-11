@@ -39,20 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, long companyId, long groupId,
-			String className, long classPK, String actionId)
-		throws PortalException {
-
-		if (!contains(
-				permissionChecker, companyId, groupId, className, classPK,
-				actionId)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, className, classPK, actionId);
-		}
-	}
-
-	public static void check(
 			PermissionChecker permissionChecker, long messageId,
 			String actionId)
 		throws PortalException {
@@ -145,9 +131,15 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 		MBDiscussion mbDiscussion = _mbDiscussionLocalService.getMBDiscussion(
 			primaryKey);
 
-		check(
-			permissionChecker, mbDiscussion.getCompanyId(), groupId,
-			mbDiscussion.getClassName(), mbDiscussion.getClassPK(), actionId);
+		if (!contains(
+				permissionChecker, mbDiscussion.getCompanyId(), groupId,
+				mbDiscussion.getClassName(), mbDiscussion.getClassPK(),
+				actionId)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, mbDiscussion.getClassName(),
+				mbDiscussion.getClassPK(), actionId);
+		}
 	}
 
 	@Reference(unbind = "-")

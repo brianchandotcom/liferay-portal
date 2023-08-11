@@ -22,8 +22,10 @@ import {SelectLayoutTree} from './SelectLayoutTree.es';
  */
 
 const SelectLayout = ({
+	config,
 	itemSelectorSaveEvent,
 	multiSelection,
+	namespace,
 	nodes,
 	selectedLayoutIds,
 }) => {
@@ -80,6 +82,7 @@ const SelectLayout = ({
 					)}
 
 					<SelectLayoutTree
+						config={{...config, namespace}}
 						filter={filter}
 						itemSelectorSaveEvent={itemSelectorSaveEvent}
 						items={nodes}

@@ -21,7 +21,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
-	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.132"
+	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.135"
 	compileInclude group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 	compileInclude group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.14'
 	compileInclude group: "org.codehaus.groovy", name: "groovy", version: "2.4.21"

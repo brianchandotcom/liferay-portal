@@ -5,29 +5,51 @@
 
 package com.liferay.journal.internal.workflow;
 
+import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +75,38 @@ public class JournalArticleWorkflowHandler
 	@Override
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
+	@Override
+	public String getURLViewInContext(
+		long classPK, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		String noSuchEntryRedirect) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JournalArticle article = _journalArticleLocalService.fetchArticle(
+			classPK);
+
+		try {
+			if (!_isShowDisplayPage(
+					classPK, themeDisplay.getScopeGroupId(), article)) {
+
+				return _getHitLayoutURL(
+					article, liferayPortletRequest, themeDisplay);
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return super.getURLViewInContext(
+			classPK, liferayPortletRequest, liferayPortletResponse,
+			noSuchEntryRedirect);
 	}
 
 	@Override
@@ -132,13 +186,93 @@ public class JournalArticleWorkflowHandler
 			workflowContext);
 	}
 
+	private String _getHitLayoutURL(
+			JournalArticle article, LiferayPortletRequest liferayPortletRequest,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
+				_portal.getClassNameId(JournalArticle.class),
+				article.getResourcePrimKey());
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				layoutClassedModelUsage.getPlid());
+
+			if ((layout != null) && !layout.isSystem() &&
+				_layoutPermission.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.VIEW)) {
+
+				return PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						liferayPortletRequest,
+						layoutClassedModelUsage.getContainerKey(),
+						layoutClassedModelUsage.getPlid(),
+						PortletRequest.RENDER_PHASE)
+				).setParameter(
+					"previewClassNameId",
+					layoutClassedModelUsage.getClassNameId()
+				).setParameter(
+					"previewClassPK", layoutClassedModelUsage.getClassPK()
+				).setParameter(
+					"previewType", AssetRendererFactory.TYPE_LATEST
+				).setParameter(
+					"previewVersion", InfoItemIdentifier.VERSION_LATEST
+				).buildString();
+			}
+		}
+
+		return null;
+	}
+
+	private boolean _isShowDisplayPage(
+			long classPK, long groupId, JournalArticle article)
+		throws PortalException {
+
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			getAssetRendererFactory();
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			getClassName(), classPK);
+
+		if (Validator.isNull(article.getLayoutUuid()) &&
+			Validator.isNull(assetEntry.getLayoutUuid()) &&
+			!AssetDisplayPageUtil.hasAssetDisplayPage(
+				groupId,
+				assetRendererFactory.getAssetEntry(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey()))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static final boolean _VISIBLE = true;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleWorkflowHandler.class);
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private Portal _portal;

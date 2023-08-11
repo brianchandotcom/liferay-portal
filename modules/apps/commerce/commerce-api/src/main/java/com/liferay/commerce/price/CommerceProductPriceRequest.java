@@ -8,6 +8,8 @@ package com.liferay.commerce.price;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +32,12 @@ public class CommerceProductPriceRequest {
 		return _cpInstanceId;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	public boolean isCalculateTax() {
@@ -62,7 +68,7 @@ public class CommerceProductPriceRequest {
 		_cpInstanceId = cpInstanceId;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		_quantity = quantity;
 	}
 
@@ -70,12 +76,17 @@ public class CommerceProductPriceRequest {
 		_secure = secure;
 	}
 
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
 	private boolean _calculateTax;
 	private CommerceContext _commerceContext;
 	private List<CommerceOptionValue> _commerceOptionValues =
 		Collections.emptyList();
 	private long _cpInstanceId;
-	private int _quantity;
+	private BigDecimal _quantity;
 	private boolean _secure;
+	private String _unitOfMeasureKey;
 
 }

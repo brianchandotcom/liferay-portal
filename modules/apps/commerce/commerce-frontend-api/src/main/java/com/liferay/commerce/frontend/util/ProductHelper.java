@@ -12,6 +12,8 @@ import com.liferay.commerce.frontend.model.PriceModel;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 /**
@@ -27,8 +29,9 @@ public interface ProductHelper {
 		throws PortalException;
 
 	public PriceModel getPriceModel(
-			long cpInstanceId, int quantity, CommerceContext commerceContext,
-			String commerceOptionValuesJSON, Locale locale)
+			long cpInstanceId, String commerceOptionValuesJSON,
+			BigDecimal quantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, Locale locale)
 		throws PortalException;
 
 	public ProductSettingsModel getProductSettingsModel(long cpDefinitionId)

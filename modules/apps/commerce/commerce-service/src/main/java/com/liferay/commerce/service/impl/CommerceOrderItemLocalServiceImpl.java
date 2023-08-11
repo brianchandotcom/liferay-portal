@@ -191,10 +191,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 			CommerceProductPrice commerceProductPrice =
 				_getStaticCommerceProductPrice(
-					commerceOptionValue.getCPInstanceId(), currentQuantity,
-					commerceOptionValue.getPrice(),
-					childCommerceOrderItem.getCommerceOrder(),
-					commerceContext.getCommerceCurrency());
+					commerceOptionValue.getCPInstanceId(),
+					commerceContext.getCommerceCurrency(),
+					childCommerceOrderItem.getCommerceOrder(), currentQuantity,
+					commerceOptionValue.getPrice(), unitOfMeasureKey);
 
 			_setCommerceOrderItemPrice(
 				childCommerceOrderItem, commerceProductPrice);
@@ -800,10 +800,11 @@ public class CommerceOrderItemLocalServiceImpl
 
 			CommerceProductPrice staticCommerceProductPrice =
 				_getStaticCommerceProductPrice(
-					commerceOptionValue.getCPInstanceId(), currentQuantity,
+					commerceOptionValue.getCPInstanceId(),
+					commerceContext.getCommerceCurrency(),
+					childCommerceOrderItem.getCommerceOrder(), currentQuantity,
 					commerceOptionValue.getPrice(),
-					childCommerceOrderItem.getCommerceOrder(),
-					commerceContext.getCommerceCurrency());
+					childCommerceOrderItem.getUnitOfMeasureKey());
 
 			_updateCommerceOrderItem(
 				userId, childCommerceOrderItem.getCommerceOrderItemId(),
@@ -983,10 +984,11 @@ public class CommerceOrderItemLocalServiceImpl
 					childCommerceOrderItem,
 					_getStaticCommerceProductPrice(
 						commerceOptionValue.getCPInstanceId(),
+						commerceContext.getCommerceCurrency(),
+						childCommerceOrderItem.getCommerceOrder(),
 						childCommerceOrderItem.getQuantity(),
 						commerceOptionValue.getPrice(),
-						childCommerceOrderItem.getCommerceOrder(),
-						commerceContext.getCommerceCurrency()),
+						childCommerceOrderItem.getUnitOfMeasureKey()),
 					commerceContext);
 			}
 
@@ -1323,7 +1325,7 @@ public class CommerceOrderItemLocalServiceImpl
 				_getCommerceProductPrice(
 					cpInstance.getCPDefinitionId(),
 					cpInstance.getCPInstanceId(), json, quantity,
-					commerceContext);
+					unitOfMeasureKey, commerceContext);
 
 			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
 
@@ -1423,19 +1425,21 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private CommerceProductPrice _getCommerceProductPrice(
 			long cpDefinitionId, long cpInstanceId, String json,
-			BigDecimal quantity, CommerceContext commerceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			CommerceContext commerceContext)
 		throws PortalException {
 
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
-		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
-		commerceProductPriceRequest.setQuantity(quantity.intValue());
-		commerceProductPriceRequest.setSecure(false);
+		commerceProductPriceRequest.setCalculateTax(true);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCommerceOptionValues(
 			_getStaticOptionValuesNotLinkedToSku(cpDefinitionId, json));
-		commerceProductPriceRequest.setCalculateTax(true);
+		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
+		commerceProductPriceRequest.setQuantity(quantity);
+		commerceProductPriceRequest.setSecure(false);
+		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return _commerceProductPriceCalculation.getCommerceProductPrice(
 			commerceProductPriceRequest);
@@ -1516,8 +1520,9 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private CommerceProductPrice _getStaticCommerceProductPrice(
-			long cpInstanceId, BigDecimal quantity, BigDecimal optionValuePrice,
-			CommerceOrder commerceOrder, CommerceCurrency commerceCurrency)
+			long cpInstanceId, CommerceCurrency commerceCurrency,
+			CommerceOrder commerceOrder, BigDecimal quantity,
+			BigDecimal optionValuePrice, String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceProductPriceImpl commerceProductPriceImpl =
@@ -1557,7 +1562,8 @@ public class CommerceOrderItemLocalServiceImpl
 			_commerceMoneyFactory.create(
 				commerceCurrency, finalPriceWithTaxAmount));
 		commerceProductPriceImpl.setCommerceDiscountValue(null);
-		commerceProductPriceImpl.setQuantity(quantity.intValue());
+		commerceProductPriceImpl.setQuantity(quantity);
+		commerceProductPriceImpl.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceProductPriceImpl;
 	}
@@ -2032,7 +2038,7 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceOrderItem.getCPDefinitionId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(),
-				commerceContext);
+				commerceOrderItem.getUnitOfMeasureKey(), commerceContext);
 		}
 
 		_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
@@ -2211,7 +2217,7 @@ public class CommerceOrderItemLocalServiceImpl
 				_getCommerceProductPrice(
 					cpInstance.getCPDefinitionId(),
 					cpInstance.getCPInstanceId(), commerceOrderItem.getJson(),
-					quantity, null);
+					quantity, unitOfMeasureKey, null);
 
 			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
 
@@ -2260,7 +2266,8 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceProductPrice = _getCommerceProductPrice(
 					commerceOrderItem.getCPDefinitionId(),
 					commerceOrderItem.getCPInstanceId(),
-					commerceOrderItem.getJson(), quantity, commerceContext);
+					commerceOrderItem.getJson(), quantity,
+					commerceOrderItem.getUnitOfMeasureKey(), commerceContext);
 			}
 
 			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);

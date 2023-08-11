@@ -8,6 +8,8 @@ package com.liferay.commerce.price;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 
+import java.math.BigDecimal;
+
 /**
  * @author Matija Petanjek
  */
@@ -25,8 +27,12 @@ public class CommerceProductOptionValueRelativePriceRequest {
 		return _cpInstanceId;
 	}
 
-	public int getCPInstanceMinQuantity() {
+	public BigDecimal getCPInstanceMinQuantity() {
 		return _cpInstanceMinQuantity;
+	}
+
+	public String getCPInstanceUnitOfMeasureKey() {
+		return _cpInstanceUnitOfMeasureKey;
 	}
 
 	public CPDefinitionOptionValueRel getSelectedCPDefinitionOptionValueRel() {
@@ -37,8 +43,12 @@ public class CommerceProductOptionValueRelativePriceRequest {
 		return _selectedCPInstanceId;
 	}
 
-	public int getSelectedCPInstanceMinQuantity() {
+	public BigDecimal getSelectedCPInstanceMinQuantity() {
 		return _selectedCPInstanceMinQuantity;
+	}
+
+	public String getSelectedCPInstanceUnitOfMeasureKey() {
+		return _selectedCPInstanceUnitOfMeasureKey;
 	}
 
 	public static class Builder {
@@ -87,8 +97,16 @@ public class CommerceProductOptionValueRelativePriceRequest {
 			return this;
 		}
 
-		public Builder cpInstanceMinQuantity(int cpInstanceMinQuantity) {
+		public Builder cpInstanceMinQuantity(BigDecimal cpInstanceMinQuantity) {
 			_cpInstanceMinQuantity = cpInstanceMinQuantity;
+
+			return this;
+		}
+
+		public Builder cpInstanceUnitOfMeasureKey(
+			String cpInstanceUnitOfMeasureKey) {
+
+			_cpInstanceUnitOfMeasureKey = cpInstanceUnitOfMeasureKey;
 
 			return this;
 		}
@@ -109,9 +127,18 @@ public class CommerceProductOptionValueRelativePriceRequest {
 		}
 
 		public Builder selectedCPInstanceMinQuantity(
-			int selectedCPInstanceMinQuantity) {
+			BigDecimal selectedCPInstanceMinQuantity) {
 
 			_selectedCPInstanceMinQuantity = selectedCPInstanceMinQuantity;
+
+			return this;
+		}
+
+		public Builder selectedCPInstanceUnitOfMeasureKey(
+			String selectedCPInstanceUnitOfMeasureKey) {
+
+			_selectedCPInstanceUnitOfMeasureKey =
+				selectedCPInstanceUnitOfMeasureKey;
 
 			return this;
 		}
@@ -119,10 +146,12 @@ public class CommerceProductOptionValueRelativePriceRequest {
 		private final CommerceContext _commerceContext;
 		private final CPDefinitionOptionValueRel _cpDefinitionOptionValueRel;
 		private long _cpInstanceId;
-		private int _cpInstanceMinQuantity;
+		private BigDecimal _cpInstanceMinQuantity;
+		private String _cpInstanceUnitOfMeasureKey;
 		private CPDefinitionOptionValueRel _selectedCPDefinitionOptionValueRel;
 		private long _selectedCPInstanceId;
-		private int _selectedCPInstanceMinQuantity;
+		private BigDecimal _selectedCPInstanceMinQuantity;
+		private String _selectedCPInstanceUnitOfMeasureKey;
 
 	}
 
@@ -132,9 +161,11 @@ public class CommerceProductOptionValueRelativePriceRequest {
 	private CommerceContext _commerceContext;
 	private CPDefinitionOptionValueRel _cpDefinitionOptionValueRel;
 	private long _cpInstanceId;
-	private int _cpInstanceMinQuantity;
+	private BigDecimal _cpInstanceMinQuantity;
+	private String _cpInstanceUnitOfMeasureKey;
 	private CPDefinitionOptionValueRel _selectedCPDefinitionOptionValueRel;
 	private long _selectedCPInstanceId;
-	private int _selectedCPInstanceMinQuantity;
+	private BigDecimal _selectedCPInstanceMinQuantity;
+	private String _selectedCPInstanceUnitOfMeasureKey;
 
 }

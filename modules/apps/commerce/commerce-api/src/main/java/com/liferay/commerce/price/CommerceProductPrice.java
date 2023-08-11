@@ -25,9 +25,13 @@ public interface CommerceProductPrice {
 
 	public CommerceMoney getFinalPriceWithTaxAmount();
 
-	public int getQuantity();
+	public BigDecimal getQuantity();
 
 	public BigDecimal getTaxValue();
+
+	public BigDecimal getUnitOfMeasureIncrementalOrderQuantity();
+
+	public String getUnitOfMeasureKey();
 
 	public CommerceMoney getUnitPrice();
 

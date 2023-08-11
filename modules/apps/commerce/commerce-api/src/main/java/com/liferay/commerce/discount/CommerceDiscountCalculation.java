@@ -32,12 +32,12 @@ public interface CommerceDiscountCalculation {
 		throws PortalException;
 
 	public CommerceDiscountValue getProductCommerceDiscountValue(
-			long cpInstanceId, int quantity, BigDecimal productUnitPrice,
+			long cpInstanceId, BigDecimal quantity, BigDecimal productUnitPrice,
 			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceDiscountValue getProductCommerceDiscountValue(
-			long cpInstanceId, long commercePriceListId, int quantity,
+			long cpInstanceId, long commercePriceListId, BigDecimal quantity,
 			BigDecimal productUnitPrice, CommerceContext commerceContext)
 		throws PortalException;
 

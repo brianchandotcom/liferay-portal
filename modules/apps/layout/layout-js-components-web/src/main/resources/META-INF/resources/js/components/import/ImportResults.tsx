@@ -47,9 +47,13 @@ function ImportResults({fileName, importResults}: Props) {
 
 								<span className="c-ml-3 font-weight-semi-bold text-4 text-success">
 									{sub(
-										Liferay.Language.get(
-											'x-items-were-imported'
-										),
+										importResults.imported.length === 1
+											? Liferay.Language.get(
+													'x-item-was-imported'
+											  )
+											: Liferay.Language.get(
+													'x-items-were-imported'
+											  ),
 										importResults.imported.length
 									)}
 								</span>
@@ -93,9 +97,14 @@ function ImportResults({fileName, importResults}: Props) {
 
 								<span className="c-ml-3 font-weight-semi-bold text-4 text-warning">
 									{sub(
-										Liferay.Language.get(
-											'x-items-were-imported-with-warnings'
-										),
+										importResults['imported-draft']
+											.length === 1
+											? Liferay.Language.get(
+													'x-item-was-imported-with-warnings'
+											  )
+											: Liferay.Language.get(
+													'x-items-were-imported-with-warnings'
+											  ),
 										importResults['imported-draft'].length
 									)}
 								</span>
@@ -146,9 +155,13 @@ function ImportResults({fileName, importResults}: Props) {
 
 								<span className="c-ml-3 font-weight-semi-bold text-4 text-danger">
 									{sub(
-										Liferay.Language.get(
-											'x-items-could-not-be-imported'
-										),
+										importResults.invalid.length === 1
+											? Liferay.Language.get(
+													'x-item-could-not-be-imported'
+											  )
+											: Liferay.Language.get(
+													'x-items-could-not-be-imported'
+											  ),
 										importResults.invalid.length
 									)}
 								</span>

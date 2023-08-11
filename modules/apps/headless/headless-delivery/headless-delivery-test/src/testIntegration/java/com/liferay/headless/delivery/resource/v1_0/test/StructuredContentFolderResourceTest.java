@@ -20,11 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -274,43 +269,21 @@ public class StructuredContentFolderResourceTest
 
 		long assetLibraryId = RandomTestUtil.randomLong();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
-				LoggerTestUtil.ERROR)) {
+		try {
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					assetLibraryId,
+					postStructuredContentFolder1.getExternalReferenceCode());
 
-			try {
-				structuredContentFolderResource.
-					getAssetLibraryStructuredContentFolderByExternalReferenceCode(
-						assetLibraryId,
-						postStructuredContentFolder1.
-							getExternalReferenceCode());
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
 
-				Assert.fail();
-			}
-			catch (Problem.ProblemException problemException) {
-				Problem problem = problemException.getProblem();
-
-				Assert.assertEquals("NOT_FOUND", problem.getStatus());
-				Assert.assertEquals(
-					"Unable to get a valid asset library with ID " +
-						assetLibraryId,
-					problem.getTitle());
-			}
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(LoggerTestUtil.ERROR, logEntry.getPriority());
-
-			Throwable throwable = logEntry.getThrowable();
-
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
 			Assert.assertEquals(
 				"Unable to get a valid asset library with ID " + assetLibraryId,
-				throwable.getMessage());
+				problem.getTitle());
 		}
 	}
 

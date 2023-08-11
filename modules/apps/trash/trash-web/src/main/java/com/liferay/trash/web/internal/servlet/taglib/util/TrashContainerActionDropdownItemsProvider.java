@@ -139,7 +139,7 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setRedirect(
 				_trashDisplayContext.getViewContentRedirectURL()
 			).setParameter(
-				"trashEntryId", _trashEntry.getEntryId()
+				"trashEntryId", _trashDisplayContext.getTrashEntryId()
 			).buildString()
 		).setIcon(
 			"trash"
@@ -189,15 +189,15 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setMVCPath(
 				"/view_container_model.jsp"
 			).setParameter(
-				"classNameId", _trashEntry.getClassNameId()
+				"classNameId", _trashDisplayContext.getClassNameId()
 			).setParameter(
-				"classPK", _trashEntry.getClassPK()
+				"classPK", _trashDisplayContext.getClassPK()
 			).setParameter(
 				"containerModelClassNameId",
 				() -> {
 					String trashHandlerEntryContainerModelClassName =
 						_trashHandler.getContainerModelClassName(
-							_trashEntry.getClassPK());
+							_trashDisplayContext.getClassPK());
 
 					return PortalUtil.getClassNameId(
 						trashHandlerEntryContainerModelClassName);
@@ -224,7 +224,7 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setRedirect(
 				_trashDisplayContext.getViewContentRedirectURL()
 			).setParameter(
-				"trashEntryId", _trashEntry.getEntryId()
+				"trashEntryId", _trashDisplayContext.getTrashEntryId()
 			).buildString()
 		).setIcon(
 			"restore"

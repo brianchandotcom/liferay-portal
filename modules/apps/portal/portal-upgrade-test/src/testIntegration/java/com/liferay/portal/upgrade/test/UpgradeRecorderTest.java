@@ -276,14 +276,15 @@ public class UpgradeRecorderTest {
 	private class WarningUpgradeProcess extends UpgradeProcess {
 
 		@Override
-		protected void doUpgrade() throws Exception {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Warn on upgrade");
-			}
-		}
+		protected void doUpgrade() {
+			Map<String, Map<String, Integer>> warningMessages =
+				ReflectionTestUtil.getFieldValue(
+					_upgradeRecorder, "_warningMessages");
 
-		private final Log _log = LogFactoryUtil.getLog(
-			WarningUpgradeProcess.class);
+			warningMessages.put(
+				"WarningUpgradeProcess",
+				Collections.singletonMap("Warn on upgrade", 0));
+		}
 
 	}
 

@@ -218,40 +218,6 @@
 				JournalArticle.id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFeedFinder.countByC_G_F_N_D">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				JournalFeed
-			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(
-					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(description) LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFeedFinder.findByC_G_F_N_D">
-		<![CDATA[
-			SELECT
-				{JournalFeed.*}
-			FROM
-				JournalFeed
-			WHERE
-				(companyId = ?) AND
-				(groupId = ?) AND
-				(
-					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(description) LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-			ORDER BY
-				feedId ASC
-		]]>
-	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countA_ByG_U_F_DDMSI">
 		<![CDATA[
 			SELECT

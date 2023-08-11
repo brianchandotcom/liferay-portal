@@ -47,6 +47,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal:portal-upgrade-test-util")
 	testIntegrationImplementation project(":apps:portlet-display-template:portlet-display-template-api")
 	testIntegrationImplementation project(":apps:ratings:ratings-test-util")
+	testIntegrationImplementation project(":apps:rss:rss-api")
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:social:social-activity-test-util")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")

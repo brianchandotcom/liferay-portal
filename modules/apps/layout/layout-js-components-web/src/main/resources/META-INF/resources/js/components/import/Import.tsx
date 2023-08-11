@@ -55,10 +55,6 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 
 	const validateFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files || event.target.files?.length === 0) {
-			setFile(null);
-			setFileName(null);
-			setFileText(FILE_TEXTS.initial);
-
 			return;
 		}
 

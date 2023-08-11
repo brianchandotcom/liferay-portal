@@ -257,10 +257,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 				_portal.getPortletNamespace(
 					SegmentsPortletKeys.SEGMENTS_EXPERIMENT)
 			).put(
-				"segmentExperimentAction",
-				ParamUtil.getString(
-					httpServletRequest, "segmentExperimentAction")
-			).put(
 				"segmentExperimentDataURL",
 				_getSegmentExperimentDataURL(httpServletRequest)
 			).build()

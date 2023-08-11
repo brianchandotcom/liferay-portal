@@ -35,6 +35,7 @@ import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -80,9 +81,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -817,8 +815,11 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationshipPersistence.getDataSource()),
 			dbTableName, false);
 
-		if (_objectDefinitionLocalService != null) {
-			_objectDefinitionLocalService.deployObjectDefinition(
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			_objectDefinitionLocalServiceSnapshot.get();
+
+		if (objectDefinitionLocalService != null) {
+			objectDefinitionLocalService.deployObjectDefinition(
 				objectDefinition2);
 		}
 
@@ -1177,17 +1178,15 @@ public class ObjectRelationshipLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectRelationshipLocalServiceImpl.class);
 
+	private static final Snapshot<ObjectDefinitionLocalService>
+		_objectDefinitionLocalServiceSnapshot = new Snapshot<>(
+			ObjectRelationshipLocalServiceImpl.class,
+			ObjectDefinitionLocalService.class, null, true);
+
 	private BundleContext _bundleContext;
 
 	@Reference
 	private CurrentConnection _currentConnection;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

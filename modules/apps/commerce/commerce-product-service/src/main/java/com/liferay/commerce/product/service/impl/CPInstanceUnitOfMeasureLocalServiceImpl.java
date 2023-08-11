@@ -94,13 +94,6 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 	}
 
 	@Override
-	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
-		long companyId, String sku) {
-
-		return cpInstanceUnitOfMeasurePersistence.findByC_S(companyId, sku);
-	}
-
-	@Override
 	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
@@ -115,6 +108,13 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 
 		return cpInstanceUnitOfMeasurePersistence.findByCPInstanceId(
 			cpInstanceId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures(
+		long companyId, String sku) {
+
+		return cpInstanceUnitOfMeasurePersistence.findByC_S(companyId, sku);
 	}
 
 	@Override

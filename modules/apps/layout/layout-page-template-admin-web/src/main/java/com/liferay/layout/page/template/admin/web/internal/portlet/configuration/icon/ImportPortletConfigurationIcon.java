@@ -81,6 +81,20 @@ public class ImportPortletConfigurationIcon
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/layout_page_template_admin/view_import"
+			).setBackURL(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest,
+						LayoutPageTemplateAdminPortletKeys.
+							LAYOUT_PAGE_TEMPLATES,
+						PortletRequest.RENDER_PHASE)
+				).setTabs1(
+					ParamUtil.getString(portletRequest, "tabs1")
+				).setParameter(
+					"layoutPageTemplateCollectionId",
+					ParamUtil.getString(
+						portletRequest, "layoutPageTemplateCollectionId")
+				).buildString()
 			).setParameter(
 				"layoutPageTemplateCollectionId",
 				ParamUtil.getString(

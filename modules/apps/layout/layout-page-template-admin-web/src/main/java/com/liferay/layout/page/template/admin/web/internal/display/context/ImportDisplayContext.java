@@ -266,7 +266,7 @@ public class ImportDisplayContext {
 			PortletURLBuilder.create(
 				_renderResponse.createRenderURL()
 			).setTabs1(
-				"page-templates"
+				ParamUtil.getString(_httpServletRequest, "tabs1")
 			).buildString()
 		).put(
 			"importURL",

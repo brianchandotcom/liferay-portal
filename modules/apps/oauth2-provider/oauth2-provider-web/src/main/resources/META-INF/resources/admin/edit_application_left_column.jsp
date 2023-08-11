@@ -29,7 +29,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 	</c:if>
 
 	<aui:select helpMessage="client-authentication-method-help" label="Client Authentication Method" name="clientAuthenticationMethod" required="<%= true %>">
-		<aui:option label="Client Secret Post" value="client_secret_post" />
+		<aui:option label="Client Secret Basic or Post" value="client_secret_post" />
 		<aui:option label="None" value="none" />
 		<aui:option label="Client Secret JWT" value="client_secret_jwt" />
 		<aui:option label="Private Key JWT" value="private_key_jwt" />

@@ -25,7 +25,15 @@ const TYPES_TO_SYMBOLS = {
 	objectFolder: 'folder',
 };
 
-export default function LeftSidebar() {
+interface LeftSidebarProps {
+	selectedFolderName: string;
+	setShowModal: (value: boolean) => void;
+}
+
+export default function LeftSidebar({
+	selectedFolderName,
+	setShowModal,
+}: LeftSidebarProps) {
 	const [query, setQuery] = useState('');
 	const [{leftSidebarItems}, dispatch] = useFolderContext();
 	const {setCenter} = useZoomPanHelper();
@@ -63,7 +71,9 @@ export default function LeftSidebar() {
 			]}
 		>
 			<div className="lfr-objects__model-builder-left-sidebar">
-				<ClayButton>
+				<ClayButton
+					className="lfr-objects__model-builder-left-sidebar-body-create-new-object-button"
+					onClick={() => setShowModal(true)}>
 					{Liferay.Language.get('create-new-object')}
 				</ClayButton>
 
@@ -71,48 +81,53 @@ export default function LeftSidebar() {
 					query={query}
 					setQuery={(searchTerm) => setQuery(searchTerm)}
 				/>
+					<TreeView<
+						LeftSidebarItemType | LeftSidebarDefinitionItemType
+					>
+						items={filteredItems}
+						nestedKey="objectDefinitions"
+						onSelect={(item) => {
+							if (
+								item.type === 'objectDefinition' &&
+								!!leftSidebarItems[0].objectDefinitions?.find(
+									(objectDefinition) => {
+										return (
+											objectDefinition.name === item.name
+										);
+									}
+								)
+							) {
+								const {edges, nodes} = store.getState();
 
-				<TreeView<LeftSidebarItemType | LeftSidebarDefinitionItemType>
-					items={filteredItems}
-					nestedKey="objectDefinitions"
-					onSelect={(item) => {
-						if (
-							item.type === 'objectDefinition' &&
-							!!leftSidebarItems[0].objectDefinitions?.find(
-								(objectDefinition) => {
-									return objectDefinition.name === item.name;
+								dispatch({
+									payload: {
+										edges,
+										nodes,
+										selectedObjectDefinitionName: (item as LeftSidebarDefinitionItemType)
+											.definitionName,
+									},
+									type: TYPES.SET_SELECTED_NODE,
+								});
+
+								const selectedNode = nodes.find(
+									(definitionNode) =>
+										definitionNode.data.name ===
+										(item as LeftSidebarDefinitionItemType)
+											.definitionName
+								);
+
+								if (selectedNode) {
+									const x =
+										selectedNode.__rf.position.x +
+										selectedNode.__rf.width / 2;
+									const y =
+										selectedNode.__rf.position.y +
+										selectedNode.__rf.height / 2;
+									setCenter(x, y, 1.5);
 								}
-							)
-						) {
-							const {edges, nodes} = store.getState();
-
-							dispatch({
-								payload: {
-									edges,
-									nodes,
-									selectedObjectDefinitionName: (item as LeftSidebarDefinitionItemType)
-										.definitionName,
-								},
-								type: TYPES.SET_SELECTED_NODE,
-							});
-
-							const selectedNode = nodes.find(
-								(definitionNode) =>
-									definitionNode.data.name ===
-									(item as LeftSidebarDefinitionItemType)
-										.definitionName
-							);
-
-							if (selectedNode) {
-								const x =
-									selectedNode.__rf.position.x +
-									selectedNode.__rf.width / 2;
-								const y =
-									selectedNode.__rf.position.y +
-									selectedNode.__rf.height / 2;
-								setCenter(x, y, 1.5);
 							}
-						}
+							
+						
 					}}
 					showExpanderOnHover={false}
 				>

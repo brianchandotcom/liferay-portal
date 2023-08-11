@@ -14,8 +14,10 @@ import {
 	Input,
 	REQUIRED_MSG,
 	Select,
+	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -27,6 +29,8 @@ interface ModalAddObjectDefinitionProps {
 	apiURL: string;
 	handleOnClose: () => void;
 	objectFolderExternalReferenceCode?: string;
+	reload?: boolean;
+	setNewNode?: (value: ObjectDefinition) => void;
 	storages: LabelTypeObject[];
 }
 
@@ -41,6 +45,8 @@ export function ModalAddObjectDefinition({
 	apiURL,
 	handleOnClose,
 	objectFolderExternalReferenceCode,
+	reload = true,
+	setNewNode,
 	storages,
 }: ModalAddObjectDefinitionProps) {
 	const [error, setError] = useState<string>('');
@@ -98,14 +104,40 @@ export function ModalAddObjectDefinition({
 			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
 		}
 
+		if (
+			Liferay.FeatureFlags['LPS-148856'] &&
+			objectFolderExternalReferenceCode
+		) {
+			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
+		}
+
 		if (Liferay.FeatureFlags['LPS-135430']) {
-			objectDefinition.storageType = storage.type;
+			objectDefinition.storageType = storage.value;
 		}
 		try {
-			await API.save(apiURL, objectDefinition, 'POST');
+			const newObjectDefinition = ((await API.save(
+				apiURL,
+				objectDefinition,
+				'POST'
+			)) as unknown) as ObjectDefinition;
 
 			onClose();
-			window.location.reload();
+
+			openToast({
+				message: sub(
+					Liferay.Language.get('x-was-created-successfully'),
+					`<strong>${label}</strong>`
+				),
+				type: 'success',
+			});
+
+			if (setNewNode) {
+				setNewNode(newObjectDefinition);
+			}
+
+			if (reload) {
+				setTimeout(() => window.location.reload(), 1000);
+			}
 		}
 		catch (error) {
 			setError((error as Error).message);
@@ -136,10 +168,10 @@ export function ModalAddObjectDefinition({
 
 	const selectedStorageType = (storageType: string) => {
 		const chooseStorage = storageSortedByLabel.find(
-			(currentStorage) => currentStorage.type === storageType
+			(currentStorage) => currentStorage.value === storageType
 		);
 
-		return chooseStorage?.type;
+		return chooseStorage?.value;
 	};
 
 	return (
@@ -195,14 +227,14 @@ export function ModalAddObjectDefinition({
 											...values,
 											storage: storageSortedByLabel.find(
 												(storage) =>
-													storage.type === value
+													storage.value === value
 											),
 										});
 									}}
 									options={storageSortedByLabel.map(
 										(storage) => {
 											return {
-												key: storage.type,
+												key: storage.value,
 												label: storage.label,
 											};
 										}
@@ -211,7 +243,7 @@ export function ModalAddObjectDefinition({
 										'object-definition-storage-type-tooltip'
 									)}
 									value={selectedStorageType(
-										values.storage.type
+										values.storage.value
 									)}
 								/>
 

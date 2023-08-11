@@ -63,6 +63,8 @@ export declare type TState = {
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
+	storages: LabelTypeObject[];
+	viewApiURL: string;
 };
 export declare type LeftSidebarItemType = {
 	folderName: string;

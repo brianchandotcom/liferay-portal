@@ -1,0 +1,20 @@
+.lfr-objects__model-builder-node-container-empty {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 1rem;
+	width: 280px;
+
+	&-description {
+		color: #6b6c7e;
+		font-size: 14px;
+		font-weight: 400;
+		text-align: center;
+	}
+
+	&-title {
+		font-size: 16px;
+		font-weight: 600;
+	}
+}

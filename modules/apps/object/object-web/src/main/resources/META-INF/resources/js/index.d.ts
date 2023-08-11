@@ -375,7 +375,7 @@ interface LabelNameObject {
 
 interface LabelTypeObject {
 	label: string;
-	type: string;
+	value: string;
 }
 
 interface NameValueObject {

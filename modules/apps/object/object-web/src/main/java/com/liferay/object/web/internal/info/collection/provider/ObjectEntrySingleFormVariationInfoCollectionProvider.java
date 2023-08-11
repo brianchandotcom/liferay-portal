@@ -446,15 +446,13 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				_getPagination(collectionQuery.getPagination()),
 				_getSearch(collectionQuery), null);
 
-		List<com.liferay.object.rest.dto.v1_0.ObjectEntry> objectEntries =
-			new ArrayList<>(objectEntriesPage.getItems());
-
 		return InfoPage.of(
 			TransformUtil.transform(
-				objectEntries,
+				new ArrayList<>(objectEntriesPage.getItems()),
 				objectEntry -> ObjectEntryUtil.toObjectEntry(
 					_objectDefinition.getObjectDefinitionId(), objectEntry)),
-			collectionQuery.getPagination(), objectEntries.size());
+			collectionQuery.getPagination(),
+			(int)objectEntriesPage.getTotalCount());
 	}
 
 	private String _getFieldName(ObjectField objectField) {

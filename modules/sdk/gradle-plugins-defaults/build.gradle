@@ -29,7 +29,7 @@ dependencies {
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.go", version: "2.0.1"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.72"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.22"
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.76"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.0"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.testray", version: "1.0.16"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.10"
 	api group: "gradle.plugin.com.github.maiflai", name: "gradle-scalatest", version: "0.25"

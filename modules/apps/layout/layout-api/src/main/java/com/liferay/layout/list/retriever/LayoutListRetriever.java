@@ -30,9 +30,19 @@ public interface LayoutListRetriever
 			() -> getListCount(s, layoutListRetrieverContext));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getInfoPage(S, LayoutListRetrieverContext)}
+	 */
+	@Deprecated
 	public List<Object> getList(
 		S s, LayoutListRetrieverContext layoutListRetrieverContext);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getInfoPage(S, LayoutListRetrieverContext)}
+	 */
+	@Deprecated
 	public int getListCount(
 		S s, LayoutListRetrieverContext layoutListRetrieverContext);
 

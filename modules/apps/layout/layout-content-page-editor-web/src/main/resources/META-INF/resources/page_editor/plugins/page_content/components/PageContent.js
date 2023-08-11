@@ -337,7 +337,7 @@ export default function PageContent({
 								displayType="unstyled"
 								size="sm"
 							>
-								<ClayIcon symbol="pencil" />
+								{!isHovered && <ClayIcon symbol="pencil" />}
 							</ClayButton>
 						)}
 					</ClayLayout.ContentCol>

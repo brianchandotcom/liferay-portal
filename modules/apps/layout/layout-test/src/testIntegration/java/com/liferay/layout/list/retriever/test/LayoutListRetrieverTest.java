@@ -118,8 +118,10 @@ public class LayoutListRetrieverTest {
 
 		layoutListRetrieverContext.setContextObject(fileEntry);
 
-		List<Object> list = layoutListRetriever.getList(
+		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			keyListObjectReference, layoutListRetrieverContext);
+
+		List<Object> list = (List<Object>)infoPage.getPageItems();
 
 		Assert.assertEquals(list.toString(), 2, list.size());
 
@@ -156,8 +158,10 @@ public class LayoutListRetrieverTest {
 				JSONUtil.put(
 					"key", TestInfoCollectionProvider.class.getName()));
 
-		List<Object> list = layoutListRetriever.getList(
+		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			keyListObjectReference, new DefaultLayoutListRetrieverContext());
+
+		List<Object> list = (List<Object>)infoPage.getPageItems();
 
 		Assert.assertEquals(list.toString(), 1, list.size());
 		Assert.assertEquals(

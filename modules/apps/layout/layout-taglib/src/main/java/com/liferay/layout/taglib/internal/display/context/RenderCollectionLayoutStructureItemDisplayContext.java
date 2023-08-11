@@ -20,6 +20,8 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
+import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
@@ -104,30 +106,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public List<Object> getCollection() {
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			_getLayoutListRetriever();
-		ListObjectReference listObjectReference = _getListObjectReference();
+		InfoPage<?> infoPage = _getInfoPage();
 
-		if ((layoutListRetriever == null) || (listObjectReference == null) ||
-			!_hasViewPermission(listObjectReference)) {
-
-			return Collections.emptyList();
-		}
-
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			_getDefaultLayoutListRetrieverContext(
-				layoutListRetriever, listObjectReference);
-
-		defaultLayoutListRetrieverContext.setPagination(
-			CollectionPaginationUtil.getPagination(
-				getActivePage(),
-				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
-				_collectionStyledLayoutStructureItem.getNumberOfItems(),
-				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
-				_collectionStyledLayoutStructureItem.getPaginationType()));
-
-		return layoutListRetriever.getList(
-			listObjectReference, defaultLayoutListRetrieverContext);
+		return (List<Object>)infoPage.getPageItems();
 	}
 
 	public String getCollectionItemType() {
@@ -343,28 +324,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private int _getCollectionCount() {
-		if (_collectionCount != null) {
-			return _collectionCount;
-		}
+		InfoPage<?> infoPage = _getInfoPage();
 
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			_getLayoutListRetriever();
-		ListObjectReference listObjectReference = _getListObjectReference();
-
-		if ((layoutListRetriever == null) || (listObjectReference == null) ||
-			!_hasViewPermission(listObjectReference)) {
-
-			_collectionCount = 0;
-
-			return _collectionCount;
-		}
-
-		_collectionCount = layoutListRetriever.getListCount(
-			listObjectReference,
-			_getDefaultLayoutListRetrieverContext(
-				layoutListRetriever, listObjectReference));
-
-		return _collectionCount;
+		return infoPage.getTotalCount();
 	}
 
 	private Map<String, String[]> _getConfiguration() {
@@ -456,24 +418,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		_contextObject = infoItem;
 
 		return _contextObject;
-	}
-
-	private DefaultLayoutListRetrieverContext
-		_getDefaultLayoutListRetrieverContext(
-			LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
-			ListObjectReference listObjectReference) {
-
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setConfiguration(_getConfiguration());
-		defaultLayoutListRetrieverContext.setContextObject(_getContextObject());
-		defaultLayoutListRetrieverContext.setInfoFilters(
-			_getInfoFilters(layoutListRetriever, listObjectReference));
-		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds(layoutListRetriever, listObjectReference));
-
-		return defaultLayoutListRetrieverContext;
 	}
 
 	private Map<String, String[]> _getFilterValues() {
@@ -568,6 +512,47 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		_infoFilters = infoFilters;
 
 		return _infoFilters;
+	}
+
+	private InfoPage<?> _getInfoPage() {
+		if (_infoPage != null) {
+			return _infoPage;
+		}
+
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			_getLayoutListRetriever();
+		ListObjectReference listObjectReference = _getListObjectReference();
+
+		if ((layoutListRetriever == null) || (listObjectReference == null) ||
+			!_hasViewPermission(listObjectReference)) {
+
+			_infoPage = InfoPage.of(
+				Collections.emptyList(), Pagination.of(0, 0), 0);
+
+			return _infoPage;
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setConfiguration(_getConfiguration());
+		defaultLayoutListRetrieverContext.setContextObject(_getContextObject());
+		defaultLayoutListRetrieverContext.setInfoFilters(
+			_getInfoFilters(layoutListRetriever, listObjectReference));
+		defaultLayoutListRetrieverContext.setPagination(
+			CollectionPaginationUtil.getPagination(
+				getActivePage(),
+				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
+				_collectionStyledLayoutStructureItem.getNumberOfItems(),
+				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
+				_collectionStyledLayoutStructureItem.getPaginationType()));
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_getSegmentsEntryIds(layoutListRetriever, listObjectReference));
+
+		_infoPage = layoutListRetriever.getInfoPage(
+			listObjectReference, defaultLayoutListRetrieverContext);
+
+		return _infoPage;
 	}
 
 	private LayoutListRetriever<?, ListObjectReference>
@@ -712,7 +697,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		RenderCollectionLayoutStructureItemDisplayContext.class);
 
 	private Integer _activePage;
-	private Integer _collectionCount;
 	private String _collectionItemType;
 	private final CollectionStyledLayoutStructureItem
 		_collectionStyledLayoutStructureItem;
@@ -721,6 +705,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private Boolean _hasViewPermission;
 	private final HttpServletRequest _httpServletRequest;
 	private Map<String, InfoFilter> _infoFilters;
+	private InfoPage<?> _infoPage;
 	private Integer _maxNumberOfItemsPerPage;
 	private Integer _numberOfItemsPerPage;
 	private Integer _numberOfItemsToDisplay;

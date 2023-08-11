@@ -9,6 +9,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
@@ -119,12 +120,12 @@ public class GetCollectionItemCountMVCResourceCommand
 						infoItem);
 				}
 
-				jsonObject.put(
-					"totalNumberOfItems",
-					layoutListRetriever.getListCount(
-						listObjectReferenceFactory.getListObjectReference(
-							layoutObjectReferenceJSONObject),
-						defaultLayoutListRetrieverContext));
+				InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
+					listObjectReferenceFactory.getListObjectReference(
+						layoutObjectReferenceJSONObject),
+					defaultLayoutListRetrieverContext);
+
+				jsonObject.put("totalNumberOfItems", infoPage.getTotalCount());
 			}
 		}
 

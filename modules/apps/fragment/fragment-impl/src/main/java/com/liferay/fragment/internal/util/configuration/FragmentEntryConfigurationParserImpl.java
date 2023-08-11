@@ -16,6 +16,7 @@ import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -725,9 +726,11 @@ public class FragmentEntryConfigurationParserImpl
 			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 				segmentsEntryIds);
 
-			return layoutListRetriever.getList(
+			InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 				listObjectReferenceFactory.getListObjectReference(jsonObject),
 				defaultLayoutListRetrieverContext);
+
+			return infoPage.getPageItems();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

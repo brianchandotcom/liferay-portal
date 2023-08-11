@@ -32,6 +32,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -319,10 +320,7 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutListRetriever, listObjectReference,
 				segmentsExperienceId));
 
-		List<Object> list = layoutListRetriever.getList(
-			listObjectReference, defaultLayoutListRetrieverContext);
-
-		int listCount = layoutListRetriever.getListCount(
+		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			listObjectReference, defaultLayoutListRetrieverContext);
 
 		jsonObject.put(
@@ -352,7 +350,9 @@ public class GetCollectionFieldMVCResourceCommand
 					listItemStyle);
 				defaultInfoListRendererContext.setTemplateKey(templateKey);
 
-				infoListRenderer.render(list, defaultInfoListRendererContext);
+				infoListRenderer.render(
+					(List<Object>)infoPage.getPageItems(),
+					defaultInfoListRendererContext);
 
 				return unsyncStringWriter.toString();
 			}
@@ -367,7 +367,7 @@ public class GetCollectionFieldMVCResourceCommand
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-				for (Object object : list) {
+				for (Object object : infoPage.getPageItems()) {
 					jsonArray.put(
 						_getDisplayObjectJSONObject(
 							httpServletRequest, httpServletResponse,
@@ -389,12 +389,13 @@ public class GetCollectionFieldMVCResourceCommand
 		).put(
 			"itemType", originalItemType
 		).put(
-			"length", listCount
+			"length", infoPage.getTotalCount()
 		).put(
 			"totalNumberOfItems",
 			CollectionPaginationUtil.getTotalNumberOfItems(
-				listCount, displayAllPages, displayAllItems, numberOfItems,
-				numberOfItemsPerPage, numberOfPages, paginationType)
+				infoPage.getTotalCount(), displayAllPages, displayAllItems,
+				numberOfItems, numberOfItemsPerPage, numberOfPages,
+				paginationType)
 		);
 
 		return jsonObject;

@@ -1,5 +1,8 @@
 definition {
 
+	static var companyWebId = "";
+	static var clientExtension = "";
+
 	macro addUserAndSetAccount {
 		if (!(isSet(groupName))) {
 			var groupName = "Marketplace Site";
@@ -58,6 +61,14 @@ definition {
 	}
 
 	macro marketplaceInitializersTearDown {
+		var companyWebId = JSONCompany.getWebId();
+
+		if (isSet(clientExtension)) {
+			var clientExtension = "liferay-marketplace-custom-element";
+
+			AntCommands.runCommand("build-test-workspace.xml", "undeploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+		}
+
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -69,6 +80,22 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
+
+			Site.openSitesAdmin();
+
+			if (IsElementPresent(key_tableEntry = "Marketplace Site", locator1 = "LexiconTable#TABLE_ENTRY")) {
+				Site.openSitesAdmin();
+
+				PortletEntry.selectAll();
+
+				Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+
+				MenuItem.clickNoError(menuItem = "Delete");
+
+				Click(locator1 = "Button#MODAL_DELETE");
+
+				Alert.viewSuccessMessage();
+			}
 
 			Account.openAccountsAdmin();
 
@@ -85,9 +112,6 @@ definition {
 	}
 
 	macro marketplaceSetUp {
-		static var clientExtensionSamples = "";
-		static var companyWebId = "";
-
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();

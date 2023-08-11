@@ -17,7 +17,7 @@ export default function Filter({
 	onSearchValue: Function;
 	onSort: Function;
 }) {
-	const label = sub(
+	const sortLabel = sub(
 		Liferay.Language.get('x-sort-fragments-by-render-time'),
 		isAscendingSort
 			? Liferay.Language.get('descending')
@@ -33,14 +33,14 @@ export default function Filter({
 			/>
 
 			<ClayButtonWithIcon
-				aria-label={label}
+				aria-label={sortLabel}
 				borderless
 				className="ml-2 mt-0"
 				displayType="secondary"
 				onClick={() => onSort(!isAscendingSort)}
 				size="sm"
 				symbol={isAscendingSort ? 'order-list-up' : 'order-list-down'}
-				title={label}
+				title={sortLabel}
 			/>
 		</div>
 	);

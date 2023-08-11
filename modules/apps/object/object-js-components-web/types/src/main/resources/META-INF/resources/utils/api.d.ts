@@ -164,25 +164,25 @@ export declare function save(
 	url: string,
 	item: unknown,
 	method?: 'PATCH' | 'POST' | 'PUT'
-): Promise<void>;
+): Promise<any>;
 export declare function addPickListItem({
 	id,
 	key,
 	name_i18n,
-}: Partial<PickListItem>): Promise<void>;
+}: Partial<PickListItem>): Promise<any>;
 export declare function updatePickList({
 	externalReferenceCode,
 	id,
 	listTypeEntries,
 	name_i18n,
-}: Partial<PickList>): Promise<void>;
+}: Partial<PickList>): Promise<any>;
 export declare function updatePickListItem({
 	externalReferenceCode,
 	id,
 	name_i18n,
-}: Partial<PickListItem>): Promise<void>;
+}: Partial<PickListItem>): Promise<any>;
 export declare function updateRelationship({
 	objectRelationshipId,
 	...others
-}: ObjectRelationship): Promise<void>;
+}: ObjectRelationship): Promise<any>;
 export {};

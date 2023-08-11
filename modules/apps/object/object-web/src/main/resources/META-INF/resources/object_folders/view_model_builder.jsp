@@ -35,6 +35,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			"objectDefinitionPermissionsURL", objectDefinitionsDetailsDisplayContext.getPermissionsURL(ObjectDefinition.class.getName())
 		).put(
 			"siteKeyValuePair", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("site")
+		).put(
+			"storages", objectDefinitionsDetailsDisplayContext.getStoragesJSONArray()
+		).put(
+			"viewApiURL", "/o/object-admin/v1.0/object-definitions"
 		).build()
 	%>'
 />

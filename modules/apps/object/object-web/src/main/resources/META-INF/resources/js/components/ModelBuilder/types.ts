@@ -66,6 +66,8 @@ export type TState = {
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
+	storages: LabelValueObject[];
+	viewApiURL: string;
 };
 
 export type LeftSidebarItemType = {

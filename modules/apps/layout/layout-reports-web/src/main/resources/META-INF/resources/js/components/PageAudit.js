@@ -18,27 +18,31 @@ import './PageAudit.scss';
 
 export default function PageAudit({panelIsOpen}) {
 	const [data, setData] = useState({});
-	const {layoutReportsTabsURL} = useContext(ConstantsContext);
+	const {layoutReportsDataURL} = useContext(ConstantsContext);
 
 	useEffect(() => {
-		if (panelIsOpen && layoutReportsTabsURL) {
-			fetch(layoutReportsTabsURL, {method: 'GET'})
+		if (panelIsOpen && layoutReportsDataURL) {
+			fetch(layoutReportsDataURL, {method: 'GET'})
 				.then((response) => response.json())
 				.then((data) => setData(data))
 				.catch((error) => console.error(error));
 		}
-	}, [layoutReportsTabsURL, panelIsOpen]);
+	}, [layoutReportsDataURL, panelIsOpen]);
 
-	if (!data.tabsData || !data.segmentExperienceSelectorData) {
+	if (!data.tabsData || !data.segmentsExperienceSelectorData) {
 		return null;
 	}
 
+	const pageSpeedData = data.tabsData.find(
+		({id}) => id === 'page-speed-insights'
+	);
+
 	return (
 		<PageAuditBody
-			segments={data.segmentExperienceSelectorData}
+			segments={data.segmentsExperienceSelectorData}
 			tabs={data.tabsData}
 		>
-			<LayoutReports />
+			<LayoutReports url={pageSpeedData.url} />
 		</PageAuditBody>
 	);
 }

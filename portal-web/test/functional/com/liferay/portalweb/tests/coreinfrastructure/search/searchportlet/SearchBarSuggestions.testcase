@@ -20,7 +20,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-159730."
+	@description = "This is a use case for LPS-159730 and LPS-164852."
 	@priority = 4
 	test AssertURLforSuggestionsResults {
 		JSONWebcontent.addWebContent(
@@ -32,6 +32,22 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "New Search Page");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "/new-search-page");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple");
+
+		Navigator.openURL();
 
 		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "New Search Page");
 

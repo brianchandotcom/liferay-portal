@@ -976,12 +976,6 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = ${workflowProcessName});
 
-		// Workaround for LPS-186021
-
-		while ((IsElementNotPresent(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA")) && (maxIterations = "5")) {
-			Refresh();
-		}
-
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");

@@ -1104,12 +1104,6 @@ definition {
 	test SLASettingsAvailableOnMetricsPage {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// Workaround for LPS-186021
-
-		while ((IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON")) && (maxIterations = "5")) {
-			Refresh();
-		}
-
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");

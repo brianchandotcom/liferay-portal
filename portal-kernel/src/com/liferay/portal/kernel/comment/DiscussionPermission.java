@@ -56,6 +56,10 @@ public interface DiscussionPermission {
 	}
 
 	public boolean hasPermission(
+		PermissionChecker permissionChecker, long companyId, long groupId,
+		String className, long classPK, String actionId);
+
+	public boolean hasPermission(
 			PermissionChecker permissionChecker, long commentId,
 			String actionId)
 		throws PortalException;

@@ -152,10 +152,6 @@
 	<bean class="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil" id="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil">
 		<property name="directRequestDispatcherFactory" ref="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory" />
 	</bean>
-	<bean class="com.liferay.portal.servlet.DirectServletRegistryImpl" id="com.liferay.portal.kernel.servlet.DirectServletRegistry" />
-	<bean class="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil" id="com.liferay.portal.kernel.servlet.DirectServletRegistryUtil">
-		<property name="directServletRegistry" ref="com.liferay.portal.kernel.servlet.DirectServletRegistry" />
-	</bean>
 	<bean class="com.liferay.portal.servlet.TransferHeadersHelperImpl" id="com.liferay.portal.kernel.servlet.TransferHeadersHelper" />
 	<bean class="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil" id="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil">
 		<property name="transferHeadersHelper" ref="com.liferay.portal.kernel.servlet.TransferHeadersHelper" />

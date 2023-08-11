@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-declare type TimeSpan = 'last-7-days' | 'last-30-days' | null;
+export declare type TimeSpan = 'last-7-days' | 'last-30-days' | null;
 declare type Histogram = Array<Record<string, string | number | null>>;
 interface DataSet {
 	histogram: Histogram;

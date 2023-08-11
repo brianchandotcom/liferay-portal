@@ -8,6 +8,7 @@ interface Action {
 	type: 'ADD_WARNING' | null;
 }
 interface State {
+	languageTag?: string;
 	publishedToday: boolean;
 	warning: boolean;
 }

@@ -46,7 +46,7 @@ public class JournalRowChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
-		boolean disabled, String primaryKey) {
+		boolean disabled, String primaryKey, String rowElementId) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -68,7 +68,7 @@ public class JournalRowChecker extends EmptyOnClickRowChecker {
 			StringBundler.concat(
 				_portletResponse.getNamespace(), RowChecker.ROW_IDS,
 				JournalArticle.class.getSimpleName(), "']"),
-			"'#" + getAllRowIds() + "'", StringPool.BLANK);
+			"'#" + getAllRowIds() + "'", StringPool.BLANK, rowElementId);
 	}
 
 	@Override

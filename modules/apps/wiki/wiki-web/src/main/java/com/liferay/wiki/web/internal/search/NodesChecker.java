@@ -58,7 +58,7 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
-		boolean disabled, String primaryKey) {
+		boolean disabled, String primaryKey, String rowElementId) {
 
 		long nodeId = GetterUtil.getLong(primaryKey);
 
@@ -117,7 +117,7 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 				_liferayPortletResponse.getNamespace(), RowChecker.ROW_IDS,
 				name, ""),
 			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
-			StringPool.BLANK);
+			StringPool.BLANK, rowElementId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NodesChecker.class);

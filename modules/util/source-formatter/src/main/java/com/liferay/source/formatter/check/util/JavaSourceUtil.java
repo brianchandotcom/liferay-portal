@@ -61,11 +61,10 @@ public class JavaSourceUtil extends SourceUtil {
 		for (String missingImport : missingImports) {
 			sb.append("import ");
 			sb.append(missingImport);
-			sb.append(StringPool.SEMICOLON);
+			sb.append(";\n");
 		}
 
-		return StringUtil.replace(
-			content, packageName + StringPool.SEMICOLON, sb.toString());
+		return StringUtil.replace(content, packageName + ";\n", sb.toString());
 	}
 
 	public static String addMethodNewParameters(

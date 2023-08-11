@@ -62,19 +62,6 @@ public class JournalFeedFinderImpl
 
 	@Override
 	public int countByC_G_F_N_D(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator) {
-
-		String[] feedIds = _customSQL.keywords(feedId, false);
-		String[] names = _customSQL.keywords(name);
-		String[] descriptions = _customSQL.keywords(description);
-
-		return countByC_G_F_N_D(
-			companyId, groupId, feedIds, names, descriptions, andOperator);
-	}
-
-	@Override
-	public int countByC_G_F_N_D(
 		long companyId, long groupId, String[] feedIds, String[] names,
 		String[] descriptions, boolean andOperator) {
 
@@ -156,21 +143,6 @@ public class JournalFeedFinderImpl
 		else {
 			andOperator = true;
 		}
-
-		return findByC_G_F_N_D(
-			companyId, groupId, feedIds, names, descriptions, andOperator,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public List<JournalFeed> findByC_G_F_N_D(
-		long companyId, long groupId, String feedId, String name,
-		String description, boolean andOperator, int start, int end,
-		OrderByComparator<JournalFeed> orderByComparator) {
-
-		String[] feedIds = _customSQL.keywords(feedId, false);
-		String[] names = _customSQL.keywords(name);
-		String[] descriptions = _customSQL.keywords(description);
 
 		return findByC_G_F_N_D(
 			companyId, groupId, feedIds, names, descriptions, andOperator,

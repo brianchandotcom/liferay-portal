@@ -59,7 +59,7 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
-		boolean disabled, String primaryKey) {
+		boolean disabled, String primaryKey, String rowElementId) {
 
 		try {
 			long kbCommentId = GetterUtil.getLong(primaryKey);
@@ -77,7 +77,8 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 				httpServletRequest, checked, disabled,
 				_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 					KBComment.class.getSimpleName(),
-				primaryKey, checkBoxRowIds, getAllRowIds(), StringPool.BLANK);
+				primaryKey, checkBoxRowIds, getAllRowIds(), StringPool.BLANK,
+				rowElementId);
 		}
 		catch (PortalException portalException) {
 

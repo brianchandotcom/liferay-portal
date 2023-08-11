@@ -77,7 +77,8 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 	protected String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String name, String value, String checkBoxRowIds,
-		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+		String checkBoxAllRowIds, String checkBoxPostOnClick,
+		String rowElementId) {
 
 		try {
 			long organizationId = GetterUtil.getLong(value);
@@ -107,7 +108,7 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 
 		return super.getRowCheckBox(
 			httpServletRequest, checked, disabled, name, value, checkBoxRowIds,
-			checkBoxAllRowIds, checkBoxPostOnClick);
+			checkBoxAllRowIds, checkBoxPostOnClick, rowElementId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

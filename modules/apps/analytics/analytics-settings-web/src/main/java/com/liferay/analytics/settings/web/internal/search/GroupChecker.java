@@ -43,7 +43,8 @@ public class GroupChecker extends EmptyOnClickRowChecker {
 	protected String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String name, String value, String checkBoxRowIds,
-		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+		String checkBoxAllRowIds, String checkBoxPostOnClick,
+		String rowElementId) {
 
 		if (!checked && _ids.contains(value)) {
 			disabled = true;
@@ -51,7 +52,7 @@ public class GroupChecker extends EmptyOnClickRowChecker {
 
 		return super.getRowCheckBox(
 			httpServletRequest, checked, disabled, name, value, checkBoxRowIds,
-			checkBoxAllRowIds, checkBoxPostOnClick);
+			checkBoxAllRowIds, checkBoxPostOnClick, rowElementId);
 	}
 
 	private final String _channelId;

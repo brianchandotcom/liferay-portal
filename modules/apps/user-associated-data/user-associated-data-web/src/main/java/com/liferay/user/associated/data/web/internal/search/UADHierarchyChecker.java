@@ -34,7 +34,8 @@ public class UADHierarchyChecker extends EmptyOnClickRowChecker {
 	protected String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String name, String value, String checkBoxRowIds,
-		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+		String checkBoxAllRowIds, String checkBoxPostOnClick,
+		String rowElementId) {
 
 		for (UADDisplay<?> uadDisplay : _uadDisplays) {
 			try {
@@ -46,7 +47,8 @@ public class UADHierarchyChecker extends EmptyOnClickRowChecker {
 
 				return super.getRowCheckBox(
 					httpServletRequest, checked, disabled, name, value,
-					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
+					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick,
+					rowElementId);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

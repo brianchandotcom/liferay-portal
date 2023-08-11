@@ -58,7 +58,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
-		boolean disabled, String primaryKey) {
+		boolean disabled, String primaryKey, String rowElementId) {
 
 		long entryId = GetterUtil.getLong(primaryKey);
 
@@ -87,7 +87,8 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		return getRowCheckBox(
 			httpServletRequest, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, StringPool.BLANK);
+			primaryKey, checkBoxRowIds, checkBoxAllRowIds, StringPool.BLANK,
+			rowElementId);
 	}
 
 	private String _getEntryRowIds() {

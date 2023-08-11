@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -93,20 +94,29 @@ public class RowChecker {
 
 	public String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
-		boolean disabled, String primaryKey) {
+		boolean disabled, String primaryKey, String rowElementId) {
 
 		return getRowCheckBox(
 			httpServletRequest, checked, disabled, _rowIds, primaryKey,
 			StringUtil.quote(_rowIds), StringUtil.quote(_allRowIds),
-			StringPool.BLANK);
+			StringPool.BLANK, rowElementId);
 	}
 
 	public String getRowCheckBox(
 		HttpServletRequest httpServletRequest, ResultRow resultRow) {
 
+		Map<String, Object> data = resultRow.getData();
+
+		String rowElementId = null;
+
+		if (data != null) {
+			rowElementId = GetterUtil.getString(data.get("rowElementId"));
+		}
+
 		return getRowCheckBox(
 			httpServletRequest, isChecked(resultRow.getObject()),
-			isDisabled(resultRow.getObject()), resultRow.getPrimaryKey());
+			isDisabled(resultRow.getObject()), resultRow.getPrimaryKey(),
+			rowElementId);
 	}
 
 	public String getRowId() {
@@ -259,22 +269,31 @@ public class RowChecker {
 	protected String getRowCheckBox(
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String name, String value, String checkBoxRowIds,
-		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+		String checkBoxAllRowIds, String checkBoxPostOnClick,
+		String rowElementId) {
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(18);
 
 		sb.append("<label><input ");
+
+		if (rowElementId != null) {
+			sb.append("aria-labelledby=\"");
+			sb.append(rowElementId);
+			sb.append("\" ");
+		}
 
 		if (checked) {
 			sb.append("checked ");
 		}
 
+		sb.append("class=\"");
+		sb.append(_cssClass);
+		sb.append("\" ");
+
 		if (disabled) {
 			sb.append("disabled ");
 		}
 
-		sb.append("class=\"");
-		sb.append(_cssClass);
 		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");

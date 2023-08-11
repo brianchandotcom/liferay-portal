@@ -2453,6 +2453,10 @@ definition {
 
 		Button.clickPublish();
 
+		WaitForElementPresent(
+			errorMessage = "The Start node must have an outgoing transition",
+			locator1 = "Message#ERROR");
+
 		Alert.viewErrorMessage(errorMessage = "The Start node must have an outgoing transition");
 
 		Navigator.gotoBack();

@@ -43,7 +43,7 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 
 	return (
 		<ListView
-			forceRefetch={formModal.forceRefetch}
+			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				addButton: () => navigate('create'),
 				buttons: (actions) =>

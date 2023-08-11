@@ -14,8 +14,7 @@ import {
 const getCaseParameters = (testraySuite: TestraySuite): CaseParameter => {
 	try {
 		return JSON.parse(testraySuite.caseParameters);
-	}
-	catch (error) {
+	} catch (error) {
 		return CaseParameterInitialState;
 	}
 };
@@ -32,19 +31,19 @@ const useSuiteCaseFilter = (testraySuite: TestraySuite) => {
 
 	const searchBuilder = new SearchBuilder();
 
-	if (caseParameters?.testrayCaseTypes) {
+	if (caseParameters?.testrayCaseTypes?.length) {
 		searchBuilder
 			.in('caseTypeId', getCaseValues(caseParameters.testrayCaseTypes))
 			.or();
 	}
 
-	if (caseParameters?.testrayComponents) {
+	if (caseParameters?.testrayComponents?.length) {
 		searchBuilder
 			.in('componentId', getCaseValues(caseParameters.testrayComponents))
 			.or();
 	}
 
-	if (caseParameters?.testrayRequirements) {
+	if (caseParameters?.testrayRequirements?.length) {
 		searchBuilder.in(
 			'requerimentsId',
 			getCaseValues(caseParameters.testrayRequirements)

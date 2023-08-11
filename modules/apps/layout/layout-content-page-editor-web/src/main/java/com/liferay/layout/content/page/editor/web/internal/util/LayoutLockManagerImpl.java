@@ -11,13 +11,13 @@ import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutModelImpl;
@@ -28,6 +28,7 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -48,12 +49,12 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			return;
 		}
 
-		Lock lock = LockManagerUtil.fetchLock(
+		Lock lock = _lockManager.fetchLock(
 			Layout.class.getName(), layout.getPlid());
 
 		if (lock == null) {
 			try {
-				LockManagerUtil.lock(
+				_lockManager.lock(
 					themeDisplay.getUserId(), Layout.class.getName(),
 					layout.getPlid(), String.valueOf(themeDisplay.getUserId()),
 					false, LayoutModelImpl.LOCK_EXPIRATION_TIME);
@@ -70,7 +71,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	@Override
 	public String getLockedLayoutURL(ActionRequest actionRequest) {
 		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
+			_portal.getControlPanelPortletURL(
 				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
@@ -84,7 +85,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				}
 
 				HttpServletRequest httpServletRequest =
-					PortalUtil.getHttpServletRequest(actionRequest);
+					_portal.getHttpServletRequest(actionRequest);
 
 				backURL = ParamUtil.getString(
 					httpServletRequest, "p_l_back_url");
@@ -126,9 +127,15 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			return;
 		}
 
-		LockManagerUtil.unlock(
+		_lockManager.unlock(
 			Layout.class.getName(), String.valueOf(layout.getPlid()),
 			String.valueOf(userId));
 	}
+
+	@Reference
+	private LockManager _lockManager;
+
+	@Reference
+	private Portal _portal;
 
 }

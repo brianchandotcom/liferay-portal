@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.BaseWorkflowPortletTab;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
@@ -129,7 +129,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 		renderRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION,
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+			_workflowDefinitionManager.getWorkflowDefinition(
 				themeDisplay.getCompanyId(), name, version));
 	}
 
@@ -142,5 +142,8 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

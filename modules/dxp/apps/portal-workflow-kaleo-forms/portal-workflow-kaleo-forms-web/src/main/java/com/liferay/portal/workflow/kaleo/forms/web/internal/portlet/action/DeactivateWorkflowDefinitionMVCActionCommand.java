@@ -12,13 +12,14 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -57,7 +58,7 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 		int version = ParamUtil.getInteger(actionRequest, "version");
 
 		try {
-			WorkflowDefinitionManagerUtil.updateActive(
+			_workflowDefinitionManager.updateActive(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 				version, false);
 		}
@@ -80,5 +81,8 @@ public class DeactivateWorkflowDefinitionMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeactivateWorkflowDefinitionMVCActionCommand.class);
+
+	@Reference
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

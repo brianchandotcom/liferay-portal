@@ -14,6 +14,7 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 import {DefinitionNode} from '../DefinitionNode/DefinitionNode';
+import {EmptyNode} from '../DefinitionNode/EmptyNode';
 
 import './Diagram.scss';
 
@@ -24,6 +25,7 @@ import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
 const NODE_TYPES = {
+	emptyNode: EmptyNode,
 	objectDefinition: DefinitionNode,
 };
 
@@ -31,8 +33,26 @@ const EDGE_TYPES = {
 	default: DefaultEdge,
 };
 
-function DiagramBuilder() {
+function DiagramBuilder({
+	setShowModal,
+}: {
+	setShowModal: (value: boolean) => void;
+}) {
 	const [{elements}, dispatch] = useFolderContext();
+
+	const emptyNode = [
+		{
+			data: {
+				setShowModal,
+			},
+			id: 'empty',
+			position: {
+				x: 400,
+				y: 400,
+			},
+			type: 'emptyNode',
+		},
+	];
 
 	const onConnect = useCallback(
 		(connection: Connection | Edge) => {
@@ -51,7 +71,7 @@ function DiagramBuilder() {
 			<ReactFlow
 				connectionMode={ConnectionMode.Loose}
 				edgeTypes={EDGE_TYPES}
-				elements={elements}
+				elements={elements.length ? elements : emptyNode}
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
 				onConnect={onConnect}

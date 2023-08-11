@@ -26,4 +26,6 @@ export declare function objectFolderReducer(
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
+	storages: LabelValueObject[];
+	viewApiURL: string;
 };

@@ -385,6 +385,8 @@ export async function save(
 		};
 		throw ErrorDetails();
 	}
+
+	return response.json();
 }
 
 export async function addPickListItem({

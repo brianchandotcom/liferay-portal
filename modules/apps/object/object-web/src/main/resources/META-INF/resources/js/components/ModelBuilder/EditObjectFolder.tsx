@@ -4,10 +4,11 @@
  */
 
 import {API} from '@liferay/object-js-components-web';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
+import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
@@ -25,11 +26,27 @@ export default function EditObjectFolder({
 	deletionTypes,
 	siteKeyValuePair,
 }: EditObjectFolder) {
-	const [{rightSidebarType}, dispatch] = useFolderContext();
+	const [
+		{rightSidebarType, selectedFolderERC, storages, viewApiURL},
+		dispatch,
+	] = useFolderContext();
+	const [newObjectDefinition, setNewObjectDefinition] = useState<
+		ObjectDefinition
+	>();
+	const [showModal, setShowModal] = useState(false);
+
+	const [selectedFolderName, setSelectedFolderName] = useState('');
 
 	useEffect(() => {
 		const makeFetch = async () => {
 			const folderResponse = await API.getAllFolders();
+
+			setSelectedFolderName(
+				folderResponse.find(
+					(folder) =>
+						folder.externalReferenceCode === selectedFolderERC
+				)!.name
+			);
 
 			const objectFoldersWithDefinitions: ObjectFolder[] = await Promise.all(
 				folderResponse.map(async (folder) => {
@@ -57,15 +74,27 @@ export default function EditObjectFolder({
 
 	return (
 		<>
-			<Header
-				folderExternalReferenceCode="uncategorized"
-				folderName="Uncategorized"
-				hasDraftObjectDefinitions={false}
-			/>
+			{showModal && (
+				<ModalAddObjectDefinition
+					apiURL={viewApiURL}
+					handleOnClose={() => {
+						setShowModal(false);
+					}}
+					objectFolderExternalReferenceCode={selectedFolderERC}
+					reload={false}
+					setNewNode={setNewObjectDefinition}
+					storages={storages}
+				/>
+			)}
+			<Header hasDraftObjectDefinitions={false} folderExternalReferenceCode={selectedFolderERC}
+				folderName={selectedFolderName}/>
 			<div className="lfr-objects__model-builder-diagram-container">
-				<LeftSidebar />
+				<LeftSidebar
+					selectedFolderName={selectedFolderName}
+					setShowModal={setShowModal}
+				/>
 
-				<Diagram />
+				<Diagram setShowModal={setShowModal} />
 
 				<RightSideBar.Root>
 					{rightSidebarType === 'empty' && <RightSideBar.Empty />}

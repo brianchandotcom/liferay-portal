@@ -53,7 +53,8 @@ const MDFRequestList = () => {
 	);
 
 	const mdfRequestItems = data?.items;
-	const mdfRequestListItems = useGetListItemsFromMDFRequests(mdfRequestItems);
+	const mdfRequestListItems =
+		useGetListItemsFromMDFRequests(mdfRequestItems) || [];
 
 	const companiesEntries:
 		| React.OptionHTMLAttributes<HTMLOptionElement>[]
@@ -249,7 +250,7 @@ const MDFRequestList = () => {
 						actions?.includes(PermissionActionType.EXPORT) && (
 							<CSVLink
 								className="btn btn-secondary mr-2"
-								data={mdfRequestItems}
+								data={mdfRequestListItems}
 								filename="MDF Requests.csv"
 							>
 								Export MDF Report

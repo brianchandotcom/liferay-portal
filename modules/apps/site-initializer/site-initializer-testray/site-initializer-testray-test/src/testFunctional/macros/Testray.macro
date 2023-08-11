@@ -255,6 +255,10 @@ definition {
 		Testray.confirmBreadcrumb();
 	}
 
+	macro openTestrayViaURL {
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+	}
+
 	macro pageNumberNavigation {
 		Click(
 			key_pageNumber = ${pageNumber},
@@ -439,12 +443,6 @@ definition {
 		}
 
 		Button.click(button = "Select Users");
-	}
-
-	macro signOutTestray {
-		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
-
-		Click(locator1 = "TestrayUser#SIGN_OUT");
 	}
 
 	macro tearDownCP {

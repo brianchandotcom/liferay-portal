@@ -21,36 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_ICON_SIDEBAR</td>
-	<td>//div[contains(@class, 'dropdown')]//span[contains(., 'Test')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGE_ACCOUNT</td>
-	<td>//span[contains(text(),'Manage Account')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIGN_OUT</td>
-	<td>//span[contains(text(),'Sign Out')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIGN_IN</td>
-	<td>//input[contains(@id, 'LoginPortlet_login') and contains(@type, 'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_EMAIL</td>
-	<td>//div[contains(@class, 'login-container')]//input[contains(@id, 'liferay_login_web') and contains(@type, 'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_PASSWORD</td>
-	<td>//div[contains(@class, 'login-container')]//input[contains(@id, 'liferay_login_web') and contains(@type, 'password')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_SUCCESS</td>
 	<td>//label[contains(@class, 'text-success') and contains(., '${key_fieldName}')]</td>
 	<td></td>
@@ -58,11 +28,6 @@
 <tr>
 	<td>TITLE_FAILED</td>
 	<td>//label[contains(@class, 'text-danger') and contains(., '${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIGN_IN_BUTTON</td>
-	<td>//div[contains(@class, 'button-holder')]//button[contains(@id, '_com_liferay_login_web_')]</td>
 	<td></td>
 </tr>
 </tbody>

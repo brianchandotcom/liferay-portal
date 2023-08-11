@@ -316,9 +316,6 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutListRetriever, listObjectReference,
 				segmentsExperience.getSegmentsEntryId()));
 
-		int listCount = layoutListRetriever.getListCount(
-			listObjectReference, defaultLayoutListRetrieverContext);
-
 		defaultLayoutListRetrieverContext.setPagination(
 			CollectionPaginationUtil.getPagination(
 				activePage, displayAllItems, numberOfItems,
@@ -360,6 +357,9 @@ public class GetCollectionFieldMVCResourceCommand
 
 			jsonObject.put("content", unsyncStringWriter.toString());
 		}
+
+		int listCount = layoutListRetriever.getListCount(
+			listObjectReference, defaultLayoutListRetrieverContext);
 
 		jsonObject.put(
 			"customCollectionSelectorURL",

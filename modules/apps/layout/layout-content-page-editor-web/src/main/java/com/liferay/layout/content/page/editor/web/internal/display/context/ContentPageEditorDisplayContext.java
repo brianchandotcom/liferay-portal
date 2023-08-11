@@ -42,7 +42,6 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
-import com.liferay.layout.content.page.editor.web.internal.util.LayoutLockManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingTypesUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
@@ -57,6 +56,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.layout.responsive.ViewportSize;
+import com.liferay.layout.util.LayoutLockManager;
 import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -169,6 +169,7 @@ public class ContentPageEditorDisplayContext {
 		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector, JSONFactory jsonFactory, Language language,
 		LayoutLocalService layoutLocalService,
+		LayoutLockManager layoutLockManager,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplateEntryService layoutPageTemplateEntryService,
 		LayoutPermission layoutPermission,
@@ -196,6 +197,7 @@ public class ContentPageEditorDisplayContext {
 		_jsonFactory = jsonFactory;
 		this.language = language;
 		_layoutLocalService = layoutLocalService;
+		this.layoutLockManager = layoutLockManager;
 		this.layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
 		_layoutPageTemplateEntryService = layoutPageTemplateEntryService;
@@ -999,6 +1001,7 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoItemServiceRegistry infoItemServiceRegistry;
 	protected final InfoSearchClassMapperRegistry infoSearchClassMapperRegistry;
 	protected final Language language;
+	protected final LayoutLockManager layoutLockManager;
 	protected final LayoutPageTemplateEntryLocalService
 		layoutPageTemplateEntryLocalService;
 	protected final Portal portal;
@@ -1496,7 +1499,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private Object _getLookAndFeelURL() throws Exception {
-		return LayoutLockManager.getUnlockDraftLayoutURL(
+		return layoutLockManager.getUnlockDraftLayoutURL(
 			portal.getLiferayPortletResponse(renderResponse),
 			() -> {
 				ThemeDisplay themeDisplay =

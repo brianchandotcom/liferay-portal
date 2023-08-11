@@ -7,7 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
-import com.liferay.layout.content.page.editor.web.internal.util.LayoutLockManager;
+import com.liferay.layout.util.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,6 +29,8 @@ import java.util.concurrent.Callable;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -44,7 +46,7 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 		try {
 			if (isLayoutLockRequired()) {
-				LayoutLockManager.getLock(actionRequest);
+				layoutLockManager.getLock(actionRequest);
 			}
 
 			Callable<JSONObject> callable = () -> doTransactionalCommand(
@@ -118,8 +120,11 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 		return JSONUtil.put(
 			"redirectURL",
-			() -> LayoutLockManager.getLockedLayoutURL(actionRequest));
+			() -> layoutLockManager.getLockedLayoutURL(actionRequest));
 	}
+
+	@Reference
+	protected LayoutLockManager layoutLockManager;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseContentPageEditorTransactionalMVCActionCommand.class);

@@ -514,6 +514,92 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12137 Verify that is possible only to use the Dynamic Price Type"
+	@priority = 4
+	test CanUseOnlyDynamicPriceType {
+		property portal.acceptance = "false";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("Then the admin is able only to use the Dynamic Price Type") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Select(
+				key_fieldLabel = "Price Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Static");
+
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Price type can only be dynamic for externally defined product options");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementNotPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Price type can only be dynamic for externally defined product options");
+
+			AssertElementPresent(
+				key_title = "Price Type",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "");
+
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Price type can only be dynamic for externally defined product options");
+
+			AssertElementPresent(
+				key_title = "Price Type",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "");
+		}
+	}
+
 	@description = "COMMERCE-12093. As an admin, I can create a bundled product with options using Define Externally configuration"
 	@priority = 5
 	test CanViewExternallyDefinedProductsListedAccordingToSelectedCategory {

@@ -7,7 +7,7 @@
 
 interface DeleteAPISchemaModal {
 	closeModal: voidReturn;
-	itemData: APISchemaItem;
+	itemData: BaseItem;
 	loadData: voidReturn;
 }
 export declare function DeleteAPISchemaModalContent({

@@ -10,7 +10,7 @@ import React from 'react';
 
 interface DeleteAPISchemaModal {
 	closeModal: voidReturn;
-	itemData: APISchemaItem;
+	itemData: BaseItem;
 	loadData: voidReturn;
 }
 

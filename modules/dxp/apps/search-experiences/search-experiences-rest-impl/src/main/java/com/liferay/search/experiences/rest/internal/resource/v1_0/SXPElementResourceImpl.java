@@ -213,9 +213,15 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 							sxpElementId)
 					).put(
 						"update",
-						() -> addAction(
-							ActionKeys.UPDATE, "putSXPElement", permissionName,
-							sxpElementId)
+						() -> {
+							if (sxpElement.getReadOnly()) {
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.UPDATE, "putSXPElement",
+								permissionName, sxpElementId);
+						}
 					).build());
 
 				return sxpElement;

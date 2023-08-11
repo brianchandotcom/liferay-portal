@@ -1,5 +1,26 @@
 # Poshi Runner Change Log
 
+## 1.0.457
+
+### Core
+
+* [POSHI-593](https://liferay.atlassian.net/browse/POSHI-593) - java.lang.Exception in com.liferay.poshi.runner.resources.PoshiResources70xTest
+* [POSHI-609](https://liferay.atlassian.net/browse/POSHI-609) - PoshiProperties variables must also be reset when using PropsUtil.setProperties
+* [POSHI-616](https://liferay.atlassian.net/browse/POSHI-616) - Legacy Database Dumps are reading in two different dirs causing Poshi failures
+
+### Other
+
+* [LPS-181508](https://liferay.atlassian.net/browse/LPS-181508) - In order to use supported JDK versions, we need to upgrade to Gradle 7 to use newer JDK
+
+### Runner
+
+* [POSHI-612](https://liferay.atlassian.net/browse/POSHI-612) - Add a configurable timeout for individual tests in ParallelPoshiRunner
+
+### Utils
+
+* [POSHI-608](https://liferay.atlassian.net/browse/POSHI-608) - Add a way to synchronously execute calls against portal's virtual instance API's
+* [POSHI-615](https://liferay.atlassian.net/browse/POSHI-615) - Escape regex in new assertTextMatches method
+
 ## 1.0.453
 
 ### Core

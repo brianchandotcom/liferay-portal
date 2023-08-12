@@ -152,12 +152,12 @@ public class ProjectTemplatesPortletProviderTest
 				newTemplate = "true";
 			}
 		}
-		
+
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=ProviderTest",
 			"-DliferayProduct=" + _liferayProduct,
-			"-DnewTemplate=" + newTemplate, 
+			"-DnewTemplate=" + newTemplate,
 			"-DliferayVersion=" + _liferayVersion, "-Dpackage=provider.test");
 
 		if (!_liferayVersion.startsWith("7.0")) {

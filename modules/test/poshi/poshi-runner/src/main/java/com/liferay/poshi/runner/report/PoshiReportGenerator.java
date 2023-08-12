@@ -32,40 +32,6 @@ import org.json.JSONArray;
  */
 public class PoshiReportGenerator {
 
-	public static Map<String, Set<String>> executeFilePaths = new HashMap<>();
-	public static Map<String, Set<String>> macroFilePaths = new HashMap<>();
-
-	public static void getFilePaths(
-		Map<String, Set<Element>> elementsMap,
-		Map<String, Set<String>> filePathsMap) {
-
-		List<String> keyList = new ArrayList<>(elementsMap.keySet());
-
-		for (String key : keyList) {
-			Set<Element> elementSet = elementsMap.get(key);
-
-			List<Element> elementList = new ArrayList<>(elementSet);
-
-			Set<String> filePathList = new HashSet<>();
-
-			for (Element element : elementList) {
-				PoshiElement poshiElement = (PoshiElement)element;
-
-				StringBuilder sb = new StringBuilder();
-				URL fileURL = poshiElement.getFilePathURL();
-
-				sb.append(fileURL.toString());
-
-				sb.append(":");
-				sb.append(poshiElement.getPoshiScriptLineNumber());
-
-				filePathList.add(sb.toString());
-			}
-
-			filePathsMap.put(key, filePathList);
-		}
-	}
-
 	public static void main(String[] args) throws Exception {
 		_poshiProperties = PoshiProperties.getPoshiProperties();
 

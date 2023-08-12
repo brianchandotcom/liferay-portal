@@ -21,9 +21,10 @@
 				<%@ include file="/sections/dispatch_trigger_setup.jspf" %>
 			</c:when>
 			<c:otherwise>
-				<aui:alert type="warning">
-					<liferay-ui:message key="configure-credentials-before-continuing" />
-				</aui:alert>
+				<clay:alert
+					displayType="warning"
+					message="configure-credentials-before-continuing"
+				/>
 			</c:otherwise>
 		</c:choose>
 	</commerce-ui:panel>

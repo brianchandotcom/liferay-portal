@@ -29,9 +29,9 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 				<clay:col
 					size="12"
 				>
-					<aui:alert type="info">
-						<liferay-ui:message key="there-are-no-available-shipping-methods" />
-					</aui:alert>
+					<clay:alert
+						message="there-are-no-available-shipping-methods"
+					/>
 				</clay:col>
 			</clay:row>
 

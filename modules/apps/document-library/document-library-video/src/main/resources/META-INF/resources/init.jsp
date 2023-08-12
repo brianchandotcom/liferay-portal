@@ -25,6 +25,7 @@ page import="com.liferay.document.library.video.internal.converter.DLVideoFFMPEG
 page import="com.liferay.document.library.video.internal.util.DLVideoFFMPEGUtil" %><%@
 page import="com.liferay.document.library.video.renderer.DLVideoRenderer" %><%@
 page import="com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileVersion" %><%@
 page import="com.liferay.portal.kernel.util.ContentTypes" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

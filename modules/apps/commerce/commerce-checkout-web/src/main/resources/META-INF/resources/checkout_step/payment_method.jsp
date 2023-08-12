@@ -26,9 +26,9 @@ String commercePaymentMethodKey = BeanParamUtil.getString(commerceOrder, request
 				<clay:col
 					size="12"
 				>
-					<aui:alert type="info">
-						<liferay-ui:message key="there-are-no-available-payment-methods" />
-					</aui:alert>
+					<clay:alert
+						message="there-are-no-available-payment-methods"
+					/>
 				</clay:col>
 			</clay:row>
 

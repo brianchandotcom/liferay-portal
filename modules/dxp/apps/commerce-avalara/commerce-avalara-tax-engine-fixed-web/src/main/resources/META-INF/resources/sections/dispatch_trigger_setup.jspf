@@ -16,30 +16,34 @@ DispatchLog latestDispatchLog = (DispatchLog)GetterUtil.getObject(request.getAtt
 >
 	<c:choose>
 		<c:when test="<%= !jobPreviouslyRun || (latestDispatchLog == null) %>">
-			<aui:alert type="warning">
-				<liferay-ui:message key="sync-avalara-tax-rates-to-finish-connector-setup" />
-			</aui:alert>
+			<clay:alert
+				displayType="warning"
+				message="sync-avalara-tax-rates-to-finish-connector-setup"
+			/>
+
 			<%@ include file="/buttons/sync_tax_rates.jspf" %>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.IN_PROGRESS.getStatus() %>">
-				<aui:alert type="info">
-					<liferay-ui:message key="tax-rates-are-syncing" />
-				</aui:alert>
+				<clay:alert
+					message="tax-rates-are-syncing"
+				/>
 			</c:if>
 
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.FAILED.getStatus() %>">
-				<aui:alert type="danger">
-					<liferay-ui:message key="tax-rate-sync-failed" />
-				</aui:alert>
+				<clay:alert
+					displayType="danger"
+					message="tax-rate-sync-failed"
+				/>
 
 				<%@ include file="/buttons/sync_tax_rates.jspf" %>
 			</c:if>
 
 			<c:if test="<%= latestDispatchLog.getStatus() == DispatchTaskStatus.SUCCESSFUL.getStatus() %>">
-				<aui:alert type="success">
-					<liferay-ui:message key="tax-rate-sync-completed-successfully" />
-				</aui:alert>
+				<clay:alert
+					displayType="success"
+					message="tax-rate-sync-completed-successfully"
+				/>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

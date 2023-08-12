@@ -22,9 +22,9 @@ long paymentCommerceTermEntryId = BeanParamUtil.getLong(termCommerceCheckoutStep
 				<clay:col
 					size="12"
 				>
-					<aui:alert type="info">
-						<liferay-ui:message key="there-are-no-available-payment-terms" />
-					</aui:alert>
+					<clay:alert
+						message="there-are-no-available-payment-terms"
+					/>
 				</clay:col>
 			</clay:row>
 

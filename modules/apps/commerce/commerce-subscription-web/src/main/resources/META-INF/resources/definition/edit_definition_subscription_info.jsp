@@ -61,9 +61,11 @@ if (deliveryMaxSubscriptionCycles > 0) {
 }
 %>
 
-<aui:alert closeable="<%= false %>" cssClass="mt-3" type="warning">
-	<liferay-ui:message key="all-channels-associated-with-this-product-must-have-at-least-one-payment-method-active-that-supports-recurring-payments" />
-</aui:alert>
+<clay:alert
+	cssClass="mt-3"
+	displayType="warning"
+	message="all-channels-associated-with-this-product-must-have-at-least-one-payment-method-active-that-supports-recurring-payments"
+/>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionSubscriptionInfoActionURL" />
 

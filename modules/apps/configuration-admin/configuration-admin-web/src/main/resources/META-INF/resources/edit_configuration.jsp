@@ -198,9 +198,9 @@ renderResponse.setTitle(categoryDisplayName);
 					</h2>
 
 					<c:if test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) && configurationModel.isReadOnly() %>">
-						<aui:alert closeable="<%= false %>" id="readonlyAlert" type="info">
-							<liferay-ui:message key="this-configuration-is-read-only" />
-						</aui:alert>
+						<clay:alert
+							message="this-configuration-is-read-only"
+						/>
 					</c:if>
 
 					<c:if test="<%= !configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">

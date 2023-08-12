@@ -12,7 +12,8 @@ DLVideoFFMPEGVideoConverter dlVideoFFMPEGVideoConverter = (DLVideoFFMPEGVideoCon
 %>
 
 <c:if test="<%= dlVideoFFMPEGVideoConverter.isEnabled() && !DLVideoFFMPEGUtil.isFFMPEGInstalled() %>">
-	<aui:alert closeable="<%= false %>" type="danger">
-		<liferay-ui:message arguments="https://ffmpeg.org/download.html" key="the-ffmpeg-executable-is-not-installed-on-your-system.-please-contact-your-administrator-to-install-it-following-the-instructions-in-x" />
-	</aui:alert>
+	<clay:alert
+		displayType="danger"
+		message='<%= LanguageUtil.format(request, "the-ffmpeg-executable-is-not-installed-on-your-system.-please-contact-your-administrator-to-install-it-following-the-instructions-in-x", "https://ffmpeg.org/download.html") %>'
+	/>
 </c:if>

@@ -74,22 +74,22 @@ public class PoshiReportGenerator {
 		}
 	}
 
-	private static void _findExecuteElements() {
+	private static void _findMacroExecuteElementUsages() {
 		Map<String, Element> rootElementMap = PoshiContext.getRootElements();
 
-		List<String> rootElementList = new ArrayList<>(rootElementMap.keySet());
+		List<String> rootElementKeys = new ArrayList<>(rootElementMap.keySet());
 
-		for (String rootElementName : rootElementList) {
-			Element rootElement = rootElementMap.get(rootElementName);
+		for (String rootElementKey : rootElementKeys) {
+			Element rootElement = rootElementMap.get(rootElementKey);
 
-			_storeExecuteElements(rootElement);
+			_storeMacroExecuteElements(rootElement);
 		}
 	}
 
 	private static void _generateMacroUsageReport() throws Exception {
 		PoshiContext.readFiles();
 
-		_findExecuteElements();
+		_findMacroExecuteElementUsages();
 
 		_setJavaScriptDataFilePath();
 
@@ -112,7 +112,7 @@ public class PoshiReportGenerator {
 		_javaScriptDataFilePath = sb.toString();
 	}
 
-	private static void _storeExecuteElements(Element element) {
+	private static void _storeMacroExecuteElements(Element element) {
 		String macroName = element.attributeValue("macro");
 
 		if ((element instanceof ExecutePoshiElement) &&
@@ -120,22 +120,22 @@ public class PoshiReportGenerator {
 
 			Set<Element> elements = new HashSet<>();
 
-			if (_executeMacroElements.containsKey(macroName)) {
-				elements = _executeMacroElements.get(macroName);
+			if (_executeMacroElementMap.containsKey(macroName)) {
+				elements = _executeMacroElementMap.get(macroName);
 
 				elements.add(element);
 			}
 			else {
 				elements.add(element);
 
-				_executeMacroElements.put(macroName, elements);
+				_executeMacroElementMap.put(macroName, elements);
 			}
 		}
 
 		List<Element> childElementList = element.elements();
 
 		for (Element childElement : childElementList) {
-			_storeExecuteElements(childElement);
+			_storeMacroExecuteElements(childElement);
 		}
 	}
 
@@ -188,25 +188,25 @@ public class PoshiReportGenerator {
 	}
 
 	private static void _writeDataJavaScriptFile() throws Exception {
-		JSONArray executeDataJSONArray = new JSONArray();
+		JSONArray executeUsageJSONArray = new JSONArray();
 
-		executeDataJSONArray.put(
+		executeUsageJSONArray.put(
 			new String[] {"Name", "File Path", "Usage Count"});
 
-		List<String> keyList = new ArrayList<>(_executeMacroElements.keySet());
+		List<String> executeMacroElementKeys = new ArrayList<>(
+			_executeMacroElementMap.keySet());
 
-		Map<String, Element> commandElementMap =
+		Map<String, Element> commandElements =
 			PoshiContext.getCommandElements();
 
-		List<String> commandKeyList = new ArrayList<>(
-			commandElementMap.keySet());
+		List<String> commandKeys = new ArrayList<>(commandElements.keySet());
 
-		for (String key : keyList) {
+		for (String executeMacroElementKey : executeMacroElementKeys) {
 			JSONArray jsonArray = new JSONArray();
 
-			jsonArray.put(key);
+			jsonArray.put(executeMacroElementKey);
 
-			for (String commandKey : commandKeyList) {
+			for (String commandKey : commandKeys) {
 				if (!commandKey.startsWith("macro")) {
 					continue;
 				}
@@ -214,11 +214,12 @@ public class PoshiReportGenerator {
 				String macroName = commandKey.substring(
 					commandKey.indexOf(".") + 1);
 
-				if (macroName.equals(key)) {
+				if (macroName.equals(executeMacroElementKey)) {
 					PoshiElement poshiElement =
-						(PoshiElement)commandElementMap.get(commandKey);
+						(PoshiElement)commandElements.get(commandKey);
 
 					StringBuilder sb = new StringBuilder();
+
 					URL fileURL = poshiElement.getFilePathURL();
 
 					sb.append(fileURL.toString());
@@ -230,19 +231,20 @@ public class PoshiReportGenerator {
 				}
 			}
 
-			Set<Element> elementSet = _executeMacroElements.get(key);
+			Set<Element> executeMacroElements = _executeMacroElementMap.get(
+				executeMacroElementKey);
 
-			Integer filePathsSize = elementSet.size();
+			Integer filePathsSize = executeMacroElements.size();
 
 			jsonArray.put(filePathsSize.toString());
 
-			executeDataJSONArray.put(jsonArray);
+			executeUsageJSONArray.put(jsonArray);
 		}
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var executeUsageData = ");
-		sb.append(executeDataJSONArray);
+		sb.append(executeUsageJSONArray);
 		sb.append(";\nvar executeUsageDataGeneratedDate = new Date(");
 		sb.append(DateUtil.getTimeInMilliseconds());
 		sb.append(")");
@@ -250,7 +252,7 @@ public class PoshiReportGenerator {
 		FileUtil.write(_javaScriptDataFilePath, sb.toString());
 	}
 
-	private static final Map<String, Set<Element>> _executeMacroElements =
+	private static final Map<String, Set<Element>> _executeMacroElementMap =
 		Collections.synchronizedMap(new HashMap<>());
 	private static String _javaScriptDataFilePath;
 	private static PoshiProperties _poshiProperties;

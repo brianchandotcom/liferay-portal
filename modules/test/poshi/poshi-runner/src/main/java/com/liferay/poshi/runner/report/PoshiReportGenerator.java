@@ -33,8 +33,6 @@ import org.json.JSONArray;
 public class PoshiReportGenerator {
 
 	public static void main(String[] args) throws Exception {
-		_poshiProperties = PoshiProperties.getPoshiProperties();
-
 		if (_poshiProperties.generateUsageReport) {
 			_generateMacroUsageReport();
 		}
@@ -57,25 +55,9 @@ public class PoshiReportGenerator {
 
 		_findMacroExecuteElementUsages();
 
-		_setJavaScriptDataFilePath();
-
 		_writeBaseUsageReportFiles();
 
 		_writeDataJavaScriptFile();
-	}
-
-	private static void _setJavaScriptDataFilePath() {
-		StringBuilder sb = new StringBuilder();
-
-		if (_poshiProperties.testRunLocally) {
-			sb.append(FileUtil.getCanonicalPath("./usage-report/js/data.js"));
-		}
-		else {
-			sb.append(_poshiProperties.testBaseDirName);
-			sb.append("/usage-report/js/data.js");
-		}
-
-		_javaScriptDataFilePath = sb.toString();
 	}
 
 	private static void _storeMacroExecuteElements(Element element) {
@@ -215,12 +197,28 @@ public class PoshiReportGenerator {
 		sb.append(DateUtil.getTimeInMilliseconds());
 		sb.append(")");
 
-		FileUtil.write(_javaScriptDataFilePath, sb.toString());
+		FileUtil.write(_USAGE_DATA_JAVA_SCRIPT_FILE_PATH, sb.toString());
 	}
+
+	private static final String _USAGE_DATA_JAVA_SCRIPT_FILE_PATH;
 
 	private static final Map<String, Set<Element>> _executeMacroElementMap =
 		Collections.synchronizedMap(new HashMap<>());
-	private static String _javaScriptDataFilePath;
-	private static PoshiProperties _poshiProperties;
+	private static final PoshiProperties _poshiProperties =
+		PoshiProperties.getPoshiProperties();
+
+	static {
+		StringBuilder sb = new StringBuilder();
+
+		if (_poshiProperties.testRunLocally) {
+			sb.append(FileUtil.getCanonicalPath("./usage-report/js/data.js"));
+		}
+		else {
+			sb.append(_poshiProperties.testBaseDirName);
+			sb.append("/usage-report/js/data.js");
+		}
+
+		_USAGE_DATA_JAVA_SCRIPT_FILE_PATH = sb.toString();
+	}
 
 }

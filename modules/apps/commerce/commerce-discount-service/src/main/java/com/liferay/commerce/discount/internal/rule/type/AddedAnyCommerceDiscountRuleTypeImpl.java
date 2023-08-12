@@ -83,6 +83,11 @@ public class AddedAnyCommerceDiscountRuleTypeImpl
 		return _language.get(resourceBundle, "has-one-of-these-products");
 	}
 
+	@Override
+	public boolean validate(String typeSettings) {
+		return true;
+	}
+
 	@Reference
 	private Language _language;
 

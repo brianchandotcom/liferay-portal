@@ -14,8 +14,11 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -85,6 +88,33 @@ public class CartTotalCommerceDiscountRuleTypeImpl
 		return _language.get(
 			resourceBundle, CommerceDiscountRuleConstants.TYPE_CART_TOTAL);
 	}
+
+	@Override
+	public boolean validate(String typeSettings) {
+		if (Validator.isNull(typeSettings)) {
+			return false;
+		}
+
+		try {
+			BigDecimal typeSettingsValue = new BigDecimal(typeSettings);
+
+			if (typeSettingsValue == null) {
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CartTotalCommerceDiscountRuleTypeImpl.class);
 
 	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;

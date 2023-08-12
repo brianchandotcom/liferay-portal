@@ -26,4 +26,6 @@ public interface CommerceDiscountRuleType {
 
 	public String getLabel(Locale locale);
 
+	public boolean validate(String typeSettings);
+
 }

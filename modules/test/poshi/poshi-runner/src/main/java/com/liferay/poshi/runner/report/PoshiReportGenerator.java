@@ -13,8 +13,6 @@ import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.util.DateUtil;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -141,7 +139,7 @@ public class PoshiReportGenerator {
 		}
 	}
 
-	private static void _writeBaseUsageReportFiles() throws IOException {
+	private static void _writeBaseUsageReportFiles() throws Exception {
 		String currentDirName = FileUtil.getCanonicalPath(".");
 
 		ClassLoader classLoader = PoshiReportGenerator.class.getClassLoader();
@@ -189,10 +187,7 @@ public class PoshiReportGenerator {
 		FileUtil.write(sb.toString(), indexHTMLContent);
 	}
 
-	private static void _writeDataJavaScriptFile(
-			Map<String, Set<Element>> elementsMap, String filePath)
-		throws IOException {
-
+	private static void _writeDataJavaScriptFile() throws Exception {
 		JSONArray executeDataJSONArray = new JSONArray();
 
 		executeDataJSONArray.put(

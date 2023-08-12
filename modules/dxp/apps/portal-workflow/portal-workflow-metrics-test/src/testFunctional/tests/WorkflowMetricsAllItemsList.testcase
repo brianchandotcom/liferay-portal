@@ -38,24 +38,6 @@ definition {
 
 	}
 
-	@description = "Verify that any user with administrator role can reassign allowed tasks"
-	@ignore = "Test Stub"
-	@priority = 5
-	test AdministratorUserCanReassignAnyTasks {
-
-		// TODO AdministratorUserCanReassignAnyTasks pending implementation
-
-	}
-
-	@description = "Verify that an administrator user that it's not asset creator can reassign multiple already assigned tasks to different users"
-	@ignore = "Test Stub"
-	@priority = 5
-	test AdministratorUserCanReassignMultipleTasksAssignedToOtherUsers {
-
-		// TODO AdministratorUserCanReassignMultipleTasksAssignedToOtherUsers pending implementation
-
-	}
-
 	@description = "Verify that the Asset Creator user can resubmit the task after a administrator that it's not asset creator reject a task assigned to him"
 	@ignore = "Test Stub"
 	@priority = 5

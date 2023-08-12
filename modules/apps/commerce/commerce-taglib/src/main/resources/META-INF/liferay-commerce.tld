@@ -56,21 +56,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>search-input</name>
-		<tag-class>com.liferay.commerce.taglib.servlet.taglib.SearchInputTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>actionURL</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>formName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<name>tier-price</name>
 		<tag-class>com.liferay.commerce.taglib.servlet.taglib.TierPriceTag</tag-class>
 		<body-content>JSP</body-content>
@@ -112,22 +97,6 @@
 			<name>namespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<name>user-management-bar</name>
-		<tag-class>com.liferay.commerce.taglib.servlet.taglib.UserManagementBarTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>href</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>showNotifications</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
 		</attribute>
 	</tag>
 </taglib>

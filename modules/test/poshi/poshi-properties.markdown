@@ -113,6 +113,10 @@ Sets a boolean that determines whether BrowserMob Proxy is enabled. The proxy ca
 
 Sets the port number assigned to the BrowserMob Proxy server.
 
+### report.type
+
+Sets type of report to generate. The only supported type currently is `usage`
+
 ### save.screenshot
 
 Sets a boolean for whether a screenshot is saved when tests fail.

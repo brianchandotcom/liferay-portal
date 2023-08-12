@@ -33,7 +33,7 @@ import org.json.JSONArray;
 public class PoshiReportGenerator {
 
 	public static void main(String[] args) throws Exception {
-		if (_poshiProperties.generateUsageReport) {
+		if (_poshiProperties.reportType.equals("usage")) {
 			_generateMacroUsageReport();
 		}
 	}

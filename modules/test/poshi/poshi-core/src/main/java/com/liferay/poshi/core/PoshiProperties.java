@@ -50,8 +50,6 @@ public class PoshiProperties extends Properties {
 	public static final String GENERATE_COMMAND_SIGNATURE =
 		"generate.command.signature";
 
-	public static final String GENERATE_USAGE_REPORT = "generate.usage.report";
-
 	public static final String GET_LOCATION_MAX_RETRIES =
 		"get.location.max.retries";
 
@@ -89,6 +87,8 @@ public class PoshiProperties extends Properties {
 	public static final String PROXY_SERVER_ENABLED = "proxy.server.enabled";
 
 	public static final String PROXY_SERVER_PORT = "proxy.server.port";
+
+	public static final String REPORT_TYPE = "report.type";
 
 	public static final String SAVE_SCREENSHOT = "save.screenshot";
 
@@ -299,8 +299,6 @@ public class PoshiProperties extends Properties {
 		getProperty(DEBUG_STACKTRACE));
 	public Boolean generateCommandSignature = GetterUtil.getBoolean(
 		getProperty(GENERATE_COMMAND_SIGNATURE));
-	public Boolean generateUsageReport = GetterUtil.getBoolean(
-		getProperty(GENERATE_USAGE_REPORT));
 	public int getLocationMaxRetries = GetterUtil.getInteger(
 		getProperty(GET_LOCATION_MAX_RETRIES));
 	public int getLocationTimeout = GetterUtil.getInteger(
@@ -324,6 +322,7 @@ public class PoshiProperties extends Properties {
 		getProperty(PROXY_SERVER_ENABLED));
 	public int proxyServerPort = GetterUtil.getInteger(
 		getProperty(PROXY_SERVER_PORT));
+	public Boolean reportType = GetterUtil.getBoolean(getProperty(REPORT_TYPE));
 	public boolean saveScreenshot = GetterUtil.getBoolean(
 		getProperty(SAVE_SCREENSHOT));
 	public boolean saveWebPage = GetterUtil.getBoolean(

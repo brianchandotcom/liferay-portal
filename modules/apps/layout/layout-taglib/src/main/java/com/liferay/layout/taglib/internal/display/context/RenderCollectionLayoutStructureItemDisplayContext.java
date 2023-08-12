@@ -92,15 +92,20 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return _activePage;
 		}
 
-		_activePage = Math.max(
-			1,
-			Math.min(
-				getNumberOfPages(),
-				ParamUtil.getInteger(
-					PortalUtil.getOriginalServletRequest(_httpServletRequest),
-					PAGE_NUMBER_PARAM_PREFIX +
-						_collectionStyledLayoutStructureItem.getItemId(),
-					1)));
+		_activePage = ParamUtil.getInteger(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			PAGE_NUMBER_PARAM_PREFIX +
+				_collectionStyledLayoutStructureItem.getItemId(),
+			1);
+
+		int numberOfPages =
+			_collectionStyledLayoutStructureItem.getNumberOfPages();
+
+		if (!_collectionStyledLayoutStructureItem.isDisplayAllPages() &&
+			(_activePage > numberOfPages)) {
+
+			_activePage = numberOfPages - 1;
+		}
 
 		return _activePage;
 	}

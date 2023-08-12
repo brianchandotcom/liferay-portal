@@ -37,7 +37,111 @@ public class PoshiReportGenerator {
 	public static Map<String, Set<String>> executeFilePaths = new HashMap<>();
 	public static Map<String, Set<String>> macroFilePaths = new HashMap<>();
 
-	public static void createPoshiReport() throws IOException {
+	public static void getFilePaths(
+		Map<String, Set<Element>> elementsMap,
+		Map<String, Set<String>> filePathsMap) {
+
+		List<String> keyList = new ArrayList<>(elementsMap.keySet());
+
+		for (String key : keyList) {
+			Set<Element> elementSet = elementsMap.get(key);
+
+			List<Element> elementList = new ArrayList<>(elementSet);
+
+			Set<String> filePathList = new HashSet<>();
+
+			for (Element element : elementList) {
+				PoshiElement poshiElement = (PoshiElement)element;
+
+				StringBuilder sb = new StringBuilder();
+				URL fileURL = poshiElement.getFilePathURL();
+
+				sb.append(fileURL.toString());
+
+				sb.append(":");
+				sb.append(poshiElement.getPoshiScriptLineNumber());
+
+				filePathList.add(sb.toString());
+			}
+
+			filePathsMap.put(key, filePathList);
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+		_poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (_poshiProperties.generateUsageReport) {
+			_generateMacroUsageReport();
+		}
+	}
+
+	private static void _findExecuteElements() {
+		Map<String, Element> rootElementMap = PoshiContext.getRootElements();
+
+		List<String> rootElementList = new ArrayList<>(rootElementMap.keySet());
+
+		for (String rootElementName : rootElementList) {
+			Element rootElement = rootElementMap.get(rootElementName);
+
+			_storeExecuteElements(rootElement);
+		}
+	}
+
+	private static void _generateMacroUsageReport() throws Exception {
+		PoshiContext.readFiles();
+
+		_findExecuteElements();
+
+		_setJavaScriptDataFilePath();
+
+		_writeBaseUsageReportFiles();
+
+		_writeDataJavaScriptFile(_macroElements, _javaScriptDataFilePath);
+	}
+
+	private static void _setJavaScriptDataFilePath() {
+		StringBuilder sb = new StringBuilder();
+
+		if (_poshiProperties.testRunLocally) {
+			sb.append(FileUtil.getCanonicalPath("./usage-report/js/data.js"));
+		}
+		else {
+			sb.append(_poshiProperties.testBaseDirName);
+			sb.append("/usage-report/js/data.js");
+		}
+
+		_javaScriptDataFilePath = sb.toString();
+	}
+
+	private static void _storeExecuteElements(Element element) {
+		String macroName = element.attributeValue("macro");
+
+		if ((element instanceof ExecutePoshiElement) &&
+			Validator.isNotNull(macroName)) {
+
+			Set<Element> elements = new HashSet<>();
+
+			if (_macroElements.containsKey(macroName)) {
+				elements = _macroElements.get(macroName);
+
+				elements.add(element);
+			}
+			else {
+				elements.add(element);
+
+				_macroElements.put(macroName, elements);
+			}
+		}
+
+		List<Element> childElementList = element.elements();
+
+		for (Element childElement : childElementList) {
+			_storeExecuteElements(childElement);
+		}
+	}
+
+	private static void _writeBaseUsageReportFiles() throws IOException {
 		String currentDirName = FileUtil.getCanonicalPath(".");
 
 		ClassLoader classLoader = PoshiReportGenerator.class.getClassLoader();
@@ -85,46 +189,7 @@ public class PoshiReportGenerator {
 		FileUtil.write(sb.toString(), indexHTMLContent);
 	}
 
-	public static void getFilePaths(
-		Map<String, Set<Element>> elementsMap,
-		Map<String, Set<String>> filePathsMap) {
-
-		List<String> keyList = new ArrayList<>(elementsMap.keySet());
-
-		for (String key : keyList) {
-			Set<Element> elementSet = elementsMap.get(key);
-
-			List<Element> elementList = new ArrayList<>(elementSet);
-
-			Set<String> filePathList = new HashSet<>();
-
-			for (Element element : elementList) {
-				PoshiElement poshiElement = (PoshiElement)element;
-
-				StringBuilder sb = new StringBuilder();
-				URL fileURL = poshiElement.getFilePathURL();
-
-				sb.append(fileURL.toString());
-
-				sb.append(":");
-				sb.append(poshiElement.getPoshiScriptLineNumber());
-
-				filePathList.add(sb.toString());
-			}
-
-			filePathsMap.put(key, filePathList);
-		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		_poshiProperties = PoshiProperties.getPoshiProperties();
-
-		if (_poshiProperties.generateUsageReport) {
-			_writeMacroUsageReport();
-		}
-	}
-
-	public static void writeDataToDataJavaScriptFile(
+	private static void _writeDataJavaScriptFile(
 			Map<String, Set<Element>> elementsMap, String filePath)
 		throws IOException {
 
@@ -188,71 +253,6 @@ public class PoshiReportGenerator {
 		sb.append(")");
 
 		FileUtil.write(filePath, sb.toString());
-	}
-
-	private static void _findExecuteElements() {
-		Map<String, Element> rootElementMap = PoshiContext.getRootElements();
-
-		List<String> rootElementList = new ArrayList<>(rootElementMap.keySet());
-
-		for (String rootElementName : rootElementList) {
-			Element rootElement = rootElementMap.get(rootElementName);
-
-			_storeExecuteElements(rootElement);
-		}
-	}
-
-	private static void _setJavaScriptDataFilePath() {
-		StringBuilder sb = new StringBuilder();
-
-		if (_poshiProperties.testRunLocally) {
-			sb.append(FileUtil.getCanonicalPath("./usage-report/js/data.js"));
-		}
-		else {
-			sb.append(_poshiProperties.testBaseDirName);
-			sb.append("/usage-report/js/data.js");
-		}
-
-		_javaScriptDataFilePath = sb.toString();
-	}
-
-	private static void _storeExecuteElements(Element element) {
-		String macroName = element.attributeValue("macro");
-
-		if ((element instanceof ExecutePoshiElement) &&
-			Validator.isNotNull(macroName)) {
-
-			Set<Element> elements = new HashSet<>();
-
-			if (_macroElements.containsKey(macroName)) {
-				elements = _macroElements.get(macroName);
-
-				elements.add(element);
-			}
-			else {
-				elements.add(element);
-
-				_macroElements.put(macroName, elements);
-			}
-		}
-
-		List<Element> childElementList = element.elements();
-
-		for (Element childElement : childElementList) {
-			_storeExecuteElements(childElement);
-		}
-	}
-
-	private static void _writeMacroUsageReport() throws Exception {
-		PoshiContext.readFiles();
-
-		_findExecuteElements();
-
-		_setJavaScriptDataFilePath();
-
-		createPoshiReport();
-
-		writeDataToDataJavaScriptFile(_macroElements, _javaScriptDataFilePath);
 	}
 
 	private static String _javaScriptDataFilePath;

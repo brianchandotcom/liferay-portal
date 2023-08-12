@@ -412,26 +412,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders the process duration information for a publishing process.</description>
-		<name>process-duration</name>
-		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessDurationTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<description>The background task for the publishing process.</description>
-			<name>backgroundTask</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
-		</attribute>
-		<attribute>
-			<description>Whether the title is for a list view or detail view.</description>
-			<name>listView</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Renders different error messages the publishing process.</description>
 		<name>process-error</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessErrorTag</tag-class>
@@ -651,26 +631,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders the start date of a publishing process.</description>
-		<name>process-start-date</name>
-		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessStartDateTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<description>The background task for the publishing process.</description>
-			<name>backgroundTask</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
-		</attribute>
-		<attribute>
-			<description>Whether the title is for a list view or detail view.</description>
-			<name>listView</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Renders the short status information for a publishing process.</description>
 		<name>process-status</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessStatusTag</tag-class>
@@ -860,25 +820,6 @@
 			<name>treeId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Displays a badge UI element on the screen with simple publication information, indicating whether a staged model has been published.</description>
-		<name>status</name>
-		<tag-class>com.liferay.staging.taglib.servlet.taglib.StatusTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>The CSS class to use for formatting the badge and tag displays.</description>
-			<name>cssClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The staged model to use to display the publishing information.</description>
-			<name>stagedModel</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.kernel.model.StagedModel</type>
 		</attribute>
 	</tag>
 </taglib>

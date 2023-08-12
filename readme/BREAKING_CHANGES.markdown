@@ -1598,3 +1598,24 @@ This affects anyone using these API methods.
 ### Why was this change made?
 
 These methods are no longer called by Liferay internally.
+
+---------------------------------------
+
+## Remove interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` under portal-kernel.
+- **Date:** 2023-August-11
+- **JIRA Ticket:** [LPS-182671](https://liferay.atlassian.net/browse/LPS-182671)
+
+### What changed?
+Interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` and related support logic is removed.
+
+### Who is affected?
+
+This affects anyone implementing this interface class.
+
+### How should I update my code?
+
+Implement `com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission` instead.
+
+### Why was this change made?
+
+Interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` was deprecated since 7.1 and no longer used by Liferay internally.

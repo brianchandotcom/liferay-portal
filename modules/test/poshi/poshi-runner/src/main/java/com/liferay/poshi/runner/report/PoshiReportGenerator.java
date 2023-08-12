@@ -95,7 +95,7 @@ public class PoshiReportGenerator {
 
 		_writeBaseUsageReportFiles();
 
-		_writeDataJavaScriptFile(_macroElements, _javaScriptDataFilePath);
+		_writeDataJavaScriptFile();
 	}
 
 	private static void _setJavaScriptDataFilePath() {
@@ -120,15 +120,15 @@ public class PoshiReportGenerator {
 
 			Set<Element> elements = new HashSet<>();
 
-			if (_macroElements.containsKey(macroName)) {
-				elements = _macroElements.get(macroName);
+			if (_executeMacroElements.containsKey(macroName)) {
+				elements = _executeMacroElements.get(macroName);
 
 				elements.add(element);
 			}
 			else {
 				elements.add(element);
 
-				_macroElements.put(macroName, elements);
+				_executeMacroElements.put(macroName, elements);
 			}
 		}
 
@@ -193,7 +193,7 @@ public class PoshiReportGenerator {
 		executeDataJSONArray.put(
 			new String[] {"Name", "File Path", "Usage Count"});
 
-		List<String> keyList = new ArrayList<>(elementsMap.keySet());
+		List<String> keyList = new ArrayList<>(_executeMacroElements.keySet());
 
 		Map<String, Element> commandElementMap =
 			PoshiContext.getCommandElements();
@@ -230,7 +230,7 @@ public class PoshiReportGenerator {
 				}
 			}
 
-			Set<Element> elementSet = elementsMap.get(key);
+			Set<Element> elementSet = _executeMacroElements.get(key);
 
 			Integer filePathsSize = elementSet.size();
 
@@ -247,12 +247,12 @@ public class PoshiReportGenerator {
 		sb.append(DateUtil.getTimeInMilliseconds());
 		sb.append(")");
 
-		FileUtil.write(filePath, sb.toString());
+		FileUtil.write(_javaScriptDataFilePath, sb.toString());
 	}
 
-	private static String _javaScriptDataFilePath;
-	private static final Map<String, Set<Element>> _macroElements =
+	private static final Map<String, Set<Element>> _executeMacroElements =
 		Collections.synchronizedMap(new HashMap<>());
+	private static String _javaScriptDataFilePath;
 	private static PoshiProperties _poshiProperties;
 
 }

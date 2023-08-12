@@ -117,7 +117,7 @@ public class PoshiReportGenerator {
 	}
 
 	public static void main(String[] args) throws Exception {
-		_getPoshiProperties();
+		_poshiProperties = PoshiProperties.getPoshiProperties();
 
 		if (_poshiProperties.generateUsageReport) {
 			_writeMacroUsageReport();
@@ -200,10 +200,6 @@ public class PoshiReportGenerator {
 
 			_storeExecuteElements(rootElement);
 		}
-	}
-
-	private static void _getPoshiProperties() {
-		_poshiProperties = PoshiProperties.getPoshiProperties();
 	}
 
 	private static void _setJavaScriptDataFilePath() {

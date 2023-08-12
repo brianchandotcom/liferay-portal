@@ -245,9 +245,13 @@ public class PoshiReportGenerator {
 
 	private static void _writeMacroUsageReport() throws Exception {
 		PoshiContext.readFiles();
+
 		_findExecuteElements();
+
 		_setJavaScriptDataFilePath();
+
 		createPoshiReport();
+
 		writeDataToDataJavaScriptFile(_macroElements, _javaScriptDataFilePath);
 	}
 

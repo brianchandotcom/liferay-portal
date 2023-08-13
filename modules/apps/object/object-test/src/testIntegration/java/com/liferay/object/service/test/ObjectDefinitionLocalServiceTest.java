@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
@@ -20,6 +21,7 @@ import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
+import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
@@ -1549,6 +1551,34 @@ public class ObjectDefinitionLocalServiceTest {
 			customObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			unmodifiableSystemObjectDefinition);
+	}
+
+	@Test
+	public void testUpdateRootObjectDefinitionId() throws Exception {
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService);
+
+		AssertUtils.assertFailure(
+			NoSuchObjectDefinitionException.class,
+			"No ObjectDefinition exists with the primary key 0",
+			() -> _objectDefinitionLocalService.updateRootObjectDefinitionId(
+				objectDefinition1.getObjectDefinitionId(), 0));
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService);
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionRootObjectDefinitionIdException.class,
+			"Object definition " + objectDefinition2.getObjectDefinitionId() +
+				" is not a root object definition",
+			() -> _objectDefinitionLocalService.updateRootObjectDefinitionId(
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
 	@Test

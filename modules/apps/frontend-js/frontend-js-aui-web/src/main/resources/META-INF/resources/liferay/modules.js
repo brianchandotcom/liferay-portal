@@ -331,10 +331,6 @@
 						path: 'widget_zindex.js',
 						requires: ['aui-modal', 'plugin'],
 					},
-					'liferay-xml-formatter': {
-						path: 'xml_formatter.js',
-						requires: ['aui-base'],
-					},
 				},
 				root: PATH_JAVASCRIPT + '/liferay/',
 			},

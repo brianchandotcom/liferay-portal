@@ -11,8 +11,6 @@
 
 	const COMBINE = LiferayAUI.getCombine();
 
-	const CORE_MODULES = YUI.Env.core;
-
 	const PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
 
 	const PATH_JAVASCRIPT = '/o/frontend-js-aui-web';
@@ -79,10 +77,6 @@
 							'autocomplete-filters',
 							'autocomplete-highlighters',
 						],
-					},
-					'liferay-browser-selectors': {
-						path: 'browser_selectors.js',
-						requires: ['yui-base'],
 					},
 					'liferay-cover-cropper': {
 						path: 'cover_cropper.js',
@@ -336,6 +330,4 @@
 		root: PATH_JAVASCRIPT + '/aui/',
 		useBrowserConsole: false,
 	};
-
-	CORE_MODULES.push('liferay-browser-selectors');
 })();

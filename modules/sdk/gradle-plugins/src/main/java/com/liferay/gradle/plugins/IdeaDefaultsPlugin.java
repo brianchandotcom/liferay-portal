@@ -75,16 +75,8 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 		_configureIdeaModule(project, javaMainSourceSet, ideaModule);
 
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_configureIdeaModuleAfterEvaluate(
-						project, javaMainSourceSet, ideaModule);
-				}
-
-			});
+		_configureIdeaModuleAfterEvaluate(
+			project, javaMainSourceSet, ideaModule);
 	}
 
 	@Override

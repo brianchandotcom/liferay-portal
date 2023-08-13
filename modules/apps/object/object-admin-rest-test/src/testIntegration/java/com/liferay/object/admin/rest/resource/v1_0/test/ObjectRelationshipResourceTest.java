@@ -31,6 +31,7 @@ import org.junit.runner.RunWith;
  * @author Javier Gamarra
  * @author Murilo Stodolni
  */
+@FeatureFlags({"LPS-167253", "LPS-187142"})
 @RunWith(Arquillian.class)
 public class ObjectRelationshipResourceTest
 	extends BaseObjectRelationshipResourceTestCase {
@@ -84,7 +85,6 @@ public class ObjectRelationshipResourceTest
 	public void testGraphQLGetObjectRelationshipNotFound() {
 	}
 
-	@FeatureFlags("LPS-167253")
 	@Override
 	@Test
 	public void testPostObjectDefinitionObjectRelationship() throws Exception {

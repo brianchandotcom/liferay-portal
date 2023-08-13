@@ -169,6 +169,26 @@ public class ObjectDefinitionServiceTest {
 	}
 
 	@Test
+	public void testUpdateRootObjectDefinitionId() throws Exception {
+		try {
+			_testUpdateRootObjectDefinitionId(_adminUser, _user);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _user.getUserId() +
+						" must have UPDATE permission for"));
+		}
+
+		_testUpdateRootObjectDefinitionId(_adminUser, _adminUser);
+		_testUpdateRootObjectDefinitionId(_user, _user);
+	}
+
+	@Test
 	public void testUpdateTitleObjectFieldId() throws Exception {
 		try {
 			_testUpdateTitleObjectFieldId(_adminUser, _user);
@@ -371,6 +391,28 @@ public class ObjectDefinitionServiceTest {
 					null, null, false,
 					LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope());
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
+	}
+
+	private void _testUpdateRootObjectDefinitionId(User ownerUser, User user)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			_setUser(user);
+
+			objectDefinition = _addCustomObjectDefinition(ownerUser);
+
+			_objectDefinitionService.updateRootObjectDefinitionId(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId());
 		}
 		finally {
 			if (objectDefinition != null) {

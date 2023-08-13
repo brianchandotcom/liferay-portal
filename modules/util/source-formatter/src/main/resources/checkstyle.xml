@@ -582,8 +582,8 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Verifies that `NestedFieldSupport.class` is used in `service` property of `Component` annotation" />
 			<property name="enabled" value="false" />
-			<message key="service.needed" value="''NestedFieldSupport.class'' is needed in ''service'' property of ''Component'' annotation, because at least one of methods has ''NestedField annotation" />
-			<message key="service.unneeded" value="No need to add ''NestedFieldSupport.class'' in ''service'' property of ''Component'' annotation, because no method has ''NestedField'' annotation" />
+			<message key="nested.field.support.missing" value="Set ''nested.field.support=true'' in the ''property'' attribute of ''Component'' annotation as one of methods has a ''NestedField'' annotation" />
+			<message key="nested.field.support.unneeded" value="Remove ''nested.field.support'' in the ''property'' attribute of ''Component'' annotation as no method has a ''NestedField'' annotation" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.NestedIfStatementCheck">
 			<property name="category" value="Styling" />

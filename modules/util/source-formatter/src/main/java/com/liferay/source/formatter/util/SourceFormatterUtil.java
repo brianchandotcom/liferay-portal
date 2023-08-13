@@ -717,7 +717,9 @@ public class SourceFormatterUtil {
 		throws IOException {
 
 		try {
-			if (GitUtil.getLatestCommitId() != null) {
+			if (!baseDirName.contains("gradle-plugins-source-formatter") &&
+				(GitUtil.getLatestCommitId() != null)) {
+
 				if ((_sfIgnoreDirectories == null) ||
 					(_subrepoIgnoreDirectories == null)) {
 

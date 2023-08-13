@@ -223,10 +223,6 @@
 							'liferay-navigation-interaction',
 						],
 					},
-					'liferay-notification': {
-						path: 'notification.js',
-						requires: ['liferay-alert'],
-					},
 					'liferay-panel-search': {
 						path: 'panel_search.js',
 						requires: ['aui-base', 'liferay-search-filter'],

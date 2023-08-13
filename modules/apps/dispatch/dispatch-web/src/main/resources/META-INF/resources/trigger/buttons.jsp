@@ -25,7 +25,7 @@ String runNowButton = "runNowButton" + row.getRowId();
 	<aui:button name="<%= runNowButton %>" value="run-now" />
 </c:if>
 
-<aui:script use="aui-io-request,aui-parse-content,liferay-notification">
+<aui:script use="aui-io-request,aui-parse-content">
 	A.one('#<portlet:namespace /><%= runNowButton %>').on('click', function (
 		event
 	) {
@@ -62,16 +62,9 @@ String runNowButton = "runNowButton" + row.getRowId();
 
 							iconSpinnerContainer.addClass('hide');
 
-							new Liferay.Notification({
-								closeable: true,
-								delay: {
-									hide: 5000,
-									show: 0,
-								},
-								duration: 500,
+							Liferay.Util.openToast({
 								message:
 									'<liferay-ui:message key="an-unexpected-error-occurred" />',
-								render: true,
 								title: '<liferay-ui:message key="danger" />',
 								type: 'danger',
 							});

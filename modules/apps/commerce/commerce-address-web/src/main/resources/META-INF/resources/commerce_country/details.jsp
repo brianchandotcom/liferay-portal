@@ -80,7 +80,7 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 </aui:script>
 
 <c:if test="<%= commerceRegionsStarter != null %>">
-	<aui:script use="aui-io-request,aui-parse-content,liferay-notification">
+	<aui:script use="aui-io-request,aui-parse-content">
 		A.one('#<portlet:namespace />importCommerceRegionsButton').on(
 			'click',
 			function (event) {
@@ -103,16 +103,9 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 										'#<portlet:namespace />importCommerceRegionsButton'
 									).attr('disabled', false);
 
-									new Liferay.Notification({
-										closeable: true,
-										delay: {
-											hide: 5000,
-											show: 0,
-										},
-										duration: 500,
+									Liferay.Util.openToast({
 										message:
 											'<liferay-ui:message key="an-unexpected-error-occurred" />',
-										render: true,
 										title: '<liferay-ui:message key="danger" />',
 										type: 'danger',
 									});

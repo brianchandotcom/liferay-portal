@@ -12,10 +12,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -26,27 +30,74 @@ public class APIApplicationRelevantObjectEntryModelListenerTest
 
 	@Test
 	public void test() throws Exception {
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"Base URL can have a maximum of 255 alphanumeric characters."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL",
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						StringPool.FORWARD_SLASH
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				"headless-builder/applications", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"Base URL can have a maximum of 255 alphanumeric characters."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL",
+					StringUtil.toLowerCase(RandomTestUtil.randomString(256)) +
+						StringPool.FORWARD_SLASH
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				"headless-builder/applications", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Base URL must contain only lowercase characters."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL",
+					RandomTestUtil.randomString(
+						255
+					).toUpperCase()
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				"headless-builder/applications", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).put(
-				"baseURL",
-				RandomTestUtil.randomString() + StringPool.FORWARD_SLASH
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"Base URL can have a maximum of 255 alphanumeric characters.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "unpublished"
-			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),

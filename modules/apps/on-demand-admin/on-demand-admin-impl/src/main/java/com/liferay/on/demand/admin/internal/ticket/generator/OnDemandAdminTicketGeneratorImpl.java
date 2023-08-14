@@ -84,14 +84,19 @@ public class OnDemandAdminTicketGeneratorImpl
 		int expirationTime =
 			onDemandAdminConfiguration.authenticationTokenExpirationTime();
 
-		return _ticketLocalService.addDistinctTicket(
-			user.getCompanyId(), User.class.getName(), user.getUserId(),
-			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
-			justification,
-			new Date(
-				System.currentTimeMillis() +
-					TimeUnit.MINUTES.toMillis(expirationTime)),
-			null);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			return _ticketLocalService.addDistinctTicket(
+				user.getCompanyId(), User.class.getName(), user.getUserId(),
+				OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
+				justification,
+				new Date(
+					System.currentTimeMillis() +
+						TimeUnit.MINUTES.toMillis(expirationTime)),
+				null);
+		}
 	}
 
 	private User _addOnDemandAdminUser(

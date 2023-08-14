@@ -68,7 +68,7 @@ public class CTCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,10 @@ public class CTCollectionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", onDemandUserId=");
+		sb.append(onDemandUserId);
+		sb.append(", shareable=");
+		sb.append(shareable);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -157,6 +161,8 @@ public class CTCollectionCacheModel
 			ctCollectionImpl.setDescription(description);
 		}
 
+		ctCollectionImpl.setOnDemandUserId(onDemandUserId);
+		ctCollectionImpl.setShareable(shareable);
 		ctCollectionImpl.setStatus(status);
 		ctCollectionImpl.setStatusByUserId(statusByUserId);
 
@@ -189,6 +195,10 @@ public class CTCollectionCacheModel
 		schemaVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		onDemandUserId = objectInput.readLong();
+
+		shareable = objectInput.readBoolean();
 
 		status = objectInput.readInt();
 
@@ -238,6 +248,10 @@ public class CTCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(onDemandUserId);
+
+		objectOutput.writeBoolean(shareable);
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -255,6 +269,8 @@ public class CTCollectionCacheModel
 	public long schemaVersionId;
 	public String name;
 	public String description;
+	public long onDemandUserId;
+	public boolean shareable;
 	public int status;
 	public long statusByUserId;
 	public long statusDate;

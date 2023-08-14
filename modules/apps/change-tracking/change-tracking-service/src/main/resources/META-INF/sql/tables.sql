@@ -22,6 +22,8 @@ create table CTCollection (
 	schemaVersionId LONG,
 	name VARCHAR(75) null,
 	description VARCHAR(200) null,
+	onDemandUserId LONG,
+	shareable BOOLEAN,
 	status INTEGER,
 	statusByUserId LONG,
 	statusDate DATE null

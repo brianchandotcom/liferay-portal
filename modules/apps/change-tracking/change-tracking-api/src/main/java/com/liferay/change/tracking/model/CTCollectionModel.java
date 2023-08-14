@@ -233,6 +233,55 @@ public interface CTCollectionModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the on demand user ID of this ct collection.
+	 *
+	 * @return the on demand user ID of this ct collection
+	 */
+	public long getOnDemandUserId();
+
+	/**
+	 * Sets the on demand user ID of this ct collection.
+	 *
+	 * @param onDemandUserId the on demand user ID of this ct collection
+	 */
+	public void setOnDemandUserId(long onDemandUserId);
+
+	/**
+	 * Returns the on demand user uuid of this ct collection.
+	 *
+	 * @return the on demand user uuid of this ct collection
+	 */
+	public String getOnDemandUserUuid();
+
+	/**
+	 * Sets the on demand user uuid of this ct collection.
+	 *
+	 * @param onDemandUserUuid the on demand user uuid of this ct collection
+	 */
+	public void setOnDemandUserUuid(String onDemandUserUuid);
+
+	/**
+	 * Returns the shareable of this ct collection.
+	 *
+	 * @return the shareable of this ct collection
+	 */
+	public boolean getShareable();
+
+	/**
+	 * Returns <code>true</code> if this ct collection is shareable.
+	 *
+	 * @return <code>true</code> if this ct collection is shareable; <code>false</code> otherwise
+	 */
+	public boolean isShareable();
+
+	/**
+	 * Sets whether this ct collection is shareable.
+	 *
+	 * @param shareable the shareable of this ct collection
+	 */
+	public void setShareable(boolean shareable);
+
+	/**
 	 * Returns the status of this ct collection.
 	 *
 	 * @return the status of this ct collection

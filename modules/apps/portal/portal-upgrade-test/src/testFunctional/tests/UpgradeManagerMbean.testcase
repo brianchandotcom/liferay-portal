@@ -1,0 +1,44 @@
+@component-name = "portal-database-upgrade-framework"
+definition {
+
+	property app.server.types = "tomcat";
+	property custom.properties = "upgrade.database.auto.run=true";
+	property database.types = "mysql";
+	property jmxremote.enabled= "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property skip.start.app.server = "true";
+	property testray.main.component.name = "Database Upgrade Framework";
+
+	@priority = 3
+	test CheckMbeanDuringUpgradeIsRunning {
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.upgrade-legacy-database = "true";
+		property custom.startup.log.message = "Started web bundles";
+
+		task ("Given the portal is started When the Upgrade Manager mBean attributes are captured while the upgrade is running") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("Then look for the mbean output file") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("And the result of the upgrade is published as running and the type is published as pending in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: pending"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: running"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
+}

@@ -228,7 +228,9 @@ definition {
 		}
 
 		task ("And Then I receive error message in server console") {
-			AssertConsoleTextPresent(value1 = "Unable to get a valid asset library with ID nonexistentId");
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Unable to get a valid asset library with ID nonexistentId");
 		}
 	}
 

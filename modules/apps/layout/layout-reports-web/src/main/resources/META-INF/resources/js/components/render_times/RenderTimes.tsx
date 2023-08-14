@@ -12,6 +12,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Fragment, FragmentFilter} from '../../constants/fragments';
 import Filter from './Filter';
 import FragmentList from './FragmentList';
+import ResultsBar from './ResultsBar';
 import getFragmentsByFilterValue from './getFragmentsByFilterValue';
 
 export default function RenderTimes({url}: {url: string}) {
@@ -59,6 +60,13 @@ export default function RenderTimes({url}: {url: string}) {
 			/>
 
 			<SearchResultsMessage numberOfResults={filteredFragments.length} />
+
+			<ResultsBar
+				className="c-mb-3"
+				filters={filters}
+				fragments={filteredFragments}
+				onSetFilters={setFilters}
+			/>
 
 			{visibleInfo ? (
 				<ClayAlert

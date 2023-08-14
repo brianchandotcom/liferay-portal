@@ -1613,6 +1613,47 @@
 													"indexed": true
 												},
 												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"ca_ES": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"de_DE": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"en_US": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"es_ES": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"fi_FI": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"fr_FR": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"hu_HU": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"ja_JP": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"nl_NL": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"pt_BR": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"sv_SE": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"zh_CN": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
 											}
 										],
 										"type": "Column"

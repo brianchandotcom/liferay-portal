@@ -9,24 +9,24 @@ import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-interface ImportResult {
+interface Result {
 	message: string;
 	name: string;
 	type: 'fragment' | 'composition';
 }
 
-export interface ImportResultsData {
-	'imported': ImportResult[];
-	'imported-draft': ImportResult[];
-	'invalid': ImportResult[];
+export interface Results {
+	'imported': Result[];
+	'imported-draft': Result[];
+	'invalid': Result[];
 }
 
-interface Props {
+interface ResultsProps {
 	fileName: string | null;
-	importResults: ImportResultsData;
+	importResults: Results;
 }
 
-function ImportResults({fileName, importResults}: Props) {
+function ImportResults({fileName, importResults}: ResultsProps) {
 	const [expanded, setExpanded] = useState(
 		!importResults['imported-draft'] && !importResults.invalid
 	);

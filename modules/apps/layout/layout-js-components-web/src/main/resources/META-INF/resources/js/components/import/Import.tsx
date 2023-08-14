@@ -13,7 +13,7 @@ import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import ImportResults, {ImportResultsData} from './ImportResults';
+import ImportResults, {Results} from './ImportResults';
 
 interface Props {
 	backURL: string;
@@ -43,10 +43,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	const [file, setFile] = useState<File | null>(null);
 	const [fileName, setFileName] = useState<string | null>(null);
 	const [fileText, setFileText] = useState<string>(FILE_TEXTS.initial);
-	const [
-		importResults,
-		setImportResults,
-	] = useState<ImportResultsData | null>(null);
+	const [importResults, setImportResults] = useState<Results | null>(null);
 
 	const fileInputRef = useRef<HTMLInputElement>(null);
 

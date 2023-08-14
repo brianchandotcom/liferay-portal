@@ -1716,6 +1716,10 @@
 			<category name="Upgrade" />
 			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />
 		</check>
+		<check name="UpgradeJavaPhoneLocalServiceUtilCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter `ServiceContext` of the method `addPhone` of class `PhoneLocalServiceUtil`." />
+		</check>
 		<check name="UpgradeJavaPortletSharedSearchSettingsCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class" />

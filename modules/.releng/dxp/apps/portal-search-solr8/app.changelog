@@ -9,3 +9,15 @@ app.artifacts-5.0.0=\
 app.change.log-5.0.0=LPS-166987 LPS-168749 LPS-171270 LPS-172250
 
 app.git.id-5.0.0=9f51470a903446cf40cc5766997c8f13af7301c2
+
+#
+# Liferay App Version 5.0.1
+#
+
+app.artifacts-5.0.1=\
+	com.liferay.portal.search.solr8.api-5.0.1.jar,\
+	com.liferay.portal.search.solr8.impl-5.0.13.jar
+
+app.change.log-5.0.1=LPS-156857 LPS-157425 LPS-171941 LPS-171976 LPS-172192 LPS-173765 LPS-174196 LPS-174289 LPS-176632 LPS-180562 LPS-180691 LPS-181002 LPS-181508 LPS-181829 LPS-182432 LPS-182523 LPS-183440 LPS-185533 LPS-187417 LPS-188507 LPS-188912
+
+app.git.id-5.0.1=b9a53df5eb0716f8ff2b1d33aaabf126edff17e3

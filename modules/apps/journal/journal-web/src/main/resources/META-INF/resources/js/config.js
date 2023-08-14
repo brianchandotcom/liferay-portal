@@ -23,7 +23,6 @@
 						path: 'main.js',
 						requires: [
 							'aui-base',
-							'aui-dialog-iframe-deprecated',
 							'liferay-portlet-base',
 							'liferay-util-window',
 						],

@@ -25,7 +25,11 @@ export default function Container({
 				}
 			)}
 		>
-			<ClayLayout.ContainerFluid>{children}</ClayLayout.ContainerFluid>
+			<ClayLayout.ContainerFluid
+				size={Liferay.FeatureFlags['LPS-184404'] ? false : 'xl'}
+			>
+				{children}
+			</ClayLayout.ContainerFluid>
 		</nav>
 	);
 }

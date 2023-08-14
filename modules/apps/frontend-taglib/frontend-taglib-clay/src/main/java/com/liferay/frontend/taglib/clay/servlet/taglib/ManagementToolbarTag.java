@@ -725,7 +725,12 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		}
 
 		jspWriter.write("\"><div class=\"container-fluid");
-		jspWriter.write(" container-fluid-max-xl\"><ul class=\"navbar-nav\">");
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-184404")) {
+			jspWriter.write(" container-fluid-max-xl");
+		}
+
+		jspWriter.write("\"><ul class=\"navbar-nav\">");
 
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			pageContext);
@@ -1034,7 +1039,12 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		if (!active && isShowSearch()) {
 			jspWriter.write("<div class=\"navbar-form navbar-form-autofit ");
 			jspWriter.write(" navbar-overlay navbar-overlay-sm-down\"><div");
-			jspWriter.write(" class=\"container-fluid container-fluid-max-xl");
+			jspWriter.write(" class=\"container-fluid");
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-184404")) {
+				jspWriter.write(" container-fluid-max-xl");
+			}
+
 			jspWriter.write("\"><form");
 
 			String searchActionURL = getSearchActionURL();
@@ -1239,7 +1249,13 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		if (isShowResultsBar()) {
 			jspWriter.write("<nav class=\"subnav-tbar subnav-tbar-primary");
 			jspWriter.write(" tbar tbar-inline-xs-down\"><div class=\"");
-			jspWriter.write("container-fluid container-fluid-max-xl\">");
+			jspWriter.write("container-fluid");
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-184404")) {
+				jspWriter.write(" container-fluid-max-xl");
+			}
+
+			jspWriter.write("\">");
 			jspWriter.write("<ul class=\"tbar-nav tbar-nav-wrap\">");
 			jspWriter.write("<li class=\"tbar-item");
 

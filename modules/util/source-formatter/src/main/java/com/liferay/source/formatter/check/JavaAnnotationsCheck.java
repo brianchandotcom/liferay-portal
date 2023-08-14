@@ -405,7 +405,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 	private static final Pattern _classConstantPattern = Pattern.compile(
 		"^([A-Z]\\w+)\\.?([A-Z]\\w+)$");
 	private static final Pattern _componentNamePattern = Pattern.compile(
-		"\\(component\\.name=([^)]+)\\)");
+		"component\\.name=(.+?\\.[A-Z]\\w*)");
 	private static final Pattern _pipePattern = Pattern.compile(
 		"(= \".*)( \\| | \\||\\| )");
 

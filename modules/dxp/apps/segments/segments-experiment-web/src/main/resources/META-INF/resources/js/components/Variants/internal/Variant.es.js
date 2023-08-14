@@ -7,13 +7,14 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import {openConfirmModal} from 'frontend-js-web';
+import {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import SegmentsExperimentsContext from '../../../context.es';
 import {navigateToExperience} from '../../../util/navigation.es';
 import {indexToPercentageString} from '../../../util/percentages.es';
+import {DeleteModal} from '../../DeleteModal.es';
 
 function Variant({
 	active,
@@ -32,130 +33,153 @@ function Variant({
 }) {
 	const [openDropdown, setOpenDropdown] = useState(false);
 	const {editVariantLayoutURL} = useContext(SegmentsExperimentsContext);
+	const [deleteModalActive, setDeleteModalActive] = useState(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			setDeleteModalActive(false);
+		},
+	});
 
 	return (
-		<ClayList.Item active={active} flex>
-			<ClayList.ItemField expand>
-				<ClayList.ItemTitle>
-					<ClayButton
-						className="lfr-portal-tooltip text-truncate"
-						data-title={name}
-						displayType="unstyled"
-						onClick={_handleVariantNavigation}
-					>
-						{winner && (
-							<ClayIcon
-								className="mr-1 text-success"
-								symbol="check-circle-full"
-							/>
-						)}
+		<>
+			<ClayList.Item active={active} flex>
+				<ClayList.ItemField expand>
+					<ClayList.ItemTitle>
+						<ClayButton
+							className="lfr-portal-tooltip text-truncate"
+							data-title={name}
+							displayType="unstyled"
+							onClick={_handleVariantNavigation}
+						>
+							{winner && (
+								<ClayIcon
+									className="mr-1 text-success"
+									symbol="check-circle-full"
+								/>
+							)}
 
-						{control ? (
-							<>
-								<span className="mr-2">
-									{Liferay.Language.get('variant-control')}
-								</span>
+							{control ? (
+								<>
+									<span className="mr-2">
+										{Liferay.Language.get(
+											'variant-control'
+										)}
+									</span>
 
-								<ClayIcon symbol="lock" />
-							</>
-						) : (
-							name
-						)}
-					</ClayButton>
-				</ClayList.ItemTitle>
-			</ClayList.ItemField>
+									<ClayIcon symbol="lock" />
+								</>
+							) : (
+								name
+							)}
+						</ClayButton>
+					</ClayList.ItemTitle>
+				</ClayList.ItemField>
 
-			{!control && editable && (
-				<>
+				{!control && editable && (
+					<>
+						<ClayList.ItemField>
+							<ClayButton
+								borderless
+								className="btn-monospaced"
+								displayType="secondary"
+								onClick={_handleEditVariantContent}
+							>
+								<ClayIcon symbol="pencil" />
+							</ClayButton>
+						</ClayList.ItemField>
+
+						<ClayList.ItemField>
+							<ClayDropDown
+								active={openDropdown}
+								onActiveChange={setOpenDropdown}
+								trigger={
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'show-actions'
+										)}
+										borderless
+										className="btn-monospaced"
+										displayType="secondary"
+									>
+										<ClayIcon symbol="ellipsis-v" />
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Item onClick={_handleEdition}>
+										<ClayIcon
+											className="c-mr-3 text-4"
+											symbol="pencil"
+										/>
+
+										{Liferay.Language.get('edit')}
+									</ClayDropDown.Item>
+
+									<ClayDropDown.Item
+										onClick={() =>
+											setDeleteModalActive(true)
+										}
+									>
+										<ClayIcon
+											className="c-mr-3 text-4"
+											symbol="trash"
+										/>
+
+										{Liferay.Language.get('delete')}
+									</ClayDropDown.Item>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						</ClayList.ItemField>
+					</>
+				)}
+
+				{showSplit && (
+					<ClayList.ItemField>
+						<span
+							aria-label={Liferay.Language.get('traffic-split')}
+							className="font-weight-normal list-group-title mr-1 text-secondary"
+						>
+							{indexToPercentageString(split)}
+						</span>
+					</ClayList.ItemField>
+				)}
+
+				{publishable && (
 					<ClayList.ItemField>
 						<ClayButton
-							borderless
-							className="btn-monospaced"
-							displayType="secondary"
-							onClick={_handleEditVariantContent}
+							displayType={winner ? 'primary' : 'secondary'}
+							onClick={() =>
+								onVariantPublish(segmentsExperienceId)
+							}
+							small
 						>
-							<ClayIcon symbol="pencil" />
+							{Liferay.Language.get('publish')}
 						</ClayButton>
 					</ClayList.ItemField>
+				)}
+			</ClayList.Item>
 
-					<ClayList.ItemField>
-						<ClayDropDown
-							active={openDropdown}
-							onActiveChange={setOpenDropdown}
-							trigger={
-								<ClayButton
-									aria-label={Liferay.Language.get(
-										'show-actions'
-									)}
-									borderless
-									className="btn-monospaced"
-									displayType="secondary"
-								>
-									<ClayIcon symbol="ellipsis-v" />
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Item onClick={_handleEdition}>
-									<ClayIcon
-										className="c-mr-3 text-4"
-										symbol="pencil"
-									/>
+			{deleteModalActive && (
+				<DeleteModal
+					modalObserver={observer}
+					onCancel={onClose}
+					onDelete={() => {
+						onVariantDeletion(variantId);
 
-									{Liferay.Language.get('edit')}
-								</ClayDropDown.Item>
-
-								<ClayDropDown.Item onClick={_handleDeletion}>
-									<ClayIcon
-										className="c-mr-3 text-4"
-										symbol="trash"
-									/>
-
-									{Liferay.Language.get('delete')}
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					</ClayList.ItemField>
-				</>
+						onClose();
+					}}
+					title={Liferay.Language.get('delete-variant')}
+				>
+					<label>
+						{Liferay.Language.get(
+							'are-you-sure-you-want-to-delete-this'
+						)}
+					</label>
+				</DeleteModal>
 			)}
-
-			{showSplit && (
-				<ClayList.ItemField>
-					<span
-						aria-label={Liferay.Language.get('traffic-split')}
-						className="font-weight-normal list-group-title mr-1 text-secondary"
-					>
-						{indexToPercentageString(split)}
-					</span>
-				</ClayList.ItemField>
-			)}
-
-			{publishable && (
-				<ClayList.ItemField>
-					<ClayButton
-						displayType={winner ? 'primary' : 'secondary'}
-						onClick={() => onVariantPublish(segmentsExperienceId)}
-						small
-					>
-						{Liferay.Language.get('publish')}
-					</ClayButton>
-				</ClayList.ItemField>
-			)}
-		</ClayList.Item>
+		</>
 	);
-
-	function _handleDeletion() {
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
-			),
-			onConfirm: (isConfirmed) => {
-				if (isConfirmed) {
-					return onVariantDeletion(variantId);
-				}
-			},
-		});
-	}
 
 	function _handleEdition() {
 		return onVariantEdition({name, variantId});

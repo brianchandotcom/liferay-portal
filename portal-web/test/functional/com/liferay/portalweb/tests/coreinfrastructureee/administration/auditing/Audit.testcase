@@ -314,7 +314,7 @@ definition {
 
 			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_IN_AUDIT_FRAMEWORK_BUTTON");
 
 			CreateObject.saveObject();
 
@@ -589,7 +589,7 @@ definition {
 
 			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_IN_AUDIT_FRAMEWORK_BUTTON");
 
 			CreateObject.saveObject();
 
@@ -708,7 +708,7 @@ definition {
 
 			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_IN_AUDIT_FRAMEWORK_BUTTON");
 
 			CreateObject.saveObject();
 

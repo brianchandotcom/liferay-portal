@@ -216,8 +216,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ENABLE_ENTRY_HISTORY_BUTTON</td>
-		<td>//span[text()='Enable Entry History']/preceding-sibling::span/input</td>
+		<td>ENABLE_ENTRY_HISTORY_IN_AUDIT_FRAMEWORK_BUTTON</td>
+		<td>//span[text()='Enable Entry History in Audit Framework']/preceding-sibling::span/input</td>
 		<td></td>
 	</tr>
 	<tr>

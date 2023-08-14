@@ -52,7 +52,7 @@ public class UpgradePartitionedControlTableTest
 	@Test
 	public void testUpgrade() throws Exception {
 		try {
-			createAndPopulateTable(TEST_TABLE_NAME);
+			createAndPopulateControlTable(TEST_TABLE_NAME);
 
 			_createViewSQL(TEST_TABLE_NAME);
 

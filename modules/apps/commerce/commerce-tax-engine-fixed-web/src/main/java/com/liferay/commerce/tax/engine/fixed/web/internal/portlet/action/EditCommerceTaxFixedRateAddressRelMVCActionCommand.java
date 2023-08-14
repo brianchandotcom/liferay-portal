@@ -16,10 +16,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -156,7 +156,7 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 		CommerceTaxMethod commerceTaxMethod =
 			_commerceTaxMethodService.getCommerceTaxMethod(commerceTaxMethodId);
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceTaxMethod.getGroupId(),
 				CommerceTaxByAddressTypeConfiguration.class.getName()));
@@ -182,8 +182,5 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

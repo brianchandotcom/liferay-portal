@@ -14,10 +14,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
@@ -100,7 +100,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 				new ConfigurationInvocationHandler<>(
 					clazz,
 					new TypedSettings(
-						_settingsFactory.getSettings(settingsLocator)));
+						FallbackKeysSettingsUtil.getSettings(settingsLocator)));
 
 			return configurationInvocationHandler.createProxy();
 		}
@@ -344,8 +344,5 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

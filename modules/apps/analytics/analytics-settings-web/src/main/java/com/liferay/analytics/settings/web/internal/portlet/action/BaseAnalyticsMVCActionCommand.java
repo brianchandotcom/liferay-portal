@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -190,9 +190,6 @@ public abstract class BaseAnalyticsMVCActionCommand
 	protected GroupLocalService groupLocalService;
 
 	@Reference
-	protected SettingsFactory settingsFactory;
-
-	@Reference
 	protected SettingsLocatorHelper settingsLocatorHelper;
 
 	private void _checkPermissions(ThemeDisplay themeDisplay)
@@ -220,7 +217,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 		Dictionary<String, Object> configurationProperties = new Hashtable<>();
 
-		Settings settings = settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new CompanyServiceSettingsLocator(scopePK, pid));
 
 		SettingsDescriptor settingsDescriptor =

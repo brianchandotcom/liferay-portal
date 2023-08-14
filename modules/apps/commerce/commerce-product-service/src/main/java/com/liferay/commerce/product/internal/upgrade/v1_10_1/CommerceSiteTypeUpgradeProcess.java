@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
@@ -30,13 +30,11 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 	public CommerceSiteTypeUpgradeProcess(
 		ClassNameLocalService classNameLocalService,
 		GroupLocalService groupLocalService,
-		ConfigurationProvider configurationProvider,
-		SettingsFactory settingsFactory) {
+		ConfigurationProvider configurationProvider) {
 
 		_classNameLocalService = classNameLocalService;
 		_groupLocalService = groupLocalService;
 		_configurationProvider = configurationProvider;
-		_settingsFactory = settingsFactory;
 	}
 
 	@Override
@@ -48,7 +46,7 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				long groupId = resultSet.getLong("siteGroupId");
 
-				Settings settings = _settingsFactory.getSettings(
+				Settings settings = FallbackKeysSettingsUtil.getSettings(
 					new GroupServiceSettingsLocator(
 						_getCommerceChannelGroupIdBySiteGroupId(groupId),
 						CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
@@ -112,6 +110,5 @@ public class CommerceSiteTypeUpgradeProcess extends UpgradeProcess {
 	private final ClassNameLocalService _classNameLocalService;
 	private final ConfigurationProvider _configurationProvider;
 	private final GroupLocalService _groupLocalService;
-	private final SettingsFactory _settingsFactory;
 
 }

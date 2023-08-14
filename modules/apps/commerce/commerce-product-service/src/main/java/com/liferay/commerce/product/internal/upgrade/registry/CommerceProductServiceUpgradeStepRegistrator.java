@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -135,7 +134,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			"1.10.0", "1.10.1",
 			new CommerceSiteTypeUpgradeProcess(
 				_classNameLocalService, _groupLocalService,
-				_configurationProvider, _settingsFactory));
+				_configurationProvider));
 
 		registry.register(
 			"1.10.1", "1.11.0",
@@ -442,8 +441,5 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -73,7 +73,7 @@ public class EditCommerceAvalaraConnectorMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new CompanyServiceSettingsLocator(
 				themeDisplay.getCompanyId(),
 				CommerceAvalaraConnectorConfiguration.class.getName()));
@@ -111,8 +111,5 @@ public class EditCommerceAvalaraConnectorMVCActionCommand
 
 	@Reference
 	private CommerceAvalaraConnector _commerceAvalaraConnector;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

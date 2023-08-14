@@ -20,7 +20,4 @@ public interface SettingsFactory {
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
 		long groupId, String portletId);
 
-	public Settings getSettings(SettingsLocator settingsLocator)
-		throws SettingsException;
-
 }

@@ -12,10 +12,10 @@ import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -70,7 +70,7 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 		CommerceTaxMethod commerceTaxMethod = _getCommerceTaxMethod(
 			actionRequest);
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceTaxMethod.getGroupId(),
 				CommerceAvalaraConnectorChannelConfiguration.class.getName()));
@@ -98,8 +98,5 @@ public class EditCommerceTaxAvalaraMVCActionCommand
 
 	@Reference
 	private CommerceTaxMethodService _commerceTaxMethodService;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

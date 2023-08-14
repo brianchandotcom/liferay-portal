@@ -48,10 +48,12 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -435,7 +437,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Settings portletInstanceSettings = _settingsFactory.getSettings(
+		Settings portletInstanceSettings = FallbackKeysSettingsUtil.getSettings(
 			new PortletInstanceSettingsLocator(
 				themeDisplay.getLayout(), portlet.getPortletId()));
 
@@ -505,9 +507,11 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
-		Settings portletInstanceSettings = _settingsFactory.getSettings(
-			new PortletInstanceSettingsLocator(
-				themeDisplay.getLayout(), portlet.getPortletId()));
+		SettingsLocator settingsLocator = new PortletInstanceSettingsLocator(
+			themeDisplay.getLayout(), portlet.getPortletId());
+
+		Settings portletInstanceSettings = FallbackKeysSettingsUtil.getSettings(
+			settingsLocator);
 
 		ModifiableSettings portletInstanceModifiableSettings =
 			portletInstanceSettings.getModifiableSettings();

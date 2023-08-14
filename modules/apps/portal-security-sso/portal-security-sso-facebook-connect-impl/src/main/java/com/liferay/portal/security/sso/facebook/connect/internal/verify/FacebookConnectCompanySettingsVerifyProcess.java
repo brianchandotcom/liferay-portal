@@ -6,7 +6,6 @@
 package com.liferay.portal.security.sso.facebook.connect.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -93,11 +92,6 @@ public class FacebookConnectCompanySettingsVerifyProcess
 	}
 
 	@Override
-	protected SettingsFactory getSettingsFactory() {
-		return _settingsFactory;
-	}
-
-	@Override
 	protected String getSettingsId() {
 		return FacebookConnectConstants.SERVICE_NAME;
 	}
@@ -122,9 +116,6 @@ public class FacebookConnectCompanySettingsVerifyProcess
 
 	@Reference
 	private PrefsProps _prefsProps;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

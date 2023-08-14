@@ -15,10 +15,10 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 
@@ -36,7 +36,7 @@ public class CommerceCatalogDefaultImageImpl
 	public long getDefaultCatalogFileEntryId(long groupId)
 		throws PortalException {
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				groupId, CommerceMediaConstants.SERVICE_NAME));
 
@@ -71,7 +71,7 @@ public class CommerceCatalogDefaultImageImpl
 			TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
 		}
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				groupId, CommerceMediaConstants.SERVICE_NAME));
 
@@ -86,8 +86,5 @@ public class CommerceCatalogDefaultImageImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

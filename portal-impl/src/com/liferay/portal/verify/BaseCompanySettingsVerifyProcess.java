@@ -10,11 +10,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -60,8 +60,6 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 		return new String[0][0];
 	}
 
-	protected abstract SettingsFactory getSettingsFactory();
-
 	protected abstract String getSettingsId();
 
 	protected abstract SettingsLocatorHelper getSettingsLocatorHelper();
@@ -71,9 +69,7 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 			Dictionary<String, String> dictionary)
 		throws IOException, SettingsException, ValidatorException {
 
-		SettingsFactory settingsFactory = getSettingsFactory();
-
-		Settings settings = settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new CompanyServiceSettingsLocator(companyId, settingsId));
 
 		ModifiableSettings modifiableSettings =

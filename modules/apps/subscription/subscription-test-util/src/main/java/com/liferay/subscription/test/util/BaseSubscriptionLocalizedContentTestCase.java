@@ -9,10 +9,10 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -125,7 +125,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 			String bodyPreferenceName)
 		throws Exception {
 
-		Settings settings = _settingsFactory.getSettings(
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
 			new GroupServiceSettingsLocator(
 				group.getGroupId(), getServiceName()));
 
@@ -160,9 +160,6 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 
 		localizedContents.put(locale, body);
 	}
-
-	@Inject
-	private SettingsFactory _settingsFactory;
 
 	@Inject
 	private UserLocalService _userLocalService;

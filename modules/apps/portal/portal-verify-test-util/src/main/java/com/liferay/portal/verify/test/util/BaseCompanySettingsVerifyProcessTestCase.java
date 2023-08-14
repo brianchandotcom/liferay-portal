@@ -7,10 +7,10 @@ package com.liferay.portal.verify.test.util;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
@@ -95,7 +95,7 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 
 	protected Settings getSettings(long companyId) {
 		try {
-			return settingsFactory.getSettings(
+			return FallbackKeysSettingsUtil.getSettings(
 				new CompanyServiceSettingsLocator(companyId, getSettingsId()));
 		}
 		catch (SettingsException settingsException) {
@@ -113,9 +113,6 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 
 	@Inject
 	protected PrefsProps prefsProps;
-
-	@Inject
-	protected SettingsFactory settingsFactory;
 
 	private static BundleContext _bundleContext;
 

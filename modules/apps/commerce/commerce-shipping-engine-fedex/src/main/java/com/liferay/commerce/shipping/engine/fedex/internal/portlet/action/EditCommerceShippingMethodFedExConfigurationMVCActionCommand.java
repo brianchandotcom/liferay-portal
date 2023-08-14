@@ -13,10 +13,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -58,7 +58,7 @@ public class EditCommerceShippingMethodFedExConfigurationMVCActionCommand
 			UnicodeProperties unicodeProperties =
 				PropertiesParamUtil.getProperties(actionRequest, "settings--");
 
-			Settings settings = _settingsFactory.getSettings(
+			Settings settings = FallbackKeysSettingsUtil.getSettings(
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
 					FedExCommerceShippingEngineConstants.SERVICE_NAME));
@@ -94,8 +94,5 @@ public class EditCommerceShippingMethodFedExConfigurationMVCActionCommand
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

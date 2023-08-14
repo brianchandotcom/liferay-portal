@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -80,12 +81,25 @@ public class APIApplicationRelevantObjectEntryModelListener
 					_objectFieldLocalService.getObjectField(
 						objectEntry.getObjectDefinitionId(), "baseURL");
 
+				String message = null;
+				String messageKey = null;
+
+				if (!StringUtil.isLowerCase(baseURL)) {
+					message = "%s must contain only lowercase characters.";
+					messageKey = "x-must-contain-only-lowercase-characters";
+				}
+				else {
+					message =
+						"%s can have a maximum of 255 alphanumeric characters.";
+					messageKey =
+						"x-can-have-a-maximum-of-255-alphanumeric-characters";
+				}
+
+				String label = objectField.getLabel(user.getLocale());
+
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					Arrays.asList(objectField.getLabel(user.getLocale())),
-					String.format(
-						"%s can have a maximum of 255 alphanumeric characters",
-						objectField.getLabel(user.getLocale())),
-					"x-can-have-a-maximum-of-255-alphanumeric-characters");
+					Arrays.asList(label, "\"/\""),
+					String.format(message, label), messageKey);
 			}
 		}
 		catch (Exception exception) {
@@ -94,7 +108,7 @@ public class APIApplicationRelevantObjectEntryModelListener
 	}
 
 	private static final Pattern _baseURLPattern = Pattern.compile(
-		"[a-zA-Z0-9-]{1,255}");
+		"[a-z-0-9-]{1,255}");
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

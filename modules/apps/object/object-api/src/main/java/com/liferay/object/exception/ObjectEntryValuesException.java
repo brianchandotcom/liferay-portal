@@ -198,6 +198,31 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class InvalidFileValue extends ObjectEntryValuesException {
+
+		public InvalidFileValue(String fileValue, String objectFieldName) {
+			super(
+				String.format(
+					"The file Value %s is invalid for object field \"%s\"",
+					fileValue, objectFieldName));
+
+			_fileValue = fileValue;
+			_objectFieldName = objectFieldName;
+		}
+
+		public String getFileValue() {
+			return _fileValue;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final String _fileValue;
+		private final String _objectFieldName;
+
+	}
+
 	public static class InvalidObjectField extends ObjectEntryValuesException {
 
 		public InvalidObjectField(

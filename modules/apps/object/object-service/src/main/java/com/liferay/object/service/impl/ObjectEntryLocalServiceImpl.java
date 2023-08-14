@@ -4176,9 +4176,20 @@ public class ObjectEntryLocalServiceImpl
 				return;
 			}
 
-			if (objectField.isRequired()) {
-				throw new ObjectEntryValuesException.Required(
-					objectField.getName());
+			if (GetterUtil.getString(
+					entry.getValue()
+				).equals(
+					""
+				)) {
+
+				if (objectField.isRequired()) {
+					throw new ObjectEntryValuesException.Required(
+						objectField.getName());
+				}
+			}
+			else {
+				throw new ObjectEntryValuesException.InvalidFileValue(
+					(String)entry.getValue(), objectField.getName());
 			}
 		}
 		else if (objectField.compareBusinessType(

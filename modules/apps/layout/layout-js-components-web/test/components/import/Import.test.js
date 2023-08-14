@@ -6,11 +6,22 @@
 import '@testing-library/jest-dom/extend-expect';
 import {Import} from '@liferay/layout-js-components-web';
 import {act, fireEvent, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-describe('ImportModal', () => {
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	navigate: jest.fn(),
+}));
+
+describe('Import', () => {
 	beforeAll(() => {
 		jest.useFakeTimers();
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
 	it('renders text informing the user should upload a ZIP file', () => {
@@ -62,6 +73,23 @@ describe('ImportModal', () => {
 		expect(button.disabled).toBeFalsy();
 	});
 
+	it('renders cancel button enabled', () => {
+		render(
+			<Import backURL="http://test.com" portletNamespace="namespace" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const button = screen.getByRole('button', {name: /cancel/i});
+		expect(button.disabled).toBeFalsy();
+
+		userEvent.click(button);
+
+		expect(navigate).toHaveBeenCalled();
+	});
+
 	it('shows required validation when a file with an invalid extension is introduced', () => {
 		render(<Import portletNamespace="namespace" />);
 
@@ -83,5 +111,16 @@ describe('ImportModal', () => {
 		expect(
 			screen.getByText('only-zip-files-are-allowed')
 		).toBeInTheDocument();
+	});
+
+	it('renders help link', () => {
+		const {getByText} = render(
+			<Import
+				helpLink={{href: 'http://example.com', message: 'Learn more'}}
+				portletNamespace="namespace"
+			/>
+		);
+
+		expect(getByText('Learn more')).toBeInTheDocument();
 	});
 });

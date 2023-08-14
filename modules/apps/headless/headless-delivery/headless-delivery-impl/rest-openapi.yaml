@@ -5091,6 +5091,11 @@ components:
                         The number of comments the structured content has received.
                     readOnly: true
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                    writeOnly: true
                 priority:
                     # @review
                     description:

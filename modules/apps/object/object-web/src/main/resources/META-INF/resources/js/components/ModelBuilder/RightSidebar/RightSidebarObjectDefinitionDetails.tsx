@@ -63,16 +63,15 @@ export function RightSidebarObjectDefinitionDetails({
 					selectedNode.data?.externalReferenceCode as string
 				);
 
-				const newNonRelationshipObjectFieldsInfo = selectedObjectDefinitionResponse.objectFields.map(
-					(objectField) => {
-						if (objectField.businessType !== 'Relationship') {
-							return {
-								label: objectField.label,
-								name: objectField.name,
-							};
-						}
-					}
-				) as nonRelationshipObjectFieldsInfo[];
+				const newNonRelationshipObjectFieldsInfo = selectedObjectDefinitionResponse.objectFields
+					.filter(
+						(objectField) =>
+							objectField.businessType !== 'Relationship'
+					)
+					.map((objectField) => ({
+						label: objectField.label,
+						name: objectField.name,
+					})) as nonRelationshipObjectFieldsInfo[];
 
 				setNonRelationshipObjectFieldsInfo(
 					newNonRelationshipObjectFieldsInfo

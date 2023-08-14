@@ -5,17 +5,21 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
+import com.liferay.portal.search.internal.query.BooleanQueryImpl;
 import com.liferay.portal.search.internal.query.CommonTermsQueryImpl;
 import com.liferay.portal.search.internal.query.FuzzyQueryImpl;
 import com.liferay.portal.search.internal.query.MatchAllQueryImpl;
 import com.liferay.portal.search.internal.query.MoreLikeThisQueryImpl;
 import com.liferay.portal.search.internal.query.TermQueryImpl;
 import com.liferay.portal.search.internal.query.WildcardQueryImpl;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
+import java.util.List;
 
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 
 import org.junit.Assert;
@@ -74,6 +78,29 @@ public class ElasticsearchQueryTranslatorTest {
 	@Test
 	public void testTranslateBoostWildcardQuery() {
 		_assertBoost(new WildcardQueryImpl("test", "test"));
+	}
+
+	@Test
+	public void testTranslateInnerBoostBooleanQuery() {
+		Query query = new MatchAllQueryImpl();
+
+		query.setBoost(_BOOST);
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.addMustQueryClauses(query);
+
+		QueryBuilder queryBuilder = _elasticsearchQueryTranslator.translate(
+			booleanQuery);
+
+		List<QueryBuilder> mustQueryBuilders =
+			((BoolQueryBuilder)queryBuilder).must();
+
+		QueryBuilder innerQueryBuilder = mustQueryBuilders.get(0);
+
+		Assert.assertEquals(
+			innerQueryBuilder.toString(), String.valueOf(_BOOST),
+			String.valueOf(innerQueryBuilder.boost()));
 	}
 
 	private void _assertBoost(Query query) {

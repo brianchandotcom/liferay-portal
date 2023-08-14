@@ -13,6 +13,11 @@ package ${configYAML.apiPackagePath}.client.dto.${escapedVersion};
 </#list>
 
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
+
+<#if freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)?keys?seq_contains("permissions")>
+	import ${configYAML.apiPackagePath}.client.permission.Permission;
+</#if>
+
 import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 
 import java.io.Serializable;

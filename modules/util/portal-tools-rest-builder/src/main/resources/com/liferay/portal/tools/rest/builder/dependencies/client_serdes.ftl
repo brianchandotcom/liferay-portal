@@ -14,6 +14,10 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
+<#if freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)?keys?seq_contains("permissions")>
+	import ${configYAML.apiPackagePath}.client.permission.Permission;
+</#if>
+
 import java.math.BigDecimal;
 
 import java.text.DateFormat;

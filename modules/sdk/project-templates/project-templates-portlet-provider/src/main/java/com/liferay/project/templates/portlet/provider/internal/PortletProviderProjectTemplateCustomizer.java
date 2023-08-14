@@ -46,10 +46,9 @@ public class PortletProviderProjectTemplateCustomizer
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
 		if (liferayVersion.startsWith("7.4")) {
+			String liferayProduct = projectTemplatesArgs.getLiferayProduct();
 			String qualifiedVersion = liferayVersion.substring(
 				liferayVersion.lastIndexOf(".") + 1);
-
-			String liferayProduct = projectTemplatesArgs.getLiferayProduct();
 
 			if (liferayProduct.equals("dxp")) {
 				qualifiedVersion = qualifiedVersion.substring(1);

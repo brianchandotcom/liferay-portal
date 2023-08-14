@@ -40,47 +40,91 @@ export function fieldsCustomSort(objectFields: ObjectFieldNode[]) {
 	return objectFields.sort(compareFields);
 }
 
-function findEdgesWithSameSourceAndTarget(
+function separateEdgesBySourceAndTarget(
 	edges: Edge<ObjectRelationshipEdgeData>[]
 ) {
-	const duplicates = edges.filter((edge, index, self) => {
-		const foundIndex = self.findIndex(
-			(item) =>
-				(item.source === edge.source && item.target === edge.target) ||
-				(item.source === edge.target && item.target === edge.source)
-		);
+	const edgeGroups: {[key: string]: Edge<ObjectRelationshipEdgeData>[]} = {};
 
-		return foundIndex !== -1 && foundIndex !== index;
+	edges.forEach((edge) => {
+		const key =
+			edge.source <= edge.target
+				? `${edge.source}-${edge.target}`
+				: `${edge.target}-${edge.source}`;
+
+		if (!edgeGroups[key]) {
+			edgeGroups[key] = [];
+		}
+
+		edgeGroups[key].push(edge);
 	});
 
-	return duplicates;
+	const groupedEdges = Object.values(edgeGroups);
+
+	return groupedEdges;
+}
+
+export function incrementEdgesYPosition(
+	edges: Edge<ObjectRelationshipEdgeData>[],
+	initialYPosition: number,
+	yIncrement: number
+) {
+	let sourceTargetYIncrement = initialYPosition;
+
+	return edges.map((edge) => {
+		const newEdge = {
+			...edge,
+			data: {
+				...edge.data,
+				sourceY: sourceTargetYIncrement,
+				targetY: sourceTargetYIncrement,
+			},
+		} as Edge<ObjectRelationshipEdgeData>;
+
+		sourceTargetYIncrement += yIncrement;
+
+		return newEdge;
+	});
 }
 
 export function getNonOverlappingEdges(
 	allEdges: Edge<ObjectRelationshipEdgeData>[]
 ) {
-	const overlapEdges = findEdgesWithSameSourceAndTarget(allEdges);
+	const groupedEdges = separateEdgesBySourceAndTarget(allEdges);
 
-	const nonOverlappingEdges = overlapEdges.map((edge) => {
-		const newEdge = {
-			...edge,
-			data: {
-				...edge.data,
-				sourceY: 50,
-				targetY: 50,
-			},
-		} as Edge<ObjectRelationshipEdgeData>;
+	const newEdges: Edge<ObjectRelationshipEdgeData>[] = [];
 
-		return newEdge;
+	function addIncrementedEdges(
+		edges: Edge<ObjectRelationshipEdgeData>[],
+		initialYPosition: number,
+		yIncrement: number
+	) {
+		const incrementedEdges = incrementEdgesYPosition(
+			edges,
+			initialYPosition,
+			yIncrement
+		);
+		newEdges.push(...incrementedEdges);
+	}
+
+	groupedEdges.forEach((edges) => {
+		const edgeCount = edges.length;
+
+		if (edgeCount <= 1) {
+			addIncrementedEdges(edges, 0, 0);
+		}
+		else if (edgeCount <= 3) {
+			addIncrementedEdges(edges, 0, 50);
+		}
+		else if (edgeCount <= 4) {
+			addIncrementedEdges(edges, -50, 50);
+		}
+		else if (edgeCount <= 6) {
+			addIncrementedEdges(edges, -100, 50);
+		}
+		else {
+			addIncrementedEdges(edges, -100, 30);
+		}
 	});
 
-	const filteredEdges: Edge<ObjectRelationshipEdgeData>[] = allEdges.filter(
-		(edge) => {
-			return !nonOverlappingEdges.some(
-				(nonOverlappingEdge) => edge.id === nonOverlappingEdge.id
-			);
-		}
-	);
-
-	return [...filteredEdges, ...nonOverlappingEdges];
+	return newEdges;
 }

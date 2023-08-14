@@ -6,10 +6,11 @@
 /// <reference types="react" />
 
 import {EdgeProps} from 'react-flow-renderer';
+import {ObjectRelationshipEdgeData} from '../types';
 export default function DefaultEdge({
 	id,
 	source,
 	target,
 	style,
 	data,
-}: EdgeProps): JSX.Element | null;
+}: EdgeProps<ObjectRelationshipEdgeData>): JSX.Element | null;

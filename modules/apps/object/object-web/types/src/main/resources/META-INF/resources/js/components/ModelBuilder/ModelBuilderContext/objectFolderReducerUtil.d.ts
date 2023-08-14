@@ -8,6 +8,11 @@ import {ObjectFieldNode, ObjectRelationshipEdgeData} from '../types';
 export declare function fieldsCustomSort(
 	objectFields: ObjectFieldNode[]
 ): ObjectFieldNode[];
+export declare function incrementEdgesYPosition(
+	edges: Edge<ObjectRelationshipEdgeData>[],
+	initialYPosition: number,
+	yIncrement: number
+): Edge<ObjectRelationshipEdgeData>[];
 export declare function getNonOverlappingEdges(
 	allEdges: Edge<ObjectRelationshipEdgeData>[]
 ): Edge<ObjectRelationshipEdgeData>[];

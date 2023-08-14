@@ -3,7 +3,6 @@
 <suppressions>
 	<source-check>
 		<suppress checks="JavaMetaAnnotationsCheck" files="frontend-js-minifier/src/main/java/com/liferay/frontend/js/minifier/internal/configuration/YahooJavaScriptMinifierConfiguration\.java" />
-		<suppress checks="JavaOSGiReferenceCheck" files="frontend-js-importmaps-extender/src/main/java/com/liferay/frontend/js/importmaps/extender/internal/JSImportMapsContributorExtender\.java" />
 		<suppress checks="JSLodashDependencyCheck" files="frontend-js-aui-web/src/main/resources/META-INF/resources/liferay/aui_sandbox\.js" />
 	</source-check>
 </suppressions>

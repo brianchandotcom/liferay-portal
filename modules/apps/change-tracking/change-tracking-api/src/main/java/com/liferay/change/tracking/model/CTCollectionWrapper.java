@@ -45,6 +45,8 @@ public class CTCollectionWrapper
 		attributes.put("schemaVersionId", getSchemaVersionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("onDemandUserId", getOnDemandUserId());
+		attributes.put("shareable", isShareable());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusDate", getStatusDate());
@@ -119,6 +121,18 @@ public class CTCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long onDemandUserId = (Long)attributes.get("onDemandUserId");
+
+		if (onDemandUserId != null) {
+			setOnDemandUserId(onDemandUserId);
+		}
+
+		Boolean shareable = (Boolean)attributes.get("shareable");
+
+		if (shareable != null) {
+			setShareable(shareable);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -226,6 +240,26 @@ public class CTCollectionWrapper
 	}
 
 	/**
+	 * Returns the on demand user ID of this ct collection.
+	 *
+	 * @return the on demand user ID of this ct collection
+	 */
+	@Override
+	public long getOnDemandUserId() {
+		return model.getOnDemandUserId();
+	}
+
+	/**
+	 * Returns the on demand user uuid of this ct collection.
+	 *
+	 * @return the on demand user uuid of this ct collection
+	 */
+	@Override
+	public String getOnDemandUserUuid() {
+		return model.getOnDemandUserUuid();
+	}
+
+	/**
 	 * Returns the primary key of this ct collection.
 	 *
 	 * @return the primary key of this ct collection
@@ -243,6 +277,16 @@ public class CTCollectionWrapper
 	@Override
 	public long getSchemaVersionId() {
 		return model.getSchemaVersionId();
+	}
+
+	/**
+	 * Returns the shareable of this ct collection.
+	 *
+	 * @return the shareable of this ct collection
+	 */
+	@Override
+	public boolean getShareable() {
+		return model.getShareable();
 	}
 
 	/**
@@ -323,6 +367,16 @@ public class CTCollectionWrapper
 	@Override
 	public boolean isProduction() {
 		return model.isProduction();
+	}
+
+	/**
+	 * Returns <code>true</code> if this ct collection is shareable.
+	 *
+	 * @return <code>true</code> if this ct collection is shareable; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isShareable() {
+		return model.isShareable();
 	}
 
 	@Override
@@ -411,6 +465,26 @@ public class CTCollectionWrapper
 	}
 
 	/**
+	 * Sets the on demand user ID of this ct collection.
+	 *
+	 * @param onDemandUserId the on demand user ID of this ct collection
+	 */
+	@Override
+	public void setOnDemandUserId(long onDemandUserId) {
+		model.setOnDemandUserId(onDemandUserId);
+	}
+
+	/**
+	 * Sets the on demand user uuid of this ct collection.
+	 *
+	 * @param onDemandUserUuid the on demand user uuid of this ct collection
+	 */
+	@Override
+	public void setOnDemandUserUuid(String onDemandUserUuid) {
+		model.setOnDemandUserUuid(onDemandUserUuid);
+	}
+
+	/**
 	 * Sets the primary key of this ct collection.
 	 *
 	 * @param primaryKey the primary key of this ct collection
@@ -428,6 +502,16 @@ public class CTCollectionWrapper
 	@Override
 	public void setSchemaVersionId(long schemaVersionId) {
 		model.setSchemaVersionId(schemaVersionId);
+	}
+
+	/**
+	 * Sets whether this ct collection is shareable.
+	 *
+	 * @param shareable the shareable of this ct collection
+	 */
+	@Override
+	public void setShareable(boolean shareable) {
+		model.setShareable(shareable);
 	}
 
 	/**

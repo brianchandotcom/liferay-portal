@@ -395,12 +395,18 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		String[] allSystemRoles = ArrayUtil.append(
 			systemRoles, systemOrganizationRoles, systemSiteRoles);
 
+		List<String> primKeys = new ArrayList<>();
+
 		for (String roleName : allSystemRoles) {
 			Role role = getRole(companyId, roleName);
 
+			primKeys.add(String.valueOf(role.getRoleId()));
+		}
+
+		if (!primKeys.isEmpty()) {
 			_resourceLocalService.addResources(
-				companyId, 0, 0, Role.class.getName(), role.getRoleId(), false,
-				false, false);
+				companyId, 0, 0, Role.class.getName(),
+				primKeys.toArray(new String[0]), false, false, false);
 		}
 
 		// All users should be able to view all system roles by default

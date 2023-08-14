@@ -64,7 +64,7 @@ definition {
 			value1 = "\TAB");
 
 		KeyPress(
-			key_link = "Accessibility Menu",
+			key_link = "Open Accessibility Menu",
 			locator1 = "AccessibilityMenu#QUICK_LINK",
 			value1 = "\ENTER");
 	}

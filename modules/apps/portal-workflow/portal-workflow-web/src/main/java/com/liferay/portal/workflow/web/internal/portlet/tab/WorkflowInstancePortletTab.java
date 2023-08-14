@@ -63,11 +63,6 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Override
-	public String getSearchJspPath() {
-		return "/instance/workflow_instance_search.jsp";
-	}
-
-	@Override
 	public ServletContext getServletContext() {
 		return servletContext;
 	}

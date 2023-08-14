@@ -23,8 +23,6 @@ public interface WorkflowPortletTab extends DynamicInclude {
 
 	public String getName();
 
-	public String getSearchJspPath();
-
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse);
 

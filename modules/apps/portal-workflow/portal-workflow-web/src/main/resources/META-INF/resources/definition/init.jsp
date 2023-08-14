@@ -32,7 +32,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException" %><%@
 page import="com.liferay.portal.workflow.web.internal.dao.search.WorkflowDefinitionResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionDisplayContext" %><%@
-page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionDisplayTerms" %><%@
 page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearch" %>
 
 <%@ page import="java.text.Format" %>

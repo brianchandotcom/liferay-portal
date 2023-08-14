@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+WorkflowNavigationDisplayContext workflowNavigationDisplayContext = (WorkflowNavigationDisplayContext)request.getAttribute(WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -20,15 +22,12 @@ if (Validator.isNotNull(backURL)) {
 
 <liferay-ui:success key='<%= portletName + "requestProcessed" %>' message="your-request-completed-successfully" />
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchPage" value="<%= selectedWorkflowPortletTab.getSearchJspPath() %>" />
-
-	<%
-	PortletURL searchURL = selectedWorkflowPortletTab.getSearchURL(renderRequest, renderResponse);
-	%>
-
-	<liferay-util:param name="searchURL" value="<%= searchURL.toString() %>" />
-</liferay-util:include>
+<c:if test="<%= workflowPortletTabs.size() != 1 %>">
+	<clay:navigation-bar
+		inverted="<%= false %>"
+		navigationItems="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
+	/>
+</c:if>
 
 <%
 selectedWorkflowPortletTab.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), null);

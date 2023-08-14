@@ -50,11 +50,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Override
-	public String getSearchJspPath() {
-		return "/definition/workflow_definition_search.jsp";
-	}
-
-	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

@@ -54,11 +54,6 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	}
 
 	@Override
-	public String getSearchJspPath() {
-		return "/designer/kaleo_definition_search.jsp";
-	}
-
-	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

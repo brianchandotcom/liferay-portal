@@ -454,16 +454,22 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
+		// Workaround for LPS-180801
+
+		var workflowTask = Workflow._matchTaskCase(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowTask = "review");
+
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "review");
+			workflowTask = ${workflowTask});
 
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
 			workflowDefinitionTask = "approve",
-			workflowTask = "review");
+			workflowTask = ${workflowTask});
 
 		Navigator.openURL();
 

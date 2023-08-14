@@ -26,6 +26,7 @@ interface IField {
 }
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
+	className?: string;
 	disableSave?: boolean;
 	fields: Array<IField>;
 	items: Array<any>;
@@ -36,10 +37,11 @@ interface IOrderableTableProps {
 	onCreationButtonClick: Function;
 	onOrderChange: (args: {orderedItems: any[]}) => void;
 	onSaveButtonClick: Function;
-	title: string;
+	title?: string;
 }
 declare const OrderableTable: ({
 	actions,
+	className,
 	disableSave,
 	fields,
 	items: initialItems,

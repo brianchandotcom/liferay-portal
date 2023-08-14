@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -74,16 +73,14 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	public void testHasFilesWithFileEntryNameHasSpecialChars()
 		throws Exception {
 
-		String fileName = RandomTestUtil.randomString() + "%2B .txt";
+		String fileName = RandomTestUtil.randomString() + "+ .txt";
 
 		Assert.assertFalse(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileName))));
 
-		_addFileEntry(
-			HttpComponentsUtil.decodeURL(fileName),
-			RandomTestUtil.randomString());
+		_addFileEntry(fileName, RandomTestUtil.randomString());
 
 		Assert.assertTrue(
 			WebServerServlet.hasFiles(

@@ -1,6 +1,7 @@
 @component-name = "portal-smoke"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.smoke = "true";
@@ -95,7 +96,6 @@ definition {
 	@priority = 4
 	test SmokeWithEmbeddedHypersonic {
 		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
-		property ci.retries.disabled = "true";
 		property custom.properties = "passwords.default.policy.change.required=true";
 		property database.hypersonic.embedded = "true";
 		property database.types = "hypersonic";
@@ -116,7 +116,6 @@ definition {
 	@priority = 4
 	test SmokeWithJNDI {
 		property app.server.types = "tomcat,wildfly,weblogic,websphere";
-		property ci.retries.disabled = "true";
 		property database.jndi.enabled = "true";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.smoke = "false";
@@ -134,7 +133,6 @@ definition {
 
 	@priority = 5
 	test SmokeWithRewriteBatchedStatements {
-		property ci.retries.disabled = "true";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";
 		property portal.smoke = "false";
 		property rewrite.batch.statements = "true";
@@ -150,7 +148,6 @@ definition {
 
 	@priority = 5
 	test SmokeWithRuntimeJSPCompile {
-		property ci.retries.disabled = "true";
 		property delete.precompiled.jsps = "true";
 		property portal.smoke = "false";
 
@@ -163,7 +160,6 @@ definition {
 
 	@priority = 5
 	test SmokeWithSPADisabled {
-		property ci.retries.disabled = "true";
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property portal.smoke = "false";
 

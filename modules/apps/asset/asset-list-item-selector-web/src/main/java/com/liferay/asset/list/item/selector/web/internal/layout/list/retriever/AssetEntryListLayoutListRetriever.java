@@ -117,28 +117,6 @@ public class AssetEntryListLayoutListRetriever
 	}
 
 	@Override
-	public List<Object> getList(
-		ClassedModelListObjectReference classedModelListObjectReference,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		InfoPage<?> infoPage = getInfoPage(
-			classedModelListObjectReference, layoutListRetrieverContext);
-
-		return (List<Object>)infoPage.getPageItems();
-	}
-
-	@Override
-	public int getListCount(
-		ClassedModelListObjectReference classedModelListObjectReference,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		InfoPage<?> infoPage = getInfoPage(
-			classedModelListObjectReference, layoutListRetrieverContext);
-
-		return infoPage.getTotalCount();
-	}
-
-	@Override
 	public List<InfoFilter> getSupportedInfoFilters(
 		ClassedModelListObjectReference classedModelListObjectReference) {
 

@@ -109,28 +109,6 @@ public class InfoCollectionProviderLayoutListRetriever
 	}
 
 	@Override
-	public List<Object> getList(
-		KeyListObjectReference keyListObjectReference,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		InfoPage<?> infoPage = getInfoPage(
-			keyListObjectReference, layoutListRetrieverContext);
-
-		return (List<Object>)infoPage.getPageItems();
-	}
-
-	@Override
-	public int getListCount(
-		KeyListObjectReference keyListObjectReference,
-		LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		InfoPage<?> infoPage = getInfoPage(
-			keyListObjectReference, layoutListRetrieverContext);
-
-		return infoPage.getTotalCount();
-	}
-
-	@Override
 	public List<InfoFilter> getSupportedInfoFilters(
 		KeyListObjectReference keyListObjectReference) {
 

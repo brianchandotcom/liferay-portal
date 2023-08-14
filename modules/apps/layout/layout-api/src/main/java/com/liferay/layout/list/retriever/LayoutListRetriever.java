@@ -21,29 +21,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface LayoutListRetriever
 	<T extends ItemSelectorReturnType, S extends ListObjectReference> {
 
-	public default InfoPage<?> getInfoPage(
-		S s, LayoutListRetrieverContext layoutListRetrieverContext) {
-
-		return InfoPage.of(
-			getList(s, layoutListRetrieverContext),
-			layoutListRetrieverContext.getPagination(),
-			() -> getListCount(s, layoutListRetrieverContext));
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getInfoPage(S, LayoutListRetrieverContext)}
-	 */
-	@Deprecated
-	public List<Object> getList(
-		S s, LayoutListRetrieverContext layoutListRetrieverContext);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getInfoPage(S, LayoutListRetrieverContext)}
-	 */
-	@Deprecated
-	public int getListCount(
+	public InfoPage<?> getInfoPage(
 		S s, LayoutListRetrieverContext layoutListRetrieverContext);
 
 	public default List<InfoFilter> getSupportedInfoFilters(S s) {

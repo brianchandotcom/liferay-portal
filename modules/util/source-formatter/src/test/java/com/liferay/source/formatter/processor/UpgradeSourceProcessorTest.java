@@ -211,6 +211,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaPhoneLocalServiceUtilCheck() throws Exception {
+		test("upgrade/UpgradeJavaPhoneLocalServiceUtilCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaPortletSharedSearchSettingsCheck()
 		throws Exception {
 

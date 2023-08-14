@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -812,30 +811,6 @@ public class JournalArticleFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected String getDDMStructureIds(
-		long[] ddmStructureIds, String tableName) {
-
-		if (ArrayUtil.isEmpty(ddmStructureIds)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler((ddmStructureIds.length * 3) + 1);
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (int i = 0; i < ddmStructureIds.length; i++) {
-			sb.append(tableName);
-			sb.append(".DDMStructureId = ? ");
-			sb.append(WHERE_OR);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		return sb.toString();
 	}
 
 	protected String getFolderIds(List<Long> folderIds, String tableName) {

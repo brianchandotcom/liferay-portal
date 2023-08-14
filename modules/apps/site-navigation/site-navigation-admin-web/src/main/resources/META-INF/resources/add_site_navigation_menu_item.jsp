@@ -45,9 +45,18 @@ if (addURL == null) {
 	</aui:fieldset>
 
 	<aui:button-row cssClass="modal-footer position-fixed">
-		<aui:button name="addButton" type="submit" value='<%= type.equals("layout") ? "select" : "add" %>' />
+		<clay:button
+			id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
+			label='<%= type.equals("layout") ? "select" : "add" %>'
+			type="submit"
+		/>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<clay:button
+			displayType="btn-secondary cancel"
+			label="cancel"
+			onClick='<%= "Liferay.Util.navigation('" + redirect + "')" %>'
+			type="button"
+		/>
 	</aui:button-row>
 </aui:form>
 

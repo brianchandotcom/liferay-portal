@@ -42,8 +42,10 @@ SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServi
 			/>
 		</c:if>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-block" type="submit" />
-		</aui:button-row>
+		<clay:button
+			block="<%= true %>"
+			label="save"
+			type="submit"
+		/>
 	</aui:form>
 </c:if>

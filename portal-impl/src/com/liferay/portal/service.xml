@@ -2104,7 +2104,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="scope" />
-			<finder-column name="primKey" />
+			<finder-column arrayable-operator="OR" name="primKey" />
 		</finder>
 		<finder name="C_N_S_R" return-type="Collection">
 			<finder-column name="companyId" />

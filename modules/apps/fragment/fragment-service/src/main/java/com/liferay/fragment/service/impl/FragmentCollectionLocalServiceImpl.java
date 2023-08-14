@@ -247,6 +247,32 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	public String getUniqueFragmentCollectionName(long groupId, String name) {
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.fetchByG_LikeN_First(
+				groupId, name, null);
+
+		if (fragmentCollection == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			fragmentCollection =
+				fragmentCollectionPersistence.fetchByG_LikeN_First(
+					groupId, newName, null);
+
+			if (fragmentCollection == null) {
+				return newName;
+			}
+		}
+	}
+
+	@Override
 	public FragmentCollection updateFragmentCollection(
 			long fragmentCollectionId, String name, String description)
 		throws PortalException {

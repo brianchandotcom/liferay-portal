@@ -241,6 +241,34 @@ public class FragmentCompositionLocalServiceImpl
 	}
 
 	@Override
+	public String getUniqueFragmentCompositionName(
+		long groupId, long fragmentCollectionId, String name) {
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionPersistence.fetchByG_FCI_LikeN_First(
+				groupId, fragmentCollectionId, name, null);
+
+		if (fragmentComposition == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			fragmentComposition =
+				fragmentCompositionPersistence.fetchByG_FCI_LikeN_First(
+					groupId, fragmentCollectionId, newName, null);
+
+			if (fragmentComposition == null) {
+				return newName;
+			}
+		}
+	}
+
+	@Override
 	public FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws PortalException {

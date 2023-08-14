@@ -219,6 +219,7 @@ const OrderableTableRow = ({
 
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
+	className?: string;
 	creationMenuItems?: React.ComponentProps<
 		typeof ClayDropDownWithItems
 	>['items'];
@@ -232,11 +233,12 @@ interface IOrderableTableProps {
 	onCancelButtonClick: Function;
 	onOrderChange: (args: {orderedItems: any[]}) => void;
 	onSaveButtonClick: Function;
-	title: string;
+	title?: string;
 }
 
 const OrderableTable = ({
 	actions,
+	className,
 	creationMenuItems,
 	creationMenuLabel = Liferay.Language.get('add'),
 	disableSave,
@@ -298,10 +300,14 @@ const OrderableTable = ({
 	};
 
 	return (
-		<ClayLayout.Sheet className="mt-3 orderable-table-sheet">
-			<ClayLayout.SheetHeader>
-				<h2 className="sheet-title">{title}</h2>
-			</ClayLayout.SheetHeader>
+		<ClayLayout.Sheet
+			className={classNames('mt-3 orderable-table-sheet', className)}
+		>
+			{title && (
+				<ClayLayout.SheetHeader>
+					<h2 className="sheet-title">{title}</h2>
+				</ClayLayout.SheetHeader>
+			)}
 
 			<ClayLayout.SheetSection>
 				<ManagementToolbar.Container>

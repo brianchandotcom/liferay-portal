@@ -27,6 +27,7 @@ interface IField {
 }
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
+	className?: string;
 	creationMenuItems?: React.ComponentProps<
 		typeof ClayDropDownWithItems
 	>['items'];
@@ -40,10 +41,11 @@ interface IOrderableTableProps {
 	onCancelButtonClick: Function;
 	onOrderChange: (args: {orderedItems: any[]}) => void;
 	onSaveButtonClick: Function;
-	title: string;
+	title?: string;
 }
 declare const OrderableTable: ({
 	actions,
+	className,
 	creationMenuItems,
 	creationMenuLabel,
 	disableSave,

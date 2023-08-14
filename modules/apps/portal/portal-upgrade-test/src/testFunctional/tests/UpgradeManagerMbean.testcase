@@ -4,7 +4,7 @@ definition {
 	property app.server.types = "tomcat";
 	property custom.properties = "upgrade.database.auto.run=true";
 	property database.types = "mysql";
-	property jmxremote.enabled= "true";
+	property jmxremote.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property skip.start.app.server = "true";
@@ -12,10 +12,10 @@ definition {
 
 	@priority = 3
 	test CheckMbeanDuringUpgradeIsRunning {
+		property custom.startup.log.message = "Started web bundles";
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
 		property skip.upgrade-legacy-database = "true";
-		property custom.startup.log.message = "Started web bundles";
 
 		task ("Given the portal is started When the Upgrade Manager mBean attributes are captured while the upgrade is running") {
 			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
@@ -42,7 +42,7 @@ definition {
 		}
 	}
 
-    @priority = 5
+	@priority = 5
 	test CheckMbeanFailedUpgrade {
 		property custom.mysql.sql.statement = "ALTER TABLE FragmentComposition DROP description;";
 		property data.archive.type = "data-archive-portal";
@@ -229,4 +229,5 @@ definition {
 			}
 		}
 	}
+
 }

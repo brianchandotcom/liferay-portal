@@ -16165,7 +16165,7 @@ mail.send.blacklist=</echo>
 						<![CDATA[
 CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=1234 -Dcom.sun.management.jmxremote.ssl=false"
 						]]>
-					</echo>
+				</echo>
 			</then>
 		</if>
 
@@ -16369,7 +16369,7 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 					token="CATALINA_OPTS=&quot;$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=1234 -Dcom.sun.management.jmxremote.ssl=false&quot;"
 					value=""
 				/>
-				
+
 				<delete failonerror="false" file="${project.dir}/mbean-attributes-output.txt" />
 			</then>
 		</if>

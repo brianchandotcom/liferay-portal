@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
+import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
 
 /**
  * @author Pei-Jung Lan

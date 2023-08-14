@@ -12,7 +12,7 @@ import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.UpgradePartitionedControlTable;
+import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

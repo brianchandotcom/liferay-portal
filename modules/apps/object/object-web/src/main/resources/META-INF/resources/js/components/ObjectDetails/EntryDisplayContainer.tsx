@@ -33,7 +33,7 @@ export function EntryDisplayContainer({
 	>();
 
 	const titleFieldOptions = useMemo(() => {
-		return nonRelationshipObjectFieldsInfo.map(({label, name}) => {
+		return nonRelationshipObjectFieldsInfo?.map(({label, name}) => {
 			return {
 				label: getLocalizableLabel(
 					values.defaultLanguageId as Liferay.Language.Locale,

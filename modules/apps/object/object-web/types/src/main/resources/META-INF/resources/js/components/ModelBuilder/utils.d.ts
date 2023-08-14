@@ -6,14 +6,16 @@
 import {ArrowHeadType, Node, Position} from 'react-flow-renderer';
 export declare function getEdgeParams(
 	source: Node,
-	target: Node
+	sourceIncrementY: number,
+	target: Node,
+	targetIncrementY: number
 ): {
 	sourcePos: Position;
-	sx: number;
-	sy: number;
+	sourceX: number;
+	sourceY: number;
 	targetPos: Position;
-	tx: number;
-	ty: number;
+	targetX: number;
+	targetY: number;
 };
 export declare function createElements(): (
 	| {

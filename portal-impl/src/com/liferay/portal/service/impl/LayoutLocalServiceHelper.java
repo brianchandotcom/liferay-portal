@@ -286,11 +286,11 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			Layout parentLayout = layoutPersistence.findByG_P_L(
 				groupId, privateLayout, parentLayoutId);
 
-			if ((((layout == null) ||
-				  Validator.isNull(layout.getSourcePrototypeLayoutUuid())) &&
-				 !_isDraftLayout(classNameId, classPK, type) &&
-				 (layout instanceof VirtualLayout)) ||
-				!parentLayout.isLayoutSortable()) {
+			if (((layout == null) ||
+				 Validator.isNull(layout.getSourcePrototypeLayoutUuid())) &&
+				!_isDraftLayout(classNameId, classPK, type) &&
+				((layout instanceof VirtualLayout) ||
+				 !parentLayout.isLayoutSortable())) {
 
 				throw new LayoutParentLayoutIdException(
 					LayoutParentLayoutIdException.NOT_SORTABLE);

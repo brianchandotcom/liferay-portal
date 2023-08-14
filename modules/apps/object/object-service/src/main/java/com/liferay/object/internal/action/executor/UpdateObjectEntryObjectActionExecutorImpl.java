@@ -7,6 +7,7 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.executor.ObjectActionExecutor;
+import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
@@ -16,6 +17,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -54,18 +56,21 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
+		Map<String, Object> values = _getValues(
+			objectDefinition, parametersUnicodeProperties,
+			ObjectEntryVariablesUtil.getVariables(
+				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+				_systemObjectDefinitionManagerRegistry));
+
+		values.put(
+			"objectActionId", payloadJSONObject.getLong("objectActionId"));
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				_execute(
 					objectDefinition,
 					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
-					_userLocalService.getUser(userId),
-					_getValues(
-						objectDefinition, parametersUnicodeProperties,
-						ObjectEntryVariablesUtil.getVariables(
-							_dtoConverterRegistry, objectDefinition,
-							payloadJSONObject,
-							_systemObjectDefinitionManagerRegistry)));
+					_userLocalService.getUser(userId), values);
 
 				return null;
 			});
@@ -116,6 +121,13 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 					}
 				});
 		}
+		catch (Exception exception) {
+			_objectActionLocalService.updateStatus(
+				GetterUtil.getLong(values.get("objectActionId")),
+				ObjectActionConstants.STATUS_FAILED);
+
+			throw exception;
+		}
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 				skipObjectEntryResourcePermission);
@@ -158,6 +170,9 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

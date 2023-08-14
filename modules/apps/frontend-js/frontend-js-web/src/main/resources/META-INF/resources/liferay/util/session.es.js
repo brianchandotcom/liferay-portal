@@ -10,7 +10,7 @@ const TOKEN_SERIALIZE = 'serialize://';
 function getSessionClickFormData(cmd) {
 	const doAsUserIdEncoded = Liferay.ThemeDisplay.getDoAsUserIdEncoded();
 
-	const doAsUserLanguageId = Liferay.ThemeDisplay.getDoAsUserLanguageId();
+	const doAsUserLanguageId = document.documentElement.lang;
 
 	const formData = new FormData();
 

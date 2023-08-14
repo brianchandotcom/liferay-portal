@@ -3621,6 +3621,14 @@ public class PortalImpl implements Portal {
 			}
 		}
 
+		if (Validator.isNotNull(doAsUserLanguageId) && initialize) {
+			Locale userLocale = LocaleUtil.fromLanguageId(doAsUserLanguageId);
+
+			setLocale(httpServletRequest, httpServletResponse, userLocale);
+
+			return userLocale;
+		}
+
 		if ((user != null) && !user.isGuestUser()) {
 			Locale userLocale = getAvailableLocale(groupId, user.getLocale());
 

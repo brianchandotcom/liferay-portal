@@ -11,7 +11,7 @@ import java.util.List;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-public interface SettingsFactory {
+public interface ArchivedSettingsFactory {
 
 	public ArchivedSettings getPortletInstanceArchivedSettings(
 			long groupId, String portletId, String name)

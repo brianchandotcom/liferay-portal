@@ -48,11 +48,11 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
+import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -159,7 +159,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		for (String curName : names) {
 			ArchivedSettings archivedSettings =
-				_settingsFactory.getPortletInstanceArchivedSettings(
+				_archivedSettingsFactory.getPortletInstanceArchivedSettings(
 					themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 					curName);
 
@@ -447,7 +447,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ArchivedSettings archivedSettings =
-			_settingsFactory.getPortletInstanceArchivedSettings(
+			_archivedSettingsFactory.getPortletInstanceArchivedSettings(
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
@@ -503,7 +503,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ArchivedSettings archivedSettings =
-			_settingsFactory.getPortletInstanceArchivedSettings(
+			_archivedSettingsFactory.getPortletInstanceArchivedSettings(
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
@@ -686,7 +686,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 					renderRequest.setAttribute(
 						PortletConfigurationWebKeys.SETTINGS_FACTORY,
-						_settingsFactory);
+						_archivedSettingsFactory);
 				}
 			}
 
@@ -1110,6 +1110,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		PortletConfigurationPortlet.class);
 
 	@Reference
+	private ArchivedSettingsFactory _archivedSettingsFactory;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -1151,9 +1154,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 	private class PortletConfigurationPortletPortletConfig
 		extends LiferayPortletConfigWrapper {

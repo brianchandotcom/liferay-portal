@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -158,7 +158,8 @@ public class SiteInitializerExtender
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _sapEntryLocalService,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
-				null, _settingsFactory, _siteNavigationMenuItemLocalService,
+				null, _archivedSettingsFactory,
+				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
@@ -283,7 +284,7 @@ public class SiteInitializerExtender
 					new FileBackedServletContextDelegate(
 						file, fileKey, symbolicName),
 					null),
-				_settingsFactory, _siteNavigationMenuItemLocalService,
+				_archivedSettingsFactory, _siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
@@ -320,6 +321,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private AccountRoleResource.Factory _accountRoleResourceFactory;
+
+	@Reference
+	private ArchivedSettingsFactory _archivedSettingsFactory;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -485,9 +489,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 	@Reference
 	private SiteNavigationMenuItemLocalService

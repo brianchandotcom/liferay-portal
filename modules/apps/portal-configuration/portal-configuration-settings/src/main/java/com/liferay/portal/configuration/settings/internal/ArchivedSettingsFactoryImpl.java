@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
+import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
-@Component(service = SettingsFactory.class)
-public class SettingsFactoryImpl implements SettingsFactory {
+@Component(service = ArchivedSettingsFactory.class)
+public class ArchivedSettingsFactoryImpl implements ArchivedSettingsFactory {
 
 	@Override
 	public ArchivedSettings getPortletInstanceArchivedSettings(
@@ -91,7 +91,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SettingsFactoryImpl.class);
+		ArchivedSettingsFactoryImpl.class);
 
 	@Reference
 	private PortletItemLocalService _portletItemLocalService;

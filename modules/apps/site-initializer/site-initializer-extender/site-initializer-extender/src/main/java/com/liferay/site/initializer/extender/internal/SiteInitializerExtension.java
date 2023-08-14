@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
@@ -153,7 +153,8 @@ public class SiteInitializerExtension {
 		SAPEntryLocalService sapEntryLocalService,
 		SegmentsEntryLocalService segmentsEntryLocalService,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
-		ServletContext servletContext, SettingsFactory settingsFactory,
+		ServletContext servletContext,
+		ArchivedSettingsFactory archivedSettingsFactory,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -202,7 +203,7 @@ public class SiteInitializerExtension {
 			ploEntryLocalService, portal, resourceActionLocalService,
 			resourcePermissionLocalService, roleLocalService,
 			sapEntryLocalService, segmentsEntryLocalService,
-			segmentsExperienceLocalService, settingsFactory,
+			segmentsExperienceLocalService, archivedSettingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,

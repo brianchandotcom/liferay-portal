@@ -9,12 +9,9 @@ definition {
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	setUp {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+		var portalURL = PropsUtil.get("portal.url");
 
-		if (${testLiferayVirtualInstance} == "false") {
-			AntCommands.runCommand("build-test.xml", "prepare-database-upgrade-configuration");
-		}
-		else {
+		if (${portalURL} != "http://www.example.com") {
 			SignIn.signIn();
 
 			SearchAdministration.executeReindex();
@@ -57,6 +54,7 @@ definition {
 	@priority = 4
 	test ViewAFSStoreUpgradeNoConfig {
 		property data.archive.type = "data-archive-afs-store";
+		property database-upgrade-configuration = "true";
 		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "6.2.10.21";
 		property skip.start.app.server = "true";

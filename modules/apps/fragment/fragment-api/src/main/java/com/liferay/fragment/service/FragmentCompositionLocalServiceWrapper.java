@@ -488,6 +488,15 @@ public class FragmentCompositionLocalServiceWrapper
 	}
 
 	@Override
+	public String getUniqueFragmentCompositionName(
+		long groupId, long fragmentCollectionId, String name) {
+
+		return _fragmentCompositionLocalService.
+			getUniqueFragmentCompositionName(
+				groupId, fragmentCollectionId, name);
+	}
+
+	@Override
 	public FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

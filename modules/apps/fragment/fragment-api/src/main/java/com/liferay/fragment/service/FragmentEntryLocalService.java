@@ -395,6 +395,10 @@ public interface FragmentEntryLocalService
 			long userId, long groupId, String folderName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getUniqueFragmentEntryName(
+		long groupId, long fragmentCollectionId, String name);
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntryVersion getVersion(

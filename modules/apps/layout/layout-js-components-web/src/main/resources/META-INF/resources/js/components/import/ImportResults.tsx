@@ -34,10 +34,11 @@ function ImportResults({fileName, importResults}: Props) {
 	return (
 		<>
 			{importResults.imported && (
-				<ClayLayout.Sheet className="c-pb-1 c-pt-2" size="lg">
+				<ClayLayout.Sheet size="lg">
 					<ClayPanel
-						className="c-mb-n3 c-mt-1 sheet-row"
+						className="sheet-row"
 						collapsable
+						collapseHeaderClassNames="c-py-0"
 						displayTitle={
 							<ClayPanel.Title>
 								<ClayIcon

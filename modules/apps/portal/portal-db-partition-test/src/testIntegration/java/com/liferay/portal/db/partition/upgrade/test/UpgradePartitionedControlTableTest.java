@@ -10,9 +10,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
+import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,11 +84,9 @@ public class UpgradePartitionedControlTableTest
 							connection.prepareStatement(
 								StringBundler.concat(
 									"select testColumn from ", TEST_TABLE_NAME,
-									" where testColumn = ? and companyId = ",
-									"?"))) {
+									" where testColumn = ?"))) {
 
 						preparedStatement.setLong(1, 1L);
-						preparedStatement.setLong(2, _DEFAULT_COMPANY_ID);
 
 						try (ResultSet resultSet =
 								preparedStatement.executeQuery()) {
@@ -110,7 +108,7 @@ public class UpgradePartitionedControlTableTest
 
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
-					if (_DEFAULT_COMPANY_ID ==
+					if (PortalInstances.getDefaultCompanyId() ==
 							DBPartitionUtil.getCurrentCompanyId()) {
 
 						return;
@@ -124,8 +122,5 @@ public class UpgradePartitionedControlTableTest
 				});
 		}
 	}
-
-	private static final long _DEFAULT_COMPANY_ID =
-		CompanyThreadLocal.getCompanyId();
 
 }

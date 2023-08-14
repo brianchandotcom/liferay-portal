@@ -119,7 +119,7 @@ public class OnDemandAdminTicketGeneratorImpl
 			String password = PwdGenerator.getPassword(20);
 
 			User user = _userLocalService.addUser(
-				userId, companyId, false, password, password, true, null,
+				0, companyId, false, password, password, true, null,
 				emailAddress, locale, firstName, middleName, lastName, 0, 0,
 				male, date.getMonth(), date.getDay(), date.getYear(), null,
 				UserConstants.TYPE_REGULAR, null, null,

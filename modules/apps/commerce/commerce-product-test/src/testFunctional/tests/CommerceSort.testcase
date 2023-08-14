@@ -14,6 +14,77 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-12097. If a product price list price is updated, then the products reordered sorted by price from low to high can be viewed in the front store"
+	@priority = 5
+	test AssertProductsAreReorderedByPriceLowToHighAfterUpdatingPriceListPrice {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the admin edits a price list entry price") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN77823");
+
+			CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = 16);
+		}
+
+		task ("Then the buyer can properly view products sorted by price from low to high") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price Low to High");
+
+			var indexProductArray = "1;Mount,2;Wheel Seal - Front,3;Valve Cover Grommets,4;Piston,5;Transmission Cooler Line Assembly,6;Exhaust Clamps,7;Bushings";
+
+			for (var i : list ${indexProductArray}) {
+				var curr_index = StringUtil.extractFirst(${i}, ";");
+				var curr_productName = StringUtil.extractLast(${i}, ";");
+
+				AssertTextEquals(
+					key_index = ${curr_index},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+					value1 = ${curr_productName});
+			}
+
+			var productAndPriceArray = "Mount;$ 3.00,Wheel Seal - Front;$ 4.00,Valve Cover Grommets;$ 6.00,Piston;$ 14.00,Transmission Cooler Line Assembly;$ 15.00,Exhaust Clamps;$ 16.00,Bushings;$ 18.00";
+
+			for (var i : list ${productAndPriceArray}) {
+				var curr_productName = StringUtil.extractFirst(${i}, ";");
+				var curr_price = StringUtil.extractLast(${i}, ";");
+
+				AssertTextEquals(
+					key_productName = ${curr_productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+					value1 = ${curr_price});
+			}
+		}
+	}
+
 	@description = "COMMERCE-6173. As a buyer, I want to sort products by Name(ascending) using Sort widget and the results should be visible on the Search Results widget"
 	@priority = 3
 	test AssertProductsAreSortedByNameAscending {

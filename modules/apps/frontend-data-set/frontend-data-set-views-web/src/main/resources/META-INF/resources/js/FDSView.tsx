@@ -12,6 +12,7 @@ import React, {useEffect, useState} from 'react';
 import '../css/FDSView.scss';
 import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
+import Actions from './fds_view/Actions';
 import Details from './fds_view/Details';
 import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
@@ -39,6 +40,16 @@ if (Liferay.FeatureFlags['LPS-188645']) {
 		{
 			Component: Sorting,
 			label: Liferay.Language.get('sorting'),
+		},
+	];
+}
+
+if (Liferay.FeatureFlags['LPS-192282']) {
+	NAVIGATION_BAR_ITEMS = [
+		...NAVIGATION_BAR_ITEMS,
+		{
+			Component: Actions,
+			label: Liferay.Language.get('actions'),
 		},
 	];
 }

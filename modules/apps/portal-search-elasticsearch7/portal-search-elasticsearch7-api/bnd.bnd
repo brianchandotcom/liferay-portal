@@ -3,6 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.search.elasticsearch7.api
 Bundle-Version: 7.1.4
 Export-Package:\
 	com.liferay.portal.search.elasticsearch7.configuration,\
-	com.liferay.portal.search.elasticsearch7.constants,\
-	com.liferay.portal.search.elasticsearch7.settings
+	com.liferay.portal.search.elasticsearch7.constants
 -dsannotations-options: inherit

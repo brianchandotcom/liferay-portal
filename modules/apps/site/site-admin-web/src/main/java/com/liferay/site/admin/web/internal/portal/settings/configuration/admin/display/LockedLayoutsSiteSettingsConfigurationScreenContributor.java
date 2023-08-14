@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(service = SiteSettingsConfigurationScreenContributor.class)
-public class LockedPagesSiteSettingsConfigurationScreenContributor
+public class LockedLayoutsSiteSettingsConfigurationScreenContributor
 	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
@@ -31,7 +31,7 @@ public class LockedPagesSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/site_settings/locked_pages.jsp";
+		return "/site_settings/locked_layouts.jsp";
 	}
 
 	@Override

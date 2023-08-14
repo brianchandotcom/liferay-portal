@@ -29,6 +29,8 @@
 			<hint-collection name="TEXTAREA" />
 			<hint name="max-length">200</hint>
 		</field>
+		<field name="onDemandUserId" type="long" />
+		<field name="shareable" type="boolean" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusDate" type="Date" />

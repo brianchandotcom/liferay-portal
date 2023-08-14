@@ -71,6 +71,7 @@ public class CTCollectionModelImpl
 		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"schemaVersionId", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"onDemandUserId", Types.BIGINT}, {"shareable", Types.BOOLEAN},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusDate", Types.TIMESTAMP}
 	};
@@ -90,13 +91,15 @@ public class CTCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("schemaVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("onDemandUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("shareable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,schemaVersionId LONG,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusDate DATE null)";
+		"create table CTCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,schemaVersionId LONG,name VARCHAR(75) null,description VARCHAR(200) null,onDemandUserId LONG,shareable BOOLEAN,status INTEGER,statusByUserId LONG,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTCollection";
 
@@ -278,6 +281,10 @@ public class CTCollectionModelImpl
 			attributeGetterFunctions.put("name", CTCollection::getName);
 			attributeGetterFunctions.put(
 				"description", CTCollection::getDescription);
+			attributeGetterFunctions.put(
+				"onDemandUserId", CTCollection::getOnDemandUserId);
+			attributeGetterFunctions.put(
+				"shareable", CTCollection::getShareable);
 			attributeGetterFunctions.put("status", CTCollection::getStatus);
 			attributeGetterFunctions.put(
 				"statusByUserId", CTCollection::getStatusByUserId);
@@ -336,6 +343,13 @@ public class CTCollectionModelImpl
 			attributeSetterBiConsumers.put(
 				"description",
 				(BiConsumer<CTCollection, String>)CTCollection::setDescription);
+			attributeSetterBiConsumers.put(
+				"onDemandUserId",
+				(BiConsumer<CTCollection, Long>)
+					CTCollection::setOnDemandUserId);
+			attributeSetterBiConsumers.put(
+				"shareable",
+				(BiConsumer<CTCollection, Boolean>)CTCollection::setShareable);
 			attributeSetterBiConsumers.put(
 				"status",
 				(BiConsumer<CTCollection, Integer>)CTCollection::setStatus);
@@ -600,6 +614,58 @@ public class CTCollectionModelImpl
 
 	@JSON
 	@Override
+	public long getOnDemandUserId() {
+		return _onDemandUserId;
+	}
+
+	@Override
+	public void setOnDemandUserId(long onDemandUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_onDemandUserId = onDemandUserId;
+	}
+
+	@Override
+	public String getOnDemandUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getOnDemandUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setOnDemandUserUuid(String onDemandUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public boolean getShareable() {
+		return _shareable;
+	}
+
+	@JSON
+	@Override
+	public boolean isShareable() {
+		return _shareable;
+	}
+
+	@Override
+	public void setShareable(boolean shareable) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shareable = shareable;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -742,6 +808,8 @@ public class CTCollectionModelImpl
 		ctCollectionImpl.setSchemaVersionId(getSchemaVersionId());
 		ctCollectionImpl.setName(getName());
 		ctCollectionImpl.setDescription(getDescription());
+		ctCollectionImpl.setOnDemandUserId(getOnDemandUserId());
+		ctCollectionImpl.setShareable(isShareable());
 		ctCollectionImpl.setStatus(getStatus());
 		ctCollectionImpl.setStatusByUserId(getStatusByUserId());
 		ctCollectionImpl.setStatusDate(getStatusDate());
@@ -774,6 +842,10 @@ public class CTCollectionModelImpl
 		ctCollectionImpl.setName(this.<String>getColumnOriginalValue("name"));
 		ctCollectionImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		ctCollectionImpl.setOnDemandUserId(
+			this.<Long>getColumnOriginalValue("onDemandUserId"));
+		ctCollectionImpl.setShareable(
+			this.<Boolean>getColumnOriginalValue("shareable"));
 		ctCollectionImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 		ctCollectionImpl.setStatusByUserId(
@@ -921,6 +993,10 @@ public class CTCollectionModelImpl
 			ctCollectionCacheModel.description = null;
 		}
 
+		ctCollectionCacheModel.onDemandUserId = getOnDemandUserId();
+
+		ctCollectionCacheModel.shareable = isShareable();
+
 		ctCollectionCacheModel.status = getStatus();
 
 		ctCollectionCacheModel.statusByUserId = getStatusByUserId();
@@ -1007,6 +1083,8 @@ public class CTCollectionModelImpl
 	private long _schemaVersionId;
 	private String _name;
 	private String _description;
+	private long _onDemandUserId;
+	private boolean _shareable;
 	private int _status;
 	private long _statusByUserId;
 	private Date _statusDate;
@@ -1053,6 +1131,8 @@ public class CTCollectionModelImpl
 		_columnOriginalValues.put("schemaVersionId", _schemaVersionId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("onDemandUserId", _onDemandUserId);
+		_columnOriginalValues.put("shareable", _shareable);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
 		_columnOriginalValues.put("statusDate", _statusDate);
@@ -1101,11 +1181,15 @@ public class CTCollectionModelImpl
 
 		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("status", 2048L);
+		columnBitmasks.put("onDemandUserId", 2048L);
 
-		columnBitmasks.put("statusByUserId", 4096L);
+		columnBitmasks.put("shareable", 4096L);
 
-		columnBitmasks.put("statusDate", 8192L);
+		columnBitmasks.put("status", 8192L);
+
+		columnBitmasks.put("statusByUserId", 16384L);
+
+		columnBitmasks.put("statusDate", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -53,6 +53,15 @@ public class ObjectValidationRuleEngineException extends PortalException {
 
 	}
 
+	public static class MustHavePermissionEngineGroovy
+		extends ObjectValidationRuleEngineException {
+
+		public MustHavePermissionEngineGroovy() {
+			super("The user must have permission to choose engine groovy.");
+		}
+
+	}
+
 	public static class MustNotBeNull
 		extends ObjectValidationRuleEngineException {
 

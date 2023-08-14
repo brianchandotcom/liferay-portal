@@ -363,6 +363,10 @@ public interface FragmentCompositionLocalService
 			long userId, long groupId, String folderName)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getUniqueFragmentCompositionName(
+		long groupId, long fragmentCollectionId, String name);
+
 	public FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws PortalException;

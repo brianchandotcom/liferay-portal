@@ -472,6 +472,13 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getTempFileNames(userId, groupId, folderName);
 	}
 
+	public static String getUniqueFragmentEntryName(
+		long groupId, long fragmentCollectionId, String name) {
+
+		return getService().getUniqueFragmentEntryName(
+			groupId, fragmentCollectionId, name);
+	}
+
 	public static com.liferay.fragment.model.FragmentEntryVersion getVersion(
 			FragmentEntry fragmentEntry, int version)
 		throws PortalException {

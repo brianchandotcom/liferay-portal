@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +114,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		super.testPatchSku();
 
 		_testPatchSkuExternalReferenceCode();
+		_testPatchSkuWithPricing();
+		_testPatchSkuWithShipping();
 	}
 
 	@Override
@@ -294,6 +298,49 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		Assert.assertEquals(
 			patchSku.getExternalReferenceCode(),
 			randomSku.getExternalReferenceCode());
+		assertValid(patchSku);
+	}
+
+	private void _testPatchSkuWithPricing() throws Exception {
+		Sku sku = testPatchSku_addSku();
+
+		Sku randomSku = new Sku() {
+			{
+				cost = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+				promoPrice = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+			}
+		};
+
+		Sku patchSku = skuResource.patchSku(sku.getId(), randomSku);
+
+		Assert.assertEquals(patchSku.getCost(), randomSku.getCost());
+		Assert.assertEquals(patchSku.getPrice(), randomSku.getPrice());
+		Assert.assertEquals(
+			patchSku.getPromoPrice(), randomSku.getPromoPrice());
+
+		assertValid(patchSku);
+	}
+
+	private void _testPatchSkuWithShipping() throws Exception {
+		Sku sku = testPatchSku_addSku();
+
+		Sku randomSku = new Sku() {
+			{
+				depth = RandomTestUtil.randomDouble();
+				height = RandomTestUtil.randomDouble();
+				weight = RandomTestUtil.randomDouble();
+				width = RandomTestUtil.randomDouble();
+			}
+		};
+
+		Sku patchSku = skuResource.patchSku(sku.getId(), randomSku);
+
+		Assert.assertEquals(patchSku.getDepth(), randomSku.getDepth());
+		Assert.assertEquals(patchSku.getHeight(), randomSku.getHeight());
+		Assert.assertEquals(patchSku.getWeight(), randomSku.getWeight());
+		Assert.assertEquals(patchSku.getWidth(), randomSku.getWidth());
+
 		assertValid(patchSku);
 	}
 

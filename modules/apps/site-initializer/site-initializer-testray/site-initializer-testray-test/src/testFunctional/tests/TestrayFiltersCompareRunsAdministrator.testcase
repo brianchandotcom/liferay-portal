@@ -182,18 +182,10 @@ definition {
 		}
 
 		task ("When the user filter a compare runs by case name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1");
 		}
 
 		task ("Then the user see case 1 in the table") {
@@ -229,18 +221,10 @@ definition {
 		}
 
 		task ("When the user filter a compare runs by priority") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Priority",
-				value1 = 3);
-
-			Button.click(button = "Apply");
+				selectValue = 3);
 		}
 
 		task ("Then the user see priority 3 in the table") {

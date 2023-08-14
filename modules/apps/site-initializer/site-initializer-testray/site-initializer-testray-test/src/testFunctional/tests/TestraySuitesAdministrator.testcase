@@ -330,15 +330,14 @@ definition {
 		}
 
 		task ("When the user search suite non existent") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = "Team 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Suite Name",
+				inputValue = "Suite 3");
 		}
 
 		task ("Then not see the suite 3 in the table") {
-			Testray.viewTableEntryListNotPresent(listEntry = "Team 3");
+			Testray.viewTableEntryListNotPresent(listEntry = "Suite 3");
 		}
 	}
 
@@ -366,11 +365,10 @@ definition {
 		}
 
 		task ("When the user filter suite 1") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = ${suiteName});
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Suite Name",
+				inputValue = ${suiteName});
 		}
 
 		task ("Then the user see only suite 1 in the table") {

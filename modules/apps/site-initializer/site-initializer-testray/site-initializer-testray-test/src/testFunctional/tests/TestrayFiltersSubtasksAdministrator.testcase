@@ -172,18 +172,10 @@ definition {
 		}
 
 		task ("When the user select the user 'User User' in the filter") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Subtask_2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "User");
-
-			Button.click(button = "Apply");
+				selectValue = "User");
 		}
 
 		task ("Then can see only user 'User User' in the table") {
@@ -203,15 +195,10 @@ definition {
 		}
 
 		task ("When the user filter the subtask in the filter by error") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Subtask_1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.typeFilter(
-				label = "Errors",
-				value = "Failed prior to running test");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Errors",
+				inputValue = "Failed prior to running test");
 		}
 
 		task ("Then the user see only subtask 1 with error in the table") {
@@ -231,15 +218,10 @@ definition {
 		}
 
 		task ("When the user select the subtask 2 in the filter by name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Subtask_2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Subtask Name",
+				inputValue = "Subtask_2");
 		}
 
 		task ("Then the user see only subtask 2 in the table") {
@@ -277,25 +259,14 @@ definition {
 		}
 
 		task ("When the user filter multiple options by: Assignee, user and status in the filter") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Subtask_2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Complete",
+				fieldType = "checkbox,input,select",
+				inputFieldLabel = "Subtask Name",
+				inputValue = "Subtask_2",
 				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Complete",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_2");
+				selectValue = "Test");
 		}
 
 		task ("Then can see only user 'User User' and complete status in the table") {
@@ -319,15 +290,10 @@ definition {
 		}
 
 		task ("When filtering a subtask by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Subtask_2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.typeFilter(
-				label = "Subtask Name",
-				value = "Subtask_3");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Subtask Name",
+				inputValue = "Subtask_3");
 		}
 
 		task ("Then the user is not present in the subtask table") {
@@ -345,7 +311,7 @@ definition {
 				key_tableEntry = "Subtask_1",
 				locator1 = "Testray#TABLE_ENTRY");
 
-			TestrayFilter.searchFilter(value = "Assignee");
+			TestrayFilter.searchFilter(filterName = "Assignee");
 		}
 
 		task ("Then the user can see the field label called Assignee") {
@@ -355,7 +321,7 @@ definition {
 		}
 
 		task ("When the user searches for a field that does not exist") {
-			TestrayFilter.searchFilter(value = "Assignee 2");
+			TestrayFilter.searchFilter(filterName = "Assignee 2");
 		}
 
 		task ("Then the user can no more see the label called Assignee in the filter") {

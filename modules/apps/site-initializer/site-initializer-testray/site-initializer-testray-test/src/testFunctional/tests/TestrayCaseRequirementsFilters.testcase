@@ -112,14 +112,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseRequirementsByLink {
 		task ("When the user filter a case requirement by link") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Link",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "google");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Link",
+				inputValue = "google");
 		}
 
 		task ("Then can see the filters apply in the list by link") {
@@ -133,14 +129,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseRequirementsBySummary {
 		task ("When the user filter a case requirement by summary") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 1");
 		}
 
 		task ("Then can see the filters apply in the list by summary") {
@@ -154,19 +146,12 @@ definition {
 	@priority = 4
 	test AdminCanFilterCaseRequirementsWithMultipleOptions {
 		task ("When the user filter a case requirement with multiple options") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 1");
-
-			Type(
-				key_fieldLabel = "Link",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "google");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input,multiSelect",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 1",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1");
 		}
 
 		task ("Then can see the multiple options in the table and do not see the requirement 2") {
@@ -180,14 +165,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterForNonexistentCaseRequirements {
 		task ("When the user filters a case requirement by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 3");
 		}
 
 		task ("Then can see message no results found") {
@@ -201,7 +182,7 @@ definition {
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Link");
+			TestrayFilter.searchFilter(filterName = "Link");
 		}
 
 		task ("Then can see the field called link and do not see the field key") {

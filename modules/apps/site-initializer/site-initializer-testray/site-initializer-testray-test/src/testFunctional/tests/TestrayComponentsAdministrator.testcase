@@ -319,11 +319,10 @@ definition {
 		}
 
 		task ("When the user filter component 1") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = ${componentName});
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Component Name",
+				inputValue = ${componentName});
 		}
 
 		task ("Then the user see only component 1 in the table") {
@@ -362,11 +361,10 @@ definition {
 		}
 
 		task ("When the user search component non existent") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = "Component 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Component Name",
+				inputValue = "component 3");
 		}
 
 		task ("Then not see the component 3 in the table") {

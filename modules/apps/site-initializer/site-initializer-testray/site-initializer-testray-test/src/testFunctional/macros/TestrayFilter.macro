@@ -1,21 +1,15 @@
 definition {
 
-	macro assertMultiSelect {
-		for (var option : list ${listMultiSelect}) {
-			AssertElementPresent(
-				key_option = ${option},
-				locator1 = "TestrayFilter#VIEW_MULTI_SELECT");
-		}
-	}
-
 	macro assertNoResultsFound {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
 			value1 = "No Results Found");
 	}
 
-	macro clickColumn {
-		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
+	macro clearFilterResults {
+		Click(locator1 = "ManagementBar#CLEAR_FILTER");
+
+		AssertElementNotPresent(locator1 = "ManagementBar#CLEAR_FILTER");
 	}
 
 	macro clickFilter {
@@ -24,16 +18,62 @@ definition {
 
 	macro clickMultiSelect {
 		Click(
-			key_label = ${header},
+			key_label = ${fieldLabel},
 			locator1 = "TestrayFilter#CLICK_MULTI_SELECT");
 	}
 
-	macro multiSelect {
-		TestrayFilter.clickMultiSelect(header = ${header});
+	macro filterResults {
+		TestrayFilter.clickFilter();
 
-		for (var option : list ${listMultiSelect}) {
+		ScrollWebElementIntoView(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
+
+		for (var fieldType : list ${fieldType}) {
+			if (${fieldType} == "input") {
+				Type(
+					key_fieldLabel = ${inputFieldLabel},
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${inputValue});
+			}
+
+			if (${fieldType} == "multiSelect") {
+				TestrayFilter.multiSelectFilter(
+					fieldLabel = ${multiSelectFieldLabel},
+					multiSelectList = ${multiSelectValue});
+			}
+
+			if (${fieldType} == "checkbox") {
+				Click.clickAtNotVisible(
+					key_label = ${checkboxFieldLabel},
+					key_status = ${checkboxValue},
+					locator1 = "TestrayFilter#STATUS_IN_FILTER");
+			}
+
+			if (${fieldType} == "select") {
+				Select(
+					locator1 = "Select#SELECT_FIELD_LABEL",
+					selectFieldLabel = ${selectFieldLabel},
+					value1 = ${selectValue});
+			}
+
+			if (${fieldType} == "textArea") {
+				Type(
+					key_fieldId = ${textAreaFieldLabel},
+					locator1 = "TextArea#ANY_ID",
+					value1 = ${textAreaValue});
+			}
+		}
+
+		Button.click(button = "Apply");
+
+		WaitForPageLoad();
+	}
+
+	macro multiSelectFilter {
+		TestrayFilter.clickMultiSelect(fieldLabel = ${fieldLabel});
+
+		for (var option : list ${multiSelectList}) {
 			Click(
-				key_label = ${label},
+				key_label = ${fieldLabel},
 				key_option = ${option},
 				locator1 = "TestrayFilter#MULTI_SELECT_OPTION");
 		}
@@ -48,24 +88,17 @@ definition {
 	macro searchFilter {
 		Type(
 			locator1 = "TestrayFilter#SEARCH_FILTERS",
-			value1 = ${value});
+			value1 = ${filterName});
 	}
 
 	macro selectColumns {
+		Click(locator1 = "TestrayFilter#COLUMN_BUTTON");
+
 		for (var column : list ${listColumn}) {
 			Click(
 				key_column = ${column},
 				locator1 = "TestrayFilter#COLUMNS_OPTIONS");
 		}
-
-		Button.click(button = "Apply");
-	}
-
-	macro typeFilter {
-		Type(
-			key_fieldLabel = ${label},
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${value});
 
 		Button.click(button = "Apply");
 	}

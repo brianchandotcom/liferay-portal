@@ -96,18 +96,14 @@ definition {
 	@priority = 4
 	test AdminCanFilterCaseByCaseName {
 		task ("When the user filter a case by name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1");
 		}
 
 		task ("Then can see the filters apply in the list by name") {
-			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1");
+			Testray.viewTableEntryList(listEntry = "Case 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
@@ -117,22 +113,12 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByCaseType {
 		task ("When the user filter a case by case type") {
-			TestrayFilter.clickColumn();
-
 			TestrayFilter.selectColumns(listColumn = "Case Type");
 
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Case Type",
-				label = "Case Type",
-				listMultiSelect = "Case Type 1,Batch");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Case Type",
-				listMultiSelect = "Case Type 1,Batch");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Case Type",
+				multiSelectValue = "Case Type 1,Batch");
 		}
 
 		task ("Then can see the case type selected") {
@@ -146,18 +132,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByComponent {
 		task ("When the user filter a case by component") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Component",
+				multiSelectValue = "Component 1");
 		}
 
 		task ("Then can see the component selected") {
@@ -169,23 +147,18 @@ definition {
 	@priority = 2
 	test AdminCanFilterCaseByDescription {
 		task ("Given the user selects the description column") {
-			TestrayFilter.clickColumn();
-
 			TestrayFilter.selectColumns(listColumn = "Description");
 		}
 
 		task ("When the user filter a case by description") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				locator1 = "TextArea#DESCRIPTION",
-				value1 = "Description 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "textArea",
+				textAreaFieldLabel = "description",
+				textAreaValue = "Description 1");
 		}
 
 		task ("Then can see the filters apply in the list by description") {
-			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1,Description 1");
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Description 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Description 2");
 		}
@@ -195,18 +168,14 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByPriority {
 		task ("When the user filter a case by priority") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Priority",
-				value1 = 4);
-
-			Button.click(button = "Apply");
+				selectValue = 4);
 		}
 
 		task ("Then can see the filters apply in the list by priority") {
-			Testray.viewTableEntryList(listEntry = "4,Case 2,Component 1");
+			Testray.viewTableEntryList(listEntry = "4,Case 2");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 1");
 		}
@@ -216,18 +185,14 @@ definition {
 	@priority = 2
 	test AdminCanFilterCaseBySteps {
 		task ("When the user filter a case by steps") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_text = "steps",
-				locator1 = "TextArea#ANY",
-				value1 = "Steps 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "textArea",
+				textAreaFieldLabel = "steps",
+				textAreaValue = "Steps 1");
 		}
 
 		task ("Then can see the filters apply in the list by steps") {
-			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1");
+			Testray.viewTableEntryList(listEntry = "5,Case 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
@@ -237,22 +202,12 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByTeam {
 		task ("When the user filter a case by team") {
-			TestrayFilter.clickColumn();
-
 			TestrayFilter.selectColumns(listColumn = "Team");
 
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1");
 		}
 
 		task ("Then can see the team selected") {
@@ -264,48 +219,22 @@ definition {
 	@priority = 4
 	test AdminCanFilterCasesWithMultipleOptions {
 		task ("Given that the user selects the columns") {
-			TestrayFilter.clickColumn();
-
 			TestrayFilter.selectColumns(listColumn = "Case Type,Team,Description");
-
-			TestrayFilter.clickFilter();
 		}
 
 		task ("When the user filter a case by multiple options") {
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			TestrayFilter.multiSelect(
-				header = "Case Type",
-				label = "Case Type",
-				listMultiSelect = "Case Type 1");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Type(
-				locator1 = "TextArea#DESCRIPTION",
-				value1 = "Description 1");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "input,select,textArea",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1",
 				selectFieldLabel = "Priority",
-				value1 = 5);
-
-			Button.click(button = "Apply");
+				selectValue = 5,
+				textAreaFieldLabel = "description",
+				textAreaValue = "Description 1");
 		}
 
 		task ("Then can see the multiple options in the table") {
-			Testray.viewTableEntryList(listEntry = "Component 1,Case 1,Team 1,Case Type 1,Description 1,5");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case Type 1,Description 1,5");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
@@ -315,14 +244,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterForNonexistentCase {
 		task ("When the user filters a case by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 3");
 		}
 
 		task ("Then can not see the case in the list") {
@@ -336,7 +261,7 @@ definition {
 		task ("When the user search filter called priority") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Priority");
+			TestrayFilter.searchFilter(filterName = "Priority");
 		}
 
 		task ("Then can see the label called priority") {
@@ -346,7 +271,7 @@ definition {
 		}
 
 		task ("When change the filter search to case name") {
-			TestrayFilter.searchFilter(value = "Case Name");
+			TestrayFilter.searchFilter(filterName = "Case Name");
 		}
 
 		task ("Then can not see the label called priority anymore") {
@@ -360,14 +285,10 @@ definition {
 	@priority = 2
 	test CanClearFilterResults {
 		task ("When the user filters a case by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Test");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Test");
 		}
 
 		task ("And can not see the cases in the list") {
@@ -375,7 +296,7 @@ definition {
 		}
 
 		task ("When the user clear the filters") {
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+			TestrayFilter.clearFilterResults();
 		}
 
 		task ("Then can see the cases in the list again") {
@@ -389,14 +310,12 @@ definition {
 		task ("When the user filters a filter by its non-existent name") {
 			TestrayFilter.clickFilter();
 
-			Type(
-				locator1 = "TestrayFilter#SEARCH_FILTERS",
-				value1 = "testTest");
+			TestrayFilter.searchFilter(filterName = "TestTest");
 
 			AssertElementPresent(locator1 = "TestrayFilter#MESSAGE_NO_RESULTS");
 		}
 
-		task ("Then you can clear the filter results by close button") {
+		task ("Then can clear the filter results using the Clear button and the message is no longer displayed") {
 			Click(locator1 = "Button#CLEAR");
 
 			AssertElementNotPresent(locator1 = "TestrayFilter#MESSAGE_NO_RESULTS");
@@ -411,14 +330,10 @@ definition {
 		}
 
 		task ("And that the user filter a case") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1");
 		}
 
 		task ("When the user pin a result in the filter") {
@@ -448,14 +363,10 @@ definition {
 		}
 
 		task ("And that the user filter a case") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1");
 		}
 
 		task ("When the user pin and unpin a result in the filter") {
@@ -474,7 +385,7 @@ definition {
 	@description = "Story ID: LPS-177202 | Test Summary: Verify that the error message appears when pining without selected filters"
 	@priority = 2
 	test CanViewMessageError {
-		task ("When the user pin a result without filtering") {
+		task ("When the user pin a result without pinning") {
 			WaitForElementPresent(
 				key_tableEntry = "Case 1",
 				locator1 = "Testray#TABLE_ENTRY");

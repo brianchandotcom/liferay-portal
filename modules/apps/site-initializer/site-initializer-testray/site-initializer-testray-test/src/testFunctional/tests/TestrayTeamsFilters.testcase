@@ -183,10 +183,9 @@ definition {
 				key_numberItems = 20,
 				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
+			TestrayFilter.multiSelectFilter(
+				fieldLabel = "Team",
+				multiSelectList = "Team 1");
 
 			Button.click(button = "Apply");
 		}
@@ -210,7 +209,7 @@ definition {
 				key_numberItems = 20,
 				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
-			TestrayFilter.searchFilter(value = "Priority");
+			TestrayFilter.searchFilter(filterName = "Priority");
 		}
 
 		task ("Then the user can see the field label called team") {

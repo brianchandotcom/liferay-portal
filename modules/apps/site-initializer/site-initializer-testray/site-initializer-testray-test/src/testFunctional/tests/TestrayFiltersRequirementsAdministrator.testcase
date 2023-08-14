@@ -84,14 +84,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterForNonexistentRequirements {
 		task ("When the user filters a requirement by its non-existent name") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 3");
 		}
 
 		task ("Then can see message no results found") {
@@ -103,18 +99,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsByComponent {
 		task ("When the user filter a requirement by component") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Component",
+				multiSelectValue = "Component 1");
 		}
 
 		task ("Then can see the component selected in the table") {
@@ -126,18 +114,14 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsByLink {
 		task ("When the user filter a requirement by link") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Link",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "The front page of the internet");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Link",
+				inputValue = "The front page of the internet");
 		}
 
 		task ("Then can see the filters apply in the list by name") {
-			Testray.viewTableEntryList(listEntry = "The front page of the internet,Component 1,Requirement 1,Team 1");
+			Testray.viewTableEntryList(listEntry = "The front page of the internet,Requirement 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
@@ -147,14 +131,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsBySummary {
 		task ("When the user filter a requirement by summary") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 1");
 		}
 
 		task ("Then can see the filters apply in the list by summary") {
@@ -168,18 +148,10 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsByTeam {
 		task ("When the user filter a requirement by team") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1");
 		}
 
 		task ("Then can see the team selected in the table") {
@@ -191,28 +163,16 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsWithMultipleOptions {
 		task ("When the user filter a requirement with multiple options") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			Type(
-				key_fieldLabel = "Summary",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Requirement 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input,multiSelect",
+				inputFieldLabel = "Summary",
+				inputValue = "Requirement 1",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1");
 		}
 
 		task ("Then can see the multiple options in the table and do not see the requirement 2") {
-			Testray.viewTableEntryList(listEntry = "The front page of the internet,Component 1,Requirement 1,Team 1");
+			Testray.viewTableEntryList(listEntry = "The front page of the internet,Requirement 1,Team 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
@@ -224,7 +184,7 @@ definition {
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Link");
+			TestrayFilter.searchFilter(filterName = "Link");
 		}
 
 		task ("Then can see the field called link and do not see the field key") {

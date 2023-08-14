@@ -235,16 +235,10 @@ definition {
 		}
 
 		task ("When the user select 'User' in the filter") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "User");
-
-			Button.click(button = "Apply");
-
-			WaitForPageLoad();
+				selectValue = "User");
 		}
 
 		task ("Then can see only task 1 with 'User' in the table") {
@@ -264,11 +258,10 @@ definition {
 		}
 
 		task ("When the user select the build 2 in the filter by name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Build Name",
-				value = "Build 2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Build Name",
+				inputValue = "Build 2");
 		}
 
 		task ("Then the user see only build 2 in the table") {
@@ -288,14 +281,10 @@ definition {
 		}
 
 		task ("When the user select the project 2 in the filter") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Project Name",
-				label = "Project Name",
-				listMultiSelect = "Project 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Project Name",
+				multiSelectValue = "Project 2");
 		}
 
 		task ("Then the user see only project 2 in the table") {
@@ -315,14 +304,10 @@ definition {
 		}
 
 		task ("When the user select the routine 2 in the filter") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Routine Name",
-				label = "Routine Name",
-				listMultiSelect = "Routine 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Routine Name",
+				multiSelectValue = "Routine 2");
 		}
 
 		task ("Then the user see only routine 2 in the table") {
@@ -350,14 +335,10 @@ definition {
 		}
 
 		task ("When the user filter task by status in the filter") {
-			TestrayFilter.clickFilter();
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Abandoned",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Abandoned",
+				fieldType = "checkbox");
 		}
 
 		task ("Then can see only abandoned status in the table") {
@@ -379,11 +360,10 @@ definition {
 		}
 
 		task ("When the user filter task by task name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Task Name",
-				value = "Task_2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Task Name",
+				inputValue = "Task_2");
 		}
 
 		task ("Then can see the Task_2 in the table") {
@@ -419,21 +399,12 @@ definition {
 		}
 
 		task ("When the user filter multiple options by: task name, build name and status in the filter") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_fieldLabel = "Build Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Build 2");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Complete",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			TestrayFilter.typeFilter(
-				label = "Task Name",
-				value = "Task_2");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Complete",
+				fieldType = "checkbox,input",
+				inputFieldLabel = "Task Name",
+				inputValue = "Task_2");
 		}
 
 		task ("Then can see only build 2 and complete status in the table") {
@@ -457,11 +428,10 @@ definition {
 		}
 
 		task ("When filtering a task by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Task Name",
-				value = "Task_3");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Task Name",
+				inputValue = "Task_3");
 		}
 
 		task ("Then the user is not present in the task table") {
@@ -475,7 +445,7 @@ definition {
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Assignee");
+			TestrayFilter.searchFilter(filterName = "Assignee");
 		}
 
 		task ("Then the user can see the field label called Assignee") {
@@ -485,7 +455,7 @@ definition {
 		}
 
 		task ("When the user searches for a field that does not exist") {
-			TestrayFilter.searchFilter(value = "Assignee 2");
+			TestrayFilter.searchFilter(filterName = "Assignee 2");
 		}
 
 		task ("Then the user can no more see the label called Assignee in the filter") {

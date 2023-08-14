@@ -173,18 +173,10 @@ definition {
 		}
 
 		task ("When the user filter a component by team") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Component 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Run",
-				value1 = 00);
-
-			Button.click(button = "Apply");
+				selectValue = 00);
 		}
 
 		task ("Then the user see only component 1 in the table related to run 1") {
@@ -204,18 +196,10 @@ definition {
 		}
 
 		task ("When the user filter a component by team") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Component 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1");
 		}
 
 		task ("Then the user see only component 1 in the table related to team 1") {
@@ -235,23 +219,12 @@ definition {
 		}
 
 		task ("When the user filter component using multiple filtering options") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Component 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect,select",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1",
 				selectFieldLabel = "Run",
-				value1 = 00);
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			Button.click(button = "Apply");
+				selectValue = 00);
 		}
 
 		task ("Then the user see only component 1 in the table") {
@@ -273,7 +246,7 @@ definition {
 				key_tableEntry = "Component 2",
 				locator1 = "Testray#TABLE_ENTRY");
 
-			TestrayFilter.searchFilter(value = "Priority");
+			TestrayFilter.searchFilter(filterName = "Priority");
 		}
 
 		task ("Then the user can see the field label called priority") {

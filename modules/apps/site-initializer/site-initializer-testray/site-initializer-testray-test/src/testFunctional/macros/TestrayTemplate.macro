@@ -67,7 +67,7 @@ definition {
 	macro searchTemplateName {
 		Click(locator1 = "Button#PLUS");
 
-		TestrayFilter.searchFilter(value = ${templateName});
+		TestrayFilter.searchFilter(filterName = ${templateName});
 	}
 
 	macro viewTemplateName {

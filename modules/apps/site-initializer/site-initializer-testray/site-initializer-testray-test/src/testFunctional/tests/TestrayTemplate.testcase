@@ -125,28 +125,27 @@ definition {
 				routineName = ${routineName});
 		}
 
-		task ("And see Build_Template in the list") {
+		task ("And the user see Build_Template in the list") {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
 			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
-		task ("And Deactivated Template 2 and see in the list") {
+		task ("And deactivate the template 2 and see it in the list") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Template 2");
 
 			Testray.viewTableEntryList(listEntry = "Deactivated,Template 2");
-
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 
 		task ("When the user filter a template by name") {
-			TestrayFilter.clickFilter();
+			TestrayFilter.clearFilterResults();
 
-			TestrayFilter.typeFilter(
-				label = "Template Name",
-				value = "Template 2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Template Name",
+				inputValue = "Template 2");
 		}
 
 		task ("Then the user see only the Template 2 in the table") {
@@ -203,11 +202,10 @@ definition {
 		task ("When the user filter a template non existent") {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Template Name",
-				value = "Build_Template 3");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Template Name",
+				inputValue = "Build_Template 3");
 		}
 
 		task ("Then the user not see the Build_Template 3 in the table") {
@@ -230,15 +228,17 @@ definition {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 		}
 
-		task ("When the user changed the status to Activated") {
+		task ("And the user changed the status of template to Deactivate") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Build_Template");
 
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+			TestrayFilter.clearFilterResults();
 
 			Testray.viewTableEntryList(listEntry = "Deactivated,Build_Template");
+		}
 
+		task ("When the user changed the status of the template to Activate") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Activate",
 				tableEntry = "Deactivated");
@@ -272,7 +272,7 @@ definition {
 	@description = "Story ID: LPS-162439 | Test Summary: Verify if can delete an deactived template"
 	@priority = 5
 	test CanDeleteDeactiveTemplate {
-		task ("Given that the user adds a Template with status Deactivated") {
+		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
 				caseList = ${caseName},
 				description = "Template Description",
@@ -280,7 +280,9 @@ definition {
 				fieldName = "Build_Template",
 				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
 				routineName = ${routineName});
+		}
 
+		task ("And the user has changed the status of the template to Deactivated") {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
 			TestrayManage.selectTableRowOption(
@@ -290,11 +292,11 @@ definition {
 			Testray.viewTableEntryList(listEntry = "Deactivated,Build_Template");
 		}
 
-		task ("When the template with Deactivated status is deleted") {
+		task ("When the template with status Deactivated is deleted") {
 			Testray.deleteItem(itemName = "Deactivated");
 		}
 
-		task ("Then the template with Deactivated status should not appear in the list") {
+		task ("Then the template with the status Deactivated should not appear in the list") {
 			Testray.viewTableEntryListNotPresent(listEntry = "Deactivated");
 		}
 	}
@@ -320,12 +322,10 @@ definition {
 				routineName = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
-
-			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
-		task ("And Deactivated Template 2") {
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+		task ("And the user Deactivated Template 2") {
+			TestrayFilter.clearFilterResults();
 
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
@@ -335,14 +335,10 @@ definition {
 		}
 
 		task ("When the user filter a template with Activated status") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_ID",
-				selectFieldId = "dueStatus",
-				value1 = "Activated");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "select",
+				selectFieldLabel = "Status",
+				selectValue = "Activated");
 		}
 
 		task ("Then the user see only the Activated status in the table") {
@@ -375,12 +371,10 @@ definition {
 				routineName = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
-
-			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
-		task ("And Deactivated Template 2") {
-			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
+		task ("And the user Deactivated Template 2") {
+			TestrayFilter.clearFilterResults();
 
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
@@ -390,14 +384,10 @@ definition {
 		}
 
 		task ("When the user filter a template with Deactivated status") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_ID",
-				selectFieldId = "dueStatus",
-				value1 = "Deactivated");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "select",
+				selectFieldLabel = "Status",
+				selectValue = "Deactivated");
 		}
 
 		task ("Then the user see only the Deactivated status in the table") {
@@ -422,7 +412,7 @@ definition {
 				routineName = ${routineName});
 		}
 
-		task ("When the user search a template") {
+		task ("When the user search for a template") {
 			TestrayTemplate.searchTemplateName(templateName = "Build_Template");
 		}
 
@@ -438,7 +428,7 @@ definition {
 			TestrayTemplate.addTemplate(dropdownItem = "New Template");
 		}
 
-		task ("Then a required field warning message appears") {
+		task ("Then a required field message appears") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "Name is a required field.");

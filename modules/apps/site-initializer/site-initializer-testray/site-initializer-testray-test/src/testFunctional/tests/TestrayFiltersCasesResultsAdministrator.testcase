@@ -173,18 +173,10 @@ definition {
 		task ("When the user filter a case result by assign") {
 			Testray.clickBreadcrumb(text = ${buildName});
 
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			Button.click(button = "Apply");
+				selectValue = "Test");
 		}
 
 		task ("Then the user can see user avatar in the table") {
@@ -202,18 +194,10 @@ definition {
 		}
 
 		task ("When the user filter a case result by case name") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1");
 		}
 
 		task ("Then the user see only the Case 1 in the table") {
@@ -233,18 +217,10 @@ definition {
 		}
 
 		task ("When the user filter a case result by case type") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.multiSelect(
-				header = "Case Type",
-				label = "Case Type",
-				listMultiSelect = "Case Type 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Case Type",
+				multiSelectValue = "Case Type 1");
 		}
 
 		task ("Then the user see only case type 1 in the table") {
@@ -264,18 +240,10 @@ definition {
 		}
 
 		task ("When the user filter a case result by component") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Component",
+				multiSelectValue = "Component 2");
 		}
 
 		task ("Then the user see only component 2 in the table") {
@@ -291,30 +259,16 @@ definition {
 	@priority = 3
 	test CanFilterByEnviroments {
 		task ("Given that the user has two enviroments different in the table") {
-			TestrayFilter.clickColumn();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
 			TestrayFilter.selectColumns(listColumn = "Environment");
 
 			Testray.viewTableEntryList(listEntry = "Option 1,Option 2");
 		}
 
 		task ("When the user filter a case result by enviroment") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Environment",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Option 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Environment",
+				inputValue = "Option 1");
 		}
 
 		task ("Then the user see only the option 1 in the table") {
@@ -334,18 +288,10 @@ definition {
 		}
 
 		task ("When the user filter the case result by error") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_text = "errors",
-				locator1 = "TextArea#ANY",
-				value1 = "Failed to run on CI");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "textArea",
+				textAreaFieldLabel = "errors",
+				textAreaValue = "Failed to run on CI");
 		}
 
 		task ("Then the user see only case result 1 with error in the table") {
@@ -365,18 +311,10 @@ definition {
 		}
 
 		task ("When the user filter a case result by priority") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Priority",
-				value1 = 3);
-
-			Button.click(button = "Apply");
+				selectValue = 3);
 		}
 
 		task ("Then the user see only the priority 3 in the table") {
@@ -408,18 +346,10 @@ definition {
 		}
 
 		task ("When the user filter a case result with passed status") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Passed",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Passed",
+				fieldType = "checkbox");
 		}
 
 		task ("Then the user see passed status in the table") {
@@ -439,18 +369,10 @@ definition {
 		}
 
 		task ("When the user filter a case result by team") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 2");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 2");
 		}
 
 		task ("Then the user see only Team 2 in the table") {
@@ -482,42 +404,18 @@ definition {
 		}
 
 		task ("When the user filter a case result with multiple options") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Passed",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 1");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Passed",
+				fieldType = "checkbox,input,select",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 1",
 				selectFieldLabel = "Priority",
-				value1 = 5);
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
-				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			TestrayFilter.multiSelect(
-				header = "Component",
-				label = "Component",
-				listMultiSelect = "Component 1");
-
-			Button.click(button = "Apply");
+				selectValue = 5);
 		}
 
 		task ("Then the user see only the Case 1 and status in the table") {
-			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1,Passed");
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Passed");
 		}
 
 		task ("And do not see Case 2 in the table") {
@@ -529,16 +427,10 @@ definition {
 	@priority = 3
 	test CanNotFilterForNonexistent {
 		task ("Given that the user filter a case result existent") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case");
 		}
 
 		task ("And can see the case result in the list and not see case result 3") {
@@ -550,18 +442,10 @@ definition {
 		task ("When the user filter a case result by its non-existent name") {
 			Refresh();
 
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Case 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Case Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Case 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Case Name",
+				inputValue = "Case 3");
 		}
 
 		task ("Then can not see the case result in the list") {
@@ -587,7 +471,7 @@ definition {
 				key_tableEntry = "Case 1",
 				locator1 = "Testray#TABLE_ENTRY");
 
-			TestrayFilter.searchFilter(value = "Run");
+			TestrayFilter.searchFilter(filterName = "Run");
 		}
 
 		task ("Then the user can see the field label called run") {

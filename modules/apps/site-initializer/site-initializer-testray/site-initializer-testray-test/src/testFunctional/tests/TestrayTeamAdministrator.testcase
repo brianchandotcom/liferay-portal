@@ -173,11 +173,10 @@ definition {
 		}
 
 		task ("When the user search team non existent") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = "Team 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Team Name",
+				inputValue = "Team 3");
 		}
 
 		task ("Then not see the team 3 in the table") {
@@ -213,11 +212,10 @@ definition {
 		}
 
 		task ("When the user filter team 1") {
-			TestrayFilter.clickFilter();
-
-			PortletEntry.inputName(name = ${teamName});
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Team Name",
+				inputValue = ${teamName});
 		}
 
 		task ("Then the user see only team 1 in the table") {

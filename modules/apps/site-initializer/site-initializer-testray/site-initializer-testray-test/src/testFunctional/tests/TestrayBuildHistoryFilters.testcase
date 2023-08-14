@@ -125,11 +125,10 @@ definition {
 		}
 
 		task ("When the user select the build 2 in the filter") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Build Name",
-				value = "Build 2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Build Name",
+				inputValue = "Build 2");
 		}
 
 		task ("Then the user see only build 2 in the table") {
@@ -149,14 +148,10 @@ definition {
 		}
 
 		task ("When the user select product version 7.0 in the filter") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Product Version",
-				value1 = "7.0");
-
-			Button.click(button = "Apply");
+				selectValue = "7.0");
 		}
 
 		task ("Then the user see only products with version 7.0 in the table") {
@@ -172,16 +167,12 @@ definition {
 	@priority = 4
 	test AdminCanFilterWithMultipleOptions {
 		task ("When the user select multiple options in the filter") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "input,select",
+				inputFieldLabel = "Build Name",
+				inputValue = "Build 1",
 				selectFieldLabel = "Product Version",
-				value1 = "7.0");
-
-			TestrayFilter.typeFilter(
-				label = "Build Name",
-				value = "Build 1");
+				selectValue = "7.0");
 		}
 
 		task ("Then the user see only build 1 and version 7.0 in the table") {
@@ -201,11 +192,10 @@ definition {
 		}
 
 		task ("When filtering a build by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Build Name",
-				value = "Build 3");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Build Name",
+				inputValue = "Build 3");
 		}
 
 		task ("Then the user is not present in the build table") {
@@ -219,7 +209,7 @@ definition {
 		task ("When the user searches for a field called product version") {
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Product Version");
+			TestrayFilter.searchFilter(filterName = "Product Version");
 		}
 
 		task ("Then the user can see the field label called product version") {
@@ -229,7 +219,7 @@ definition {
 		}
 
 		task ("When the user searches for a field that does not exist") {
-			TestrayFilter.searchFilter(value = "Product Version 2");
+			TestrayFilter.searchFilter(filterName = "Product Version 2");
 		}
 
 		task ("Then the user can no more see the label called product version in the filter") {

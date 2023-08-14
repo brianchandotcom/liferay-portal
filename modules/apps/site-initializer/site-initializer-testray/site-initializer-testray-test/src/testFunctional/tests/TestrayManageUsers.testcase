@@ -86,11 +86,10 @@ definition {
 		}
 
 		task ("When the user filter a user by name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Name",
-				value = "User User");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Name",
+				inputValue = "User User");
 		}
 
 		task ("Then can see the user in the table") {
@@ -110,11 +109,10 @@ definition {
 		}
 
 		task ("When filtering a user by his non-existent name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.typeFilter(
-				label = "Name",
-				value = "Test 2");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Name",
+				inputValue = "Test 2");
 		}
 
 		task ("Then the user is not present in the table") {

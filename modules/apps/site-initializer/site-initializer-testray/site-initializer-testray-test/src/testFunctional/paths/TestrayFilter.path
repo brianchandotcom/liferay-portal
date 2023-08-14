@@ -26,23 +26,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_MULTI_SELECT</td>
-	<td>//div[contains(@class,'testray-multi-select')]//div[text()='${key_option}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLUMNS_ICON</td>
+	<td>COLUMN_BUTTON</td>
 	<td>//button[contains(@class,'d-flex')]//span[contains(@class,'navbar-breakpoint-down-d-none')]//*[name()='svg']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLUMNS_OPTIONS</td>
 	<td>//div[@class='popover-body']//input[@type='checkbox']//following::span[contains(text(),'${key_column}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLEAR_FILTER</td>
-	<td>//div[@class='tbar-section']//button[contains(text(),'Clear')]</td>
 	<td></td>
 </tr>
 <tr>

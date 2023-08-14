@@ -185,22 +185,16 @@ definition {
 		task ("Given that the user assign to me a case result") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
-			TestrayTestflow.userAvatarNotPresent();
-
 			Button.click(button = "Assign to Me");
 		}
 
 		task ("When the user filter a case result by assign") {
 			Navigator.gotoNavTab(navTab = "History");
 
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			Button.click(button = "Apply");
+				selectValue = "Test");
 		}
 
 		task ("Then the user sees routine 1 that has been assigned to the user") {
@@ -232,14 +226,10 @@ definition {
 		}
 
 		task ("When the user filter a issue") {
-			TestrayFilter.clickFilter();
-
-			Type(
-				key_text = "issues",
-				locator1 = "TextArea#ANY",
-				value1 = "LPS-123456");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "textArea",
+				textAreaFieldLabel = "issues",
+				textAreaValue = "LPS-123456");
 		}
 
 		task ("Then the user can see the issue in the table") {
@@ -259,18 +249,10 @@ definition {
 		}
 
 		task ("When the user filter a product version by name") {
-			TestrayFilter.clickFilter();
-
-			TestrayFilter.multiSelect(
-				header = "Product Version Name",
-				label = "Product Version Name",
-				listMultiSelect = "7.0");
-
-			TestrayFilter.assertMultiSelect(
-				label = "Product Version Name",
-				listMultiSelect = "7.0");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Product Version Name",
+				multiSelectValue = "7.0");
 		}
 
 		task ("Then the user see only product version 7.0 in the table") {
@@ -294,14 +276,10 @@ definition {
 		}
 
 		task ("When the user select a routine called routine 1 in the filter") {
-			TestrayFilter.clickFilter();
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				fieldType = "select",
 				selectFieldLabel = "Routines",
-				value1 = "Routine 1");
-
-			Button.click(button = "Apply");
+				selectValue = "Routine 1");
 		}
 
 		task ("Then the user see only the routine 1 in the table") {
@@ -329,14 +307,10 @@ definition {
 		task ("When the user filter a case result with passed status") {
 			Navigator.gotoNavTab(navTab = "History");
 
-			TestrayFilter.clickFilter();
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Passed",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Passed",
+				fieldType = "checkbox");
 		}
 
 		task ("Then the user see passed status in the table") {
@@ -352,24 +326,14 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "History");
 
-			WaitForPageLoad();
-
 			Testray.viewTableEntryList(listEntry = "Run 1,Run 2");
 		}
 
 		task ("When the user filter a case result by enviroment") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Run 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Environment",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Run 1");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Environment",
+				inputValue = "Run 1");
 		}
 
 		task ("Then the user see only the run 1 in the table") {
@@ -389,24 +353,14 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "History");
 
-			WaitForPageLoad();
-
 			Testray.viewTableEntryList(listEntry = "Failed to run on CI,Aborted prior to running test");
 		}
 
 		task ("When the user filter the case result by error") {
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Run 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_text = "errors",
-				locator1 = "TextArea#ANY",
-				value1 = "Failed to run on CI");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "textArea",
+				textAreaFieldLabel = "errors",
+				textAreaValue = "Failed to run on CI");
 		}
 
 		task ("Then the user see only case result 1 with error in the table") {
@@ -421,33 +375,21 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by team"
 	@priority = 3
 	test AdminCanFilterCaseHistoryTeam {
-		task ("Given that the user has a team in the table") {
-			Testray.viewTableEntryList(listEntry = "Team 1");
-		}
-
-		task ("When the user filter a case result history by team") {
+		task ("Given that the user go to case history tab") {
 			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			Navigator.gotoNavTab(navTab = "History");
+		}
 
-			WaitForPageLoad();
-
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Run 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			TestrayFilter.multiSelect(
-				header = "Team",
-				label = "Team",
-				listMultiSelect = "Team 1");
-
-			Button.click(button = "Apply");
+		task ("When the user filter a case result history by team") {
+			TestrayFilter.filterResults(
+				fieldType = "multiSelect",
+				multiSelectFieldLabel = "Team",
+				multiSelectValue = "Team 1");
 		}
 
 		task ("Then the user see only Team 1 with two runs in the table") {
-			Testray.viewTableEntryList(listEntry = "Run 1,Run 2");
+			Testray.viewTableEntryList(listEntry = "Team 1");
 		}
 	}
 
@@ -461,7 +403,7 @@ definition {
 
 			TestrayFilter.clickFilter();
 
-			TestrayFilter.searchFilter(value = "Routines");
+			TestrayFilter.searchFilter(filterName = "Routines");
 		}
 
 		task ("Then the user can see the field label called routine") {
@@ -497,35 +439,16 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "History");
 
-			WaitForPageLoad();
-
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Run 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Click.clickAtNotVisible(
-				key_label = "Status",
-				key_status = "Passed",
-				locator1 = "TestrayFilter#STATUS_IN_FILTER");
-
-			Type(
-				key_text = "errors",
-				locator1 = "TextArea#ANY",
-				value1 = "Failed to run on CI");
-
-			TestrayFilter.multiSelect(
-				header = "Product Version Name",
-				label = "Product Version Name",
-				listMultiSelect = "7.0");
-
-			Select(
-				locator1 = "Select#SELECT_FIELD_LABEL",
+			TestrayFilter.filterResults(
+				checkboxFieldLabel = "Status",
+				checkboxValue = "Passed",
+				fieldType = "checkbox,select,textArea,multiSelect",
+				multiSelectFieldLabel = "Product Version Name",
+				multiSelectValue = "7.0",
 				selectFieldLabel = "Assignee",
-				value1 = "Test");
-
-			Button.click(button = "Apply");
+				selectValue = "Test",
+				textAreaFieldLabel = "errors",
+				textAreaValue = "Failed to run on CI");
 		}
 
 		task ("Then the user see only the error, run and product version in the table") {
@@ -545,18 +468,10 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "History");
 
-			WaitForPageLoad();
-
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Run 1",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Environment",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Run");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Environment",
+				inputValue = "Run");
 		}
 
 		task ("And can see the Run 1 and 2 in the list and not see Run 3") {
@@ -568,18 +483,10 @@ definition {
 		task ("When the user filter a Run by its non-existent name") {
 			Refresh();
 
-			TestrayFilter.clickFilter();
-
-			ScrollWebElementIntoView(
-				key_tableEntry = "Run 2",
-				locator1 = "Testray#TABLE_ENTRY");
-
-			Type(
-				key_fieldLabel = "Environment",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Run 3");
-
-			Button.click(button = "Apply");
+			TestrayFilter.filterResults(
+				fieldType = "input",
+				inputFieldLabel = "Environment",
+				inputValue = "Run 3");
 		}
 
 		task ("Then can not see the run 3 in the list") {

@@ -164,4 +164,42 @@ definition {
 			}
 		}
 	}
+
+	@priority = 5
+	test CheckMbeanWhenUpgradeHaveWarnAndError {
+		property custom.mysql.sql.statement = "ALTER TABLE FragmentComposition DROP description;";
+		property data.archive.type = "data-archive-portal";
+		property portal.version = "7.4.13";
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
+
+		task ("Given the indexes.sql file from portal-impl.jar is deleted") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "delete-indexes-sql");
+		}
+
+		task ("And the upgrade have finished When a warn and an error were registered during upgrade") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("Then look for the mbean output file") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("And the status of the upgrade is published as failure in the JVM via mBean") {
+			if (!(contains(${mBeanAttibutesFile}, "Type: major"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade type not present in the mBean file");
+			}
+
+			if (!(contains(${mBeanAttibutesFile}, "Result: failure"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Expected upgrade result not present in the mBean file");
+			}
+		}
+	}
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
+import com.liferay.portal.vulcan.permission.Permission;
 
 import java.io.File;
 import java.io.IOException;
@@ -661,6 +662,9 @@ public class OpenAPIParserUtil {
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("object", null),
 					Object.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("permission", null),
+					Permission.class.getName());
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("string", null),
 					String.class.getName());

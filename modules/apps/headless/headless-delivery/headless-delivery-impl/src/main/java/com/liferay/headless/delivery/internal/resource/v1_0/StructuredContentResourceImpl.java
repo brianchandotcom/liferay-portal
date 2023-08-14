@@ -112,6 +112,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -781,9 +782,10 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-		Long[] assetCategoryIds, long[] assetLinkEntryIds, double assetPriority,
-		String[] assetTagNames, long groupId,
-		StructuredContent structuredContent) {
+			Long[] assetCategoryIds, long[] assetLinkEntryIds,
+			double assetPriority, String[] assetTagNames, long groupId,
+			StructuredContent structuredContent)
+		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
@@ -794,6 +796,19 @@ public class StructuredContentResourceImpl
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		serviceContext.setAssetPriority(assetPriority);
+
+		if ((structuredContent.getViewableBy() == null) &&
+			(structuredContent.getPermissions() != null)) {
+
+			serviceContext.setModelPermissions(
+				ModelPermissionsUtil.toModelPermissions(
+					contextCompany.getCompanyId(),
+					structuredContent.getPermissions(),
+					getPermissionCheckerResourceId(structuredContent.getId()),
+					getPermissionCheckerResourceName(structuredContent.getId()),
+					resourceActionLocalService, resourcePermissionLocalService,
+					roleLocalService));
+		}
 
 		return serviceContext;
 	}

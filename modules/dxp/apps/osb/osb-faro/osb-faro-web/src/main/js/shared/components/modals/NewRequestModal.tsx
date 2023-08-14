@@ -56,7 +56,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 			.search({
 				delta: AUTOCOMPLETE_DELTA,
 				filter: inputValue
-					? `contains(demographics/email/value, ${inputValue})`
+					? `contains(demographics/email/value, '${inputValue}')`
 					: '',
 				groupId,
 				page

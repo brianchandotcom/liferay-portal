@@ -39,11 +39,7 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 		<div>
 			<react:component
 				module="js/SmallImage"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"smallImageSource", smallImageSource
-					).build()
-				%>'
+				props="<%= journalEditArticleDisplayContext.getProps() %>"
 			/>
 		</div>
 	</c:when>

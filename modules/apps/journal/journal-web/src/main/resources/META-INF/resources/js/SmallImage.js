@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {sub} from 'frontend-js-web';
+import {openSelectionModal, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 const SMALL_IMAGE_SOURCES = {
@@ -33,22 +33,34 @@ export default function SmallImage({
 	itemSelectorURL,
 	portletNamespace,
 	previewURL,
-	smallImageId,
+	smallImageId: initialSmallImageId,
 	smallImageName: initialSmallImageName,
 	smallImageSource: initialSmallImageSource,
 	smallImageURL: initialSmallImageURL,
 }) {
+	const [smallImageId, setSmallImageId] = useState(initialSmallImageId);
+	const [smallImageName, setSmallImageName] = useState(initialSmallImageName);
 	const [smallImageSource, setSmallImageSource] = useState(
 		initialSmallImageSource
 	);
 
 	const [smallImageURL, setSmallImageURL] = useState(initialSmallImageURL);
 
-	const [smallImageName, setSmallImageName] = useState(initialSmallImageName);
-
 	const fileInputRef = useRef();
 
-	const openItemSelector = () => {};
+	const openItemSelector = () => {
+		openSelectionModal({
+			onSelect: (selectedItem) => {
+				const item = JSON.parse(selectedItem.value);
+
+				setSmallImageId(item.fileEntryId);
+				setSmallImageName(item.title);
+			},
+			selectEventName: `${portletNamespace}selectImage`,
+			title: Liferay.Language.get('select-image'),
+			url: itemSelectorURL,
+		});
+	};
 
 	return (
 		<div className="mb-3">

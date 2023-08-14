@@ -25,8 +25,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -787,6 +789,26 @@ public class JournalEditArticleDisplayContext {
 			_httpServletRequest, "portletResource");
 
 		return _portletResource;
+	}
+
+	public Map<String, Object> getProps() {
+		return HashMapBuilder.<String, Object>put(
+			"itemSelectorURL",
+			() -> {
+				ItemSelectorCriterion itemSelectorCriterion =
+					new ImageItemSelectorCriterion();
+
+				itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new FileEntryItemSelectorReturnType());
+
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						_liferayPortletResponse.getNamespace() + "selectImage",
+						itemSelectorCriterion));
+			}
+		).build();
 	}
 
 	public String getPublishButtonLabel() throws PortalException {

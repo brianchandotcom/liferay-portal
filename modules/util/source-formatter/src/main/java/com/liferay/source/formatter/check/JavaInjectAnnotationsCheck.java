@@ -26,6 +26,12 @@ public class JavaInjectAnnotationsCheck extends JavaAnnotationsCheck {
 			String fileContent, String annotation, String indent)
 		throws Exception {
 
+		if (!absolutePath.contains("/test/") &&
+			!absolutePath.contains("/testIntegration/")) {
+
+			return annotation;
+		}
+
 		String trimmedAnnotation = StringUtil.trim(annotation);
 
 		if (!trimmedAnnotation.equals("@Inject") &&

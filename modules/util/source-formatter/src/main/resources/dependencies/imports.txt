@@ -107,6 +107,7 @@ com.liferay.exportimport.kernel.staging.StagingConstants=com.liferay.exportimpor
 com.liferay.frontend.editor.embed.EditorEmbedProviderTypeConstants=com.liferay.frontend.editor.embed.constants.EditorEmbedProviderTypeConstants
 com.liferay.frontend.taglib.clay.data.Filter=com.liferay.frontend.data.set.provider.search.FDSKeywords
 com.liferay.frontend.taglib.clay.data.Pagination=com.liferay.frontend.data.set.provider.search.FDSPagination
+com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider=com.liferay.frontend.data.set.provider.FDSActionProvider
 com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView=com.liferay.frontend.data.set.view.FDSView
 com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider=com.liferay.frontend.data.set.provider.FDSDataProvider
 com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem=com.liferay.frontend.data.set.model.FDSActionDropdownItem

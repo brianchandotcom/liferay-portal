@@ -55,6 +55,14 @@ export function reducer(state, action) {
 				),
 			};
 
+		case 'DELETE_EXPERIMENT':
+			return {
+				...state,
+				deleteExperimentModal: {
+					active: action.payload.active,
+				},
+			};
+
 		case 'EDIT_EXPERIMENT':
 			return _editExperiment(state, action.payload);
 

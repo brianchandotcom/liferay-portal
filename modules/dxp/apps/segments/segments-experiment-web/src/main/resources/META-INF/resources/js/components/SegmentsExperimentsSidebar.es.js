@@ -6,7 +6,7 @@
 import ClayModal, {useModal} from '@clayui/modal';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useEffect, useReducer} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
 import {
@@ -14,11 +14,14 @@ import {
 	addVariant,
 	archiveExperiment,
 	closeCreationModal,
+	closeDeletionModal,
 	closeEditionModal,
 	deleteArchivedExperiment,
 	editSegmentsExperiment,
 	openCreationModal,
+	openDeletionModal,
 	openEditionModal,
+	reviewAndRunExperiment,
 	reviewClickTargetElement,
 	updateSegmentsExperimentStatus,
 	updateSegmentsExperimentTarget,
@@ -34,9 +37,17 @@ import {
 	SegmentsExperimentType,
 	SegmentsVariantType,
 } from '../types.es';
-import {navigateToExperience} from '../util/navigation.es';
-import {STATUS_COMPLETED, STATUS_TERMINATED} from '../util/statuses.es';
+import {
+	getSegmentsExperimentAction,
+	navigateToExperience,
+} from '../util/navigation.es';
+import {
+	STATUS_COMPLETED,
+	STATUS_DRAFT,
+	STATUS_TERMINATED,
+} from '../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../util/toasts.es';
+import {DeleteModal} from './DeleteModal.es';
 import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
@@ -62,7 +73,12 @@ function SegmentsExperimentsSidebar({
 		getInitialState
 	);
 
-	const {createExperimentModal, editExperimentModal, experiment} = state;
+	const {
+		createExperimentModal,
+		deleteExperimentModal,
+		editExperimentModal,
+		experiment,
+	} = state;
 
 	const {
 		observer: creationModalObserver,
@@ -76,6 +92,31 @@ function SegmentsExperimentsSidebar({
 	} = useModal({
 		onClose: () => dispatch(closeEditionModal()),
 	});
+	const {
+		observer: deletionModalObserver,
+		onClose: onDeletionModalClose,
+	} = useModal({
+		onClose: () => dispatch(closeDeletionModal()),
+	});
+
+	useEffect(() => {
+		const segmentsExperimentAction = getSegmentsExperimentAction();
+
+		if (
+			!segmentsExperimentAction ||
+			!experiment ||
+			experiment.status.value !== STATUS_DRAFT
+		) {
+			return;
+		}
+
+		if (segmentsExperimentAction === 'reviewAndRun') {
+			dispatch(reviewAndRunExperiment());
+		}
+		else if (segmentsExperimentAction === 'delete') {
+			dispatch(openDeletionModal());
+		}
+	}, [dispatch, experiment]);
 
 	return page.type === 'content' ? (
 		<DispatchContext.Provider value={dispatch}>
@@ -131,6 +172,33 @@ function SegmentsExperimentsSidebar({
 								title={Liferay.Language.get('edit-test')}
 							/>
 						</ClayModal>
+					)}
+
+					{deleteExperimentModal.active && (
+						<DeleteModal
+							modalObserver={deletionModalObserver}
+							onCancel={onDeletionModalClose}
+							onDelete={() => {
+								_handleDeleteSegmentsExperiment(
+									experiment.segmentsExperimentId
+								);
+
+								onDeletionModalClose();
+							}}
+							title={Liferay.Language.get('delete-test')}
+						>
+							<p className="font-weight-bold text-secondary">
+								{Liferay.Language.get(
+									'are-you-sure-you-want-to-delete-this'
+								)}
+							</p>
+
+							<p className="text-secondary">
+								{Liferay.Language.get(
+									'you-will-lose-all-data-relate-to-it.-you-will-not-be-able-to-undo-this-operation'
+								)}
+							</p>
+						</DeleteModal>
 					)}
 				</div>
 			</StateContext.Provider>

@@ -7,6 +7,7 @@ import {createContext} from 'react';
 
 const DEFAULT_STATE = {
 	createExperimentModal: {active: false},
+	deleteExperimentModal: {active: false},
 	editExperimentModal: {active: false},
 	errors: {},
 	experiences: [],

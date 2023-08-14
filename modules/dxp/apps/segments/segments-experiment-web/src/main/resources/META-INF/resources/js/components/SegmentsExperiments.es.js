@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
-import {archiveExperiment} from '../state/actions.es';
+import {archiveExperiment, openDeletionModal} from '../state/actions.es';
 import {DispatchContext, StateContext} from '../state/context.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
 import {navigateToExperience} from '../util/navigation.es';
@@ -45,6 +45,7 @@ function SegmentsExperiments({
 }) {
 	const [activeTab, setActiveTab] = useState(TABS_STATES.ACTIVE);
 	const {experiment, experimentHistory} = useContext(StateContext);
+	const dispatch = useContext(DispatchContext);
 
 	const goalTarget = experiment?.goal?.target?.replace('#', '');
 	const isGoalTargetInDOM = document.getElementById(goalTarget);
@@ -61,7 +62,9 @@ function SegmentsExperiments({
 				experiment={experiment}
 				goalTarget={goalTarget}
 				onCreateSegmentsExperiment={onCreateSegmentsExperiment}
-				onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
+				onDeleteSegmentsExperiment={() => {
+					dispatch(openDeletionModal());
+				}}
 				onEditSegmentsExperiment={onEditSegmentsExperiment}
 				onEditSegmentsExperimentStatus={onEditSegmentsExperimentStatus}
 				onTargetChange={onTargetChange}
@@ -101,7 +104,9 @@ function SegmentsExperiments({
 						experiment={experiment}
 						goalTarget={goalTarget}
 						onCreateSegmentsExperiment={onCreateSegmentsExperiment}
-						onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
+						onDeleteSegmentsExperiment={() => {
+							dispatch(openDeletionModal());
+						}}
 						onEditSegmentsExperiment={onEditSegmentsExperiment}
 						onEditSegmentsExperimentStatus={
 							onEditSegmentsExperimentStatus
@@ -139,21 +144,6 @@ function Experiments({
 
 	function _handleEditExperiment() {
 		onEditSegmentsExperiment();
-	}
-
-	function _handleDeleteActiveExperiment() {
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
-			),
-			onConfirm: (isConfirmed) => {
-				if (isConfirmed) {
-					return onDeleteSegmentsExperiment(
-						experiment.segmentsExperimentId
-					);
-				}
-			},
-		});
 	}
 
 	function _handlePublishVariant(experienceId) {
@@ -228,7 +218,7 @@ function Experiments({
 									</ClayDropDown.Item>
 
 									<ClayDropDown.Item
-										onClick={_handleDeleteActiveExperiment}
+										onClick={onDeleteSegmentsExperiment}
 									>
 										<ClayIcon
 											className="c-mr-3 text-4"

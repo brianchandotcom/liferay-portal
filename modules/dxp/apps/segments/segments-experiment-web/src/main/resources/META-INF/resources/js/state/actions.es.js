@@ -65,6 +65,20 @@ export function openCreationModal(payload) {
 	};
 }
 
+export function closeDeletionModal() {
+	return {
+		payload: {active: false},
+		type: 'DELETE_EXPERIMENT',
+	};
+}
+
+export function openDeletionModal() {
+	return {
+		payload: {active: true},
+		type: 'DELETE_EXPERIMENT',
+	};
+}
+
 export function openEditionModal(payload) {
 	return {
 		payload,

@@ -171,11 +171,11 @@ function Variant({
 					}}
 					title={Liferay.Language.get('delete-variant')}
 				>
-					<label>
+					<p className="font-weight-bold text-secondary">
 						{Liferay.Language.get(
 							'are-you-sure-you-want-to-delete-this'
 						)}
-					</label>
+					</p>
 				</DeleteModal>
 			)}
 		</>

@@ -1,0 +1,6 @@
+packageRunStart {
+	String liferayVirtualInstanceId = project.hasProperty("liferay.virtual.instance.id") ? project.getProperty("liferay.virtual.instance.id") : "default"
+
+	environment "LIFERAY_ROUTES_CLIENT_EXTENSION", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/${project.name}"
+	environment "LIFERAY_ROUTES_DXP", "${gradle.liferayWorkspace.homeDir}/routes/${liferayVirtualInstanceId}/dxp"
+}

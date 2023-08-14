@@ -5,7 +5,9 @@
 		"LIFERAY_MARKETPLACE_ETC_NODE_SSA_CLIENT_ID": "@liferay-marketplace-etc-node-ssa-client-id",
 		"LIFERAY_MARKETPLACE_ETC_NODE_SSA_CLIENT_SECRET": "@liferay-marketplace-etc-node-ssa-client-secret",
 		"LIFERAY_MARKETPLACE_ETC_NODE_SSA_DURATION": "30",
-		"LIFERAY_MARKETPLACE_ETC_NODE_SSA_SERVICE_USER_ID": "@liferay-marketplace-etc-node-ssa-service-user-id"
+		"LIFERAY_MARKETPLACE_ETC_NODE_SSA_SERVICE_USER_ID": "@liferay-marketplace-etc-node-ssa-service-user-id",
+		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
+		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},
 	"environments": {
 		"infra": {

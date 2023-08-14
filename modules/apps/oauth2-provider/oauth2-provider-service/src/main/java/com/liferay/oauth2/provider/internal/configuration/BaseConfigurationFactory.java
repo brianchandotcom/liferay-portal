@@ -58,8 +58,16 @@ public abstract class BaseConfigurationFactory {
 				_portalK8sConfigMapModifierSnapshot.get();
 
 			portalK8sConfigMapModifier.modifyConfigMap(
-				configMapModel -> _extensionProperties.forEach(
-					configMapModel.data()::remove),
+				configMapModel -> {
+					_extensionProperties.forEach(configMapModel.data()::remove);
+
+					Map<String, String> labels = configMapModel.labels();
+
+					labels.put(
+						"dxp.lxc.liferay.com/virtualInstanceId",
+						_virtualInstanceId);
+					labels.put("ext.lxc.liferay.com/projectName", _projectName);
+				},
 				_configMapName);
 		}
 	}
@@ -92,21 +100,27 @@ public abstract class BaseConfigurationFactory {
 
 		_extensionProperties = extensionProperties;
 
-		String serviceId = GetterUtil.getString(
-			properties.get("ext.lxc.liferay.com.serviceId"));
-
 		PortalK8sConfigMapModifier portalK8sConfigMapModifier =
 			_portalK8sConfigMapModifierSnapshot.get();
 
+		String projectName = GetterUtil.getString(
+			properties.get("ext.lxc.liferay.com.projectName"),
+			(String)properties.get("projectName"));
+
+		String serviceIdOrProjectName = GetterUtil.getString(
+			properties.get("ext.lxc.liferay.com.serviceId"), projectName);
+
 		if ((portalK8sConfigMapModifier == null) ||
-			Validator.isNull(serviceId)) {
+			Validator.isNull(serviceIdOrProjectName)) {
 
 			return;
 		}
 
 		_configMapName = StringBundler.concat(
-			serviceId, StringPool.DASH, company.getWebId(),
+			serviceIdOrProjectName, StringPool.DASH, company.getWebId(),
 			"-lxc-ext-init-metadata");
+		_projectName = projectName;
+		_virtualInstanceId = company.getWebId();
 
 		portalK8sConfigMapModifier.modifyConfigMap(
 			configMapModel -> {
@@ -118,11 +132,8 @@ public abstract class BaseConfigurationFactory {
 
 				labels.put(
 					"dxp.lxc.liferay.com/virtualInstanceId",
-					company.getWebId());
-				labels.put(
-					"ext.lxc.liferay.com/projectId",
-					GetterUtil.getString(
-						properties.get("ext.lxc.liferay.com.projectId")));
+					_virtualInstanceId);
+				labels.put("ext.lxc.liferay.com/projectName", _projectName);
 				labels.put(
 					"ext.lxc.liferay.com/projectUid",
 					GetterUtil.getString(
@@ -164,5 +175,7 @@ public abstract class BaseConfigurationFactory {
 
 	private volatile String _configMapName;
 	private volatile Map<String, String> _extensionProperties;
+	private volatile String _projectName;
+	private volatile String _virtualInstanceId;
 
 }

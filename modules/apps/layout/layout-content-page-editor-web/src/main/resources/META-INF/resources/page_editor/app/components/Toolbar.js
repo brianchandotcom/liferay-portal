@@ -209,6 +209,7 @@ function ToolbarBody({className}) {
 			)}
 			onClick={deselectItem}
 			ref={dropClearRef}
+			size={Liferay.FeatureFlags['LPS-184404'] ? false : 'xl'}
 		>
 			<ZoomAlert />
 

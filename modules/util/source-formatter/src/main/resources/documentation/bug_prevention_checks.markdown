@@ -88,6 +88,7 @@ JavaFinderImplCustomSQLCheck | .java | Checks that hardcoded SQL values in `*Fin
 JavaGetFeatureFlagCheck | .java | Checks that `FeatureFlagManagerUtil.isEnabled` should be used (instead of `PropsUtil.get` in `GetterUtil.getBoolean`). |
 JavaIgnoreAnnotationCheck | .java | Finds methods with `@Ignore` annotation in test classes. |
 [JavaIndexableCheck](check/java_indexable_check.markdown#javaindexablecheck) | .java | Checks that the type gets returned when using annotation `@Indexable`. |
+JavaInjectAnnotationsCheck | .java | Performs several checks on classes with `@Inject` annotations. |
 JavaInterfaceCheck | .java | Checks that `interface` is not `static`. |
 JavaInternalPackageCheck | .java | Performs several checks on class in `internal` package. |
 JavaJSPDynamicIncludeCheck | .java | Performs several checks on `*JSPDynamicInclude` class. |

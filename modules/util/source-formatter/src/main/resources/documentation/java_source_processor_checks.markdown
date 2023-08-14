@@ -94,6 +94,7 @@ JavaIOExceptionCheck | [Styling](styling_checks.markdown#styling-checks) | Valid
 JavaIgnoreAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds methods with `@Ignore` annotation in test classes. |
 JavaImportsCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.java` files. |
 [JavaIndexableCheck](check/java_indexable_check.markdown#javaindexablecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that the type gets returned when using annotation `@Indexable`. |
+JavaInjectAnnotationsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on classes with `@Inject` annotations. |
 JavaInnerClassImportsCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where inner classes are imported. |
 JavaInterfaceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that `interface` is not `static`. |
 JavaInternalPackageCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on class in `internal` package. |

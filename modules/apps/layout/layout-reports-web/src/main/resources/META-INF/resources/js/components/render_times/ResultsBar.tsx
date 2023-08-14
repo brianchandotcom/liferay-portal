@@ -7,7 +7,13 @@ import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {Dispatch, SetStateAction, useMemo} from 'react';
+import React, {
+	Dispatch,
+	SetStateAction,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
 import {
 	Entries,
@@ -26,6 +32,7 @@ interface PropsResultsBar {
 interface PropsResultsBarItemLabel {
 	filterKey: keyof FragmentFilter;
 	label: string;
+	onSetFeedback: Dispatch<SetStateAction<string>>;
 	onSetFilters: Dispatch<SetStateAction<FragmentFilter>>;
 }
 
@@ -46,6 +53,7 @@ const ResultsBarItem = ({
 const ResultsBarItemLabel = ({
 	filterKey,
 	label,
+	onSetFeedback,
 	onSetFilters,
 }: PropsResultsBarItemLabel) => {
 	return (
@@ -62,6 +70,7 @@ const ResultsBarItemLabel = ({
 							...filters,
 							[filterKey]: null,
 						}));
+						onSetFeedback(Liferay.Language.get('filter-removed'));
 					},
 				}}
 				displayType="unstyled"
@@ -79,6 +88,16 @@ export default function ResultsBar({
 	fragments,
 	onSetFilters,
 }: PropsResultsBar) {
+	const [feedback, setFeedback] = useState('');
+
+	useEffect(() => {
+		if (feedback) {
+			const timeout = setTimeout(() => setFeedback(''), 1000);
+
+			return () => clearTimeout(timeout);
+		}
+	}, [feedback]);
+
 	const hasActiveFilters = useMemo(
 		() => Object.entries(filters).some(([, value]) => value),
 		[filters]
@@ -86,6 +105,10 @@ export default function ResultsBar({
 
 	return (
 		<>
+			<span className="sr-only" role="alert">
+				{feedback}
+			</span>
+
 			{hasActiveFilters ? (
 				<div
 					className={classNames(
@@ -111,6 +134,7 @@ export default function ResultsBar({
 									filterKey={key}
 									key={key}
 									label={FILTER_NAMES[value]}
+									onSetFeedback={setFeedback}
 									onSetFilters={onSetFilters}
 								/>
 							) : null
@@ -129,6 +153,9 @@ export default function ResultsBar({
 										status: null,
 										type: null,
 									});
+									setFeedback(
+										Liferay.Language.get('filters-cleared')
+									);
 								}}
 							>
 								{Liferay.Language.get('clear')}

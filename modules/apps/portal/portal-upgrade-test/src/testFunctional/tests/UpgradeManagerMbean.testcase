@@ -141,4 +141,27 @@ definition {
 			}
 		}
 	}
+
+	@priority = 4
+	test CheckMbeanWhenAutoUpgradeIsDisabled {
+		property custom.properties = "upgrade.database.auto.run=false";
+
+		task ("Given auto.upgrade is disabled When the portal is started") {
+			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");
+		}
+
+		task ("Then look for the mbean output file") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var mBeanAttibutesFile = FileUtil.read("${projectDir}/mbean-attributes-output.txt");
+		}
+
+		task ("And the output file returns that the mBean it's not registered") {
+			if (!(contains(${mBeanAttibutesFile}, "Not Registered"))) {
+				echo(${mBeanAttibutesFile});
+
+				fail("Upgrade Manager MBean is registered");
+			}
+		}
+	}
 }

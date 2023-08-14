@@ -6260,7 +6260,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
+			value1 = "No Objects Created Yet");
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"

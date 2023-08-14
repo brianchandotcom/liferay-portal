@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -48,7 +47,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
-@FeatureFlags("LPS-187854")
 @RunWith(Arquillian.class)
 public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
@@ -202,9 +200,21 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	private void _assertNotificationRecipientSettings(
+	private void _assetNotificationQueueEntry(
 		boolean expectedSingleRecipient, String expectedToRecipient,
 		NotificationQueueEntry notificationQueueEntry) {
+
+		Assert.assertNotNull(
+			MailServiceTestUtil.getMailMessages("To", expectedToRecipient));
+
+		assertTermValues(
+			getTermValues(),
+			ListUtil.fromString(
+				notificationQueueEntry.getBody(), StringPool.COMMA));
+		assertTermValues(
+			getTermValues(),
+			ListUtil.fromString(
+				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
 		NotificationRecipient notificationRecipient =
 			notificationQueueEntry.getNotificationRecipient();
@@ -241,13 +251,13 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			expectedEmailAddresses.length, actualEmailAddresses.length);
 
 		for (String expectedEmailAddress : expectedEmailAddresses) {
-			boolean contains = false;
+			boolean containsEmailAddress = false;
 
 			for (String actualEmailAddress : actualEmailAddresses) {
 				if (StringUtil.equals(
 						expectedEmailAddress, actualEmailAddress)) {
 
-					contains = true;
+					containsEmailAddress = true;
 
 					break;
 				}
@@ -255,29 +265,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 			Assert.assertTrue(
 				actualToRecipient + " does not contain " + expectedToRecipient,
-				contains);
+				containsEmailAddress);
 		}
-	}
-
-	private void _assetNotificationQueueEntry(
-		boolean expectedSingleRecipient, String expectedToRecipient,
-		NotificationQueueEntry notificationQueueEntry) {
-
-		_assertNotificationRecipientSettings(
-			expectedSingleRecipient, expectedToRecipient,
-			notificationQueueEntry);
-
-		Assert.assertNotNull(
-			MailServiceTestUtil.getMailMessages("To", expectedToRecipient));
-
-		assertTermValues(
-			getTermValues(),
-			ListUtil.fromString(
-				notificationQueueEntry.getBody(), StringPool.COMMA));
-		assertTermValues(
-			getTermValues(),
-			ListUtil.fromString(
-				notificationQueueEntry.getSubject(), StringPool.COMMA));
 	}
 
 }

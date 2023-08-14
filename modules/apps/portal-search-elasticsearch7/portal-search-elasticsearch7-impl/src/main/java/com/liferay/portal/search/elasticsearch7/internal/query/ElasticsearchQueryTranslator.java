@@ -67,185 +67,409 @@ public class ElasticsearchQueryTranslator
 			queryBuilder = QueryBuilders.queryStringQuery(query.toString());
 		}
 
-		if (query.getBoost() != null) {
-			queryBuilder.boost(query.getBoost());
+		return queryBuilder;
+	}
+
+	@Override
+	public QueryBuilder visit(BooleanQuery booleanQuery) {
+		QueryBuilder queryBuilder = _booleanQueryTranslator.translate(
+			booleanQuery, this);
+
+		if (booleanQuery.getBoost() != null) {
+			queryBuilder.boost(booleanQuery.getBoost());
 		}
 
 		return queryBuilder;
 	}
 
 	@Override
-	public QueryBuilder visit(BooleanQuery booleanQuery) {
-		return _booleanQueryTranslator.translate(booleanQuery, this);
-	}
-
-	@Override
 	public QueryBuilder visit(BoostingQuery boostingQuery) {
-		return _boostingQueryTranslator.translate(boostingQuery, this);
+		QueryBuilder queryBuilder = _boostingQueryTranslator.translate(
+			boostingQuery, this);
+
+		if (boostingQuery.getBoost() != null) {
+			queryBuilder.boost(boostingQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(CommonTermsQuery commonTermsQuery) {
-		return _commonTermsQueryTranslator.translate(commonTermsQuery);
+		QueryBuilder queryBuilder = _commonTermsQueryTranslator.translate(
+			commonTermsQuery);
+
+		if (commonTermsQuery.getBoost() != null) {
+			queryBuilder.boost(commonTermsQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(ConstantScoreQuery constantScoreQuery) {
-		return _constantScoreQueryTranslator.translate(
+		QueryBuilder queryBuilder = _constantScoreQueryTranslator.translate(
 			constantScoreQuery, this);
+
+		if (constantScoreQuery.getBoost() != null) {
+			queryBuilder.boost(constantScoreQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(DateRangeTermQuery dateRangeTermQuery) {
-		return _dateRangeTermQueryTranslator.translate(dateRangeTermQuery);
+		QueryBuilder queryBuilder = _dateRangeTermQueryTranslator.translate(
+			dateRangeTermQuery);
+
+		if (dateRangeTermQuery.getBoost() != null) {
+			queryBuilder.boost(dateRangeTermQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(DisMaxQuery disMaxQuery) {
-		return _disMaxQueryTranslator.translate(disMaxQuery, this);
+		QueryBuilder queryBuilder = _disMaxQueryTranslator.translate(
+			disMaxQuery, this);
+
+		if (disMaxQuery.getBoost() != null) {
+			queryBuilder.boost(disMaxQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(ExistsQuery existsQuery) {
-		return _existsQueryTranslator.translate(existsQuery);
+		QueryBuilder queryBuilder = _existsQueryTranslator.translate(
+			existsQuery);
+
+		if (existsQuery.getBoost() != null) {
+			queryBuilder.boost(existsQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(FunctionScoreQuery functionScoreQuery) {
-		return _functionScoreQueryTranslator.translate(
+		QueryBuilder queryBuilder = _functionScoreQueryTranslator.translate(
 			functionScoreQuery, this);
+
+		if (functionScoreQuery.getBoost() != null) {
+			queryBuilder.boost(functionScoreQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(FuzzyQuery fuzzyQuery) {
-		return _fuzzyQueryTranslator.translate(fuzzyQuery);
+		QueryBuilder queryBuilder = _fuzzyQueryTranslator.translate(fuzzyQuery);
+
+		if (fuzzyQuery.getBoost() != null) {
+			queryBuilder.boost(fuzzyQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(GeoBoundingBoxQuery geoBoundingBoxQuery) {
-		return _geoBoundingBoxQueryTranslator.translate(geoBoundingBoxQuery);
+		QueryBuilder queryBuilder = _geoBoundingBoxQueryTranslator.translate(
+			geoBoundingBoxQuery);
+
+		if (geoBoundingBoxQuery.getBoost() != null) {
+			queryBuilder.boost(geoBoundingBoxQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(GeoDistanceQuery geoDistanceQuery) {
-		return _geoDistanceQueryTranslator.translate(geoDistanceQuery);
+		QueryBuilder queryBuilder = _geoDistanceQueryTranslator.translate(
+			geoDistanceQuery);
+
+		if (geoDistanceQuery.getBoost() != null) {
+			queryBuilder.boost(geoDistanceQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(GeoDistanceRangeQuery geoDistanceRangeQuery) {
-		return _geoDistanceRangeQueryTranslator.translate(
+		QueryBuilder queryBuilder = _geoDistanceRangeQueryTranslator.translate(
 			geoDistanceRangeQuery);
+
+		if (geoDistanceRangeQuery.getBoost() != null) {
+			queryBuilder.boost(geoDistanceRangeQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(GeoPolygonQuery geoPolygonQuery) {
-		return _geoPolygonQueryTranslator.translate(geoPolygonQuery);
+		QueryBuilder queryBuilder = _geoPolygonQueryTranslator.translate(
+			geoPolygonQuery);
+
+		if (geoPolygonQuery.getBoost() != null) {
+			queryBuilder.boost(geoPolygonQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(GeoShapeQuery geoShapeQuery) {
-		return _geoShapeQueryTranslator.translate(geoShapeQuery);
+		QueryBuilder queryBuilder = _geoShapeQueryTranslator.translate(
+			geoShapeQuery);
+
+		if (geoShapeQuery.getBoost() != null) {
+			queryBuilder.boost(geoShapeQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(IdsQuery idsQuery) {
-		return _idsQueryTranslator.translate(idsQuery);
+		QueryBuilder queryBuilder = _idsQueryTranslator.translate(idsQuery);
+
+		if (idsQuery.getBoost() != null) {
+			queryBuilder.boost(idsQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(MatchAllQuery matchAllQuery) {
-		return _matchAllQueryTranslator.translate(matchAllQuery);
+		QueryBuilder queryBuilder = _matchAllQueryTranslator.translate(
+			matchAllQuery);
+
+		if (matchAllQuery.getBoost() != null) {
+			queryBuilder.boost(matchAllQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(MatchPhrasePrefixQuery matchPhrasePrefixQuery) {
-		return _matchPhrasePrefixQueryTranslator.translate(
+		QueryBuilder queryBuilder = _matchPhrasePrefixQueryTranslator.translate(
 			matchPhrasePrefixQuery);
+
+		if (matchPhrasePrefixQuery.getBoost() != null) {
+			queryBuilder.boost(matchPhrasePrefixQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(MatchPhraseQuery matchPhraseQuery) {
-		return _matchPhraseQueryTranslator.translate(matchPhraseQuery);
+		QueryBuilder queryBuilder = _matchPhraseQueryTranslator.translate(
+			matchPhraseQuery);
+
+		if (matchPhraseQuery.getBoost() != null) {
+			queryBuilder.boost(matchPhraseQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(MatchQuery matchQuery) {
-		return _matchQueryTranslator.translate(matchQuery);
+		QueryBuilder queryBuilder = _matchQueryTranslator.translate(matchQuery);
+
+		if (matchQuery.getBoost() != null) {
+			queryBuilder.boost(matchQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(MoreLikeThisQuery moreLikeThisQuery) {
-		return _moreLikeThisQueryTranslator.translate(moreLikeThisQuery);
+		QueryBuilder queryBuilder = _moreLikeThisQueryTranslator.translate(
+			moreLikeThisQuery);
+
+		if (moreLikeThisQuery.getBoost() != null) {
+			queryBuilder.boost(moreLikeThisQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(MultiMatchQuery multiMatchQuery) {
-		return _multiMatchQueryTranslator.translate(multiMatchQuery);
+		QueryBuilder queryBuilder = _multiMatchQueryTranslator.translate(
+			multiMatchQuery);
+
+		if (multiMatchQuery.getBoost() != null) {
+			queryBuilder.boost(multiMatchQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(NestedQuery nestedQuery) {
-		return _nestedQueryTranslator.translate(nestedQuery, this);
+		QueryBuilder queryBuilder = _nestedQueryTranslator.translate(
+			nestedQuery, this);
+
+		if (nestedQuery.getBoost() != null) {
+			queryBuilder.boost(nestedQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(PercolateQuery percolateQuery) {
-		return _percolateQueryTranslator.translate(percolateQuery);
+		QueryBuilder queryBuilder = _percolateQueryTranslator.translate(
+			percolateQuery);
+
+		if (percolateQuery.getBoost() != null) {
+			queryBuilder.boost(percolateQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(PrefixQuery prefixQuery) {
-		return _prefixQueryTranslator.translate(prefixQuery);
+		QueryBuilder queryBuilder = _prefixQueryTranslator.translate(
+			prefixQuery);
+
+		if (prefixQuery.getBoost() != null) {
+			queryBuilder.boost(prefixQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(RangeTermQuery rangeTermQuery) {
-		return _rangeTermQueryTranslator.translate(rangeTermQuery);
+		QueryBuilder queryBuilder = _rangeTermQueryTranslator.translate(
+			rangeTermQuery);
+
+		if (rangeTermQuery.getBoost() != null) {
+			queryBuilder.boost(rangeTermQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(RegexQuery regexQuery) {
-		return _regexQueryTranslator.translate(regexQuery);
+		QueryBuilder queryBuilder = _regexQueryTranslator.translate(regexQuery);
+
+		if (regexQuery.getBoost() != null) {
+			queryBuilder.boost(regexQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(ScriptQuery scriptQuery) {
-		return _scriptQueryTranslator.translate(scriptQuery);
+		QueryBuilder queryBuilder = _scriptQueryTranslator.translate(
+			scriptQuery);
+
+		if (scriptQuery.getBoost() != null) {
+			queryBuilder.boost(scriptQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(SimpleStringQuery simpleStringQuery) {
-		return _simpleQueryStringQueryTranslator.translate(simpleStringQuery);
+		QueryBuilder queryBuilder = _simpleQueryStringQueryTranslator.translate(
+			simpleStringQuery);
+
+		if (simpleStringQuery.getBoost() != null) {
+			queryBuilder.boost(simpleStringQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(StringQuery stringQuery) {
-		return _stringQueryTranslator.translate(stringQuery);
+		QueryBuilder queryBuilder = _stringQueryTranslator.translate(
+			stringQuery);
+
+		if (stringQuery.getBoost() != null) {
+			queryBuilder.boost(stringQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(TermQuery termQuery) {
-		return _termQueryTranslator.translate(termQuery);
+		QueryBuilder queryBuilder = _termQueryTranslator.translate(termQuery);
+
+		if (termQuery.getBoost() != null) {
+			queryBuilder.boost(termQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(TermsQuery termsQuery) {
-		return _termsQueryTranslator.translate(termsQuery);
+		QueryBuilder queryBuilder = _termsQueryTranslator.translate(termsQuery);
+
+		if (termsQuery.getBoost() != null) {
+			queryBuilder.boost(termsQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(TermsSetQuery termsSetQuery) {
-		return _termsSetQueryTranslator.translate(termsSetQuery);
+		QueryBuilder queryBuilder = _termsSetQueryTranslator.translate(
+			termsSetQuery);
+
+		if (termsSetQuery.getBoost() != null) {
+			queryBuilder.boost(termsSetQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(WildcardQuery wildcardQuery) {
-		return _wildcardQueryTranslator.translate(wildcardQuery);
+		QueryBuilder queryBuilder = _wildcardQueryTranslator.translate(
+			wildcardQuery);
+
+		if (wildcardQuery.getBoost() != null) {
+			queryBuilder.boost(wildcardQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Override
 	public QueryBuilder visit(WrapperQuery wrapperQuery) {
-		return _wrapperQueryTranslator.translate(wrapperQuery);
+		QueryBuilder queryBuilder = _wrapperQueryTranslator.translate(
+			wrapperQuery);
+
+		if (wrapperQuery.getBoost() != null) {
+			queryBuilder.boost(wrapperQuery.getBoost());
+		}
+
+		return queryBuilder;
 	}
 
 	@Reference

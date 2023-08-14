@@ -13,6 +13,7 @@ import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentCompositionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
+import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.fragment.model.FragmentCollection;
@@ -82,7 +83,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	@Override
 	public List<FragmentsImporterResultEntry> importFragmentEntries(
 			long userId, long groupId, long fragmentCollectionId, File file,
-			boolean overwrite)
+			FragmentsImportStrategy fragmentsImportStrategy)
 		throws Exception {
 
 		_fragmentsImporterResultEntries = new ArrayList<>();
@@ -122,7 +123,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				}
 
 				FragmentCollection fragmentCollection = _addFragmentCollection(
-					groupId, entry.getKey(), name, description, overwrite);
+					groupId, entry.getKey(), name, description,
+					fragmentsImportStrategy);
 
 				_importResources(
 					userId, groupId, fragmentCollection, entry.getKey(),
@@ -132,13 +134,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
 					fragmentCollectionFolder.getFragmentCompositions(),
-					overwrite);
+					fragmentsImportStrategy);
 
 				_importFragmentEntries(
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
 					fragmentCollectionFolder.getFragmentEntries(),
-					resourceReferences, overwrite);
+					resourceReferences, fragmentsImportStrategy);
 			}
 
 			if (MapUtil.isNotEmpty(orphanFragmentCompositions) ||
@@ -155,12 +157,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				_importFragmentCompositions(
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
-					orphanFragmentCompositions, overwrite);
+					orphanFragmentCompositions, fragmentsImportStrategy);
 
 				_importFragmentEntries(
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
-					orphanFragmentEntries, resourceReferences, overwrite);
+					orphanFragmentEntries, resourceReferences,
+					fragmentsImportStrategy);
 			}
 		}
 
@@ -232,7 +235,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 	private FragmentCollection _addFragmentCollection(
 			long groupId, String fragmentCollectionKey, String name,
-			String description, boolean overwrite)
+			String description, FragmentsImportStrategy fragmentsImportStrategy)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -245,7 +248,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					groupId, fragmentCollectionKey, name, description,
 					ServiceContextThreadLocal.getServiceContext());
 		}
-		else if (overwrite) {
+		else if (Objects.equals(
+					FragmentsImportStrategy.OVERWRITE,
+					fragmentsImportStrategy)) {
+
 			fragmentCollection =
 				_fragmentCollectionService.updateFragmentCollection(
 					fragmentCollection.getFragmentCollectionId(), name,
@@ -263,7 +269,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, boolean cacheable,
 			String configuration, String icon, boolean readOnly,
-			String typeLabel, String typeOptions, boolean overwrite)
+			String typeLabel, String typeOptions,
+			FragmentsImportStrategy fragmentsImportStrategy)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -274,7 +281,11 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentCollection.getGroupId(), fragmentEntryKey);
 
-		if ((fragmentEntry != null) && !overwrite) {
+		if ((fragmentEntry != null) &&
+			Objects.equals(
+				FragmentsImportStrategy.DO_NOT_OVERWRITE,
+				fragmentsImportStrategy)) {
+
 			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
 		}
 
@@ -858,7 +869,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private void _importFragmentCompositions(
 			long userId, long groupId, ZipFile zipFile,
 			long fragmentCollectionId, Map<String, String> fragmentCompositions,
-			boolean overwrite)
+			FragmentsImportStrategy fragmentsImportStrategy)
 		throws Exception {
 
 		for (Map.Entry<String, String> entry :
@@ -892,7 +903,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 							WorkflowConstants.STATUS_APPROVED,
 							ServiceContextThreadLocal.getServiceContext());
 				}
-				else if (!overwrite) {
+				else if (Objects.equals(
+							FragmentsImportStrategy.DO_NOT_OVERWRITE,
+							fragmentsImportStrategy)) {
+
 					throw new DuplicateFragmentCompositionKeyException();
 				}
 				else {
@@ -940,7 +954,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private void _importFragmentEntries(
 			long userId, long groupId, ZipFile zipFile,
 			long fragmentCollectionId, Map<String, String> fragmentEntries,
-			Map<String, String> resourceReferences, boolean overwrite)
+			Map<String, String> resourceReferences,
+			FragmentsImportStrategy fragmentsImportStrategy)
 		throws Exception {
 
 		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
@@ -987,7 +1002,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
 				cacheable, configuration, icon, readOnly, typeLabel,
-				typeOptions, overwrite);
+				typeOptions, fragmentsImportStrategy);
 
 			if (fragmentEntry == null) {
 				continue;

@@ -32,8 +32,10 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.publish.maven.tasks.AbstractPublishToMaven;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.external.javadoc.CoreJavadocOptions;
 
@@ -308,6 +310,18 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					return new File(project.getBuildDir(), "settings.xml");
+				}
+
+			});
+
+		TaskOutputs taskOutputs = writeMavenSettingsTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
 				}
 
 			});

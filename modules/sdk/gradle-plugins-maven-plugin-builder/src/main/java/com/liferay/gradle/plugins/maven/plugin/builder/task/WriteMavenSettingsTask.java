@@ -13,13 +13,10 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 
 import org.w3c.dom.Document;
@@ -28,12 +25,9 @@ import org.w3c.dom.Element;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class WriteMavenSettingsTask extends DefaultTask {
 
-	@InputDirectory
-	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getLocalRepositoryDir() {
 		return GradleUtil.toFile(getProject(), _localRepositoryDir);
 	}

@@ -111,9 +111,10 @@ renderResponse.setTitle(title);
 											</div>
 
 											<div class="input-group-item input-group-item-shrink">
-												<button class="btn btn-secondary" type="button">
-													<liferay-ui:message key="select" />
-												</button>
+												<clay:button
+													displayType="secondary"
+													label="select"
+												/>
 											</div>
 										</div>
 									</div>

@@ -11,6 +11,7 @@ import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
+import {openPermissionsModal} from '../utils/modals/index';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
@@ -61,6 +62,11 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 					title: currentAction.title,
 					url: formattedHref,
 				});
+			}
+			if (currentAction.target === 'modal-permissions') {
+				event.preventDefault();
+
+				openPermissionsModal(formattedHref);
 			}
 			else if (currentAction.target === 'sidePanel') {
 				event.preventDefault();

@@ -564,11 +564,11 @@ definition {
 		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
 
 		if (${accountName} == "Company Name 1") {
-			var externalReferenceCode = "0017i00001MQSGdAAP";
+			var externalReferenceCode = "0010100001994ivAAA";
 		}
 
 		if (${accountName} == "Company Name 2") {
-			var externalReferenceCode = "0017i00001MQSAyAAP";
+			var externalReferenceCode = "0010100001994iwAAA";
 		}
 
 		if (!(isSet(password))) {

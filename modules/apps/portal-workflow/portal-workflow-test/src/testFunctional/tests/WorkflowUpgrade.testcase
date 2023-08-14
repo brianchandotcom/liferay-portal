@@ -114,12 +114,10 @@ definition {
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();
 	}
 
-	@ignore = "true"
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade7110 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();
@@ -136,12 +134,10 @@ definition {
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();
 	}
 
-	@ignore = "true"
 	@priority = 5
 	test ViewAndApproveWorkflowBlogsAfterUpgrade72101 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.2.10.1";
 
 		ValidateWorkflowUpgrade.approveBlogsWorkflow();

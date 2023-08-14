@@ -718,6 +718,10 @@
 			<category name="Bug Prevention" />
 			<description name="Finds methods with `@Ignore` annotation in test classes." />
 		</check>
+		<check name="JavaInjectAnnotationsCheck">
+			<category name="Bug Prevention" />
+			<description name="Performs several checks on classes with `@Inject` annotations." />
+		</check>
 		<check name="JavaInternalPackageCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on class in `internal` package." />

@@ -72,7 +72,9 @@ definition {
 		}
 
 		task ("Then back to API Builder list") {
-			AssertElementPresent();
+			AssertElementPresent(
+				key_objectLabel = "API Builder",
+				locator1 = "ObjectPortlet#OBJECT_PORTLET_HEADER");
 		}
 
 		task ("And Then app Title is not changed") {

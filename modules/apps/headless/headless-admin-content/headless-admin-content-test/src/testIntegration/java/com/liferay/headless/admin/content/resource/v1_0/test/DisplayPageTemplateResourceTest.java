@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -30,7 +31,9 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,6 +43,24 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DisplayPageTemplateResourceTest
 	extends BaseDisplayPageTemplateResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		PrincipalThreadLocal.setName(_originalName);
+	}
 
 	@Override
 	@Test
@@ -210,6 +231,8 @@ public class DisplayPageTemplateResourceTest
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	private String _originalName;
 
 	@Inject
 	private Portal _portal;

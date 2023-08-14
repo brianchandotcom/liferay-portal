@@ -8,6 +8,8 @@
 <c:if test="<%= hasPermission %>">
 	<div class="row">
 		<div class="col-12">
+			<liferay-ui:error exception="<%= CommerceDiscountRuleTypeSettingsException.class %>" message="cart-total-minimum-amount-cannot-be-empty-and-must-be-a-decimal-number" />
+
 			<commerce-ui:panel
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "rules") %>'

@@ -8,6 +8,7 @@ package com.liferay.commerce.pricing.web.internal.portlet.action;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
@@ -57,6 +58,8 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Throwable throwable) {
 			if (throwable instanceof CommerceDiscountCouponCodeException ||
+				throwable instanceof
+					CommerceDiscountRuleTypeSettingsException ||
 				throwable instanceof NoSuchDiscountException) {
 
 				SessionErrors.add(

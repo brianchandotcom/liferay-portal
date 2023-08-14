@@ -15,6 +15,7 @@ import com.liferay.commerce.discount.exception.CommerceDiscountDisplayDateExcept
 import com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTypeException;
 import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTargetException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTitleException;
 import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountException;
@@ -25,7 +26,10 @@ import com.liferay.commerce.discount.model.CommerceDiscountAccountRelTable;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRelTable;
 import com.liferay.commerce.discount.model.CommerceDiscountOrderTypeRelTable;
 import com.liferay.commerce.discount.model.CommerceDiscountRelTable;
+import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.model.CommerceDiscountTable;
+import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
+import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
@@ -51,6 +55,7 @@ import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1977,6 +1982,29 @@ public class CommerceDiscountLocalServiceImpl
 
 			throw new CommerceDiscountMaxPriceValueException();
 		}
+
+		if (commerceDiscountId > 0) {
+			List<CommerceDiscountRule> commerceDiscountRules =
+				_commerceDiscountRuleLocalService.getCommerceDiscountRules(
+					commerceDiscountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+			for (CommerceDiscountRule commerceDiscountRule :
+					commerceDiscountRules) {
+
+				CommerceDiscountRuleType commerceDiscountRuleType =
+					_commerceDiscountRuleTypeRegistry.
+						getCommerceDiscountRuleType(
+							commerceDiscountRule.getType());
+
+				if (!commerceDiscountRuleType.validate(
+						commerceDiscountRule.getSettingsProperty(
+							commerceDiscountRule.getType()))) {
+
+					throw new CommerceDiscountRuleTypeSettingsException();
+				}
+			}
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {
@@ -2009,6 +2037,9 @@ public class CommerceDiscountLocalServiceImpl
 
 	@Reference
 	private CommerceDiscountRuleLocalService _commerceDiscountRuleLocalService;
+
+	@Reference
+	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;
 
 	@Reference
 	private CommerceDiscountTargetRegistry _commerceDiscountTargetRegistry;

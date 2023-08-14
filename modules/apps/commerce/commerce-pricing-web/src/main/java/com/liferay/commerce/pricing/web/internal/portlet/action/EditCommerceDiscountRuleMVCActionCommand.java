@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
@@ -53,10 +54,23 @@ public class EditCommerceDiscountRuleMVCActionCommand
 				_deleteCommerceDiscountCPDefinition(actionRequest);
 			}
 		}
-		catch (Exception exception) {
-			SessionErrors.add(actionRequest, exception.getClass());
+		catch (Throwable throwable) {
+			if (throwable instanceof
+					CommerceDiscountRuleTypeSettingsException) {
 
-			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
+				SessionErrors.add(actionRequest, throwable.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
 		}
 	}
 
@@ -90,7 +104,9 @@ public class EditCommerceDiscountRuleMVCActionCommand
 	private void _updateCommerceDiscountRule(ActionRequest actionRequest)
 		throws Exception {
 
-		String type = ParamUtil.getString(actionRequest, "type");
+		String commerceDiscountRuleType = ParamUtil.getString(
+			actionRequest, "commerceDiscountRuleType");
+		String name = ParamUtil.getString(actionRequest, "name");
 		String typeSettings = ParamUtil.getString(
 			actionRequest, "typeSettings");
 
@@ -99,7 +115,8 @@ public class EditCommerceDiscountRuleMVCActionCommand
 
 		if (commerceDiscountRuleId > 0) {
 			_commerceDiscountRuleService.updateCommerceDiscountRule(
-				commerceDiscountRuleId, type, typeSettings);
+				commerceDiscountRuleId, name, commerceDiscountRuleType,
+				typeSettings);
 		}
 		else {
 			long commerceDiscountId = ParamUtil.getLong(
@@ -109,7 +126,8 @@ public class EditCommerceDiscountRuleMVCActionCommand
 				CommerceDiscountRule.class.getName(), actionRequest);
 
 			_commerceDiscountRuleService.addCommerceDiscountRule(
-				commerceDiscountId, type, typeSettings, serviceContext);
+				commerceDiscountId, name, commerceDiscountRuleType,
+				typeSettings, serviceContext);
 		}
 	}
 

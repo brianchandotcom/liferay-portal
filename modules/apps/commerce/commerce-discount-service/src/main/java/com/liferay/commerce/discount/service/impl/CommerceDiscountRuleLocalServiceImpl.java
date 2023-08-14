@@ -6,6 +6,7 @@
 package com.liferay.commerce.discount.service.impl;
 
 import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeException;
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
@@ -60,7 +61,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		_validate(type);
+		_validate(0, type, typeSettings);
 
 		long commerceDiscountRuleId = counterLocalService.increment();
 
@@ -181,7 +182,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 			commerceDiscountRulePersistence.findByPrimaryKey(
 				commerceDiscountRuleId);
 
-		_validate(type);
+		_validate(commerceDiscountRuleId, type, typeSettings);
 
 		commerceDiscountRule.setType(type);
 
@@ -214,7 +215,7 @@ public class CommerceDiscountRuleLocalServiceImpl
 			commerceDiscountRulePersistence.findByPrimaryKey(
 				commerceDiscountRuleId);
 
-		_validate(type);
+		_validate(commerceDiscountRuleId, type, typeSettings);
 
 		commerceDiscountRule.setName(name);
 		commerceDiscountRule.setType(type);
@@ -248,12 +249,21 @@ public class CommerceDiscountRuleLocalServiceImpl
 		indexer.reindex(commerceDiscount);
 	}
 
-	private void _validate(String type) throws PortalException {
+	private void _validate(
+			long commerceDiscountRuleId, String type, String typeSettings)
+		throws PortalException {
+
 		CommerceDiscountRuleType commerceDiscountRuleType =
 			_commerceDiscountRuleTypeRegistry.getCommerceDiscountRuleType(type);
 
 		if (commerceDiscountRuleType == null) {
 			throw new CommerceDiscountRuleTypeException();
+		}
+
+		if ((commerceDiscountRuleId > 0) &&
+			!commerceDiscountRuleType.validate(typeSettings)) {
+
+			throw new CommerceDiscountRuleTypeSettingsException();
 		}
 	}
 

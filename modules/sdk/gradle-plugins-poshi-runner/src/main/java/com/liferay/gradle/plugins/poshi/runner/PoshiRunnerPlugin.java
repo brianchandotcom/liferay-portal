@@ -665,8 +665,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			Integer chromeMajorVersion = Integer.parseInt(matcher.group(1));
 
 			if (chromeMajorVersion >= 115) {
-				_legacyChromeDriver = false;
-
 				StringBuilder sb = new StringBuilder();
 
 				sb.append(
@@ -1298,7 +1296,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put(115, "115.0.5790.170");
 			}
 		};
-		
 	private static final Pattern _majorChromeVersionPattern = Pattern.compile(
 		"([\\d]+)\\.[\\d\\.]+");
 	private static final Map<String, String> _webDriverBrowserBinaryNames =

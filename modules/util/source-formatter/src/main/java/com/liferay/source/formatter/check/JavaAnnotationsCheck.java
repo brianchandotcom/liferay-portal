@@ -34,7 +34,8 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 	protected void checkComponentName(
 			String fileName, String absolutePath, JavaClass javaClass,
-			String annotation, String attributeValue)
+			String annotation, String attributeValue,
+			boolean forceOSGiComponent)
 		throws Exception {
 
 		String componentName = _getComponentName(
@@ -57,7 +58,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 			return;
 		}
 
-		if (!componentName.startsWith("com.liferay")) {
+		if (!componentName.startsWith("com.liferay") || !forceOSGiComponent) {
 			return;
 		}
 

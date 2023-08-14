@@ -99,8 +99,8 @@ public class JavaReferenceAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		checkComponentName(
-			fileName, absolutePath, javaClass, annotation,
-			targetAttributeValue);
+			fileName, absolutePath, javaClass, annotation, targetAttributeValue,
+			true);
 	}
 
 	private static final String _ALLOWED_REFERENCE_METHOD_FILE_NAMES_KEY =

@@ -21,6 +21,15 @@ export interface Results {
 	'invalid': Result[];
 }
 
+interface ResultsDataEntry {
+	cssClass: string;
+	icon: string;
+	titles: {
+		plural: string;
+		singular: string;
+	};
+}
+
 interface ResultsProps {
 	fileName: string | null;
 	importResults: Results;
@@ -203,6 +212,84 @@ function ImportResults({fileName, importResults}: ResultsProps) {
 				</ClayLayout.Sheet>
 			)}
 		</>
+	);
+}
+
+interface SectionProps {
+	data: ResultsDataEntry;
+	defaultMessage?: string;
+	fileName: string | null;
+	panelProps?: object;
+	results: Result[];
+}
+
+function ImportResultsSection({
+	data,
+	defaultMessage,
+	fileName,
+	panelProps,
+	results,
+}: SectionProps) {
+	if (!results) {
+		return null;
+	}
+
+	const {cssClass, icon, titles} = data;
+	const title = results.length === 1 ? titles.singular : titles.plural;
+
+	return (
+		<ClayLayout.Sheet size="lg">
+			<ClayPanel
+				{...panelProps}
+				displayTitle={
+					<ClayPanel.Title>
+						<ClayIcon
+							className={`text-4 ${cssClass}`}
+							symbol={icon}
+						/>
+
+						<span
+							className={`c-ml-3 font-weight-semi-bold text-4 ${cssClass}`}
+						>
+							{sub(title, results.length)}
+						</span>
+					</ClayPanel.Title>
+				}
+			>
+				<ClayPanel.Body className="c-px-4 sheet-row">
+					<ul className="list-group sidebar-list-group">
+						{results.map((result, index) => (
+							<li
+								className="list-group-item list-group-item-flex p-0"
+								key={index}
+							>
+								<ClayLayout.ContentCol expand>
+									<div className="list-group-title">
+										{result.name}
+									</div>
+
+									{result.message ||
+										(defaultMessage && (
+											<div
+												className={`list-group-subtext ${cssClass}`}
+											>
+												{result.message ||
+													defaultMessage}
+											</div>
+										))}
+								</ClayLayout.ContentCol>
+
+								<ClayLayout.ContentCol>
+									<div className="list-group-subtitle">
+										{fileName}
+									</div>
+								</ClayLayout.ContentCol>
+							</li>
+						))}
+					</ul>
+				</ClayPanel.Body>
+			</ClayPanel>
+		</ClayLayout.Sheet>
 	);
 }
 

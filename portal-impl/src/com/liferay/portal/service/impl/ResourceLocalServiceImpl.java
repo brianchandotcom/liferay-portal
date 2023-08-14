@@ -282,6 +282,23 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
+	public void addResources(
+			long companyId, long groupId, long userId, String name,
+			String[] primKeys, boolean portletActions,
+			boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(addGroupPermissions);
+		serviceContext.setAddGuestPermissions(addGuestPermissions);
+
+		_resourcePermissionLocalService.addResourcePermissions(
+			companyId, groupId, userId, name, primKeys, portletActions,
+			serviceContext);
+	}
+
 	/**
 	 * Adds resources for the entity with the name. Use this method if the user
 	 * is unknown or irrelevant and there is no current entity instance.
@@ -304,7 +321,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		serviceContext.setAddGuestPermissions(false);
 
 		_resourcePermissionLocalService.addResourcePermissions(
-			companyId, groupId, 0, name, null, portletActions, serviceContext);
+			companyId, groupId, 0, name, (String)null, portletActions,
+			serviceContext);
 	}
 
 	@Override

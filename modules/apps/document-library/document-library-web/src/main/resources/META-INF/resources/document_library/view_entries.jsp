@@ -204,19 +204,29 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 
 														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 															<span class="inline-item inline-item-after state-icon">
-																<aui:icon image="lock" markupView="lexicon" message="locked" />
+																<clay:icon
+																	aria-label='<%= LanguageUtil.get(request, "locked") %>'
+																	symbol="lock"
+																/>
 															</span>
 														</c:if>
 
 														<c:if test="<%= dlViewFileVersionDisplayContext.isShared() %>">
 															<span class="inline-item inline-item-after lfr-portal-tooltip state-icon" title="<%= LanguageUtil.get(request, "shared") %>">
-																<aui:icon image="users" markupView="lexicon" message="shared" />
+																<clay:icon
+																	aria-label='<%= LanguageUtil.get(request, "shared") %>'
+																	symbol="users"
+																/>
 															</span>
 														</c:if>
 
 														<c:if test="<%= fileShortcut != null %>">
 															<span class="inline-item inline-item-after state-icon">
-																<aui:icon image="shortcut" markupView="lexicon" message="shortcut" />
+																<clay:icon
+																	aria-label='<%= LanguageUtil.get(request, "shortcut") %>'
+																	symbol="shortcut"
+																	title='<%= LanguageUtil.get(request, "shortcut") %>'
+																/>
 															</span>
 														</c:if>
 													</div>

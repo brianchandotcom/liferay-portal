@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,7 +12,7 @@ import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_4_x.UpgradeMasterPartitionTable;
+import com.liferay.portal.upgrade.v7_4_x.UpgradePartitionedControlTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +28,8 @@ import org.junit.runner.RunWith;
  * @author Sofía Mendoza Gutiérrez
  */
 @RunWith(Arquillian.class)
-public class UpgradeMasterPartitionTableTest extends BaseDBPartitionTestCase {
+public class UpgradePartitionedControlTableTest
+	extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -55,7 +56,7 @@ public class UpgradeMasterPartitionTableTest extends BaseDBPartitionTestCase {
 
 			_createViewSQL(TEST_TABLE_NAME);
 
-			UpgradeProcess upgradeProcess = new UpgradeMasterPartitionTable(
+			UpgradeProcess upgradeProcess = new UpgradePartitionedControlTable(
 				TEST_TABLE_NAME);
 
 			upgradeProcess.upgrade();

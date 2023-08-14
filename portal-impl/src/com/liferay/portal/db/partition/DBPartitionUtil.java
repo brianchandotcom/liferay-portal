@@ -180,8 +180,7 @@ public class DBPartitionUtil {
 		return _dropDBPartition(companyId);
 	}
 
-	public static void replaceViewByTable(
-			Connection connection, String tableName)
+	public static void replaceByTable(Connection connection, String viewName)
 		throws Exception {
 
 		long companyId = getCurrentCompanyId();
@@ -191,12 +190,12 @@ public class DBPartitionUtil {
 		}
 
 		try (Statement statement = connection.createStatement()) {
-			statement.execute(_getDropViewSQL(companyId, tableName));
+			statement.execute(_getDropViewSQL(companyId, viewName));
 
-			statement.execute(_getCreateTableSQL(companyId, tableName));
+			statement.execute(_getCreateTableSQL(companyId, viewName));
 
 			_copyData(
-				tableName, _defaultSchemaName, _getSchemaName(companyId),
+				viewName, _defaultSchemaName, _getSchemaName(companyId),
 				statement, StringPool.BLANK);
 		}
 	}

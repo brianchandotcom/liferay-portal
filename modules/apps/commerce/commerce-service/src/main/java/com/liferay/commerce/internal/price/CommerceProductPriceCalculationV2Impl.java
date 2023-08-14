@@ -111,8 +111,20 @@ public class CommerceProductPriceCalculationV2Impl
 			cpInstanceId, commerceProductPriceRequest.getUnitOfMeasureKey(),
 			commerceContext);
 
+		CommercePriceEntry unitCommercePriceEntry = _getUnitPriceEntry(
+			commercePriceListId, cpInstanceId, unitOfMeasureKey);
+
+		BigDecimal unitOfMeasureIncrementalOrderQuantity = BigDecimal.ONE;
+
+		if ((unitCommercePriceEntry != null) &&
+			(unitCommercePriceEntry.getQuantity() != null)) {
+
+			unitOfMeasureIncrementalOrderQuantity =
+				unitCommercePriceEntry.getQuantity();
+		}
+
 		CommerceMoney unitPriceCommerceMoney = _getUnitPrice(
-			commercePriceListId, cpInstanceId, quantity, unitOfMeasureKey,
+			unitCommercePriceEntry, commercePriceListId, quantity,
 			commerceContext);
 
 		boolean priceOnApplication =
@@ -168,12 +180,17 @@ public class CommerceProductPriceCalculationV2Impl
 				commerceChannel.isDiscountsTargetNetPrice();
 		}
 
+		BigDecimal baseQuantity = quantity.divide(
+			unitOfMeasureIncrementalOrderQuantity,
+			unitOfMeasureIncrementalOrderQuantity.scale(),
+			RoundingMode.HALF_UP);
+
 		if (discountsTargetNetPrice) {
 			commerceDiscountValue = _getCommerceDiscountValue(
-				cpInstanceId, commercePriceListId, quantity, finalPrice,
+				cpInstanceId, commercePriceListId, baseQuantity, finalPrice,
 				unitOfMeasureKey, commerceContext);
 
-			finalPrice = finalPrice.multiply(quantity);
+			finalPrice = finalPrice.multiply(baseQuantity);
 
 			if (commerceDiscountValue != null) {
 				CommerceMoney discountAmountCommerceMoney =
@@ -188,11 +205,11 @@ public class CommerceProductPriceCalculationV2Impl
 		}
 		else {
 			commerceDiscountValue = _getCommerceDiscountValue(
-				cpInstanceId, commercePriceListId, quantity,
+				cpInstanceId, commercePriceListId, baseQuantity,
 				finalPriceWithTaxAmount, unitOfMeasureKey, commerceContext);
 
 			finalPriceWithTaxAmount = finalPriceWithTaxAmount.multiply(
-				quantity);
+				baseQuantity);
 
 			if (commerceDiscountValue != null) {
 				CommerceMoney discountAmountCommerceMoney =
@@ -215,6 +232,8 @@ public class CommerceProductPriceCalculationV2Impl
 		commerceProductPriceImpl.setPriceOnApplication(priceOnApplication);
 		commerceProductPriceImpl.setQuantity(quantity);
 		commerceProductPriceImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceProductPriceImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 
 		if (unitPriceCommerceMoney.isEmpty()) {
 			if (unitPriceCommerceMoney.isPriceOnApplication()) {
@@ -258,8 +277,9 @@ public class CommerceProductPriceCalculationV2Impl
 
 			commerceProductPriceImpl.setCommerceDiscountValue(
 				CommercePriceConverterUtil.getConvertedCommerceDiscountValue(
-					commerceDiscountValue, updatedPrices[2].multiply(quantity),
-					finalPrice, commerceMoneyFactory,
+					commerceDiscountValue,
+					updatedPrices[2].multiply(baseQuantity), finalPrice,
+					commerceMoneyFactory,
 					RoundingMode.valueOf(commerceCurrency.getRoundingMode())));
 		}
 
@@ -317,7 +337,7 @@ public class CommerceProductPriceCalculationV2Impl
 		throws PortalException {
 
 		CommerceProductPrice commerceProductPrice = getCommerceProductPrice(
-			cpInstanceId, quantity, unitOfMeasureKey, commerceContext);
+			cpInstanceId, quantity, secure, unitOfMeasureKey, commerceContext);
 
 		if (commerceProductPrice == null) {
 			return commerceMoneyFactory.emptyCommerceMoney();
@@ -444,10 +464,13 @@ public class CommerceProductPriceCalculationV2Impl
 			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException {
 
+		long commercePriceListId = _getCommercePriceListId(
+			cpInstanceId, unitOfMeasureKey, commerceContext);
+
 		return _getUnitPrice(
-			_getCommercePriceListId(
-				cpInstanceId, unitOfMeasureKey, commerceContext),
-			cpInstanceId, quantity, unitOfMeasureKey, commerceContext);
+			_getUnitPriceEntry(
+				commercePriceListId, cpInstanceId, unitOfMeasureKey),
+			commercePriceListId, quantity, commerceContext);
 	}
 
 	@Activate
@@ -1086,12 +1109,45 @@ public class CommerceProductPriceCalculationV2Impl
 	}
 
 	private CommerceMoney _getUnitPrice(
-			long commercePriceListId, long cpInstanceId, BigDecimal quantity,
-			String unitOfMeasureKey, CommerceContext commerceContext)
+			CommercePriceEntry commercePriceEntry, long commercePriceListId,
+			BigDecimal quantity, CommerceContext commerceContext)
+		throws PortalException {
+
+		if (commercePriceEntry == null) {
+			return commerceMoneyFactory.create(
+				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
+		}
+
+		if (commercePriceEntry.isPriceOnApplication()) {
+			return commerceMoneyFactory.priceOnApplicationCommerceMoney();
+		}
+
+		BigDecimal unitPrice = _getCommercePrice(
+			commercePriceListId, commercePriceEntry, quantity);
+
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.getCommercePriceList(
+				commercePriceListId);
+
+		if (!commercePriceList.isNetPrice()) {
+			CPInstance cpInstance = commercePriceEntry.getCPInstance();
+
+			unitPrice = getConvertedPrice(
+				cpInstance.getCPInstanceId(), unitPrice, true, commerceContext);
+		}
+
+		return _getCommerceMoney(
+			commercePriceEntry.getCommercePriceListId(),
+			commerceContext.getCommerceCurrency(), unitPrice);
+	}
+
+	private CommercePriceEntry _getUnitPriceEntry(
+			long commercePriceListId, long cpInstanceId,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		if (commercePriceListId == 0) {
-			return commerceMoneyFactory.emptyCommerceMoney();
+			return null;
 		}
 
 		CommercePriceList commercePriceList =
@@ -1103,55 +1159,16 @@ public class CommerceProductPriceCalculationV2Impl
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceListId, cpInstance.getCPInstanceUuid(),
-				unitOfMeasureKey, true);
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid(), unitOfMeasureKey, true);
 
 		if (commercePriceEntry != null) {
-			if (commercePriceEntry.isPriceOnApplication()) {
-				return commerceMoneyFactory.priceOnApplicationCommerceMoney();
-			}
-
-			BigDecimal unitPrice = _getCommercePrice(
-				commercePriceList.getCommercePriceListId(), commercePriceEntry,
-				quantity);
-
-			if (!commercePriceList.isNetPrice()) {
-				unitPrice = getConvertedPrice(
-					cpInstance.getCPInstanceId(), unitPrice, true,
-					commerceContext);
-			}
-
-			return _getCommerceMoney(
-				commercePriceListId, commerceContext.getCommerceCurrency(),
-				unitPrice);
+			return commercePriceEntry;
 		}
 
-		CommercePriceEntry commerceBasePriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				_getBasePriceListId(cpInstance), cpInstance.getCPInstanceUuid(),
-				unitOfMeasureKey, false);
-
-		if (commerceBasePriceEntry == null) {
-			return commerceMoneyFactory.create(
-				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
-		}
-
-		if (commerceBasePriceEntry.isPriceOnApplication()) {
-			return commerceMoneyFactory.priceOnApplicationCommerceMoney();
-		}
-
-		BigDecimal unitPrice = _getCommercePrice(
-			commercePriceList.getCommercePriceListId(), commerceBasePriceEntry,
-			quantity);
-
-		if (!commercePriceList.isNetPrice()) {
-			unitPrice = getConvertedPrice(
-				cpInstance.getCPInstanceId(), unitPrice, true, commerceContext);
-		}
-
-		return _getCommerceMoney(
-			commercePriceListId, commerceContext.getCommerceCurrency(),
-			unitPrice);
+		return _commercePriceEntryLocalService.fetchCommercePriceEntry(
+			_getBasePriceListId(cpInstance), cpInstance.getCPInstanceUuid(),
+			unitOfMeasureKey, false);
 	}
 
 	private boolean _hasGrossPricePriceList(

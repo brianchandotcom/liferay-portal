@@ -96,6 +96,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -146,10 +147,14 @@ public class CommerceOrderItemLocalServiceImpl
 
 		_updateWorkflow(user.getUserId(), commerceOrder);
 
+		CommerceProductPrice commerceProductPrice = _getCommerceProductPrice(
+			cpInstance.getCPDefinitionId(), cpInstance.getCPInstanceId(), json,
+			quantity, unitOfMeasureKey, commerceContext);
+
 		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
-			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
-			json, quantity, shippedQuantity, unitOfMeasureKey, commerceContext,
-			serviceContext);
+			commerceOrder.getGroupId(), user, commerceOrder,
+			commerceProductPrice, cpInstance, 0, json, quantity,
+			shippedQuantity, unitOfMeasureKey, serviceContext);
 
 		commerceOrderItem.setReplacedCPInstanceId(replacedCPInstanceId);
 
@@ -175,12 +180,26 @@ public class CommerceOrderItemLocalServiceImpl
 			BigDecimal currentQuantity = quantity.multiply(
 				commerceOptionValue.getQuantity());
 
+			BigDecimal unitOfMeasureIncrementalOrderQuantity =
+				commerceProductPrice.getUnitOfMeasureIncrementalOrderQuantity();
+
+			currentQuantity = currentQuantity.divide(
+				unitOfMeasureIncrementalOrderQuantity,
+				unitOfMeasureIncrementalOrderQuantity.scale(),
+				RoundingMode.HALF_UP);
+
+			commerceProductPrice = _getCommerceProductPrice(
+				commerceOptionValueCPInstance.getCPDefinitionId(),
+				commerceOptionValueCPInstance.getCPInstanceId(),
+				commerceOptionValue.toJSON(), currentQuantity, StringPool.BLANK,
+				commerceContext);
+
 			CommerceOrderItem childCommerceOrderItem = _createCommerceOrderItem(
 				commerceOrder.getGroupId(), user, commerceOrder,
-				commerceOptionValueCPInstance,
+				commerceProductPrice, commerceOptionValueCPInstance,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOptionValue.toJSON(), currentQuantity, 0,
-				StringPool.BLANK, commerceContext, serviceContext);
+				StringPool.BLANK, serviceContext);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				childCommerceOrderItem = commerceOrderItemPersistence.update(
@@ -189,12 +208,12 @@ public class CommerceOrderItemLocalServiceImpl
 				continue;
 			}
 
-			CommerceProductPrice commerceProductPrice =
-				_getStaticCommerceProductPrice(
-					commerceOptionValue.getCPInstanceId(),
-					commerceContext.getCommerceCurrency(),
-					childCommerceOrderItem.getCommerceOrder(), currentQuantity,
-					commerceOptionValue.getPrice(), unitOfMeasureKey);
+			commerceProductPrice = _getStaticCommerceProductPrice(
+				commerceOptionValue.getCPInstanceId(),
+				commerceContext.getCommerceCurrency(),
+				childCommerceOrderItem.getCommerceOrder(), currentQuantity,
+				commerceOptionValue.getPrice(), StringPool.BLANK,
+				BigDecimal.ONE);
 
 			_setCommerceOrderItemPrice(
 				childCommerceOrderItem, commerceProductPrice);
@@ -581,9 +600,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (commerceOrderItem == null) {
 			commerceOrderItem = _createCommerceOrderItem(
-				commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
-				null, quantity, shippedQuantity, unitOfMeasureKey, null,
-				serviceContext);
+				commerceOrder.getGroupId(), user, commerceOrder, null,
+				cpInstance, 0, null, quantity, shippedQuantity,
+				unitOfMeasureKey, serviceContext);
 		}
 		else {
 			commerceOrderItem = _updateCommerceOrderItem(
@@ -786,8 +805,12 @@ public class CommerceOrderItemLocalServiceImpl
 					"Child commerce order item does not match any JSON item");
 			}
 
+			BigDecimal childCommerceOrderItemQuantity =
+				childCommerceOrderItem.getQuantity();
+
 			BigDecimal currentQuantity = quantity.multiply(
-				commerceOptionValue.getQuantity());
+				childCommerceOrderItemQuantity.divide(
+					commerceOrderItem.getQuantity(), RoundingMode.HALF_UP));
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				_updateCommerceOrderItem(
@@ -804,7 +827,8 @@ public class CommerceOrderItemLocalServiceImpl
 					commerceContext.getCommerceCurrency(),
 					childCommerceOrderItem.getCommerceOrder(), currentQuantity,
 					commerceOptionValue.getPrice(),
-					childCommerceOrderItem.getUnitOfMeasureKey());
+					childCommerceOrderItem.getUnitOfMeasureKey(),
+					BigDecimal.ONE);
 
 			_updateCommerceOrderItem(
 				userId, childCommerceOrderItem.getCommerceOrderItemId(),
@@ -856,8 +880,12 @@ public class CommerceOrderItemLocalServiceImpl
 					"Child commerce order item does not match any JSON item");
 			}
 
+			BigDecimal childCommerceOrderItemQuantity =
+				childCommerceOrderItem.getQuantity();
+
 			BigDecimal currentQuantity = quantity.multiply(
-				commerceOptionValue.getQuantity());
+				childCommerceOrderItemQuantity.divide(
+					commerceOrderItem.getQuantity(), RoundingMode.HALF_UP));
 
 			_updateCommerceOrderItem(
 				userId, childCommerceOrderItem.getCommerceOrderItemId(),
@@ -988,7 +1016,8 @@ public class CommerceOrderItemLocalServiceImpl
 						childCommerceOrderItem.getCommerceOrder(),
 						childCommerceOrderItem.getQuantity(),
 						commerceOptionValue.getPrice(),
-						childCommerceOrderItem.getUnitOfMeasureKey()),
+						childCommerceOrderItem.getUnitOfMeasureKey(),
+						BigDecimal.ONE),
 					commerceContext);
 			}
 
@@ -1273,9 +1302,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private CommerceOrderItem _createCommerceOrderItem(
 			long groupId, User user, CommerceOrder commerceOrder,
-			CPInstance cpInstance, long parentCommerceOrderItemId, String json,
-			BigDecimal quantity, int shippedQuantity, String unitOfMeasureKey,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			CommerceProductPrice commerceProductPrice, CPInstance cpInstance,
+			long parentCommerceOrderItemId, String json, BigDecimal quantity,
+			int shippedQuantity, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
@@ -1320,12 +1350,8 @@ public class CommerceOrderItemLocalServiceImpl
 		_setDimensions(commerceOrderItem, cpInstance);
 		_setSubscriptionInfo(commerceOrderItem, cpInstance);
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			CommerceProductPrice commerceProductPrice =
-				_getCommerceProductPrice(
-					cpInstance.getCPDefinitionId(),
-					cpInstance.getCPInstanceId(), json, quantity,
-					unitOfMeasureKey, commerceContext);
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			(commerceProductPrice != null)) {
 
 			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
 
@@ -1522,8 +1548,13 @@ public class CommerceOrderItemLocalServiceImpl
 	private CommerceProductPrice _getStaticCommerceProductPrice(
 			long cpInstanceId, CommerceCurrency commerceCurrency,
 			CommerceOrder commerceOrder, BigDecimal quantity,
-			BigDecimal optionValuePrice, String unitOfMeasureKey)
+			BigDecimal optionValuePrice, String unitOfMeasureKey,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity)
 		throws PortalException {
+
+		if (unitOfMeasureIncrementalOrderQuantity == null) {
+			unitOfMeasureIncrementalOrderQuantity = BigDecimal.ONE;
+		}
 
 		CommerceProductPriceImpl commerceProductPriceImpl =
 			new CommerceProductPriceImpl();
@@ -1564,6 +1595,8 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceProductPriceImpl.setCommerceDiscountValue(null);
 		commerceProductPriceImpl.setQuantity(quantity);
 		commerceProductPriceImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceProductPriceImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 
 		return commerceProductPriceImpl;
 	}

@@ -226,9 +226,9 @@ const Header: React.FC<IHeaderProps> & {
 	);
 };
 
+Header.Actions = Actions;
 Header.NavBar = NavBar;
 Header.PageActions = PageActions;
-Header.Actions = Actions;
 Header.Section = Section;
 Header.TitleSection = TitleSection;
 

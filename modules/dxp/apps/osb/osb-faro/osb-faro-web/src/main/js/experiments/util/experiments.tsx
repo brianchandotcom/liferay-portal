@@ -147,7 +147,7 @@ export const getExperimentLink: GetLinkFn = ({action, id, pageURL}) => {
 	const experimentLink = `${pageURL}?segmentsExperimentKey=${id}`;
 
 	if (action) {
-		return `${experimentLink}&segmentExperimentAction=${action}`;
+		return `${experimentLink}&segmentsExperimentAction=${action}`;
 	}
 
 	return experimentLink;

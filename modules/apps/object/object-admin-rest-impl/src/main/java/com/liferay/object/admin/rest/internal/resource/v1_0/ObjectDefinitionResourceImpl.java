@@ -993,6 +993,8 @@ public class ObjectDefinitionResourceImpl
 							null),
 						objectField),
 					ObjectField.class);
+				objectFolderExternalReferenceCode =
+					objectDefinition.getObjectFolderExternalReferenceCode();
 				objectLayouts = transformToArray(
 					_objectLayoutLocalService.getObjectLayouts(
 						objectDefinition.getObjectDefinitionId()),
@@ -1073,18 +1075,6 @@ public class ObjectDefinitionResourceImpl
 
 						return serviceBuilderObjectField.getName();
 					});
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-					setObjectFolderExternalReferenceCode(
-						() -> {
-							ObjectFolder objectFolder =
-								_objectFolderLocalService.getObjectFolder(
-									objectDefinition.getObjectFolderId());
-
-							return objectFolder.getExternalReferenceCode();
-						});
-				}
-
 				setTitleObjectFieldName(
 					() -> {
 						com.liferay.object.model.ObjectField

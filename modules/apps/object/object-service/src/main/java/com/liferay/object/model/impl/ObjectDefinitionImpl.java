@@ -7,6 +7,8 @@ package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -69,6 +71,18 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		}
 
 		return getDBTableName() + "_l";
+	}
+
+	@Override
+	public String getObjectFolderExternalReferenceCode() {
+		ObjectFolder objectFolder =
+			ObjectFolderLocalServiceUtil.fetchObjectFolder(getObjectFolderId());
+
+		if (objectFolder == null) {
+			return null;
+		}
+
+		return objectFolder.getExternalReferenceCode();
 	}
 
 	@Override

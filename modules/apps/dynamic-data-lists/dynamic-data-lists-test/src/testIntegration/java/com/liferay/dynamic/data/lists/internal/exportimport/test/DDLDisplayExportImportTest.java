@@ -81,6 +81,9 @@ public class DDLDisplayExportImportTest
 				).put(
 					"recordSetId",
 					new String[] {String.valueOf(recordSet.getRecordSetId())}
+				).put(
+					"recordSetKey",
+					new String[] {String.valueOf(recordSet.getRecordSetKey())}
 				).build());
 
 		DDLRecord importedRecord =

@@ -41,21 +41,18 @@ public class DDLDisplayConfigurationAction extends DefaultConfigurationAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		String recordSetId = getParameter(actionRequest, "recordSetId");
-
 		DDLRecordSet recordSet = _ddlRecordSetLocalService.getRecordSet(
-			GetterUtil.getLong(recordSetId));
+			GetterUtil.getLong(getParameter(actionRequest, "recordSetId")));
 
 		setPreference(
-			actionRequest, "groupId", _getRecordSetGroupId(recordSet));
+			actionRequest, "recordSetId",
+			String.valueOf(recordSet.getRecordSetId()));
+		setPreference(
+			actionRequest, "groupId", String.valueOf(recordSet.getGroupId()));
 		setPreference(
 			actionRequest, "recordSetKey", recordSet.getRecordSetKey());
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	private String _getRecordSetGroupId(DDLRecordSet recordSet) {
-		return String.valueOf(recordSet.getGroupId());
 	}
 
 	@Reference

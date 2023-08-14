@@ -147,8 +147,18 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.setScopeGroupId(recordSetGroupId);
 		}
 
-		DDLRecordSet recordSet = _ddlRecordSetLocalService.fetchRecordSet(
-			GetterUtil.getLong(recordSetId));
+		String recordSetKey = portletPreferences.getValue("recordSetKey", null);
+
+		DDLRecordSet recordSet = null;
+
+		try {
+			recordSet = _ddlRecordSetLocalService.getRecordSet(
+				recordSetGroupId, recordSetKey);
+		}
+		catch (PortalException portalException) {
+			throw new PortletDataException(
+				"Unable to export referenced records", portalException);
+		}
 
 		if (recordSet == null) {
 			if (_log.isWarnEnabled()) {
@@ -190,6 +200,8 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 		_exportReferenceDDMTemplate(
 			portletDataContext, portletId, formDDMTemplateId);
 
+		portletDataContext.setScopeGroupId(previousScopeGroupId);
+
 		return portletPreferences;
 	}
 
@@ -229,9 +241,8 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDLRecordSet.class + ".groupId");
 
-		String importedRecordSetId = String.valueOf(
-			GetterUtil.getLong(
-				portletPreferences.getValue("recordSetId", null)));
+		String importedRecordSetId = portletPreferences.getValue(
+			"recordSetId", null);
 
 		if (recordSetGroupIds.containsKey(importedRecordSetId)) {
 			groupId = recordSetGroupIds.get(importedRecordSetId);
@@ -259,9 +270,8 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 						DDLRecordSet.class);
 
-				long recordSetId = GetterUtil.getLong(importedRecordSetId);
-
-				recordSetId = MapUtil.getLong(recordSetIds, recordSetId, 0);
+				long recordSetId = MapUtil.getLong(
+					recordSetIds, GetterUtil.getLong(importedRecordSetId), 0);
 
 				try {
 					portletPreferences.setValue(

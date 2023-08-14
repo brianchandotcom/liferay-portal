@@ -267,81 +267,81 @@ public class JournalArticleLocalServiceImpl
 	 * </code>
 	 * </pre></p>
 	 *
-	 * @param  externalReferenceCode the external reference code of the web
-	 *         content article
-	 * @param  userId the primary key of the web content article's creator/owner
-	 * @param  groupId the primary key of the web content article's group
-	 * @param  folderId the primary key of the web content article folder
-	 * @param  classNameId the primary key of the DDMStructure class if the web
-	 *         content article is related to a DDM structure, the primary key of
-	 *         the class name associated with the article, or
-	 *         JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
-	 *         module otherwise
-	 * @param  classPK the primary key of the DDM structure, if the primary key
-	 *         of the DDMStructure class is given as the
-	 *         <code>classNameId</code> parameter, the primary key of the class
-	 *         associated with the web content article, or <code>0</code>
-	 *         otherwise
-	 * @param  articleId the primary key of the web content article
-	 * @param  autoArticleId whether to auto generate the web content article ID
-	 * @param  version the web content article's version
-	 * @param  titleMap the web content article's locales and localized titles
-	 * @param  descriptionMap the web content article's locales and localized
-	 *         descriptions
-	 * @param  friendlyURLMap the web content article's locales and localized
-	 *         friendly URLs
-	 * @param  content the HTML content wrapped in XML
-	 * @param  ddmStructureId the primary key of the web content article's DDM
-	 *         structure, if the article is related to a DDM structure, or
-	 *         <code>0</code> otherwise
-	 * @param  ddmTemplateKey the primary key of the web content article's DDM
-	 *         template
-	 * @param  layoutUuid the unique string identifying the web content
-	 *         article's display page
-	 * @param  displayDateMonth the month the web content article is set to
-	 *         display
-	 * @param  displayDateDay the calendar day the web content article is set to
-	 *         display
-	 * @param  displayDateYear the year the web content article is set to
-	 *         display
-	 * @param  displayDateHour the hour the web content article is set to
-	 *         display
-	 * @param  displayDateMinute the minute the web content article is set to
-	 *         display
-	 * @param  expirationDateMonth the month the web content article is set to
-	 *         expire
-	 * @param  expirationDateDay the calendar day the web content article is set
-	 *         to expire
-	 * @param  expirationDateYear the year the web content article is set to
-	 *         expire
-	 * @param  expirationDateHour the hour the web content article is set to
-	 *         expire
-	 * @param  expirationDateMinute the minute the web content article is set to
-	 *         expire
-	 * @param  neverExpire whether the web content article is not set to auto
-	 *         expire
-	 * @param  reviewDateMonth the month the web content article is set for
-	 *         review
-	 * @param  reviewDateDay the calendar day the web content article is set for
-	 *         review
-	 * @param  reviewDateYear the year the web content article is set for review
-	 * @param  reviewDateHour the hour the web content article is set for review
-	 * @param  reviewDateMinute the minute the web content article is set for
-	 *         review
-	 * @param  neverReview whether the web content article is not set for review
-	 * @param  indexable whether the web content article is searchable
-	 * @param  smallImage whether the web content article has a small image
-	 * @param  smallImageSource the web content article's small image source
-	 * @param  smallImageURL the web content article's small image URL
-	 * @param  smallImageFile the web content article's small image file
-	 * @param  images the web content's images
-	 * @param  articleURL the web content article's accessible URL
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         UUID, creation date, modification date, expando bridge
-	 *         attributes, guest permissions, group permissions, asset category
-	 *         IDs, asset tag names, asset link entry IDs, URL title, and
-	 *         workflow actions for the web content article. Can also set
-	 *         whether to add the default guest and group permissions.
+	 * @param externalReferenceCode the external reference code of the web
+	 *                              content article
+	 * @param userId                the primary key of the web content article's creator/owner
+	 * @param groupId               the primary key of the web content article's group
+	 * @param folderId              the primary key of the web content article folder
+	 * @param classNameId           the primary key of the DDMStructure class if the web
+	 *                              content article is related to a DDM structure, the primary key of
+	 *                              the class name associated with the article, or
+	 *                              JournalArticleConstants.CLASS_NAME_ID_DEFAULT in the journal-api
+	 *                              module otherwise
+	 * @param classPK               the primary key of the DDM structure, if the primary key
+	 *                              of the DDMStructure class is given as the
+	 *                              <code>classNameId</code> parameter, the primary key of the class
+	 *                              associated with the web content article, or <code>0</code>
+	 *                              otherwise
+	 * @param articleId             the primary key of the web content article
+	 * @param autoArticleId         whether to auto generate the web content article ID
+	 * @param version               the web content article's version
+	 * @param titleMap              the web content article's locales and localized titles
+	 * @param descriptionMap        the web content article's locales and localized
+	 *                              descriptions
+	 * @param friendlyURLMap        the web content article's locales and localized
+	 *                              friendly URLs
+	 * @param content               the HTML content wrapped in XML
+	 * @param ddmStructureId        the primary key of the web content article's DDM
+	 *                              structure, if the article is related to a DDM structure, or
+	 *                              <code>0</code> otherwise
+	 * @param ddmTemplateKey        the primary key of the web content article's DDM
+	 *                              template
+	 * @param layoutUuid            the unique string identifying the web content
+	 *                              article's display page
+	 * @param displayDateMonth      the month the web content article is set to
+	 *                              display
+	 * @param displayDateDay        the calendar day the web content article is set to
+	 *                              display
+	 * @param displayDateYear       the year the web content article is set to
+	 *                              display
+	 * @param displayDateHour       the hour the web content article is set to
+	 *                              display
+	 * @param displayDateMinute     the minute the web content article is set to
+	 *                              display
+	 * @param expirationDateMonth   the month the web content article is set to
+	 *                              expire
+	 * @param expirationDateDay     the calendar day the web content article is set
+	 *                              to expire
+	 * @param expirationDateYear    the year the web content article is set to
+	 *                              expire
+	 * @param expirationDateHour    the hour the web content article is set to
+	 *                              expire
+	 * @param expirationDateMinute  the minute the web content article is set to
+	 *                              expire
+	 * @param neverExpire           whether the web content article is not set to auto
+	 *                              expire
+	 * @param reviewDateMonth       the month the web content article is set for
+	 *                              review
+	 * @param reviewDateDay         the calendar day the web content article is set for
+	 *                              review
+	 * @param reviewDateYear        the year the web content article is set for review
+	 * @param reviewDateHour        the hour the web content article is set for review
+	 * @param reviewDateMinute      the minute the web content article is set for
+	 *                              review
+	 * @param neverReview           whether the web content article is not set for review
+	 * @param indexable             whether the web content article is searchable
+	 * @param smallImage            whether the web content article has a small image
+	 * @param smallImageSource      the web content article's small image source
+	 * @param smallImageURL         the web content article's small image URL
+	 * @param smallImageFile        the web content article's small image file
+	 * @param images                the web content's images
+	 * @param articleURL            the web content article's accessible URL
+	 * @param serviceContext        the service context to be applied. Can set the
+	 *                              UUID, creation date, modification date, expando bridge
+	 *                              attributes, guest permissions, group permissions, asset category
+	 *                              IDs, asset tag names, asset link entry IDs, URL title, and
+	 *                              workflow actions for the web content article. Can also set
+	 *                              whether to add the default guest and group permissions.
 	 * @return the web content article
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -361,8 +361,8 @@ public class JournalArticleLocalServiceImpl
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			int smallImageSource, String smallImageURL, File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
+			long smallImageId, int smallImageSource, String smallImageURL,
+			File smallImageFile, Map<String, byte[]> images, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -491,7 +491,15 @@ public class JournalArticleLocalServiceImpl
 		article.setSmallImage(smallImage);
 
 		if (smallImage) {
-			article.setSmallImageId(counterLocalService.increment());
+			if (smallImageSource ==
+					JournalArticleConstants.
+						SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA) {
+
+				article.setSmallImageId(smallImageId);
+			}
+			else {
+				article.setSmallImageId(counterLocalService.increment());
+			}
 		}
 		else {
 			article.setSmallImageId(0);
@@ -641,7 +649,7 @@ public class JournalArticleLocalServiceImpl
 			true, 1, titleMap, descriptionMap, titleMap, content,
 			ddmStructureId, ddmTemplateKey, null, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, null,
+			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, 0, 0, null,
 			null, null, null, serviceContext);
 	}
 
@@ -4562,7 +4570,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
 	 *         String, long, String, String, int, int, int, int, int, int, int,
 	 *         int, int, int, boolean, int, int, int, int, int, boolean,
-	 *         boolean, boolean, int, String, File, Map, String,
+	 *         boolean, boolean, long, int, String, File, Map, String,
 	 *         ServiceContext)} description.
 	 * @param  ddmTemplateKey the primary key of the web content article's DDM
 	 *         template

@@ -658,35 +658,45 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private String _getChromeDriverURL(String chromeDriverVersion) {
-		Integer chromeMajorVersion = Integer.parseInt(
-			chromeDriverVersion.substring(0, 3));
+		Matcher matcher = _majorChromeVersionPattern.matcher(
+			chromeDriverVersion);
 
-		if (chromeMajorVersion >= 115) {
-			StringBuilder sb = new StringBuilder();
+		if (matcher.find()) {
+			Integer chromeMajorVersion = Integer.parseInt(matcher.group(1));
 
-			sb.append(
-				"https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/");
-			sb.append(chromeDriverVersion);
-			sb.append("/");
+			if (chromeMajorVersion >= 115) {
+				_legacyChromeDriver = false;
 
-			String osType = "";
+				StringBuilder sb = new StringBuilder();
 
-			if (OSDetector.isApple()) {
-				osType = "mac-x64";
+				sb.append(
+					"https://edgedl.me.gvt1.com/edgedl/chrome" +
+						"/chrome-for-testing/");
+				sb.append(chromeDriverVersion);
+				sb.append("/");
+
+				String osType = "";
+
+				if (OSDetector.isApple()) {
+					osType = "mac-x64";
+				}
+				else if (OSDetector.isAppleARM()) {
+					osType = "mac-arm64";
+				}
+				else if (OSDetector.isWindows()) {
+					osType = "win" + OSDetector.getBitmode();
+				}
+				else {
+					osType = "linux64";
+				}
+
+				sb.append(osType);
+				sb.append("/chromedriver-");
+				sb.append(osType);
+				sb.append(".zip");
+
+				return sb.toString();
 			}
-			else if (OSDetector.isWindows()) {
-				osType = "win" + OSDetector.getBitmode();
-			}
-			else {
-				osType = "linux64";
-			}
-
-			sb.append(osType);
-			sb.append("/chromedriver-");
-			sb.append(osType);
-			sb.append(".zip");
-
-			return sb.toString();
 		}
 
 		return _getLegacyChromeDriverURL(chromeDriverVersion);
@@ -1288,6 +1298,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put(115, "115.0.5790.170");
 			}
 		};
+		
+	private static final Pattern _majorChromeVersionPattern = Pattern.compile(
+		"([\\d]+)\\.[\\d\\.]+");
 	private static final Map<String, String> _webDriverBrowserBinaryNames =
 		new HashMap<String, String>() {
 			{

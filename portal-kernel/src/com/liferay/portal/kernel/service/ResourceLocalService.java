@@ -191,6 +191,12 @@ public interface ResourceLocalService extends BaseLocalService {
 			boolean addGuestPermissions)
 		throws PortalException;
 
+	public void addResources(
+			long companyId, long groupId, long userId, String name,
+			String[] primKeys, boolean portletActions,
+			boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
 	/**
 	 * Adds resources for the entity with the name. Use this method if the user
 	 * is unknown or irrelevant and there is no current entity instance.

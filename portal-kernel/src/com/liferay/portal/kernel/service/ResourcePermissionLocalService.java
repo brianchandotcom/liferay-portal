@@ -182,6 +182,12 @@ public interface ResourcePermissionLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addResourcePermissions(
+			long companyId, long groupId, long userId, String name,
+			String[] primKeys, boolean portletActions,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Grants the role permissions at the scope to perform the actions on all
 	 * resources of the type. Existing actions are retained.

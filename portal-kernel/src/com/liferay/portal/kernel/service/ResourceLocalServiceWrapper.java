@@ -225,6 +225,18 @@ public class ResourceLocalServiceWrapper
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
+	public void addResources(
+			long companyId, long groupId, long userId, java.lang.String name,
+			java.lang.String[] primKeys, boolean portletActions,
+			boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_resourceLocalService.addResources(
+			companyId, groupId, userId, name, primKeys, portletActions,
+			addGroupPermissions, addGuestPermissions);
+	}
+
 	/**
 	 * Adds resources for the entity with the name. Use this method if the user
 	 * is unknown or irrelevant and there is no current entity instance.

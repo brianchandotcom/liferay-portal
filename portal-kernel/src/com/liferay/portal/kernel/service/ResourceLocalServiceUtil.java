@@ -220,6 +220,17 @@ public class ResourceLocalServiceUtil {
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	public static void addResources(
+			long companyId, long groupId, long userId, String name,
+			String[] primKeys, boolean portletActions,
+			boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException {
+
+		getService().addResources(
+			companyId, groupId, userId, name, primKeys, portletActions,
+			addGroupPermissions, addGuestPermissions);
+	}
+
 	/**
 	 * Adds resources for the entity with the name. Use this method if the user
 	 * is unknown or irrelevant and there is no current entity instance.

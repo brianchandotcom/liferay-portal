@@ -171,6 +171,18 @@ public class ResourcePermissionLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public void addResourcePermissions(
+			long companyId, long groupId, long userId, String name,
+			String[] primKeys, boolean portletActions,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_resourcePermissionLocalService.addResourcePermissions(
+			companyId, groupId, userId, name, primKeys, portletActions,
+			serviceContext);
+	}
+
 	/**
 	 * Grants the role permissions at the scope to perform the actions on all
 	 * resources of the type. Existing actions are retained.

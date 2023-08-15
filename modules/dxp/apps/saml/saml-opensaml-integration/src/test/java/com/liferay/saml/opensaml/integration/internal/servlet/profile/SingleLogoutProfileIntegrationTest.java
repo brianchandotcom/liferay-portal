@@ -12,8 +12,10 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
+import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl;
@@ -82,12 +84,18 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		_singleLogoutProfileImpl = new SingleLogoutProfileImpl();
 
 		ReflectionTestUtil.setFieldValue(
+			_relayStateHelperImpl, "_portalUUID", new PortalUUIDImpl());
+
+		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "identifierGenerationStrategyFactory",
 			identifierGenerationStrategyFactory);
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "metadataManager", metadataManagerImpl);
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "portal", portal);
+		ReflectionTestUtil.setFieldValue(
+			_singleLogoutProfileImpl, "_relayStateHelper",
+			_relayStateHelperImpl);
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "samlBindingProvider",
 			samlBindingProvider);
@@ -100,6 +108,9 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_singleLogoutProfileImpl, "samlSpSessionLocalService",
 			_samlSpSessionLocalService);
+
+		ReflectionTestUtil.invoke(
+			_relayStateHelperImpl, "activate", new Class<?>[0]);
 
 		prepareServiceProvider(SP_ENTITY_ID);
 	}
@@ -332,6 +343,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		Assert.assertEquals("test@liferay.com", nameID.getValue());
 	}
 
+	private final RelayStateHelperImpl _relayStateHelperImpl =
+		new RelayStateHelperImpl();
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
 	private SamlSpSessionLocalService _samlSpSessionLocalService;

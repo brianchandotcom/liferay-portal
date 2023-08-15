@@ -229,7 +229,7 @@
 																											"fieldKey": "FileEntry_previewImage",
 																											"itemReference": {
 																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/app_logo.png#]"
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_app_logo.png#]"
 																											}
 																										}
 																									}
@@ -316,7 +316,7 @@
 																													"fieldKey": "FileEntry_previewImage",
 																													"itemReference": {
 																														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/placecube_logo.png#]"
+																														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_placecube_logo.png#]"
 																													}
 																												}
 																											}
@@ -776,7 +776,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/app_logo.png#]"
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_app_logo.png#]"
 																								}
 																							}
 																						}
@@ -792,7 +792,7 @@
 																								"fieldKey": "FileEntry_previewImage",
 																								"itemReference": {
 																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/local_services.png#]"
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_local_services.png#]"
 																								}
 																							}
 																						}
@@ -1048,7 +1048,7 @@
 																			"fieldKey": "FileEntry_previewImage",
 																			"itemReference": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/info_icon.png#]"
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_info_icon.png#]"
 																			}
 																		}
 																	}
@@ -1140,7 +1140,7 @@
 																			"fieldKey": "FileEntry_previewImage",
 																			"itemReference": {
 																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/info_icon.png#]"
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_info_icon.png#]"
 																			}
 																		}
 																	}
@@ -1404,7 +1404,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/placecube_numbers.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_placecube_numbers.png#]"
 																							}
 																						}
 																					}
@@ -1523,7 +1523,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/placecube_gear.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_placecube_gear.png#]"
 																							}
 																						}
 																					}
@@ -1642,7 +1642,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/increase_logo.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_increase_logo.png#]"
 																							}
 																						}
 																					}
@@ -1761,7 +1761,7 @@
 																							"fieldKey": "FileEntry_previewImage",
 																							"itemReference": {
 																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/09-digital-place-for-local-public-services/customer_icon.png#]"
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_customer_icon.png#]"
 																							}
 																						}
 																					}

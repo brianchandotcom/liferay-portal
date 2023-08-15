@@ -332,7 +332,7 @@
 																															"fieldKey": "FileEntry_fileURL",
 																															"itemReference": {
 																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/open-square-spaces/13_smc_logo_new.png#]"
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/open-square-ecm/16_smc_logo_new.png#]"
 																															}
 																														}
 																													}

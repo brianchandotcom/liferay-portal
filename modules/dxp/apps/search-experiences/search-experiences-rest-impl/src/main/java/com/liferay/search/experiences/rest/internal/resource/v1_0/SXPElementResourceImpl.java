@@ -298,24 +298,17 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	public SXPElement putSXPElement(Long sxpElementId, SXPElement sxpElement)
 		throws Exception {
 
-		return _sxpElementDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
-				_dtoConverterRegistry, contextHttpServletRequest,
-				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser),
-			_sxpElementService.updateSXPElement(
-				sxpElementId,
-				LocalizedMapUtil.getLocalizedMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpElement.getDescription(),
-					sxpElement.getDescription_i18n()),
-				_getElementDefinitionJSON(sxpElement), _getSchemaVersion(),
-				GetterUtil.getBoolean(sxpElement.getHidden()),
-				LocalizedMapUtil.getLocalizedMap(
-					contextAcceptLanguage.getPreferredLocale(),
-					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)));
+		com.liferay.search.experiences.model.SXPElement
+			serviceBuilderSxpElement = _sxpElementService.fetchSXPElementById(
+				sxpElementId);
+
+		sxpElement.setId(sxpElementId);
+
+		if (serviceBuilderSxpElement != null) {
+			return _updateSxpElement(sxpElementId, sxpElement);
+		}
+
+		return postSXPElement(sxpElement);
 	}
 
 	@Override
@@ -331,7 +324,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		sxpElement.setExternalReferenceCode(externalReferenceCode);
 
 		if (serviceBuilderSxpElement != null) {
-			return putSXPElement(
+			return _updateSxpElement(
 				serviceBuilderSxpElement.getSXPElementId(), sxpElement);
 		}
 
@@ -406,6 +399,30 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	private String _getSchemaVersion() {
 		return "1.0";
+	}
+
+	private SXPElement _updateSxpElement(
+			Long sxpElementId, SXPElement sxpElement)
+		throws Exception {
+
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser),
+			_sxpElementService.updateSXPElement(
+				sxpElementId,
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpElement.getDescription(),
+					sxpElement.getDescription_i18n()),
+				_getElementDefinitionJSON(sxpElement), _getSchemaVersion(),
+				GetterUtil.getBoolean(sxpElement.getHidden()),
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	private void _validateSXPElementExternalReferenceCode(SXPElement sxpElement)

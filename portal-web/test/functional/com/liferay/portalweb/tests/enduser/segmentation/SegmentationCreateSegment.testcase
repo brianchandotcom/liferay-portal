@@ -2892,7 +2892,7 @@ definition {
 
 			Segmentation.fillProperty(criterionValue = "Developer");
 
-			Segmentation.addProperties(propertyOption = "First Name");
+			Segmentation.addSecondProperty(propertyOption = "First Name");
 
 			Segmentation.fillProperty(
 				criterionValue = "Test",

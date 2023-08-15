@@ -546,16 +546,26 @@ definition {
 	@description = "LPS-142175 - Verify it's possible to import object with Actions"
 	@priority = 4
 	test CanImportObjectWithAction {
-		task ("When import object with action") {
+		task ("When import an object definition with action") {
 			ObjectExportImport.importObject(
 				objectFileName = "ImportedObjectWithAction",
 				objectName = "ImportedObjectWithAction160652");
 		}
 
-		task ("Then assert the imported file is present") {
+		task ("and When assert that the imported file is present") {
 			AssertElementPresent(
 				key_labelName = "Imported Object With Action",
 				locator1 = "CreateObject#OBJECT_NAME");
+		}
+
+		task ("Then the action is present on the object") {
+			ObjectPortlet.selectCustomObject(label = "Imported Object With Action");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.assertObjectActions(
+				actionActive = "Yes",
+				actionLabel = "CanImportObjectWithAction");
 		}
 	}
 

@@ -107,11 +107,15 @@ definition {
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath(${portalInstanceJson}, "$.items..portalInstanceId");
 
-		for (var portalInstanceId : list ${portalInstanceIds}) {
-			if (${portalInstanceId} != "liferay.com") {
-				HeadlessPortalInstanceAPI.deletePortalInstance(
-					authenticationMethod = ${authenticationMethod},
-					portalInstanceId = ${portalInstanceId});
+		var lxcEnvironment = JSONUtil2.getLXCEnvironment();
+
+		if (${lxcEnvironment} != "true") {
+			for (var portalInstanceId : list ${portalInstanceIds}) {
+				if (${portalInstanceId} != "liferay.com") {
+					HeadlessPortalInstanceAPI.deletePortalInstance(
+						authenticationMethod = ${authenticationMethod},
+						portalInstanceId = ${portalInstanceId});
+				}
 			}
 		}
 	}

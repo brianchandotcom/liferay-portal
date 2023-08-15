@@ -309,6 +309,19 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 									copySpec.from(project.tarTree(file));
 								}
 
+								copySpec.eachFile(
+									fileCopyDetails -> {
+										String newPath =
+											fileCopyDetails.getPath();
+
+										if (newPath.contains("/")) {
+											newPath = newPath.substring(
+												newPath.lastIndexOf("/") + 1);
+
+											fileCopyDetails.setPath(newPath);
+										}
+									});
+
 								copySpec.into(webDriverDir);
 							}
 

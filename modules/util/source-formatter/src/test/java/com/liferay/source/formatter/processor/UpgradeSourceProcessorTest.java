@@ -71,6 +71,17 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaAddAddressMethodCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaAddAddressMethodCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addAddress from AddressLocalService, ",
+				"AddressLocalServiceUtil, AddressService and ",
+				"AddressServiceUtil. Fill the new parameters manually, see ",
+				"LPS-193462"));
+	}
+
+	@Test
 	public void testUpgradeJavaAddFDSTableSchemaFieldCheck() throws Exception {
 		test("upgrade/UpgradeJavaAddFDSTableSchemaFieldCheck.testjava");
 	}

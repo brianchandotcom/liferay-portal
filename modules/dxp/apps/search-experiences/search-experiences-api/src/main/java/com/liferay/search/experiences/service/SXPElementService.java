@@ -59,6 +59,10 @@ public interface SXPElementService extends BaseService {
 			String externalReferenceCode, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SXPElement fetchSXPElementById(long sxpElementId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

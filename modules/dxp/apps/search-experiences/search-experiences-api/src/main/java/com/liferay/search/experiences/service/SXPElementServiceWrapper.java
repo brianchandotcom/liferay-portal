@@ -58,6 +58,14 @@ public class SXPElementServiceWrapper
 			externalReferenceCode, companyId);
 	}
 
+	@Override
+	public com.liferay.search.experiences.model.SXPElement fetchSXPElementById(
+			long sxpElementId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementService.fetchSXPElementById(sxpElementId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

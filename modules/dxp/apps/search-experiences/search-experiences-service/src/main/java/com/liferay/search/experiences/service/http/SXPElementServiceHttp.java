@@ -171,6 +171,46 @@ public class SXPElementServiceHttp {
 		}
 	}
 
+	public static com.liferay.search.experiences.model.SXPElement
+			fetchSXPElementById(HttpPrincipal httpPrincipal, long sxpElementId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SXPElementServiceUtil.class, "fetchSXPElementById",
+				_fetchSXPElementByIdParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, sxpElementId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.search.experiences.model.SXPElement)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.search.experiences.model.SXPElement getSXPElement(
 			HttpPrincipal httpPrincipal, long sxpElementId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -178,7 +218,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "getSXPElement",
-				_getSXPElementParameterTypes3);
+				_getSXPElementParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId);
@@ -221,7 +261,7 @@ public class SXPElementServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class,
 				"getSXPElementByExternalReferenceCode",
-				_getSXPElementByExternalReferenceCodeParameterTypes4);
+				_getSXPElementByExternalReferenceCodeParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId);
@@ -267,7 +307,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "updateSXPElement",
-				_updateSXPElementParameterTypes5);
+				_updateSXPElementParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId, descriptionMap, elementDefinitionJSON,
@@ -316,13 +356,15 @@ public class SXPElementServiceHttp {
 		_fetchSXPElementByExternalReferenceCodeParameterTypes2 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _getSXPElementParameterTypes3 =
+	private static final Class<?>[] _fetchSXPElementByIdParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getSXPElementParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getSXPElementByExternalReferenceCodeParameterTypes4 = new Class[] {
+		_getSXPElementByExternalReferenceCodeParameterTypes5 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _updateSXPElementParameterTypes5 =
+	private static final Class<?>[] _updateSXPElementParameterTypes6 =
 		new Class[] {
 			long.class, java.util.Map.class, String.class, String.class,
 			boolean.class, java.util.Map.class,

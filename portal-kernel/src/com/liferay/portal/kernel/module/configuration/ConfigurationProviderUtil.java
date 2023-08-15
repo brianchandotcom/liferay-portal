@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.module.configuration;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Dictionary;
@@ -73,6 +74,14 @@ public class ConfigurationProviderUtil {
 
 		return _configurationProvider.getPortletInstanceConfiguration(
 			clazz, layout, portletId);
+	}
+
+	public static <T> T getPortletInstanceConfiguration(
+			Class<T> clazz, ThemeDisplay themeDisplay)
+		throws ConfigurationException {
+
+		return _configurationProvider.getPortletInstanceConfiguration(
+			clazz, themeDisplay);
 	}
 
 	public static <T> T getSystemConfiguration(Class<T> clazz)

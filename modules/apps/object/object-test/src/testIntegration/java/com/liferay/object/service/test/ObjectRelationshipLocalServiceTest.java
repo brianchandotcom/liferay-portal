@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.system.TestSystemObjectDefinitionManager;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -262,6 +263,46 @@ public class ObjectRelationshipLocalServiceTest {
 		_testCreateManyToManyObjectRelationshipTable(_systemObjectDefinition2);
 
 		_testSystemObjectRelationshipOneToMany();
+	}
+
+	@Test
+	public void testDeleteObjectRelationship() {
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Edge object relationships cannot be deleted",
+			() -> {
+				ObjectRelationship objectRelationship =
+					ObjectRelationshipTestUtil.addObjectRelationship(
+						_objectRelationshipLocalService, _objectDefinition1,
+						_objectDefinition2);
+
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					_objectRelationshipLocalService.updateObjectRelationship(
+						objectRelationship.getObjectRelationshipId(),
+						objectRelationship.getParameterObjectFieldId(),
+						objectRelationship.getDeletionType(), true,
+						objectRelationship.getLabelMap()));
+			});
+		AssertUtils.assertFailure(
+			ObjectRelationshipReverseException.class,
+			"Reverse object relationships cannot be deleted",
+			() -> {
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.addObjectRelationship(
+						TestPropsValues.getUserId(),
+						_objectDefinition1.getObjectDefinitionId(),
+						_objectDefinition2.getObjectDefinitionId(), 0,
+						ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString()),
+						StringUtil.randomId(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					_objectRelationshipLocalService.
+						fetchReverseObjectRelationship(
+							objectRelationship, true));
+			});
 	}
 
 	@Test

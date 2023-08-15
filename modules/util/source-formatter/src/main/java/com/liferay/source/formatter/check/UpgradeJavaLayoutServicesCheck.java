@@ -36,8 +36,8 @@ public class UpgradeJavaLayoutServicesCheck extends BaseUpgradeCheck {
 				StringBundler.concat(
 					"Unable to format methods addLayout and updateLayout from ",
 					"LayoutService, LayoutLocalService, LayoutServiceUtil and ",
-					"LayoutLocalServiceUtil. Fill the new parameters manually,",
-					"see LPS-188828 and LPS-190401"));
+					"LayoutLocalServiceUtil. Fill the new parameters ",
+					"manually, see LPS-188828 and LPS-190401"));
 
 			return false;
 		}

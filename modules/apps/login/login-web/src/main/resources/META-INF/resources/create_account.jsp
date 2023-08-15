@@ -21,7 +21,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 %>
 
-<portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+<portlet:actionURL name="/login/create_account" secure="<%= request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/login/create_account" />
 </portlet:actionURL>
 

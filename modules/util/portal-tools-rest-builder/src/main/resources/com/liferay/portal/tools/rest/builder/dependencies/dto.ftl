@@ -27,7 +27,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
-<#if freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)?keys?seq_contains("permissions")>
+<#assign
+	enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
+	properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+/>
+
+<#if properties["permissions"]?? && properties["permissions"]=="Permission[]">
 	import com.liferay.portal.vulcan.permission.Permission;
 </#if>
 
@@ -129,11 +134,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 	public static ${schemaName} unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(${schemaName}.class, json);
 	}
-
-	<#assign
-		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-	/>
 
 	<#list properties?keys as propertyName>
 		<#assign

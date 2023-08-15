@@ -14,7 +14,12 @@ package ${configYAML.apiPackagePath}.client.serdes.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.json.BaseJSONParser;
 
-<#if freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)?keys?seq_contains("permissions")>
+<#assign
+	enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
+	properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+/>
+
+<#if properties["permissions"]?? && properties["permissions"]=="Permission[]">
 	import ${configYAML.apiPackagePath}.client.permission.Permission;
 </#if>
 
@@ -59,11 +64,6 @@ public class ${schemaName}SerDes {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("{");
-
-		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-		/>
 
 		<#list properties?keys as propertyName>
 			<#assign propertyType = properties[propertyName] />

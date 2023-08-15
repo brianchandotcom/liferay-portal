@@ -14,7 +14,12 @@ package ${configYAML.apiPackagePath}.client.dto.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.client.function.UnsafeSupplier;
 
-<#if freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)?keys?seq_contains("permissions")>
+<#assign
+enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
+properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+/>
+
+<#if properties["permissions"]?? && properties["permissions"]=="Permission[]">
 	import ${configYAML.apiPackagePath}.client.permission.Permission;
 </#if>
 
@@ -40,11 +45,6 @@ public class ${schemaName} implements Cloneable, Serializable {
 	public static ${schemaName} toDTO(String json) {
 		return ${schemaName}SerDes.toDTO(json);
 	}
-
-	<#assign
-		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-	/>
 
 	<#list properties?keys as propertyName>
 		<#assign capitalizedPropertyName = propertyName?cap_first />

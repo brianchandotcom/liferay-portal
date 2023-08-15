@@ -983,7 +983,6 @@ definition {
 	@description = "This is a use case for LPS-75292."
 	@priority = 5
 	test ViewCalendarEventDetailViaMailLink {
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.smtp.server.enabled = "true";
 

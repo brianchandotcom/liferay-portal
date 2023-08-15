@@ -458,6 +458,7 @@ definition {
 
 		var workflowTask = Workflow._matchTaskCase(
 			workflowAssetTitle = "Blogs Entry Title",
+			workflowDefinitionTask = "approve",
 			workflowTask = "review");
 
 		Workflow.assignToMeTaskByActions(
@@ -468,7 +469,7 @@ definition {
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title",
 			workflowAssetType = "Blogs Entry",
-			workflowDefinitionTask = "approve",
+			workflowDefinitionTask = ${workflowDefinitionTask},
 			workflowTask = ${workflowTask});
 
 		Navigator.openURL();

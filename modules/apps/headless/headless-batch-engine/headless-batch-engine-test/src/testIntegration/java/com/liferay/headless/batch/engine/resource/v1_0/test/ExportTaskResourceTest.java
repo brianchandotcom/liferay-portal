@@ -445,6 +445,8 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0." +
+			"ProductOptionValue",
+		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0." +
 			"ProductSpecification",
 		"com.liferay.headless.commerce.delivery.catalog.dto.v1_0." +
 			"RelatedProduct",

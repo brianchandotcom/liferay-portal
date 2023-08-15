@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OSBSiteInitializer.class)
 public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 
-	public void addSXPBlueprint(
+	public void addOrUpdateSXPBlueprint(
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 

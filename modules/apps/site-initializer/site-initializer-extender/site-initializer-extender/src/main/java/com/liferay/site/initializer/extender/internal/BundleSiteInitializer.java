@@ -613,7 +613,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					segmentsEntriesIdsStringUtilReplaceValues, serviceContext,
 					taxonomyCategoryIdsAndTaxonomyVocabularyIdsStringUtilReplaceValues));
-			_invoke(() -> _addSXPBlueprint(serviceContext));
+			_invoke(() -> _addOrUpdateSXPBlueprint(serviceContext));
 			_invoke(() -> _addUserRoles(serviceContext));
 
 			_invoke(
@@ -3563,6 +3563,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return structuredContentFolder.getId();
 	}
 
+	private void _addOrUpdateSXPBlueprint(ServiceContext serviceContext)
+		throws Exception {
+
+		if (_osbSiteInitializer == null) {
+			return;
+		}
+
+		_osbSiteInitializer.addOrUpdateSXPBlueprint(
+			serviceContext, _servletContext);
+	}
+
 	private TaxonomyCategory _addOrUpdateTaxonomyCategoryTaxonomyCategory(
 			String parentTaxonomyCategoryId, ServiceContext serviceContext,
 			TaxonomyCategory taxonomyCategory)
@@ -4235,16 +4246,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_styleBookEntryZipProcessor.importStyleBookEntries(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			zipWriter.getFile(), true);
-	}
-
-	private void _addSXPBlueprint(ServiceContext serviceContext)
-		throws Exception {
-
-		if (_osbSiteInitializer == null) {
-			return;
-		}
-
-		_osbSiteInitializer.addSXPBlueprint(serviceContext, _servletContext);
 	}
 
 	private Map<String, String> _addTaxonomyCategories(

@@ -17,7 +17,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OSBSiteInitializer {
 
-	public void addSXPBlueprint(
+	public void addOrUpdateSXPBlueprint(
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception;
 

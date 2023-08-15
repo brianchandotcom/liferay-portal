@@ -1631,6 +1631,10 @@
 			<description name="Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file." />
 			<weight>2</weight>
 		</check>
+		<check name="UpgradeJavaAddAddressMethodCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil" />
+		</check>
 		<check name="UpgradeJavaAddFDSTableSchemaFieldCheck">
 			<category name="Upgrade" />
 			<description name="Replace method addFDSTableSchemaFieldCheck by add" />

@@ -84,8 +84,6 @@ definition {
 				fieldLabelName = "Name",
 				tabName = "Field Tab");
 
-			// Need to rewrite when LPS-182835 get fixed
-
 			ObjectAdmin.addCategorizationOnLayoutTab();
 
 			Button.clickSave();
@@ -161,8 +159,6 @@ definition {
 				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
-
-			// Need to rewrite when LPS-182835 get fixed
 
 			for (var tagName : list "${tagName1},${tagName2},local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});

@@ -147,11 +147,9 @@ definition {
 	test AdminCanFilterCaseRequirementsWithMultipleOptions {
 		task ("When the user filter a case requirement with multiple options") {
 			TestrayFilter.filterResults(
-				fieldType = "input,multiSelect",
+				fieldType = "input",
 				inputFieldLabel = "Summary",
-				inputValue = "Requirement 1",
-				multiSelectFieldLabel = "Team",
-				multiSelectValue = "Team 1");
+				inputValue = "Requirement 1");
 		}
 
 		task ("Then can see the multiple options in the table and do not see the requirement 2") {

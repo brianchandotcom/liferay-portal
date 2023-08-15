@@ -16,13 +16,6 @@ definition {
 
 			User.firstLoginPG();
 		}
-
-		task ("Create a new Testray Site") {
-			HeadlessSite.addSite(
-				siteName = ${testSiteName},
-				templateName = "Testray",
-				templateType = "Site Initializer");
-		}
 	}
 
 	tearDown {
@@ -40,6 +33,13 @@ definition {
 	@description = "This is a test for LPS-152637. Verify if Testray can be created"
 	@priority = 5
 	test AddTestraySite {
+		task ("Create a new Testray Site") {
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Testray",
+				templateType = "Site Initializer");
+		}
+
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
@@ -62,6 +62,13 @@ definition {
 	test RemoteAppsAreCreatedForTestray {
 		property solutions.acceptance = "true";
 
+		task ("Create a new Testray Site") {
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Testray",
+				templateType = "Site Initializer");
+		}
+
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
@@ -81,6 +88,13 @@ definition {
 	@priority = 5
 	test StyleBooksAreCreatedForTestray {
 		property solutions.acceptance = "true";
+
+		task ("Create a new Testray Site") {
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Testray",
+				templateType = "Site Initializer");
+		}
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

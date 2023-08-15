@@ -389,7 +389,7 @@ definition {
 		}
 
 		task ("Then the user see only Team 1 with two runs in the table") {
-			Testray.viewTableEntryList(listEntry = "Team 1");
+			Testray.viewTableEntryList(listEntry = "Run 1,Run 2");
 		}
 	}
 

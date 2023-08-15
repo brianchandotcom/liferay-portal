@@ -390,7 +390,9 @@ definition {
 				key_tableEntry = "Case 1",
 				locator1 = "Testray#TABLE_ENTRY");
 
-			Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
+			Click.javaScriptClick(
+				key_title = "pin",
+				locator1 = "Button#ANY_TITLE");
 		}
 
 		task ("Then the user see the error message") {

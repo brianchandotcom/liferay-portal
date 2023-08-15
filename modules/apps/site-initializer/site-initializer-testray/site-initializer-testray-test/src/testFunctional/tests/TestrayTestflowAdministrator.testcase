@@ -18,6 +18,7 @@ definition {
 	var projectName = "Project 1";
 	var routineName = "Routine 1";
 	var runName = "Option 1";
+	var taskName = "Task_1";
 	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 
@@ -163,17 +164,14 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test");
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("And go to task through build") {
@@ -201,17 +199,16 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to edit a task"
 	@priority = 4
 	test AdminCanEditTask {
-		task ("Given that the user add a Task") {
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
+
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
 		task ("When the user edit the task") {
@@ -230,22 +227,17 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Task"
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test");
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("When the user add a duplicate Task") {
-			TestrayTestflow.goToTestflow();
-
 			LexiconEntry.gotoAdd();
 
 			TestrayTestflow.editBreadcrumb(
@@ -308,17 +300,16 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an complete task"
 	@priority = 3
 	test AdminCanReanalyzeCompleteTask {
-		task ("Given that the user add a Task") {
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
+
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile,Unit Test",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test,Administrator User");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
 		task ("When the user reanalyze an complete task") {
@@ -337,17 +328,16 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to update a task's status to complete"
 	@priority = 4
 	test AdminCanUpdateTaskStatusToComplete {
-		task ("Given that the user add a Task") {
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
+
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 
 		task ("When the user update task status to complete") {
@@ -364,22 +354,17 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an Administrator I should see the build that is associated with the task"
 	@priority = 2
 	test AdminCanViewAssociatedBuildInTask {
-		task ("Given that the user add a Task") {
-			TestrayTestflow.goToTestflow();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test");
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("When the user clicks in the task with an associated build") {
-			TestrayTestflow.goToTestflow();
-
 			TestrayManage.selectTableRowOption(
 				rowOption = "View Associated Build",
 				tableEntry = "Task_1");
@@ -434,22 +419,21 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify if as an Administrator I should be able view task in analysis"
 	@priority = 4
 	test AdminCanViewTaskInAnalysis {
-		task ("When the user add a Task") {
-			TestrayTestflow.goToTestflow();
+		task ("Given that the user add a Task via API") {
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
+		}
 
-			TestrayTestflow.addTask(
-				caseTypeList = "Compile",
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = "Task_1",
-				userGroups = "false",
-				userList = "Test Test");
+		task ("When the user goes to Task page") {
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("Then can see the status of the task In Analysis") {
 			TestrayTestflow.assertStatus(
-				label = "Task Details",
+				label = "Tasks",
 				status = "In Analysis");
 		}
 	}

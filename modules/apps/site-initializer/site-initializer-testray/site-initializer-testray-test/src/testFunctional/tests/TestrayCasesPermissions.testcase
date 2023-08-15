@@ -23,7 +23,10 @@ definition {
 		}
 
 		task ("Create a new Testray Site") {
-			Testray.addTestraySite(siteName = ${testSiteName});
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Testray",
+				templateType = "Site Initializer");
 		}
 
 		task ("create project, team, component, case type and case via API") {

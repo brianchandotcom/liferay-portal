@@ -100,19 +100,23 @@ definition {
 
 	macro viewUserInfomation {
 		AssertTextEquals(
-			locator1 = "Testray#DETAILS_LAST_NAME_FIELD",
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "familyName",
 			value1 = ${lastName});
 
 		AssertTextEquals(
-			locator1 = "Testray#DETAILS_EMAIL_ADDRESS_FIELD",
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "emailAddress",
 			value1 = ${emailAddress});
 
 		AssertTextEquals(
-			locator1 = "Testray#DETAILS_SCREEN_NAME_FIELD",
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "alternateName",
 			value1 = ${screenName});
 
 		AssertTextEquals(
-			locator1 = "Testray#DETAILS_FIRST_NAME_FIELD",
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "givenName",
 			value1 = ${firstName});
 	}
 

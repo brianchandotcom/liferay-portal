@@ -80,7 +80,9 @@ definition {
 	}
 
 	macro pinResult {
-		Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
+		Click.javaScriptClick(
+			key_title = "pin",
+			locator1 = "Button#ANY_TITLE");
 
 		Alert.viewSuccessMessageText(successMessage = "Filters pinned successfully.");
 	}
@@ -104,7 +106,9 @@ definition {
 	}
 
 	macro unpinResult {
-		Click.javaScriptClick(locator1 = "TestrayFilter#UNPIN_ICON");
+		Click.javaScriptClick(
+			key_title = "unpin",
+			locator1 = "Button#ANY_TITLE");
 
 		Alert.viewSuccessMessageText(successMessage = "Filters unpinned successfully.");
 	}

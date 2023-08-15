@@ -124,7 +124,7 @@ definition {
 		}
 
 		task ("Then the user can return to the home page") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+			Testray.assertTabPageTitle(pageTabTitle = "Projects");
 		}
 	}
 

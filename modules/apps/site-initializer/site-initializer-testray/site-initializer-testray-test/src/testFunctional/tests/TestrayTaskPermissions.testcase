@@ -90,21 +90,12 @@ definition {
 				caseResultName = ${caseResultName},
 				componentName = ${componentName},
 				runName = ${runName});
-		}
 
-		task ("Create a task via UI") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			TestrayTestflow.goToTestflow();
-
-			TestrayTestflow.addTask(
-				caseTypeList = ${caseType},
-				selectBuild = ${buildName},
-				selectProject = ${projectName},
-				selectRoutine = ${routineName},
-				taskName = ${taskName},
-				userGroups = "false",
-				userList = "Test Test");
+			JSONTestray.addTask(
+				buildName = ${buildName},
+				key = "INANALYSIS",
+				statusTask = "In Analysis",
+				taskName = ${taskName});
 		}
 	}
 

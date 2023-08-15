@@ -220,9 +220,9 @@ definition {
 		task ("And the user is redirected to the project page") {
 			WaitForElementPresent(
 				key_pageTabTitle = "Projects",
-				locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+				locator1 = "Testray#PAGE_TAB_TITLE");
 
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+			Testray.assertTabPageTitle(pageTabTitle = "Projects");
 
 			Testray.changePagination(quantity = 150);
 		}
@@ -250,9 +250,9 @@ definition {
 		task ("And the user is redirected to the requirement tab") {
 			WaitForElementPresent(
 				key_pageTabTitle = "Requirements",
-				locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+				locator1 = "Testray#PAGE_TAB_TITLE");
 
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Requirements");
+			Testray.assertTabPageTitle(pageTabTitle = "Requirements");
 		}
 
 		task ("Then can not see the requirement in the table") {
@@ -274,7 +274,7 @@ definition {
 		}
 
 		task ("And the user is redirected to the routine page") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
+			Testray.assertTabPageTitle(pageTabTitle = "Routines");
 		}
 
 		task ("Then can not see the routine in the table") {
@@ -306,7 +306,7 @@ definition {
 		}
 
 		task ("Then the user is redirected to the build page and can see the edited build title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Tests");
+			Testray.assertTabPageTitle(pageTabTitle = "Tests");
 
 			TestrayDropdown.assertBreadcrumbTitle(text = "Build Edited");
 		}
@@ -343,7 +343,7 @@ definition {
 		}
 
 		task ("Then the user is redirected to the case page and can see the edited case title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Test History");
+			Testray.assertTabPageTitle(pageTabTitle = "Test History");
 
 			TestrayDropdown.assertBreadcrumbTitle(text = "Case Edited");
 		}
@@ -371,7 +371,7 @@ definition {
 		}
 
 		task ("Then the user is redirected to the project page and can see the edited project title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
+			Testray.assertTabPageTitle(pageTabTitle = "Routines");
 
 			TestrayDropdown.assertBreadcrumbTitle(text = "Project Edited");
 		}
@@ -409,7 +409,7 @@ definition {
 		}
 
 		task ("Then the user is redirected to the requirement page and can see the edited requirement title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Cases");
+			Testray.assertTabPageTitle(pageTabTitle = "Cases");
 
 			TestrayDropdown.assertBreadcrumbTitle(text = "Requirement Edited");
 		}
@@ -437,7 +437,7 @@ definition {
 		}
 
 		task ("Then the user is redirected to the routine page and can see the edited routine title") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Build History");
+			Testray.assertTabPageTitle(pageTabTitle = "Build History");
 
 			TestrayDropdown.assertBreadcrumbTitle(text = "Routine Edited");
 		}

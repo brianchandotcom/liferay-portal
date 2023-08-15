@@ -261,7 +261,7 @@ definition {
 		task ("When the administrator go to the Project 2 by project directory") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayDropdown.selectProjectDirectory(project = "Project 2");
+			TestrayDropdown.selectProjectDirectory(projectName = "Project 2");
 		}
 
 		task ("Then should be redirected to project 2") {

@@ -100,7 +100,7 @@ definition {
 		}
 
 		task ("Then the user sees the initial session on the Testray Site") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+			Testray.assertTabPageTitle(pageTabTitle = "Projects");
 		}
 	}
 
@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("Then the user sees the initial session on the Testray Site") {
-			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+			Testray.assertTabPageTitle(pageTabTitle = "Projects");
 		}
 	}
 

@@ -44,6 +44,10 @@ definition {
 
 			Button.click(button = "Save");
 
+			WaitForElementPresent(
+				key_text = "Refresh",
+				locator1 = "Button#ANY");
+
 			Click(
 				key_text = "Refresh",
 				locator1 = "Button#ANY");
@@ -199,6 +203,8 @@ definition {
 		Click(
 			key_button = "TestFlow",
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
+
+		WaitForPageLoad();
 	}
 
 	macro reanalyzeTask {

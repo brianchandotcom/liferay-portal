@@ -259,6 +259,8 @@ definition {
 	@priority = 3
 	test CanFilterByEnviroments {
 		task ("Given that the user has two enviroments different in the table") {
+			ScrollWebElementIntoView(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
+
 			TestrayFilter.selectColumns(listColumn = "Environment");
 
 			Testray.viewTableEntryList(listEntry = "Option 1,Option 2");

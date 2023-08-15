@@ -425,7 +425,9 @@ definition {
 	@priority = 2
 	test CanViewRequiredField {
 		task ("When the user tries add a new template without filling out the required fields") {
-			TestrayTemplate.addTemplate(dropdownItem = "New Template");
+			TestrayTemplate.addTemplate(
+				dropdownItem = "New Template",
+				duplicate = "duplicate");
 		}
 
 		task ("Then a required field message appears") {

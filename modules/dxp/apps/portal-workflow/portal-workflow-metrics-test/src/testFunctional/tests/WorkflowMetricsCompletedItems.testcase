@@ -339,12 +339,29 @@ definition {
 	}
 
 	@description = "LPS-94146 - Verify that when there are no results for a filter selection, the table should display the respective empty state"
-	@ignore = "Test Stub"
 	@priority = 3
 	test TableDisplaysEmptyStateWhenThereIsNoResult {
+		task ("Given a workflow") {
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67647 TableDisplaysEmptyStateWhenThereIsNoResult pending implementation
+			Navigator.gotoNavItem(navItem = "Performance");
+		}
 
+		task ("When there is no results for a filter section") {
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN");
+
+			Click(
+				completionVelocityDateRange = "Yesterday",
+				locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+		}
+
+		task ("Then the table should display with no values") {
+			WorkflowMetrics.checkCompletedWorkflowValues(
+				key_completed = 0,
+				key_ontime = 0,
+				key_overdue = 0,
+				key_untracked = 0);
+		}
 	}
 
 	@description = "LPS-98233 - Verify that the To date is greater than the From date"

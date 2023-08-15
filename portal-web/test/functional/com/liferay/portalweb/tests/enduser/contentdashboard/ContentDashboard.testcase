@@ -5113,16 +5113,18 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Open the info panel and collapse the Categorization section") {
+		task ("Open the info panel and collapse the Public Categories section") {
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
 				tableEntry = "WC WebContent Title");
+
+			Navigator.gotoNavTab(navTab = "Categorization");
 
 			AssertVisible(
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
-			Panel.collapsePanel(panel = "Categorization");
+			Panel.collapsePanel(panel = "Public Categories");
 
 			AssertNotVisible(
 				categoryName = "Category Name",
@@ -5156,22 +5158,24 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Open the info panel and expand the Categorization section") {
+		task ("Open the info panel and expand the Public Categories section") {
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
 				tableEntry = "WC WebContent Title");
+
+			Navigator.gotoNavTab(navTab = "Categorization");
 
 			AssertVisible(
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
-			Panel.collapsePanel(panel = "Categorization");
+			Panel.collapsePanel(panel = "Public Categories");
 
 			AssertNotVisible(
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
-			Panel.expandPanel(panel = "Categorization");
+			Panel.expandPanel(panel = "Public Categories");
 
 			AssertVisible(
 				categoryName = "Category Name",

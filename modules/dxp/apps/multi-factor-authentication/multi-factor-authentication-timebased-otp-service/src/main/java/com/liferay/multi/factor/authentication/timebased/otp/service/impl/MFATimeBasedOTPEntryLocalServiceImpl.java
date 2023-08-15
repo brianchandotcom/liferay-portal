@@ -109,6 +109,22 @@ public class MFATimeBasedOTPEntryLocalServiceImpl
 		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
 	}
 
+	public MFATimeBasedOTPEntry updateLastTOTP(
+			long userId, String lastValidTOTP)
+		throws PortalException {
+
+		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
+			mfaTimeBasedOTPEntryPersistence.fetchByUserId(userId);
+
+		if (mfaTimeBasedOTPEntry == null) {
+			throw new NoSuchEntryException("User ID " + userId);
+		}
+
+		mfaTimeBasedOTPEntry.setLastValidTOTP(lastValidTOTP);
+
+		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

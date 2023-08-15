@@ -30,11 +30,11 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.ThreadContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Luis Ortiz
@@ -163,13 +163,28 @@ public class UpgradeRecorder {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, ReleaseManager.class, null);
+
+		_serviceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		_serviceTracker.close();
+	}
+
 	private String _calculateResult() {
 		if (!_errorMessages.isEmpty()) {
 			return "failure";
 		}
 
 		try {
-			if (!_releaseManager.isUpgraded()) {
+			ReleaseManager releaseManager = _serviceTracker.getService();
+
+			if (!releaseManager.isUpgraded()) {
 				return "unresolved";
 			}
 		}
@@ -317,12 +332,7 @@ public class UpgradeRecorder {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ReleaseManager _releaseManager;
+	private ServiceTracker<ReleaseManager, ReleaseManager> _serviceTracker;
 
 	private class SchemaVersions {
 

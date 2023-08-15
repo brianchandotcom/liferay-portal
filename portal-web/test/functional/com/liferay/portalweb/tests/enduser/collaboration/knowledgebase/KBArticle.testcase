@@ -1289,6 +1289,69 @@ definition {
 			locator1 = "WorkflowKnowledgeBaseArticle#ARTICLE_TABLE_ARTICLE_STATUS");
 	}
 
+	@description = "This test covers LPS-184220. It checks that the article can not be expired before approving and it can be expired after approving."
+	@priority = 4
+	test CanViewExpiredArticleWithWorkflowEnabled {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+		property test.liferay.virtual.instance = "false";
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Knowledge Base Article");
+
+		KBArticle.updateCheckInterval(fieldValue = 1);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			enableExpirationDate = "true",
+			extendedMinutes = 1,
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			kbWorkflowAction = "Submit for Workflow",
+			notificationDate = 0);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Pending");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Knowledge Base Article Title",
+			workflowAssetType = "Knowledge Base Article",
+			workflowTask = "Review");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Approved");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Expiring Soon");
+
+		// We need to wait for the system time to pass by 1 minute in order to verify the article is expired. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
+
+		Pause(locator1 = 60000);
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconList.viewListEntryLabel(
+			listEntry = "Knowledge Base Article Title",
+			listEntryLabel = "Expired");
+	}
+
 	@description = "This ensures that an image in the KB content field can be rendered correctly after moving it to a folder."
 	@priority = 4
 	test CanViewImageInKBAfterMovingToFolder {

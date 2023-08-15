@@ -36,6 +36,7 @@ UpgradeJavaGetFileMethodCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm |
 UpgradeJavaGetLayoutDisplayPageObjectProviderCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace parameter type long by ItemInfoReference in the getLayoutDisplayPageObjectProvider method |
 UpgradeJavaGetLayoutDisplayPageProviderCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName |
 UpgradeJavaIndexerCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace Indexer by Indexer<?> |
+UpgradeJavaLanguageUtilCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace `ListUtil.fromArray` by `new ArrayList' when the parameter is to 'LanguageUtil.getAvailableLocales' |
 UpgradeJavaLayoutServicesCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Fill the new parameters of the method `addLayout` and `updateLayout` of `LayoutServiceUtil`, `LayoutService`, `LayoutLocalService` and `LayoutLocalServiceUtil` classes |
 UpgradeJavaMultiVMPoolUtilCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPhoneLocalServiceUtilCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Fill the new parameter `ServiceContext` of the method `addPhone` of class `PhoneLocalServiceUtil`. |

@@ -8,12 +8,14 @@ package com.liferay.object.web.internal.object.definitions.portlet.action;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
+import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -23,17 +25,22 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Map;
+
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Milton Castro
  */
 @Component(
+	configurationPid = "com.liferay.object.configuration.ObjectScriptConfiguration",
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
 		"mvc.command.name=/object_definitions/add_object_action"
@@ -62,13 +69,21 @@ public class AddObjectActionMVCRenderCommand implements MVCRenderCommand {
 					_notificationTemplateLocalService,
 					_objectActionExecutorRegistry, _objectActionTriggerRegistry,
 					_objectDefinitionLocalService,
-					_objectDefinitionModelResourcePermission));
+					_objectDefinitionModelResourcePermission,
+					_objectScriptConfiguration));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
 		}
 
 		return "/object_definitions/add_object_action.jsp";
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_objectScriptConfiguration = ConfigurableUtil.createConfigurable(
+			ObjectScriptConfiguration.class, properties);
 	}
 
 	@Reference
@@ -94,6 +109,8 @@ public class AddObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	private volatile ObjectScriptConfiguration _objectScriptConfiguration;
 
 	@Reference
 	private Portal _portal;

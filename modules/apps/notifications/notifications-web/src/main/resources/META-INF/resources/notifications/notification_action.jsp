@@ -25,21 +25,12 @@ if (subscriptionId > 0) {
 }
 %>
 
-<c:choose>
-	<c:when test="<%= notificationActionIconList %>">
-		<liferay-ui:icon-list>
-			<%@ include file="/notifications/notification_action_icon_body.jspf" %>
-		</liferay-ui:icon-list>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:icon-menu
-			direction="left-side"
-			icon="<%= StringPool.BLANK %>"
-			markupView="lexicon"
-			message="actions"
-			showWhenSingleIcon="<%= true %>"
-		>
-			<%@ include file="/notifications/notification_action_icon_body.jspf" %>
-		</liferay-ui:icon-menu>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="actions"
+	showWhenSingleIcon="<%= true %>"
+>
+	<%@ include file="/notifications/notification_action_icon_body.jspf" %>
+</liferay-ui:icon-menu>

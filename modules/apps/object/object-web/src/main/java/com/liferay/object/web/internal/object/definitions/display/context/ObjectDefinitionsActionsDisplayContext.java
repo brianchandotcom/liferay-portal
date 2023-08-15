@@ -13,6 +13,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
+import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -20,6 +21,7 @@ import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -54,7 +57,8 @@ public class ObjectDefinitionsActionsDisplayContext
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ObjectScriptConfiguration objectScriptConfiguration) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
@@ -63,6 +67,9 @@ public class ObjectDefinitionsActionsDisplayContext
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectScriptConfiguration = objectScriptConfiguration;
+
+		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
 	public String getEditObjectActionURL() throws Exception {
@@ -144,6 +151,14 @@ public class ObjectDefinitionsActionsDisplayContext
 				StringUtil.equals(
 					objectActionExecutor.getKey(),
 					ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
+
+				continue;
+			}
+
+			if (StringUtil.equals(
+					objectActionExecutor.getKey(),
+					ObjectActionExecutorConstants.KEY_GROOVY) &&
+				!_validateScriptConfiguration()) {
 
 				continue;
 			}
@@ -300,11 +315,27 @@ public class ObjectDefinitionsActionsDisplayContext
 		};
 	}
 
+	private boolean _validateScriptConfiguration() {
+		PermissionChecker permissionChecker =
+			_objectRequestHelper.getPermissionChecker();
+
+		if (permissionChecker.isOmniadmin() ||
+			(_objectScriptConfiguration.allowInstanceAdminExecuteCode() &&
+			 permissionChecker.isCompanyAdmin())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private final JSONFactory _jsonFactory;
 	private final NotificationTemplateLocalService
 		_notificationTemplateLocalService;
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectRequestHelper _objectRequestHelper;
+	private final ObjectScriptConfiguration _objectScriptConfiguration;
 
 }

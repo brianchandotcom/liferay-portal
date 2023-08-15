@@ -22,9 +22,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  */
+@Component(service = Ghostscript.class)
 public class GhostscriptImpl implements Ghostscript {
 
 	@Override

@@ -94,6 +94,8 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperimentId, segmentsExperienceId, plid, name, goal,
 			status, status);
 
+		_deleteSegmentsExperiment(serviceContext.getScopeGroupId(), plid);
+
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.create(segmentsExperimentId);
 
@@ -201,6 +203,11 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperimentLocalService.deleteSegmentsExperiment(
 				segmentsExperiment);
 		}
+	}
+
+	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid) {
+		return segmentsExperimentPersistence.fetchByG_P(groupId, plid);
 	}
 
 	@Override
@@ -477,6 +484,21 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
 			winnerSegmentsExperienceId, status);
+	}
+
+	private void _deleteSegmentsExperiment(long groupId, long plid)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.fetchByG_P(groupId, plid);
+
+		if ((segmentsExperiment != null) &&
+			(segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_TERMINATED)) {
+
+			segmentsExperimentLocalService.deleteSegmentsExperiment(
+				segmentsExperiment);
+		}
 	}
 
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(

@@ -660,11 +660,11 @@ public class OpenAPIParserUtil {
 					new AbstractMap.SimpleImmutableEntry<>("number", "double"),
 					Double.class.getName());
 				put(
-					new AbstractMap.SimpleImmutableEntry<>("permission", null),
-					Permission.class.getName());
-				put(
 					new AbstractMap.SimpleImmutableEntry<>("object", null),
 					Object.class.getName());
+				put(
+					new AbstractMap.SimpleImmutableEntry<>("permission", null),
+					Permission.class.getName());
 				put(
 					new AbstractMap.SimpleImmutableEntry<>("string", null),
 					String.class.getName());

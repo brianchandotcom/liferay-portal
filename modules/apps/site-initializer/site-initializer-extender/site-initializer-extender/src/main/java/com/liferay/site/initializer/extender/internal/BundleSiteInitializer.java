@@ -505,6 +505,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addSiteSettings(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
+			_invoke(() -> _addOrUpdateSXPBlueprint(serviceContext));
 			_invoke(() -> _addOrUpdateUserGroups(serviceContext));
 
 			Map<String, String>
@@ -613,7 +614,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					segmentsEntriesIdsStringUtilReplaceValues, serviceContext,
 					taxonomyCategoryIdsAndTaxonomyVocabularyIdsStringUtilReplaceValues));
-			_invoke(() -> _addOrUpdateSXPBlueprint(serviceContext));
 			_invoke(() -> _addUserRoles(serviceContext));
 
 			_invoke(

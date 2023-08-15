@@ -396,6 +396,12 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new RequiredObjectDefinitionException();
 		}
 
+		if (objectDefinition.getRootObjectDefinitionId() != 0) {
+			throw new ObjectDefinitionRootObjectDefinitionIdException(
+				"Object Definitions that belong to a hierarchical structure " +
+					"cannot be deleted");
+		}
+
 		_objectActionLocalService.deleteObjectActions(
 			objectDefinition.getObjectDefinitionId());
 

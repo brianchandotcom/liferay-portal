@@ -279,6 +279,11 @@ public class ObjectRelationshipLocalServiceImpl
 
 		// TODO When should we allow an object relationship to be deleted?
 
+		if (objectRelationship.isEdge()) {
+			throw new ObjectRelationshipEdgeException(
+				"Edge object relationships cannot be deleted");
+		}
+
 		if (objectRelationship.isReverse()) {
 			throw new ObjectRelationshipReverseException(
 				"Reverse object relationships cannot be deleted");

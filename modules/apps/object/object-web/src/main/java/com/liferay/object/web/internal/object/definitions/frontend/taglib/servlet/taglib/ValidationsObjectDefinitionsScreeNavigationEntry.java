@@ -6,26 +6,33 @@
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsValidationsDisplayContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renan Vasconcelos
  */
 @Component(
+	configurationPid = "com.liferay.object.configuration.ObjectScriptConfiguration",
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
@@ -58,9 +65,17 @@ public class ValidationsObjectDefinitionsScreeNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsValidationsDisplayContext(
 				httpServletRequest, _objectDefinitionModelResourcePermission,
+				_objectScriptConfiguration,
 				_objectValidationRuleEngineRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_objectScriptConfiguration = ConfigurableUtil.createConfigurable(
+			ObjectScriptConfiguration.class, properties);
 	}
 
 	@Reference(
@@ -68,6 +83,8 @@ public class ValidationsObjectDefinitionsScreeNavigationEntry
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	private volatile ObjectScriptConfiguration _objectScriptConfiguration;
 
 	@Reference
 	private ObjectValidationRuleEngineRegistry

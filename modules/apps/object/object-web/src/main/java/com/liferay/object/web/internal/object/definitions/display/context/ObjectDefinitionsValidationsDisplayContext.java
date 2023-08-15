@@ -8,11 +8,13 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.learn.LearnMessageUtil;
+import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
+import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -20,9 +22,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -41,12 +45,16 @@ public class ObjectDefinitionsValidationsDisplayContext
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
+		ObjectScriptConfiguration objectScriptConfiguration,
 		ObjectValidationRuleEngineRegistry objectValidationRuleEngineRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
+		_objectScriptConfiguration = objectScriptConfiguration;
 		_objectValidationRuleEngineRegistry =
 			objectValidationRuleEngineRegistry;
+
+		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
 	public String getEditObjectValidationURL() throws Exception {
@@ -87,10 +95,16 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 		return ListUtil.sort(
 			TransformUtil.transform(
-				_objectValidationRuleEngineRegistry.
-					getObjectValidationRuleEngines(
-						objectDefinition.getCompanyId(),
-						objectDefinition.getName()),
+				ListUtil.filter(
+					_objectValidationRuleEngineRegistry.
+						getObjectValidationRuleEngines(
+							objectDefinition.getCompanyId(),
+							objectDefinition.getName()),
+					objectValidationRuleEngine ->
+						!StringUtil.equals(
+							objectValidationRuleEngine.getKey(),
+							ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) ||
+						_validateScriptConfiguration()),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
 					objectValidationRuleEngine.getLabel(
@@ -162,6 +176,22 @@ public class ObjectDefinitionsValidationsDisplayContext
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));
 	}
 
+	private boolean _validateScriptConfiguration() {
+		PermissionChecker permissionChecker =
+			_objectRequestHelper.getPermissionChecker();
+
+		if (permissionChecker.isOmniadmin() ||
+			(_objectScriptConfiguration.allowInstanceAdminExecuteCode() &&
+			 permissionChecker.isCompanyAdmin())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private final ObjectRequestHelper _objectRequestHelper;
+	private final ObjectScriptConfiguration _objectScriptConfiguration;
 	private final ObjectValidationRuleEngineRegistry
 		_objectValidationRuleEngineRegistry;
 

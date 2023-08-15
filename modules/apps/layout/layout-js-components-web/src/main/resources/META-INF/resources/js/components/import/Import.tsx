@@ -103,13 +103,8 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({importResults}) => {
-				if (
-					!importResults ||
-					(!importResults.imported &&
-						!importResults['imported-draft'] &&
-						!importResults.invalid)
-				) {
+			.then(({importResults = {}}) => {
+				if (!Object.keys(importResults).length) {
 					navigate(backURL);
 					openToast({
 						message: sub(

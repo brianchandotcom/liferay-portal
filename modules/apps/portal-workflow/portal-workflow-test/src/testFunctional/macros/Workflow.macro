@@ -14,6 +14,12 @@ definition {
 
 		if (IsTextNotEqual(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK", value1 = ${workflowTask})) {
 			var workflowTask = StringUtil.upperCaseFirstLetter(${workflowTask});
+
+			if (isSet(workflowDefinitionTask)) {
+				var workflowDefinitionTask = StringUtil.upperCaseFirstLetter(${workflowDefinitionTask});
+
+				return ${workflowDefinitionTask};
+			}
 		}
 
 		return ${workflowTask};

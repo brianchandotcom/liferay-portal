@@ -706,7 +706,7 @@ public class DBTest {
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + _TABLE_NAME_2  + " order by id");
+				"select * from " + _TABLE_NAME_2 + " order by id");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

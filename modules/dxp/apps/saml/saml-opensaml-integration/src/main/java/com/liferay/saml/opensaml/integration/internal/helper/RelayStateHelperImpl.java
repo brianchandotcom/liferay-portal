@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.saml.opensaml.integration.internal.util;
+package com.liferay.saml.opensaml.integration.internal.helper;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -11,19 +11,24 @@ import com.google.common.cache.CacheBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import org.opensaml.saml.common.messaging.context.SAMLBindingContext;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael Bowerman
  */
-public class RelayStateUtil {
+@Component(service = RelayStateHelper.class)
+public class RelayStateHelperImpl implements RelayStateHelper {
 
-	public static String getRelayState(SAMLBindingContext samlBindingContext) {
+	public String getRelayState(SAMLBindingContext samlBindingContext) {
 		String relayState = _relayStates.remove(
 			samlBindingContext.getRelayState());
 
@@ -36,7 +41,7 @@ public class RelayStateUtil {
 		return relayState;
 	}
 
-	public static void setRelayState(
+	public void setRelayState(
 		SAMLBindingContext samlBindingContext, String relayState) {
 
 		if (relayState == null) {
@@ -48,18 +53,15 @@ public class RelayStateUtil {
 			}
 		}
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		_relayStates.put(uuid, relayState);
 
 		samlBindingContext.setRelayState(uuid);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(RelayStateUtil.class);
-
-	private static final ConcurrentMap<String, String> _relayStates;
-
-	static {
+	@Activate
+	protected void activate() {
 		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
 
 		cacheBuilder.expireAfterWrite(10, TimeUnit.MINUTES);
@@ -68,5 +70,13 @@ public class RelayStateUtil {
 
 		_relayStates = cache.asMap();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RelayStateHelperImpl.class);
+
+	@Reference
+	private PortalUUID _portalUUID;
+
+	private ConcurrentMap<String, String> _relayStates;
 
 }

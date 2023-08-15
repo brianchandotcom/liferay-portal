@@ -1,0 +1,106 @@
+.customer-portal-card-footer {
+	align-items: flex-start;
+	background: var(--color-brand-primary-lighten-5);
+	border-radius: 0.5rem;
+	display: flex;
+	flex: none;
+	flex-direction: column;
+	flex-grow: 0;
+	margin-top: 1.5rem;
+	order: 1;
+	padding: 1.5rem;
+
+	p,
+	h1,
+	h3,
+	h4,
+	h5 {
+		align-items: center;
+		display: flex;
+		font-family: 'Source Sans Pro';
+		font-style: normal;
+	}
+
+	h1 {
+		color: var(--color-neutral-10);
+		font-size: 1.5rem;
+		font-weight: 700;
+		line-height: 1.75rem;
+	}
+
+	p,
+	h5 {
+		font-size: 0.813rem;
+		font-weight: 400;
+		line-height: 1rem;
+	}
+
+	p {
+		color: var(--color-neutral-7);
+	}
+
+	h3 {
+		color: var(--color-neutral-10);
+		font-size: 1.063rem;
+		font-weight: 700;
+		line-height: 1.25rem;
+	}
+
+	h4 {
+		color: var(--color-neutral-9);
+		font-size: 0.813rem;
+		font-weight: 600;
+		line-height: 1rem;
+		margin-bottom: 0;
+	}
+
+	h5 {
+		color: var(--color-neutral-5);
+		margin-bottom: 0;
+	}
+}
+
+.customer-portal-card-description-scroll {
+	height: 7.313rem;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	scroll-padding-left: 5rem;
+}
+.customer-portal-card-footer-style-ac {
+	width: 30.188rem !important;
+}
+
+.customer-portal-card-footer-style-lxc {
+	width: 44.938rem;
+}
+
+.customer-portal-card-lexicon .lexicon-icon {
+	margin-left: -10px;
+	width: 0.5rem !important;
+}
+
+.customer-portal-card-description h3 .lexicon-icon {
+	cursor: pointer;
+	margin-left: 0.75rem;
+	width: 0.875rem;
+}
+
+.customer-portal-card-lexicon .btn-monospaced {
+	height: 0.625rem;
+	margin-top: -0.5rem;
+}
+
+::-webkit-scrollbar {
+	width: 0.313rem;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--color-neutral-0);
+	scroll-padding-left: 5rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--color-neutral-3);
+	background-color: rgba(7, 7, 7, 0.5);
+	border-radius: 0.125rem;
+}

@@ -4949,7 +4949,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.jericho.html.jar!jericho-html.jar</file-name>
-				<version>3.1</version>
+				<version>3.4</version>
 				<project-name>Jericho HTML Parser</project-name>
 				<project-url>http://jericho.htmlparser.net</project-url>
 				<licenses>

@@ -13,13 +13,14 @@ import javax.servlet.jsp.JspException;
  * @author Chema Balsas
  */
 public class ContainerFluidTag extends ContainerTag {
+
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		setFluid(true);
 
-		if (Validator.isNull(getSize()) && Validator.isNull(_fullWidth)) {
+		if (Validator.isNull(getSize()) && !getFullWidth()) {
 			setSize("xl");
 		}
 
@@ -44,4 +45,5 @@ public class ContainerFluidTag extends ContainerTag {
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container-fluid:";
 
 	private boolean _fullWidth;
+
 }

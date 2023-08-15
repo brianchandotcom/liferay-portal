@@ -142,7 +142,10 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 						<clay:container-fluid>
 							<ul class="tbar-nav">
 								<li class="tbar-item">
-									<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:void(0);" />
+									<clay:icon
+										cssClass="component-action sidenav-close"
+										symbol="times"
+									/>
 								</li>
 							</ul>
 						</clay:container-fluid>

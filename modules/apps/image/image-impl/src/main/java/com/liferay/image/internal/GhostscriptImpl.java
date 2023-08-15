@@ -10,7 +10,7 @@ import com.liferay.petra.process.LoggingOutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.image.ImageMagickUtil;
+import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ivica Cardic
@@ -79,16 +80,16 @@ public class GhostscriptImpl implements Ghostscript {
 
 	@Override
 	public boolean isEnabled() {
-		return ImageMagickUtil.isEnabled();
+		return _imageMagick.isEnabled();
 	}
 
 	@Override
 	public void reset() {
 		if (isEnabled()) {
 			try {
-				_globalSearchPath = ImageMagickUtil.getGlobalSearchPath();
+				_globalSearchPath = _imageMagick.getGlobalSearchPath();
 
-				_commandPath = getCommandPath();
+				_commandPath = _getCommandPath();
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -96,14 +97,14 @@ public class GhostscriptImpl implements Ghostscript {
 		}
 	}
 
-	protected String getCommandPath() throws Exception {
+	private String _getCommandPath() throws Exception {
 		String commandPath = null;
 
 		if (OSDetector.isWindows()) {
-			commandPath = getCommandPathWindows();
+			commandPath = _getCommandPathWindows();
 		}
 		else {
-			commandPath = getCommandPathUnix();
+			commandPath = _getCommandPathUnix();
 		}
 
 		if (commandPath == null) {
@@ -118,7 +119,7 @@ public class GhostscriptImpl implements Ghostscript {
 		return commandPath;
 	}
 
-	protected String getCommandPathUnix() throws Exception {
+	private String _getCommandPathUnix() throws Exception {
 		String[] dirNames = _globalSearchPath.split(File.pathSeparator);
 
 		for (String dirName : dirNames) {
@@ -132,7 +133,7 @@ public class GhostscriptImpl implements Ghostscript {
 		return null;
 	}
 
-	protected String getCommandPathWindows() throws Exception {
+	private String _getCommandPathWindows() throws Exception {
 		String[] dirNames = _globalSearchPath.split(File.pathSeparator);
 
 		for (String dirName : dirNames) {
@@ -169,5 +170,8 @@ public class GhostscriptImpl implements Ghostscript {
 
 	private String _commandPath;
 	private String _globalSearchPath;
+
+	@Reference
+	private ImageMagick _imageMagick;
 
 }

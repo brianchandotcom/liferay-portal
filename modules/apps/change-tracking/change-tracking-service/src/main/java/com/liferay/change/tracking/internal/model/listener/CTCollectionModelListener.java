@@ -5,10 +5,14 @@
 
 package com.liferay.change.tracking.internal.model.listener;
 
+import com.liferay.change.tracking.constants.CTOnDemandUserConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.service.TicketLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,7 +29,33 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 			ctCollection.getCtCollectionId());
 	}
 
+	@Override
+	public void onAfterUpdate(
+			CTCollection originalCTCollection, CTCollection ctCollection)
+		throws ModelListenerException {
+
+		if (ctCollection.isShareable()) {
+			return;
+		}
+
+		if (ctCollection.isShareable() != originalCTCollection.isShareable()) {
+			for (Ticket ticket :
+					_ticketLocalService.getTickets(
+						ctCollection.getCompanyId(),
+						CTCollection.class.getName(),
+						ctCollection.getCtCollectionId(),
+						CTOnDemandUserConstants.
+							TICKET_TYPE_ON_DEMAND_USER_LOGIN)) {
+
+				_ticketLocalService.deleteTicket(ticket);
+			}
+		}
+	}
+
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 }

@@ -103,7 +103,7 @@ const LabelProperty = ({hideField, label}) => {
 
 const RequiredProperty = () => {
 	return (
-		<span className="ddm-label-required reference-mark">
+		<span aria-hidden="true" className="ddm-label-required reference-mark">
 			<ClayIcon symbol="asterisk" />
 		</span>
 	);

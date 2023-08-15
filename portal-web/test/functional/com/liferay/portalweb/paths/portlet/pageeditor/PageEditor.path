@@ -1012,7 +1012,7 @@
 </tr>
 <tr>
 	<td>IMAGE_RESOLUTION_LABEL</td>
-	<td>//p[contains(@class,'text-secondary')]/b[contains(.,'${key_resolutionLabel}')]</td>
+	<td>//p[contains(@class,'text-secondary')]/strong[contains(.,'${key_resolutionLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

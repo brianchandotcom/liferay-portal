@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_NAV_LINK_IN_STACK</td>
-	<td>//*[contains(@class,'text-truncate') and contains(text(),'${key_stackName}')]/following-sibling::div//a[contains(.,'${key_menuBar}')][contains(@class,'active')]</td>
+	<td>//*[contains(@class,'text-truncate') and contains(text(),'${key_stackName}')]/following-sibling::div[1]//a[contains(.,'${key_menuBar}')][contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>NAV_LINK_IN_STACK</td>
-	<td>//*[contains(@class,'text-truncate') and contains(text(),'${key_stackName}')]/following-sibling::div//a[contains(.,'${key_menuBar}')]</td>
+	<td>//*[contains(@class,'text-truncate') and contains(text(),'${key_stackName}')]/following-sibling::div[1]//a[contains(.,'${key_menuBar}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -47,6 +47,7 @@ public class MFATimeBasedOTPEntryWrapper
 		attributes.put("lastFailIP", getLastFailIP());
 		attributes.put("lastSuccessDate", getLastSuccessDate());
 		attributes.put("lastSuccessIP", getLastSuccessIP());
+		attributes.put("lastValidTOTP", getLastValidTOTP());
 		attributes.put("sharedSecret", getSharedSecret());
 
 		return attributes;
@@ -125,6 +126,12 @@ public class MFATimeBasedOTPEntryWrapper
 
 		if (lastSuccessIP != null) {
 			setLastSuccessIP(lastSuccessIP);
+		}
+
+		String lastValidTOTP = (String)attributes.get("lastValidTOTP");
+
+		if (lastValidTOTP != null) {
+			setLastValidTOTP(lastValidTOTP);
 		}
 
 		String sharedSecret = (String)attributes.get("sharedSecret");
@@ -207,6 +214,16 @@ public class MFATimeBasedOTPEntryWrapper
 	@Override
 	public String getLastSuccessIP() {
 		return model.getLastSuccessIP();
+	}
+
+	/**
+	 * Returns the last valid totp of this mfa time based otp entry.
+	 *
+	 * @return the last valid totp of this mfa time based otp entry
+	 */
+	@Override
+	public String getLastValidTOTP() {
+		return model.getLastValidTOTP();
 	}
 
 	/**
@@ -362,6 +379,16 @@ public class MFATimeBasedOTPEntryWrapper
 	@Override
 	public void setLastSuccessIP(String lastSuccessIP) {
 		model.setLastSuccessIP(lastSuccessIP);
+	}
+
+	/**
+	 * Sets the last valid totp of this mfa time based otp entry.
+	 *
+	 * @param lastValidTOTP the last valid totp of this mfa time based otp entry
+	 */
+	@Override
+	public void setLastValidTOTP(String lastValidTOTP) {
+		model.setLastValidTOTP(lastValidTOTP);
 	}
 
 	/**

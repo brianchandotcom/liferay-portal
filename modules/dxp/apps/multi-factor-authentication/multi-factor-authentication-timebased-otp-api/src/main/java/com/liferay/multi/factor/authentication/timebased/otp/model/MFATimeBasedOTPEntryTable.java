@@ -63,6 +63,9 @@ public class MFATimeBasedOTPEntryTable
 	public final Column<MFATimeBasedOTPEntryTable, String> lastSuccessIP =
 		createColumn(
 			"lastSuccessIP", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<MFATimeBasedOTPEntryTable, String> lastValidTOTP =
+		createColumn(
+			"lastValidTOTP", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MFATimeBasedOTPEntryTable, String> sharedSecret =
 		createColumn(
 			"sharedSecret", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

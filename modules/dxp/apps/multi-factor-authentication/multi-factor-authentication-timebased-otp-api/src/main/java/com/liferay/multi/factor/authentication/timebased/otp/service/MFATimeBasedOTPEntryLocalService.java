@@ -266,6 +266,10 @@ public interface MFATimeBasedOTPEntryLocalService
 			long userId, String ipAddress, boolean success)
 		throws PortalException;
 
+	public MFATimeBasedOTPEntry updateLastTOTP(
+			long userId, String lastValidTOTP)
+		throws PortalException;
+
 	/**
 	 * Updates the mfa time based otp entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

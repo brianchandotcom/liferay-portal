@@ -11,5 +11,6 @@ create table MFATimeBasedOTPEntry (
 	lastFailIP VARCHAR(75) null,
 	lastSuccessDate DATE null,
 	lastSuccessIP VARCHAR(75) null,
+	lastValidTOTP VARCHAR(75) null,
 	sharedSecret VARCHAR(75) null
 );

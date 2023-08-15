@@ -364,6 +364,15 @@ public class MFATimeBasedOTPEntryLocalServiceWrapper
 			userId, ipAddress, success);
 	}
 
+	@Override
+	public com.liferay.multi.factor.authentication.timebased.otp.model.
+		MFATimeBasedOTPEntry updateLastTOTP(long userId, String lastValidTOTP)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mfaTimeBasedOTPEntryLocalService.updateLastTOTP(
+			userId, lastValidTOTP);
+	}
+
 	/**
 	 * Updates the mfa time based otp entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

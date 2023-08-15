@@ -306,6 +306,13 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 		return getService().updateAttempts(userId, ipAddress, success);
 	}
 
+	public static MFATimeBasedOTPEntry updateLastTOTP(
+			long userId, String lastValidTOTP)
+		throws PortalException {
+
+		return getService().updateLastTOTP(userId, lastValidTOTP);
+	}
+
 	/**
 	 * Updates the mfa time based otp entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -14,6 +14,7 @@
 		<field name="lastFailIP" type="String" />
 		<field name="lastSuccessDate" type="Date" />
 		<field name="lastSuccessIP" type="String" />
+		<field name="lastValidTOTP" type="String" />
 		<field name="sharedSecret" type="String" />
 	</model>
 </model-hints>

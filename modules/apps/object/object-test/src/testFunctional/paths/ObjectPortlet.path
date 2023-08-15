@@ -212,7 +212,7 @@
 	</tr>
 	<tr>
 		<td>ENABLE_CATEGORIZATION_BUTTON</td>
-		<td>//span[text()='Enable Categorization']/preceding-sibling::span/input</td>
+		<td>//span[text()='Enable Categorization of Object entries']/preceding-sibling::span/input</td>
 		<td></td>
 	</tr>
 	<tr>

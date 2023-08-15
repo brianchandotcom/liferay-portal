@@ -33,6 +33,10 @@ import org.json.JSONArray;
 public class PoshiReportGenerator {
 
 	public static void main(String[] args) throws Exception {
+		if (Validator.isNull(_poshiProperties.reportType)) {
+			return;
+		}
+
 		if (_poshiProperties.reportType.equals("usage")) {
 			_generateMacroUsageReport();
 		}

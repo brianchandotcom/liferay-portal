@@ -6,6 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.configuration.ObjectScriptConfiguration;
+import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.model.ObjectAction;
@@ -137,9 +138,8 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 		if (Objects.equals(
 				objectActionExecutorKey,
 				ObjectActionExecutorConstants.KEY_GROOVY) &&
-			!permissionChecker.isOmniadmin() &&
-			(!_allowInstanceAdminExecuteCode ||
-			 !permissionChecker.isCompanyAdmin())) {
+			!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+				permissionChecker, _allowInstanceAdminExecuteCode)) {
 
 			throw new ObjectActionExecutorKeyException(
 				"The user must have permission to choose object action " +

@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.object.action.executor,\
 	com.liferay.object.action.trigger,\
 	com.liferay.object.configuration,\
+	com.liferay.object.configuration.util,\
 	com.liferay.object.constants,\
 	com.liferay.object.definition.notification.term.util,\
 	com.liferay.object.definition.security.permission.resource,\

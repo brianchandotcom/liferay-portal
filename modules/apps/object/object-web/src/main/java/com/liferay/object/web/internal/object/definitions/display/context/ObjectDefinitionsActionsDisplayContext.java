@@ -14,6 +14,7 @@ import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.configuration.ObjectScriptConfiguration;
+import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -157,7 +157,10 @@ public class ObjectDefinitionsActionsDisplayContext
 			if (StringUtil.equals(
 					objectActionExecutor.getKey(),
 					ObjectActionExecutorConstants.KEY_GROOVY) &&
-				!_validateScriptConfiguration()) {
+				!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+					_objectRequestHelper.getPermissionChecker(),
+					_objectScriptConfiguration.
+						allowInstanceAdminExecuteCode())) {
 
 				continue;
 			}
@@ -318,20 +321,6 @@ public class ObjectDefinitionsActionsDisplayContext
 					objectRequestHelper.getRequest(), "add-object-action"));
 			dropdownItem.setTarget("sidePanel");
 		};
-	}
-
-	private boolean _validateScriptConfiguration() {
-		PermissionChecker permissionChecker =
-			_objectRequestHelper.getPermissionChecker();
-
-		if (permissionChecker.isOmniadmin() ||
-			(_objectScriptConfiguration.allowInstanceAdminExecuteCode() &&
-			 permissionChecker.isCompanyAdmin())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private final JSONFactory _jsonFactory;

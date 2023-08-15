@@ -9,6 +9,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.object.configuration.ObjectScriptConfiguration;
+import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -104,7 +104,10 @@ public class ObjectDefinitionsValidationsDisplayContext
 						!StringUtil.equals(
 							objectValidationRuleEngine.getKey(),
 							ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) ||
-						_validateScriptConfiguration()),
+						ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+							_objectRequestHelper.getPermissionChecker(),
+							_objectScriptConfiguration.
+								allowInstanceAdminExecuteCode())),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
 					objectValidationRuleEngine.getLabel(
@@ -174,20 +177,6 @@ public class ObjectDefinitionsValidationsDisplayContext
 			objectRequestHelper.getLocale(), getObjectDefinitionId(),
 			objectField -> !objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));
-	}
-
-	private boolean _validateScriptConfiguration() {
-		PermissionChecker permissionChecker =
-			_objectRequestHelper.getPermissionChecker();
-
-		if (permissionChecker.isOmniadmin() ||
-			(_objectScriptConfiguration.allowInstanceAdminExecuteCode() &&
-			 permissionChecker.isCompanyAdmin())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private final ObjectRequestHelper _objectRequestHelper;

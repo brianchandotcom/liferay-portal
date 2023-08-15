@@ -6,6 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.configuration.ObjectScriptConfiguration;
+import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
@@ -138,9 +139,8 @@ public class ObjectValidationRuleServiceImpl
 
 		if (Objects.equals(
 				engine, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) &&
-			!permissionChecker.isOmniadmin() &&
-			(!_allowInstanceAdminExecuteCode ||
-			 !permissionChecker.isCompanyAdmin())) {
+			!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+				permissionChecker, _allowInstanceAdminExecuteCode)) {
 
 			throw new ObjectValidationRuleEngineException.
 				MustHavePermissionEngineGroovy();

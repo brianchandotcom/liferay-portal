@@ -305,6 +305,17 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		sxpElement.setId(sxpElementId);
 
 		if (serviceBuilderSxpElement != null) {
+			if (serviceBuilderSxpElement.getReadOnly()) {
+				return _sxpElementDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						new HashMap<>(), _dtoConverterRegistry,
+						contextHttpServletRequest, sxpElementId,
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUriInfo, contextUser),
+					_sxpElementService.getSXPElement(sxpElementId));
+			}
+
 			return _updateSxpElement(sxpElementId, sxpElement);
 		}
 
@@ -324,6 +335,18 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		sxpElement.setExternalReferenceCode(externalReferenceCode);
 
 		if (serviceBuilderSxpElement != null) {
+			if (serviceBuilderSxpElement.getReadOnly()) {
+				return _sxpElementDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						new HashMap<>(), _dtoConverterRegistry,
+						contextHttpServletRequest,
+						serviceBuilderSxpElement.getSXPElementId(),
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUriInfo, contextUser),
+					serviceBuilderSxpElement);
+			}
+
 			return _updateSxpElement(
 				serviceBuilderSxpElement.getSXPElementId(), sxpElement);
 		}

@@ -132,16 +132,18 @@ AUI.add(
 						</div>`;
 
 					const checkboxHTML = `
-						<div class="custom-checkbox custom-control">
-							<label>
-								<input class="custom-control-input"
-									id="${instance.ns('hideModalCheckbox')}" type="checkbox" />
-								<span class="custom-control-label">
-									<span class="custom-control-label-text">
-										${Liferay.Language.get('do-not-show-me-this-again')}
+						<div class="c-pt-4">
+							<div class="custom-checkbox custom-control">
+								<label>
+									<input class="custom-control-input"
+										id="${instance.ns('hideModalCheckbox')}" type="checkbox" />
+									<span class="custom-control-label">
+										<span class="custom-control-label-text">
+											${Liferay.Language.get('do-not-show-me-this-again')}
+										</span>
 									</span>
-								</span>
-							</label>
+								</label>
+							</div>
 						</div>`;
 
 					let bodyHTML = infoHTML + checkboxHTML;
@@ -214,15 +216,15 @@ AUI.add(
 
 						bodyHTML = isLowOnDiskSpace
 							? progressBarHTML +
-							  `<div class="text-secondary c-mt-2">
+							  `<div class="c-mt-2 text-secondary">
 							  		${lowDiskSpaceDescriptionHTML}
 								</div>`
 							: infoHTML +
-							  `<div class="panel" role="tablist">
+							  `<div class="c-mb-0 panel" style="height: 120px;" role="tablist">
 									<button
 										aria-controls="collapsePanel"
 										aria-expanded="false"
-										class="disk-space-panel collapsed btn btn-link c-pl-0 c-pb-0"
+										class="disk-space-panel c-pb-0 c-pl-0 collapsed btn btn-link"
 										data-target="#collapsableDiskSpace"
 										data-toggle="liferay-collapse"
 										role="tab"
@@ -235,7 +237,7 @@ AUI.add(
 										</span>
 									</button>
 									<div class="panel-collapse collapse" id="collapsableDiskSpace" role="tabpanel">
-										<div class="panel-body c-pl-0 c-pr-0">
+										<div class="c-pl-0 c-pr-0 panel-body">
 											${progressBarHTML}
 										</div>
 									</div>
@@ -434,7 +436,6 @@ AUI.add(
 									},
 								},
 							],
-							height: '320px',
 							id: instance.ns('reindexActionsConfirmationModal'),
 							size: 'md',
 							status,

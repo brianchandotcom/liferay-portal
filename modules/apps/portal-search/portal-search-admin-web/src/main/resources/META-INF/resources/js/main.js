@@ -111,37 +111,38 @@ AUI.add(
 				) {
 					const instance = this;
 
-					const infoHTML =
-						'<div class="text-secondary">' +
-						'<div class="c-mb-2">' +
-						Liferay.Language.get('reindex-actions-time-info') +
-						'</div>' +
-						'<div>' +
-						(isConcurrentMode ||
-						data.classname ||
-						data.cmd === 'reindexDictionaries'
-							? Liferay.Language.get(
-									'reindex-actions-search-results-available-info'
-							  )
-							: Liferay.Language.get(
-									'reindex-actions-search-results-not-available-info'
-							  )) +
-						'</div>' +
-						'</div>';
+					const infoHTML = `
+						<div class="text-secondary">
+							<div class="c-mb-2">
+								${Liferay.Language.get('reindex-actions-time-info')}
+							</div>
+							<div>
+								${
+									isConcurrentMode ||
+									data.classname ||
+									data.cmd === 'reindexDictionaries'
+										? Liferay.Language.get(
+												'reindex-actions-search-results-available-info'
+										  )
+										: Liferay.Language.get(
+												'reindex-actions-search-results-not-available-info'
+										  )
+								}
+							</div>
+						</div>`;
 
-					const checkboxHTML =
-						'<div class="custom-checkbox custom-control">' +
-						'<label>' +
-						'<input class="custom-control-input" id="' +
-						instance.ns('hideModalCheckbox') +
-						'" type="checkbox" />' +
-						'<span class="custom-control-label">' +
-						'<span class="custom-control-label-text">' +
-						Liferay.Language.get('do-not-show-me-this-again') +
-						'</span>' +
-						'</span>' +
-						'</label>' +
-						'</div>';
+					const checkboxHTML = `
+						<div class="custom-checkbox custom-control">
+							<label>
+								<input class="custom-control-input"
+									id="${instance.ns('hideModalCheckbox')}" type="checkbox" />
+								<span class="custom-control-label">
+									<span class="custom-control-label-text">
+										${Liferay.Language.get('do-not-show-me-this-again')}
+									</span>
+								</span>
+							</label>
+						</div>`;
 
 					let bodyHTML = infoHTML + checkboxHTML;
 
@@ -154,93 +155,98 @@ AUI.add(
 								(availableDiskSpace + currentDiskSpaceUsed)) *
 							100;
 
-						const progressBarHTML =
-							'<label>' +
-							Liferay.Language.get('disk-usage') +
-							'</label>' +
-							'<div class="progress ' +
-							(isLowOnDiskSpace && 'progress-warning') +
-							'">' +
-							'<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="' +
-							usedPercentage +
-							'" class="progress-bar" role="progressbar" style="width: ' +
-							usedPercentage +
-							'%;"></div>' +
-							'</div>' +
-							'<div class="text-3 text-secondary">' +
-							'<span>' +
-							Liferay.Util.sub(
-								Liferay.Language.get('used-x-of-x-gb'),
-								currentDiskSpaceUsed.toFixed(1),
-								totalDiskSpace.toFixed(1)
-							) +
-							'</span>' +
-							'<span class="float-right">' +
-							Liferay.Util.sub(
-								Liferay.Language.get('x-gb-free'),
-								availableDiskSpace.toFixed(1)
-							) +
-							'</span>' +
-							'</div>';
+						const progressBarHTML = `
+							<label>
+								${Liferay.Language.get('disk-usage')}
+							</label>
+							<div class="progress ${isLowOnDiskSpace && 'progress-warning'}">
+								<div
+									aria-valuemax="100"
+									aria-valuemin="0"
+									aria-valuenow="${usedPercentage}"
+									class="progress-bar"
+									role="progressbar"
+									style="width: ${usedPercentage}%;"
+								>
+								</div>
+							</div>
+							<div class="text-3 text-secondary">
+								<span>
+									${Liferay.Util.sub(
+										Liferay.Language.get('used-x-of-x-gb'),
+										currentDiskSpaceUsed.toFixed(1),
+										totalDiskSpace.toFixed(1)
+									)}
+								</span>
+								<span class="float-right">
+									${Liferay.Util.sub(
+										Liferay.Language.get('x-gb-free'),
+										availableDiskSpace.toFixed(1)
+									)}
+								</span>
+							</div>`;
 
-						const lowDiskSpaceDescriptionHTML =
-							'<span>' +
-							Liferay.Language.get(
-								'reindex-elasticsearch-disk-space-warning'
-							) +
-							':' +
-							'</span>' +
-							'<ul>' +
-							'<li>' +
-							Liferay.Util.sub(
-								Liferay.Language.get('available-disk-space-x'),
-								availableDiskSpace.toFixed(1)
-							) +
-							'</li>' +
-							'<li>' +
-							Liferay.Util.sub(
-								Liferay.Language.get(
-									'current-disk-space-used-x'
-								),
-								currentDiskSpaceUsed.toFixed(1)
-							) +
-							'</li>' +
-							'</ul>' +
-							'<span class="c-mt-2">' +
-							Liferay.Language.get(
-								'do-you-still-wish-to-execute-reindex'
-							) +
-							'</span>';
+						const lowDiskSpaceDescriptionHTML = `
+							<span>
+								${Liferay.Language.get('reindex-elasticsearch-disk-space-warning')}:
+							</span>
+							<ul>
+								<li>
+									${Liferay.Util.sub(
+										Liferay.Language.get(
+											'available-disk-space-x'
+										),
+										availableDiskSpace.toFixed(1)
+									)}
+								</li>
+								<li>
+									${Liferay.Util.sub(
+										Liferay.Language.get(
+											'current-disk-space-used-x'
+										),
+										currentDiskSpaceUsed.toFixed(1)
+									)}
+								</li>
+							</ul>
+							<span class="c-mt-2">
+								${Liferay.Language.get('do-you-still-wish-to-execute-reindex')}
+							</span>`;
 
 						bodyHTML = isLowOnDiskSpace
 							? progressBarHTML +
-							  '<div class="text-secondary c-mt-2">' +
-							  lowDiskSpaceDescriptionHTML +
-							  '</div>'
+							  `<div class="text-secondary c-mt-2">
+							  		${lowDiskSpaceDescriptionHTML}
+								</div>`
 							: infoHTML +
-							  '<div class="panel" role="tablist">' +
-							  '<button aria-controls="collapsePanel" aria-expanded="false" class="disk-space-panel collapsed btn btn-link c-pl-0 c-pb-0" data-target="#collapsableDiskSpace" data-toggle="liferay-collapse" role="tab">' +
-							  '<span class="collapse-button-closed">' +
-							  Liferay.Language.get('view-disk-space') +
-							  '</span>' +
-							  '<span class="collapse-button-open">' +
-							  Liferay.Language.get('hide-disk-space') +
-							  '</span>' +
-							  '</button>' +
-							  '<div class="panel-collapse collapse" id="collapsableDiskSpace" role="tabpanel">' +
-							  '<div class="panel-body c-pl-0 c-pr-0">' +
-							  progressBarHTML +
-							  '</div>' +
-							  '</div>' +
-							  '</div>' +
+							  `<div class="panel" role="tablist">
+									<button
+										aria-controls="collapsePanel"
+										aria-expanded="false"
+										class="disk-space-panel collapsed btn btn-link c-pl-0 c-pb-0"
+										data-target="#collapsableDiskSpace"
+										data-toggle="liferay-collapse"
+										role="tab"
+									>
+										<span class="collapse-button-closed">
+											${Liferay.Language.get('view-disk-space')}
+										</span>
+										<span class="collapse-button-open">
+											${Liferay.Language.get('hide-disk-space')}
+										</span>
+									</button>
+									<div class="panel-collapse collapse" id="collapsableDiskSpace" role="tabpanel">
+										<div class="panel-body c-pl-0 c-pr-0">
+											${progressBarHTML}
+										</div>
+									</div>
+								</div>` +
 							  checkboxHTML;
 					}
 
-					return (
-						'<div class="reindex-actions-confirmation-modal-body">' +
-						bodyHTML +
-						'</div>'
-					);
+					return `
+						<div class="reindex-actions-confirmation-modal-body">
+							${bodyHTML}
+						</div>`;
 				},
 
 				_getControlMenuReloadItem(element) {
@@ -343,10 +349,10 @@ AUI.add(
 
 						const syncIcon = document.createElement('div');
 
-						syncIcon.innerHTML =
-							'<svg class="lexicon-icon" focusable="false"><use href="' +
-							Liferay.Icons.spritemap +
-							'#reload" /></svg>';
+						syncIcon.innerHTML = `
+							<svg class="lexicon-icon" focusable="false">
+								<use href="${Liferay.Icons.spritemap}#reload" />
+							</svg>`;
 
 						currentControlMenuCategory.appendChild(syncIcon);
 					}

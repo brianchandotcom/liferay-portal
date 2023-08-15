@@ -16,28 +16,25 @@ import InstanceSelector from './InstanceSelector';
 const EXECUTE_BUTTON_QUERY_SELECTOR = '.save-server-button';
 
 const EXECUTION_MODES = {
-	CONCURRENT: 'concurrent',
-	REGULAR: 'regular',
-	SYNC: 'sync',
-};
-
-const EXECUTION_MODES_DETAILS = {
-	[EXECUTION_MODES.CONCURRENT]: {
+	CONCURRENT: {
 		description: Liferay.Language.get(
 			'reindex-mode-concurrent-description'
 		),
 		label: Liferay.Language.get('concurrent'),
 		symbol: 'change-list',
+		value: 'concurrent',
 	},
-	[EXECUTION_MODES.REGULAR]: {
+	REGULAR: {
 		description: Liferay.Language.get('reindex-mode-full-description'),
 		label: Liferay.Language.get('full'),
 		symbol: 'globe-lines',
+		value: 'regular',
 	},
-	[EXECUTION_MODES.SYNC]: {
+	SYNC: {
 		description: Liferay.Language.get('reindex-mode-sync-description'),
 		label: Liferay.Language.get('sync'),
 		symbol: 'reload',
+		value: 'sync',
 	},
 };
 
@@ -62,10 +59,13 @@ function ExecutionOptions({
 	portletNamespace,
 	virtualInstances = [],
 }) {
-	const [activeDropdown, setActiveDropdown] = useState(false);
 	const [executionMode, setExecutionMode] = useState(
-		initialExecutionMode || EXECUTION_MODES.REGULAR
+		initialExecutionMode || EXECUTION_MODES.REGULAR.value
 	);
+	const [
+		executionModeDropdownActive,
+		setExecutionModeDropdownActive,
+	] = useState(false);
 	const [selected, setSelected] = useState(initialCompanyIds);
 	const [scope, setScope] = useState(initialScope || SCOPES.ALL);
 
@@ -82,7 +82,7 @@ function ExecutionOptions({
 
 		executeButtonsElement.forEach((element) => {
 			if (
-				executionMode === EXECUTION_MODES.CONCURRENT &&
+				executionMode === EXECUTION_MODES.CONCURRENT.value &&
 				element.hasAttribute('data-concurrent-disabled')
 			) {
 				element.classList.add('disabled');
@@ -95,8 +95,11 @@ function ExecutionOptions({
 
 	const _handleExecutionModeChange = (mode) => {
 		setExecutionMode(mode);
-		setActiveDropdown(false);
+		setExecutionModeDropdownActive(false);
 	};
+
+	const _handleExecutionModeDropdownChange = () =>
+		setExecutionModeDropdownActive(!executionModeDropdownActive);
 
 	const _handleScopeChange = (value) => {
 		setScope(value);
@@ -122,10 +125,12 @@ function ExecutionOptions({
 							className="form-control form-control-select"
 							displayType="secondary"
 							id="executionMode"
-							onClick={() => setActiveDropdown(!activeDropdown)}
+							onClick={_handleExecutionModeDropdownChange}
 							ref={alignElementRef}
 						>
-							{EXECUTION_MODES_DETAILS[executionMode].label}
+							{Object.values(EXECUTION_MODES).find(
+								({value}) => value === executionMode
+							)?.label || ''}
 						</ClayButton>
 
 						<input
@@ -137,10 +142,10 @@ function ExecutionOptions({
 						/>
 
 						<ClayDropDown.Menu
-							active={activeDropdown}
+							active={executionModeDropdownActive}
 							alignElementRef={alignElementRef}
 							closeOnClickOutside
-							onActiveChange={setActiveDropdown}
+							onActiveChange={setExecutionModeDropdownActive}
 							style={{
 								maxWidth: '100%',
 								width:
@@ -153,19 +158,15 @@ function ExecutionOptions({
 									EXECUTION_MODES.REGULAR,
 									EXECUTION_MODES.CONCURRENT,
 									EXECUTION_MODES.SYNC,
-								].map((item) => {
-									const {
-										description,
-										label,
-										symbol,
-									} = EXECUTION_MODES_DETAILS[item];
-
+								].map(({description, label, symbol, value}) => {
 									return (
 										<ClayDropDown.Item
 											className="c-pb-2 c-pt-2"
-											key={item}
+											key={value}
 											onClick={() =>
-												_handleExecutionModeChange(item)
+												_handleExecutionModeChange(
+													value
+												)
 											}
 										>
 											<div className="d-flex">
@@ -189,7 +190,7 @@ function ExecutionOptions({
 							</ClayDropDown.ItemList>
 						</ClayDropDown.Menu>
 
-						{executionMode === EXECUTION_MODES.CONCURRENT && (
+						{executionMode === EXECUTION_MODES.CONCURRENT.value && (
 							<div className="font-weight-normal form-text">
 								{Liferay.Language.get(
 									'reindex-mode-concurrent-note'

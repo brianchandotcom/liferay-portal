@@ -5,14 +5,12 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -46,7 +44,6 @@ import freemarker.core.TemplateClassResolver;
 import freemarker.debug.impl.DebuggerService;
 
 import freemarker.ext.beans.BeansWrapper;
-import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.ext.jsp.TaglibFactory;
 import freemarker.ext.jsp.internal.WriterFactoryUtil;
 import freemarker.ext.servlet.HttpRequestHashModel;
@@ -116,29 +113,6 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 	service = TemplateManager.class
 )
 public class FreeMarkerManager extends BaseTemplateManager {
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static BeansWrapper getBeansWrapper() {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		BeansWrapper beansWrapper = _beansWrappers.get(classLoader);
-
-		if (beansWrapper == null) {
-			BeansWrapperBuilder beansWrapperBuilder = new BeansWrapperBuilder(
-				Configuration.getVersion());
-
-			beansWrapper = beansWrapperBuilder.build();
-
-			_beansWrappers.put(classLoader, beansWrapper);
-		}
-
-		return beansWrapper;
-	}
 
 	@Override
 	public void destroy() {
@@ -549,9 +523,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerManager.class);
 
-	private static final Map<ClassLoader, BeansWrapper> _beansWrappers =
-		new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Function<InvocationHandler, ServletContext>
 		_servletContextProxyProviderFunction =
 			ProxyUtil.getProxyProviderFunction(ServletContext.class);

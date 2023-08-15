@@ -92,7 +92,7 @@ public class PoshiReportGenerator {
 
 		ClassLoader classLoader = PoshiReportGenerator.class.getClassLoader();
 
-		URL url = classLoader.getResource("reports/usage/index.html");
+		URL url = classLoader.getResource("META-INF/resources/reports/usage/index.html");
 
 		String indexHTMLContent = FileUtil.read(url);
 
@@ -100,24 +100,24 @@ public class PoshiReportGenerator {
 
 		if (_poshiProperties.testRunLocally) {
 			FileUtil.copyFileFromResource(
-				"reports/usage/css/main.css",
+					"META-INF/resources/reports/usage/css/main.css",
 				currentDirName + "/usage-report/css/main.css");
 			FileUtil.copyFileFromResource(
-				"reports/usage/js/main.js",
+					"META-INF/resources/reports/usage/js/main.js",
 				currentDirName + "/usage-report/js/main.js");
 			FileUtil.copyFileFromResource(
-				"reports/usage/js/data.js",
+					"META-INF/resources/reports/usage/js/data.js",
 				currentDirName + "/usage-report/js/data.js");
 		}
 		else {
 			FileUtil.copyFileFromResource(
-				"reports/usage/css/main.css",
+					"META-INF/resources/reports/usage/css/main.css",
 				testBaseDirName + "/usage-report/css/main.css");
 			FileUtil.copyFileFromResource(
-				"reports/usage/js/main.js",
+					"META-INF/resources/reports/usage/js/main.js",
 				testBaseDirName + "/usage-report/js/main.js");
 			FileUtil.copyFileFromResource(
-				"reports/usage/js/data.js",
+					"META-INF/resources/reports/usage/js/data.js",
 				testBaseDirName + "/usage-report/js/data.js");
 		}
 

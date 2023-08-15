@@ -7,7 +7,34 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React from 'react';
+
+const RESULTS_DATA: ResultsData = {
+	'imported': {
+		cssClass: 'text-success',
+		icon: 'check-circle-full',
+		titles: {
+			plural: Liferay.Language.get('x-items-were-imported'),
+			singular: Liferay.Language.get('x-item-was-imported'),
+		},
+	},
+	'imported-draft': {
+		cssClass: 'text-warning',
+		icon: 'warning-full',
+		titles: {
+			plural: Liferay.Language.get('x-items-were-imported-with-warnings'),
+			singular: Liferay.Language.get('x-item-was-imported-with-warnings'),
+		},
+	},
+	'invalid': {
+		cssClass: 'text-danger',
+		icon: 'exclamation-full',
+		titles: {
+			plural: Liferay.Language.get('x-items-could-not-be-imported'),
+			singular: Liferay.Language.get('x-item-could-not-be-imported'),
+		},
+	},
+};
 
 interface Result {
 	message: string;
@@ -30,187 +57,47 @@ interface ResultsDataEntry {
 	};
 }
 
+interface ResultsData {
+	'imported': ResultsDataEntry;
+	'imported-draft': ResultsDataEntry;
+	'invalid': ResultsDataEntry;
+}
+
 interface ResultsProps {
 	fileName: string | null;
 	importResults: Results;
 }
 
 function ImportResults({fileName, importResults}: ResultsProps) {
-	const [expanded, setExpanded] = useState(
-		!importResults['imported-draft'] && !importResults.invalid
-	);
-
 	return (
 		<>
-			{importResults.imported && (
-				<ClayLayout.Sheet size="lg">
-					<ClayPanel
-						className="sheet-row"
-						collapsable
-						collapseHeaderClassNames="c-py-0"
-						displayTitle={
-							<ClayPanel.Title>
-								<ClayIcon
-									className="text-4 text-success"
-									symbol="check-circle-full"
-								/>
+			<ImportResultsSection
+				data={RESULTS_DATA.imported}
+				fileName={fileName}
+				panelProps={{
+					collapsable: true,
+					collapseHeaderClassNames: 'c-p-0',
+					defaultExpanded:
+						!importResults['imported-draft'] &&
+						!importResults.invalid,
+				}}
+				results={importResults.imported}
+			/>
 
-								<span className="c-ml-3 font-weight-semi-bold text-4 text-success">
-									{sub(
-										importResults.imported.length === 1
-											? Liferay.Language.get(
-													'x-item-was-imported'
-											  )
-											: Liferay.Language.get(
-													'x-items-were-imported'
-											  ),
-										importResults.imported.length
-									)}
-								</span>
-							</ClayPanel.Title>
-						}
-						expanded={expanded}
-						onExpandedChange={() => {
-							setExpanded(!expanded);
-						}}
-						showCollapseIcon
-					>
-						<ClayPanel.Body>
-							<ul className="list-group sidebar-list-group">
-								{importResults.imported.map((result, index) => (
-									<li
-										className="list-group-item list-group-item-flex p-0"
-										key={index}
-									>
-										<ClayLayout.ContentCol expand>
-											<div className="list-group-title">
-												{result.name}
-											</div>
-										</ClayLayout.ContentCol>
-									</li>
-								))}
-							</ul>
-						</ClayPanel.Body>
-					</ClayPanel>
-				</ClayLayout.Sheet>
-			)}
+			<ImportResultsSection
+				data={RESULTS_DATA['imported-draft']}
+				fileName={fileName}
+				results={importResults['imported-draft']}
+			/>
 
-			{importResults['imported-draft'] && (
-				<ClayLayout.Sheet size="lg">
-					<ClayPanel
-						displayTitle={
-							<ClayPanel.Title>
-								<ClayIcon
-									className="text-4 text-warning"
-									symbol="warning-full"
-								/>
-
-								<span className="c-ml-3 font-weight-semi-bold text-4 text-warning">
-									{sub(
-										importResults['imported-draft']
-											.length === 1
-											? Liferay.Language.get(
-													'x-item-was-imported-with-warnings'
-											  )
-											: Liferay.Language.get(
-													'x-items-were-imported-with-warnings'
-											  ),
-										importResults['imported-draft'].length
-									)}
-								</span>
-							</ClayPanel.Title>
-						}
-					>
-						<ClayPanel.Body className="c-px-0">
-							<ul className="list-group sidebar-list-group">
-								{importResults['imported-draft'].map(
-									(result, index) => (
-										<li
-											className="list-group-item list-group-item-flex p-0"
-											key={index}
-										>
-											<ClayLayout.ContentCol expand>
-												<div className="list-group-title">
-													{result.name}
-												</div>
-
-												<div className="list-group-subtext text-warning">
-													{result.message}
-												</div>
-											</ClayLayout.ContentCol>
-
-											<ClayLayout.ContentCol>
-												<div className="list-group-subtitle">
-													{fileName}
-												</div>
-											</ClayLayout.ContentCol>
-										</li>
-									)
-								)}
-							</ul>
-						</ClayPanel.Body>
-					</ClayPanel>
-				</ClayLayout.Sheet>
-			)}
-
-			{importResults.invalid && (
-				<ClayLayout.Sheet size="lg">
-					<ClayPanel
-						displayTitle={
-							<ClayPanel.Title>
-								<ClayIcon
-									className="text-4 text-danger"
-									symbol="exclamation-full"
-								/>
-
-								<span className="c-ml-3 font-weight-semi-bold text-4 text-danger">
-									{sub(
-										importResults.invalid.length === 1
-											? Liferay.Language.get(
-													'x-item-could-not-be-imported'
-											  )
-											: Liferay.Language.get(
-													'x-items-could-not-be-imported'
-											  ),
-										importResults.invalid.length
-									)}
-								</span>
-							</ClayPanel.Title>
-						}
-					>
-						<ClayPanel.Body className="c-px-0">
-							<ul className="list-group sidebar-list-group">
-								{importResults.invalid.map((result, index) => (
-									<li
-										className="list-group-item list-group-item-flex p-0"
-										key={index}
-									>
-										<ClayLayout.ContentCol expand>
-											<div className="list-group-title">
-												{result.name}
-											</div>
-
-											<div className="list-group-subtext text-danger">
-												{result.message
-													? result.message
-													: Liferay.Language.get(
-															'the-definition-of-the-item-is-invalid'
-													  )}
-											</div>
-										</ClayLayout.ContentCol>
-
-										<ClayLayout.ContentCol>
-											<div className="list-group-subtitle">
-												{fileName}
-											</div>
-										</ClayLayout.ContentCol>
-									</li>
-								))}
-							</ul>
-						</ClayPanel.Body>
-					</ClayPanel>
-				</ClayLayout.Sheet>
-			)}
+			<ImportResultsSection
+				data={RESULTS_DATA.invalid}
+				defaultMessage={Liferay.Language.get(
+					'the-definition-of-the-item-is-invalid'
+				)}
+				fileName={fileName}
+				results={importResults.invalid}
+			/>
 		</>
 	);
 }

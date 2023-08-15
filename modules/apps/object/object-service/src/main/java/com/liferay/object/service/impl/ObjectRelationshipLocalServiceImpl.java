@@ -1030,12 +1030,15 @@ public class ObjectRelationshipLocalServiceImpl
 			return;
 		}
 
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			_objectDefinitionLocalServiceSnapshot.get();
+
 		ObjectDefinition objectDefinition1 =
-			_objectDefinitionLocalService.getObjectDefinition(
+			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
 
 		ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.getObjectDefinition(
+			objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
 		if (objectDefinition1.isUnmodifiableSystemObject() ||

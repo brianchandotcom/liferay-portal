@@ -125,6 +125,90 @@ definition {
 			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
 	}
 
+	@description = "This test covers LPS-170320. It ensures that KB article navigation fragment can display article siblings."
+	@priority = 4
+	test CanViewArticlesSiblingsViaKBNavigation {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property test.liferay.virtual.instance = "false";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Knowledge Base Article",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Guest");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Menu Display",
+			fragmentName = "Knowledge Base Navigation");
+
+		PageEditor.publish();
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Template Name");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "KB Parent Article Content1",
+			kbArticleTitle = "KB Parent Article1");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "KB Parent Article Content2",
+			kbArticleTitle = "KB Parent Article2");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "KB Parent Article1",
+			kbChildArticleContent = "KB Child Article Content1",
+			kbChildArticleTitle = "KB Child Article1");
+
+		JSONKnowledgeBase.addkBChildArticle(
+			groupName = "Guest",
+			kbArticleTitle = "KB Parent Article2",
+			kbChildArticleContent = "KB Child Article Content2",
+			kbChildArticleTitle = "KB Child Article2");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/k/kb-parent-article1");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Parent Article1",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_TEXT");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Child Article1",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Parent Article2",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_TEXT");
+
+		AssertElementNotPresent(
+			key_kbArticleTitle = "KB Child Article2",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/k/kb-parent-article2");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Parent Article2",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_TEXT");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Child Article2",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
+
+		AssertElementPresent(
+			key_kbArticleTitle = "KB Parent Article1",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_TEXT");
+
+		AssertElementNotPresent(
+			key_kbArticleTitle = "KB Child Article1",
+			locator1 = "Fragment#KNOWLEDGE_BASE_FRAGMENT_NAVIGATION_SELECTED_SECOND_LEVEL_HIERARCHY");
+	}
+
 	@description = "This test ensures that when viewing a KB article in the navigation fragment, the corresponding KB article content is displayed in another fragment that selects to display KB content."
 	@priority = 5
 	test CanViewArticlesViaKBNavigation {

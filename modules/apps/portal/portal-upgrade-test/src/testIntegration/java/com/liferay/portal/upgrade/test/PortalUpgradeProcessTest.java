@@ -346,10 +346,8 @@ public class PortalUpgradeProcessTest {
 		}
 	}
 
-	private void _updateSchemaVersion(Version version) {
-		ReflectionTestUtil.invoke(
-			_innerPortalUpgradeProcess, "updateSchemaVersion",
-			new Class<?>[] {Version.class}, version);
+	private void _updateSchemaVersion(Version version) throws SQLException {
+		_innerPortalUpgradeProcess.updateSchemaVersion(version);
 	}
 
 	private static final Version _ORIGINAL_SCHEMA_VERSION = new Version(
@@ -367,6 +365,13 @@ public class PortalUpgradeProcessTest {
 
 		public void close() throws SQLException {
 			connection.close();
+		}
+
+		public void updateSchemaVersion(Version newSchemaVersion)
+			throws SQLException {
+
+			PortalUpgradeProcess.updateSchemaVersion(
+				connection, newSchemaVersion);
 		}
 
 		private InnerPortalUpgradeProcess() throws SQLException {

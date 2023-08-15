@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -20,6 +21,10 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.Collections;
 import java.util.List;
@@ -81,26 +86,22 @@ public class UpgradeRecorderTest {
 	}
 
 	@Test
-	public void testFailureByPendingUpgrade() {
-		List<Release> releases = _releaseLocalService.getReleases(0, 1);
+	public void testFailureByPendingUpgrade() throws SQLException {
+		try (Connection connection = DataAccess.getConnection()) {
+			Version version = PortalUpgradeProcess.getCurrentSchemaVersion(
+				connection);
 
-		Release release = releases.get(0);
+			PortalUpgradeProcess.updateSchemaVersion(
+				connection, new Version(0, 0, 0));
 
-		String schemaVersion = release.getSchemaVersion();
+			try {
+				StartupHelperUtil.setUpgrading(true);
 
-		try {
-			release.setSchemaVersion("0.0.0");
-
-			release = _releaseLocalService.updateRelease(release);
-
-			StartupHelperUtil.setUpgrading(true);
-
-			StartupHelperUtil.setUpgrading(false);
-		}
-		finally {
-			release.setSchemaVersion(schemaVersion);
-
-			_releaseLocalService.updateRelease(release);
+				StartupHelperUtil.setUpgrading(false);
+			}
+			finally {
+				PortalUpgradeProcess.updateSchemaVersion(connection, version);
+			}
 		}
 
 		Assert.assertEquals("unresolved", _getResult());

@@ -6,15 +6,19 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import java.sql.Connection;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -91,27 +95,24 @@ public class ReleaseManagerTest {
 	public void testUnsuccessfulUpgradeByMissingPortalUpgrade()
 		throws Exception {
 
-		Release release = _releaseLocalService.fetchRelease(
-			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+		try (Connection connection = DataAccess.getConnection()) {
+			Version version = PortalUpgradeProcess.getCurrentSchemaVersion(
+				connection);
 
-		String currentSchemaVersion = release.getSchemaVersion();
+			PortalUpgradeProcess.updateSchemaVersion(
+				connection, new Version(0, 0, 0));
 
-		try {
-			release.setSchemaVersion("0.0.0");
-
-			release = _releaseLocalService.updateRelease(release);
-
-			Assert.assertFalse(_releaseManager.isUpgraded());
-			Assert.assertFalse(
-				Validator.isBlank(
-					_releaseManager.getShortStatusMessage(false)));
-			Assert.assertFalse(
-				Validator.isBlank(_releaseManager.getStatusMessage(false)));
-		}
-		finally {
-			release.setSchemaVersion(currentSchemaVersion);
-
-			_releaseLocalService.updateRelease(release);
+			try {
+				Assert.assertFalse(_releaseManager.isUpgraded());
+				Assert.assertFalse(
+					Validator.isBlank(
+						_releaseManager.getShortStatusMessage(false)));
+				Assert.assertFalse(
+					Validator.isBlank(_releaseManager.getStatusMessage(false)));
+			}
+			finally {
+				PortalUpgradeProcess.updateSchemaVersion(connection, version);
+			}
 		}
 	}
 

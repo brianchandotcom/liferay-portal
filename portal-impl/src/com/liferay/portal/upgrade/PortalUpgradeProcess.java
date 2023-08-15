@@ -5,6 +5,8 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,23 +38,33 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	public static Version getCurrentSchemaVersion(Connection connection)
 		throws SQLException {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select schemaVersion from Release_ where servletContextName " +
-					"= ?")) {
+		return _currentSchemaVersionDCLSingleton.getSingleton(
+			() -> {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select schemaVersion from Release_ where " +
+								"servletContextName = ?")) {
 
-			preparedStatement.setString(
-				1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+					preparedStatement.setString(
+						1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					String schemaVersion = resultSet.getString("schemaVersion");
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
 
-					return Version.parseVersion(schemaVersion);
+						while (resultSet.next()) {
+							String schemaVersion = resultSet.getString(
+								"schemaVersion");
+
+							return Version.parseVersion(schemaVersion);
+						}
+					}
 				}
-			}
-		}
+				catch (SQLException sqlException) {
+					ReflectionUtil.throwException(sqlException);
+				}
 
-		return new Version(0, 0, 0);
+				return new Version(0, 0, 0);
+			});
 	}
 
 	public static Version getLatestSchemaVersion() {
@@ -152,6 +164,27 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
+	public static void updateSchemaVersion(
+			Connection connection, Version newSchemaVersion)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Release_ set schemaVersion = ? where " +
+					"servletContextName = ?")) {
+
+			preparedStatement.setString(1, newSchemaVersion.toString());
+			preparedStatement.setString(
+				2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			if (preparedStatement.executeUpdate() > 0) {
+				_currentSchemaVersionDCLSingleton.destroy(null);
+
+				_currentSchemaVersionDCLSingleton.getSingleton(
+					() -> newSchemaVersion);
+			}
+		}
+	}
+
 	@Override
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();
@@ -195,7 +228,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 			upgrade(_upgradeVersionTreeMap.get(pendingSchemaVersion));
 
-			updateSchemaVersion(pendingSchemaVersion);
+			updateSchemaVersion(connection, pendingSchemaVersion);
 		}
 
 		clearIndexesCache();
@@ -206,21 +239,6 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			_upgradeVersionTreeMap.tailMap(fromSchemaVersion, false);
 
 		return pendingUpgradeProcesses.keySet();
-	}
-
-	protected void updateSchemaVersion(Version newSchemaVersion)
-		throws SQLException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set schemaVersion = ? where " +
-					"servletContextName = ?")) {
-
-			preparedStatement.setString(1, newSchemaVersion.toString());
-			preparedStatement.setString(
-				2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-			preparedStatement.execute();
-		}
 	}
 
 	private static void _registerUpgradeProcesses(
@@ -245,13 +263,20 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 			preparedStatement.setInt(4, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
-			preparedStatement.execute();
+			if (preparedStatement.executeUpdate() > 0) {
+				_currentSchemaVersionDCLSingleton.destroy(null);
+
+				_currentSchemaVersionDCLSingleton.getSingleton(
+					() -> _initialSchemaVersion);
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalUpgradeProcess.class);
 
+	private static final DCLSingleton<Version>
+		_currentSchemaVersionDCLSingleton = new DCLSingleton<>();
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
 	private static final UpgradeVersionTreeMap _upgradeVersionTreeMap =
 		new UpgradeVersionTreeMap() {

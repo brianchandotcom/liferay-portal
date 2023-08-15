@@ -241,6 +241,22 @@ definition {
 		}
 
 		task ("Then the zip file contains a related file type export successfully") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "json_objectEntry_export.txt");
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
+			var attachmenId = JSONPathUtil.getProperty(
+				property = "$.items..customAttachment.id",
+				response = ${response});
+			var attachmenHref = JSONPathUtil.getProperty(
+				property = "$.items..customAttachment.link.href",
+				response = ${response});
+
+			FileUtil.replaceStringInFile(${filePath}, 20123, ${userId});
+
+			FileUtil.replaceStringInFile(${filePath}, 36105, ${attachmenId});
+
+			FileUtil.replaceStringInFile(${filePath}, "/documents/36568/36570/Document_3.png", ${attachmenHref});
+
 			ImportExport.assertFileContent(
 				comparisonFileName = "json_objectEntry_export.txt",
 				fileName = "export.json");

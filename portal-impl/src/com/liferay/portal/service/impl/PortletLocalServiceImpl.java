@@ -961,6 +961,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portletsMap.put(portlet.getPortletId(), portlet);
 		}
 
+		if (companyId == CompanyConstants.SYSTEM) {
+			return portletsMap;
+		}
+
 		List<Portlet> portlets = portletPersistence.findByCompanyId(companyId);
 
 		for (Portlet portlet : portlets) {

@@ -188,8 +188,7 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 					mavenPublication.setGroupId(
 						String.valueOf(project.getGroup()));
 
-					mavenPublication.artifact(
-						GradleUtil.getTask(project, "war"));
+					mavenPublication.artifact(_getWarFile(project));
 				}
 
 			});
@@ -209,9 +208,23 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 		Task publishTask = GradleUtil.getTask(
 			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
+		publishTask.dependsOn(_WAR_TASK_NAME);
+
 		publishTask.finalizedBy(updatePluginVersionTask);
 	}
 
+	private File _getWarFile(Project project) {
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		return new File(
+			new File(portalRootDir, "tools/sdk/dist"),
+			GradleUtil.getArchivesBaseName(project) + "-" +
+				project.getVersion() + ".war");
+	}
+
 	private static final String _GROUP = "com.liferay.plugins";
+
+	private static final String _WAR_TASK_NAME = "war";
 
 }

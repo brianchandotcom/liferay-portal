@@ -315,7 +315,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!anet-java-sdk.jar</file-name>
-				<version>1.9.9</version>
+				<version>2.0.6</version>
 				<project-name>Authorize.Net Java SDK</project-name>
 				<project-url>http://developer.authorize.net</project-url>
 				<licenses>

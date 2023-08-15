@@ -2658,8 +2658,6 @@ catch (Exception e) {
 	@description = "View web content in associated public page."
 	@priority = 4
 	test ViewWebContentInAssociatedPublicPage {
-		property timeout.explicit.wait = "10";
-
 		task ("Set the Asset Publisher as default for page") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",

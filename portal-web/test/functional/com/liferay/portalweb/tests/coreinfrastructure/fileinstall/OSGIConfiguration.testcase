@@ -45,6 +45,22 @@ definition {
 			userEmailAddress = "test@www.able.com");
 	}
 
+	@description = "This is a usecase for LPS-172690. Verify an UploadServletRequestConfiguration config can be deployed without explicit max size."
+	@priority = 2
+	test CanDeployUploadServletRequestConfigWithoutMaxSize {
+		property database.types = "mysql";
+		property osgi.module.configuration.file.names = "com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration.config";
+		property osgi.module.configurations = "maxTries=\"50\"${line.separator}tempDir=\"\"";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+
+		User.firstLoginPG();
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT * FROM lportal.Configuration_ WHERE configurationId LIKE '%com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration%'",
+			text = "maxTries=\"50\"");
+	}
+
 	@description = "Verify if no osgi config file exists, when a config is updated via UI, then the config is added to the database and a config file is not created."
 	@priority = 3
 	test ConfigAddedViaUIDoesNotCreateNewConfigFile {

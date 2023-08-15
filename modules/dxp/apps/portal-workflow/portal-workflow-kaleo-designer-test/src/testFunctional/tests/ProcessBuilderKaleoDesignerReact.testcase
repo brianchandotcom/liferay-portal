@@ -873,12 +873,98 @@ definition {
 	}
 
 	@description = "Verify that the user is able to complete the task through different types of users assigned at My Workflow Task"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanCompleteTaskThroughDifferentUsersAssignments {
+		property test.liferay.virtual.instance = "false";
 
-		// TODO CanCompleteTaskThroughDifferentUsersAssignments pending implementation
+		task ("Given two users with admin role") {
+			for (var accountUser : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "userea${accountUser}@liferay.com",
+					userFirstName = "userfn${accountUser}",
+					userLastName = "userln${accountUser}",
+					userScreenName = "usersn${accountUser}");
 
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea${accountUser}@liferay.com");
+
+				JSONRole.assignRoleToUser(
+					roleTitle = "Administrator",
+					userEmailAddress = "userea${accountUser}@liferay.com");
+			}
+		}
+
+		task ("And given a workflow definition with node task assigned to the admin role") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+				nodeLabel = "Task",
+				nodePosition = "-20,-40");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "task",
+				connectorLabel = "Start-Task Connector",
+				connectorOut = "start",
+				key_direction = "right");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Complete Task",
+				connectorOut = "task",
+				key_direction = "right");
+
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+			ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+				assignmentType = "Role",
+				roleName = "Administrator");
+
+			PortletEntry.publish();
+		}
+
+		task ("And given that the workflow definition is assigned to the Blogs Entry") {
+			Navigator.gotoBack();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "New Workflow Definition",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("When two blog entries are added") {
+			for (var blogNumber : list "1,2") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry ${blogNumber} Content",
+					entryTitle = "Blogs Entry Title ${blogNumber}");
+			}
+		}
+
+		task ("Then the task can be completed by each user") {
+			for (var i : list "1,2") {
+				User.logoutAndLoginPG(
+					freeLogin = "true",
+					userLoginEmailAddress = "userea${i}@liferay.com",
+					userLoginFullName = "userfn${i} userln${i}");
+
+				UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+				Workflow.assignToMeTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title ${i}",
+					workflowAssetType = "Blogs Entry",
+					workflowTask = "Task");
+
+				Workflow.approveTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title ${i}",
+					workflowAssetType = "Blogs Entry",
+					workflowDefinitionTask = "Complete Task",
+					workflowTask = "Task");
+			}
+		}
 	}
 
 	@description = "Verify that the user can select and define an Action to be conducted once the timer expires"

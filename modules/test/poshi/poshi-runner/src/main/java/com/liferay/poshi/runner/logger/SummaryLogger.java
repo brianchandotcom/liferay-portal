@@ -60,7 +60,7 @@ public final class SummaryLogger {
 
 	public void createSummaryReport() throws Exception {
 		String summaryHTMLContent = _readResource(
-			"META-INF/resources/html/summary.html");
+				"META-INF/resources/logger/html/summary.html");
 
 		_summaryContentWrapperLoggerElement.addChildLoggerElement(
 			_getSummaryContentLoggerElement());

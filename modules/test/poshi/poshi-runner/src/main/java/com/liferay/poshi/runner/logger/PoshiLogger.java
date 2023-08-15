@@ -51,7 +51,7 @@ public class PoshiLogger {
 			ClassLoader classLoader = PoshiLogger.class.getClassLoader();
 
 			URL url = classLoader.getResource(
-				"META-INF/resources/html/index.html");
+					"META-INF/resources/logger/html/index.html");
 
 			indexHTMLContent = FileUtil.read(url);
 
@@ -68,16 +68,16 @@ public class PoshiLogger {
 
 			if (_poshiProperties.testRunLocally) {
 				FileUtil.copyFileFromResource(
-					"META-INF/resources/css/main.css",
+						"META-INF/resources/logger/css/main.css",
 					currentDirName + "/test-results/css/main.css");
 				FileUtil.copyFileFromResource(
-					"META-INF/resources/js/component.js",
+						"META-INF/resources/logger/js/component.js",
 					currentDirName + "/test-results/js/component.js");
 				FileUtil.copyFileFromResource(
-					"META-INF/resources/js/main.js",
+						"META-INF/resources/logger/js/main.js",
 					currentDirName + "/test-results/js/main.js");
 				FileUtil.copyFileFromResource(
-					"META-INF/resources/js/update_images.js",
+						"META-INF/resources/logger/js/update_images.js",
 					currentDirName + "/test-results/js/update_images.js");
 			}
 			else {

@@ -13,7 +13,7 @@ import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import ImportResults, {Results} from './ImportResults';
+import ImportResults, {Results, getResultsText} from './ImportResults';
 
 interface Props {
 	backURL: string;
@@ -26,9 +26,6 @@ interface Props {
 }
 
 const FILE_TEXTS = {
-	imported: Liferay.Language.get(
-		'the-file-was-successfully-imported.-please-see-the-import-results'
-	),
 	initial: Liferay.Language.get('no-file-selected'),
 	loaded: Liferay.Language.get(
 		'the-file-was-loaded.-click-the-import-button-to-import-it'
@@ -115,7 +112,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 				}
 
 				setImportResults(importResults);
-				setFileText(FILE_TEXTS.imported);
+				setFileText(getResultsText(importResults));
 
 				setFile(null);
 			})

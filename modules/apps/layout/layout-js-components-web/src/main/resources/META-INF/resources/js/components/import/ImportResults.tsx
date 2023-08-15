@@ -179,3 +179,21 @@ function ImportResultsSection({
 		</ClayLayout.Sheet>
 	);
 }
+
+export function getResultsText(importResults: Results) {
+	let text = '';
+
+	Object.entries(importResults).forEach(([key, results]) => {
+		if (results.length) {
+			const {titles} = RESULTS_DATA[key as keyof ResultsData];
+
+			const resultsText = sub(
+				results.length === 1 ? titles.singular : titles.plural,
+				results.length
+			);
+			text = text + ` ${resultsText}`;
+		}
+	});
+
+	return text;
+}

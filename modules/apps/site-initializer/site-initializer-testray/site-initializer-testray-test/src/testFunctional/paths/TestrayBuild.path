@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>TABLE_DETAILS</td>
-	<td>//div[contains(@class, 'panel-collapse')]//td[contains(text(),'${key_text}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROMOTE_BUILD</td>
 	<td>//span[contains(@title,'promoted')]</td>
 	<td></td>
@@ -23,11 +18,6 @@
 <tr>
 	<td>SELECT_STACKS_PARAMETER_LABEL_FIELD</td>
 	<td>//div[@class='modal-body']//label[text()='${parameterLabel}']//following::option[text()='${stackOptions}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_STACKS_PARAMETER_LABEL_FIELD_2</td>
-	<td>//div[@class='modal-body']//label[text()='${parameterLabel2}']//following::option[text()='${stackoptions2}']</td>
 	<td></td>
 </tr>
 </tbody>

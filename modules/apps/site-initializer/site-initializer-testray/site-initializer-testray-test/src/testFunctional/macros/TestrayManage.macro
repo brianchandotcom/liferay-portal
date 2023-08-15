@@ -10,12 +10,6 @@ definition {
 		Click(locator1 = "Modal#SAVE_BUTTON");
 	}
 
-	macro assertTitleModal {
-		AssertElementNotPresent(
-			key_title = ${key_itemvalue},
-			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
-	}
-
 	macro changeTeamToComponent {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
@@ -36,7 +30,7 @@ definition {
 	}
 
 	macro createCaseTypes {
-		Click(locator1 = "TestrayManage#MODAL_PLUS");
+		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(caseTypeName)) {
 			PortletEntry.inputName(name = ${caseTypeName});
@@ -48,7 +42,7 @@ definition {
 	macro createComponent {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Click(locator1 = "TestrayManage#MODAL_PLUS");
+		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(componentName)) {
 			PortletEntry.inputName(name = ${componentName});
@@ -65,7 +59,7 @@ definition {
 	}
 
 	macro createNewCategory {
-		Click(locator1 = "TestrayManage#MODAL_PLUS");
+		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(category)) {
 			PortletEntry.inputName(name = ${category});
@@ -75,7 +69,7 @@ definition {
 	}
 
 	macro createNewOption {
-		Click(locator1 = "TestrayManage#MODAL_PLUS");
+		Click(locator1 = "Testray#MODAL_PLUS");
 
 		PortletEntry.inputName(name = ${option});
 
@@ -90,7 +84,7 @@ definition {
 	}
 
 	macro createProductVersion {
-		Click(locator1 = "TestrayManage#MODAL_PLUS");
+		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(productVersion)) {
 			PortletEntry.inputName(name = ${productVersion});
@@ -100,7 +94,7 @@ definition {
 	}
 
 	macro createTeam {
-		Click(locator1 = "TestrayManage#MODAL_PLUS");
+		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(teamName)) {
 			PortletEntry.inputName(name = ${teamName});
@@ -275,14 +269,6 @@ definition {
 		}
 
 		Button.clickSave();
-	}
-
-	macro selectOptionDropdownCategory {
-		Click(locator1 = "TestrayManage#DROPDOWN_CATEGORIES");
-
-		MenuItem.clickNoError(menuItem = ${menuItem});
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro selectTableRowOption {

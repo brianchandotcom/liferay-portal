@@ -6,14 +6,6 @@ definition {
 			locator1 = "Testray#BREADCRUMB_ENTRY");
 	}
 
-	macro assertTheDropdownDisabled {
-		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
-	}
-
-	macro clickOnTheDropdown {
-		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
-	}
-
 	macro goToResultSidebar {
 		Click(
 			key_button = "Results",
@@ -34,7 +26,7 @@ definition {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
 
 		Click(
-			key_project = ${project},
+			key_project = ${projectName},
 			locator1 = "TestrayDropdown#PROJECT_DIRECTORY");
 	}
 

@@ -14,7 +14,6 @@
 	<bean class="com.liferay.portal.bean.BeanPropertiesImpl" id="com.liferay.portal.bean.BeanPropertiesImpl" />
 	<bean class="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" id="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" />
 	<bean class="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" id="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" />
-	<bean class="com.liferay.portal.image.GhostscriptImpl" id="com.liferay.portal.image.GhostscriptImpl" />
 	<bean class="com.liferay.portal.image.ImageToolImpl" id="com.liferay.portal.image.ImageToolImpl" />
 	<bean class="com.liferay.portal.internal.increment.BufferedIncrementProcessorUtil" />
 	<bean factory-bean="com.liferay.portal.kernel.json.JSONFactory" factory-method="getLiferayJSONDeserializationWhitelist" id="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist" />
@@ -71,9 +70,6 @@
 		<property name="editorOptionsProvider">
 			<bean class="com.liferay.portal.editor.configuration.EditorOptionsProvider" />
 		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.image.GhostscriptUtil" id="com.liferay.portal.kernel.image.GhostscriptUtil">
-		<property name="ghostscript" ref="com.liferay.portal.image.GhostscriptImpl" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.image.ImageToolUtil" id="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool" ref="com.liferay.portal.image.ImageToolImpl" />

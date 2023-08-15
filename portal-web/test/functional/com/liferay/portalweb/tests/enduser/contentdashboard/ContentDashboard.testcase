@@ -422,7 +422,7 @@ definition {
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Details");
+			Panel.expandPanel(panel = "Properties");
 
 			AssertVisible(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
@@ -452,7 +452,7 @@ definition {
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Details");
+			Panel.expandPanel(panel = "Properties");
 
 			AssertVisible(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
@@ -482,7 +482,7 @@ definition {
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Details");
+			Panel.expandPanel(panel = "Properties");
 
 			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL_ID");
 		}
@@ -510,7 +510,7 @@ definition {
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
 
-			Panel.expandPanel(panel = "Details");
+			Panel.expandPanel(panel = "Properties");
 
 			AssertVisible(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
@@ -1250,7 +1250,7 @@ definition {
 				item = "Info",
 				tableEntry = "DM Document Title");
 
-			Panel.expandPanel(panel = "Details");
+			Panel.expandPanel(panel = "Properties");
 		}
 
 		task ("Then the field labels should be added to distinguish between the two URLs ") {

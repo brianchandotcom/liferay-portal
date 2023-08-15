@@ -57,7 +57,7 @@ public class ObjectValidationRuleEngineException extends PortalException {
 		extends ObjectValidationRuleEngineException {
 
 		public MustHavePermissionEngineGroovy() {
-			super("The user must have permission to choose engine groovy.");
+			super("The user must have permission to choose engine Groovy.");
 		}
 
 	}

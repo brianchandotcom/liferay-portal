@@ -784,7 +784,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private ObjectField _addObjectField(
 			User user, Map<Locale, String> labelMap, String name,
-			long objectDefinitionId1, long objectDefinitionId2, String type)
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, String type)
 		throws PortalException {
 
 		ObjectField objectField = _objectFieldPersistence.create(
@@ -794,20 +795,15 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setUserId(user.getUserId());
 		objectField.setUserName(user.getFullName());
 		objectField.setListTypeDefinitionId(0);
-		objectField.setObjectDefinitionId(objectDefinitionId2);
+		objectField.setObjectDefinitionId(
+			objectDefinition2.getObjectDefinitionId());
 		objectField.setBusinessType(
 			ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP);
-
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
 
 		String dbColumnName = StringBundler.concat(
 			"r_", name, "_", objectDefinition1.getPKObjectFieldName());
 
 		objectField.setDBColumnName(dbColumnName);
-
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
 
 		String dbTableName = objectDefinition2.getDBTableName();
 
@@ -934,8 +930,8 @@ public class ObjectRelationshipLocalServiceImpl
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField objectField = _addObjectField(
-				user, objectRelationship.getLabelMap(), name,
-				objectDefinitionId1, objectDefinitionId2, type);
+				user, objectRelationship.getLabelMap(), name, objectDefinition1,
+				objectDefinition2, type);
 
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());

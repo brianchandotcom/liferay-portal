@@ -22,9 +22,9 @@ export const FETCH_URLS = {
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${id}/taxonomy-categories`,
 	getCategory: (id) =>
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/`,
+	getSites: () => '/o/headless-admin-user/v1.0/my-user-account/sites',
 	getSubCategories: (id) =>
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/taxonomy-categories`,
-	getUserAccount: () => '/o/headless-admin-user/v1.0/my-user-account',
 	getVocabularies: (id) =>
 		`/o/headless-admin-taxonomy/v1.0/sites/${id}/taxonomy-vocabularies`,
 };
@@ -335,15 +335,15 @@ function CategorySelectorInput({
 		// be the start of the category tree, in which the children of the
 		// vocabulary get added on as the tree gets expanded (in modal).
 
-		fetch(FETCH_URLS.getUserAccount(), {
+		fetch(FETCH_URLS.getSites(), {
 			headers: DEFAULT_HEADERS,
 			method: 'GET',
 		})
 			.then((response) => response.json())
-			.then((userData) => {
+			.then(({items}) => {
 				const tree = [];
 
-				userData.siteBriefs.forEach((site, siteIndex) => {
+				items.forEach((site, siteIndex) => {
 					fetch(FETCH_URLS.getVocabularies(site.id), {
 						headers: DEFAULT_HEADERS,
 						method: 'GET',

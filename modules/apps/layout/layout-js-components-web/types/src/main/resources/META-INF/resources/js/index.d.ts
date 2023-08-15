@@ -5,6 +5,7 @@
 
 export {default as ExperienceSelector} from './components/experience_selector/ExperienceSelector';
 export {default as Import} from './components/import/Import';
+export {default as ImportResults} from './components/import/ImportResults';
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {
 	default as ColorPicker,

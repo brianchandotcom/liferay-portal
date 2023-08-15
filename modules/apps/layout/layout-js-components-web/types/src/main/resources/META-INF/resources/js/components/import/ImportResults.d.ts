@@ -5,19 +5,23 @@
 
 /// <reference types="react" />
 
-interface ImportResult {
+interface Result {
 	message: string;
 	name: string;
 	type: 'fragment' | 'composition';
 }
-export interface ImportResultsData {
-	'imported': ImportResult[];
-	'imported-draft': ImportResult[];
-	'invalid': ImportResult[];
+export interface Results {
+	'imported': Result[];
+	'imported-draft': Result[];
+	'invalid': Result[];
 }
-interface Props {
+interface ResultsProps {
 	fileName: string | null;
-	importResults: ImportResultsData;
+	importResults: Results;
 }
-declare function ImportResults({fileName, importResults}: Props): JSX.Element;
-export default ImportResults;
+export default function ImportResults({
+	fileName,
+	importResults,
+}: ResultsProps): JSX.Element;
+export declare function getResultsText(importResults: Results): string;
+export {};

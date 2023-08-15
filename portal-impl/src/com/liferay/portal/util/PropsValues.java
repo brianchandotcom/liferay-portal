@@ -363,10 +363,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.COMPANY_LOGIN_PREPOPULATE_DOMAIN));
 
-	public static final boolean COMPANY_SECURITY_AUTH_REQUIRES_HTTPS =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS));
-
 	public static final String COMPANY_SECURITY_AUTH_TYPE = PropsUtil.get(
 		PropsKeys.COMPANY_SECURITY_AUTH_TYPE);
 

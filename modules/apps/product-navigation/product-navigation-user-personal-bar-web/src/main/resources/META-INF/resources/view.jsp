@@ -135,7 +135,6 @@
 						containerProps: {
 							className: '',
 						},
-						height: '400px',
 						onClose: function () {
 							loading = false;
 							redirect = false;

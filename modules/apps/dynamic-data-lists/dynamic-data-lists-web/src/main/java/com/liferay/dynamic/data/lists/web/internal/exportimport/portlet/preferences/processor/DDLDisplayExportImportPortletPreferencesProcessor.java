@@ -107,10 +107,10 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		long recordSetGroupId = GetterUtil.getLong(
+		long groupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", StringPool.BLANK));
 
-		if (recordSetGroupId <= 0) {
+		if (groupId == 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No group ID found in preferences of portlet " + portletId);
@@ -119,11 +119,11 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		Group group = _groupLocalService.fetchGroup(recordSetGroupId);
+		Group group = _groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No group found with group ID " + recordSetGroupId);
+				_log.debug("No group found with group ID " + groupId);
 			}
 
 			return portletPreferences;
@@ -141,26 +141,16 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
+		long scopeGroupId = portletDataContext.getScopeGroupId();
 
-		if (recordSetGroupId != previousScopeGroupId) {
-			portletDataContext.setScopeGroupId(recordSetGroupId);
+		if (groupId != scopeGroupId) {
+			portletDataContext.setScopeGroupId(groupId);
 		}
 
-		String recordSetKey = portletPreferences.getValue("recordSetKey", null);
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.fetchRecordSet(
+			groupId, portletPreferences.getValue("recordSetKey", null));
 
-		DDLRecordSet recordSet = null;
-
-		try {
-			recordSet = _ddlRecordSetLocalService.getRecordSet(
-				recordSetGroupId, recordSetKey);
-		}
-		catch (PortalException portalException) {
-			throw new PortletDataException(
-				"Unable to export referenced records", portalException);
-		}
-
-		if (recordSet == null) {
+		if (ddlRecordSet == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -168,39 +158,56 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 						" refers to an invalid recordSetId ", recordSetId));
 			}
 
-			portletDataContext.setScopeGroupId(previousScopeGroupId);
+			portletDataContext.setScopeGroupId(scopeGroupId);
 
 			return portletPreferences;
 		}
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, recordSet);
-
-		ActionableDynamicQuery recordActionableDynamicQuery =
-			_getRecordActionableDynamicQuery(
-				portletDataContext, recordSet, portletId);
+			portletDataContext, portletId, ddlRecordSet);
 
 		try {
-			recordActionableDynamicQuery.performActions();
+			ActionableDynamicQuery actionableDynamicQuery =
+				_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext);
+
+			ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+				actionableDynamicQuery.getAddCriteriaMethod();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					addCriteriaMethod.addCriteria(dynamicQuery);
+
+					Property property = PropertyFactoryUtil.forName(
+						"recordSetId");
+
+					dynamicQuery.add(
+						property.eq(ddlRecordSet.getRecordSetId()));
+				});
+
+			actionableDynamicQuery.setGroupId(ddlRecordSet.getGroupId());
+			actionableDynamicQuery.setPerformActionMethod(
+				(DDLRecord ddlRecord) ->
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletId, ddlRecord));
+
+			actionableDynamicQuery.performActions();
 		}
 		catch (PortalException portalException) {
 			throw new PortletDataException(
 				"Unable to export referenced records", portalException);
 		}
 
-		long displayDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("displayDDMTemplateId", null));
-
 		_exportReferenceDDMTemplate(
-			portletDataContext, portletId, displayDDMTemplateId);
-
-		long formDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("formDDMTemplateId", null));
-
+			portletDataContext, portletId,
+			GetterUtil.getLong(
+				portletPreferences.getValue("displayDDMTemplateId", null)));
 		_exportReferenceDDMTemplate(
-			portletDataContext, portletId, formDDMTemplateId);
+			portletDataContext, portletId,
+			GetterUtil.getLong(
+				portletPreferences.getValue("formDDMTemplateId", null)));
 
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
+		portletDataContext.setScopeGroupId(scopeGroupId);
 
 		return portletPreferences;
 	}
@@ -220,41 +227,34 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 				"Unable to export portlet permissions", portalException);
 		}
 
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long importGroupId = GetterUtil.getLong(
+		long groupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", null));
 
-		if ((importGroupId == portletDataContext.getCompanyGroupId()) &&
+		if ((groupId == portletDataContext.getCompanyGroupId()) &&
 			MergeLayoutPrototypesThreadLocal.isInProgress()) {
 
 			portletDataContext.setScopeType("company");
 		}
 
-		long groupId = MapUtil.getLong(groupIds, importGroupId, importGroupId);
+		String recordSetId = portletPreferences.getValue("recordSetId", null);
 
-		Map<String, Long> recordSetGroupIds =
+		groupId = MapUtil.getLong(
 			(Map<String, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDLRecordSet.class + ".groupId");
+				DDLRecordSet.class + ".groupId"),
+			recordSetId,
+			MapUtil.getLong(
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class),
+				groupId, groupId));
 
-		String importedRecordSetId = portletPreferences.getValue(
-			"recordSetId", null);
-
-		if (recordSetGroupIds.containsKey(importedRecordSetId)) {
-			groupId = recordSetGroupIds.get(importedRecordSetId);
-		}
+		long scopeGroupId = portletDataContext.getScopeGroupId();
 
 		portletDataContext.setScopeGroupId(groupId);
 
-		if (Validator.isNotNull(importedRecordSetId) && (groupId != 0)) {
-			Group importedRecordSetGroup = _groupLocalService.fetchGroup(
-				groupId);
+		if (Validator.isNotNull(recordSetId) && (groupId > 0)) {
+			Group group = _groupLocalService.fetchGroup(groupId);
 
-			if (importedRecordSetGroup == null) {
+			if (group == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("No group found with group ID " + groupId);
 				}
@@ -263,22 +263,19 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			}
 
 			if (!ExportImportThreadLocal.isStagingInProcess() ||
-				importedRecordSetGroup.isStagedPortlet(
-					DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
-
-				Map<Long, Long> recordSetIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						DDLRecordSet.class);
-
-				long recordSetId = MapUtil.getLong(
-					recordSetIds, GetterUtil.getLong(importedRecordSetId), 0);
+				group.isStagedPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 
 				try {
 					portletPreferences.setValue(
-						"recordSetId", String.valueOf(recordSetId));
-
-					portletPreferences.setValue(
 						"groupId", String.valueOf(groupId));
+					portletPreferences.setValue(
+						"recordSetId",
+						String.valueOf(
+							MapUtil.getLong(
+								(Map<Long, Long>)
+									portletDataContext.getNewPrimaryKeysMap(
+										DDLRecordSet.class),
+								GetterUtil.getLong(recordSetId))));
 				}
 				catch (ReadOnlyException readOnlyException) {
 					throw new PortletDataException(
@@ -288,28 +285,27 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			}
 		}
 
-		Map<Long, Long> templateIds =
+		Map<Long, Long> ddmTemplateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMTemplate.class);
 
-		long importedDisplayDDMTemplateId = GetterUtil.getLong(
+		long displayDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("displayDDMTemplateId", null));
-
-		long displayDDMTemplateId = MapUtil.getLong(
-			templateIds, importedDisplayDDMTemplateId,
-			importedDisplayDDMTemplateId);
-
-		long importedFormDDMTemplateId = GetterUtil.getLong(
+		long formDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("formDDMTemplateId", null));
-
-		long formDDMTemplateId = MapUtil.getLong(
-			templateIds, importedFormDDMTemplateId, importedFormDDMTemplateId);
 
 		try {
 			portletPreferences.setValue(
-				"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
+				"displayDDMTemplateId",
+				String.valueOf(
+					MapUtil.getLong(
+						ddmTemplateIds, displayDDMTemplateId,
+						displayDDMTemplateId)));
 			portletPreferences.setValue(
-				"formDDMTemplateId", String.valueOf(formDDMTemplateId));
+				"formDDMTemplateId",
+				String.valueOf(
+					MapUtil.getLong(
+						ddmTemplateIds, formDDMTemplateId, formDDMTemplateId)));
 		}
 		catch (ReadOnlyException readOnlyException) {
 			throw new PortletDataException(
@@ -317,7 +313,7 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 				readOnlyException);
 		}
 
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
+		portletDataContext.setScopeGroupId(scopeGroupId);
 
 		return portletPreferences;
 	}
@@ -345,35 +341,6 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, ddmTemplate);
-	}
-
-	private ActionableDynamicQuery _getRecordActionableDynamicQuery(
-		PortletDataContext portletDataContext, DDLRecordSet recordSet,
-		String portletId) {
-
-		ActionableDynamicQuery recordActionableDynamicQuery =
-			_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			recordActionableDynamicQuery.getAddCriteriaMethod();
-
-		recordActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				Property property = PropertyFactoryUtil.forName("recordSetId");
-
-				dynamicQuery.add(property.eq(recordSet.getRecordSetId()));
-			});
-
-		recordActionableDynamicQuery.setGroupId(recordSet.getGroupId());
-		recordActionableDynamicQuery.setPerformActionMethod(
-			(DDLRecord record) ->
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletId, record));
-
-		return recordActionableDynamicQuery;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -192,7 +192,7 @@
 </tr>
 <tr>
 	<td>BUTTON_LABEL</td>
-	<td>//div[./label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}']</td>
+	<td>//div[./label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}'] | //div[contains(@class,'form-group')][.//label[normalize-space(text())='${fieldLabel}']]//button[normalize-space()='${text}']</td>
 	<td></td>
 </tr>
 <tr>

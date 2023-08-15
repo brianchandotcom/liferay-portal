@@ -24,6 +24,7 @@ import org.gradle.api.publish.PublicationContainer;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository;
 import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.ant.AntTarget;
@@ -84,6 +85,8 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 					// to know if we are publishing a snapshot or not.
 
 					_configureTaskPublish(project, updateVersionTask);
+
+					_configurePublishing(project);
 				}
 
 			});
@@ -198,6 +201,23 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(GradleUtil.getProjectGroup(project, _GROUP));
 	}
 
+	private void _configurePublishing(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PublishToMavenRepository.class,
+			new Action<PublishToMavenRepository>() {
+
+				@Override
+				public void execute(
+					PublishToMavenRepository publishToMavenRepository) {
+
+					publishToMavenRepository.dependsOn(_WAR_TASK_NAME);
+				}
+
+			});
+	}
+
 	private void _configureTaskPublish(
 		Project project, Task updatePluginVersionTask) {
 
@@ -207,8 +227,6 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 		Task publishTask = GradleUtil.getTask(
 			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
-
-		publishTask.dependsOn(_WAR_TASK_NAME);
 
 		publishTask.finalizedBy(updatePluginVersionTask);
 	}

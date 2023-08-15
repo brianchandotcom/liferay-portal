@@ -857,20 +857,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				if (groupKey.equals(GroupConstants.USER_PERSONAL_SITE)) {
 					initUserPersonalSitePermissions(group);
 				}
-			}
 
-			if (group.isControlPanel() &&
-				(_layoutPersistence.countByG_P(group.getGroupId(), true) ==
-					0)) {
+				if (group.isControlPanel()) {
+					addControlPanelLayouts(group);
+				}
 
-				addControlPanelLayouts(group);
-			}
-
-			if (group.isGuest() &&
-				(_layoutPersistence.countByG_P(group.getGroupId(), false) ==
-					0)) {
-
-				addDefaultGuestPublicLayouts(group);
+				if (group.isGuest()) {
+					addDefaultGuestPublicLayouts(group);
+				}
 			}
 
 			_systemGroupsMap.put(groupCacheKey, group);

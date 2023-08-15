@@ -79,8 +79,6 @@ definition {
 	@description = "LPS-132509 Given a blog with an associated Display Page Template When the user with permissions clicks on the Metrics button Then the user is led to the metrics panel"
 	@priority = 4
 	test ViewMetricsButtonKebabWhenBlogHasDPT {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {

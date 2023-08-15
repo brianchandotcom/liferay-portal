@@ -305,9 +305,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the blog author's avatar and name are shown"
 	@priority = 3
 	test BlogAuthorInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -335,9 +332,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the list of categories assigned to the content will be divided between public and internal vocabularies"
 	@priority = 3
 	test BlogCategoriesInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Add an internal vocabulary for Test Site Name") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -403,9 +397,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Creation date of the blog is shown in the Details section"
 	@priority = 3
 	test BlogCreationDateInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -433,9 +424,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Display date of the blog is shown in the Details section"
 	@priority = 3
 	test BlogDisplayDateInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -463,9 +451,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the ID of the blog is shown in the Details section"
 	@priority = 3
 	test BlogIDDateInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -491,9 +476,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Modification date of the blog is shown in the Details section"
 	@priority = 3
 	test BlogModificationDateInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -521,8 +503,6 @@ definition {
 	@description = "LPS-132509 Given a blog created in site A in the instance, and another one created in the site B When the user goes to the content dashboard Then the user can see both listed"
 	@priority = 5
 	test BlogsFromDifferentSitesAreListed {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create another site") {
@@ -569,9 +549,6 @@ definition {
 	@description = "LPS-132509 Given the Content Dashboard When a blog is listed in the assets list Then the following metadata are shown: Title, Author (Owner), Type, Site or Asset Library, Status, Category 1, Category 2, Modified Date"
 	@priority = 3
 	test BlogsMetadata {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a category for Audiente and Staged") {
 			JSONCategory.addCategory(
 				groupName = "Global",
@@ -607,9 +584,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the blog status label is shown"
 	@priority = 3
 	test BlogStatusInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -635,9 +609,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then all the tags assigned to the blog appear as labels in the Tags section"
 	@priority = 3
 	test BlogTagsInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog with the tag") {
 			JSONBlog.addEntry(
 				assetTagNames = "tagname",
@@ -666,9 +637,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the title of the blog is shown"
 	@priority = 3
 	test BlogTitleInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -719,9 +687,6 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the blog version labels are shown"
 	@priority = 3
 	test BlogVersionInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -1994,8 +1959,6 @@ definition {
 	@priority = 4
 	@uitest
 	test ClickTitleBlogDPTWithNoPermissions {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2082,8 +2045,6 @@ definition {
 	@priority = 4
 	@uitest
 	test ClickTitleBlogDPTWithPermissions {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a default Display Page Template") {
@@ -2127,8 +2088,6 @@ definition {
 	@priority = 4
 	@uitest
 	test ClickTitleBlogNoDPTWithNoPermissions {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -2204,8 +2163,6 @@ definition {
 	@priority = 4
 	@uitest
 	test ClickTitleBlogNoDPTWithPermissions {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3376,8 +3333,6 @@ definition {
 	@description = "LPS-132509 Given a blog with an associated Display Page Template When the user with permissions to edit clicks on the Edit button Then the user is led to the edit mode"
 	@priority = 4
 	test EditBlog {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3541,8 +3496,6 @@ definition {
 	@description = "LPS-146471 Given The Filter and Order dropdown When the user selects the option Filter by Author: All Then the list of contents displays content from all users featured in the user's content dashboard view, including Blogs"
 	@priority = 5
 	test FilterBlogByAuthorAll {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3568,8 +3521,6 @@ definition {
 	@description = "LPS-146471 Given The Filter and Order dropdown When the user selects the option Filter by Author: Me Then the list of contents displays content where the user is the creator, including Blogs"
 	@priority = 5
 	test FilterBlogByAuthorMe {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3595,8 +3546,6 @@ definition {
 	@description = "LPS-146471 Given The Filter and Order dropdown When the user selects the option Filter by Author: Author And the user selects one or more authors Then the list of contents displays content where the selected users are the last editors of the approved version, including Blogs"
 	@priority = 5
 	test FilterBlogByAuthorOther {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3622,8 +3571,6 @@ definition {
 	@description = "LPS-146471 Given The Filter by... > Category When the user clicks on several categories and clicks Save Then the content list in the Content Dashboard filters accordingly, including Blogs"
 	@priority = 5
 	test FilterBlogByCategory {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Add a public vocabulary for Test Site Name") {
@@ -3661,8 +3608,6 @@ definition {
 	@description = "LPS-146471 Given The Filter by... > Sites and Asset Libraries When the user selects one site or asset library within the modal Then the list of contents that match the site or asset library selected is displayed, including Blogs"
 	@priority = 5
 	test FilterBlogBySite {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -3799,8 +3744,6 @@ definition {
 	@description = "LPS-146471 Given The Filter by... > Tags When the user clicks on several tags and clicks Save Then the content list in the Content Dashboard filters accordingly, including Blogs"
 	@priority = 5
 	test FilterBlogByTag {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog with the tag") {
@@ -4701,8 +4644,6 @@ definition {
 	@description = "LPS-146471 Given The Type filter modal When the user selects the Blogs Entry option Then the subtype selected appears as filter box above the Content table in the Content Dashboard, with the format ""Subtype: [Blogs Entry]"""
 	@priority = 5
 	test FilterBySubtypeBlogsEntry {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
 		property portal.acceptance = "true";
 
 		task ("Create a blog") {
@@ -4734,9 +4675,6 @@ definition {
 	@description = "LPS-146471 Given The Type filter modal When the user selects the Blogs Entry option + any other subtype/s Then the subtype Blogs + other subtypes preselected will be shown as a text with the format ""[number] Subtypes selected"""
 	@priority = 3
 	test FilterBySubtypeBlogsEntryAndWebContent {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B\"true\"";
-
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",

@@ -123,48 +123,71 @@ definition {
 		}
 	}
 
-	@description = "LPS-153676.The Asset Publisher would be displaying the Basic Web Content article"
+	@description = "This is a test for LPS-153676.The Asset Publisher should display the site scope web content after publish global scoped Web Content Display to live."
 	@priority = 4
 	test PublishGlobalScopedWebContentDisplayToLive {
-		task ("When the user creates other Web Content") {
-			Navigator.gotoSitePage(
-				pageName = "Test Site Name",
-				siteName = "Test Site Name");
+		task ("Given a user displays the global web content on Web Content Display and the site web content on Asset Publisher in staging site") {
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Global Web Content Content",
+				groupName = "Global",
+				title = "Global Web Content Title");
+
+			HeadlessWebcontent.addBasicWebContent(
+				content = "Site Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Site Web Content Title");
 
 			JSONLayout.addPublicLayout(
-				groupName = "${randomSiteName} (Staging)",
-				layoutName = "Test Page Name",
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Content Page Name",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "${randomSiteName} Staging");
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
 
 			PageEditor.addWidget(portletName = "Web Content Display");
 
 			PageEditor.addWidget(
-				portletName = "Web Content Display",
-				targetFragmentName = "Asset Publisher");
-		}
-
-		task ("When the user adds elements to the page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Site Name",
-				site = "false",
-				widgetName = "Web Content Display");
-
-			PageEditor.addWidget(
-				dropTarget = "Header",
 				portletName = "Asset Publisher",
-				scope = "Global");
+				targetFragmentName = "Web Content Display");
+
+			WebContentDisplayPortlet.configureScope(scopeSelection = "Global");
+
+			IFrame.closeFrame();
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Global Web Content Title");
+
+			IFrame.closeFrame();
+
+			AssetPublisherPortlet.configureScope(globalSite = "true");
+
+			IFrame.closeFrame();
+
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Site Web Content Title",
+				assetType = "Basic Web Content",
+				siteName = "Test Site Name");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
 		}
 
-		task ("Then Asset Publisher would display the Site Article") {
-			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
+		task ("When the user publishes the global scoped Web Content Display to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
 			Staging.publishCustomPublication();
+		}
+
+		task ("Then the user should see the site web content shown on Asset Publisher in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Site Web Content Title");
 		}
 	}
 

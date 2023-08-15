@@ -108,6 +108,7 @@ const ExperimentOverviewPage: React.FC<IExperimentOverviewPage> = ({
 	const {selectedChannel} = useChannelContext();
 
 	useAddRefetch(refetch);
+
 	return (
 		<SafeResults {...result}>
 			{({experiment}) =>

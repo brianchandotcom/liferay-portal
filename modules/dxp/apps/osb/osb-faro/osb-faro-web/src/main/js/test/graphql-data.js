@@ -37,6 +37,7 @@ import {
 import {EventTypes} from 'event-analysis/utils/types';
 import {
 	EXPERIMENT_QUERY,
+	EXPERIMENT_ROOT_QUERY,
 	EXPERIMENT_SESSION_HISTOGRAM_QUERY,
 	EXPERIMENT_SESSION_VARIANTS_HISTOGRAM_QUERY,
 	EXPERIMENT_VARIANTS_HISTOGRAM_QUERY
@@ -257,6 +258,29 @@ export function mockExperimentReq() {
 					status: 'RUNNING',
 					type: 'AB',
 					winnerDXPVariantId: null
+				}
+			}
+		}
+	};
+}
+
+export function mockExperimentRootReq({status}) {
+	return {
+		request: {
+			query: EXPERIMENT_ROOT_QUERY,
+			variables: {
+				experimentId: '123'
+			}
+		},
+		result: {
+			data: {
+				experiment: {
+					__typename: 'Experiment',
+					channelId: '2000',
+					id: '123',
+					name: 'Experiment Test',
+					pageURL: 'https://www.beryl.com/experiment-test',
+					status
 				}
 			}
 		}

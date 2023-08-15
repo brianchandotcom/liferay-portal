@@ -341,9 +341,23 @@ function CategorySelectorInput({
 		})
 			.then((response) => response.json())
 			.then(({items}) => {
+				const itemsWithGlobalSite = items.some(
+					({id}) =>
+						id.toString() ===
+						Liferay.ThemeDisplay.getCompanyGroupId().toString()
+				)
+					? items
+					: [
+							{
+								descriptiveName: Liferay.Language.get('global'),
+								id: Liferay.ThemeDisplay.getCompanyGroupId(),
+							},
+							...items,
+					  ];
+
 				const tree = [];
 
-				items.forEach((site, siteIndex) => {
+				itemsWithGlobalSite.forEach((site, siteIndex) => {
 					fetch(FETCH_URLS.getVocabularies(site.id), {
 						headers: DEFAULT_HEADERS,
 						method: 'GET',

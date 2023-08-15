@@ -68,7 +68,7 @@ interface ResultsProps {
 	importResults: Results;
 }
 
-function ImportResults({fileName, importResults}: ResultsProps) {
+export default function ImportResults({fileName, importResults}: ResultsProps) {
 	return (
 		<>
 			<ImportResultsSection
@@ -179,5 +179,3 @@ function ImportResultsSection({
 		</ClayLayout.Sheet>
 	);
 }
-
-export default ImportResults;

@@ -598,11 +598,9 @@ definition {
 
 		DMDocument.selectDocuments(dmDocumentTitle = "Document_1,DM Folder Name");
 
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Permissions");
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
-		Alert.viewErrorMessage(errorMessage = "It is not possible to simultaneously change the permissions of different asset types.");
+		MenuItem.viewDisabled(menuItem = "Permissions");
 	}
 
 	@description = "This ensures that users can not edit file and shortcut permissions simultaneously."
@@ -626,11 +624,9 @@ definition {
 
 		PortletEntry.selectAll();
 
-		DMNavigator.gotoItemViaManagementBar(
-			item = "dropdownMenu",
-			menuItem = "Permissions");
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
-		Alert.viewErrorMessage(errorMessage = "It is not possible to simultaneously change the permissions of different asset types.");
+		MenuItem.viewDisabled(menuItem = "Permissions");
 	}
 
 	@description = "This ensures that the files permissions can be removed via bulk editing."

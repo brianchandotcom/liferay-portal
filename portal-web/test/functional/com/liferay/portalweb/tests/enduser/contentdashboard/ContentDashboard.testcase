@@ -376,6 +376,8 @@ definition {
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
 
+			Navigator.gotoNavTab(navTab = "Categorization");
+
 			AssertVisible(
 				locator1 = "ContentDashboard#INFO_PANEL_VOCABULARY_NAME",
 				vocabularyName = "Vocabulary Public");
@@ -625,6 +627,8 @@ definition {
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
+
+			Navigator.gotoNavTab(navTab = "Categorization");
 
 			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL_TAGS_TITLE");
 

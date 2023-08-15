@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ExpandoUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -94,7 +95,7 @@ public class ServiceContextFactory {
 		// Expando
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
+			ExpandoUtil.getExpandoBridgeAttributes(
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(), className),
 				httpServletRequest);
@@ -130,7 +131,7 @@ public class ServiceContextFactory {
 		// Expando
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			PortalUtil.getExpandoBridgeAttributes(
+			ExpandoUtil.getExpandoBridgeAttributes(
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
 					serviceContext.getCompanyId(), className),
 				portletRequest);

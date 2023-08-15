@@ -45,6 +45,10 @@ public class CTOnDemandUserTicketGeneratorImpl
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ctCollectionId);
 
+		if (!ctCollection.isShareable()) {
+			return null;
+		}
+
 		List<Ticket> tickets = _ticketLocalService.getTickets(
 			ctCollection.getCompanyId(), CTCollection.class.getName(),
 			ctCollectionId,

@@ -9,10 +9,12 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
+import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsActionsDisplayContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -20,16 +22,21 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renan Vasconcelos
  */
 @Component(
+	configurationPid = "com.liferay.object.configuration.ObjectScriptConfiguration",
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
@@ -65,9 +72,17 @@ public class ActionsObjectDefinitionsScreenNavigationEntry
 				_notificationTemplateLocalService,
 				_objectActionExecutorRegistry, _objectActionTriggerRegistry,
 				_objectDefinitionLocalService,
-				_objectDefinitionModelResourcePermission));
+				_objectDefinitionModelResourcePermission,
+				_objectScriptConfiguration));
 
 		super.render(httpServletRequest, httpServletResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_objectScriptConfiguration = ConfigurableUtil.createConfigurable(
+			ObjectScriptConfiguration.class, properties);
 	}
 
 	@Reference
@@ -90,5 +105,7 @@ public class ActionsObjectDefinitionsScreenNavigationEntry
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	private volatile ObjectScriptConfiguration _objectScriptConfiguration;
 
 }

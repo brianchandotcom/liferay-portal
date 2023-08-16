@@ -28,7 +28,7 @@ public class AssetTagNamesFieldQueryBuilderFactory
 		return null;
 	}
 
-	@Reference
-	protected TitleFieldQueryBuilder titleQueryBuilder;
+	@Reference(target = "(query.builder.type=title)")
+	protected FieldQueryBuilder titleQueryBuilder;
 
 }

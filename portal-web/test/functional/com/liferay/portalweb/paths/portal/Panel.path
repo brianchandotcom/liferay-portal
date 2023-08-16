@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>TAB_PANEL_BY_INDEX</td>
-	<td>xpath=(//div[contains(@class,'active')][@role='tabpanel']//*[contains(@class,'panel')])[${index}]//*[contains(@class,'collapse-icon')]//*[normalize-space(text())='${key_panel}']</td>
+	<td>xpath=(//div[contains(@class,'active')][@role='tabpanel']//li[contains(@class,'panel')])[${index}]//*[contains(@class,'collapse-icon')]//*[normalize-space(text())='${key_panel}']</td>
 	<td></td>
 </tr>
 <tr>

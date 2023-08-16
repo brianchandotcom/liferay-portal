@@ -5,10 +5,10 @@
 
 package com.liferay.layout.taglib.servlet.taglib.react;
 
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.LayoutItemSelectorReturnType;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -166,10 +166,11 @@ public class SelectLayoutTag extends IncludeTag {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId);
+			groupId, privateLayout, parentLayoutId, false, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		for (Layout layout : layouts) {
-			if (_isExcludedLayout(layout) || StagingUtil.isIncomplete(layout)) {
+			if (_isExcludedLayout(layout)) {
 				continue;
 			}
 

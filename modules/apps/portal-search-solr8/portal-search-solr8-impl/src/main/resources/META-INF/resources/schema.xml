@@ -742,8 +742,8 @@
 		<field docValues="true" indexed="true" name="rootEntryClassName" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="rootEntryClassPK" stored="true" type="string" />
 		<field docValues="true" indexed="true" multiValued="true" name="scopeGroupId" stored="true" type="string" />
-		<field indexed="true" name="screenName.text" stored="false" type="text_lowercase" />
 		<field docValues="true" indexed="true" name="screenName" stored="true" type="string" />
+		<field indexed="true" name="screenName.text" stored="false" type="text_lowercase" />
 		<field indexed="true" name="size" stored="true" type="string" />
 		<field indexed="true" name="sourceURL" stored="true" type="text" />
 		<field indexed="true" name="sourceURLParts" stored="true" type="text" />

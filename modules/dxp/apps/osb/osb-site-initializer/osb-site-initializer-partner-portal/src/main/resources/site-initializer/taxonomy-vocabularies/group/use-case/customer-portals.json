@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC065",
+	"name": "Customer Portals",
+	"name_i18n": {
+		"ar_SA": "Customer Portals",
+		"ca_ES": "Customer Portals",
+		"de_DE": "Customer Portals",
+		"en_US": "Customer Portals",
+		"es_ES": "Customer Portals",
+		"fi_FI": "Customer Portals",
+		"fr_FR": "Customer Portals",
+		"hu_HU": "Customer Portals",
+		"ja_JP": "Customer Portals",
+		"nl_NL": "Customer Portals",
+		"pt_BR": "Customer Portals",
+		"sv_SE": "Customer Portals",
+		"zh_CN": "Customer Portals"
+	},
+	"viewableBy": "Anyone"
+}

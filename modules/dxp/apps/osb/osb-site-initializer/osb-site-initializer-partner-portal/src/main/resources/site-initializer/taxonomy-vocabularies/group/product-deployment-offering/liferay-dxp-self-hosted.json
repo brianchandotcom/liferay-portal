@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC070",
+	"name": "Liferay DXP Self-Hosted",
+	"name_i18n": {
+		"ar_SA": "Liferay DXP Self-Hosted",
+		"ca_ES": "Liferay DXP Self-Hosted",
+		"de_DE": "Liferay DXP Self-Hosted",
+		"en_US": "Liferay DXP Self-Hosted",
+		"es_ES": "Liferay DXP Self-Hosted",
+		"fi_FI": "Liferay DXP Self-Hosted",
+		"fr_FR": "Liferay DXP Self-Hosted",
+		"hu_HU": "Liferay DXP Self-Hosted",
+		"ja_JP": "Liferay DXP Self-Hosted",
+		"nl_NL": "Liferay DXP Self-Hosted",
+		"pt_BR": "Liferay DXP Self-Hosted",
+		"sv_SE": "Liferay DXP Self-Hosted",
+		"zh_CN": "Liferay DXP Self-Hosted"
+	},
+	"viewableBy": "Anyone"
+}

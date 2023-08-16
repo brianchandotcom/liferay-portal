@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC061",
+	"name": "German",
+	"name_i18n": {
+		"ar_SA": "German",
+		"ca_ES": "German",
+		"de_DE": "German",
+		"en_US": "German",
+		"es_ES": "German",
+		"fi_FI": "German",
+		"fr_FR": "German",
+		"hu_HU": "German",
+		"ja_JP": "German",
+		"nl_NL": "German",
+		"pt_BR": "German",
+		"sv_SE": "German",
+		"zh_CN": "German"
+	},
+	"viewableBy": "Anyone"
+}

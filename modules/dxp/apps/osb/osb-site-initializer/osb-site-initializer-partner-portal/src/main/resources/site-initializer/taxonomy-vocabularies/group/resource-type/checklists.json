@@ -1,0 +1,9 @@
+{
+	"description": "Checklists",
+	"externalReferenceCode": "PRMC047",
+	"name": "Checklists",
+	"name_i18n": {
+		"en_US": "Checklists"
+	},
+	"viewableBy": "Anyone"
+}

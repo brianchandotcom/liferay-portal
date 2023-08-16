@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC033",
+	"name": "Energy & Utilities",
+	"name_i18n": {
+		"ar_SA": "Energy & Utilities",
+		"ca_ES": "Energy & Utilities",
+		"de_DE": "Energy & Utilities",
+		"en_US": "Energy & Utilities",
+		"es_ES": "Energy & Utilities",
+		"fi_FI": "Energy & Utilities",
+		"fr_FR": "Energy & Utilities",
+		"hu_HU": "Energy & Utilities",
+		"ja_JP": "Energy & Utilities",
+		"nl_NL": "Energy & Utilities",
+		"pt_BR": "Energy & Utilities",
+		"sv_SE": "Energy & Utilities",
+		"zh_CN": "Energy & Utilities"
+	},
+	"viewableBy": "Anyone"
+}

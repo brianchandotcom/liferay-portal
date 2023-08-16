@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC039",
+	"name": "PowerPoint",
+	"name_i18n": {
+		"ar_SA": "PowerPoint",
+		"ca_ES": "PowerPoint",
+		"de_DE": "PowerPoint",
+		"en_US": "PowerPoint",
+		"es_ES": "PowerPoint",
+		"fi_FI": "PowerPoint",
+		"fr_FR": "PowerPoint",
+		"hu_HU": "PowerPoint",
+		"ja_JP": "PowerPoint",
+		"nl_NL": "PowerPoint",
+		"pt_BR": "PowerPoint",
+		"sv_SE": "PowerPoint",
+		"zh_CN": "PowerPoint"
+	},
+	"viewableBy": "Anyone"
+}

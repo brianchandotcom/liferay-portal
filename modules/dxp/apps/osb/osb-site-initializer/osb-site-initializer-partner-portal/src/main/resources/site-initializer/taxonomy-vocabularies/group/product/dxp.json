@@ -1,20 +1,20 @@
 {
-	"externalReferenceCode": "PRMC007",
-	"name": "DXP",
+	"externalReferenceCode": "PRMC073",
+	"name": "Liferay DXP",
 	"name_i18n": {
-		"ar_SA": "DXP",
-		"ca_ES": "DXP",
-		"de_DE": "DXP",
-		"en_US": "DXP",
-		"es_ES": "DXP",
-		"fi_FI": "DXP",
-		"fr_FR": "DXP",
-		"hu_HU": "DXP",
-		"ja_JP": "DXP",
-		"nl_NL": "DXP",
-		"pt_BR": "DXP",
-		"sv_SE": "DXP",
-		"zh_CN": "DXP"
+		"ar_SA": "Liferay DXP",
+		"ca_ES": "Liferay DXP",
+		"de_DE": "Liferay DXP",
+		"en_US": "Liferay DXP",
+		"es_ES": "Liferay DXP",
+		"fi_FI": "Liferay DXP",
+		"fr_FR": "Liferay DXP",
+		"hu_HU": "Liferay DXP",
+		"ja_JP": "Liferay DXP",
+		"nl_NL": "Liferay DXP",
+		"pt_BR": "Liferay DXP",
+		"sv_SE": "Liferay DXP",
+		"zh_CN": "Liferay DXP"
 	},
 	"viewableBy": "Anyone"
 }

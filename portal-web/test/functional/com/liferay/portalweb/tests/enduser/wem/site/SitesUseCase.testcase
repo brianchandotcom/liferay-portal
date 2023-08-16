@@ -842,6 +842,10 @@ definition {
 		}
 
 		task ("Assign site to the user") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			User.openUsersAdmin();
 
 			User.editUserSiteCP(

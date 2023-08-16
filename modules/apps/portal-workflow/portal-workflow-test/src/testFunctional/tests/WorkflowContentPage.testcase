@@ -81,6 +81,10 @@ definition {
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
 
+		Site.openSiteSettingsAdmin(siteURLKey = "site-test");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
@@ -222,6 +226,10 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "site-test");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openURL();
 

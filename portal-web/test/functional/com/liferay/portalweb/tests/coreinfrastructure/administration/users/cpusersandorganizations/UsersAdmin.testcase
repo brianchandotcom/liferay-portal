@@ -1544,6 +1544,10 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		User.openUsersAdmin();
 
 		User.editUserSiteCP(

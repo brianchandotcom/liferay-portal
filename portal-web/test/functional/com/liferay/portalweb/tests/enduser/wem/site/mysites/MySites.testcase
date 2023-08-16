@@ -373,6 +373,10 @@ definition {
 		}
 
 		task ("Make user a member of new site via User Admin CP") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			User.openUsersAdmin();
 
 			User.editUserSiteCP(

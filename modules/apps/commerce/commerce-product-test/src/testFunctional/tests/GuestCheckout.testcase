@@ -47,6 +47,10 @@ definition {
 
 		Alert.viewSuccessMessage();
 
+		Site.openSiteSettingsAdmin(siteURLKey = "speedwell");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -143,6 +147,10 @@ definition {
 			locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
 
 		Alert.viewSuccessMessage();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "speedwell");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -268,6 +276,10 @@ definition {
 			locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
 
 		Alert.viewSuccessMessage();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "speedwell");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -714,6 +726,10 @@ definition {
 			locator1 = "CommerceEntry#FIX_ISSUE_BUTTON");
 
 		Alert.viewSuccessMessage();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "speedwell");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

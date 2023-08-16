@@ -76,7 +76,15 @@ const DonutChart = ({
 		return (
 			<>
 				<span className="text-nowrap">
-					{titleChart} <b>{valueChart}</b>
+					{titleChart}
+
+					<b>
+						{formatCurrency(
+							valueChart,
+							dataCurrency,
+							'lessPrecision'
+						)}
+					</b>
 				</span>
 
 				<div className="d-flex">
@@ -149,7 +157,8 @@ const DonutChart = ({
 																<div className="font-weight-semi-bold">
 																	{`${formatCurrency(
 																		item.value,
-																		dataCurrency
+																		dataCurrency,
+																		'lessPrecision'
 																	)}`}
 																</div>
 															</div>

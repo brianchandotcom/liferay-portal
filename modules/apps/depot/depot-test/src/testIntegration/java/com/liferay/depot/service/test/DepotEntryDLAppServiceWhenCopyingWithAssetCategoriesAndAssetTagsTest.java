@@ -97,6 +97,49 @@ public class
 	}
 
 	@Test
+	public void testCopyFileShouldCopyAssetCategoriesToRelatedGroup()
+		throws Exception {
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {_assetCategory.getCategoryId()});
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), _depotGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FILE_NAME,
+			ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
+			serviceContext);
+
+		String className = DLFileEntryConstants.getClassName();
+
+		Assert.assertArrayEquals(
+			new long[] {_assetCategory.getCategoryId()},
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry1.getFileEntryId()));
+
+		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
+			_groupParentFolder.getGroupId(),
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					_groupParentFolder.getGroupId()),
+			ServiceContextTestUtil.getServiceContext(
+				_groupParentFolder.getGroupId()));
+
+		Assert.assertArrayEquals(
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry1.getFileEntryId()),
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry2.getFileEntryId()));
+	}
+
+	@Test
 	public void testCopyFileShouldCopyAssetTagsToRelatedGroup()
 		throws Exception {
 

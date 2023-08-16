@@ -22,7 +22,8 @@
 					{
 						"definition": {
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 							}
 						},
@@ -33,18 +34,20 @@
 							"fragment": {
 								"key": "content-welcome-banner"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Selling Liferay",
 												"ar_SA": "Selling Liferay",
 												"ca_ES": "Selling Liferay",
 												"de_DE": "Selling Liferay",
+												"en_US": "Selling Liferay",
 												"es_ES": "Selling Liferay",
 												"fi_FI": "Selling Liferay",
 												"fr_FR": "Selling Liferay",
@@ -61,13 +64,14 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
 												"ar_SA": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
 												"ca_ES": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
 												"de_DE": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
+												"en_US": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
 												"es_ES": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
 												"fi_FI": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
 												"fr_FR": "<p>These modules are the starting point for anyone looking to play a part in selling Liferay. Whether you are business or technically aligned you should start here to learn the fundamentals.</p>\n",
@@ -84,7 +88,8 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -92,15 +97,18 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -128,7 +136,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -140,11 +149,13 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							}
 						],
@@ -169,11 +180,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -189,11 +202,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -287,7 +302,8 @@
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "middle"
@@ -309,7 +325,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -381,7 +398,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -440,7 +458,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -460,13 +479,14 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Level 0",
 																						"ar_SA": "Level 0",
 																						"ca_ES": "Level 0",
 																						"de_DE": "Level 0",
+																						"en_US": "Level 0",
 																						"es_ES": "Level 0",
 																						"fi_FI": "Level 0",
 																						"fr_FR": "Level 0",
@@ -567,13 +587,14 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
 																								"ar_SA": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
 																								"ca_ES": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
 																								"de_DE": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
+																								"en_US": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
 																								"es_ES": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
 																								"fi_FI": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
 																								"fr_FR": "The foundation for anyone working with Liferay and Liferay’s product and offerings in any capacity.",
@@ -656,10 +677,10 @@
 																									"value": {
 																										"href": {
 																											"value_i18n": {
-																												"en_US": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
 																												"ar_SA": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
 																												"ca_ES": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
 																												"de_DE": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
+																												"en_US": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
 																												"es_ES": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
 																												"fi_FI": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
 																												"fr_FR": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-0",
@@ -675,10 +696,10 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Start Learning",
 																										"ar_SA": "Start Learning",
 																										"ca_ES": "Start Learning",
 																										"de_DE": "Start Learning",
+																										"en_US": "Start Learning",
 																										"es_ES": "Start Learning",
 																										"fi_FI": "Start Learning",
 																										"fr_FR": "Start Learning",
@@ -724,7 +745,8 @@
 																						"iconLink": "",
 																						"iconName": "order-arrow-right"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"borderRadius": "",
 																						"shadow": "",
@@ -763,11 +785,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -861,7 +885,8 @@
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "middle"
@@ -883,7 +908,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -955,7 +981,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1014,7 +1041,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1074,13 +1102,14 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Level 1",
 																								"ar_SA": "Level 1",
 																								"ca_ES": "Level 1",
 																								"de_DE": "Level 1",
+																								"en_US": "Level 1",
 																								"es_ES": "Level 1",
 																								"fi_FI": "Level 1",
 																								"fr_FR": "Level 1",
@@ -1141,13 +1170,14 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
 																								"ar_SA": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
 																								"ca_ES": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
 																								"de_DE": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
+																								"en_US": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
 																								"es_ES": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
 																								"fi_FI": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
 																								"fr_FR": "Shows Liferay sellers how to succeed in Selling Liferay,&nbsp; from generating prospects to closing deals.",
@@ -1230,10 +1260,10 @@
 																									"value": {
 																										"href": {
 																											"value_i18n": {
-																												"en_US": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
 																												"ar_SA": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
 																												"ca_ES": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
 																												"de_DE": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
+																												"en_US": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
 																												"es_ES": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
 																												"fi_FI": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
 																												"fr_FR": "https://learn.liferay.com/web/guest/w/courses/selling-liferay/level-1-business",
@@ -1249,10 +1279,10 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Start LearningStart Learning",
 																										"ar_SA": "Start Learning",
 																										"ca_ES": "Start Learning",
 																										"de_DE": "Start Learning",
+																										"en_US": "Start LearningStart Learning",
 																										"es_ES": "Start Learning",
 																										"fi_FI": "Start Learning",
 																										"fr_FR": "Start Learning",
@@ -1298,7 +1328,8 @@
 																						"iconLink": "",
 																						"iconName": "order-arrow-right"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"borderRadius": "",
 																						"shadow": "",
@@ -1337,11 +1368,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -1359,11 +1392,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],

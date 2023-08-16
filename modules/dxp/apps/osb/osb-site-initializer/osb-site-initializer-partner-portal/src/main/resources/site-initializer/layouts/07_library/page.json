@@ -6,12 +6,14 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Site Member",
 			"scope": 4
 		},

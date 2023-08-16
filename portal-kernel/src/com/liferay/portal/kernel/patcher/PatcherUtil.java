@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.patcher;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,21 +24,17 @@ public class PatcherUtil {
 		return _INSTALLED_PATCH_NAMES;
 	}
 
-	private static Properties _getProperties(String fileName) {
-		if (Validator.isNull(fileName)) {
-			fileName = _PATCHER_PROPERTIES;
-		}
-
+	private static Properties _getProperties() {
 		Properties properties = new Properties();
 
 		ClassLoader classLoader = PatcherUtil.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				fileName)) {
+				_PATCHER_PROPERTIES)) {
 
 			if (inputStream == null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to load " + fileName);
+					_log.debug("Unable to load " + _PATCHER_PROPERTIES);
 				}
 			}
 			else {
@@ -67,7 +62,7 @@ public class PatcherUtil {
 	private static final Log _log = LogFactoryUtil.getLog(PatcherUtil.class);
 
 	static {
-		_PROPERTIES = _getProperties(_PATCHER_PROPERTIES);
+		_PROPERTIES = _getProperties();
 
 		_INSTALLED_PATCH_NAMES = StringUtil.split(
 			_PROPERTIES.getProperty(_PROPERTY_INSTALLED_PATCHES));

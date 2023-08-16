@@ -19,8 +19,6 @@ import MDFClaimList from './routes/MDFClaimList';
 import MDFRequestForm from './routes/MDFRequestForm';
 import MDFRequestList from './routes/MDFRequestList';
 import PartnerOpportunitiesList from './routes/PartnerOpportunitiesList';
-import getOpportunityDates from './routes/PartnerOpportunitiesList/utils/getOpportunityDates';
-import getRenewalsDates from './routes/PartnerOpportunitiesList/utils/getRenewalsDates';
 import DealsChart from './routes/dashboard/DealsChart';
 import LevelChart from './routes/dashboard/LevelChart';
 import MDFRequestChart from './routes/dashboard/MDFRequestChart';
@@ -62,13 +60,6 @@ const appRoutes: AppRouteComponent = {
 					label: 'End Date',
 				},
 			]}
-			getDates={(item) =>
-				getOpportunityDates(
-					item.projectSubscriptionStartDate,
-					item.projectSubscriptionStartDate
-				)
-			}
-			getFilteredItems={(items) => items}
 			name="Partner Opportunities"
 			newButtonDeal={false}
 			sort="dateCreated:desc"
@@ -82,12 +73,9 @@ const appRoutes: AppRouteComponent = {
 					label: 'Close Date',
 				},
 			]}
-			getDates={(item) => getRenewalsDates(item.closeDate)}
-			getFilteredItems={(items) =>
-				items.filter((item) => item.STAGE !== 'Closed Lost')
-			}
 			name="Renewal Opportunities"
 			newButtonDeal={false}
+			opportunityFilter="stage ne 'Closed Lost' and type eq 'Existing Business'"
 			sort="closeDate:asc"
 		/>
 	),

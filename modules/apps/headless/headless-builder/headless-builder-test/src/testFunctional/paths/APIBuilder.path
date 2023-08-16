@@ -106,6 +106,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_DELETE_BUTTON</td>
+	<td>//button[@id='modalDeleteButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_TITLE_IN_DELETE_MODAL</td>
+	<td>//input[@class='form-control']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(text(),'Publish')]</td>
 	<td></td>
@@ -113,6 +123,11 @@
 <tr>
 	<td>UNPUBLISH_API_APPLICATION_WARNING_DIALOG_TITLE</td>
 	<td>//h1[@class='modal-title' and contains(text(),'Unpublish API Application')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_MESSAGE_IN_DELETE_DIALOG</td>
+	<td>//div[@class='form-feedback-item mt-2' and contains(text(),'Please type the API title mentioned above.')]</td>
 	<td></td>
 </tr>
 <tr>

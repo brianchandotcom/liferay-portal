@@ -50,7 +50,9 @@ public class SynchronousDestination extends BaseDestination {
 	}
 
 	private void _send(Message message) {
-		for (MessageListener messageListener : messageListeners) {
+		for (MessageListener messageListener :
+				messageListenerRegistry.getMessageListeners(name)) {
+
 			try {
 				messageListener.receive(message);
 			}

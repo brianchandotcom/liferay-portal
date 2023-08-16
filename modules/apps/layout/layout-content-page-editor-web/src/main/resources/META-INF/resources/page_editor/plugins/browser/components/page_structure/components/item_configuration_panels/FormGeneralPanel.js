@@ -293,22 +293,25 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 					</ClayForm.Group>
-
-					<ClayToggle
-						label={Liferay.Language.get('preview-embedded-message')}
-						onToggle={(checked) => {
-							dispatch(
-								updateItemLocalConfig({
-									disableUndo: true,
-									itemConfig: {
-										showMessagePreview: checked,
-									},
-									itemId: item.itemId,
-								})
-							);
-						}}
-						toggled={Boolean(item.config.showMessagePreview)}
-					/>
+					<ClayForm.Group small>
+						<ClayToggle
+							label={Liferay.Language.get(
+								'preview-embedded-message'
+							)}
+							onToggle={(checked) => {
+								dispatch(
+									updateItemLocalConfig({
+										disableUndo: true,
+										itemConfig: {
+											showMessagePreview: checked,
+										},
+										itemId: item.itemId,
+									})
+								);
+							}}
+							toggled={Boolean(item.config.showMessagePreview)}
+						/>
+					</ClayForm.Group>
 				</>
 			)}
 
@@ -367,19 +370,20 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 
 			{type !== URL_OPTION && Liferay.FeatureFlags['LPS-183498'] && (
 				<>
-					<CheckboxField
-						className="mt-3"
-						field={{
-							label: Liferay.Language.get(
-								'show-notification-when-form-is-submitted'
-							),
-							name: 'showNotification',
-						}}
-						onValueSelect={(name, value) => {
-							onConfigChange({[name]: value});
-						}}
-						value={showNotification}
-					/>
+					<ClayForm.Group small>
+						<CheckboxField
+							field={{
+								label: Liferay.Language.get(
+									'show-notification-when-form-is-submitted'
+								),
+								name: 'showNotification',
+							}}
+							onValueSelect={(name, value) => {
+								onConfigChange({[name]: value});
+							}}
+							value={showNotification}
+						/>
+					</ClayForm.Group>
 
 					{showNotification && (
 						<>

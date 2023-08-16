@@ -526,8 +526,8 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
 
 			DMDocument.addCP(
-				dmDocumentFile = "RayOne.png",
-				dmDocumentTitle = "RayOne");
+				dmDocumentFile = "ray_one.png",
+				dmDocumentTitle = "ray_one");
 		}
 
 		task ("And Given a structure with an image selector required field") {
@@ -567,7 +567,7 @@ definition {
 				key_viewHomeFolder = "Global",
 				locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
-			LexiconCard.clickCardTitle(card = "RayOne");
+			LexiconCard.clickCardTitle(card = "ray_one");
 		}
 
 		task ("And When the user goes to select an uploaded image again") {
@@ -583,7 +583,7 @@ definition {
 				key_viewHomeFolder = "Global",
 				locator1 = "ObjectField#VIEW_HOME_FOLDER");
 
-			LexiconCard.clickCardTitle(card = "RayOne");
+			LexiconCard.clickCardTitle(card = "ray_one");
 		}
 	}
 

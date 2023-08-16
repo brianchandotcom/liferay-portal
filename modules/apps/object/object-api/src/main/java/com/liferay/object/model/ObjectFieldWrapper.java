@@ -664,6 +664,11 @@ public class ObjectFieldWrapper
 		return model.isLocalized();
 	}
 
+	@Override
+	public boolean isMetadata() {
+		return model.isMetadata();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object field is required.
 	 *

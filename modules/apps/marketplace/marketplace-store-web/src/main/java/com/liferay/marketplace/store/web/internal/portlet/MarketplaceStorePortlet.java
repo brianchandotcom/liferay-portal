@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.patcher.Patcher;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -662,7 +662,7 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
 		}
 
-		parameterMap.put("installedPatches", patcher.getInstalledPatches());
+		parameterMap.put("installedPatches", PatcherUtil.getInstalledPatches());
 		parameterMap.put(
 			"supportsHotDeploy", new String[] {Boolean.TRUE.toString()});
 	}
@@ -698,9 +698,6 @@ public class MarketplaceStorePortlet extends MVCPortlet {
 	protected JSONFactory jsonFactory;
 
 	protected OAuthManager oAuthManager;
-
-	@Reference
-	protected Patcher patcher;
 
 	@Reference
 	protected Portal portal;

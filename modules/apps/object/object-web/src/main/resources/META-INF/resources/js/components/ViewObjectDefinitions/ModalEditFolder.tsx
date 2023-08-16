@@ -11,13 +11,13 @@ import {
 	API,
 	FormError,
 	Input,
-	InputLocalized,
 	REQUIRED_MSG,
 	getLocalizableLabel,
 	invalidateLocalizableLabelRequired,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
+import { InputLocalized } from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 

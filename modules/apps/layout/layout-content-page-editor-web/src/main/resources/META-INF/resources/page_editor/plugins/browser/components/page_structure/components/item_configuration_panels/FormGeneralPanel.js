@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useId} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {addMappingFields} from '../../../../../../app/actions/index';
@@ -169,8 +170,17 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 	} = interactionConfig || {};
 
 	const dispatch = useDispatch();
+
 	const languageId = useSelector(selectLanguageId);
+
 	const helpTextId = useId();
+	const previewId = useId();
+
+	const localizedNotificationText = getEditableLocalizedValue(
+		notificationText,
+		languageId,
+		Liferay.Language.get('your-information-was-successfully-received')
+	);
 
 	useEffect(() => {
 		return () => {
@@ -199,6 +209,30 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 		},
 		[interactionConfig, onValueSelect]
 	);
+
+	const [showNotificationPreview, setShowNotificationPreview] = useState(
+		item.config.showNotificationPreview
+	);
+
+	const onPreviewNotification = (checked) => {
+		setShowNotificationPreview(checked);
+
+		dispatch(
+			updateItemLocalConfig({
+				disableUndo: true,
+				itemConfig: {
+					showNotificationPreview: checked,
+				},
+				itemId: item.itemId,
+			})
+		);
+	};
+
+	const hidePreview = () => {
+		const previewElement = document.getElementById(previewId);
+
+		previewElement?.remove();
+	};
 
 	return (
 		<>
@@ -348,39 +382,73 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 					/>
 
 					{showNotification && (
-						<ClayForm.Group small>
-							<ClayInput.Group className="align-items-end" small>
-								<ClayInput.GroupItem>
-									<TextField
-										field={{
-											label: Liferay.Language.get(
-												'success-notification-text'
-											),
-										}}
-										onValueSelect={(_, value) =>
-											onConfigChange({
-												notificationText: setIn(
-													notificationText || {},
-													languageId,
-													value
+						<>
+							<ClayForm.Group small>
+								<ClayInput.Group
+									className="align-items-end"
+									small
+								>
+									<ClayInput.GroupItem>
+										<TextField
+											field={{
+												label: Liferay.Language.get(
+													'success-notification-text'
 												),
-											})
-										}
-										value={getEditableLocalizedValue(
-											notificationText,
-											languageId,
-											Liferay.Language.get(
-												'your-information-was-successfully-received'
-											)
-										)}
-									/>
-								</ClayInput.GroupItem>
+											}}
+											onValueSelect={(_, value) => {
+												if (showNotificationPreview) {
+													onPreviewNotification(
+														false
+													);
+													hidePreview();
+												}
+												onConfigChange({
+													notificationText: setIn(
+														notificationText || {},
+														languageId,
+														value
+													),
+												});
+											}}
+											value={localizedNotificationText}
+										/>
+									</ClayInput.GroupItem>
 
-								<ClayInput.GroupItem shrink>
-									<CurrentLanguageFlag />
-								</ClayInput.GroupItem>
-							</ClayInput.Group>
-						</ClayForm.Group>
+									<ClayInput.GroupItem shrink>
+										<CurrentLanguageFlag />
+									</ClayInput.GroupItem>
+								</ClayInput.Group>
+							</ClayForm.Group>
+							<ClayForm.Group small>
+								<ClayToggle
+									label={Liferay.Language.get(
+										'preview-success-notification'
+									)}
+									onToggle={(checked) => {
+										onPreviewNotification(checked);
+
+										if (checked) {
+											openToast({
+												message: localizedNotificationText,
+												onClose: () =>
+													onPreviewNotification(
+														false
+													),
+												toastProps: {
+													id: previewId,
+												},
+											});
+										}
+										else {
+											hidePreview();
+										}
+									}}
+									toggled={Boolean(
+										item.config.showNotificationPreview
+									)}
+								/>
+							</ClayForm.Group>
+						</>
 					)}
 				</>
 			)}

@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -34,7 +34,7 @@ public class CommerceMediaProviderImpl implements CommerceMediaProvider {
 
 		CommerceMediaDefaultImageConfiguration
 			commerceMediaDefaultImageConfiguration =
-				ConfigurationProviderUtil.getConfiguration(
+				_configurationProvider.getConfiguration(
 					CommerceMediaDefaultImageConfiguration.class,
 					new GroupServiceSettingsLocator(
 						groupId, CommerceMediaConstants.SERVICE_NAME));
@@ -65,6 +65,9 @@ public class CommerceMediaProviderImpl implements CommerceMediaProvider {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

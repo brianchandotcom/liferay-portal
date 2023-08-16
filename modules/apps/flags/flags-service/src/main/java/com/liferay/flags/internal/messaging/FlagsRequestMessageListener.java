@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -161,7 +161,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		// Email
 
 		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
+			_configurationProvider.getCompanyConfiguration(
 				FlagsGroupServiceConfiguration.class, companyId);
 
 		String fromName = flagsGroupServiceConfiguration.emailFromName();
@@ -312,6 +312,9 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

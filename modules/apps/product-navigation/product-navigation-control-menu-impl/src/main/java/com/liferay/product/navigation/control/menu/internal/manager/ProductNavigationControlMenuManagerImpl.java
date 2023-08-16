@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -63,7 +63,7 @@ public class ProductNavigationControlMenuManagerImpl
 
 		try {
 			MenuAccessConfiguration menuAccessConfiguration =
-				ConfigurationProviderUtil.getGroupConfiguration(
+				_configurationProvider.getGroupConfiguration(
 					MenuAccessConfiguration.class, group.getGroupId());
 
 			if ((menuAccessConfiguration != null) &&
@@ -116,6 +116,9 @@ public class ProductNavigationControlMenuManagerImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductNavigationControlMenuManagerImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

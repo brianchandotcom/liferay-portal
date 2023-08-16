@@ -7,7 +7,6 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -102,7 +101,7 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 		_getSearchSuggestionsCompanyConfiguration(long companyId) {
 
 		try {
-			return ConfigurationProviderUtil.getCompanyConfiguration(
+			return configurationProvider.getCompanyConfiguration(
 				SearchSuggestionsCompanyConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {

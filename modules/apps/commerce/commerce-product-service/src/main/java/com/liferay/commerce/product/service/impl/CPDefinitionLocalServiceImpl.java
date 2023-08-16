@@ -91,7 +91,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -2035,7 +2035,7 @@ public class CPDefinitionLocalServiceImpl
 
 		try {
 			CProductVersionConfiguration cProductVersionConfiguration =
-				ConfigurationProviderUtil.getConfiguration(
+				_configurationProvider.getConfiguration(
 					CProductVersionConfiguration.class,
 					new SystemSettingsLocator(
 						CProductVersionConfiguration.class.getName()));
@@ -3029,7 +3029,7 @@ public class CPDefinitionLocalServiceImpl
 	private boolean _isVersioningEnabled() {
 		try {
 			CProductVersionConfiguration cProductVersionConfiguration =
-				ConfigurationProviderUtil.getConfiguration(
+				_configurationProvider.getConfiguration(
 					CProductVersionConfiguration.class,
 					new SystemSettingsLocator(
 						CProductVersionConfiguration.class.getName()));
@@ -3338,6 +3338,9 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPAttachmentFileEntryLocalService

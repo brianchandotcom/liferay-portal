@@ -14,7 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -97,11 +97,11 @@ public class SalesforceHttp {
 
 		try {
 			if (groupId == 0) {
-				return ConfigurationProviderUtil.getCompanyConfiguration(
+				return _configurationProvider.getCompanyConfiguration(
 					SalesforceConfiguration.class, companyId);
 			}
 
-			return ConfigurationProviderUtil.getGroupConfiguration(
+			return _configurationProvider.getGroupConfiguration(
 				SalesforceConfiguration.class, groupId);
 		}
 		catch (ConfigurationException configurationException) {
@@ -171,6 +171,9 @@ public class SalesforceHttp {
 
 		return bytes;
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Http _http;

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -220,7 +220,7 @@ public class DDMFormPortlet extends MVCPortlet {
 			_ddmFormInstanceRecordVersionLocalService, _ddmFormInstanceService,
 			_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
 			_ddmFormValuesFactory, _ddmFormValuesMerger,
-			ConfigurationProviderUtil.getCompanyConfiguration(
+			_configurationProvider.getCompanyConfiguration(
 				DDMFormWebConfiguration.class,
 				CompanyThreadLocal.getCompanyId()),
 			_ddmStorageAdapterRegistry, _groupLocalService, _jsonFactory,
@@ -269,6 +269,9 @@ public class DDMFormPortlet extends MVCPortlet {
 	private static final String _ALIAS = "form";
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMFormPortlet.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;

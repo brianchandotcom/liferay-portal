@@ -10,7 +10,7 @@ import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -135,16 +135,19 @@ public class SearchBarPortletInstanceConfigurationRenderer
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				return ConfigurationProviderUtil.getCompanyConfiguration(
+				return _configurationProvider.getCompanyConfiguration(
 					clazz, themeDisplay.getCompanyId());
 			}
 
-			return ConfigurationProviderUtil.getSystemConfiguration(clazz);
+			return _configurationProvider.getSystemConfiguration(clazz);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
 		}
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

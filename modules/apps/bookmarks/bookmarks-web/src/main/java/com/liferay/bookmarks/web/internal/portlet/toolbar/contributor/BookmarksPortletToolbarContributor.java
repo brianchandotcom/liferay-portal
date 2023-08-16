@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -213,7 +213,7 @@ public class BookmarksPortletToolbarContributor
 		try {
 			BookmarksGroupServiceOverriddenConfiguration
 				bookmarksGroupServiceOverriddenConfiguration =
-					ConfigurationProviderUtil.getConfiguration(
+					_configurationProvider.getConfiguration(
 						BookmarksGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							themeDisplay.getScopeGroupId(),
@@ -272,6 +272,9 @@ public class BookmarksPortletToolbarContributor
 
 	@Reference
 	private BookmarksFolderService _bookmarksFolderService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

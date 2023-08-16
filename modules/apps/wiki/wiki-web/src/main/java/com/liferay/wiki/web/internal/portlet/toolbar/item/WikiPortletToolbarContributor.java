@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
@@ -137,7 +137,7 @@ public class WikiPortletToolbarContributor
 		try {
 			WikiGroupServiceOverriddenConfiguration
 				wikiGroupServiceOverriddenConfiguration =
-					ConfigurationProviderUtil.getConfiguration(
+					_configurationProvider.getConfiguration(
 						WikiGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							themeDisplay.getScopeGroupId(),
@@ -178,6 +178,9 @@ public class WikiPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPortletToolbarContributor.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

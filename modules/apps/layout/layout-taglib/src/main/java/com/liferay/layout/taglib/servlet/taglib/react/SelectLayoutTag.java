@@ -11,7 +11,6 @@ import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -174,51 +173,66 @@ public class SelectLayoutTag extends IncludeTag {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			JSONArray childrenJSONArray = _getLayoutsJSONArray(
 				groupId, privateLayout, layout.getLayoutId(),
 				selectedLayoutUuid);
 
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
-			}
+			jsonArray.put(
+				JSONUtil.put(
+					"children",
+					() -> {
+						if (childrenJSONArray.length() > 0) {
+							return childrenJSONArray;
+						}
 
-			if ((_checkDisplayPage && !layout.isContentDisplayPage()) ||
-				(_enableCurrentPage && (layout.getPlid() == _getSelPlid()))) {
+						return null;
+					}
+				).put(
+					"disabled",
+					() -> {
+						if ((_checkDisplayPage &&
+							 !layout.isContentDisplayPage()) ||
+							(_enableCurrentPage &&
+							 (layout.getPlid() == _getSelPlid()))) {
 
-				jsonObject.put("disabled", true);
-			}
+							return true;
+						}
 
-			jsonObject.put(
-				"groupId", layout.getGroupId()
-			).put(
-				"icon", layout.getIcon()
-			).put(
-				"id", layout.getUuid()
-			).put(
-				"layoutId", layout.getLayoutId()
-			).put(
-				"name", layout.getName(themeDisplay.getLocale())
-			).put(
-				"payload", _getPayload(layout, themeDisplay)
-			).put(
-				"privateLayout", layout.isPrivateLayout()
-			).put(
-				"returnType", getItemSelectorReturnType()
-			).put(
-				"url",
-				PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false)
-			);
+						return null;
+					}
+				).put(
+					"groupId", layout.getGroupId()
+				).put(
+					"icon", layout.getIcon()
+				).put(
+					"id", layout.getUuid()
+				).put(
+					"layoutId", layout.getLayoutId()
+				).put(
+					"name", layout.getName(themeDisplay.getLocale())
+				).put(
+					"payload", _getPayload(layout, themeDisplay)
+				).put(
+					"privateLayout", layout.isPrivateLayout()
+				).put(
+					"returnType", getItemSelectorReturnType()
+				).put(
+					"selected",
+					() -> {
+						if (ArrayUtil.contains(
+								selectedLayoutUuid, layout.getUuid())) {
 
-			if (ArrayUtil.contains(selectedLayoutUuid, layout.getUuid())) {
-				jsonObject.put("selected", true);
-			}
+							return true;
+						}
 
-			jsonObject.put(
-				"value", layout.getBreadcrumb(themeDisplay.getLocale()));
-
-			jsonArray.put(jsonObject);
+						return null;
+					}
+				).put(
+					"url",
+					PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false)
+				).put(
+					"value", layout.getBreadcrumb(themeDisplay.getLocale())
+				));
 		}
 
 		return jsonArray;

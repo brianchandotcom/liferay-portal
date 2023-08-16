@@ -10,9 +10,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
@@ -54,13 +57,10 @@ public class MessageBusManager
 
 	@Override
 	public int getMessageListenerCount(String destinationName) {
-		Destination destination = _messageBus.getDestination(destinationName);
+		List<MessageListener> messageListeners =
+			_messageListenerRegistry.getMessageListeners(destinationName);
 
-		if (destination == null) {
-			return 0;
-		}
-
-		return destination.getMessageListenerCount();
+		return messageListeners.size();
 	}
 
 	@Activate
@@ -149,6 +149,9 @@ public class MessageBusManager
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference
+	private MessageListenerRegistry _messageListenerRegistry;
 
 	private ServiceTracker<Destination, ServiceRegistration<DynamicMBean>>
 		_serviceTracker;

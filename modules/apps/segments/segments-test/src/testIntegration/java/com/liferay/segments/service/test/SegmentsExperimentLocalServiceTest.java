@@ -440,10 +440,9 @@ public class SegmentsExperimentLocalServiceTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid());
 
-		SegmentsExperiment segmentsExperimentDefault =
-			SegmentsTestUtil.addSegmentsExperiment(
-				_group.getGroupId(), defaultSegmentsExperienceId,
-				_layout.getPlid());
+		SegmentsTestUtil.addSegmentsExperiment(
+			_group.getGroupId(), defaultSegmentsExperienceId,
+			_layout.getPlid());
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
@@ -453,31 +452,18 @@ public class SegmentsExperimentLocalServiceTest {
 			SegmentsTestUtil.addSegmentsExperience(
 				_group.getGroupId(), _layout.getPlid());
 
-		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(
-			segmentsExperience1);
+		_addSegmentsExperiment(segmentsExperience1);
 
-		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(
+		SegmentsExperiment expectedSegmentsExperiment = _addSegmentsExperiment(
 			segmentsExperience2);
 
-		List<SegmentsExperiment> segmentsExperiments =
-			_segmentsExperimentLocalService.getSegmentsExperiments(
+		SegmentsExperiment actualSegmentsExperiment =
+			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_layout.getGroupId(), _layout.getPlid());
 
 		Assert.assertEquals(
-			segmentsExperiments.toString(), 3, segmentsExperiments.size());
-
-		long[] segmentsExperimentIds = TransformUtil.transformToLongArray(
-			segmentsExperiments,
-			SegmentsExperimentModel::getSegmentsExperimentId);
-
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				segmentsExperimentIds,
-				new long[] {
-					segmentsExperimentDefault.getSegmentsExperimentId(),
-					segmentsExperiment1.getSegmentsExperimentId(),
-					segmentsExperiment2.getSegmentsExperimentId()
-				}));
+			expectedSegmentsExperiment.getSegmentsExperimentId(),
+			actualSegmentsExperiment.getSegmentsExperimentId());
 	}
 
 	@Test

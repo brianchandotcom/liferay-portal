@@ -25,7 +25,6 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
@@ -49,11 +48,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				return;
 			}
 
-			List<SegmentsExperiment> segmentsExperiments =
-				_segmentsExperimentLocalService.getSegmentsExperiments(
+			SegmentsExperiment segmentsExperiment =
+				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					layout.getGroupId(), layout.getPlid());
 
-			for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
+			if (segmentsExperiment != null) {
 				_asahSegmentsExperimentProcessor.
 					processUpdateSegmentsExperimentLayout(
 						segmentsExperiment, layout);

@@ -200,8 +200,6 @@ public class HTMLTag extends BaseHTMLTag {
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowPrivatePages(true);
-		layoutItemSelectorCriterion.setShowPublicPages(true);
 
 		return String.valueOf(
 			itemSelector.getItemSelectorURL(

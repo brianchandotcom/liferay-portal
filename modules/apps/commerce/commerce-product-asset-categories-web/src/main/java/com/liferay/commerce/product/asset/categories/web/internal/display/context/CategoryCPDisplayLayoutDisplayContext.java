@@ -211,8 +211,6 @@ public class CategoryCPDisplayLayoutDisplayContext
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
 			new LayoutItemSelectorCriterion();
 
-		layoutItemSelectorCriterion.setShowPrivatePages(true);
-		layoutItemSelectorCriterion.setShowPublicPages(true);
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));

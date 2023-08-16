@@ -105,8 +105,6 @@ public class LayoutDDMFormFieldTemplateContextContributor
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowPrivatePages(true);
-		layoutItemSelectorCriterion.setShowPublicPages(true);
 
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(

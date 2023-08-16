@@ -1,0 +1,115 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
+	property testray.main.component.name = "Display Page Templates";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomLabelName = StringUtil.randomString(8);
+
+	static var randomObjectName = "A${randomLabelName}";
+
+	setUp {
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add an object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${randomLabelName},
+				objectName = ${randomObjectName},
+				pluralLabelName = "${randomLabelName}s");
+		}
+	}
+
+	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for object entry."
+	@priority = 4
+	test MapSpecificDisplayPageForObject {
+		property custom.properties = "feature.flag.LPS-183727=true";
+
+		task ("Given a page designer has a display page template for Object") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = ${randomObjectName},
+				value = "Liferay");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = ${randomLabelName},
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer adds a Button fragment to a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Then the page designer could map the specific display page for object entry to the Button fragment") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = ${objectEntryId},
+				field = "Display Page Name",
+				navItem = "${randomLabelName}s");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Liferay");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Liferay");
+		}
+	}
+
+}

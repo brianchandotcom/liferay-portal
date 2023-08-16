@@ -37,4 +37,7 @@ public interface LayoutsImporter {
 			String pageElementJSON, int position, long segmentsExperienceId)
 		throws Exception;
 
+	public Layout importLayoutSettings(Layout layout, String settingsJSON)
+		throws Exception;
+
 }

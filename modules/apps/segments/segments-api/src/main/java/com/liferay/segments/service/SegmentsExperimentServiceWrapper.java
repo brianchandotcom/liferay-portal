@@ -60,6 +60,14 @@ public class SegmentsExperimentServiceWrapper
 	}
 
 	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.fetchSegmentsExperiment(
+			groupId, plid);
+	}
+
+	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
 			long segmentsExperienceId, long plid, int[] statuses)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -116,6 +124,10 @@ public class SegmentsExperimentServiceWrapper
 			segmentsExperimentKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid) {

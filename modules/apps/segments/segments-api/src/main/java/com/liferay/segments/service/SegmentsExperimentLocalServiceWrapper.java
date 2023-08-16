@@ -269,6 +269,12 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid) {
+		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
+			groupId, plid);
+	}
+
+	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
 		long segmentsExperienceId, long plid, int[] statuses) {
 
@@ -434,6 +440,10 @@ public class SegmentsExperimentLocalServiceWrapper
 			start, end);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid) {

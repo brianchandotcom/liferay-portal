@@ -237,6 +237,12 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
+		long groupId, long plid) {
+
+		return getService().fetchSegmentsExperiment(groupId, plid);
+	}
+
+	public static SegmentsExperiment fetchSegmentsExperiment(
 		long segmentsExperienceId, long plid, int[] statuses) {
 
 		return getService().fetchSegmentsExperiment(
@@ -381,6 +387,10 @@ public class SegmentsExperimentLocalServiceUtil {
 		return getService().getSegmentsExperiments(start, end);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	public static List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid) {
 

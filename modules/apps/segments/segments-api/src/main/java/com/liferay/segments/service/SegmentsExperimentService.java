@@ -62,6 +62,10 @@ public interface SegmentsExperimentService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
 			long segmentsExperienceId, long plid, int[] statuses)
 		throws PortalException;
@@ -93,6 +97,10 @@ public interface SegmentsExperimentService extends BaseService {
 			String segmentsExperimentKey)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid);

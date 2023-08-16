@@ -5,15 +5,21 @@
 
 import {Liferay} from '../../../services/liferay';
 
-const formatCurrency = (value: any, currencyKey?: string) =>
-	new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+const formatCurrency = (
+	value: number,
+	currencyKey?: string,
+	precision?: String
+) => {
+	return new Intl.NumberFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
 		currency: currencyKey ? currencyKey : 'USD',
 		notation: 'compact',
 
 		// @ts-ignore
 
-		roundingPriority: 'morePrecision',
+		roundingPriority: precision || 'morePrecision',
+
 		style: 'currency',
 	}).format(value);
+};
 
 export default formatCurrency;

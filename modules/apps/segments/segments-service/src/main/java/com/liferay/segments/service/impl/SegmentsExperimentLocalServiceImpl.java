@@ -57,6 +57,8 @@ import com.liferay.segments.service.persistence.SegmentsExperiencePersistence;
 
 import java.math.RoundingMode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -292,11 +294,22 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperimentKey, null);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid) {
 
-		return segmentsExperimentPersistence.findByG_P(groupId, plid);
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.fetchByG_P(groupId, plid);
+
+		if (segmentsExperiment == null) {
+			return new ArrayList<>();
+		}
+
+		return Arrays.asList(segmentsExperiment);
 	}
 
 	@Override

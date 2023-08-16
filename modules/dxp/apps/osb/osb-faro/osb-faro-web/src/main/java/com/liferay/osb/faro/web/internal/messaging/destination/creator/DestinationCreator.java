@@ -44,11 +44,6 @@ public class DestinationCreator {
 
 	public void removeDestination() {
 		if (_serviceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_serviceRegistration.getReference());
-
-			destination.destroy();
-
 			_serviceRegistration.unregister();
 		}
 	}

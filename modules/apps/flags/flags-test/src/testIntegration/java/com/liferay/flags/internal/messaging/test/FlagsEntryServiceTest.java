@@ -64,12 +64,7 @@ public class FlagsEntryServiceTest {
 	@After
 	public void tearDown() {
 		if (_serviceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_serviceRegistration.getReference());
-
 			_serviceRegistration.unregister();
-
-			destination.destroy();
 		}
 	}
 

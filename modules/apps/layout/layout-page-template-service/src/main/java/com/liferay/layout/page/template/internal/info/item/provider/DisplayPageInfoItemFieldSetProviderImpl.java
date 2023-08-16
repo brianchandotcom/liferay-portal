@@ -97,6 +97,10 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 				GetterUtil.getLong(infoItemFormVariationKey),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
 
+		String url =
+			themeDisplay.getPortalURL() + _portal.getPathContext() +
+				"/display-page/custom/";
+
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
 
@@ -116,9 +120,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 							layoutPageTemplateEntry.getName())
 					).build(),
 					HttpComponentsUtil.addParameters(
-						themeDisplay.getPortalURL() + _portal.getPathContext() +
-							"/display-page/custom/",
-						"className", infoItemReference.getClassName(),
+						url, "className", infoItemReference.getClassName(),
 						"classPK", _getClassPK(infoItemReference), "selPlid",
 						layoutPageTemplateEntry.getPlid())));
 		}

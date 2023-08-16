@@ -1619,3 +1619,27 @@ Implement `com.liferay.portal.kernel.security.permission.resource.ModelResourceP
 ### Why was this change made?
 
 Interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` was deprecated since 7.1 and no longer used by Liferay internally.
+
+---------------------------------------
+
+## Removed destination liferay/hot_deploy
+- **Date:** 2023-August-4
+- **JIRA Ticket:** [LPS-192680](https://liferay.atlassian.net/browse/LPS-192680)
+
+### What changed?
+
+Message bus destination `liferay/hot_deploy` and test rule `DestinationAwaitClassTestRule` are removed.
+
+### Who is affected?
+
+- Anyone who is registering `com.liferay.portal.kernel.messaging.MessageListener` to the destination to listener to hot deploy events;
+- Anyone who is using custom instance of `DestinationAwaitClassTestRule`.
+
+### How should I update my code?
+
+- Register `HotDeployListener` to listen to hot deploy events;
+- Manually implement the logic to sync with any destination
+
+### Why was this change made?
+
+This destination is no longer used in Liferay.

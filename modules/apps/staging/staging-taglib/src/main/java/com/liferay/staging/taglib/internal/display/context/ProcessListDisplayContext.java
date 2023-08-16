@@ -5,7 +5,7 @@
 
 package com.liferay.staging.taglib.internal.display.context;
 
-import com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil;
+import com.liferay.portal.background.task.util.comparator.BackgroundTaskComparatorFactoryUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;

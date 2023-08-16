@@ -5,7 +5,6 @@
 
 package com.liferay.site.internal.util;
 
-import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -19,6 +18,7 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;

@@ -19,8 +19,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator" %><%@
-page import="com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil" %><%@
+<%@ page import="com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil" %><%@
 page import="com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.exportimport.kernel.exception.RemoteExportException" %><%@
 page import="com.liferay.exportimport.kernel.lar.ExportImportHelperUtil" %><%@
@@ -28,6 +27,7 @@ page import="com.liferay.exportimport.kernel.lar.PortletDataHandler" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.constants.StagingConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@

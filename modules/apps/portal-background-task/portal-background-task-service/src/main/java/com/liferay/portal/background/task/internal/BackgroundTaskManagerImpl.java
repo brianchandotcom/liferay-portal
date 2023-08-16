@@ -5,10 +5,10 @@
 
 package com.liferay.portal.background.task.internal;
 
-import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCompletionDateComparator;
-import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator;
-import com.liferay.background.task.kernel.util.comparator.BackgroundTaskNameComparator;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.background.task.util.comparator.BackgroundTaskCompletionDateComparator;
+import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
+import com.liferay.portal.background.task.util.comparator.BackgroundTaskNameComparator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;

@@ -19,6 +19,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-util")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-taglib")
+	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-function")

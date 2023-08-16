@@ -81,6 +81,8 @@ components:
                     type: boolean
                 enableLocalization:
                     type: boolean
+                enableObjectEntryDraft:
+                    type: boolean
                 enableObjectEntryHistory:
                     type: boolean
                 externalReferenceCode:

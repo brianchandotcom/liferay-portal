@@ -114,7 +114,7 @@ public abstract class BaseDLTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public String getRootContainerModelName() {
-		return "folder";
+		return "home";
 	}
 
 	@Override

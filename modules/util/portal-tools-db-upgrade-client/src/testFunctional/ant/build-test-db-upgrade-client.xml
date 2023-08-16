@@ -79,7 +79,7 @@
 	<target name="bypass-expected-upgrade-error">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<execute dir="${db.upgrade.client.home}">
 			db_upgrade_client${file.suffix.bat} run
@@ -529,7 +529,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-app-db-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
@@ -552,7 +552,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-app-ext-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
 
@@ -575,7 +575,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-db-ext-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
 
@@ -598,7 +598,7 @@ upgrade.database.auto.run=false</echo>
 	<target name="check-upgrade-properties-none-set">
 		<get-database-upgrade-client-paths />
 
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<delete file="${db.upgrade.client.home}/app-server.properties" />
 

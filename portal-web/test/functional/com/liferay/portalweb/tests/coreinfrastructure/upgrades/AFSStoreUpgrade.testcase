@@ -54,7 +54,7 @@ definition {
 	@priority = 4
 	test ViewAFSStoreUpgradeNoConfig {
 		property data.archive.type = "data-archive-afs-store";
-		property database-upgrade-configuration = "true";
+		property database.upgrade.enabled = "true";
 		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "6.2.10.21";
 		property skip.start.app.server = "true";

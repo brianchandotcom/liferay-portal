@@ -3417,7 +3417,7 @@ information. Make sure to commit in all build-lib-versions results.
 			<test-set-up>
 				<setup-test-environment />
 
-				<prepare-database-upgrade-configuration />
+				<prepare-database-upgrade-properties />
 			</test-set-up>
 		</run-batch-test>
 	</target>

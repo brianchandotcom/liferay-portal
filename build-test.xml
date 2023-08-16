@@ -2781,7 +2781,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-database-upgrade-configuration">
+	<macrodef name="prepare-database-upgrade-properties">
 		<sequential>
 			<delete file="${liferay.home}/tools/portal-tools-db-upgrade-client/logs/upgrade.log" />
 
@@ -11173,8 +11173,8 @@ ${update.properties}</echo>
 		<prepare-azure-store-configuration />
 	</target>
 
-	<target name="prepare-database-upgrade-configuration">
-		<prepare-database-upgrade-configuration />
+	<target name="prepare-database-upgrade-properties">
+		<prepare-database-upgrade-properties />
 	</target>
 
 	<target name="prepare-encryption-PCKS12-certificate">
@@ -16079,12 +16079,12 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="database-upgrade-configuration" />
+		<get-testcase-property property.name="database.upgrade.enabled" />
 
 		<if>
-			<equals arg1="${database-upgrade-configuration}" arg2="true" />
+			<equals arg1="${database.upgrade.enabled}" arg2="true" />
 			<then>
-				<prepare-database-upgrade-configuration />
+				<prepare-database-upgrade-properties />
 			</then>
 		</if>
 
@@ -16619,7 +16619,7 @@ mail.send.blacklist=</echo>
 	</target>
 
 	<target name="upgrade-legacy-database">
-		<prepare-database-upgrade-configuration />
+		<prepare-database-upgrade-properties />
 
 		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
 

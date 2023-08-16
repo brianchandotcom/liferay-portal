@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -33,13 +32,7 @@ public class PatcherUtil {
 
 		Properties properties = new Properties();
 
-		Class<?> clazz = getClass();
-
-		if (Objects.equals(fileName, _PATCHER_SERVICE_PROPERTIES)) {
-			clazz = clazz.getInterfaces()[0];
-		}
-
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = PatcherUtil.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
 				fileName)) {
@@ -65,9 +58,6 @@ public class PatcherUtil {
 	private static final String[] _INSTALLED_PATCH_NAMES;
 
 	private static final String _PATCHER_PROPERTIES = "patcher.properties";
-
-	private static final String _PATCHER_SERVICE_PROPERTIES =
-		"patcher-service.properties";
 
 	private static final Properties _PROPERTIES;
 

@@ -12,6 +12,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
+import com.liferay.headless.delivery.client.permission.Permission;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -352,6 +353,28 @@ public class StructuredContentSerDes {
 			sb.append("\"numberOfComments\": ");
 
 			sb.append(structuredContent.getNumberOfComments());
+		}
+
+		if (structuredContent.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < structuredContent.getPermissions().length;
+				 i++) {
+
+				sb.append(structuredContent.getPermissions()[i]);
+
+				if ((i + 1) < structuredContent.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (structuredContent.getPriority() != null) {
@@ -741,6 +764,15 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getNumberOfComments()));
 		}
 
+		if (structuredContent.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(structuredContent.getPermissions()));
+		}
+
 		if (structuredContent.getPriority() == null) {
 			map.put("priority", null);
 		}
@@ -1013,6 +1045,12 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setPermissions(
+						(Permission[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {

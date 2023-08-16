@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
 
 import java.io.Serializable;
@@ -448,6 +449,27 @@ public class StructuredContent implements Cloneable, Serializable {
 	}
 
 	protected Integer numberOfComments;
+
+	public Permission[] getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Permission[] permissions) {
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier<Permission[], Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Permission[] permissions;
 
 	public Double getPriority() {
 		return priority;

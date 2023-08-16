@@ -299,7 +299,7 @@ public class WebDriverUtil {
 
 			firefoxProfile.addExtension(
 				WebDriverUtil.class,
-					"/META-INF/resources/logger/firefox/extensions/jserrorcollector.xpi");
+				"/META-INF/resources/firefox/extensions/jserrorcollector.xpi");
 
 			firefoxOptions.setProfile(firefoxProfile);
 		}

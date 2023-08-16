@@ -50,27 +50,29 @@
 							"fragment": {
 								"key": "content-welcome-banner"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "first-banner-primary-button-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"sv_SE": "Watch a Video Tour",
-												"pt_BR": "Watch a Video Tour",
-												"fr_FR": "Watch a Video Tour",
-												"ja_JP": "Watch a Video Tour",
+												"ar_SA": "Watch a Video Tour",
 												"ca_ES": "Watch a Video Tour",
 												"de_DE": "Watch a Video Tour",
-												"hu_HU": "Watch a Video Tour",
-												"ar_SA": "Watch a Video Tour",
-												"fi_FI": "Watch a Video Tour",
 												"en_US": "Watch a Video Tour",
 												"es_ES": "Watch a Video Tour",
-												"zh_CN": "Watch a Video Tour",
-												"nl_NL": "Watch a Video Tour"
+												"fi_FI": "Watch a Video Tour",
+												"fr_FR": "Watch a Video Tour",
+												"hu_HU": "Watch a Video Tour",
+												"ja_JP": "Watch a Video Tour",
+												"nl_NL": "Watch a Video Tour",
+												"pt_BR": "Watch a Video Tour",
+												"sv_SE": "Watch a Video Tour",
+												"zh_CN": "Watch a Video Tour"
 											}
 										}
 									}
@@ -78,22 +80,23 @@
 								{
 									"id": "second-banner-primary-button-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"sv_SE": "Watch a Video Tour",
-												"pt_BR": "Watch a Video Tour",
-												"fr_FR": "Watch a Video Tour",
-												"ja_JP": "Watch a Video Tour",
+												"ar_SA": "Watch a Video Tour",
 												"ca_ES": "Watch a Video Tour",
 												"de_DE": "Watch a Video Tour",
-												"hu_HU": "Watch a Video Tour",
-												"ar_SA": "Watch a Video Tour",
-												"fi_FI": "Watch a Video Tour",
 												"en_US": "Watch a Video Tour",
 												"es_ES": "Watch a Video Tour",
-												"zh_CN": "Watch a Video Tour",
-												"nl_NL": "Watch a Video Tour"
+												"fi_FI": "Watch a Video Tour",
+												"fr_FR": "Watch a Video Tour",
+												"hu_HU": "Watch a Video Tour",
+												"ja_JP": "Watch a Video Tour",
+												"nl_NL": "Watch a Video Tour",
+												"pt_BR": "Watch a Video Tour",
+												"sv_SE": "Watch a Video Tour",
+												"zh_CN": "Watch a Video Tour"
 											}
 										}
 									}
@@ -101,22 +104,23 @@
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"sv_SE": "Welcome to Partner Enablemet",
-												"pt_BR": "Welcome to Partner Enablemet",
-												"fr_FR": "Welcome to Partner Enablemet",
-												"ja_JP": "Welcome to Partner Enablemet",
+												"ar_SA": "Welcome to Partner Enablemet",
 												"ca_ES": "Welcome to Partner Enablemet",
 												"de_DE": "Welcome to Partner Enablemet",
-												"hu_HU": "Welcome to Partner Enablemet",
-												"ar_SA": "Welcome to Partner Enablemet",
-												"fi_FI": "Welcome to Partner Enablemet",
 												"en_US": "Welcome to Partner Enablement",
 												"es_ES": "Welcome to Partner Enablemet",
-												"zh_CN": "Welcome to Partner Enablemet",
-												"nl_NL": "Welcome to Partner Enablemet"
+												"fi_FI": "Welcome to Partner Enablemet",
+												"fr_FR": "Welcome to Partner Enablemet",
+												"hu_HU": "Welcome to Partner Enablemet",
+												"ja_JP": "Welcome to Partner Enablemet",
+												"nl_NL": "Welcome to Partner Enablemet",
+												"pt_BR": "Welcome to Partner Enablemet",
+												"sv_SE": "Welcome to Partner Enablemet",
+												"zh_CN": "Welcome to Partner Enablemet"
 											}
 										}
 									}
@@ -124,22 +128,23 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"sv_SE": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"pt_BR": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"fr_FR": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"ja_JP": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"ar_SA": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
 												"ca_ES": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
 												"de_DE": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"hu_HU": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"ar_SA": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"fi_FI": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
 												"en_US": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
 												"es_ES": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"zh_CN": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
-												"nl_NL": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;"
+												"fi_FI": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"fr_FR": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"hu_HU": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"ja_JP": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"nl_NL": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"pt_BR": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"sv_SE": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;",
+												"zh_CN": "We’re here to help you succeed in building your Liferay practice. Use these Enablement resources and courses to expand your knowledge and skills.&nbsp;"
 											}
 										}
 									}
@@ -147,22 +152,23 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"sv_SE": "Partner Enablement",
-												"pt_BR": "Partner Enablement",
-												"fr_FR": "Partner Enablement",
-												"ja_JP": "Partner Enablement",
+												"ar_SA": "Partner Enablement",
 												"ca_ES": "Partner Enablement",
 												"de_DE": "Partner Enablement",
-												"hu_HU": "Partner Enablement",
-												"ar_SA": "Partner Enablement",
-												"fi_FI": "Partner Enablement",
 												"en_US": "Partner Enablement",
 												"es_ES": "Partner Enablement",
-												"zh_CN": "Partner Enablement",
-												"nl_NL": "Partner Enablement"
+												"fi_FI": "Partner Enablement",
+												"fr_FR": "Partner Enablement",
+												"hu_HU": "Partner Enablement",
+												"ja_JP": "Partner Enablement",
+												"nl_NL": "Partner Enablement",
+												"pt_BR": "Partner Enablement",
+												"sv_SE": "Partner Enablement",
+												"zh_CN": "Partner Enablement"
 											}
 										}
 									}
@@ -172,7 +178,8 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -186,22 +193,23 @@
 												{
 													"id": "first-banner-primary-button-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"sv_SE": "Watch a Video Tour",
-																"pt_BR": "Watch a Video Tour",
-																"fr_FR": "Watch a Video Tour",
-																"ja_JP": "Watch a Video Tour",
+																"ar_SA": "Watch a Video Tour",
 																"ca_ES": "Watch a Video Tour",
 																"de_DE": "Watch a Video Tour",
-																"hu_HU": "Watch a Video Tour",
-																"ar_SA": "Watch a Video Tour",
-																"fi_FI": "Watch a Video Tour",
 																"en_US": "Watch a Video Tour",
 																"es_ES": "Watch a Video Tour",
-																"zh_CN": "Watch a Video Tour",
-																"nl_NL": "Watch a Video Tour"
+																"fi_FI": "Watch a Video Tour",
+																"fr_FR": "Watch a Video Tour",
+																"hu_HU": "Watch a Video Tour",
+																"ja_JP": "Watch a Video Tour",
+																"nl_NL": "Watch a Video Tour",
+																"pt_BR": "Watch a Video Tour",
+																"sv_SE": "Watch a Video Tour",
+																"zh_CN": "Watch a Video Tour"
 															}
 														}
 													}
@@ -215,7 +223,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -223,9 +232,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "nm",
 												"buttonType": "outline-primary",
-												"type": "link",
-												"buttonSize": "nm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
@@ -235,38 +244,38 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"sv_SE": "https://passport.liferay.com/",
-																		"pt_BR": "https://passport.liferay.com/",
-																		"fr_FR": "https://passport.liferay.com/",
-																		"ja_JP": "https://passport.liferay.com/",
+																		"ar_SA": "https://passport.liferay.com/",
 																		"ca_ES": "https://passport.liferay.com/",
 																		"de_DE": "https://passport.liferay.com/",
-																		"hu_HU": "https://passport.liferay.com/",
-																		"ar_SA": "https://passport.liferay.com/",
-																		"fi_FI": "https://passport.liferay.com/",
 																		"en_US": "https://passport.liferay.com/",
 																		"es_ES": "https://passport.liferay.com/",
-																		"zh_CN": "https://passport.liferay.com/",
-																		"nl_NL": "https://passport.liferay.com/"
+																		"fi_FI": "https://passport.liferay.com/",
+																		"fr_FR": "https://passport.liferay.com/",
+																		"hu_HU": "https://passport.liferay.com/",
+																		"ja_JP": "https://passport.liferay.com/",
+																		"nl_NL": "https://passport.liferay.com/",
+																		"pt_BR": "https://passport.liferay.com/",
+																		"sv_SE": "https://passport.liferay.com/",
+																		"zh_CN": "https://passport.liferay.com/"
 																	}
 																}
 															}
 														},
 														"text": {
 															"value_i18n": {
-																"sv_SE": "Explore Learning Paths",
-																"pt_BR": "Explore Learning Paths",
-																"fr_FR": "Explore Learning Paths",
-																"ja_JP": "Explore Learning Paths",
+																"ar_SA": "Explore Learning Paths",
 																"ca_ES": "Explore Learning Paths",
 																"de_DE": "Explore Learning Paths",
-																"hu_HU": "Explore Learning Paths",
-																"ar_SA": "Explore Learning Paths",
-																"fi_FI": "Explore Learning Paths",
 																"en_US": "Explore Learning Paths",
 																"es_ES": "Explore Learning Paths",
-																"zh_CN": "Explore Learning Paths",
-																"nl_NL": "Explore Learning Paths"
+																"fi_FI": "Explore Learning Paths",
+																"fr_FR": "Explore Learning Paths",
+																"hu_HU": "Explore Learning Paths",
+																"ja_JP": "Explore Learning Paths",
+																"nl_NL": "Explore Learning Paths",
+																"pt_BR": "Explore Learning Paths",
+																"sv_SE": "Explore Learning Paths",
+																"zh_CN": "Explore Learning Paths"
 															}
 														}
 													}
@@ -280,7 +289,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -305,7 +315,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -317,7 +328,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -331,22 +343,23 @@
 												{
 													"id": "first-banner-primary-button-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"sv_SE": "Watch a Video Tour",
-																"pt_BR": "Watch a Video Tour",
-																"fr_FR": "Watch a Video Tour",
-																"ja_JP": "Watch a Video Tour",
+																"ar_SA": "Watch a Video Tour",
 																"ca_ES": "Watch a Video Tour",
 																"de_DE": "Watch a Video Tour",
-																"hu_HU": "Watch a Video Tour",
-																"ar_SA": "Watch a Video Tour",
-																"fi_FI": "Watch a Video Tour",
 																"en_US": "Watch a Video Tour",
 																"es_ES": "Watch a Video Tour",
-																"zh_CN": "Watch a Video Tour",
-																"nl_NL": "Watch a Video Tour"
+																"fi_FI": "Watch a Video Tour",
+																"fr_FR": "Watch a Video Tour",
+																"hu_HU": "Watch a Video Tour",
+																"ja_JP": "Watch a Video Tour",
+																"nl_NL": "Watch a Video Tour",
+																"pt_BR": "Watch a Video Tour",
+																"sv_SE": "Watch a Video Tour",
+																"zh_CN": "Watch a Video Tour"
 															}
 														}
 													}
@@ -360,7 +373,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -368,9 +382,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "nm",
 												"buttonType": "primary",
-												"type": "link",
-												"buttonSize": "nm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
@@ -380,38 +394,38 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"sv_SE": "https://passport.liferay.com/",
-																		"pt_BR": "https://passport.liferay.com/",
-																		"fr_FR": "https://passport.liferay.com/",
-																		"ja_JP": "https://passport.liferay.com/",
+																		"ar_SA": "https://passport.liferay.com/",
 																		"ca_ES": "https://passport.liferay.com/",
 																		"de_DE": "https://passport.liferay.com/",
-																		"hu_HU": "https://passport.liferay.com/",
-																		"ar_SA": "https://passport.liferay.com/",
-																		"fi_FI": "https://passport.liferay.com/",
 																		"en_US": "https://passport.liferay.com/",
 																		"es_ES": "https://passport.liferay.com/",
-																		"zh_CN": "https://passport.liferay.com/",
-																		"nl_NL": "https://passport.liferay.com/"
+																		"fi_FI": "https://passport.liferay.com/",
+																		"fr_FR": "https://passport.liferay.com/",
+																		"hu_HU": "https://passport.liferay.com/",
+																		"ja_JP": "https://passport.liferay.com/",
+																		"nl_NL": "https://passport.liferay.com/",
+																		"pt_BR": "https://passport.liferay.com/",
+																		"sv_SE": "https://passport.liferay.com/",
+																		"zh_CN": "https://passport.liferay.com/"
 																	}
 																}
 															}
 														},
 														"text": {
 															"value_i18n": {
-																"sv_SE": "Explore Learning Paths",
-																"pt_BR": "Explore Learning Paths",
-																"fr_FR": "Explore Learning Paths",
-																"ja_JP": "Explore Learning Paths",
+																"ar_SA": "Explore Learning Paths",
 																"ca_ES": "Explore Learning Paths",
 																"de_DE": "Explore Learning Paths",
-																"hu_HU": "Explore Learning Paths",
-																"ar_SA": "Explore Learning Paths",
-																"fi_FI": "Explore Learning Paths",
 																"en_US": "Explore Learning Paths",
 																"es_ES": "Explore Learning Paths",
-																"zh_CN": "Explore Learning Paths",
-																"nl_NL": "Explore Learning Paths"
+																"fi_FI": "Explore Learning Paths",
+																"fr_FR": "Explore Learning Paths",
+																"hu_HU": "Explore Learning Paths",
+																"ja_JP": "Explore Learning Paths",
+																"nl_NL": "Explore Learning Paths",
+																"pt_BR": "Explore Learning Paths",
+																"sv_SE": "Explore Learning Paths",
+																"zh_CN": "Explore Learning Paths"
 															}
 														}
 													}
@@ -446,7 +460,8 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
@@ -468,7 +483,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -591,7 +607,8 @@
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "middle"
@@ -613,7 +630,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -682,7 +700,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -741,7 +760,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -801,13 +821,14 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Programs",
 																								"ar_SA": "Programs",
 																								"ca_ES": "Programs",
 																								"de_DE": "Programs",
+																								"en_US": "Programs",
 																								"es_ES": "Programs",
 																								"fi_FI": "Programs",
 																								"fr_FR": "Programs",
@@ -868,7 +889,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": ""
@@ -941,13 +963,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "View Programs",
 																										"ar_SA": "View Programs",
 																										"ca_ES": "View Programs",
 																										"de_DE": "View Programs",
+																										"en_US": "View Programs",
 																										"es_ES": "View Programs",
 																										"fi_FI": "View Programs",
 																										"fr_FR": "View Programs",
@@ -993,7 +1016,8 @@
 																						"iconLink": "",
 																						"iconName": "order-arrow-right"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"borderRadius": "",
 																						"shadow": "",
@@ -1032,7 +1056,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1155,7 +1180,8 @@
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "middle"
@@ -1177,7 +1203,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1246,7 +1273,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1305,7 +1333,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1365,13 +1394,14 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Learning Paths and Certifications",
 																								"ar_SA": "Learning Paths and Certifications",
 																								"ca_ES": "Learning Paths and Certifications",
 																								"de_DE": "Learning Paths and Certifications",
+																								"en_US": "Learning Paths and Certifications",
 																								"es_ES": "Learning Paths and Certifications",
 																								"fi_FI": "Learning Paths and Certifications",
 																								"fr_FR": "Learning Paths and Certifications",
@@ -1432,7 +1462,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": ""
@@ -1505,13 +1536,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "View Certifications",
 																										"ar_SA": "View Certifications",
 																										"ca_ES": "View Certifications",
 																										"de_DE": "View Certifications",
+																										"en_US": "View Certifications",
 																										"es_ES": "View Certifications",
 																										"fi_FI": "View Certifications",
 																										"fr_FR": "View Certifications",
@@ -1557,7 +1589,8 @@
 																						"iconLink": "",
 																						"iconName": "order-arrow-right"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"borderRadius": "",
 																						"shadow": "",
@@ -1596,7 +1629,8 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
@@ -1719,7 +1753,8 @@
 														},
 														{
 															"id": "tablet",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														}
 													],
 													"verticalAlignment": "middle"
@@ -1741,7 +1776,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1810,7 +1846,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -1869,7 +1906,8 @@
 																	"id": "portraitMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "tablet"
 																}
 															],
@@ -1929,13 +1967,14 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Delivery Accreditation",
 																								"ar_SA": "Delivery Accreditation",
 																								"ca_ES": "Delivery Accreditation",
 																								"de_DE": "Delivery Accreditation",
+																								"en_US": "Delivery Accreditation",
 																								"es_ES": "Delivery Accreditation",
 																								"fi_FI": "Delivery Accreditation",
 																								"fr_FR": "Delivery Accreditation",
@@ -1996,7 +2035,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": ""
@@ -2069,13 +2109,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "View Delivery Accreditation",
 																										"ar_SA": "View Delivery Accreditation",
 																										"ca_ES": "View Delivery Accreditation",
 																										"de_DE": "View Delivery Accreditation",
+																										"en_US": "View Delivery Accreditation",
 																										"es_ES": "View Delivery Accreditation",
 																										"fi_FI": "View Delivery Accreditation",
 																										"fr_FR": "View Delivery Accreditation",
@@ -2121,7 +2162,8 @@
 																						"iconLink": "",
 																						"iconName": "order-arrow-right"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"fragmentStyle": {
 																						"borderRadius": "",
 																						"shadow": "",
@@ -2160,11 +2202,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],

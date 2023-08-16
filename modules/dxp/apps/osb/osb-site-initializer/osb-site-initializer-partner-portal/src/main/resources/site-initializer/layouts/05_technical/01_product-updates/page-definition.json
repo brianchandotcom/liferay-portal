@@ -24,18 +24,20 @@
 							"fragment": {
 								"key": "content-welcome-banner"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Welcome to Product Updates",
 												"ar_SA": "Welcome to Product Updates",
 												"ca_ES": "Welcome to Product Updates",
 												"de_DE": "Welcome to Product Updates",
+												"en_US": "Welcome to Product Updates",
 												"es_ES": "Welcome to Product Updates",
 												"fi_FI": "Welcome to Product Updates",
 												"fr_FR": "Welcome to Product Updates",
@@ -52,13 +54,14 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
 												"ar_SA": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
 												"ca_ES": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
 												"de_DE": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
+												"en_US": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
 												"es_ES": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
 												"fi_FI": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
 												"fr_FR": "Each week, as we release a new Update for Liferay DXP 7.4, we'll summarise the most important features, provide links to where you can get more details, and provide quick \"how-to\" videos to show you the new features in action!",
@@ -75,7 +78,8 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -83,15 +87,18 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -119,7 +126,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -131,11 +139,13 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							}
 						],
@@ -178,11 +188,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"collectionViewportDefinition": {},
+											"collectionViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"collectionViewportDefinition": {},
+											"collectionViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -201,7 +213,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -290,7 +303,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -312,7 +326,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -336,7 +351,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -396,7 +412,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_updateNumber",
@@ -454,7 +471,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -537,10 +555,10 @@
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "View Details",
 																												"ar_SA": "View Details",
 																												"ca_ES": "View Details",
 																												"de_DE": "View Details",
+																												"en_US": "View Details",
 																												"es_ES": "View Details",
 																												"fi_FI": "View Details",
 																												"fr_FR": "View Details",
@@ -586,7 +604,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",

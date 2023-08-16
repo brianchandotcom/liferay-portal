@@ -24,18 +24,20 @@
 							"fragment": {
 								"key": "content-welcome-banner"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Welcome to Pricing Calculator",
 												"ar_SA": "Welcome to Pricing Calculator",
 												"ca_ES": "Welcome to Pricing Calculator",
 												"de_DE": "Welcome to Pricing Calculator",
+												"en_US": "Welcome to Pricing Calculator",
 												"es_ES": "Welcome to Pricing Calculator",
 												"fi_FI": "Welcome to Pricing Calculator",
 												"fr_FR": "Welcome to Pricing Calculator",
@@ -52,13 +54,15 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								},
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -66,7 +70,8 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -80,13 +85,14 @@
 												{
 													"id": "first-banner-primary-button-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Watch Video",
 																"ar_SA": "Watch Video",
 																"ca_ES": "Watch Video",
 																"de_DE": "Watch Video",
+																"en_US": "Watch Video",
 																"es_ES": "Watch Video",
 																"fi_FI": "Watch Video",
 																"fr_FR": "Watch Video",
@@ -109,11 +115,13 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -138,7 +146,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -150,11 +159,13 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							}
 						],

@@ -68,8 +68,8 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	@Reference
 	protected QueryPreProcessConfiguration queryPreProcessConfiguration;
 
-	@Reference
-	protected SubstringFieldQueryBuilder substringFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=substring)")
+	protected FieldQueryBuilder substringFieldQueryBuilder;
 
 	@Reference(target = "(query.builder.type=title)")
 	protected FieldQueryBuilder titleFieldQueryBuilder;

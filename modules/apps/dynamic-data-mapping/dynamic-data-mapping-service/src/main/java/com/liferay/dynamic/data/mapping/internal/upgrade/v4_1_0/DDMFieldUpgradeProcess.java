@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -92,10 +93,11 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					StringBundler.concat(
 						"select DDMContent.contentId, DDMContent.companyId, ",
 						"DDMContent.data_, DDMStorageLink.structureVersionId, ",
-						"DDMStructure.structureId from DDMContent inner join ",
-						"DDMStorageLink on DDMStorageLink.classPK = ",
-						"DDMContent.contentId inner join DDMStructureVersion ",
-						"on DDMStructureVersion.structureVersionId = ",
+						"DDMStructure.structureId, DDMStructure.classNameId ",
+						"from DDMContent inner join DDMStorageLink on ",
+						"DDMStorageLink.classPK = DDMContent.contentId inner ",
+						"join DDMStructureVersion on ",
+						"DDMStructureVersion.structureVersionId = ",
 						"DDMStorageLink.structureVersionId inner join ",
 						"DDMStructure on DDMStructureVersion.structureId = ",
 						"DDMStructure.structureId where ",
@@ -131,6 +133,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				_upgradeDDMContent(
+					resultSet.getLong("classNameId"),
 					resultSet.getLong("companyId"),
 					resultSet.getLong("contentId"),
 					insertDDMFieldPreparedStatement,
@@ -375,7 +378,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMContent(
-			long companyId, long contentId,
+			long classNameId, long companyId, long contentId,
 			PreparedStatement insertDDMFieldPreparedStatement,
 			PreparedStatement insertDDMFieldAttributePreparedStatement,
 			String data, PreparedStatement deleteDDMContentPreparedStatement,
@@ -401,9 +404,13 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		DDMFormValues ddmFormValues =
 			ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 
-		ddmFormValues.setDDMFormFieldValues(
-			_upgradeDDMFormValuesHierarchy(
-				ddmFormValues.getDDMFormFieldValues()));
+		if (classNameId != PortalUtil.getClassNameId(
+				_CLASS_NAME_DDL_RECORD_SET)) {
+
+			ddmFormValues.setDDMFormFieldValues(
+				_upgradeDDMFormValuesHierarchy(
+					ddmFormValues.getDDMFormFieldValues()));
+		}
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
@@ -571,6 +578,9 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 		return newDDMFormFieldValues;
 	}
+
+	private static final String _CLASS_NAME_DDL_RECORD_SET =
+		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFieldUpgradeProcess.class);

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
@@ -117,11 +118,15 @@ public class SynchronousDestinationTestRule
 			}
 
 			testSynchronousDestination.setName(destinationName);
+			testSynchronousDestination.setMessageListenerRegistry(
+				_serviceTracker.getService());
 
 			return testSynchronousDestination;
 		}
 
 		public void enableSync() {
+			_serviceTracker.open();
+
 			Filter audioProcessorFilter = _registerDestinationFilter(
 				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
 			Filter asyncFilter = _registerDestinationFilter(
@@ -331,6 +336,8 @@ public class SynchronousDestinationTestRule
 			ReflectionTestUtil.setFieldValue(
 				destination, "messageListeners",
 				_schedulerInvokerMessageListeners);
+
+			_serviceTracker.close();
 		}
 
 		/**
@@ -390,6 +397,11 @@ public class SynchronousDestinationTestRule
 		private SafeCloseable _bufferedIncrementForceSyncSafeCloseable;
 		private Map<String, Destination> _destinations;
 		private Set<InvokerMessageListener> _schedulerInvokerMessageListeners;
+		private final ServiceTracker
+			<MessageListenerRegistry, MessageListenerRegistry> _serviceTracker =
+				new ServiceTracker<>(
+					SystemBundleUtil.getBundleContext(),
+					MessageListenerRegistry.class, null);
 		private Sync _sync;
 
 	}

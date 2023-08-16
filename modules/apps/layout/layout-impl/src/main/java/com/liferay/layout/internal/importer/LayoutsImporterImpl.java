@@ -168,6 +168,15 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	@Override
+	public Layout importLayoutSettings(Layout layout, String settingsJSON)
+		throws Exception {
+
+		Settings settings = Settings.toDTO(settingsJSON);
+
+		return _updateLayoutSettings(layout, settings);
+	}
+
+	@Override
 	public List<FragmentEntryLink> importPageElement(
 			Layout layout, LayoutStructure layoutStructure, String parentItemId,
 			String pageElementJSON, int position)
@@ -1364,7 +1373,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
-			_updateLayoutSettings(layout, settings);
+			layout = _updateLayoutSettings(layout, settings);
 		}
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
@@ -1554,14 +1563,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private void _updateLayoutSettings(Layout layout, Settings settings) {
+	private Layout _updateLayoutSettings(Layout layout, Settings settings) {
 		if (settings == null) {
 			layout.setThemeId(null);
 			layout.setColorSchemeId(null);
 
-			layout = _layoutLocalService.updateLayout(layout);
-
-			return;
+			return _layoutLocalService.updateLayout(layout);
 		}
 
 		UnicodeProperties unicodeProperties =
@@ -1629,7 +1636,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 		}
 
-		_layoutLocalService.updateLayout(layout);
+		return _layoutLocalService.updateLayout(layout);
 	}
 
 	private static final String _DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT =

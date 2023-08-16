@@ -1,6 +1,7 @@
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR
+ * LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.change.tracking.web.internal.portlet.action;
@@ -19,6 +20,7 @@ import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.diff.DiffHtml;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -47,8 +50,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperienceTable;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ResourceRequest;
@@ -650,6 +661,70 @@ public class GetEntryRenderDataMVCResourceCommand
 			);
 		}
 
+		if (ctEntry.getModelClassNameId() ==
+				_classNameLocalService.getClassNameId(Layout.class)) {
+
+			List<SegmentsExperience> segmentsExperienceList =
+				_segmentsExperienceLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						SegmentsExperienceTable.INSTANCE
+					).from(
+						SegmentsExperienceTable.INSTANCE
+					).where(
+						SegmentsExperienceTable.INSTANCE.plid.eq(
+							ctEntry.getModelClassPK()
+						).and(
+							SegmentsExperienceTable.INSTANCE.ctCollectionId.eq(
+								CTConstants.CT_COLLECTION_ID_PRODUCTION
+							).or(
+								SegmentsExperienceTable.INSTANCE.ctCollectionId.
+									eq(ctEntry.getCtCollectionId())
+							)
+						)
+					));
+
+			JSONArray segmentsExperienceJSONArray =
+				_jsonFactory.createJSONArray();
+
+			for (SegmentsExperience segmentsExperience :
+					segmentsExperienceList) {
+
+				segmentsExperienceJSONArray.put(
+					JSONUtil.put(
+						"active", segmentsExperience.getActive()
+					).put(
+						"id", segmentsExperience.getSegmentsExperienceId()
+					).put(
+						"name",
+						segmentsExperience.getName(
+							httpServletRequest.getLocale())
+					).put(
+						"segmentName",
+						() -> {
+							if (Objects.equals(
+									segmentsExperience.
+										getSegmentsExperienceKey(),
+									SegmentsExperienceConstants.KEY_DEFAULT) &&
+								(segmentsExperience.getSegmentsEntryId() ==
+									0)) {
+
+								return _language.get(
+									httpServletRequest, "anyone");
+							}
+
+							SegmentsEntry segmentsEntry =
+								_segmentsEntryLocalService.getSegmentsEntry(
+									segmentsExperience.getSegmentsEntryId());
+
+							return segmentsEntry.getName(
+								httpServletRequest.getLocale());
+						}
+					));
+			}
+
+			jsonObject.put("userExperiences", segmentsExperienceJSONArray);
+		}
+
 		return jsonObject;
 	}
 
@@ -908,5 +983,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

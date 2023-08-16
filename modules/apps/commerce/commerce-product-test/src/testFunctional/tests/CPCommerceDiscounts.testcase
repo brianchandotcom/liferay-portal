@@ -925,6 +925,82 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12062 and COMMERCE-12091, Verify that is not possible to use the comma and that the Minimum Amount must be filled with a number"
+	@priority = 5
+	test CanUserReciveAnErrorForEmptyOrDecimalCommaNumberForMinimumAmountField {
+		property portal.acceptance = "true";
+
+		task ("Given a Discount is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				target = "products",
+				title = "Discount 1 10% off",
+				usePercentage = "true");
+
+			CommerceNavigator.goToDiscountAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Discount 1 10% off");
+		}
+
+		task ("And a new rule is added") {
+			CommerceDiscounts.addNewDiscountsRule(
+				name = "Rule",
+				type = "Cart Total");
+
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Cart total minimum amount cannot be empty and must be a decimal number.");
+		}
+
+		task ("And the user leaves the Minimum Amount empty") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Rule");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				key_fieldLabel = "Cart Total Minimum Amount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "");
+		}
+
+		task ("Then the user will receive an error") {
+			Button.clickSave();
+
+			AssertElementPresent(
+				key_field = "The Cart Total Minimum Amount field is required.",
+				locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
+		}
+
+		task ("And if the user add a number with the comma into the field") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Rule");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type.sendKeys(
+				key_fieldLabel = "Cart Total Minimum Amount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "1000,00");
+
+			Button.clickSave();
+		}
+
+		task ("Then the user will receive an error") {
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Cart total minimum amount cannot be empty and must be a decimal number.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9592."
 	@priority = 5
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {

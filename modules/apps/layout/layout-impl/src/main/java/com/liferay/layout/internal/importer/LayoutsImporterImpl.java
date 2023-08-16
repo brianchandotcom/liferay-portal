@@ -7,10 +7,16 @@ package com.liferay.layout.internal.importer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.delivery.dto.v1_0.ClientExtension;
 import com.liferay.headless.delivery.dto.v1_0.ContentSubtype;
 import com.liferay.headless.delivery.dto.v1_0.ContentType;
 import com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate;
@@ -81,6 +87,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -100,6 +107,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -1571,6 +1579,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			return _layoutLocalService.updateLayout(layout);
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
@@ -1609,6 +1620,22 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layout.setCss(settings.getCss());
 		}
 
+		Map<String, Serializable> favIconMap =
+			(Map<String, Serializable>)settings.getFavIcon();
+
+		if (MapUtil.isNotEmpty(favIconMap)) {
+			if (Objects.equals(favIconMap.get("contentType"), "Document")) {
+				layout.setFaviconFileEntryId(
+					_getFileEntryId(GetterUtil.getLong(favIconMap.get("id"))));
+			}
+			else if (favIconMap.containsKey("externalReferenceCode")) {
+				_addClientExtensionEntryRel(
+					String.valueOf(favIconMap.get("externalReferenceCode")),
+					layout, serviceContext,
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+			}
+		}
+
 		MasterPage masterPage = settings.getMasterPage();
 
 		if (masterPage != null) {
@@ -1636,7 +1663,65 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 		}
 
+		ArrayUtil.isNotEmptyForEach(
+			settings.getGlobalCSSClientExtensions(),
+			globalCSSClientExtension -> _addClientExtensionEntryRel(
+				globalCSSClientExtension.getExternalReferenceCode(), layout,
+				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS));
+		ArrayUtil.isNotEmptyForEach(
+			settings.getGlobalJSClientExtensions(),
+			globalJSClientExtension -> _addClientExtensionEntryRel(
+				globalJSClientExtension.getExternalReferenceCode(), layout,
+				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_JS));
+
+		ClientExtension themeCSSClientExtension =
+			settings.getThemeCSSClientExtension();
+
+		if (themeCSSClientExtension != null) {
+			_addClientExtensionEntryRel(
+				themeCSSClientExtension.getExternalReferenceCode(), layout,
+				serviceContext, ClientExtensionEntryConstants.TYPE_THEME_CSS);
+		}
+
 		return _layoutLocalService.updateLayout(layout);
+	}
+
+	private void _addClientExtensionEntryRel(
+		String cetExternalReferenceCode, Layout layout,
+		ServiceContext serviceContext, String type) {
+
+		CET cet = _cetManager.getCET(
+			layout.getCompanyId(), cetExternalReferenceCode);
+
+		if ((cet == null) || !Objects.equals(type, cet.getType())) {
+			return;
+		}
+
+		try {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				serviceContext.getUserId(), layout.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), cetExternalReferenceCode, type, null,
+				serviceContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+	}
+
+	private long _getFileEntryId(long contentDocumentId) {
+		try {
+			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
+
+			return fileEntry.getFileEntryId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return 0;
 	}
 
 	private static final String _DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT =
@@ -1693,6 +1778,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private ClientExtensionEntryRelLocalService _clientExtensionEntryRelLocalService;
+
+	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
@@ -1703,6 +1791,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
@@ -1722,6 +1813,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private CETManager _cetManager;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

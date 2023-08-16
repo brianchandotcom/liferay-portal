@@ -931,14 +931,29 @@ information.
 
 					<trycatch>
 						<try>
-							<if>
-								<not>
-									<equals arg1="${gradle.executable.task}" arg2="" />
-								</not>
-								<then>
-									<echo>Executing Gradle task: ${gradle.executable.task}</echo>
-								</then>
-							</if>
+							<beanshell>
+								<![CDATA[
+									StringBuilder sb = new StringBuilder();
+
+									String gradleExecutableTask = project.getProperty("gradle.executable.task");
+
+									if ((gradleExecutableTask != null) && !gradleExecutableTask.isEmpty()) {
+										sb.append("Executing Gradle task: ");
+										sb.append(gradleExecutableTask);
+									}
+
+									String testName = project.getProperty("test.name");
+
+									if ((testName != null) && !testName.isEmpty()) {
+										sb.append(" --tests ");
+										sb.append(testName);
+									}
+
+									if (sb.length() > 0) {
+										System.out.println(sb.toString());
+									}
+								]]>
+							</beanshell>
 
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />

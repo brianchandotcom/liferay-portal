@@ -731,6 +731,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<var name="test.name" unset="true" />
 			<var name="test.project.name" unset="true" />
+			<var name="test.project.results.dir" unset="true" />
 
 			<local name="test.class.file" />
 			<local name="test.class.file.path" />
@@ -811,12 +812,21 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						return modulesProperties.getProperty("project.name[" + bundleSymbolicName + "]");
 					}
 
+					public static String getTestProjectResultsDir(File bndFile) {
+						String testProjectName = getTestProjectName(bndFile);
+
+						File testProjectResultsDir = new File(project.getProperty("project.dir") + "/modules/" + testProjectName.replaceAll(":", "/") + "/test-results/");
+
+						return JenkinsResultsParserUtil.getCanonicalPath(testProjectResultsDir);
+					}
+
 					String testClassFilePath = project.getProperty("test.class.file.path");
 
 					File bndFile = getBndFile(new File(testClassFilePath));
 
 					project.setProperty("test.name", getTestName(testClassFilePath));
 					project.setProperty("test.project.name", getTestProjectName(bndFile));
+					project.setProperty("test.project.results.dir", getTestProjectResultsDir(bndFile));
 				]]>
 			</beanshell>
 		</sequential>
@@ -2508,13 +2518,29 @@ log.sanitizer.enabled=false</echo>
 
 							<for list="${test.class.group}" param="test.class">
 								<sequential>
-									<get-test-project-information test.class="@{test.class}" />
+									<trycatch property="test.failure.message">
+										<try>
+											<get-test-project-information test.class="@{test.class}" />
 
-									<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="${test.project.name}:testIntegration" test.name="${test.name}">
-										<arg value="--continue" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</gradle-execute>
+											<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="${test.project.name}:testIntegration" test.name="${test.name}">
+												<arg value="--continue" />
+												<arg value="-Dbuild.exclude.ant.plugin=true" />
+												<arg value="-Dtest.class.group.index=${axis.variable}" />
+											</gradle-execute>
+
+											<move
+												todir="modules/test-results"
+											>
+												<fileset
+													dir="${test.project.results.dir}"
+													includes="**/TEST-*.xml"
+												/>
+											</move>
+										</try>
+										<catch>
+											<echo>${test.failure.message}</echo>
+										</catch>
+									</trycatch>
 								</sequential>
 							</for>
 
@@ -6947,16 +6973,32 @@ information. Make sure to commit in all format-javadoc results.
 
 				<for list="${test.class.group}" param="test.class">
 					<sequential>
-						<get-test-project-information test.class="@{test.class}" />
+						<trycatch property="test.failure.message">
+							<try>
+								<get-test-project-information test.class="@{test.class}" />
 
-						<gradle-execute dir="modules" task="${test.project.name}:test" test.name="${test.name}">
-							<arg value="--continue" />
-							<arg value="-Dbuild.exclude.ant.plugin=true" />
-							<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
-							<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
-							<arg value="-Dtest.class.group.index=${axis.variable}" />
-						</gradle-execute>
+								<gradle-execute dir="modules" task="${test.project.name}:test" test.name="${test.name}">
+									<arg value="--continue" />
+									<arg value="-Dbuild.exclude.ant.plugin=true" />
+									<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
+									<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+									<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
+									<arg value="-Dtest.class.group.index=${axis.variable}" />
+								</gradle-execute>
+
+								<move
+									todir="modules/test-results"
+								>
+									<fileset
+										dir="${test.project.results.dir}"
+										includes="**/TEST-*.xml"
+									/>
+								</move>
+							</try>
+							<catch>
+								<echo>${test.failure.message}</echo>
+							</catch>
+						</trycatch>
 					</sequential>
 				</for>
 

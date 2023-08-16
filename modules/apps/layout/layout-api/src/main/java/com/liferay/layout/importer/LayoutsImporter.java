@@ -27,6 +27,10 @@ public interface LayoutsImporter {
 			File file, boolean overwrite)
 		throws Exception;
 
+	public Layout importLayoutSettings(
+			long userId, Layout layout, String settingsJSON)
+		throws Exception;
+
 	public List<FragmentEntryLink> importPageElement(
 			Layout layout, LayoutStructure layoutStructure, String parentItemId,
 			String pageElementJSON, int position)
@@ -35,9 +39,6 @@ public interface LayoutsImporter {
 	public List<FragmentEntryLink> importPageElement(
 			Layout layout, LayoutStructure layoutStructure, String parentItemId,
 			String pageElementJSON, int position, long segmentsExperienceId)
-		throws Exception;
-
-	public Layout importLayoutSettings(Layout layout, String settingsJSON)
 		throws Exception;
 
 }

@@ -437,7 +437,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 			if (settings != null) {
 				layout = _layoutsImporter.importLayoutSettings(
-					layout, settings.toString());
+					contextUser.getUserId(), layout, settings.toString());
 			}
 		}
 

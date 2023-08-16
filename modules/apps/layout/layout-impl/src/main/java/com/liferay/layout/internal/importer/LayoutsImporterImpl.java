@@ -106,8 +106,8 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -176,12 +176,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	@Override
-	public Layout importLayoutSettings(Layout layout, String settingsJSON)
+	public Layout importLayoutSettings(
+			long userId, Layout layout, String settingsJSON)
 		throws Exception {
 
 		Settings settings = Settings.toDTO(settingsJSON);
 
-		return _updateLayoutSettings(layout, settings);
+		return _updateLayoutSettings(userId, layout, settings);
 	}
 
 	@Override
@@ -249,6 +250,29 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private void _addClientExtensionEntryRel(
+		String cetExternalReferenceCode, Layout layout,
+		ServiceContext serviceContext, String type, long userId) {
+
+		CET cet = _cetManager.getCET(
+			layout.getCompanyId(), cetExternalReferenceCode);
+
+		if ((cet == null) || !Objects.equals(type, cet.getType())) {
+			return;
+		}
+
+		try {
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				userId, layout.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), cetExternalReferenceCode, type, null,
+				serviceContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
 
 	private void _deleteExistingPortletPreferences(long plid) {
@@ -387,6 +411,21 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 
 		return _language.format(locale, languageKey, arguments);
+	}
+
+	private long _getFileEntryId(long contentDocumentId) {
+		try {
+			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
+
+			return fileEntry.getFileEntryId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return 0;
 	}
 
 	private String _getKey(String defaultKey, String name, ZipEntry zipEntry) {
@@ -1116,7 +1155,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				Set<String> warningMessages = new HashSet<>();
 
 				_processPageDefinition(
-					layoutPageTemplateEntry.getPlid(), pageDefinition,
+					layoutPageTemplateEntry.getPlid(), pageDefinition, userId,
 					warningMessages);
 
 				long previewFileEntryId = _getPreviewFileEntryId(
@@ -1252,7 +1291,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				Set<String> warningMessages = new HashSet<>();
 
 				_processPageDefinition(
-					layoutUtilityPageEntry.getPlid(), pageDefinition,
+					layoutUtilityPageEntry.getPlid(), pageDefinition, userId,
 					warningMessages);
 
 				long previewFileEntryId = _getPreviewFileEntryId(
@@ -1339,7 +1378,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processPageDefinition(
-			long plid, PageDefinition pageDefinition,
+			long plid, PageDefinition pageDefinition, long userId,
 			Set<String> warningMessages)
 		throws Exception {
 
@@ -1381,7 +1420,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
-			layout = _updateLayoutSettings(layout, settings);
+			layout = _updateLayoutSettings(userId, layout, settings);
 		}
 
 		_updateLayoutPageTemplateStructure(layout, layoutStructure);
@@ -1571,7 +1610,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private Layout _updateLayoutSettings(Layout layout, Settings settings) {
+	private Layout _updateLayoutSettings(
+		long userId, Layout layout, Settings settings) {
+
 		if (settings == null) {
 			layout.setThemeId(null);
 			layout.setColorSchemeId(null);
@@ -1632,7 +1673,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_addClientExtensionEntryRel(
 					String.valueOf(favIconMap.get("externalReferenceCode")),
 					layout, serviceContext,
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON, userId);
 			}
 		}
 
@@ -1667,12 +1708,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			settings.getGlobalCSSClientExtensions(),
 			globalCSSClientExtension -> _addClientExtensionEntryRel(
 				globalCSSClientExtension.getExternalReferenceCode(), layout,
-				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS));
+				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+				userId));
 		ArrayUtil.isNotEmptyForEach(
 			settings.getGlobalJSClientExtensions(),
 			globalJSClientExtension -> _addClientExtensionEntryRel(
 				globalJSClientExtension.getExternalReferenceCode(), layout,
-				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_JS));
+				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+				userId));
 
 		ClientExtension themeCSSClientExtension =
 			settings.getThemeCSSClientExtension();
@@ -1680,48 +1723,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		if (themeCSSClientExtension != null) {
 			_addClientExtensionEntryRel(
 				themeCSSClientExtension.getExternalReferenceCode(), layout,
-				serviceContext, ClientExtensionEntryConstants.TYPE_THEME_CSS);
+				serviceContext, ClientExtensionEntryConstants.TYPE_THEME_CSS,
+				userId);
 		}
 
 		return _layoutLocalService.updateLayout(layout);
-	}
-
-	private void _addClientExtensionEntryRel(
-		String cetExternalReferenceCode, Layout layout,
-		ServiceContext serviceContext, String type) {
-
-		CET cet = _cetManager.getCET(
-			layout.getCompanyId(), cetExternalReferenceCode);
-
-		if ((cet == null) || !Objects.equals(type, cet.getType())) {
-			return;
-		}
-
-		try {
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				serviceContext.getUserId(), layout.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid(), cetExternalReferenceCode, type, null,
-				serviceContext);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-	}
-
-	private long _getFileEntryId(long contentDocumentId) {
-		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
-
-			return fileEntry.getFileEntryId();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		return 0;
 	}
 
 	private static final String _DISPLAY_PAGE_TEMPLATE_ENTRY_KEY_DEFAULT =
@@ -1759,6 +1765,16 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private CETManager _cetManager;
+
+	@Reference
+	private ClientExtensionEntryRelLocalService
+		_clientExtensionEntryRelLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
 
@@ -1778,9 +1794,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private ClientExtensionEntryRelLocalService _clientExtensionEntryRelLocalService;
-
-	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
@@ -1791,9 +1804,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
@@ -1813,9 +1823,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private CETManager _cetManager;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

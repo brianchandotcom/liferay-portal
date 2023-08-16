@@ -11,12 +11,15 @@ import {ObjectDefinitionNodeData} from '../types';
 export declare function DefinitionNode({
 	data: {
 		defaultLanguageId,
+		editObjectDefinitionURL,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
 		isLinkedNode,
 		label,
 		name,
 		nodeSelected,
+		objectDefinitionId,
+		objectDefinitionPermissionsURL,
 		objectFields,
 		status,
 		system,

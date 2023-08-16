@@ -10,7 +10,7 @@ import React from 'react';
 import DangerModal from '../DangerModal';
 import WarningModal from '../WarningModal';
 import {DeletedObjectDefinition} from './ViewObjectDefinitions';
-import {deleteObjectDefinition} from './objectDefinitionUtil';
+import {deleteObjectDefinitionToast} from './objectDefinitionUtil';
 
 interface ModalDeleteObjectDefinitionProps {
 	handleOnClose: () => void;
@@ -71,7 +71,7 @@ export function ModalDeleteObjectDefinition({
 					observer={observer}
 					onClose={onClose}
 					onDelete={async () => {
-						await deleteObjectDefinition(
+						await deleteObjectDefinitionToast(
 							objectDefinition?.id,
 							objectDefinition?.name
 						);

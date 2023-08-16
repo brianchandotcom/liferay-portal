@@ -42,15 +42,17 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.RolePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -58,6 +60,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -254,6 +259,25 @@ public class UserResourceDTOConverter
 		};
 	}
 
+	private List<Role> _getUserGroupRoles(long userId, long groupId)
+		throws Exception {
+
+		List<Role> roles = _roleLocalService.getUserGroupRoles(userId, groupId);
+
+		List<Role> filteredRoles = new ArrayList<>();
+
+		for (Role role : roles) {
+			if (_rolePermission.contains(
+					GuestOrUserUtil.getPermissionChecker(), role.getRoleId(),
+					ActionKeys.VIEW)) {
+
+				filteredRoles.add(role);
+			}
+		}
+
+		return filteredRoles;
+	}
+
 	private AccountBrief _toAccountBrief(
 			AccountEntryUserRel accountEntryUserRel,
 			DTOConverterContext dtoConverterContext, User user)
@@ -293,7 +317,7 @@ public class UserResourceDTOConverter
 				id = organization.getOrganizationId();
 				name = organization.getName();
 				roleBriefs = TransformUtil.transformToArray(
-					_roleService.getUserGroupRoles(
+					_getUserGroupRoles(
 						user.getUserId(), organization.getGroupId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
@@ -349,8 +373,7 @@ public class UserResourceDTOConverter
 					dtoConverterContext.isAcceptAllLanguages(),
 					group.getNameMap());
 				roleBriefs = TransformUtil.transformToArray(
-					_roleService.getUserGroupRoles(
-						user.getUserId(), group.getGroupId()),
+					_getUserGroupRoles(user.getUserId(), group.getGroupId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
 			}
@@ -387,13 +410,16 @@ public class UserResourceDTOConverter
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private RoleLocalService _roleLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"
 	)
 	private ModelResourcePermission<Role> _roleModelResourcePermission;
 
 	@Reference
-	private RoleService _roleService;
+	private RolePermission _rolePermission;
 
 	@Reference
 	private UserBagFactory _userBagFactory;

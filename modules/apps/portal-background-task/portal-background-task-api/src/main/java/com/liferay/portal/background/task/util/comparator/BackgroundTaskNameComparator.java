@@ -3,29 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.background.task.kernel.util.comparator;
+package com.liferay.portal.background.task.util.comparator;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo García
+ * @author Daniel Kocsis
  */
-public class BackgroundTaskCreateDateComparator
+public class BackgroundTaskNameComparator
 	extends OrderByComparator<BackgroundTask> {
 
-	public static final String ORDER_BY_ASC = "BackgroundTask.createDate ASC";
+	public static final String ORDER_BY_ASC = "BackgroundTask.name ASC";
 
-	public static final String ORDER_BY_DESC = "BackgroundTask.createDate DESC";
+	public static final String ORDER_BY_DESC = "BackgroundTask.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public BackgroundTaskCreateDateComparator() {
+	public BackgroundTaskNameComparator() {
 		this(false);
 	}
 
-	public BackgroundTaskCreateDateComparator(boolean ascending) {
+	public BackgroundTaskNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -33,8 +32,10 @@ public class BackgroundTaskCreateDateComparator
 	public int compare(
 		BackgroundTask backgroundTask1, BackgroundTask backgroundTask2) {
 
-		int value = DateUtil.compareTo(
-			backgroundTask1.getCreateDate(), backgroundTask2.getCreateDate());
+		String name1 = backgroundTask1.getName();
+		String name2 = backgroundTask2.getName();
+
+		int value = name1.compareToIgnoreCase(name2);
 
 		if (_ascending) {
 			return value;

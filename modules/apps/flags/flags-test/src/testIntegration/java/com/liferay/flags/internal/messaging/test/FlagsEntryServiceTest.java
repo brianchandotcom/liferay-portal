@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
@@ -118,23 +117,18 @@ public class FlagsEntryServiceTest {
 	}
 
 	private void _registerDestination(MessageListener messageListener) {
-		DestinationConfiguration destinationConfiguration =
+		Destination destination = _destinationFactory.createDestination(
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				DestinationNames.SUBSCRIPTION_SENDER);
-
-		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
+				DestinationNames.SUBSCRIPTION_SENDER));
 
 		destination.register(messageListener);
 
-		Dictionary<String, Object> properties =
+		_serviceRegistration = _bundleContext.registerService(
+			Destination.class, destination,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
-			).build();
-
-		_serviceRegistration = _bundleContext.registerService(
-			Destination.class, destination, properties);
+			).build());
 	}
 
 	private BundleContext _bundleContext;

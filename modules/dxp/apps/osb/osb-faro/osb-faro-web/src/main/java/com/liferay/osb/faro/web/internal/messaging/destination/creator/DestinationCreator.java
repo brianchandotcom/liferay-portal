@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Dictionary;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
@@ -24,22 +22,15 @@ public class DestinationCreator {
 		BundleContext bundleContext, DestinationFactory destinationFactory,
 		String destinationName) {
 
-		_bundleContext = bundleContext;
-
-		DestinationConfiguration destinationConfiguration =
-			DestinationConfiguration.createSerialDestinationConfiguration(
-				destinationName);
-
 		Destination destination = destinationFactory.createDestination(
-			destinationConfiguration);
+			DestinationConfiguration.createSerialDestinationConfiguration(
+				destinationName));
 
-		Dictionary<String, Object> dictionary =
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, destination,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
-			).build();
-
-		_serviceRegistration = _bundleContext.registerService(
-			Destination.class, destination, dictionary);
+			).build());
 	}
 
 	public void removeDestination() {
@@ -48,7 +39,6 @@ public class DestinationCreator {
 		}
 	}
 
-	private volatile BundleContext _bundleContext;
 	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

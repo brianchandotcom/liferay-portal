@@ -2752,6 +2752,81 @@ definition {
 			fieldValue = "blocked.com");
 	}
 
+	@description = "This is a use case for LPS-189434. The Admin is able to remove entries inside the form when inviting users to an account."
+	@priority = 5
+	test CanRemoveEntryFromUserInvitationForm {
+		property custom.properties = "feature.flag.LPS-189430=true";
+
+		task ("Given: Add an account and navigate to invite users") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Account._goToInviteUsers(accountName = "Account Name");
+
+			AssertElementNotPresent(locator1 = "Icon#DELETE");
+		}
+
+		task ("When: Add a user entry and click remove button") {
+			Button.click(button = "Add Entry");
+
+			AssertElementPresent(locator1 = "Icon#DELETE");
+
+			Type(
+				key_indexNumber = 2,
+				key_text = "Email Addresses",
+				locator1 = "TextInput#ANY_N",
+				value1 = "user@liferay.com");
+
+			KeyPress(
+				key_indexNumber = 2,
+				key_text = "Email Addresses",
+				locator1 = "TextInput#ANY_N",
+				value1 = "\RETURN");
+
+			ClickNoError(
+				key_indexNumber = 1,
+				key_text = "times-circle",
+				locator1 = "Icon#ANY_N");
+
+			Confirm.dismissAlert();
+
+			ClickNoError(
+				key_indexNumber = 1,
+				key_text = "times-circle",
+				locator1 = "Icon#ANY_N");
+
+			AssertConfirm(value1 = "Do you want to remove this entry?");
+		}
+
+		task ("Then: Assert added entry is deleted after executing the confirmation in the confirmation window and does not affect the original feature") {
+			AssertElementNotPresent(
+				key_indexNumber = 2,
+				key_text = "Email Addresses",
+				locator1 = "TextInput#ANY_N");
+
+			Type(
+				key_text = "Email Addresses",
+				locator1 = "TextInput#ANY",
+				value1 = "user@liferay.com");
+
+			KeyPress(
+				key_text = "Email Addresses",
+				locator1 = "TextInput#ANY",
+				value1 = "\RETURN");
+
+			SelectFrameTop();
+
+			Button.click(button = "Invite");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "This test removes an organization as an assignee of a business account."
 	@priority = 5
 	test CanRemoveOrganizationFromBusinessAccount {

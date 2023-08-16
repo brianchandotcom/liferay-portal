@@ -758,10 +758,10 @@ public class ObjectEntryDisplayContextImpl
 			JSONArray rowsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (ObjectField objectField :
-					_objectFieldLocalService.getCustomObjectFields(
+					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {
 
-				if (!_isActive(objectField)) {
+				if (!_isActive(objectField) || objectField.isMetadata()) {
 					continue;
 				}
 
@@ -800,7 +800,7 @@ public class ObjectEntryDisplayContextImpl
 		Map<Long, ObjectField> objectFieldsMap = new HashMap<>();
 
 		ListUtil.isNotEmptyForEach(
-			_objectFieldLocalService.getCustomObjectFields(
+			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId()),
 			objectField -> objectFieldsMap.put(
 				objectField.getObjectFieldId(), objectField));

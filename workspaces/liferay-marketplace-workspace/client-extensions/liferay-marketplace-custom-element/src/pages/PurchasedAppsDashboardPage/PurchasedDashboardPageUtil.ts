@@ -63,11 +63,7 @@ export const customerAppPermissionDescriptions: PermissionDescription[] = [
 	{
 		permissionName: 'View purchased apps and solutions',
 		permissionTooltip: 'View Cloud and DXP apps purchased by the customer.',
-		permittedRoles: [
-			'Account Administrator',
-			'Account Buyer',
-			'Account Member',
-		],
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
 	},
 	{
 		permissionName: 'Create licenses for a DXP application',

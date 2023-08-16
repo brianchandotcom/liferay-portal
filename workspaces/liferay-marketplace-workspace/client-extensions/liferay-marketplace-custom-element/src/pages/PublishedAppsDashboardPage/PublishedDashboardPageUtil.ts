@@ -66,11 +66,7 @@ export type UserAccountProps = {
 	roleBriefs: RoleBriefProps[];
 };
 
-export const customerRoles = [
-	'Account Administrator',
-	'Account Buyer',
-	'Account Member',
-];
+export const customerRoles = ['Account Administrator', 'Account Buyer'];
 
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{

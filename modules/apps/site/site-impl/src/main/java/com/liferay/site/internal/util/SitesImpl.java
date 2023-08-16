@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portlet.sites.util;
+package com.liferay.site.internal.util;
 
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
@@ -93,11 +93,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Raymond Augé
  * @author Ryan Park
  * @author Zsolt Berentey
  */
+@Component(service = Sites.class)
 public class SitesImpl implements Sites {
 
 	@Override

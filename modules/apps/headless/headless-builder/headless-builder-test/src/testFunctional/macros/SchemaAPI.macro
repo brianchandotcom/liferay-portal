@@ -58,7 +58,7 @@ definition {
 	}
 
 	macro getAPISchemas {
-		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
+		var curl = SchemaAPI._curlAPISchema(virtualHost = ${virtualHost});
 
 		var response = JSONCurlUtil.get(${curl});
 

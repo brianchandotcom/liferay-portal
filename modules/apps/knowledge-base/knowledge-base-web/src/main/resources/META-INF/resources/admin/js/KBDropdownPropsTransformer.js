@@ -107,7 +107,7 @@ const ACTIONS = {
 			},
 			selectEventName: `selectKBMoveFolder`,
 			size: 'md',
-			title: sub(Liferay.Language.get('move-x-to'), kbObjectTitle),
+			title: sub(Liferay.Language.get('move-x-to'), `"${kbObjectTitle}"`),
 			url: addParams(
 				`${portletNamespace}moveKBObjectId=${kbObjectId}&${portletNamespace}moveKBObjectClassName=${kbObjectType}`,
 				moveKBObjectModalURL

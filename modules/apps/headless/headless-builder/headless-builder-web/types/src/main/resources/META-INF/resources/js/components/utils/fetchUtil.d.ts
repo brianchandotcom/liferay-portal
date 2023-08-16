@@ -12,6 +12,7 @@ export declare function fetchJSON<T>({
 	input: RequestInfo;
 }): Promise<T>;
 export declare function getItems<T>({url}: {url: string}): Promise<T[]>;
+export declare function getAllItems<T>({url}: {url: string}): Promise<T[]>;
 export declare function updateData<T>({
 	dataToUpdate,
 	onError,

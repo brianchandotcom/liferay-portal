@@ -29,6 +29,26 @@ export async function getItems<T>({url}: {url: string}) {
 	return items;
 }
 
+export async function getAllItems<T>({url}: {url: string}) {
+	let allItems: T[] = [];
+	let currentPage = 1;
+	let lastPage;
+
+	do {
+		const {items, lastPage: lastPageFromAPI, page} = await fetchJSON<{
+			items: T[];
+			lastPage: number;
+			page: number;
+		}>({input: url + `?page=${currentPage}`});
+
+		currentPage = page + 1;
+		lastPage = lastPageFromAPI;
+		allItems = [...allItems, ...items];
+	} while (currentPage <= lastPage);
+
+	return allItems;
+}
+
 export async function updateData<T>({
 	dataToUpdate,
 	onError,

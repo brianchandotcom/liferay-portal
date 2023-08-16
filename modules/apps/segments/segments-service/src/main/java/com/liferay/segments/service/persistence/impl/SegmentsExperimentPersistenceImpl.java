@@ -3281,150 +3281,113 @@ public class SegmentsExperimentPersistenceImpl
 	private static final String _FINDER_COLUMN_G_S_SEGMENTSEXPERIMENTKEY_3 =
 		"(segmentsExperiment.segmentsExperimentKey IS NULL OR segmentsExperiment.segmentsExperimentKey = '')";
 
-	private FinderPath _finderPathWithPaginationFindByG_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P;
+	private FinderPath _finderPathFetchByG_P;
 	private FinderPath _finderPathCountByG_P;
 
 	/**
-	 * Returns all the segments experiments where groupId = &#63; and plid = &#63;.
+	 * Returns the segments experiment where groupId = &#63; and plid = &#63; or throws a <code>NoSuchExperimentException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param plid the plid
-	 * @return the matching segments experiments
+	 * @return the matching segments experiment
+	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
 	 */
 	@Override
-	public List<SegmentsExperiment> findByG_P(long groupId, long plid) {
-		return findByG_P(
-			groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public SegmentsExperiment findByG_P(long groupId, long plid)
+		throws NoSuchExperimentException {
+
+		SegmentsExperiment segmentsExperiment = fetchByG_P(groupId, plid);
+
+		if (segmentsExperiment == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", plid=");
+			sb.append(plid);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchExperimentException(sb.toString());
+		}
+
+		return segmentsExperiment;
 	}
 
 	/**
-	 * Returns a range of all the segments experiments where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>.
-	 * </p>
+	 * Returns the segments experiment where groupId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments
+	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	@Override
-	public List<SegmentsExperiment> findByG_P(
-		long groupId, long plid, int start, int end) {
-
-		return findByG_P(groupId, plid, start, end, null);
+	public SegmentsExperiment fetchByG_P(long groupId, long plid) {
+		return fetchByG_P(groupId, plid, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments experiments where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>.
-	 * </p>
+	 * Returns the segments experiment where groupId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiments
-	 */
-	@Override
-	public List<SegmentsExperiment> findByG_P(
-		long groupId, long plid, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return findByG_P(groupId, plid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiments where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching segments experiments
+	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	@Override
-	public List<SegmentsExperiment> findByG_P(
-		long groupId, long plid, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache) {
+	public SegmentsExperiment fetchByG_P(
+		long groupId, long plid, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, plid};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_P, finderArgs, this);
+		}
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			SegmentsExperiment.class);
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+		if (result instanceof SegmentsExperiment) {
+			SegmentsExperiment segmentsExperiment = (SegmentsExperiment)result;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
+			if ((groupId != segmentsExperiment.getGroupId()) ||
+				(plid != segmentsExperiment.getPlid())) {
 
-			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_P;
-				finderArgs = new Object[] {groupId, plid};
+				result = null;
+			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						SegmentsExperiment.class,
+						segmentsExperiment.getPrimaryKey())) {
+
+				result = null;
 			}
 		}
-		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_P;
-			finderArgs = new Object[] {
-				groupId, plid, start, end, orderByComparator
-			};
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
-		List<SegmentsExperiment> list = null;
-
-		if (useFinderCache && productionMode) {
-			list = (List<SegmentsExperiment>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperiment segmentsExperiment : list) {
-					if ((groupId != segmentsExperiment.getGroupId()) ||
-						(plid != segmentsExperiment.getPlid())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_SELECT_SEGMENTSEXPERIMENT_WHERE);
 
 			sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
 
 			sb.append(_FINDER_COLUMN_G_P_PLID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SegmentsExperimentModelImpl.ORDER_BY_JPQL);
-			}
 
 			String sql = sb.toString();
 
@@ -3441,13 +3404,35 @@ public class SegmentsExperimentPersistenceImpl
 
 				queryPos.add(plid);
 
-				list = (List<SegmentsExperiment>)QueryUtil.list(
-					query, getDialect(), start, end);
+				List<SegmentsExperiment> list = query.list();
 
-				cacheResult(list);
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByG_P, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
 
-				if (useFinderCache && productionMode) {
-					finderCache.putResult(finderPath, finderArgs, list);
+						if (_log.isWarnEnabled()) {
+							if (!productionMode || !useFinderCache) {
+								finderArgs = new Object[] {groupId, plid};
+							}
+
+							_log.warn(
+								"SegmentsExperimentPersistenceImpl.fetchByG_P(long, long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					SegmentsExperiment segmentsExperiment = list.get(0);
+
+					result = segmentsExperiment;
+
+					cacheResult(segmentsExperiment);
 				}
 			}
 			catch (Exception exception) {
@@ -3458,659 +3443,28 @@ public class SegmentsExperimentPersistenceImpl
 			}
 		}
 
-		return list;
-	}
-
-	/**
-	 * Returns the first segments experiment in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching segments experiment
-	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
-	 */
-	@Override
-	public SegmentsExperiment findByG_P_First(
-			long groupId, long plid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
-		throws NoSuchExperimentException {
-
-		SegmentsExperiment segmentsExperiment = fetchByG_P_First(
-			groupId, plid, orderByComparator);
-
-		if (segmentsExperiment != null) {
-			return segmentsExperiment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchExperimentException(sb.toString());
-	}
-
-	/**
-	 * Returns the first segments experiment in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	@Override
-	public SegmentsExperiment fetchByG_P_First(
-		long groupId, long plid,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		List<SegmentsExperiment> list = findByG_P(
-			groupId, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last segments experiment in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment
-	 * @throws NoSuchExperimentException if a matching segments experiment could not be found
-	 */
-	@Override
-	public SegmentsExperiment findByG_P_Last(
-			long groupId, long plid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
-		throws NoSuchExperimentException {
-
-		SegmentsExperiment segmentsExperiment = fetchByG_P_Last(
-			groupId, plid, orderByComparator);
-
-		if (segmentsExperiment != null) {
-			return segmentsExperiment;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchExperimentException(sb.toString());
-	}
-
-	/**
-	 * Returns the last segments experiment in the ordered set where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	@Override
-	public SegmentsExperiment fetchByG_P_Last(
-		long groupId, long plid,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		int count = countByG_P(groupId, plid);
-
-		if (count == 0) {
+		if (result instanceof List<?>) {
 			return null;
 		}
-
-		List<SegmentsExperiment> list = findByG_P(
-			groupId, plid, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		else {
+			return (SegmentsExperiment)result;
 		}
-
-		return null;
 	}
 
 	/**
-	 * Returns the segments experiments before and after the current segments experiment in the ordered set where groupId = &#63; and plid = &#63;.
+	 * Removes the segments experiment where groupId = &#63; and plid = &#63; from the database.
 	 *
-	 * @param segmentsExperimentId the primary key of the current segments experiment
 	 * @param groupId the group ID
 	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experiment
-	 * @throws NoSuchExperimentException if a segments experiment with the primary key could not be found
+	 * @return the segments experiment that was removed
 	 */
 	@Override
-	public SegmentsExperiment[] findByG_P_PrevAndNext(
-			long segmentsExperimentId, long groupId, long plid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+	public SegmentsExperiment removeByG_P(long groupId, long plid)
 		throws NoSuchExperimentException {
 
-		SegmentsExperiment segmentsExperiment = findByPrimaryKey(
-			segmentsExperimentId);
+		SegmentsExperiment segmentsExperiment = findByG_P(groupId, plid);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperiment[] array = new SegmentsExperimentImpl[3];
-
-			array[0] = getByG_P_PrevAndNext(
-				session, segmentsExperiment, groupId, plid, orderByComparator,
-				true);
-
-			array[1] = segmentsExperiment;
-
-			array[2] = getByG_P_PrevAndNext(
-				session, segmentsExperiment, groupId, plid, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SegmentsExperiment getByG_P_PrevAndNext(
-		Session session, SegmentsExperiment segmentsExperiment, long groupId,
-		long plid, OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		sb.append(_SQL_SELECT_SEGMENTSEXPERIMENT_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_PLID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(SegmentsExperimentModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(groupId);
-
-		queryPos.add(plid);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						segmentsExperiment)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<SegmentsExperiment> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the segments experiments that the user has permission to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @return the matching segments experiments that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperiment> filterFindByG_P(long groupId, long plid) {
-		return filterFindByG_P(
-			groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiments that the user has permission to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperiment> filterFindByG_P(
-		long groupId, long plid, int start, int end) {
-
-		return filterFindByG_P(groupId, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiments that the user has permissions to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiments that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperiment> filterFindByG_P(
-		long groupId, long plid, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P(groupId, plid, start, end, orderByComparator);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIMENT_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIMENT_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_PLID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIMENT_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SegmentsExperimentModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				sb.append(SegmentsExperimentModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SegmentsExperiment.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, SegmentsExperimentImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, SegmentsExperimentImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(plid);
-
-			return (List<SegmentsExperiment>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the segments experiments before and after the current segments experiment in the ordered set of segments experiments that the user has permission to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param segmentsExperimentId the primary key of the current segments experiment
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next segments experiment
-	 * @throws NoSuchExperimentException if a segments experiment with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperiment[] filterFindByG_P_PrevAndNext(
-			long segmentsExperimentId, long groupId, long plid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
-		throws NoSuchExperimentException {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_PrevAndNext(
-				segmentsExperimentId, groupId, plid, orderByComparator);
-		}
-
-		SegmentsExperiment segmentsExperiment = findByPrimaryKey(
-			segmentsExperimentId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperiment[] array = new SegmentsExperimentImpl[3];
-
-			array[0] = filterGetByG_P_PrevAndNext(
-				session, segmentsExperiment, groupId, plid, orderByComparator,
-				true);
-
-			array[1] = segmentsExperiment;
-
-			array[2] = filterGetByG_P_PrevAndNext(
-				session, segmentsExperiment, groupId, plid, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected SegmentsExperiment filterGetByG_P_PrevAndNext(
-		Session session, SegmentsExperiment segmentsExperiment, long groupId,
-		long plid, OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SEGMENTSEXPERIMENT_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIMENT_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_PLID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_SEGMENTSEXPERIMENT_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SegmentsExperimentModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				sb.append(SegmentsExperimentModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SegmentsExperiment.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-		sqlQuery.setFirstResult(0);
-		sqlQuery.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sqlQuery.addEntity(
-				_FILTER_ENTITY_ALIAS, SegmentsExperimentImpl.class);
-		}
-		else {
-			sqlQuery.addEntity(
-				_FILTER_ENTITY_TABLE, SegmentsExperimentImpl.class);
-		}
-
-		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-		queryPos.add(groupId);
-
-		queryPos.add(plid);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						segmentsExperiment)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<SegmentsExperiment> list = sqlQuery.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the segments experiments where groupId = &#63; and plid = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 */
-	@Override
-	public void removeByG_P(long groupId, long plid) {
-		for (SegmentsExperiment segmentsExperiment :
-				findByG_P(
-					groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsExperiment);
-		}
+		return remove(segmentsExperiment);
 	}
 
 	/**
@@ -4177,59 +3531,6 @@ public class SegmentsExperimentPersistenceImpl
 		}
 
 		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of segments experiments that the user has permission to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @return the number of matching segments experiments that the user has permission to view
-	 */
-	@Override
-	public int filterCountByG_P(long groupId, long plid) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P(groupId, plid);
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_SEGMENTSEXPERIMENT_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_PLID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SegmentsExperiment.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(plid);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 =
@@ -5797,6 +5098,13 @@ public class SegmentsExperimentPersistenceImpl
 				segmentsExperiment.getSegmentsExperimentKey()
 			},
 			segmentsExperiment);
+
+		finderCache.putResult(
+			_finderPathFetchByG_P,
+			new Object[] {
+				segmentsExperiment.getGroupId(), segmentsExperiment.getPlid()
+			},
+			segmentsExperiment);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -5894,6 +5202,15 @@ public class SegmentsExperimentPersistenceImpl
 		finderCache.putResult(_finderPathCountByG_S, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByG_S, args, segmentsExperimentModelImpl);
+
+		args = new Object[] {
+			segmentsExperimentModelImpl.getGroupId(),
+			segmentsExperimentModelImpl.getPlid()
+		};
+
+		finderCache.putResult(_finderPathCountByG_P, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByG_P, args, segmentsExperimentModelImpl);
 	}
 
 	/**
@@ -6706,17 +6023,8 @@ public class SegmentsExperimentPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "segmentsExperimentKey"}, false);
 
-		_finderPathWithPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "plid"}, true);
-
-		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+		_finderPathFetchByG_P = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "plid"}, true);
 

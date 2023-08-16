@@ -226,6 +226,9 @@ public interface SegmentsExperimentLocalService
 		long segmentsExperimentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
 		long segmentsExperienceId, long plid, int[] statuses);
 
@@ -325,6 +328,10 @@ public interface SegmentsExperimentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsExperiments(int start, int end);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid);

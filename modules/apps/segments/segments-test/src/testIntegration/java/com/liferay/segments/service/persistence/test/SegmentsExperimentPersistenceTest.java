@@ -636,6 +636,17 @@ public class SegmentsExperimentPersistenceTest {
 			ReflectionTestUtil.invoke(
 				segmentsExperiment, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "segmentsExperimentKey"));
+
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperiment.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(segmentsExperiment.getPlid()),
+			ReflectionTestUtil.<Long>invoke(
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 	}
 
 	protected SegmentsExperiment addSegmentsExperiment() throws Exception {

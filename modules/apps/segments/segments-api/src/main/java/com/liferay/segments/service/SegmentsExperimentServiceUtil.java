@@ -57,6 +57,13 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
+			long groupId, long plid)
+		throws PortalException {
+
+		return getService().fetchSegmentsExperiment(groupId, plid);
+	}
+
+	public static SegmentsExperiment fetchSegmentsExperiment(
 			long segmentsExperienceId, long plid, int[] statuses)
 		throws PortalException {
 
@@ -105,6 +112,10 @@ public class SegmentsExperimentServiceUtil {
 		return getService().getSegmentsExperiment(segmentsExperimentKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	public static List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid) {
 

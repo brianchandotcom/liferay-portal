@@ -114,7 +114,7 @@ definition {
 		property test.assert.warning.exceptions = "false";
 
 		task ("Given the indexes.sql file from portal-impl.jar is deleted") {
-			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "delete-indexes-sql");
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-indexes-sql");
 		}
 
 		task ("And the upgrade have finished When a warn is registered during upgrade") {
@@ -175,7 +175,7 @@ definition {
 		property test.assert.warning.exceptions = "false";
 
 		task ("Given the indexes.sql file from portal-impl.jar is deleted") {
-			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "delete-indexes-sql");
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-indexes-sql");
 		}
 
 		task ("And the upgrade have finished When a warn and an error were registered during upgrade") {

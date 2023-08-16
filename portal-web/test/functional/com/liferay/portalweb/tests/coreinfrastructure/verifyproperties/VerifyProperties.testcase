@@ -56,8 +56,8 @@ definition {
 	@description = "LPS-176626: Verify friendly URL error is present during auto-upgrade"
 	@priority = 4
 	test VerifyLayoutFriendlyURLErrorUsingAutoUpgrade {
-		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-reserved-friendly-url";
+		property database.auto.upgrade.enabled = "true";
 		property database.types = "mysql";
 		property portal.version = "6.2.10.21";
 		property skip.upgrade-legacy-database = "true";
@@ -81,8 +81,8 @@ definition {
 	@description = "LRQA-78467: Verify Properties is executed before the PortalUpgradeProcess starts to upgrade database when enable AutoUpgrade on startup"
 	@priority = 3
 	test VerifyPropertiesIsExecutedUsingAutoUpgrade {
-		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-portal";
+		property database.auto.upgrade.enabled = "true";
 		property portal.version = "7.4.13";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";

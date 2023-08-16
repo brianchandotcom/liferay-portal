@@ -4,8 +4,8 @@ definition {
 	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
 	property data.archive.type = "data-archive-portal";
-	property database.upgrade.enabled = "true";
 	property database.types = "mysql";
+	property database.upgrade.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property portal.version = "6.2.10.21";

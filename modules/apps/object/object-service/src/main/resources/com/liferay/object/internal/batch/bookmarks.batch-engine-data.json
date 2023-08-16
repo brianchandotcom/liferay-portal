@@ -50,7 +50,7 @@
 					],
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "Clob"
 				},
 				{
@@ -74,7 +74,7 @@
 					],
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -98,7 +98,7 @@
 					],
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],

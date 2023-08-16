@@ -10,8 +10,8 @@ import aQute.bnd.osgi.Constants;
 import com.github.jk1.license.LicenseReportExtension;
 import com.github.jk1.license.LicenseReportPlugin;
 import com.github.jk1.license.ModuleData;
-import com.github.jk1.license.ReportTask;
 import com.github.jk1.license.render.ReportRenderer;
+import com.github.jk1.license.task.ReportTask;
 
 import com.liferay.gradle.plugins.LiferayAntPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;

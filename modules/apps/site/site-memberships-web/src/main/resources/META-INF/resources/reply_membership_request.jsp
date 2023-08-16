@@ -85,7 +85,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 	</div>
 
 	<aui:button-row>
-		<clay:button label="save" type="submit"></clay:button>
+		<clay:button
+			label="save"
+			type="submit"
+		/>
 
 		<clay:link
 			displayType="secondary"

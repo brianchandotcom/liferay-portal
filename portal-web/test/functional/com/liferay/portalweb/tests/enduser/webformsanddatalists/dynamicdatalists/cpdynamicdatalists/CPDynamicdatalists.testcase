@@ -1125,90 +1125,95 @@ definition {
 	@description = "This is a use case for LPS-65726"
 	@priority = 5
 	test AddListRecordWithLinkToPageField {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Given a list with a Link to page field") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		PagesAdmin.addPage(pageName = "Test Page");
+			PagesAdmin.addPage(pageName = "Test Page");
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
-		DynamicDataMapping.addField(
-			field = "Link to Page",
-			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage");
+			DynamicDataMapping.addField(
+				field = "Link to Page",
+				fieldFieldLabel = "Link to Page",
+				fieldName = "LinkToPage");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
+		}
 
-		Navigator.openURL();
+		task ("When the field is populated to a page and the page is published as Public") {
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLDataDefinition.viewCP(
-			ddlDataDefinitionName = "Data Definition",
-			fieldFieldLabel = "Link to Page");
+			DDLDataDefinition.viewCP(
+				ddlDataDefinitionName = "Data Definition",
+				fieldFieldLabel = "Link to Page");
 
-		DynamicDataMapping.viewField(
-			field = "Link to Page",
-			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage");
+			DynamicDataMapping.viewField(
+				field = "Link to Page",
+				fieldFieldLabel = "Link to Page",
+				fieldName = "LinkToPage");
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLList.addCP(ddlListName = "List Name");
+			DDLList.addCP(ddlListName = "List Name");
 
-		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+			DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLRecord.addCP(
-			ddlDataDefinitionName = "Data Definition",
-			ddlListName = "List Name");
+			DDLRecord.addCP(
+				ddlDataDefinitionName = "Data Definition",
+				ddlListName = "List Name");
 
-		DDLRecord.populateFieldLinkToPage(
-			ddlRecordFieldData = "Test Page",
-			fieldName = "LinkToPage",
-			pagePrivacy = "Public");
+			DDLRecord.populateFieldLinkToPage(
+				ddlRecordFieldData = "Test Page",
+				fieldName = "LinkToPage",
+				pagePrivacy = "Public");
 
-		Click(
-			key_indexNumber = 1,
-			key_text = "Publish",
-			locator1 = "Button#ANY_N");
+			SelectFrameTop();
 
-		Alert.viewSuccessMessage();
+			Button.clickPublish();
 
-		Navigator.openURL();
+			Alert.viewSuccessMessage();
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		task ("Then the user should be able to access the List Records and the Link to Page field can be viewed") {
+			Navigator.openURL();
 
-		DDLNavigator.gotoListRecords(ddlListName = "List Name");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Test Page",
-			field = "Link to Page",
-			fieldFieldLabel = "Link to Page");
+			DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
-		DDLRecord.viewLinkToPageLink(ddlRecordFieldData = "Test Page");
+			DDLRecord.viewFirstFieldCP(
+				ddlRecordFieldData = "Test Page",
+				field = "Link to Page",
+				fieldFieldLabel = "Link to Page");
+
+			DDLRecord.viewLinkToPageLink(ddlRecordFieldData = "Test Page");
+		}
 	}
 
 	@priority = 4

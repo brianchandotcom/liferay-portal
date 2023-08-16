@@ -9,7 +9,11 @@ import updateFormItemConfigAction from '../actions/updateFormItemConfig';
 import updateItemLocalConfig from '../actions/updateItemLocalConfig';
 import FormService from '../services/FormService';
 
-export default function updateFormItemConfig({itemConfig, itemId}) {
+export default function updateFormItemConfig({
+	itemConfig,
+	itemId,
+	overridePreviousConfig = true,
+}) {
 	const isMapping = Boolean(itemConfig.classNameId);
 
 	return (dispatch, getState) => {
@@ -43,7 +47,7 @@ export default function updateFormItemConfig({itemConfig, itemId}) {
 						isMapping,
 						itemId,
 						layoutData,
-						overridePreviousConfig: true,
+						overridePreviousConfig,
 						removedFragmentEntryLinkIds,
 					})
 				);

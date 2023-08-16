@@ -40,11 +40,12 @@ export function FormGeneralPanel({item}) {
 	const dispatch = useDispatch();
 
 	const onValueSelect = useCallback(
-		(nextConfig) =>
+		(nextConfig, overridePreviousConfig = true) =>
 			dispatch(
 				updateFormItemConfig({
 					itemConfig: nextConfig,
 					itemId: item.itemId,
+					overridePreviousConfig,
 				})
 			),
 		[dispatch, item.itemId]
@@ -205,7 +206,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 						...config,
 				  };
 
-			onValueSelect({successMessage: nextConfig});
+			onValueSelect({successMessage: nextConfig}, false);
 		},
 		[interactionConfig, onValueSelect]
 	);

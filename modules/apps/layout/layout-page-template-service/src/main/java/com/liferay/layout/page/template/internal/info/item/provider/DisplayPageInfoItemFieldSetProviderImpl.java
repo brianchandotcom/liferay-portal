@@ -116,7 +116,8 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 							layoutPageTemplateEntry.getName())
 					).build(),
 					HttpComponentsUtil.addParameters(
-						themeDisplay.getPortalURL() + "/display-page/custom/",
+						themeDisplay.getPortalURL() + _portal.getPathContext() +
+							"/display-page/custom/",
 						"className", infoItemReference.getClassName(),
 						"classPK", _getClassPK(infoItemReference), "selPlid",
 						layoutPageTemplateEntry.getPlid())));

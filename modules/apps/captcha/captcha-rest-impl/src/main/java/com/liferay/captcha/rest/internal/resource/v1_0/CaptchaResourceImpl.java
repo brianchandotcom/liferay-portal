@@ -13,6 +13,7 @@ import com.liferay.captcha.rest.resource.v1_0.CaptchaResource;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Base64;
@@ -98,6 +99,10 @@ public class CaptchaResourceImpl extends BaseCaptchaResourceImpl {
 	}
 
 	private void _checkSimpleCaptchaConfiguration() throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-185213")) {
+			throw new UnsupportedOperationException();
+		}
+
 		CaptchaConfiguration captchaConfiguration =
 			_configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);

@@ -254,7 +254,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	private void _addClientExtensionEntryRel(
 		String cetExternalReferenceCode, Layout layout,
-		ServiceContext serviceContext, String type, long userId) {
+		ServiceContext serviceContext, String type,
+		Map<String, String> clientExtensionConfig, long userId) {
 
 		CET cet = _cetManager.getCET(
 			layout.getCompanyId(), cetExternalReferenceCode);
@@ -263,12 +264,22 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			return;
 		}
 
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		if (clientExtensionConfig != null) {
+			for (Map.Entry<String, String> entry :
+					clientExtensionConfig.entrySet()) {
+
+				unicodeProperties.put(entry.getKey(), entry.getValue());
+			}
+		}
+
 		try {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				userId, layout.getGroupId(),
 				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid(), cetExternalReferenceCode, type, null,
-				serviceContext);
+				layout.getPlid(), cetExternalReferenceCode, type,
+				unicodeProperties.toString(), serviceContext);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -1673,7 +1684,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_addClientExtensionEntryRel(
 					String.valueOf(favIconMap.get("externalReferenceCode")),
 					layout, serviceContext,
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON, userId);
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON, null,
+					userId);
 			}
 		}
 
@@ -1709,13 +1721,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			globalCSSClientExtension -> _addClientExtensionEntryRel(
 				globalCSSClientExtension.getExternalReferenceCode(), layout,
 				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-				userId));
+				globalCSSClientExtension.getClientExtensionConfig(), userId));
 		ArrayUtil.isNotEmptyForEach(
 			settings.getGlobalJSClientExtensions(),
 			globalJSClientExtension -> _addClientExtensionEntryRel(
 				globalJSClientExtension.getExternalReferenceCode(), layout,
 				serviceContext, ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				userId));
+				globalJSClientExtension.getClientExtensionConfig(), userId));
 
 		ClientExtension themeCSSClientExtension =
 			settings.getThemeCSSClientExtension();
@@ -1724,7 +1736,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			_addClientExtensionEntryRel(
 				themeCSSClientExtension.getExternalReferenceCode(), layout,
 				serviceContext, ClientExtensionEntryConstants.TYPE_THEME_CSS,
-				userId);
+				themeCSSClientExtension.getClientExtensionConfig(), userId);
 		}
 
 		return _layoutLocalService.updateLayout(layout);

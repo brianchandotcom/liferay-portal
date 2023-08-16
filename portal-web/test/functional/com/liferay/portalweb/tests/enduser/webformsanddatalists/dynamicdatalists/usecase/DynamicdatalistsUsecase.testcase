@@ -2353,57 +2353,62 @@ definition {
 				layoutName = "Test Page ${pageNumber}");
 		}
 
-		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
+		task ("Given multiple pages with a field linked") {
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLDataDefinition.addCP(ddlDataDefinitionName = "Link To Page Data Definition");
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Link To Page Data Definition");
 
-		DynamicDataMapping.addField(
-			field = "Link to Page",
-			fieldFieldLabel = "Link to Page",
-			fieldName = "LinkToPage");
+			DynamicDataMapping.addField(
+				field = "Link to Page",
+				fieldFieldLabel = "Link to Page",
+				fieldName = "LinkToPage");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
+		}
 
-		Navigator.openURL();
+		task ("When a Link to Page list is created") {
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLList.addCP(ddlListName = "List Name");
+			DDLList.addCP(ddlListName = "List Name");
 
-		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Link To Page Data Definition");
+			DDLDataDefinition.selectCP(ddlDataDefinitionName = "Link To Page Data Definition");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLRecord.addCP(
-			ddlDataDefinitionName = "Link To Page Data Definition",
-			ddlListName = "List Name");
+			DDLRecord.addCP(
+				ddlDataDefinitionName = "Link To Page Data Definition",
+				ddlListName = "List Name");
 
-		DDLRecord.populateFieldLinkToPage(
-			ddlRecordFieldData = "Test Page 10",
-			fieldName = "LinkToPage");
+			DDLRecord.populateFieldLinkToPage(
+				ddlRecordFieldData = "Test Page 10",
+				fieldName = "LinkToPage");
 
-		Click(
-			key_indexNumber = 1,
-			key_text = "Publish",
-			locator1 = "Button#ANY_N");
+			SelectFrameTop();
 
-		Alert.viewSuccessMessage();
+			Button.clickPublish();
+		}
 
-		DDLRecord.viewFirstFieldCP(
-			ddlRecordFieldData = "Test Page 10",
-			fieldFieldLabel = "Link to Page");
+		task ("Then the user is able to select and view the Link to Page") {
+			Alert.viewSuccessMessage();
+
+			DDLRecord.viewFirstFieldCP(
+				ddlRecordFieldData = "Test Page 10",
+				fieldFieldLabel = "Link to Page");
+		}
 	}
 
 	@description = "This is a use case for LPS-48743."

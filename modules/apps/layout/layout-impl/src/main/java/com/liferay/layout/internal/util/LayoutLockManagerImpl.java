@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.util;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.model.LockedLayout;
 import com.liferay.layout.util.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +22,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutModelImpl;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -66,6 +70,11 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		else if (lock.getUserId() != themeDisplay.getUserId()) {
 			throw new LockedLayoutException();
 		}
+	}
+
+	@Override
+	public List<LockedLayout> getLockedLayouts(long groupId) {
+		return Collections.emptyList();
 	}
 
 	@Override

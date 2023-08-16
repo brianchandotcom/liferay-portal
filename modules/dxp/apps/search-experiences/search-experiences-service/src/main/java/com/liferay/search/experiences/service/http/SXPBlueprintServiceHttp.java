@@ -173,13 +173,54 @@ public class SXPBlueprintServiceHttp {
 	}
 
 	public static com.liferay.search.experiences.model.SXPBlueprint
+			fetchSXPBlueprintById(
+				HttpPrincipal httpPrincipal, long sxpBlueprintId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SXPBlueprintServiceUtil.class, "fetchSXPBlueprintById",
+				_fetchSXPBlueprintByIdParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, sxpBlueprintId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.search.experiences.model.SXPBlueprint)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPBlueprint
 			getSXPBlueprint(HttpPrincipal httpPrincipal, long sxpBlueprintId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPBlueprintServiceUtil.class, "getSXPBlueprint",
-				_getSXPBlueprintParameterTypes3);
+				_getSXPBlueprintParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpBlueprintId);
@@ -222,7 +263,7 @@ public class SXPBlueprintServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SXPBlueprintServiceUtil.class,
 				"getSXPBlueprintByExternalReferenceCode",
-				_getSXPBlueprintByExternalReferenceCodeParameterTypes4);
+				_getSXPBlueprintByExternalReferenceCodeParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, externalReferenceCode);
@@ -268,7 +309,7 @@ public class SXPBlueprintServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPBlueprintServiceUtil.class, "updateSXPBlueprint",
-				_updateSXPBlueprintParameterTypes5);
+				_updateSXPBlueprintParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpBlueprintId, configurationJSON, descriptionMap,
@@ -317,13 +358,15 @@ public class SXPBlueprintServiceHttp {
 		_fetchSXPBlueprintByExternalReferenceCodeParameterTypes2 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _getSXPBlueprintParameterTypes3 =
+	private static final Class<?>[] _fetchSXPBlueprintByIdParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getSXPBlueprintParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getSXPBlueprintByExternalReferenceCodeParameterTypes4 = new Class[] {
+		_getSXPBlueprintByExternalReferenceCodeParameterTypes5 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _updateSXPBlueprintParameterTypes5 =
+	private static final Class<?>[] _updateSXPBlueprintParameterTypes6 =
 		new Class[] {
 			long.class, String.class, java.util.Map.class, String.class,
 			String.class, java.util.Map.class,

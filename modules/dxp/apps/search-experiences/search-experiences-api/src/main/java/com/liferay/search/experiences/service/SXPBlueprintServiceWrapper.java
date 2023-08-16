@@ -57,6 +57,14 @@ public class SXPBlueprintServiceWrapper
 			externalReferenceCode, companyId);
 	}
 
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint
+			fetchSXPBlueprintById(long sxpBlueprintId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.fetchSXPBlueprintById(sxpBlueprintId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

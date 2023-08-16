@@ -27,13 +27,16 @@
 
 	[#if activity.tactic.name != "Email Campaign"]
 		[#assign digital_marketing_fields = digital_marketing_fields + [ { "title": "Specific sites to be used", "value": (activity.specificSites)!"-" }, { "title": "Keywords for PPC campaigns", "value": (activity.keywordsForPPCCampaigns)!"-" }, { "title": "Ad (any size/type)", "value": (activity.ad)!"-" }, { "title": "Do you require any assets from Liferay?", "value": (activity.assetsLiferayRequired?string("Yes", "No")!"-") }, { "title": "How will the Liferay brand be used in the campaign?", "value": (activity.howLiferayBrandUsed)!"-"}] /]
+	[#elseif activity.tactic.name = "Email Campaign"]
+	  	[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Landing page copy", "value": (activity.landingPageCopy)!"-" }, {"title": "How will the Liferay brand be used in the campaign?", "value": (activity.howLiferayBrandUsed)} ] /]
 	[/#if]
 
-	  		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Landing page copy", "value": (activity.landingPageCopy)!"-" }, {"title": "Do you require any assets from Liferay?", "value": activity.assetsLiferayRequired?string("Yes", "No")!"-"}, {"title": "Are you using any CIAB assets?", "value": (activity.usingCIABAssets)}, {"title": "How will the Liferay brand be used in the campaign?", "value": (activity.howLiferayBrandUsed)} ] /]
-
 	[#if activity.nurtureDripCampaign?has_content]
-
-	[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Nurture or drip campaign?", "value": activity.nurtureDripCampaign?boolean?string("Yes", "No")}] /]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Nurture or drip campaign?", "value": activity.nurtureDripCampaign?boolean?string("Yes", "No")}] /]
+	[#elseif activity.usingCIABAssets?has_content]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Are you using any CIAB assets?", "value": activity.usingCIABAssets?string?boolean?string("Yes", "No")}] /]
+	[#elseif activity.assetsLiferayRequired?has_content]
+		[#assign digital_marketing_fields = digital_marketing_fields + [{"title": "Please describe including specifications and due dates", "value": activity.assetsLiferayDescription}] /]
 	[/#if]
 
 	[#return digital_marketing_fields /]
@@ -49,22 +52,16 @@
 
 	[#if activity.tactic.name = "Broadcast Advertising"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Broadcast channel", "value": (activity.broadcastChannel)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "# of weeks/airing", "value": (activity.weeksAiring)!"-" }, { "title": "Guaranteed Impressions", "value": (activity.guaranteedImpressions!"-")}] /]
-
 	[#elseif activity.tactic.name = "Campaign with Industry Publication"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Publication", "value": (activity.publication)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "Expected Impressions", "value": (activity.expectedImpressions)!"-" } ] /]
-
 	[#elseif activity.tactic.name = "Co-branded Merchandise"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [{ "title": "What type of merchandise?", "value": (activity.typeMerchandise)!"-" },{ "title": "Quantity", "value": (activity.quantity)!"-" }] /]
-
 	[#elseif activity.tactic.name = "Direct Mail"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [{ "title": "Target # of sends", "value": (activity.targetOfSends)!"-" },{ "title": "CTA", "value": (activity.cta)!"-" }] /]
-
 	[#elseif activity.tactic.name = "Print Advertising"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Publication", "value": (activity.publication)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "Expected Impressions", "value": (activity.expectedImpressions)!"-" } ] /]
-
 	[#elseif activity.tactic.name = "Outbound Telemarketing Sales"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Audience Target", "value": (activity.audienceTarget)!"-" }, { "title": "Source and Size of call List", "value": (activity.sourceAndSizeOfCallList)!"-" }, { "title": "Resources necessary from Liferay", "value": (activity.resourcesNecessaryFromLiferay)!"-" } ] /]
-
 	[/#if]
 
 	[#return miscellaneous_marketing_fields /]
@@ -154,6 +151,7 @@
 
 				<span class="font-weight-light ml-sm-2">
 					[#assign days_left = (request_date > 0)?then(request_date?ceiling, 0) /]
+
 					[#if days_left > 0 ]
 						${(request_date > 0)?then(request_date?ceiling, 0)} ${(days_left > 1)?then('days left to claim', 'day left to claim')}
 					[#else]

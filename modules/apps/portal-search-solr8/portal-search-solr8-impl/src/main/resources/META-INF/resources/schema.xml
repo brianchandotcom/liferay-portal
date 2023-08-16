@@ -660,6 +660,7 @@
 		<copyField dest="all" source="type" />
 		<copyField dest="all" source="userName" />
 		<copyField dest="assetTagNames.raw" source="assetTagNames" />
+		<copyField dest="screenName.text" source="screenName" />
 		<copyField dest="userName.text" source="userName" />
 		<field indexed="true" multiValued="false" name="_version_" stored="true" type="long" />
 		<field indexed="true" multiValued="true" name="all" stored="false" type="text" />
@@ -741,6 +742,7 @@
 		<field docValues="true" indexed="true" name="rootEntryClassName" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="rootEntryClassPK" stored="true" type="string" />
 		<field docValues="true" indexed="true" multiValued="true" name="scopeGroupId" stored="true" type="string" />
+		<field indexed="true" name="screenName.text" stored="false" type="text_lowercase" />
 		<field docValues="true" indexed="true" name="screenName" stored="true" type="string" />
 		<field indexed="true" name="size" stored="true" type="string" />
 		<field indexed="true" name="sourceURL" stored="true" type="text" />

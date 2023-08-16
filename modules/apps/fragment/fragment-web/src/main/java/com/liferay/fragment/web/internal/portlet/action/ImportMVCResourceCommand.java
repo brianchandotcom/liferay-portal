@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.File;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -66,11 +67,24 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		boolean overwrite = ParamUtil.getBoolean(resourceRequest, "overwrite");
 
+		_importFragments(
+			file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
+			themeDisplay.getLocale(), overwrite, themeDisplay.getUserId());
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse, jsonObject);
+	}
+
+	private JSONObject _importFragments(
+		File file, long fragmentCollectionId, long groupId, Locale locale,
+		boolean overwrite, long userId) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		try {
 			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
 				_fragmentsImporter.importFragmentEntries(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					fragmentCollectionId, file, overwrite);
+					userId, groupId, fragmentCollectionId, file, overwrite);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();
@@ -113,13 +127,10 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			_log.error(exception);
 
 			jsonObject.put(
-				"error",
-				_language.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+				"error", _language.get(locale, "an-unexpected-error-occurred"));
 		}
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

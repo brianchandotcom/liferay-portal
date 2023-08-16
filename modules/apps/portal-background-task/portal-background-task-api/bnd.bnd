@@ -8,4 +8,5 @@ Export-Package:\
 	com.liferay.portal.background.task.exception,\
 	com.liferay.portal.background.task.model,\
 	com.liferay.portal.background.task.service,\
-	com.liferay.portal.background.task.service.persistence
+	com.liferay.portal.background.task.service.persistence,\
+	com.liferay.portal.background.task.util.comparator

@@ -35,6 +35,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
+import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
@@ -52,6 +53,7 @@ import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.object.system.util.SystemUtil;
 import com.liferay.object.util.comparator.ObjectFieldCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -65,6 +67,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,7 +85,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -548,43 +550,59 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getScope());
 		}
 
+		List<ObjectField> objectFields = ListUtil.fromArray(
+			objectDefinition.getObjectFields());
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
-			new ArrayList<>(
-				_objectFieldLocalService.getObjectFields(
-					objectDefinitionId, false));
+			ListUtil.copy(
+				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
-		if (objectDefinition.getObjectFields() != null) {
-			for (ObjectField objectField : objectDefinition.getObjectFields()) {
-				long listTypeDefinitionId =
-					ObjectFieldUtil.getListTypeDefinitionId(
-						serviceBuilderObjectDefinition.getCompanyId(),
-						_listTypeDefinitionLocalService, objectField);
+		if (SystemUtil.allowManageSystemEntities()) {
+			objectFields.removeIf(
+				objectField ->
+					(objectField.getSystem() == null) ||
+					!objectField.getSystem());
+			serviceBuilderObjectFields.removeIf(
+				serviceBuilderObjectField ->
+					!serviceBuilderObjectField.isSystem() ||
+					serviceBuilderObjectField.isMetadata());
+		}
+		else {
+			objectFields.removeIf(
+				objectField ->
+					(objectField.getSystem() != null) &&
+					objectField.getSystem());
+			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
+		}
 
-				_objectFieldLocalService.updateObjectField(
-					objectField.getExternalReferenceCode(),
-					GetterUtil.getLong(objectField.getId()),
-					contextUser.getUserId(), listTypeDefinitionId,
-					objectDefinitionId, objectField.getBusinessTypeAsString(),
-					null, null, objectField.getDBTypeAsString(),
-					objectField.getIndexed(), objectField.getIndexedAsKeyword(),
-					objectField.getIndexedLanguageId(),
-					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-					GetterUtil.getBoolean(objectField.getLocalized()),
-					objectField.getName(), objectField.getReadOnlyAsString(),
-					objectField.getReadOnlyConditionExpression(),
-					objectField.getRequired(),
-					GetterUtil.getBoolean(objectField.getState()),
-					objectField.getSystem(),
-					ObjectFieldSettingUtil.toObjectFieldSettings(
-						listTypeDefinitionId, objectField,
-						_objectFieldSettingLocalService,
-						_objectFilterLocalService));
+		for (ObjectField objectField : objectFields) {
+			long listTypeDefinitionId = ObjectFieldUtil.getListTypeDefinitionId(
+				serviceBuilderObjectDefinition.getCompanyId(),
+				_listTypeDefinitionLocalService, objectField);
 
-				serviceBuilderObjectFields.removeIf(
-					serviceBuilderObjectField -> Objects.equals(
-						serviceBuilderObjectField.getName(),
-						objectField.getName()));
-			}
+			_objectFieldLocalService.updateObjectField(
+				objectField.getExternalReferenceCode(),
+				GetterUtil.getLong(objectField.getId()),
+				contextUser.getUserId(), listTypeDefinitionId,
+				objectDefinitionId, objectField.getBusinessTypeAsString(), null,
+				null, objectField.getDBTypeAsString(), objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(),
+				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
+				GetterUtil.getBoolean(objectField.getLocalized()),
+				objectField.getName(), objectField.getReadOnlyAsString(),
+				objectField.getReadOnlyConditionExpression(),
+				objectField.getRequired(),
+				GetterUtil.getBoolean(objectField.getState()),
+				objectField.getSystem(),
+				ObjectFieldSettingUtil.toObjectFieldSettings(
+					listTypeDefinitionId, objectField,
+					_objectFieldSettingLocalService,
+					_objectFilterLocalService));
+
+			serviceBuilderObjectFields.removeIf(
+				serviceBuilderObjectField -> Objects.equals(
+					serviceBuilderObjectField.getName(),
+					objectField.getName()));
 		}
 
 		for (com.liferay.object.model.ObjectField serviceBuilderObjectField :

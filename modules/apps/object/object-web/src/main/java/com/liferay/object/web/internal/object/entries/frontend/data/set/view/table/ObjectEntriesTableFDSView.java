@@ -110,8 +110,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				objectViewColumn.getLabel(locale, false),
 				objectField.getLabel(locale, false));
 
-			if ((objectField == null) || objectField.isSystem()) {
-				_addSystemObjectField(
+			if ((objectField == null) || objectField.isMetadata()) {
+				_addMetadataObjectField(
 					fdsTableSchemaBuilder, label,
 					objectViewColumn.getObjectFieldName());
 			}
@@ -124,8 +124,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 							objectField.getDefaultLanguageId()));
 				}
 
-				_addCustomObjectField(
-					fdsTableSchemaBuilder, label, objectField);
+				_addObjectField(fdsTableSchemaBuilder, label, objectField);
 			}
 		}
 
@@ -147,89 +146,31 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		}
 
 		if (_objectDefinition.isDefaultStorageType()) {
-			_addSystemObjectField(
+			_addMetadataObjectField(
 				fdsTableSchemaBuilder, systemObjectFieldLabels.get("id"), "id");
 		}
 		else {
-			_addSystemObjectField(
+			_addMetadataObjectField(
 				fdsTableSchemaBuilder,
 				systemObjectFieldLabels.get("externalReferenceCode"),
 				"externalReferenceCode");
 		}
 
-		for (ObjectField customObjectField :
+		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId(), false)) {
+					_objectDefinition.getObjectDefinitionId())) {
 
-			_addCustomObjectField(
-				fdsTableSchemaBuilder, customObjectField.getLabel(locale, true),
-				customObjectField);
+			_addObjectField(
+				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
+				objectField);
 		}
 
-		_addSystemObjectField(
+		_addMetadataObjectField(
 			fdsTableSchemaBuilder, systemObjectFieldLabels.get("status"),
 			"status");
-		_addSystemObjectField(
+		_addMetadataObjectField(
 			fdsTableSchemaBuilder, systemObjectFieldLabels.get("creator"),
 			"creator");
-	}
-
-	private void _addCustomObjectField(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder, String label,
-		ObjectField objectField) {
-
-		if (objectField.isSystem()) {
-			return;
-		}
-
-		if (Validator.isNull(objectField.getRelationshipType())) {
-			_addFDSTableSchemaField(
-				objectField.getBusinessType(), null, objectField.getDBType(),
-				fdsTableSchemaBuilder,
-				_getFieldName(
-					objectField.getBusinessType(), objectField.getName()),
-				label, false, objectField.getObjectFieldSettings(),
-				objectField.isIndexed());
-		}
-		else if (Objects.equals(
-					objectField.getRelationshipType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectFieldId2(
-						objectField.getObjectFieldId());
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-
-			ObjectField titleObjectField =
-				_objectFieldLocalService.fetchObjectField(
-					objectDefinition.getTitleObjectFieldId());
-
-			if (titleObjectField == null) {
-				_addFDSTableSchemaField(
-					objectField.getBusinessType(), null,
-					objectField.getDBType(), fdsTableSchemaBuilder,
-					objectField.getName(), label, false,
-					objectField.getObjectFieldSettings(), false);
-			}
-			else {
-				_addFDSTableSchemaField(
-					titleObjectField.getBusinessType(),
-					_getContentRenderer(titleObjectField.getName()),
-					titleObjectField.getDBType(), fdsTableSchemaBuilder,
-					_getFieldName(
-						titleObjectField.getBusinessType(),
-						StringBundler.concat(
-							StringUtil.replaceLast(
-								objectField.getName(), "Id", ""),
-							StringPool.PERIOD, titleObjectField.getName())),
-					label, false, titleObjectField.getObjectFieldSettings(),
-					false);
-			}
-		}
 	}
 
 	private void _addFDSTableSchemaField(
@@ -353,7 +294,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 		fdsTableSchemaBuilder.add(fdsTableSchemaField);
 	}
 
-	private void _addSystemObjectField(
+	private void _addMetadataObjectField(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldLabel,
 		String fieldName) {
 
@@ -387,6 +328,64 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			_addFDSTableSchemaField(
 				null, "status", null, fdsTableSchemaBuilder, fieldName,
 				_getLabel(fieldLabel, "status"), true, null, true);
+		}
+	}
+
+	private void _addObjectField(
+		FDSTableSchemaBuilder fdsTableSchemaBuilder, String label,
+		ObjectField objectField) {
+
+		if (objectField.isMetadata()) {
+			return;
+		}
+
+		if (Validator.isNull(objectField.getRelationshipType())) {
+			_addFDSTableSchemaField(
+				objectField.getBusinessType(), null, objectField.getDBType(),
+				fdsTableSchemaBuilder,
+				_getFieldName(
+					objectField.getBusinessType(), objectField.getName()),
+				label, false, objectField.getObjectFieldSettings(),
+				objectField.isIndexed());
+		}
+		else if (Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectFieldId2(
+						objectField.getObjectFieldId());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			ObjectField titleObjectField =
+				_objectFieldLocalService.fetchObjectField(
+					objectDefinition.getTitleObjectFieldId());
+
+			if (titleObjectField == null) {
+				_addFDSTableSchemaField(
+					objectField.getBusinessType(), null,
+					objectField.getDBType(), fdsTableSchemaBuilder,
+					objectField.getName(), label, false,
+					objectField.getObjectFieldSettings(), false);
+			}
+			else {
+				_addFDSTableSchemaField(
+					titleObjectField.getBusinessType(),
+					_getContentRenderer(titleObjectField.getName()),
+					titleObjectField.getDBType(), fdsTableSchemaBuilder,
+					_getFieldName(
+						titleObjectField.getBusinessType(),
+						StringBundler.concat(
+							StringUtil.replaceLast(
+								objectField.getName(), "Id", ""),
+							StringPool.PERIOD, titleObjectField.getName())),
+					label, false, titleObjectField.getObjectFieldSettings(),
+					false);
+			}
 		}
 	}
 

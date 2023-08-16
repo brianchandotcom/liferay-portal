@@ -5,7 +5,6 @@
 
 package com.liferay.portal.monitoring.internal.statistics.jmx;
 
-import com.liferay.portal.monitoring.internal.statistics.portlet.ActionRequestSummaryStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portlet.PortletSummaryStatistics;
 
 import javax.management.DynamicMBean;
@@ -36,7 +35,9 @@ public class ActionRequestPortletManager extends BasePortletManager {
 		return _actionRequestSummaryStatistics;
 	}
 
-	@Reference
-	private ActionRequestSummaryStatistics _actionRequestSummaryStatistics;
+	@Reference(
+		target = "(component.name=com.liferay.portal.monitoring.internal.statistics.portlet.ActionRequestSummaryStatistics)"
+	)
+	private PortletSummaryStatistics _actionRequestSummaryStatistics;
 
 }

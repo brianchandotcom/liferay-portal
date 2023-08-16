@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(enabled = false, service = ActionRequestSummaryStatistics.class)
+@Component(enabled = false, service = PortletSummaryStatistics.class)
 public class ActionRequestSummaryStatistics
 	implements PortletSummaryStatistics {
 

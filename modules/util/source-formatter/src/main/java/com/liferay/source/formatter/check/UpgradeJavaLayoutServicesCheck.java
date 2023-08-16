@@ -6,7 +6,6 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -22,28 +21,6 @@ import java.util.regex.Pattern;
  * @author Tamyris Bernardo
  */
 public class UpgradeJavaLayoutServicesCheck extends BaseUpgradeCheck {
-
-	public boolean validateParameters(
-		String fileName, String javaMethodContent, List<String> parameterList,
-		String[] parameterTypes) {
-
-		if (!hasParameterTypes(
-				javaMethodContent, javaMethodContent,
-				ArrayUtil.toStringArray(parameterList), parameterTypes)) {
-
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Unable to format methods addLayout and updateLayout from ",
-					"LayoutService, LayoutLocalService, LayoutServiceUtil and ",
-					"LayoutLocalServiceUtil. Fill the new parameters ",
-					"manually, see LPS-188828 and LPS-190401"));
-
-			return false;
-		}
-
-		return true;
-	}
 
 	@Override
 	protected String format(
@@ -83,8 +60,16 @@ public class UpgradeJavaLayoutServicesCheck extends BaseUpgradeCheck {
 					continue;
 				}
 
+				String message = StringBundler.concat(
+					"Unable to format methods addLayout and updateLayout from ",
+					"LayoutService, LayoutLocalService, LayoutServiceUtil and ",
+					"LayoutLocalServiceUtil. Fill the new parameters ",
+					"manually, see LPS-188828 and LPS-190401");
+
 				List<String> parameterList = JavaSourceUtil.getParameterList(
 					methodCall);
+
+				String newMethod = null;
 
 				if (methodCall.contains(".addLayout")) {
 					String[] parameterTypes = {
@@ -98,11 +83,20 @@ public class UpgradeJavaLayoutServicesCheck extends BaseUpgradeCheck {
 						"ServiceContext"
 					};
 
-					newContent = _replaceAddOrUpdateLayout(
-						newContent, 17, fileName, javaMethodContent,
-						new int[] {parameterList.size() - 1}, matcher,
-						methodCall, new String[] {"0"}, parameterList,
-						parameterTypes);
+					if (!hasValidParameters(
+							17, fileName, javaMethodContent, message,
+							parameterList, parameterTypes)) {
+
+						continue;
+					}
+
+					newMethod = JavaSourceUtil.addMethodNewParameters(
+						JavaSourceUtil.getIndent(methodCall),
+						new int[] {parameterList.size() - 1}, matcher.group(),
+						new String[] {"0"}, parameterList);
+
+					newContent = StringUtil.replace(
+						content, methodCall, newMethod);
 				}
 				else if (methodCall.contains(".updateLayout")) {
 					String[] parameterTypes = {
@@ -116,38 +110,27 @@ public class UpgradeJavaLayoutServicesCheck extends BaseUpgradeCheck {
 						"ServiceContext"
 					};
 
+					if (!hasValidParameters(
+							15, fileName, javaMethodContent, message,
+							parameterList, parameterTypes)) {
+
+						continue;
+					}
+
 					int index = parameterList.size() - 1;
 
-					newContent = _replaceAddOrUpdateLayout(
-						newContent, 15, fileName, javaMethodContent,
-						new int[] {index, index, index}, matcher, methodCall,
-						new String[] {"0", "0", "0"}, parameterList,
-						parameterTypes);
+					newMethod = JavaSourceUtil.addMethodNewParameters(
+						JavaSourceUtil.getIndent(methodCall),
+						new int[] {index, index, index}, matcher.group(),
+						new String[] {"0", "0", "0"}, parameterList);
+
+					newContent = StringUtil.replace(
+						content, methodCall, newMethod);
 				}
 			}
 		}
 
 		return newContent;
-	}
-
-	private String _replaceAddOrUpdateLayout(
-		String content, int expectedParametersSize, String fileName,
-		String javaMethodContent, int[] indexNewParameters, Matcher matcher,
-		String methodCall, String[] newParameters, List<String> parameterList,
-		String[] parameterTypes) {
-
-		if ((parameterList.size() != expectedParametersSize) ||
-			!validateParameters(
-				fileName, javaMethodContent, parameterList, parameterTypes)) {
-
-			return content;
-		}
-
-		String newMethod = JavaSourceUtil.addMethodNewParameters(
-			JavaSourceUtil.getIndent(methodCall), indexNewParameters,
-			matcher.group(), newParameters, parameterList);
-
-		return StringUtil.replace(content, methodCall, newMethod);
 	}
 
 	private static final Pattern _addOrUpdateLayoutPattern = Pattern.compile(

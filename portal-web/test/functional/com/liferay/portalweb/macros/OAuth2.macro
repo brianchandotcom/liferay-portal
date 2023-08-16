@@ -617,7 +617,7 @@ definition {
 			Select(
 				key_fieldLabel = "Client Authentication Method",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Client Secret Post");
+				value1 = "Client Secret Basic or Post");
 		}
 
 		if (isSet(clientProfile)) {

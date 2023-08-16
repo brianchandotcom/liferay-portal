@@ -209,7 +209,12 @@ definition {
 	macro gotoEdit {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
-		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+		if (isSet(editInPreviewPage)) {
+			Click(locator1 = "DocumentsAndMediaDocument#DOCUMENT_TOOLBAR_VERTICAL_ELLIPSIS");
+		}
+		else {
+			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+		}
 
 		MenuItem.clickNoError(menuItem = "Edit in Office 365");
 	}

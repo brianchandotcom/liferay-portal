@@ -104,6 +104,19 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addObjectEntryViaAPI {
+		var objectEntryId = JSONObject.addObjectEntry(
+			fieldNameList = ${fieldNameList},
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword},
+			valueList = ${valueList});
+
+		return ${objectEntryId};
+
+		echo(${objectEntryId});
+	}
+
 	macro addObjectFieldViaAPI {
 		JSONObject.addObjectField(
 			fieldBusinessType = ${fieldBusinessType},

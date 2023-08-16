@@ -89,6 +89,50 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	macro addObjectEntry {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var objectName = StringUtil.toLowerCase(${objectName});
+		var list1 = ListUtil.newListFromString(${fieldNameList});
+		var list2 = ListUtil.newListFromString(${valueList});
+		var size = ListUtil.size(${list1});
+		var fieldName = ListUtil.get(${list1}, 0);
+		var value = ListUtil.get(${list2}, 0);
+
+		var data = "\"${fieldName}\": \"${value}\"";
+		var i = 1;
+
+		while (${i} != ${size}) {
+			var fieldName = ListUtil.get(${list1}, ${i});
+			var value = ListUtil.get(${list2}, ${i});
+
+			var data = StringUtil.add(${data}, ",\"${fieldName}\": \"${value}\"", "");
+			var i = ${i} + 1;
+		}
+
+		var curl = '''
+			${portalURL}/o/c/${objectName}s \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-u ${userEmailAddress}:${userPassword} \
+				-d {
+					${data}
+				}
+		''';
+
+		var objectEntryId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${objectEntryId};
+	}
+
 	macro addObjectEntryViaJSONAPI {
 		Variables.assertDefined(parameterList = ${objectName});
 

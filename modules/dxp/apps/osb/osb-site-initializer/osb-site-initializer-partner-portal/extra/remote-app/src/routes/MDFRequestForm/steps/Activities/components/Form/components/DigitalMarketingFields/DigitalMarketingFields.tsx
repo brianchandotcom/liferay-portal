@@ -83,6 +83,15 @@ const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 						small
 					/>
 
+					<PRMFormik.Field
+						component={PRMForm.RadioGroup}
+						items={getBooleanEntries()}
+						label="Are you using any CIAB assets?"
+						name={`activities[${currentActivityIndex}].activityDescription.usingCIABAssets`}
+						required
+						small
+					/>
+
 					{values.activities[currentActivityIndex].activityDescription
 						?.nurtureDripCampaign === 'true' && (
 						<PRMFormik.Field
@@ -133,17 +142,6 @@ const DigitalMarketingFields = ({currentActivityIndex, tactic}: IProps) => {
 					label="Please describe including specifications and due dates"
 					name={`activities[${currentActivityIndex}].activityDescription.assetsLiferayDescription`}
 					required
-				/>
-			)}
-
-			{tactic === TacticKeys.EMAIL_CAMPAIGN && (
-				<PRMFormik.Field
-					component={PRMForm.RadioGroup}
-					items={getBooleanEntries()}
-					label="Are you using any CIAB assets?"
-					name={`activities[${currentActivityIndex}].activityDescription.usingCIABAssets`}
-					required
-					small
 				/>
 			)}
 

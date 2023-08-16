@@ -17,6 +17,13 @@ export default function getDigitalMarketFields(
 				mdfRequestActivity.activityDescription
 					?.overallMessageContentCTA,
 		},
+		{
+			title: 'Do you require any assets from Liferay?',
+			value: getBooleanValue(
+				mdfRequestActivity.activityDescription
+					?.assetsLiferayRequired as string
+			),
+		},
 	];
 	if (mdfRequestActivity.tactic.key === TacticKeys.EMAIL_CAMPAIGN) {
 		digitalMarketingFields.push(
@@ -26,8 +33,10 @@ export default function getDigitalMarketFields(
 			},
 			{
 				title: 'Nurture or drip campaign?',
-				value:
-					mdfRequestActivity.activityDescription?.nurtureDripCampaign,
+				value: getBooleanValue(
+					mdfRequestActivity.activityDescription
+						?.nurtureDripCampaign as string
+				),
 			}
 		);
 		if (mdfRequestActivity.activityDescription?.nurtureDripCampaign) {
@@ -36,22 +45,13 @@ export default function getDigitalMarketFields(
 				value: mdfRequestActivity.activityDescription?.manySeries,
 			});
 		}
-
-		digitalMarketingFields.push({
-			title: 'Do you require any assets from Liferay?',
-			value:
-				mdfRequestActivity.activityDescription?.assetsLiferayRequired,
-		});
-		if (mdfRequestActivity.activityDescription?.assetsLiferayRequired) {
-			digitalMarketingFields.push({
-				title: 'Please describe including specifications and due dates',
-				value: mdfRequestActivity.activityDescription?.specificSites,
-			});
-		}
 		digitalMarketingFields.push(
 			{
 				title: 'Are you using any CIAB assets?',
-				value: mdfRequestActivity.activityDescription?.usingCIABAssets,
+				value: getBooleanValue(
+					mdfRequestActivity.activityDescription
+						?.usingCIABAssets as string
+				),
 			},
 			{
 				title: 'How will the Liferay brand be used in the campaign?',
@@ -75,13 +75,6 @@ export default function getDigitalMarketFields(
 			{
 				title: 'Ad (any size/type)',
 				value: mdfRequestActivity.activityDescription?.ad,
-			},
-			{
-				title: 'Do you require any assets from Liferay?',
-				value: getBooleanValue(
-					mdfRequestActivity.activityDescription
-						?.assetsLiferayRequired as string
-				),
 			}
 		);
 		if (mdfRequestActivity.activityDescription?.assetsLiferayRequired) {

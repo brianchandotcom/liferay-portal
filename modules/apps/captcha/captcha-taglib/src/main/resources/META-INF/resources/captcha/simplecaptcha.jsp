@@ -59,9 +59,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 
 	<aui:script position="inline">
 		var hasEventAttached = false;
-		var captcha = document.getElementById(
-			'<portlet:namespace />captcha'
-		);
+		var captcha = document.getElementById('<portlet:namespace />captcha');
 
 		function attachEvent() {
 			var refreshCaptcha = document.getElementById(
@@ -89,21 +87,21 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			Liferay.Util.fetch(url, {
 				method: 'GET',
 			})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error();
-				}
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error();
+					}
 
-				return response.json();
-			})
-			.then((response) => {
-				captcha.setAttribute('src', response.image);
-			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-			});
+					return response.json();
+				})
+				.then((response) => {
+					captcha.setAttribute('src', response.image);
+				})
+				.catch((error) => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+				});
 		}
 
 		if (<%= url.startsWith("/o/") %>) {

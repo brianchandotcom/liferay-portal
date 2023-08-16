@@ -78,7 +78,11 @@ export default function EditAPISchema({
 					apiSchema: response,
 				}));
 
-				setLocalUIData(response);
+				setLocalUIData({
+					description: response.description,
+					mainObjectDefinitionERC: response.mainObjectDefinitionERC,
+					name: response.name,
+				});
 			}
 		});
 	};

@@ -71,8 +71,8 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	@Reference
 	protected SubstringFieldQueryBuilder substringFieldQueryBuilder;
 
-	@Reference
-	protected TitleFieldQueryBuilder titleFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=title)")
+	protected FieldQueryBuilder titleFieldQueryBuilder;
 
 	private Collection<String> _getFields(
 		Map<String, Object> properties, String key) {

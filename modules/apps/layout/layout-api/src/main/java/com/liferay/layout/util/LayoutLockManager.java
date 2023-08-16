@@ -5,10 +5,13 @@
 
 package com.liferay.layout.util;
 
+import com.liferay.layout.model.LockedLayout;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 
@@ -18,6 +21,8 @@ import javax.portlet.ActionRequest;
 public interface LayoutLockManager {
 
 	public void getLock(ActionRequest actionRequest) throws PortalException;
+
+	public List<LockedLayout> getLockedLayouts(long groupId);
 
 	public String getLockedLayoutURL(ActionRequest actionRequest);
 

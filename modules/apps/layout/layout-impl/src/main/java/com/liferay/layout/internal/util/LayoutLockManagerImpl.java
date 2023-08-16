@@ -7,12 +7,21 @@ package com.liferay.layout.internal.util;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.model.LockedLayout;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutLockManager;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
+import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Layout;
@@ -34,6 +43,8 @@ import com.liferay.portal.model.impl.LayoutModelImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -48,6 +59,41 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutLockManager.class)
 public class LayoutLockManagerImpl implements LayoutLockManager {
+
+	@Override
+	public String getLayoutType(long classPK, Locale locale, String type) {
+		if (Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY)) {
+			return _language.get(locale, "display-page-template");
+		}
+
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
+			return _language.get(locale, "collection-page");
+		}
+
+		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+			return StringPool.BLANK;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(classPK);
+
+		if (layoutPageTemplateEntry != null) {
+			return _getLayoutPageTemplateEntryTypeLabel(
+				layoutPageTemplateEntry, locale);
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(classPK);
+
+		if (layoutUtilityPageEntry != null) {
+			return _getLayoutUtilityPageEntryTypeLabel(
+				layoutUtilityPageEntry, locale);
+		}
+
+		return _language.get(locale, "content-page");
+	}
 
 	@Override
 	public void getLock(ActionRequest actionRequest) throws PortalException {
@@ -195,8 +241,61 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			String.valueOf(userId));
 	}
 
+	private String _getLayoutPageTemplateEntryTypeLabel(
+		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+
+			return _language.get(locale, "content-page-template");
+		}
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
+
+			return _language.get(locale, "display-page-template");
+		}
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			return _language.get(locale, "master");
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getLayoutUtilityPageEntryTypeLabel(
+		LayoutUtilityPageEntry layoutUtilityPageEntry, Locale locale) {
+
+		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer =
+			LayoutUtilityPageEntryViewRendererRegistryUtil.
+				getLayoutUtilityPageEntryViewRenderer(
+					layoutUtilityPageEntry.getType());
+
+		if (layoutUtilityPageEntryViewRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		return layoutUtilityPageEntryViewRenderer.getLabel(locale);
+	}
+
+	@Reference
+	private Language _language;
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private LockManager _lockManager;

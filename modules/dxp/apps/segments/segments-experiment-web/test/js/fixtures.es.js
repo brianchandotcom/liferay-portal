@@ -3,16 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const controlVariant = [
-	{
-		control: true,
-		name: 'Control',
-		segmentsExperienceId: '0',
-		segmentsExperimentId: '0',
-		segmentsExperimentRelId: '123',
-		split: 0.0,
-	},
-];
+export const controlVariant = {
+	control: true,
+	name: 'Control',
+	segmentsExperienceId: '0',
+	segmentsExperimentId: '0',
+	segmentsExperimentRelId: '123',
+	split: 0.0,
+};
+
+export const variant = {
+	control: false,
+	name: 'Variant',
+	segmentsExperienceId: '1',
+	segmentsExperimentId: '0',
+	segmentsExperimentRelId: '124',
+	split: 50.0,
+	winner: true,
+};
 
 export const segmentsExperiment = {
 	confidenceLevel: 0,
@@ -67,26 +75,7 @@ export const segmentsGoals = [
 	},
 ];
 
-export const segmentsVariants = [
-	{
-		control: true,
-		name: 'Control',
-		segmentsExperienceId: '0',
-		segmentsExperimentId: '0',
-		segmentsExperimentRelId: '123',
-		split: 50.0,
-		winner: false,
-	},
-	{
-		control: false,
-		name: 'Variant',
-		segmentsExperienceId: '1',
-		segmentsExperimentId: '0',
-		segmentsExperimentRelId: '124',
-		split: 50.0,
-		winner: true,
-	},
-];
+export const segmentsVariants = [controlVariant, variant];
 
 /*
  * Default values used by the tests in assertions and mocked responses

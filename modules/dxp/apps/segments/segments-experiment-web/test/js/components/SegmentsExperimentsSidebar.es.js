@@ -193,7 +193,7 @@ describe('Variants', () => {
 			getByText,
 		} = renderApp({
 			initialSegmentsExperiment: segmentsExperiment,
-			initialSegmentsVariants: segmentsVariants,
+			initialSegmentsVariants: [controlVariant],
 			selectedSegmentsExperienceId:
 				segmentsExperiment.segmentsExperimentId,
 		});
@@ -224,6 +224,32 @@ describe('Variants', () => {
 				name: 'Variant Name',
 			})
 		);
+	});
+
+	it('Not render create variant button if there is more than one variant created', async () => {
+		const {queryByText} = renderApp({
+			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: segmentsVariants,
+			selectedSegmentsExperienceId:
+				segmentsExperiment.segmentsExperimentId,
+		});
+
+		const button = queryByText('create-variant');
+
+		expect(button).toBeFalsy();
+	});
+
+	it('Render create variant button if there is only one control variant', async () => {
+		const {queryByText} = renderApp({
+			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: [controlVariant],
+			selectedSegmentsExperienceId:
+				segmentsExperiment.segmentsExperimentId,
+		});
+
+		const button = queryByText('create-variant');
+
+		expect(button).toBeTruthy();
 	});
 
 	it("Renders variants without create variant button when it's not editable", () => {
@@ -296,7 +322,7 @@ describe('Review and Run test', () => {
 	it('Error messages appears when the user clicks in review and run and there is only the control variant created', async () => {
 		const {getByText} = renderApp({
 			initialSegmentsExperiment: segmentsExperiment,
-			initialSegmentsVariants: controlVariant,
+			initialSegmentsVariants: [controlVariant],
 		});
 
 		getByText(segmentsExperiment.name);

@@ -69,4 +69,12 @@ definition {
 		}
 	}
 
+	macro getAPIEndpoints {
+		var curl = EndpointAPI._curlAPIEndpoint();
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
 }

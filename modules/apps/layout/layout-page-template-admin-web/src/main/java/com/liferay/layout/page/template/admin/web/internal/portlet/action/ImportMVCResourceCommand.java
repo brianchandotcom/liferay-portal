@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.File;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -51,8 +52,6 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -67,11 +66,26 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 		boolean overwrite = ParamUtil.getBoolean(
 			resourceRequest, "overwrite", true);
 
+		JSONObject jsonObject = _importPageTemplates(
+			file, themeDisplay.getScopeGroupId(),
+			layoutPageTemplateCollectionId, themeDisplay.getLocale(), overwrite,
+			themeDisplay.getUserId());
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse, jsonObject);
+	}
+
+	private JSONObject _importPageTemplates(
+		File file, long groupId, long layoutPageTemplateCollectionId,
+		Locale locale, boolean overwrite, long userId) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		try {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 				_layoutsImporter.importFile(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					layoutPageTemplateCollectionId, file, overwrite);
+					userId, groupId, layoutPageTemplateCollectionId, file,
+					overwrite);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();
@@ -107,13 +121,10 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			_log.error(exception);
 
 			jsonObject.put(
-				"error",
-				_language.get(
-					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
+				"error", _language.get(locale, "an-unexpected-error-occurred"));
 		}
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

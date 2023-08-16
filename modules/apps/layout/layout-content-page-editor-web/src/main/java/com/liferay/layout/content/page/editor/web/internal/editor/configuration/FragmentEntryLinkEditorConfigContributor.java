@@ -109,7 +109,6 @@ public class FragmentEntryLinkEditorConfigContributor
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 		return layoutItemSelectorCriterion;
 	}

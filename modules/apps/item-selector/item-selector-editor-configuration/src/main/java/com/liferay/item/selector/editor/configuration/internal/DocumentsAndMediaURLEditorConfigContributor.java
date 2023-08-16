@@ -52,7 +52,6 @@ public class DocumentsAndMediaURLEditorConfigContributor
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 		jsonObject.put(
 			"filebrowserBrowseUrl",

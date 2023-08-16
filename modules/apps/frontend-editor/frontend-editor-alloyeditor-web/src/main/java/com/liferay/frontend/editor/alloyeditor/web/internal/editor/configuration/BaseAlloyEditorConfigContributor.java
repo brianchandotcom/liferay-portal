@@ -102,7 +102,6 @@ public abstract class BaseAlloyEditorConfigContributor
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 		jsonObject.put(
 			"documentBrowseLinkUrl",

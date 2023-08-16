@@ -376,7 +376,6 @@ public class EditStyleBookEntryDisplayContext {
 
 				layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 					new LayoutItemSelectorReturnType());
-				layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 				Group group = _themeDisplay.getScopeGroup();
 

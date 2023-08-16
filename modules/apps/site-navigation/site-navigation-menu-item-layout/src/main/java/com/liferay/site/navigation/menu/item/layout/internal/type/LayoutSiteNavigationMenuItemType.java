@@ -175,7 +175,6 @@ public class LayoutSiteNavigationMenuItemType
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 		layoutItemSelectorCriterion.setShowBreadcrumb(false);
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
 		layoutItemSelectorCriterion.setMultiSelection(true);
 
 		return PortletURLBuilder.create(

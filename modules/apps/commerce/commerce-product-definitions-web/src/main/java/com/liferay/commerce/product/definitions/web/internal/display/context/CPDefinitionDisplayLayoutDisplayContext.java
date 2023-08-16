@@ -198,7 +198,6 @@ public class CPDefinitionDisplayLayoutDisplayContext
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
 			new LayoutItemSelectorCriterion();
 
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
 		layoutItemSelectorCriterion.setShowPrivatePages(true);
 		layoutItemSelectorCriterion.setShowPublicPages(true);
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(

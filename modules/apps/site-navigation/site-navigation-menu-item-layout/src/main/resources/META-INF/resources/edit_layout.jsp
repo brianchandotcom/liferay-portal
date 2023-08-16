@@ -58,7 +58,6 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelector
 
 layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
 layoutItemSelectorCriterion.setShowBreadcrumb(false);
-layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, layoutItemSelectorCriterion);
 

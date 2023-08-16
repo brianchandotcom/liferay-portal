@@ -511,6 +511,12 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
 
+		Blueprints.openBlueprintsAdmin();
+
+		AssertElementPresent(
+			key_entryTitle = "Empty Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
 

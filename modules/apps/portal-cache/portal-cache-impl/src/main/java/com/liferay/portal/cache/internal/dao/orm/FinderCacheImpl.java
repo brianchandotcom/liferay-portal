@@ -56,11 +56,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Brian Wing Shun Chan
@@ -379,13 +381,10 @@ public class FinderCacheImpl
 		removeCache(_getCacheNameWithPagination(cacheName));
 		removeCache(_getCacheNameWithoutPagination(cacheName));
 
-		String tableName = cacheName;
+		String tableName = _tableNameServiceTrackerMap.getService(cacheName);
 
-		ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
-			cacheName);
-
-		if (argumentsResolver != null) {
-			tableName = argumentsResolver.getTableName();
+		if (tableName == null) {
+			tableName = cacheName;
 		}
 
 		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.remove(
@@ -486,6 +485,33 @@ public class FinderCacheImpl
 			CacheRegistryItem.class, new FinderCacheCacheRegistryItem(), null);
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ArgumentsResolver.class, "class.name");
+
+		_tableNameServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ArgumentsResolver.class, "class.name",
+				new ServiceTrackerCustomizer<ArgumentsResolver, String>() {
+
+					@Override
+					public String addingService(
+						ServiceReference<ArgumentsResolver> serviceReference) {
+
+						return (String)serviceReference.getProperty(
+							"table.name");
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ArgumentsResolver> serviceReference,
+						String tableName) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ArgumentsResolver> serviceReference,
+						String tableName) {
+					}
+
+				});
 	}
 
 	@Deactivate
@@ -500,13 +526,10 @@ public class FinderCacheImpl
 	}
 
 	private void _clearDSLQueryCache(String className) {
-		String tableName = className;
+		String tableName = _tableNameServiceTrackerMap.getService(className);
 
-		ArgumentsResolver argumentsResolver = _serviceTrackerMap.getService(
-			className);
-
-		if (argumentsResolver != null) {
-			tableName = argumentsResolver.getTableName();
+		if (tableName == null) {
+			tableName = className;
 		}
 
 		Set<String> dslQueryCacheNames = _dslQueryCacheNamesMap.get(tableName);
@@ -709,6 +732,7 @@ public class FinderCacheImpl
 
 	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 	private ServiceTrackerMap<String, ArgumentsResolver> _serviceTrackerMap;
+	private ServiceTrackerMap<String, String> _tableNameServiceTrackerMap;
 	private boolean _valueObjectFinderCacheEnabled;
 	private int _valueObjectFinderCacheListThreshold;
 

@@ -21,6 +21,7 @@ export default function useGetListItemsFromDealRegistration(
 		page,
 		pageSize,
 		filtersTerm,
+		'',
 		sort
 	);
 

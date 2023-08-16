@@ -19,7 +19,6 @@ import {PartnerOpportunitiesColumnKey} from '../../common/enums/partnerOpportuni
 import {PRMPageRoute} from '../../common/enums/prmPageRoute';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
-import DealRegistrationDTO from '../../common/interfaces/dto/dealRegistrationDTO';
 import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
@@ -30,23 +29,17 @@ import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 
 interface IProps {
 	columnsDates: TableColumn<PartnerOpportunitiesItem>[];
-	getDates: (
-		items: DealRegistrationDTO
-	) => PartnerOpportunitiesItem | undefined;
-	getFilteredItems: (
-		items: PartnerOpportunitiesItem[]
-	) => PartnerOpportunitiesItem[];
 	name: string;
 	newButtonDeal?: boolean;
+	opportunityFilter?: string;
 	sort: string;
 }
 
 const PartnerOpportunitiesList = ({
 	columnsDates,
-	getDates,
-	getFilteredItems,
 	name,
 	newButtonDeal,
+	opportunityFilter,
 	sort,
 }: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
@@ -60,14 +53,14 @@ const PartnerOpportunitiesList = ({
 
 	const pagination = usePagination();
 	const {data, isValidating} = useGetListItemsFromPartnerOpportunities(
-		getDates,
 		pagination.activePage,
 		pagination.activeDelta,
 		filtersTerm,
-		sort
+		sort,
+		opportunityFilter
 	);
 	const {totalCount: totalPagination} = data;
-	const filteredData = data.items && getFilteredItems(data.items);
+	const filteredData = data.items;
 
 	const siteURL = useLiferayNavigate();
 	const columns = [

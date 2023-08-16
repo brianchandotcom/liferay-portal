@@ -62,10 +62,7 @@ export default function useFilters() {
 		}
 
 		if (filters.searchTerm) {
-			initialFilter = getSearchFilterTerm(
-				initialFilter,
-				filters.searchTerm
-			);
+			initialFilter = getSearchFilterTerm(filters.searchTerm);
 		}
 
 		onFilter({

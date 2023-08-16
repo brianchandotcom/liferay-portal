@@ -375,7 +375,7 @@ public class ObjectEntry implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
 
 	@Schema(description = "The categories associated with this object entry.")

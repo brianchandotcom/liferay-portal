@@ -17,11 +17,13 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -68,6 +70,8 @@ public class
 			RandomTestUtil.randomString(), _assetVocabulary.getVocabularyId(),
 			new ServiceContext());
 
+		_childGroup = GroupTestUtil.addGroup(group.getGroupId());
+
 		_newParentFolder = _dlAppService.addFolder(
 			null, group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "New Test Folder",
@@ -80,6 +84,44 @@ public class
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				targetGroup.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	@Test
+	public void testCopyFileShouldCopyAssetCategoriesParentGroup()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {_assetCategory.getCategoryId()});
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
+			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			serviceContext);
+
+		String className = DLFileEntryConstants.getClassName();
+
+		Assert.assertArrayEquals(
+			new long[] {_assetCategory.getCategoryId()},
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry1.getFileEntryId()));
+
+		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_childGroup.getGroupId(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
+
+		Assert.assertArrayEquals(
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry1.getFileEntryId()),
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry2.getFileEntryId()));
 	}
 
 	@Test
@@ -117,6 +159,45 @@ public class
 			_assetCategoryLocalService.getCategoryIds(
 				className, fileEntry1.getFileEntryId()),
 			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry2.getFileEntryId()));
+	}
+
+	@Test
+	public void testCopyFileShouldCopyAssetTagsParentGroup() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		String assetTagName = RandomTestUtil.randomString();
+
+		AssetTestUtil.addTag(group.getGroupId(), assetTagName);
+
+		serviceContext.setAssetTagNames(new String[] {assetTagName});
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
+			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			serviceContext);
+
+		String className = DLFileEntryConstants.getClassName();
+
+		Assert.assertArrayEquals(
+			new String[] {StringUtil.toLowerCase(assetTagName)},
+			_assetTagLocalService.getTagNames(
+				className, fileEntry1.getFileEntryId()));
+
+		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_childGroup.getGroupId(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
+
+		Assert.assertArrayEquals(
+			_assetTagLocalService.getTagNames(
+				className, fileEntry1.getFileEntryId()),
+			_assetTagLocalService.getTagNames(
 				className, fileEntry2.getFileEntryId()));
 	}
 
@@ -496,6 +577,9 @@ public class
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _childGroup;
 
 	private Folder _newParentFolder;
 

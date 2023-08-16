@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC060",
+	"name": "French",
+	"name_i18n": {
+		"ar_SA": "French",
+		"ca_ES": "French",
+		"de_DE": "French",
+		"en_US": "French",
+		"es_ES": "French",
+		"fi_FI": "French",
+		"fr_FR": "French",
+		"hu_HU": "French",
+		"ja_JP": "French",
+		"nl_NL": "French",
+		"pt_BR": "French",
+		"sv_SE": "French",
+		"zh_CN": "French"
+	},
+	"viewableBy": "Anyone"
+}

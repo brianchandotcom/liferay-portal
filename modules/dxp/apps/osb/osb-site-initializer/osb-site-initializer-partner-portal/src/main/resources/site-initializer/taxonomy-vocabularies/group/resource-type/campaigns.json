@@ -1,0 +1,9 @@
+{
+	"description": "Campaigns",
+	"externalReferenceCode": "PRMC045",
+	"name": "Campaigns",
+	"name_i18n": {
+		"en_US": "Campaigns"
+	},
+	"viewableBy": "Anyone"
+}

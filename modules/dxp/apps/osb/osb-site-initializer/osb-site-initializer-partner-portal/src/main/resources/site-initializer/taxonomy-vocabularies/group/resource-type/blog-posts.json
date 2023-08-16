@@ -1,0 +1,9 @@
+{
+	"description": "Blog Posts",
+	"externalReferenceCode": "PRMC043",
+	"name": "Blog Posts",
+	"name_i18n": {
+		"en_US": "Blog Posts"
+	},
+	"viewableBy": "Anyone"
+}

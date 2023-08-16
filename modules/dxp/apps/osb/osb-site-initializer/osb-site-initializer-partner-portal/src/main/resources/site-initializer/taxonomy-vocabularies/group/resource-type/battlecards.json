@@ -1,0 +1,9 @@
+{
+	"description": "Battlecards",
+	"externalReferenceCode": "PRMC042",
+	"name": "Battlecards",
+	"name_i18n": {
+		"en_US": "Battlecards"
+	},
+	"viewableBy": "Anyone"
+}

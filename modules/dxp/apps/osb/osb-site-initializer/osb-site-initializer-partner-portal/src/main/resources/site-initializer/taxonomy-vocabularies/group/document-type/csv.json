@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC034",
+	"name": "CSV",
+	"name_i18n": {
+		"ar_SA": "CSV",
+		"ca_ES": "CSV",
+		"de_DE": "CSV",
+		"en_US": "CSV",
+		"es_ES": "CSV",
+		"fi_FI": "CSV",
+		"fr_FR": "CSV",
+		"hu_HU": "CSV",
+		"ja_JP": "CSV",
+		"nl_NL": "CSV",
+		"pt_BR": "CSV",
+		"sv_SE": "CSV",
+		"zh_CN": "CSV"
+	},
+	"viewableBy": "Anyone"
+}

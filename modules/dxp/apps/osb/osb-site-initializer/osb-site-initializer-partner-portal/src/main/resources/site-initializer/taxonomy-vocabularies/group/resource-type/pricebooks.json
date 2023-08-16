@@ -1,0 +1,9 @@
+{
+	"description": "Pricebooks",
+	"externalReferenceCode": "PRMC055",
+	"name": "Pricebooks",
+	"name_i18n": {
+		"en_US": "Pricebooks"
+	},
+	"viewableBy": "Anyone"
+}

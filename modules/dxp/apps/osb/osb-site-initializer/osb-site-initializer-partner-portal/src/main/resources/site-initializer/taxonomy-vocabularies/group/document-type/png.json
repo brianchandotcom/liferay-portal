@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC038",
+	"name": "PNG",
+	"name_i18n": {
+		"ar_SA": "PNG",
+		"ca_ES": "PNG",
+		"de_DE": "PNG",
+		"en_US": "PNG",
+		"es_ES": "PNG",
+		"fi_FI": "PNG",
+		"fr_FR": "PNG",
+		"hu_HU": "PNG",
+		"ja_JP": "PNG",
+		"nl_NL": "PNG",
+		"pt_BR": "PNG",
+		"sv_SE": "PNG",
+		"zh_CN": "PNG"
+	},
+	"viewableBy": "Anyone"
+}

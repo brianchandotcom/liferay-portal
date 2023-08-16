@@ -11619,6 +11619,17 @@ cluster.link.channel.properties.transport.0=${project.dir}/portal-web/test/funct
 			</then>
 		</if>
 
+		<get-testcase-property property.name="database.auto.upgrade.enabled" />
+
+		<if>
+			<equals arg1="${database.auto.upgrade.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+upgrade.database.auto.run=true</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="custom.properties" />
 
 		<if>

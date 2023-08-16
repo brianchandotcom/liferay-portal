@@ -2,7 +2,7 @@
 definition {
 
 	property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
-	property custom.properties = "upgrade.database.auto.run=true";
+	property database.auto.upgrade.enabled = "true";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.smoke.upgrades = "true";

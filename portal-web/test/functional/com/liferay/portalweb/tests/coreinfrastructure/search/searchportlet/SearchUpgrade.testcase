@@ -150,7 +150,7 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade721 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
@@ -163,7 +163,7 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade730 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
@@ -176,7 +176,7 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7110 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.release = "quarantine";
 		property portal.version = "7.1.10";
@@ -188,7 +188,7 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7210 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10";
@@ -201,7 +201,7 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade70106 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.release = "quarantine";
 		property portal.version = "7.0.10.6";
@@ -227,7 +227,7 @@ definition {
 
 	@priority = 5
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade72101 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10.1";
@@ -361,7 +361,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade721 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
@@ -374,7 +374,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade730 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.release = "quarantine";
@@ -387,7 +387,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7110 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.release = "quarantine";
 		property portal.version = "7.1.10";
@@ -399,7 +399,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7210 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10";
@@ -412,7 +412,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade72101 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property database.auto.upgrade.enabled = "true";
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.release = "quarantine";
 		property portal.version = "7.2.10.1";

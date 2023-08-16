@@ -96,11 +96,7 @@ export function CreateAPISchemaModalContent({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = [
-			'description',
-			'mainObjectDefinitionERC',
-			'name',
-		];
+		const mandatoryFields = ['mainObjectDefinitionERC', 'name'];
 
 		if (!Object.keys(data).length) {
 			const errors = mandatoryFields.reduce(

@@ -93,13 +93,7 @@ export default function BaseAPISchemaFields({
 					'has-error': displayError.description,
 				})}
 			>
-				<label>
-					{Liferay.Language.get('description')}
-
-					<span className="ml-1 reference-mark text-warning">
-						<ClayIcon symbol="asterisk" />
-					</span>
-				</label>
+				<label>{Liferay.Language.get('description')}</label>
 
 				<textarea
 					className="form-control"
@@ -114,20 +108,6 @@ export default function BaseAPISchemaFields({
 					)}
 					value={data.description}
 				/>
-
-				<div className="feedback-container">
-					<ClayForm.FeedbackGroup>
-						{displayError.description && (
-							<ClayForm.FeedbackItem className="mt-2">
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{Liferay.Language.get(
-									'please-enter-a-schema-description'
-								)}
-							</ClayForm.FeedbackItem>
-						)}
-					</ClayForm.FeedbackGroup>
-				</div>
 			</ClayForm.Group>
 
 			<ClayForm.Group

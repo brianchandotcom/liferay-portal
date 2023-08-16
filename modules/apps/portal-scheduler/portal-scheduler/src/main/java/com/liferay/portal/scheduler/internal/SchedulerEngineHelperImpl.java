@@ -355,12 +355,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		scriptingDestination.register(schedulerJobConfigurationMessageListener);
 
-		_schedulerJobConfigurationServiceTracker = ServiceTrackerFactory.open(
-			_bundleContext, SchedulerJobConfiguration.class,
-			new SchedulerJobConfigurationServiceTrackerCustomizer());
-
 		DependencyManagerSyncUtil.registerSyncCallable(
 			() -> {
+				_schedulerJobConfigurationServiceTracker =
+					ServiceTrackerFactory.open(
+						_bundleContext, SchedulerJobConfiguration.class,
+						new SchedulerJobConfigurationServiceTrackerCustomizer());
+
 				_schedulerEngine.start();
 
 				return null;

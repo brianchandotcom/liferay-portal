@@ -261,7 +261,7 @@ public class ObjectFieldUtil {
 
 			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
-			if ((objectField == null) ||
+			if ((objectField == null) || objectField.isMetadata() ||
 				Objects.equals(
 					objectField.getReadOnly(),
 					ObjectFieldConstants.READ_ONLY_FALSE)) {

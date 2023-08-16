@@ -1722,7 +1722,7 @@ public class ObjectDefinitionLocalServiceImpl
 		int count = _objectFieldPersistence.countByODI_S(
 			objectDefinition.getObjectDefinitionId(), false);
 
-		if (count == 0) {
+		if ((count == 0) && !objectDefinition.isSystem()) {
 			throw new RequiredObjectFieldException();
 		}
 

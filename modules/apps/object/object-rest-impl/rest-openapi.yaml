@@ -104,7 +104,6 @@ components:
                     type: string
                 status:
                     $ref: "#/components/schemas/Status"
-                    readOnly: true
                 taxonomyCategoryBriefs:
                     description:
                         The categories associated with this object entry.
@@ -126,7 +125,6 @@ components:
             properties:
                 code:
                     format: int32
-                    readOnly: true
                     type: integer
                 label:
                     type: string

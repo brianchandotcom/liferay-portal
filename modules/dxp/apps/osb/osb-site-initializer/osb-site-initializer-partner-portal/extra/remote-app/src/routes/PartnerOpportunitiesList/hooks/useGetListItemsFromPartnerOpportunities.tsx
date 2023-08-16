@@ -6,32 +6,27 @@
 import {useMemo} from 'react';
 
 import {PartnerOpportunitiesColumnKey} from '../../../common/enums/partnerOpportunitiesColumnKey';
-import DealRegistrationDTO from '../../../common/interfaces/dto/dealRegistrationDTO';
 import useGetDealRegistration from '../../../common/services/liferay/object/deal-registration/useGetDealRegistration';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import getOpportunityAmount from '../utils/getOpportunityAmount';
 import getOpportunityDates from '../utils/getOpportunityDates';
 
 export default function useGetListItemsFromPartnerOpportunities(
-	getDates: (
-		item: DealRegistrationDTO
-	) =>
-		| {
-				[key in PartnerOpportunitiesColumnKey]?: string;
-		  }
-		| undefined,
 	page: number,
 	pageSize: number,
 	filtersTerm: string,
-	sort: string
+	sort: string,
+	opportunityFilter?: string
 ) {
 	const swrResponse = useGetDealRegistration(
 		ResourceName.OPPORTUNITIES_SALESFORCE,
 		page,
 		pageSize,
 		filtersTerm,
+		opportunityFilter ? `&filter=${opportunityFilter}` : '',
 		sort
 	);
+
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({

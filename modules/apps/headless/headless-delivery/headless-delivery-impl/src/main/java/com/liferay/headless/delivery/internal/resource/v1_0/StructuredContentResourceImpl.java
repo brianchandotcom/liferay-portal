@@ -32,7 +32,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
@@ -787,28 +787,27 @@ public class StructuredContentResourceImpl
 			StructuredContent structuredContent)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, assetTagNames,
-				_getExpandoBridgeAttributes(structuredContent), groupId,
-				contextHttpServletRequest,
-				structuredContent.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			structuredContent.getViewableByAsString()
+		).assetCategoryIds(
+			assetCategoryIds
+		).assetTagNames(
+			assetTagNames
+		).expandoBridgeAttributes(
+			_getExpandoBridgeAttributes(structuredContent)
+		).permissions(
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(),
+				structuredContent.getPermissions(),
+				getPermissionCheckerResourceId(structuredContent.getId()),
+				getPermissionCheckerResourceName(structuredContent.getId()),
+				resourceActionLocalService, resourcePermissionLocalService,
+				roleLocalService)
+		).build();
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		serviceContext.setAssetPriority(assetPriority);
-
-		if ((structuredContent.getViewableBy() == null) &&
-			(structuredContent.getPermissions() != null)) {
-
-			serviceContext.setModelPermissions(
-				ModelPermissionsUtil.toModelPermissions(
-					contextCompany.getCompanyId(),
-					structuredContent.getPermissions(),
-					getPermissionCheckerResourceId(structuredContent.getId()),
-					getPermissionCheckerResourceName(structuredContent.getId()),
-					resourceActionLocalService, resourcePermissionLocalService,
-					roleLocalService));
-		}
 
 		return serviceContext;
 	}

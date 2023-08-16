@@ -18,7 +18,7 @@ interface InputLocalizedProps {
 	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
 	required?: boolean;
-	resultFormatter?: (val: string) => React.ReactNode;
+	resultFormatter?: (value: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
 	translations: LocalizedValue<string>;
 }

@@ -19,8 +19,11 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -28,11 +31,16 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,6 +67,16 @@ public class ObjectDefinitionsDetailsDisplayContext
 		_panelCategoryRegistry = panelCategoryRegistry;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
+	}
+
+	public String getEditObjectDefinitionURL() throws Exception {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/object_definitions/edit_object_definition"
+		).setParameter(
+			"objectDefinitionId", "{id}"
+		).buildString();
 	}
 
 	public List<Map<String, Object>> getNonrelationshipObjectFieldsInfo() {
@@ -96,6 +114,35 @@ public class ObjectDefinitionsDetailsDisplayContext
 
 		return (List<ObjectField>)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_FIELDS);
+	}
+
+	public String getPermissionsURL(String modelResource) throws Exception {
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_objectRequestHelper.getRequest(),
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			_objectRequestHelper.getCurrentURL()
+		).setParameter(
+			"modelResource", modelResource
+		).setParameter(
+			"modelResourceDescription", "{name}"
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).buildPortletURL();
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return portletURL.toString();
 	}
 
 	public String getScope() {

@@ -4,7 +4,11 @@
  */
 
 import {SetStateAction} from 'react';
-import {ViewObjectDefinitionsModals} from './ViewObjectDefinitions';
+import {DropDownItems} from '../ModelBuilder/types';
+import {
+	DeletedObjectDefinition,
+	ViewObjectDefinitionsModals,
+} from './ViewObjectDefinitions';
 declare type folderAction = {
 	href: string;
 	method: string;
@@ -19,11 +23,35 @@ export declare function deleteFolder(
 	id: number,
 	folderName: string
 ): Promise<void>;
-export declare function deleteObjectDefinition(
+export declare function deleteObjectDefinitionToast(
 	id: number,
 	objectDefinitionName: string
 ): Promise<void>;
+export declare function deleteObjectDefinition(
+	baseResourceURL: string,
+	objectDefinitionId: number,
+	objectDefinitionName: string,
+	status: string,
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
+	handleShowDeleteModal: () => void
+): Promise<void>;
 export declare function deleteRelationship(id: number): Promise<void>;
+export declare function getDefinitionNodeActions(
+	baseResourceURL: string,
+	objectDefinitionId: number,
+	objectDefinitionName: string,
+	hasObjectDefinitionDeleteResourcePermission: boolean,
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean,
+	editObjectDefinitionURL: string,
+	objectDefinitionPermissionsURL: string,
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	},
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
+	handleShowDeleteModal: () => void
+): DropDownItems[];
 export declare function getFolderActions(
 	id: number,
 	objectFolderPermissionsURL: string,

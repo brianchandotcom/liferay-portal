@@ -10,17 +10,21 @@ import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import EditObjectFolder from './EditObjectFolder';
 import {FolderContextProvider} from './ModelBuilderContext/objectFolderContext';
-
 interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	baseResourceURL: string;
 	companyKeyValuePair: KeyValuePair[];
 	deletionTypes: TDeletionType[];
-	objectDefinitions: ObjectDefinition[];
+	editObjectDefinitionURL: string;
+	objectDefinitionPermissionsURL: string;
 	siteKeyValuePair: KeyValuePair[];
 }
 
 const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
+	baseResourceURL,
 	companyKeyValuePair,
 	deletionTypes,
+	editObjectDefinitionURL,
+	objectDefinitionPermissionsURL,
 	siteKeyValuePair,
 }) => {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -28,7 +32,14 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 
 	return (
 		<ReactFlowProvider>
-			<FolderContextProvider value={{selectedFolderERC: folderERC}}>
+			<FolderContextProvider
+				value={{
+					baseResourceURL,
+					editObjectDefinitionURL,
+					objectDefinitionPermissionsURL,
+					selectedFolderERC: folderERC,
+				}}
+			>
 				<EditObjectFolder
 					companyKeyValuePair={companyKeyValuePair}
 					deletionTypes={deletionTypes}

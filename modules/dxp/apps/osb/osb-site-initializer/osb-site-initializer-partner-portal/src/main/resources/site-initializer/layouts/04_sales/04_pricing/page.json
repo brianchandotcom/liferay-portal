@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/sales/deal-registrations",
+	"friendlyURL": "/sales/pricebooks",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Deal Registrations"
+		"en_US": "Pricing"
 	},
 	"permissions": [
 		{

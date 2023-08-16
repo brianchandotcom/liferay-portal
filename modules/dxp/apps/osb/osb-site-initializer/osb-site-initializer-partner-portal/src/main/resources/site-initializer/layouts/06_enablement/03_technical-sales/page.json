@@ -1,19 +1,17 @@
 {
-	"friendlyURL": "/marketing/use-cases",
-	"hidden": false,
+	"friendlyURL": "/technical-sales",
+	"hidden": true,
 	"name_i18n": {
-		"en_US": "Use Cases"
+		"en_US": "Technical Sales"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Site Member",
 			"scope": 4
 		},
@@ -78,6 +76,13 @@
 				"VIEW"
 			],
 			"roleName": "Channel Finance Manager (CFM)",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Channel Enablement Manager (CEM)",
 			"scope": 4
 		}
 	],

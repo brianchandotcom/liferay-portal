@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.MessageRunnable;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ public class ParallelDestination extends BaseAsyncDestination {
 
 	@Override
 	protected void dispatch(
-		Set<MessageListener> messageListeners, final Message message) {
+		List<MessageListener> messageListeners, final Message message) {
 
 		Thread currentThread = Thread.currentThread();
 

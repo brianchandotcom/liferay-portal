@@ -241,8 +241,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int expirationDateMinute, boolean neverExpire, int reviewDateMonth,
 			int reviewDateDay, int reviewDateYear, int reviewDateHour,
 			int reviewDateMinute, boolean neverReview, boolean indexable,
-			boolean smallImage, int smallImageSource, String smallImageURL,
-			File smallImageFile, ServiceContext serviceContext)
+			boolean smallImage, long smallImageId, int smallImageSource,
+			String smallImageURL, File smallImageFile,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
@@ -259,8 +260,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
 			reviewDateHour, reviewDateMinute, neverReview, indexable,
-			smallImage, smallImageSource, smallImageURL, smallImageFile,
-			serviceContext);
+			smallImage, smallImageId, smallImageSource, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 	/**
@@ -2253,8 +2254,8 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			int smallImageSource, String smallImageURL, File smallImageFile,
-			ServiceContext serviceContext)
+			long smallImageId, int smallImageSource, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
 		JournalArticle journalArticle = journalArticleLocalService.getArticle(
@@ -2273,7 +2274,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, indexable, smallImage,
+			reviewDateMinute, neverReview, indexable, smallImage, smallImageId,
 			smallImageSource, smallImageURL, smallImageFile, serviceContext);
 	}
 

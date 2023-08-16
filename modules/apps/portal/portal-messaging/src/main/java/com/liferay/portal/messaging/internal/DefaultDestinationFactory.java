@@ -9,6 +9,7 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -56,16 +57,16 @@ public class DefaultDestinationFactory implements DestinationFactory {
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			new ParallelDestinationPrototype(
-				_portalExecutorManager, _permissionCheckerFactory,
-				_userLocalService));
+				_messageListenerRegistry, _portalExecutorManager,
+				_permissionCheckerFactory, _userLocalService));
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 			new SerialDestinationPrototype(
-				_portalExecutorManager, _permissionCheckerFactory,
-				_userLocalService));
+				_messageListenerRegistry, _portalExecutorManager,
+				_permissionCheckerFactory, _userLocalService));
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-			new SynchronousDestinationPrototype());
+			new SynchronousDestinationPrototype(_messageListenerRegistry));
 	}
 
 	@Deactivate
@@ -75,6 +76,9 @@ public class DefaultDestinationFactory implements DestinationFactory {
 
 	private final ConcurrentMap<String, DestinationPrototype>
 		_destinationPrototypes = new ConcurrentHashMap<>();
+
+	@Reference
+	private MessageListenerRegistry _messageListenerRegistry;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

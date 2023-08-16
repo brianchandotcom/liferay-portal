@@ -1,6 +1,6 @@
 {
 	"friendlyURL": "/events",
-	"hidden": false,
+	"hidden": true,
 	"name_i18n": {
 		"en_US": "Events"
 	},

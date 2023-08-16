@@ -1,19 +1,17 @@
 {
-	"friendlyURL": "/sales/pricebooks",
+	"friendlyURL": "/demo-request",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Pricebooks"
+		"en_US": "Demo Request"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Site Member",
 			"scope": 4
 		},

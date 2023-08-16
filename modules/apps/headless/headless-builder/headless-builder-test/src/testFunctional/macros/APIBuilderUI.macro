@@ -40,6 +40,19 @@ definition {
 		Click(locator1 = "APIBuilder#CREATE_BUTTON");
 	}
 
+	macro deleteAPIApplication {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "API Builder");
+
+		Click(
+			key_title = ${key_title},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
+	}
+
 	macro filterByLastUpdated {
 		Variables.assertDefined(parameterList = "${fromDate},${toDate}");
 

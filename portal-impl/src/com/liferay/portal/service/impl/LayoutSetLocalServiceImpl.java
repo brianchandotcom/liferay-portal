@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -46,7 +47,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.sites.kernel.util.SitesUtil;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.IOException;
@@ -307,7 +308,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		try {
 			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
-			SitesUtil.mergeLayoutSetPrototypeLayouts(
+			_sites.mergeLayoutSetPrototypeLayouts(
 				_groupPersistence.findByPrimaryKey(groupId), layoutSet);
 		}
 		catch (Exception exception) {
@@ -640,6 +641,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetLocalServiceImpl.class);
+
+	private static volatile Sites _sites =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Sites.class, LayoutSetLocalServiceImpl.class, "_sites", false);
 
 	@BeanReference(type = GroupPersistence.class)
 	private GroupPersistence _groupPersistence;

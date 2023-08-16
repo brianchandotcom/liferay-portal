@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -114,7 +115,6 @@ import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.sites.kernel.util.Sites;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -3646,7 +3646,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layoutPrototypeUuid, layout.getCompanyId());
 
 		try {
-			SitesUtil.applyLayoutPrototype(
+			_sites.applyLayoutPrototype(
 				layoutPrototype, layout, layoutPrototypeLinkEnabled);
 		}
 		catch (PortalException portalException) {
@@ -4012,10 +4012,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		try {
 			WorkflowThreadLocal.setEnabled(false);
 
-			SitesUtil.mergeLayoutPrototypeLayout(group, layout);
+			_sites.mergeLayoutPrototypeLayout(group, layout);
 
 			if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
-				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+				_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
 		catch (CTTransactionException | PortalException exception) {
@@ -4047,10 +4047,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
-			if (SitesUtil.isLayoutSetMergeable(group, layoutSet)) {
+			if (_sites.isLayoutSetMergeable(group, layoutSet)) {
 				WorkflowThreadLocal.setEnabled(false);
 
-				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+				_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
 		catch (Exception exception) {
@@ -4112,6 +4112,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLocalServiceImpl.class);
 
+	private static volatile Sites _sites =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Sites.class, LayoutLocalServiceImpl.class, "_sites", false);
 	private static final ThreadLocal<Long> _virtualLayoutTargetGroupId =
 		new CentralizedThreadLocal<>(
 			LayoutLocalServiceImpl.class + "._virtualLayoutTargetGroupId",

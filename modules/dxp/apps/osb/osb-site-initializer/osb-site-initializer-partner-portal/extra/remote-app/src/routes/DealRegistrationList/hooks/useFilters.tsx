@@ -20,10 +20,7 @@ export default function useFilters() {
 		let initialFilter = '';
 
 		if (filters.searchTerm) {
-			initialFilter = getSearchFilterTerm(
-				initialFilter,
-				filters.searchTerm
-			);
+			initialFilter = getSearchFilterTerm(filters.searchTerm);
 		}
 
 		setFilterTerm(initialFilter);

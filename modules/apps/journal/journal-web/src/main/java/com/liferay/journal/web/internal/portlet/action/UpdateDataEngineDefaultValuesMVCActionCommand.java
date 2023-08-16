@@ -280,7 +280,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageSource,
+				neverReview, indexable, smallImage, 0, smallImageSource,
 				smallImageURL, smallFile, serviceContext);
 		}
 		else if (actionName.equals(
@@ -295,7 +295,7 @@ public class UpdateDataEngineDefaultValuesMVCActionCommand
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire,
 				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-				reviewDateMinute, neverReview, indexable, smallImage,
+				reviewDateMinute, neverReview, indexable, smallImage, 0,
 				smallImageSource, smallImageURL, smallFile, serviceContext);
 		}
 

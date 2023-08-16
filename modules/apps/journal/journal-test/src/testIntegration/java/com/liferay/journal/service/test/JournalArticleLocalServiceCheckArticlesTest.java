@@ -219,7 +219,8 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 			expirationDateCalendar.get(Calendar.YEAR),
 			expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
 			expirationDateCalendar.get(Calendar.MINUTE), neverExpires, 0, 0, 0,
-			0, 0, true, true, false, 0, null, null, null, null, serviceContext);
+			0, 0, true, true, false, 0, 0, null, null, null, null,
+			serviceContext);
 	}
 
 	protected Calendar getExpirationCalendar(long timeUnit, int timeValue)
@@ -295,8 +296,9 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 				TestPropsValues.getUserId(), article.getGroupId(),
 				article.getFolderId(), article.getArticleId(),
 				article.getVersion(), article.getTitleMap(),
-				article.getDescriptionMap(), article.getContent(),
-				article.getDDMTemplateKey(), article.getLayoutUuid(),
+				article.getDescriptionMap(), article.getFriendlyURLMap(),
+				article.getContent(), article.getDDMTemplateKey(),
+				article.getLayoutUuid(),
 				displayDateCalendar.get(Calendar.MONTH),
 				displayDateCalendar.get(Calendar.DAY_OF_MONTH),
 				displayDateCalendar.get(Calendar.YEAR),
@@ -307,7 +309,7 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 				expirationDateCalendar.get(Calendar.YEAR),
 				expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
 				expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0,
-				0, true, article.isIndexable(), article.isSmallImage(),
+				0, true, article.isIndexable(), article.isSmallImage(), 0,
 				article.getSmallImageSource(), article.getSmallImageURL(), null,
 				null, null, serviceContext);
 		}

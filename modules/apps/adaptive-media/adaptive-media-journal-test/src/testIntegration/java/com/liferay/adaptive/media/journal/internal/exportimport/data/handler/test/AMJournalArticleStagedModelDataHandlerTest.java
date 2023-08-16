@@ -300,7 +300,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			true, 0, titleMap, null, titleMap, content,
 			ddmStructure.getStructureId(), ddmTemplate.getTemplateKey(), null,
 			1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
-			false, 0, null, null, null, null, serviceContext);
+			false, 0, 0, null, null, null, null, serviceContext);
 	}
 
 	private void _assertContentEquals(

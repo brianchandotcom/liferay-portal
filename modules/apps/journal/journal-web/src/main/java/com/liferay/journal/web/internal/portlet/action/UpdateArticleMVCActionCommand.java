@@ -330,7 +330,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageSource,
+				neverReview, indexable, smallImage, 0, smallImageSource,
 				smallImageURL, smallFile, null, articleURL, serviceContext);
 		}
 		else {
@@ -355,7 +355,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					expirationDateHour, expirationDateMinute, neverExpire,
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, neverReview, indexable,
-					smallImage, smallImageSource, smallImageURL, smallFile,
+					smallImage, 0, smallImageSource, smallImageURL, smallFile,
 					null, articleURL, serviceContext);
 			}
 

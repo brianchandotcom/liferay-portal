@@ -608,7 +608,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
 	 *         String, long, String, String, int, int, int, int, int, int, int,
 	 *         int, int, int, boolean, int, int, int, int, int, boolean,
-	 *         boolean, boolean, int, String, File, Map, String,
+	 *         boolean, boolean, long, int, String, File, Map, String,
 	 *         ServiceContext)} description.
 	 * @param  ddmStructureId the primary key of the web content article's DDM
 	 *         structure, if the article is related to a DDM structure, or
@@ -4992,7 +4992,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
 	 *         String, long, String, String, int, int, int, int, int, int, int,
 	 *         int, int, int, boolean, int, int, int, int, int, boolean,
-	 *         boolean, boolean, int, String, File, Map, String,
+	 *         boolean, boolean, long, int, String, File, Map, String,
 	 *         ServiceContext)} description.
 	 * @param  layoutUuid the unique string identifying the web content
 	 *         article's display page
@@ -5130,7 +5130,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
 	 *         String, long, String, String, int, int, int, int, int, int, int,
 	 *         int, int, int, boolean, int, int, int, int, int, boolean,
-	 *         boolean, boolean, int, String, File, Map, String,
+	 *         boolean, boolean, long, int, String, File, Map, String,
 	 *         ServiceContext)} description.
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date, expando bridge attributes, asset category IDs,
@@ -5338,7 +5338,7 @@ public class JournalArticleLocalServiceImpl
 	 *         long, long, long, long, String, boolean, double, Map, Map, Map,
 	 *         String, long, String, String, int, int, int, int, int, int, int,
 	 *         int, int, int, boolean, int, int, int, int, int, boolean,
-	 *         boolean, boolean, int, String, File, Map, String,
+	 *         boolean, boolean, long, int, String, File, Map, String,
 	 *         ServiceContext)} description.
 	 * @param  images the web content's images
 	 * @param  serviceContext the service context to be applied. Can set the

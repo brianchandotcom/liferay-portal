@@ -106,7 +106,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProviderTest {
 					displayDateCalendar.get(Calendar.HOUR_OF_DAY),
 					displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
 					true, 0, 0, 0, 0, 0, true, true, true,
-					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER,
+					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER, 0,
 					null, _getSmallImage(), null, null,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
@@ -177,7 +177,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProviderTest {
 					displayDateCalendar.get(Calendar.YEAR),
 					displayDateCalendar.get(Calendar.HOUR_OF_DAY),
 					displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
-					true, 0, 0, 0, 0, 0, true, true, true,
+					true, 0, 0, 0, 0, 0, 0, true, true, true,
 					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER,
 					null, _getSmallImage(), null, null,
 					ServiceContextTestUtil.getServiceContext(
@@ -222,7 +222,7 @@ public class PreviewImageJournalArticleContentDashboardItemActionProviderTest {
 			displayDateCalendar.get(Calendar.YEAR),
 			displayDateCalendar.get(Calendar.HOUR_OF_DAY),
 			displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0,
-			0, 0, 0, true, true, true,
+			0, 0, 0, 0, true, true, true,
 			JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER, null,
 			_getSmallImage(), null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

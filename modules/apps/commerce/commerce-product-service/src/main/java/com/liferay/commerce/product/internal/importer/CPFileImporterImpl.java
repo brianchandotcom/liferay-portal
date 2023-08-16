@@ -364,7 +364,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			ddmStructure.getStructureId(), ddmTemplateKey, StringPool.BLANK,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
-			false, 0, StringPool.BLANK, null, null, StringPool.BLANK,
+			false, 0, 0, StringPool.BLANK, null, null, StringPool.BLANK,
 			serviceContext);
 
 		JSONArray permissionsJSONArray = jsonObject.getJSONArray("permissions");

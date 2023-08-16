@@ -101,7 +101,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 			displayDateCalendar.get(Calendar.YEAR),
 			displayDateCalendar.get(Calendar.HOUR_OF_DAY),
 			displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0,
-			0, 0, 0, true, true, false, 0, null, null, null, null,
+			0, 0, 0, true, true, false, 0, 0, null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -187,7 +187,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 					displayDateCalendar.get(Calendar.HOUR_OF_DAY),
 					displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
 					true, 0, 0, 0, 0, 0, true, true, true,
-					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER,
+					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER, 0,
 					null, _getFile(), null, null,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));

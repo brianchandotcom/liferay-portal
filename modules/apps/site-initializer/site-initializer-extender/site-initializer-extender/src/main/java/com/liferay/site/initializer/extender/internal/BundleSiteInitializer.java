@@ -2350,7 +2350,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
 					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-					0, 0, true, true, false, 0, null, null, null, null,
+					0, 0, true, true, false, 0, 0, null, null, null, null,
 					serviceContext);
 			}
 			else {
@@ -2369,7 +2369,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),
 					calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0,
-					0, 0, true, true, false, 0, null, null, null, null,
+					0, 0, true, true, false, 0, 0, null, null, null, null,
 					serviceContext);
 			}
 

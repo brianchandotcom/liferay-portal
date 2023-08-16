@@ -159,11 +159,16 @@ public class SegmentsExperimentServiceImpl
 		return segmentsExperiment;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long plid) {
 
-		return segmentsExperimentPersistence.filterFindByG_P(groupId, plid);
+		return segmentsExperimentLocalService.getSegmentsExperiments(
+			groupId, plid);
 	}
 
 	@Override

@@ -95,7 +95,7 @@ public abstract class BaseBookmarksTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public String getRootContainerModelName() {
-		return "folder";
+		return "home";
 	}
 
 	@Override

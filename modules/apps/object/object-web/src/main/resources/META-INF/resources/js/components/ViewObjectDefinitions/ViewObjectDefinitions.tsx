@@ -11,7 +11,6 @@ import {
 	getLocalizableLabel,
 	stringToURLParameterFormat,
 } from '@liferay/object-js-components-web';
-import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -57,8 +56,10 @@ export type ViewObjectDefinitionsModals = {
 	unbindFromRootObjectDefinition: boolean;
 };
 
-export interface DeletedObjectDefinition extends ObjectDefinition {
+export interface DeletedObjectDefinition {
 	hasObjectRelationship: boolean;
+	id: number;
+	name: string;
 	objectEntriesCount: number;
 }
 
@@ -115,6 +116,13 @@ export default function ViewObjectDefinitions({
 	>();
 
 	const [loading, setLoading] = useState(true);
+
+	function handleShowDeleteModal() {
+		setShowModal((previousState: ViewObjectDefinitionsModals) => ({
+			...previousState,
+			deleteObjectDefinition: true,
+		}));
+	}
 
 	function objectDefinitionLabelDataRenderer({
 		itemData,
@@ -188,60 +196,14 @@ export default function ViewObjectDefinitions({
 			}
 
 			if (action.data.id === 'deleteObjectDefinition') {
-				if (
-					itemData.rootObjectDefinitionExternalReferenceCode &&
-					Liferay.FeatureFlags['LPS-187142']
-				) {
-					setSelectedObjectDefinition(itemData);
-
-					setShowModal((previousState) => ({
-						...previousState,
-						deletionNotAllowed: true,
-					}));
-
-					return;
-				}
-
-				const getDeleteObjectDefinition = async () => {
-					const url = createResourceURL(baseResourceURL, {
-						objectDefinitionId: itemData.id,
-						p_p_resource_id:
-							'/object_definitions/get_object_definition_delete_info',
-					}).href;
-
-					const {
-						hasObjectRelationship,
-						objectEntriesCount,
-					} = await API.fetchJSON<{
-						hasObjectRelationship: boolean;
-						objectEntriesCount: number;
-					}>(url);
-
-					if (itemData.status.code !== 0) {
-						await deleteObjectDefinition(
-							itemData.id,
-							itemData.name
-						);
-						setTimeout(() => window.location.reload(), 1000);
-
-						return;
-					}
-
-					setDeletedObjectDefinition({
-						...itemData,
-						hasObjectRelationship,
-						objectEntriesCount,
-					});
-
-					setShowModal(
-						(previousState: ViewObjectDefinitionsModals) => ({
-							...previousState,
-							deleteObjectDefinition: true,
-						})
-					);
-				};
-
-				getDeleteObjectDefinition();
+				deleteObjectDefinition(
+					baseResourceURL,
+					itemData.id,
+					itemData.name,
+					itemData.status.label,
+					setDeletedObjectDefinition,
+					handleShowDeleteModal
+				);
 			}
 
 			if (action.data.id === 'moveObjectDefinition') {

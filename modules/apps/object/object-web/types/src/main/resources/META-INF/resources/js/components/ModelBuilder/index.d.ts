@@ -7,9 +7,11 @@ import React from 'react';
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	baseResourceURL: string;
 	companyKeyValuePair: KeyValuePair[];
 	deletionTypes: TDeletionType[];
-	objectDefinitions: ObjectDefinition[];
+	editObjectDefinitionURL: string;
+	objectDefinitionPermissionsURL: string;
 	siteKeyValuePair: KeyValuePair[];
 }
 declare const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps>;

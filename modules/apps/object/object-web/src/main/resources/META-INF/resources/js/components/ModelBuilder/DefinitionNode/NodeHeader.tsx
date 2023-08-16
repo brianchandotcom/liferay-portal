@@ -4,17 +4,16 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import DropDown from '@clayui/drop-down';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import './NodeHeader.scss';
+import {DropDownItems} from '../types';
 
 interface NodeHeaderProps {
-	hasObjectDefinitionDeleteResourcePermission: boolean;
-	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	dropDownItems: DropDownItems[];
 	isLinkedNode: boolean;
 	objectDefinitionLabel: string;
 	status: {
@@ -26,108 +25,59 @@ interface NodeHeaderProps {
 }
 
 export default function NodeHeader({
-	hasObjectDefinitionDeleteResourcePermission,
-	hasObjectDefinitionManagePermissionsResourcePermission,
+	dropDownItems,
 	isLinkedNode,
 	objectDefinitionLabel,
 	status,
 	system,
 }: NodeHeaderProps) {
 	return (
-		<div className="lfr-objects__model-builder-node-header-container">
-			<div className="lfr-objects__model-builder-node-header-label-container">
-				<div className="lfr-objects__model-builder-node-header-label-title">
-					{isLinkedNode && (
-						<ClayIcon className="c-pt-1 text-4" symbol="link" />
-					)}
+		<>
+			<div className="lfr-objects__model-builder-node-header-container">
+				<div className="lfr-objects__model-builder-node-header-label-container">
+					<div className="lfr-objects__model-builder-node-header-label-title">
+						{isLinkedNode && (
+							<ClayIcon className="c-pt-1 text-4" symbol="link" />
+						)}
 
-					<span>{objectDefinitionLabel}</span>
+						<span>{objectDefinitionLabel}</span>
+					</div>
+
+					<ClayDropDownWithItems
+						className="lfr__object-web-view-object-definitions-actions"
+						items={dropDownItems}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'show-actions'
+								)}
+								displayType="secondary"
+								onClick={(event) => {
+									event?.stopPropagation();
+								}}
+								size="sm"
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
 				</div>
 
-				<DropDown
-					alignmentPosition={3}
-					trigger={
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('show-actions')}
-							displayType="secondary"
-							size="sm"
-							symbol="ellipsis-v"
-						/>
-					}
-				>
-					<DropDown.ItemList>
-						<DropDown.Item symbolRight="shortcut">
-							{sub(
-								Liferay.Language.get('edit-in-x'),
-								Liferay.Language.get('page view')
-							)}
-						</DropDown.Item>
+				<div>
+					<ClayLabel displayType={system ? 'info' : 'warning'}>
+						{Liferay.Language.get(system ? 'system' : 'custom')}
+					</ClayLabel>
 
-						<hr />
-
-						<DropDown.Item>
-							<ClayIcon
-								className="c-mr-3 text-4"
-								symbol="info-circle-open"
-							/>
-
-							{Liferay.Language.get('view-details')}
-						</DropDown.Item>
-
-						<hr />
-
-						{hasObjectDefinitionManagePermissionsResourcePermission && (
-							<>
-								<hr />
-								<DropDown.Item>
-									<ClayIcon
-										className="c-mr-3 text-4"
-										symbol="users"
-									/>
-
-									{sub(
-										Liferay.Language.get('manage-x'),
-										Liferay.Language.get('permissions')
-									)}
-								</DropDown.Item>
-							</>
+					<ClayLabel
+						displayType={
+							status?.label === 'approved' ? 'success' : 'info'
+						}
+					>
+						{Liferay.Language.get(
+							status?.label === 'approved' ? 'approved' : 'draft'
 						)}
-
-						{hasObjectDefinitionDeleteResourcePermission && (
-							<>
-								<hr />
-								<DropDown.Item>
-									<ClayIcon
-										className="c-mr-3 text-4"
-										symbol="trash"
-									/>
-
-									{sub(
-										Liferay.Language.get('delete-x'),
-										Liferay.Language.get('object')
-									)}
-								</DropDown.Item>
-							</>
-						)}
-					</DropDown.ItemList>
-				</DropDown>
+					</ClayLabel>
+				</div>
 			</div>
-
-			<div>
-				<ClayLabel displayType={system ? 'info' : 'warning'}>
-					{Liferay.Language.get(system ? 'system' : 'custom')}
-				</ClayLabel>
-
-				<ClayLabel
-					displayType={
-						status?.label === 'approved' ? 'success' : 'info'
-					}
-				>
-					{Liferay.Language.get(
-						status?.label === 'approved' ? 'approved' : 'draft'
-					)}
-				</ClayLabel>
-			</div>
-		</div>
+		</>
 	);
 }

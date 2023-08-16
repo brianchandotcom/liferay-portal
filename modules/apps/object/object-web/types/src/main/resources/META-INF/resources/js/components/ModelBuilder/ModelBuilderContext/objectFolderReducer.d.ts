@@ -16,7 +16,10 @@ export declare function objectFolderReducer(
 	action: TAction
 ): {
 	elements: any;
+	baseResourceURL: string;
+	editObjectDefinitionURL: string;
 	leftSidebarItems: LeftSidebarItemType[];
+	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];
 	objectFolders: ObjectFolder[];
 	rightSidebarType: RightSidebarType;

@@ -8,9 +8,15 @@ import React, {useState} from 'react';
 import {Handle, NodeProps, Position, useStore} from 'react-flow-renderer';
 
 import './DefinitionNode.scss';
+import {ModalDeleteObjectDefinition} from '../../ViewObjectDefinitions/ModalDeleteObjectDefinition';
+import {
+	DeletedObjectDefinition,
+	ViewObjectDefinitionsModals,
+} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
+import {getDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import {ObjectDefinitionNodeData, ObjectFieldNode} from '../types';
+import {ObjectDefinitionNodeData} from '../types';
 import NodeFields from './NodeFields';
 import NodeFooter from './NodeFooter';
 import NodeHeader from './NodeHeader';
@@ -18,12 +24,15 @@ import NodeHeader from './NodeHeader';
 export function DefinitionNode({
 	data: {
 		defaultLanguageId,
+		editObjectDefinitionURL,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
 		isLinkedNode,
 		label,
 		name,
 		nodeSelected,
+		objectDefinitionId,
+		objectDefinitionPermissionsURL,
 		objectFields,
 		status,
 		system,
@@ -33,61 +42,104 @@ export function DefinitionNode({
 	const [_, dispatch] = useFolderContext();
 	const store = useStore();
 
+	const [showModal, setShowModal] = useState<
+		Partial<ViewObjectDefinitionsModals>
+	>({
+		deleteObjectDefinition: false,
+	});
+	const [
+		deletedObjectDefinition,
+		setDeletedObjectDefinition,
+	] = useState<DeletedObjectDefinition | null>();
+
+	const [{baseResourceURL}] = useFolderContext();
+
+	const handleShowDeleteDefinitionModal = () => {
+		setShowModal({
+			deleteObjectDefinition: true,
+		});
+	};
+
 	return (
-		<div
-			className={classNames('lfr-objects__model-builder-node-container', {
-				'lfr-objects__model-builder-node-container--selected': nodeSelected,
-			})}
-			onClick={() => {
-				const {edges, nodes} = store.getState();
+		<>
+			<div
+				className={classNames(
+					'lfr-objects__model-builder-node-container',
+					{
+						'lfr-objects__model-builder-node-container--selected': nodeSelected,
+					}
+				)}
+				onClick={() => {
+					const {edges, nodes} = store.getState();
 
-				dispatch({
-					payload: {
-						edges,
-						nodes,
-						selectedObjectDefinitionName: name as string,
-					},
-					type: TYPES.SET_SELECTED_NODE,
-				});
-			}}
-		>
-			<NodeHeader
-				hasObjectDefinitionDeleteResourcePermission={
-					hasObjectDefinitionDeleteResourcePermission as boolean
-				}
-				hasObjectDefinitionManagePermissionsResourcePermission={
-					hasObjectDefinitionManagePermissionsResourcePermission as boolean
-				}
-				isLinkedNode={isLinkedNode as boolean}
-				objectDefinitionLabel={label as string}
-				status={status!}
-				system={system as boolean}
-			/>
-
-			<NodeFields
-				defaultLanguageId={defaultLanguageId as Liferay.Language.Locale}
-				objectFields={objectFields as ObjectFieldNode[]}
-				showAll={showAllFields}
-			/>
-
-			<NodeFooter
-				setShowAllFields={setShowAllFields}
-				showAllFields={showAllFields}
-			/>
-
-			<Handle
-				className="lfr-objects__model-builder-node-handle"
-				hidden
-				id={name}
-				position={Position.Left}
-				style={{
-					background: '#80ACFF',
-					height: '12px',
-					left: '-30px',
-					width: '12px',
+					dispatch({
+						payload: {
+							edges,
+							nodes,
+							selectedObjectDefinitionName: name as string,
+						},
+						type: TYPES.SET_SELECTED_NODE,
+					});
 				}}
-				type="source"
-			/>
-		</div>
+			>
+				<NodeHeader
+					dropDownItems={getDefinitionNodeActions(
+						baseResourceURL,
+						objectDefinitionId,
+						name,
+						hasObjectDefinitionDeleteResourcePermission,
+						hasObjectDefinitionManagePermissionsResourcePermission,
+						editObjectDefinitionURL,
+						objectDefinitionPermissionsURL,
+						status,
+						setDeletedObjectDefinition,
+						handleShowDeleteDefinitionModal
+					)}
+					isLinkedNode={isLinkedNode}
+					objectDefinitionLabel={label}
+					status={status!}
+					system={system}
+				/>
+
+				<NodeFields
+					defaultLanguageId={defaultLanguageId}
+					objectFields={objectFields}
+					showAll={showAllFields}
+				/>
+
+				<NodeFooter
+					setShowAllFields={setShowAllFields}
+					showAllFields={showAllFields}
+				/>
+
+				<Handle
+					className="lfr-objects__model-builder-node-handle"
+					hidden
+					id={name}
+					position={Position.Left}
+					style={{
+						background: '#80ACFF',
+						height: '12px',
+						left: '-30px',
+						width: '12px',
+					}}
+					type="source"
+				/>
+			</div>
+
+			{showModal.deleteObjectDefinition && (
+				<ModalDeleteObjectDefinition
+					handleOnClose={() => {
+						setShowModal({
+							deleteObjectDefinition: false,
+						});
+					}}
+					objectDefinition={
+						deletedObjectDefinition as DeletedObjectDefinition
+					}
+					setDeletedObjectDefinition={setDeletedObjectDefinition}
+				/>
+			)}
+		</>
 	);
 }

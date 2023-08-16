@@ -107,11 +107,23 @@ interface ObjectFieldView extends ObjectField {
 	type?: string;
 }
 
+type DefinitionAction = {
+	href: string;
+	method: string;
+};
+
+type DefinitionActions = {
+	delete: DefinitionAction;
+	get: DefinitionAction;
+	permissions: DefinitionAction;
+	update: DefinitionAction;
+};
+
 interface ObjectDefinition {
 	accountEntryRestricted: boolean;
 	accountEntryRestrictedObjectFieldId: string;
 	accountEntryRestrictedObjectFieldName: string;
-	actions: {method: string};
+	actions: DefinitionActions;
 	active: boolean;
 	dateCreated: string;
 	dateModified: string;

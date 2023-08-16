@@ -7,6 +7,31 @@ import {Edge, Elements, Node} from 'react-flow-renderer';
 
 import {TYPES} from './ModelBuilderContext/typesEnum';
 
+declare type TDropDownType =
+	| 'checkbox'
+	| 'contextual'
+	| 'group'
+	| 'item'
+	| 'radio'
+	| 'radiogroup'
+	| 'divider';
+
+export type DropDownItems = {
+	active?: boolean;
+	checked?: boolean;
+	disabled?: boolean;
+	href?: string;
+	items?: Array<IItem>;
+	label?: string;
+	name?: string;
+	onChange?: Function;
+	onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+	symbolLeft?: string;
+	symbolRight?: string;
+	type?: TDropDownType;
+	value?: string;
+};
+
 export type TAction =
 	| {
 			payload: {
@@ -30,8 +55,11 @@ export type TAction =
 	  };
 
 export type TState = {
+	baseResourceURL: string;
+	editObjectDefinitionURL: string;
 	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
 	leftSidebarItems: LeftSidebarItemType[];
+	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];
 	objectFolders: ObjectFolder[];
 	rightSidebarType: RightSidebarType;
@@ -64,14 +92,26 @@ export interface ObjectFieldNode extends Partial<ObjectField> {
 
 export interface ObjectDefinitionNodeData
 	extends Partial<Omit<ObjectDefinition, 'objectFields' | 'label'>> {
+	defaultLanguageId: Liferay.Language.Locale;
+	editObjectDefinitionURL: string;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
 	isLinkedNode: boolean;
 	label: string;
+	name: string;
 	nodeSelected: boolean;
+	objectDefinitionId: number;
+	objectDefinitionPermissionsURL: string;
 	objectFields: ObjectFieldNode[];
+	objectRelationships: ObjectRelationship[];
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+	system: boolean;
 }
 
 export interface ObjectRelationshipEdgeData {

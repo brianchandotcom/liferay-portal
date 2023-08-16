@@ -6,9 +6,9 @@
 /// <reference types="react" />
 
 import './NodeHeader.scss';
+import {DropDownItems} from '../types';
 interface NodeHeaderProps {
-	hasObjectDefinitionDeleteResourcePermission: boolean;
-	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	dropDownItems: DropDownItems[];
 	isLinkedNode: boolean;
 	objectDefinitionLabel: string;
 	status: {
@@ -19,8 +19,7 @@ interface NodeHeaderProps {
 	system: boolean;
 }
 export default function NodeHeader({
-	hasObjectDefinitionDeleteResourcePermission,
-	hasObjectDefinitionManagePermissionsResourcePermission,
+	dropDownItems,
 	isLinkedNode,
 	objectDefinitionLabel,
 	status,

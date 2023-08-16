@@ -24,8 +24,10 @@ export declare type ViewObjectDefinitionsModals = {
 	moveObjectDefinition: boolean;
 	unbindFromRootObjectDefinition: boolean;
 };
-export interface DeletedObjectDefinition extends ObjectDefinition {
+export interface DeletedObjectDefinition {
 	hasObjectRelationship: boolean;
+	id: number;
+	name: string;
 	objectEntriesCount: number;
 }
 export default function ViewObjectDefinitions({

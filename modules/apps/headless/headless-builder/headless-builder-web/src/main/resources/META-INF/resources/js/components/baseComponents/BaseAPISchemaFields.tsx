@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {Select} from '../fieldComponents/Select';
-import {getItems} from '../utils/fetchUtil';
+import {getAllItems} from '../utils/fetchUtil';
 
 type DataError = {
 	description: boolean;
@@ -35,7 +35,7 @@ export default function BaseAPISchemaFields({
 	>();
 
 	useEffect(() => {
-		getItems<ObjectDefinition>({
+		getAllItems<ObjectDefinition>({
 			url: '/o/object-admin/v1.0/object-definitions',
 		}).then((result) => {
 			setObjectDefinitions(result);

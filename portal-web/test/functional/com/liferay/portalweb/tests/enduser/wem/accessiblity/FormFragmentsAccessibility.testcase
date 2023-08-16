@@ -115,4 +115,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191359. The Integer fields on associated display page should comply with WCAG 2.1 AA standards."
+	@priority = 3
+	test ViewAccessibilityOfIntegerFieldsOnAssociatedDisplayPage {
+		task ("Given a site administrater has a display page template for Object with integer fields") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Age",
+				fieldName = "age",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongInteger",
+				fieldLabelName = "Postcode",
+				fieldName = "postcode",
+				fieldType = "Long",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+
+			var objectEntryId = ObjectAdmin.addObjectEntryViaAPI(
+				fieldNameList = "age,postcode",
+				objectName = ${randomObjectName},
+				valueList = "30,20231010");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = ${randomLabelName},
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "${randomLabelName}s");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(field = "Default");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrater accesses to the associated display page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+		}
+
+		task ("Then the integer fields should have correct accessibility") {
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-inputs-numeric-input')])[1]");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-inputs-numeric-input')])[2]");
+		}
+	}
+
 }

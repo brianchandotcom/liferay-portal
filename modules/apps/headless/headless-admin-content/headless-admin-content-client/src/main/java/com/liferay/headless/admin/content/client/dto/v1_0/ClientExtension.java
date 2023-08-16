@@ -10,6 +10,7 @@ import com.liferay.headless.admin.content.client.serdes.v1_0.ClientExtensionSerD
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -24,6 +25,30 @@ public class ClientExtension implements Cloneable, Serializable {
 	public static ClientExtension toDTO(String json) {
 		return ClientExtensionSerDes.toDTO(json);
 	}
+
+	public Map<String, String> getClientExtensionConfig() {
+		return clientExtensionConfig;
+	}
+
+	public void setClientExtensionConfig(
+		Map<String, String> clientExtensionConfig) {
+
+		this.clientExtensionConfig = clientExtensionConfig;
+	}
+
+	public void setClientExtensionConfig(
+		UnsafeSupplier<Map<String, String>, Exception>
+			clientExtensionConfigUnsafeSupplier) {
+
+		try {
+			clientExtensionConfig = clientExtensionConfigUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> clientExtensionConfig;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;

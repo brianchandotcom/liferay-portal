@@ -27,6 +27,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -48,6 +50,38 @@ public class ClientExtension implements Serializable {
 	public static ClientExtension unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(ClientExtension.class, json);
 	}
+
+	@Schema
+	@Valid
+	public Map<String, String> getClientExtensionConfig() {
+		return clientExtensionConfig;
+	}
+
+	public void setClientExtensionConfig(
+		Map<String, String> clientExtensionConfig) {
+
+		this.clientExtensionConfig = clientExtensionConfig;
+	}
+
+	@JsonIgnore
+	public void setClientExtensionConfig(
+		UnsafeSupplier<Map<String, String>, Exception>
+			clientExtensionConfigUnsafeSupplier) {
+
+		try {
+			clientExtensionConfig = clientExtensionConfigUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> clientExtensionConfig;
 
 	@Schema(description = "The client extension's external reference code.")
 	public String getExternalReferenceCode() {
@@ -131,6 +165,16 @@ public class ClientExtension implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (clientExtensionConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientExtensionConfig\": ");
+
+			sb.append(_toJSON(clientExtensionConfig));
+		}
 
 		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {

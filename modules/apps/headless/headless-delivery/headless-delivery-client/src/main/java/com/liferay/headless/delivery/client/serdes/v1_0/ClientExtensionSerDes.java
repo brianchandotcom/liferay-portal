@@ -46,6 +46,16 @@ public class ClientExtensionSerDes {
 
 		sb.append("{");
 
+		if (clientExtension.getClientExtensionConfig() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientExtensionConfig\": ");
+
+			sb.append(_toJSON(clientExtension.getClientExtensionConfig()));
+		}
+
 		if (clientExtension.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -93,6 +103,15 @@ public class ClientExtensionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (clientExtension.getClientExtensionConfig() == null) {
+			map.put("clientExtensionConfig", null);
+		}
+		else {
+			map.put(
+				"clientExtensionConfig",
+				String.valueOf(clientExtension.getClientExtensionConfig()));
+		}
+
 		if (clientExtension.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -130,7 +149,16 @@ public class ClientExtensionSerDes {
 			ClientExtension clientExtension, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "clientExtensionConfig")) {
+				if (jsonParserFieldValue != null) {
+					clientExtension.setClientExtensionConfig(
+						(Map)ClientExtensionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
 					clientExtension.setExternalReferenceCode(
 						(String)jsonParserFieldValue);

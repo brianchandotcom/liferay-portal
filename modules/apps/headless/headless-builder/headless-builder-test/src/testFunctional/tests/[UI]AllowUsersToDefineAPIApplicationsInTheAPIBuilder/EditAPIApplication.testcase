@@ -14,8 +14,8 @@ definition {
 
 		task ("Given create an API application") {
 			ApplicationAPI.createAPIApplication(
-				baseURL = "App-test",
-				status = "published",
+				baseURL = "app-test",
+				status = "unpublished",
 				title = "App-test");
 		}
 	}
@@ -159,6 +159,11 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("When I click on the dropdown menu of created API application") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+
 			Click(
 				key_title = "App-test",
 				locator1 = "APIBuilder#DROPDOWN_MENU");

@@ -96,6 +96,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
+			resultRowSplitter="<%= displayPageDisplayContext.isSearch() ? null : new LayoutPageTemplateResultRowSplitter() %>"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

@@ -88,18 +88,17 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 							)}
 						</div>
 					)}
+					{experiment.editable && (
+						<ClayButton
+							className="mb-3"
+							data-testid="create-variant"
+							displayType="secondary"
+							onClick={() => setCreatingVariant(!creatingVariant)}
+						>
+							{Liferay.Language.get('create-variant')}
+						</ClayButton>
+					)}
 				</>
-			)}
-
-			{experiment.editable && (
-				<ClayButton
-					className="mb-3"
-					data-testid="create-variant"
-					displayType="secondary"
-					onClick={() => setCreatingVariant(!creatingVariant)}
-				>
-					{Liferay.Language.get('create-variant')}
-				</ClayButton>
 			)}
 
 			<VariantList

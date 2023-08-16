@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 
@@ -19,6 +20,8 @@ import javax.portlet.ActionRequest;
  * @author Lourdes Fernández Besada
  */
 public interface LayoutLockManager {
+
+	public String getLayoutType(long classPK, Locale locale, String type);
 
 	public void getLock(ActionRequest actionRequest) throws PortalException;
 

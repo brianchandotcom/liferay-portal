@@ -121,9 +121,7 @@ definition {
 			locator1 = "RecycleBin#RECYCLE_BIN_WARNING_SELECT_RESTORE_FOLDER",
 			value1 = "The original Folder of this file does not exist anymore. Choose a different Folder to restore ${documentName}.");
 
-		AssertClick(
-			locator1 = "Button#CHOOSE_THIS_FOLDER",
-			value1 = "Choose This Folder");
+		Button.click(button = "Select Home");
 
 		SelectFrameTop(value1 = "relative=top");
 

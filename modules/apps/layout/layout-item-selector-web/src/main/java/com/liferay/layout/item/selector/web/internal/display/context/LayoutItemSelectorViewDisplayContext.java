@@ -97,10 +97,6 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _layoutItemSelectorCriterion.isEnableCurrentPage();
 	}
 
-	public boolean isFollowURLOnTitleClick() {
-		return _layoutItemSelectorCriterion.isFollowURLOnTitleClick();
-	}
-
 	public boolean isMultiSelection() {
 		return _layoutItemSelectorCriterion.isMultiSelection();
 	}
@@ -111,14 +107,6 @@ public class LayoutItemSelectorViewDisplayContext {
 
 	public boolean isShowBreadcrumb() {
 		return _layoutItemSelectorCriterion.isShowBreadcrumb();
-	}
-
-	public boolean isShowDraftPages() {
-		return _layoutItemSelectorCriterion.isShowDraftPages();
-	}
-
-	public boolean isShowHiddenPages() {
-		return _layoutItemSelectorCriterion.isShowHiddenPages();
 	}
 
 	private BreadcrumbEntry _getHomeBreadcrumbEntry() throws PortalException {

@@ -25,7 +25,6 @@ const nodeByName = (items, name) => {
 
 export function SelectLayoutTree({
 	filter,
-	followURLOnTitleClick,
 	itemSelectorSaveEvent,
 	items: initialItems = [],
 	onItemsCountChange,
@@ -88,20 +87,15 @@ export function SelectLayoutTree({
 			return;
 		}
 
-		if (followURLOnTitleClick) {
-			getOpener().document.location.href = item.url;
-		}
-		else {
-			const data = Array.from(selectedItemsRef.current.values());
+		const data = Array.from(selectedItemsRef.current.values());
 
-			Liferay.fire(itemSelectorSaveEvent, {
-				data,
-			});
+		Liferay.fire(itemSelectorSaveEvent, {
+			data,
+		});
 
-			getOpener().Liferay.fire(itemSelectorSaveEvent, {
-				data,
-			});
-		}
+		getOpener().Liferay.fire(itemSelectorSaveEvent, {
+			data,
+		});
 	};
 
 	const handleSingleSelection = (item, selection) => {
@@ -131,12 +125,6 @@ export function SelectLayoutTree({
 
 	const onClick = (event, item, selection, expand) => {
 		event.preventDefault();
-
-		if (followURLOnTitleClick) {
-			getOpener().document.location.href = item.url;
-
-			return;
-		}
 
 		if (item.disabled) {
 			expand.toggle(item.id);

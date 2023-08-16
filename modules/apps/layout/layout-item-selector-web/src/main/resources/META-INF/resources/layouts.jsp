@@ -22,12 +22,9 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 <liferay-layout:select-layout
 	checkDisplayPage="<%= layoutItemSelectorViewDisplayContext.isCheckDisplayPage() %>"
 	enableCurrentPage="<%= layoutItemSelectorViewDisplayContext.isEnableCurrentPage() %>"
-	followURLOnTitleClick="<%= layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick() %>"
 	itemSelectorReturnType="<%= layoutItemSelectorViewDisplayContext.getItemSelectedReturnType() %>"
 	itemSelectorSaveEvent="<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	multiSelection="<%= layoutItemSelectorViewDisplayContext.isMultiSelection() %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
-	showDraftLayouts="<%= layoutItemSelectorViewDisplayContext.isShowDraftPages() %>"
-	showHiddenLayouts="<%= layoutItemSelectorViewDisplayContext.isShowHiddenPages() %>"
 />

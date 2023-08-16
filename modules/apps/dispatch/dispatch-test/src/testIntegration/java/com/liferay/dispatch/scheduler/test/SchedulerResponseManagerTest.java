@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Dictionary;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -76,16 +79,20 @@ public class SchedulerResponseManagerTest {
 			DestinationConfiguration.createSynchronousDestinationConfiguration(
 				_TEST_DESTINATION_NAME));
 
-		ServiceRegistration<?> serviceRegistration =
+		Dictionary<String, Object> dictionary =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"destination.name", _TEST_DESTINATION_NAME
+			).build();
+
+		ServiceRegistration<?> serviceRegistration1 =
 			bundleContext.registerService(
-				Destination.class, destination,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name", _TEST_DESTINATION_NAME
-				).build());
+				Destination.class, destination, dictionary);
 
 		TestMessageListener testMessageListener = new TestMessageListener();
 
-		destination.register(testMessageListener);
+		ServiceRegistration<?> serviceRegistration2 =
+			bundleContext.registerService(
+				MessageListener.class, testMessageListener, dictionary);
 
 		_schedulerEngineHelper.schedule(
 			_triggerFactory.createTrigger(
@@ -110,7 +117,9 @@ public class SchedulerResponseManagerTest {
 				testMessageListener.getCompanyIdFromMessage());
 		}
 		finally {
-			serviceRegistration.unregister();
+			serviceRegistration2.unregister();
+
+			serviceRegistration1.unregister();
 
 			_schedulerEngineHelper.delete(
 				_TEST_NAME, _TEST_NAME, StorageType.MEMORY_CLUSTERED);

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHa
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,9 @@ import java.util.concurrent.CountDownLatch;
 
 import org.junit.runner.Description;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -245,7 +248,13 @@ public class SynchronousDestinationTestRule
 				}
 			};
 
-			schedulerDestination.register(messageListener);
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			ServiceRegistration<MessageListener> serviceRegistration =
+				bundleContext.registerService(
+					MessageListener.class, messageListener,
+					MapUtil.singletonDictionary(
+						"destination.name", schedulerDestination.getName()));
 
 			for (int i = 0; i < workersMaxSize; i++) {
 				schedulerDestination.send(countDownMessage);
@@ -258,7 +267,7 @@ public class SynchronousDestinationTestRule
 				ReflectionUtil.throwException(interruptedException);
 			}
 
-			schedulerDestination.unregister(messageListener);
+			serviceRegistration.unregister();
 
 			endCountDownLatch.countDown();
 		}

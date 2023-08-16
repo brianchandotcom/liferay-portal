@@ -16,9 +16,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Group;
@@ -32,6 +30,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.test.rule.Inject;
@@ -105,6 +104,10 @@ public class PDFProcessorTest {
 
 		if (_dlProcessorServiceRegistration != null) {
 			_dlProcessorServiceRegistration.unregister();
+		}
+
+		if (_messageListenerServiceRegistration != null) {
+			_messageListenerServiceRegistration.unregister();
 		}
 	}
 
@@ -587,26 +590,26 @@ public class PDFProcessorTest {
 	}
 
 	protected AtomicInteger registerPDFProcessorMessageListener(
-		final EventType eventType) {
+		EventType eventType) {
 
-		final AtomicInteger count = new AtomicInteger();
+		AtomicInteger count = new AtomicInteger();
 
-		Destination destination = _messageBus.getDestination(
-			DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
+		Bundle bundle = FrameworkUtil.getBundle(PDFProcessorTest.class);
 
-		destination.register(
-			new MessageListener() {
+		BundleContext bundleContext = bundle.getBundleContext();
 
-				@Override
-				public void receive(Message message) {
-					Object[] payload = (Object[])message.getPayload();
+		_messageListenerServiceRegistration = bundleContext.registerService(
+			MessageListener.class,
+			message -> {
+				Object[] payload = (Object[])message.getPayload();
 
-					if (eventType.isMatch(payload[0])) {
-						count.incrementAndGet();
-					}
+				if (eventType.isMatch(payload[0])) {
+					count.incrementAndGet();
 				}
-
-			});
+			},
+			MapUtil.singletonDictionary(
+				"destination.name",
+				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR));
 
 		return count;
 	}
@@ -669,6 +672,8 @@ public class PDFProcessorTest {
 	@Inject
 	private MessageBus _messageBus;
 
+	private ServiceRegistration<MessageListener>
+		_messageListenerServiceRegistration;
 	private ServiceContext _serviceContext;
 
 }

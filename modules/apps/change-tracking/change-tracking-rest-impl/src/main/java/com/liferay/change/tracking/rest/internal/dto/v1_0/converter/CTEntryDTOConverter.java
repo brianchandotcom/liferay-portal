@@ -83,7 +83,9 @@ public class CTEntryDTOConverter
 			Group group = _groupLocalService.fetchGroup(
 				groupedModel.getGroupId());
 
-			return group.getGroupId();
+			if (group != null) {
+				return group.getGroupId();
+			}
 		}
 
 		return null;
@@ -96,7 +98,9 @@ public class CTEntryDTOConverter
 			Group group = _groupLocalService.fetchGroup(
 				groupedModel.getGroupId());
 
-			return group.getName(locale);
+			if (group != null) {
+				return group.getName(locale);
+			}
 		}
 
 		return null;
@@ -147,6 +151,10 @@ public class CTEntryDTOConverter
 
 	private Status _toStatus(Locale locale, BaseModel<?> model)
 		throws Exception {
+
+		if (model == null) {
+			return null;
+		}
 
 		Map<String, Object> modelAttributes = model.getModelAttributes();
 

@@ -341,6 +341,10 @@ components:
             description:
                 Represents a client extension
             properties:
+                clientExtensionConfig:
+                    additionalProperties:
+                        type: string
+                    type: object
                 externalReferenceCode:
                     # @review
                     description:

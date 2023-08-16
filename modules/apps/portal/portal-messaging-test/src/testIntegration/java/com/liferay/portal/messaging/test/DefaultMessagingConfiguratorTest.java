@@ -10,8 +10,10 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -135,11 +137,16 @@ public class DefaultMessagingConfiguratorTest {
 			Assert.assertTrue(
 				destinationName, destinationName.contains("portaltest"));
 
+			List<MessageListener> destinationMessageListeners =
+				_messageListenerRegistry.getMessageListeners(destinationName);
+
 			if (destinationName.equals("liferay/portaltest1")) {
-				Assert.assertEquals(1, destination.getMessageListenerCount());
+				Assert.assertEquals(
+					destinationMessageListeners.toString(), 1,
+					destinationMessageListeners.size());
 			}
 
-			if (destination.getMessageListenerCount() > 0) {
+			if (!destinationMessageListeners.isEmpty()) {
 				Message message = new Message();
 
 				message.setDestinationName(destinationName);
@@ -152,6 +159,10 @@ public class DefaultMessagingConfiguratorTest {
 	private static BundleContext _bundleContext;
 
 	private DefaultMessagingConfigurator _defaultMessagingConfigurator;
+
+	@Inject
+	private MessageListenerRegistry _messageListenerRegistry;
+
 	private ServiceTracker<Destination, Destination> _serviceTracker;
 
 	private static class TestMessageListener implements MessageListener {

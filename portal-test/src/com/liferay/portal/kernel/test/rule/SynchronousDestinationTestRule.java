@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,7 +16,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -29,21 +27,14 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHa
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 
 import org.junit.runner.Description;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -212,66 +203,24 @@ public class SynchronousDestinationTestRule
 				}
 			}
 
-			Destination schedulerDestination = _destinations.get(
+			_schedulerDestination = _destinations.get(
 				DestinationNames.SCHEDULER_DISPATCH);
 
-			if (schedulerDestination == null) {
+			if (_schedulerDestination == null) {
 				return;
 			}
 
-			_schedulerInvokerMessageListeners =
-				ReflectionTestUtil.getFieldValue(
-					schedulerDestination, "messageListeners");
+			Destination dummySchedulerDestination =
+				new TestSynchronousDestination() {
 
-			ReflectionTestUtil.setFieldValue(
-				schedulerDestination, "messageListeners",
-				Collections.newSetFromMap(new ConcurrentHashMap<>()));
-
-			int workersMaxSize = ReflectionTestUtil.getFieldValue(
-				schedulerDestination, "_workersMaxSize");
-
-			CountDownLatch startCountDownLatch = new CountDownLatch(
-				workersMaxSize);
-
-			CountDownLatch endCountDownLatch = new CountDownLatch(1);
-
-			Message countDownMessage = new Message();
-
-			MessageListener messageListener = message -> {
-				if (countDownMessage == message) {
-					startCountDownLatch.countDown();
-
-					try {
-						endCountDownLatch.await();
+					@Override
+					public void send(Message message) {
 					}
-					catch (InterruptedException interruptedException) {
-						ReflectionUtil.throwException(interruptedException);
-					}
-				}
-			};
 
-			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+				};
 
-			ServiceRegistration<MessageListener> serviceRegistration =
-				bundleContext.registerService(
-					MessageListener.class, messageListener,
-					MapUtil.singletonDictionary(
-						"destination.name", schedulerDestination.getName()));
-
-			for (int i = 0; i < workersMaxSize; i++) {
-				schedulerDestination.send(countDownMessage);
-			}
-
-			try {
-				startCountDownLatch.await();
-			}
-			catch (InterruptedException interruptedException) {
-				ReflectionUtil.throwException(interruptedException);
-			}
-
-			serviceRegistration.unregister();
-
-			endCountDownLatch.countDown();
+			_destinations.put(
+				DestinationNames.SCHEDULER_DISPATCH, dummySchedulerDestination);
 		}
 
 		public void replaceDestination(String destinationName) {
@@ -297,8 +246,6 @@ public class SynchronousDestinationTestRule
 				Destination synchronousDestination =
 					createSynchronousDestination(destinationName);
 
-				destination.copyMessageListeners(synchronousDestination);
-
 				_destinations.put(destinationName, synchronousDestination);
 			}
 
@@ -316,6 +263,11 @@ public class SynchronousDestinationTestRule
 				_bufferedIncrementForceSyncSafeCloseable.close();
 			}
 
+			if (_schedulerDestination != null) {
+				_destinations.put(
+					DestinationNames.SCHEDULER_DISPATCH, _schedulerDestination);
+			}
+
 			for (Destination destination : _asyncServiceDestinations) {
 				_destinations.put(destination.getName(), destination);
 			}
@@ -325,17 +277,6 @@ public class SynchronousDestinationTestRule
 			for (String absentDestinationName : _absentDestinationNames) {
 				_destinations.remove(absentDestinationName);
 			}
-
-			Destination destination = _destinations.get(
-				DestinationNames.SCHEDULER_DISPATCH);
-
-			if (destination == null) {
-				return;
-			}
-
-			ReflectionTestUtil.setFieldValue(
-				destination, "messageListeners",
-				_schedulerInvokerMessageListeners);
 
 			_serviceTracker.close();
 		}
@@ -396,7 +337,7 @@ public class SynchronousDestinationTestRule
 			new ArrayList<>();
 		private SafeCloseable _bufferedIncrementForceSyncSafeCloseable;
 		private Map<String, Destination> _destinations;
-		private Set<InvokerMessageListener> _schedulerInvokerMessageListeners;
+		private Destination _schedulerDestination;
 		private final ServiceTracker
 			<MessageListenerRegistry, MessageListenerRegistry> _serviceTracker =
 				new ServiceTracker<>(

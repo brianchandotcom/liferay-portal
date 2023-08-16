@@ -33,43 +33,15 @@ public class PushNotificationMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_registerMessaging(
+			bundleContext, PushNotificationsDestinationNames.PUSH_NOTIFICATION,
+			new PushNotificationsMessageListener(
+				_pushNotificationsDeviceLocalService));
 
-		DestinationConfiguration pushNotificationDestinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				PushNotificationsDestinationNames.PUSH_NOTIFICATION);
-
-		Destination pushNotificationDestination = _registerDestination(
-			pushNotificationDestinationConfiguration);
-
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				MessageListener.class,
-				new PushNotificationsMessageListener(
-					_pushNotificationsDeviceLocalService),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name", pushNotificationDestination.getName()
-				).build()));
-
-		DestinationConfiguration
-			pushNotificationResponseDestinationConfiguration =
-				new DestinationConfiguration(
-					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-					PushNotificationsDestinationNames.
-						PUSH_NOTIFICATION_RESPONSE);
-
-		Destination pushNotificationResponseDestination = _registerDestination(
-			pushNotificationResponseDestinationConfiguration);
-
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				MessageListener.class,
-				new PushNotificationsResponseMessageListener(_jsonFactory),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name",
-					pushNotificationResponseDestination.getName()
-				).build()));
+		_registerMessaging(
+			bundleContext,
+			PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
+			new PushNotificationsResponseMessageListener(_jsonFactory));
 	}
 
 	@Deactivate
@@ -83,29 +55,30 @@ public class PushNotificationMessagingConfigurator {
 
 			_serviceRegistrations.clear();
 		}
-
-		_bundleContext = null;
 	}
 
-	private Destination _registerDestination(
-		DestinationConfiguration destinationConfiguration) {
+	private void _registerMessaging(
+		BundleContext bundleContext, String destinationName,
+		MessageListener messageListener) {
 
 		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				destinationName));
 
-		Dictionary<String, Object> properties =
+		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
 			).build();
 
 		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				Destination.class, destination, properties));
+			bundleContext.registerService(
+				Destination.class, destination, dictionary));
 
-		return destination;
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class, messageListener, dictionary));
 	}
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

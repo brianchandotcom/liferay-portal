@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -53,37 +54,23 @@ public class BackgroundTaskMessagingConfigurator {
 			ConfigurableUtil.createConfigurable(
 				BackgroundTaskManagerConfiguration.class, properties);
 
-		Destination backgroundTaskDestination = _registerDestination(
+		_registerMessaging(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK,
 			backgroundTaskManagerConfiguration.workersCoreSize(),
-			backgroundTaskManagerConfiguration.workersMaxSize());
+			backgroundTaskManagerConfiguration.workersMaxSize(),
+			new BackgroundTaskMessageListener(
+				_backgroundTaskExecutorRegistry, _backgroundTaskLocalService,
+				_backgroundTaskStatusRegistry,
+				_backgroundTaskThreadLocalManager, _lockManager, _messageBus));
 
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				MessageListener.class,
-				new BackgroundTaskMessageListener(
-					_backgroundTaskExecutorRegistry,
-					_backgroundTaskLocalService, _backgroundTaskStatusRegistry,
-					_backgroundTaskThreadLocalManager, _lockManager,
-					_messageBus),
-				MapUtil.singletonDictionary(
-					"destination.name", backgroundTaskDestination.getName())));
-
-		Destination backgroundTaskStatusDestination = _registerDestination(
+		_registerMessaging(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			DestinationNames.BACKGROUND_TASK_STATUS, 1, 1);
-
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				MessageListener.class,
-				new BackgroundTaskStatusMessageListener(
-					_backgroundTaskLocalService, _backgroundTaskStatusRegistry,
-					_lockManager, _roleLocalService, _userLocalService,
-					_userNotificationEventLocalService),
-				MapUtil.singletonDictionary(
-					"destination.name",
-					backgroundTaskStatusDestination.getName())));
+			DestinationNames.BACKGROUND_TASK_STATUS, 1, 1,
+			new BackgroundTaskStatusMessageListener(
+				_backgroundTaskLocalService, _backgroundTaskStatusRegistry,
+				_lockManager, _roleLocalService, _userLocalService,
+				_userNotificationEventLocalService));
 	}
 
 	@Deactivate
@@ -95,9 +82,10 @@ public class BackgroundTaskMessagingConfigurator {
 		}
 	}
 
-	private Destination _registerDestination(
+	private void _registerMessaging(
 		BundleContext bundleContext, String destinationType,
-		String destinationName, int workersCoreSize, int workersMaxSize) {
+		String destinationName, int workersCoreSize, int workersMaxSize,
+		MessageListener messageListener) {
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(destinationType, destinationName);
@@ -108,13 +96,16 @@ public class BackgroundTaskMessagingConfigurator {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
+		Dictionary<String, String> dictionary = MapUtil.singletonDictionary(
+			"destination.name", destination.getName());
+
 		_serviceRegistrations.add(
 			bundleContext.registerService(
-				Destination.class, destination,
-				MapUtil.singletonDictionary(
-					"destination.name", destination.getName())));
+				Destination.class, destination, dictionary));
 
-		return destination;
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class, messageListener, dictionary));
 	}
 
 	@Reference

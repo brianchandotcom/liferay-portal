@@ -369,6 +369,58 @@ public class
 	}
 
 	@Test
+	public void testCopyFolderShouldCopyAssetCategoriesAndAssetTagsParentGroup()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {_assetCategory.getCategoryId()});
+
+		String assetTagName = RandomTestUtil.randomString();
+
+		AssetTestUtil.addTag(group.getGroupId(), assetTagName);
+
+		serviceContext.setAssetTagNames(new String[] {assetTagName});
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			ContentTypes.TEXT_PLAIN, DLAppServiceTestUtil.FILE_NAME,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			BaseDLAppTestCase.CONTENT.getBytes(), null, null, serviceContext);
+
+		Folder folder = _dlAppService.copyFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			_childGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
+
+		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+			_childGroup.getGroupId(), folder.getFolderId());
+
+		Assert.assertEquals(fileEntries.toString(), 1, fileEntries.size());
+
+		FileEntry fileEntry2 = fileEntries.get(0);
+
+		String className = DLFileEntryConstants.getClassName();
+
+		Assert.assertArrayEquals(
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry1.getFileEntryId()),
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry2.getFileEntryId()));
+
+		Assert.assertArrayEquals(
+			_assetTagLocalService.getTagNames(
+				className, fileEntry1.getFileEntryId()),
+			_assetTagLocalService.getTagNames(
+				className, fileEntry2.getFileEntryId()));
+	}
+
+	@Test
 	public void testCopyFolderShouldCopyAssetTagsSameGroup() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

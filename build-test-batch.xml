@@ -738,11 +738,11 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<local name="test.class.java" />
 
 			<propertyregex
-				casesensitive="false"
+				casesensitive="true"
 				input="@{test.class}"
 				property="test.class.java"
-				regexp=".class"
-				replace=".java"
+				regexp="\.class"
+				replace="\.java"
 			/>
 
 			<first id="test.class.file">

@@ -1,0 +1,57 @@
+{
+	"object-fields": [
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "f790477c-1f6d-4dca-8d8f-54830297451c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Changelog Link"
+			},
+			"name": "changelogLink",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "20d71ec6-17f6-4e2a-b681-6c3ba5af0484",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Highlights Link"
+			},
+			"name": "highlightsLink",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"externalReferenceCode": "75c0464b-4745-44b8-ae40-72949deb8b34",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Download Link"
+			},
+			"name": "downloadLink",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"externalReferenceCode": "95af84dc-0a26-4f54-be1e-c242a92dde26",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Update Number"
+			},
+			"name": "updateNumber",
+			"required": false,
+			"type": "Clob"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ReleaseNotes$]"
+}

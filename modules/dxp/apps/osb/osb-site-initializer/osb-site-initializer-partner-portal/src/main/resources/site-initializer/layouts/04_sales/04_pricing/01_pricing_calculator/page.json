@@ -1,19 +1,17 @@
 {
-	"friendlyURL": "/marketing/events",
-	"hidden": true,
+	"friendlyURL": "/sales/pricing-calculator",
+	"hidden": false,
 	"name_i18n": {
-		"en_US": "Events"
+		"en_US": "Pricing Calculator"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Site Member",
 			"scope": 4
 		},
@@ -83,11 +81,5 @@
 	],
 	"private": false,
 	"system": false,
-	"type": "link_to_layout",
-	"typeSettings": [
-		{
-			"key": "url",
-			"value": "/events"
-		}
-	]
+	"type": "content"
 }

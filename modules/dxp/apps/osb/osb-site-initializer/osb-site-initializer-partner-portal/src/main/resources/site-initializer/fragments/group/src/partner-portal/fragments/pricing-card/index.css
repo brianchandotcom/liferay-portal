@@ -1,0 +1,14 @@
+.alert-success {
+	background-color: #03c0f6;
+	border-color: #03c0f6;
+	color: White;
+}
+
+.lexicon-icon-check {
+	fill: #0073fd;
+}
+
+.list-group {
+	color: #a7a9bc !important;
+	font-size: 1rem;
+}

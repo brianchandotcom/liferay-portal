@@ -1,19 +1,17 @@
 {
-	"friendlyURL": "/resources",
+	"friendlyURL": "/Library",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Resources"
+		"en_US": "Library"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Site Member",
 			"scope": 4
 		},

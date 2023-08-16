@@ -14,7 +14,6 @@
 		<suppress checks="JavaVariableTypeCheck" files="portal-tools-theme-builder/src/main/java/com/liferay/portal/tools/theme/builder/maven/BuildThemeMojo\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-tools-db-support/.*" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="css-builder/build\.gradle" />
-		<suppress checks="LibraryVulnerabilitiesCheck" files="css-builder/src/main/resources/META-INF/maven/com.liferay/com.liferay.css.builder/pom\.xml" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="javadoc-formatter/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="lang-builder/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="portal-tools-service-builder/build\.gradle" />

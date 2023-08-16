@@ -66,13 +66,16 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		Test testIntegrationTask = _addTaskTestIntegration(
 			project, testIntegrationSourceSet);
 
-		project.afterEvaluate(new Action<Project>() {
-			@Override
-			public void execute(Project project) {
-				_configureEclipse(project, testIntegrationSourceSet);
-				_configureIdea(project, testIntegrationSourceSet);
-			}
-		});
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureEclipse(project, testIntegrationSourceSet);
+					_configureIdea(project, testIntegrationSourceSet);
+				}
+
+			});
 
 		_configureTaskCheck(testIntegrationTask);
 	}
@@ -283,11 +286,11 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 	}
 
 	private void _configureIdeaModule(
-		Project project, final SourceSet testIntegrationSourceSet) {
+		Project project, SourceSet testIntegrationSourceSet) {
 
 		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
 
-		final IdeaModule ideaModule = ideaModel.getModule();
+		IdeaModule ideaModule = ideaModel.getModule();
 
 		Map<String, Map<String, Collection<Configuration>>> scopes =
 			ideaModule.getScopes();

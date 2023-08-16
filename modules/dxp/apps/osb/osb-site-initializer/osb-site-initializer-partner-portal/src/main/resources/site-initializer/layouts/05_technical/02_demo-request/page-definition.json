@@ -24,18 +24,20 @@
 							"fragment": {
 								"key": "content-welcome-banner"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Request a Demo Instance",
 												"ar_SA": "Request a Demo Instance",
 												"ca_ES": "Request a Demo Instance",
 												"de_DE": "Request a Demo Instance",
+												"en_US": "Request a Demo Instance",
 												"es_ES": "Request a Demo Instance",
 												"fi_FI": "Request a Demo Instance",
 												"fr_FR": "Request a Demo Instance",
@@ -52,13 +54,14 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
 												"ar_SA": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
 												"ca_ES": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
 												"de_DE": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
+												"en_US": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
 												"es_ES": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
 												"fi_FI": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
 												"fr_FR": "Demos are available for you to showcase Liferay's benefits, features, and solutions for your prospect's unique business challenges.&nbsp;&nbsp;",
@@ -75,7 +78,8 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -83,15 +87,18 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -119,7 +126,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -131,11 +139,13 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							}
 						],
@@ -160,11 +170,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -180,11 +192,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -196,27 +210,29 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"ar_SA": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"ca_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"de_DE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"es_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"fi_FI": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"fr_FR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"hu_HU": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"ja_JP": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"nl_NL": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"pt_BR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"sv_SE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
-																"zh_CN": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n"
+																"ar_SA": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"ca_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"de_DE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"en_US": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"es_ES": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"fi_FI": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"fr_FR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"hu_HU": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"ja_JP": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"nl_NL": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"pt_BR": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"sv_SE": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n",
+																"zh_CN": "<h4 dir=\"ltr\"><strong>Getting Started</strong></h4>\n\n<p dir=\"ltr\">Demo bundles are hosted on our demo server and can be configured for presentation. You need to provide a GitHub ID in order to use them. Demo bundles cannot be downloaded. However, the data can be exported locally. Access to the demo server is for&nbsp;<u>7 days&nbsp;</u>per request.&nbsp;<br />\n<br />\nOnce a demo instance is ready to use, you will receive an email and the instructions to use it. If the demo has a specific script, you will find the same attached to the email as well.</p>\n\n<p dir=\"ltr\">For questions regarding any technical resource, please contact your Channel Account Manager or&nbsp;email:&nbsp;<a href=\"mailto:sales-engineering-channels@liferay.com\" target=\"_blank\">sales-engineering-channels@liferay.com</a>.</p>\n\n<p> </p>\n\n<h4 dir=\"ltr\"><strong>Demo Recordings</strong></h4>\n\n<p dir=\"ltr\">It is recommended that you first watch the relevant demo recording to determine if the use case will be relevant to your presentation.&nbsp;</p>\n"
 															}
 														}
 													}
@@ -239,17 +255,20 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
 									"size": 6
 								},
-								"pageElements": [],
+								"pageElements": [
+								],
 								"type": "Column"
 							}
 						],

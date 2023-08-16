@@ -24,18 +24,20 @@
 							"fragment": {
 								"key": "content-welcome-banner"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "first-welcome-banner-title",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Learning Paths and Certifications",
 												"ar_SA": "Learning Paths and Certifications",
 												"ca_ES": "Learning Paths and Certifications",
 												"de_DE": "Learning Paths and Certifications",
+												"en_US": "Learning Paths and Certifications",
 												"es_ES": "Learning Paths and Certifications",
 												"fi_FI": "Learning Paths and Certifications",
 												"fr_FR": "Learning Paths and Certifications",
@@ -52,13 +54,14 @@
 								{
 									"id": "first-welcome-banner-description",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
 												"ar_SA": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
 												"ca_ES": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
 												"de_DE": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
+												"en_US": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
 												"es_ES": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
 												"fi_FI": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
 												"fr_FR": "<b id=\"docs-internal-guid-057fd86f-7fff-2165-748c-a7e40465b7eb\">Liferay Solution Partners are required to maintain a minimum number of sales and presales certified individuals on full-time staff. The exact number of required individuals varies with partner level and is outlined under partner requirements in the Solution Partner Program Guide</b>",
@@ -75,7 +78,8 @@
 								{
 									"id": "second-welcome-banner-title",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -83,7 +87,8 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -97,13 +102,14 @@
 												{
 													"id": "first-banner-primary-button-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Watch A Video Tour",
 																"ar_SA": "Watch A Video Tour",
 																"ca_ES": "Watch A Video Tour",
 																"de_DE": "Watch A Video Tour",
+																"en_US": "Watch A Video Tour",
 																"es_ES": "Watch A Video Tour",
 																"fi_FI": "Watch A Video Tour",
 																"fr_FR": "Watch A Video Tour",
@@ -126,7 +132,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -134,23 +141,24 @@
 												"key": "dialect-dialect-button"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "ghost",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
 													"id": "link",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Explore Learning Paths",
 																"ar_SA": "Explore Learning Paths",
 																"ca_ES": "Explore Learning Paths",
 																"de_DE": "Explore Learning Paths",
+																"en_US": "Explore Learning Paths",
 																"es_ES": "Explore Learning Paths",
 																"fi_FI": "Explore Learning Paths",
 																"fr_FR": "Explore Learning Paths",
@@ -173,7 +181,8 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
@@ -198,7 +207,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -210,11 +220,13 @@
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							},
 							{
-								"definition": {},
+								"definition": {
+								},
 								"type": "FragmentDropZone"
 							}
 						],
@@ -232,13 +244,14 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Certifications",
 												"ar_SA": "Certifications",
 												"ca_ES": "Certifications",
 												"de_DE": "Certifications",
+												"en_US": "Certifications",
 												"es_ES": "Certifications",
 												"fi_FI": "Certifications",
 												"fr_FR": "Certifications",
@@ -266,18 +279,20 @@
 							"fragment": {
 								"key": "BASIC_COMPONENT-paragraph"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
-												"en_US": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
 												"ar_SA": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
 												"ca_ES": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
 												"de_DE": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
+												"en_US": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
 												"es_ES": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
 												"fi_FI": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
 												"fr_FR": "<p dir=\"ltr\"><b id=\"docs-internal-guid-43df8ac1-7fff-912c-1879-b068aac8ca6d\">The current Liferay certification path for both sales &amp; presales partner staff is achieved through virtual participation in the applicable Live Liferay Learning Path. These learning path modules are available live once per quarter and attendance is captured for each individual module. Please select your path below to register for</b> <b>the next available sessions to achieve certification prior to the December 31st 2023 audit. Should you have any questions please reach out to your CAM or the Liferay enablement team at, <a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>.&nbsp;</b></p>\n",
@@ -336,11 +351,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -356,11 +373,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -454,7 +473,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -476,7 +496,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -545,7 +566,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -604,7 +626,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -664,13 +687,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Business Sales",
 																										"ar_SA": "Business Sales",
 																										"ca_ES": "Business Sales",
 																										"de_DE": "Business Sales",
+																										"en_US": "Business Sales",
 																										"es_ES": "Business Sales",
 																										"fi_FI": "Business Sales",
 																										"fr_FR": "Business Sales",
@@ -731,13 +755,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
 																										"ar_SA": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
 																										"ca_ES": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
 																										"de_DE": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
+																										"en_US": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
 																										"es_ES": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
 																										"fi_FI": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
 																										"fr_FR": "Learning paths for Account Executives, BDRs, SDRs, and other business sales roles",
@@ -843,10 +868,10 @@
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Start Learning",
 																												"ar_SA": "Start Learning",
 																												"ca_ES": "Start Learning",
 																												"de_DE": "Start Learning",
+																												"en_US": "Start Learning",
 																												"es_ES": "Start Learning",
 																												"fi_FI": "Start Learning",
 																												"fr_FR": "Start Learning",
@@ -892,7 +917,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",
@@ -931,11 +957,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1029,7 +1057,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1051,7 +1080,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1120,7 +1150,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1179,7 +1210,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1239,13 +1271,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Technical Sales",
 																										"ar_SA": "Technical Sales",
 																										"ca_ES": "Technical Sales",
 																										"de_DE": "Technical Sales",
+																										"en_US": "Technical Sales",
 																										"es_ES": "Technical Sales",
 																										"fi_FI": "Technical Sales",
 																										"fr_FR": "Technical Sales",
@@ -1306,13 +1339,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
 																										"ar_SA": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
 																										"ca_ES": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
 																										"de_DE": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
+																										"en_US": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
 																										"es_ES": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
 																										"fi_FI": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
 																										"fr_FR": "Learning paths for Sales Engineers, Pre-Sales Consultants and other technical sales roles",
@@ -1418,10 +1452,10 @@
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Start Learning",
 																												"ar_SA": "Start Learning",
 																												"ca_ES": "Start Learning",
 																												"de_DE": "Start Learning",
+																												"en_US": "Start Learning",
 																												"es_ES": "Start Learning",
 																												"fi_FI": "Start Learning",
 																												"fr_FR": "Start Learning",
@@ -1467,7 +1501,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",
@@ -1506,11 +1541,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1603,7 +1640,8 @@
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1625,7 +1663,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1694,7 +1733,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1753,7 +1793,8 @@
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1813,13 +1854,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Developer",
 																										"ar_SA": "Developer",
 																										"ca_ES": "Developer",
 																										"de_DE": "Developer",
+																										"en_US": "Developer",
 																										"es_ES": "Developer",
 																										"fi_FI": "Developer",
 																										"fr_FR": "Developer",
@@ -1880,13 +1922,14 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
 																										"ar_SA": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
 																										"ca_ES": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
 																										"de_DE": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
+																										"en_US": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
 																										"es_ES": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
 																										"fi_FI": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
 																										"fr_FR": "Training focussed on deploying, implementing, configuring and tailoring Liferay",
@@ -1965,13 +2008,14 @@
 																								{
 																									"id": "element-text",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Start Learning",
 																												"ar_SA": "Start Learning",
 																												"ca_ES": "Start Learning",
 																												"de_DE": "Start Learning",
+																												"en_US": "Start Learning",
 																												"es_ES": "Start Learning",
 																												"fi_FI": "Start Learning",
 																												"fr_FR": "Start Learning",
@@ -2017,7 +2061,8 @@
 																								"iconLink": "",
 																								"iconName": "order-arrow-right"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"fragmentStyle": {
 																								"borderRadius": "",
 																								"shadow": "",
@@ -2056,11 +2101,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],

@@ -4659,8 +4659,8 @@ public class JournalArticleLocalServiceImpl
 			boolean neverExpire, int reviewDateMonth, int reviewDateDay,
 			int reviewDateYear, int reviewDateHour, int reviewDateMinute,
 			boolean neverReview, boolean indexable, boolean smallImage,
-			int smallImageSource, String smallImageURL, File smallImageFile,
-			Map<String, byte[]> images, String articleURL,
+			long smallImageId, int smallImageSource, String smallImageURL,
+			File smallImageFile, Map<String, byte[]> images, String articleURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -4857,8 +4857,14 @@ public class JournalArticleLocalServiceImpl
 		article.setSmallImage(smallImage);
 
 		if (smallImage) {
-			if ((smallImageFile != null) && (smallImageBytes != null) &&
-				(article.getSmallImageId() <= 0)) {
+			if (smallImageSource ==
+					JournalArticleConstants.
+						SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA) {
+
+				article.setSmallImageId(smallImageId);
+			}
+			else if ((smallImageFile != null) && (smallImageBytes != null) &&
+					 (article.getSmallImageId() <= 0)) {
 
 				article.setSmallImageId(counterLocalService.increment());
 			}
@@ -5098,15 +5104,15 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticleLocalService.updateArticle(
 			userId, groupId, folderId, articleId, version, titleMap,
-			descriptionMap, null, content, article.getDDMTemplateKey(), layoutUuid,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
-			reviewDateHour, reviewDateMinute, neverReview,
+			descriptionMap, null, content, article.getDDMTemplateKey(),
+			layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, reviewDateMonth, reviewDateDay,
+			reviewDateYear, reviewDateHour, reviewDateMinute, neverReview,
 			article.isIndexable(), article.isSmallImage(),
-			article.getSmallImageSource(), article.getSmallImageURL(), null,
-			null, null, serviceContext);
+			article.getSmallImageId(), article.getSmallImageSource(),
+			article.getSmallImageURL(), null, null, null, serviceContext);
 	}
 
 	/**

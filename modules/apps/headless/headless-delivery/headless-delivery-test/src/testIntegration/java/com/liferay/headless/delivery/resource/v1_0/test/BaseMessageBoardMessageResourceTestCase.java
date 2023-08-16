@@ -2367,7 +2367,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			assertEquals(
 				Arrays.asList(irrelevantMessageBoardMessage),
 				(List<MessageBoardMessage>)page.getItems());
-			assertValid(page);
+			assertValid(
+				page,
+				testGetSiteUserMessageBoardMessagesActivityPage_getExpectedActions(
+					irrelevantSiteId, irrelevantUserId));
 		}
 
 		MessageBoardMessage messageBoardMessage1 =
@@ -2388,13 +2391,26 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
 			(List<MessageBoardMessage>)page.getItems());
-		assertValid(page);
+		assertValid(
+			page,
+			testGetSiteUserMessageBoardMessagesActivityPage_getExpectedActions(
+				siteId, userId));
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage1.getId());
 
 		messageBoardMessageResource.deleteMessageBoardMessage(
 			messageBoardMessage2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetSiteUserMessageBoardMessagesActivityPage_getExpectedActions(
+				Long siteId, Long userId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
 	}
 
 	@Test

@@ -206,4 +206,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191358. Check the accessibility when the fragment developer edit Rich Text field of object from Edit DPT."
+	@priority = 3
+	test ViewAccessibilityOfRichTextFieldOnAssociatedDisplayPage {
+		task ("Given a site administrater has a display page template for Object with rich text field") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "RichText",
+				fieldLabelName = "Description",
+				fieldName = "description",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "description",
+				objectName = ${randomObjectName},
+				value = "Create custom digital experiences without sacrificing speed, flexibility, or cost.");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = ${randomLabelName},
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "${randomLabelName}s");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(field = "Default");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrater accesses to the associated display page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+		}
+
+		task ("Then the rich text field should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'lfr-layout-structure-item-inputs-rich-text-input')]");
+		}
+	}
+
 }

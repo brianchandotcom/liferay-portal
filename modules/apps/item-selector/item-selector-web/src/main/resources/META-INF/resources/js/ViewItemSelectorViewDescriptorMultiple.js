@@ -12,36 +12,23 @@ export default function ({
 }) {
 	const searchContainer = Liferay.SearchContainer.get(`${namespace}entries`);
 
-	searchContainer.on('rowToggled', (event) => {
-		const searchContainerItems = event.elements.allSelectedElements;
-
-		const array = [];
-
-		searchContainerItems.each(function () {
-			let domElement = this.ancestor('li');
-
-			if (domElement === null) {
-				domElement = this.ancestor('tr');
-			}
-
-			if (domElement === null) {
-				domElement = this.ancestor('dd');
-			}
-
-			if (domElement !== null) {
-				const itemValue = domElement.getDOM().dataset.value;
-
-				array.push(itemValue);
-			}
-		});
-
-		const openerWindow = getOpener();
-
-		openerWindow.Liferay.fire(itemSelectorSelectedEvent, {
+	const searchContainerOnHandler = searchContainer.on('rowToggled', () => {
+		getOpener().Liferay.fire(itemSelectorSelectedEvent, {
 			data: {
 				returnType: itemSelectorReturnType,
-				value: array,
+				value: searchContainer.select
+					.getAllSelectedElements()
+					.getDOMNodes()
+					.map((item) => item.closest('li, tr, dd'))
+					.filter((domElement) => domElement)
+					.map((domElement) => domElement.dataset.value),
 			},
 		});
 	});
+
+	return {
+		dispose() {
+			searchContainerOnHandler.dispose();
+		},
+	};
 }

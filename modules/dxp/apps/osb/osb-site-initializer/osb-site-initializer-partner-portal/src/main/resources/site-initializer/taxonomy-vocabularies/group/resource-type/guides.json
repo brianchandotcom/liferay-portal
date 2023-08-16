@@ -1,0 +1,9 @@
+{
+	"description": "Guides",
+	"externalReferenceCode": "PRMC051",
+	"name": "Guides",
+	"name_i18n": {
+		"en_US": "Guides"
+	},
+	"viewableBy": "Anyone"
+}

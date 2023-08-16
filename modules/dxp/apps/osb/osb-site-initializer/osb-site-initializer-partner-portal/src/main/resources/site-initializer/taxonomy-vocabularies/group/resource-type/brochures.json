@@ -1,0 +1,9 @@
+{
+	"description": "Brochures",
+	"externalReferenceCode": "PRMC044",
+	"name": "Brochures",
+	"name_i18n": {
+		"en_US": "Brochures"
+	},
+	"viewableBy": "Anyone"
+}

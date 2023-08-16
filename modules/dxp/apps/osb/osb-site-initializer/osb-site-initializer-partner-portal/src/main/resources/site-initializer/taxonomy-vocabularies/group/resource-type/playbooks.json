@@ -1,0 +1,9 @@
+{
+	"description": "Playbooks",
+	"externalReferenceCode": "PRMC053",
+	"name": "Playbooks",
+	"name_i18n": {
+		"en_US": "Playbooks"
+	},
+	"viewableBy": "Anyone"
+}

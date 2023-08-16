@@ -1,0 +1,9 @@
+{
+	"description": "Videos",
+	"externalReferenceCode": "PRMC057",
+	"name": "Videos",
+	"name_i18n": {
+		"en_US": "Videos"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC037",
+	"name": "MP4",
+	"name_i18n": {
+		"ar_SA": "MP4",
+		"ca_ES": "MP4",
+		"de_DE": "MP4",
+		"en_US": "MP4",
+		"es_ES": "MP4",
+		"fi_FI": "MP4",
+		"fr_FR": "MP4",
+		"hu_HU": "MP4",
+		"ja_JP": "MP4",
+		"nl_NL": "MP4",
+		"pt_BR": "MP4",
+		"sv_SE": "MP4",
+		"zh_CN": "MP4"
+	},
+	"viewableBy": "Anyone"
+}

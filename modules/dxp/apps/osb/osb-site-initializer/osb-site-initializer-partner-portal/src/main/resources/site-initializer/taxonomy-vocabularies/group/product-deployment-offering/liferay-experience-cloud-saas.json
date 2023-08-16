@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC071",
+	"name": "Liferay Experience Cloud SaaS",
+	"name_i18n": {
+		"ar_SA": "Liferay Experience Cloud SaaS",
+		"ca_ES": "Liferay Experience Cloud SaaS",
+		"de_DE": "Liferay Experience Cloud SaaS",
+		"en_US": "Liferay Experience Cloud SaaS",
+		"es_ES": "Liferay Experience Cloud SaaS",
+		"fi_FI": "Liferay Experience Cloud SaaS",
+		"fr_FR": "Liferay Experience Cloud SaaS",
+		"hu_HU": "Liferay Experience Cloud SaaS",
+		"ja_JP": "Liferay Experience Cloud SaaS",
+		"nl_NL": "Liferay Experience Cloud SaaS",
+		"pt_BR": "Liferay Experience Cloud SaaS",
+		"sv_SE": "Liferay Experience Cloud SaaS",
+		"zh_CN": "Liferay Experience Cloud SaaS"
+	},
+	"viewableBy": "Anyone"
+}

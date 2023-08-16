@@ -1,0 +1,20 @@
+{
+	"externalReferenceCode": "PRMC068",
+	"name": "Supplier Portals",
+	"name_i18n": {
+		"ar_SA": "Supplier Portals",
+		"ca_ES": "Supplier Portals",
+		"de_DE": "Supplier Portals",
+		"en_US": "Supplier Portals",
+		"es_ES": "Supplier Portals",
+		"fi_FI": "Supplier Portals",
+		"fr_FR": "Supplier Portals",
+		"hu_HU": "Supplier Portals",
+		"ja_JP": "Supplier Portals",
+		"nl_NL": "Supplier Portals",
+		"pt_BR": "Supplier Portals",
+		"sv_SE": "Supplier Portals",
+		"zh_CN": "Supplier Portals"
+	},
+	"viewableBy": "Anyone"
+}

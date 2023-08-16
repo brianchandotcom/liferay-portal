@@ -812,7 +812,7 @@ definition {
 			dmDocumentVersionNumber = "2.0");
 	}
 
-	@description = "This test ensures that a Word document title can be changed via the OneDrive editor."
+	@description = "This test covers LPS-191493. This test ensures that a Word document title can be changed via the OneDrive editor."
 	@priority = 4
 	test EditWordDocument {
 		property test.liferay.virtual.instance = "false";
@@ -832,7 +832,14 @@ definition {
 			dmDocumentFile = "Document_3.docx",
 			dmDocumentTitle = "Document_3.docx");
 
-		OneDrive.gotoEdit(dmDocumentTitle = "Document_3.docx");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_3.docx",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		OneDrive.gotoEdit(
+			dmDocumentTitle = "Document_3.docx",
+			editInPreviewPage = "true");
 
 		OneDrive.editTitle(dmDocumentTitle = "Word Doc Title ${num} Edited");
 

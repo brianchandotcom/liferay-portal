@@ -616,9 +616,13 @@ public class ObjectEntryDTOConverter
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId(), false);
+				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
+			if (objectField.isMetadata()) {
+				continue;
+			}
+
 			if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
 				objectField.isLocalized()) {
 

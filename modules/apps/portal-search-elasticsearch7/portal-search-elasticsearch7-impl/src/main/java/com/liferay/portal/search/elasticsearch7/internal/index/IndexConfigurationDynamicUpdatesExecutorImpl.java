@@ -42,8 +42,7 @@ public class IndexConfigurationDynamicUpdatesExecutorImpl
 
 		for (String mapping : mappings) {
 			PutMappingIndexRequest putMappingIndexRequest =
-				new PutMappingIndexRequest(
-					new String[] {indexName}, "_doc", mapping);
+				new PutMappingIndexRequest(new String[] {indexName}, mapping);
 
 			try {
 				_searchEngineAdapter.execute(putMappingIndexRequest);

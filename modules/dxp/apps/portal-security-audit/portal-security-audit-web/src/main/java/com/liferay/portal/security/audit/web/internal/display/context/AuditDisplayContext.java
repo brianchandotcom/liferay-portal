@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -29,6 +30,7 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -45,6 +47,10 @@ public class AuditDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_timeZone = timeZone;
+
+		_servletRequestWrapper =
+			(ServletRequestWrapper)
+				liferayPortletRequest.getOriginalHttpServletRequest();
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -176,8 +182,8 @@ public class AuditDisplayContext {
 			return _endDateAmPm;
 		}
 
-		_endDateAmPm = ParamUtil.getInteger(
-			_httpServletRequest, "endDateAmPm", _today.get(Calendar.AM_PM));
+		_endDateAmPm = _getParamWithOrWithoutNamespace(
+			"endDateAmPm", _today.get(Calendar.AM_PM));
 
 		return _endDateAmPm;
 	}
@@ -187,8 +193,8 @@ public class AuditDisplayContext {
 			return _endDateDay;
 		}
 
-		_endDateDay = ParamUtil.getInteger(
-			_httpServletRequest, "endDateDay", _today.get(Calendar.DATE));
+		_endDateDay = _getParamWithOrWithoutNamespace(
+			"endDateDay", _today.get(Calendar.DATE));
 
 		return _endDateDay;
 	}
@@ -198,8 +204,8 @@ public class AuditDisplayContext {
 			return _endDateHour;
 		}
 
-		_endDateHour = ParamUtil.getInteger(
-			_httpServletRequest, "endDateHour", _today.get(Calendar.HOUR));
+		_endDateHour = _getParamWithOrWithoutNamespace(
+			"endDateHour", _today.get(Calendar.HOUR));
 
 		return _endDateHour;
 	}
@@ -209,8 +215,8 @@ public class AuditDisplayContext {
 			return _endDateMinute;
 		}
 
-		_endDateMinute = ParamUtil.getInteger(
-			_httpServletRequest, "endDateMinute", _today.get(Calendar.MINUTE));
+		_endDateMinute = _getParamWithOrWithoutNamespace(
+			"endDateMinute", _today.get(Calendar.MINUTE));
 
 		return _endDateMinute;
 	}
@@ -220,8 +226,8 @@ public class AuditDisplayContext {
 			return _endDateMonth;
 		}
 
-		_endDateMonth = ParamUtil.getInteger(
-			_httpServletRequest, "endDateMonth", _today.get(Calendar.MONTH));
+		_endDateMonth = _getParamWithOrWithoutNamespace(
+			"endDateMonth", _today.get(Calendar.MONTH));
 
 		return _endDateMonth;
 	}
@@ -231,8 +237,8 @@ public class AuditDisplayContext {
 			return _endDateYear;
 		}
 
-		_endDateYear = ParamUtil.getInteger(
-			_httpServletRequest, "endDateYear", _today.get(Calendar.YEAR));
+		_endDateYear = _getParamWithOrWithoutNamespace(
+			"endDateYear", _today.get(Calendar.YEAR));
 
 		return _endDateYear;
 	}
@@ -257,6 +263,17 @@ public class AuditDisplayContext {
 		return _groupId;
 	}
 
+	private int _getParamWithOrWithoutNamespace(
+		String param, int defaultValue) {
+
+		return ParamUtil.getInteger(
+			(HttpServletRequest)_servletRequestWrapper.getRequest(),
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + param,
+			ParamUtil.getInteger(
+				(HttpServletRequest)_servletRequestWrapper.getRequest(), param,
+				defaultValue));
+	}
+
 	private PortletURL _getPortletURL() throws Exception {
 		if (_portletURL != null) {
 			return _portletURL;
@@ -268,6 +285,42 @@ public class AuditDisplayContext {
 					_liferayPortletRequest, _liferayPortletResponse),
 				_liferayPortletResponse)
 		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateAmPm",
+			_getEndDateAmPm()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateDay",
+			_getEndDateDay()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateHour",
+			_getEndDateHour()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateMinute",
+			_getEndDateMinute()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateMonth",
+			_getEndDateMonth()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateYear",
+			_getEndDateYear()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateAmPm",
+			_getStartDateAmPm()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateDay",
+			_getStartDateDay()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateHour",
+			_getStartDateHour()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateMinute",
+			_getStartDateMinute()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateMonth",
+			_getStartDateMonth()
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateYear",
+			_getStartDateYear()
+		).setParameter(
 			"className", _getClassName()
 		).setParameter(
 			"classPK", _getClassPK()
@@ -276,18 +329,6 @@ public class AuditDisplayContext {
 		).setParameter(
 			"clientIP", _getClientIP()
 		).setParameter(
-			"endDateAmPm", _getEndDateAmPm()
-		).setParameter(
-			"endDateDay", _getEndDateDay()
-		).setParameter(
-			"endDateHour", _getEndDateHour()
-		).setParameter(
-			"endDateMinute", _getEndDateMinute()
-		).setParameter(
-			"endDateMonth", _getEndDateMonth()
-		).setParameter(
-			"endDateYear", _getEndDateYear()
-		).setParameter(
 			"eventType", _getEventType()
 		).setParameter(
 			"groupId", _getGroupId()
@@ -295,18 +336,6 @@ public class AuditDisplayContext {
 			"serverName", _getServerName()
 		).setParameter(
 			"serverPort", _getServerPort()
-		).setParameter(
-			"startDateAmPm", _getStartDateAmPm()
-		).setParameter(
-			"startDateDay", _getStartDateDay()
-		).setParameter(
-			"startDateHour", _getStartDateHour()
-		).setParameter(
-			"startDateMinute", _getStartDateMinute()
-		).setParameter(
-			"startDateMonth", _getStartDateMonth()
-		).setParameter(
-			"startDateYear", _getStartDateYear()
 		).setParameter(
 			"userId", _getUserId()
 		).setParameter(
@@ -341,8 +370,8 @@ public class AuditDisplayContext {
 			return _startDateAmPm;
 		}
 
-		_startDateAmPm = ParamUtil.getInteger(
-			_httpServletRequest, "startDateAmPm", _today.get(Calendar.AM_PM));
+		_startDateAmPm = _getParamWithOrWithoutNamespace(
+			"startDateAmPm", _today.get(Calendar.AM_PM));
 
 		return _startDateAmPm;
 	}
@@ -352,8 +381,8 @@ public class AuditDisplayContext {
 			return _startDateDay;
 		}
 
-		_startDateDay = ParamUtil.getInteger(
-			_httpServletRequest, "startDateDay", _today.get(Calendar.DATE));
+		_startDateDay = _getParamWithOrWithoutNamespace(
+			"startDateDay", _today.get(Calendar.DATE));
 
 		return _startDateDay;
 	}
@@ -363,8 +392,8 @@ public class AuditDisplayContext {
 			return _startDateHour;
 		}
 
-		_startDateHour = ParamUtil.getInteger(
-			_httpServletRequest, "startDateHour", _today.get(Calendar.HOUR));
+		_startDateHour = _getParamWithOrWithoutNamespace(
+			"startDateHour", _today.get(Calendar.HOUR));
 
 		return _startDateHour;
 	}
@@ -374,9 +403,8 @@ public class AuditDisplayContext {
 			return _startDateMinute;
 		}
 
-		_startDateMinute = ParamUtil.getInteger(
-			_httpServletRequest, "startDateMinute",
-			_today.get(Calendar.MINUTE));
+		_startDateMinute = _getParamWithOrWithoutNamespace(
+			"startDateMinute", _today.get(Calendar.MINUTE));
 
 		return _startDateMinute;
 	}
@@ -386,8 +414,8 @@ public class AuditDisplayContext {
 			return _startDateMonth;
 		}
 
-		_startDateMonth = ParamUtil.getInteger(
-			_httpServletRequest, "startDateMonth", _today.get(Calendar.MONTH));
+		_startDateMonth = _getParamWithOrWithoutNamespace(
+			"startDateMonth", _today.get(Calendar.MONTH));
 
 		return _startDateMonth;
 	}
@@ -397,8 +425,8 @@ public class AuditDisplayContext {
 			return _startDateYear;
 		}
 
-		_startDateYear = ParamUtil.getInteger(
-			_httpServletRequest, "startDateYear", _today.get(Calendar.YEAR));
+		_startDateYear = _getParamWithOrWithoutNamespace(
+			"startDateYear", _today.get(Calendar.YEAR));
 
 		return _startDateYear;
 	}
@@ -443,6 +471,7 @@ public class AuditDisplayContext {
 	private SearchContainer<AuditEvent> _searchContainer;
 	private String _serverName;
 	private Integer _serverPort;
+	private final ServletRequestWrapper _servletRequestWrapper;
 	private Integer _startDateAmPm;
 	private Integer _startDateDay;
 	private Integer _startDateHour;

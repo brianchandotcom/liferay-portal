@@ -12364,6 +12364,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			get.location.max.retries=${test.get.location.max.retries}
 			get.location.timeout=${test.get.location.timeout}
 			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
+			instance.url=${instance.url}
 			ip.address=${ip.address}
 			liferay.home.dir.name=${liferay.home.absolute}
 			liferay.app.server.classes.portal.dir=${app.server.classes.portal.dir}

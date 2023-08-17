@@ -1845,6 +1845,8 @@ definition {
 
 	macro firstLoginPG {
 		var appServerType = PropsUtil.get("app.server.type");
+		var userEmailAddress = JSONUtil2.getDefaultUserEmail();
+		var password = JSONUtil2.getDefaultUserPassword();
 
 		if (${appServerType} == "weblogic") {
 
@@ -1864,15 +1866,30 @@ definition {
 
 		UserBar.signOut();
 
-		JSONUser.agreeToTermsAndAnswerReminderQuery(
-			portalURL = ${virtualHostsURL},
-			userEmailAddress = ${userEmailAddress});
+		if (isSet(virtualHostsURL)) {
+			var defaultPortalURL = ${virtualHostsURL};
+		}
+		else {
+			var defaultPortalURL = JSONCompany.getDefaultPortalURL();
+		}
+
+		var isLXC = JSONUtil2.getLXCEnvironment();
+
+		if (${isLXC} != "true") {
+
+			// Workaround for LXC not supporting JSON call currently
+
+			JSONUser.agreeToTermsAndAnswerReminderQuery(
+				password = ${password},
+				portalURL = ${defaultPortalURL},
+				userEmailAddress = ${userEmailAddress});
+		}
 
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}

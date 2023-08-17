@@ -56,15 +56,16 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var portalURL = Regex.removeHTTP(url = ${portalURL});
 
 		var portalURL = Regex.removePortNumber(url = ${portalURL});
+		var domain = JSONCompany.getDomain();
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			authenticationMethod = ${authenticationMethod},
-			domain = "liferay.com",
+			domain = ${domain},
 			portalInstanceId = ${portalURL},
 			virtualHost = ${portalURL});
 

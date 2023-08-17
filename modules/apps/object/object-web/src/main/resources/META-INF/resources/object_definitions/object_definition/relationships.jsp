@@ -33,6 +33,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"id", ObjectDefinitionsFDSNames.OBJECT_RELATIONSHIPS
 			).put(
+				"isApproved", objectDefinition.isApproved()
+			).put(
 				"items", objectDefinitionsRelationshipsDisplayContext.getFDSActionDropdownItems()
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
@@ -55,17 +57,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 				"objectRelationshipTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipTypes(objectDefinition)
 			).put(
 				"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)
-			).build()
-		%>'
-	/>
-</div>
-
-<div>
-	<react:component
-		module="js/components/ObjectRelationship/DeleteRelationship"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"isApproved", objectDefinition.isApproved()
 			).build()
 		%>'
 	/>

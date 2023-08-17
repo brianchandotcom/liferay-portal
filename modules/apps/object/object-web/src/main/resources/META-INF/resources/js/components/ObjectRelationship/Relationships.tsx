@@ -19,10 +19,16 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import {deleteRelationship} from '../ViewObjectDefinitions/objectDefinitionUtil';
+import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
 
 interface ItemData {
 	id: number;
 	reverse: boolean;
+}
+
+interface RelationshipsProps extends IFDSTableProps {
+	isApproved: boolean;
 }
 
 export default function Relationships({
@@ -30,14 +36,21 @@ export default function Relationships({
 	creationMenu,
 	formName,
 	id,
+	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
 	style,
 	url,
-}: IFDSTableProps) {
+}: RelationshipsProps) {
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();
+
+	const [
+		objectRelationship,
+		setObjectRelationship,
+	] = useState<ObjectRelationship | null>();
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -114,7 +127,14 @@ export default function Relationships({
 			itemData: ObjectRelationship;
 		}) {
 			if (action.data.id === 'deleteObjectRelationship') {
-				Liferay.fire('deleteObjectRelationship', {itemData});
+				if (isApproved || itemData.reverse) {
+					setObjectRelationship(itemData);
+					setShowModal(true);
+				}
+				else {
+					deleteRelationship(itemData.id);
+					setTimeout(() => window.location.reload(), 1500);
+				}
 			}
 		},
 		portletId:
@@ -164,5 +184,19 @@ export default function Relationships({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return (
+		<>
+			<FrontendDataSet {...dataSetProps} />
+
+			{showModal && objectRelationship && (
+				<ModalDeleteObjectRelationship
+					handleOnClose={() => setShowModal(false)}
+					objectRelationship={
+						objectRelationship as ObjectRelationship
+					}
+					setObjectRelationship={setObjectRelationship}
+				/>
+			)}
+		</>
+	);
 }

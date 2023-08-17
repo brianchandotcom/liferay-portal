@@ -23,6 +23,7 @@ export declare function deleteObjectDefinition(
 	id: number,
 	objectDefinitionName: string
 ): Promise<void>;
+export declare function deleteRelationship(id: number): Promise<void>;
 export declare function getFolderActions(
 	id: number,
 	objectFolderPermissionsURL: string,

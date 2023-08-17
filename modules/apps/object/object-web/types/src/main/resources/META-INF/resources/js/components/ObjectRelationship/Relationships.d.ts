@@ -6,13 +6,18 @@
 /// <reference types="react" />
 
 import {IFDSTableProps} from '../../utils/fds';
+interface RelationshipsProps extends IFDSTableProps {
+	isApproved: boolean;
+}
 export default function Relationships({
 	apiURL,
 	creationMenu,
 	formName,
 	id,
+	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
 	style,
 	url,
-}: IFDSTableProps): JSX.Element;
+}: RelationshipsProps): JSX.Element;
+export {};

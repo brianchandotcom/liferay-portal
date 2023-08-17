@@ -51,6 +51,24 @@ export async function deleteObjectDefinition(
 	});
 }
 
+export async function deleteRelationship(id: number) {
+	try {
+		await API.deleteObjectRelationships(id);
+
+		Liferay.Util.openToast({
+			message: Liferay.Language.get(
+				'relationship-was-deleted-successfully'
+			),
+		});
+	}
+	catch (error) {
+		Liferay.Util.openToast({
+			message: (error as Error).message,
+			type: 'danger',
+		});
+	}
+}
+
 export function getFolderActions(
 	id: number,
 	objectFolderPermissionsURL: string,

@@ -243,7 +243,7 @@ function CriteriaGroup({
 			className={classNames(
 				{
 					'criteria-group-root w-100': criteria,
-					'dnd-drag': isDragging,
+					'disabled': isDragging,
 				},
 				`color--${propertyKey} criteria-group-item${
 					root ? '-root' : ''

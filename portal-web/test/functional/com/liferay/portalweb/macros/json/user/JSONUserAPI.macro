@@ -96,7 +96,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -226,6 +226,9 @@ definition {
 	macro _getUserIdByEmailAddress {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
+		var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
+		var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
+
 		var companyId = JSONCompany.getCompanyIdNoSelenium(
 			creatorEmailAddress = ${creatorEmailAddress},
 			creatorPassword = ${creatorPassword},
@@ -235,20 +238,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
-		}
-
-		if (!(isSet(creatorEmailAddress))) {
-			if (isSet(specificURL)) {
-				var creatorEmailAddress = ${userEmailAddress};
-			}
-			else {
-				var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
-			}
-		}
-
-		if (!(isSet(creatorPassword))) {
-			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
+			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
 		var curl = '''

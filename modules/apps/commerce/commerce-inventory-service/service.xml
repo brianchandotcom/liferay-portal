@@ -37,9 +37,10 @@
 		<finder name="LtCreateDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="createDate" />
 		</finder>
-		<finder name="C_S" return-type="Collection">
+		<finder name="C_S_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" mvcc-enabled="true" name="CommerceInventoryBookedQuantity" remote-service="true" table="CIBookedQuantity">
@@ -72,9 +73,10 @@
 		<finder name="Sku" return-type="Collection">
 			<finder-column name="sku" />
 		</finder>
-		<finder name="C_S" return-type="Collection">
+		<finder name="C_S_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" mvcc-enabled="true" name="CommerceInventoryReplenishmentItem" remote-service="true" table="CIReplenishmentItem" uuid="true">
@@ -110,13 +112,15 @@
 		<finder name="Sku" return-type="Collection">
 			<finder-column name="sku" />
 		</finder>
-		<finder name="C_S" return-type="Collection">
+		<finder name="C_S_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
-		<finder name="AD_S" return-type="Collection">
+		<finder name="AD_S_U" return-type="Collection">
 			<finder-column name="availabilityDate" />
 			<finder-column name="sku" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" mvcc-enabled="true" name="CommerceInventoryWarehouse" remote-service="true" table="CIWarehouse" uuid="true">
@@ -204,13 +208,15 @@
 		<finder name="CommerceInventoryWarehouseId" return-type="Collection">
 			<finder-column name="commerceInventoryWarehouseId" />
 		</finder>
-		<finder name="CompanyId_Sku" return-type="Collection">
+		<finder name="C_S_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
-		<finder name="C_S" return-type="CommerceInventoryWarehouseItem" unique="true">
+		<finder name="CIWI_S_U" return-type="CommerceInventoryWarehouseItem" unique="true">
 			<finder-column name="commerceInventoryWarehouseId" />
 			<finder-column name="sku" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceInventoryWarehouseRel" remote-service="true" table="CIWarehouseRel">

@@ -908,12 +908,12 @@
 		<column name="lowStockActivity" type="String" />
 		<column name="displayAvailability" type="boolean" />
 		<column name="displayStockQuantity" type="boolean" />
-		<column name="minStockQuantity" type="int" />
+		<column name="minStockQuantity" type="BigDecimal" />
 		<column name="backOrders" type="boolean" />
-		<column name="minOrderQuantity" type="int" />
-		<column name="maxOrderQuantity" type="int" />
+		<column name="minOrderQuantity" type="BigDecimal" />
+		<column name="maxOrderQuantity" type="BigDecimal" />
 		<column name="allowedOrderQuantities" type="String" />
-		<column name="multipleOrderQuantity" type="int" />
+		<column name="multipleOrderQuantity" type="BigDecimal" />
 
 		<!-- Finder methods -->
 

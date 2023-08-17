@@ -1,13 +1,16 @@
 definition {
 
 	macro addDisplayPageTemplateEntry {
-		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
+		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			grandParentGroupName = ${grandParentGroupName},
-			groupKey = ${groupName},
-			parentGroupName = ${parentGroupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONLayoutpagetemplateSetter.setGroupId(
+				grandParentGroupName = ${grandParentGroupName},
+				groupKey = ${groupName},
+				parentGroupName = ${parentGroupName},
+				site = ${site});
+		}
+
 		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = ${contentType});
 
 		if ((${subType} == "Basic Document") || (${contentType} == "Blogs Entry") || (${contentType} == "Category") || (${contentType} == "Commerce Order") || (${contentType} == "Commerce Product") || (${contentType} == "Knowledge Base Article")) {

@@ -272,6 +272,7 @@ definition {
 	@priority = 3
 	test FilterOptionsAreAlphabeticallyOrdered {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.createUsersGroovy(numberOfUsers = 1);
 
@@ -609,6 +610,7 @@ definition {
 	test UserCanFilterInstanceWithPendingTasksInParallelByStep {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -760,6 +760,7 @@ definition {
 	test CanReviewChangesWithManyDocuments {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1056,6 +1057,7 @@ definition {
 	@priority = 4
 	test ConfigureContextViewToDisplayProductionEntities {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a Publication and make a change to the Home Page") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
@@ -1246,6 +1248,7 @@ definition {
 	test IsBrowserHistoryPreserved {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -1284,6 +1287,7 @@ definition {
 	@priority = 4
 	test IsLocalizedInPublicationsAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.openUsersAdmin();
 
@@ -1801,6 +1805,7 @@ definition {
 	@priority = 3
 	test ViewItemsAreProperlyIndexedInProductionAndPublication {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a new tag") {
 			JSONAssettag.addTag(

@@ -170,6 +170,7 @@ definition {
 	@priority = 5
 	test CheckBlockedEventsNotShownOnSegments {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -224,6 +225,7 @@ definition {
 	@priority = 3
 	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -350,6 +352,7 @@ definition {
 	@priority = 5
 	test CheckEventAnalysisNotUpdatedWhenEventIsBlocked {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

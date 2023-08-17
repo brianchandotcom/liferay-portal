@@ -52,6 +52,7 @@ definition {
 	@priority = 4
 	test CanAccidentCitationBeAdded {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that an user go to Raylife AP and create a new application") {
 			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
@@ -111,6 +112,7 @@ definition {
 	@priority = 4
 	test CanViewApplicationStatusAsUnderwriting {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to Raylife AP and create a new application") {
 			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");

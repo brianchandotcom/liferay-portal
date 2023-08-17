@@ -40,6 +40,7 @@ definition {
 	@refactordone
 	test LogLevelCanBeConfigured {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -21,6 +21,7 @@ definition {
 		property skip.install-patch = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -83,6 +84,7 @@ definition {
 		property portal.release = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -130,6 +132,7 @@ definition {
 		property skip.install-patch = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		if (${testBuildFixPackZipURLPrevious} == ${testBuildFixPackZipURLLatestHeavy}) {
 			echo("Skip test since the heavey fixpack equal to previous fixpack");

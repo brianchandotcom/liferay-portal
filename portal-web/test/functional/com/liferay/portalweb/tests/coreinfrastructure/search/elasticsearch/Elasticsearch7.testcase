@@ -25,6 +25,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -133,6 +134,7 @@ definition {
 	@priority = 5
 	test AssertSearchAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -240,6 +242,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch liferay started at [\d\.]+:9201");
 
@@ -259,6 +262,7 @@ definition {
 	test BulkExecutionFailuresAreLoggedCorrectly {
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration");
 
@@ -293,6 +297,7 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
 			nodePort = 9200,
@@ -343,6 +348,7 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchAdministration.openSearchAdmin();
 
@@ -442,6 +448,7 @@ definition {
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
@@ -457,6 +464,7 @@ definition {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Execute concurrent reindex while using sidecar") {
 			SearchAdministration.executeReindex(concurrentReindex = "true");
@@ -507,6 +515,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177668=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a new result ranking") {
 			SearchTuning.openResultRankingsAdmin();
@@ -625,6 +634,7 @@ definition {
 	@priority = 4
 	test ReindexSpecificPortalInstances {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 
@@ -654,6 +664,7 @@ definition {
 		property portal.release = "false";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Assert that indexNameCurrent and indexNameNext fields in the lportal.Company database table are empty when a Concurrent reindex has not been executed yet") {
 			var companyId = JSONCompany.getCompanyId();
@@ -726,6 +737,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-177668=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Grab the timestamp value for the 'Test Test' user document from the index before a Sync reindex is executed") {
 			var companyId = JSONCompany.getCompanyId();
@@ -819,6 +831,7 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -852,6 +865,7 @@ definition {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 
@@ -908,6 +922,7 @@ definition {
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -981,6 +996,7 @@ definition {
 	test UpdateSystemSettingsWithoutPortalRestart {
 		property embedded.elasticsearch.only = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -1046,6 +1062,7 @@ definition {
 	test WarnTracePresentWithDataInconsistency {
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "DM Document",

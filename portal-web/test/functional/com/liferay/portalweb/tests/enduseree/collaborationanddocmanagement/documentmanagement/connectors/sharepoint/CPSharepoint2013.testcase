@@ -101,6 +101,7 @@ definition {
 	@refactorneeded
 	test CheckinDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -151,6 +152,7 @@ definition {
 	@refactorneeded
 	test DeleteDocumentInSubfolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -209,6 +211,7 @@ definition {
 	@refactorneeded
 	test DeleteSubfolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -235,6 +238,7 @@ definition {
 	@refactorneeded
 	test EditDocumentFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -287,6 +291,7 @@ definition {
 	@refactorneeded
 	test EditRepository {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -354,6 +359,7 @@ definition {
 	@refactorneeded
 	test MoveCheckedoutDocumentToFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -425,6 +431,7 @@ definition {
 	@refactorneeded
 	test MoveDocumentToHome {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -461,6 +468,7 @@ definition {
 	@refactorneeded
 	test SearchDocumentViaHome {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -485,6 +493,7 @@ definition {
 	@refactorneeded
 	test ViewEditedCheckedoutDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -535,6 +544,7 @@ definition {
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
@@ -573,6 +583,7 @@ definition {
 	@refactorneeded
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 

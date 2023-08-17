@@ -46,6 +46,7 @@ definition {
 	@refactordone
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -74,6 +75,7 @@ definition {
 	test CanAddBlogEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -105,6 +107,7 @@ definition {
 	test CanAddKBArticleWithEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 
@@ -132,6 +135,7 @@ definition {
 	@refactordone
 	test CanAddWCWithEmbeddedVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -214,6 +218,7 @@ definition {
 		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property test.assert.warning.exceptions = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -285,6 +290,7 @@ definition {
 	@refactordone
 	test CanImportExportedBlogWithEmbeddedVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -327,6 +333,7 @@ definition {
 	test CanImportExportedKBWithEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -383,6 +390,7 @@ definition {
 	test CanImportExportedWebContentWithEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -445,6 +453,7 @@ definition {
 	test CanViewFromDisconnectedSite {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -501,6 +510,7 @@ definition {
 	test PreviewRemainsAfterDisablingFFmpeg {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Video Title In Site",

@@ -26,6 +26,7 @@ definition {
 	test CanActivateAnInactiveCountry {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that Brazil is set to inactive") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -68,6 +69,7 @@ definition {
 	test CanActivateAnInactiveRegion {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that an inactive region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -124,6 +126,7 @@ definition {
 	@priority = 3
 	test CanActivateCountriesInBulk {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given multiple inactive countries exist") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -150,6 +153,7 @@ definition {
 	@priority = 5
 	test CanAddCountry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a user is in the Countries Management portlet") {
 			ApplicationsMenu.gotoPortlet(
@@ -187,6 +191,7 @@ definition {
 	@priority = 5
 	test CanAddRegion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a country exists") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -217,6 +222,7 @@ definition {
 	@priority = 5
 	test CanDeactivateAnActiveCountry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that China is set to Active") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -255,6 +261,7 @@ definition {
 	@priority = 3
 	test CanDectivateCountriesInBulk {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given multiple countries exist") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -285,6 +292,7 @@ definition {
 	test CanDeleteCountry {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a country named Angola exists in Countries Management portlet") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -320,6 +328,7 @@ definition {
 	test CanDeleteRegion {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -353,6 +362,7 @@ definition {
 	@priority = 3
 	test CanDeleteRegionsInBulk {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a country with regions") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -393,6 +403,7 @@ definition {
 	@priority = 5
 	test CanEditRegion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a region exists") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -435,6 +446,7 @@ definition {
 	test CannotAddExistingRegionCode {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a country with existing regions") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -463,6 +475,7 @@ definition {
 	@priority = 3
 	test CannotAddRegionWithoutKeyAndRegionCode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user adding a region to country") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -491,6 +504,7 @@ definition {
 	@priority = 3
 	test CanOrderCountryByName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given countries display in the Countries Management") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -523,6 +537,7 @@ definition {
 	@priority = 3
 	test CanOrderCountryByPriority {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a country is added with a priority higher than 0.0") {
 			JSONCountry.addCountry(
@@ -564,6 +579,7 @@ definition {
 	@priority = 3
 	test CanOrderRegionByName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given there are regions existing for a country") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -598,6 +614,7 @@ definition {
 	@priority = 3
 	test CanOrderRegionByPriority {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given there is a region with higher priority added to a country") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -647,6 +664,7 @@ definition {
 	@priority = 5
 	test CanSearchCountry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a user is in the Countries Management portlet") {
 			ApplicationsMenu.gotoPortlet(
@@ -670,6 +688,7 @@ definition {
 	@priority = 3
 	test ClickingCancelOrBackWillNotSaveRegion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user adding a region") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -732,6 +751,7 @@ definition {
 	@priority = 4
 	test CountryNameCanBeLocalized {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given other languages are not translated by default") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -777,6 +797,7 @@ definition {
 	@priority = 3
 	test FilterByActiveWillNotDisplayInactiveCountries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an inactive country") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -814,6 +835,7 @@ definition {
 	@priority = 4
 	test KeyValueIsUsedWhenCountryNameIsBlank {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a user is in the Countries Management portlet") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -842,6 +864,7 @@ definition {
 	@priority = 3
 	test PaginationWorksInCountries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given 20 is the default pagination set") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -882,6 +905,7 @@ definition {
 	@priority = 3
 	test PaginationWorksInRegions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given 20 is the default pagination set") {
 			CountriesManagement.openCountriesManagementPortlet();
@@ -924,6 +948,7 @@ definition {
 	@priority = 4
 	test RegionNameCanBeLocalized {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given other languages are not translated by default") {
 			CountriesManagement.openCountriesManagementPortlet();

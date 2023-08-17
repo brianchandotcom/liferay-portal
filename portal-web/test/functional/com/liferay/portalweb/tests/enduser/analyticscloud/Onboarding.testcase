@@ -36,6 +36,7 @@ definition {
 	@priority = 5
 	test ModalDisplayedWhenFirstAccessToWorkspace {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var supportedFPVersionList = "DXP 7.3 Fix Pack 1,DXP 7.2 Fix Pack 11,DXP 7.1 Fix Pack 22,DXP 7.0 Fix Pack 98";
 

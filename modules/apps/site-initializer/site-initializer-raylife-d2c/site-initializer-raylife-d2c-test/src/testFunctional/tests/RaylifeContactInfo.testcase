@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test CanContinueOnContactsInfoWithAllFilled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -56,6 +57,7 @@ definition {
 	@priority = 4
 	test CanViewErrorMessageForEmail {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -81,6 +83,7 @@ definition {
 	@priority = 4
 	test CanViewErrorMessageForInvalidZipCode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -111,6 +114,7 @@ definition {
 	@priority = 4
 	test CanViewErrorMessageForPhoneNumber {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -141,6 +145,7 @@ definition {
 	@priority = 3
 	test CanViewFirstNameInTip {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -168,6 +173,7 @@ definition {
 	@priority = 3
 	test FirstNameMaxNumber {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -188,6 +194,7 @@ definition {
 	@priority = 3
 	test LastNameMaxNumber {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

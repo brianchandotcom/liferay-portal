@@ -144,6 +144,7 @@ definition {
 	test AdminCanControlWhenPropagateSiteTemplateChanges {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -228,6 +229,7 @@ definition {
 	test AssertAutomaticSiteTemplatePropagation {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var sQLStatement = "SELECT * FROM Layout WHERE friendlyURL = '/test';";
@@ -342,6 +344,7 @@ definition {
 	test AssertPartialSiteTemplatePropagation {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -577,6 +580,7 @@ definition {
 	test AssertSiteTemplatePropagationOnPrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add new site template and a new private site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -641,6 +645,7 @@ definition {
 	test AssertSiteTemplatePropagationWhenOpeningSite {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var sQLStatement = "SELECT * FROM Layout WHERE friendlyURL = '/test';";
@@ -912,6 +917,7 @@ definition {
 	@priority = 4
 	test DeleteSiteTemplateImportedToVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds new site template and a new site based on this site template") {
 			SiteTemplates.addCP(
@@ -1040,6 +1046,7 @@ definition {
 	@priority = 4
 	test LocalizeSiteTemplatesAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds new site ") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -1162,6 +1169,7 @@ definition {
 	test ResetPageChanges {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -1248,6 +1256,7 @@ definition {
 	@priority = 4
 	test SiteCanReuseCachedSiteTemplateLarFileForContentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1316,6 +1325,7 @@ definition {
 	@priority = 4
 	test SiteCanReuseCachedSiteTemplateLarFileForWidgetPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1529,6 +1539,7 @@ definition {
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given User adds pages with friendly URL collision in new site and site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -1599,6 +1610,7 @@ definition {
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSiteInSitePage {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given User adds pages with friendly URL collision in new site and site template") {
 			SiteTemplates.addCP(

@@ -345,6 +345,7 @@ definition {
 	@priority = 4
 	test MoveWebContentToFolderChangeItsWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 

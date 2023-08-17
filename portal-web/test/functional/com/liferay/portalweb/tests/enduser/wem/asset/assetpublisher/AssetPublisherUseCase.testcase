@@ -42,6 +42,7 @@ definition {
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(
@@ -182,6 +183,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(
@@ -343,6 +345,7 @@ definition {
 	test ConfigureAssetPublisherAfterAddingKaleoFormsAdminPortletToBlackList {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		task ("Add the Kaleo Forms admin portlet to blacklist") {
 			ApplicationsMenu.gotoPortlet(
@@ -624,6 +627,7 @@ definition {
 	test FilterAndOrderAssetsByField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Language Selector to page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -1230,6 +1234,7 @@ definition {
 	@priority = 4
 	test RemoveMultipleManualSelectionAssetEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Stop and start com.liferay.layout.type.controller.portlet bundle via GogoShell") {
 			GogoShell.openGogoShellAdmin(siteURLKey = ${siteURLKey});
@@ -1923,6 +1928,7 @@ definition {
 	@priority = 4
 	test ViewInContextTranslatedWCWithFriendlyURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = ${randomSiteName},
@@ -1988,6 +1994,7 @@ definition {
 	@priority = 3
 	test ViewLocalizedWebContentWithLocalizedCategories {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a vocabulary with localized title") {
 			JSONCategory.addVocabulary(
@@ -2105,6 +2112,7 @@ definition {
 	@priority = 4
 	test ViewNonSearchableWebContentAfterDisableSearchWithIndex {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a normal web content") {
 			JSONWebcontent.addWebContent(
@@ -2169,6 +2177,7 @@ definition {
 	test ViewNotificationEmailWhenSetDynamicSubscriptionLimitToZero {
 		property custom.properties = "mail.send.blacklist=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Set the Dynamic Subscription Limit to 0 in Asset Publisher") {
@@ -2248,6 +2257,7 @@ catch (Exception e) {
 	@uitest
 	test ViewOpenOfficeFileTypeLinks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable OpenOffice Integration") {
 			SystemSettings.openSystemSettingsAdmin();

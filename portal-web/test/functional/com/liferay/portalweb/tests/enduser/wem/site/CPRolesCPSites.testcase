@@ -361,6 +361,7 @@ definition {
 	@priority = 4
 	test ViewSiteManagePagesRegRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Get site name") {
 			Navigator.openURL();

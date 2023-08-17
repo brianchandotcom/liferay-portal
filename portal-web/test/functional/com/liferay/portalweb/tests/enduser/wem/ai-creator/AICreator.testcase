@@ -95,6 +95,7 @@ definition {
 	@priority = 3
 	test CannotEnableOpenAIFromSiteSettingsAfterDisableItFromInstanceSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site administrater disable the OpenAI from Instance Settings") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
@@ -132,6 +133,7 @@ definition {
 	@priority = 4
 	test ConfigureAPIKey {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator enables the OpenAI client") {
 			GogoShell.openGogoShellAdmin();
@@ -165,6 +167,7 @@ definition {
 	@priority = 4
 	test GenerateContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -263,6 +266,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenGenericErrorsHappenOnConfiguringAPIKey {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator accesses to the OpenAI configuration page") {
 			GogoShell.openGogoShellAdmin();
@@ -298,6 +302,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenGenericErrorsHappenOnGeneratingContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -345,6 +350,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenOpenAIServerErrorsHappenOnGeneratingContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -431,6 +437,7 @@ definition {
 	@priority = 3
 	test ViewGeneratedContentAppendedToExistingContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();

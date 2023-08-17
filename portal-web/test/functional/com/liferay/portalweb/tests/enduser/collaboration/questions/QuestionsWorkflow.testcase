@@ -42,6 +42,7 @@ definition {
 	@priority = 4
 	test CanAddAnswerViaJSONAfterEnablingWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -84,6 +85,7 @@ definition {
 	test CanApproveQuestion {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Portal Content Reviewer",
@@ -146,6 +148,7 @@ definition {
 	@priority = 3
 	test CanSetHistoryRouterWithWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
@@ -185,6 +188,7 @@ definition {
 	@priority = 4
 	test PendingStatusCanBeReturnedThroughJSON {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 

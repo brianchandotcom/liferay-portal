@@ -178,6 +178,7 @@ definition {
 	@priority = 4
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
@@ -243,6 +244,7 @@ definition {
 	@priority = 3
 	test SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

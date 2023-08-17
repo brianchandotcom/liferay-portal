@@ -31,6 +31,7 @@ definition {
 		property apacheds.multiple.users.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add LDAP server and test connection") {
 			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
@@ -56,6 +57,7 @@ definition {
 		property environment.acceptance = "false";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add LDAP server and test connection") {
 			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
@@ -106,6 +108,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Disable Allow Custom Password At Account Creation in Users add LDAP server and test connection configure LDAP settings") {
 			Navigator.openURL();
@@ -169,6 +172,7 @@ definition {
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -212,6 +216,7 @@ definition {
 	test DeactivatedUserStayDeactivatedAfterLDAPImport {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -275,6 +280,7 @@ definition {
 		property apacheds.enabled = "true";
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add LDAP server and test connection") {
 			PortalSettings.addLDAPServer();
@@ -374,6 +380,7 @@ definition {
 	test LDAPAuthenticationWorksWithDifferentPasswordAlgorithm {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -409,6 +416,7 @@ definition {
 	test LDAPImportIntervalCanBeSetManually {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User enable DEBUG log level for LDAP related loggers") {
 			LDAP.enableLDAPDebugLogs();
@@ -445,6 +453,7 @@ definition {
 	@priority = 3
 	test LDAPInstanceSettingsDoNotAffectSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable LDAP Authentication") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -475,6 +484,7 @@ definition {
 	@priority = 4
 	test LDAPSecurityCredentialsAreHidden {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add Server and edit security credential") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -495,6 +505,7 @@ definition {
 	test UserChangesCanBeExportedToLDAP {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds LDAP server and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
@@ -534,6 +545,7 @@ definition {
 	test UsersCanBeImportedFromLDAPByGroups {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds LDAP server and configure settings with group import method") {
 			var enableSettingList = "enabled,ldapImportEnabled";

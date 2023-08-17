@@ -2115,6 +2115,7 @@ definition {
 	@priority = 4
 	test PublishContentPageWithoutCustomFieldsPermission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a custom field for Page") {
 			ApplicationsMenu.gotoPortlet(

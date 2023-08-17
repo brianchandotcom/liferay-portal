@@ -62,6 +62,7 @@ definition {
 	@priority = 4
 	test CanEditDuplicatedWorkflowTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -93,6 +94,7 @@ definition {
 	@priority = 4
 	test CanImportNonXMLFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -126,6 +128,7 @@ definition {
 	@priority = 4
 	test CanImportXMLFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -172,6 +175,7 @@ definition {
 	@priority = 4
 	test CanNotPublishWithoutTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -227,6 +231,7 @@ definition {
 	@priority = 5
 	test CanPublishWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -248,6 +253,7 @@ definition {
 	test CanRestorePreviousVersionOnMenu {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -283,6 +289,7 @@ definition {
 	test CanRestorePreviousVersionOnModal {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -320,6 +327,7 @@ definition {
 	@priority = 2
 	test CanSaveUntitledWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -344,6 +352,7 @@ definition {
 	@priority = 3
 	test CanSaveWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -368,6 +377,7 @@ definition {
 	@priority = 3
 	test CanSelectDuplicate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -401,6 +411,7 @@ definition {
 	test CanSelectPermissions {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -464,6 +475,7 @@ definition {
 	test CanViewPreviousVersion {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -491,6 +503,7 @@ definition {
 	@priority = 3
 	test DisplaysCreatedDateLastModifiedTotalModifications {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -516,6 +529,7 @@ definition {
 	@priority = 3
 	test DisplaysModificationDates {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -557,6 +571,7 @@ definition {
 	@priority = 4
 	test RevisionHistoryIsNotCopied {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

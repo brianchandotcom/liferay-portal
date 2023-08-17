@@ -56,6 +56,7 @@ definition {
 	@priority = 2
 	test AppsWithNoEntriesAreDisabledInNewDataExport {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given sign in as New User and add entries supported by GDPR") {
 			JSONBlog.addEntry(
@@ -684,6 +685,7 @@ definition {
 	@priority = 3
 	test CanAnonymizeWithPasswordLengthChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given publish the document entry as the new admin user") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -741,6 +743,7 @@ definition {
 	@priority = 3
 	test CanAnonymizeWithPasswordMinimumUpperCaseChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given publish the document entry as the new admin user") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -853,6 +856,7 @@ definition {
 	@priority = 4
 	test CanDeleteAllEntriesFromPersonalSiteScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
@@ -1044,6 +1048,7 @@ definition {
 	@priority = 3
 	test CanDeleteAndAnonymizeAllEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1246,6 +1251,7 @@ definition {
 	@priority = 3
 	test CanDeleteASingleStagedAndLiveBlogsEntry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Publish the staged blogs entries to live as a new admin user") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1681,6 +1687,7 @@ definition {
 	@priority = 3
 	test CanFilterAndViewData {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -2090,6 +2097,7 @@ definition {
 	@priority = 2
 	test PaginationWorksInExportPersonalData {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given there are data across several different applications") {
 			JSONBlog.addEntry(

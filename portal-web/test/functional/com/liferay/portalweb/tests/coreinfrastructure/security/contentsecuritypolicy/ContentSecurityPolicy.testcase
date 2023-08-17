@@ -30,6 +30,7 @@ definition {
 	@priority = 4
 	test CanSetSiteLevelCSPAndOverwritesInstanceLevelCSP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add new site with SiteURL CSP enabled at site level and enable CSP at Instance level.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
@@ -115,6 +116,7 @@ definition {
 	@priority = 4
 	test DisableSiteLevelCSPOverwritesInstanceLevelCSP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add new site with SiteURL CSP enabled at site level and enable CSP at Instance level.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
@@ -197,6 +199,7 @@ definition {
 	@priority = 4
 	test SiteDisplayInstanceLevelCSPAfterResetSiteLevelCSP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add new site with SiteURL CSP enabled at site level and enable CSP at Instance level.") {
 			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
@@ -271,6 +274,7 @@ definition {
 	@priority = 5
 	test VerifyCSPConfigurationCanBeLoadedFromOSGiFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Add virtual instance and enable CSP at Instance level") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -316,6 +320,7 @@ definition {
 	@priority = 4
 	test VerifyCSPCouldConfiguredByWebId {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
@@ -350,6 +355,7 @@ definition {
 	@priority = 4
 	test VerifyCSPCouldConfiguredToBlockImageSource {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
@@ -384,6 +390,7 @@ definition {
 	@priority = 5
 	test VerifyCSPSiteSettingsCanBeLoadedFromOSGiFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Add new site and add a new virtual host as SiteURL") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -431,6 +438,7 @@ definition {
 	@priority = 5
 	test VerifyNonceIsAddedWhenCSPIsEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Add virtual instance and enable CSP at Instance level") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -493,6 +501,7 @@ definition {
 	@priority = 5
 	test VerifyNonceIsAddedWhenCSPIsEnabledAtSiteLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Add new site and add a new virtual host as SiteURL") {
 			HeadlessSite.addSite(siteName = "Site Name");

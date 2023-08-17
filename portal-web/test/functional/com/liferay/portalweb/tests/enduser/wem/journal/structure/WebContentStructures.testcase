@@ -296,6 +296,7 @@ definition {
 	test EditStructureKey {
 		property custom.properties = "feature.flag.LPS-184255=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user has a structure with a structurekey") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -373,6 +374,7 @@ definition {
 	test OverrideStructureKeyAfterImportStructure {
 		property custom.properties = "feature.flag.LPS-184255=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user exports a structure with a structurekey") {
 			SystemSettings.openSystemSettingsAdmin();

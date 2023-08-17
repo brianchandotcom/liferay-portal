@@ -980,6 +980,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with an Account is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

@@ -226,6 +226,7 @@ definition {
 	test CanIdentifyMultipleCurrentNode {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -270,6 +271,7 @@ definition {
 	@priority = 3
 	test CanIdentifyPastStagesOnWorkflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -326,6 +328,7 @@ definition {
 	@priority = 5
 	test CanOrderByAssignee {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -987,6 +990,7 @@ definition {
 	@priority = 3
 	test DisplayNextSLAInLineWhenSLANotStarted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1092,6 +1096,7 @@ definition {
 	@priority = 3
 	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1160,6 +1165,7 @@ definition {
 	test DueDateHasIconSlaNameDueDateAndResolutionStatus {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
@@ -1519,6 +1525,7 @@ definition {
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1581,6 +1588,7 @@ definition {
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOverdue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1651,6 +1659,7 @@ definition {
 	@priority = 4
 	test ItemIsConsideredOverdueWhenItHasOneSlaOverdue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1801,6 +1810,7 @@ definition {
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusOnTime {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1855,6 +1865,7 @@ definition {
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusOverdue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -1908,6 +1919,7 @@ definition {
 	@priority = 3
 	test ItemOrdetationIsPreservedWhenChangesPagination {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2202,6 +2214,7 @@ definition {
 	@priority = 3
 	test PopoverDisplaysUpTo2SlasOrderFromMostToLeastCritical {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2391,6 +2404,7 @@ definition {
 	@priority = 3
 	test ReorderEntriesClickingDueDateColumn {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchAdministration.executeReindex();
 
@@ -2469,6 +2483,7 @@ definition {
 	@priority = 3
 	test SearchBarIsAddedOnAssigneeDropdownMenuWhenItIsHigherThan496px {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2560,6 +2575,7 @@ definition {
 	@priority = 3
 	test SortConsidersOnlyTheFirstAssignee {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2800,6 +2816,7 @@ definition {
 	test TooltipDisplaysStepsListWhenMultipleItems {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2864,6 +2881,7 @@ definition {
 	@priority = 4
 	test TrackApprovalDisplayCorrectVersionAfterChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
@@ -2922,6 +2940,7 @@ definition {
 	test TrackApprovalDisplayWorkflowInUse {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -3034,6 +3053,7 @@ definition {
 	@priority = 3
 	test UsernamesAreSeparatedByCommaInItemDetailModal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

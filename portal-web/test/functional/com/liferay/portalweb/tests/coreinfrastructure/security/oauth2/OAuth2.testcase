@@ -30,6 +30,7 @@ definition {
 	test ApplicationCanBeAuthorizedWithoutUserSession {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -96,6 +97,7 @@ definition {
 		property oauth2.application.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -136,6 +138,7 @@ definition {
 	test ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -167,6 +170,7 @@ definition {
 	@priority = 3
 	test ApplicationCannotBeAuthorizedWithInvalidJWT {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
@@ -249,6 +253,7 @@ definition {
 	test ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -292,6 +297,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add an OAuth 2 application") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -359,6 +365,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file to configure System Settings") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -443,6 +450,7 @@ definition {
 		property oauth2.application.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -498,6 +506,7 @@ definition {
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -556,6 +565,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default.config";
 		property osgi.module.configurations = "include.bundle.symbolic.name=\"false\"${line.separator}osgi.jaxrs.name=\"Default\"${line.separator}separator=\"\"${line.separator}service.properties=\"\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Deploy simple OAuth2 provider app") {
 			FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.sample.jar");
@@ -635,6 +645,7 @@ definition {
 	test ClientCredentialsShouldBeConfigurableInUserScope {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a test web content") {
 			JSONWebcontent.addWebContent(
@@ -726,6 +737,7 @@ definition {
 	test ConfigureOnSystemLevelShouldApplyToInstanceLevel {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -796,6 +808,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[\"example-scope-1,example-scope-2\=everything\"]${line.separator}osgi.jaxrs.name=\"liferay-oauth2-scope-sample-qa-app\"${line.separator}passthrough=\"true\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
@@ -891,6 +904,7 @@ definition {
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -980,6 +994,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -1088,6 +1103,7 @@ definition {
 		property oauth2.application.enabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -1120,6 +1136,7 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -1157,6 +1174,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -1252,6 +1270,7 @@ definition {
 	test InstanceLevelConfigurationWillCoverSystemLevelWhenTheyConfiguredWithSameIssuer {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file to configure System Settings") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -1323,6 +1342,7 @@ definition {
 	test JWTAssertionCanBeAcceptedAsGrantTypeWithEmailAddressAsUserAuthenticationType {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
@@ -1437,6 +1457,7 @@ definition {
 	test JWTAssertionCanBeAcceptedAsGrantTypeWithScreenNameAsUserAuthenticationType {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
@@ -1494,6 +1515,7 @@ definition {
 	@priority = 4
 	test LookUpRemoteAppClientIdViaERC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a new OAuth2 application and input OAuth2 valuies") {
 			OAuth2.openOAuth2Admin();
@@ -1543,6 +1565,7 @@ definition {
 	test OAuth2SAPEntriesCanBeAddedAndEdited {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add SAP") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -1669,6 +1692,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Deploy client extension on node1") {
 			FileInstall.deployFileOnServer(jarFile = "liferay-sample-batch-0.zip");
@@ -1722,6 +1746,7 @@ definition {
 	@priority = 3
 	test ObtainPublicKeyInJWKSFormatInURI {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Provide a signing key in JSON Web Key format") {
 			var jwk = FileUtil.read("test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/jwk.txt");
@@ -1762,6 +1787,7 @@ definition {
 	@priority = 4
 	test PanelsShouldBeExpandableOnGlobalScopes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -1821,6 +1847,7 @@ definition {
 	@priority = 4
 	test PanelsShouldBeExpandableOnResourceScopes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
 			var baseURL = PropsUtil.get("portal.url");
@@ -1885,6 +1912,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=\"8\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -1924,6 +1952,7 @@ definition {
 	test RememberDeviceExternalPropertyShouldBeVisible {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -1953,6 +1982,7 @@ definition {
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -2014,6 +2044,7 @@ definition {
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
@@ -2071,6 +2102,7 @@ definition {
 	@description = "This is a use case for LRQA-48773. User can update scope bundle prefixes."
 	test ScopeBundlePrefixesCanBeUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
@@ -2138,6 +2170,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[\"example-scope-1,example-scope-2\=everything.read,everything.write\"]${line.separator}osgi.jaxrs.name=\"liferay-oauth2-scope-sample-qa-app\"${line.separator}passthrough=\"false\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
@@ -2191,6 +2224,7 @@ definition {
 	@priority = 4
 	test ScopesShouldBeDisplayedAsListOnInstanceLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add CP able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -2232,6 +2266,7 @@ definition {
 		property oauth2.application.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add and edit an PKCE application") {
 			OAuth2.openSSLPage();
@@ -2263,6 +2298,7 @@ definition {
 	test TrustedExternalPropertyShouldBeVisible {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add the OSGI configuration file") {
 			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");

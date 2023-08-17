@@ -151,6 +151,7 @@ definition {
 	test CombineContentForMultisegmentDynamicCollectionWithoutPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -285,6 +286,7 @@ definition {
 	test CombineContentForMultisegmentDynamicCollectionWithPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -436,6 +438,7 @@ definition {
 	test CombineContentForMultisegmentManualCollectionWithoutPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -537,6 +540,7 @@ definition {
 	test CombineContentForMultisegmentManualCollectionWithPagination {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3753,6 +3757,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInAssetPublisher {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -3854,6 +3859,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentDynamicCollectionInCollectionDisplayFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create web content articles") {
 			JSONWebcontent.addWebContent(
@@ -3965,6 +3971,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInAssetPublisher {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
@@ -4067,6 +4074,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentForMultisegmentManualCollectionInCollectionDisplayFragment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create web content articles") {
 			JSONWebcontent.addWebContent(
@@ -4180,6 +4188,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentOrderForMultisegmentDynamicCollection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create web content articles") {
 			for (var i : list "1,2,3,4") {
@@ -4303,6 +4312,7 @@ definition {
 	@priority = 3
 	test ViewCombineContentOrderForMultisegmentManualCollection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a public page") {
 			JSONLayout.addPublicLayout(

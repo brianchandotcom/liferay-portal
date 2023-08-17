@@ -99,6 +99,7 @@ definition {
 	test UserGroupSiteTemplates {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SiteTemplates.addCP(
 			disableChanges = "true",

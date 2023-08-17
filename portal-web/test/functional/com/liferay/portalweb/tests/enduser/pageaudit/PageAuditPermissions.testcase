@@ -72,6 +72,7 @@ definition {
 	test CheckInvalidCanonicalURL {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -101,6 +102,7 @@ definition {
 	test CheckInvalidCanonicalURLWithoutPermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
@@ -150,6 +152,7 @@ definition {
 	test CheckInvalidHreflang {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -184,6 +187,7 @@ definition {
 	test CheckLinksTexts {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -222,6 +226,7 @@ definition {
 	test CheckMissingMetaDescription {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -255,6 +260,7 @@ definition {
 	test CheckMissingMetaDescriptionWithoutPermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
@@ -304,6 +310,7 @@ definition {
 	test CheckMissingTitleElement {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -1197,6 +1204,7 @@ definition {
 	test CheckPageBlockedFromIndexing {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -1230,6 +1238,7 @@ definition {
 	test CheckPageBlockedFromIndexingWithoutPermission {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add permissions to Role") {
 			Permissions.definePermissionViaJSONAPI(
@@ -1278,6 +1287,7 @@ definition {
 	test PageAuditContentPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Navigate to content page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
@@ -1297,6 +1307,7 @@ definition {
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1339,6 +1350,7 @@ definition {
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add Widget Page") {
 			JSONLayout.addPublicLayout(

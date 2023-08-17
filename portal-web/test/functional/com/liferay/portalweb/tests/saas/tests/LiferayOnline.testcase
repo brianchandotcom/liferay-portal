@@ -37,6 +37,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add virtual instance Liferay Site with the Liferay Site Initializer") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
@@ -60,6 +61,7 @@ definition {
 	test AddLiferayWelcomeSiteWithInitializer {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Sites and add a new one") {
 			ApplicationsMenu.gotoPortlet(
@@ -91,6 +93,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add virtual instance able.com with a blank Initializer") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -117,6 +120,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add virtual instance raylife.com with the Masterclass Initializer") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
@@ -141,6 +145,7 @@ definition {
 	@priority = 4
 	test CannotSelectInitializerWithoutDeployRaylifeAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
@@ -187,6 +192,7 @@ definition {
 	@priority = 4
 	test CannotSelectInitializerWithoutDeployRaylifeD2C {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
@@ -234,6 +240,7 @@ definition {
 	test CreateTeamExtranetVirtualInstanceByAPI {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Virtual Instance by Json") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
@@ -343,6 +350,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Virtual Instance by Json") {
 			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(

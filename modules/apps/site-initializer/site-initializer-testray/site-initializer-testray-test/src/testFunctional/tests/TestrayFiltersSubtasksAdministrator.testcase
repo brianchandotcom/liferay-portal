@@ -170,6 +170,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterSubtasksByAssignee {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that subtask 1 is assigned to user userfn userln") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -219,6 +220,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterSubtasksByError {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two subtasks different in the table") {
 			AssertElementPresent(
@@ -259,6 +261,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterSubtasksByName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two subtasks different in the table") {
 			AssertElementPresent(
@@ -299,6 +302,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterSubtaskWithMultipleOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that subtask 1 is assigned to user userfn userln") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -376,6 +380,7 @@ definition {
 	@priority = 3
 	test AdminCanNotFilterForNonExistentSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two subtasks that existent in the table") {
 			AssertElementPresent(
@@ -410,6 +415,7 @@ definition {
 	@priority = 2
 	test AdminCanSearchForField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();

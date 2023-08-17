@@ -325,6 +325,7 @@ definition {
 	@priority = 4
 	test AddWebContentRemoveGuestViewPermission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Permissions,Web Content Administration";
 
 		SystemSettings.openSystemSettingsAdmin();

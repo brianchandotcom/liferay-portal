@@ -21,6 +21,7 @@ definition {
 	test CookiesBannerAcceptAllSelected {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User click on Accept all") {
 			CookieBanner.cookiesBannerAcceptAll();
@@ -36,6 +37,7 @@ definition {
 	test CookiesBannerCouldBeEnabledAndCustomized {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: a site configured to show the Banner") {
 			CookieBannerAdmin.setCustomTextForAllFields(text = "INSTANCE_LEVEL");
@@ -59,6 +61,7 @@ definition {
 	test CookiesBannerCouldBeEnabledAndCustomizedViaOSGIFile {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: a site configured to show the Banner via OSGI file") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -102,6 +105,7 @@ definition {
 	test CookiesBannerDeclineAllSelected {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User click on Decline all") {
 			CookieBanner.cookiesBannerDeclineAll();
@@ -117,6 +121,7 @@ definition {
 	test PrivacyPolicyLinksCanBeConfiguredFromALocalSite {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: a site configured to show the Banner") {
 			JSONLayout.addPublicLayout(

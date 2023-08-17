@@ -161,6 +161,7 @@ definition {
 	@priority = 3
 	test AdminCanGoToBuildFromTheSidebar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
@@ -190,6 +191,7 @@ definition {
 	@priority = 3
 	test AdminCanGoToSubtaskFromTheSidebar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
@@ -228,6 +230,7 @@ definition {
 	@priority = 3
 	test AdminCanGoToTaskFromTheSidebar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
@@ -256,6 +259,7 @@ definition {
 	@priority = 3
 	test AdminCanSeeSubtaskReexaminedInSidebar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");

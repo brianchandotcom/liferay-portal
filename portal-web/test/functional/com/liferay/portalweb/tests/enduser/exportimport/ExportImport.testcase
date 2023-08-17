@@ -33,6 +33,7 @@ definition {
 	@priority = 3
 	test AssertStagingSystemSettingsInfo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User open the Web Content configuration in System settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -71,6 +72,7 @@ definition {
 	@priority = 4
 	test AssetLinksCanBeConfiguredWhenExport {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new site with 2 WC") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -265,6 +267,7 @@ definition {
 	@priority = 4
 	test EditExportTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new Blog entry and web content") {
 			JSONBlog.addEntry(
@@ -410,6 +413,7 @@ definition {
 	test ExportImportGlobalDDMStructureViaInstances {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site, a page to it then export the Site including WC's but excluding DM's") {
 			LAR.openExportAdmin(siteScopeName = "Global");
@@ -470,6 +474,7 @@ definition {
 	test ExportImportGlobalPagesViaInstances {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User configure the export on Global Site to include Pages but exclude DM's and WC's then export it") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
@@ -533,6 +538,7 @@ definition {
 	@priority = 3
 	test ExportImportJournalArticleWithLinkToPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Web Content Administration";
 
 		task ("Given: User adds a new site and 3 page to it") {
@@ -674,6 +680,7 @@ definition {
 	@priority = 3
 	test ExportImportLayoutCircularReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Page Administration,Web Content Administration";
 
 		task ("Given: User adds a new site and a page to it") {
@@ -811,6 +818,7 @@ definition {
 	@priority = 4
 	test ExportImportPagesLinkCircular {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User creates site pages that link to each other/circular references") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1211,6 +1219,7 @@ definition {
 	@priority = 3
 	test ExportImportSiteWithNestedUploadField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site and a file to it") {
 			HeadlessSite.addSite(siteName = "Site A");
@@ -1323,6 +1332,7 @@ definition {
 	test ExportImportSmoke {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		task ("Given: User exports default site") {
@@ -1442,6 +1452,7 @@ definition {
 	test ExportImportValidation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		task ("Given: User adds a new file and a blog entry") {
@@ -1502,6 +1513,7 @@ definition {
 	@priority = 3
 	test ExportImportWebContentCircularReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1611,6 +1623,7 @@ definition {
 	@priority = 4
 	test ExportImportWithExportTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new export template") {
 			LAR.openExportAdmin(siteScopeName = "Guest");
@@ -1658,6 +1671,7 @@ definition {
 	test ExportViaGuest {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a new user") {
 			JSONUser.addUser(
@@ -1768,6 +1782,7 @@ definition {
 	@priority = 3
 	test ImportStagedSiteWithCircularReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site with 2 pages then activates local staging") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1936,6 +1951,7 @@ definition {
 	@priority = 4
 	test ImportWCDReferenceAfterActivateStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site with a page then a WCD widget to it") {
 			HeadlessSite.addSite(siteName = "Site Name A");
@@ -2012,6 +2028,7 @@ definition {
 	@priority = 3
 	test PublishWebContentWithBrokenLink {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User disable the validation of file entries and layout references") {
 			ApplicationsMenu.gotoPortlet(

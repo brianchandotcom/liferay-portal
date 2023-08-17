@@ -32,6 +32,7 @@ definition {
 	@priority = 4
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var bucketID = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -74,6 +75,7 @@ definition {
 	@priority = 5
 	test IBMS3StoreSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var bucketId = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();

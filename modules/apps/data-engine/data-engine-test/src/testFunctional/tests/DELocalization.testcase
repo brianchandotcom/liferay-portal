@@ -28,6 +28,7 @@ definition {
 	@priority = 4
 	test CanBeTranslatedWithDifferentInstanceLanguages {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -536,6 +537,7 @@ definition {
 	@priority = 5
 	test CanDefaulfLanguageChangeTranslationsAfterEdited {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -672,6 +674,7 @@ definition {
 	@priority = 5
 	test CanDefaultLanguageBeChanged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -712,6 +715,7 @@ definition {
 	@priority = 5
 	test CanDefaultLanguageBeEditedAndRemainTranslations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -804,6 +808,7 @@ definition {
 	@priority = 3
 	test CanFieldWithoutTranslationFollowsDefaultLanguage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1818,6 +1823,7 @@ definition {
 	@priority = 4
 	test CanPortalLanguageBeChanged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -560,6 +560,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
@@ -3214,6 +3215,7 @@ definition {
 	test ImportLAR {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

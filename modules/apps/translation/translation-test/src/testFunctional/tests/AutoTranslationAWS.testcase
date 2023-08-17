@@ -25,6 +25,7 @@ definition {
 	@priority = 5
 	test CanTranslateContentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -80,6 +81,7 @@ definition {
 	@priority = 5
 	test CanTranslateContentPageFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -135,6 +137,7 @@ definition {
 	@priority = 5
 	test CanTranslateWC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC content",
@@ -176,6 +179,7 @@ definition {
 	@priority = 5
 	test CanTranslateWCFieldIndependently {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC content",

@@ -999,6 +999,7 @@ definition {
 		property database.partition.enabled = "true";
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var labelName = StringUtil.randomString(8);
 

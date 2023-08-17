@@ -81,6 +81,7 @@ definition {
 	@priority = 5
 	test AddAttributeAndAttributeFilterInEventsAnalysis {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var filterName = "url";
@@ -136,6 +137,7 @@ definition {
 	@priority = 4
 	test AddMaxOf3AttributesToEvent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeNameList = "category,pageTitle,url";
 
@@ -182,6 +184,7 @@ definition {
 	@priority = 4
 	test AssertAttributeBreakdownsSortedByHighestEventCount {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2";
@@ -271,6 +274,7 @@ definition {
 	@priority = 4
 	test AssertDataChangeWhenRearrangeBreakdownAndReturnOriginalState {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeNameList = "category,pageTitle,url";
 
@@ -391,6 +395,7 @@ definition {
 	@priority = 4
 	test AssertRemovedEventIsNotPresent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var filterName = "url";
@@ -458,6 +463,7 @@ definition {
 	@priority = 4
 	test AssertTheAnalysisResultIsSorted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2";
@@ -570,6 +576,7 @@ definition {
 	@priority = 4
 	test CanAddDuplicateFilterInEventAnalysis {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var filterName = "category";
@@ -638,6 +645,7 @@ definition {
 	@priority = 5
 	test CheckAutocompleteSuggestionsForAllConditions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "city";
 		var inputValue = "recife";
@@ -722,6 +730,7 @@ definition {
 	@priority = 3
 	test CreateEventAnalysisWithBooleanAttributeFilterTrueAndFalseCondition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var filterName1 = "like";
@@ -820,6 +829,7 @@ definition {
 	@priority = 3
 	test CreateEventAnalysisWithDateAttributeFilterAllCondition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var filterName = "birthdate";
@@ -928,6 +938,7 @@ definition {
 	@priority = 3
 	test CreateEventAnalysisWithNumberAttributeFilterAllCondition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 		var filterName = "price";

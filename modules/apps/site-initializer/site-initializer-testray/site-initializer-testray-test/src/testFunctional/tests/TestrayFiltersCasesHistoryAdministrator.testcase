@@ -185,6 +185,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterByAssignee {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user assign to me a case result") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -228,6 +229,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterByIssue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a issue in the case result") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -268,6 +270,7 @@ definition {
 	@priority = 2
 	test AdminCanFilterByProductVersionName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two product version different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -315,6 +318,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterByRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two routine different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -358,6 +362,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterByStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user complete a test with passed status") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -395,6 +400,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseHistoryByEnvironment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two enviroments different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -444,6 +450,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterCaseHistoryByError {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has two case result with errors different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -493,6 +500,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseHistoryTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user has a team in the table") {
 			AssertElementPresent(
@@ -536,6 +544,7 @@ definition {
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user searches for a field called routine") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -564,6 +573,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterWithMultipleOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user complete a test with passed status") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
@@ -640,6 +650,7 @@ definition {
 	@priority = 3
 	test AdminCanNotFilterForNonExistentCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user filter a case result history existent") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");

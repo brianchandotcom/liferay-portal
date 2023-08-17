@@ -1067,6 +1067,7 @@ definition {
 	test PreviewMappedContentOfCollectionItemOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1263,6 +1264,7 @@ definition {
 	@priority = 4
 	test ViewAvailableMappableFieldsOfCollectionItemOnDisplayPageTemplateForCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1642,6 +1644,7 @@ definition {
 	test ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1756,6 +1759,7 @@ definition {
 	test ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the DDMStructure feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -1974,6 +1978,7 @@ definition {
 	@priority = 4
 	test ViewCollectionItemsBasedOnCustomDocumentTypeOnDisplayPageTemplateForCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
@@ -2099,6 +2104,7 @@ definition {
 	@priority = 4
 	test ViewCollectionItemsBasedOnCustomWebContentStructureOnDisplayPageTemplateForCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the DDMStructure feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();

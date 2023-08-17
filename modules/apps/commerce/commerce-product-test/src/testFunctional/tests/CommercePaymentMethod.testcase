@@ -20,6 +20,7 @@ definition {
 	test ActivateOfflinePaymentMethodsAndAddDescription {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Channel") {
 			CommerceJSONChannelsAPI._addChannel(
@@ -62,6 +63,7 @@ definition {
 	test AddEditAndDeleteOfflinePaymentMethod {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the System Integrator navigates to the Offline Payment Method Keys configuration under the Payment category in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -126,6 +128,7 @@ definition {
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -189,6 +192,7 @@ definition {
 	test AssertAndEditNewPaymentMethodInOrdersPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -285,6 +289,7 @@ definition {
 	test CreateOrderWithMultipleActivePaymentMethods {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

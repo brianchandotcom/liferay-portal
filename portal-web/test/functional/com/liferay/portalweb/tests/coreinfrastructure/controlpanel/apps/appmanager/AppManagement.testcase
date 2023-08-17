@@ -48,6 +48,7 @@ definition {
 	@priority = 3
 	test AppManagerFilterAndOrder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -83,6 +84,7 @@ definition {
 	@priority = 3
 	test AppManagerLocalization {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -115,6 +117,7 @@ definition {
 	@priority = 4
 	test AppShouldNotBeNestedWithinItself {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -135,6 +138,7 @@ definition {
 	test CanDeactivateAndActivateAdaptiveMedia {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Adaptive Media";
 
 		ApplicationsMenu.gotoPortlet(
@@ -168,6 +172,7 @@ definition {
 	test CanDeactivateAndActivateAssetLibraries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Depot";
 
 		ApplicationsMenu.gotoPortlet(
@@ -201,6 +206,7 @@ definition {
 	test CanDeactivateAndActivateBlogs {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Blogs";
 
 		ApplicationsMenu.gotoPortlet(
@@ -234,6 +240,7 @@ definition {
 	test CanDeactivateAndActivateComment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Content Page Review";
 
 		ApplicationsMenu.gotoPortlet(
@@ -267,6 +274,7 @@ definition {
 	test CanDeactivateAndActivateDocumentLibraryOpener {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Document Management";
 
 		ApplicationsMenu.gotoPortlet(
@@ -300,6 +308,7 @@ definition {
 	test CanDeactivateAndActivateKnowledgeBase {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Knowledge Base";
 
 		ApplicationsMenu.gotoPortlet(
@@ -333,6 +342,7 @@ definition {
 	test CanDeactivateAndActivateMessageBoards {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Message Boards";
 
 		ApplicationsMenu.gotoPortlet(
@@ -366,6 +376,7 @@ definition {
 	test CanDeactivateAndActivateNotifications {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Notifications";
 
 		ApplicationsMenu.gotoPortlet(
@@ -399,6 +410,7 @@ definition {
 	test CanDeactivateAndActivateQuestions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Questions";
 
 		ApplicationsMenu.gotoPortlet(
@@ -432,6 +444,7 @@ definition {
 	test CanDeactivateAndActivateRatings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Ratings";
 
 		ApplicationsMenu.gotoPortlet(
@@ -465,6 +478,7 @@ definition {
 	test CanDeactivateAndActivateSharing {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Asset Sharing";
 
 		ApplicationsMenu.gotoPortlet(
@@ -498,6 +512,7 @@ definition {
 	test CanDeactivateAndActivateTranslation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Translations Management";
 
 		ApplicationsMenu.gotoPortlet(
@@ -531,6 +546,7 @@ definition {
 	test CanDeactivateAndActivateWiki {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.main.component.name = "Wiki";
 
 		ApplicationsMenu.gotoPortlet(
@@ -563,6 +579,7 @@ definition {
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace") {
 			ApplicationsMenu.gotoPortlet(
@@ -606,6 +623,7 @@ definition {
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByLiferayVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace") {
 			ApplicationsMenu.gotoPortlet(
@@ -649,6 +667,7 @@ definition {
 	@priority = 3
 	test CanFilterMarketplaceStoreAppsByPrice {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace") {
 			ApplicationsMenu.gotoPortlet(
@@ -691,6 +710,7 @@ definition {
 	@priority = 5
 	test InstallViaUploadIsSuccessful {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -712,6 +732,7 @@ definition {
 	@priority = 3
 	test InvalidFileShouldNotBeUploaded {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -741,6 +762,7 @@ definition {
 	@priority = 3
 	test SearchMarketplaceStore {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given user login marketplace store assert user login in Purchased page") {
 			Navigator.openStoreURL();
@@ -792,6 +814,7 @@ definition {
 	@priority = 5
 	test UninstallAppIsSuccessful {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "test-app-portlet";
 
@@ -823,6 +846,7 @@ definition {
 	@priority = 5
 	test ViewLicenseManager {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Marketplace",
@@ -838,6 +862,7 @@ definition {
 	@priority = 3
 	test ViewPurchasedApp {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given login marketplace store") {
 			Navigator.openStoreURL();

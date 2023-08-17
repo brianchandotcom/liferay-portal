@@ -352,6 +352,7 @@ definition {
 	@priority = 4
 	test AssignSiteRoleToUG {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG User Group Description",
@@ -489,6 +490,7 @@ definition {
 	test UserGroupSiteOwnerPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchAdministration.executeReindex();
 

@@ -14,6 +14,7 @@ definition {
 		property custom.properties = "setup.wizard.add.sample.data=true";
 		property database.types = "hypersonic";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			addSampleData = "false",
@@ -36,6 +37,7 @@ definition {
 	test HSQLtoHSQLLportal1SampleDataEnabled {
 		property database.types = "hypersonic";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",
@@ -62,6 +64,7 @@ definition {
 	test HSQLtoMariaDB {
 		property database.types = "mariadb";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			addSampleData = "false",
@@ -84,6 +87,7 @@ definition {
 		property database.types = "mariadb";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",
@@ -111,6 +115,7 @@ definition {
 		property database.types = "mysql";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",
@@ -137,6 +142,7 @@ definition {
 	test HSQLtoPostgreSQL {
 		property database.types = "postgresql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -158,6 +164,7 @@ definition {
 		property database.types = "postgresql";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			addSampleData = "true",

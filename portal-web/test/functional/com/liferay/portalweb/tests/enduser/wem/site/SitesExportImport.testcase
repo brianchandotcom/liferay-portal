@@ -37,6 +37,7 @@ definition {
 	@priority = 3
 	test CanImportGlobalScopedWCThatCommentOnAnotherSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a WC on Global site and an assert publisher widget to a page on "Test Site Name" site") {
 			JSONWebcontent.addWebContent(

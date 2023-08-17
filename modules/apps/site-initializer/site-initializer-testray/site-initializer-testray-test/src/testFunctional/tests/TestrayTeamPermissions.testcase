@@ -61,6 +61,7 @@ definition {
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDeleteTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -113,6 +114,7 @@ definition {
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -165,6 +167,7 @@ definition {
 	@priority = 2
 	test UserRoleCanNotCreateEditAndDeleteTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

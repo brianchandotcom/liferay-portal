@@ -162,6 +162,7 @@ definition {
 	@priority = 3
 	test ChangeLanguageInBlogDisplayPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set portal to use Localized URL") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -219,6 +220,7 @@ definition {
 	@priority = 3
 	test ChangeLanguageInDocumentDisplayPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set portal to use Localized URL") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -280,6 +282,7 @@ definition {
 	@priority = 3
 	test ChangeLanguageInWidgetPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set portal to use Localized URL") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -489,6 +492,7 @@ definition {
 	@priority = 5
 	test LanguageSelector {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set portal to use Localized URL") {
 			SystemSettings.openSystemSettingsAdmin();

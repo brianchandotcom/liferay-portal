@@ -20,6 +20,7 @@ definition {
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommands.runCommand("build-test.xml", "start-app-server-tomcat-simple");
 
@@ -87,6 +88,7 @@ definition {
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
 
@@ -101,6 +103,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -128,6 +131,7 @@ definition {
 	@priority = 3
 	test VerifyPropertiesNotRunWithEmptyDatabase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
 

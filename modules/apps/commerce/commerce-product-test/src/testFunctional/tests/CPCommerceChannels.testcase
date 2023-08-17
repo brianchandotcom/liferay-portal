@@ -835,6 +835,7 @@ definition {
 	test CanPaginatePaymentAndShippingRestrictions {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the admin navigates to 'Minium Portal' channel") {
 			CommerceChannels.openChannelsAdmin();

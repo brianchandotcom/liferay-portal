@@ -236,6 +236,7 @@ definition {
 	test SubmitVerificationOfReCaptcha {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site member has a content page with a reCaptcha and a Submit Button inside Form Container") {
 			task ("Add a Text field to object") {

@@ -46,6 +46,7 @@ definition {
 		// AC Quarantine Ticket: LRAC-14035
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
@@ -410,6 +411,7 @@ definition {
 		// AC Bug ticket: LRAC-13973
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Close the onboarding modal") {
 			ACUtils.closeModal();
@@ -557,6 +559,7 @@ definition {
 	@priority = 2
 	test CheckAllMessagesWhenHasPropertyAndDataSourceButNoData {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
@@ -796,6 +799,7 @@ definition {
 	@priority = 2
 	test CheckAllMessageWhenHasPropertyNoDataSource {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Accounts and Salesforce tests are no longer possible to run after this one from LRAC-11571
 
@@ -930,6 +934,7 @@ definition {
 	@priority = 2
 	test CheckAllPagesMessagesWhenHasPropertyAndDataSource {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
@@ -1182,6 +1187,7 @@ definition {
 		// AC Quarantine Ticket: LRAC-14036
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
@@ -1315,6 +1321,7 @@ definition {
 		// AC Quarantine Ticket: LRAC-13989
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
@@ -1535,6 +1542,7 @@ definition {
 	@priority = 2
 	test CheckMessageWhenNoPropertyNoDataSource {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var textValue = "First, complete the onboarding to get your workspace set up.";
 
@@ -1580,6 +1588,7 @@ definition {
 	@priority = 2
 	test CheckSearchMessagesWithNoResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Check the first screen of the onboarding modal") {
 			ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");

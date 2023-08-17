@@ -188,6 +188,7 @@ definition {
 	@refactordone
 	test CannotViewAsGuestInAPWhenPermissionsAreRemoved {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
@@ -257,6 +258,7 @@ definition {
 	@refactordone
 	test CanViewBlogWithAbstractDisplay {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a blog entry with custom abstract") {
 			JSONBlog.addEntry(
@@ -301,6 +303,7 @@ definition {
 	@priority = 3
 	test CanViewBlogWithCardDisplay {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -512,6 +515,7 @@ definition {
 	@uittest
 	test CanViewEntryInAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// This is lengthy but we'll keep this as a UI test to validate blogs behavior when used with AP.
 

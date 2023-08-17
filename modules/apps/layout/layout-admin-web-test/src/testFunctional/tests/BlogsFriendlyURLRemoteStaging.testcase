@@ -49,6 +49,7 @@ definition {
 	@priority = 5
 	test CanPublishFriendlyURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -103,6 +104,7 @@ definition {
 	@priority = 4
 	test CanPublishRemovedOldFriendlyURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -161,6 +163,7 @@ definition {
 	@priority = 4
 	test CanPublishRestoredOldFriendlyURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

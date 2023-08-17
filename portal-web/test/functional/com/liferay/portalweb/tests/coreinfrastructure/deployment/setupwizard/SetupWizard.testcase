@@ -56,6 +56,7 @@ definition {
 	test BasicConfigurationVisualLook {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.viewDefaultPortalNamePG();
 
@@ -75,6 +76,7 @@ definition {
 		property database.types = "mysql";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@test.com",
@@ -98,6 +100,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.prepare.bundle.properties = "true";
+		property test.run.type = "single";
 
 		User.firstLoginPG();
 
@@ -130,6 +133,7 @@ definition {
 		property database.types = "mysql";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePG(
 			administratorEmail = "test@liferay.com",
@@ -150,6 +154,7 @@ definition {
 	test HypersonicWithSpecialContent {
 		property database.types = "hypersonic";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.configurePortalNamePG(portalName = "");
 
@@ -219,6 +224,7 @@ definition {
 		property database.types = "mysql";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.security.strangers.verify=false");
 
@@ -267,6 +273,7 @@ definition {
 	test ViewConfiguredSetupWizardValue {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SetupWizard.viewDefaultPortalNamePG();
 

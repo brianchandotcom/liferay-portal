@@ -118,6 +118,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanDeleteCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -158,6 +159,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanEditCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -205,6 +207,7 @@ definition {
 	@priority = 3
 	test AssertLeadRoleCanDeleteCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -245,6 +248,7 @@ definition {
 	@priority = 3
 	test AssertLeadRoleCanEditCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -296,6 +300,7 @@ definition {
 	@priority = 2
 	test AssertUserRoleCanNotDeleteCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -334,6 +339,7 @@ definition {
 	@priority = 2
 	test AssertUserRoleCanNotEditCaseResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

@@ -98,6 +98,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterCaseByCaseName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case by name") {
 			TestrayFilter.clickFilter();
@@ -124,6 +125,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByCaseType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case by case type") {
 			TestrayFilter.clickColumn();
@@ -155,6 +157,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case by component") {
 			TestrayFilter.clickFilter();
@@ -180,6 +183,7 @@ definition {
 	@priority = 2
 	test AdminCanFilterCaseByDescription {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user selects the description column") {
 			TestrayFilter.clickColumn();
@@ -213,6 +217,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByPriority {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case by priority") {
 			TestrayFilter.clickFilter();
@@ -239,6 +244,7 @@ definition {
 	@priority = 2
 	test AdminCanFilterCaseBySteps {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case by steps") {
 			TestrayFilter.clickFilter();
@@ -264,6 +270,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseByTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case by team") {
 			TestrayFilter.clickColumn();
@@ -293,6 +300,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterCasesWithMultipleOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user selects the columns") {
 			TestrayFilter.clickColumn();
@@ -356,6 +364,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterForNonexistentCase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -377,6 +386,7 @@ definition {
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user search filter called priority") {
 			TestrayFilter.clickFilter();
@@ -405,6 +415,7 @@ definition {
 	@priority = 2
 	test CanClearFilterResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filters a case by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -438,6 +449,7 @@ definition {
 	@priority = 2
 	test CanClearFilterWithCloseButton {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filters a filter by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -460,6 +472,7 @@ definition {
 	@priority = 3
 	test CanPinFilterResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that can see two different cases in the table") {
 			AssertElementPresent(
@@ -509,6 +522,7 @@ definition {
 	@priority = 3
 	test CanUnpinFilterResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that can see two different cases in the table") {
 			AssertElementPresent(
@@ -554,6 +568,7 @@ definition {
 	@priority = 2
 	test CanViewMessageError {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user pin a result without filtering") {
 			WaitForElementPresent(

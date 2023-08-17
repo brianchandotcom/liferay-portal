@@ -25,6 +25,7 @@ definition {
 	test NewURLLoadEventCanDisplayLoadingBar {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -39,6 +40,7 @@ definition {
 	@priority = 4
 	test SPANotificationSetTimeout {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: set the user notification timeout to 1 second") {
 			SystemSettings.openSystemSettingsAdmin();

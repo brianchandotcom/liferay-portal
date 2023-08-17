@@ -389,6 +389,7 @@ definition {
 	@priority = 4
 	test CanCreateTwoFactoryConfigurations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientId1 = PropsUtil.get("google.client.id.2");
@@ -539,6 +540,7 @@ definition {
 	test CanNotAffectOtherSystemsDueToUseOfInstanceOSGiConfigurations {
 		property custom.properties = "feature.flag.LPS-155284=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given change the Instance OSGi configurations to export") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -775,6 +777,7 @@ definition {
 	test CanUseInstanceConfigurationAcrossDifferentSystems {
 		property custom.properties = "feature.flag.LPS-155284=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given change the Instance OSGi configurations to export") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -1005,6 +1008,7 @@ definition {
 	test ExportedFactoryConfigurationCanBeImported {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1079,6 +1083,7 @@ definition {
 	@priority = 4
 	test FactoryConfigurationAreInTheirProperScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1124,6 +1129,7 @@ definition {
 	@priority = 4
 	test FactoryConfigurationCanBeDeleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1163,6 +1169,7 @@ definition {
 	@priority = 4
 	test FactoryConfigurationCanBeEdited {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1249,6 +1256,7 @@ definition {
 	@priority = 4
 	test SingleFactoryConfigurationCanBeExported {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
@@ -1410,6 +1418,7 @@ definition {
 	@priority = 2
 	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given change the server/company level mail setting value") {
 			ServerAdministration.openServerAdmin();
@@ -1468,6 +1477,7 @@ definition {
 	test ViewPasswordChangedNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given: Add the user's first name in the password changed notification template") {
@@ -1555,6 +1565,7 @@ definition {
 	test ViewPasswordResetNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given: Add a new user and add the user's first name in the password reset notification template") {
@@ -1638,6 +1649,7 @@ definition {
 	@priority = 5
 	test ViewSystemSettingsSavedByKeyboard {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

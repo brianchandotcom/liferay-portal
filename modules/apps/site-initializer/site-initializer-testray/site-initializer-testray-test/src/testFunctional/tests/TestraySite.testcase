@@ -41,6 +41,7 @@ definition {
 	@priority = 5
 	test AddTestraySite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -64,6 +65,7 @@ definition {
 	test RemoteAppsAreCreatedForTestray {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -85,6 +87,7 @@ definition {
 	test StyleBooksAreCreatedForTestray {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

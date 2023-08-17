@@ -33,6 +33,7 @@ definition {
 	test AddAndDeleteBlogEntriesOnSeparateNodes {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -158,6 +159,7 @@ definition {
 	@priority = 3
 	test CanAccessGogoShellOnAnyClusteredNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -186,6 +188,7 @@ definition {
 		property database.partition.enabled = "true";
 		property liferay.online.properties = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -232,6 +235,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -277,6 +281,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -326,6 +331,7 @@ definition {
 	@priority = 4
 	test CanInvokeMethods {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Result of invoke-method-portal: 9080",
@@ -387,6 +393,7 @@ definition {
 	@priority = 4
 	test CanUpdateLogLevelsForAllNodesFromMaster {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -417,6 +424,7 @@ definition {
 	test CanUpdateLogLevelsForAllNodesFromSlave {
 		property app.server.bundles.size = "2";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.logoutPG(
 			password = "test",
@@ -456,6 +464,7 @@ definition {
 		property portal.release = "true";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -585,6 +594,7 @@ definition {
 	test EnableAndDisableFeatureFlagOnMasterNode {
 		property custom.properties = "feature.flag.ui.visible[dev]=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a feature is disabled on both nodes") {
 			for (var nodePort : list "9080,8080") {
@@ -667,6 +677,7 @@ definition {
 	test EnableAndDisableFeatureFlagOnSlaveNode {
 		property custom.properties = "feature.flag.ui.visible[dev]=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a feature is disabled on both nodes") {
 			for (var nodePort : list "9080,8080") {
@@ -789,6 +800,7 @@ definition {
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -851,6 +863,7 @@ definition {
 	@priority = 4
 	test SlaveNodeCanBecomeMasterNode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "This node is master node",
@@ -891,6 +904,7 @@ definition {
 	test TCPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -912,6 +926,7 @@ definition {
 	test UDPControlChannelProperties {
 		property custom.properties = "cluster.link.channel.properties.control=udp.xml${line.separator}cluster.link.channel.properties.transport.0=udp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var serverPort : list "8080,9080") {
 			Clustering.viewTextPresentOnSpecificNode(
@@ -932,6 +947,7 @@ definition {
 	@priority = 4
 	test ValidateDocumentOnSeparateNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -988,6 +1004,7 @@ definition {
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -1041,6 +1058,7 @@ definition {
 	@priority = 4
 	test ValidatePublishOnTwoNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -1139,6 +1157,7 @@ definition {
 	@priority = 4
 	test ValidateSchedulerOnSeparateNodes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName();
 

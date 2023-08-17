@@ -134,6 +134,7 @@ definition {
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -217,6 +218,7 @@ definition {
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSession {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -339,6 +341,7 @@ definition {
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSessionOnReleaseBundle {
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -719,6 +722,7 @@ definition {
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -842,6 +846,7 @@ definition {
 	test ViewFavoritesListInDifferentUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given having 2 users") {
 			var userEmailAddress = StringUtil.randomString(8);

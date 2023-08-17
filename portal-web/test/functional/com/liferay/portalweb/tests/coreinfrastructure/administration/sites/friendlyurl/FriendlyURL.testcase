@@ -32,6 +32,7 @@ definition {
 	test DoNotRedirectToDefaultInstanceWithNoCompany {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}virtual.hosts.strict.access=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -57,6 +58,7 @@ definition {
 	test RedirectToDefaultInstanceWithNoCompany {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(
 			baseURL = "http://www.able.com:8080",
@@ -76,6 +78,7 @@ definition {
 	test RedirectToLocalizedFriendlyURLWithVirtualHost {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given two pages on a site") {
 			JSONLayout.addPublicLayout(
@@ -153,6 +156,7 @@ definition {
 	@priority = 3
 	test UppercaseVirtualHostNamesConvertedToLowercase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When an uppercase virtual host is added to a site url") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
@@ -237,6 +241,7 @@ definition {
 	test ViewFriendlyURLWithSharedLocalesButDifferentLanguages {
 		property custom.properties = "locale.prepend.friendly.url.style=2${line.separator}locales.enabled=en_US,fr_FR,fr_CA";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var siteName : list "USA Site Name,France Site Name,Canada Site Name") {
 			HeadlessSite.addSite(siteName = ${siteName});

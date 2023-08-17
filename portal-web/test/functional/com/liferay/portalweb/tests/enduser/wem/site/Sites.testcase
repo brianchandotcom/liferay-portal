@@ -20,6 +20,7 @@ definition {
 	@priority = 4
 	test ActivateSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Show Inactive Request Message in system setting") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -312,6 +313,7 @@ definition {
 	test EditSiteFriendlyURLInvalid {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -405,6 +407,7 @@ definition {
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var randomChildSiteName = StringUtil.randomString(8);
@@ -514,6 +517,7 @@ definition {
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

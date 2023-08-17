@@ -35,6 +35,7 @@ definition {
 	@priority = 4
 	test CanViewErrorMessageForWrongZipCode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -53,6 +54,7 @@ definition {
 	@priority = 4
 	test ZipCodeIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

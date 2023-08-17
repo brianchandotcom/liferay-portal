@@ -638,6 +638,7 @@ definition {
 	test TasksAreGroupedByVersionedTasks {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -710,6 +711,7 @@ definition {
 	@priority = 3
 	test TasksWithMoreThan10PossibleTransitionsHasScroll {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -62,6 +62,7 @@ definition {
 	@refactordone
 	test CanDeleteBlogCoverImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -166,6 +167,7 @@ definition {
 	@refactordone
 	test CanDeleteBlogInlineImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -273,6 +275,7 @@ definition {
 	@refactordone
 	test CanDeleteBlogSmallImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -379,6 +382,7 @@ definition {
 	test CanDeleteDMImage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -480,6 +484,7 @@ definition {
 	@refactordone
 	test CanDeleteDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -581,6 +586,7 @@ definition {
 	@refactordone
 	test CanDeleteDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -716,6 +722,7 @@ definition {
 	@refactordone
 	test CanDeleteOpenGraphImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -844,6 +851,7 @@ definition {
 	@refactordone
 	test CanDeleteVideoShortcut {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -970,6 +978,7 @@ definition {
 	@refactordone
 	test CanDeleteWCImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1095,6 +1104,7 @@ definition {
 	@refactordone
 	test CanEditBlogCoverImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1205,6 +1215,7 @@ definition {
 	@refactordone
 	test CanEditBlogInlineImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1323,6 +1334,7 @@ definition {
 	@refactordone
 	test CanEditBlogSmallImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1422,6 +1434,7 @@ definition {
 	@refactordone
 	test CanEditDMImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1520,6 +1533,7 @@ definition {
 	@refactordone
 	test CanEditDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1618,6 +1632,7 @@ definition {
 	@refactordone
 	test CanEditDocumentWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1765,6 +1780,7 @@ definition {
 	@refactordone
 	test CanEditInternalVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -1906,6 +1922,7 @@ definition {
 	@refactordone
 	test CanEditOpenGraphImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -2026,6 +2043,7 @@ definition {
 	@refactordone
 	test CanEditWCImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -2153,6 +2171,7 @@ definition {
 	@refactordone
 	test CanNotSearchForPendingDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2195,6 +2214,7 @@ definition {
 	@refactordone
 	test CanNotSelectUnavailableStructure {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2223,6 +2243,7 @@ definition {
 	@refactordone
 	test CanNotViewImageFromDisconnectedSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -2273,6 +2294,7 @@ definition {
 	@refactordone
 	test CanNotViewPendingImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2317,6 +2339,7 @@ definition {
 	@priority = 4
 	test CanPublishAssetFromSiteWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2379,6 +2402,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedDocumentFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2469,6 +2493,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedDocumentViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Description",
@@ -2552,6 +2577,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedImageFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2642,6 +2668,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedImageViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Description",
@@ -2726,6 +2753,7 @@ definition {
 	@refactordone
 	test CanPublishDMWithDocumentType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -2794,6 +2822,7 @@ definition {
 	@refactordone
 	test CanPublishDocumentFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2861,6 +2890,7 @@ definition {
 	@priority = 5
 	test CanPublishDocumentFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -2923,6 +2953,7 @@ definition {
 	@priority = 5
 	test CanPublishDocumentViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Description",
@@ -2979,6 +3010,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedDocumentFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -3069,6 +3101,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedDocumentViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Description",
@@ -3149,6 +3182,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedImageFromFolderViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -3239,6 +3273,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedImageViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -3319,6 +3354,7 @@ definition {
 	@priority = 4
 	test CanPublishImageAfterChangingDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -3428,6 +3464,7 @@ definition {
 	@priority = 4
 	test CanPublishImageAfterChangingRootFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -3519,6 +3556,7 @@ definition {
 	@refactordone
 	test CanPublishImageShortcut {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -3574,6 +3612,7 @@ definition {
 	@priority = 5
 	test CanPublishImageViaWidget {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -3631,6 +3670,7 @@ definition {
 	@refactordone
 	test CanPublishImageWithCustomField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -3723,6 +3763,7 @@ definition {
 	@refactordone
 	test CanPublishImageWithLatestVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -3810,6 +3851,7 @@ definition {
 	@refactordone
 	test CanPublishImageWithLatestVersionInBlogs {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -3877,6 +3919,7 @@ definition {
 	@refactordone
 	test CanPublishVideoShortcutThumbnail {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -3936,6 +3979,7 @@ definition {
 	@refactordone
 	test CanViewApprovedDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -4019,6 +4063,7 @@ definition {
 	@priority = 5
 	test CanViewBlogsCoverImageAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -4099,6 +4144,7 @@ definition {
 	@priority = 5
 	test CanViewBlogsSmallImageAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -4178,6 +4224,7 @@ definition {
 	@priority = 5
 	test CanViewExternalVideoFromBlogsContentFieldAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -4255,6 +4302,7 @@ definition {
 	@priority = 4
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -4340,6 +4388,7 @@ definition {
 	@refactordone
 	test CanViewImageAfterScopedFilter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -4367,6 +4416,7 @@ definition {
 	@priority = 5
 	test CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -4446,6 +4496,7 @@ definition {
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -4528,6 +4579,7 @@ definition {
 	@priority = 4
 	test CanViewImagetInWCAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -4612,6 +4664,7 @@ definition {
 	@priority = 5
 	test ImageIsStillAccessibleAfterDisablingStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",

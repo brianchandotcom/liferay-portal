@@ -175,6 +175,7 @@ definition {
 	@priority = 3
 	test AdminCanAssignToMeSubtaskAssignedToTheOfflineUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user different assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -205,6 +206,7 @@ definition {
 	@priority = 2
 	test AdminCanCancelMergeSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user trying merge subtasks") {
 			TestrayTestflow.assertStatus(
@@ -231,6 +233,7 @@ definition {
 	@priority = 3
 	test AdminCanCompleteSubtaskAsBlocked {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user edit a Subtask as Blocked") {
 			TestrayTestflow.assertStatus(
@@ -272,6 +275,7 @@ definition {
 	@priority = 3
 	test AdminCanCompleteSubtaskAsFailing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user edit a Subtask as Failed") {
 			TestrayTestflow.assertStatus(
@@ -313,6 +317,7 @@ definition {
 	@priority = 5
 	test AdminCanCompleteSubtaskAsPassing {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user edit a Subtask as passed") {
 			TestrayTestflow.assertStatus(
@@ -343,6 +348,7 @@ definition {
 	@priority = 3
 	test AdminCanCompleteSubtaskAsTestFix {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user edit a Subtask as Test Fix") {
 			TestrayTestflow.assertStatus(
@@ -380,6 +386,7 @@ definition {
 	@priority = 5
 	test AdminCanCompleteSubtaskThatBeenMerged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user logged in assign a subtask") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -412,6 +419,7 @@ definition {
 	@priority = 3
 	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -454,6 +462,7 @@ definition {
 	@priority = 4
 	test AdminCanMergeInAnalysisSubtaskWithCompletedSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
@@ -515,6 +524,7 @@ definition {
 	@priority = 3
 	test AdminCanNotEditSubtaskWithUserOffline {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user different assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -537,6 +547,7 @@ definition {
 	@priority = 3
 	test AdminCanNotMergeOnlyOneSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user trying merging a single subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1");
@@ -553,6 +564,7 @@ definition {
 	@priority = 4
 	test AdminCanNotMergeSubtasksWithDifferentUsers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user different assign a subtask") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -585,6 +597,7 @@ definition {
 	@priority = 4
 	test AdminCanReanalyzeSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -621,6 +634,7 @@ definition {
 	@priority = 3
 	test AdminCanReturnToOpenSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When that the user Assign and Begin Analysis of the subtask") {
 			TestrayTestflow.assertStatus(
@@ -651,6 +665,7 @@ definition {
 	@priority = 3
 	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user merged a subtask with status open") {
 			TestrayTestflow.assertStatus(

@@ -123,6 +123,7 @@ definition {
 		property portal.context = "world";
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I navigate to localhost:8080/world/o/api") {
 			var portalURL = PropsUtil.get("portal.url");

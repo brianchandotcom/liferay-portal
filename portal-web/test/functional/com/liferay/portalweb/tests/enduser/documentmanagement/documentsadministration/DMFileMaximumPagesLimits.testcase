@@ -28,6 +28,7 @@ definition {
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInInstanceSettingsByTheConfigurationInSystemSetting {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
@@ -97,6 +98,7 @@ definition {
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSiteSettingsByTheConfigurationInInstanceSetting {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",
@@ -169,6 +171,7 @@ definition {
 	@priority = 4
 	test CanLimitMaximumPagesOfPDFPreviewInSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "large_file.pdf",

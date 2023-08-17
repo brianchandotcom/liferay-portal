@@ -64,6 +64,7 @@ definition {
 	@priority = 3
 	test AdminCanAddAndDeleteRoutineWithDefaultEnvironmentFactors {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
@@ -94,6 +95,7 @@ definition {
 	@priority = 5
 	test AdminCanAddRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user add a new Routine") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -110,6 +112,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
@@ -136,6 +139,7 @@ definition {
 	@priority = 4
 	test AdminCanDeleteRoutineWithBuilds {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a new Routine and a new Case") {
 			JSONTestray.addTeam(
@@ -209,6 +213,7 @@ definition {
 	@priority = 5
 	test AdminCanEditRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a new Routine") {
 			JSONTestray.addRoutine(
@@ -235,6 +240,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add Routine with duplicated name") {
 			JSONTestray.addRoutine(
@@ -255,6 +261,7 @@ definition {
 	@priority = 2
 	test AdminCanViewRequiredField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a new Routine without name") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -273,6 +280,7 @@ definition {
 	@priority = 2
 	test CanGoToProjectDirectory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a new Project") {
 			JSONTestray.addProject(

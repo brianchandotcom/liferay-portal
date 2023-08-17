@@ -155,6 +155,7 @@ definition {
 	@priority = 4
 	test ImportedDDMStructuresInGlobalStagingNotPublishedInLive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Access Global Site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
@@ -337,6 +338,7 @@ definition {
 	@priority = 3
 	test PublishWebContentWithFeeds {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site designer has web content feeds") {
 			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
@@ -545,6 +547,7 @@ definition {
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(

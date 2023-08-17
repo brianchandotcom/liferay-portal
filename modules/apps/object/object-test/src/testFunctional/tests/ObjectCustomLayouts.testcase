@@ -399,6 +399,7 @@ definition {
 	@priority = 3
 	test CanCreateObjectWithCategorizationSection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 200",
@@ -454,6 +455,7 @@ definition {
 	@priority = 3
 	test CanDeleteCategorizationSection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: An object with the layout categorization section") {
 			ObjectAdmin.addObjectViaAPI(
@@ -620,6 +622,7 @@ definition {
 	@priority = 3
 	test CanEditCategorizationSection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 200",
@@ -698,6 +701,7 @@ definition {
 	test CanEditEntryWhenAllowedToEdit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(
@@ -826,6 +830,7 @@ definition {
 	test CannotEditEntryWhenNotAllowedToEdit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a related object with Custom Layout and Relationship tab") {
 			ObjectAdmin.addObjectViaAPI(

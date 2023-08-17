@@ -48,6 +48,7 @@ definition {
 	@priority = 5
 	test AdminCanAddProject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user Create a Project") {
 			Testray.createProjectTestray(
@@ -68,6 +69,7 @@ definition {
 	@priority = 3
 	test AdminCanAddProjectFromDropdown {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user Create a Project from the dropdown") {
 			Testray.createProjectByDropdown(
@@ -88,6 +90,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteProject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user Create a Project via API") {
 			JSONTestray.addProject(
@@ -108,6 +111,7 @@ definition {
 	@priority = 5
 	test AdminCanEditProject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user Create a Project") {
 			Testray.createProjectTestray(
@@ -142,6 +146,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateProject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user tries to create a duplicate project") {
 			JSONTestray.addProject(
@@ -162,6 +167,7 @@ definition {
 	@priority = 2
 	test AdminCanViewWarningMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user tries to create a project without a name") {
 			Testray.createProjectTestray(
@@ -180,6 +186,7 @@ definition {
 	@priority = 3
 	test CanDeleteProjectsThatContainRoutinesWithoutAssociatedBuilds {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user Create a Project without associated builds") {
 			JSONTestray.addProject(
@@ -208,6 +215,7 @@ definition {
 	@priority = 4
 	test CannotDeleteProjectsThatContainRoutinesWithAssociatedBuilds {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user Create a Project") {
 			JSONTestray.addProject(

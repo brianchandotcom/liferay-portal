@@ -1660,6 +1660,7 @@ definition {
 	@priority = 4
 	test ImpersonatingAdministratorandOwner {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2312,6 +2313,7 @@ definition {
 	@priority = 3
 	test UpdateExistUserEmailAddressByScript {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2339,6 +2341,7 @@ definition {
 	@priority = 4
 	test UpdateUserInformation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2374,6 +2377,7 @@ definition {
 	@priority = 4
 	test ValidateRegExPasswordPolicyCP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "test1@liferay.com",
@@ -2556,6 +2560,7 @@ definition {
 	test ViewEmailVerificationNotificationTemplateUpdated {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given: Add a new user and add the user's first name in the email verification notification template") {
@@ -2650,6 +2655,7 @@ definition {
 	test ViewEmailWithPasswordSetupLinkSendToNewUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given: Add the user's first name in the account created notification template") {
@@ -2952,6 +2958,7 @@ definition {
 	test WelcomeEmailContainsVirtualHostSendToNewUser {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		PortalSettings.gotoConfiguration(

@@ -28,6 +28,7 @@ definition {
 	@priority = 5
 	test OnDemandAdminCanChangeInstanceAdminPassword {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: a new Virtual Instance is created") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -66,6 +67,7 @@ definition {
 	@priority = 5
 	test OnDemandAdminUnavailableInNonDefaultInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a new Virtual Instance is created") {
 			ApplicationsMenu.gotoPortlet(

@@ -688,6 +688,7 @@ definition {
 	test FilterWebContentByTag {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -907,6 +908,7 @@ definition {
 	@priority = 4
 	test FilterWebContentByTagAndTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -1150,6 +1152,7 @@ definition {
 	@priority = 4
 	test FilterWebContentByTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -2751,6 +2754,7 @@ definition {
 	test ViewPrefilterResults {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 

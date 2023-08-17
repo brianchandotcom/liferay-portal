@@ -50,6 +50,7 @@ definition {
 	test CannotSearchContentPageWithoutPublishedVersion {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator has a content page with Heading fragment and keeps it as draft") {
 			ContentPagesNavigator.openEditContentPage(
@@ -87,6 +88,7 @@ definition {
 	test FilterByTypeFacet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Type Facet to Search page") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -148,6 +150,7 @@ definition {
 	test SearchByInlineText {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -220,6 +223,7 @@ definition {
 	test SearchByNotEditableText {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
@@ -279,6 +283,7 @@ definition {
 	@priority = 4
 	test SearchPageInSelectModalWhenMapPageToEditableField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
@@ -357,6 +362,7 @@ definition {
 	@priority = 4
 	test SearchPageWithWorkflowByInlineTextAndMapContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given enable workflow for Content Pages") {
 			Workflow.openWorkflowAdmin(siteURLKey = ${siteURLKey});
@@ -499,6 +505,7 @@ definition {
 	@priority = 3
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Publish the content page") {
 			JSONLayout.publishLayout(
@@ -574,6 +581,7 @@ definition {
 	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Paragraph fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(

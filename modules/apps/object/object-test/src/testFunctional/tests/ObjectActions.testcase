@@ -29,6 +29,7 @@ definition {
 	test CanActivateOrDeactivateAction {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add an object, field, action, and check if an action is active") {
 			ObjectAdmin.addObjectViaAPI(
@@ -504,6 +505,7 @@ definition {
 	@priority = 4
 	test CanCreateActionAddAnObjectEntryUsingOldValueWithOnAfterDeleteTrigger {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given two custom objects with a text field") {
 			for (var letters : list "A,B") {
@@ -1915,6 +1917,7 @@ definition {
 	@priority = 4
 	test CanCreateActionWithExpressionBuilder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1970,6 +1973,7 @@ definition {
 	@priority = 5
 	test CanCreateActionWithGroovyScript {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
@@ -2053,6 +2057,7 @@ definition {
 	@priority = 4
 	test CanCreateEntryWithActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2264,6 +2269,7 @@ definition {
 	@priority = 5
 	test CanEditActionWithGroovyScript {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Groovy Script") {
 			var groovyScript = '''
@@ -2359,6 +2365,7 @@ definition {
 	test CanEditExpression {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add an Object, Field and Action") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2434,6 +2441,7 @@ definition {
 	test CanEnableAndDisableCondition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add object, field, and publish then") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2729,6 +2737,7 @@ definition {
 	@priority = 3
 	test CannotLeaveActionThenBlank {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 187",
@@ -2759,6 +2768,7 @@ definition {
 	@priority = 3
 	test CannotLeaveActionWhenBlank {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 188",
@@ -2790,6 +2800,7 @@ definition {
 	@priority = 3
 	test CannotLeaveURLBlank {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 189",
@@ -2880,6 +2891,7 @@ definition {
 	@priority = 3
 	test CannotSaveWithoutExpressionBuilder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
@@ -3158,6 +3170,7 @@ definition {
 	test CanTriggerActionAfterDisablingExpression {
 		task ("Given an object with a field is created") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -3955,6 +3968,7 @@ definition {
 	@priority = 3
 	test CanUseExpressionWithWebhook {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(
@@ -4079,6 +4093,7 @@ definition {
 	@priority = 4
 	test VerifyActionNameIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 156562",

@@ -15,6 +15,7 @@ definition {
 	test CustomPathDeploy {
 		property custom.properties = "module.framework.configs.dir=${liferay.home}/test/configs";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When a config is deployed to the custom config path") {
 			var liferayHome = PropsUtil.get("liferay.home.dir.name");

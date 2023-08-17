@@ -54,6 +54,7 @@ definition {
 	@priority = 5
 	test AssertTheTotalNumberOfActivePolicies {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -76,6 +77,7 @@ definition {
 	@priority = 4
 	test CanDeletePolicies {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -149,6 +151,7 @@ definition {
 	@priority = 5
 	test CanViewIfTheNumberOfPoliciesHasIncreased {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

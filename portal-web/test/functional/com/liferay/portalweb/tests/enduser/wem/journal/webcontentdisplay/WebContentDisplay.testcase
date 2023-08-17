@@ -488,6 +488,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Enable the FFMPEG Audio Converter in System Settings") {
@@ -1007,6 +1008,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	test UndeployWebContentDisplayModuleViaGogoShell {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Web Content Display module via GogoShell") {
 			GogoShell.openGogoShellAdmin();
@@ -1189,6 +1191,7 @@ ${runtimeInstance}
 	@priority = 4
 	test ViewAllFileTypesEnabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

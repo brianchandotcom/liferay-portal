@@ -27,6 +27,7 @@ definition {
 	@priority = 4
 	test PersistentAndMemoryJobs {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Groovy.runScriptViaGogoShell(
 			expectedOutput = "Persistent job 1 is added",

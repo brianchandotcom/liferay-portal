@@ -571,6 +571,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-173894=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an Email Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();
@@ -752,6 +753,7 @@ definition {
 	test CanSendEmailViaActionStandalone {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
@@ -837,6 +839,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-173894=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an Email Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();

@@ -130,6 +130,7 @@ definition {
 	@refactordone
 	test CanCheckinDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
 
@@ -174,6 +175,7 @@ definition {
 	@refactordone
 	test CanDeleteDocumentInSubfolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 
@@ -227,6 +229,7 @@ definition {
 	@refactordone
 	test CanDeleteSubfolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 
@@ -252,6 +255,7 @@ definition {
 	@priority = 4
 	test CanDownloadFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Commerce_Black.jpg");
 
@@ -273,6 +277,7 @@ definition {
 	test CanEditDocumentFile {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 
@@ -323,6 +328,7 @@ definition {
 	test CanEnterRepository {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 
@@ -376,6 +382,7 @@ definition {
 	@refactordone
 	test CanMoveCheckedoutDocumentToFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 
@@ -440,6 +447,7 @@ definition {
 	@refactordone
 	test CanMoveDocumentToHome {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
 
@@ -469,6 +477,7 @@ definition {
 	test CannotCopyAssetsFromRepository {
 		property custom.properties = "feature.flag.LPS-182512=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.jpg");
 
@@ -491,6 +500,7 @@ definition {
 	test CanNotFilterSearchResultsWithExternalRepository {
 		property custom.properties = "default.layout.template.id=1_column";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_4.txt");
 
@@ -535,6 +545,7 @@ definition {
 	@priority = 3
 	test CanPublishRepository {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -569,6 +580,7 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		User.logoutPG();
 
@@ -691,6 +703,7 @@ definition {
 	@refactordone
 	test CanSearchForDocumentFromHome {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 
@@ -713,6 +726,7 @@ definition {
 	@refactordone
 	test CanViewDocumentAsGuest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -772,6 +786,7 @@ definition {
 	@refactordone
 	test CanViewEditedCheckedoutDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.xls");
 
@@ -818,6 +833,7 @@ definition {
 	@refactordone
 	test OriginalFileExtensionIsPreservedAfterInvalidChange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 

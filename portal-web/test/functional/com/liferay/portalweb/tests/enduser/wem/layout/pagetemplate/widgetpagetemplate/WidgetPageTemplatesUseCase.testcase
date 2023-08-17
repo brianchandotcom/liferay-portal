@@ -32,6 +32,7 @@ definition {
 	@priority = 4
 	test ResetFailureCountAndReenablePropagation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site designer has a widget page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -91,6 +92,7 @@ definition {
 	@priority = 3
 	test ViewNoAddPageTabViaPageTemplatesCP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Get site name and go to page template in global site") {
 			var siteName = TestCase.getSiteName(siteName = ${siteName});

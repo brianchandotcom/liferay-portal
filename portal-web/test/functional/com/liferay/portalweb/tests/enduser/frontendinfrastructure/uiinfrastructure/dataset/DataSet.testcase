@@ -105,6 +105,7 @@ definition {
 	@priority = 5
 	test CanDisplayHeadlessDeliveryAPIResources {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();
@@ -163,6 +164,7 @@ definition {
 	@priority = 3
 	test CanReturnAMatchedResult {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When go to add data sets") {
 			LexiconEntry.gotoAdd();

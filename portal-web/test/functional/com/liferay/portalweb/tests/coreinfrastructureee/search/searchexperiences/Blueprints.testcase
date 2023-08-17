@@ -30,6 +30,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -101,6 +102,7 @@ definition {
 
 	test ApplyBlueprintIDToSearchViaLLSO {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -207,6 +209,7 @@ definition {
 
 	test ApplyBlueprintToContentPageViaLLSO {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "",
@@ -280,6 +283,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "",
@@ -510,6 +514,7 @@ definition {
 
 	test AssertBlueprintStillAppliedAfterRename {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "apple apple apple",

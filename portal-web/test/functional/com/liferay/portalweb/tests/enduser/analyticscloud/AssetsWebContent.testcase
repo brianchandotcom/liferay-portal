@@ -208,6 +208,7 @@ definition {
 		// AC Refactor ticket: LRAC-10769 and LRAC-10024
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -363,6 +364,7 @@ definition {
 	@priority = 5
 	test CanNavigateToWebContentOverviewPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -416,6 +418,7 @@ definition {
 	@priority = 5
 	test CanSearchWebContentList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
@@ -608,6 +611,7 @@ definition {
 	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";
@@ -676,6 +680,7 @@ definition {
 	@priority = 5
 	test ViewAllWebContentShownInAssetList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var assetNameList = "Web Content AC Title,Web Content AC Title 2,Web Content AC Title 3";
 
@@ -731,6 +736,7 @@ definition {
 	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInWC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -867,6 +873,7 @@ definition {
 	@priority = 5
 	test WebContentTechnologyCardShowsViewsByExpectedBrowser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

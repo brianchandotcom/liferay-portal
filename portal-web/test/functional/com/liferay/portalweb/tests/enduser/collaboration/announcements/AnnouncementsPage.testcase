@@ -73,6 +73,7 @@ definition {
 	test CanAddAnnouncementsEntryFutureDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AnnouncementsNavigator.openToEntriesTab(
 			layoutName = "announcements-page",

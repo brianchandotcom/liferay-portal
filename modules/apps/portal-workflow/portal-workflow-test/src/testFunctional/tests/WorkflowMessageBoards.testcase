@@ -246,6 +246,7 @@ definition {
 	@priority = 4
 	test RejectMessageBoardsThreadPG {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

@@ -1514,6 +1514,7 @@ definition {
 	test ViewEmptyStateWhenSiteIsEmpty {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Deactivate the Default fragment sets") {
 			ApplicationsMenu.gotoPortlet(

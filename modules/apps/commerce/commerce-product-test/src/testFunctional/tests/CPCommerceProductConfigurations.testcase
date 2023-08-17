@@ -734,6 +734,7 @@ definition {
 	test CanLocaleBePrependedForProductOnSiteMapPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the localization for the Friendly URL is changed") {
 			ApplicationsMenu.gotoPortlet(
@@ -1014,6 +1015,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the localization for the Friendly URL is changed") {
 			ApplicationsMenu.gotoPortlet(
@@ -1935,6 +1937,7 @@ definition {
 	@priority = 4
 	test CanSiteCurrentLanguageAffectSiteMap {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an account is created") {
 			JSONAccountEntry.addAccountEntry(
@@ -2058,6 +2061,7 @@ definition {
 	@priority = 3
 	test CanViewLanguageTagsOnSitemapPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an account is created") {
 			JSONAccountEntry.addAccountEntry(

@@ -25,6 +25,7 @@ definition {
 		property portal.release = "false";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
@@ -88,6 +89,7 @@ definition {
 	@priority = 3
 	test ExecuteScriptWithEmbeddedHTML {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 
@@ -124,6 +126,7 @@ definition {
 	test ExecuteScriptWithLiferayClasses {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 
@@ -154,6 +157,7 @@ definition {
 	test ExecuteScriptWithPredefinedProperty {
 		property custom.properties = "partnerstamm-api-user = his_user";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 
@@ -184,6 +188,7 @@ definition {
 	@priority = 4
 	test ExecuteScriptWithPredefinedVariables {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 
@@ -210,6 +215,7 @@ definition {
 	test ExecuteSimpleScript {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ServerAdministration.openServerAdmin();
 

@@ -773,6 +773,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -821,6 +822,7 @@ definition {
 	test PermanentRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -855,6 +857,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -905,6 +908,7 @@ definition {
 	test TemporaryRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 

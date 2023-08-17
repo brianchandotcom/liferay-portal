@@ -124,6 +124,7 @@ definition {
 	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user add a user and UserGroups") {
 			JSONUser.addUser(
@@ -202,6 +203,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -263,6 +265,7 @@ definition {
 	@priority = 4
 	test AdminCanEditTask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -320,6 +323,7 @@ definition {
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user try to add a duplicate Task") {
 			TestrayTestflow.goToTestflow();
@@ -362,6 +366,7 @@ definition {
 	@priority = 3
 	test AdminCanReanalyzeAbandonedTask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a Task and subtask via API") {
 			JSONTestray.addTask(
@@ -413,6 +418,7 @@ definition {
 	@priority = 3
 	test AdminCanReanalyzeCompleteTask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -460,6 +466,7 @@ definition {
 	@priority = 4
 	test AdminCanUpdateTaskStatusToComplete {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -506,6 +513,7 @@ definition {
 	@priority = 2
 	test AdminCanViewAssociatedBuildInTask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -545,6 +553,7 @@ definition {
 	@priority = 4
 	test AdminCanViewRequiredAssignUsers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user try to add a Task without User") {
 			TestrayTestflow.goToTestflow();
@@ -566,6 +575,7 @@ definition {
 	@priority = 2
 	test AdminCanViewRequiredCaseType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user try to add a Task without case type") {
 			TestrayTestflow.goToTestflow();
@@ -587,6 +597,7 @@ definition {
 	@priority = 4
 	test AdminCanViewTaskInAnalysis {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user add a Task in a different flow") {
 			TestrayLayout.clickResultsOnSidebar();
@@ -633,6 +644,7 @@ definition {
 	@priority = 3
 	test CanRemoveUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user add a Task") {
 			TestrayTestflow.goToTestflow();
@@ -678,6 +690,7 @@ definition {
 	@priority = 2
 	test CanViewFieldNameRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user try to add a Task without name") {
 			TestrayTestflow.goToTestflow();

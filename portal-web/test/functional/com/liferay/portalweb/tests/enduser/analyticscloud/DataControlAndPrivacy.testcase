@@ -43,6 +43,7 @@ definition {
 	@priority = 4
 	test CanChangeRetentionPeriod {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Launch AC and go to Settings") {
 			ACUtils.launchAC();
@@ -75,6 +76,7 @@ definition {
 	@priority = 5
 	test CanCreateAccessRequest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var userEmail = "dcp1@liferay.com";
 		var userName = "dcp1";
@@ -122,6 +124,7 @@ definition {
 	@priority = 5
 	test CanCreateDeleteRequest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var userEmail = "dcp2@liferay.com";
 		var userName = "dcp2";
@@ -173,6 +176,7 @@ definition {
 		// The Suppressed User card was hidden after this ticket: LRAC-13620
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var userEmail = "dcp3@liferay.com";
 		var userName = "dcp3";

@@ -61,6 +61,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotCreateProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -91,6 +92,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -127,6 +129,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotEditProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -163,6 +166,7 @@ definition {
 	@priority = 3
 	test AssertLeadRoleCanCreateProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -194,6 +198,7 @@ definition {
 	@priority = 3
 	test AssertLeadRoleCanDeleteProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -228,6 +233,7 @@ definition {
 	@priority = 3
 	test AssertLeadRoleCanEditProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -263,6 +269,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotCreateProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -293,6 +300,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotDeleteProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -329,6 +337,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotEditProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

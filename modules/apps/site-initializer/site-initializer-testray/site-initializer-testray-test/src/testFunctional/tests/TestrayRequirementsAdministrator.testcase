@@ -70,6 +70,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteRequirements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Requirement' via API") {
 			JSONTestray.addRequirement(
@@ -108,6 +109,7 @@ definition {
 	@priority = 5
 	test AdminCanEditRequirements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a team, component and requirement are created via API") {
 			JSONTestray.addTeam(
@@ -163,6 +165,7 @@ definition {
 	@priority = 3
 	test AdminCanLinkAndUnlinkCaseToRequirement {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a case, case type and requirement are created via API") {
 			JSONTestray.addCases(
@@ -220,6 +223,7 @@ definition {
 	@priority = 2
 	test AdminCanViewRequiredField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I go to the requirement page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

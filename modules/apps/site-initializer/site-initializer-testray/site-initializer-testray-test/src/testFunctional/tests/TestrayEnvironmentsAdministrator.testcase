@@ -50,6 +50,7 @@ definition {
 	@priority = 5
 	test AdminCanAddAndDeleteFactorOption {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -90,6 +91,7 @@ definition {
 	@priority = 5
 	test AdminCanAddCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I create a new Category") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -110,6 +112,7 @@ definition {
 	@priority = 5
 	test AdminCanAddOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -142,6 +145,7 @@ definition {
 	@priority = 3
 	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Project', a new 'Routine' and new 'Environment Factors' via API") {
 			JSONTestray.addProject(
@@ -185,6 +189,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -207,6 +212,7 @@ definition {
 	@priority = 5
 	test AdminCanEditFactorCategories {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -241,6 +247,7 @@ definition {
 	@priority = 4
 	test AdminCanEditOptionChangingCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -298,6 +305,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateFactorCategory {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -322,6 +330,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateFactorOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
@@ -352,6 +361,7 @@ definition {
 	@priority = 2
 	test AdminCanViewRequiredField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I try to create Options without a title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -380,6 +390,7 @@ definition {
 	@priority = 2
 	test AdminCanViewWarningMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I try to create Category without a title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

@@ -34,6 +34,7 @@ definition {
 	@priority = 4
 	test CanSeeUserApplicationNumber {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

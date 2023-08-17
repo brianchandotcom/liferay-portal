@@ -26,6 +26,7 @@ definition {
 	test CanOverrideHookProperties {
 		property custom.system.properties = "company-id-properties=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the default theme is set to Classic") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -70,6 +71,7 @@ definition {
 		property custom.system.properties = "company-id-properties=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -107,6 +109,7 @@ definition {
 	test CanSetPortalPropertyViaJVM {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
@@ -148,6 +151,7 @@ definition {
 	test ChangeDefaultCompanyToDifferentInstance {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

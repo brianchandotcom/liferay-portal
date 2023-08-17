@@ -116,6 +116,7 @@ definition {
 	@priority = 3
 	test AssertCanBackSectionByBreadcrumb {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to build page") {
 			Testray.changePagination(
@@ -148,6 +149,7 @@ definition {
 	@priority = 3
 	test AssertCanGoToCaseResultsthroughBreadcrumb {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to the breadcrumb") {
 			Testray.gotoBreadcrumb();
@@ -171,6 +173,7 @@ definition {
 	@priority = 4
 	test AssertCanSearchProjectByBreadcrumb {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to the breadcrumb") {
 			Testray.gotoBreadcrumb();

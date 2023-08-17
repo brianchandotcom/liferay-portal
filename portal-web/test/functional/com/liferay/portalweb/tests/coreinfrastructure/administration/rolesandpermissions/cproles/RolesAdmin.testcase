@@ -139,6 +139,7 @@ definition {
 	@priority = 4
 	test CanRemoveSiteInScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONRole.addRegularRole(
 			roleKey = "Remove Permission Scope",
@@ -232,6 +233,7 @@ definition {
 	@priority = 5
 	test ChangeScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

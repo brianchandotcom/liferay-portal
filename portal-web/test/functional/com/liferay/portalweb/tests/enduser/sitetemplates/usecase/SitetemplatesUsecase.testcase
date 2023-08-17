@@ -103,6 +103,7 @@ definition {
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new Site template with a page") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -172,6 +173,7 @@ definition {
 	@priority = 3
 	test AllPageIsVisibleAfterAddingNewPages {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -221,6 +223,7 @@ definition {
 	@priority = 4
 	test ChangeLocalizationAfterSiteTemplateIsAddedInVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -312,6 +315,7 @@ definition {
 	@priority = 4
 	test ImportOldSchemaVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User navigate to Site template admin page") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -598,6 +602,7 @@ definition {
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1182,6 +1187,7 @@ definition {
 	@priority = 4
 	test ViewImportedSitePageWithNumericFriendlyURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 

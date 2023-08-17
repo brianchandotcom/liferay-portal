@@ -28,6 +28,7 @@ definition {
 	@priority = 5
 	test CustomURLCanBypassValidationIfMatchWithURLPatternInSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: Not set URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
@@ -83,6 +84,7 @@ definition {
 	@priority = 5
 	test CustomURLCannotBypassValidationAfterResetDefaultValues {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add URL Pattern in Instance Settings") {
 			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
@@ -159,6 +161,7 @@ definition {
 	@priority = 5
 	test MultipleURLPatternCanBeAddedInSystemSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add multiple URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
@@ -212,6 +215,7 @@ definition {
 	@priority = 4
 	test VerifyErrorMessageWhenAddingInvalidURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add invalid url values to the URL Pattern field and assert the error messages at System settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
@@ -242,6 +246,7 @@ definition {
 	@priority = 5
 	test VerifyURLPatternConfigurationCanBeLoadedFromOSGiFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Add virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -298,6 +303,7 @@ definition {
 	@priority = 4
 	test VerifyURLPatternCouldConfiguredByWebId {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add the OSGI configuration file") {
 			OSGiConfig.copyOSGiConfigFile(

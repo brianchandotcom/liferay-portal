@@ -138,6 +138,7 @@ definition {
 	@priority = 3
 	test AdminCanAddManageComponents {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to components") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -160,6 +161,7 @@ definition {
 	@priority = 3
 	test AdminCanAddManageProductVersions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to product version") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -182,6 +184,7 @@ definition {
 	@priority = 3
 	test AdminCanAddManageTeams {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to teams") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -204,6 +207,7 @@ definition {
 	@priority = 3
 	test AdminCanDeleteCases {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to the case created") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -232,6 +236,7 @@ definition {
 	@priority = 3
 	test AdminCanDeleteProject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to the project created") {
 			Testray.goToProjectPage(projectName = "Project 2");
@@ -268,6 +273,7 @@ definition {
 	@priority = 3
 	test AdminCanDeleteRequirements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to the requirement created") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -304,6 +310,7 @@ definition {
 	@priority = 3
 	test AdminCanDeleteRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to the routine created") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -334,6 +341,7 @@ definition {
 	@priority = 3
 	test AdminCanEditBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to build") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -371,6 +379,7 @@ definition {
 	@priority = 3
 	test AdminCanEditCases {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -410,6 +419,7 @@ definition {
 	@priority = 3
 	test AdminCanEditProject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to project") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -438,6 +448,7 @@ definition {
 	@priority = 3
 	test AdminCanEditRequirements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to requirement") {
 			JSONTestray.addRequirement(
@@ -480,6 +491,7 @@ definition {
 	@priority = 3
 	test AdminCanEditRoutine {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to routine") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -512,6 +524,7 @@ definition {
 	@priority = 3
 	test AdminCanEditSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to suite") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -546,6 +559,7 @@ definition {
 	@priority = 3
 	test AdminCanPromotedBuilds {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to build") {
 			Testray.goToProjectPage(projectName = ${projectName});

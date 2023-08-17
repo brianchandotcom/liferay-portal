@@ -25,6 +25,7 @@ definition {
 	@priority = 4
 	test CanAddEntry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153556",
@@ -76,6 +77,7 @@ definition {
 	@priority = 4
 	test CanAffectOnlyEntriesAddedWhenUpdateValidationWithEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153559",
@@ -152,6 +154,7 @@ definition {
 	@priority = 4
 	test CanAffectOnlyEntriesUpdateWhenUpdateValidationWithEntries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153560",
@@ -314,6 +317,7 @@ definition {
 	test CanDefineExpressionConcat {
 		task ("Create Custom Object and some Custom Fields") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156694",
@@ -420,6 +424,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionConditionalLogic {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Fields Text") {
 			ObjectAdmin.addObjectViaAPI(
@@ -686,6 +691,7 @@ definition {
 	test CanDefineExpressionContainsAndDoesNotContain {
 		task ("Create Custom Object and Custom Fields") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156688",
@@ -806,6 +812,7 @@ definition {
 	test CanDefineExpressionFutureDatesAndPastDates {
 		task ("Create Custom Object and Custom Field") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156701",
@@ -915,6 +922,7 @@ definition {
 	test CanDefineExpressionIsAnEmail {
 		task ("Create Custom Object and Custom Field") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156690",
@@ -986,6 +994,7 @@ definition {
 	test CanDefineExpressionIsDecimalOrIsInteger {
 		task ("Create Custom Object and Custom Field") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156698",
@@ -1095,6 +1104,7 @@ definition {
 	test CanDefineExpressionIsEmpty {
 		task ("Create Custom Object and Custom Field") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156695",
@@ -1167,6 +1177,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsEqualToAndIsNotEqualTo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1282,6 +1293,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsGreaterThanOrEqualTo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1364,6 +1376,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsLessThanOrEqualTo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1446,6 +1459,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionIsUrl {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1517,6 +1531,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionMatch {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1588,6 +1603,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionOperators {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and some Custom Fields") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1879,6 +1895,7 @@ definition {
 	@priority = 4
 	test CanDefineExpressionRange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1963,6 +1980,7 @@ definition {
 	test CanDefineExpressionSum {
 		task ("Create Custom Object and some Custom Fields") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156699",
@@ -2069,6 +2087,7 @@ definition {
 	@priority = 4
 	test CannotActiveByDefaultWhenAddValidationsGroovy {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153551",
@@ -2097,6 +2116,7 @@ definition {
 	@priority = 4
 	test CanPreventEntryCreationViaGroovy {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153550",
@@ -2152,6 +2172,7 @@ definition {
 	@priority = 4
 	test CanUpdateWhenPassesForAllValidations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153558",
@@ -2219,6 +2240,7 @@ definition {
 	test CanUserDefineValidationActiveOrInactive {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a custom object with a text field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2297,6 +2319,7 @@ definition {
 	@priority = 4
 	test CanUserSeeBasicInfoTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153553",
@@ -2330,6 +2353,7 @@ definition {
 	@priority = 4
 	test CanUserSeeConditionsTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153554",
@@ -2365,6 +2389,7 @@ definition {
 	@priority = 4
 	test CanValidateExpressionBuilderAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2409,6 +2434,7 @@ definition {
 	@priority = 4
 	test CanValidateExpressionBuilderScheduledAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2465,6 +2491,7 @@ definition {
 	@priority = 4
 	test CanValidateGroovyAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2539,6 +2566,7 @@ definition {
 	@priority = 4
 	test CanValidateGroovyScheduledAction {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2582,6 +2610,7 @@ definition {
 	test CanValidateSystemObjectWithExpressionBuilder {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Objects, select System Object User and click on validations tab") {
 			ObjectAdmin.openObjectAdmin();
@@ -2659,6 +2688,7 @@ definition {
 	@priority = 4
 	test CanViewDefaultViewWhenEmptyValidation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153547",
@@ -2680,6 +2710,7 @@ definition {
 	@priority = 4
 	test CanViewLocalizedInputChanged {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153549",
@@ -2732,6 +2763,7 @@ definition {
 	@priority = 4
 	test CanViewMessageErrorWhenDontPassesForAllValidations {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153546",
@@ -2785,6 +2817,7 @@ definition {
 	@priority = 4
 	test CanViewSpecificErrorWhenGroovySintaxIsIncorrect {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a Custom Object and a Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2839,6 +2872,7 @@ definition {
 	test CanViewValidationTab {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153546",
@@ -2858,6 +2892,7 @@ definition {
 	@priority = 4
 	test ErrorMessageFieldIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153555",
@@ -2891,6 +2926,7 @@ definition {
 	@priority = 4
 	test LabelFieldIsRequiredOnValidation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153548",

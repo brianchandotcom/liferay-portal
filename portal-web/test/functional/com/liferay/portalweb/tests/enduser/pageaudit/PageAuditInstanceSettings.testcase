@@ -44,6 +44,7 @@ definition {
 	test DefaultStrategyAtInstanceSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -75,6 +76,7 @@ definition {
 	test InstanceSettingsHierarchy {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaInstanceSettings(preferredStrategy = "Mobile");
@@ -109,6 +111,7 @@ definition {
 	test MobileStrategyAtInstanceSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -140,6 +143,7 @@ definition {
 	test SiteSettingsHierarchyOverInstanceSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -177,6 +181,7 @@ definition {
 	test UncheckedInstanceSettingsSiteScopeThenUncheckedAtSiteSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings(scope = "Site Scope");
@@ -204,6 +209,7 @@ definition {
 	@priority = 3
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteScope {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings();
@@ -222,6 +228,7 @@ definition {
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisibleAtSiteSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings();
@@ -250,6 +257,7 @@ definition {
 	test UncheckedInstanceSettingsVirtualInstanceThenNotVisiblePageAuditIcon {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Uncheck PageSpeed at Instance Settings") {
 			PageAudit.disableGooglePageSpeedViaInstanceSettings();

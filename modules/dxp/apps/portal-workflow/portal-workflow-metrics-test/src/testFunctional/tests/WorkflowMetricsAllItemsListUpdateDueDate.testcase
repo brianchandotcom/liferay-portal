@@ -33,6 +33,7 @@ definition {
 	@priority = 5
 	test BulkUpdateModalIsDisplayedWhenMoreThan1PendingTaskIsSelected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Multi Task Process");
 
@@ -178,6 +179,7 @@ definition {
 	@priority = 4
 	test CanNotUpdateDueDateOfUnassignedTasks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "user@liferay.com",

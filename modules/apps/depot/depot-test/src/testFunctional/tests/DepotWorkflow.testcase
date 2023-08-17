@@ -120,6 +120,7 @@ definition {
 	test CanApproveWCArticle {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -352,6 +353,7 @@ definition {
 	@refactordone
 	test CanApproveWCInFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
@@ -457,6 +459,7 @@ definition {
 	@refactordone
 	test CanRejectAndResubmitImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -583,6 +586,7 @@ definition {
 	@refactordone
 	test CanRejectAndResubmitWC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

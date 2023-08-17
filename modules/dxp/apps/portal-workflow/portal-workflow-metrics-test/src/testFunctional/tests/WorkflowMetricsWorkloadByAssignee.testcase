@@ -187,6 +187,7 @@ definition {
 	@priority = 3
 	test CardIsUpdatedWhenUserNameIsEdited {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -226,6 +227,7 @@ definition {
 	@priority = 4
 	test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -540,6 +542,7 @@ definition {
 	@priority = 3
 	test SearchBarIsIncludedWhenDropdownIsHigherThan496Px {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -597,6 +600,7 @@ definition {
 	@priority = 3
 	test SearchBarIsPresentInStepFilter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -734,6 +738,7 @@ definition {
 	@priority = 3
 	test SumOfOverdueAndOnTimeAreNeverBiggerThanTotalItems {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -927,6 +932,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

@@ -101,6 +101,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

@@ -109,6 +109,7 @@ definition {
 	@priority = 4
 	test DeleteComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Page Comments Page");
 

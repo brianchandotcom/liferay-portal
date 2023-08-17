@@ -44,6 +44,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingAllParameters {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
 		var keyword = "all parameters";
@@ -76,6 +77,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingDisplayLanguageId {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var parametersDisplay1 = "size=10\&displayLanguageId=${displayLanguageId1}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
 		var parametersDisplay2 = "size=10\&displayLanguageId=${displayLanguageId2}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
@@ -124,6 +126,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingGroupID {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -174,6 +177,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingNoParameters {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var keyword1 = "without optional parameters 1";
 		var keyword2 = "without optional parameters 2";
@@ -213,6 +217,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var parametersFirstPage = "size=${size}\&page=${firstPage}\&sort=counts,desc,lastModifiedDate,desc";
 		var parametersSecondPage = "size=${size}\&page=${secondPage}\&sort=counts,desc,lastModifiedDate,desc";
@@ -283,6 +288,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingSize {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var keyword1 = "with size parameters 1";
 		var keyword2 = "with size parameters 2";
@@ -331,6 +337,7 @@ definition {
 	@priority = 3
 	test RequestKeywordsUsingSort {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var keyword1 = "first key word";
 		var keyword2 = "second key word";

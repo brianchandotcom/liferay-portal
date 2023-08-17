@@ -124,6 +124,7 @@ definition {
 	@priority = 4
 	test CanMapAndViewEntriesForRichTextField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151597",
@@ -354,6 +355,7 @@ definition {
 	@priority = 4
 	test CanRetrieveDataProvidersOnSelectFromListField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 213",
@@ -430,6 +432,7 @@ definition {
 	@priority = 4
 	test CanRetrieveDataProvidersOnTextField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 214",

@@ -52,6 +52,7 @@ definition {
 	@priority = 5
 	test CanAccessNewApplicationFromSideBar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -70,6 +71,7 @@ definition {
 	@priority = 3
 	test CanSwitchBetweenCards {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -90,6 +92,7 @@ definition {
 	@priority = 4
 	test CardStillSelectedWhenUserGoToPreviousPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

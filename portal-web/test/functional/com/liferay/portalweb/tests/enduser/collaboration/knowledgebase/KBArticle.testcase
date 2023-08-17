@@ -446,6 +446,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -617,6 +618,7 @@ definition {
 	@refactorneeded
 	test CannotAddArticleWithInvalidAttachmentSize {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -875,6 +877,7 @@ definition {
 	test CanRepublishAnExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -930,6 +933,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -976,6 +980,7 @@ definition {
 	test CanReviewArticleWhenReviewDateIsUpdated {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -1233,6 +1238,7 @@ definition {
 	test CanViewExpiredArticle {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		KBArticle.updateCheckInterval(fieldValue = 1);
 
@@ -1294,6 +1300,7 @@ definition {
 	test CanViewExpiredArticleWithWorkflowEnabled {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowAdmin(siteURLKey = "guest");
 
@@ -1577,6 +1584,7 @@ definition {
 	@refactorneeded
 	test ViewKBArticleGitHubSourceURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

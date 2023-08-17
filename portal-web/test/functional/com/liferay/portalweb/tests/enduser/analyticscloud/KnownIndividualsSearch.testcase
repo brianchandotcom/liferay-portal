@@ -47,6 +47,7 @@ definition {
 	@priority = 3
 	test AssertNoIndividualsActivitiesResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
@@ -119,6 +120,7 @@ definition {
 	@priority = 3
 	test AssertNoIndividualsAssociatedSegmentsResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

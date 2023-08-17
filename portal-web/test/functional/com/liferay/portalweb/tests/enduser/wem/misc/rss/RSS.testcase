@@ -461,6 +461,7 @@ definition {
 	@uitest
 	test EditRSSFeedViaAssetpublisherWhenSetFeedTimeToOne {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Asset Publisher,RSS";
 
 		task ("Change the RSS Feed Time on System Settings") {
@@ -563,6 +564,7 @@ definition {
 	@priority = 3
 	test ViewDescriptionOfRSSCacheFeedTime {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given administrater goes to System Settings") {
 			ApplicationsMenu.gotoPortlet(

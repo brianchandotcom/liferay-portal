@@ -33,6 +33,7 @@ definition {
 	test CanViewNotFoundWhenGuestAccessManageURL {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -144,6 +145,7 @@ definition {
 	@priority = 4
 	test EnableStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -284,6 +286,7 @@ definition {
 	@priority = 4
 	test UpdateUserInformation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		UserBar.viewUserDefaultIcon();
 

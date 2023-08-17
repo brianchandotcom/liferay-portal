@@ -48,6 +48,7 @@ definition {
 	@priority = 5
 	test CanViewSentEmail {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 
@@ -88,6 +89,7 @@ definition {
 	@priority = 3
 	test EmailOnTheEnvelopeEqualOnTheForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 
@@ -130,6 +132,7 @@ definition {
 	@priority = 3
 	test FirstNameOnEnvelopeSameAsForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 
@@ -168,6 +171,7 @@ definition {
 	@priority = 3
 	test LastNameOnEnvelopeSameAsForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		RaylifePaymentMethod.enablePayPalPayment();
 

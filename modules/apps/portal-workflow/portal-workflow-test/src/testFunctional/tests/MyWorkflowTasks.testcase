@@ -54,6 +54,7 @@ definition {
 	test AccountUserCanApproveTask {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -335,6 +336,7 @@ definition {
 	@priority = 4
 	test ApproveResubmitTaskByActions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -419,6 +421,7 @@ definition {
 	@priority = 2
 	test AssignedToMyRolesShowsMessageWhenNoPendingTasks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SearchAdministration.executeReindex();
 
@@ -437,6 +440,7 @@ definition {
 	@priority = 5
 	test CanAssignTaskToCurrentUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -503,6 +507,7 @@ definition {
 	@priority = 4
 	test CanAssignTaskToUserWithAccountRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -899,6 +904,7 @@ definition {
 	@priority = 5
 	test CanSearchForAssetTitleOnAssignedToMyRolesTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1389,6 +1395,7 @@ definition {
 	test ResubmitTaskByDetails {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

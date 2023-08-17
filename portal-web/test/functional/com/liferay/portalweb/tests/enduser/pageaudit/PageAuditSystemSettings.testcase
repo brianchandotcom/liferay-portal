@@ -44,6 +44,7 @@ definition {
 	@uitest
 	test AssertProgressBar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -70,6 +71,7 @@ definition {
 	@priority = 3
 	test CheckErrorDetailsDisplayedInvalidApiKey {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set Google PageSpeed API") {
 			PageAudit.setAPIViaSystemSettings(apiKey = "invalidAPI");
@@ -97,6 +99,7 @@ definition {
 	test DefaultStrategyAtSystemSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -128,6 +131,7 @@ definition {
 	test DesktopStrategyAtSystemSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -159,6 +163,7 @@ definition {
 	test MobileStrategyAtSystemSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -190,6 +195,7 @@ definition {
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings();
@@ -207,6 +213,7 @@ definition {
 	test PageAuditDisplayPageDisabled {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings();
@@ -249,6 +256,7 @@ definition {
 	test PageAuditWidgetPageDisabled {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings();
@@ -273,6 +281,7 @@ definition {
 	test PageWithNoIssues {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test-no-issues");
@@ -300,6 +309,7 @@ definition {
 	test SiteSettingsHierarchyOverSystemSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set a custom page as canonical URL to have data already loaded") {
 			PageAudit.setSEOcanonicalURL(url = "https://liferay-echo.github.io/liferay-portal/page-audit-test");
@@ -337,6 +347,7 @@ definition {
 	test UncheckedSystemSettingsSiteScopeThenUncheckedAtTabSiteSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "Site Scope");
@@ -365,6 +376,7 @@ definition {
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtInstanceSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section in System Settings") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
@@ -399,6 +411,7 @@ definition {
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtSiteScope {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
@@ -417,6 +430,7 @@ definition {
 	test UncheckedSystemSettingsSystemScopeThenNotVisibleAtVirtualInstance {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "System Scope");
@@ -435,6 +449,7 @@ definition {
 	test UncheckedSystemSettingsVirtualInstanceThenNotVisibleAtTabSiteSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings();
@@ -463,6 +478,7 @@ definition {
 	test UncheckedSystemSettingsVirtualInstanceThenVisibleAtSiteScope {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Google PageSpeed settings tab in the System Scope section") {
 			PageAudit.disableGooglePageSpeedViaSystemSettings(settingsScope = "Virtual Instance Scope");

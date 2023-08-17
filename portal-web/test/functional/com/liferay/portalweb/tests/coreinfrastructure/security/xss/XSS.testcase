@@ -30,6 +30,7 @@ definition {
 	@priority = 4
 	test MaliciousURLScriptsAreNotValidated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Access malicious url and assert script was not validated") {
 			var maliciousUrl1 = '''
@@ -362,6 +363,7 @@ definition {
 	@priority = 3
 	test NoXSSVulnerabilityInMatomo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Edit matomo CP") {
 			var portalURL = PropsUtil.get("portal.url");

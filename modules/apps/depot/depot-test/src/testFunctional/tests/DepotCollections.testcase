@@ -121,6 +121,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Depot.remoteStagingSetUp(
 			depotName = "Test Depot Name",

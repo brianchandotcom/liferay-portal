@@ -213,6 +213,7 @@ definition {
 	@priority = 4
 	test AddWebContentBasedOnStructureAndTemplateFromParentSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable ancestor scopes by default in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -298,6 +299,7 @@ definition {
 	@priority = 4
 	test AddWebContentBasedOnStructureKeyWithAmpersand {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a web content creator has a structure with ampersand in its structure key") {
 			task ("Disable Autogenerate Structure Key in System Settings") {
@@ -1031,6 +1033,7 @@ definition {
 	@priority = 4
 	test CannotAssociateDisplayPageToGlobalStructureInNormalSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a web content creator enables ancestor scopes by default in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -1502,6 +1505,7 @@ definition {
 	@priority = 3
 	test SearchStructureWithDefaultValue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a web content structure with text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

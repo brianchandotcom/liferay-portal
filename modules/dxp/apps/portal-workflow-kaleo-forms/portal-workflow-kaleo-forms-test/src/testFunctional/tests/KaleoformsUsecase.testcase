@@ -133,6 +133,7 @@ definition {
 	@priority = 3
 	test AssertEditFormNotUsedAsCreateForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -364,6 +365,7 @@ definition {
 	@priority = 4
 	test AssertPendingFormPresentAfterDeletingDifferentProcessDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -506,6 +508,7 @@ definition {
 	test AssignRolePermissionsAddProcessCP {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -623,6 +626,7 @@ definition {
 	test AssignRolePermissionsApprovePG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -901,6 +905,7 @@ definition {
 	test AssignRolePermissionsRejectPG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
@@ -1039,6 +1044,7 @@ definition {
 	test AssignRolePermissionsSubmitProcessPG {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1220,6 +1226,7 @@ definition {
 	@priority = 3
 	test CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1579,6 +1586,7 @@ definition {
 	test CompleteProcessAndViewNotifications {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1796,6 +1804,7 @@ definition {
 	test CompleteProcessWithEditedSingleApproverWorkflow {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -1917,6 +1926,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2046,6 +2056,7 @@ definition {
 	@priority = 4
 	test EditProcessCreateFormAfterFormSubmission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2177,6 +2188,7 @@ definition {
 	@priority = 3
 	test EditProcessEditFormAfterFormSubmission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2449,6 +2461,7 @@ definition {
 	@priority = 3
 	test EditProcessFieldSetBeforeFormSubmission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2856,6 +2869,7 @@ definition {
 	test EditProcessWorkflowAfterFormSubmission {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -3020,6 +3034,7 @@ definition {
 	test EditProcessWorkflowBeforeFormSubmission {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -3860,6 +3875,7 @@ definition {
 	@priority = 4
 	test UpdateDueDate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4062,6 +4078,7 @@ definition {
 	@priority = 3
 	test ViewApprovedProcessRecordsSeparateAuthor {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4608,6 +4625,7 @@ definition {
 	@priority = 4
 	test ViewProcessWithComments {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -4965,6 +4983,7 @@ definition {
 	@priority = 3
 	test ViewWorkflowComments {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

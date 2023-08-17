@@ -632,6 +632,7 @@ definition {
 	@priority = 5
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";
@@ -684,6 +685,7 @@ definition {
 	@priority = 5
 	test ViewAllFormsShownInAssetList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var formNameList = "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3";
 
@@ -732,6 +734,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.release = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

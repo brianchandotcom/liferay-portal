@@ -567,6 +567,7 @@ definition {
 	@priority = 4
 	test ManuallyPropagateChanges {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site administrator accesses to the Page Fragments configuration of Instance Settings") {
 			PortalSettings.gotoConfiguration(
@@ -909,6 +910,7 @@ definition {
 	@priority = 4
 	test ViewDefaultFormFragmentOfTextFieldAddedInGlobalSiteInheritesInNewSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a Text Input fragment copied from Form Components in global site") {
 			task ("Add a fragment set") {
@@ -1157,6 +1159,7 @@ definition {
 	@priority = 3
 	test ViewErrorMessageWhenFailToPropagateChanges {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a site administrator unchecks the Propagate Default Fragments Changes During Deploy Process Automatically") {
 			PortalSettings.gotoConfiguration(

@@ -55,6 +55,7 @@ definition {
 	@priority = 5
 	test AdminCanAddAndDeleteNewUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
@@ -102,6 +103,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterUsersByName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
@@ -144,6 +146,7 @@ definition {
 	@priority = 3
 	test AdminCanNotFilterForNonExistentUsers {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
@@ -176,6 +179,7 @@ definition {
 	@priority = 4
 	test CanEditAccountInformation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to user created") {
 			TestrayLayout.clickManageOnSidebar();
@@ -212,6 +216,7 @@ definition {
 	@priority = 3
 	test CanNotSaveRolesWithoutOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
@@ -242,6 +247,7 @@ definition {
 	@priority = 2
 	test CanViewFieldRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();

@@ -51,6 +51,7 @@ definition {
 	@priority = 5
 	test AdminCanAddProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Product Version' via API") {
 			JSONTestray.addProductVersion(
@@ -79,6 +80,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Product Version' via API") {
 			JSONTestray.addProductVersion(
@@ -111,6 +113,7 @@ definition {
 	@priority = 5
 	test AdminCanEditProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Product Version' via API") {
 			JSONTestray.addProductVersion(
@@ -144,6 +147,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateProductVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Product Version' via API") {
 			JSONTestray.addProductVersion(
@@ -173,6 +177,7 @@ definition {
 	@priority = 2
 	test AdminCanViewWarningMessage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go to the Manage Product Versions page and try to create a version without filling in the 'Name' field") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

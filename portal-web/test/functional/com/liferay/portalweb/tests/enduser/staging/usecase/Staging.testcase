@@ -33,6 +33,7 @@ definition {
 	@priority = 5
 	test ActivateStagingAfterChangingInstanceLanguageToSpanish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -87,6 +88,7 @@ definition {
 	test ActivateStagingPageVersioningWithCustomDefaultLanguage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
@@ -224,6 +226,7 @@ definition {
 	@priority = 3
 	test AssertCannotPublishUnselectedChildPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Enable local staging with a blank site") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
@@ -273,6 +276,7 @@ definition {
 	@priority = 4
 	test CanEnableLocalStagingOnInheritedSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Create a site with new site template with disable llow site administrators to modify pages associated with this site template, even when propagation of changes is enabled and Ready for Propagation,the testcase is blocked by LPS-146160.") {
 			SiteTemplates.addCP(
@@ -309,6 +313,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add 10 content pages with 2 Grid modules and 2 WCD in each") {
 			for (var pageCount : list "1,2,3") {
@@ -536,6 +541,7 @@ definition {
 	@priority = 3
 	test ConfigureDDMStructureViaAPWhenNotStagedAssets {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.name = "Data Engine";
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -587,6 +593,7 @@ definition {
 	@priority = 3
 	test CreateWidgetTemplateWhenNotStagedADT {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "site-name");
 
@@ -826,6 +833,7 @@ definition {
 	@priority = 4
 	test PublishChildPageWithoutItsParentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -894,6 +902,7 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.name = "Data Engine";
 
 		HeadlessSite.addSite(
@@ -1050,6 +1059,7 @@ definition {
 	@priority = 4
 	test PublishDDLViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Unable the publish displayed content by default function and enable local staging") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -1259,6 +1269,7 @@ definition {
 	@priority = 4
 	test PublishReviewedPageRevision {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -1460,6 +1471,7 @@ definition {
 	test PublishTemplateWithPages {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
@@ -1486,6 +1498,7 @@ definition {
 	@priority = 4
 	test PublishViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Unable the publish displayed content by default function and enable local staging") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -1695,6 +1708,7 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var companyId = JSONCompany.getCompanyId(portalURL = "http://localhost:9080");
 
@@ -1805,6 +1819,7 @@ definition {
 	@priority = 3
 	test PublishWebContentWithUnchangedReferencedContent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -2022,6 +2037,7 @@ definition {
 	test StagingMultipleDM {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -2079,6 +2095,7 @@ definition {
 	test StagingOnlyApprovedPublishToLive {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -2250,6 +2267,7 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
 
@@ -2330,6 +2348,7 @@ definition {
 	@priority = 4
 	test StagingWithPublishTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2480,6 +2499,7 @@ definition {
 	@priority = 3
 	test StagingWithReplicateIndividualDeletionsByDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -2607,6 +2627,7 @@ definition {
 	@priority = 3
 	test ValidateFriendlyURLWithSpecialCharacters {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -2639,6 +2660,7 @@ definition {
 	@priority = 4
 	test ViewHistoryVersionWithDeletedUser {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2726,6 +2748,7 @@ definition {
 	@priority = 4
 	test ViewLastPublishDateBehaviourAfterInitialPublication {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
@@ -2808,6 +2831,7 @@ definition {
 	@priority = 4
 	test ViewPageOrderWithStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2834,6 +2858,7 @@ definition {
 	@priority = 2
 	test ViewParentPageNameAfterPublishChangesInChildPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -2966,6 +2991,7 @@ definition {
 	@priority = 5
 	test ViewPublishDocumentTypeWithConfiguredAssetType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -3047,6 +3073,7 @@ definition {
 	@priority = 3
 	test ViewPublishWCWithConfiguredCategoriesFilter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -3152,6 +3179,7 @@ definition {
 	@priority = 4
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 

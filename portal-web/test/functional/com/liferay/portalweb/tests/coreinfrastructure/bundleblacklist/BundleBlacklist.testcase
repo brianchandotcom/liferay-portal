@@ -33,6 +33,7 @@ definition {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a test portlet on a page") {
 			JSONLayout.addPublicLayout(
@@ -84,6 +85,7 @@ definition {
 	test BlacklistModuleLPKG {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -128,6 +130,7 @@ definition {
 	@priority = 4
 	test BlacklistModuleWar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 
@@ -157,6 +160,7 @@ definition {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.frontend.taglib.clay.sample.web\"]";
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a portlet's jar is blacklisted") {
 			AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.frontend.taglib.clay.sample.web");
@@ -195,6 +199,7 @@ definition {
 	@priority = 3
 	test CanEnableBlacklistedModuleLPKGAfterRestart {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -247,6 +252,7 @@ definition {
 	@priority = 3
 	test CanEnableBlacklistedModuleWarAfterRestart {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a war module") {
 			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
@@ -290,6 +296,7 @@ definition {
 	@priority = 3
 	test CanRemoveBlacklistedModuleLPKG {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -333,6 +340,7 @@ definition {
 	test CanRemoveBlacklistedModuleWar {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"minium-theme\"]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle minium-theme");
 
@@ -387,6 +395,7 @@ definition {
 	test EnableBlacklistedModuleAfterShutdown {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a blacklisted module") {
 			OSGiConfig.deployOSGiConfigFile(
@@ -430,6 +439,7 @@ definition {
 	test ExportBundleBlacklistConfig {
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.gogo.shell.web\" ]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle com.liferay.gogo.shell.web");
 
@@ -454,6 +464,7 @@ definition {
 	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleJar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
@@ -483,6 +494,7 @@ definition {
 	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleLPKG {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -533,6 +545,7 @@ definition {
 	@priority = 3
 	test RestartCanNotEnableBlacklistedModuleWar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",

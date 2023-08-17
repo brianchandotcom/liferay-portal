@@ -227,6 +227,7 @@ definition {
 		property skip.clean-app-server-deploy-dir = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Client Extensions,Frontend Data Set";
 
 		task ("Given a non-root portal context") {

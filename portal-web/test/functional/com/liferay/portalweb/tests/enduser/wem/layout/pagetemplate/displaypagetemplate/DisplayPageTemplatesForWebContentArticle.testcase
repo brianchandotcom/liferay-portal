@@ -1109,6 +1109,7 @@ definition {
 	@priority = 2
 	test ViewCanonicalURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I select Use Localized URL as Canonical URL") {
 			SystemSettings.openSystemSettingsAdmin();

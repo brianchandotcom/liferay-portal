@@ -110,6 +110,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotCreateRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -142,6 +143,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -182,6 +184,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotEditRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -222,6 +225,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanCreateRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -262,6 +266,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanDeleteRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -300,6 +305,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotCreateRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -332,6 +338,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotDeleteRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -372,6 +379,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotEditRun {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

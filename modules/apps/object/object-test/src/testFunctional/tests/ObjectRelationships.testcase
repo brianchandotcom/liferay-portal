@@ -25,6 +25,7 @@ definition {
 	@priority = 4
 	test CanAddMultipleOneToManyRelationsWithNativeObject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 288",
@@ -91,6 +92,7 @@ definition {
 	test CanAddOneToManyRelationWithNativeObject {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 289",
@@ -148,6 +150,7 @@ definition {
 	test CanAddTabsForSelfMMRelationship {
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			property test.liferay.virtual.instance = "false";
+			property test.run.type = "single";
 
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
@@ -220,6 +223,7 @@ definition {
 	@priority = 5
 	test CanCreateManyToManyRelationshipWithNativeObject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 290",
@@ -303,6 +307,7 @@ definition {
 	test CanCreateObjectWithRelationshipParameter {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a custom object, and a self relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -346,6 +351,7 @@ definition {
 	test CanCreateOneToManyForNativeObject {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 290",
@@ -372,6 +378,7 @@ definition {
 	@priority = 5
 	test CanCreateOneToManyRelationshipWithNativeObject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 290",
@@ -510,6 +517,7 @@ definition {
 	@priority = 4
 	test CanDeleteManyToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add two users to relate to Custom Object entries") {
 			for (var userNum : list "1,2") {
@@ -637,6 +645,7 @@ definition {
 	@priority = 5
 	test CanDeleteManyToManyRelationshipFromParentSide {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -679,6 +688,7 @@ definition {
 	@priority = 4
 	test CanDeleteOneToManyRelationship {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -754,6 +764,7 @@ definition {
 	@priority = 4
 	test CanDeleteOneToManyRelationshipBetweenCustomObjectEntryAndNativeObjectEntry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add 2 users entries to relate to custom object entries") {
 			JSONUser.addUser(
@@ -879,6 +890,7 @@ definition {
 	@priority = 4
 	test CanDoNestedRelation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 149249",
@@ -1173,6 +1185,7 @@ definition {
 	@priority = 4
 	test CanEditRelationshipParameter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a custom object, and a self relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1225,6 +1238,7 @@ definition {
 	@priority = 4
 	test CanIdentifyParentChildRelationship {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1279,6 +1293,7 @@ definition {
 	@priority = 4
 	test CannotCreateManytoManyRelationshipWithItself {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1312,6 +1327,7 @@ definition {
 	@priority = 4
 	test CannotDeleteManyToManyRelationshipFromChildSide {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1354,6 +1370,7 @@ definition {
 	@priority = 4
 	test CannotDeleteRelationshipWithIncorrectInput {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a custom object and a relationship to itself") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1402,6 +1419,7 @@ definition {
 	@priority = 4
 	test CannotLeaveRelationshipLabelBlank {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147736",
@@ -1429,6 +1447,7 @@ definition {
 	@priority = 4
 	test CannotLeaveRelationshipTabOnFirstPlaceByRemovingFieldsTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a custom object and a relationship to itself") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1502,6 +1521,7 @@ definition {
 	test CannotRelateAnEntryWithItself {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: An object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1587,6 +1607,7 @@ definition {
 	@priority = 3
 	test CannotSeeParameterWhenNotRequiredByRelationship {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a custom object, and a relationship non-require by API") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1645,6 +1666,7 @@ definition {
 	@priority = 4
 	test CannotSelectRelationshipFieldForObjectEntryTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147735",
@@ -1669,6 +1691,7 @@ definition {
 	@priority = 4
 	test CannotUpdateNameTypeObjectFromParentRelationship {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an object related to itself, in a Many-to-Many relationship") {
 			ObjectAdmin.addObjectViaAPI(
@@ -1735,6 +1758,7 @@ definition {
 	test CanRelateManyToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add 2 users entries to relate to custom object entries") {
 			JSONUser.addUser(
@@ -1865,6 +1889,7 @@ definition {
 	test CanRelateOneToManyCustomObjectEntryWithNativeObjectEntries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add 3 users entries to relate to custom object entries") {
 			for (var userNum : list "1,2,3") {
@@ -1966,6 +1991,7 @@ definition {
 	@priority = 4
 	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 291",
@@ -2016,6 +2042,7 @@ definition {
 	@priority = 4
 	test CanSeeLabelWhenCreatingRelationshipTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create an Object and add an attachment field") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2162,6 +2189,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a custom object that contains a text field and a relationship with itself (Many to Many)") {
 			ObjectAdmin.addObjectViaAPI(
@@ -2257,6 +2285,7 @@ definition {
 	@priority = 4
 	test CanSetTitleFieldForNativeObject {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -2279,6 +2308,7 @@ definition {
 	@priority = 4
 	test CanViewAndAddObjectEntriesAfterCreateRelationship {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 292",

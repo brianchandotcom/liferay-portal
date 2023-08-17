@@ -413,6 +413,7 @@ definition {
 	test AccountAdminCanDeleteAccount {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given add an Account Administrator with delete permission assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -616,6 +617,7 @@ definition {
 	@priority = 4
 	test AccountAdminCannotAddUserWithBlockedDomain {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given there is an Account Administrator assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -910,6 +912,7 @@ definition {
 	@refactorneeded
 	test AccountAdminCanUnassignOrganizationToAccount {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given add an Account Administrator with manage org permission assigned to a Business Account") {
 			JSONAccountEntry.addAccountEntry(
@@ -1454,6 +1457,7 @@ definition {
 	@priority = 5
 	test CanAccessAListOfAccountsTheUserBelongsTo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user") {
 			JSONUser.addUser(
@@ -1864,6 +1868,7 @@ definition {
 	@priority = 5
 	test CanViewAccountWithViewPermissions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a user with View permissions for AccountEntry and a business account") {
 			JSONRole.addRegularRole(

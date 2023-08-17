@@ -25,6 +25,7 @@ definition {
 	@priority = 4
 	test CannotSelectMultipleCollectionsWithoutFiltersInCommon {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Basic Web Content and Basic Document collection providers in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();

@@ -60,6 +60,7 @@ definition {
 	@priority = 5
 	test SetCustomURLAtPageLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -118,6 +119,7 @@ definition {
 	@priority = 5
 	test SetCustomURLAtPageLevelForEachActiveLanguage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -193,6 +195,7 @@ definition {
 	@priority = 5
 	test SetDefaultURLAtSystemLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -235,6 +238,7 @@ definition {
 	@priority = 5
 	test SetLocalizedURLAtSystemLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -279,6 +283,7 @@ definition {
 	test ViewPageNameInCanonicalURL {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var num : list "1,2") {
 			JSONLayout.addPublicLayout(

@@ -715,6 +715,7 @@ definition {
 	@priority = 3
 	test ViewTranslatedPicklistItemNameOnForms {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Custom Picklist and a Item (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
@@ -968,6 +969,7 @@ definition {
 	@priority = 3
 	test ViewTranslatedPicklistNameOnObjectAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Custom Picklist (via API)") {
 			Picklist.addPicklistViaAPI(picklistName = "Picklist Test");

@@ -73,6 +73,7 @@ definition {
 	test CanExportAllVisibleClaims {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -121,6 +122,7 @@ definition {
 	@priority = 4
 	test CanExportFilteredClaims {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -251,6 +253,7 @@ definition {
 	test CanExportSearchedClaims {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -324,6 +327,7 @@ definition {
 	test CanSubmitFullClaim {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -351,6 +355,7 @@ definition {
 	test CanSubmitPartialClaim {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -377,6 +382,7 @@ definition {
 	test CFMCanChangeStatusToClaimPaid {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -430,6 +436,7 @@ definition {
 	@priority = 5
 	test CMDCannotChangeStatusToClaimPaid {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -467,6 +474,7 @@ definition {
 	@priority = 5
 	test CMMCannotChangeStatusToClaimPaid {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a new claim is created and approved") {
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -504,6 +512,7 @@ definition {
 	@priority = 5
 	test TotalClaimAmountReflectsBudgetValue {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

@@ -86,6 +86,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterForNonexistentRequirements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filters a requirement by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -107,6 +108,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsByComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a requirement by component") {
 			TestrayFilter.clickFilter();
@@ -132,6 +134,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsByLink {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a requirement by link") {
 			TestrayFilter.clickFilter();
@@ -159,6 +162,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsBySummary {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a requirement by summary") {
 			TestrayFilter.clickFilter();
@@ -182,6 +186,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsByTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a requirement by team") {
 			TestrayFilter.clickFilter();
@@ -207,6 +212,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterRequirementsWithMultipleOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a requirement with multiple options") {
 			TestrayFilter.clickFilter();
@@ -244,6 +250,7 @@ definition {
 	@priority = 2
 	test AdminCanSearchForField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();

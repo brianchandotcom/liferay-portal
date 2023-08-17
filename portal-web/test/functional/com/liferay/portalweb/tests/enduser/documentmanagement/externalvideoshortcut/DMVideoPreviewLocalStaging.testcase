@@ -55,6 +55,7 @@ definition {
 	test CanPublishWCAfterEditingEmbeddedVideo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		for (var entryCount : list "1,2") {
 			JSONDocument.addFileWithUploadedFile(
@@ -139,6 +140,7 @@ definition {
 	test CanRemoveVideoReferenceAfterRepublishingKBArticle {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",

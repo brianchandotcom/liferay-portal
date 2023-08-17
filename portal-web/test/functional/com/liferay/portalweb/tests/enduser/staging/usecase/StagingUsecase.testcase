@@ -40,6 +40,7 @@ definition {
 	@priority = 5
 	test ActivateStagingForSiteWithTheme {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User install test theme on the portal") {
 			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
@@ -77,6 +78,7 @@ definition {
 	@priority = 4
 	test AssertAssetPriorityNotBeResetAfterPublication {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a page and an AP portlet to the default page") {
 			JSONLayout.addPublicLayout(
@@ -267,6 +269,7 @@ definition {
 	@priority = 4
 	test AssertContentNotBePublishedByDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User verify that the dynamic export function is disabled by default") {
 			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
@@ -312,6 +315,7 @@ definition {
 	@priority = 3
 	test AssertDeletedAssetLinkRemovedFromLiveSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a Blog portlet to the Staging site and 2 documents") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -650,6 +654,7 @@ definition {
 	@priority = 4
 	test EditPublishTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new page to the staging site and a widget to it") {
 			JSONLayout.addPublicLayout(
@@ -798,6 +803,7 @@ definition {
 	test ImportLARsOnStagedSite {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Page Administration,Training,Web Content Administration";
 
 		task ("Given: User import home page from LAR file on staging site") {
@@ -908,6 +914,7 @@ definition {
 	@priority = 4
 	test ModifiedReferredContentCanPublishToLiveWhenEnableIncludeIfModifiedOption {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Create basic web content with a new image and publish to live") {
 			JSONWebcontent.addWebContent(
@@ -1035,6 +1042,7 @@ definition {
 	@priority = 4
 	test NonModifiedReferredContentCannotPublishToLiveWhenEnableIncludeIfModifiedOption {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Create basic web content with a new image and publish to live") {
 			JSONWebcontent.addWebContent(
@@ -1231,6 +1239,7 @@ definition {
 	@priority = 5
 	test PublishThemeFromStagedToLive {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User deploy test theme on the portal and enables local staging") {
 			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
@@ -1310,6 +1319,7 @@ definition {
 	@priority = 3
 	test PublishWebContentFriendlyURLEncoding {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add 2 WC with friendly URL") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -1352,6 +1362,7 @@ definition {
 	@priority = 5
 	test PublishWithDefaultTrueAndReplicateIndividualDeletions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Enable the publish displayed content by default function") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -2003,6 +2014,7 @@ definition {
 	@priority = 4
 	test StagingPublishWCWithWebContentFieldViaAP {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new AP widget and a WC to the staging site") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -2225,6 +2237,7 @@ definition {
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		task ("Given: User add a new file to the staging site") {
@@ -2572,6 +2585,7 @@ definition {
 	@priority = 5
 	test ViewDeletingApplicationDataPopUpInPublishProgress {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Go to Advanced Publication Process screen") {
 			Navigator.gotoStagedSitePage(
@@ -2606,6 +2620,7 @@ definition {
 	@priority = 5
 	test ViewDeletingApplicationDataPopUpWhenSetPublishSchedule {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Go to Advanced Publication Process screen") {
 			Navigator.gotoStagedSitePage(
@@ -2641,6 +2656,7 @@ definition {
 	@priority = 4
 	test ViewPublishDMWithModifiedTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new AP widget to the staging site") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -2698,6 +2714,7 @@ definition {
 	@priority = 4
 	test ViewPublishedContentWithSpecialCharsInDocumentTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new file") {
 			JSONDocument.addFileWithUploadedFile(
@@ -2817,6 +2834,7 @@ definition {
 	@priority = 4
 	test ViewPublishedWCWithApostropheInImageField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new structure with an extra mandatory field on the staging site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -2908,6 +2926,7 @@ definition {
 	@priority = 3
 	test ViewPublishTemplateDateRange {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User add a new publish template with a content date range") {
 			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
@@ -2948,6 +2967,7 @@ definition {
 	@priority = 5
 	test ViewSingleAssetPublication {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new WC to the staging site") {
 			JSONWebcontent.addWebContent(

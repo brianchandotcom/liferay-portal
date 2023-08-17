@@ -153,6 +153,7 @@ definition {
 	@priority = 4
 	test AssertAnalystRoleCanEditSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -193,6 +194,7 @@ definition {
 	@priority = 4
 	test AssertAnalystRoleCanMergeSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -223,6 +225,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanEditSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -263,6 +266,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanMergeSubtask {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -293,6 +297,7 @@ definition {
 	@priority = 2
 	test AssertUserRoleCanNotEditSubatsk {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -321,6 +326,7 @@ definition {
 	@priority = 2
 	test AssertUserRoleCanNotMergeSubatsk {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

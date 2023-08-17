@@ -529,6 +529,7 @@ definition {
 	test CanCreateNewRelationTypeWithXSS {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a product relation with XSS type is configured") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration");

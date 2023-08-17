@@ -141,6 +141,7 @@ definition {
 	test CannotAddCategoriesWhenReachTheLimit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Change the Maximum Number of Categories per Vocabulary to 3") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -221,6 +222,7 @@ definition {
 	test ConfigureMaximumNumberOfCategoriesPerVocabulary {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Change the Maximum Number of Categories per Vocabulary in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();

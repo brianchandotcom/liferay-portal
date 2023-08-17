@@ -66,6 +66,7 @@ definition {
 	@priority = 4
 	test ViewActivityStatusWhenActivityIsClaimed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the CMM user is logged in and approves the created MDF") {
 			User.logoutAndLoginPG(
@@ -107,6 +108,7 @@ definition {
 	@priority = 4
 	test ViewActivityStatusWhenMDFIsApproved {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the CMM user is logged in and approves the created MDF") {
 			User.logoutAndLoginPG(
@@ -147,6 +149,7 @@ definition {
 	@priority = 4
 	test ViewActivityStatusWhenMDFIsSubmitted {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the partner go to the created MDF") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");

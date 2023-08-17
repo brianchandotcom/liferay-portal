@@ -56,6 +56,7 @@ definition {
 	@priority = 5
 	test AdminCanAddComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
@@ -85,6 +86,7 @@ definition {
 	@priority = 5
 	test AdminCanAddComponentWithoutTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -113,6 +115,7 @@ definition {
 	@priority = 5
 	test AdminCanAddTeamToComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addTeam(
@@ -152,6 +155,7 @@ definition {
 	@priority = 3
 	test AdminCanChangeTeamToComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
@@ -191,6 +195,7 @@ definition {
 	@priority = 3
 	test AdminCanDeleteComponentWithoutTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -225,6 +230,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteComponentWithTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
@@ -262,6 +268,7 @@ definition {
 	@priority = 4
 	test AdminCanEditComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
@@ -307,6 +314,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicatedComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
@@ -340,6 +348,7 @@ definition {
 	@priority = 4
 	test AdminCanSearchComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that two component are created via API") {
 			JSONTestray.addComponent(
@@ -406,6 +415,7 @@ definition {
 	@priority = 3
 	test AdminCanSearchComponentNonExistent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that component are created via API") {
 			JSONTestray.addComponent(
@@ -445,6 +455,7 @@ definition {
 	@priority = 2
 	test CannotAddComponentWithoutAName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go to the Manage Component page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

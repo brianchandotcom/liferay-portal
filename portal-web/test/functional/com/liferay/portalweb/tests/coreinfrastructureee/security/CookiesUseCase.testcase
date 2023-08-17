@@ -23,6 +23,7 @@ definition {
 	test CookieBannerAndCookieConsentPanelElementsAreVisible {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
 			CookieBanner.verifyAllElementsArePresent();
@@ -46,6 +47,7 @@ definition {
 	test CookieBannerBecameVisibleWhenCookiesAreRemovedOrExpired {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Cookie Banner is present on the Site.") {
 			CookieBanner.cookiesBannerAcceptAll();
@@ -68,6 +70,7 @@ definition {
 	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Cookie Banner is present on the Site.") {
 			CookieBanner.cookiesBannerAcceptAll();
@@ -86,6 +89,7 @@ definition {
 	@priority = 5
 	test VerifyFunctionalCookiesForFirstVisitInInstanceLevelDisableImplicitMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator disabled the cookie preference handling in instance level and the implicit cookie consent mode.") {
 			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
@@ -122,6 +126,7 @@ definition {
 	@priority = 5
 	test VerifyFunctionalCookiesForFirstVisitInstanceLevelImplicitMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in instance level and the explicit cookie consent mode.") {
 			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
@@ -158,6 +163,7 @@ definition {
 	@priority = 5
 	test VerifyFunctionalCookiesForNotFirstVisitInInstanceLevelEnableThenDisable {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled agreed on the cookie usage, then disable the cookie preference handling in site level.") {
 			UserBar.signOut();
@@ -209,6 +215,7 @@ definition {
 	test VerifyingExplicitCookieWorfklow {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode enabled.") {
 			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithCookieConsent();
@@ -229,6 +236,7 @@ definition {
 	test VerifyingImplicitCookieWorfklow {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Cookie preference handling is saved with Explicit Consent mode is disabled.") {
 			CookiePreferenceHandlingAdmin.enablePreferenceHandlingWithoutCookieConsent();
@@ -245,6 +253,7 @@ definition {
 	@priority = 5
 	test VerifyNoCookiesForFirstVisitInstanceLevelExplicitMode {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Site Administrator enabled the cookie preference handling in instance level and the explicit cookie consent mode.") {
 			CookiePreferenceHandlingAdmin.disablePreferenceHandlingWithOutCookieConsentInSiteSettings(
@@ -281,6 +290,7 @@ definition {
 	@priority = 3
 	test VerifyOrderOfMenuItemsInSiteSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Verify the order of menu items in Site Settings") {
 			AssertVisible(locator1 = "CookieBannerAdmin#MENU_ITEMS_IN_ORDER");

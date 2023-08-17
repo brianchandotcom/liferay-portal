@@ -29,6 +29,7 @@ definition {
 	@priority = 4
 	test CanEnableLocalStagingOnMasterclassSiteTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a new site based on Masterclass site template") {
 			Site.openSitesAdmin();
@@ -102,6 +103,7 @@ definition {
 	@priority = 4
 	test CanEnableLocalStagingOnRaylifeSiteTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a new site based on Raylife site template") {
 			Site.openSitesAdmin();

@@ -30,6 +30,7 @@ definition {
 	@priority = 4
 	test CanDuplicateNonPublishedProcess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -55,6 +56,7 @@ definition {
 	@priority = 4
 	test CanDuplicateProcess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
@@ -69,6 +71,7 @@ definition {
 	@priority = 4
 	test CanEditTitleOfDuplicatedProcess {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow();
 
@@ -85,6 +88,7 @@ definition {
 	@priority = 3
 	test CanFilterByNonPublishedProcesses {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -108,6 +112,7 @@ definition {
 	@priority = 3
 	test CanFilterByPublishedProcesses {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -188,6 +193,7 @@ definition {
 	@priority = 2
 	test CanOrderByLastModified {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
@@ -210,6 +216,7 @@ definition {
 	@priority = 3
 	test CanOrderByTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -259,6 +266,7 @@ definition {
 	@priority = 2
 	test CanReverseSortDirection {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
@@ -330,6 +338,7 @@ definition {
 	@priority = 4
 	test CanSearchNonAsciiChar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "単一承認者");
 
@@ -347,6 +356,7 @@ definition {
 	@priority = 4
 	test CanSelectEditOption {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -367,6 +377,7 @@ definition {
 	test CanSelectEditOptionForNonPublishedProcess {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -395,6 +406,7 @@ definition {
 	test CanSelectPermissionsOption {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -409,6 +421,7 @@ definition {
 	test CanSelectPermissionsOptionForNonPublishedProcess {
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -438,6 +451,7 @@ definition {
 	@priority = 3
 	test CanUnpublishDuplicatedDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Copy of Single Approver");
 
@@ -532,6 +546,7 @@ definition {
 	@priority = 2
 	test DisplaysText {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -547,6 +562,7 @@ definition {
 	@priority = 3
 	test PaginationComponentIsDisplayed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -580,6 +596,7 @@ definition {
 	@priority = 5
 	test RedirectToNewWorkflowPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

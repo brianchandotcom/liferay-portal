@@ -36,6 +36,7 @@ definition {
 	@refactordone
 	test CanAddBlogsImageViaURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -594,6 +595,7 @@ definition {
 	@refactordone
 	test CanPreviewFacebookVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -696,6 +698,7 @@ definition {
 	@refactordone
 	test CanPreviewTwitchVideo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -999,6 +1002,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.document.library.item.selector.web\" ]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -1529,6 +1533,7 @@ definition {
 	@priority = 4
 	test VerticalNavItemsShowsWhenMoreThan5Items {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
 

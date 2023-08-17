@@ -762,6 +762,7 @@ definition {
 	@priority = 4
 	test CheckTestChangesInAC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create AB test, create variant and run the test") {
 			ABTest.createABTest(
@@ -802,6 +803,7 @@ definition {
 	@priority = 4
 	test CheckVariantDeletedInAC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create AB test and create 2 variants") {
 			ABTest.createABTest(

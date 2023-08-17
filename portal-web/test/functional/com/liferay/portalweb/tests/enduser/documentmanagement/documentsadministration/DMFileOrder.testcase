@@ -30,6 +30,7 @@ definition {
 	@priority = 4
 	test CanChangeSettingInInstanceSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(depotName = "Test Depot Name");
 
@@ -96,6 +97,7 @@ definition {
 	@priority = 4
 	test InstanceTakesEffectOverSystemFileOrderSetting {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateFileOrder(orderBy = "Downloads");
 
@@ -181,6 +183,7 @@ definition {
 	@priority = 4
 	test SiteTakesEffectOverInstanceFileOrderSetting {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateFileOrder(
 			instanceSettings = "true",

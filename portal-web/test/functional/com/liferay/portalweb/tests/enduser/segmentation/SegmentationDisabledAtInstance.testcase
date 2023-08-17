@@ -36,6 +36,7 @@ definition {
 	@priority = 3
 	test CheckRoleDisabledAlertAtInstanceSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable asssigning role by segment at Instance Settings") {
 			Segmentation.disableSegmentationAtSystemSettings();

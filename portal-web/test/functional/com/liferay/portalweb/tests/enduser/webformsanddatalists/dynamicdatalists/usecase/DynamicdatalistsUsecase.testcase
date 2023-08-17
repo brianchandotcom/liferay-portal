@@ -81,6 +81,7 @@ definition {
 	@priority = 4
 	test AddListWithXSSWorkflowDefinition {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -1681,6 +1682,7 @@ definition {
 	@priority = 3
 	test EditDefaultLanguageAndPublishRecord {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2018,6 +2020,7 @@ definition {
 	@priority = 4
 	test RemoveRepeatableDateField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2481,6 +2484,7 @@ definition {
 	@priority = 4
 	test ViewCannotSaveWithDuplicateFieldNames {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2513,6 +2517,7 @@ definition {
 	@priority = 4
 	test ViewDisplayTemplateClassLinks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -2948,6 +2953,7 @@ definition {
 	@priority = 4
 	test ViewRepeatableNestedFields {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 
@@ -3082,6 +3088,7 @@ definition {
 	@priority = 4
 	test ViewUniqueFieldLabels {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.openURL();
 

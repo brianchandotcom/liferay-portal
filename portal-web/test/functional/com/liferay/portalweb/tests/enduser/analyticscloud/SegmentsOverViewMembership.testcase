@@ -44,6 +44,7 @@ definition {
 	@priority = 3
 	test OrderDynamicSegmentMembershipPreview {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";

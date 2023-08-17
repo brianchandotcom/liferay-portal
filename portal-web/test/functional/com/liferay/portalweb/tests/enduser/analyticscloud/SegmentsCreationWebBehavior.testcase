@@ -123,6 +123,7 @@ definition {
 		// AC Refactor ticket: LRAC-10769
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -210,6 +211,7 @@ definition {
 	@priority = 5
 	test CanCreateWebBehaviorSegmentDownloadingDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createDMAndAddToPage();
 
@@ -284,6 +286,7 @@ definition {
 	@priority = 4
 	test CanCreateWebBehaviorSegmentSinceXdays {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -361,6 +364,7 @@ definition {
 		// AC Refactor ticket: LRAC-10769
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createFormAndAddToPage();
 
@@ -443,6 +447,7 @@ definition {
 		// AC Refactor ticket: LRAC-10769
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -524,6 +529,7 @@ definition {
 		// AC Refactor ticket: LRAC-10769
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -605,6 +611,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -691,6 +698,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -763,6 +771,7 @@ definition {
 	test CanCreateWebBehaviorSegmentUsingHasNot {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// AC Quarantine Reason: Segment membership takes too long to update membership list
 
@@ -848,6 +857,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -930,6 +940,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -1016,6 +1027,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -1094,6 +1106,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var username = "ac";
 
@@ -1175,6 +1188,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var username = "ac";
 
@@ -1258,6 +1272,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var username = "ac";
 
@@ -1338,6 +1353,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
 

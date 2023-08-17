@@ -31,6 +31,7 @@ definition {
 	@priority = 4
 	test CanViewAllHreflangTagsAfterDisabling {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -88,6 +89,7 @@ definition {
 	@priority = 5
 	test CanViewTranslatedLanguageHreflangTagOnContentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -140,6 +142,7 @@ definition {
 	@priority = 5
 	test CanViewTranslatedLanguageHreflangTagOnDisplayPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -215,6 +218,7 @@ definition {
 	@priority = 5
 	test CanViewTranslatedLanguageHreflangTagOnWidgetPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 

@@ -43,6 +43,7 @@ definition {
 	@priority = 4
 	test AssertContentNotBePublishedByDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Keep 'Enable Dynamic Export' checkbox unchecked") {
 			APNavigator.openToConfigInSystemSettings(portlet = "Asset Publisher");
@@ -103,6 +104,7 @@ definition {
 	@priority = 3
 	test PublishWCViaRemoteStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add web content display on page") {
 			JSONLayout.addWidgetToPublicLayout(

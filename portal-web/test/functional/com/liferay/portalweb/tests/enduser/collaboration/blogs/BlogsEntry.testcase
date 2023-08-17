@@ -29,6 +29,7 @@ definition {
 	@refactordone
 	test AbstractDescriptionPersistsWhenTypingInContentField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -595,6 +596,7 @@ definition {
 	test CanChangeAScheduledEntryToThePresentAndPublish {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -800,6 +802,7 @@ definition {
 	@refactorneeded
 	test CanEditCustomAbstract {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -892,6 +895,7 @@ definition {
 	test CanImportEntryWithImageAfterCleaningDB {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 		var imageId = JSONBlog.uploadBlogImage(
@@ -998,6 +1002,7 @@ definition {
 	test CanImportEntryWithSmallImageAfterCleaningDB {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
@@ -1378,6 +1383,7 @@ definition {
 	test CannotInjectBBCodeIntoCommentUsingPingback {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1587,6 +1593,7 @@ definition {
 	@refactorneeded
 	test CanViewDefaultAbstract {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

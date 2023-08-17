@@ -12,6 +12,7 @@ definition {
 		property custom.properties = "default.landing.page.path=/web/guest/landing${line.separator}company.default.home.url=";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and add a public page ") {
 			User.firstLoginPG();
@@ -44,6 +45,7 @@ definition {
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var facebookApplicationId = PropsUtil.get("facebook.application.id");
 		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
@@ -88,6 +90,7 @@ definition {
 	test LoginWithSpanishOnlyEnabledLocale {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
@@ -130,6 +133,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and go to control panel - roles") {
 			User.firstLoginUI();
@@ -147,6 +151,7 @@ definition {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When: User tries to login with wrong credential") {
 			User.firstLoginUI(userEmailAddress = "wrong@liferay.com");
@@ -171,6 +176,7 @@ definition {
 		property portal.release = "false";
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Login and enable OTP and Sign Out as Instance Admin") {
 			User.firstLoginUI();
@@ -205,6 +211,7 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property openam.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to http://test.able.com:8080/openam and run ant command") {
 			Navigator.openSpecificURL(url = "http://test.able.com:8080/openam");
@@ -271,6 +278,7 @@ definition {
 	@priority = 5
 	test RedirectToDefaultPortalLandingPageOnLogin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and configure landing page CP") {
 			User.firstLoginPG();
@@ -308,6 +316,7 @@ definition {
 	test TokenBasedSSOSmoke {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and reset token based SSO configuration") {
 			User.firstLoginPG();
@@ -381,6 +390,7 @@ definition {
 	test UserSetNewPasswordWithoutPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User opens the portal for the first time without default admin password property") {
 			Navigator.openURL();
@@ -410,6 +420,7 @@ definition {
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-openid";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Login and view General CP authentication settings") {
 			User.firstLoginPG();
@@ -431,6 +442,7 @@ definition {
 	test VirtualInstancesNeedExtraInformationWithoutPasswordProperty {
 		property custom.properties = "default.admin.password=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User opens the portal for the first time without default admin password property") {
 			Navigator.openURL();
@@ -475,6 +487,7 @@ definition {
 	test VirtualInstancesNeedNoExtraInformationWithPasswordProperty {
 		property custom.properties = "company.security.send.password.reset.link=true${line.separator}passwords.default.policy.change.required=false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User opens the portal with a set admin password and logs in") {
 			User.firstLoginUI();

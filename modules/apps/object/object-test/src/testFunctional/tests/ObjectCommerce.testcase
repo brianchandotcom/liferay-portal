@@ -25,6 +25,7 @@ definition {
 	@priority = 4
 	test CanCreateEntryRelatedToCommerceProductGroup {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -102,6 +103,7 @@ definition {
 	@priority = 4
 	test CanCreateEntryRelatedToCommerceProducts {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a Custom Object") {
 			ObjectAdmin.addObjectViaAPI(
@@ -185,6 +187,7 @@ definition {
 	@priority = 4
 	test ObjectScopedCompanyNotDisplayedSiteChannel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145735",

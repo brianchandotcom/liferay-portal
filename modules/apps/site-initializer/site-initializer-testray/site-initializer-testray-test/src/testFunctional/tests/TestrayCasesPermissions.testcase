@@ -81,6 +81,7 @@ definition {
 	@priority = 4
 	test AssertAnalystRoleCanCreateEditAndDeleteCase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -157,6 +158,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanCreateEditAndDeleteCase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -233,6 +235,7 @@ definition {
 	@priority = 2
 	test AssertUserRoleCanNotCreateEditAndDeleteCase {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

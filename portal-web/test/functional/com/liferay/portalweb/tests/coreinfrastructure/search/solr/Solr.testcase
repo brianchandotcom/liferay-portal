@@ -29,6 +29,7 @@ definition {
 
 	test AssertSearchAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -109,6 +110,7 @@ definition {
 	test ConcurrentReindexNotAvailableWithSolr {
 		property custom.properties = "feature.flag.LPS-177664=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Search Admin and assert Concurrent reindex is not available while using Solr") {
 			SearchAdministration.openIndexActions();
@@ -123,6 +125,7 @@ definition {
 	@priority = 4
 	test SolrSmokeTest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -173,6 +176,7 @@ definition {
 	test SolrWithSolrCloudSmokeTest {
 		property solr.solrcloud.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "zkClient has connected");
 
@@ -240,6 +244,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property solr.ssl.authentication.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONMBMessage.addMessage(
 			groupName = "Guest",

@@ -51,6 +51,7 @@ definition {
 	test AllActionsAreAvailableInRepository {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -70,6 +71,7 @@ definition {
 	test CanDeleteDocumentWithCustomType {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -146,6 +148,7 @@ definition {
 	@refactordone
 	test CanEditAndRepublishDocumentType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -252,6 +255,7 @@ definition {
 	test CanEditAndRepublishDocumentWithCustomTypeAndSet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
@@ -365,6 +369,7 @@ definition {
 	test CanEditAndRepublishImageWithWebContent {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -482,6 +487,7 @@ definition {
 	@refactordone
 	test CanEditAndRepublishMetadataSetWithCustomType {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
 
@@ -607,6 +613,7 @@ definition {
 	test CanEditDocumentWithCustomType {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
 
@@ -697,6 +704,7 @@ definition {
 	@priority = 5
 	test CanNavigateToRemoteLiveViaToolbar {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -714,6 +722,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -828,6 +837,7 @@ definition {
 	@priority = 4
 	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -889,6 +899,7 @@ definition {
 	@priority = 4
 	test CanViewExternalVideoInMGAfterPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -948,6 +959,7 @@ definition {
 	@priority = 4
 	test CanViewExternalVideoInWCAfterPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -1019,6 +1031,7 @@ definition {
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToAddEntry(
 			documentTypeName = "External Video Shortcut",
@@ -1096,6 +1109,7 @@ definition {
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -1164,6 +1178,7 @@ definition {
 	@priority = 4
 	test CanViewImageInDynamicCollectionViaAPAfterPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -1226,6 +1241,7 @@ definition {
 	@priority = 4
 	test CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -1300,6 +1316,7 @@ definition {
 	@priority = 4
 	test CanViewImageInManualCollectionViaAPAfterPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -1392,6 +1409,7 @@ definition {
 	@priority = 4
 	test CanViewImageInMGAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1450,6 +1468,7 @@ definition {
 	@priority = 4
 	test CanViewImageInMGAfterPublish {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1506,6 +1525,7 @@ definition {
 	@priority = 4
 	test CanViewImagetInWCAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1581,6 +1601,7 @@ definition {
 	test CanViewRepublishedDocumentInfo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONAssettag.addTag(
 			groupName = "Site Name",
@@ -1715,6 +1736,7 @@ definition {
 	test CanViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -1834,6 +1856,7 @@ definition {
 	@priority = 5
 	test ImageIsStillAccessibleAfterDisablingStaging {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

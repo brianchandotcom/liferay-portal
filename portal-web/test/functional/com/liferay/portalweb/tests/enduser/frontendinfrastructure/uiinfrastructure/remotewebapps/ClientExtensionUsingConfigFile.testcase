@@ -42,6 +42,7 @@ definition {
 	test CanUseOsgiClientExtensionIframeAsPortlet {
 		property iframe.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given config file for client extension of type iframe created") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "iframe");
@@ -65,6 +66,7 @@ definition {
 	test OsgiClientExtensionOfTypeCustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
 		property custom.element.client.extension.created = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given config file for client extension of type custom element created") {
 			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");

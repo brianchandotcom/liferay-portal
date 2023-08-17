@@ -25,6 +25,7 @@ definition {
 	@priority = 5
 	test AutodetectClusteringAddress {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "bind_addr=127.0.0.1");
 
@@ -35,6 +36,7 @@ definition {
 	test CustomClusteringAddress {
 		property cluster.node.ip = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var ipAddress = PropsUtil.get("ip.address");
 
@@ -45,6 +47,7 @@ definition {
 	test CustomControlChannelPropertiesFile {
 		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
 
@@ -55,6 +58,7 @@ definition {
 	test CustomizeChannelNames {
 		property custom.properties = "cluster.link.channel.name.control=test-control-channel${line.separator}cluster.link.channel.name.transport.0=test-transport-channel";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "channelName: test-control-channel");
 
@@ -66,6 +70,7 @@ definition {
 		property cluster.enabled = "false";
 		property custom.properties = "cluster.link.enabled=true${line.separator}cluster.link.channel.properties.transport.0=tcp.xml";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
 

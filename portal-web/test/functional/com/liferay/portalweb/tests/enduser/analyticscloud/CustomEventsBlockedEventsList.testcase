@@ -138,6 +138,7 @@ definition {
 	@priority = 4
 	test CanSortBlockedEventsByNameAndLastSeen {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Web Content Display to page and display the custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
@@ -223,6 +224,7 @@ definition {
 	@priority = 5
 	test CheckBlockedEventsListWhenMore100EventsCreated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Web Content Display to page and display the custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

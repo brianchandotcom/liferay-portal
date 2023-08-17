@@ -456,6 +456,7 @@ definition {
 	@priority = 3
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -490,6 +491,7 @@ definition {
 	@priority = 3
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -28,6 +28,7 @@ definition {
 	test RedirectOnExpire {
 		property custom.properties = "session.timeout=2${line.separator}session.timeout.redirect.on.expire=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property web.xml.timeout = "2";
 
 		task ("Add public page") {
@@ -74,6 +75,7 @@ definition {
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property web.xml.timeout = "2";
 
 		task ("Assert session not expired and user sign in not present") {

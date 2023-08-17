@@ -55,6 +55,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteSmartSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I add a new Testray component and requirement") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -108,6 +109,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I add a new Testray Suite via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -138,6 +140,7 @@ definition {
 	@priority = 4
 	test AdminCanDesignSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a Testray team, component, case type and case are created via API") {
 			JSONTestray.addTeam(
@@ -194,6 +197,7 @@ definition {
 	@priority = 5
 	test AdminCanEditSmartSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I add a new Testray component and requirement") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -272,6 +276,7 @@ definition {
 	@priority = 5
 	test AdminCanEditSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I add a new suite") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -308,6 +313,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateSuites {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I add a new Testray Suite via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -340,6 +346,7 @@ definition {
 	@priority = 3
 	test AdminCanNotSearchSuiteNonExistent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that suite are created via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -376,6 +383,7 @@ definition {
 	@priority = 4
 	test AdminCanSearchSuite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that two suite are created via API") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
@@ -430,6 +438,7 @@ definition {
 	@priority = 2
 	test AdminCanViewRequiredField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go to the Testray Suite page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

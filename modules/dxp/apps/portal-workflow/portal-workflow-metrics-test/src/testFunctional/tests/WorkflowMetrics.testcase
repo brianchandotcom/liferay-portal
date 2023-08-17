@@ -266,6 +266,7 @@ definition {
 	@priority = 5
 	test ApplyPaginationOnBulkReassign {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -365,6 +366,7 @@ definition {
 	test ApplySearchesForAllAssignees {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -461,6 +463,7 @@ definition {
 	test BulkReassignWorkflowInstances {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.bulkReassignSetup();
 
@@ -545,6 +548,7 @@ definition {
 	test BulkReassignWorkflowInstancesExceptions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -585,6 +589,7 @@ definition {
 	test BulkTransitionWorkflowTasks {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -965,6 +970,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1164,6 +1170,7 @@ definition {
 	test FilterAllItemsListByAssigneeName {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1331,6 +1338,7 @@ definition {
 	test SearchAndFilterOnPerformanceByStepPage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1428,6 +1436,7 @@ definition {
 	test SearchPerformanceOfAllAssignees {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1507,6 +1516,7 @@ definition {
 	test SeeListOfReports {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var key_testSlaDefinitionDays = 0;
@@ -1584,6 +1594,7 @@ definition {
 	test SingleTaskWorkflowTransition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1821,6 +1832,7 @@ definition {
 	test UpdateandDeleteSLA {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
@@ -2155,6 +2167,7 @@ definition {
 	test ValidateWorkflowProcessListOnMetrics {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2392,6 +2405,7 @@ definition {
 	test VerifyMetricsIndexesInControlPanel {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -2408,6 +2422,7 @@ definition {
 	test VerifySLACustomCalendar {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var appName = "com.liferay.portal.workflow.metrics.calendar.sample_1.0.0";
 		var warFileName = "com.liferay.portal.workflow.metrics.sla.calendar.sample";
@@ -2509,6 +2524,7 @@ definition {
 	@priority = 5
 	test VerifySLATimeFrameStartPauseStop {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2689,6 +2705,7 @@ definition {
 	test ViewCompletedItems {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2795,6 +2812,7 @@ definition {
 	test ViewPendingItems {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var key_testSlaDefinitionDays = 0;
@@ -2887,6 +2905,7 @@ definition {
 	test ViewPerformanceByAssigneePage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2951,6 +2970,7 @@ definition {
 	test ViewProcessItemDetailPage {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3022,6 +3042,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3064,6 +3085,7 @@ definition {
 	test ViewTopAsigneePerformance {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3167,6 +3189,7 @@ definition {
 	test ViewWorkloadByAssigneeCard {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -3245,6 +3268,7 @@ definition {
 	test ViewWorkloadByAssigneePage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

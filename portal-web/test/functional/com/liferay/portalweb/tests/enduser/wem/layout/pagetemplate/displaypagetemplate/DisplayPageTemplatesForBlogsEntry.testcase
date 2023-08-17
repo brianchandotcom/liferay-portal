@@ -40,6 +40,7 @@ definition {
 	@priority = 4
 	test MapReadingTimeToEditableField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable the Reading Time") {
 			BlogsConfiguration.enableReadingTime();

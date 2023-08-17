@@ -2199,6 +2199,7 @@ definition {
 	test CanRemoveOfflinePaymentSetAsDefaultPaymentMethod {
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a new offline payment method") {
 			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method");

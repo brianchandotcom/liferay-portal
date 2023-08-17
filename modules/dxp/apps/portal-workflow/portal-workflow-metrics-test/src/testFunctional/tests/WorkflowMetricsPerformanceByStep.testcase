@@ -184,6 +184,7 @@ definition {
 	test CanSeeAllVersionsTogether {
 		property ci.retries.disabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -361,6 +362,7 @@ definition {
 	@priority = 3
 	test CardDoesNotDisplayMoreThan10Entries {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -469,6 +471,7 @@ definition {
 	@priority = 4
 	test FilterConsidersStepsTouchedByTaks {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -562,6 +565,7 @@ definition {
 	@priority = 4
 	test FilterConsidersStepsTouchedByTaksOnPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Configure Single Approver Workflow to Blogs Entry") {
 			ApplicationsMenu.gotoPortlet(
@@ -879,6 +883,7 @@ definition {
 	@priority = 4
 	test PageConsidersClosedInstancesInChosenVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var documentTitle1 = "Blogs Entry Title 1";
 		var documentTitle2 = "Blogs Entry Title 2";
@@ -1111,6 +1116,7 @@ definition {
 	@priority = 5
 	test StepIsNotDisplayedForSpecificVersion {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Configure Single Approver Workflow to Blogs Entry") {
 			ApplicationsMenu.gotoPortlet(
@@ -1319,6 +1325,7 @@ definition {
 	test UserCanSearchNonAsciiChars {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

@@ -47,6 +47,7 @@ definition {
 	@priority = 4
 	test ChooseCurrentLanguagesViaLanguageSelector {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Define English, German and Spanish as current languages via Language Selector") {
 			Navigator.gotoSitePage(
@@ -176,6 +177,7 @@ definition {
 	@priority = 4
 	test ViewRemovedCurrentPortalLanguagesViaLanguageSelector {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Define English, Chinese and French as current languages in portal settings") {
 			PortalSettings.gotoConfiguration(
@@ -214,6 +216,7 @@ definition {
 	@priority = 4
 	test ViewRemovedCurrentSiteLanguagesViaLanguageSelector {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Define English, German and Spanish as current languages in site settings") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");

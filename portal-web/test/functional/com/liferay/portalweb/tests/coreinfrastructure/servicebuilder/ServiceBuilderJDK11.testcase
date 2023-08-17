@@ -24,6 +24,7 @@ definition {
 	test Smoke {
 		property osgi.modules.includes.jdk11 = "portal-tools-service-builder-test-api";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

@@ -51,6 +51,7 @@ definition {
 	@priority = 5
 	test AdminCanAddTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the team are created") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -75,6 +76,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
@@ -109,6 +111,7 @@ definition {
 	@priority = 5
 	test AdminCanEditTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
@@ -143,6 +146,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateTeams {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
@@ -175,6 +179,7 @@ definition {
 	@priority = 3
 	test AdminCanNotSearchTeamNonExistent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that two team are created via API") {
 			JSONTestray.addTeam(
@@ -213,6 +218,7 @@ definition {
 	@priority = 4
 	test AdminCanSearchTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that two team are created via API") {
 			JSONTestray.addTeam(
@@ -271,6 +277,7 @@ definition {
 	@priority = 2
 	test AssertThatTheFieldIsRequired {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given I go to the manage teams") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

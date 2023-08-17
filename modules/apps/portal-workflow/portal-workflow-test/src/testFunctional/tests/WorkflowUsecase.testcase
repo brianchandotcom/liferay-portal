@@ -299,6 +299,7 @@ definition {
 	test AddDDLRecordWithDoubleApproverDefinition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		ApplicationsMenu.gotoPortlet(
@@ -467,6 +468,7 @@ definition {
 	test AddWebContentWithCategorySpecificDefinition {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -800,6 +802,7 @@ definition {
 	test UnpublishAndDeleteUploadedDefinition {
 		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -928,6 +931,7 @@ definition {
 	@priority = 4
 	test ViewInvalidDefinitionAlert {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

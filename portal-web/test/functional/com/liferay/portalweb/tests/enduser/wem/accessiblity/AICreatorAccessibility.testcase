@@ -56,6 +56,7 @@ definition {
 	@priority = 3
 	test ViewAccessibilityOfAICreatorModal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();
@@ -117,6 +118,7 @@ definition {
 	@priority = 3
 	test ViewFocusOnModalWhenAICreatorModalIsOpen {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a content creator configures the API key") {
 			GogoShell.openGogoShellAdmin();

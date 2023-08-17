@@ -52,6 +52,7 @@ definition {
 	@priority = 3
 	test AssertInformationInApplicationDetailSummary {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -140,6 +141,7 @@ definition {
 	@priority = 3
 	test AssertRedirectToContactInfoPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -185,6 +187,7 @@ definition {
 	@priority = 3
 	test CanViewIncompleteApplicationDetailPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

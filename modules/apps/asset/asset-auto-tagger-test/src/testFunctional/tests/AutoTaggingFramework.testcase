@@ -40,6 +40,7 @@ definition {
 		property cluster.enabled = "true";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -162,6 +163,7 @@ definition {
 	@refactordone
 	test CanAddAndRemoveImageAutoTagViaGogoShell {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -220,6 +222,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property websphere.ssl.truststore.enabled = "true";
 
 		AutoTagging.enableOpenNLP(
@@ -249,6 +252,7 @@ definition {
 	@refactordone
 	test CanCheckMaxNumberOfTagsBetweenInstanceLevelAndPortalLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableAutoTagging(
 			enableAutoTaggingFor = "System Settings",
@@ -265,6 +269,7 @@ definition {
 	@refactordone
 	test CanConfigureImageAutoTaggingPerSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name AutoTag Enabled");
 
@@ -319,6 +324,7 @@ definition {
 	@priority = 3
 	test NoTagUpdatesAfterDisablingAutoTagsAtInstanceLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Instance Settings");
 
@@ -353,6 +359,7 @@ definition {
 	@priority = 3
 	test NoTagUpdatesAfterDisablingAutoTagsAtSiteLevel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
 

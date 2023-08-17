@@ -2101,6 +2101,7 @@ definition {
 	@priority = 4
 	test CannotPublishObjectWithouPublishPermission {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 53",
@@ -2973,6 +2974,7 @@ definition {
 	@priority = 5
 	test CanRelateManyOtherEntriesBothObjects {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given two custom objects, A and B, each with a text field and a layout") {
 			for (var nameObject : list "A,B") {
@@ -6689,6 +6691,7 @@ definition {
 	@priority = 4
 	test ObjectDisappearsProcessBuilderWhenInactivated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 143",
@@ -6718,6 +6721,7 @@ definition {
 	@priority = 4
 	test ObjectDisappearsWorkflowSiteMenuWhenInactivated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 144",

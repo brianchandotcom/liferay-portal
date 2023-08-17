@@ -140,6 +140,7 @@ definition {
 	@refactordone
 	test CanEditTemplateAndStructure {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 

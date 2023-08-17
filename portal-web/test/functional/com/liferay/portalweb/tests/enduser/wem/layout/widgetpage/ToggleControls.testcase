@@ -32,6 +32,7 @@ definition {
 	test HideAndShowExistingInvisiblePortlet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("View toggle controls is at view status") {
 			Navigator.gotoSitePage(
@@ -107,6 +108,7 @@ definition {
 	test HideAndShowHeaderOfExistingVisiblePortlet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("View toggle controls is at view status") {
 			Navigator.gotoSitePage(
@@ -159,6 +161,7 @@ definition {
 	@priority = 4
 	test HideFutureInvisiblePortletAndHeaderOfFutureVisiblePortlet {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Can hide future invisible portlets on widget page when Toggle Controls is closed") {
 			Navigator.gotoSitePage(
@@ -205,6 +208,7 @@ definition {
 	@priority = 4
 	test ViewNotAffectPortletsOnContentPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
@@ -268,6 +272,7 @@ definition {
 	@priority = 4
 	test ViewOnlyAffectCurrentInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

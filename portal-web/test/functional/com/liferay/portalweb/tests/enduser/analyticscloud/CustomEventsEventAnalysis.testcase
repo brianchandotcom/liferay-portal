@@ -832,6 +832,7 @@ definition {
 	@priority = 5
 	test RemoveAttribute {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
 
@@ -894,6 +895,7 @@ definition {
 	@priority = 3
 	test SearchEventAttributeInEventTab {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var defaultAttributeName = "pageTitle";
 		var customAttributeName = "category";
@@ -949,6 +951,7 @@ definition {
 	@priority = 3
 	test SearchEventsInDifferentTabs {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var defaultEventName = "pageViewed";
 
@@ -1023,6 +1026,7 @@ definition {
 	@priority = 4
 	test ViewEventsAreListedInAlphabeticalOrder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var attributeName = "assetId";
 		var defaultEventName = "assetClicked";

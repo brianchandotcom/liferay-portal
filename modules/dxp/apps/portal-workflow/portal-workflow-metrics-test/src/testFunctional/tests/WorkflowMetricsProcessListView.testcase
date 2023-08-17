@@ -56,6 +56,7 @@ definition {
 	@priority = 3
 	test PaginationButtonIndicatesSelectedPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -90,6 +91,7 @@ definition {
 	@priority = 3
 	test PaginationFollowsAscDescSequence {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -128,6 +130,7 @@ definition {
 	@priority = 3
 	test PaginationIsDisplayedWhenTableHas5Items {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -206,6 +209,7 @@ definition {
 	@priority = 3
 	test SavedOrderOptionStaysInMetricsContext {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver A");
 
@@ -333,6 +337,7 @@ definition {
 	@priority = 3
 	test TableIsOrderedByOverdueDesc {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Test Workflow");
 

@@ -213,6 +213,7 @@ definition {
 	@priority = 4
 	test CanPublishDocument {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -271,6 +272,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -336,6 +338,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedWC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -402,6 +405,7 @@ definition {
 	@priority = 4
 	test CanPublishWC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",

@@ -60,6 +60,7 @@ definition {
 	@refactordone
 	test AbstractDescriptionPersistsWhenTypingInContentField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",
@@ -171,6 +172,7 @@ definition {
 	@refactordone
 	test CanDisplayViewCountForEntry {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
@@ -486,6 +488,7 @@ definition {
 	@refactordone
 	test CanSubscribeToComment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(
@@ -562,6 +565,7 @@ definition {
 	@refactordone
 	test CanViewAbstractDisplayingFirst400Characters {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -590,6 +594,7 @@ definition {
 	@refactorneeded
 	test CanViewEntriesOnMultiplePagesWithDifferentScopes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -678,6 +683,7 @@ definition {
 	@priority = 5
 	test CanViewEntryUsingDisplayPageTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// To avoid interference from other tests about the NPE assertion，skip run it on virtal instance, see LPS-185660.
 
@@ -755,6 +761,7 @@ definition {
 	@refactordone
 	test CanViewReadingTime {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		BlogsConfiguration.enableReadingTime();
 

@@ -32,6 +32,7 @@ definition {
 	test CanChangeFilterWithClientExtension {
 		property osgi.modules.includes = "frontend-data-set-sample-web";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given Sample FDS portlet deployed") {
 			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");

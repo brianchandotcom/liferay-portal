@@ -33,6 +33,7 @@ definition {
 	@priority = 4
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var bucketID = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -77,6 +78,7 @@ definition {
 	test AWSS3StoreDataMigration {
 		property store.migration.test = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a document is added to the default store") {
 			var bucketId = PropsUtil.get("s3.bucket.id");
@@ -156,6 +158,7 @@ definition {
 	@priority = 5
 	test AWSS3StoreSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var bucketId = PropsUtil.get("s3.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -189,6 +192,7 @@ definition {
 	@priority = 3
 	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

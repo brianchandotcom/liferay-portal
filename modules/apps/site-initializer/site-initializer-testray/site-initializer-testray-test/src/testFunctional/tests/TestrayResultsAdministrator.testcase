@@ -120,6 +120,7 @@ definition {
 	@priority = 3
 	test AdminCanAssignTestsDirectlyThroughTheContextMenu {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -144,6 +145,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteResults {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -170,6 +172,7 @@ definition {
 	@priority = 4
 	test AdminCanExecuteTestsAndMarkThemAsFailed {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -210,6 +213,7 @@ definition {
 	@priority = 4
 	test AdminCanQuickEditTests {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -247,6 +251,7 @@ definition {
 	@priority = 3
 	test AdminCanReopenTests {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -294,6 +299,7 @@ definition {
 	@priority = 4
 	test AdminCanResetTests {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -328,6 +334,7 @@ definition {
 	@priority = 4
 	test AdminCanSeeIssuesInAllTables {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -402,6 +409,7 @@ definition {
 	@priority = 3
 	test AdminCanUnassignTests {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -438,6 +446,7 @@ definition {
 	@priority = 2
 	test AdminCanUnassignTestsThroughTheContextMenu {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -468,6 +477,7 @@ definition {
 	@priority = 4
 	test AdminCanVerifyTheAccuracyOfTheCaseResultMetricsCard {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -486,6 +496,7 @@ definition {
 	@priority = 3
 	test AdminCanViewResultsGroupedByComponent {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});
@@ -514,6 +525,7 @@ definition {
 	@priority = 3
 	test AdminCanViewResultsGroupedByTeam {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
 			Testray.goToProjectPage(projectName = ${projectName});

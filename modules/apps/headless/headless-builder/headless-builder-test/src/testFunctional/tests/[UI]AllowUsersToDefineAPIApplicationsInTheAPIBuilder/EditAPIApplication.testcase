@@ -34,6 +34,7 @@ definition {
 	test CanNavigateToAppDetailsForm {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
@@ -56,6 +57,7 @@ definition {
 	test CannotStoreModifiedValuesWithoutSaving {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
@@ -88,6 +90,7 @@ definition {
 	test CanSaveModifiedValuesAndPublishApplication {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
@@ -125,6 +128,7 @@ definition {
 	test CanSaveModifiedValuesForUnpublishedApplication {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given from dropdown menu I click Edit option") {
 			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
@@ -157,6 +161,7 @@ definition {
 	test CanSeeEditOptionButton {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I click on the dropdown menu of created API application") {
 			ApplicationsMenu.gotoPortlet(

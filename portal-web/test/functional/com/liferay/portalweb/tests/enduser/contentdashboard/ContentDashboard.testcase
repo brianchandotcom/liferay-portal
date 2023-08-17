@@ -1746,6 +1746,7 @@ definition {
 	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1834,6 +1835,7 @@ definition {
 	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a default Display Page Template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1936,6 +1938,7 @@ definition {
 	@uitest
 	test ClickTitleApprovedNoDPT {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add web content Approved") {
 			JSONWebcontent.addWebContent(
@@ -2333,6 +2336,7 @@ definition {
 	@uitest
 	test ClickTitleDraftNoDPT {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add web content Draft") {
 			JSONWebcontent.addWebContent(
@@ -2362,6 +2366,7 @@ definition {
 	@uitest
 	test ClickTitlePendingNoDPT {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Configure Web Content Article workflow to Single Approver") {
 			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
@@ -2398,6 +2403,7 @@ definition {
 	@uitest
 	test ClickTitleScheduledNoDPT {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
@@ -4185,6 +4191,7 @@ definition {
 	test FilterByDuplicatedMimeType {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add documents with different mime types") {
 			JSONDocument.addFileWithUploadedFile(
@@ -4399,6 +4406,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an expired Document asset") {
 			task ("Set update interval") {

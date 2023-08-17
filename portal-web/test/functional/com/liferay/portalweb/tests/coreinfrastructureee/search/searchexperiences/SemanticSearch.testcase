@@ -27,6 +27,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider\",\"com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider\"]";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider");
 
@@ -91,6 +92,7 @@ definition {
 	test AssertReindexWarningAppearsForCriticalChanges {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When System Settings are using default configurations, assert the warning is not present") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
@@ -497,6 +499,7 @@ definition {
 	test ViewSystemAndInstanceSettingsSaveUI {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Within System Settings, fill out required fields for Hugging Face Inference API and save") {
 			SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
@@ -686,6 +689,7 @@ definition {
 	test ViewSystemSettingUnsuccessfulConnectionWarning {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property txtai.enabled = "true";
 
 		task ("Assert the warning doesn't appear when connection is successful and changes persist when configuration is saved") {
@@ -792,6 +796,7 @@ definition {
 	test ViewTxtaiSystemSettingsTestConfiguration {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property txtai.enabled = "true";
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");

@@ -34,6 +34,7 @@ definition {
 	@priority = 5
 	test CanPurchaseBasicPolicy {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -68,6 +69,7 @@ definition {
 	@priority = 5
 	test CanPurchasePremiumPolicy {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -102,6 +104,7 @@ definition {
 	@priority = 5
 	test CanPurchaseStandardPolicy {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -136,6 +139,7 @@ definition {
 	@priority = 4
 	test CanViewUserNameInTitle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

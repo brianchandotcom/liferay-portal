@@ -637,6 +637,7 @@ definition {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
@@ -692,6 +693,7 @@ definition {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();

@@ -162,6 +162,7 @@ definition {
 	test CustomizeOrderOfFragmentSetsAndWidgetCategories {
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -202,6 +203,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
 			ContentPagesNavigator.openEditContentPage(
@@ -299,6 +301,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
 			ContentPagesNavigator.openEditContentPage(
@@ -395,6 +398,7 @@ definition {
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesOnReleaseBundle {
 		property portal.upstream = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -433,6 +437,7 @@ definition {
 	@priority = 4
 	test MoveFragmentSetToThePlaceOfHiddenOne {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a page creator has a content page based on a custom master with disallowed fragment set") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(

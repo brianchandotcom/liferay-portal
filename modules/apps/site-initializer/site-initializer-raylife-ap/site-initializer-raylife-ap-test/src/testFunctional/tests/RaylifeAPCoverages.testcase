@@ -66,6 +66,7 @@ definition {
 	@priority = 5
 	test IfReviewQuoteButtonIsEnableWhenFieldsFilled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 		// To be deleted. This is covered tests that use the macro RaylifeApplicationModal.typeAllNewApplicationCoverageInfoFields since the macro proceeds to click the Review Quote button.

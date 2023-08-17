@@ -25,6 +25,7 @@ definition {
 	test CanEnablePopServerNotificationsPerInstance {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Setup: Save default instance mail settings so they appear in database") {
 			PortalSettings.gotoConfiguration(

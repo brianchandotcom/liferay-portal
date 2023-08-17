@@ -183,6 +183,7 @@ definition {
 	@priority = 4
 	test CanCreateSamePropertyNameInDifferentWorkspaces {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var acProperty = "AC Property Name";
 		var acWorkspace = "New AC Workspace";

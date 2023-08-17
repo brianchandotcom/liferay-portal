@@ -110,6 +110,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterTemplateByName {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
@@ -173,6 +174,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
@@ -201,6 +203,7 @@ definition {
 	@priority = 3
 	test AdminCanNotFilterForNonExistentTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user add build Template") {
 			TestrayTemplate.addTemplate(
@@ -236,6 +239,7 @@ definition {
 	@priority = 4
 	test CanActivateDisabledTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds a Template with status Activated") {
 			TestrayTemplate.addTemplate(
@@ -280,6 +284,7 @@ definition {
 	@priority = 4
 	test CanCreateTemplateWithActiveDefault {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
@@ -303,6 +308,7 @@ definition {
 	@priority = 5
 	test CanDeleteDeactiveTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds a Template with status Deactivated") {
 			TestrayTemplate.addTemplate(
@@ -344,6 +350,7 @@ definition {
 	@priority = 4
 	test CanFilterActiveTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
@@ -409,6 +416,7 @@ definition {
 	@priority = 3
 	test CanFilterDeactivedTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
@@ -474,6 +482,7 @@ definition {
 	@priority = 3
 	test CanSeachTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the user adds a template") {
 			TestrayTemplate.addTemplate(
@@ -493,6 +502,7 @@ definition {
 	@priority = 2
 	test CanViewRequiredField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user tries add a new template without filling out the required fields") {
 			TestrayTemplate.addTemplate(dropdownItem = "New Template");

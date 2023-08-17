@@ -49,6 +49,7 @@ definition {
 	@priority = 3
 	test CanDeleteCriteria {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -111,6 +112,7 @@ definition {
 	@priority = 5
 	test CanDeleteDynamicSegment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
 
@@ -167,6 +169,7 @@ definition {
 	@priority = 4
 	test CanDeleteSegmentViaSegmentList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -229,6 +232,7 @@ definition {
 	@priority = 5
 	test CanDeleteStaticSegment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -281,6 +285,7 @@ definition {
 	@priority = 5
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -376,6 +381,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Connect DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

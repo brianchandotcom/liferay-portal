@@ -118,6 +118,7 @@ definition {
 	@refactorneeded
 	test ViewDocumentAsGuest {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

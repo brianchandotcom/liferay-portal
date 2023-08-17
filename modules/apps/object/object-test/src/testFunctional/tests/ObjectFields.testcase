@@ -576,6 +576,7 @@ definition {
 	test CanCreateObjectEntryWithEveryField {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Picklist and create new Picklist and item") {
 			ApplicationsMenu.gotoPortlet(
@@ -4429,6 +4430,7 @@ definition {
 	@priority = 4
 	test MaximumFileSizeIsSetBySystemConfigurationsWhenZero {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151561",

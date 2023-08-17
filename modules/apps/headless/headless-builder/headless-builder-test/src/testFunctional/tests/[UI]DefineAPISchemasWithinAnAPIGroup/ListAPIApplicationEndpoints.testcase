@@ -36,6 +36,7 @@ definition {
 	test CanClickAddEndpointButtons {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I navigate to Endpoints in Edit API Application") {
 			APIBuilderUI.switchToRelatedEntryInEditApplication(
@@ -58,6 +59,7 @@ definition {
 	test CanCopyURLOfAPIEndpoint {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
@@ -97,6 +99,7 @@ definition {
 	test CanFilterEndpointAPIByCreationDateAsLastUpdated {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
@@ -128,6 +131,7 @@ definition {
 	test CanFilterEndpointAPIByDateBeforeCreationAsLastUpdated {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
@@ -159,6 +163,7 @@ definition {
 	test CanListCreatedEndpoint {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given with postEndpointAPI to create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
@@ -188,6 +193,7 @@ definition {
 	test CanOrderEndpointAPI {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given with postEndpointAPI to create two endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
@@ -218,6 +224,7 @@ definition {
 	test CanPaginateAPIEndpoints {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given postAPIEndpoint to create 11 endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
@@ -256,6 +263,7 @@ definition {
 	test CanSearchEndpointAPI {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given I create an edpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
@@ -283,6 +291,7 @@ definition {
 	test CanSeeAvailableFieldsAndActions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
@@ -324,6 +333,7 @@ definition {
 	test CanSeeNoEndpointAPIAndAddEndpointButton {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I navigate to Endpoints in Edit API Application") {
 			APIBuilderUI.switchToRelatedEntryInEditApplication(

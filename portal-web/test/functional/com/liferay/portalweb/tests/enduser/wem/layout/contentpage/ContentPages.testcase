@@ -572,6 +572,7 @@ definition {
 	@priority = 4
 	test EditContentPageAfterResetChangesFromSiteTemplate {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = StringUtil.randomString(8);
 
@@ -1313,6 +1314,7 @@ definition {
 	@priority = 4
 	test ViewConfigurationSettingsOfWidgetAfterCleanUpOrphanedThemePortletPreferences {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(

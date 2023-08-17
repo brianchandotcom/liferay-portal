@@ -28,6 +28,7 @@ definition {
 		property ignore.errors = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -88,6 +89,7 @@ definition {
 		property ignore.errors = "true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -141,6 +143,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property ignore.errors = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();
@@ -203,6 +206,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -231,6 +235,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property database.partition.enabled = "false";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();

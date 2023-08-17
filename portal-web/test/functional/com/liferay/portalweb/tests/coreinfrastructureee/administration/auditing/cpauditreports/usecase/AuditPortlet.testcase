@@ -31,6 +31,7 @@ definition {
 	@priority = 3
 	test CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -143,6 +144,7 @@ definition {
 	test CanCaptureEventsAboutUserActions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -253,6 +255,7 @@ definition {
 	@priority = 3
 	test CanCaptureEventsAboutUserGroupAndRole {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -402,6 +405,7 @@ definition {
 	test CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages {
 		property custom.properties = "audit.message.com.liferay.portal.kernel.model.Layout.VIEW=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -484,6 +488,7 @@ definition {
 	@priority = 4
 	test CanSearchEventsInAuditAdvancedSearch {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

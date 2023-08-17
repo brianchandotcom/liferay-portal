@@ -78,6 +78,7 @@ definition {
 	@priority = 5
 	test TriggerSchedulerJobManuallyCanRemoveExportEntryAndLARFile {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Export two types of LAR files") {
 			JSONLayout.addPublicLayout(

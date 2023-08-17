@@ -41,6 +41,7 @@ definition {
 	@priority = 5
 	test AdminCanAddAnnouncement {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -70,6 +71,7 @@ definition {
 	test CanAccessDealListingViaQuickLinks {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
@@ -89,6 +91,7 @@ definition {
 	test CanAccessMDFRequestListingViaQuickLinks {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 

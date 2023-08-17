@@ -119,6 +119,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseRequirementsByLink {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case requirement by link") {
 			TestrayFilter.clickFilter();
@@ -146,6 +147,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterCaseRequirementsBySummary {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case requirement by summary") {
 			TestrayFilter.clickFilter();
@@ -169,6 +171,7 @@ definition {
 	@priority = 4
 	test AdminCanFilterCaseRequirementsWithMultipleOptions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filter a case requirement with multiple options") {
 			TestrayFilter.clickFilter();
@@ -201,6 +204,7 @@ definition {
 	@priority = 3
 	test AdminCanFilterForNonexistentCaseRequirements {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user filters a case requirement by its non-existent name") {
 			TestrayFilter.clickFilter();
@@ -222,6 +226,7 @@ definition {
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();

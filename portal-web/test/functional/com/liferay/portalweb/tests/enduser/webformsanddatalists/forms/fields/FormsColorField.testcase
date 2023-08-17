@@ -94,6 +94,7 @@ definition {
 	@priority = 5
 	test CanBeDuplicated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -421,6 +422,7 @@ definition {
 	test PredefinedValueCanBeAdded {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 

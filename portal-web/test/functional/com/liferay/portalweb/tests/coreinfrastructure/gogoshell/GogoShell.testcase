@@ -29,6 +29,7 @@ definition {
 	test AccessGogoShellCommandViaPortlet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -50,6 +51,7 @@ definition {
 	@priority = 3
 	test GogoShellCommandDisconnectNotSupported {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		GogoShell.openGogoShellAdmin();
 
@@ -63,6 +65,7 @@ definition {
 	@priority = 4
 	test GogoShellPortletOnlyOnMainInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",
@@ -94,6 +97,7 @@ definition {
 	test OmniAdminCanAccessGogoShellCommandViaPortlet {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -125,6 +129,7 @@ definition {
 	test SiteAdminCannotAccessGogoShellPortlet {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

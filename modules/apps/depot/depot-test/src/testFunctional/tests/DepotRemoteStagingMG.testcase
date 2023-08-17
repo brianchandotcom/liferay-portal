@@ -61,6 +61,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -144,6 +145,7 @@ definition {
 	@priority = 4
 	test CanPublishDeletedImageFromFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -234,6 +236,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -318,6 +321,7 @@ definition {
 	@priority = 4
 	test CanPublishEditedImageFromFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -412,6 +416,7 @@ definition {
 	@priority = 5
 	test CanPublishImage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
@@ -472,6 +477,7 @@ definition {
 	@priority = 4
 	test CanPublishImageAfterChangingDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -583,6 +589,7 @@ definition {
 	@priority = 4
 	test CanPublishImageAfterChangingRootFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -675,6 +682,7 @@ definition {
 	@priority = 4
 	test CanPublishImageFromFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -741,6 +749,7 @@ definition {
 	@priority = 4
 	test CanViewExternalVideoAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -814,6 +823,7 @@ definition {
 	@priority = 4
 	test CanViewImageAfterFriendlyURLIsUpdated {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",

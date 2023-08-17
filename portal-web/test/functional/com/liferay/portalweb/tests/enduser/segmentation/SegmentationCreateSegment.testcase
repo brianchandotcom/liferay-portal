@@ -467,6 +467,7 @@ definition {
 	test AddSegmentByOrganizationRegion {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -1881,6 +1882,7 @@ definition {
 	test AddSegmentByUserSiteOrganizationRole {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -2122,6 +2124,7 @@ definition {
 	test AddSegmentUsingCustomFields {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add custom field in User") {
 			ApplicationsMenu.gotoPortlet(
@@ -2616,6 +2619,7 @@ definition {
 	@priority = 3
 	test InstanceSettingsSessionPropertyVocabulariesBreadcrumb {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -2647,6 +2651,7 @@ definition {
 	@priority = 3
 	test InstanceSettingsSessionPropertyVocabulariesCancelButton {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
 			PortalSettings.openInstanceSettingsAdmin();
@@ -2677,6 +2682,7 @@ definition {
 	test InstanceSettingsSessionPropertyVocabularyInSegmentsEditor {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set Session Property Vocabulary") {
 			Segmentation.setVocabularySessionProperty(
@@ -2742,6 +2748,7 @@ definition {
 	test KeepInfomationOfDeleteVocabularyInSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Set Session Property Vocabulary") {
 			Segmentation.setVocabularySessionProperty(
@@ -3385,6 +3392,7 @@ definition {
 	test VocabulariesListedInSystemSettingsSegments {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add two vocabularies to global site") {
 			for (var n : list "1,2") {

@@ -42,6 +42,7 @@ definition {
 	@priority = 5
 	test AdminCanAddCaseTypes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I create a Case Type") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
@@ -68,6 +69,7 @@ definition {
 	@priority = 5
 	test AdminCanDeleteCaseTypes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
@@ -100,6 +102,7 @@ definition {
 	@priority = 5
 	test AdminCanEditCaseTypes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
@@ -140,6 +143,7 @@ definition {
 	@priority = 3
 	test AdminCanNotAddDuplicateCasesTypes {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
@@ -172,6 +176,7 @@ definition {
 	@priority = 2
 	test AdminCanViewRequiredField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I go to the manage menu") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});

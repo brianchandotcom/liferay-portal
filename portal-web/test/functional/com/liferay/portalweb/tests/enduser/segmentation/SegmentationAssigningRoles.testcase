@@ -52,6 +52,7 @@ definition {
 	test AssigningBySegmentNotWorkingDisabledInstanceSettings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -144,6 +145,7 @@ definition {
 	test AssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(
@@ -197,6 +199,7 @@ definition {
 	@priority = 3
 	test CanAssignBySegmentEnabledInstanceSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -295,6 +298,7 @@ definition {
 	test CanAssignSiteRolesToSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(
@@ -348,6 +352,7 @@ definition {
 	@priority = 3
 	test CheckMessageSegmentationByRolesDisabledInstanceSettings {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable segmentation by roles from instance settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -388,6 +393,7 @@ definition {
 	test DisableAssignRolesBySegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -467,6 +473,7 @@ definition {
 	test DisableAssignRolesWarningMessage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Assert the Enable Assign roles by segments checkbox is disabled") {
 			ApplicationsMenu.gotoPortlet(
@@ -506,6 +513,7 @@ definition {
 	test DisabledAssignSiteRolesOptionInSegmentsEditor {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(
@@ -562,6 +570,7 @@ definition {
 	test EditPageAfterEnableAssignRole {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a Content Page") {
 			JSONLayout.addPublicLayout(
@@ -601,6 +610,7 @@ definition {
 	test EnableAssignRolesBySegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -686,6 +696,7 @@ definition {
 	test EnableAssignRolesNoWarningMessage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Enable Assign roles by segment") {
 			ApplicationsMenu.gotoPortlet(

@@ -32,6 +32,7 @@ definition {
 	@priority = 5
 	test GCSStoreSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var bucketId = PropsUtil.get("gcs.bucket.id");
 		var companyId = JSONCompany.getCompanyId();

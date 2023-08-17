@@ -18,6 +18,7 @@ definition {
 	test LockUnlockDMFileEntryAndMBTread {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=5000";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -97,6 +98,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Clustering.viewClusterStatusInConsole();
 
@@ -145,6 +147,7 @@ definition {
 	@priority = 3
 	test SmokeWithJDBC {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Smoke.viewWelcomeContentPage();
 
@@ -165,6 +168,7 @@ definition {
 	test SmokeWithJNDI {
 		property configure.read.write.database = "jndi";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Smoke.viewWelcomeContentPage();
 

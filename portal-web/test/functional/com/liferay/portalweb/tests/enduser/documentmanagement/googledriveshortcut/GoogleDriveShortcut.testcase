@@ -61,6 +61,7 @@ definition {
 	@priority = 4
 	test CanDeleteGoogleDocInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -91,6 +92,7 @@ definition {
 	@priority = 5
 	test CanDeleteGoogleDocInSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -121,6 +123,7 @@ definition {
 	@refactordone
 	test CanEditGoogleDocInDepot {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -170,6 +173,7 @@ definition {
 	@refactordone
 	test CanEditGoogleDocInSite {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -215,6 +219,7 @@ definition {
 	@refactordone
 	test CanMoveGoogleDocToFolder {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

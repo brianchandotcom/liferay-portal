@@ -105,6 +105,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotCreateBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -133,6 +134,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -167,6 +169,7 @@ definition {
 	@priority = 3
 	test AssertAnalystRoleCanNotEditBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -201,6 +204,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanCreateBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -238,6 +242,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanDeleteBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -274,6 +279,7 @@ definition {
 	@priority = 4
 	test AssertLeadRoleCanEditBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -315,6 +321,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotCreateBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -343,6 +350,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotDeleteBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -377,6 +385,7 @@ definition {
 	@priority = 3
 	test AssertUserRoleCanNotEditBuild {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(

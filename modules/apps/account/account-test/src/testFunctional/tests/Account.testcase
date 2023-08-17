@@ -459,6 +459,7 @@ definition {
 	@priority = 4
 	test BlockedDomainsAreInstanceWide {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Block google.com domain and create a new account") {
 			AccountConfiguration.addBlockedEmailDomain(settingValues = "google.com");
@@ -1619,6 +1620,7 @@ definition {
 	@priority = 5
 	test CanDefineGroupScopePermissionsInRolesAdmin {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a new role through Roles Admin Portlet") {
 			Role.openRolesAdmin();
@@ -2486,6 +2488,7 @@ definition {
 	test CannotAddUserWithBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an account is created and is configured to have blocked domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2545,6 +2548,7 @@ definition {
 	test CannotAddUserWithInvalidEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an account is created and is configured to have valid email domains") {
 			AccountConfiguration.enableAccountEmailDomain();
@@ -2732,6 +2736,7 @@ definition {
 	@priority = 4
 	test CanRemoveDomainFromBlacklist {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com,google.com");
 

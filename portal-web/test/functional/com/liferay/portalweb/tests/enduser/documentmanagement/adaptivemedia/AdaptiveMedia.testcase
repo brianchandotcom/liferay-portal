@@ -480,6 +480,7 @@ definition {
 	@refactordone
 	test ImageResolutionIsScopedToInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalInstances.openVirtualInstancesAdmin();
 

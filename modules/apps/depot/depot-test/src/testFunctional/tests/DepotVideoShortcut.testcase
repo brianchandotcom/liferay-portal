@@ -110,6 +110,7 @@ definition {
 	@refactordone
 	test CannotSearchDepotVideoShortcutWhenSearchingIsDisabled {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -185,6 +186,7 @@ definition {
 	@refactordone
 	test CanSearchVideoShortcutByTag {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -538,6 +540,7 @@ definition {
 	@refactordone
 	test CanViewVideoShortcutInRelatedAssets {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",

@@ -210,6 +210,7 @@ definition {
 	@priority = 3
 	test CanAddValidFileAfterInvalidFileIsDiscardedViaMultipleUpload {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateFileExtensions(fieldValue = ".docx");
 
@@ -267,6 +268,7 @@ definition {
 	test CanAutocompleteCategory {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -330,6 +332,7 @@ definition {
 	test CanAutoCompleteCategory {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
@@ -1908,6 +1911,7 @@ definition {
 	@refactordone
 	test CanLimitMaximumAmountOfVersions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Can research how to update file using JSON
 
@@ -2292,6 +2296,7 @@ definition {
 	test CannotPreviewFileThatExceedsLimit {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "File Entries");
 
@@ -2366,6 +2371,7 @@ definition {
 	test CannotViewExpiredDocumentAsGuest {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -2724,6 +2730,7 @@ definition {
 	test CanRepublishDocumentAfterDisablingExpirationDate {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -2814,6 +2821,7 @@ definition {
 	test CanRestrictFileExtensionToDoc {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateFileExtensions(fieldValue = ".doc");
 
@@ -2935,6 +2943,7 @@ definition {
 	test CanReviewDocumentWhenDateIsChanged {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -2988,6 +2997,7 @@ definition {
 	test CanReviewDocumentWhenDateIsDisabled {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -3039,6 +3049,7 @@ definition {
 	test CanReviewDocumentWhenDateIsSet {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -3344,6 +3355,7 @@ definition {
 	test CanViewExpiredDocument {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateCheckInterval(fieldValue = 1);
 
@@ -3384,6 +3396,7 @@ definition {
 	test CanViewExpiredDocumentAsContentReviewer {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -3884,6 +3897,7 @@ definition {
 	@refactordone
 	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		SystemSettings.openSystemSettingsAdmin();
 
@@ -4032,6 +4046,7 @@ definition {
 	@priority = 4
 	test VerifyTreeImageIsAvailable {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Go to Documents and Media Settings") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -4050,6 +4065,7 @@ definition {
 	@priority = 4
 	test WildcardCanBeDefinedWithOtherFileExtensions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DMDocument.updateFileExtensions(
 			fieldValue = ".doc",

@@ -56,6 +56,7 @@ definition {
 	@priority = 3
 	test AssertNewApplicationBoundStatus {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given that an user go to Raylife AP and start a new application") {
 			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
@@ -122,6 +123,7 @@ definition {
 	@priority = 5
 	test CanCreateNewApplication {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -188,6 +190,7 @@ definition {
 	@priority = 3
 	test CanDeleteIncompleteApplication {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 

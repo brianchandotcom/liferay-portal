@@ -32,6 +32,7 @@ definition {
 	@priority = 4
 	test AssertNoErrorMessageAfterExportAndImportSiteLAR {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var containerId = PropsUtil.get("azure.container.id");
 		var companyId = JSONCompany.getCompanyId();
@@ -84,6 +85,7 @@ definition {
 	test AzureStoreDataMigration {
 		property store.migration.test = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a document is added to the default store") {
 			var containerId = PropsUtil.get("azure.container.id");
@@ -163,6 +165,7 @@ definition {
 	@priority = 5
 	test AzureStoreSmoke {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var containerId = PropsUtil.get("azure.container.id");
 		var companyId = JSONCompany.getCompanyId();

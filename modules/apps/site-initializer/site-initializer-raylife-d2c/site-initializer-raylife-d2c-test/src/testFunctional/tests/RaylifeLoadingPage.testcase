@@ -34,6 +34,7 @@ definition {
 	@priority = 3
 	test CanDismissLoadingPageInfoPanel {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -70,6 +71,7 @@ definition {
 	@priority = 5
 	test CanReachLoadingPageByPropertyPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
@@ -106,6 +108,7 @@ definition {
 	@priority = 5
 	test CanRedirectToQuotePage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 

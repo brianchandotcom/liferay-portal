@@ -37,6 +37,7 @@ definition {
 	test CanBeAddedWithoutAffectingNavigation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		FormsAdmin.addForm();
@@ -394,6 +395,7 @@ definition {
 	@priority = 4
 	test CanEditFormattingStyle {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -511,6 +513,7 @@ definition {
 	@priority = 5
 	test CanSupportALinkToAURL {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -537,6 +540,7 @@ definition {
 	@priority = 5
 	test CanSupportBulletedLists {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -656,6 +660,7 @@ definition {
 	@priority = 5
 	test CanSupportNumberedLists {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -705,6 +710,7 @@ definition {
 	@priority = 4
 	test CanSupportTables {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -741,6 +747,7 @@ definition {
 	@priority = 5
 	test CanSupportVideos {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -787,6 +794,7 @@ definition {
 	@priority = 5
 	test CanUndoAndRedo {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -865,6 +873,7 @@ definition {
 	@priority = 5
 	test TextCanBeBoldedItalicizedAndUnderlined {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 

@@ -29,6 +29,7 @@ definition {
 	@priority = 4
 	test CheckPublicationSummaryLocal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a new page on site and enable local staging") {
 			JSONLayout.addPublicLayout(
@@ -77,6 +78,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Enable remote staging and add a new page on site") {
 			Staging.remoteStagingSetUpViaJson(
@@ -112,6 +114,7 @@ definition {
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Add a web content entry") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");

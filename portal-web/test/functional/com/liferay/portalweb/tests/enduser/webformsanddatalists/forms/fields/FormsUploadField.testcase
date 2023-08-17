@@ -351,6 +351,7 @@ definition {
 	@priority = 5
 	test CanBeSetToRepeatable {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 
@@ -646,6 +647,7 @@ definition {
 	test GuestUserCannotUploadFileWithInvalidSize {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		FormsAdmin.addForm();
 

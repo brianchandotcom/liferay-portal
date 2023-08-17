@@ -1029,6 +1029,7 @@ definition {
 	@priority = 3
 	test ViewChildPageNameViaLocalizedPage {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 

@@ -26,6 +26,7 @@ definition {
 		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -75,6 +76,7 @@ definition {
 	test CanOverrideValueWithoutConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -98,6 +100,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "articleCommentsEnabled=B\"true\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given assert the Article Comments Enabled is checked for web content in System Settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -270,6 +273,7 @@ definition {
 	test CanUseSiteConfigurationAcrossDifferentSystems {
 		property custom.properties = "feature.flag.LPS-155284=true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given change the Site OSGi configurations to export") {
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
@@ -366,6 +370,7 @@ definition {
 	@priority = 5
 	test CheckSystemSettingsScopeIsCorrected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Naviagte to System Settings") {
 			ApplicationsMenu.gotoPortlet(

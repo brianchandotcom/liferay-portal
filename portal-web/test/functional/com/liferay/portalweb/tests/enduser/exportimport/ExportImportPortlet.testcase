@@ -33,6 +33,7 @@ definition {
 	@priority = 3
 	test CanImportJournalArticleWhenUncheckMissingReferencesValidation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: Uncheck the Validate Missing References box in System settings") {
 			ApplicationsMenu.gotoPortlet(
@@ -117,6 +118,7 @@ definition {
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add an input field for document then export it") {
 			CustomFields.addCP(
@@ -296,6 +298,7 @@ definition {
 	@priority = 4
 	test ExportDMWithDeletedDocumentLink {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User add a new site with a new document") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -350,6 +353,7 @@ definition {
 	@priority = 5
 	test ExportImportDDLViaGlobal {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site and a page to it") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -452,6 +456,7 @@ definition {
 	@priority = 4
 	test ExportImportDeletions {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new WC then export it") {
 			JSONWebcontent.addWebContent(
@@ -570,6 +575,7 @@ definition {
 	test ExportImportWebContentFolderWithWorkflow {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new WC folder with default workflow") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -627,6 +633,7 @@ definition {
 	@priority = 3
 	test ExportImportWebcontentWithRepeatField {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site") {
 			HeadlessSite.addSite(siteName = "Exported Site");
@@ -764,6 +771,7 @@ definition {
 	@priority = 4
 	test ExportWebContentWithDeletedReference {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given: User adds a new site with a page") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -954,6 +962,7 @@ definition {
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressInVirtualInstance {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Export blank web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

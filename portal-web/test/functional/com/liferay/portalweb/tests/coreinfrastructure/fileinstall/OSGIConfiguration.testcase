@@ -33,6 +33,7 @@ definition {
 		property osgi.module.configurations = "mx=\"www.able.com\"${line.separator}virtualHostname=\"www.able.com\"";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -49,6 +50,7 @@ definition {
 	test ConfigAddedViaUIDoesNotCreateNewConfigFile {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given no osgi config file exists for a specific config") {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
@@ -92,6 +94,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"33\"";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given an osgi config file exists for a specific config") {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
@@ -215,6 +218,7 @@ definition {
 	test OSGIConfigFileUpdatesExistingConfigInDatabase {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given no osgi config file exists for a specific config") {
 			var configName = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration";
@@ -286,6 +290,7 @@ definition {
 	test RecreateDefaultFactoryConfig {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given the default factory config created by the OSGI configurator is deleted") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -370,6 +375,7 @@ definition {
 	test TikaConfigurationWithCustomTikaXML {
 		property app.server.types = "tomcat";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var projectDir = PropsUtil.get("project.dir");
 

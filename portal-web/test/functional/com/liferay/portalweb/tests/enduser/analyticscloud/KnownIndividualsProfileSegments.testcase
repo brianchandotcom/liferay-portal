@@ -70,6 +70,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -135,6 +136,7 @@ definition {
 	@priority = 3
 	test AssertIndividualsSegmentSelected {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -200,6 +202,7 @@ definition {
 	@priority = 3
 	test OrderIndividualsAssociatedSegments {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 
@@ -345,6 +348,7 @@ definition {
 	@priority = 3
 	test PaginateIndividualsSegmentList {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("View the page as the new user") {
 			User.logoutAndLoginPG(
@@ -442,6 +446,7 @@ definition {
 		// AC Refactor ticket: LRAC-14011
 
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 

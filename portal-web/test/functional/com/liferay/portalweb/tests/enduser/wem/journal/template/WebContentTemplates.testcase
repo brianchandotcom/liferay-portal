@@ -70,6 +70,7 @@ definition {
 	test CannotAddTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Disable Template Creation") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -151,6 +152,7 @@ definition {
 	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a template for Basic Web Content Structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -287,6 +289,7 @@ definition {
 	@priority = 4
 	test ViewTemplateCreationFailureWhenDisableTemplateCreation {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a template for Basic Web Content structure but not save") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

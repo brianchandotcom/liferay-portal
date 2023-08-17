@@ -429,6 +429,7 @@ definition {
 	@priority = 4
 	test ConfigureDocumentFrequency {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -798,6 +799,7 @@ definition {
 
 	test ConfigureViewInContextLinkBehavior {
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 

@@ -945,6 +945,7 @@ definition {
 	test AddNewExperienceOrganizationRegionSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Organization via JSONWS") {
 			JSONOrganization.addOrganization(
@@ -1108,6 +1109,7 @@ definition {
 	test AddNewExperienceOrganizationTypeSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Configure organization type") {
 			ApplicationsMenu.gotoPortlet(
@@ -1603,6 +1605,7 @@ definition {
 	test AddNewExperienceSessionHostnameSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create a new Portal Instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -1720,6 +1723,7 @@ definition {
 	test AddNewExperienceSessionIPGeocoderCountry {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a session IP Geocoder Country segment") {
 			JSONSegmentsentry.addSegment(
@@ -2787,6 +2791,7 @@ definition {
 	test AddNewExperienceUserSiteOrganizationRoleSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Assign userea1 to Test Site group") {
 			JSONGroup.assignUserToGroup(
@@ -3080,6 +3085,7 @@ definition {
 	test AddNewExperienceUserUserGroupSegment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Create an user group via JSONWS") {
 			JSONUserGroup.addUserGroup(
@@ -5219,6 +5225,7 @@ definition {
 	test RemoveFragmentAndChangeBackToDefaultExperience {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Add a Web Content via JSONWS") {
 			JSONWebcontent.addWebContent(

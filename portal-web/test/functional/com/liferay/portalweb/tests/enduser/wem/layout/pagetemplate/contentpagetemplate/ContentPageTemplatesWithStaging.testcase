@@ -175,8 +175,6 @@ definition {
 	@priority = 4
 	test UndoChangesOfContentPageTemplateInStagingSite {
 		task ("View Undo button is disabled when no changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
@@ -193,8 +191,6 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button",
 				targetFragmentName = "Paragraph");
-
-			PageEditor.waitForAutoSave();
 
 			AssertVisible(
 				key_text = "undo",

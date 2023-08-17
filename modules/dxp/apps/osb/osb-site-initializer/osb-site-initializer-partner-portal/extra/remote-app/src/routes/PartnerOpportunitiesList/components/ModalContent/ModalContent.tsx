@@ -19,7 +19,7 @@ export default function ModalContent({content, onClose}: IProps) {
 	return (
 		<ClayModal.Body>
 			<div className="align-items-center d-flex justify-content-between mb-4">
-				<h3 className="col-6 mb-0">Leads Details</h3>
+				<h3 className="col-6 mb-0">Opportunity Details</h3>
 
 				<ClayButtonWithIcon
 					displayType={null}

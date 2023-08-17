@@ -22,6 +22,7 @@ create table CTCollection (
 	schemaVersionId LONG,
 	name VARCHAR(75) null,
 	description VARCHAR(200) null,
+	ctRemoteId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusDate DATE null
@@ -102,7 +103,9 @@ create table CTRemote (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
-	url VARCHAR(75) null
+	url VARCHAR(75) null,
+	clientId VARCHAR(75) null,
+	clientSecret VARCHAR(75) null
 );
 
 create table CTSchemaVersion (

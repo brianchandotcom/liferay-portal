@@ -196,6 +196,36 @@ public interface CTRemoteModel
 	 */
 	public void setUrl(String url);
 
+	/**
+	 * Returns the client ID of this ct remote.
+	 *
+	 * @return the client ID of this ct remote
+	 */
+	@AutoEscape
+	public String getClientId();
+
+	/**
+	 * Sets the client ID of this ct remote.
+	 *
+	 * @param clientId the client ID of this ct remote
+	 */
+	public void setClientId(String clientId);
+
+	/**
+	 * Returns the client secret of this ct remote.
+	 *
+	 * @return the client secret of this ct remote
+	 */
+	@AutoEscape
+	public String getClientSecret();
+
+	/**
+	 * Sets the client secret of this ct remote.
+	 *
+	 * @param clientSecret the client secret of this ct remote
+	 */
+	public void setClientSecret(String clientSecret);
+
 	@Override
 	public CTRemote cloneWithOriginalValues();
 

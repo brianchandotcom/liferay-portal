@@ -68,7 +68,7 @@ public class CTCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,8 @@ public class CTCollectionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", ctRemoteId=");
+		sb.append(ctRemoteId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -157,6 +159,7 @@ public class CTCollectionCacheModel
 			ctCollectionImpl.setDescription(description);
 		}
 
+		ctCollectionImpl.setCtRemoteId(ctRemoteId);
 		ctCollectionImpl.setStatus(status);
 		ctCollectionImpl.setStatusByUserId(statusByUserId);
 
@@ -189,6 +192,8 @@ public class CTCollectionCacheModel
 		schemaVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		ctRemoteId = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -238,6 +243,8 @@ public class CTCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(ctRemoteId);
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -255,6 +262,7 @@ public class CTCollectionCacheModel
 	public long schemaVersionId;
 	public String name;
 	public String description;
+	public long ctRemoteId;
 	public int status;
 	public long statusByUserId;
 	public long statusDate;

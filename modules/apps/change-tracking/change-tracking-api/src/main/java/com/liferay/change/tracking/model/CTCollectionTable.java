@@ -47,6 +47,8 @@ public class CTCollectionTable extends BaseTable<CTCollectionTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CTCollectionTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CTCollectionTable, Long> ctRemoteId = createColumn(
+		"ctRemoteId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CTCollectionTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CTCollectionTable, Long> statusByUserId = createColumn(

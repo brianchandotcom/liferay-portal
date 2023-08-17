@@ -136,6 +136,8 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setDescription(RandomTestUtil.randomString());
 
+		newCTCollection.setCtRemoteId(RandomTestUtil.nextLong());
+
 		newCTCollection.setStatus(RandomTestUtil.nextInt());
 
 		newCTCollection.setStatusByUserId(RandomTestUtil.nextLong());
@@ -177,6 +179,9 @@ public class CTCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingCTCollection.getDescription(),
 			newCTCollection.getDescription());
+		Assert.assertEquals(
+			existingCTCollection.getCtRemoteId(),
+			newCTCollection.getCtRemoteId());
 		Assert.assertEquals(
 			existingCTCollection.getStatus(), newCTCollection.getStatus());
 		Assert.assertEquals(
@@ -291,7 +296,8 @@ public class CTCollectionPersistenceTest {
 			"externalReferenceCode", true, "ctCollectionId", true, "companyId",
 			true, "userId", true, "createDate", true, "modifiedDate", true,
 			"schemaVersionId", true, "name", true, "description", true,
-			"status", true, "statusByUserId", true, "statusDate", true);
+			"ctRemoteId", true, "status", true, "statusByUserId", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -594,6 +600,8 @@ public class CTCollectionPersistenceTest {
 		ctCollection.setName(RandomTestUtil.randomString());
 
 		ctCollection.setDescription(RandomTestUtil.randomString());
+
+		ctCollection.setCtRemoteId(RandomTestUtil.nextLong());
 
 		ctCollection.setStatus(RandomTestUtil.nextInt());
 

@@ -41,6 +41,10 @@ public class CTRemoteTable extends BaseTable<CTRemoteTable> {
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CTRemoteTable, String> url = createColumn(
 		"url", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CTRemoteTable, String> clientId = createColumn(
+		"clientId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CTRemoteTable, String> clientSecret = createColumn(
+		"clientSecret", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CTRemoteTable() {
 		super("CTRemote", CTRemoteTable::new);

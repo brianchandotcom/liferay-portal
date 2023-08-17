@@ -233,6 +233,20 @@ public interface CTCollectionModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the ct remote ID of this ct collection.
+	 *
+	 * @return the ct remote ID of this ct collection
+	 */
+	public long getCtRemoteId();
+
+	/**
+	 * Sets the ct remote ID of this ct collection.
+	 *
+	 * @param ctRemoteId the ct remote ID of this ct collection
+	 */
+	public void setCtRemoteId(long ctRemoteId);
+
+	/**
 	 * Returns the status of this ct collection.
 	 *
 	 * @return the status of this ct collection

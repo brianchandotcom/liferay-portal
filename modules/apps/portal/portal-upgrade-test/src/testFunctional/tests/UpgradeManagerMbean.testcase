@@ -2,7 +2,7 @@
 definition {
 
 	property app.server.types = "tomcat";
-	property database.partition.enabled = "true";
+	property database.auto.upgrade.enabled = "true";
 	property database.types = "mysql";
 	property jmxremote.enabled = "true";
 	property portal.release = "true";
@@ -145,7 +145,7 @@ definition {
 
 	@priority = 4
 	test CheckMbeanWhenAutoUpgradeIsDisabled {
-		property database.partition.enabled = "false";
+		property database.auto.upgrade.enabled = "false";
 
 		task ("Given auto.upgrade is disabled When the portal is started") {
 			AntCommands.runCommand("modules/apps/portal/portal-upgrade-test/src/testFunctional/ant/util/build-test-upgrade-manager.xml", "start-app-server-check-mbean-attributes");

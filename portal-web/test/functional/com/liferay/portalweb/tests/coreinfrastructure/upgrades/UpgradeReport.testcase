@@ -176,7 +176,7 @@ definition {
 	@priority = 4
 	test ReportGeneratedWithAutoUpgrade {
 		property custom.properties = "upgrade.report.enabled=true";
-		property database.partition.enabled = "true";
+		property database.auto.upgrade.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";
 		property upgrade.reports.enabled = "false";
@@ -349,7 +349,7 @@ definition {
 	@priority = 4
 	test ReportGeneratedWithLogContext {
 		property custom.properties = "upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
-		property database.partition.enabled = "true";
+		property database.auto.upgrade.enabled = "true";
 		property log.context.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";

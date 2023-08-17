@@ -280,21 +280,21 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId_Sku() throws Exception {
-		_persistence.countByCompanyId_Sku(RandomTestUtil.nextLong(), "");
+	public void testCountByC_S_U() throws Exception {
+		_persistence.countByC_S_U(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByCompanyId_Sku(0L, "null");
+		_persistence.countByC_S_U(0L, "null", "null");
 
-		_persistence.countByCompanyId_Sku(0L, (String)null);
+		_persistence.countByC_S_U(0L, (String)null, (String)null);
 	}
 
 	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(), "");
+	public void testCountByCIWI_S_U() throws Exception {
+		_persistence.countByCIWI_S_U(RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByC_S(0L, "null");
+		_persistence.countByCIWI_S_U(0L, "null", "null");
 
-		_persistence.countByC_S(0L, (String)null);
+		_persistence.countByCIWI_S_U(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -664,6 +664,11 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 			ReflectionTestUtil.invoke(
 				commerceInventoryWarehouseItem, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "sku"));
+		Assert.assertEquals(
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey(),
+			ReflectionTestUtil.invoke(
+				commerceInventoryWarehouseItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "unitOfMeasureKey"));
 
 		Assert.assertEquals(
 			commerceInventoryWarehouseItem.getExternalReferenceCode(),

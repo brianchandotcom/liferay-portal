@@ -44,11 +44,13 @@ public interface CommerceInventoryAuditService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
-			long companyId, String sku, int start, int end)
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceInventoryAuditsCount(long companyId, String sku)
+	public int getCommerceInventoryAuditsCount(
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	/**

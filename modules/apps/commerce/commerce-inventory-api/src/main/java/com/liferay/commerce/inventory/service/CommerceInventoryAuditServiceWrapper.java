@@ -32,19 +32,21 @@ public class CommerceInventoryAuditServiceWrapper
 	public java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryAudit>
 				getCommerceInventoryAudits(
-					long companyId, String sku, int start, int end)
+					long companyId, String sku, String unitOfMeasureKey,
+					int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryAuditService.getCommerceInventoryAudits(
-			companyId, sku, start, end);
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
-	public int getCommerceInventoryAuditsCount(long companyId, String sku)
+	public int getCommerceInventoryAuditsCount(
+			long companyId, String sku, String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryAuditService.getCommerceInventoryAuditsCount(
-			companyId, sku);
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	/**

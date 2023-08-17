@@ -264,10 +264,11 @@ public class CommerceInventoryAuditLocalServiceUtil {
 	}
 
 	public static List<CommerceInventoryAudit> getCommerceInventoryAudits(
-		long companyId, String sku, int start, int end) {
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end) {
 
 		return getService().getCommerceInventoryAudits(
-			companyId, sku, start, end);
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	/**
@@ -280,9 +281,10 @@ public class CommerceInventoryAuditLocalServiceUtil {
 	}
 
 	public static int getCommerceInventoryAuditsCount(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
-		return getService().getCommerceInventoryAuditsCount(companyId, sku);
+		return getService().getCommerceInventoryAuditsCount(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	public static

@@ -454,18 +454,18 @@
 		<field name="lowStockActivity" type="String" />
 		<field name="displayAvailability" type="boolean" />
 		<field name="displayStockQuantity" type="boolean" />
-		<field name="minStockQuantity" type="int">
+		<field name="minStockQuantity" type="BigDecimal">
 			<validator name="number" />
 		</field>
 		<field name="backOrders" type="boolean" />
-		<field name="minOrderQuantity" type="int">
+		<field name="minOrderQuantity" type="BigDecimal">
 			<validator name="number" />
 		</field>
-		<field name="maxOrderQuantity" type="int">
+		<field name="maxOrderQuantity" type="BigDecimal">
 			<validator name="number" />
 		</field>
 		<field name="allowedOrderQuantities" type="String" />
-		<field name="multipleOrderQuantity" type="int">
+		<field name="multipleOrderQuantity" type="BigDecimal">
 			<validator name="number" />
 		</field>
 	</model>

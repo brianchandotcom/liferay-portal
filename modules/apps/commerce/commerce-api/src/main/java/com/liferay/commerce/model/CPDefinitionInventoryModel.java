@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -323,14 +325,14 @@ public interface CPDefinitionInventoryModel
 	 *
 	 * @return the min stock quantity of this cp definition inventory
 	 */
-	public int getMinStockQuantity();
+	public BigDecimal getMinStockQuantity();
 
 	/**
 	 * Sets the min stock quantity of this cp definition inventory.
 	 *
 	 * @param minStockQuantity the min stock quantity of this cp definition inventory
 	 */
-	public void setMinStockQuantity(int minStockQuantity);
+	public void setMinStockQuantity(BigDecimal minStockQuantity);
 
 	/**
 	 * Returns the back orders of this cp definition inventory.
@@ -358,28 +360,28 @@ public interface CPDefinitionInventoryModel
 	 *
 	 * @return the min order quantity of this cp definition inventory
 	 */
-	public int getMinOrderQuantity();
+	public BigDecimal getMinOrderQuantity();
 
 	/**
 	 * Sets the min order quantity of this cp definition inventory.
 	 *
 	 * @param minOrderQuantity the min order quantity of this cp definition inventory
 	 */
-	public void setMinOrderQuantity(int minOrderQuantity);
+	public void setMinOrderQuantity(BigDecimal minOrderQuantity);
 
 	/**
 	 * Returns the max order quantity of this cp definition inventory.
 	 *
 	 * @return the max order quantity of this cp definition inventory
 	 */
-	public int getMaxOrderQuantity();
+	public BigDecimal getMaxOrderQuantity();
 
 	/**
 	 * Sets the max order quantity of this cp definition inventory.
 	 *
 	 * @param maxOrderQuantity the max order quantity of this cp definition inventory
 	 */
-	public void setMaxOrderQuantity(int maxOrderQuantity);
+	public void setMaxOrderQuantity(BigDecimal maxOrderQuantity);
 
 	/**
 	 * Returns the allowed order quantities of this cp definition inventory.
@@ -401,14 +403,14 @@ public interface CPDefinitionInventoryModel
 	 *
 	 * @return the multiple order quantity of this cp definition inventory
 	 */
-	public int getMultipleOrderQuantity();
+	public BigDecimal getMultipleOrderQuantity();
 
 	/**
 	 * Sets the multiple order quantity of this cp definition inventory.
 	 *
 	 * @param multipleOrderQuantity the multiple order quantity of this cp definition inventory
 	 */
-	public void setMultipleOrderQuantity(int multipleOrderQuantity);
+	public void setMultipleOrderQuantity(BigDecimal multipleOrderQuantity);
 
 	@Override
 	public CPDefinitionInventory cloneWithOriginalValues();

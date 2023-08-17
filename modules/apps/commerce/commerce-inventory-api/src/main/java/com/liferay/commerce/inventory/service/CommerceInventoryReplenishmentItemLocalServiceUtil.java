@@ -139,9 +139,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	}
 
 	public static void deleteCommerceInventoryReplenishmentItems(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
-		getService().deleteCommerceInventoryReplenishmentItems(companyId, sku);
+		getService().deleteCommerceInventoryReplenishmentItems(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	/**
@@ -249,12 +250,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 	public static CommerceInventoryReplenishmentItem
 		fetchCommerceInventoryReplenishmentItem(
-			long companyId, String sku,
+			long companyId, String sku, String unitOfMeasureKey,
 			OrderByComparator<CommerceInventoryReplenishmentItem>
 				orderByComparator) {
 
 		return getService().fetchCommerceInventoryReplenishmentItem(
-			companyId, sku, orderByComparator);
+			companyId, sku, unitOfMeasureKey, orderByComparator);
 	}
 
 	public static CommerceInventoryReplenishmentItem
@@ -359,12 +360,13 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	}
 
 	public static List<CommerceInventoryReplenishmentItem>
-		getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-			long companyId, String sku, int start, int end) {
+		getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end) {
 
 		return getService().
-			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-				companyId, sku, start, end);
+			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+				companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	/**
@@ -378,10 +380,11 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 	public static java.math.BigDecimal
 		getCommerceInventoryReplenishmentItemsCount(
-			long commerceInventoryWarehouseId, String sku) {
+			long commerceInventoryWarehouseId, String sku,
+			String unitOfMeasureKey) {
 
 		return getService().getCommerceInventoryReplenishmentItemsCount(
-			commerceInventoryWarehouseId, sku);
+			commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 	}
 
 	public static int
@@ -394,12 +397,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	}
 
 	public static int
-		getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-			long companyId, String sku) {
+		getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey) {
 
 		return getService().
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				companyId, sku);
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

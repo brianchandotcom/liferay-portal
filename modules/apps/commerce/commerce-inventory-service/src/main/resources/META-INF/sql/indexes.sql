@@ -1,17 +1,17 @@
-create index IX_53AE0C80 on CIAudit (companyId, sku[$COLUMN_LENGTH:75$]);
+create index IX_45C5C370 on CIAudit (companyId, sku[$COLUMN_LENGTH:75$], unitOfMeasureKey[$COLUMN_LENGTH:75$]);
 create index IX_E7D143D9 on CIAudit (createDate);
 create index IX_57638B52 on CIAudit (sku[$COLUMN_LENGTH:75$]);
 
-create index IX_1B168464 on CIBookedQuantity (companyId, sku[$COLUMN_LENGTH:75$]);
+create index IX_625D8A54 on CIBookedQuantity (companyId, sku[$COLUMN_LENGTH:75$], unitOfMeasureKey[$COLUMN_LENGTH:75$]);
 create index IX_33BF9CB0 on CIBookedQuantity (expirationDate);
 create index IX_EC1719EE on CIBookedQuantity (sku[$COLUMN_LENGTH:75$]);
 
-create index IX_EBC91179 on CIReplenishmentItem (availabilityDate, sku[$COLUMN_LENGTH:75$]);
+create index IX_E160DC29 on CIReplenishmentItem (availabilityDate, sku[$COLUMN_LENGTH:75$], unitOfMeasureKey[$COLUMN_LENGTH:75$]);
 create index IX_967CACA8 on CIReplenishmentItem (commerceInventoryWarehouseId);
 create index IX_C4760B6E on CIReplenishmentItem (companyId, availabilityDate);
 create index IX_FD9E7E02 on CIReplenishmentItem (companyId, commerceInventoryWarehouseId);
 create unique index IX_3462AACC on CIReplenishmentItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_1B681B5C on CIReplenishmentItem (companyId, sku[$COLUMN_LENGTH:75$]);
+create index IX_62C4534C on CIReplenishmentItem (companyId, sku[$COLUMN_LENGTH:75$], unitOfMeasureKey[$COLUMN_LENGTH:75$]);
 create index IX_6C8E22D3 on CIReplenishmentItem (sku[$COLUMN_LENGTH:75$], availabilityDate);
 create index IX_F48BBEAB on CIReplenishmentItem (uuid_[$COLUMN_LENGTH:75$], companyId);
 
@@ -27,7 +27,7 @@ create index IX_E4C1F39E on CIWarehouseGroupRel (groupId, primary_);
 
 create unique index IX_8D9FD306 on CIWarehouseItem (commerceInventoryWarehouseId, sku[$COLUMN_LENGTH:75$]);
 create unique index IX_8A09C40B on CIWarehouseItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_F8B2565B on CIWarehouseItem (companyId, sku[$COLUMN_LENGTH:75$]);
+create index IX_B86B6C8B on CIWarehouseItem (companyId, sku[$COLUMN_LENGTH:75$], unitOfMeasureKey[$COLUMN_LENGTH:75$]);
 create index IX_97CADC57 on CIWarehouseItem (sku[$COLUMN_LENGTH:75$]);
 create index IX_A83335EA on CIWarehouseItem (uuid_[$COLUMN_LENGTH:75$], companyId);
 

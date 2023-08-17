@@ -30,9 +30,11 @@ public class CPDefinitionInventoryServiceUtil {
 	public static CPDefinitionInventory addCPDefinitionInventory(
 			long cpDefinitionId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, java.math.BigDecimal minStockQuantity,
+			boolean backOrders, java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities,
+			java.math.BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		return getService().addCPDefinitionInventory(
@@ -65,32 +67,14 @@ public class CPDefinitionInventoryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static CPDefinitionInventory updateCPDefinitionInventory(
-			long groupId, long cpDefinitionInventoryId,
-			String cpDefinitionInventoryEngine, String lowStockActivity,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
-		throws PortalException {
-
-		return getService().updateCPDefinitionInventory(
-			groupId, cpDefinitionInventoryId, cpDefinitionInventoryEngine,
-			lowStockActivity, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
-			allowedOrderQuantities, multipleOrderQuantity);
-	}
-
 	public static CPDefinitionInventory updateCPDefinitionInventory(
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, java.math.BigDecimal minStockQuantity,
+			boolean backOrders, java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities,
+			java.math.BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		return getService().updateCPDefinitionInventory(

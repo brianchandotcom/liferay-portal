@@ -45,7 +45,7 @@ public class CommerceInventoryAuditServiceHttp {
 		<com.liferay.commerce.inventory.model.CommerceInventoryAudit>
 				getCommerceInventoryAudits(
 					HttpPrincipal httpPrincipal, long companyId, String sku,
-					int start, int end)
+					String unitOfMeasureKey, int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -55,7 +55,7 @@ public class CommerceInventoryAuditServiceHttp {
 				_getCommerceInventoryAuditsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku, start, end);
+				methodKey, companyId, sku, unitOfMeasureKey, start, end);
 
 			Object returnObj = null;
 
@@ -88,7 +88,8 @@ public class CommerceInventoryAuditServiceHttp {
 	}
 
 	public static int getCommerceInventoryAuditsCount(
-			HttpPrincipal httpPrincipal, long companyId, String sku)
+			HttpPrincipal httpPrincipal, long companyId, String sku,
+			String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -98,7 +99,7 @@ public class CommerceInventoryAuditServiceHttp {
 				_getCommerceInventoryAuditsCountParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku);
+				methodKey, companyId, sku, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -132,10 +133,12 @@ public class CommerceInventoryAuditServiceHttp {
 		CommerceInventoryAuditServiceHttp.class);
 
 	private static final Class<?>[] _getCommerceInventoryAuditsParameterTypes0 =
-		new Class[] {long.class, String.class, int.class, int.class};
+		new Class[] {
+			long.class, String.class, String.class, int.class, int.class
+		};
 	private static final Class<?>[]
 		_getCommerceInventoryAuditsCountParameterTypes1 = new Class[] {
-			long.class, String.class
+			long.class, String.class, String.class
 		};
 
 }

@@ -238,7 +238,8 @@ public interface CommerceInventoryAuditLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
-		long companyId, String sku, int start, int end);
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end);
 
 	/**
 	 * Returns the number of commerce inventory audits.
@@ -249,7 +250,8 @@ public interface CommerceInventoryAuditLocalService
 	public int getCommerceInventoryAuditsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceInventoryAuditsCount(long companyId, String sku);
+	public int getCommerceInventoryAuditsCount(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

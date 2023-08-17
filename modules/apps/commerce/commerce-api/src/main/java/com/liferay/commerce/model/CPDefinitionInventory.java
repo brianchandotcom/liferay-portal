@@ -51,6 +51,6 @@ public interface CPDefinitionInventory
 
 			};
 
-	public int[] getAllowedOrderQuantitiesArray();
+	public java.math.BigDecimal[] getAllowedOrderQuantitiesArray();
 
 }

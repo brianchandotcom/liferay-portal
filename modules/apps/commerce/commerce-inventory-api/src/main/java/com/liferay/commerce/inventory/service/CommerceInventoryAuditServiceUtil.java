@@ -30,18 +30,20 @@ public class CommerceInventoryAuditServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryAuditServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static List<CommerceInventoryAudit> getCommerceInventoryAudits(
-			long companyId, String sku, int start, int end)
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end)
 		throws PortalException {
 
 		return getService().getCommerceInventoryAudits(
-			companyId, sku, start, end);
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	public static int getCommerceInventoryAuditsCount(
-			long companyId, String sku)
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
-		return getService().getCommerceInventoryAuditsCount(companyId, sku);
+		return getService().getCommerceInventoryAuditsCount(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	/**

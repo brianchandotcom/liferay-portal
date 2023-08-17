@@ -304,10 +304,11 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	public java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryAudit>
 			getCommerceInventoryAudits(
-				long companyId, String sku, int start, int end) {
+				long companyId, String sku, String unitOfMeasureKey, int start,
+				int end) {
 
 		return _commerceInventoryAuditLocalService.getCommerceInventoryAudits(
-			companyId, sku, start, end);
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	/**
@@ -322,9 +323,11 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceInventoryAuditsCount(long companyId, String sku) {
+	public int getCommerceInventoryAuditsCount(
+		long companyId, String sku, String unitOfMeasureKey) {
+
 		return _commerceInventoryAuditLocalService.
-			getCommerceInventoryAuditsCount(companyId, sku);
+			getCommerceInventoryAuditsCount(companyId, sku, unitOfMeasureKey);
 	}
 
 	@Override

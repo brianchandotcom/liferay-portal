@@ -55,9 +55,11 @@ public class CPDefinitionInventoryLocalServiceWrapper
 			long userId, long cpDefinitionId,
 			String cpDefinitionInventoryEngine, String lowStockActivity,
 			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
+			java.math.BigDecimal minStockQuantity, boolean backOrders,
+			java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities,
+			java.math.BigDecimal multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionInventoryLocalService.addCPDefinitionInventory(
@@ -464,9 +466,11 @@ public class CPDefinitionInventoryLocalServiceWrapper
 	public CPDefinitionInventory updateCPDefinitionInventory(
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, java.math.BigDecimal minStockQuantity,
+			boolean backOrders, java.math.BigDecimal minOrderQuantity,
+			java.math.BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities,
+			java.math.BigDecimal multipleOrderQuantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionInventoryLocalService.updateCPDefinitionInventory(

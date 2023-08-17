@@ -34,42 +34,47 @@ public class CommerceInventoryBookedQuantityServiceWrapper
 	public java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
 				getCommerceInventoryBookedQuantities(
-					long companyId, String sku, int start, int end)
+					long companyId, String sku, String unitOfMeasureKey,
+					int start, int end)
 			throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _commerceInventoryBookedQuantityService.
-			getCommerceInventoryBookedQuantities(companyId, sku, start, end);
+			getCommerceInventoryBookedQuantities(
+				companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity>
 				getCommerceInventoryBookedQuantities(
-					long companyId, String keywords, String sku, int start,
-					int end)
+					long companyId, String keywords, String sku,
+					String unitOfMeasureKey, int start, int end)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryBookedQuantityService.
 			getCommerceInventoryBookedQuantities(
-				companyId, keywords, sku, start, end);
+				companyId, keywords, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String sku)
+			long companyId, String sku, String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _commerceInventoryBookedQuantityService.
-			getCommerceInventoryBookedQuantitiesCount(companyId, sku);
+			getCommerceInventoryBookedQuantitiesCount(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String keywords, String sku)
+			long companyId, String keywords, String sku,
+			String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryBookedQuantityService.
-			getCommerceInventoryBookedQuantitiesCount(companyId, keywords, sku);
+			getCommerceInventoryBookedQuantitiesCount(
+				companyId, keywords, sku, unitOfMeasureKey);
 	}
 
 	/**

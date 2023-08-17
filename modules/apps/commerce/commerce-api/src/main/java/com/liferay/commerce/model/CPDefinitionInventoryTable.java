@@ -8,6 +8,8 @@ package com.liferay.commerce.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.Date;
@@ -72,28 +74,28 @@ public class CPDefinitionInventoryTable
 		displayStockQuantity = createColumn(
 			"displayStockQuantity", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionInventoryTable, Integer> minStockQuantity =
-		createColumn(
-			"minStockQuantity", Integer.class, Types.INTEGER,
+	public final Column<CPDefinitionInventoryTable, BigDecimal>
+		minStockQuantity = createColumn(
+			"minStockQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionInventoryTable, Boolean> backOrders =
 		createColumn(
 			"backOrders", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionInventoryTable, Integer> minOrderQuantity =
-		createColumn(
-			"minOrderQuantity", Integer.class, Types.INTEGER,
+	public final Column<CPDefinitionInventoryTable, BigDecimal>
+		minOrderQuantity = createColumn(
+			"minOrderQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionInventoryTable, Integer> maxOrderQuantity =
-		createColumn(
-			"maxOrderQuantity", Integer.class, Types.INTEGER,
+	public final Column<CPDefinitionInventoryTable, BigDecimal>
+		maxOrderQuantity = createColumn(
+			"maxOrderQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionInventoryTable, String>
 		allowedOrderQuantities = createColumn(
 			"allowedOrderQuantities", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionInventoryTable, Integer>
+	public final Column<CPDefinitionInventoryTable, BigDecimal>
 		multipleOrderQuantity = createColumn(
-			"multipleOrderQuantity", Integer.class, Types.INTEGER,
+			"multipleOrderQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 
 	private CPDefinitionInventoryTable() {

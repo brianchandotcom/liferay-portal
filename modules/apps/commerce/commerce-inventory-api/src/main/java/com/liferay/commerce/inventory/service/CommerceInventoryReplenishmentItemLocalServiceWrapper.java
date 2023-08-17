@@ -157,10 +157,11 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 
 	@Override
 	public void deleteCommerceInventoryReplenishmentItems(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
 		_commerceInventoryReplenishmentItemLocalService.
-			deleteCommerceInventoryReplenishmentItems(companyId, sku);
+			deleteCommerceInventoryReplenishmentItems(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	/**
@@ -297,14 +298,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 	public
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 			fetchCommerceInventoryReplenishmentItem(
-				long companyId, String sku,
+				long companyId, String sku, String unitOfMeasureKey,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.commerce.inventory.model.
 						CommerceInventoryReplenishmentItem> orderByComparator) {
 
 		return _commerceInventoryReplenishmentItemLocalService.
 			fetchCommerceInventoryReplenishmentItem(
-				companyId, sku, orderByComparator);
+				companyId, sku, unitOfMeasureKey, orderByComparator);
 	}
 
 	@Override
@@ -432,12 +433,13 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 	public java.util.List
 		<com.liferay.commerce.inventory.model.
 			CommerceInventoryReplenishmentItem>
-				getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-					long companyId, String sku, int start, int end) {
+				getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+					long companyId, String sku, String unitOfMeasureKey,
+					int start, int end) {
 
 		return _commerceInventoryReplenishmentItemLocalService.
-			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-				companyId, sku, start, end);
+			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+				companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	/**
@@ -453,11 +455,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 
 	@Override
 	public java.math.BigDecimal getCommerceInventoryReplenishmentItemsCount(
-		long commerceInventoryWarehouseId, String sku) {
+		long commerceInventoryWarehouseId, String sku,
+		String unitOfMeasureKey) {
 
 		return _commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItemsCount(
-				commerceInventoryWarehouseId, sku);
+				commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -471,12 +474,13 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-		long companyId, String sku) {
+	public int
+		getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey) {
 
 		return _commerceInventoryReplenishmentItemLocalService.
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				companyId, sku);
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	@Override

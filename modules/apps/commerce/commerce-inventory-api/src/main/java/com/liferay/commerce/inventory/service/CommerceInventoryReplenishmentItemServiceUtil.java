@@ -50,10 +50,11 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	}
 
 	public static void deleteCommerceInventoryReplenishmentItems(
-			long companyId, String sku)
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
-		getService().deleteCommerceInventoryReplenishmentItems(companyId, sku);
+		getService().deleteCommerceInventoryReplenishmentItems(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	public static CommerceInventoryReplenishmentItem
@@ -86,22 +87,24 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	}
 
 	public static List<CommerceInventoryReplenishmentItem>
-			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-				long companyId, String sku, int start, int end)
+			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+				long companyId, String sku, String unitOfMeasureKey, int start,
+				int end)
 		throws PortalException {
 
 		return getService().
-			getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-				companyId, sku, start, end);
+			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+				companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	public static java.math.BigDecimal
 			getCommerceInventoryReplenishmentItemsCount(
-				long commerceInventoryWarehouseId, String sku)
+				long commerceInventoryWarehouseId, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().getCommerceInventoryReplenishmentItemsCount(
-			commerceInventoryWarehouseId, sku);
+			commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 	}
 
 	public static int
@@ -115,13 +118,13 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	}
 
 	public static int
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				long companyId, String sku)
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+				long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				companyId, sku);
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	/**

@@ -129,7 +129,8 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 	}
 
 	public static void deleteCommerceInventoryReplenishmentItems(
-			HttpPrincipal httpPrincipal, long companyId, String sku)
+			HttpPrincipal httpPrincipal, long companyId, String sku,
+			String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -139,7 +140,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 				_deleteCommerceInventoryReplenishmentItemsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku);
+				methodKey, companyId, sku, unitOfMeasureKey);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -305,19 +306,19 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.inventory.model.
 			CommerceInventoryReplenishmentItem>
-					getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
+					getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 						HttpPrincipal httpPrincipal, long companyId, String sku,
-						int start, int end)
+						String unitOfMeasureKey, int start, int end)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
-				"getCommerceInventoryReplenishmentItemsByCompanyIdAndSku",
-				_getCommerceInventoryReplenishmentItemsByCompanyIdAndSkuParameterTypes6);
+				"getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey",
+				_getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKeyParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku, start, end);
+				methodKey, companyId, sku, unitOfMeasureKey, start, end);
 
 			Object returnObj = null;
 
@@ -352,7 +353,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 	public static java.math.BigDecimal
 			getCommerceInventoryReplenishmentItemsCount(
 				HttpPrincipal httpPrincipal, long commerceInventoryWarehouseId,
-				String sku)
+				String sku, String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -362,7 +363,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 				_getCommerceInventoryReplenishmentItemsCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceInventoryWarehouseId, sku);
+				methodKey, commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -435,18 +436,19 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 	}
 
 	public static int
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				HttpPrincipal httpPrincipal, long companyId, String sku)
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+				HttpPrincipal httpPrincipal, long companyId, String sku,
+				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceInventoryReplenishmentItemServiceUtil.class,
-				"getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku",
-				_getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSkuParameterTypes9);
+				"getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey",
+				_getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKeyParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, sku);
+				methodKey, companyId, sku, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -539,7 +541,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 		};
 	private static final Class<?>[]
 		_deleteCommerceInventoryReplenishmentItemsParameterTypes2 =
-			new Class[] {long.class, String.class};
+			new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[]
 		_fetchCommerceInventoryReplenishmentItemByExternalReferenceCodeParameterTypes3 =
 			new Class[] {String.class, long.class};
@@ -551,17 +553,19 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 		_getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseIdParameterTypes5 =
 			new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsByCompanyIdAndSkuParameterTypes6 =
-			new Class[] {long.class, String.class, int.class, int.class};
+		_getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKeyParameterTypes6 =
+			new Class[] {
+				long.class, String.class, String.class, int.class, int.class
+			};
 	private static final Class<?>[]
 		_getCommerceInventoryReplenishmentItemsCountParameterTypes7 =
-			new Class[] {long.class, String.class};
+			new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[]
 		_getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseIdParameterTypes8 =
 			new Class[] {long.class};
 	private static final Class<?>[]
-		_getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSkuParameterTypes9 =
-			new Class[] {long.class, String.class};
+		_getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKeyParameterTypes9 =
+			new Class[] {long.class, String.class, String.class};
 	private static final Class<?>[]
 		_updateCommerceInventoryReplenishmentItemParameterTypes10 =
 			new Class[] {

@@ -325,17 +325,18 @@ public interface CommerceInventoryBookedQuantityPersistence
 	public int countBySku(String sku);
 
 	/**
-	 * Returns all the commerce inventory booked quantities where companyId = &#63; and sku = &#63;.
+	 * Returns all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @return the matching commerce inventory booked quantities
 	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S(
-		long companyId, String sku);
+	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
-	 * Returns a range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63;.
+	 * Returns a range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryBookedQuantityModelImpl</code>.
@@ -343,15 +344,17 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param start the lower bound of the range of commerce inventory booked quantities
 	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
 	 * @return the range of matching commerce inventory booked quantities
 	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S(
-		long companyId, String sku, int start, int end);
+	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end);
 
 	/**
-	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63;.
+	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryBookedQuantityModelImpl</code>.
@@ -359,18 +362,19 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param start the lower bound of the range of commerce inventory booked quantities
 	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching commerce inventory booked quantities
 	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S(
-		long companyId, String sku, int start, int end,
+	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryBookedQuantity> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63;.
+	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryBookedQuantityModelImpl</code>.
@@ -378,106 +382,117 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param start the lower bound of the range of commerce inventory booked quantities
 	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching commerce inventory booked quantities
 	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S(
-		long companyId, String sku, int start, int end,
+	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryBookedQuantity> orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the first commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce inventory booked quantity
 	 * @throws NoSuchInventoryBookedQuantityException if a matching commerce inventory booked quantity could not be found
 	 */
-	public CommerceInventoryBookedQuantity findByC_S_First(
-			long companyId, String sku,
+	public CommerceInventoryBookedQuantity findByC_S_U_First(
+			long companyId, String sku, String unitOfMeasureKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryBookedQuantity> orderByComparator)
 		throws NoSuchInventoryBookedQuantityException;
 
 	/**
-	 * Returns the first commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the first commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching commerce inventory booked quantity, or <code>null</code> if a matching commerce inventory booked quantity could not be found
 	 */
-	public CommerceInventoryBookedQuantity fetchByC_S_First(
-		long companyId, String sku,
+	public CommerceInventoryBookedQuantity fetchByC_S_U_First(
+		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryBookedQuantity> orderByComparator);
 
 	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the last commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce inventory booked quantity
 	 * @throws NoSuchInventoryBookedQuantityException if a matching commerce inventory booked quantity could not be found
 	 */
-	public CommerceInventoryBookedQuantity findByC_S_Last(
-			long companyId, String sku,
+	public CommerceInventoryBookedQuantity findByC_S_U_Last(
+			long companyId, String sku, String unitOfMeasureKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryBookedQuantity> orderByComparator)
 		throws NoSuchInventoryBookedQuantityException;
 
 	/**
-	 * Returns the last commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the last commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching commerce inventory booked quantity, or <code>null</code> if a matching commerce inventory booked quantity could not be found
 	 */
-	public CommerceInventoryBookedQuantity fetchByC_S_Last(
-		long companyId, String sku,
+	public CommerceInventoryBookedQuantity fetchByC_S_U_Last(
+		long companyId, String sku, String unitOfMeasureKey,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommerceInventoryBookedQuantity> orderByComparator);
 
 	/**
-	 * Returns the commerce inventory booked quantities before and after the current commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63;.
+	 * Returns the commerce inventory booked quantities before and after the current commerce inventory booked quantity in the ordered set where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param commerceInventoryBookedQuantityId the primary key of the current commerce inventory booked quantity
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce inventory booked quantity
 	 * @throws NoSuchInventoryBookedQuantityException if a commerce inventory booked quantity with the primary key could not be found
 	 */
-	public CommerceInventoryBookedQuantity[] findByC_S_PrevAndNext(
+	public CommerceInventoryBookedQuantity[] findByC_S_U_PrevAndNext(
 			long commerceInventoryBookedQuantityId, long companyId, String sku,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CommerceInventoryBookedQuantity> orderByComparator)
 		throws NoSuchInventoryBookedQuantityException;
 
 	/**
-	 * Removes all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; from the database.
+	 * Removes all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 */
-	public void removeByC_S(long companyId, String sku);
+	public void removeByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
-	 * Returns the number of commerce inventory booked quantities where companyId = &#63; and sku = &#63;.
+	 * Returns the number of commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
 	 * @return the number of matching commerce inventory booked quantities
 	 */
-	public int countByC_S(long companyId, String sku);
+	public int countByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
 	 * Caches the commerce inventory booked quantity in the entity cache if it is enabled.

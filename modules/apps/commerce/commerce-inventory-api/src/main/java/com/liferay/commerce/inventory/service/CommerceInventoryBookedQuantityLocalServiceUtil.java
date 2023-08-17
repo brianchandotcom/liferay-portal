@@ -249,16 +249,18 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	}
 
 	public static java.math.BigDecimal getCommerceBookedQuantity(
-		long companyId, long commerceChannelGroupId, String sku) {
+		long companyId, long commerceChannelGroupId, String sku,
+		String unitOfMeasureKey) {
 
 		return getService().getCommerceBookedQuantity(
-			companyId, commerceChannelGroupId, sku);
+			companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
 	}
 
 	public static java.math.BigDecimal getCommerceBookedQuantity(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
-		return getService().getCommerceBookedQuantity(companyId, sku);
+		return getService().getCommerceBookedQuantity(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	/**
@@ -280,19 +282,21 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 
 	public static List<CommerceInventoryBookedQuantity>
 		getCommerceInventoryBookedQuantities(
-			long companyId, String sku, int start, int end) {
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end) {
 
 		return getService().getCommerceInventoryBookedQuantities(
-			companyId, sku, start, end);
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	public static List<CommerceInventoryBookedQuantity>
 			getCommerceInventoryBookedQuantities(
-				long companyId, String keywords, String sku, int start, int end)
+				long companyId, String keywords, String sku,
+				String unitOfMeasureKey, int start, int end)
 		throws PortalException {
 
 		return getService().getCommerceInventoryBookedQuantities(
-			companyId, keywords, sku, start, end);
+			companyId, keywords, sku, unitOfMeasureKey, start, end);
 	}
 
 	/**
@@ -305,18 +309,19 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	}
 
 	public static int getCommerceInventoryBookedQuantitiesCount(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
 		return getService().getCommerceInventoryBookedQuantitiesCount(
-			companyId, sku);
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	public static int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String keywords, String sku)
+			long companyId, String keywords, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().getCommerceInventoryBookedQuantitiesCount(
-			companyId, keywords, sku);
+			companyId, keywords, sku, unitOfMeasureKey);
 	}
 
 	/**
@@ -363,12 +368,12 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	public static CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
 			long commerceBookedQuantityId, long userId,
 			java.util.Date expirationDate, java.math.BigDecimal quantity,
-			String sku, Map<String, String> context)
+			String sku, String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
 		return getService().resetCommerceBookedQuantity(
 			commerceBookedQuantityId, userId, expirationDate, quantity, sku,
-			context);
+			unitOfMeasureKey, context);
 	}
 
 	public static CommerceInventoryBookedQuantity

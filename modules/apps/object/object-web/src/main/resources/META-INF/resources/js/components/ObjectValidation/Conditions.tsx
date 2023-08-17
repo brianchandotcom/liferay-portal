@@ -15,7 +15,11 @@ import {
 	filterArrayByQuery,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import {InputLocalized, LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
+import {
+	InputLocalized,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {TabProps} from './useObjectValidationForm';

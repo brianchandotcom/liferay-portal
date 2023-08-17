@@ -543,6 +543,10 @@ definition {
 			value1 = ${option});
 	}
 
+	macro selectComplimentarySubscriptionTerm{
+		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
+	}
+
 	macro selectKeyCheckboxByEnvironmentName {
 		var key_environmentName = ${environmentName};
 

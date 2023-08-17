@@ -78,7 +78,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
-	const saveChanges = function () {
+	const beforeSubmit = function () {
 		document.getElementById(`${namespace}content`).value = window[
 			`${namespace}contentEditor`
 		].getHTML();
@@ -104,7 +104,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		}
 
 		if (Liferay.FeatureFlags['LPS-188060']) {
-			saveChanges();
+			beforeSubmit();
 			submitForm(form);
 		}
 	};
@@ -117,7 +117,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			contextualSidebarButtonOnClick
 		),
 		attachListener(form, 'submit', () => {
-			saveChanges();
+			beforeSubmit();
 		}),
 	];
 

@@ -4,6 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayDropdown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -62,6 +63,16 @@ const SidebarPanelInfoView = ({
 		!!tags.length || !!Object.keys(vocabularies).length;
 
 	const showTabs = !!getItemVersionsURL || hasCategorization;
+
+	const allTabs = !!getItemVersionsURL && hasCategorization;
+
+	const [active, setActive] = useState(false);
+
+	function _handleItemClick() {
+		setActive(false);
+
+		setActiveTabKeyValue(TABS.version);
+	}
 
 	return (
 		<>
@@ -187,7 +198,7 @@ const SidebarPanelInfoView = ({
 							</ClayTabs.Item>
 						)}
 
-						{!!getItemVersionsURL && (
+						{!!getItemVersionsURL && !hasCategorization && (
 							<ClayTabs.Item
 								active={activeTabKeyValue === TABS.version}
 								className="flex-shrink-0"
@@ -200,6 +211,32 @@ const SidebarPanelInfoView = ({
 							>
 								{Liferay.Language.get('versions')}
 							</ClayTabs.Item>
+						)}
+
+						{allTabs && (
+							<ClayDropdown
+								active={active}
+								alignmentPosition={Align.BottomLeft}
+								hasRightSymbols
+								onActiveChange={setActive}
+								trigger={
+									<ClayTabs.Item>
+										{Liferay.Language.get('more')}
+
+										<ClayIcon symbol="caret-bottom" />
+									</ClayTabs.Item>
+								}
+							>
+								<ClayDropdown.Item
+									active={activeTabKeyValue === TABS.version}
+									aria-selected={
+										activeTabKeyValue === TABS.version
+									}
+									onClick={() => _handleItemClick()}
+								>
+									{Liferay.Language.get('versions')}
+								</ClayDropdown.Item>
+							</ClayDropdown>
 						)}
 					</ClayTabs>
 				)}

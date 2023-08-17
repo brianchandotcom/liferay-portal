@@ -13,6 +13,7 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -100,6 +101,14 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/edit_ct_collection.jsp");
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						_portal.getHttpServletRequest(actionRequest),
+						"an-unexpected-error-occurred")));
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -114,6 +123,9 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

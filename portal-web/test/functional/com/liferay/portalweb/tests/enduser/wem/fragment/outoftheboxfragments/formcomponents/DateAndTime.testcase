@@ -1,0 +1,113 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property custom.properties = "feature.flag.LPS-183727=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
+	property testray.main.component.name = "Fragments";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomLabelName = StringUtil.randomString(8);
+
+	static var randomObjectName = "A${randomLabelName}";
+
+	setUp {
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add an object with a Date and Time field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${randomLabelName},
+				objectName = ${randomObjectName},
+				pluralLabelName = "${randomLabelName}s");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "DateTime",
+				fieldLabelName = "Clock",
+				fieldName = "clock",
+				fieldType = "DateTime",
+				isRequired = "false",
+				objectName = ${randomObjectName},
+				timeStorageOption = "useInputAsEntered");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+		}
+	}
+
+	@description = "This is a test for LPS-191312. The page designer could map Date and Time field to Date and Time fragment."
+	@priority = 5
+	test MapDateAndTimeFragmentToDateAndTimeField {
+		task ("Given a page designer has a Form Container on a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("When the page designer maps the Form Container to new object") {
+			PageEditor.mapFormContainerToObject(contentType = ${randomLabelName});
+		}
+
+		task ("Then the page designer sees the Date and Time fragment mapped to the Date and Time field") {
+			PageEditor.viewInputStyle(
+				label = "Clock",
+				showLabel = "true",
+				type = "date-input");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer navigates to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the page designer could fill out the Date and Time field and submit form") {
+			WaitForEditable(
+				key_text = "Clock",
+				locator1 = "TextInput#ANY");
+
+			Type.typeKeys(
+				key_text = "Clock",
+				locator1 = "TextInput#ANY",
+				value1 = "10/10/2022");
+
+			Type.typeKeys(
+				key_text = "Clock",
+				locator1 = "TextInput#ANY",
+				value1 = "keys=ARROW_RIGHT");
+
+			Type.typeKeys(
+				key_text = "Clock",
+				locator1 = "TextInput#ANY",
+				value1 = "10:10AM");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ObjectAdmin.goToCustomObject(objectName = ${randomObjectName});
+
+			ObjectPortlet.viewEntry(entry = "Oct 10, 2022, 10:10 AM");
+		}
+	}
+
+}

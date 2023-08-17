@@ -2526,40 +2526,11 @@ log.sanitizer.enabled=false</echo>
 
 							<for list="${test.class.group}" param="test.class">
 								<sequential>
-									<local name="test.timeout" />
-
-									<trycatch property="test.failure.message">
-										<try>
-											<get-test-project-information test.class="@{test.class}" />
-
-											<limit failonerror="true" maxwait="${test.class.timeout.seconds}" property="test.timeout" value="FAILURE: ${test.project.name}:testIntegration --tests ${test.name} failed to complete in ${test.class.timeout.minutes} minutes">
-												<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="${test.project.name}:testIntegration" test.name="${test.name}">
-													<arg value="--continue" />
-													<arg value="-Dbuild.exclude.ant.plugin=true" />
-													<arg value="-Dtest.class.group.index=${axis.variable}" />
-												</gradle-execute>
-											</limit>
-
-											<move
-												todir="modules/test-results"
-											>
-												<fileset
-													dir="${test.project.results.dir}"
-													includes="**/TEST-*.xml"
-												/>
-											</move>
-										</try>
-										<catch>
-											<if>
-												<isset property="test.timeout" />
-												<then>
-													<echo>${test.timeout}</echo>
-												</then>
-											</if>
-
-											<echo>${test.failure.message}</echo>
-										</catch>
-									</trycatch>
+									<run-modules-junit-test test.class="@{test.class}" test.task="testIntegration">
+										<arg value="--continue" />
+										<arg value="-Dbuild.exclude.ant.plugin=true" />
+										<arg value="-Dtest.class.group.index=${axis.variable}" />
+									</run-modules-junit-test>
 								</sequential>
 							</for>
 
@@ -2732,6 +2703,86 @@ log.sanitizer.enabled=false</echo>
 					<stop-suite-search-engine />
 				</test-tear-down>
 			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-modules-junit-test">
+		<attribute name="test.class" />
+		<attribute name="test.task" />
+
+		<element implicit="true" name="args" optional="true" />
+
+		<sequential>
+			<var name="test.timeout" unset="true" />
+
+			<trycatch property="test.failure.message">
+				<try>
+					<get-test-project-information test.class="@{test.class}" />
+
+					<limit failonerror="true" maxwait="${test.class.timeout.seconds}" property="test.timeout" value="FAILURE: ${test.project.name}:@{test.task} --tests ${test.name} failed to complete in ${test.class.timeout.minutes} minutes">
+						<gradle-execute dir="modules" task="${test.project.name}:@{test.task}" test.name="${test.name}">
+							<args />
+						</gradle-execute>
+					</limit>
+
+					<move
+						flatten="true"
+						todir="modules/test-results"
+					>
+						<fileset
+							dir="${test.project.results.dir}"
+							includes="**/TEST-*.xml"
+						/>
+					</move>
+				</try>
+				<catch>
+					<var name="junit.failure.message" value="" />
+
+					<if>
+						<isset property="test.timeout" />
+						<then>
+							<var name="junit.failure.message" value="${test.timeout}${line.separator}" />
+						</then>
+					</if>
+
+					<var name="junit.failure.message" value="${junit.failure.message}${test.failure.message}" />
+
+					<echo>${junit.failure.message}</echo>
+
+					<var name="junit.failure.message.element" unset="true" />
+
+					<property name="junit.failure.message" value="${test.failure.message}${test.timeout}" />
+
+					<get-junit-failure-message-element />
+
+					<local name="test.class.name" />
+
+					<propertyregex
+						input="@{test.class}"
+						override="true"
+						property="test.class.name"
+						regexp="(.*)\.class"
+						replace="\1"
+					/>
+
+					<propertyregex
+						global="true"
+						input="${test.class.name}"
+						override="true"
+						property="test.class.name"
+						regexp="/"
+						replace="."
+					/>
+
+					<generate-backend-batch-junit-report
+						junit.failure.count="1"
+						junit.failure.message.element="${junit.failure.message.element}"
+						test.class.name="${test.class.name}"
+						test.command.name="testCompile"
+						test.results.dir="modules/test-results"
+					/>
+				</catch>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -6992,43 +7043,14 @@ information. Make sure to commit in all format-javadoc results.
 
 				<for list="${test.class.group}" param="test.class">
 					<sequential>
-						<local name="test.timeout" />
-
-						<trycatch property="test.failure.message">
-							<try>
-								<get-test-project-information test.class="@{test.class}" />
-
-								<limit failonerror="true" maxwait="${test.class.timeout.seconds}" property="test.timeout" value="FAILURE: ${test.project.name}:test --tests ${test.name} failed to complete in ${test.class.timeout.minutes} minutes">
-									<gradle-execute dir="modules" task="${test.project.name}:test" test.name="${test.name}">
-										<arg value="--continue" />
-										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
-										<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
-										<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
-										<arg value="-Dtest.class.group.index=${axis.variable}" />
-									</gradle-execute>
-								</limit>
-
-								<move
-									todir="modules/test-results"
-								>
-									<fileset
-										dir="${test.project.results.dir}"
-										includes="**/TEST-*.xml"
-									/>
-								</move>
-							</try>
-							<catch>
-								<if>
-									<isset property="test.timeout" />
-									<then>
-										<echo>${test.timeout}</echo>
-									</then>
-								</if>
-
-								<echo>${test.failure.message}</echo>
-							</catch>
-						</trycatch>
+						<run-modules-junit-test test.class="@{test.class}" test.task="test">
+							<arg value="--continue" />
+							<arg value="-Dbuild.exclude.ant.plugin=true" />
+							<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
+							<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
+							<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
+							<arg value="-Dtest.class.group.index=${axis.variable}" />
+						</run-modules-junit-test>
 					</sequential>
 				</for>
 

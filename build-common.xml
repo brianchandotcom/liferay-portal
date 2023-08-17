@@ -664,6 +664,7 @@ information.
 		<attribute name="junit.failure.message.element" />
 		<attribute name="test.class.name" />
 		<attribute name="test.command.name" />
+		<attribute default="." name="test.results.dir" />
 
 		<sequential>
 			<local name="junit.timestamp" />
@@ -672,7 +673,7 @@ information.
 				<format pattern="yyyy-MM-dd_kk:mm:ss" property="junit.timestamp" />
 			</tstamp>
 
-			<echo file="TEST-@{test.class.name}.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+			<echo file="@{test.results.dir}/TEST-@{test.class.name}.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 
 			<testsuite errors="@{junit.failure.count}" failures="@{junit.failure.count}" hostname="localhost" name="@{test.class.name}" skipped="0" tests="1" time="0.0" timestamp="${junit.timestamp}">
 				<properties />

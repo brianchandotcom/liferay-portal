@@ -832,7 +832,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						).put(
 							"path", path
 						).put(
-							"scope", scope.name()
+							"scope", StringUtil.toLowerCase(scope.name())
 						))
 				).put(
 					"apiApplicationToAPISchemas",

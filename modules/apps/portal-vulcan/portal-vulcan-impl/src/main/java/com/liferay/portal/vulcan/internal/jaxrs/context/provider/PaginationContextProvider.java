@@ -5,12 +5,19 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration;
+import com.liferay.portal.vulcan.pagination.InvalidPaginationException;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -22,21 +29,60 @@ import org.apache.cxf.message.Message;
 @Provider
 public class PaginationContextProvider implements ContextProvider<Pagination> {
 
+	public PaginationContextProvider(
+		ConfigurationProvider configurationProvider, Portal portal) {
+
+		_configurationProvider = configurationProvider;
+		_portal = portal;
+	}
+
 	@Override
 	public Pagination createContext(Message message) {
 		HttpServletRequest httpServletRequest =
 			ContextProviderUtil.getHttpServletRequest(message);
 
-		String page = httpServletRequest.getParameter("page");
-		String pageSize = httpServletRequest.getParameter("pageSize");
+		int page = GetterUtil.getInteger(
+			httpServletRequest.getParameter("page"), 1);
 
-		if (StringUtil.equals(page, "0") || StringUtil.equals(pageSize, "0")) {
-			return null;
+		if (page <= 0) {
+			throw new InvalidPaginationException(
+				String.format(
+					"The Page parameter introduced [%s] is not valid. Only " +
+						"numbers higher or equal to 1 are accepted.",
+					page));
 		}
 
-		return Pagination.of(
-			GetterUtil.getInteger(page, 1),
-			GetterUtil.getInteger(pageSize, 20));
+		int pageSize = GetterUtil.getInteger(
+			httpServletRequest.getParameter("pageSize"), 20);
+
+		try {
+			HeadlessAPICompanyConfiguration headlessAPICompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					HeadlessAPICompanyConfiguration.class,
+					_portal.getCompanyId(httpServletRequest));
+
+			int maxPageSize =
+				headlessAPICompanyConfiguration.paginationSizeLimit();
+
+			if (maxPageSize <= 0) {
+				return Pagination.of(
+					page, (pageSize <= 0) ? QueryUtil.ALL_POS : pageSize);
+			}
+
+			if ((pageSize > maxPageSize) || (pageSize <= 0)) {
+				return Pagination.of(page, maxPageSize);
+			}
+
+			return Pagination.of(page, pageSize);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new ServerErrorException(
+				configurationException.getMessage(),
+				Response.Status.INTERNAL_SERVER_ERROR);
+		}
 	}
+
+	private final ConfigurationProvider _configurationProvider;
+	private final Portal _portal;
 
 }

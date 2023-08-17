@@ -230,6 +230,8 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
+		Refresh();
+
 		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
 			dmDocumentTitle = "DM Document Title",

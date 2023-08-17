@@ -602,7 +602,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		String testBatchRunPropertyQuery = sb.toString();
 
 		JobProperty jobProperty = getJobProperty(
-			"test.batch.run.property.global.query");
+			"test.batch.run.property.global.query", testSuiteName, batchName);
 
 		String jobPropertyValue = jobProperty.getValue();
 

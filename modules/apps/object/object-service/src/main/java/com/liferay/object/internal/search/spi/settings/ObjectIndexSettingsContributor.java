@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.index.settings.contributor;
+package com.liferay.object.internal.search.spi.settings;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.settings.IndexSettingsContributor;
@@ -23,10 +23,10 @@ public class ObjectIndexSettingsContributor
 	public void contribute(
 		String indexName, TypeMappingsHelper typeMappingsHelper) {
 
-		String typeMappings = StringUtil.read(
-			getClass(), "/META-INF/mappings/liferay-type-mappings.json");
-
-		typeMappingsHelper.addTypeMappings(indexName, typeMappings);
+		typeMappingsHelper.addTypeMappings(
+			indexName,
+			StringUtil.read(
+				getClass(), "dependencies/additional-type-mappings.json"));
 	}
 
 	@Override

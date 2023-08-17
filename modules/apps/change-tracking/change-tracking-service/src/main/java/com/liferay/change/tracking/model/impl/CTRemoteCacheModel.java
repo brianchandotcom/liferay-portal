@@ -67,7 +67,7 @@ public class CTRemoteCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -87,6 +87,10 @@ public class CTRemoteCacheModel
 		sb.append(description);
 		sb.append(", url=");
 		sb.append(url);
+		sb.append(", clientId=");
+		sb.append(clientId);
+		sb.append(", clientSecret=");
+		sb.append(clientSecret);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +140,20 @@ public class CTRemoteCacheModel
 			ctRemoteImpl.setUrl(url);
 		}
 
+		if (clientId == null) {
+			ctRemoteImpl.setClientId("");
+		}
+		else {
+			ctRemoteImpl.setClientId(clientId);
+		}
+
+		if (clientSecret == null) {
+			ctRemoteImpl.setClientSecret("");
+		}
+		else {
+			ctRemoteImpl.setClientSecret(clientSecret);
+		}
+
 		ctRemoteImpl.resetOriginalValues();
 
 		return ctRemoteImpl;
@@ -155,6 +173,8 @@ public class CTRemoteCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		url = objectInput.readUTF();
+		clientId = objectInput.readUTF();
+		clientSecret = objectInput.readUTF();
 	}
 
 	@Override
@@ -189,6 +209,20 @@ public class CTRemoteCacheModel
 		else {
 			objectOutput.writeUTF(url);
 		}
+
+		if (clientId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(clientId);
+		}
+
+		if (clientSecret == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(clientSecret);
+		}
 	}
 
 	public long mvccVersion;
@@ -200,5 +234,7 @@ public class CTRemoteCacheModel
 	public String name;
 	public String description;
 	public String url;
+	public String clientId;
+	public String clientSecret;
 
 }

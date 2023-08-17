@@ -32,6 +32,52 @@ public class JSONUtil {
 		}
 	}
 
+	public static void assertJSONValue(
+		String jsonContent, String jsonPath, String value) {
+
+		String jsonValue = getWithJSONPath(jsonContent, jsonPath);
+
+		if (!value.equals(jsonValue)) {
+			throw new RuntimeException(
+				"Expected JSON value: " + value + "\n Actual JSON value: " +
+					jsonValue);
+		}
+	}
+
+	public static void assertNotEquals(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
+
+		if (equals(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is equal to \n" + jsonObject2);
+		}
+	}
+
+	public static void assertNotJSONValue(
+		String jsonContent, String jsonPath, String value) {
+
+		String jsonValue = getWithJSONPath(jsonContent, jsonPath);
+
+		if (value.equals(jsonValue)) {
+			throw new RuntimeException(
+				"Expected JSON value: " + value +
+					"\n matches actual JSON value: " + jsonValue);
+		}
+	}
+
+	public static void assertNotSimilar(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
+
+		if (similar(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is similar to \n" + jsonObject2);
+		}
+	}
+
 	public static void assertSimilar(
 			JSONObject jsonObject1, JSONObject jsonObject2)
 		throws Exception {

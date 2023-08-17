@@ -89,51 +89,63 @@ export default function Action({
 			openToast({message: successMessage});
 		}
 		catch (error) {
-			const {detail} = error as {detail?: string};
-			const details = JSON.parse(detail as string);
-			const newErrors: Error = {};
-
-			const parseError = (details: ErrorMessage[], errors: Error) => {
-				details.forEach(({fieldName, message, messages}) => {
-					if (message) {
-						errors[fieldName] = message;
-					}
-					else {
-						errors[fieldName] = {};
-						parseError(
-							messages as ErrorMessage[],
-							errors[fieldName] as Error
-						);
-					}
-				});
+			const {detail, message} = error as {
+				detail?: string;
+				message?: string;
 			};
 
-			parseError(details, newErrors);
+			if (detail) {
+				const details = JSON.parse(detail as string);
+				const newErrors: Error = {};
 
-			setBackEndErrors(newErrors);
-
-			const errorMessages = new Set<string>();
-
-			const getErrorMessage = (errors: Error) => {
-				Object.values(errors).forEach((value) => {
-					if (typeof value === 'string') {
-						if (!errorMessages.has(value)) {
-							errorMessages.add(value);
+				const parseError = (details: ErrorMessage[], errors: Error) => {
+					details.forEach(({fieldName, message, messages}) => {
+						if (message) {
+							errors[fieldName] = message;
 						}
-					}
-					else {
-						getErrorMessage(value);
-					}
-				});
-			};
-
-			if (newErrors) {
-				getErrorMessage(newErrors);
-				errorMessages.forEach((message) => {
-					openToast({
-						message,
-						type: 'danger',
+						else {
+							errors[fieldName] = {};
+							parseError(
+								messages as ErrorMessage[],
+								errors[fieldName] as Error
+							);
+						}
 					});
+				};
+
+				parseError(details, newErrors);
+
+				setBackEndErrors(newErrors);
+
+				const errorMessages = new Set<string>();
+
+				const getErrorMessage = (errors: Error) => {
+					Object.values(errors).forEach((value) => {
+						if (typeof value === 'string') {
+							if (!errorMessages.has(value)) {
+								errorMessages.add(value);
+							}
+						}
+						else {
+							getErrorMessage(value);
+						}
+					});
+				};
+
+				if (newErrors) {
+					getErrorMessage(newErrors);
+					errorMessages.forEach((message) => {
+						openToast({
+							message,
+							type: 'danger',
+						});
+					});
+				}
+			}
+			else if (message) {
+				openToast({
+					message,
+					type: 'danger',
 				});
 			}
 		}

@@ -5,6 +5,8 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
+	finalizedBy formatSource
+
 	forcedExclusions "com.ibm.icu:icu4j:2.6.1"
 	goalPrefix = "service-builder"
 }

@@ -5,6 +5,8 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
+	finalizedBy formatSource
+
 	goalPrefix = "upgrade-table-builder"
 }
 

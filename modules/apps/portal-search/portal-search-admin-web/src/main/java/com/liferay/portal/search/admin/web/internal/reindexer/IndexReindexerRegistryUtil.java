@@ -13,31 +13,36 @@ import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import java.util.Collection;
 import java.util.Set;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Jiaxu Wei
  */
-@Component(service = IndexReindexerRegistry.class)
-public class IndexReindexerRegistry {
+public class IndexReindexerRegistryUtil {
 
-	public IndexReindexer getIndexReindexer(String className) {
+	public static IndexReindexer getIndexReindexer(String className) {
 		return _serviceTrackerMap.getService(className);
 	}
 
-	public Set<String> getIndexReindexerClassNames() {
+	public static Set<String> getIndexReindexerClassNames() {
 		return _serviceTrackerMap.keySet();
 	}
 
-	public Collection<IndexReindexer> getIndexReindexers() {
+	public static Collection<IndexReindexer> getIndexReindexers() {
 		return _serviceTrackerMap.values();
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final ServiceTrackerMap<String, IndexReindexer>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			IndexReindexerRegistryUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, IndexReindexer.class, null,
 			ServiceReferenceMapperFactory.create(
@@ -49,12 +54,5 @@ public class IndexReindexerRegistry {
 					emitter.emit(clazz.getName());
 				}));
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	private ServiceTrackerMap<String, IndexReindexer> _serviceTrackerMap;
 
 }

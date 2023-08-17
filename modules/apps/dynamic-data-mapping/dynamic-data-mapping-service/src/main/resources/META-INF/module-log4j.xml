@@ -6,6 +6,6 @@
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.upgrade" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.util" />
-		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.verify.DDMServiceVerifyProcess" />
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.verify.DDMServiceVerifyProcess" />
 	</Loggers>
 </Configuration>

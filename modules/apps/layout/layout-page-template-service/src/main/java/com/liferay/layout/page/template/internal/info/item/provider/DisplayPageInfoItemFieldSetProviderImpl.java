@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -90,9 +91,12 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 				).build(),
 				_getDefaultDisplayPageURL(infoItemReference, themeDisplay)));
 
-		String url =
-			themeDisplay.getPortalURL() + _portal.getPathContext() +
-				"/display-page/custom/";
+		Group group = themeDisplay.getScopeGroup();
+
+		String groupFriendlyURL = _portal.getGroupFriendlyURL(
+			group.getPublicLayoutSet(), themeDisplay, false, false);
+
+		String url = groupFriendlyURL + "/display-page/custom/";
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(

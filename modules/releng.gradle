@@ -215,6 +215,7 @@ portalArtifactsJar {
 
 	baseName = "portal"
 	classifier = null
+	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 	zip64 = true

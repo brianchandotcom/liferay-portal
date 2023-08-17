@@ -1,7 +1,9 @@
 dependencies {
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationImplementation project(":apps:list-type:list-type-api")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:object:object-rest-api")
+	testIntegrationImplementation project(":apps:object:object-rest-test-util")
 	testIntegrationImplementation project(":apps:object:object-storage-salesforce-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")

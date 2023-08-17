@@ -172,6 +172,8 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 		try {
 			JenkinsResultsParserUtil.toString(sb.toString());
+
+			keepJenkinsBuild(true);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

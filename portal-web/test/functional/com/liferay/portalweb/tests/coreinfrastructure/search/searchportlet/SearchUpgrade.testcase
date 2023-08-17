@@ -501,7 +501,6 @@ definition {
 		property portal.version = "7.3.10.u6";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
-		property testray.main.component.name = "Search Experiences";
 
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
@@ -511,7 +510,6 @@ definition {
 		property portal.version = "7.4.13.u33";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
-		property testray.main.component.name = "Search Experiences";
 
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
@@ -522,7 +520,6 @@ definition {
 		property portal.version = "7.4.13.u63";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
-		property testray.main.component.name = "Search Experiences";
 
 		task ("Assert elements within existing blueprint query builder add element sidebar are using English translations and not language keys") {
 			Blueprints.openBlueprintsAdmin();

@@ -5,6 +5,8 @@
 
 package com.liferay.knowledge.base.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletConfig;
@@ -102,6 +105,26 @@ public class EditKBArticleDisplayContext {
 		return BeanParamUtil.getString(
 			getKBArticle(), _liferayPortletRequest, "content",
 			BeanPropertiesUtil.getString(_getKBTemplate(), "content"));
+	}
+
+	public List<DropdownItem> getEditKBArticleActionDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.put(
+					"id",
+					_liferayPortletResponse.getNamespace() + "publishItem");
+				dropdownItem.setIcon("arrow-right-full");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "publish"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setIcon("date-time");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "schedule-publication"));
+			}
+		).build();
 	}
 
 	public String getFormCssClass() {

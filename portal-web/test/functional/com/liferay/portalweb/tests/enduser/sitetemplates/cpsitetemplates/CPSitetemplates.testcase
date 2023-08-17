@@ -752,12 +752,9 @@ definition {
 
 		task ("When: Adds a parent content page and a child content page to the created site template") {
 			SiteTemplates.addSitePageViaSiteTemplateCP(
-				masterLayoutName = "Blank",
 				pageName = "Parent Content Page",
 				sitePageType = "Content Page",
 				siteTemplateName = "Site Template Name");
-
-			SelectFrameTop();
 
 			PageEditor.publish();
 
@@ -767,9 +764,35 @@ definition {
 				sitePageType = "Content Page",
 				siteTemplateName = "Site Template Name");
 
-			SelectFrameTop();
-
 			PageEditor.publish();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			if (IsElementPresent(index = 1, key_itemName = "Parent Content Page", locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS", value1 = "Draft")) {
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Edit",
+					pageName = "Parent Content Page");
+
+				PageEditor.publish();
+			}
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			Click(
+				key_pageName = "Parent Content Page",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHILD_INDICATOR");
+
+			if (IsElementPresent(index = 1, key_itemName = "Child Content Page", locator1 = "PagesAdmin#LIST_GROUP_ITEM_PAGE_STATUS", value1 = "Draft")) {
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "Edit",
+					pageName = "Child Content Page");
+
+				PageEditor.publish();
+			}
 		}
 
 		task ("Then: User can view and edit child content page in the site") {

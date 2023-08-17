@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -403,12 +404,16 @@ public class AMImageEntryLocalServiceTest {
 
 	@Test
 	public void testGetExpectedAMImageEntriesCount() throws Exception {
+		String originalName = PrincipalThreadLocal.getName();
+
 		Company company = CompanyTestUtil.addCompany();
 
 		ServiceRegistration<AMImageCounter> amImageCounterServiceRegistration =
 			null;
 
 		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 			int counter = RandomTestUtil.randomInt(100, 300);
 
 			amImageCounterServiceRegistration = _registerAMImageCounter(
@@ -426,12 +431,15 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);
 
 			_companyLocalService.deleteCompany(company);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
 	@Test
 	public void testGetExpectedAMImageEntriesCountSumsAllAMImageCounters()
 		throws Exception {
+
+		String originalName = PrincipalThreadLocal.getName();
 
 		Company company = CompanyTestUtil.addCompany();
 
@@ -441,6 +449,8 @@ public class AMImageEntryLocalServiceTest {
 			null;
 
 		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 			int counter1 = RandomTestUtil.randomInt(100, 300);
 
 			amImageCounterServiceRegistration1 = _registerAMImageCounter(
@@ -464,11 +474,14 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration2);
 
 			_companyLocalService.deleteCompany(company);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
 	@Test
 	public void testGetPercentage() throws Exception {
+		String originalName = PrincipalThreadLocal.getName();
+
 		Company company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.getAdminUser(company.getCompanyId());
@@ -485,6 +498,7 @@ public class AMImageEntryLocalServiceTest {
 			null;
 
 		try {
+			PrincipalThreadLocal.setName(user.getUserId());
 			amImageCounterServiceRegistration = _registerAMImageCounter(
 				"test", 4);
 
@@ -509,11 +523,14 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);
 
 			_companyLocalService.deleteCompany(company);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
 	@Test
 	public void testGetPercentageMax100() throws Exception {
+		String originalName = PrincipalThreadLocal.getName();
+
 		Company company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.getAdminUser(company.getCompanyId());
@@ -530,6 +547,7 @@ public class AMImageEntryLocalServiceTest {
 			null;
 
 		try {
+			PrincipalThreadLocal.setName(user.getUserId());
 			amImageCounterServiceRegistration = _registerAMImageCounter(
 				"test",
 				-AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(
@@ -564,11 +582,14 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);
 
 			_companyLocalService.deleteCompany(company);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
 	@Test
 	public void testGetPercentageWhenNoImages() throws Exception {
+		String originalName = PrincipalThreadLocal.getName();
+
 		Company company = CompanyTestUtil.addCompany();
 
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
@@ -576,6 +597,7 @@ public class AMImageEntryLocalServiceTest {
 				company.getCompanyId(), "uuid1", 100, 200);
 
 		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 			Assert.assertEquals(
 				0,
 				AMImageEntryLocalServiceUtil.getPercentage(
@@ -584,6 +606,7 @@ public class AMImageEntryLocalServiceTest {
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 

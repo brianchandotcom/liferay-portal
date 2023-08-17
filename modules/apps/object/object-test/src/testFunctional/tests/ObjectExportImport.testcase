@@ -443,6 +443,18 @@ definition {
 				locator1 = "CreateObject#OBJECT_NAME");
 		}
 
+		task ("Then the state is present on the object") {
+			ObjectPortlet.selectCustomObject(label = "Imported Object With State");
+
+			ObjectAdmin.goToStateManagerTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
+
+			AssertElementPresent(
+				key_stateName = "PicklistItemTest",
+				locator1 = "ObjectAdmin#VIEW_STATE_NAME");
+		}
+
 		task ("Then the imported object with state can be exported") {
 			ObjectAdmin.openObjectAdmin();
 

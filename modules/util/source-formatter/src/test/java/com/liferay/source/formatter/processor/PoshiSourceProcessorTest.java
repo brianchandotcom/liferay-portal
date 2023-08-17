@@ -42,6 +42,13 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testPropertyCiRetirtiesDisabledSmoke() throws Exception {
+		test(
+			"PropertyCiRetriesDisabledSmoke.testtestcase",
+			"Should add property ci.retries.disabled = \"true\" in definition");
+	}
+
+	@Test
 	public void testSortAntCommandParameters() throws Exception {
 		test("SortAntCommandParameters.testtestcase");
 	}

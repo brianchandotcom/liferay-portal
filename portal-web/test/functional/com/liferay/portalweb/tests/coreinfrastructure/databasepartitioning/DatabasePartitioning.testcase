@@ -320,7 +320,7 @@ definition {
 	@description = "This is a use case for LPS-171480."
 	@priority = 3
 	test CanScheduleJobInVariousCompaniesWhenAutoUpgradeIsEnabled {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"1\"";
 		property test.liferay.virtual.instance = "false";

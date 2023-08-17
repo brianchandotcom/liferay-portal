@@ -14,7 +14,7 @@ definition {
 
 	@priority = 5
 	test CanAutoUpgradeLargePartitionedDatabase7413 {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
+		property custom.properties = "upgrade.report.enabled=true";
 		property custom.startup.timeout = "300";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
@@ -36,7 +36,7 @@ definition {
 
 	@priority = 5
 	test CanAutoUpgradeLargePartitionedDatabase7413Benchmark {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
+		property custom.properties = "upgrade.report.enabled=true";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";

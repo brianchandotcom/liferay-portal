@@ -20,6 +20,7 @@ export declare type ViewObjectDefinitionsModals = {
 	deleteObjectDefinition: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
+	redirectEditObjectDefinition: boolean;
 };
 export interface DeletedObjectDefinition {
 	hasObjectRelationship: boolean;

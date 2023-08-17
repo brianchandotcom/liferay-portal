@@ -30,10 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author     Marcellus Tavares
  * @author     Rafael Praxedes
- * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(service = VerifyProcess.class)
-@Deprecated
 public class DDMServiceVerifyProcess extends VerifyProcess {
 
 	@Override

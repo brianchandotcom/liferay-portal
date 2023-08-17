@@ -31,10 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Zsolt Berentey
- * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(service = VerifyProcess.class)
-@Deprecated
 public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Override

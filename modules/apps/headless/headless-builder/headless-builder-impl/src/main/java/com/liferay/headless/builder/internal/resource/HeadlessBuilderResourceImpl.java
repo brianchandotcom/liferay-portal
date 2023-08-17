@@ -34,7 +34,7 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	@GET
-	@Path(_COMPANY_SCOPED_PATH_REGEX)
+	@Path("/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,
@@ -47,7 +47,7 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	@GET
-	@Path(_SITE_SCOPED_PATH_REGEX)
+	@Path(HeadlessBuilderConstants.SITE_SCOPED_BASE_PATH + "/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,
@@ -98,11 +98,6 @@ public class HeadlessBuilderResourceImpl {
 				"Endpoint /%s does not exist for %s", path,
 				contextAPIApplication.getTitle()));
 	}
-
-	private static final String _COMPANY_SCOPED_PATH_REGEX = "/{path: .*}";
-
-	private static final String _SITE_SCOPED_PATH_REGEX =
-		HeadlessBuilderConstants.SITE_SCOPED_BASE_PATH + "/{path: .*}";
 
 	private final EndpointHelper _endpointHelper;
 

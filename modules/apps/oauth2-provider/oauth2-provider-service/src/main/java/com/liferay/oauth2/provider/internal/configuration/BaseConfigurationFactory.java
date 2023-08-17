@@ -6,7 +6,6 @@
 package com.liferay.oauth2.provider.internal.configuration;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
@@ -24,6 +23,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Map;
+
+import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Deactivate;
@@ -151,6 +152,9 @@ public abstract class BaseConfigurationFactory {
 			_configMapName);
 	}
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	protected Collection<Application> applications;
+
 	@Reference
 	protected CompanyLocalService companyLocalService;
 
@@ -161,9 +165,6 @@ public abstract class BaseConfigurationFactory {
 
 	@Reference
 	protected OAuth2ApplicationLocalService oAuth2ApplicationLocalService;
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	protected Collection<ScopeFinder> scopeFinders;
 
 	@Reference
 	protected UserLocalService userLocalService;

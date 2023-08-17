@@ -118,6 +118,24 @@ definition {
 				}
 			}
 		}
+		else {
+
+			// If LXC Environment, only delete the one we are using beforehand
+
+			var portalURL = JSONCompany.getPortalURL();
+
+			var portalInstance = Regex.removeHTTP(url = ${portalURL});
+
+			var portalInstance = Regex.removePortNumber(url = ${portalInstance});
+
+			for (var portalInstanceId : list ${portalInstanceIds}) {
+				if (${portalInstanceId} == ${portalInstance}) {
+					HeadlessPortalInstanceAPI.deletePortalInstance(
+						authenticationMethod = ${authenticationMethod},
+						portalInstanceId = ${portalInstanceId});
+				}
+			}
+		}
 	}
 
 	macro deletePortalInstance {

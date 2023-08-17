@@ -16,6 +16,7 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,7 +55,8 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 			jsonObject.has("classPK")) {
 
 			return new Tuple(
-				jsonObject.getString("className"),
+				infoSearchClassMapperRegistry.getSearchClassName(
+					jsonObject.getString("className")),
 				jsonObject.getLong("classPK"));
 		}
 
@@ -86,7 +88,9 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 							AssetEntry.class.getName())) {
 
 						return new Tuple(
-							classedModel.getModelClassName(), primaryKeyObj);
+							infoSearchClassMapperRegistry.getSearchClassName(
+								classedModel.getModelClassName()),
+							primaryKeyObj);
 					}
 
 					AssetEntry assetEntry =
@@ -95,7 +99,9 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 
 					if (assetEntry != null) {
 						return new Tuple(
-							portal.getClassName(assetEntry.getClassNameId()),
+							infoSearchClassMapperRegistry.getSearchClassName(
+								portal.getClassName(
+									assetEntry.getClassNameId())),
 							assetEntry.getClassPK());
 					}
 				}
@@ -127,6 +133,9 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	protected InfoItemServiceRegistry infoItemServiceRegistry;
+
+	@Reference
+	protected InfoSearchClassMapperRegistry infoSearchClassMapperRegistry;
 
 	@Reference
 	protected Portal portal;

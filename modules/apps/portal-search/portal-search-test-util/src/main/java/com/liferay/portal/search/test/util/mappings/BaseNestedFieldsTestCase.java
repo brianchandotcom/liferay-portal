@@ -100,7 +100,7 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest =
 			new GetFieldMappingIndexRequest(
-				new String[] {String.valueOf(getCompanyId())}, getMappingName(),
+				new String[] {String.valueOf(getCompanyId())},
 				new String[] {
 					"ddmFieldArray.ddmFieldValueText_en_US",
 					"ddmFieldArray.ddmFieldValueKeyword"
@@ -278,8 +278,6 @@ public abstract class BaseNestedFieldsTestCase extends BaseIndexingTestCase {
 		searchRequestBuilder.fetchSourceIncludes(
 			new String[] {"ddmFieldArray.*", Field.GROUP_ID});
 	}
-
-	protected abstract String getMappingName();
 
 	protected Query getQuery(
 		BooleanQuery booleanQuery, boolean mappedAsNested) {

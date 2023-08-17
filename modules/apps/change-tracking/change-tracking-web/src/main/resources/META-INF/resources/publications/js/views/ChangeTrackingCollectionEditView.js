@@ -52,6 +52,8 @@ export default function ChangeTrackingCollectionEditView({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
+		setSaveButtonDisabled(true);
+
 		const bodyContent = objectToFormData({
 			[`${namespace}ctCollectionId`]: ctCollectionId,
 			[`${namespace}name`]: nameField,
@@ -115,6 +117,9 @@ export default function ChangeTrackingCollectionEditView({
 					else {
 						navigate(redirect);
 					}
+				}
+				else {
+					setSaveButtonDisabled(false);
 				}
 			})
 			.catch((error) => {

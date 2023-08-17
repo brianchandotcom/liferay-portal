@@ -1,5 +1,7 @@
 definition {
 
+	property ci.retries.disabled = "true";
+
 	@priority = 5
 	test Smoke {
 		property testray.main.component.name = "Liferay Partner Workspace";

@@ -57,21 +57,18 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> values = _getValues(
-			objectDefinition, parametersUnicodeProperties,
-			ObjectEntryVariablesUtil.getVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionManagerRegistry));
-
-		values.put(
-			"objectActionId", payloadJSONObject.getLong("objectActionId"));
-
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				_execute(
-					objectDefinition,
+					objectActionId, objectDefinition,
 					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),
-					_userLocalService.getUser(userId), values);
+					_userLocalService.getUser(userId),
+					_getValues(
+						objectDefinition, parametersUnicodeProperties,
+						ObjectEntryVariablesUtil.getVariables(
+							_dtoConverterRegistry, objectDefinition,
+							payloadJSONObject,
+							_systemObjectDefinitionManagerRegistry)));
 
 				return null;
 			});
@@ -83,8 +80,8 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 	}
 
 	private void _execute(
-			ObjectDefinition objectDefinition, long primaryKey, User user,
-			Map<String, Object> values)
+			long objectActionId, ObjectDefinition objectDefinition,
+			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
@@ -124,8 +121,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		}
 		catch (Exception exception) {
 			_objectActionLocalService.updateStatus(
-				GetterUtil.getLong(values.get("objectActionId")),
-				ObjectActionConstants.STATUS_FAILED);
+				objectActionId, ObjectActionConstants.STATUS_FAILED);
 
 			throw exception;
 		}

@@ -58,7 +58,7 @@ definition {
 			}
 			else {
 				Click(
-					key_action = "Reindex search indexes.",
+					key_action = "Reindex search indexes",
 					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 			}
 

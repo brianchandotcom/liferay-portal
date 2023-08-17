@@ -193,7 +193,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries.");
+		SearchAdministration.executeReindex(action = "Reindex spell-check dictionaries");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 

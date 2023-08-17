@@ -13,10 +13,13 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.DestinationWrapper;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -25,7 +28,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -48,16 +51,20 @@ public class CTMessageBusInterceptorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_testMessageListener = new TestMessageListener();
-
-		Destination destination = _messageBus.getDestination(
+		_originalDestination = _messageBus.getDestination(
 			DestinationNames.SUBSCRIPTION_SENDER);
 
-		_originalMessageListeners = destination.getMessageListeners();
+		_testDestination = new TestDestination(
+			_destinationFactory.createDestination(
+				new DestinationConfiguration(
+					DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
+					DestinationNames.SUBSCRIPTION_SENDER)));
 
-		destination.unregisterMessageListeners();
+		_destinationsMap = ReflectionTestUtil.getFieldValue(
+			_messageBus, "_destinations");
 
-		destination.register(_testMessageListener);
+		_destinationsMap.put(
+			DestinationNames.SUBSCRIPTION_SENDER, _testDestination);
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -66,14 +73,8 @@ public class CTMessageBusInterceptorTest {
 
 	@After
 	public void tearDown() {
-		Destination destination = _messageBus.getDestination(
-			DestinationNames.SUBSCRIPTION_SENDER);
-
-		destination.unregisterMessageListeners();
-
-		for (MessageListener messageListener : _originalMessageListeners) {
-			destination.register(messageListener);
-		}
+		_destinationsMap.put(
+			DestinationNames.SUBSCRIPTION_SENDER, _originalDestination);
 	}
 
 	@Test
@@ -93,7 +94,7 @@ public class CTMessageBusInterceptorTest {
 			subscriptionSender.flushNotificationsAsync();
 		}
 
-		Assert.assertNull(_testMessageListener.getReceivedMessage());
+		Assert.assertNull(_testDestination.getReceivedMessage());
 
 		List<Message> messages = _ctMessageLocalService.getMessages(
 			_ctCollection.getCtCollectionId());
@@ -132,7 +133,7 @@ public class CTMessageBusInterceptorTest {
 		_ctMessageLocalService.addCTMessage(
 			_ctCollection.getCtCollectionId(), message);
 
-		Assert.assertNull(_testMessageListener.getReceivedMessage());
+		Assert.assertNull(_testDestination.getReceivedMessage());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -142,7 +143,7 @@ public class CTMessageBusInterceptorTest {
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 		}
 
-		Message receivedMessage = _testMessageListener.getReceivedMessage();
+		Message receivedMessage = _testDestination.getReceivedMessage();
 
 		SubscriptionSender deserializedSubscriptionSender =
 			(SubscriptionSender)receivedMessage.getPayload();
@@ -187,22 +188,30 @@ public class CTMessageBusInterceptorTest {
 	private static CTProcessLocalService _ctProcessLocalService;
 
 	@Inject
+	private static DestinationFactory _destinationFactory;
+
+	@Inject
 	private static MessageBus _messageBus;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
-	private Set<MessageListener> _originalMessageListeners;
-	private TestMessageListener _testMessageListener;
+	private Map<String, Destination> _destinationsMap;
+	private Destination _originalDestination;
+	private TestDestination _testDestination;
 
-	private static class TestMessageListener implements MessageListener {
+	private static class TestDestination extends DestinationWrapper {
+
+		public TestDestination(Destination destination) {
+			super(destination);
+		}
 
 		public Message getReceivedMessage() {
 			return _message;
 		}
 
 		@Override
-		public void receive(Message message) {
+		public void send(Message message) {
 			_message = message;
 		}
 

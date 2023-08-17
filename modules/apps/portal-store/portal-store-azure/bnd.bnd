@@ -41,7 +41,7 @@ Import-Package:\
 	\
 	!net.shibboleth.utilities.java.support.xml,\
 	\
-	!org.apache.logging.log4j.*,\
+	!org.apache.log4j.*,\
 	\
 	!org.bouncycastle.*,\
 	\

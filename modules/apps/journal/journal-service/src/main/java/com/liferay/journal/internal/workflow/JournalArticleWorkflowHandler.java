@@ -83,12 +83,24 @@ public class JournalArticleWorkflowHandler
 		LiferayPortletResponse liferayPortletResponse,
 		String noSuchEntryRedirect) {
 
+		JournalArticle article = _journalArticleLocalService.fetchArticle(
+			classPK);
+
+		if (article == null) {
+			article = _journalArticleLocalService.fetchLatestArticle(classPK);
+		}
+
+		if (article == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to find article " + classPK);
+			}
+
+			return null;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		JournalArticle article = _journalArticleLocalService.fetchArticle(
-			classPK);
 
 		try {
 			if (!_isShowDisplayPage(

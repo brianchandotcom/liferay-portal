@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKBOX_ID</td>
+	<td>//input[contains(@type,'checkbox')][contains(@id,'${checkboxId}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKBOX_LABEL</td>
 	<td>//label[input]//*[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>

@@ -67,8 +67,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, String unitOfMeasureKey, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -176,8 +176,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, String unitOfMeasureKey, boolean validateInventory,
-			ServiceContext serviceContext)
+			BigDecimal quantity, String unitOfMeasureKey,
+			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(externalReferenceCode)) {
@@ -230,19 +230,18 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Commerce order item
 
-		int shippedQuantity = Math.negateExact(
-			commerceShipmentItem.getQuantity());
+		BigDecimal shippedQuantity = commerceShipmentItem.getQuantity();
 
 		try {
 			commerceOrderItem =
 				_commerceOrderItemLocalService.incrementShippedQuantity(
 					commerceShipmentItem.getCommerceOrderItemId(),
-					shippedQuantity);
+					shippedQuantity.negate());
 
 			// Stock quantity
 
 			if ((commerceShipmentItem.getCommerceInventoryWarehouseId() > 0) &&
-				(commerceShipmentItem.getQuantity() > 0)) {
+				(shippedQuantity.compareTo(BigDecimal.ZERO) > 0)) {
 
 				_restoreStockQuantity(
 					commerceOrderItem, commerceShipmentItem,
@@ -362,7 +361,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Override
 	public CommerceShipmentItem updateCommerceShipmentItem(
 			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory)
+			BigDecimal quantity, boolean validateInventory)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -375,7 +374,7 @@ public class CommerceShipmentItemLocalServiceImpl
 			_commerceOrderItemLocalService.getCommerceOrderItem(
 				commerceShipmentItem.getCommerceOrderItemId());
 
-		int originalQuantity = commerceShipmentItem.getQuantity();
+		BigDecimal originalQuantity = commerceShipmentItem.getQuantity();
 
 		if (validateInventory) {
 			_validate(
@@ -390,17 +389,16 @@ public class CommerceShipmentItemLocalServiceImpl
 		commerceShipmentItem = commerceShipmentItemPersistence.update(
 			commerceShipmentItem);
 
-		int quantityDelta = quantity - originalQuantity;
+		BigDecimal quantityDelta = quantity.subtract(originalQuantity);
 
 		// Stock quantity
 
 		if (BigDecimalUtil.eq(
 				commerceOrderItem.getQuantity(),
-				BigDecimal.valueOf(commerceOrderItem.getShippedQuantity()))) {
+				commerceOrderItem.getShippedQuantity())) {
 
 			_restoreStockQuantity(
-				commerceOrderItem, commerceShipmentItem,
-				Math.abs(quantityDelta));
+				commerceOrderItem, commerceShipmentItem, quantityDelta.abs());
 		}
 		else {
 			_updateStockQuantity(
@@ -459,7 +457,7 @@ public class CommerceShipmentItemLocalServiceImpl
 
 	private void _restoreStockQuantity(
 			CommerceOrderItem commerceOrderItem,
-			CommerceShipmentItem commerceShipmentItem, int quantity)
+			CommerceShipmentItem commerceShipmentItem, BigDecimal quantity)
 		throws PortalException {
 
 		long commerceCatalogGroupId = 0;
@@ -472,15 +470,15 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		_commerceInventoryEngine.increaseStockQuantity(
 			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
-			commerceShipmentItem.getCommerceInventoryWarehouseId(),
-			BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
+			commerceShipmentItem.getCommerceInventoryWarehouseId(), quantity,
+			commerceOrderItem.getSku(),
 			commerceOrderItem.getUnitOfMeasureKey());
 
 		_commerceInventoryBookedQuantityLocalService.
 			resetCommerceInventoryBookedQuantity(
 				commerceOrderItem.getCommerceInventoryBookedQuantityId(),
-				commerceOrderItem.getUserId(), null,
-				BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
+				commerceOrderItem.getUserId(), null, quantity,
+				commerceOrderItem.getSku(),
 				commerceOrderItem.getUnitOfMeasureKey(),
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.ORDER_ID,
@@ -496,7 +494,7 @@ public class CommerceShipmentItemLocalServiceImpl
 
 	private void _updateStockQuantity(
 			CommerceOrderItem commerceOrderItem, long commerceShipmentItemId,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		if (commerceOrderItem == null) {
@@ -528,9 +526,8 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItem.getUserId(),
 			commerceOrderItem.getCommerceInventoryBookedQuantityId(),
 			commerceCatalogGroupId,
-			commerceShipmentItem.getCommerceInventoryWarehouseId(),
-			BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
-			commerceOrderItem.getUnitOfMeasureKey(),
+			commerceShipmentItem.getCommerceInventoryWarehouseId(), quantity,
+			commerceOrderItem.getSku(), commerceOrderItem.getUnitOfMeasureKey(),
 			HashMapBuilder.put(
 				CommerceInventoryAuditTypeConstants.ORDER_ID,
 				String.valueOf(commerceOrderItem.getCommerceOrderId())
@@ -549,7 +546,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	private void _validate(
 			CommerceOrderItem commerceOrderItem,
 			CommerceShipment commerceShipment,
-			long commerceInventoryWarehouseId, int quantity, int newQuantity)
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			BigDecimal newQuantity)
 		throws PortalException {
 
 		if ((commerceShipment != null) &&
@@ -573,9 +571,8 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		BigDecimal commerceOrderItemQuantity = commerceOrderItem.getQuantity();
 
-		int availableQuantity =
-			commerceOrderItemQuantity.intValue() -
-				commerceOrderItem.getShippedQuantity();
+		BigDecimal availableQuantity = commerceOrderItemQuantity.subtract(
+			commerceOrderItem.getShippedQuantity());
 
 		CommerceShipmentItem commerceShipmentItem =
 			commerceShipmentItemPersistence.fetchByC_C_C(
@@ -584,18 +581,20 @@ public class CommerceShipmentItemLocalServiceImpl
 				commerceInventoryWarehouseId);
 
 		if (commerceShipmentItem != null) {
-			availableQuantity =
-				availableQuantity + commerceShipmentItem.getQuantity();
+			availableQuantity = availableQuantity.add(
+				commerceShipmentItem.getQuantity());
 		}
 
-		int commerceInventoryWarehouseQuantity =
+		BigDecimal commerceInventoryWarehouseQuantity =
 			_commerceOrderItemLocalService.
 				getCommerceInventoryWarehouseItemQuantity(
 					commerceOrderItem.getCommerceOrderItemId(),
 					commerceInventoryWarehouseId);
 
-		if (((newQuantity > quantity) && (newQuantity > availableQuantity)) ||
-			(newQuantity > commerceInventoryWarehouseQuantity)) {
+		if ((BigDecimalUtil.gt(newQuantity, quantity) &&
+			 BigDecimalUtil.gt(newQuantity, availableQuantity)) ||
+			BigDecimalUtil.gt(
+				newQuantity, commerceInventoryWarehouseQuantity)) {
 
 			throw new CommerceShipmentItemQuantityException();
 		}

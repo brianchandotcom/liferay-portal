@@ -14,7 +14,7 @@ definition {
 
 		task ("Given publish an API application") {
 			ApplicationAPI.createAPIApplication(
-				baseURL = "App-test",
+				baseURL = "app-test",
 				status = "published",
 				title = "App-test");
 		}

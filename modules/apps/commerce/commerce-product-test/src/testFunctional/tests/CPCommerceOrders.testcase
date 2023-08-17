@@ -3051,6 +3051,146 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12025. If given a user with permissions that only view orders, then the user can just view the order, cannot add or edit order fields"
+	@priority = 5
+	test CanViewOrdersOnlyWhenGivenViewPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a business account and Money Order enabled is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editPaymentMethod(
+				active = "true",
+				paymentMethod = "Money Order");
+
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Commerce Account",
+				accountType = "Business");
+
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("And a user with permissions that can view order and channel is created") {
+			JSONRole.addRegularRole(
+				roleKey = "View Order Role",
+				roleTitle = "View Order Role");
+
+			JSONUser.addUserWithRole(
+				roleTitle = "View Order Role",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			for (var resourceLists : list "com.liferay.commerce.order:VIEW_COMMERCE_ORDERS,com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel:VIEW,com.liferay.commerce.model.CommerceOrder:VIEW,com.liferay.commerce.model.CommerceOrderType:VIEW,com.liferay.commerce.product.model.CommerceChannel:VIEW,com.liferay.commerce.notification.model.CommerceNotificationTemplate:VIEW,90:VIEW_CONTROL_PANEL,com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet:ACCESS_IN_CONTROL_PANEL,com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet:VIEW,com.liferay.commerce.channel:VIEW_COMMERCE_CHANNELS") {
+				var resourceName = StringUtil.extractFirst(${resourceLists}, ":");
+				var resourceAction = StringUtil.extractLast(${resourceLists}, ":");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceAction},
+					resourceName = ${resourceName},
+					roleTitle = "View Order Role");
+			}
+		}
+
+		task ("When an order is placed") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				orderItems = "MIN55861:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2,
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("Then the admin can view the order fields with 'Add' or 'Edit' button") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			for (var titleName : list "Purchase Order Number,Payment Terms,Delivery Terms,Requested Delivery Date,Printed Note") {
+				AssertElementPresent(
+					key_buttonName = "Add",
+					key_titleName = ${titleName},
+					locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+			}
+
+			for (var titleName : list "Billing Address,Shipping Address") {
+				AssertElementPresent(
+					key_buttonName = "Edit",
+					key_titleName = ${titleName},
+					locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+			}
+
+			AssertElementPresent(locator1 = "CommerceOrders#ORDER_EDIT_SUMMARY_BUTTON");
+
+			AssertElementPresent(
+				key_value = "MIN55861",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			for (var titleName : list "Payment Method,Payment Status") {
+				AssertElementPresent(
+					key_buttonName = "Edit",
+					key_titleName = ${titleName},
+					locator1 = "CommerceOrders#ORDER_DETAILS_EDIT_BUTTON");
+			}
+		}
+
+		task ("But the user that with only view order role cannot view the order fields with 'Add' or 'Edit' button") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			for (var titleName : list "Purchase Order Number,Payment Terms,Delivery Terms,Requested Delivery Date,Printed Note") {
+				AssertElementNotPresent(
+					key_buttonName = "Add",
+					key_titleName = ${titleName},
+					locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+			}
+
+			for (var titleName : list "Billing Address,Shipping Address") {
+				AssertElementNotPresent(
+					key_buttonName = "Edit",
+					key_titleName = ${titleName},
+					locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+			}
+
+			AssertElementNotPresent(locator1 = "CommerceOrders#ORDER_EDIT_SUMMARY_BUTTON");
+
+			AssertElementNotPresent(
+				key_value = "MIN55861",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			for (var titleName : list "Payment Method,Payment Status") {
+				AssertElementNotPresent(
+					key_buttonName = "Edit",
+					key_titleName = ${titleName},
+					locator1 = "CommerceOrders#ORDER_DETAILS_EDIT_BUTTON");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11737. If admin adds a product to the cart with a printed note, then the printed note still can be viewed after the cart checkout via headless API"
 	@priority = 5
 	test CanViewPrintedNoteAfterCartCheckoutViaHeadlessAPI {

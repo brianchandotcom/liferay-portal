@@ -568,7 +568,7 @@ definition {
 				radioLabel = "Sync");
 
 			Click(
-				key_action = "Reindex search indexes.",
+				key_action = "Reindex search indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 		}
 
@@ -690,7 +690,7 @@ definition {
 				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 
 			Click(
-				key_action = "Reindex search indexes.",
+				key_action = "Reindex search indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 		}
 
@@ -783,7 +783,7 @@ definition {
 				radioLabel = "Sync");
 
 			Click(
-				key_action = "Reindex search indexes.",
+				key_action = "Reindex search indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 		}
 

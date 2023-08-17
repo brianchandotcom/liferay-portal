@@ -14,8 +14,6 @@
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"scheduledDate", ""
-			).put(
-				"scheduledTime", ""
 			).build()
 		%>'
 	/>

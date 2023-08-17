@@ -42,7 +42,6 @@ export declare function getDefinitionNodeActions(
 	objectDefinitionName: string,
 	hasObjectDefinitionDeleteResourcePermission: boolean,
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean,
-	editObjectDefinitionURL: string,
 	objectDefinitionPermissionsURL: string,
 	status: {
 		code: number;
@@ -50,7 +49,8 @@ export declare function getDefinitionNodeActions(
 		label_i18n: string;
 	},
 	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
-	handleShowDeleteModal: () => void
+	handleShowDeleteModal: () => void,
+	handleShowRedirectModal: () => void
 ): DropDownItems[];
 export declare function getFolderActions(
 	id: number,

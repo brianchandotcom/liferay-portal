@@ -22,6 +22,7 @@ export declare type ViewObjectDefinitionsModals = {
 	deletionNotAllowed: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
+	redirectEditObjectDefinition: boolean;
 	unbindFromRootObjectDefinition: boolean;
 };
 export interface DeletedObjectDefinition {

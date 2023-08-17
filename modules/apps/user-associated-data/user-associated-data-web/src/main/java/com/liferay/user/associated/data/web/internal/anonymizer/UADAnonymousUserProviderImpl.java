@@ -75,7 +75,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		}
 	}
 
-	private User _createAnonymousUser(long companyId) throws Exception {
+	private User _addAnonymousUser(long companyId) throws Exception {
 		User user = _userLocalService.createUser(
 			_counterLocalService.increment());
 
@@ -163,7 +163,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			companyId);
 
 		if (configuration == null) {
-			User anonymousUser = _createAnonymousUser(companyId);
+			User anonymousUser = _addAnonymousUser(companyId);
 
 			_configurationProvider.saveCompanyConfiguration(
 				AnonymousUserConfiguration.class, companyId,
@@ -191,7 +191,7 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			return anonymousUser;
 		}
 
-		anonymousUser = _createAnonymousUser(companyId);
+		anonymousUser = _addAnonymousUser(companyId);
 
 		properties.put("userId", anonymousUser.getUserId());
 

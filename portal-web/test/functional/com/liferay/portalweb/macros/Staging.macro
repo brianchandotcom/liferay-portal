@@ -489,6 +489,13 @@ definition {
 
 		var displayDateMinuteFuture = ${displayDateMinute} + 5;
 
+		var result = MathUtil.isGreaterThan(${displayDateMinuteFuture}, 60);
+
+		if (${result} == "true") {
+			var displayDateHour = ${displayDateHour} + 1;
+			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
+		}
+
 		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
 
 		if (${displayDateMinuteFutureLength} == 1) {

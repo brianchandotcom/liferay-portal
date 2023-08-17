@@ -1025,8 +1025,8 @@ const FDSEntries = ({
 						onClick: onViewClick,
 					},
 					{
-						type: "group",
 						separator: true,
+						type: 'group',
 					},
 					{
 						icon: 'blank',
@@ -1034,8 +1034,8 @@ const FDSEntries = ({
 						onClick: onRenameClick,
 					},
 					{
-						type: "group",
 						separator: true,
+						type: 'group',
 					},
 					{
 						icon: 'trash',

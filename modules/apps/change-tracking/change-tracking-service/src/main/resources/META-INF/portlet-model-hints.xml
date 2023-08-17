@@ -23,6 +23,7 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="ctRemoteId" type="long" />
 		<field name="schemaVersionId" type="long" />
 		<field name="name" type="String" />
 		<field name="description" type="String">
@@ -109,6 +110,8 @@
 		<field name="name" type="String" />
 		<field name="description" type="String" />
 		<field name="url" type="String" />
+		<field name="clientId" type="String" />
+		<field name="clientSecret" type="String" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTSchemaVersion">
 		<field name="mvccVersion" type="long" />

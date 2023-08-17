@@ -129,6 +129,10 @@ public class CTRemotePersistenceTest {
 
 		newCTRemote.setUrl(RandomTestUtil.randomString());
 
+		newCTRemote.setClientId(RandomTestUtil.randomString());
+
+		newCTRemote.setClientSecret(RandomTestUtil.randomString());
+
 		_ctRemotes.add(_persistence.update(newCTRemote));
 
 		CTRemote existingCTRemote = _persistence.findByPrimaryKey(
@@ -152,6 +156,10 @@ public class CTRemotePersistenceTest {
 		Assert.assertEquals(
 			existingCTRemote.getDescription(), newCTRemote.getDescription());
 		Assert.assertEquals(existingCTRemote.getUrl(), newCTRemote.getUrl());
+		Assert.assertEquals(
+			existingCTRemote.getClientId(), newCTRemote.getClientId());
+		Assert.assertEquals(
+			existingCTRemote.getClientSecret(), newCTRemote.getClientSecret());
 	}
 
 	@Test
@@ -188,7 +196,8 @@ public class CTRemotePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CTRemote", "mvccVersion", true, "ctRemoteId", true, "companyId",
 			true, "userId", true, "createDate", true, "modifiedDate", true,
-			"name", true, "description", true, "url", true);
+			"name", true, "description", true, "url", true, "clientId", true,
+			"clientSecret", true);
 	}
 
 	@Test
@@ -418,6 +427,10 @@ public class CTRemotePersistenceTest {
 		ctRemote.setDescription(RandomTestUtil.randomString());
 
 		ctRemote.setUrl(RandomTestUtil.randomString());
+
+		ctRemote.setClientId(RandomTestUtil.randomString());
+
+		ctRemote.setClientSecret(RandomTestUtil.randomString());
 
 		_ctRemotes.add(_persistence.update(ctRemote));
 

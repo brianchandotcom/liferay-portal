@@ -432,6 +432,8 @@ components:
                 reverse:
                     readOnly: true
                     type: boolean
+                system:
+                    type: boolean
                 type:
                     enum: [oneToMany, oneToOne, manyToMany]
                     type: string

@@ -147,8 +147,6 @@ definition {
 	@description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
 	@priority = 2
 	test CanModifyBorder {
-		property portal.upstream = "quarantine";
-
 		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
 		CalendarLookAndFeelConfiguration.selectTab(tabName = "Border Styles");

@@ -90,6 +90,13 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"2.9.1", "2.10.0",
+			UpgradeProcessFactory.addColumns("CTCollection", "ctRemoteId LONG"),
+			UpgradeProcessFactory.addColumns(
+				"CTRemote", "clientId VARCHAR(75)",
+				"clientSecret VARCHAR(75)"));
 	}
 
 }

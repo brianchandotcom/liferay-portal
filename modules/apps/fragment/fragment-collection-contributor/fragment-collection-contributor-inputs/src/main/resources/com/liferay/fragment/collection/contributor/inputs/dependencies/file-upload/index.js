@@ -7,7 +7,9 @@ const wrapper = fragmentElement;
 
 const fileInput = document.getElementById(`${fragmentNamespace}-file-upload`);
 const fileName = wrapper.querySelector('.forms-file-upload-file-name');
-const removeButton = document.getElementById(`${fragmentNamespace}-file-upload-remove-button`);
+const removeButton = document.getElementById(
+	`${fragmentNamespace}-file-upload-remove-button`
+);
 const selectButton = wrapper.querySelector('.btn-secondary');
 
 function showRemoveButton() {
@@ -57,6 +59,7 @@ else {
 	}
 	else {
 		selectButton.addEventListener('click', () => {
+			fileInput.type = 'file';
 			fileInput.click();
 		});
 	}

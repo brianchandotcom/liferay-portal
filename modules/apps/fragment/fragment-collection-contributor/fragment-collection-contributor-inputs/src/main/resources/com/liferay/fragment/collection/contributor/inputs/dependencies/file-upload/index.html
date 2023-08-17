@@ -15,7 +15,7 @@
 				[@clay["icon"] symbol="times-circle-full" /]
 			</button>
 
-			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="${(input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary)?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] />
+			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="text" [#if input.value??]value="${input.value}"[/#if] />
 		</div>
 
 		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]

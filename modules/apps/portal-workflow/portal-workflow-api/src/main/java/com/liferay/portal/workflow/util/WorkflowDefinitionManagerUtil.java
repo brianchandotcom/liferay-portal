@@ -41,15 +41,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, start, end, orderByComparator);
 	}
 
-	public static List<WorkflowDefinition> getActiveWorkflowDefinitions(
-			long companyId, String name, int start, int end,
-			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getActiveWorkflowDefinitions(
-			companyId, name, start, end, orderByComparator);
-	}
-
 	public static int getActiveWorkflowDefinitionsCount(long companyId)
 		throws WorkflowException {
 
@@ -72,13 +63,6 @@ public class WorkflowDefinitionManagerUtil {
 
 		return _workflowDefinitionManager.getLatestWorkflowDefinitions(
 			companyId, start, end, orderByComparator);
-	}
-
-	public static int getLatestWorkflowDefinitionsCount(long companyId)
-		throws WorkflowException {
-
-		return _workflowDefinitionManager.getLatestWorkflowDefinitionsCount(
-			companyId);
 	}
 
 	public static WorkflowDefinition getWorkflowDefinition(
@@ -128,14 +112,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, title, name, bytes);
 	}
 
-	public static void undeployWorkflowDefinition(
-			long companyId, long userId, String name, int version)
-		throws WorkflowException {
-
-		_workflowDefinitionManager.undeployWorkflowDefinition(
-			companyId, userId, name, version);
-	}
-
 	public static WorkflowDefinition updateActive(
 			long companyId, long userId, String name, int version,
 			boolean active)
@@ -143,12 +119,6 @@ public class WorkflowDefinitionManagerUtil {
 
 		return _workflowDefinitionManager.updateActive(
 			companyId, userId, name, version, active);
-	}
-
-	public static void validateWorkflowDefinition(byte[] bytes)
-		throws WorkflowException {
-
-		_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 	}
 
 	private static volatile WorkflowDefinitionManager

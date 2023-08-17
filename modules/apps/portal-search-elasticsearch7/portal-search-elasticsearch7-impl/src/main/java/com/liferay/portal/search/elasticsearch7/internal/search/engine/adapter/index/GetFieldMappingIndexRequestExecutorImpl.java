@@ -16,11 +16,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.GetFieldMappingsRequest;
+import org.elasticsearch.client.indices.GetFieldMappingsResponse;
+import org.elasticsearch.client.indices.GetFieldMappingsResponse.FieldMappingMetadata;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,29 +44,18 @@ public class GetFieldMappingIndexRequestExecutorImpl
 			_getGetFieldMappingsResponse(
 				getFieldMappingsRequest, getFieldMappingIndexRequest);
 
-		Map
-			<String,
-			 Map
-				 <String,
-				  Map<String, GetFieldMappingsResponse.FieldMappingMetadata>>>
-					mappings = getFieldMappingsResponse.mappings();
+		Map<String, Map<String, FieldMappingMetadata>> mappings =
+			getFieldMappingsResponse.mappings();
 
 		Map<String, String> fieldMappings = new HashMap<>();
 
 		for (String indexName : getFieldMappingIndexRequest.getIndexNames()) {
-			Map
-				<String,
-				 Map<String, GetFieldMappingsResponse.FieldMappingMetadata>>
-					map1 = mappings.get(indexName);
-
-			Map<String, GetFieldMappingsResponse.FieldMappingMetadata> map2 =
-				map1.get(getFieldMappingIndexRequest.getMappingName());
+			Map<String, FieldMappingMetadata> map = mappings.get(indexName);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			for (String fieldName : getFieldMappingIndexRequest.getFields()) {
-				GetFieldMappingsResponse.FieldMappingMetadata
-					fieldMappingMetadata = map2.get(fieldName);
+				FieldMappingMetadata fieldMappingMetadata = map.get(fieldName);
 
 				Map<String, Object> source = fieldMappingMetadata.sourceAsMap();
 
@@ -87,8 +77,6 @@ public class GetFieldMappingIndexRequestExecutorImpl
 		getFieldMappingsRequest.fields(getFieldMappingIndexRequest.getFields());
 		getFieldMappingsRequest.indices(
 			getFieldMappingIndexRequest.getIndexNames());
-		getFieldMappingsRequest.types(
-			getFieldMappingIndexRequest.getMappingName());
 
 		return getFieldMappingsRequest;
 	}

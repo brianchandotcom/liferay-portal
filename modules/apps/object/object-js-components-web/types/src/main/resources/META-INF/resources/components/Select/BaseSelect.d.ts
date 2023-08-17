@@ -26,11 +26,13 @@ export interface SelectProps {
 	id?: string;
 	label?: string;
 	placeholder?: string;
+	readonly?: boolean;
 	required?: boolean;
 	value?: string;
 }
-interface IProps extends SelectProps {
+interface BaseSelectProps extends SelectProps {
 	children: ReactNode;
+	contentRight?: ReactNode;
 	dropdownActive: boolean;
 	setDropdownActive: React.Dispatch<React.SetStateAction<boolean>>;
 	trigger?: JSX.Element;
@@ -38,6 +40,7 @@ interface IProps extends SelectProps {
 export declare function BaseSelect({
 	children,
 	className,
+	contentRight,
 	disabled,
 	dropdownActive,
 	error,
@@ -45,10 +48,11 @@ export declare function BaseSelect({
 	id,
 	label,
 	placeholder,
+	readonly,
 	required,
 	setDropdownActive,
 	trigger,
 	value,
 	...restProps
-}: IProps): JSX.Element;
+}: BaseSelectProps): JSX.Element;
 export {};

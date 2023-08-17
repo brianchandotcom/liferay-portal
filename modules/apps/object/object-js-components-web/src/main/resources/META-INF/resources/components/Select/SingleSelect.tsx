@@ -11,16 +11,22 @@ import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
 
 import './index.scss';
 
-interface IProps<T extends CustomItem<number | string> = CustomItem>
-	extends SelectProps {
+interface SingleSelectProps<T> extends SelectProps {
 	children?: ReactNode;
+	contentRight?: ReactNode;
 	onChange?: (selected: T) => void;
 	options: T[];
 }
 
 export function SingleSelect<
 	T extends CustomItem<number | string> = CustomItem
->({onChange = () => {}, options, children, ...otherProps}: IProps<T>) {
+>({
+	contentRight,
+	children,
+	onChange = () => {},
+	options,
+	...otherProps
+}: SingleSelectProps<T>) {
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 	const arrayChildren = Children.toArray(children);
 	const [showPopover, setShowPopover] = useState(false);
@@ -33,6 +39,7 @@ export function SingleSelect<
 
 	return (
 		<BaseSelect
+			contentRight={contentRight}
 			dropdownActive={dropdownActive}
 			setDropdownActive={setDropdownActive}
 			{...otherProps}

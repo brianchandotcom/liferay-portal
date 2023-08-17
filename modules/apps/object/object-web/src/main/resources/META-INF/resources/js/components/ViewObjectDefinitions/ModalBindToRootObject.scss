@@ -1,0 +1,14 @@
+.lfr__object-modal-bind-to-root-object {
+	&-body {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		justify-content: center;
+	}
+
+	&-description {
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 21px;
+	}
+}

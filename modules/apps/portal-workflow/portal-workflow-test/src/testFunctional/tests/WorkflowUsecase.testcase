@@ -798,6 +798,67 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
+	@description = "LPS-192072: Verify if it is possible to configure the system on a main instance and then publish a workflow to a virtual instance"
+	@priority = 5
+	test CanPublishWorkflowAtVirtualInstance {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given administrators publish and edit workflows configuration is enabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Workflow",
+				configurationName = "Workflow Definition",
+				configurationScope = "System Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Allow Administrators to Publish and Edit Workflows");
+		}
+
+		task ("When creating a workflow in a virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "Workflow Definition for Able");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorOut = "start",
+				key_direction = "right");
+		}
+
+		task ("Then the workflow can be published") {
+			Button.clickPublish();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			AssertVisible(
+				key_workflowDefinitionTitle = "Workflow Definition for Able",
+				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
+		}
+	}
+
 	@priority = 5
 	test UnpublishAndDeleteUploadedDefinition {
 		property portal.acceptance = "quarantine";

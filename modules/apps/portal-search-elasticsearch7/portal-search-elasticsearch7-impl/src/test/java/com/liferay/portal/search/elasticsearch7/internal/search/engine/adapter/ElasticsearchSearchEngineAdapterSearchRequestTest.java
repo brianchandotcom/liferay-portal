@@ -48,7 +48,6 @@ import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -56,6 +55,7 @@ import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.junit.After;
@@ -117,7 +117,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_createIndex();
 
 		_putMapping(
-			_MAPPING_NAME,
 			StringBundler.concat(
 				"{\n\"dynamic_templates\": [\n{\n",
 				"\"template_en\": {\n\"mapping\": {\n",
@@ -472,7 +471,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 		indexRequest.id(document.getUID());
 		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-		indexRequest.type(_MAPPING_NAME);
 
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
 			new DefaultElasticsearchDocumentFactory();
@@ -508,12 +506,11 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 			"Expected document added: " + value, getResponse.isExists());
 	}
 
-	private void _putMapping(String mappingName, String mappingSource) {
+	private void _putMapping(String mappingSource) {
 		PutMappingRequest putMappingRequest = new PutMappingRequest(
 			_INDEX_NAME);
 
 		putMappingRequest.source(mappingSource, XContentType.JSON);
-		putMappingRequest.type(mappingName);
 
 		try {
 			_indicesClient.putMapping(
@@ -547,8 +544,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 	private static final String _LOCALIZED_FIELD_NAME =
 		"spellCheckKeyword_en_US";
-
-	private static final String _MAPPING_NAME = "test_mapping";
 
 	private static ElasticsearchFixture _elasticsearchFixture;
 	private static final MockedStatic<FrameworkUtil>

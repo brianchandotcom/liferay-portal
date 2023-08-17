@@ -10,7 +10,8 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
+import org.elasticsearch.client.indices.PutMappingRequest;
+import org.elasticsearch.common.bytes.BytesReference;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,10 +42,9 @@ public class PutMappingIndexRequestExecutorTest {
 	}
 
 	@Test
-	public void testIndexRequestTranslation() {
+	public void testIndexRequestTranslation() throws Exception {
 		PutMappingIndexRequest putMappingIndexRequest =
-			new PutMappingIndexRequest(
-				new String[] {_INDEX_NAME}, _MAPPING_NAME, _FIELD_NAME);
+			new PutMappingIndexRequest(new String[] {_INDEX_NAME}, _FIELD_NAME);
 
 		PutMappingIndexRequestExecutorImpl putMappingIndexRequestExecutorImpl =
 			new PutMappingIndexRequestExecutorImpl();
@@ -59,15 +59,15 @@ public class PutMappingIndexRequestExecutorTest {
 
 		Assert.assertArrayEquals(
 			new String[] {_INDEX_NAME}, putMappingRequest.indices());
-		Assert.assertEquals(_FIELD_NAME, putMappingRequest.source());
-		Assert.assertEquals(_MAPPING_NAME, putMappingRequest.type());
+
+		BytesReference bytesReference = putMappingRequest.source();
+
+		Assert.assertEquals(_FIELD_NAME, bytesReference.utf8ToString());
 	}
 
 	private static final String _FIELD_NAME = "testField";
 
 	private static final String _INDEX_NAME = "test_request_index";
-
-	private static final String _MAPPING_NAME = "testMapping";
 
 	private ElasticsearchFixture _elasticsearchFixture;
 

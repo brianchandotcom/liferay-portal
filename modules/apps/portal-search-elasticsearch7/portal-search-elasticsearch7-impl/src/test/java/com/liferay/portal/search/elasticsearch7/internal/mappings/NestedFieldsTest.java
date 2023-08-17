@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.mappings;
 
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.mappings.BaseNestedFieldsTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -33,11 +32,6 @@ public class NestedFieldsTest extends BaseNestedFieldsTestCase {
 				setLiferayMappingsAddedToIndex(true);
 			}
 		};
-	}
-
-	@Override
-	protected String getMappingName() {
-		return LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE;
 	}
 
 }

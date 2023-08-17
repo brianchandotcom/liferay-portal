@@ -21,11 +21,15 @@ import org.osgi.service.component.annotations.Deactivate;
 public class JAXRSLifecycle {
 
 	public void ensureReady() {
-		_serviceRegistrationDCLSingleton.getSingleton(
-			() -> _bundleContext.registerService(
-				Object.class, new Object(),
-				MapUtil.singletonDictionary(
-					"liferay.jaxrs.whiteboard.ready", true)));
+		if (!_jaxrsReady) {
+			_jaxrsReady = true;
+
+			_serviceRegistrationDCLSingleton.getSingleton(
+				() -> _bundleContext.registerService(
+					Object.class, new Object(),
+					MapUtil.singletonDictionary(
+						"liferay.jaxrs.whiteboard.ready", true)));
+		}
 	}
 
 	@Activate
@@ -40,6 +44,7 @@ public class JAXRSLifecycle {
 	}
 
 	private BundleContext _bundleContext;
+	private boolean _jaxrsReady;
 	private final DCLSingleton<ServiceRegistration<?>>
 		_serviceRegistrationDCLSingleton = new DCLSingleton<>();
 

@@ -50,8 +50,6 @@ const SidebarPanelInfoView = ({
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(TABS.details);
 
-	const showTabs = !!getItemVersionsURL;
-
 	const [error, setError] = useState(false);
 
 	const stickerColor = parseInt(user.userId, 10) % 10;
@@ -62,6 +60,8 @@ const SidebarPanelInfoView = ({
 
 	const hasCategorization =
 		!!tags.length || !!Object.keys(vocabularies).length;
+
+	const showTabs = !!getItemVersionsURL || hasCategorization;
 
 	return (
 		<>
@@ -156,9 +156,7 @@ const SidebarPanelInfoView = ({
 			<div className="c-mb-3 sidebar-section">
 				{showTabs && activeTabKeyValue !== null && (
 					<ClayTabs
-						className={classNames('d-flex flex-nowrap', {
-							'justify-content-center': hasCategorization,
-						})}
+						className="c-px-3 d-flex flex-nowrap justify-content-start"
 						modern
 					>
 						<ClayTabs.Item
@@ -189,16 +187,20 @@ const SidebarPanelInfoView = ({
 							</ClayTabs.Item>
 						)}
 
-						<ClayTabs.Item
-							active={activeTabKeyValue === TABS.version}
-							className="flex-shrink-0"
-							innerProps={{
-								'aria-controls': 'versions',
-							}}
-							onClick={() => setActiveTabKeyValue(TABS.version)}
-						>
-							{Liferay.Language.get('versions')}
-						</ClayTabs.Item>
+						{!!getItemVersionsURL && (
+							<ClayTabs.Item
+								active={activeTabKeyValue === TABS.version}
+								className="flex-shrink-0"
+								innerProps={{
+									'aria-controls': 'versions',
+								}}
+								onClick={() =>
+									setActiveTabKeyValue(TABS.version)
+								}
+							>
+								{Liferay.Language.get('versions')}
+							</ClayTabs.Item>
+						)}
 					</ClayTabs>
 				)}
 			</div>

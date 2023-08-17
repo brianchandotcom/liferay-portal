@@ -15,7 +15,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public interface ObjectActionExecutor {
 
 	public void execute(
-			long companyId, UnicodeProperties parametersUnicodeProperties,
+			long companyId, long objectActionId,
+			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
 		throws Exception;
 

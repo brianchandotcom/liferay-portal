@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -831,7 +832,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						).put(
 							"path", path
 						).put(
-							"scope", scope.name()
+							"scope", StringUtil.toLowerCase(scope.name())
 						))
 				).put(
 					"apiApplicationToAPISchemas",

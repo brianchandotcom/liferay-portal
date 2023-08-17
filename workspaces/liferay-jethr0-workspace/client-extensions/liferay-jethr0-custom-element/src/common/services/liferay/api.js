@@ -12,11 +12,11 @@ const baseFetch = async (url, filter, sort, options = {}) => {
 
 	const urlSearchParams = new URLSearchParams(urlObject.search);
 
-	if (filter !== null) {
+	if ((filter !== null) && (filter !== undefined)) {
 		urlSearchParams.append('filter', filter);
 	}
 
-	if (sort !== null) {
+	if ((sort !== null) && (sort !== undefined)) {
 		urlSearchParams.append('sort', sort);
 	}
 

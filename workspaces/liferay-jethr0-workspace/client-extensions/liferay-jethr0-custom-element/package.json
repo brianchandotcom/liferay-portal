@@ -12,6 +12,8 @@
 		]
 	},
 	"dependencies": {
+		"@clayui/css": "^3.85.0",
+		"@clayui/table": "^3.56.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-scripts": "5.0.1"

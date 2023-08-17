@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayTable from '@clayui/table';
+
 import React from 'react';
 
 import entities from '../services/entity.js';
@@ -21,32 +23,33 @@ function BuildQueue() {
 	}
 
 	return (
-		<div>
-			<table border="1">
-				<tr>
-					<th>ID</th>
+		<ClayTable borderedColumns responsiveSize='sm'>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell headingCell>ID</ClayTable.Cell>
 
-					<th>Name</th>
+					<ClayTable.Cell headingCell>Name</ClayTable.Cell>
 
-					<th>Priority</th>
+					<ClayTable.Cell headingCell>Priority</ClayTable.Cell>
 
-					<th>Create Date</th>
+					<ClayTable.Cell headingCell>Create Date</ClayTable.Cell>
 
-					<th>Start Date</th>
+					<ClayTable.Cell headingCell>Start Date</ClayTable.Cell>
 
-					<th>State</th>
+					<ClayTable.Cell headingCell>State</ClayTable.Cell>
 
-					<th>Type</th>
+					<ClayTable.Cell headingCell>Type</ClayTable.Cell>
 
-					<th>Queued</th>
+					<ClayTable.Cell headingCell>Queued</ClayTable.Cell>
 
-					<th>Running</th>
+					<ClayTable.Cell headingCell>Running</ClayTable.Cell>
 
-					<th>Completed</th>
+					<ClayTable.Cell headingCell>Completed</ClayTable.Cell>
 
-					<th>Total</th>
-				</tr>
-
+					<ClayTable.Cell headingCell>Total</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
+			<ClayTable.Body>
 				{data.map((project) => {
 					let completedBuilds = 0;
 					let queuedBuilds = 0;
@@ -68,33 +71,33 @@ function BuildQueue() {
 					}
 
 					return (
-						<tr key={project.id}>
-							<td>{project.id}</td>
+						<ClayTable.Row>
+							<ClayTable.Cell headingCell>{project.id}</ClayTable.Cell>
 
-							<td>{project.name}</td>
+							<ClayTable.Cell>{project.name}</ClayTable.Cell>
 
-							<td>{project.priority}</td>
+							<ClayTable.Cell>{project.priority}</ClayTable.Cell>
 
-							<td>{project.dateCreated}</td>
+							<ClayTable.Cell>{project.dateCreated}</ClayTable.Cell>
 
-							<td>{project.startDate}</td>
+							<ClayTable.Cell>{project.startDate}</ClayTable.Cell>
 
-							<td>{project.state.name}</td>
+							<ClayTable.Cell>{project.state.name}</ClayTable.Cell>
 
-							<td>{project.type.name}</td>
+							<ClayTable.Cell>{project.type.name}</ClayTable.Cell>
 
-							<td>{queuedBuilds}</td>
+							<ClayTable.Cell>{queuedBuilds}</ClayTable.Cell>
 
-							<td>{runningBuilds}</td>
+							<ClayTable.Cell>{runningBuilds}</ClayTable.Cell>
 
-							<td>{completedBuilds}</td>
+							<ClayTable.Cell>{completedBuilds}</ClayTable.Cell>
 
-							<td>{totalBuilds}</td>
-						</tr>
+							<ClayTable.Cell>{totalBuilds}</ClayTable.Cell>
+						</ClayTable.Row>
 					);
 				})}
-			</table>
-		</div>
+			</ClayTable.Body>
+		</ClayTable>
 	);
 }
 

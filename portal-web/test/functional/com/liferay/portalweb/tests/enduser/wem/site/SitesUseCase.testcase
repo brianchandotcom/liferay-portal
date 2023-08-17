@@ -339,10 +339,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Sites Administration,User Groups";
 
-		task ("Get site name") {
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-		}
-
 		task ("Add a site role") {
 			JSONRole.addSiteRole(
 				roleKey = "Roles Siterole Name",
@@ -350,15 +346,13 @@ definition {
 		}
 
 		task ("Add a user group") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.addCP(userGroupName = "UG UserGroup Name");
+			JSONUserGroupSetter.setUserGroupId(userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign the user group to default site") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
+			JSONGroup.assignUserGroupToGroup(
+				groupName = "Guest",
+				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Add a regular role") {
@@ -368,22 +362,10 @@ definition {
 		}
 
 		task ("Add assign member permission to the regular role") {
-			for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.portal.kernel.model.Group",
-					roleTitle = "Roles Regrole Name");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Roles Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ASSIGN_MEMBERS",
-				resourceName = "com.liferay.portal.kernel.model.Role",
-				roleTitle = "Roles Regrole Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Group,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION:90,VIEW_CONTROL_PANEL:com.liferay.portal.kernel.model.Role,ASSIGN_MEMBERS",
+				roleTitle = "Roles Regrole Name",
+				roleType = "regular");
 		}
 
 		task ("Add a user") {
@@ -400,11 +382,9 @@ definition {
 		}
 
 		task ("Assign current site to the user") {
-			User.openUsersAdmin();
-
-			User.editUserSiteCP(
-				siteName = ${siteName},
-				userScreenName = "usersn");
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign regular role to the user") {
@@ -708,21 +688,13 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a user group") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.addCP(userGroupName = "User Group Name");
+			JSONUserGroup.addUserGroup(userGroupName = "User Group Name");
 		}
 
-		UserGroup.openUserGroupsAdmin();
-
 		task ("Add a public page in user group") {
-			UserGroup.gotoAddPageCP(userGroupName = "User Group Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(pageName = "site Page Name");
+			JSONUserGroup.addLayout(
+				layoutName = "Site Page Name",
+				userGroupName = "User Group Name");
 		}
 
 		task ("Add a user ") {
@@ -739,11 +711,9 @@ definition {
 		}
 
 		task ("Assign user to user group") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.assignMemberCP(
-				userGroupName = "User Group Name",
-				userScreenName = "usersn");
+			JSONUser.addUserToUserGroup(
+				userEmailAddress = "userea@liferay.com",
+				userGroupName = "User Group Name");
 		}
 
 		task ("Log in as created user") {

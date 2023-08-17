@@ -5274,15 +5274,17 @@ definition {
 	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page");
 		}
 
 		task ("Add an Asset Publisher portlet to the created public page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page",
 				widgetName = "Asset Publisher");
 		}
@@ -5291,7 +5293,7 @@ definition {
 			for (var text : list "1,1 2,1 2 3,1 2 3 4,2 3 4,3 4,4") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content ${text}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "WC WebContent Title ${text}");
 			}
 		}
@@ -5323,17 +5325,14 @@ definition {
 			}
 
 			task ("Create a dynamic asset list") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
-					itemType = "All Types",
-					title = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+				AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
+
+				AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 			}
 
 			task ("Create filter rule for asset list") {
-				AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-				AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List ${queryContains} ${queryAndOperator}");
-
 				AssetListsAdmin.addKeywordsFilter(
 					keyWords = "2 3",
 					queryAndOperator = ${queryAndOperator},

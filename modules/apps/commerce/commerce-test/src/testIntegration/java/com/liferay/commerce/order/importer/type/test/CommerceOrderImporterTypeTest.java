@@ -201,8 +201,8 @@ public class CommerceOrderImporterTypeTest {
 			_commerceChannel.getCommerceChannelId());
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
-			100);
+			_user.getUserId(), commerceInventoryWarehouse,
+			BigDecimal.valueOf(100), cpInstance.getSku(), StringPool.BLANK);
 
 		CPTestUtil.addBaseCommerceCatalogCommercePriceList(
 			commerceCatalog.getGroupId(), _commerceCurrency.getCode(),

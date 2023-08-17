@@ -24,6 +24,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -62,9 +64,10 @@ public class CPDefinitionInventoryTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 			TestPropsValues.getUserId(), _cpDefinition.getCPDefinitionId(),
-			"default", "default", false, false, 1, false,
+			"default", "default", false, false, BigDecimal.ONE, false,
 			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
-			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null, 1);
+			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
+			BigDecimal.ONE);
 	}
 
 	@Inject

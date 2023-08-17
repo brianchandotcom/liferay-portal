@@ -690,25 +690,25 @@ public class CommerceCheckoutTest {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 				_user.getUserId(), cpDefinition.getCPDefinitionId(), "default",
-				"default", false, false, 1, false,
+				"default", false, false, BigDecimal.ONE, false,
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
-				1);
+				BigDecimal.ONE);
 		}
 		else {
 			_cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(), "default",
-				"default", false, false, 1, false,
+				"default", false, false, BigDecimal.ONE, false,
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
-				1);
+				BigDecimal.ONE);
 		}
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+		BigDecimal stockQuantity = _commerceInventoryEngine.getStockQuantity(
 			_company.getCompanyId(), cpDefinition.getGroupId(),
-			commerceOrderItem.getSku());
+			commerceOrderItem.getSku(), StringPool.BLANK);
 
-		commerceOrderItem.setQuantity(BigDecimal.valueOf(stockQuantity));
+		commerceOrderItem.setQuantity(stockQuantity);
 
 		commerceOrderItem =
 			_commerceOrderItemLocalService.updateCommerceOrderItem(

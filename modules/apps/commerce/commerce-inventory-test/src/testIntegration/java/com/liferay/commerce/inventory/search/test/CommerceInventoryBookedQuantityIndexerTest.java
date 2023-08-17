@@ -157,7 +157,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		_commerceInventoryWarehouseItems.add(
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 				_user.getUserId(), _commerceInventoryWarehouse,
-				cpInstance.getSku(), 2));
+				BigDecimal.valueOf(2), cpInstance.getSku(), StringPool.BLANK));
 
 		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -193,7 +193,8 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 			_commerceInventoryBookedQuantityLocalService.
 				getCommerceInventoryBookedQuantities(
 					commerceOrderItem.getCompanyId(),
-					commerceOrderItem.getSku(), -1, -1));
+					commerceOrderItem.getSku(),
+					commerceOrderItem.getUnitOfMeasureKey(), -1, -1));
 	}
 
 	@Test
@@ -213,7 +214,7 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		_commerceInventoryWarehouseItems.add(
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 				_user.getUserId(), _commerceInventoryWarehouse,
-				cpInstance.getSku(), 2));
+				BigDecimal.valueOf(2), cpInstance.getSku(), StringPool.BLANK));
 
 		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -249,7 +250,8 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 				_commerceInventoryBookedQuantityLocalService.
 					getCommerceInventoryBookedQuantities(
 						commerceOrderItem.getCompanyId(),
-						commerceOrderItem.getSku(), -1, -1);
+						commerceOrderItem.getSku(),
+						commerceOrderItem.getUnitOfMeasureKey(), -1, -1);
 
 		_assertSearch(
 			_accountEntry.getName(), cpInstance.getSku(),

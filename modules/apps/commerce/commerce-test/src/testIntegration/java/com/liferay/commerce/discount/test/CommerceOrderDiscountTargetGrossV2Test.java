@@ -36,6 +36,7 @@ import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTaxTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -182,11 +183,9 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			_commerceChannel.getCommerceChannelId());
 
-		int quantity = 10;
-
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse,
-			cpInstanceDiscount.getSku(), quantity);
+			_user.getUserId(), commerceInventoryWarehouse, BigDecimal.TEN,
+			cpInstanceDiscount.getSku(), StringPool.BLANK);
 
 		String couponCode = StringUtil.randomString();
 
@@ -315,16 +314,16 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			_commerceChannel.getCommerceChannelId());
 
-		int quantity = 10;
+		BigDecimal quantity = BigDecimal.TEN;
 		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse,
-			cpInstanceDiscount.getSku(), quantity);
+			_user.getUserId(), commerceInventoryWarehouse, quantity,
+			cpInstanceDiscount.getSku(), StringPool.BLANK);
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse,
-			cpInstancePlain.getSku(), quantity);
+			_user.getUserId(), commerceInventoryWarehouse, quantity,
+			cpInstancePlain.getSku(), StringPool.BLANK);
 
 		CommerceDiscount commerceDiscount1 =
 			CommerceDiscountTestUtil.addFixedCommerceDiscount(
@@ -486,16 +485,16 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			_commerceChannel.getCommerceChannelId());
 
-		int quantity = 10;
+		BigDecimal quantity = BigDecimal.TEN;
 		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse,
-			cpInstanceDiscount.getSku(), quantity);
+			_user.getUserId(), commerceInventoryWarehouse, quantity,
+			cpInstanceDiscount.getSku(), StringPool.BLANK);
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse,
-			cpInstancePlain.getSku(), quantity);
+			_user.getUserId(), commerceInventoryWarehouse, quantity,
+			cpInstancePlain.getSku(), StringPool.BLANK);
 
 		CommerceDiscount commerceDiscount1 =
 			CommerceDiscountTestUtil.addFixedCommerceDiscount(

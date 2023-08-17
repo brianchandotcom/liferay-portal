@@ -20,6 +20,7 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.PaymentMethod;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -157,8 +158,8 @@ public class PaymentMethodResourceTest
 
 		_commerceInventoryWarehouseItem =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-				_user.getUserId(), _commerceInventoryWarehouse,
-				_cpInstance.getSku(), 10);
+				_user.getUserId(), _commerceInventoryWarehouse, BigDecimal.TEN,
+				_cpInstance.getSku(), StringPool.BLANK);
 
 		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),

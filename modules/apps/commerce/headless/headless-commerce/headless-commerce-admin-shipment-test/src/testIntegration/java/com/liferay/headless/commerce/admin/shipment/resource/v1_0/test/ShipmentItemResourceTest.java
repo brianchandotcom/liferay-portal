@@ -22,6 +22,7 @@ import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShipmentItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -93,7 +94,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), _commerceInventoryWarehouse,
-			_cpInstance.getSku(), 100);
+			BigDecimal.valueOf(100), _cpInstance.getSku(), StringPool.BLANK);
 
 		_commerceShipment =
 			CommerceShipmentLocalServiceUtil.addCommerceShipment(

@@ -14,6 +14,18 @@ public class GetMappingIndexRequest
 	extends CrossClusterRequest
 	implements MappingIndexRequest<GetMappingIndexResponse> {
 
+	public GetMappingIndexRequest(String[] indexNames) {
+		_indexNames = indexNames;
+
+		_mappingName = null;
+
+		setPreferLocalCluster(true);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public GetMappingIndexRequest(String[] indexNames, String mappingName) {
 		_indexNames = indexNames;
 		_mappingName = mappingName;

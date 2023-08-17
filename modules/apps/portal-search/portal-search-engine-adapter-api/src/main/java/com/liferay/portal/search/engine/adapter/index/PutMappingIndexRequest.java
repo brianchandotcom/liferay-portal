@@ -14,6 +14,17 @@ public class PutMappingIndexRequest
 	extends CrossClusterRequest
 	implements MappingIndexRequest<PutMappingIndexResponse> {
 
+	public PutMappingIndexRequest(String[] indexNames, String mapping) {
+		_indexNames = indexNames;
+		_mapping = mapping;
+
+		_mappingName = null;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public PutMappingIndexRequest(
 		String[] indexNames, String mappingName, String mapping) {
 

@@ -14,12 +14,25 @@ public class GetFieldMappingIndexRequest
 	extends CrossClusterRequest
 	implements MappingIndexRequest<GetFieldMappingIndexResponse> {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public GetFieldMappingIndexRequest(
 		String[] indexNames, String mappingName, String[] fields) {
 
 		_indexNames = indexNames;
 		_mappingName = mappingName;
 		_fields = fields;
+
+		setPreferLocalCluster(true);
+	}
+
+	public GetFieldMappingIndexRequest(String[] indexNames, String[] fields) {
+		_indexNames = indexNames;
+		_fields = fields;
+
+		_mappingName = null;
 
 		setPreferLocalCluster(true);
 	}

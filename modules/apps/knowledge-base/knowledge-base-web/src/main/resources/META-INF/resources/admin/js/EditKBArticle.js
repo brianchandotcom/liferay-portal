@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openSelectionModal} from 'frontend-js-web';
+
 function attachListener(element, eventType, callback) {
 	element?.addEventListener(eventType, callback);
 
@@ -13,7 +15,12 @@ function attachListener(element, eventType, callback) {
 	};
 }
 
-export default function EditKBArticle({kbArticle, namespace, publishAction}) {
+export default function EditKBArticle({
+	kbArticle,
+	namespace,
+	publishAction,
+	scheduleModalURL,
+}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
@@ -55,6 +62,24 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	else {
 		publishButton = document.getElementById(`${namespace}publishButton`);
 	}
+	
+	const scheduleButton = document.getElementById(
+		`${namespace}scheduleButton`
+	);
+
+	const scheduleButtonOnClick = () => {
+		openSelectionModal({
+			buttonAddLabel: Liferay.Language.get('schedule'),
+			height: '50vh',
+			multiple: true,
+			onSelect: (selectedItems) => {
+				console.log(selectedItems);
+			},
+			size: 'md',
+			title: Liferay.Language.get('schedule-publication'),
+			url: scheduleModalURL,
+		});
+	};
 
 	const updateMultipleKBArticleAttachments = function () {
 		const selectedFileNameContainer = document.getElementById(
@@ -111,6 +136,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 
 	const eventHandlers = [
 		attachListener(publishButton, 'click', publishButtonOnClick),
+		attachListener(scheduleButton, 'click', scheduleButtonOnClick),
 		attachListener(
 			contextualSidebarButton,
 			'click',

@@ -613,7 +613,7 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommercePermissionUpgradeProcess(
 					_resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService));
-
+		
 		registry.register(
 			"10.0.1", "10.1.0",
 			UpgradeProcessFactory.alterColumnType(
@@ -634,6 +634,18 @@ public class CommerceServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				CommerceOrderItemModelImpl.TABLE_NAME,
 				"UOMIncrementalOrderQuantity BIGDECIMAL"));
+
+		registry.register(
+			"10.2.0", "10.3.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceOrderItemModelImpl.TABLE_NAME, "shippedQuantity",
+				"BIGDECIMAL null"));
+
+		registry.register(
+			"10.3.0", "10.4.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceShipmentItemModelImpl.TABLE_NAME, "quantity",
+				"BIGDECIMAL null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

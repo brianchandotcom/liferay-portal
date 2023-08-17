@@ -184,6 +184,8 @@ definition {
 
 	@priority = 4
 	test RejectPageCommentPG {
+		property test.liferay.virtual.instance = "true";
+
 		Navigator.gotoPage(pageName = "Page Comments Page");
 
 		PageComment.addWithWorkflowPG(

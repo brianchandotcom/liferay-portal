@@ -251,6 +251,15 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 			return false;
 		}
 
+		String trimmedLine = StringUtil.trim(
+			getLine(
+				content,
+				getLineNumber(content, pos) + getLineNumber(s, x) - 1));
+
+		if (!trimmedLine.endsWith("*/")) {
+			return false;
+		}
+
 		s = s.substring(0, x);
 
 		if (!s.contains("/*")) {

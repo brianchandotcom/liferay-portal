@@ -56,9 +56,8 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 							type="submit"
 						/>
 
-						<c:choose
-						>
-							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-192286") %>'>
+						<c:choose>
+							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188060") %>'>
 								<clay:dropdown-menu
 									cssClass="c-mr-3"
 									displayType="primary"
@@ -68,8 +67,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 									name="publishDropdown"
 									small="<%= true %>"
 								/>
-							</c:when
-						>
+							</c:when>
 							<c:otherwise>
 								<clay:button
 									cssClass="c-mr-3"

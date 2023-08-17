@@ -49,7 +49,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 
 	let publishButton;
 
-	if (Liferay.FeatureFlags['LPS-192286']) {
+	if (Liferay.FeatureFlags['LPS-188060']) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
 	}
 	else {
@@ -103,7 +103,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			}
 		}
 
-		if (Liferay.FeatureFlags['LPS-192286']) {
+		if (Liferay.FeatureFlags['LPS-188060']) {
 			saveChanges();
 			submitForm(form);
 		}

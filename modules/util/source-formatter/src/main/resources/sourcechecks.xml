@@ -1910,6 +1910,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of elements in `.toggle` file." />
 		</check>
+		<check name="XMLUpgradeCompatibilityVersionCheck">
+			<category name="Upgrade" />
+			<description name="Checks and upgrades the compatibility version in `*.xml` file." />
+		</check>
 		<check name="XMLUpgradeDTDVersionCheck">
 			<category name="Upgrade" />
 			<description name="Checks and upgrades the DTD version in `*.xml` file." />

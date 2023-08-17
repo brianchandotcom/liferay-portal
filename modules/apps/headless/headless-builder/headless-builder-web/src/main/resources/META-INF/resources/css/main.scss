@@ -89,3 +89,33 @@
 		cursor: pointer;
 	}
 }
+
+#selectTriggerContainer {
+	button {
+		background-color: $gray-200 !important;
+		border-color: $gray-300 !important;
+		color: $gray-900 !important;
+		font-weight: lighter !important;
+		text-align: start !important;
+		width: 100% !important;
+	}
+
+	button[disabled] {
+		border-color: $gray-200 !important;
+		color: $gray-500 !important;
+		opacity: 1 !important;
+	}
+
+	.display-placeholder {
+		color: $gray-600 !important;
+	}
+}
+
+.has-error {
+	#selectTriggerContainer {
+		button {
+			background-color: $danger-l2 !important;
+			border-color: $danger-l1 !important;
+		}
+	}
+}

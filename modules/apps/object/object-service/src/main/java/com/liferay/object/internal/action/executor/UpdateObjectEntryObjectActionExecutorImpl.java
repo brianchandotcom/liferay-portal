@@ -48,7 +48,8 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 	@Override
 	public void execute(
-			long companyId, UnicodeProperties parametersUnicodeProperties,
+			long companyId, long objectActionId,
+			UnicodeProperties parametersUnicodeProperties,
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 

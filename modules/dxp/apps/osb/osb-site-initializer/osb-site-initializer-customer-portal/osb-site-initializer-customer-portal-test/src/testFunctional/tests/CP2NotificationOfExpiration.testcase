@@ -43,12 +43,12 @@ definition {
 		CustomerPortal.customerPortalTearDown();
 
 		JSONGroup.deleteGroupByName(groupName = ${testSiteName});
-		}
+	}
 
-    @description = "Story ID: LPS-148345 | Test Summary: Assert when the user activates the expiration notification option, that toggle is activated in the key details"
+	@description = "Story ID: LPS-148345 | Test Summary: Assert when the user activates the expiration notification option, that toggle is activated in the key details"
 	@priority = 3
 	test AssertWhenSelectedTheOptionTheToggleIsActive {
-        task ("Given Koroneiki's 'Allow Self Provisioning' option is active") {
+		task ("Given Koroneiki's 'Allow Self Provisioning' option is active") {
 			JSONCP.activeAllowSelfProvisioning(koroneiki = "KOR-3809080");
 		}
 
@@ -60,9 +60,9 @@ definition {
 				testAccount = "2022 FIFA World Cup Qatar - FAN ID");
 		}
 
-		task ("And the user goes to  test account") {
+		task ("And the user goes to test account") {
 			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
-		
+
 			CustomerPortal.search(searchItem = "2022 FIFA World Cup Qatar - FAN ID");
 
 			CustomerPortal.enterOnProject(title = "2022 FIFA World Cup Qatar - FAN ID");
@@ -109,21 +109,23 @@ definition {
 			var generateButtom = "Generate ${numberOfActivationKeys} Keys";
 
 			CustomerPortal.clickAtButton(text = "Generate 1 Key");
-            // WaitForElementPresent(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+
+			//WaitForElementPresent(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
+
 			CustomerPortal.viewAlert(alertText = "Complimentary Key was generated successfully.");
 		}
 
 		task ("And the key appears on table") {
 			CP2Utils.searchForKeyInTable(environmentName = "Notification Test Poshi");
-        }
-        
-        task("Then Assert if the toggle if active"){
-            Click(
-			key_text = "Notification Test Poshi",
-			locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+		}
 
-            AssertElementPresent(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_ON");
-            
-        }
-    }
- }
+		task ("Then Assert if the toggle if active") {
+			Click(
+				key_text = "Notification Test Poshi",
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+
+			AssertElementPresent(locator1 = "CP2ActivationKeys#TOGGLE_SWITCH_ON");
+		}
+	}
+
+}

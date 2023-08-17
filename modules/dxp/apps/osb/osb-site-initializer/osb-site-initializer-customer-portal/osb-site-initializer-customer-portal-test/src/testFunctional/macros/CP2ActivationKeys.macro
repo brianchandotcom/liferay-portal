@@ -522,6 +522,10 @@ definition {
 			value1 = ${key_option});
 	}
 
+	macro selectComplimentarySubscriptionTerm {
+		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
+	}
+
 	macro selectFistActiveSubscriptionInput {
 		if (isSet(index)) {
 			var key_position = ${index};
@@ -541,10 +545,6 @@ definition {
 		Select(
 			locator1 = "CP2ActivationKeys#KEY_COMPONENT_OPTION",
 			value1 = ${option});
-	}
-
-	macro selectComplimentarySubscriptionTerm{
-		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
 	}
 
 	macro selectKeyCheckboxByEnvironmentName {

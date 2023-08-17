@@ -616,7 +616,8 @@ public class ObjectEntryServiceTest {
 				_objectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"relationship", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				"relationship", false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectDefinition.setAccountEntryRestrictedObjectFieldId(
 			objectRelationship.getObjectFieldId2());

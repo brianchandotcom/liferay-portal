@@ -118,7 +118,8 @@ public class ObjectDefinitionGraphQLTest {
 			childObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			_RELATIONSHIP_NAME, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			_RELATIONSHIP_NAME, false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_parentObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(

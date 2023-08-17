@@ -287,7 +287,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			_objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			relationshipName, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			relationshipName, false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectField aggregationObjectField = new AggregationObjectFieldBuilder(
 		).externalReferenceCode(

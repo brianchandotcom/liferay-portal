@@ -569,7 +569,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsViewObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap("FDSEntry FDSView Relationship"),
-			"fdsEntryFDSViewRelationship",
+			"fdsEntryFDSViewRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		return fdsViewObjectDefinition;

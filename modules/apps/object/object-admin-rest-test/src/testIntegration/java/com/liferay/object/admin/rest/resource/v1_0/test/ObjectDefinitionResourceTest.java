@@ -285,7 +285,7 @@ public class ObjectDefinitionResourceTest
 				postObjectDefinition.getId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"a" + RandomTestUtil.randomString(),
+				"a" + RandomTestUtil.randomString(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		postObjectDefinition = objectDefinitionResource.getObjectDefinition(

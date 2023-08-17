@@ -384,7 +384,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipName",
+				"oneToManyRelationshipName", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_addAggregationObjectField(
@@ -444,7 +444,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition3.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipName",
+				"oneToManyRelationshipName", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectDefinition3.setAccountEntryRestrictedObjectFieldId(
@@ -761,7 +761,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition1.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_addAggregationObjectField(
@@ -1109,7 +1109,7 @@ public class DefaultObjectEntryManagerImplTest
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationship",
+				"oneToManyRelationship", false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_addRelatedObjectEntries(
@@ -2001,7 +2001,7 @@ public class DefaultObjectEntryManagerImplTest
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectDefinition accountEntryObjectDefinition =
@@ -2015,7 +2015,7 @@ public class DefaultObjectEntryManagerImplTest
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		childObjectDefinition.setAccountEntryRestrictedObjectFieldId(

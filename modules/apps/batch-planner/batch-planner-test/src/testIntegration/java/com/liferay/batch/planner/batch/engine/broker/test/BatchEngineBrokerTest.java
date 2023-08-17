@@ -287,7 +287,7 @@ public class BatchEngineBrokerTest {
 			_objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"a" + RandomTestUtil.randomString(),
+			"a" + RandomTestUtil.randomString(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectValidationRuleLocalService.addObjectValidationRule(

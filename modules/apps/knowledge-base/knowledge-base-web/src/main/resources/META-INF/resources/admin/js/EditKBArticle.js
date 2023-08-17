@@ -72,9 +72,10 @@ export default function EditKBArticle({
 			buttonAddLabel: Liferay.Language.get('schedule'),
 			height: '50vh',
 			multiple: true,
-			onSelect: (selectedItems) => {
-				console.log(selectedItems);
+			onSelect: ({scheduledDate}) => {
+				console.log(scheduledDate);
 			},
+			selectEventName: `selectKBArticleScheduleDate`,
 			size: 'md',
 			title: Liferay.Language.get('schedule-publication'),
 			url: scheduleModalURL,

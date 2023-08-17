@@ -4,11 +4,17 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
+import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+const SELECT_EVENT_NAME = 'selectKBArticleScheduleDate';
 export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
 	const [scheduledDate, setScheduledDate] = useState(initialScheduleDate);
+
+	useEffect(() => {
+		getOpener().Liferay.fire(SELECT_EVENT_NAME, {scheduledDate});
+	}, [scheduledDate]);
 
 	return (
 		<div className="container-fluid p-3">
@@ -26,5 +32,4 @@ export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
 
 ScheduleModal.propTypes = {
 	scheduledDate: PropTypes.string,
-	scheduledTime: PropTypes.string,
 };

@@ -211,7 +211,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap("FDSView FDSAction Relationship"),
-			"fdsViewFDSActionRelationship",
+			"fdsViewFDSActionRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -256,7 +256,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(
 				"FDSView FDSClientExtensionFilter"),
-			"fdsViewFDSClientExtensionFilter",
+			"fdsViewFDSClientExtensionFilter", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -306,7 +306,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(
 				"FDSView FDSDateFilter Relationship"),
-			"fdsViewFDSDateFilterRelationship",
+			"fdsViewFDSDateFilterRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -363,7 +363,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(
 				"FDSView FDSDynamicFilter Relationship"),
-			"fdsViewFDSDynamicFilterRelationship",
+			"fdsViewFDSDynamicFilterRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -456,7 +456,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsFieldObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap("FDSView FDSField Relationship"),
-			"fdsViewFDSFieldRelationship",
+			"fdsViewFDSFieldRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -492,7 +492,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsSortObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap("FDSView FDSSort Relationship"),
-			"fdsViewFDSSortRelationship",
+			"fdsViewFDSSortRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 

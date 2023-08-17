@@ -11,46 +11,10 @@ export default function ({
 	namespace,
 }) {
 	const selectItem = (event) => {
-		const activeCards = document.querySelectorAll(
-			'.form-check-card.active'
-		);
-
-		if (activeCards.length) {
-			activeCards.forEach((card) => {
-				card.classList.remove('active');
-			});
-		}
-
-		const target = event.delegateTarget;
-
-		const newSelectedCard = target.closest('.form-check-card');
-
-		if (newSelectedCard) {
-			newSelectedCard.classList.add('active');
-		}
-
-		let domElement = target.closest('li');
-
-		if (domElement === null) {
-			domElement = target.closest('tr');
-		}
-
-		if (domElement === null) {
-			domElement = target.closest('dd');
-		}
-
-		let itemValue = '';
-
-		if (domElement !== null) {
-			itemValue = domElement.dataset.value;
-		}
-
-		const openerWindow = getOpener();
-
-		openerWindow.Liferay.fire(itemSelectorSelectedEvent, {
+		getOpener().Liferay.fire(itemSelectorSelectedEvent, {
 			data: {
 				returnType: itemSelectorReturnType,
-				value: itemValue,
+				value: event.delegateTarget.dataset.value,
 			},
 		});
 	};

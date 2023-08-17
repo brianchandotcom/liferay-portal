@@ -77,6 +77,7 @@ public class ObjectRelationshipDTOConverter
 					serviceBuilderObjectRelationship.
 						getParameterObjectFieldId();
 				reverse = serviceBuilderObjectRelationship.isReverse();
+				system = serviceBuilderObjectRelationship.isSystem();
 				type = ObjectRelationship.Type.create(
 					serviceBuilderObjectRelationship.getType());
 

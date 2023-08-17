@@ -175,6 +175,7 @@ public class ObjectRelationshipResourceImpl
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
+				GetterUtil.getBoolean(objectRelationship.getSystem()),
 				objectRelationship.getTypeAsString()));
 	}
 
@@ -209,6 +210,7 @@ public class ObjectRelationshipResourceImpl
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
+				GetterUtil.getBoolean(objectRelationship.getSystem()),
 				objectRelationship.getTypeAsString()));
 	}
 

@@ -43,7 +43,7 @@ public class ElasticsearchHighlightTest extends BaseHighlightTestCase {
 
 		assertSearch(
 			fieldName, query,
-			queryConfig -> queryConfig.setHighlightFragmentSize(20),
+			queryConfig -> queryConfig.setHighlightFragmentSize(18),
 			toFullHighlights(
 				"[H]alpha[/H]", "[H]alpha[/H] beta",
 				"[H]alpha[/H] beta [H]alpha[/H]",

@@ -44,6 +44,7 @@ XMLTagAttributesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prev
 XMLTestIgnorableErrorLinesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `test-ignorable-error-lines.xml` file. |
 XMLTilesDefsFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `tiles-defs.xml` file. |
 XMLToggleFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `.toggle` file. |
+XMLUpgradeCompatibilityVersionCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Checks and upgrades the compatibility version in `*.xml` file. |
 XMLUpgradeDTDVersionCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Checks and upgrades the DTD version in `*.xml` file. |
 XMLUpgradeRemovedDefinitionsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Finds removed XML definitions when upgrading. |
 XMLWebFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `web.xml` file. |

@@ -5,8 +5,8 @@
 
 package com.liferay.portal.workflow.util;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -28,7 +28,10 @@ public class WorkflowDefinitionManagerUtil {
 			byte[] bytes)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.deployWorkflowDefinition(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.deployWorkflowDefinition(
 			companyId, userId, title, name, bytes);
 	}
 
@@ -37,14 +40,20 @@ public class WorkflowDefinitionManagerUtil {
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getActiveWorkflowDefinitions(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getActiveWorkflowDefinitions(
 			companyId, start, end, orderByComparator);
 	}
 
 	public static int getActiveWorkflowDefinitionsCount(long companyId)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getActiveWorkflowDefinitionsCount(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getActiveWorkflowDefinitionsCount(
 			companyId);
 	}
 
@@ -52,7 +61,10 @@ public class WorkflowDefinitionManagerUtil {
 			long companyId, String name)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getLatestWorkflowDefinition(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getLatestWorkflowDefinition(
 			companyId, name);
 	}
 
@@ -61,7 +73,10 @@ public class WorkflowDefinitionManagerUtil {
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getLatestWorkflowDefinitions(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getLatestWorkflowDefinitions(
 			companyId, start, end, orderByComparator);
 	}
 
@@ -69,7 +84,10 @@ public class WorkflowDefinitionManagerUtil {
 			long companyId, String name, int version)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getWorkflowDefinition(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getWorkflowDefinition(
 			companyId, name, version);
 	}
 
@@ -78,14 +96,20 @@ public class WorkflowDefinitionManagerUtil {
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getWorkflowDefinitions(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getWorkflowDefinitions(
 			companyId, name, start, end, orderByComparator);
 	}
 
 	public static int getWorkflowDefinitionsCount(long companyId, String name)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.getWorkflowDefinitionsCount(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.getWorkflowDefinitionsCount(
 			companyId, name);
 	}
 
@@ -108,7 +132,10 @@ public class WorkflowDefinitionManagerUtil {
 			byte[] bytes)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.saveWorkflowDefinition(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.saveWorkflowDefinition(
 			companyId, userId, title, name, bytes);
 	}
 
@@ -117,15 +144,16 @@ public class WorkflowDefinitionManagerUtil {
 			boolean active)
 		throws WorkflowException {
 
-		return _workflowDefinitionManager.updateActive(
+		WorkflowDefinitionManager workflowDefinitionManager =
+			_workflowDefinitionManagerSnapshot.get();
+
+		return workflowDefinitionManager.updateActive(
 			companyId, userId, name, version, active);
 	}
 
-	private static volatile WorkflowDefinitionManager
-		_workflowDefinitionManager =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				WorkflowDefinitionManager.class,
-				WorkflowDefinitionManagerUtil.class,
-				"_workflowDefinitionManager", true);
+	private static final Snapshot<WorkflowDefinitionManager>
+		_workflowDefinitionManagerSnapshot = new Snapshot<>(
+			WorkflowDefinitionManagerUtil.class,
+			WorkflowDefinitionManager.class);
 
 }

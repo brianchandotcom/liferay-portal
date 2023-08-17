@@ -798,6 +798,51 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
+	@description = "LPS-193788: Verify if it is not possible by default to add a workflow at a virtual instance"
+	@priority = 3
+	test CanNotAddWorkflowProcessInAVirtualInstance {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given administrators publish and edit workflows configuration is disabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Workflow",
+				configurationName = "Workflow Definition",
+				configurationScope = "System Scope");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Allow Administrators to Publish and Edit Workflows",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		}
+
+		task ("When navigation to process builder page") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "tango.com",
+				portalInstanceId = "tango.com",
+				virtualHost = "tango.com");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://tango.com:8080");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+		}
+
+		task ("Then the add button is not present") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 	@description = "LPS-192072: Verify if it is possible to configure the system on a main instance and then publish a workflow to a virtual instance"
 	@priority = 5
 	test CanPublishWorkflowAtVirtualInstance {

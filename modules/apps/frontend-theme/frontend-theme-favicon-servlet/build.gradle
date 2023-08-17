@@ -4,4 +4,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:client-extension:client-extension-api")
 	compileOnly project(":apps:client-extension:client-extension-type-api")
+	compileOnly project(":core:petra:petra-string")
 }

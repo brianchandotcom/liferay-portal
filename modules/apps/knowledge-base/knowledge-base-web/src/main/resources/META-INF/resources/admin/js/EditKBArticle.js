@@ -45,27 +45,16 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
 	};
 
-	const publishButton = document.getElementById(`${namespace}publishButton`);
-
-	const publishButtonOnClick = () => {
-		const workflowActionInput = document.getElementById(
-			`${namespace}workflowAction`
-		);
-
-		if (workflowActionInput) {
-			workflowActionInput.value = publishAction;
-		}
-
-		if (!kbArticle) {
-			const customUrl = urlTitleInput.dataset.customUrl;
-
-			if (customUrl === 'false') {
-				urlTitleInput.value = '';
-			}
-		}
-	};
-
 	const form = document.getElementById(`${namespace}fm`);
+
+	let publishButton;
+
+	if (Liferay.FeatureFlags['LPS-192286']) {
+		publishButton = document.getElementById(`${namespace}publishItem`);
+	}
+	else {
+		publishButton = document.getElementById(`${namespace}publishButton`);
+	}
 
 	const updateMultipleKBArticleAttachments = function () {
 		const selectedFileNameContainer = document.getElementById(
@@ -89,6 +78,37 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
+	const saveChanges = function () {
+		document.getElementById(`${namespace}content`).value = window[
+			`${namespace}contentEditor`
+		].getHTML();
+
+		updateMultipleKBArticleAttachments();
+	};
+
+	const publishButtonOnClick = () => {
+		const workflowActionInput = document.getElementById(
+			`${namespace}workflowAction`
+		);
+
+		if (workflowActionInput) {
+			workflowActionInput.value = publishAction;
+		}
+
+		if (!kbArticle) {
+			const customUrl = urlTitleInput.dataset.customUrl;
+
+			if (customUrl === 'false') {
+				urlTitleInput.value = '';
+			}
+		}
+
+		if (Liferay.FeatureFlags['LPS-192286']) {
+			saveChanges();
+			submitForm(form);
+		}
+	};
+
 	const eventHandlers = [
 		attachListener(publishButton, 'click', publishButtonOnClick),
 		attachListener(
@@ -97,11 +117,7 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			contextualSidebarButtonOnClick
 		),
 		attachListener(form, 'submit', () => {
-			document.getElementById(`${namespace}content`).value = window[
-				`${namespace}contentEditor`
-			].getHTML();
-
-			updateMultipleKBArticleAttachments();
+			saveChanges();
 		}),
 	];
 

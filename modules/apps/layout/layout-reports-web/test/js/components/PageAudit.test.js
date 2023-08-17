@@ -88,7 +88,7 @@ const renderPageAuditBody = ({segments = mockSegments, selectedIssue} = {}) =>
 
 describe('PageAudit', () => {
 	it('renders tabs', async () => {
-		await act(async () => renderPageAudit());
+		await act(async () => renderPageAuditBody());
 
 		expect(screen.getByText('First Tab')).toBeInTheDocument();
 		expect(screen.getByText('Second Tab')).toBeInTheDocument();

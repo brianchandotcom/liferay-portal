@@ -143,4 +143,9 @@ interface ObjectDefinition {
 	titleObjectFieldName: string;
 }
 
+interface SelectOption {
+	label: string;
+	value: string;
+}
+
 type MainSchemaNav = 'list' | {edit: number};

@@ -5,24 +5,28 @@
 
 /// <reference types="react" />
 
-interface Option {
-	label: string;
-	value: string;
-}
 interface SelectProps {
 	cleanUp?: voidReturn;
 	disabled?: boolean;
+	dropDownSearchAriaLabel?: string;
+	invalid?: boolean;
 	onClick: (value: string) => void;
-	options: Option[];
+	options: SelectOption[];
 	placeholder?: string;
-	selectedOption?: string;
+	required?: boolean;
+	selectedOption?: SelectOption;
+	triggerAriaLabel?: string;
 }
 export declare function Select({
 	cleanUp,
 	disabled,
+	dropDownSearchAriaLabel,
+	invalid,
 	onClick,
 	options,
 	placeholder,
+	required,
 	selectedOption,
+	triggerAriaLabel,
 }: SelectProps): JSX.Element;
 export {};

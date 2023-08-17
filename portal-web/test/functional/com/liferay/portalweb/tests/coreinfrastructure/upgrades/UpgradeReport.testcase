@@ -175,7 +175,8 @@ definition {
 	@description = "LPS-158740: Upgrade Report is created and populated when using auto-upgrade"
 	@priority = 4
 	test ReportGeneratedWithAutoUpgrade {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
+		property custom.properties = "upgrade.report.enabled=true";
+		property database.partition.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";
 		property upgrade.reports.enabled = "false";
@@ -347,7 +348,8 @@ definition {
 	@description = "LPS-158743: Upgrade report is generated in the console using log context format"
 	@priority = 4
 	test ReportGeneratedWithLogContext {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property custom.properties = "upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property database.partition.enabled = "true";
 		property log.context.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";
@@ -683,7 +685,8 @@ definition {
 	@description = "LPS-158743: Upgrade report trace line is generated in the console"
 	@priority = 3
 	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {
-		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property custom.properties = "upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
+		property database.partition.enabled = "true";
 		property log.context.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";

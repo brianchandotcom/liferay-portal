@@ -67,6 +67,15 @@ definition {
 			domain = "liferay.com",
 			portalInstanceId = ${portalURL},
 			virtualHost = ${portalURL});
+
+		var isLXC = JSONUtil2.getLXCEnvironment();
+
+		if (${isLXC} == "true") {
+
+			// Workaround for LXC server performance issues
+
+			Pause(locator1 = 60000);
+		}
 	}
 
 	macro signInSpecificURL {

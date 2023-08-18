@@ -30,9 +30,6 @@ export default function EditObjectFolder({
 		{rightSidebarType, selectedFolderERC, storages, viewApiURL},
 		dispatch,
 	] = useFolderContext();
-	const [newObjectDefinition, setNewObjectDefinition] = useState<
-		ObjectDefinition
-	>();
 	const [showModal, setShowModal] = useState(false);
 
 	const [selectedFolderName, setSelectedFolderName] = useState('');
@@ -81,13 +78,24 @@ export default function EditObjectFolder({
 						setShowModal(false);
 					}}
 					objectFolderExternalReferenceCode={selectedFolderERC}
+					onAfterSubmit={(newObjectDefinition) => {
+						dispatch({
+							payload: {
+								newObjectDefinition,
+								selectedFolderName,
+							},
+							type: TYPES.ADD_NEW_NODE_TO_FOLDER,
+						});
+					}}
 					reload={false}
-					setNewNode={setNewObjectDefinition}
 					storages={storages}
 				/>
 			)}
-			<Header hasDraftObjectDefinitions={false} folderExternalReferenceCode={selectedFolderERC}
-				folderName={selectedFolderName}/>
+			<Header
+				folderExternalReferenceCode={selectedFolderERC}
+				folderName={selectedFolderName}
+				hasDraftObjectDefinitions={false}
+			/>
 			<div className="lfr-objects__model-builder-diagram-container">
 				<LeftSidebar
 					selectedFolderName={selectedFolderName}

@@ -35,23 +35,44 @@ export type DropDownItems = {
 export type TAction =
 	| {
 			payload: {
+				newObjectDefinition: ObjectDefinition;
+				selectedFolderName: string;
+			};
+			type: TYPES.ADD_NEW_NODE_TO_FOLDER;
+	  }
+	| {
+			payload: {
 				objectFolders: ObjectFolder[];
 			};
 			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
 	  }
 	| {
 			payload: {
-				edges: Edge<ObjectRelationshipEdgeData>[];
-				nodes: Node<ObjectDefinitionNodeData>[];
-				selectedObjectDefinitionName: string;
+				currentFolderName: string;
+				deletedNodeName: string;
 			};
-			type: TYPES.SET_SELECTED_NODE;
+			type: TYPES.DELETE_FOLDER_NODE;
 	  }
 	| {
 			payload: {
 				newElements: any;
 			};
 			type: TYPES.SET_ELEMENTS;
+	  }
+	| {
+			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
+				nodes: Node<ObjectDefinitionNodeData>[];
+				selectedObjectDefinitionId: string;
+			};
+			type: TYPES.SET_SELECTED_NODE;
+	  }
+	| {
+			payload: {
+				currentFolderName: string;
+				updatedNode: Partial<ObjectDefinition>;
+			};
+			type: TYPES.UPDATE_FOLDER_NODE;
 	  };
 
 export type TState = {
@@ -79,6 +100,7 @@ export type LeftSidebarItemType = {
 };
 
 export type LeftSidebarDefinitionItemType = {
+	definitionId: string;
 	definitionName: string;
 	name: string;
 	selected: boolean;

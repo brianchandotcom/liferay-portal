@@ -29,8 +29,8 @@ interface ModalAddObjectDefinitionProps {
 	apiURL: string;
 	handleOnClose: () => void;
 	objectFolderExternalReferenceCode?: string;
+	onAfterSubmit?: (value: ObjectDefinition) => void;
 	reload?: boolean;
-	setNewNode?: (value: ObjectDefinition) => void;
 	storages: LabelTypeObject[];
 }
 
@@ -45,8 +45,8 @@ export function ModalAddObjectDefinition({
 	apiURL,
 	handleOnClose,
 	objectFolderExternalReferenceCode,
+	onAfterSubmit,
 	reload = true,
-	setNewNode,
 	storages,
 }: ModalAddObjectDefinitionProps) {
 	const [error, setError] = useState<string>('');
@@ -131,8 +131,8 @@ export function ModalAddObjectDefinition({
 				type: 'success',
 			});
 
-			if (setNewNode) {
-				setNewNode(newObjectDefinition);
+			if (onAfterSubmit) {
+				onAfterSubmit(newObjectDefinition);
 			}
 
 			if (reload) {

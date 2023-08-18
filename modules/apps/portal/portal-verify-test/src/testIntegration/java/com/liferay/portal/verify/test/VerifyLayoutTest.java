@@ -266,8 +266,6 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 
 		@Override
 		public void error(Object msg) {
-			super.error(msg);
-
 			_errorMessages.add((String)msg);
 		}
 

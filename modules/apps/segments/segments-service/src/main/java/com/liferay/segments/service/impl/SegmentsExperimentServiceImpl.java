@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -86,12 +85,13 @@ public class SegmentsExperimentServiceImpl
 	}
 
 	@Override
-	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid)
+	public SegmentsExperiment fetchSegmentsExperiment(
+			long groupId, long segmentsExperienceId, long plid)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				groupId, plid);
+				groupId, segmentsExperienceId, plid);
 
 		if ((segmentsExperiment != null) &&
 			_segmentsExperimentResourcePermission.contains(
@@ -101,18 +101,6 @@ public class SegmentsExperimentServiceImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public SegmentsExperiment fetchSegmentsExperiment(
-			long segmentsExperienceId, long plid, int[] statuses)
-		throws PortalException {
-
-		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
-			getPermissionChecker(), plid);
-
-		return segmentsExperimentLocalService.fetchSegmentsExperiment(
-			segmentsExperienceId, plid, statuses);
 	}
 
 	@Override
@@ -132,20 +120,6 @@ public class SegmentsExperimentServiceImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-			long[] segmentsExperienceIds, long plid, int[] statuses, int start,
-			int end)
-		throws PortalException {
-
-		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
-			getPermissionChecker(), plid);
-
-		return segmentsExperimentLocalService.
-			getSegmentsExperienceSegmentsExperiments(
-				segmentsExperienceIds, plid, statuses, start, end);
 	}
 
 	@Override
@@ -175,27 +149,6 @@ public class SegmentsExperimentServiceImpl
 			getPermissionChecker(), segmentsExperiment, ActionKeys.VIEW);
 
 		return segmentsExperiment;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long plid) {
-
-		return segmentsExperimentLocalService.getSegmentsExperiments(
-			groupId, plid);
-	}
-
-	@Override
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid, int[] statuses,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return segmentsExperimentLocalService.getSegmentsExperiments(
-			segmentsExperienceId, plid, statuses, orderByComparator);
 	}
 
 	@Override

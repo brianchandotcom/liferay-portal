@@ -284,18 +284,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="segmentsExperimentKey" />
 		</finder>
-		<finder name="G_P" return-type="SegmentsExperiment">
+		<finder name="G_S_P" return-type="SegmentsExperiment" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="plid" />
-		</finder>
-		<finder name="S_P" return-type="Collection">
 			<finder-column name="segmentsExperienceId" />
 			<finder-column name="plid" />
-		</finder>
-		<finder name="S_P_S" return-type="Collection">
-			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
-			<finder-column name="plid" />
-			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="SegmentsExperimentRel" remote-service="true">

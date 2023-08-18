@@ -6,8 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
+import ClayModal, {useModal} from '@clayui/modal';
 import React, {useState} from 'react';
 
 import {FormError, useForm} from '../../hooks/useForm';
@@ -19,9 +18,8 @@ import {Entity} from './index';
 
 interface ModalEditExternalReferenceCodeProps {
 	externalReferenceCode: string;
+	handleOnClose: () => void;
 	helpMessage: string;
-	observer: Observer;
-	onClose: () => void;
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
 	saveURL: string;
@@ -34,9 +32,8 @@ type TInitialValues = {
 
 export function ModalEditExternalReferenceCode({
 	externalReferenceCode,
+	handleOnClose,
 	helpMessage,
-	observer,
-	onClose,
 	onExternalReferenceCodeChange,
 	onGetEntity,
 	saveURL,
@@ -46,6 +43,12 @@ export function ModalEditExternalReferenceCode({
 	const initialValues: TInitialValues = {
 		externalReferenceCode,
 	};
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			handleOnClose();
+		},
+	});
 
 	const onSubmit = async ({externalReferenceCode}: TInitialValues) => {
 		try {

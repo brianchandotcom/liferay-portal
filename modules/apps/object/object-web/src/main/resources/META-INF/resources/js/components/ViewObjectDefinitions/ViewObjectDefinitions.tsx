@@ -51,6 +51,7 @@ export type ViewObjectDefinitionsModals = {
 	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
 	deletionNotAllowed: boolean;
+	editERC: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
 	redirectEditObjectDefinition: boolean;
@@ -92,6 +93,7 @@ export default function ViewObjectDefinitions({
 		deleteFolder: false,
 		deleteObjectDefinition: false,
 		deletionNotAllowed: false,
+		editERC: false,
 		editFolder: false,
 		moveObjectDefinition: false,
 		redirectEditObjectDefinition: false,

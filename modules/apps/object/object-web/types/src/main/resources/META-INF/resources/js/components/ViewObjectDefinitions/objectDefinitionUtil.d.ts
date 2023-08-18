@@ -50,7 +50,8 @@ export declare function getDefinitionNodeActions(
 	},
 	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
 	handleShowDeleteModal: () => void,
-	handleShowRedirectModal: () => void
+	handleShowRedirectModal: () => void,
+	handleShowEditERCModal: () => void
 ): DropDownItems[];
 export declare function getFolderActions(
 	id: number,

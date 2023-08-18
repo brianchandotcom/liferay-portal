@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -64,10 +63,6 @@ export function ManagementToolbar({
 		initialExternalReferenceCode
 	);
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
-
-	const {observer, onClose} = useModal({
-		onClose: () => setVisibleModal(false),
-	});
 
 	const [disabled, setDisabled] = useState(!hasPublishPermission);
 
@@ -189,9 +184,8 @@ export function ManagementToolbar({
 			{visibleModal && (
 				<ModalEditExternalReferenceCode
 					externalReferenceCode={externalReferenceCode}
+					handleOnClose={() => setVisibleModal(false)}
 					helpMessage={helpMessage}
-					observer={observer}
-					onClose={onClose}
 					onExternalReferenceCodeChange={
 						onExternalReferenceCodeChange
 					}

@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMC048",
 	"name": "Competitive Intelligence",
 	"name_i18n": {
-		"en_US": "Competitive Intelligence"
+		"ar_SA": "Competitive Intelligence",
+		"ca_ES": "Competitive Intelligence",
+		"de_DE": "Competitive Intelligence",
+		"en_US": "Competitive Intelligence",
+		"es_ES": "Competitive Intelligence",
+		"fi_FI": "Competitive Intelligence",
+		"fr_FR": "Competitive Intelligence",
+		"hu_HU": "Competitive Intelligence",
+		"ja_JP": "Competitive Intelligence",
+		"nl_NL": "Competitive Intelligence",
+		"pt_BR": "Competitive Intelligence",
+		"sv_SE": "Competitive Intelligence",
+		"zh_CN": "Competitive Intelligence"
 	},
 	"viewableBy": "Anyone"
 }

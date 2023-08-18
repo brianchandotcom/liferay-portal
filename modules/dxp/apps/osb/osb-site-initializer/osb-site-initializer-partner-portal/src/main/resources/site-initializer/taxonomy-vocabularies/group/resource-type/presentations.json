@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMC054",
 	"name": "Presentations",
 	"name_i18n": {
-		"en_US": "Presentations"
+		"ar_SA": "Presentations",
+		"ca_ES": "Presentations",
+		"de_DE": "Presentations",
+		"en_US": "Presentations",
+		"es_ES": "Presentations",
+		"fi_FI": "Presentations",
+		"fr_FR": "Presentations",
+		"hu_HU": "Presentations",
+		"ja_JP": "Presentations",
+		"nl_NL": "Presentations",
+		"pt_BR": "Presentations",
+		"sv_SE": "Presentations",
+		"zh_CN": "Presentations"
 	},
 	"viewableBy": "Anyone"
 }

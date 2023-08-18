@@ -64,7 +64,8 @@ export default function getDigitalMarketFields(
 					?.usingCIABAssets as string
 			),
 		});
-	} else {
+	}
+	else {
 		digitalMarketingFields.push(
 			{
 				title: 'Specific sites to be used',

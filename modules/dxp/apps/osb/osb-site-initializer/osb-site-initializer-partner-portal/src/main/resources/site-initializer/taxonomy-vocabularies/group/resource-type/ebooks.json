@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMC050",
 	"name": "Ebooks",
 	"name_i18n": {
-		"en_US": "Ebooks"
+		"ar_SA": "Ebooks",
+		"ca_ES": "Ebooks",
+		"de_DE": "Ebooks",
+		"en_US": "Ebooks",
+		"es_ES": "Ebooks",
+		"fi_FI": "Ebooks",
+		"fr_FR": "Ebooks",
+		"hu_HU": "Ebooks",
+		"ja_JP": "Ebooks",
+		"nl_NL": "Ebooks",
+		"pt_BR": "Ebooks",
+		"sv_SE": "Ebooks",
+		"zh_CN": "Ebooks"
 	},
 	"viewableBy": "Anyone"
 }

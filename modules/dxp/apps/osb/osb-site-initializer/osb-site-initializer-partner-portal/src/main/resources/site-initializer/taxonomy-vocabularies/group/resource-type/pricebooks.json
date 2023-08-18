@@ -3,7 +3,19 @@
 	"externalReferenceCode": "PRMC055",
 	"name": "Pricebooks",
 	"name_i18n": {
-		"en_US": "Pricebooks"
+		"ar_SA": "Pricebooks",
+		"ca_ES": "Pricebooks",
+		"de_DE": "Pricebooks",
+		"en_US": "Pricebooks",
+		"es_ES": "Pricebooks",
+		"fi_FI": "Pricebooks",
+		"fr_FR": "Pricebooks",
+		"hu_HU": "Pricebooks",
+		"ja_JP": "Pricebooks",
+		"nl_NL": "Pricebooks",
+		"pt_BR": "Pricebooks",
+		"sv_SE": "Pricebooks",
+		"zh_CN": "Pricebooks"
 	},
 	"viewableBy": "Anyone"
 }

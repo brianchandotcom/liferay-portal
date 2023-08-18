@@ -15,10 +15,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.model.SegmentsExperiment;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -62,12 +60,8 @@ public interface SegmentsExperimentService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long segmentsExperienceId, long plid, int[] statuses)
+			long groupId, long segmentsExperienceId, long plid)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -83,12 +77,6 @@ public interface SegmentsExperimentService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-			long[] segmentsExperienceIds, long plid, int[] statuses, int start,
-			int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment getSegmentsExperiment(long segmentsExperimentId)
 		throws PortalException;
 
@@ -96,19 +84,6 @@ public interface SegmentsExperimentService extends BaseService {
 	public SegmentsExperiment getSegmentsExperiment(
 			String segmentsExperimentKey)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid, int[] statuses,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
 
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,

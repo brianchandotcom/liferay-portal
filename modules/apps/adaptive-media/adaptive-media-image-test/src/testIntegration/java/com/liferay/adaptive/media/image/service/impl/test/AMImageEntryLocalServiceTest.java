@@ -431,6 +431,7 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);
 
 			_companyLocalService.deleteCompany(company);
+
 			PrincipalThreadLocal.setName(originalName);
 		}
 	}
@@ -474,6 +475,7 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration2);
 
 			_companyLocalService.deleteCompany(company);
+
 			PrincipalThreadLocal.setName(originalName);
 		}
 	}
@@ -499,6 +501,7 @@ public class AMImageEntryLocalServiceTest {
 
 		try {
 			PrincipalThreadLocal.setName(user.getUserId());
+
 			amImageCounterServiceRegistration = _registerAMImageCounter(
 				"test", 4);
 
@@ -523,6 +526,7 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);
 
 			_companyLocalService.deleteCompany(company);
+
 			PrincipalThreadLocal.setName(originalName);
 		}
 	}
@@ -548,6 +552,7 @@ public class AMImageEntryLocalServiceTest {
 
 		try {
 			PrincipalThreadLocal.setName(user.getUserId());
+
 			amImageCounterServiceRegistration = _registerAMImageCounter(
 				"test",
 				-AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(
@@ -582,6 +587,7 @@ public class AMImageEntryLocalServiceTest {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);
 
 			_companyLocalService.deleteCompany(company);
+
 			PrincipalThreadLocal.setName(originalName);
 		}
 	}
@@ -598,6 +604,7 @@ public class AMImageEntryLocalServiceTest {
 
 		try {
 			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 			Assert.assertEquals(
 				0,
 				AMImageEntryLocalServiceUtil.getPercentage(
@@ -606,6 +613,7 @@ public class AMImageEntryLocalServiceTest {
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
+
 			PrincipalThreadLocal.setName(originalName);
 		}
 	}

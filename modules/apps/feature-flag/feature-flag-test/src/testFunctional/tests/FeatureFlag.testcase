@@ -1,7 +1,7 @@
 @component-name = "portal-feature-flag"
 definition {
 
-	property custom.properties = "feature.flag.LPS-162766=false${line.separator}feature.flag.LPS-162766.type=beta${line.separator}feature.flag.LPS-162766.title=Terms and Conditions pages${line.separator}feature.flag.LPS-162766.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-162766.dependencies=LPS-162765";
+	property custom.properties = "feature.flag.LPS-162766=false${line.separator}feature.flag.LPS-162766.type=release${line.separator}feature.flag.LPS-162766.title=Terms and Conditions pages${line.separator}feature.flag.LPS-162766.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-162766.dependencies=LPS-162765";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Feature Flag";
@@ -18,9 +18,10 @@ definition {
 				panel = "Control Panel",
 				portlet = "Instance Settings");
 
-			Click(
-				key_itemName = "Feature Flags",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Release",
+				configurationScope = "Virtual Instance Scope");
 		}
 	}
 
@@ -32,7 +33,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-167698 - This tests asserts that a feature flag can be Disabled"
+	@description = "LPS-167698 - This tests asserts that a feature flag can be disabled."
 	@priority = 5
 	test CanBeDisabled {
 		property portal.acceptance = "true";
@@ -61,7 +62,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled"
+	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled."
 	@priority = 5
 	test CanBeEnabled {
 		property portal.acceptance = "true";
@@ -87,6 +88,23 @@ definition {
 				locator1 = "FeatureFlag#TOGGLE_ROW",
 				title_row = "Terms and Conditions pages",
 				toggle_state = "Enabled");
+		}
+	}
+
+	@description = "LPS-167698 - This tests asserts that a feature flag can be searched by title."
+	@priority = 4
+	test CanBeSearchedByTitle {
+		property portal.acceptance = "true";
+
+		task ("When the administrator searches for a feature flag") {
+			Search.searchCP(searchTerm = "Terms and Conditions pages");
+		}
+
+		task ("Then assert the desired feature flag is displayed") {
+			AssertElementPresent(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Terms and Conditions pages",
+				toggle_state = "Disabled");
 		}
 	}
 

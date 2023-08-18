@@ -536,11 +536,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_FIELD_MAPPINGS_HEADER</td>
-	<td>//span[contains(text(),'Field Mappings')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_FIELD_MAPPINGS_METRICS_INDEXES</td>
 	<td>//a[contains(text(),'${key_index}')]</td>
 	<td></td>

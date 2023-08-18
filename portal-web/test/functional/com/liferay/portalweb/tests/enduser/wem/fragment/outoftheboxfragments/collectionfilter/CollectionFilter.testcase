@@ -1344,24 +1344,26 @@ definition {
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAllCategories {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
 				JSONCategory.addVocabulary(
-					groupName = ${randomSiteName},
+					groupId = ${groupId},
 					title = ${title});
 			}
 		}
 
 		task ("Add a category in Vocabulary A") {
 			var categoryAId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Category A",
 				vocabularyName = "Vocabulary A");
 		}
 
 		task ("Add a category in Vocabulary B") {
 			var categoryBId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Category B",
 				vocabularyName = "Vocabulary B");
 		}
@@ -1370,7 +1372,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryAId},
 				content = "Web Content Content With Category A",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title With Category A");
 		}
 
@@ -1378,7 +1380,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				content = "Web Content Content With Both Categories",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title With Both Categories");
 		}
 
@@ -1386,7 +1388,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryAId},
 				content = "Blogs Entry Content With Category A",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Blogs Entry Title With Category A");
 		}
 
@@ -1394,7 +1396,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				content = "Blogs Entry Content With Both Categories",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Blogs Entry Title With Both Categories");
 		}
 
@@ -1402,8 +1404,8 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryAId},
 				dmDocumentTitle = "Document Title With Category A",
-				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -1411,16 +1413,17 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				dmDocumentTitle = "Document Title With Both Categories",
-				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a collection page based on dynamic collection") {

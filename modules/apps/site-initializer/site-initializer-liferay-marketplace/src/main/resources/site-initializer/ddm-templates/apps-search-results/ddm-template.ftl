@@ -127,32 +127,33 @@
 								<#if productAttachments?has_content>
 									<#list productAttachments as attachmentFields>
 										<#list attachmentFields.customFields as field>
-											<#if field.name == "App Icon" && field.customValue.data[0] == "Yes">
+											<#if (field.name == "App Icon") && (field.customValue.data[0] == "Yes")>
 												<#assign srcName = attachmentFields.src?keep_after("liferay.com") />
+
 												<img
 									   				alt=${product.name.en_US}
 									   				class="h-100 mw-100"
 									   				src="${srcName}"
-								    			/>
+												/>
 											</#if>
 										</#list>
 									</#list>
 								</#if>
-							</div>			
-							
+							</div>
+
 							<div class="pl-2">
 								<div class="font-weight-semi-bold h2 mt-1">
 									${product.name.en_US}
 								</div>
-								
+
 									<#if productSpecifications?has_content>
 										<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
-											
+
 										<#list productPriceModel as product>
 											<div class="color-neutral-3 font-size-paragraph-small mt-1">
-	                        					${product.value.en_US}
+												${product.value.en_US}
 											</div>
-	                  					 </#list>
+					  					 </#list>
 									</#if>
 							</div>
 				 		</div>
@@ -164,13 +165,13 @@
 							</div>
 
 								<#if productSpecifications?has_content>
-									<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "price-model") />	
-		
+									<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "price-model") />
+
 									<#list productPriceModel as product>
 										<div class="font-weight-semi-bold mt-1">
-	                       		 			${product.value.en_US}
+						   		 			${product.value.en_US}
 										</div>
-	                    			</#list>	
+									</#list>
 								</#if>
 					 		</div>
 				  		</div>

@@ -35,7 +35,6 @@ import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
-import com.liferay.segments.experiment.web.internal.util.comparator.SegmentsExperimentModifiedDateComparator;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
@@ -305,17 +304,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).setParameter(
 				"p_l_mode", Constants.VIEW
 			).buildString()
-		).put(
-			"historySegmentsExperiments",
-			JSONUtil.toJSONArray(
-				_segmentsExperimentService.getSegmentsExperiments(
-					segmentsExperienceId, layout.getPlid(),
-					SegmentsExperimentConstants.Status.
-						getNonexclusiveStatusValues(),
-					new SegmentsExperimentModifiedDateComparator()),
-				segmentsExperiment ->
-					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-						analyticsConfiguration, locale, segmentsExperiment))
 		).put(
 			"initialSegmentsVariants",
 			() -> {

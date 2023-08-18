@@ -11,8 +11,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginUI();
-
-		SearchAdministration.executeReindex();
 	}
 
 	tearDown {
@@ -31,14 +29,11 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given creating an API application in Control Panel > Object > Headless Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
+		task ("Given an published API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
 				title = "App-test");
-		}
-
-		task ("And Given publish the API application by Change Publication Status") {
-			APIBuilderUI.changePublicationStatus(key_title = "App-test");
 		}
 
 		task ("When I go to API Explorer") {
@@ -57,14 +52,11 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given creating an API application in Control Panel > Object > Headless Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
+		task ("Given an published API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
 				title = "App-test");
-		}
-
-		task ("And Given publishing the API application by Change Publication Status") {
-			APIBuilderUI.changePublicationStatus(key_title = "App-test");
 		}
 
 		task ("When I navigate to /o/c/{applicationUrl}") {
@@ -92,7 +84,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given creating an API application in Control Panel > Object > Headless Builder") {
+		task ("Given creating an API application") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
 				status = "unpublished",
@@ -136,14 +128,11 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given creating an API application in Control Panel > Object > Headless Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
+		task ("Given an published API application") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "published",
 				title = "App-test");
-		}
-
-		task ("And Given publishing the API application") {
-			APIBuilderUI.changePublicationStatus(key_title = "App-test");
 		}
 
 		task ("When I navigate to {protocol}//{host}:{port}/o/api?endpoint={protocol}//{host}:{port}/o/c/{applicationUrl}/openapi.json") {
@@ -164,9 +153,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given creating an API application in Control Panel > Object > Headless Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
+		task ("Given creating an API application") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "unpublished",
 				title = "App-test");
 		}
 
@@ -263,9 +253,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given creating an API application in Control Panel > Object > Headless Builder") {
-			APIBuilderUI.createAPIApplication(
-				addByPlus = "true",
+		task ("Given creating an API application") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "app-test",
+				status = "unpublished",
 				title = "App-test");
 		}
 

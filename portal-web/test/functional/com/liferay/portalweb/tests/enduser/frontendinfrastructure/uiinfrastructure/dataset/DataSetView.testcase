@@ -418,7 +418,7 @@ definition {
 		}
 
 		task ("Then confirm the options Edit and Delete are visible") {
-			MenuItem.viewVisible(menuItem = "View");
+			MenuItem.viewVisible(menuItem = "Edit");
 
 			MenuItem.viewVisible(menuItem = "Delete");
 		}

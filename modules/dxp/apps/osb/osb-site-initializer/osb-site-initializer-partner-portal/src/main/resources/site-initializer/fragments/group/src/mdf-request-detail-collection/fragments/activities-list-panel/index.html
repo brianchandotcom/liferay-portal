@@ -16,7 +16,8 @@
 	[#if activity.tactic.name != "Webinar"]
 		[#assign event_fields = event_fields + [{ "title": "Activity Location", "value": (activity.location)!"-" }, { "title": "Venue Name", "value": (activity.venueName)!"-" }] /]
 	[/#if]
-		[#assign event_fields = event_fields + [{ "title": "Liferay Branding", "value": (activity.liferayBranding)!"-" }, { "title": "Liferay Participation / Requirements", "value": (activity.liferayParticipationRequirements)!"-" }, { "title": "Source and Size of Invitee List", "value": (activity.sourceAndSizeOfInviteeList)!"-" }, { "title": "Activity Promotion", "value": (activity.activityPromotion)!"-" }, { "title": "Webinar Topic", "value": (activity.webinarTopic)!"-" }, { "title": "Webinar Host/Platform", "value": (activity.webinarTopic)!"-" }] /]
+
+	[#assign event_fields = event_fields + [{ "title": "Liferay Branding", "value": (activity.liferayBranding)!"-" }, { "title": "Liferay Participation / Requirements", "value": (activity.liferayParticipationRequirements)!"-" }, { "title": "Source and Size of Invitee List", "value": (activity.sourceAndSizeOfInviteeList)!"-" }, { "title": "Activity Promotion", "value": (activity.activityPromotion)!"-" }, { "title": "Webinar Topic", "value": (activity.webinarTopic)!"-" }, { "title": "Webinar Host/Platform", "value": (activity.webinarTopic)!"-" }] /]
 
 	[#return event_fields /]
 [/#function]
@@ -71,6 +72,7 @@
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Audience Target", "value": (activity.audienceTarget)!"-" }, { "title": "Source and Size of call List", "value": (activity.sourceAndSizeOfCallList)!"-" }, { "title": "Resources necessary from Liferay", "value": (activity.resourcesNecessaryFromLiferay)!"-" } ] /]
 
 	[/#if]
+
 	[#return miscellaneous_marketing_fields /]
 [/#function]
 

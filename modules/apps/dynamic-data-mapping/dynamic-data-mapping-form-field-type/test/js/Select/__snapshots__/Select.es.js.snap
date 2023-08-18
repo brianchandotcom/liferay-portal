@@ -1715,6 +1715,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
     >
       This is the label
       <span
+        aria-hidden="true"
         class="ddm-label-required reference-mark"
       >
         <svg

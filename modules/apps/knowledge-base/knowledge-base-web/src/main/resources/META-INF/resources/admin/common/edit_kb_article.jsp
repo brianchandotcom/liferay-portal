@@ -62,6 +62,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 									cssClass="c-mr-3"
 									displayType="primary"
 									dropdownItems="<%= editKBArticleDisplayContext.getEditKBArticleActionDropdownItems() %>"
+									icon="caret-bottom"
 									id='<%= liferayPortletResponse.getNamespace() + "publishDropdown" %>'
 									label="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>"
 									name="publishDropdown"

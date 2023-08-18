@@ -535,7 +535,6 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
 			};
 		}
-
 		case TYPES.UPDATE_FOLDER_NODE: {
 			const {currentFolderName, updatedNode} = action.payload;
 

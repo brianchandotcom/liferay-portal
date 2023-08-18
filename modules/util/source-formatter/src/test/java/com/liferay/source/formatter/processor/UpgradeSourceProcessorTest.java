@@ -280,6 +280,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJSPFieldSetGroupCheck() throws Exception {
+		test("upgrade/UpgradeJSPFieldSetGroupCheck.testjsp");
+	}
+
+	@Test
 	public void testUpgradePortletFTLCheck() throws Exception {
 		test("upgrade/UpgradeFTLPortletFTLCheck.testftl");
 	}

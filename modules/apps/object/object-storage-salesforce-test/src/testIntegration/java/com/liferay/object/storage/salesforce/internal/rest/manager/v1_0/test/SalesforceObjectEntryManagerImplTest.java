@@ -227,16 +227,16 @@ public class SalesforceObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		objectEntry = _objectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		Assert.assertEquals(
-			title,
-			MapUtil.getString(
-				_getObjectEntryProperties(
-					dtoConverterContext,
-					objectEntry.getExternalReferenceCode()),
-				"title"));
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
 
 		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
+			TestPropsValues.getCompanyId(), _getDTOConverterContext(),
 			objectEntry.getExternalReferenceCode(), _objectDefinition,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
@@ -256,24 +256,24 @@ public class SalesforceObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_partialUpdateObjectEntry(
-			dtoConverterContext, objectEntry.getExternalReferenceCode(),
-			_objectDefinition,
-			HashMapBuilder.<String, Object>put(
-				"title", "Able"
-			).build());
+		_objectEntryManager.partialUpdateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"title", "Able"
+					).build();
+				}
+			},
+			null);
 
-		Map<String, Object> properties = _getObjectEntryProperties(
-			dtoConverterContext, objectEntry.getExternalReferenceCode());
+		ObjectEntry newObjectEntry = _objectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Assert.assertEquals("Able", properties.get("title"));
-
-		_partialUpdateObjectEntry(
-			dtoConverterContext, objectEntry.getExternalReferenceCode(),
-			_objectDefinition, Collections.emptyMap());
-
-		properties = _getObjectEntryProperties(
-			dtoConverterContext, objectEntry.getExternalReferenceCode());
+		Map<String, Object> properties = newObjectEntry.getProperties();
 
 		Assert.assertEquals("Able", properties.get("title"));
 	}
@@ -282,36 +282,6 @@ public class SalesforceObjectEntryManagerImplTest {
 		return new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), _dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, _user);
-	}
-
-	private Map<String, Object> _getObjectEntryProperties(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode)
-		throws Exception {
-
-		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			externalReferenceCode, _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		return objectEntry.getProperties();
-	}
-
-	private void _partialUpdateObjectEntry(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Map<String, Object> values)
-		throws Exception {
-
-		_objectEntryManager.partialUpdateObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			externalReferenceCode, objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = values;
-				}
-			},
-			null);
 	}
 
 	@Inject

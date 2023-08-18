@@ -100,7 +100,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
@@ -130,8 +129,6 @@ import java.io.InputStream;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-
-import java.sql.Timestamp;
 
 import java.text.DateFormat;
 
@@ -2013,8 +2010,7 @@ public class DefaultObjectEntryManagerImplTest {
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_partialUpdateObjectEntryValues(
-			_objectDefinition2, objectEntry.getId(),
+		Map<String, Object> objectEntryProperties =
 			HashMapBuilder.<String, Object>put(
 				"dateObjectFieldName", "2023-08-20"
 			).put(
@@ -2028,12 +2024,26 @@ public class DefaultObjectEntryManagerImplTest {
 				new BigDecimal(0.8755445767, MathContext.DECIMAL64)
 			).put(
 				"richTextObjectFieldName", "<i>richTextObjectFieldNameValue</i>"
-			).build());
+			).build();
 
-		_assertObjectEntryProperties(
-			"2023-08-20", new BigDecimal(0.8755445767, MathContext.DECIMAL64),
-			2.7, 25, 200L, objectEntry.getId(),
-			"<i>richTextObjectFieldNameValue</i>", "textObjectFieldValue");
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>putAll(
+						objectEntryProperties
+					).put(
+						"textObjectFieldName", "textObjectFieldValue"
+					).build();
+				}
+			},
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition2,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = objectEntryProperties;
+					}
+				}));
 	}
 
 	@Test
@@ -2790,40 +2800,6 @@ public class DefaultObjectEntryManagerImplTest {
 			objectEntries.toString(), size, objectEntries.size());
 	}
 
-	private void _assertObjectEntryProperties(
-			String expectedDate, BigDecimal expectedBigDecimal,
-			double expectedDecimal, int expectedInteger,
-			long expectedLongInteger, long objectEntryId,
-			String expectedRichText, String expectedText)
-		throws Exception {
-
-		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
-			_simpleDTOConverterContext, _objectDefinition2, objectEntryId);
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		Date date = DateUtil.parseDate(
-			"yyyy-MM-dd", expectedDate, LocaleUtil.getSiteDefault());
-
-		Assert.assertEquals(
-			new Timestamp(date.getTime()),
-			properties.get("dateObjectFieldName"));
-
-		Assert.assertEquals(
-			expectedDecimal, properties.get("decimalObjectFieldName"));
-		Assert.assertEquals(
-			expectedInteger, properties.get("integerObjectFieldName"));
-		Assert.assertEquals(
-			expectedLongInteger, properties.get("longIntegerObjectFieldName"));
-		Assert.assertEquals(
-			expectedBigDecimal,
-			properties.get("precisionDecimalObjectFieldName"));
-		Assert.assertEquals(
-			expectedRichText, properties.get("richTextObjectFieldName"));
-		Assert.assertEquals(
-			expectedText, properties.get("textObjectFieldName"));
-	}
-
 	private void _assertPicklistOjectField(
 			ListEntry expectedListEntry, Object picklistObjectFieldValue)
 		throws Exception {
@@ -2991,20 +2967,6 @@ public class DefaultObjectEntryManagerImplTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();
-	}
-
-	private void _partialUpdateObjectEntryValues(
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Map<String, Object> values)
-		throws Exception {
-
-		_defaultObjectEntryManager.partialUpdateObjectEntry(
-			_simpleDTOConverterContext, objectDefinition, objectEntryId,
-			new ObjectEntry() {
-				{
-					properties = values;
-				}
-			});
 	}
 
 	private void _removeResourcePermission(String actionId, Role role)

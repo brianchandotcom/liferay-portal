@@ -5,11 +5,12 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.servlet.NullSession;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -244,5 +245,135 @@ public class SharedSessionWrapper implements HttpSession {
 
 	private final HttpSession _portalHttpSession;
 	private HttpSession _portletHttpSession;
+
+	private class NullSession implements HttpSession {
+
+		public NullSession() {
+			_creationTime = System.currentTimeMillis();
+			_id =
+				NullSession.class.getName() + StringPool.POUND +
+					StringUtil.randomId();
+			_lastAccessedTime = _creationTime;
+			_maxInactiveInterval = 0;
+			_servletContext = null;
+			_new = true;
+		}
+
+		@Override
+		public Object getAttribute(String name) {
+			return _attributes.get(name);
+		}
+
+		@Override
+		public Enumeration<String> getAttributeNames() {
+			return Collections.enumeration(_attributes.keySet());
+		}
+
+		@Override
+		public long getCreationTime() {
+			return _creationTime;
+		}
+
+		@Override
+		public String getId() {
+			return _id;
+		}
+
+		@Override
+		public long getLastAccessedTime() {
+			return _lastAccessedTime;
+		}
+
+		@Override
+		public int getMaxInactiveInterval() {
+			return _maxInactiveInterval;
+		}
+
+		@Override
+		public ServletContext getServletContext() {
+			return _servletContext;
+		}
+
+		/**
+		 * @deprecated As of Bunyan (6.0.x)
+		 */
+		@Deprecated
+		@Override
+		public HttpSessionContext getSessionContext() {
+			return null;
+		}
+
+		/**
+		 * @deprecated As of Wilberforce (7.0.x)
+		 */
+		@Deprecated
+		@Override
+		public Object getValue(String name) {
+			return getAttribute(name);
+		}
+
+		/**
+		 * @deprecated As of Wilberforce (7.0.x)
+		 */
+		@Deprecated
+		@Override
+		public String[] getValueNames() {
+			List<String> names = ListUtil.fromEnumeration(getAttributeNames());
+
+			return names.toArray(new String[0]);
+		}
+
+		@Override
+		public void invalidate() {
+			_attributes.clear();
+		}
+
+		@Override
+		public boolean isNew() {
+			return _new;
+		}
+
+		/**
+		 * @deprecated As of Wilberforce (7.0.x)
+		 */
+		@Deprecated
+		@Override
+		public void putValue(String name, Object value) {
+			setAttribute(name, value);
+		}
+
+		@Override
+		public void removeAttribute(String name) {
+			_attributes.remove(name);
+		}
+
+		/**
+		 * @deprecated As of Wilberforce (7.0.x)
+		 */
+		@Deprecated
+		@Override
+		public void removeValue(String name) {
+			removeAttribute(name);
+		}
+
+		@Override
+		public void setAttribute(String name, Object value) {
+			_attributes.put(name, value);
+		}
+
+		@Override
+		public void setMaxInactiveInterval(int maxInactiveInterval) {
+			_maxInactiveInterval = maxInactiveInterval;
+		}
+
+		private final Map<String, Object> _attributes = new HashMap<>();
+		private final long _creationTime;
+		private final String _id;
+		private final long _lastAccessedTime;
+		private int _maxInactiveInterval;
+		private final boolean _new;
+		private final ServletContext _servletContext;
+
+	}
 
 }

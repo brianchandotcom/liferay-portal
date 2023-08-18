@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mahmoud Azzam
  * @author Alessio Antonio Rendina
  */
-@Component(
-	service = {CSDiagramEntryInfoItemRenderer.class, InfoItemRenderer.class}
-)
+@Component(service = InfoItemRenderer.class)
 public class CSDiagramEntryInfoItemRenderer
 	implements InfoItemRenderer<CSDiagramEntry> {
 

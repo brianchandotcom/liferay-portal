@@ -33,9 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	service = {DiagramCardInfoItemRenderer.class, InfoItemRenderer.class}
-)
+@Component(service = InfoItemRenderer.class)
 public class DiagramCardInfoItemRenderer
 	implements InfoItemRenderer<CSDiagramEntry> {
 

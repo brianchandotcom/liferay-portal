@@ -1583,15 +1583,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			for (var fieldName : list "Text,Rich Text,Date") {
-				DataEngine.addField(
-					fieldFieldLabel = ${fieldName},
-					fieldName = ${fieldName});
-			}
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Rich Text,Date");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text Box",
@@ -1607,7 +1601,7 @@ definition {
 				fieldName = "Numeric",
 				numericType = "Decimal");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Add a web content based on new structure") {

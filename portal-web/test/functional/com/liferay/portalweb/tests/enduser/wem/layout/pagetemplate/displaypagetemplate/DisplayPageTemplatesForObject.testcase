@@ -126,6 +126,144 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191554. The administrator could display related object entries outside of form on associated display page."
+	@priority = 4
+	test DisplayRelatedObjectEntiresOutsideFormOnAssociatedDisplayPage {
+		property custom.properties = "feature.flag.LPS-183727=true${line.separator}feature.flag.LPS-176083=true";
+
+		task ("Given a site administrator has two objects with one to many relationship") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Epic Name",
+				fieldName = "epicName",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "epicName",
+				objectName = ${randomObjectName},
+				value = "Update/View Object entries using Page Builder");
+			var labelName = StringUtil.randomString(8);
+
+			var objectName = "A${labelName}";
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${labelName},
+				objectName = ${objectName},
+				pluralLabelName = "${labelName}s");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Story Name",
+				fieldName = "storyName",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${objectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = ${randomObjectName},
+				objectName_2 = ${objectName},
+				relationshipLabel = "Related Stories",
+				relationshipName = "relatedStories",
+				relationshipType = "oneToMany");
+
+			for (var storyName : list "Picklist fields to be editable from Edit DPT,Multiple Picklist fields to be editable from Edit DPT,Boolean fields to be editable from Edit DPT") {
+				ObjectAdmin.addObjectEntryViaAPI(
+					fieldNameList = "storyName,r_relatedStories_c_a${randomLabelName}Id",
+					objectName = ${objectName},
+					valueList = "${storyName},${objectEntryId}");
+			}
+		}
+
+		task ("When the site administrator adds a Form Container to a display page template for the first object") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = ${randomLabelName},
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+		}
+
+		task ("Then the site administrator could display related object entires outside Form") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				targetFragmentName = "Form Container");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Related Stories");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Story Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "${randomLabelName}s");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(field = "Default");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			for (var storyName : list "Picklist fields to be editable from Edit DPT,Multiple Picklist fields to be editable from Edit DPT,Boolean fields to be editable from Edit DPT") {
+				AssertVisible(
+					key_text = ${storyName},
+					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-191312. The administrator could edit date and time field of object entry via associated display page."
 	@priority = 4
 	test EditDateAndTimeFieldOnAssociatedDisplayPage {

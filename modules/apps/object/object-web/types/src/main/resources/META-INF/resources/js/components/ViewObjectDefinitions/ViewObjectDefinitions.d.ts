@@ -18,6 +18,7 @@ export declare type ViewObjectDefinitionsModals = {
 	addObjectDefinition: boolean;
 	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
+	editERC: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
 	redirectEditObjectDefinition: boolean;

@@ -12,6 +12,7 @@ export declare function DefinitionNode({
 	data: {
 		defaultLanguageId,
 		editObjectDefinitionURL,
+		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
 		id,

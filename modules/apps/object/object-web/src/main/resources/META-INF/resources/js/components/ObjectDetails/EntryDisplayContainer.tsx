@@ -12,6 +12,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 interface EntryDisplayContainerProps {
 	errors: FormError<ObjectDefinition>;
+	isLinkedNode?: boolean;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
 		name: string;
@@ -23,6 +24,7 @@ interface EntryDisplayContainerProps {
 
 export function EntryDisplayContainer({
 	errors,
+	isLinkedNode,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
 	setValues,
@@ -66,6 +68,7 @@ export function EntryDisplayContainer({
 
 	return (
 		<SingleSelect<{label: string; name: string}>
+			disabled={isLinkedNode}
 			error={errors.titleObjectFieldId}
 			label={Liferay.Language.get('entry-title-field')}
 			onChange={(target: {label: string; name: string}) => {

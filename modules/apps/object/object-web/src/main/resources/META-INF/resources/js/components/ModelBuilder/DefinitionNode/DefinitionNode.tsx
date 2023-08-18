@@ -5,9 +5,22 @@
 
 import classNames from 'classnames';
 import React, {useState} from 'react';
-import {Handle, NodeProps, Position, useStore} from 'react-flow-renderer';
+import {
+	Handle,
+	Node,
+	NodeProps,
+	Position,
+	isNode,
+	useStore,
+} from 'react-flow-renderer';
 
 import './DefinitionNode.scss';
+
+import {
+	API,
+	ModalEditExternalReferenceCode,
+} from '@liferay/object-js-components-web';
+
 import {formatActionURL} from '../../../utils/fds';
 import {ModalDeleteObjectDefinition} from '../../ViewObjectDefinitions/ModalDeleteObjectDefinition';
 import {
@@ -27,6 +40,7 @@ export function DefinitionNode({
 	data: {
 		defaultLanguageId,
 		editObjectDefinitionURL,
+		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
 		id,
@@ -42,18 +56,23 @@ export function DefinitionNode({
 	},
 }: NodeProps<ObjectDefinitionNodeData>) {
 	const [showAllFields, setShowAllFields] = useState<boolean>(false);
-	const [_, dispatch] = useFolderContext();
+	const [{elements}, dispatch] = useFolderContext();
 	const store = useStore();
 
 	const [showModal, setShowModal] = useState<
 		Partial<ViewObjectDefinitionsModals>
 	>({
 		deleteObjectDefinition: false,
+		editERC: false,
 	});
 	const [
 		deletedObjectDefinition,
 		setDeletedObjectDefinition,
 	] = useState<DeletedObjectDefinition | null>();
+
+	const [newExternalReferenceCode, setNewExternalReferenceCode] = useState(
+		externalReferenceCode
+	);
 
 	const [{baseResourceURL}] = useFolderContext();
 
@@ -66,6 +85,12 @@ export function DefinitionNode({
 	const handleShowRedirectModal = () => {
 		setShowModal({
 			redirectEditObjectDefinition: true,
+		});
+	};
+
+	const handleShowEditERCModal = () => {
+		setShowModal({
+			editERC: true,
 		});
 	};
 
@@ -99,7 +124,7 @@ export function DefinitionNode({
 				<NodeHeader
 					dropDownItems={getDefinitionNodeActions(
 						baseResourceURL,
-						objectDefinitionId,
+						id!,
 						name,
 						hasObjectDefinitionDeleteResourcePermission,
 						hasObjectDefinitionManagePermissionsResourcePermission,
@@ -107,7 +132,8 @@ export function DefinitionNode({
 						status,
 						setDeletedObjectDefinition,
 						handleShowDeleteDefinitionModal,
-						handleShowRedirectModal
+						handleShowRedirectModal,
+						handleShowEditERCModal
 					)}
 					isLinkedNode={isLinkedNode}
 					objectDefinitionLabel={label}
@@ -163,6 +189,60 @@ export function DefinitionNode({
 						});
 					}}
 					viewDetailsUrl={viewDetailsUrl}
+				/>
+			)}
+
+			{showModal.editERC && (
+				<ModalEditExternalReferenceCode
+					externalReferenceCode={newExternalReferenceCode as string}
+					handleOnClose={() => {
+						setShowModal(
+							(
+								previousState: Partial<
+									ViewObjectDefinitionsModals
+								>
+							) => ({
+								...previousState,
+								editERC: false,
+							})
+						);
+					}}
+					helpMessage={Liferay.Language.get(
+						'unique-key-for-referencing-the-object-definition'
+					)}
+					onExternalReferenceCodeChange={(
+						externalReferenceCode: string
+					) => {
+						const updatedElements = elements.map((element) => {
+							if (
+								isNode(element) &&
+								(element as Node<ObjectDefinitionNodeData>)
+									.id === objectDefinitionId?.toString()
+							) {
+								return {
+									...element,
+									data: {
+										...element.data,
+										externalReferenceCode,
+									},
+								};
+							}
+
+							return element;
+						});
+
+						dispatch({
+							payload: {
+								newElements: updatedElements,
+							},
+							type: TYPES.SET_ELEMENTS,
+						});
+					}}
+					onGetEntity={() =>
+						API.getObjectDefinitionById(objectDefinitionId)
+					}
+					saveURL={`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`}
+					setExternalReferenceCode={setNewExternalReferenceCode}
 				/>
 			)}
 		</>

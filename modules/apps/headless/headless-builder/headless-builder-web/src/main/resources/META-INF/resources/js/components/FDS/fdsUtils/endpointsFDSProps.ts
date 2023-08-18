@@ -33,11 +33,15 @@ export function getAPIApplicationsEndpointsFDSProps(
 				icon: 'pencil',
 				label: Liferay.Language.get('edit'),
 			},
-			{
-				icon: 'copy',
-				id: 'copyEndpointURL',
-				label: Liferay.Language.get('copy-url'),
-			},
+			...(window.isSecureContext
+				? [
+						{
+							icon: 'copy',
+							id: 'copyEndpointURL',
+							label: Liferay.Language.get('copy-url'),
+						},
+				  ]
+				: []),
 			{
 				icon: 'trash',
 				id: 'deleteAPIApplicationEndpoint',

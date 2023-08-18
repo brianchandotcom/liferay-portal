@@ -686,7 +686,7 @@ definition {
 	@priority = 3
 	test UserNotifiedWhereToFindUpgradeReportAfterAutoUpgrade {
 		property custom.properties = "upgrade.report.enabled=true${line.separator}upgrade.log.context.enabled=true";
-		property database.partition.enabled = "true";
+		property database.auto.upgrade.enabled = "true";
 		property log.context.enabled = "true";
 		property skip.start.app.server = "false";
 		property skip.upgrade-legacy-database = "true";

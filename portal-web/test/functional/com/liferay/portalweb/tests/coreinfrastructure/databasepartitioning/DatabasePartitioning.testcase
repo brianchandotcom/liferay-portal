@@ -197,7 +197,6 @@ definition {
 	@priority = 4
 	test CanAddCompanyWithHeadlessAPI {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
-		property database.auto.upgrade.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -327,6 +326,7 @@ definition {
 	@priority = 3
 	test CanScheduleJobInVariousCompaniesWhenAutoUpgradeIsEnabled {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.auto.upgrade.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
 		property osgi.module.configurations = "checkInterval=I\"1\"";
 		property test.liferay.virtual.instance = "false";

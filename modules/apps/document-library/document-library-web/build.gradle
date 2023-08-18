@@ -56,6 +56,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:learn:learn-api")
 	compileOnly project(":apps:learn:learn-taglib")
+	compileOnly project(":apps:portal-workflow:portal-workflow-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-taglib")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")

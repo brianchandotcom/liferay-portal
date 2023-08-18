@@ -40,7 +40,6 @@
 	[/#if]
 
 	[#return digital_marketing_fields /]
-
 [/#function]
 
 [#function get_content_marketing_fields activity]
@@ -48,7 +47,7 @@
 [/#function]
 
 [#function get_miscellaneous_marketing_fields activity]
-[#assign miscellaneous_marketing_fields = [{ "title": "Marketing activity", "value": (activity.marketingActivity)!"-"}] /]
+	[#assign miscellaneous_marketing_fields = [{ "title": "Marketing activity", "value": (activity.marketingActivity)!"-"}] /]
 
 	[#if activity.tactic.name = "Broadcast Advertising"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Broadcast channel", "value": (activity.broadcastChannel)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "# of weeks/airing", "value": (activity.weeksAiring)!"-" }, { "title": "Guaranteed Impressions", "value": (activity.guaranteedImpressions!"-")}] /]

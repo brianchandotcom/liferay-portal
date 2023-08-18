@@ -1748,6 +1748,10 @@
 			<category name="Upgrade" />
 			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
 		</check>
+		<check name="UpgradeJSPFieldSetGroupCheck">
+			<category name="Upgrade" />
+			<description name="Run code to remove 'fieldset-group' tag" />
+		</check>
 		<check name="UpgradePortletFTLCheck">
 			<category name="Upgrade" />
 			<description name="Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file" />

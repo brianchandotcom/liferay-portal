@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.builder.internal.vulcan.openapi.contributor;
+package com.liferay.headless.builder.internal.util;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.internal.util.OpenAPIUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -21,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Sergio Jiménez del Coso
  */
-public class APIApplicationOpenApiContributorTest {
+public class OpenAPIUtilTest {
 
 	@ClassRule
 	@Rule

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -94,7 +95,9 @@ public class SegmentsExperimentModelListener
 			if (AsahUtil.isSkipAsahEvent(
 					_analyticsSettingsManager,
 					segmentsExperiment.getCompanyId(),
-					segmentsExperiment.getGroupId())) {
+					segmentsExperiment.getGroupId()) ||
+				(segmentsExperiment.getStatus() ==
+					SegmentsExperimentConstants.STATUS_DELETED_ON_DXP_ONLY)) {
 
 				return;
 			}

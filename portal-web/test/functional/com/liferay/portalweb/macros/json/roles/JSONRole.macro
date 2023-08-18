@@ -114,11 +114,14 @@ definition {
 	}
 
 	macro assignSiteRoleToUser {
-		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
+		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
-		var groupId = JSONUserSetter.setGroupId(
-			groupName = ${groupName},
-			parentGroupName = ${parentGroupName});
+		if (!(isSet(groupId))) {
+			var groupId = JSONUserSetter.setGroupId(
+				groupName = ${groupName},
+				parentGroupName = ${parentGroupName});
+		}
+
 		var roleId = JSONRoleSetter.setRoleId(name = ${roleTitle});
 		var userId = JSONRoleSetter.setUserId(userEmailAddress = ${userEmailAddress});
 

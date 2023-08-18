@@ -8,6 +8,8 @@
 import {IFDSTableProps} from '../../utils/fds';
 interface RelationshipsProps extends IFDSTableProps {
 	isApproved: boolean;
+	objectRelationshipTypes: string[];
+	parameterRequired: boolean;
 }
 export default function Relationships({
 	apiURL,
@@ -17,6 +19,8 @@ export default function Relationships({
 	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
+	objectRelationshipTypes,
+	parameterRequired,
 	style,
 	url,
 }: RelationshipsProps): JSX.Element;

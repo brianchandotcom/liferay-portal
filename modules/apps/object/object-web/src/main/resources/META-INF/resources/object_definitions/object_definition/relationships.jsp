@@ -39,24 +39,13 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
-				"style", "fluid"
-			).put(
-				"url", objectDefinitionsRelationshipsDisplayContext.getEditObjectRelationshipURL()
-			).build()
-		%>'
-	/>
-</div>
-
-<div>
-	<react:component
-		module="js/components/ObjectRelationship/AddRelationship"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
-			).put(
 				"objectRelationshipTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipTypes(objectDefinition)
 			).put(
 				"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)
+			).put(
+				"style", "fluid"
+			).put(
+				"url", objectDefinitionsRelationshipsDisplayContext.getEditObjectRelationshipURL()
 			).build()
 		%>'
 	/>

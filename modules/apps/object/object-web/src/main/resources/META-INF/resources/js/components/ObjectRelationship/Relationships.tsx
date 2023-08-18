@@ -20,6 +20,7 @@ import {
 	formatActionURL,
 } from '../../utils/fds';
 import {deleteRelationship} from '../ViewObjectDefinitions/objectDefinitionUtil';
+import {ModalAddObjectRelationship} from './ModalAddObjectRelationship';
 import {ModalDeleteObjectRelationship} from './ModalDeleteObjectRelationship';
 
 interface ItemData {
@@ -29,6 +30,8 @@ interface ItemData {
 
 interface RelationshipsProps extends IFDSTableProps {
 	isApproved: boolean;
+	objectRelationshipTypes: string[];
+	parameterRequired: boolean;
 }
 
 export default function Relationships({
@@ -39,6 +42,8 @@ export default function Relationships({
 	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
+	objectRelationshipTypes,
+	parameterRequired,
 	style,
 	url,
 }: RelationshipsProps) {
@@ -50,7 +55,8 @@ export default function Relationships({
 		objectRelationship,
 		setObjectRelationship,
 	] = useState<ObjectRelationship | null>();
-	const [showModal, setShowModal] = useState(false);
+	const [showAddModal, setShowAddModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -129,7 +135,7 @@ export default function Relationships({
 			if (action.data.id === 'deleteObjectRelationship') {
 				if (isApproved || itemData.reverse) {
 					setObjectRelationship(itemData);
-					setShowModal(true);
+					setShowDeleteModal(true);
 				}
 				else {
 					deleteRelationship(itemData.id);
@@ -184,13 +190,32 @@ export default function Relationships({
 		],
 	};
 
+	useEffect(() => {
+		Liferay.on('addObjectRelationship', () => setShowAddModal(true));
+
+		return () => {
+			Liferay.detach('addObjectRelationship');
+		};
+	}, []);
+
 	return (
 		<>
 			<FrontendDataSet {...dataSetProps} />
 
-			{showModal && objectRelationship && (
+			{showAddModal && (
+				<ModalAddObjectRelationship
+					handleOnClose={() => setShowAddModal(false)}
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
+					}
+					objectRelationshipTypes={objectRelationshipTypes}
+					parameterRequired={parameterRequired}
+				/>
+			)}
+
+			{showDeleteModal && objectRelationship && (
 				<ModalDeleteObjectRelationship
-					handleOnClose={() => setShowModal(false)}
+					handleOnClose={() => setShowDeleteModal(false)}
 					objectRelationship={
 						objectRelationship as ObjectRelationship
 					}

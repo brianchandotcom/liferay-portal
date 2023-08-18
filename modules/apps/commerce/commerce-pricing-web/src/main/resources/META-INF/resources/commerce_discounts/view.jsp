@@ -20,7 +20,7 @@ PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 		<aui:input name="deleteDiscounts" type="hidden" />
 
 		<frontend-data-set:headless-display
-			apiURL="/o/headless-commerce-admin-pricing/v2.0/discounts?sort=dateModified:desc"
+			apiURL="/o/headless-commerce-admin-pricing/v2.0/discounts?sort=modifiedDate:desc"
 			creationMenu="<%= commerceDiscountDisplayContext.getDiscountCreationMenu() %>"
 			fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountFDSActionDropdownItems() %>"
 			formName="fm"

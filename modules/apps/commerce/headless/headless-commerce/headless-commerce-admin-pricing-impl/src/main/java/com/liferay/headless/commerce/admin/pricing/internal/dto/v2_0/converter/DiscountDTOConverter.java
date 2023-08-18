@@ -65,7 +65,6 @@ public class DiscountDTOConverter
 				amountFormatted = _getAmountFormatted(commerceDiscount, locale);
 				couponCode = commerceDiscount.getCouponCode();
 				customFields = expandoBridge.getAttributes();
-				dateModified = commerceDiscount.getModifiedDate();
 				displayDate = commerceDiscount.getDisplayDate();
 				expirationDate = commerceDiscount.getExpirationDate();
 				externalReferenceCode =
@@ -78,6 +77,7 @@ public class DiscountDTOConverter
 				limitationType = commerceDiscount.getLimitationType();
 				maximumDiscountAmount =
 					commerceDiscount.getMaximumDiscountAmount();
+				modifiedDate = commerceDiscount.getModifiedDate();
 				numberOfUse = commerceDiscount.getNumberOfUse();
 				percentageLevel1 = commerceDiscount.getLevel1();
 				percentageLevel2 = commerceDiscount.getLevel2();

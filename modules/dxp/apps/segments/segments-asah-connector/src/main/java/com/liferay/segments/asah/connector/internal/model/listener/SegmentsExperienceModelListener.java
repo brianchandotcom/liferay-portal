@@ -26,8 +26,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -56,12 +54,13 @@ public class SegmentsExperienceModelListener
 				return;
 			}
 
-			List<SegmentsExperiment> segmentsExperiments =
-				_segmentsExperimentLocalService.getSegmentsExperiments(
+			SegmentsExperiment segmentsExperiment =
+				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					segmentsExperience.getGroupId(),
 					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getPlid(), new int[0], null);
+					segmentsExperience.getPlid());
 
-			for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
+			if (segmentsExperiment != null) {
 				_processUpdateSegmentsExperience(
 					segmentsExperience, segmentsExperiment);
 			}

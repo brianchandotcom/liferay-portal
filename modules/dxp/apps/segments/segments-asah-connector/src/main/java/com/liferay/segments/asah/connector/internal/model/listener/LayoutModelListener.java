@@ -50,7 +50,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
-					layout.getGroupId(), layout.getPlid());
+					layout.getGroupId(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					layout.getPlid());
 
 			if (segmentsExperiment != null) {
 				_asahSegmentsExperimentProcessor.

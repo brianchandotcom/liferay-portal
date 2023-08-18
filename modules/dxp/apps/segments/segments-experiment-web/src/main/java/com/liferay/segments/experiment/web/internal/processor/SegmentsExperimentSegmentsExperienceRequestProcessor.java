@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsCookieManagerUtil;
 import com.liferay.segments.model.SegmentsExperience;
@@ -101,8 +100,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		if (segmentsExperienceId != -1) {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
-					segmentsExperienceId, plid,
-					SegmentsExperimentConstants.Status.getSplitStatusValues());
+					themeDisplay.getScopeGroupId(), segmentsExperienceId, plid);
 
 			if (segmentsExperiment != null) {
 				httpServletRequest.setAttribute(
@@ -134,14 +132,11 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			segmentsExperienceId = segmentsExperienceIds[0];
 		}
 
-		List<SegmentsExperiment> segmentsExperiments =
-			_segmentsExperimentLocalService.
-				getSegmentsExperienceSegmentsExperiments(
-					new long[] {segmentsExperienceId}, plid,
-					SegmentsExperimentConstants.Status.getSplitStatusValues(),
-					0, 1);
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentLocalService.fetchSegmentsExperiment(
+				themeDisplay.getScopeGroupId(), segmentsExperienceId, plid);
 
-		if (segmentsExperiments.isEmpty()) {
+		if (segmentsExperiment == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No experiment running for the user experiences " +
@@ -150,8 +145,6 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 			return segmentsExperienceIds;
 		}
-
-		SegmentsExperiment segmentsExperiment = segmentsExperiments.get(0);
 
 		List<SegmentsExperimentRel> segmentsExperimentRels =
 			_segmentsExperimentRelLocalService.getSegmentsExperimentRels(

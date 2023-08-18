@@ -112,11 +112,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					segmentsExperience.getGroupId(),
 					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getPlid(),
-					new int[] {
-						SegmentsExperimentConstants.Status.DRAFT.getValue()
-					});
+					segmentsExperience.getPlid());
 
 			Assert.assertEquals(
 				liferayAnalyticsURL + "/tests/overview/" +

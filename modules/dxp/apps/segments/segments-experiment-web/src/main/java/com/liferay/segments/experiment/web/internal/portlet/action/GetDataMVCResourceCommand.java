@@ -35,7 +35,6 @@ import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
-import com.liferay.segments.experiment.web.internal.util.comparator.SegmentsExperimentModifiedDateComparator;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
@@ -125,8 +124,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		return _segmentsExperimentService.fetchSegmentsExperiment(
-			segmentsExperienceId, layout.getPlid(),
-			SegmentsExperimentConstants.Status.getExclusiveStatusValues());
+			layout.getGroupId(), segmentsExperienceId, layout.getPlid());
 	}
 
 	private String _getContentPageEditorPortletNamespace() {
@@ -254,6 +252,29 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		return redirect;
 	}
 
+	private JSONArray _getHistorySegmentsExperimentsJSONArray(
+			AnalyticsConfiguration analyticsConfiguration, long groupId,
+			Locale locale, long plid, long segmentsExperienceId)
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentService.fetchSegmentsExperiment(
+				groupId, segmentsExperienceId, plid);
+
+		if ((segmentsExperiment == null) ||
+			!ArrayUtil.contains(
+				SegmentsExperimentConstants.Status.
+					getNonexclusiveStatusValues(),
+				segmentsExperiment.getStatus())) {
+
+			return _jsonFactory.createJSONArray();
+		}
+
+		return JSONUtil.putAll(
+			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
+				analyticsConfiguration, locale, segmentsExperiment));
+	}
+
 	private long _getLiveGroupId(long groupId) throws Exception {
 		Group group = _stagingGroupHelper.fetchLiveGroup(groupId);
 
@@ -308,15 +329,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).buildString()
 		).put(
 			"historySegmentsExperiments",
-			JSONUtil.toJSONArray(
-				_segmentsExperimentService.getSegmentsExperiments(
-					segmentsExperienceId, layout.getPlid(),
-					SegmentsExperimentConstants.Status.
-						getNonexclusiveStatusValues(),
-					new SegmentsExperimentModifiedDateComparator()),
-				segmentsExperiment ->
-					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-						analyticsConfiguration, locale, segmentsExperiment))
+			_getHistorySegmentsExperimentsJSONArray(
+				analyticsConfiguration, group.getGroupId(), locale,
+				layout.getPlid(), segmentsExperienceId)
 		).put(
 			"initialSegmentsVariants",
 			() -> {

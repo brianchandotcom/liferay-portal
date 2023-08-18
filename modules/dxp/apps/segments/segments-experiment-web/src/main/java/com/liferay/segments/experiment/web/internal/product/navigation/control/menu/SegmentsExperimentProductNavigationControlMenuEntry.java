@@ -40,7 +40,6 @@ import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.constants.ProductNavigationControlMenuEntryConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
@@ -347,8 +346,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.fetchSegmentsExperiment(
-				segmentsExperienceId, layout.getPlid(),
-				SegmentsExperimentConstants.Status.getExclusiveStatusValues());
+				themeDisplay.getScopeGroupId(), segmentsExperienceId,
+				layout.getPlid());
 
 		if (segmentsExperiment != null) {
 			return segmentsExperiment.getSegmentsExperienceId();

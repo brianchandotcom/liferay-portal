@@ -307,15 +307,13 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		return false;
 	}
 
-	private boolean _isEmptyOrContains(
-		List<String> fields, String... fieldNames) {
-
-		if (fields.isEmpty()) {
+	private boolean _isEmptyOrContains(List<String> list, String... strings) {
+		if (list.isEmpty()) {
 			return true;
 		}
 
-		for (String fieldName : fieldNames) {
-			if (fields.contains(fieldName)) {
+		for (String s : strings) {
+			if (list.contains(s)) {
 				return true;
 			}
 		}

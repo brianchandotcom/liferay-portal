@@ -39,7 +39,9 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Tina Tian
@@ -113,6 +115,34 @@ public class EntityCacheImplTest {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				SystemBundleUtil.getBundleContext(), ArgumentsResolver.class,
 				"class.name"));
+		ReflectionTestUtil.setFieldValue(
+			_finderCacheImpl, "_tableNameServiceTrackerMap",
+			ServiceTrackerMapFactory.openSingleValueMap(
+				SystemBundleUtil.getBundleContext(), ArgumentsResolver.class,
+				"class.name",
+				new ServiceTrackerCustomizer<ArgumentsResolver, String>() {
+
+					@Override
+					public String addingService(
+						ServiceReference<ArgumentsResolver> serviceReference) {
+
+						return (String)serviceReference.getProperty(
+							"table.name");
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ArgumentsResolver> serviceReference,
+						String tableName) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ArgumentsResolver> serviceReference,
+						String tableName) {
+					}
+
+				}));
 
 		entityCacheImpl.activate(_bundleContext);
 

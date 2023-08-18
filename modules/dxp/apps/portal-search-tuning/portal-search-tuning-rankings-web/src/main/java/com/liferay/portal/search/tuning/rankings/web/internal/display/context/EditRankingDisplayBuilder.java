@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -152,6 +153,10 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"initialSXPBlueprintExternalReferenceCode",
 			_getSXPBlueprintExternalReferenceCode()
+		).put(
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject(
+				"portal-search-tuning-rankings-web")
 		).put(
 			"resultsRankingUid", _getResultsRankingUid()
 		).put(

@@ -5,7 +5,9 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.RenderRequest;
@@ -18,6 +20,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -44,6 +47,8 @@ public class EditResultsRankingsMVCRenderCommandTest
 	public void testRender() throws Exception {
 		_setUpRenderResponse();
 
+		_setUpLearnMessages();
+
 		setUpPortal();
 
 		Assert.assertEquals(
@@ -58,6 +63,25 @@ public class EditResultsRankingsMVCRenderCommandTest
 
 		_editResultsRankingsMVCRenderCommand.render(
 			_renderRequest, _renderResponse);
+	}
+
+	private void _setUpLearnMessages() {
+		MockedStatic<WebCachePoolUtil> mockedStatic = Mockito.mockStatic(
+			WebCachePoolUtil.class);
+
+		mockedStatic.when(
+			() -> WebCachePoolUtil.get(Mockito.anyString(), Mockito.any())
+		).thenReturn(
+			JSONUtil.put(
+				"result-rankings",
+				JSONUtil.put(
+					"en_US",
+					JSONUtil.put(
+						"message", "Learn more."
+					).put(
+						"url", "https://learn.liferay.com"
+					)))
+		);
 	}
 
 	private void _setUpRenderResponse() {

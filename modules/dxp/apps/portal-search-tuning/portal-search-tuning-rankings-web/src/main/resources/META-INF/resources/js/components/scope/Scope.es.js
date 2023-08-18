@@ -100,6 +100,12 @@ export default function Scope({
 			<div className="c-mt-3 sheet-text text-3">
 				<span className="text-secondary">
 					{Liferay.Language.get('result-rankings-scope-help')}
+
+					<LearnMessage
+						className="c-ml-1"
+						resource="portal-search-tuning-rankings-web"
+						resourceKey="result-rankings"
+					/>
 				</span>
 			</div>
 

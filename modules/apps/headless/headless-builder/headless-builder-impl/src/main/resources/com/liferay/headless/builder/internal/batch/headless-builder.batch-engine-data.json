@@ -172,6 +172,48 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
+					"defaultValue": "collection",
+					"externalReferenceCode": "RETRIEVE_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Retrieve Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "RETRIEVE_TYPE_PICKLIST",
+					"name": "retrieveType",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "collection",
+										"objectStateTransitions": [
+											{
+												"key": "singleElement"
+											}
+										]
+									},
+									{
+										"key": "singleElement",
+										"objectStateTransitions": [
+											{
+												"key": "collection"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
 					"defaultValue": "company",
 					"externalReferenceCode": "SCOPE",
 					"indexed": true,

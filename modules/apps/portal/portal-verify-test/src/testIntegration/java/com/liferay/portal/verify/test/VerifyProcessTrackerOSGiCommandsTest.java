@@ -75,7 +75,6 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 		_verifyProcessRun = false;
 	}
 
-	@Ignore
 	@Test
 	public void testRegisterFailedVerifyProcess() {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

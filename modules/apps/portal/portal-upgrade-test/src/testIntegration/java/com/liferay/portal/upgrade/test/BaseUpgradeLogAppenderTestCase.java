@@ -330,7 +330,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				longestUpgradeProcessesValue.indexOf(fasterUpgradeProcessName));
 	}
 
-	@Ignore
 	@Test
 	public void testLogEvents() throws Exception {
 		_appender.start();

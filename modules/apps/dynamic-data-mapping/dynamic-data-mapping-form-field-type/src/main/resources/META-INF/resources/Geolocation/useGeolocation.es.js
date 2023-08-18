@@ -159,7 +159,7 @@ export function useGeolocation({
 	}, [onChange]);
 
 	useEffect(() => {
-		if (value && mapRef.current) {
+		if (value) {
 			let _value = value;
 
 			if (typeof _value !== 'string') {
@@ -170,7 +170,9 @@ export function useGeolocation({
 				.getElementById(`input_value_${instanceId}`)
 				.setAttribute('value', _value);
 
-			mapRef.current.setCenter(parseJSONValue(value));
+			if (mapRef.current) {
+				mapRef.current.setCenter(parseJSONValue(value));
+			}
 		}
 	}, [instanceId, value]);
 }

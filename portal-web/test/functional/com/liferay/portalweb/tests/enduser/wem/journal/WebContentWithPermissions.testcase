@@ -55,13 +55,9 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		DataEngine.addField(fieldName = "Text");
 
 		WebContentStructures.saveCP(
 			addRoleViewPermissions = "Regular Role Name",
@@ -75,13 +71,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoTemplates();
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
@@ -99,9 +91,7 @@ definition {
 			addOrRemoveViewPermission = "Remove",
 			roleList = "Guest,Site Member");
 
-		SelectFrameTop();
-
-		Refresh();
+		IFrame.closeFrame();
 
 		for (var number : list "1,2") {
 			JSONUser.addUser(
@@ -124,42 +114,27 @@ definition {
 			roleTitle = "Regular Role Name",
 			userEmailAddress = "user1@liferay.com");
 
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "user1@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "user1@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentStructures.viewCP(structureName = "WC Structure Name");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
 		WebContentTemplates.viewCP(
-			templateDescription = "WC Template Description",
 			templateName = "WC Template Name",
 			userEditPermission = "noEditPermission");
 
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "user2@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "user2@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
 		AssertTextNotPresent(value1 = "WC Structure Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -179,7 +154,6 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			structureName = "WC Structure Name",
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
@@ -191,17 +165,11 @@ definition {
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
 
-		WebContentFolder.addCP(
-			folderDescription = "WC Folder Description",
-			folderName = "WC Folder Name");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "user1@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "user1@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

@@ -31,8 +31,6 @@ public class DLFileEntryClassTypeReader implements ClassTypeReader {
 
 		List<ClassType> classTypes = new ArrayList<>();
 
-		classTypes.add(getBasicDocumentClassType(locale));
-
 		String languageId = LocaleUtil.toLanguageId(locale);
 
 		List<DLFileEntryType> dlFileEntryTypes =

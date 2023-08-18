@@ -207,6 +207,14 @@ public class DDMFieldLocalServiceUtil {
 		return getService().fetchDDMField(fieldId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFieldAttribute
+		fetchDDMFieldAttribute(
+			long fieldId, String attributeName, String languageId) {
+
+		return getService().fetchDDMFieldAttribute(
+			fieldId, attributeName, languageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -243,6 +251,12 @@ public class DDMFieldLocalServiceUtil {
 	 */
 	public static List<DDMField> getDDMFields(int start, int end) {
 		return getService().getDDMFields(start, end);
+	}
+
+	public static List<DDMField> getDDMFields(
+		long storageId, String fieldName) {
+
+		return getService().getDDMFields(storageId, fieldName);
 	}
 
 	/**

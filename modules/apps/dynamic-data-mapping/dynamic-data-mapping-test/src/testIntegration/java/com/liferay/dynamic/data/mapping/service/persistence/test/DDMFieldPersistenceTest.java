@@ -195,6 +195,15 @@ public class DDMFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByS_F() throws Exception {
+		_persistence.countByS_F(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByS_F(0L, "null");
+
+		_persistence.countByS_F(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByS_I() throws Exception {
 		_persistence.countByS_I(RandomTestUtil.nextLong(), "");
 

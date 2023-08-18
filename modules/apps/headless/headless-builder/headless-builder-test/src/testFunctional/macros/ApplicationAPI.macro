@@ -33,14 +33,24 @@ definition {
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
 		var body = '''
-			-d {
-				"applicationStatus": {"key": "${status}","name": "${status}"},
-				"baseURL": "${baseURL}",
-				"title": "${title}"
-			}
+			"applicationStatus": {"key": "${status}","name": "${status}"},
+			"baseURL": "${baseURL}",
+			"title": "${title}"
 		''';
 
-		var curl = StringUtil.add(${curl}, " \ ${body}", "");
+		if (isSet(relatedEndpoint)) {
+			var relatedEndpoint = '''
+				"apiApplicationToAPIEndpoints": [{
+					"httpMethod": "get",
+					"name": "${endpointName}",
+					"path": "${endpointPath}"
+				}]
+			''';
+
+			var body = StringUtil.add(${body}, ", ${relatedEndpoint}", "");
+		}
+
+		var curl = StringUtil.add(${curl}, " -d {${body}}", "");
 
 		var response = JSONCurlUtil.post(${curl});
 

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.saml.opensaml.integration.session.util.SamlSessionUtil;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
@@ -50,7 +51,9 @@ public class SamlSpAutoLogin extends BaseAutoLogin {
 
 			User user = _userLocalService.fetchUser(samlSpSession.getUserId());
 
-			if (user == null) {
+			if ((user == null) ||
+				!SamlSessionUtil.isSamlSpSessionStillValid(samlSpSession)) {
+
 				return null;
 			}
 

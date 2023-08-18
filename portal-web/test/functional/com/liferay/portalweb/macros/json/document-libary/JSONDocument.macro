@@ -34,14 +34,18 @@ definition {
 
 	macro addFile {
 		var portalURL = JSONCompany.getPortalURL();
-		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+
+		if (!(isSet(repositoryId))) {
+			var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+		}
 
 		if (isSet(folderName)) {
-			Variables.assertDefined(parameterList = "${folderName},${groupName}");
+			Variables.assertDefined(parameterList = ${folderName});
 
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 				groupName = ${groupName},
-				name = ${folderName});
+				name = ${folderName},
+				repositoryId = ${repositoryId});
 		}
 		else {
 			var folderId = 0;

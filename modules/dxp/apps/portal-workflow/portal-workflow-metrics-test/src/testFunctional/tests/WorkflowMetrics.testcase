@@ -2409,7 +2409,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
-		SearchAdministration.openSearchAdmin();
+		SearchAdministration.openFieldMappings();
 
 		WorkflowMetrics.goToFieldMappingsTab();
 

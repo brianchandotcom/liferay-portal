@@ -873,10 +873,6 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro goToFieldMappingsTab {
-		Click(locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_HEADER");
-	}
-
 	macro goToKebabMenuOptions {
 		Click(locator1 = "Icon#SVG_ELLIPSIS");
 

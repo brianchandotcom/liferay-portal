@@ -8,7 +8,7 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.portlet;
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -221,9 +221,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference
-	protected StorageEngine storageEngine;
-
 	/**
 	 * Stores the Kaleo process, workflow instance, and workflow task as
 	 * attributes in the request if the Kaleo process ID, workflow instance ID,
@@ -413,10 +410,10 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
 			new KaleoFormsAdminDisplayContext(
-				_ddlRecordLocalService, _ddmDisplayRegistry, _htmlParser,
+				_ddlRecordLocalService, _ddmDisplayRegistry,
+				_ddmStorageEngineManager, _htmlParser,
 				_kaleoDefinitionVersionLocalService,
-				_kaleoFormsWebConfiguration, renderRequest, renderResponse,
-				storageEngine);
+				_kaleoFormsWebConfiguration, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);
@@ -430,6 +427,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;
+
+	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
 
 	@Reference
 	private HtmlParser _htmlParser;

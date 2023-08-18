@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRespo
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -194,7 +194,7 @@ public class DDLRecordStagedModelDataHandler
 
 		recordElement.addAttribute("ddm-form-values-path", ddmFormValuesPath);
 
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
+		DDMFormValues ddmFormValues = _ddmStorageEngineManager.getDDMFormValues(
 			record.getDDMStorageId());
 
 		ddmFormValues =
@@ -256,13 +256,13 @@ public class DDLRecordStagedModelDataHandler
 	private ExportImportContentProcessor<DDMFormValues>
 		_ddmFormValuesExportImportContentProcessor;
 
+	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
 	@Reference(target = "(ddm.form.values.serializer.type=json)")
 	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

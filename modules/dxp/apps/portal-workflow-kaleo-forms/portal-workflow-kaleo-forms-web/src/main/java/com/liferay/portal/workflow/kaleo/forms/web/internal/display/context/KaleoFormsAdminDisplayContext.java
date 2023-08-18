@@ -8,7 +8,7 @@ package com.liferay.portal.workflow.kaleo.forms.web.internal.display.context;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -75,21 +75,21 @@ public class KaleoFormsAdminDisplayContext {
 
 	public KaleoFormsAdminDisplayContext(
 		DDLRecordLocalService ddlRecordLocalService,
-		DDMDisplayRegistry ddmDisplayRegistry, HtmlParser htmlParser,
+		DDMDisplayRegistry ddmDisplayRegistry,
+		DDMStorageEngineManager ddmStorageEngineManager, HtmlParser htmlParser,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		StorageEngine storageEngine) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_htmlParser = htmlParser;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_storageEngine = storageEngine;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
@@ -147,7 +147,12 @@ public class KaleoFormsAdminDisplayContext {
 	public DDMFormValues getDDMFormValues(long ddmStorageId)
 		throws StorageException {
 
-		return _storageEngine.getDDMFormValues(ddmStorageId);
+		try {
+			return _ddmStorageEngineManager.getDDMFormValues(ddmStorageId);
+		}
+		catch (PortalException portalException) {
+			throw new StorageException(portalException);
+		}
 	}
 
 	public String getDisplayStyle() {
@@ -615,6 +620,7 @@ public class KaleoFormsAdminDisplayContext {
 
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private final HtmlParser _htmlParser;
 	private final HttpServletRequest _httpServletRequest;
 	private final KaleoDefinitionVersionLocalService
@@ -629,7 +635,6 @@ public class KaleoFormsAdminDisplayContext {
 	private final RenderResponse _renderResponse;
 	private SearchContainer<?> _searchContainer;
 	private Integer _status;
-	private final StorageEngine _storageEngine;
 	private String _tabs1;
 	private Boolean _tabs1Published;
 	private Boolean _tabs1Unpublished;

@@ -12,7 +12,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
@@ -69,7 +69,8 @@ public class DDMCleanUpPortalInstanceLifecycleListener
 				_deleteDDMTemplate(ddmTemplate);
 			}
 
-			_storageEngine.deleteByDDMStructure(ddmStructure.getStructureId());
+			_ddmStorageEngineManager.deleteByClass(
+				ddmStructure.getStructureId());
 
 			_ddmStructureLocalService.deleteStructure(ddmStructure);
 		}
@@ -86,6 +87,9 @@ public class DDMCleanUpPortalInstanceLifecycleListener
 	}
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
@@ -99,8 +103,5 @@ public class DDMCleanUpPortalInstanceLifecycleListener
 
 	@Reference
 	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

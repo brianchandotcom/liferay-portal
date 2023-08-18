@@ -15,7 +15,7 @@ import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -80,6 +80,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutsSEODisplayContext {
 
 	public LayoutsSEODisplayContext(
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector, LayoutLocalService layoutLocalService,
@@ -88,9 +89,9 @@ public class LayoutsSEODisplayContext {
 		LayoutSEOLinkManager layoutSEOLinkManager,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		StorageEngine storageEngine) {
+		LiferayPortletResponse liferayPortletResponse) {
 
+		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
@@ -103,7 +104,6 @@ public class LayoutsSEODisplayContext {
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_storageEngine = storageEngine;
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(liferayPortletRequest);
@@ -126,8 +126,13 @@ public class LayoutsSEODisplayContext {
 			return null;
 		}
 
-		return _storageEngine.getDDMFormValues(
-			selLayoutSEOEntry.getDDMStorageId());
+		try {
+			return _ddmStorageEngineManager.getDDMFormValues(
+				selLayoutSEOEntry.getDDMStorageId());
+		}
+		catch (PortalException portalException) {
+			throw new StorageException(portalException);
+		}
 	}
 
 	public long getDDMStructurePrimaryKey() throws PortalException {
@@ -615,6 +620,7 @@ public class LayoutsSEODisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsSEODisplayContext.class);
 
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private DDMStructure _ddmStructure;
 	private final DLAppService _dlAppService;
 	private final DLURLHelper _dlurlHelper;
@@ -635,7 +641,6 @@ public class LayoutsSEODisplayContext {
 	private Boolean _privateLayout;
 	private Layout _selLayout;
 	private Long _selPlid;
-	private final StorageEngine _storageEngine;
 	private final ThemeDisplay _themeDisplay;
 
 }

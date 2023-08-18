@@ -42,9 +42,6 @@ public interface PortalCapabilityLocator {
 		DocumentRepository documentRepository,
 		RepositoryEventTrigger repositoryEventTrigger);
 
-	public SyncCapability getSyncCapability(
-		DocumentRepository documentRepository);
-
 	public TemporaryFileEntriesCapability getTemporaryFileEntriesCapability(
 		DocumentRepository documentRepository);
 

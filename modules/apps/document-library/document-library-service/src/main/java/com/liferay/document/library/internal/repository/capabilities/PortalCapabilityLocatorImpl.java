@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
-import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -32,7 +31,6 @@ import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
-import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
@@ -131,15 +129,6 @@ public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 		return new LiferayRepositoryEventTriggerCapability(
 			repositoryEventTrigger);
-	}
-
-	@Override
-	public SyncCapability getSyncCapability(
-		DocumentRepository documentRepository) {
-
-		return new LiferaySyncCapability(
-			GroupServiceAdapter.create(documentRepository),
-			_dlSyncEventLocalService, _messageBus);
 	}
 
 	@Override

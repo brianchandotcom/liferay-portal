@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.repository.capabilities.FileEntryTypeCapability
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
-import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
@@ -112,9 +111,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			_portalCapabilityLocator.getProcessorCapability(
 				documentRepository,
 				ProcessorCapability.ResourceGenerationStrategy.REUSE));
-		capabilityRegistry.addSupportedCapability(
-			SyncCapability.class,
-			_portalCapabilityLocator.getSyncCapability(documentRepository));
 	}
 
 	@Override

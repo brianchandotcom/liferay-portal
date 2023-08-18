@@ -3,14 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.servlet;
+package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -197,7 +198,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	protected boolean containsSharedAttribute(String name) {
-		for (String sharedName : PropsValues.SESSION_SHARED_ATTRIBUTES) {
+		for (String sharedName : _SESSION_SHARED_ATTRIBUTES) {
 			if (name.startsWith(sharedName)) {
 				return true;
 			}
@@ -229,6 +230,9 @@ public class SharedSessionWrapper implements HttpSession {
 		return _portletHttpSession;
 	}
 
+	private static final String[] _SESSION_SHARED_ATTRIBUTES =
+		PropsUtil.getArray(PropsKeys.SESSION_SHARED_ATTRIBUTES);
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharedSessionWrapper.class);
 
@@ -236,7 +240,8 @@ public class SharedSessionWrapper implements HttpSession {
 		new HashMap<String, String>() {
 			{
 				for (String name :
-						PropsValues.SESSION_SHARED_ATTRIBUTES_EXCLUDES) {
+						PropsUtil.getArray(
+							PropsKeys.SESSION_SHARED_ATTRIBUTES_EXCLUDES)) {
 
 					put(name, name);
 				}

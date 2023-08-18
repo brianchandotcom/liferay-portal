@@ -11,7 +11,7 @@ import {
 	TAction,
 	TState,
 } from '../types';
-export declare function objectFolderReducer(
+export declare function ObjectFolderReducer(
 	state: TState,
 	action: TAction
 ): {
@@ -26,6 +26,7 @@ export declare function objectFolderReducer(
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
+	showChangesSaved: boolean;
 	storages: LabelValueObject[];
 	viewApiURL: string;
 };

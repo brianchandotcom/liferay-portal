@@ -14,6 +14,7 @@ export declare function DefinitionNode({
 		editObjectDefinitionURL,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
+		id,
 		isLinkedNode,
 		label,
 		name,

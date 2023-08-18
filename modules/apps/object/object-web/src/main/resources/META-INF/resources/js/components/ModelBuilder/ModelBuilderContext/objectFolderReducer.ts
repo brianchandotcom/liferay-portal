@@ -4,7 +4,7 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {Edge, Node} from 'react-flow-renderer';
+import {Edge, Node, useStore} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarkerEnd';
@@ -24,9 +24,148 @@ import {
 } from './objectFolderReducerUtil';
 import {TYPES} from './typesEnum';
 
-export function objectFolderReducer(state: TState, action: TAction) {
+export function ObjectFolderReducer(state: TState, action: TAction) {
+	const store = useStore();
+
 	switch (action.type) {
+		case TYPES.ADD_NEW_NODE_TO_FOLDER: {
+			const {newObjectDefinition, selectedFolderName} = action.payload;
+			const {nodes} = store.getState();
+			const {
+				editObjectDefinitionURL,
+				elements,
+				leftSidebarItems,
+				objectDefinitionPermissionsURL,
+			} = state;
+			let newPosition = {
+				x: 2 * 300,
+				y: 2 * 400,
+			};
+			if (nodes.length) {
+				const yPositions = nodes.map((node) => node.position.y);
+				const maximumY = Math.max(...yPositions);
+				const maximumNodesYPosition = nodes.filter(
+					(node) => node.position.y === maximumY
+				);
+				const xPositions = maximumNodesYPosition.map(
+					(node) => node.position.x
+				);
+				const maximumX = Math.max(...xPositions);
+				const mostBottomRightNodePosition = maximumNodesYPosition.find(
+					(node) => node.position.x === maximumX
+				)!.position;
+				newPosition = {
+					x: mostBottomRightNodePosition!.x + 300,
+					y: mostBottomRightNodePosition!.y,
+				};
+			}
+			const newLeftSidebarItems = leftSidebarItems.map((item) => {
+				let newDefinition;
+
+				if (item.folderName === selectedFolderName) {
+					newDefinition = {
+						definitionId: newObjectDefinition.id,
+						definitionName: newObjectDefinition.name,
+						name: getLocalizableLabel(
+							newObjectDefinition.defaultLanguageId,
+							newObjectDefinition.label,
+							newObjectDefinition.name
+						),
+						selected: true,
+						type: 'objectDefinition',
+					};
+					const updatedObjectDefinitions = item.objectDefinitions?.map(
+						(objectDefinition) => {
+							return {
+								...objectDefinition,
+								selected: false,
+							};
+						}
+					);
+
+					return {
+						...item,
+						objectDefinitions: [
+							...updatedObjectDefinitions!,
+							newDefinition,
+						],
+					};
+				}
+				else {
+					return {
+						...item,
+					};
+				}
+			}) as LeftSidebarItemType[];
+			const objectFields = newObjectDefinition.objectFields.map(
+				(field) => {
+					return {
+						businessType: field.businessType,
+						externalReferenceCode: field.externalReferenceCode,
+						label: getLocalizableLabel(
+							newObjectDefinition.defaultLanguageId,
+							field.label,
+							field.name
+						),
+						name: field.name,
+						primaryKey: field.name === 'id',
+						required: field.required,
+						selected: false,
+					} as ObjectFieldNode;
+				}
+			);
+			const updatedObjectDefinitionsNodes = elements.map((node) => {
+				return {
+					...node,
+					data: {
+						...node.data,
+						nodeSelected: false,
+					},
+				};
+			});
+			const newNode = {
+				data: {
+					defaultLanguageId: newObjectDefinition.defaultLanguageId,
+					editObjectDefinitionURL,
+					externalReferenceCode:
+						newObjectDefinition.externalReferenceCode,
+					hasObjectDefinitionDeleteResourcePermission:
+						typeof newObjectDefinition.actions.delete !==
+						'undefined',
+					hasObjectDefinitionManagePermissionsResourcePermission:
+						typeof newObjectDefinition.actions.permissions !==
+						'undefined',
+					id: newObjectDefinition.id,
+					isLinkedNode: false,
+					label: getLocalizableLabel(
+						newObjectDefinition.defaultLanguageId!,
+						newObjectDefinition.label,
+						newObjectDefinition.name
+					),
+					name: newObjectDefinition.name,
+					nodeSelected: true,
+					objectDefinitionPermissionsURL,
+					objectFields: fieldsCustomSort(objectFields),
+					status: newObjectDefinition.status,
+					system: newObjectDefinition.system,
+				},
+				id: newObjectDefinition.id.toString(),
+				position: newPosition,
+				type: 'objectDefinition',
+			} as Node<ObjectDefinitionNodeData>;
+			const newObjectDefinitionNodes = [
+				...updatedObjectDefinitionsNodes,
+				newNode,
+			] as Node<ObjectDefinitionNodeData>[];
+
+			return {
+				...state,
+				elements: [...newObjectDefinitionNodes],
+				leftSidebarItems: newLeftSidebarItems,
+				selectedDefinitionNode: newNode,
 				showChangesSaved: true,
+			};
+		}
 		case TYPES.CREATE_MODEL_BUILDER_STRUCTURE: {
 			const {objectFolders} = action.payload;
 			const {
@@ -39,6 +178,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				const folderDefinitions = folder.definitions?.map(
 					(definition) => {
 						return {
+							definitionId: definition.id,
 							definitionName: definition.name,
 							name: getLocalizableLabel(
 								definition.defaultLanguageId,
@@ -116,10 +256,10 @@ export function objectFolderReducer(state: TState, action: TAction) {
 												type: relationship.type,
 											},
 											id: `reactflow__edge-object-relationship-${relationship.name}-parent-${relationship.objectDefinitionExternalReferenceCode1}-child-${relationship.objectDefinitionExternalReferenceCode2}`,
-											source: `${objectDefinition.name}`,
-											sourceHandle: `${objectDefinition.name}`,
-											target: `${relationship.objectDefinitionName2}`,
-											targetHandle: `${relationship.objectDefinitionName2}`,
+											source: `${objectDefinition.id}`,
+											sourceHandle: `${objectDefinition.id}`,
+											target: `${relationship.objectDefinitionId2}`,
+											targetHandle: `${relationship.objectDefinitionId2}`,
 											type: 'floating',
 										});
 									}
@@ -153,13 +293,12 @@ export function objectFolderReducer(state: TState, action: TAction) {
 								),
 								name: objectDefinition.name,
 								nodeSelected: false,
-								objectDefinitionId: objectDefinition.id,
 								objectDefinitionPermissionsURL,
 								objectFields: fieldsCustomSort(objectFields),
 								status: objectDefinition.status,
 								system: objectDefinition.system,
 							},
-							id: objectDefinition.name,
+							id: objectDefinition.id.toString(),
 							position: {
 								x: positionColumn.x * 300,
 								y: positionColumn.y * 400,
@@ -178,8 +317,47 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				leftSidebarItems: newLeftSidebar,
 			};
 		}
+		case TYPES.DELETE_FOLDER_NODE: {
+			const {currentFolderName, deletedNodeName} = action.payload;
+
+			const {leftSidebarItems} = state;
+
+			let updatedObjectDefinitions;
+
+			const newLeftSidebarItems = leftSidebarItems.map((item) => {
+				if (item.folderName === currentFolderName) {
+					updatedObjectDefinitions = item.objectDefinitions?.filter(
+						(definition) =>
+							definition.definitionName !== deletedNodeName
+					);
+
+					return {
+						...item,
+						objectDefinitions: [...updatedObjectDefinitions!],
+					};
+				}
+				else {
+					return {
+						...item,
+					};
+				}
+			}) as LeftSidebarItemType[];
+
+			return {
+				...state,
+				leftSidebarItems: newLeftSidebarItems,
+			};
+		}
+		case TYPES.SET_ELEMENTS: {
+			const {newElements} = action.payload;
+
+			return {
+				...state,
+				elements: newElements,
+			};
+		}
 		case TYPES.SET_SELECTED_NODE: {
-			const {edges, nodes, selectedObjectDefinitionName} = action.payload;
+			const {edges, nodes, selectedObjectDefinitionId} = action.payload;
 
 			const {leftSidebarItems} = state;
 
@@ -188,8 +366,8 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				data: {
 					...definitionNode.data,
 					nodeSelected:
-						definitionNode.data?.name ===
-						selectedObjectDefinitionName,
+						definitionNode.id ===
+						selectedObjectDefinitionId.toString(),
 				},
 			}));
 
@@ -198,8 +376,8 @@ export function objectFolderReducer(state: TState, action: TAction) {
 					(sidebarDefinition) => ({
 						...sidebarDefinition,
 						selected:
-							selectedObjectDefinitionName ===
-							sidebarDefinition.definitionName,
+							selectedObjectDefinitionId ===
+							sidebarDefinition.definitionId.toString(),
 					})
 				);
 
@@ -216,12 +394,48 @@ export function objectFolderReducer(state: TState, action: TAction) {
 				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
 			};
 		}
-		case TYPES.SET_ELEMENTS: {
-			const {newElements} = action.payload;
+		case TYPES.UPDATE_FOLDER_NODE: {
+			const {currentFolderName, updatedNode} = action.payload;
+
+			const {leftSidebarItems} = state;
+
+			let updatedObjectDefinitions;
+
+			const newLeftSidebarItems = leftSidebarItems.map(
+				(item: LeftSidebarItemType) => {
+					if (item.folderName === currentFolderName) {
+						updatedObjectDefinitions = item.objectDefinitions?.map(
+							(definition) => {
+								if (
+									definition.definitionId.toString() ===
+									updatedNode.id?.toString()
+								) {
+									return {
+										...definition,
+										name: updatedNode.label,
+									};
+								}
+
+								return definition;
+							}
+						);
+
+						return {
+							...item,
+							objectDefinitions: [...updatedObjectDefinitions!],
+						};
+					}
+					else {
+						return {
+							...item,
+						};
+					}
+				}
+			) as LeftSidebarItemType[];
 
 			return {
 				...state,
-				elements: newElements,
+				leftSidebarItems: newLeftSidebarItems,
 			};
 		}
 		default:

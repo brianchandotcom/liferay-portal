@@ -11,6 +11,8 @@ import ReactFlow, {
 	Edge,
 	MiniMap,
 	addEdge,
+	useStore,
+	useZoomPanHelper,
 } from 'react-flow-renderer';
 
 import {DefinitionNode} from '../DefinitionNode/DefinitionNode';
@@ -18,7 +20,7 @@ import {EmptyNode} from '../DefinitionNode/EmptyNode';
 
 import './Diagram.scss';
 
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
 import DefaultEdge from '../Edges/DefaultEdge';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -38,7 +40,9 @@ function DiagramBuilder({
 }: {
 	setShowModal: (value: boolean) => void;
 }) {
-	const [{elements}, dispatch] = useFolderContext();
+	const [{elements, selectedDefinitionNode}, dispatch] = useFolderContext();
+	const {setCenter} = useZoomPanHelper();
+	const store = useStore();
 
 	const emptyNode = [
 		{
@@ -53,6 +57,23 @@ function DiagramBuilder({
 			type: 'emptyNode',
 		},
 	];
+
+	useEffect(() => {
+		if (selectedDefinitionNode) {
+			const {nodes} = store.getState();
+
+			const selectedNode = nodes.find((node) => node.data.nodeSelected);
+
+			if (selectedNode) {
+				const x =
+					selectedNode.__rf.position.x + selectedNode.__rf.width / 2;
+				const y =
+					selectedNode.__rf.position.y + selectedNode.__rf.height / 2;
+				setCenter(x, y, 1);
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [elements]);
 
 	const onConnect = useCallback(
 		(connection: Connection | Edge) => {

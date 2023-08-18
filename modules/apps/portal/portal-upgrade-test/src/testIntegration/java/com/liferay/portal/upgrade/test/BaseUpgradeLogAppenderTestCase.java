@@ -49,15 +49,14 @@ import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.appender.WriterAppender;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.SimpleMessage;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -334,20 +333,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testLogEvents() throws Exception {
 		_appender.start();
 
-		Log log = LogFactoryUtil.getLog(BaseUpgradeLogAppenderTestCase.class);
+		Message msg = new SimpleMessage("Warning");
 
-		final Message msg = new SimpleMessage("Warning");
-
-		LogEvent event = Log4jLogEvent.newBuilder()
-			.setLoggerName("Warn")
-			.setLevel(Level.WARN)
-			.setMessage(msg).build();
+		LogEvent event = Log4jLogEvent.newBuilder(
+		).setLoggerName(
+			"Warn"
+		).setLevel(
+			Level.WARN
+		).setMessage(
+			msg
+		).build();
 
 		_appender.append(event);
 
 		_appender.append(event);
 
-		log = LogFactoryUtil.getLog(UpgradeProcess.class);
+		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
 		log.info(
 			"Completed upgrade process com.liferay.portal.UpgradeTest in " +

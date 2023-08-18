@@ -1,0 +1,96 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property app.server.types = "tomcat";
+	property database.bare.enabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property minimum.slave.ram = "24";
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7,solr";
+	property portal.upstream = "true";
+	property skip.start.app.server = "true";
+	property test.assert.warning.exceptions = "true";
+	property test.liferay.virtual.instance = "false";
+	property testray.main.component.name = "Upgrades Search";
+
+	@priority = 5
+	test ViewSearchPortletsConfiguration {
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page");
+
+		for (var count : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Site Name",
+				title = "WC Title ${count}");
+		}
+
+		SearchPortlets.addWidgets(
+			groupName = "Site Name",
+			layoutName = "Site Page",
+			searchPortletList = "Search Results,Search Options,Suggestions,Type Facet");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Site Page");
+
+		SearchResultPortlet.configureSearchResults(paginationDelta = 2);
+
+		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+
+		SearchPortlets.gotoConfigureSuggestionsOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.enableCheckbox(fieldName = "spellCheckSuggestionEnabled");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		SearchFacetPortlet.updateFacetConfiguration(
+			displayFrequencies = "disable",
+			portletName = "Type Facet");
+
+		Portlet.shutdownServer();
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		TestUtils.hardRefresh();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		SearchAdministration.executeReindex();
+
+		ValidateSearchUpgrade.viewSearchPortletsConfiguration();
+	}
+
+}

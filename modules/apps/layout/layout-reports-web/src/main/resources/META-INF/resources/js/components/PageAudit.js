@@ -11,6 +11,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreStateContext} from '../context/StoreContext';
 import Tabs from './Tabs';
+import IssueDetail from './layout_reports/IssueDetail';
 
 import './PageAudit.scss';
 
@@ -19,6 +20,7 @@ export default function PageAudit({panelIsOpen}) {
 	const [loading, setLoading] = useState(true);
 
 	const {layoutReportsDataURL} = useContext(ConstantsContext);
+	const {selectedIssue} = useContext(StoreStateContext);
 
 	useEffect(() => {
 		if (panelIsOpen && layoutReportsDataURL) {
@@ -45,20 +47,18 @@ export default function PageAudit({panelIsOpen}) {
 		);
 	}
 
+	if (selectedIssue) {
+		return (
+			<div className="c-p-3">
+				<IssueDetail />
+			</div>
+		);
+	}
+
 	return (
-		<PageAuditBody
+		<Tabs
 			segments={data.segmentsExperienceSelectorData}
 			tabs={data.tabsData}
 		/>
 	);
-}
-
-export function PageAuditBody({children, segments, tabs}) {
-	const {selectedIssue} = useContext(StoreStateContext);
-
-	if (selectedIssue) {
-		return <div className="c-p-3">{children}</div>;
-	}
-
-	return <Tabs segments={segments} tabs={tabs} />;
 }

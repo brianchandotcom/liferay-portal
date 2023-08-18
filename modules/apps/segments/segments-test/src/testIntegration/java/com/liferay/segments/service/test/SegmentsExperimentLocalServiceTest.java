@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -271,11 +270,10 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_layoutLocalService.deleteLayout(segmentsExperiment.getPlid());
 
-		Assert.assertTrue(
-			ListUtil.isNull(
-				_segmentsExperimentLocalService.getSegmentsExperiments(
-					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getPlid())));
+		Assert.assertNull(
+			_segmentsExperimentLocalService.fetchSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getPlid()));
 	}
 
 	@Test(expected = LockedSegmentsExperimentException.class)
@@ -304,11 +302,10 @@ public class SegmentsExperimentLocalServiceTest {
 			segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperience.getPlid());
 
-		Assert.assertTrue(
-			ListUtil.isNull(
-				_segmentsExperimentLocalService.getSegmentsExperiments(
-					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getPlid())));
+		Assert.assertNull(
+			_segmentsExperimentLocalService.fetchSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getPlid()));
 	}
 
 	@Test

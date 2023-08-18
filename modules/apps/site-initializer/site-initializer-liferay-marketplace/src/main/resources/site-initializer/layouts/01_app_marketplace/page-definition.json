@@ -551,20 +551,6 @@
 													},
 													{
 														"definition": {
-															"customCSS": ".portlet-content .pull-right button {\nwidth: 185px;\nfont-size: 14px;\npadding: 15px 8px;\n}\n\n.portlet-content .pull-right p {\nwidth: 95px;\n}",
-															"fragmentStyle": {
-																"fontSize": "13px"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																},
-																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
-															}
-														},
-														"type": "Widget"
-													},
-													{
-														"definition": {
 															"fragmentStyle": {
 																"hidden": true
 															},

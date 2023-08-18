@@ -148,7 +148,6 @@ public class UpgradeRecorderTest {
 		Assert.assertEquals("no upgrade", _getType());
 	}
 
-	@Ignore
 	@Test
 	public void testWarning() throws Exception {
 		StartupHelperUtil.setUpgrading(true);

@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
+import {
+	API,
+	getLocalizableLabel,
+	openToast,
+} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {Node, isNode} from 'react-flow-renderer';
@@ -16,21 +20,47 @@ import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
 import {
 	ObjectDefinitionNodeData,
+	ObjectFieldNode,
 	nonRelationshipObjectFieldsInfo,
 } from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {fieldsCustomSort} from '../ModelBuilderContext/objectFolderReducerUtil';
+import {TYPES} from '../ModelBuilderContext/typesEnum';
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePair: KeyValuePair[];
 	siteKeyValuePair: KeyValuePair[];
 }
+
+function setAccountRelationshipFieldMandatory(
+	values: Partial<ObjectDefinition>
+) {
+	const {objectFields} = values;
+
+	const newObjectFields = objectFields?.map((field) => {
+		if (field.name === values.accountEntryRestrictedObjectFieldName) {
+			return {
+				...field,
+				required: true,
+			};
+		}
+
+		return field;
+	});
+
+	return {
+		...values,
+		objectFields: newObjectFields,
+	};
+}
+
 export function RightSidebarObjectDefinitionDetails({
 	companyKeyValuePair,
 	siteKeyValuePair,
 }: RightSidebarObjectDefinitionDetailsProps) {
-	const [{elements}] = useFolderContext();
+	const [{elements, selectedFolderERC}, dispatch] = useFolderContext();
 
 	const selectedNode = elements.find((element) => {
 		if (isNode(element)) {
@@ -44,7 +74,13 @@ export function RightSidebarObjectDefinitionDetails({
 		setNonRelationshipObjectFieldsInfo,
 	] = useState<nonRelationshipObjectFieldsInfo[]>();
 
-	const {errors, handleChange, setValues, values} = useObjectDetailsForm({
+	const {
+		errors,
+		handleChange,
+		handleValidate,
+		setValues,
+		values,
+	} = useObjectDetailsForm({
 		initialValues: {
 			defaultLanguageId: 'en_US',
 			externalReferenceCode: '',
@@ -84,8 +120,122 @@ export function RightSidebarObjectDefinitionDetails({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedNode]);
 
+	const onSubmit = async () => {
+		const validationErrors = handleValidate();
+
+		const folderResponse = await API.getAllFolders();
+
+		const selectedFolderName = folderResponse.find(
+			(folder) => folder.externalReferenceCode === selectedFolderERC
+		)!.name;
+
+		if (!Object.keys(validationErrors).length) {
+			delete values.objectRelationships;
+			delete values.objectActions;
+			delete values.objectLayouts;
+			delete values.objectViews;
+
+			let objectDefinition = values;
+
+			if (values.accountEntryRestricted) {
+				objectDefinition = setAccountRelationshipFieldMandatory(values);
+			}
+
+			const saveResponse = await API.putObjectDefinitionByExternalReferenceCode(
+				objectDefinition
+			);
+
+			let newObjectDefinition = {};
+
+			const updatedElements = elements.map((element) => {
+				if (
+					isNode(element) &&
+					(element as Node<ObjectDefinitionNodeData>).id ===
+						objectDefinition.id?.toString()
+				) {
+					const objectFields = objectDefinition.objectFields?.map(
+						(field) => {
+							return {
+								businessType: field.businessType,
+								externalReferenceCode:
+									field.externalReferenceCode,
+								label: getLocalizableLabel(
+									objectDefinition.defaultLanguageId!,
+									field.label,
+									field.name
+								),
+								name: field.name,
+								primaryKey: field.name === 'id',
+								required: field.required,
+								selected: false,
+							} as ObjectFieldNode;
+						}
+					);
+
+					newObjectDefinition = {
+						...objectDefinition,
+						label: getLocalizableLabel(
+							objectDefinition.defaultLanguageId!,
+							objectDefinition.label,
+							objectDefinition.name
+						),
+						name: objectDefinition.name,
+						nodeSelected: true,
+						objectFields: fieldsCustomSort(objectFields!),
+						pluralLabel: {
+							[objectDefinition.defaultLanguageId!]: objectDefinition.pluralLabel,
+						},
+					} as Partial<ObjectDefinition>;
+
+					return {
+						...element,
+						data: newObjectDefinition,
+					};
+				}
+
+				return element;
+			});
+
+			if (!saveResponse.ok) {
+				const {title} = (await saveResponse.json()) as {
+					status: string;
+					title: string;
+				};
+
+				openToast({
+					message: title,
+					type: 'danger',
+				});
+
+				return;
+			}
+
+			dispatch({
+				payload: {
+					newElements: updatedElements,
+				},
+				type: TYPES.SET_ELEMENTS,
+			});
+
+			dispatch({
+				payload: {
+					currentFolderName: selectedFolderName,
+					updatedNode: newObjectDefinition,
+				},
+				type: TYPES.UPDATE_FOLDER_NODE,
+			});
+
+			openToast({
+				message: Liferay.Language.get(
+					'the-object-was-saved-successfully'
+				),
+				type: 'success',
+			});
+		}
+	};
+
 	return (
-		<>
+		<div onBlur={onSubmit}>
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
 				<span>
 					{sub(
@@ -98,6 +248,7 @@ export function RightSidebarObjectDefinitionDetails({
 					)}
 				</span>
 			</div>
+
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 				<ObjectDataContainer
 					dbTableName=""
@@ -159,6 +310,6 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }

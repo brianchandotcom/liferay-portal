@@ -16,6 +16,11 @@ import RenderTimes from './render_times/RenderTimes';
 
 import './PageAudit.scss';
 
+export const TAB_IDS = {
+	pageSpeedInsights: 'page-speed-insights',
+	renderTimes: 'render-times',
+};
+
 export default function PageAudit({panelIsOpen}) {
 	const [data, setData] = useState({});
 	const {layoutReportsDataURL} = useContext(ConstantsContext);
@@ -34,7 +39,7 @@ export default function PageAudit({panelIsOpen}) {
 	}
 
 	const pageSpeedData = data.tabsData.find(
-		({id}) => id === 'page-speed-insights'
+		({id}) => id === TAB_IDS.pageSpeedInsights
 	);
 
 	return (
@@ -93,7 +98,7 @@ export function PageAuditBody({children, segments, tabs}) {
 								className="p-3"
 								key={tab.id}
 							>
-								{tab.id === 'render-times' ? (
+								{tab.id === TAB_IDS.renderTimes ? (
 									<RenderTimes url={tab.url} />
 								) : (
 									cloneElement(children, {url: tab.url})

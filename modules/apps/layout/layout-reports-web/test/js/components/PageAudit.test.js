@@ -13,16 +13,17 @@ import '@testing-library/jest-dom/extend-expect';
 
 import PageAudit, {
 	PageAuditBody,
+	TAB_IDS,
 } from '../../../src/main/resources/META-INF/resources/js/components/PageAudit';
 
 const mockTabs = [
 	{
-		id: 'tab-1',
+		id: TAB_IDS.renderTimes,
 		name: 'First Tab',
 		url: 'url',
 	},
 	{
-		id: 'tab-2',
+		id: TAB_IDS.pageSpeedInsights,
 		name: 'Second Tab',
 		url: 'url',
 	},
@@ -56,7 +57,7 @@ jest.mock('frontend-js-web', () => ({
 	fetch: () =>
 		Promise.resolve({
 			json: () => ({
-				segmentExperienceSelectorData: mockSegments,
+				segmentsExperienceSelectorData: mockSegments,
 				tabsData: mockTabs,
 			}),
 		}),
@@ -66,7 +67,7 @@ const renderPageAudit = ({panelIsOpen = true} = {}) =>
 	render(
 		<ConstantsContextProvider
 			constants={{
-				layoutReportsTabsURL: 'url',
+				layoutReportsDataURL: 'url',
 			}}
 		>
 			<PageAudit panelIsOpen={panelIsOpen} />
@@ -88,7 +89,7 @@ const renderPageAuditBody = ({segments = mockSegments, selectedIssue} = {}) =>
 
 describe('PageAudit', () => {
 	it('renders tabs', async () => {
-		await act(async () => renderPageAuditBody());
+		await act(async () => renderPageAudit());
 
 		expect(screen.getByText('First Tab')).toBeInTheDocument();
 		expect(screen.getByText('Second Tab')).toBeInTheDocument();

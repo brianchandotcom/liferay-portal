@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.internal.util;
 
-import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
@@ -15,35 +14,25 @@ import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Sergio Jiménez del Coso
  */
 public class OpenAPIUtil {
 
-	public static String getOperationId(APIApplication.Endpoint endpoint) {
-		Http.Method method = endpoint.getMethod();
-
-		return StringUtil.toLowerCase(method.name()) +
-			_toCamelCase(endpoint.getPath()) + "Page";
-	}
-
 	public static String getOperationId(
-		Http.Method httpMethod, APIApplication.Schema schema,
-		String operationId, String path, String returnType) {
+		Http.Method method, String path, String schemaName) {
 
-		if (schema == null) {
+		String operationId =
+			StringUtil.toLowerCase(method.name()) + _toCamelCase(path) + "Page";
+
+		if (schemaName == null) {
 			return operationId;
 		}
 
-		String schemaName = schema.getName();
-
-		boolean collection = StringUtil.endsWith(operationId, "Page");
-
 		List<String> methodNameSegments = new ArrayList<>();
 
-		methodNameSegments.add(StringUtil.toLowerCase(httpMethod.name()));
+		methodNameSegments.add(StringUtil.toLowerCase(method.name()));
 
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
@@ -51,33 +40,16 @@ public class OpenAPIUtil {
 		for (int i = 0; i < pathSegments.length; i++) {
 			String pathSegment = pathSegments[i];
 
-			if (pathSegment.isEmpty()) {
-				if (pathSegments.length != 1) {
-					continue;
-				}
+			String pathName = CamelCaseUtil.toCamelCase(pathSegment);
 
-				if (collection) {
-					pathSegment = pluralSchemaName;
-				}
-				else {
-					pathSegment = schemaName;
-				}
-			}
-
-			String pathName = CamelCaseUtil.toCamelCase(
-				pathSegment.replaceAll("\\{|-id|}|Id}", ""));
-
-			if (StringUtil.equalsIgnoreCase(pathName, schemaName)) {
-				pathName = schemaName;
-			}
-			else if (StringUtil.equalsIgnoreCase(pathName, pluralSchemaName)) {
+			if (StringUtil.equalsIgnoreCase(pathName, pluralSchemaName)) {
 				pathName = pluralSchemaName;
 			}
 			else {
 				pathName = StringUtil.upperCaseFirstLetter(pathName);
 			}
 
-			if ((i == (pathSegments.length - 1)) && collection) {
+			if (i == (pathSegments.length - 1)) {
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
@@ -94,12 +66,7 @@ public class OpenAPIUtil {
 
 				methodNameSegments.add(pathName + "Page");
 			}
-			else if (Objects.equals(pathName, schemaName)) {
-				methodNameSegments.add(pathName);
-			}
-			else if ((i != (pathSegments.length - 1)) ||
-					 !Objects.equals(returnType, String.class.getName())) {
-
+			else {
 				String segment = _formatSingular(pathName);
 
 				String s = StringUtil.toLowerCase(segment);

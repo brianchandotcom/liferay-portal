@@ -166,20 +166,20 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 	}
 
 	private PathItem _toOpenAPIPathItem(APIApplication.Endpoint endpoint) {
-		String operationId = OpenAPIUtil.getOperationId(endpoint);
-
-		Operation operation = new Operation() {
-			{
-				setOperationId(operationId);
-			}
-		};
-
-		operation.setOperationId(
-			OpenAPIUtil.getOperationId(
-				endpoint.getMethod(), endpoint.getResponseSchema(),
-				operation.getOperationId(), endpoint.getPath(), "Page"));
+		String schemaName = null;
 
 		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
+
+		if (responseSchema != null) {
+			schemaName = responseSchema.getName();
+		}
+
+		String operationId = OpenAPIUtil.getOperationId(
+			endpoint.getMethod(), endpoint.getPath(), schemaName);
+
+		Operation operation = new Operation();
+
+		operation.setOperationId(operationId);
 
 		if (responseSchema != null) {
 			if (Objects.equals(endpoint.getMethod(), Http.Method.GET) &&

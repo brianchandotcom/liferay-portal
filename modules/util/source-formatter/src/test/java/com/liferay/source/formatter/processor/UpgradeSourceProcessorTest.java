@@ -259,6 +259,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJSPFieldSetGroupCheck() throws Exception {
+		test("upgrade/UpgradeJSPFieldSetGroupCheck.testjsp");
+	}
+
+	@Test
 	public void testUpgradeRejectedExecutionHandlerCheck() throws Exception {
 		test("upgrade/UpgradeRejectedExecutionHandlerCheck.testjava");
 	}

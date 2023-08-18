@@ -36,6 +36,12 @@ import NodeFooter from './NodeFooter';
 import NodeHeader from './NodeHeader';
 import {RedirectModal} from './RedirectModal';
 
+const selfRelationshipHandleStyle = {
+	background: 'transparent',
+	border: '2px transparent',
+	borderRadius: '50%',
+};
+
 export function DefinitionNode({
 	data: {
 		defaultLanguageId,
@@ -43,6 +49,7 @@ export function DefinitionNode({
 		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
+		hasSelfRelationships,
 		id,
 		isLinkedNode,
 		label,
@@ -151,7 +158,7 @@ export function DefinitionNode({
 				<Handle
 					className="lfr-objects__model-builder-node-handle"
 					hidden
-					id={name}
+					id={id.toString()}
 					position={Position.Left}
 					style={{
 						background: '#80ACFF',
@@ -161,6 +168,34 @@ export function DefinitionNode({
 					}}
 					type="source"
 				/>
+
+				{hasSelfRelationships && (
+					<>
+						<Handle
+							className="lfr-objects__model-builder-node-handle"
+							id="fixedLeftHandle"
+							position={Position.Left}
+							style={{
+								...selfRelationshipHandleStyle,
+								left: '10px',
+								top: '50%',
+							}}
+							type="source"
+						/>
+
+						<Handle
+							className="lfr-objects__model-builder-node-handle"
+							id="fixedRightHandle"
+							position={Position.Right}
+							style={{
+								...selfRelationshipHandleStyle,
+								right: '4px',
+								top: '50%',
+							}}
+							type="target"
+						/>
+					</>
+				)}
 			</div>
 
 			{showModal.deleteObjectDefinition && (

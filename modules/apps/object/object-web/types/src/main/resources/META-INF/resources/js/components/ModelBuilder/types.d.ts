@@ -133,6 +133,7 @@ export interface ObjectDefinitionNodeData
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
+	hasSelfRelationships: boolean;
 	id: number;
 	isLinkedNode: boolean;
 	label: string;
@@ -149,9 +150,11 @@ export interface ObjectDefinitionNodeData
 	system: boolean;
 }
 export interface ObjectRelationshipEdgeData {
+	defaultLanguageId?: Liferay.Language.Locale;
 	label: string;
 	markerEndId: string;
 	markerStartId: string;
+	selfRelationships?: ObjectRelationship[];
 	sourceY: number;
 	targetY: number;
 	type: string;

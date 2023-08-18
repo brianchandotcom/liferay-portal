@@ -37,7 +37,8 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 	return (
 		<ReactFlowProvider>
 			<FolderContextProvider
-				value={{baseResourceURL,
+				value={{
+					baseResourceURL,
 					editObjectDefinitionURL,
 					objectDefinitionPermissionsURL,
 					selectedFolderERC: folderERC,

@@ -29,6 +29,7 @@ export function DefinitionNode({
 		editObjectDefinitionURL,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
+		id,
 		isLinkedNode,
 		label,
 		name,
@@ -89,7 +90,7 @@ export function DefinitionNode({
 						payload: {
 							edges,
 							nodes,
-							selectedObjectDefinitionName: name as string,
+							selectedObjectDefinitionId: id!.toString(),
 						},
 						type: TYPES.SET_SELECTED_NODE,
 					});

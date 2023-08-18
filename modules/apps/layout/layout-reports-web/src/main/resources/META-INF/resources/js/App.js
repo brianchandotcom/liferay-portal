@@ -102,15 +102,17 @@ export default function App(props) {
 	return (
 		<ConstantsContextProvider constants={props}>
 			<StoreContextProvider>
-				<SidebarHeader />
+				{Liferay.FeatureFlags['LPS-187284'] ? (
+					<PageAudit panelIsOpen={panelIsOpen} />
+				) : (
+					<>
+						<SidebarHeader />
 
-				<SidebarBody>
-					{Liferay.FeatureFlags['LPS-187284'] ? (
-						<PageAudit panelIsOpen={panelIsOpen} />
-					) : (
-						<LayoutReports eventTriggered={eventTriggered} />
-					)}
-				</SidebarBody>
+						<SidebarBody>
+							<LayoutReports eventTriggered={eventTriggered} />
+						</SidebarBody>
+					</>
+				)}
 			</StoreContextProvider>
 		</ConstantsContextProvider>
 	);

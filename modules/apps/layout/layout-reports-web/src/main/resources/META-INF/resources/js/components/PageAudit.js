@@ -9,11 +9,13 @@ import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {ConstantsContext} from '../context/ConstantsContext';
-import {StoreStateContext} from '../context/StoreContext';
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import ItemDetail from './ItemDetail';
+import {SidebarBody, SidebarHeader} from './Sidebar';
 import Tabs from './Tabs';
 
 import './PageAudit.scss';
+import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
 
 export default function PageAudit({panelIsOpen}) {
 	const [data, setData] = useState(null);
@@ -21,6 +23,7 @@ export default function PageAudit({panelIsOpen}) {
 
 	const {layoutReportsDataURL} = useContext(ConstantsContext);
 	const {selectedIssue} = useContext(StoreStateContext);
+	const dispatch = useContext(StoreDispatchContext);
 
 	useEffect(() => {
 		if (panelIsOpen && layoutReportsDataURL) {
@@ -47,18 +50,34 @@ export default function PageAudit({panelIsOpen}) {
 		);
 	}
 
-	if (selectedIssue) {
-		return (
-			<div className="c-p-3">
-				<ItemDetail selectedIssue={selectedIssue} />
-			</div>
-		);
-	}
+	const onBack = () => {
+		dispatch({
+			issue: null,
+			type: SET_SELECTED_ISSUE,
+		});
+	};
 
 	return (
-		<Tabs
-			segments={data.segmentsExperienceSelectorData}
-			tabs={data.tabsData}
-		/>
+		<>
+			<SidebarHeader
+				onBackButtonClick={selectedIssue ? onBack : null}
+				title={
+					selectedIssue
+						? selectedIssue.title
+						: Liferay.Language.get('page-audit')
+				}
+			/>
+
+			<SidebarBody>
+				{selectedIssue ? (
+					<ItemDetail selectedIssue={selectedIssue} />
+				) : (
+					<Tabs
+						segments={data.segmentsExperienceSelectorData}
+						tabs={data.tabsData}
+					/>
+				)}
+			</SidebarBody>
+		</>
 	);
 }

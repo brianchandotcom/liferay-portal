@@ -899,10 +899,6 @@ public abstract class BaseDiscountResourceTestCase {
 	protected void assertValid(Discount discount) throws Exception {
 		boolean valid = true;
 
-		if (discount.getDateModified() == null) {
-			valid = false;
-		}
-
 		if (discount.getId() == null) {
 			valid = false;
 		}
@@ -1086,6 +1082,14 @@ public abstract class BaseDiscountResourceTestCase {
 					"maximumDiscountAmount", additionalAssertFieldName)) {
 
 				if (discount.getMaximumDiscountAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (discount.getModifiedDate() == null) {
 					valid = false;
 				}
 
@@ -1349,17 +1353,6 @@ public abstract class BaseDiscountResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("dateModified", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						discount1.getDateModified(),
-						discount2.getDateModified())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals(
 					"discountAccountGroups", additionalAssertFieldName)) {
 
@@ -1550,6 +1543,17 @@ public abstract class BaseDiscountResourceTestCase {
 				if (!Objects.deepEquals(
 						discount1.getMaximumDiscountAmount(),
 						discount2.getMaximumDiscountAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						discount1.getModifiedDate(),
+						discount2.getModifiedDate())) {
 
 					return false;
 				}
@@ -1886,37 +1890,6 @@ public abstract class BaseDiscountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("dateModified")) {
-			if (operator.equals("between")) {
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(discount.getDateModified(), -2)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(discount.getDateModified(), 2)));
-				sb.append(")");
-			}
-			else {
-				sb.append(entityFieldName);
-
-				sb.append(" ");
-				sb.append(operator);
-				sb.append(" ");
-
-				sb.append(_dateFormat.format(discount.getDateModified()));
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("discountAccountGroups")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2180,6 +2153,37 @@ public abstract class BaseDiscountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("modifiedDate")) {
+			if (operator.equals("between")) {
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(discount.getModifiedDate(), -2)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(
+					_dateFormat.format(
+						DateUtils.addSeconds(discount.getModifiedDate(), 2)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_dateFormat.format(discount.getModifiedDate()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("neverExpire")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2367,7 +2371,6 @@ public abstract class BaseDiscountResourceTestCase {
 					RandomTestUtil.randomString());
 				couponCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				dateModified = RandomTestUtil.nextDate();
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
@@ -2378,6 +2381,7 @@ public abstract class BaseDiscountResourceTestCase {
 				limitationTimesPerAccount = RandomTestUtil.randomInt();
 				limitationType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				modifiedDate = RandomTestUtil.nextDate();
 				neverExpire = RandomTestUtil.randomBoolean();
 				numberOfUse = RandomTestUtil.randomInt();
 				rulesConjunction = RandomTestUtil.randomBoolean();

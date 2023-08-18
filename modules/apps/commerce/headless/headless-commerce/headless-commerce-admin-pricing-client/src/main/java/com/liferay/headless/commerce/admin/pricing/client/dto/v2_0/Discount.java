@@ -135,27 +135,6 @@ public class Discount implements Cloneable, Serializable {
 
 	protected Map<String, ?> customFields;
 
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dateModified;
-
 	public DiscountAccountGroup[] getDiscountAccountGroups() {
 		return discountAccountGroups;
 	}
@@ -526,6 +505,27 @@ public class Discount implements Cloneable, Serializable {
 	}
 
 	protected BigDecimal maximumDiscountAmount;
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public void setModifiedDate(
+		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+
+		try {
+			modifiedDate = modifiedDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date modifiedDate;
 
 	public Boolean getNeverExpire() {
 		return neverExpire;

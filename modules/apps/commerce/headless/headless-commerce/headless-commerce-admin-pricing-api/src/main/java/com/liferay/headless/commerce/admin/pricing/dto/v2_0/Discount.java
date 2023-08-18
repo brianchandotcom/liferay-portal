@@ -206,34 +206,6 @@ public class Discount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
 
-	@Schema(example = "2017-07-21")
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	@JsonIgnore
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date dateModified;
-
 	@Schema
 	@Valid
 	public DiscountAccountGroup[] getDiscountAccountGroups() {
@@ -739,6 +711,34 @@ public class Discount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal maximumDiscountAmount;
 
+	@Schema(example = "2017-07-21")
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	@JsonIgnore
+	public void setModifiedDate(
+		UnsafeSupplier<Date, Exception> modifiedDateUnsafeSupplier) {
+
+		try {
+			modifiedDate = modifiedDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date modifiedDate;
+
 	@Schema(example = "true")
 	public Boolean getNeverExpire() {
 		return neverExpire;
@@ -1147,20 +1147,6 @@ public class Discount implements Serializable {
 			sb.append(_toJSON(customFields));
 		}
 
-		if (dateModified != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateModified\": ");
-
-			sb.append("\"");
-
-			sb.append(liferayToJSONDateFormat.format(dateModified));
-
-			sb.append("\"");
-		}
-
 		if (discountAccountGroups != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1429,6 +1415,20 @@ public class Discount implements Serializable {
 			sb.append("\"maximumDiscountAmount\": ");
 
 			sb.append(maximumDiscountAmount);
+		}
+
+		if (modifiedDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(modifiedDate));
+
+			sb.append("\"");
 		}
 
 		if (neverExpire != null) {

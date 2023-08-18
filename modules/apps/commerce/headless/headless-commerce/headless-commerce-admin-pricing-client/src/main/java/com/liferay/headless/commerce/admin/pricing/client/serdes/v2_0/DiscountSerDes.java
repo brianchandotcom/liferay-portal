@@ -118,21 +118,6 @@ public class DiscountSerDes {
 			sb.append(_toJSON(discount.getCustomFields()));
 		}
 
-		if (discount.getDateModified() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateModified\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(discount.getDateModified()));
-
-			sb.append("\"");
-		}
-
 		if (discount.getDiscountAccountGroups() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -411,6 +396,21 @@ public class DiscountSerDes {
 			sb.append(discount.getMaximumDiscountAmount());
 		}
 
+		if (discount.getModifiedDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(discount.getModifiedDate()));
+
+			sb.append("\"");
+		}
+
 		if (discount.getNeverExpire() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -587,15 +587,6 @@ public class DiscountSerDes {
 			map.put("customFields", String.valueOf(discount.getCustomFields()));
 		}
 
-		if (discount.getDateModified() == null) {
-			map.put("dateModified", null);
-		}
-		else {
-			map.put(
-				"dateModified",
-				liferayToJSONDateFormat.format(discount.getDateModified()));
-		}
-
 		if (discount.getDiscountAccountGroups() == null) {
 			map.put("discountAccountGroups", null);
 		}
@@ -743,6 +734,15 @@ public class DiscountSerDes {
 				String.valueOf(discount.getMaximumDiscountAmount()));
 		}
 
+		if (discount.getModifiedDate() == null) {
+			map.put("modifiedDate", null);
+		}
+		else {
+			map.put(
+				"modifiedDate",
+				liferayToJSONDateFormat.format(discount.getModifiedDate()));
+		}
+
 		if (discount.getNeverExpire() == null) {
 			map.put("neverExpire", null);
 		}
@@ -879,12 +879,6 @@ public class DiscountSerDes {
 					discount.setCustomFields(
 						(Map)DiscountSerDes.toMap(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
-				if (jsonParserFieldValue != null) {
-					discount.setDateModified(
-						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -1088,6 +1082,12 @@ public class DiscountSerDes {
 				if (jsonParserFieldValue != null) {
 					discount.setMaximumDiscountAmount(
 						new BigDecimal((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				if (jsonParserFieldValue != null) {
+					discount.setModifiedDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {

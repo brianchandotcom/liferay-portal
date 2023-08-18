@@ -180,7 +180,7 @@ public class SegmentsExperimentLocalServiceImpl
 		// Segments experiment
 
 		if (!force) {
-			_validateEditableStatus(segmentsExperiment.getStatus());
+			_validateDeletableStatus(segmentsExperiment.getStatus());
 		}
 
 		segmentsExperimentPersistence.remove(segmentsExperiment);
@@ -522,6 +522,17 @@ public class SegmentsExperimentLocalServiceImpl
 			throw new SegmentsExperimentConfidenceLevelException(
 				"Confidence level " + confidenceLevel +
 					" is not a value between 0.8 and 0.99");
+		}
+	}
+
+	private void _validateDeletableStatus(int status) throws PortalException {
+		SegmentsExperimentConstants.Status statusObject =
+			SegmentsExperimentConstants.Status.valueOf(status);
+
+		if (!statusObject.isDeletable()) {
+			throw new LockedSegmentsExperimentException(
+				"Segments experiment is not deletable in status " +
+					statusObject);
 		}
 	}
 

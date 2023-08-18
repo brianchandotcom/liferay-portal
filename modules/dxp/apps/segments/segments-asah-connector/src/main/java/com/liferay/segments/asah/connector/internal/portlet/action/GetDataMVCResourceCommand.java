@@ -307,29 +307,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		return redirect;
 	}
 
-	private JSONArray _getHistorySegmentsExperimentsJSONArray(
-			AnalyticsConfiguration analyticsConfiguration, long groupId,
-			Locale locale, long plid, long segmentsExperienceId)
-		throws Exception {
-
-		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentService.fetchSegmentsExperiment(
-				groupId, segmentsExperienceId, plid);
-
-		if ((segmentsExperiment == null) ||
-			!ArrayUtil.contains(
-				SegmentsExperimentConstants.Status.
-					getNonexclusiveStatusValues(),
-				segmentsExperiment.getStatus())) {
-
-			return _jsonFactory.createJSONArray();
-		}
-
-		return JSONUtil.putAll(
-			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-				analyticsConfiguration, locale, segmentsExperiment));
-	}
-
 	private long _getLiveGroupId(long groupId) throws Exception {
 		Group group = _stagingGroupHelper.fetchLiveGroup(groupId);
 
@@ -383,11 +360,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			).setParameter(
 				"p_l_mode", Constants.VIEW
 			).buildString()
-		).put(
-			"historySegmentsExperiments",
-			_getHistorySegmentsExperimentsJSONArray(
-				analyticsConfiguration, group.getGroupId(), locale,
-				layout.getPlid(), segmentsExperienceId)
 		).put(
 			"initialSegmentsVariants",
 			() -> {

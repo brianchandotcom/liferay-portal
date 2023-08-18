@@ -4,7 +4,6 @@
  */
 
 import ClayTable from '@clayui/table';
-
 import React from 'react';
 
 import entities from '../services/entity.js';
@@ -23,7 +22,7 @@ function BuildQueue() {
 	}
 
 	return (
-		<ClayTable borderedColumns responsiveSize='sm'>
+		<ClayTable borderedColumns responsiveSize="sm">
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell headingCell>ID</ClayTable.Cell>
@@ -71,18 +70,24 @@ function BuildQueue() {
 					}
 
 					return (
-						<ClayTable.Row>
-							<ClayTable.Cell headingCell>{project.id}</ClayTable.Cell>
+						<ClayTable.Row key={project.id}>
+							<ClayTable.Cell headingCell>
+								{project.id}
+							</ClayTable.Cell>
 
 							<ClayTable.Cell>{project.name}</ClayTable.Cell>
 
 							<ClayTable.Cell>{project.priority}</ClayTable.Cell>
 
-							<ClayTable.Cell>{project.dateCreated}</ClayTable.Cell>
+							<ClayTable.Cell>
+								{project.dateCreated}
+							</ClayTable.Cell>
 
 							<ClayTable.Cell>{project.startDate}</ClayTable.Cell>
 
-							<ClayTable.Cell>{project.state.name}</ClayTable.Cell>
+							<ClayTable.Cell>
+								{project.state.name}
+							</ClayTable.Cell>
 
 							<ClayTable.Cell>{project.type.name}</ClayTable.Cell>
 

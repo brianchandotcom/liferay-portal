@@ -9,12 +9,14 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
+import com.liferay.object.exception.ObjectRelationshipSystemException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
@@ -291,6 +293,13 @@ public class ObjectRelationshipLocalServiceImpl
 		if (objectRelationship.isReverse()) {
 			throw new ObjectRelationshipReverseException(
 				"Reverse object relationships cannot be deleted");
+		}
+
+		if (objectRelationship.isSystem() &&
+			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+
+			throw new ObjectRelationshipSystemException(
+				"Only allowed bundles can delete system relationships");
 		}
 
 		objectRelationship = objectRelationshipPersistence.remove(
@@ -732,6 +741,13 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
 
+		if (objectRelationship.isSystem() &&
+			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+
+			throw new ObjectRelationshipSystemException(
+				"Only allowed bundles can update system relationships");
+		}
+
 		if (objectRelationship.isReverse()) {
 			throw new ObjectRelationshipReverseException(
 				"Reverse object relationships cannot be updated");
@@ -886,6 +902,11 @@ public class ObjectRelationshipLocalServiceImpl
 			Map<Locale, String> labelMap, String name, boolean reverse,
 			boolean system, String type)
 		throws PortalException {
+
+		if (system && !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+			throw new ObjectRelationshipSystemException(
+				"Only allowed bundles can create system relationships");
+		}
 
 		_validateName(objectDefinitionId1, name);
 

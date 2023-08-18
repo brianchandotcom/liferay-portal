@@ -142,6 +142,50 @@ export default function Relationships({
 		);
 	}
 
+	const fdsFields = [
+		{
+			contentRenderer: 'objectFieldLabelDataRenderer',
+			expand: false,
+			fieldName: 'label',
+			label: Liferay.Language.get('label'),
+			localizeLabel: true,
+			sortable: true,
+		},
+		{
+			expand: false,
+			fieldName: 'objectDefinitionName2',
+			label: Liferay.Language.get('related-object'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			expand: false,
+			fieldName: 'type',
+			label: Liferay.Language.get('type'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			contentRenderer: 'ObjectFieldHierarchyDataRenderer',
+			expand: false,
+			fieldName: 'hierarchy',
+			label: Liferay.Language.get('hierarchy'),
+			localizeLabel: true,
+			sortable: false,
+		},
+	];
+
+	if (Liferay.FeatureFlags['LPS-193355']) {
+		fdsFields.push({
+			contentRenderer: 'objectRelationshipSourceDataRenderer',
+			expand: false,
+			fieldName: 'source',
+			label: Liferay.Language.get('source'),
+			localizeLabel: true,
+			sortable: false,
+		});
+	}
+
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL,
@@ -190,47 +234,7 @@ export default function Relationships({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: [
-						{
-							contentRenderer: 'objectFieldLabelDataRenderer',
-							expand: false,
-							fieldName: 'label',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: true,
-						},
-						{
-							expand: false,
-							fieldName: 'objectDefinitionName2',
-							label: Liferay.Language.get('related-object'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							expand: false,
-							fieldName: 'type',
-							label: Liferay.Language.get('type'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer:
-								'objectRelationshipSourceDataRenderer',
-							expand: false,
-							fieldName: 'source',
-							label: Liferay.Language.get('source'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer: 'ObjectFieldHierarchyDataRenderer',
-							expand: false,
-							fieldName: 'hierarchy',
-							label: Liferay.Language.get('hierarchy'),
-							localizeLabel: true,
-							sortable: false,
-						},
-					],
+					fields: fdsFields,
 				},
 				thumbnail: 'table',
 			},

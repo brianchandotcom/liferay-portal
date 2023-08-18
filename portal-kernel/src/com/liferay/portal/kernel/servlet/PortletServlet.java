@@ -133,8 +133,9 @@ public class PortletServlet extends HttpServlet {
 			return portalHttpSession;
 		}
 
-		return SharedSessionUtil.getSharedSessionWrapper(
-			portalHttpSession, httpServletRequest);
+		HttpSession portletHttpSession = httpServletRequest.getSession();
+
+		return new SharedSessionWrapper(portalHttpSession, portletHttpSession);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletServlet.class);

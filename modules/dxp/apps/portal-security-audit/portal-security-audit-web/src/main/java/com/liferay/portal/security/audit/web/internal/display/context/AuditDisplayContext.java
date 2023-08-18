@@ -57,6 +57,139 @@ public class AuditDisplayContext {
 
 		_today = CalendarFactoryUtil.getCalendar(
 			timeZone, _themeDisplay.getLocale());
+
+		_today.add(Calendar.MINUTE, 1);
+
+		_yesterday = CalendarFactoryUtil.getCalendar(
+			timeZone, _themeDisplay.getLocale());
+
+		_yesterday.add(Calendar.DATE, -1);
+	}
+
+	public String getClassName() {
+		if (_className != null) {
+			return _className;
+		}
+
+		_className = ParamUtil.getString(_httpServletRequest, "className");
+
+		return _className;
+	}
+
+	public String getClassPK() {
+		if (_classPK != null) {
+			return _classPK;
+		}
+
+		_classPK = ParamUtil.getString(_httpServletRequest, "classPK");
+
+		return _classPK;
+	}
+
+	public String getClientHost() {
+		if (_clientHost != null) {
+			return _clientHost;
+		}
+
+		_clientHost = ParamUtil.getString(_httpServletRequest, "clientHost");
+
+		return _clientHost;
+	}
+
+	public String getClientIP() {
+		if (_clientIP != null) {
+			return _clientIP;
+		}
+
+		_clientIP = ParamUtil.getString(_httpServletRequest, "clientIP");
+
+		return _clientIP;
+	}
+
+	public int getEndDateAmPm() {
+		if (_endDateAmPm != null) {
+			return _endDateAmPm;
+		}
+
+		_endDateAmPm = _getParamWithOrWithoutNamespace(
+			"endDateAmPm", _today.get(Calendar.AM_PM));
+
+		return _endDateAmPm;
+	}
+
+	public int getEndDateDay() {
+		if (_endDateDay != null) {
+			return _endDateDay;
+		}
+
+		_endDateDay = _getParamWithOrWithoutNamespace(
+			"endDateDay", _today.get(Calendar.DATE));
+
+		return _endDateDay;
+	}
+
+	public int getEndDateHour() {
+		if (_endDateHour != null) {
+			return _endDateHour;
+		}
+
+		_endDateHour = _getParamWithOrWithoutNamespace(
+			"endDateHour", _today.get(Calendar.HOUR));
+
+		return _endDateHour;
+	}
+
+	public int getEndDateMinute() {
+		if (_endDateMinute != null) {
+			return _endDateMinute;
+		}
+
+		_endDateMinute = _getParamWithOrWithoutNamespace(
+			"endDateMinute", _today.get(Calendar.MINUTE));
+
+		return _endDateMinute;
+	}
+
+	public int getEndDateMonth() {
+		if (_endDateMonth != null) {
+			return _endDateMonth;
+		}
+
+		_endDateMonth = _getParamWithOrWithoutNamespace(
+			"endDateMonth", _today.get(Calendar.MONTH));
+
+		return _endDateMonth;
+	}
+
+	public int getEndDateYear() {
+		if (_endDateYear != null) {
+			return _endDateYear;
+		}
+
+		_endDateYear = _getParamWithOrWithoutNamespace(
+			"endDateYear", _today.get(Calendar.YEAR));
+
+		return _endDateYear;
+	}
+
+	public String getEventType() {
+		if (_eventType != null) {
+			return _eventType;
+		}
+
+		_eventType = ParamUtil.getString(_httpServletRequest, "eventType");
+
+		return _eventType;
+	}
+
+	public long getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getInteger(_httpServletRequest, "groupId");
+
+		return _groupId;
 	}
 
 	public SearchContainer<AuditEvent> getSearchContainer() throws Exception {
@@ -84,30 +217,30 @@ public class AuditDisplayContext {
 
 		if (displayTerms.isAdvancedSearch()) {
 			Date endDate = PortalUtil.getDate(
-				_getEndDateMonth(), _getEndDateDay(), _getEndDateYear(),
-				(_getEndDateAmPm() != Calendar.PM) ? _getEndDateHour() :
-					_getEndDateHour() + 12,
-				_getEndDateMinute(), _timeZone, null);
+				getEndDateMonth(), getEndDateDay(), getEndDateYear(),
+				(getEndDateAmPm() != Calendar.PM) ? getEndDateHour() :
+					getEndDateHour() + 12,
+				getEndDateMinute(), _timeZone, null);
 
 			Date startDate = PortalUtil.getDate(
-				_getStartDateMonth(), _getStartDateDay(), _getStartDateYear(),
-				(_getStartDateAmPm() != Calendar.PM) ? _getStartDateHour() :
-					_getStartDateHour() + 12,
-				_getStartDateMinute(), _timeZone, null);
+				getStartDateMonth(), getStartDateDay(), getStartDateYear(),
+				(getStartDateAmPm() != Calendar.PM) ? getStartDateHour() :
+					getStartDateHour() + 12,
+				getStartDateMinute(), _timeZone, null);
 
 			_searchContainer.setResultsAndTotal(
 				() -> AuditEventManagerUtil.getAuditEvents(
-					_themeDisplay.getCompanyId(), _getGroupId(), _getUserId(),
-					_getUserName(), startDate, endDate, _getEventType(),
-					_getClassName(), _getClassPK(), _getClientHost(),
-					_getClientIP(), _getServerName(), _getServerPort(), null,
+					_themeDisplay.getCompanyId(), getGroupId(), getUserId(),
+					getUserName(), startDate, endDate, getEventType(),
+					getClassName(), getClassPK(), getClientHost(),
+					getClientIP(), getServerName(), getServerPort(), null,
 					displayTerms.isAndOperator(), range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
-					_themeDisplay.getCompanyId(), _getGroupId(), _getUserId(),
-					_getUserName(), startDate, endDate, _getEventType(),
-					_getClassName(), _getClassPK(), _getClientHost(),
-					_getClientIP(), _getServerName(), _getServerPort(), null,
+					_themeDisplay.getCompanyId(), getGroupId(), getUserId(),
+					getUserName(), startDate, endDate, getEventType(),
+					getClassName(), getClassPK(), getClientHost(),
+					getClientIP(), getServerName(), getServerPort(), null,
 					displayTerms.isAndOperator()));
 		}
 		else {
@@ -118,13 +251,13 @@ public class AuditDisplayContext {
 
 			_searchContainer.setResultsAndTotal(
 				() -> AuditEventManagerUtil.getAuditEvents(
-					_themeDisplay.getCompanyId(), _getGroupId(),
+					_themeDisplay.getCompanyId(), getGroupId(),
 					Long.valueOf(number), keywords, null, null, keywords,
 					keywords, keywords, keywords, keywords, keywords,
 					Integer.valueOf(number), null, false, range[0], range[1],
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
-					_themeDisplay.getCompanyId(), _getGroupId(),
+					_themeDisplay.getCompanyId(), getGroupId(),
 					Long.valueOf(number), keywords, null, null, keywords,
 					keywords, keywords, keywords, keywords, keywords,
 					Integer.valueOf(number), null, false));
@@ -133,134 +266,114 @@ public class AuditDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getServerName() {
+		if (_serverName != null) {
+			return _serverName;
+		}
+
+		_serverName = ParamUtil.getString(_httpServletRequest, "serverName");
+
+		return _serverName;
+	}
+
+	public int getServerPort() {
+		if (_serverPort != null) {
+			return _serverPort;
+		}
+
+		_serverPort = ParamUtil.getInteger(_httpServletRequest, "serverPort");
+
+		return _serverPort;
+	}
+
+	public int getStartDateAmPm() {
+		if (_startDateAmPm != null) {
+			return _startDateAmPm;
+		}
+
+		_startDateAmPm = _getParamWithOrWithoutNamespace(
+			"startDateAmPm", _yesterday.get(Calendar.AM_PM));
+
+		return _startDateAmPm;
+	}
+
+	public int getStartDateDay() {
+		if (_startDateDay != null) {
+			return _startDateDay;
+		}
+
+		_startDateDay = _getParamWithOrWithoutNamespace(
+			"startDateDay", _yesterday.get(Calendar.DATE));
+
+		return _startDateDay;
+	}
+
+	public int getStartDateHour() {
+		if (_startDateHour != null) {
+			return _startDateHour;
+		}
+
+		_startDateHour = _getParamWithOrWithoutNamespace(
+			"startDateHour", _yesterday.get(Calendar.HOUR));
+
+		return _startDateHour;
+	}
+
+	public int getStartDateMinute() {
+		if (_startDateMinute != null) {
+			return _startDateMinute;
+		}
+
+		_startDateMinute = _getParamWithOrWithoutNamespace(
+			"startDateMinute", _yesterday.get(Calendar.MINUTE));
+
+		return _startDateMinute;
+	}
+
+	public int getStartDateMonth() {
+		if (_startDateMonth != null) {
+			return _startDateMonth;
+		}
+
+		_startDateMonth = _getParamWithOrWithoutNamespace(
+			"startDateMonth", _yesterday.get(Calendar.MONTH));
+
+		return _startDateMonth;
+	}
+
+	public int getStartDateYear() {
+		if (_startDateYear != null) {
+			return _startDateYear;
+		}
+
+		_startDateYear = _getParamWithOrWithoutNamespace(
+			"startDateYear", _yesterday.get(Calendar.YEAR));
+
+		return _startDateYear;
+	}
+
+	public long getUserId() {
+		if (_userId != null) {
+			return _userId;
+		}
+
+		_userId = ParamUtil.getLong(_httpServletRequest, "userId");
+
+		return _userId;
+	}
+
+	public String getUserName() {
+		if (_userName != null) {
+			return _userName;
+		}
+
+		_userName = ParamUtil.getString(_httpServletRequest, "userName");
+
+		return _userName;
+	}
+
 	public void setPaging(boolean paging) {
 		_paging = paging;
-	}
-
-	private String _getClassName() {
-		if (_className != null) {
-			return _className;
-		}
-
-		_className = ParamUtil.getString(_httpServletRequest, "className");
-
-		return _className;
-	}
-
-	private String _getClassPK() {
-		if (_classPK != null) {
-			return _classPK;
-		}
-
-		_classPK = ParamUtil.getString(_httpServletRequest, "classPK");
-
-		return _classPK;
-	}
-
-	private String _getClientHost() {
-		if (_clientHost != null) {
-			return _clientHost;
-		}
-
-		_clientHost = ParamUtil.getString(_httpServletRequest, "clientHost");
-
-		return _clientHost;
-	}
-
-	private String _getClientIP() {
-		if (_clientIP != null) {
-			return _clientIP;
-		}
-
-		_clientIP = ParamUtil.getString(_httpServletRequest, "clientIP");
-
-		return _clientIP;
-	}
-
-	private int _getEndDateAmPm() {
-		if (_endDateAmPm != null) {
-			return _endDateAmPm;
-		}
-
-		_endDateAmPm = _getParamWithOrWithoutNamespace(
-			"endDateAmPm", _today.get(Calendar.AM_PM));
-
-		return _endDateAmPm;
-	}
-
-	private int _getEndDateDay() {
-		if (_endDateDay != null) {
-			return _endDateDay;
-		}
-
-		_endDateDay = _getParamWithOrWithoutNamespace(
-			"endDateDay", _today.get(Calendar.DATE));
-
-		return _endDateDay;
-	}
-
-	private int _getEndDateHour() {
-		if (_endDateHour != null) {
-			return _endDateHour;
-		}
-
-		_endDateHour = _getParamWithOrWithoutNamespace(
-			"endDateHour", _today.get(Calendar.HOUR));
-
-		return _endDateHour;
-	}
-
-	private int _getEndDateMinute() {
-		if (_endDateMinute != null) {
-			return _endDateMinute;
-		}
-
-		_endDateMinute = _getParamWithOrWithoutNamespace(
-			"endDateMinute", _today.get(Calendar.MINUTE));
-
-		return _endDateMinute;
-	}
-
-	private int _getEndDateMonth() {
-		if (_endDateMonth != null) {
-			return _endDateMonth;
-		}
-
-		_endDateMonth = _getParamWithOrWithoutNamespace(
-			"endDateMonth", _today.get(Calendar.MONTH));
-
-		return _endDateMonth;
-	}
-
-	private int _getEndDateYear() {
-		if (_endDateYear != null) {
-			return _endDateYear;
-		}
-
-		_endDateYear = _getParamWithOrWithoutNamespace(
-			"endDateYear", _today.get(Calendar.YEAR));
-
-		return _endDateYear;
-	}
-
-	private String _getEventType() {
-		if (_eventType != null) {
-			return _eventType;
-		}
-
-		_eventType = ParamUtil.getString(_httpServletRequest, "eventType");
-
-		return _eventType;
-	}
-
-	private long _getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		_groupId = ParamUtil.getInteger(_httpServletRequest, "groupId");
-
-		return _groupId;
 	}
 
 	private int _getParamWithOrWithoutNamespace(
@@ -286,169 +399,63 @@ public class AuditDisplayContext {
 				_liferayPortletResponse)
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateAmPm",
-			_getEndDateAmPm()
+			getEndDateAmPm()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateDay",
-			_getEndDateDay()
+			getEndDateDay()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateHour",
-			_getEndDateHour()
+			getEndDateHour()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateMinute",
-			_getEndDateMinute()
+			getEndDateMinute()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateMonth",
-			_getEndDateMonth()
+			getEndDateMonth()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "endDateYear",
-			_getEndDateYear()
+			getEndDateYear()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateAmPm",
-			_getStartDateAmPm()
+			getStartDateAmPm()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateDay",
-			_getStartDateDay()
+			getStartDateDay()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateHour",
-			_getStartDateHour()
+			getStartDateHour()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateMinute",
-			_getStartDateMinute()
+			getStartDateMinute()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateMonth",
-			_getStartDateMonth()
+			getStartDateMonth()
 		).setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "startDateYear",
-			_getStartDateYear()
+			getStartDateYear()
 		).setParameter(
-			"className", _getClassName()
+			"className", getClassName()
 		).setParameter(
-			"classPK", _getClassPK()
+			"classPK", getClassPK()
 		).setParameter(
-			"clientHost", _getClientHost()
+			"clientHost", getClientHost()
 		).setParameter(
-			"clientIP", _getClientIP()
+			"clientIP", getClientIP()
 		).setParameter(
-			"eventType", _getEventType()
+			"eventType", getEventType()
 		).setParameter(
-			"groupId", _getGroupId()
+			"groupId", getGroupId()
 		).setParameter(
-			"serverName", _getServerName()
+			"serverName", getServerName()
 		).setParameter(
-			"serverPort", _getServerPort()
+			"serverPort", getServerPort()
 		).setParameter(
-			"userId", _getUserId()
+			"userId", getUserId()
 		).setParameter(
-			"userName", _getUserName()
+			"userName", getUserName()
 		).buildPortletURL();
 
 		return _portletURL;
-	}
-
-	private String _getServerName() {
-		if (_serverName != null) {
-			return _serverName;
-		}
-
-		_serverName = ParamUtil.getString(_httpServletRequest, "serverName");
-
-		return _serverName;
-	}
-
-	private int _getServerPort() {
-		if (_serverPort != null) {
-			return _serverPort;
-		}
-
-		_serverPort = ParamUtil.getInteger(_httpServletRequest, "serverPort");
-
-		return _serverPort;
-	}
-
-	private int _getStartDateAmPm() {
-		if (_startDateAmPm != null) {
-			return _startDateAmPm;
-		}
-
-		_startDateAmPm = _getParamWithOrWithoutNamespace(
-			"startDateAmPm", _today.get(Calendar.AM_PM));
-
-		return _startDateAmPm;
-	}
-
-	private int _getStartDateDay() {
-		if (_startDateDay != null) {
-			return _startDateDay;
-		}
-
-		_startDateDay = _getParamWithOrWithoutNamespace(
-			"startDateDay", _today.get(Calendar.DATE));
-
-		return _startDateDay;
-	}
-
-	private int _getStartDateHour() {
-		if (_startDateHour != null) {
-			return _startDateHour;
-		}
-
-		_startDateHour = _getParamWithOrWithoutNamespace(
-			"startDateHour", _today.get(Calendar.HOUR));
-
-		return _startDateHour;
-	}
-
-	private int _getStartDateMinute() {
-		if (_startDateMinute != null) {
-			return _startDateMinute;
-		}
-
-		_startDateMinute = _getParamWithOrWithoutNamespace(
-			"startDateMinute", _today.get(Calendar.MINUTE));
-
-		return _startDateMinute;
-	}
-
-	private int _getStartDateMonth() {
-		if (_startDateMonth != null) {
-			return _startDateMonth;
-		}
-
-		_startDateMonth = _getParamWithOrWithoutNamespace(
-			"startDateMonth", _today.get(Calendar.MONTH));
-
-		return _startDateMonth;
-	}
-
-	private int _getStartDateYear() {
-		if (_startDateYear != null) {
-			return _startDateYear;
-		}
-
-		_startDateYear = _getParamWithOrWithoutNamespace(
-			"startDateYear", _today.get(Calendar.YEAR));
-
-		return _startDateYear;
-	}
-
-	private long _getUserId() {
-		if (_userId != null) {
-			return _userId;
-		}
-
-		_userId = ParamUtil.getLong(_httpServletRequest, "userId");
-
-		return _userId;
-	}
-
-	private String _getUserName() {
-		if (_userName != null) {
-			return _userName;
-		}
-
-		_userName = ParamUtil.getString(_httpServletRequest, "userName");
-
-		return _userName;
 	}
 
 	private String _className;
@@ -483,5 +490,6 @@ public class AuditDisplayContext {
 	private final Calendar _today;
 	private Long _userId;
 	private String _userName;
+	private final Calendar _yesterday;
 
 }

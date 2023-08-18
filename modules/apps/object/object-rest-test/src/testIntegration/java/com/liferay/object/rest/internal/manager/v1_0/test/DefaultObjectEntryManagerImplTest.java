@@ -28,6 +28,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
@@ -99,6 +100,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParserUtil;
@@ -140,11 +142,9 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1978,28 +1978,36 @@ public class DefaultObjectEntryManagerImplTest {
 
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd");
+
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						"dateObjectFieldName", "2023-08-10"
+						"dateObjectFieldName",
+						dateFormat.format(RandomTestUtil.nextDate())
 					).put(
-						"decimalObjectFieldName", 2.7
+						"decimalObjectFieldName", RandomTestUtil.randomDouble()
 					).put(
-						"integerObjectFieldName", 50
+						"integerObjectFieldName", RandomTestUtil.randomInt()
 					).put(
-						"longIntegerObjectFieldName", 30000L
+						"longIntegerObjectFieldName",
+						RandomTestUtil.randomLong(
+							ObjectFieldValidationConstants.
+								BUSINESS_TYPE_LONG_VALUE_MIN,
+							ObjectFieldValidationConstants.
+								BUSINESS_TYPE_LONG_VALUE_MAX)
 					).put(
 						"precisionDecimalObjectFieldName",
-						new BigDecimal(
-							0.9876543217654321, MathContext.DECIMAL64)
+						new BigDecimal(RandomTestUtil.randomDouble())
 					).put(
 						"richTextObjectFieldName",
 						StringBundler.concat(
 							"<i>", RandomTestUtil.randomString(), "</i>")
 					).put(
-						"textObjectFieldName", RandomTestUtil.randomString()
+						"textObjectFieldName", "textObjectFieldValue"
 					).build();
 				}
 			},
@@ -2008,6 +2016,10 @@ public class DefaultObjectEntryManagerImplTest {
 		_partialUpdateObjectEntryValues(
 			_objectDefinition2, objectEntry.getId(),
 			HashMapBuilder.<String, Object>put(
+				"dateObjectFieldName", "2023-08-20"
+			).put(
+				"decimalObjectFieldName", 2.7
+			).put(
 				"integerObjectFieldName", 25
 			).put(
 				"longIntegerObjectFieldName", 200L
@@ -2015,36 +2027,13 @@ public class DefaultObjectEntryManagerImplTest {
 				"precisionDecimalObjectFieldName",
 				new BigDecimal(0.8755445767, MathContext.DECIMAL64)
 			).put(
-				"richTextObjectFieldName", "<i>richText</i>"
-			).put(
-				"textObjectFieldName", "john"
-			).build());
-
-		Calendar calendar = new GregorianCalendar();
-
-		calendar.set(Calendar.YEAR, 2023);
-		calendar.set(Calendar.MONTH, Calendar.AUGUST);
-		calendar.set(Calendar.DAY_OF_MONTH, 10);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-
-		Timestamp timestamp = new Timestamp(calendar.getTimeInMillis());
-
-		_assertObjectEntryProperties(
-			timestamp, new BigDecimal(0.8755445767, MathContext.DECIMAL64), 2.7,
-			25, 200L, objectEntry.getId(), "<i>richText</i>", "john");
-
-		_partialUpdateObjectEntryValues(
-			_objectDefinition2, objectEntry.getId(),
-			HashMapBuilder.<String, Object>put(
-				"textObjectFieldName", "peter"
+				"richTextObjectFieldName", "<i>richTextObjectFieldNameValue</i>"
 			).build());
 
 		_assertObjectEntryProperties(
-			timestamp, new BigDecimal(0.8755445767, MathContext.DECIMAL64), 2.7,
-			25, 200L, objectEntry.getId(), "<i>richText</i>", "peter");
+			"2023-08-20", new BigDecimal(0.8755445767, MathContext.DECIMAL64),
+			2.7, 25, 200L, objectEntry.getId(),
+			"<i>richTextObjectFieldNameValue</i>", "textObjectFieldValue");
 	}
 
 	@Test
@@ -2802,7 +2791,7 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	private void _assertObjectEntryProperties(
-			Timestamp expectedDate, BigDecimal expectedBigDecimal,
+			String expectedDate, BigDecimal expectedBigDecimal,
 			double expectedDecimal, int expectedInteger,
 			long expectedLongInteger, long objectEntryId,
 			String expectedRichText, String expectedText)
@@ -2813,8 +2802,13 @@ public class DefaultObjectEntryManagerImplTest {
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
+		Date date = DateUtil.parseDate(
+			"yyyy-MM-dd", expectedDate, LocaleUtil.getSiteDefault());
+
 		Assert.assertEquals(
-			expectedDate, properties.get("dateObjectFieldName"));
+			new Timestamp(date.getTime()),
+			properties.get("dateObjectFieldName"));
+
 		Assert.assertEquals(
 			expectedDecimal, properties.get("decimalObjectFieldName"));
 		Assert.assertEquals(

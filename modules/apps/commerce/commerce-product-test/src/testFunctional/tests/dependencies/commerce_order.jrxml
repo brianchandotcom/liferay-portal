@@ -111,7 +111,7 @@
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="discountAmountMoney" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="finalPriceMoney" />
 	<field class="java.util.Map" name="nameMap" />
-	<field class="java.lang.Integer" name="quantity" />
+	<field class="java.math.BigDecimal" name="quantity" />
 	<field class="java.util.Date" name="requestedDeliveryDate" />
 	<field class="java.lang.String" name="sku" />
 	<field class="com.liferay.commerce.currency.model.CommerceMoney" name="unitPriceMoney" />

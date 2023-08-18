@@ -10,8 +10,8 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreStateContext} from '../context/StoreContext';
+import ItemDetail from './ItemDetail';
 import Tabs from './Tabs';
-import IssueDetail from './layout_reports/IssueDetail';
 
 import './PageAudit.scss';
 
@@ -50,7 +50,7 @@ export default function PageAudit({panelIsOpen}) {
 	if (selectedIssue) {
 		return (
 			<div className="c-p-3">
-				<IssueDetail />
+				<ItemDetail selectedIssue={selectedIssue} />
 			</div>
 		);
 	}

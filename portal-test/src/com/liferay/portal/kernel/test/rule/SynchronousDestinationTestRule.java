@@ -184,8 +184,6 @@ public class SynchronousDestinationTestRule
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
 			replaceDestination(
-				DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);

@@ -40,6 +40,14 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
+				definitionName: string;
+				hiddenNode: boolean;
+				leftSidebarItem: LeftSidebarItemType;
+			};
+			type: TYPES.CHANGE_NODE_VIEW;
+	  }
+	| {
+			payload: {
 				objectFolders: ObjectFolder[];
 			};
 			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
@@ -97,6 +105,7 @@ export declare type LeftSidebarItemType = {
 export declare type LeftSidebarDefinitionItemType = {
 	definitionId: string;
 	definitionName: string;
+	hiddenNode: boolean;
 	name: string;
 	selected: boolean;
 	type: 'objectDefinition';

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Text, TreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import Icon from '@clayui/icon';
@@ -192,7 +192,13 @@ export default function LeftSidebar({
 						</TreeView.ItemStack>
 
 						<TreeView.Group items={item.objectDefinitions}>
-							{({definitionName, name, selected, type}) => (
+							{({
+								definitionName,
+								hiddenNode,
+								name,
+								selected,
+								type,
+							}) => (
 								<TreeView.Item
 									actions={
 										showActions ? (
@@ -222,7 +228,36 @@ export default function LeftSidebar({
 												/>
 											</>
 										) : (
-											<></>
+											<ClayButtonWithIcon
+												aria-label={
+													hiddenNode
+														? Liferay.Language.get(
+																'hidden'
+														  )
+														: Liferay.Language.get(
+																'show'
+														  )
+												}
+												displayType="unstyled"
+												onClick={(event) => {
+													event.stopPropagation();
+
+													dispatch({
+														payload: {
+															definitionName,
+															hiddenNode,
+															leftSidebarItem: item,
+														},
+														type:
+															TYPES.CHANGE_NODE_VIEW,
+													});
+												}}
+												symbol={
+													hiddenNode
+														? 'hidden'
+														: 'view'
+												}
+											/>
 										)
 									}
 									active={selected}

@@ -6,6 +6,7 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.servlet.SharedSession;
+import com.liferay.portal.kernel.servlet.SharedSessionWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

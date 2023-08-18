@@ -11,6 +11,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginUI();
+
+		SearchAdministration.executeReindex();
 	}
 
 	tearDown {

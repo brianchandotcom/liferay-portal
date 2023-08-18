@@ -116,11 +116,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					segmentsExperience.getGroupId(),
 					segmentsExperience.getSegmentsExperienceId(),
-					segmentsExperience.getPlid(),
-					new int[] {
-						SegmentsExperimentConstants.Status.DRAFT.getValue()
-					});
+					segmentsExperience.getPlid());
 
 			Assert.assertEquals(
 				liferayAnalyticsURL + "/tests/overview/" +
@@ -183,7 +181,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 		segmentsExperiment =
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
-				_group.getGroupId(), _layout.getPlid());
+				_group.getGroupId(),
+				segmentsExperience.getSegmentsExperienceId(),
+				_layout.getPlid());
 
 		Assert.assertEquals(
 			SegmentsExperimentConstants.STATUS_TERMINATED,
@@ -221,7 +221,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 			segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
-					_group.getGroupId(), _layout.getPlid());
+					_group.getGroupId(),
+					segmentsExperience.getSegmentsExperienceId(),
+					_layout.getPlid());
 
 			Assert.assertEquals(
 				SegmentsExperimentConstants.STATUS_DRAFT,

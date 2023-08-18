@@ -120,7 +120,7 @@ public class SegmentsExperimentServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey());
+				segmentsExperiment.getSegmentsExperimentId());
 		}
 	}
 
@@ -134,7 +134,7 @@ public class SegmentsExperimentServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey());
+				segmentsExperiment.getSegmentsExperimentId());
 		}
 	}
 
@@ -153,7 +153,7 @@ public class SegmentsExperimentServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey());
+				segmentsExperiment.getSegmentsExperimentId());
 		}
 	}
 
@@ -183,7 +183,9 @@ public class SegmentsExperimentServiceTest {
 
 			Assert.assertNull(
 				_segmentsExperimentService.fetchSegmentsExperiment(
-					layout.getGroupId(), layout.getPlid()));
+					layout.getGroupId(),
+					segmentsExperiment.getSegmentsExperienceId(),
+					layout.getPlid()));
 		}
 	}
 
@@ -201,7 +203,9 @@ public class SegmentsExperimentServiceTest {
 			Assert.assertEquals(
 				segmentsExperiment,
 				_segmentsExperimentService.fetchSegmentsExperiment(
-					layout.getGroupId(), layout.getPlid()));
+					layout.getGroupId(),
+					segmentsExperiment.getSegmentsExperienceId(),
+					layout.getPlid()));
 		}
 	}
 

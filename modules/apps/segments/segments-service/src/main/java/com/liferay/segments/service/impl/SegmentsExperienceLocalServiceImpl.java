@@ -249,13 +249,10 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
-		for (SegmentsExperiment segmentsExperiment :
-				_segmentsExperimentPersistence.findByS_P(
-					segmentsExperience.getSegmentsExperienceId(),
-					_getPublishedLayoutPlid(segmentsExperience.getPlid()))) {
-
-			_deleteSegmentsExperiment(segmentsExperiment);
-		}
+		_deleteSegmentsExperiment(
+			segmentsExperience.getGroupId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			_getPublishedLayoutPlid(segmentsExperience.getPlid()));
 
 		// Resources
 
@@ -275,13 +272,9 @@ public class SegmentsExperienceLocalServiceImpl
 			groupId, SegmentsExperienceConstants.KEY_DEFAULT, plid);
 
 		if (defaultSegmentsExperience != null) {
-			for (SegmentsExperiment segmentsExperiment :
-					_segmentsExperimentPersistence.findByS_P(
-						defaultSegmentsExperience.getSegmentsExperienceId(),
-						_getPublishedLayoutPlid(plid))) {
-
-				_deleteSegmentsExperiment(segmentsExperiment);
-			}
+			_deleteSegmentsExperiment(
+				groupId, defaultSegmentsExperience.getSegmentsExperienceId(),
+				_getPublishedLayoutPlid(plid));
 		}
 
 		// Segments experiences
@@ -598,8 +591,16 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	private void _deleteSegmentsExperiment(
-			SegmentsExperiment segmentsExperiment)
+			long groupId, long segmentsExperienceId, long plid)
 		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentPersistence.fetchByG_S_P(
+				groupId, segmentsExperienceId, _getPublishedLayoutPlid(plid));
+
+		if (segmentsExperiment == null) {
+			return;
+		}
 
 		_segmentsExperimentPersistence.remove(segmentsExperiment);
 

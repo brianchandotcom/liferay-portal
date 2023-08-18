@@ -125,8 +125,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		return _segmentsExperimentService.fetchSegmentsExperiment(
-			segmentsExperienceId, layout.getPlid(),
-			SegmentsExperimentConstants.Status.getExclusiveStatusValues());
+			layout.getGroupId(), segmentsExperienceId, layout.getPlid());
 	}
 
 	private String _getContentPageEditorPortletNamespace() {

@@ -7,8 +7,10 @@ package com.liferay.segments.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
 import java.io.IOException;
@@ -36,9 +38,19 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 
 	@Override
 	public boolean hasSegmentsExperiment() {
-		return SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
-			getSegmentsExperienceId(), getPlid(),
-			SegmentsExperimentConstants.Status.getLockedStatusValues());
+		SegmentsExperiment segmentsExperiment =
+			SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
+				getGroupId(), getSegmentsExperienceId(), getPlid());
+
+		if ((segmentsExperiment == null) ||
+			!ArrayUtil.contains(
+				SegmentsExperimentConstants.Status.getLockedStatusValues(),
+				segmentsExperiment.getStatus())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

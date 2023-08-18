@@ -97,20 +97,23 @@ definition {
 
 	@priority = 4
 	test SalesDemo {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property testray.component.names = "Web Content Administration,Web Content Display";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupId = ${groupId},
 			layoutName = "Test Page Name");
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
+			groupId = ${groupId},
 			layoutName = "Test Page Name",
 			layoutTemplate = "2 Columns (50/50)");
 
 		JSONWebcontent.addWebContent(
 			content = "DHS Content",
-			groupName = "Guest",
+			groupId = ${groupId},
 			title = "DHS Title");
 
 		Navigator.gotoPage(pageName = "Test Page Name");
@@ -127,14 +130,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -155,7 +154,7 @@ definition {
 			webContentTitle = "DHS Content");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupId = ${groupId},
 			layoutName = "Sales Page");
 
 		Navigator.gotoPage(pageName = "Sales Page");

@@ -225,13 +225,15 @@ definition {
 	@description = "This is a test for LPS-128904. Look for the item via scroll bar when there are lots of items shown in Preview With dropdown list."
 	@priority = 4
 	test ViewItemInDropdownListViaScrollBar {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add 21 web contents based on Basic Web Content") {
 			var n = 1;
 
 			while ((${n} != 22) && (maxIterations = "30")) {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${n}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Web Content Title ${n}");
 
 				var n = ${n} + 1;
@@ -242,7 +244,7 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				subType = "Basic Web Content");
 		}
 

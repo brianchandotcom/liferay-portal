@@ -377,6 +377,8 @@ definition {
 	test ContentWillDisplayInOrderInRepeatableWCFields {
 		property osgi.module.configuration.file.names = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_journalArticleExportImportProcessorCacheEnabled=B\"false\"";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Given a Web Content Structure with a repeatable fields group is created") {
 			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
@@ -400,7 +402,7 @@ definition {
 
 			DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
-			WebContentStructures.saveCP(structureName = "STR_KV");
+			WebContentStructures.saveCP();
 		}
 
 		task ("And given a template is created for the structure to display keys and web content values") {
@@ -424,26 +426,24 @@ definition {
 </#if>
 			''';
 
-			NavItem.gotoTemplates();
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "STR_KV");
 
 			WebContentTemplates.addCP(
-				structureName = "STR_KV",
 				templateName = "STR_KV Template",
 				templateScript = ${templateScript});
 		}
 
 		task ("When Web Content is created using a structure with repeatable fields") {
-			NavItem.gotoWebContent();
-
 			JSONWebcontent.addWebContent(
 				content = "Basic WC",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "WC_BASIC");
+
+			NavItem.gotoWebContent();
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "STR_KV");
 
 			WebContent.addWithStructureCP(
-				structureName = "STR_KV",
 				templateName = "STR_KV Template",
 				webContentTitle = "WC_KV");
 
@@ -484,11 +484,11 @@ definition {
 
 		task ("And when a page is created with an Asset Publisher to display the Web Content and then staged") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "PAGE_KV");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "PAGE_KV",
 				widgetName = "Asset Publisher");
 
@@ -748,23 +748,15 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		DataEngine.addField(fieldName = "Text");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		WebContentStructures.saveCP();
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoTemplates();
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
@@ -773,7 +765,6 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentText = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
@@ -804,9 +795,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.viewCP(structureName = "WC Structure Name");
 
 		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name");
 
@@ -818,9 +807,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
-		WebContentTemplates.viewCP(
-			templateDescription = "WC Template Description",
-			templateName = "WC Template Name");
+		WebContentTemplates.viewCP(templateName = "WC Template Name");
 	}
 
 	@priority = 4

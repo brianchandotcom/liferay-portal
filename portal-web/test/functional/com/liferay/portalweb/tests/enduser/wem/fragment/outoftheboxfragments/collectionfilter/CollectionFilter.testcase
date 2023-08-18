@@ -247,10 +247,12 @@ definition {
 	test EnableSearchFieldInDropdownList {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Warehouse") {
 				JSONCategory.addVocabulary(
-					groupName = ${randomSiteName},
+					groupId = ${groupId},
 					title = ${vocabularyName});
 			}
 		}
@@ -258,21 +260,21 @@ definition {
 		task ("Add 8 categories in Size vocabulary") {
 			for (var categoryName : list "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch") {
 				JSONCategory.addCategory(
-					groupName = ${randomSiteName},
+					groupId = ${groupId},
 					title = ${categoryName},
 					vocabularyName = "Size");
 			}
 
 			var inch90Id = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "9 inch",
 				vocabularyName = "Size");
 			var inch95Id = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "9.5 inch",
 				vocabularyName = "Size");
 			var inch100Id = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "10 inch",
 				vocabularyName = "Size");
 		}
@@ -280,21 +282,21 @@ definition {
 		task ("Add 8 categories in Warehouse vocabulary") {
 			for (var categoryName : list "Canada,England,Japan,France,Brazil") {
 				JSONCategory.addCategory(
-					groupName = ${randomSiteName},
+					groupId = ${groupId},
 					title = ${categoryName},
 					vocabularyName = "Warehouse");
 			}
 
 			var usId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "United States",
 				vocabularyName = "Warehouse");
 			var cnId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "China",
 				vocabularyName = "Warehouse");
 			var esId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Spain",
 				vocabularyName = "Warehouse");
 		}
@@ -303,7 +305,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch100Id},${usId}",
 				content = "Air Force 1",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Air Force 1");
 		}
 
@@ -311,7 +313,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch95Id},${cnId}",
 				content = "Air Jordan 1",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Air Jordan 1");
 		}
 
@@ -319,7 +321,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch90Id},${usId}",
 				content = "Air Max 1",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Air Max 1");
 		}
 
@@ -327,22 +329,19 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch100Id},${esId}",
 				content = "LeBron VIII",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "LeBron VIII");
 		}
 
 		task ("Add a manual collection with All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
 			for (var assetName : list "Air Max 1,Air Jordan 1,Air Force 1,LeBron VIII") {
 				AssetListsAdmin.selectAsset(
 					assetName = ${assetName},

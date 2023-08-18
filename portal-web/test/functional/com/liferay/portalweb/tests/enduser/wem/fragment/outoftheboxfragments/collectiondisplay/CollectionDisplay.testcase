@@ -714,20 +714,23 @@ definition {
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
 	@priority = 4
 	test ViewBlogEntryInContentDisplay {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add three blog entries") {
 			for (var i : list "1,2,3") {
 				HeadlessBlog.addBlogEntry(
 					content = "Blogs Entry Content ${i}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Blogs Entry Title ${i}");
 			}
 		}
 
 		task ("Add a dynamic collection for Blogs Entry") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "Blogs Entry",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Blogs Entry");
 		}
 
 		task ("Add a Collection Display to a content page") {

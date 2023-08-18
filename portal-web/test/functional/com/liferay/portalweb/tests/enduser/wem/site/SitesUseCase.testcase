@@ -884,7 +884,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "World Cup - Russia 2018");
+			var groupId = HeadlessSite.addSite(siteName = "World Cup - Russia 2018");
 
 			Site.openSiteSettingsAdmin(siteURLKey = "world-cup-russia-2018");
 
@@ -900,7 +900,7 @@ definition {
 		task ("Add tags to the new site") {
 			for (var tagName : list "World Cup,Russia,2018") {
 				JSONAssettag.addTag(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					tagName = ${tagName});
 			}
 		}
@@ -924,7 +924,7 @@ definition {
 		task ("Add 2 public pages to the new site") {
 			for (var publicPageName : list "Home,Arenas") {
 				JSONLayout.addPublicLayout(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					layoutName = ${publicPageName});
 			}
 		}
@@ -932,7 +932,7 @@ definition {
 		task ("Add 4 pages to the child page Arenas") {
 			for (var childPageName : list "Arena Baltika,Zenit Arena,Kazan Arena") {
 				JSONLayout.addPublicLayout(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					layoutName = ${childPageName},
 					parentLayoutName = "Arenas");
 			}
@@ -941,7 +941,7 @@ definition {
 		task ("Add 2 private pages to the new site") {
 			for (var privatePageName : list "Accomodations,Maps") {
 				JSONLayout.addPrivateLayout(
-					groupName = "World Cup - Russia 2018",
+					groupId = ${groupId},
 					layoutName = ${privatePageName});
 			}
 		}
@@ -1027,13 +1027,13 @@ definition {
 
 		task ("Assign created site to the user") {
 			JSONUser.addUserToSite(
-				groupName = "World Cup - Russia 2018",
+				groupId = ${groupId},
 				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign site administrator to the user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = "World Cup - Russia 2018",
+				groupId = ${groupId},
 				roleTitle = "Site Administrator",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1089,11 +1089,11 @@ definition {
 		}
 
 		task ("Add a site and import the site lar file") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			var groupId = HeadlessSite.addSite(siteName = "Site Name");
 
 			for (var layoutUtilityPageName : list "404 Error,500 Error") {
 				JSONLayoututilitypage.deleteLayoutUtilityPage(
-					groupName = "Site Name",
+					groupId = ${groupId},
 					layoutUtilityPageName = ${layoutUtilityPageName});
 			}
 

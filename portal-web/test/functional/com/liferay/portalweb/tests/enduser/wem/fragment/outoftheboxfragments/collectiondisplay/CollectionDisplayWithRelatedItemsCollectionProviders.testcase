@@ -1069,6 +1069,8 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Enable the DDMStructure and DLFileEntry feature via gogo shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -1083,13 +1085,13 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -1098,26 +1100,24 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 		}
 
 		task ("Add a blogs entry with category") {
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-			Blogs.addEntryWithCategory(
-				categoryName = "Category Name",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				vocabularyName = "Vocabulary Name");
+			HeadlessBlog.addBlogEntry(
+				assetCategoryIds = ${categoryId},
+				content = "Blogs Entry Content",
+				groupId = ${groupId},
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document with category") {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -1126,7 +1126,7 @@ definition {
 				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 					contentType = "Category",
 					displayPageTemplateEntryName = "Display Page Name ${n}",
-					groupName = "Test Site Name");
+					groupId = ${groupId});
 			}
 		}
 
@@ -2735,11 +2735,13 @@ definition {
 	test ViewRelatedCategoriesInCollectionDisplayWithCategoriesForThisItem {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Web Content DPT",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				subType = "Basic Web Content");
 		}
 
@@ -2747,14 +2749,14 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Blogs Entry DPT",
-				groupName = "Test Site Name");
+				groupId = ${groupId});
 		}
 
 		task ("Add a display page template for Document and Basic Document") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Document DPT",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				subType = "Basic Document");
 		}
 
@@ -2788,21 +2790,21 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add three categories in vocabulary") {
 			var firstCategoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Category Name 1",
 				vocabularyName = "Vocabulary Name");
 			var secondCategoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Category Name 2",
 				vocabularyName = "Vocabulary Name");
 			var thirdCategoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Category Name 3",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -2811,7 +2813,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 		}
 
@@ -2831,7 +2833,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 		}
 
@@ -2851,8 +2853,8 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -2872,11 +2874,11 @@ definition {
 
 		task ("Add a widget page then add an Asset Publisher to page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Test Page Name");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}

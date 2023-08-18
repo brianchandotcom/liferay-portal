@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.math.BigDecimal;
@@ -44,6 +45,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -154,15 +156,16 @@ public class CommerceShipmentGenerator {
 			BigDecimal commerceOrderItemQuantity =
 				commerceOrderItem.getQuantity();
 
-			int quantity =
-				commerceOrderItemQuantity.intValue() -
-					commerceOrderItem.getShippedQuantity();
+			BigDecimal quantity = commerceOrderItemQuantity.subtract(
+				BigDecimal.valueOf(commerceOrderItem.getShippedQuantity()));
 
-			int commerceInventoryWarehouseItemQuantity =
+			BigDecimal commerceInventoryWarehouseItemQuantity =
 				_getRandomCommerceInventoryWarehouseItemQuantity(
 					commerceOrderItem, commerceInventoryWarehouse, quantity);
 
-			if (commerceInventoryWarehouseItemQuantity <= 0) {
+			if (BigDecimalUtil.lte(
+					commerceInventoryWarehouseItemQuantity, BigDecimal.ZERO)) {
+
 				continue;
 			}
 
@@ -170,7 +173,7 @@ public class CommerceShipmentGenerator {
 				null, commerceShipmentId,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItemQuantity, null, true,
+				commerceInventoryWarehouseItemQuantity.intValue(), null, true,
 				serviceContext);
 		}
 	}
@@ -236,25 +239,34 @@ public class CommerceShipmentGenerator {
 			_randomInt(0, commerceInventoryWarehouses.size() - 1));
 	}
 
-	private int _getRandomCommerceInventoryWarehouseItemQuantity(
+	private BigDecimal _getRandomCommerceInventoryWarehouseItemQuantity(
 			CommerceOrderItem commerceOrderItem,
-			CommerceInventoryWarehouse commerceInventoryWarehouse, int quantity)
+			CommerceInventoryWarehouse commerceInventoryWarehouse,
+			BigDecimal quantity)
 		throws Exception {
 
-		int commerceInventoryWarehouseItemQuantity =
+		BigDecimal commerceInventoryWarehouseItemQuantity = BigDecimal.valueOf(
 			_commerceOrderItemService.getCommerceInventoryWarehouseItemQuantity(
 				commerceOrderItem.getCommerceOrderItemId(),
-				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId()));
 
-		if (quantity < commerceInventoryWarehouseItemQuantity) {
+		if (BigDecimalUtil.lt(
+				quantity, commerceInventoryWarehouseItemQuantity)) {
+
 			commerceInventoryWarehouseItemQuantity = quantity;
 		}
 
-		if (commerceInventoryWarehouseItemQuantity <= 0) {
+		if (BigDecimalUtil.lte(
+				commerceInventoryWarehouseItemQuantity, BigDecimal.ZERO)) {
+
 			return commerceInventoryWarehouseItemQuantity;
 		}
 
-		return _randomInt(1, commerceInventoryWarehouseItemQuantity);
+		ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+
+		return BigDecimal.valueOf(
+			threadLocalRandom.nextDouble(
+				0, commerceInventoryWarehouseItemQuantity.doubleValue()));
 	}
 
 	private int _getRandomCommerceShipmentStatus() {

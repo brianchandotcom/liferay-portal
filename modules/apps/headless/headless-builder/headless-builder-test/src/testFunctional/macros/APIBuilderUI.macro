@@ -53,6 +53,35 @@ definition {
 		Click(locator1 = "APIBuilder#CREATE_BUTTON");
 	}
 
+	macro createAPIEndpoint {
+		Variables.assertDefined(parameterList = "${name},${path}");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = ${name});
+
+		Type(
+			key_fieldLabel = "Path",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${path});
+
+		if (isSet(applicationId)) {
+			Click.pauseClickAt(
+				locator1 = "TextInput#ANY_WITH_NAME",
+				name = "r_apiApplicationToAPIEndpoints_c_apiApplicationId");
+
+			Click(
+				applicationId = ${applicationId},
+				locator1 = "APIBuilder#API_APPLICATION_TO_API_ENDPOINTS");
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+	}
+
 	macro deleteAPIApplication {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -115,6 +144,18 @@ definition {
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
 			value1 = "\RETURN");
+	}
+
+	macro setPanelCategoryKeyToObject {
+		Variables.assertDefined(parameterList = ${objectDefinition});
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = ${objectDefinition});
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
 	}
 
 	macro switchToRelatedEntryInEditApplication {

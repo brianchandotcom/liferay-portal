@@ -140,8 +140,9 @@ export default function PageContent({
 					if (editable) {
 						setIsHovered(
 							editable.classPK === classPK ||
-								editable.externalReferenceCode ===
-									externalReferenceCode
+								(editable.externalReferenceCode &&
+									editable.externalReferenceCode ===
+										externalReferenceCode)
 						);
 					}
 				}

@@ -113,6 +113,14 @@ public class SegmentsExperimentLocalServiceUtil {
 		return getService().deleteSegmentsExperiment(segmentsExperimentId);
 	}
 
+	public static SegmentsExperiment deleteSegmentsExperiment(
+			long groupId, long segmentsExperienceId, long plid)
+		throws PortalException {
+
+		return getService().deleteSegmentsExperiment(
+			groupId, segmentsExperienceId, plid);
+	}
+
 	/**
 	 * Deletes the segments experiment from the database. Also notifies the appropriate model listeners.
 	 *
@@ -136,13 +144,6 @@ public class SegmentsExperimentLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteSegmentsExperiment(segmentsExperiment, force);
-	}
-
-	public static void deleteSegmentsExperiments(
-			long segmentsExperienceId, long plid)
-		throws PortalException {
-
-		getService().deleteSegmentsExperiments(segmentsExperienceId, plid);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -237,16 +238,10 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
-		long groupId, long plid) {
-
-		return getService().fetchSegmentsExperiment(groupId, plid);
-	}
-
-	public static SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses) {
+		long groupId, long segmentsExperienceId, long plid) {
 
 		return getService().fetchSegmentsExperiment(
-			segmentsExperienceId, plid, statuses);
+			groupId, segmentsExperienceId, plid);
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
@@ -316,23 +311,6 @@ public class SegmentsExperimentLocalServiceUtil {
 			segmentsEntryId);
 	}
 
-	public static List<SegmentsExperiment>
-		getSegmentsExperienceSegmentsExperiments(
-			long segmentsExperienceId, long plid) {
-
-		return getService().getSegmentsExperienceSegmentsExperiments(
-			segmentsExperienceId, plid);
-	}
-
-	public static List<SegmentsExperiment>
-		getSegmentsExperienceSegmentsExperiments(
-			long[] segmentsExperienceIds, long plid, int[] statuses, int start,
-			int end) {
-
-		return getService().getSegmentsExperienceSegmentsExperiments(
-			segmentsExperienceIds, plid, statuses, start, end);
-	}
-
 	/**
 	 * Returns the segments experiment with the primary key.
 	 *
@@ -388,24 +366,6 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
-	 */
-	@Deprecated
-	public static List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long plid) {
-
-		return getService().getSegmentsExperiments(groupId, plid);
-	}
-
-	public static List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid, int[] statuses,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return getService().getSegmentsExperiments(
-			segmentsExperienceId, plid, statuses, orderByComparator);
-	}
-
-	/**
 	 * Returns all the segments experiments matching the UUID and company.
 	 *
 	 * @param uuid the UUID of the segments experiments
@@ -445,13 +405,6 @@ public class SegmentsExperimentLocalServiceUtil {
 	 */
 	public static int getSegmentsExperimentsCount() {
 		return getService().getSegmentsExperimentsCount();
-	}
-
-	public static boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses) {
-
-		return getService().hasSegmentsExperiment(
-			segmentsExperienceId, plid, statuses);
 	}
 
 	public static SegmentsExperiment runSegmentsExperiment(

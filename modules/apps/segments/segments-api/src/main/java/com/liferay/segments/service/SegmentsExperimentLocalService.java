@@ -124,6 +124,10 @@ public interface SegmentsExperimentLocalService
 			long segmentsExperimentId)
 		throws PortalException;
 
+	public SegmentsExperiment deleteSegmentsExperiment(
+			long groupId, long segmentsExperienceId, long plid)
+		throws PortalException;
+
 	/**
 	 * Deletes the segments experiment from the database. Also notifies the appropriate model listeners.
 	 *
@@ -144,9 +148,6 @@ public interface SegmentsExperimentLocalService
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperiment deleteSegmentsExperiment(
 			SegmentsExperiment segmentsExperiment, boolean force)
-		throws PortalException;
-
-	public void deleteSegmentsExperiments(long segmentsExperienceId, long plid)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -226,11 +227,8 @@ public interface SegmentsExperimentLocalService
 		long segmentsExperimentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SegmentsExperiment fetchSegmentsExperiment(long groupId, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses);
+		long groupId, long segmentsExperienceId, long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
@@ -276,15 +274,6 @@ public interface SegmentsExperimentLocalService
 	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
 		long segmentsEntryId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long segmentsExperienceId, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long[] segmentsExperienceIds, long plid, int[] statuses, int start,
-		int end);
-
 	/**
 	 * Returns the segments experiment with the primary key.
 	 *
@@ -329,19 +318,6 @@ public interface SegmentsExperimentLocalService
 	public List<SegmentsExperiment> getSegmentsExperiments(int start, int end);
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchSegmentsExperiment(long, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid, int[] statuses,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
-
-	/**
 	 * Returns all the segments experiments matching the UUID and company.
 	 *
 	 * @param uuid the UUID of the segments experiments
@@ -374,10 +350,6 @@ public interface SegmentsExperimentLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSegmentsExperimentsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long plid, int[] statuses);
 
 	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,

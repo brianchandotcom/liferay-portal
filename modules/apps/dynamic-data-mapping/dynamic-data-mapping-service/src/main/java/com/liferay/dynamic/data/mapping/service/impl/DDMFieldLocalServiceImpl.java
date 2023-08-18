@@ -124,11 +124,24 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	}
 
 	@Override
+	public DDMFieldAttribute fetchDDMFieldAttribute(
+		long fieldId, String attributeName, String languageId) {
+
+		return _ddmFieldAttributePersistence.fetchByF_AN_L(
+			fieldId, attributeName, languageId);
+	}
+
+	@Override
 	public List<DDMFieldAttribute> getDDMFieldAttributes(
 		long storageId, String attributeName) {
 
 		return _ddmFieldAttributePersistence.findByS_AN(
 			storageId, attributeName);
+	}
+
+	@Override
+	public List<DDMField> getDDMFields(long storageId, String fieldName) {
+		return ddmFieldPersistence.findByS_F(storageId, fieldName);
 	}
 
 	@Override

@@ -8,8 +8,8 @@ package com.liferay.layout.seo.web.internal.util;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -36,13 +36,13 @@ import java.util.Locale;
 public class OpenGraphImageProvider {
 
 	public OpenGraphImageProvider(
+		DDMFieldLocalService ddmFieldLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLAppLocalService dlAppLocalService,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlurlHelper,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
-		LayoutSEOTemplateProcessor layoutSEOTemplateProcessor, Portal portal,
-		StorageEngine storageEngine) {
+		LayoutSEOTemplateProcessor layoutSEOTemplateProcessor, Portal portal) {
 
 		_dlAppLocalService = dlAppLocalService;
 		_dlurlHelper = dlurlHelper;
@@ -51,8 +51,8 @@ public class OpenGraphImageProvider {
 
 		_fileEntryMetadataOpenGraphTagsProvider =
 			new FileEntryMetadataOpenGraphTagsProvider(
-				ddmStructureLocalService, dlFileEntryMetadataLocalService,
-				portal, storageEngine);
+				ddmFieldLocalService, ddmStructureLocalService,
+				dlFileEntryMetadataLocalService, portal);
 	}
 
 	public OpenGraphImage getOpenGraphImage(

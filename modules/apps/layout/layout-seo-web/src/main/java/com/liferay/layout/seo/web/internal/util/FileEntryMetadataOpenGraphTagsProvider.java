@@ -9,13 +9,13 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
+import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Adolfo Pérez
@@ -34,14 +33,15 @@ import java.util.Map;
 public class FileEntryMetadataOpenGraphTagsProvider {
 
 	public FileEntryMetadataOpenGraphTagsProvider(
+		DDMFieldLocalService ddmFieldLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
-		Portal portal, StorageEngine storageEngine) {
+		Portal portal) {
 
+		_ddmFieldLocalService = ddmFieldLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 		_portal = portal;
-		_storageEngine = storageEngine;
 	}
 
 	public Iterable<KeyValuePair> getFileEntryMetadataOpenGraphTagKeyValuePairs(
@@ -72,18 +72,8 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 				continue;
 			}
 
-			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-				fileEntryMetadata.getDDMStorageId());
-
-			if (ddmFormValues == null) {
-				continue;
-			}
-
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesMap();
-
 			String tiffImageLength = _getDDMFormFieldsValueValue(
-				ddmFormFieldValuesMap.get("TIFF_IMAGE_LENGTH"));
+				fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_LENGTH");
 
 			if (tiffImageLength != null) {
 				keyValuePairs.add(
@@ -91,7 +81,7 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 			}
 
 			String tiffImageWidth = _getDDMFormFieldsValueValue(
-				ddmFormFieldValuesMap.get("TIFF_IMAGE_WIDTH"));
+				fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_WIDTH");
 
 			if (tiffImageWidth != null) {
 				keyValuePairs.add(
@@ -103,23 +93,32 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 	}
 
 	private String _getDDMFormFieldsValueValue(
-		List<DDMFormFieldValue> ddmFormFieldValues) {
+		long ddmStorageId, String fieldName) {
 
-		if (ListUtil.isEmpty(ddmFormFieldValues)) {
+		List<DDMField> ddmFields = _ddmFieldLocalService.getDDMFields(
+			ddmStorageId, fieldName);
+
+		if (ListUtil.isEmpty(ddmFields)) {
 			return null;
 		}
 
-		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+		DDMField ddmField = ddmFields.get(0);
 
-		Value value = ddmFormFieldValue.getValue();
+		DDMFieldAttribute ddmFieldAttribute =
+			_ddmFieldLocalService.fetchDDMFieldAttribute(
+				ddmField.getFieldId(), StringPool.BLANK, StringPool.BLANK);
 
-		return value.getString(value.getDefaultLocale());
+		if (ddmFieldAttribute == null) {
+			return null;
+		}
+
+		return ddmFieldAttribute.getAttributeValue();
 	}
 
+	private final DDMFieldLocalService _ddmFieldLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DLFileEntryMetadataLocalService
 		_dlFileEntryMetadataLocalService;
 	private final Portal _portal;
-	private final StorageEngine _storageEngine;
 
 }

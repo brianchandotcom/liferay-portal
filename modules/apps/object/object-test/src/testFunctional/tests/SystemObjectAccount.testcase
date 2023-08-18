@@ -48,6 +48,16 @@ definition {
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "AccountEntry",
 			objectName_2 = "CustomObject",
@@ -497,6 +507,16 @@ definition {
 			objectName = "CustomObject153528",
 			pluralLabelName = "Custom Objects 153528");
 
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153528");
+
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "AccountEntry",
 			objectName_2 = "CustomObject153528",
@@ -580,6 +600,16 @@ definition {
 			labelName = "Custom Object 153527",
 			objectName = "CustomObject153527",
 			pluralLabelName = "Custom Objects 153527");
+
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153527");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "AccountEntry",
@@ -698,6 +728,16 @@ definition {
 			labelName = "Custom Object 153526",
 			objectName = "CustomObject153526",
 			pluralLabelName = "Custom Objects 153526");
+
+		// Workaround for LPS-193897
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject153526");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "AccountEntry",

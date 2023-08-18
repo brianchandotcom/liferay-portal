@@ -405,6 +405,16 @@ definition {
 				objectName = "CustomObject170529",
 				pluralLabelName = "Custom Objects 170529");
 
+			// Workaround for LPS-193897
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject170529");
+
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name 1",
 				accountEntryType = "Business");

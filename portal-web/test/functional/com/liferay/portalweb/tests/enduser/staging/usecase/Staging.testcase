@@ -1055,7 +1055,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-149374. TC-4: Verify if Publish Displayed Content by Default is set to false, DDL content will not be published via portlet if content is unchecked in the staging process."
-	@ignore = "true"
 	@priority = 4
 	test PublishDDLViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";

@@ -69,7 +69,8 @@ public class ViewObjectDefinitionsDisplayContext {
 				dropdownItem.setHref("addObjectDefinition");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						_objectRequestHelper.getRequest(), "add-object"));
+						_objectRequestHelper.getRequest(),
+						"create-new-object"));
 				dropdownItem.setTarget("event");
 			});
 

@@ -26,9 +26,9 @@ import javax.servlet.http.HttpSessionContext;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SharedSessionWrapper implements HttpSession {
+public class SharedSession implements HttpSession {
 
-	public SharedSessionWrapper(
+	public SharedSession(
 		HttpSession portalHttpSession, HttpSession portletHttpSession) {
 
 		if (portalHttpSession == null) {
@@ -233,8 +233,7 @@ public class SharedSessionWrapper implements HttpSession {
 	private static final String[] _SESSION_SHARED_ATTRIBUTES =
 		PropsUtil.getArray(PropsKeys.SESSION_SHARED_ATTRIBUTES);
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SharedSessionWrapper.class);
+	private static final Log _log = LogFactoryUtil.getLog(SharedSession.class);
 
 	private static final Map<String, String> _sharedSessionAttributesExcludes =
 		new HashMap<String, String>() {

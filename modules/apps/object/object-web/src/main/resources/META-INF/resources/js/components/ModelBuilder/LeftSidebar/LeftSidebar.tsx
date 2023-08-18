@@ -251,6 +251,8 @@ export default function LeftSidebar({
 																	folderName:
 																		item.folderName,
 																}),
+															symbolLeft:
+																'move-folder',
 														},
 													]}
 													trigger={

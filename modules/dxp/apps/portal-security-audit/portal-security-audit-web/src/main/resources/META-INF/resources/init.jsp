@@ -37,7 +37,3 @@ page import="com.liferay.portal.security.audit.web.internal.display.context.Audi
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-%>

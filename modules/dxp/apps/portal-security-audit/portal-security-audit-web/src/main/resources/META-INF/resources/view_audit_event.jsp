@@ -24,6 +24,8 @@ if (auditEventId > 0) {
 	}
 }
 
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL())));
 

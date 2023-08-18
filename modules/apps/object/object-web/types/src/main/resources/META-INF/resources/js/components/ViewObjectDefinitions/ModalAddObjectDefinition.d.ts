@@ -12,7 +12,6 @@ interface ModalAddObjectDefinitionProps {
 	objectFolderExternalReferenceCode?: string;
 	onAfterSubmit?: (value: ObjectDefinition) => void;
 	reload?: boolean;
-	setNewNode?: (value: ObjectDefinition) => void;
 	storages: LabelValueObject[];
 }
 export declare function ModalAddObjectDefinition({

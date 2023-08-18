@@ -67,34 +67,32 @@ public class CopyrightCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
-		if (sourceFormatterArgs.isFormatCurrentBranch()) {
-			for (String currentBranchRenamedFileName :
-					GitUtil.getCurrentBranchRenamedFileNames(
-						sourceFormatterArgs.getBaseDirName(),
-						sourceFormatterArgs.getGitWorkingBranchName())) {
+		for (String currentBranchRenamedFileName :
+				GitUtil.getCurrentBranchRenamedFileNames(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName())) {
 
-				if (absolutePath.endsWith(currentBranchRenamedFileName)) {
-					return content;
-				}
+			if (absolutePath.endsWith(currentBranchRenamedFileName)) {
+				return content;
 			}
+		}
 
-			for (String currentBranchAddedFileNames :
-					GitUtil.getCurrentBranchAddedFileNames(
-						sourceFormatterArgs.getBaseDirName(),
-						sourceFormatterArgs.getGitWorkingBranchName())) {
+		for (String currentBranchAddedFileNames :
+				GitUtil.getCurrentBranchAddedFileNames(
+					sourceFormatterArgs.getBaseDirName(),
+					sourceFormatterArgs.getGitWorkingBranchName())) {
 
-				if (absolutePath.endsWith(currentBranchAddedFileNames)) {
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						"yyyy");
+			if (absolutePath.endsWith(currentBranchAddedFileNames)) {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy");
 
-					String currentYear = simpleDateFormat.format(new Date());
+				String currentYear = simpleDateFormat.format(new Date());
 
-					String year = s.substring(0, 4);
+				String year = s.substring(0, 4);
 
-					if (!year.equals(currentYear)) {
-						return StringUtil.replaceFirst(
-							content, year, currentYear, x + 35);
-					}
+				if (!year.equals(currentYear)) {
+					return StringUtil.replaceFirst(
+						content, year, currentYear, x + 35);
 				}
 			}
 		}

@@ -259,6 +259,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradePortletFTLCheck() throws Exception {
+		test("upgrade/UpgradeFTLPortletFTLCheck.testftl");
+	}
+
+	@Test
 	public void testUpgradeRejectedExecutionHandlerCheck() throws Exception {
 		test("upgrade/UpgradeRejectedExecutionHandlerCheck.testjava");
 	}

@@ -85,7 +85,9 @@ public class SearchBarPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				searchBarPortletDisplayContext);
 
-			if (searchBarPortletDisplayContext.isRenderNothing()) {
+			if (searchBarPortletDisplayContext.isDestinationUnreachable() ||
+				searchBarPortletDisplayContext.isRenderNothing()) {
+
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}

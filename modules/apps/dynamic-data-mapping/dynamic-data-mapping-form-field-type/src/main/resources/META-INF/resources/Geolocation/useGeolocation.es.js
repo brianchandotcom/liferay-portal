@@ -122,6 +122,14 @@ export function useGeolocation({
 					mapRef.current,
 					`#map_${instanceId}`
 				);
+
+				mapRef.current.removeAllListeners('positionChange');
+
+				mapRef.current.on('positionChange', onChange);
+
+				if (value) {
+					mapRef.current.setCenter(parseJSONValue(value));
+				}
 			};
 
 			switch (mapProviderKey) {

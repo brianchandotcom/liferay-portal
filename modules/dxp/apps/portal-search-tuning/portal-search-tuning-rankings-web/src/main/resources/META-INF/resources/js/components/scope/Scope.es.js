@@ -97,6 +97,36 @@ export default function Scope({
 				</>
 			)}
 
+			{Liferay.FeatureFlags['LPS-159650'] && (
+				<>
+					{_renderRadioButton(
+						SCOPE_TYPES.SXP_BLUEPRINT,
+						Liferay.Language.get(
+							'result-rankings-scope-blueprint-help'
+						),
+						Liferay.Language.get('blueprint')
+					)}
+
+					<SelectScope
+						disabled={disabled}
+						fetchByURL="/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/"
+						fetchURL="/o/search-experiences-rest/v1.0/sxp-blueprints"
+						hidden={selectedType !== SCOPE_TYPES.SXP_BLUEPRINT}
+						initialSelected={
+							initialSxpBlueprintExternalReferenceCode
+						}
+						locator={{
+							id: 'externalReferenceCode',
+							label: 'title',
+						}}
+						onSelect={onChange}
+						title={Liferay.Language.get('select-blueprint')}
+						touched={touched}
+						type={SCOPE_TYPES.SXP_BLUEPRINT}
+					/>
+				</>
+			)}
+
 			<div className="c-mt-3 sheet-text text-3">
 				<span className="text-secondary">
 					{Liferay.Language.get('result-rankings-scope-help')}

@@ -41,12 +41,17 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.appender.WriterAppender;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
+import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.message.SimpleMessage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -332,8 +337,16 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		Log log = LogFactoryUtil.getLog(BaseUpgradeLogAppenderTestCase.class);
 
-		log.warn("Warning");
-		log.warn("Warning");
+		final Message msg = new SimpleMessage("Warning");
+
+		LogEvent event = Log4jLogEvent.newBuilder()
+			.setLoggerName("Warn")
+			.setLevel(Level.WARN)
+			.setMessage(msg).build();
+
+		_appender.append(event);
+
+		_appender.append(event);
 
 		log = LogFactoryUtil.getLog(UpgradeProcess.class);
 

@@ -42,6 +42,8 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -146,6 +148,8 @@ public class JournalArticleLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+		_journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
 
 		_themeDisplay = _getThemeDisplay();
 	}
@@ -779,6 +783,33 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetNotInTrashArticlesCount() throws Exception {
+		JournalFolder journalFolder = _journalFolderFixture.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(), journalFolder.getFolderId(),
+			Collections.emptyMap());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), journalFolder.getFolderId(),
+			Collections.emptyMap());
+
+		Assert.assertEquals(
+			2,
+			_journalArticleLocalService.getNotInTrashArticlesCount(
+				_group.getGroupId(), journalFolder.getFolderId()));
+
+		_journalArticleLocalService.moveArticleToTrash(
+			TestPropsValues.getUserId(), journalArticle);
+
+		Assert.assertEquals(
+			1,
+			_journalArticleLocalService.getNotInTrashArticlesCount(
+				_group.getGroupId(), journalFolder.getFolderId()));
+	}
+
+	@Test
 	public void testRemoveArticleLocale() throws Exception {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
@@ -1387,6 +1418,11 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private JournalConverter _journalConverter;
+
+	private JournalFolderFixture _journalFolderFixture;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

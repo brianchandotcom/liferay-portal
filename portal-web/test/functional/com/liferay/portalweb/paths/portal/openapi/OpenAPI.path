@@ -57,6 +57,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>API_URL</td>
+	<td>//span[@class='url']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PARAMETER_UNDER_METHOD</td>
 	<td>//div[contains(@id,'${method}')]//input[contains(@placeholder,'${parameter}')]</td>
 	<td></td>

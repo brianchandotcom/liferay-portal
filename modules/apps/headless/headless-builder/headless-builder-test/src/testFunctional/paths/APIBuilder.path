@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>API_APPLICATION_TO_API_ENDPOINTS</td>
+	<td>//button[@class='dropdown-item' and text()='${applicationId}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATION_STATUS</td>
 	<td>//div[@class='table-list-title' and contains(.,'${key_title}')]/../..//div[contains(.,'${key_status}')]</td>
 	<td></td>

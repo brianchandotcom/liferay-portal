@@ -626,6 +626,8 @@ definition {
 				objectName = "CustomObject178761",
 				pluralLabelName = "Custom Objects 178761");
 
+			// Workaround for LPS-193897
+
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
 				fieldLabelName = "Custom Field",

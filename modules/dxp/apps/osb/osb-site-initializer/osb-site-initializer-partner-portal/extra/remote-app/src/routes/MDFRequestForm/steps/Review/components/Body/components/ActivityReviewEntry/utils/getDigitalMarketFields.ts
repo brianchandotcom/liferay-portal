@@ -24,7 +24,19 @@ export default function getDigitalMarketFields(
 					?.assetsLiferayRequired as string
 			),
 		},
+		{
+			title: 'How will the Liferay brand be used in the campaign?',
+			value: mdfRequestActivity.activityDescription?.howLiferayBrandUsed,
+		},
 	];
+	if (mdfRequestActivity.activityDescription?.assetsLiferayRequired) {
+		digitalMarketingFields.push({
+			title: 'Please describe including specifications and due dates',
+			value:
+				mdfRequestActivity.activityDescription
+					?.assetsLiferayDescription,
+		});
+	}
 	if (mdfRequestActivity.tactic.key === TacticKeys.EMAIL_CAMPAIGN) {
 		digitalMarketingFields.push(
 			{
@@ -45,22 +57,14 @@ export default function getDigitalMarketFields(
 				value: mdfRequestActivity.activityDescription?.manySeries,
 			});
 		}
-		digitalMarketingFields.push(
-			{
-				title: 'Are you using any CIAB assets?',
-				value: getBooleanValue(
-					mdfRequestActivity.activityDescription
-						?.usingCIABAssets as string
-				),
-			},
-			{
-				title: 'How will the Liferay brand be used in the campaign?',
-				value:
-					mdfRequestActivity.activityDescription?.howLiferayBrandUsed,
-			}
-		);
-	}
-	else {
+		digitalMarketingFields.push({
+			title: 'Are you using any CIAB assets?',
+			value: getBooleanValue(
+				mdfRequestActivity.activityDescription
+					?.usingCIABAssets as string
+			),
+		});
+	} else {
 		digitalMarketingFields.push(
 			{
 				title: 'Specific sites to be used',
@@ -77,18 +81,6 @@ export default function getDigitalMarketFields(
 				value: mdfRequestActivity.activityDescription?.ad,
 			}
 		);
-		if (mdfRequestActivity.activityDescription?.assetsLiferayRequired) {
-			digitalMarketingFields.push({
-				title: 'Please describe including specifications and due dates',
-				value:
-					mdfRequestActivity.activityDescription
-						?.assetsLiferayDescription,
-			});
-		}
-		digitalMarketingFields.push({
-			title: 'How will the Liferay brand be used in the campaign?',
-			value: mdfRequestActivity.activityDescription?.howLiferayBrandUsed,
-		});
 	}
 
 	return digitalMarketingFields;

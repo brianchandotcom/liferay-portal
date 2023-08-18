@@ -478,17 +478,15 @@ definition {
 
 		JSONSiteTemplate.addSiteTemplate(siteTemplateName = "Site Template Name");
 
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "MB Page",
-			siteTemplateName = "Site Template Name");
+		JSONSiteTemplate.addLayoutToSiteTemplate(
+			groupName = "Site Template Name",
+			layoutName = "MB Page");
 
-		ProductMenu.gotoHomePage();
-
-		Navigator._gotoPage(pageName = "MB Page");
-
-		Portlet.addPG(
-			defaultURL = "false",
-			portletName = "Message Boards");
+		JSONLayout.addWidgetToPrivateLayout(
+			groupName = "Site Template Name",
+			layoutName = "MB Page",
+			site = "false",
+			widgetName = "Message Boards");
 
 		User.openUsersAdmin();
 
@@ -504,16 +502,10 @@ definition {
 				userEmailAddress = "userea${i}@liferay.com");
 		}
 
-		User.openUsersAdmin();
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.assignOrgRole(
-			orgName = "Organization Name 2",
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Organization Name 2",
 			roleTitle = "Organization Administrator",
-			userFirstName = "userfn2",
-			userLastName = "userln2",
-			userScreenName = "usersn2");
+			userEmailAddress = "userea2@liferay.com");
 
 		for (var i : list "1,2,3") {
 			JSONUserGroup.addUserGroup(
@@ -527,13 +519,15 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			layoutName = "Asset Publisher Page");
 
 		for (var widgetName : list "Asset Publisher,Message Boards") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name",
+				groupId = ${groupId},
 				layoutName = "Asset Publisher Page",
 				widgetName = ${widgetName});
 		}
@@ -566,29 +560,29 @@ definition {
 			roleType = "site");
 
 		JSONUser.addUserToSite(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			userEmailAddress = "userea1@liferay.com");
 
 		JSONGroup.assignOrganizationToGroup(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			organizationName = "Organization Name 2");
 
 		JSONGroup.assignUserGroupToGroup(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			userGroupName = "UG UserGroup3 Name");
 
 		JSONRole.assignSiteRoleToUser(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			roleTitle = "Music Fan Name",
 			userEmailAddress = "userea1@liferay.com");
 
 		JSONRole.assignSiteRoleToUser(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			roleTitle = "Movie Blogger Name",
 			userEmailAddress = "userea2@liferay.com");
 
 		JSONUserGroup.assignGroupRoleToUserGroup(
-			groupName = "Site Name",
+			groupId = ${groupId},
 			roleTitle = "Sports Journalist Name",
 			userGroupName = "UG UserGroup3 Name");
 

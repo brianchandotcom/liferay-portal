@@ -765,7 +765,31 @@ public class DefaultObjectEntryManagerImpl
 		ObjectEntry existingObjectEntry = getObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntryId);
 
-		preparePatch(objectEntry, existingObjectEntry);
+		if (objectEntry.getDateCreated() != null) {
+			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+		}
+
+		if (objectEntry.getDateModified() != null) {
+			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getKeywords() != null) {
+			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getProperties() != null) {
+			Map<String, Object> properties =
+				existingObjectEntry.getProperties();
+
+			properties.putAll(objectEntry.getProperties());
+
+			existingObjectEntry.setProperties(properties);
+		}
+
+		if (objectEntry.getTaxonomyCategoryIds() != null) {
+			existingObjectEntry.setTaxonomyCategoryIds(
+				objectEntry.getTaxonomyCategoryIds());
+		}
 
 		return updateObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntryId,

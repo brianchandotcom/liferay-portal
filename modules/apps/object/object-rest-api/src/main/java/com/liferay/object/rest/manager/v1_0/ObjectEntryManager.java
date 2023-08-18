@@ -60,17 +60,6 @@ public interface ObjectEntryManager {
 			companyId, dtoConverterContext, externalReferenceCode,
 			objectDefinition, scopeKey);
 
-		preparePatch(objectEntry, existingObjectEntry);
-
-		return updateObjectEntry(
-			companyId, dtoConverterContext, externalReferenceCode,
-			objectDefinition, existingObjectEntry, scopeKey);
-	}
-
-	public default void preparePatch(
-			ObjectEntry objectEntry, ObjectEntry existingObjectEntry)
-		throws Exception {
-
 		if (objectEntry.getDateCreated() != null) {
 			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
 		}
@@ -96,6 +85,10 @@ public interface ObjectEntryManager {
 			existingObjectEntry.setTaxonomyCategoryIds(
 				objectEntry.getTaxonomyCategoryIds());
 		}
+
+		return updateObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, existingObjectEntry, scopeKey);
 	}
 
 	public ObjectEntry updateObjectEntry(

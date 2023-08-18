@@ -17,7 +17,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -97,9 +97,10 @@ public class GoogleDocsDLDisplayContextFactory
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
-				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-				(DLFileEntry)model, _dlFileEntryMetadataLocalService,
-				_fieldsToDDMFormValuesConverter, _storageEngine);
+				_ddmFormValuesToFieldsConverter, _ddmStorageEngineManager,
+				_ddmStructureLocalService, (DLFileEntry)model,
+				_dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLEditFileEntryDisplayContext(
@@ -163,9 +164,10 @@ public class GoogleDocsDLDisplayContextFactory
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
-				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-				(DLFileVersion)model, _dlFileEntryMetadataLocalService,
-				_fieldsToDDMFormValuesConverter, _storageEngine);
+				_ddmFormValuesToFieldsConverter, _ddmStorageEngineManager,
+				_ddmStructureLocalService, (DLFileVersion)model,
+				_dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter);
 
 		if (googleDocsMetadataHelper.isGoogleDocs()) {
 			return new GoogleDocsDLViewFileVersionDisplayContext(
@@ -203,6 +205,9 @@ public class GoogleDocsDLDisplayContextFactory
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -213,8 +218,5 @@ public class GoogleDocsDLDisplayContextFactory
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -84,8 +84,8 @@ public class DDLDisplayContext {
 			DDLWebConfiguration ddlWebConfiguration,
 			DDMDisplayRegistry ddmDisplayRegistry,
 			DDMPermissionSupport ddmPermissionSupport,
-			DDMTemplateLocalService ddmTemplateLocalService,
-			StorageEngine storageEngine)
+			DDMStorageEngineManager ddmStorageEngineManager,
+			DDMTemplateLocalService ddmTemplateLocalService)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
@@ -95,8 +95,8 @@ public class DDLDisplayContext {
 		_ddlWebConfiguration = ddlWebConfiguration;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
 		_ddmPermissionSupport = ddmPermissionSupport;
+		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
-		_storageEngine = storageEngine;
 
 		_ddlRequestHelper = new DDLRequestHelper(
 			PortalUtil.getHttpServletRequest(renderRequest));
@@ -206,7 +206,7 @@ public class DDLDisplayContext {
 	}
 
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
-		return _storageEngine.getDDMFormValues(classPK);
+		return _ddmStorageEngineManager.getDDMFormValues(classPK);
 	}
 
 	public long getDisplayDDMTemplateId() {
@@ -903,6 +903,7 @@ public class DDLDisplayContext {
 	private final DDLWebConfiguration _ddlWebConfiguration;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMPermissionSupport _ddmPermissionSupport;
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
@@ -919,6 +920,5 @@ public class DDLDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Boolean _showConfigurationIcon;
-	private final StorageEngine _storageEngine;
 
 }

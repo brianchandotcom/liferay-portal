@@ -18,8 +18,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -56,9 +55,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				_ddmBeanTranslator, _ddmFormValuesFactory, dlFileEntryType,
-				_dlValidator, httpServletRequest, httpServletResponse,
-				_storageEngine);
+				_ddmFormValuesFactory, _ddmStorageEngineManager,
+				dlFileEntryType, _dlValidator, httpServletRequest);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -79,9 +77,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				_ddmBeanTranslator, _ddmFormValuesFactory, _dlValidator,
-				fileEntry, httpServletRequest, httpServletResponse,
-				_storageEngine);
+				_ddmFormValuesFactory, _ddmStorageEngineManager, _dlValidator,
+				fileEntry, httpServletRequest);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -139,9 +136,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					dlMimeTypeDisplayContext, dlPreviewRendererProvider,
-					_dlTrashHelper, _dlURLHelper, fileShortcut,
-					httpServletRequest, _storageEngine, _versioningStrategy);
+					_ddmStorageEngineManager, dlMimeTypeDisplayContext,
+					dlPreviewRendererProvider, _dlTrashHelper, _dlURLHelper,
+					fileShortcut, httpServletRequest, _versioningStrategy);
 
 			for (DLDisplayContextFactory dlDisplayContextFactory :
 					_dlDisplayContextFactories) {
@@ -172,9 +169,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
-				dlMimeTypeDisplayContext, dlPreviewRendererProvider,
-				_dlTrashHelper, _dlURLHelper, fileVersion, httpServletRequest,
-				_storageEngine, _versioningStrategy);
+				_ddmStorageEngineManager, dlMimeTypeDisplayContext,
+				dlPreviewRendererProvider, _dlTrashHelper, _dlURLHelper,
+				fileVersion, httpServletRequest, _versioningStrategy);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -221,10 +218,10 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 			null, true);
 
 	@Reference
-	private DDMBeanTranslator _ddmBeanTranslator;
+	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 	@Reference
-	private DDMFormValuesFactory _ddmFormValuesFactory;
+	private DDMStorageEngineManager _ddmStorageEngineManager;
 
 	private ServiceTrackerList<DLDisplayContextFactory>
 		_dlDisplayContextFactories;
@@ -240,9 +237,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 	private ServiceTrackerMap<String, DLPreviewRendererProvider>
 		_serviceTrackerMap;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

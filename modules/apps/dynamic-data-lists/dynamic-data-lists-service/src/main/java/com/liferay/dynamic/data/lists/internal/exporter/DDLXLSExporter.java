@@ -16,7 +16,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -98,7 +98,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 				Map<String, DDMFormFieldRenderedValue> values =
 					getRenderedValues(
 						recordSet.getScope(), ddmFormFields.values(),
-						_storageEngine.getDDMFormValues(
+						_ddmStorageEngineManager.getDDMFormValues(
 							recordVersion.getDDMStorageId()),
 						_htmlParser);
 
@@ -263,12 +263,12 @@ public class DDLXLSExporter extends BaseDDLExporter {
 		_ddmFormFieldValueRendererRegistry;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private HtmlParser _htmlParser;
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

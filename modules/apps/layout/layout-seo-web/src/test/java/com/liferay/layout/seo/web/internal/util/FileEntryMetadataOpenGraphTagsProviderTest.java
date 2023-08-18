@@ -13,7 +13,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -48,8 +48,8 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 	public void setUp() {
 		_fileEntryMetadataOpenGraphTagsProvider =
 			new FileEntryMetadataOpenGraphTagsProvider(
-				_ddmStructureLocalService, _dlFileEntryMetadataLocalService,
-				_portal, _storageEngine);
+				_ddmStorageEngineManager, _ddmStructureLocalService,
+				_dlFileEntryMetadataLocalService, _portal);
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		);
 
 		Mockito.when(
-			_storageEngine.getDDMFormValues(Mockito.anyLong())
+			_ddmStorageEngineManager.getDDMFormValues(Mockito.anyLong())
 		).thenReturn(
 			_ddmFormValues
 		);
@@ -134,7 +134,7 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		);
 
 		Mockito.when(
-			_storageEngine.getDDMFormValues(Mockito.anyLong())
+			_ddmStorageEngineManager.getDDMFormValues(Mockito.anyLong())
 		).thenReturn(
 			null
 		);
@@ -242,7 +242,7 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		);
 
 		Mockito.when(
-			_storageEngine.getDDMFormValues(Mockito.anyLong())
+			_ddmStorageEngineManager.getDDMFormValues(Mockito.anyLong())
 		).thenReturn(
 			_ddmFormValues
 		);
@@ -291,7 +291,7 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		);
 
 		Mockito.when(
-			_storageEngine.getDDMFormValues(Mockito.anyLong())
+			_ddmStorageEngineManager.getDDMFormValues(Mockito.anyLong())
 		).thenReturn(
 			_ddmFormValues
 		);
@@ -337,6 +337,8 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		DDMFormFieldValue.class);
 	private final DDMFormValues _ddmFormValues = Mockito.mock(
 		DDMFormValues.class);
+	private final DDMStorageEngineManager _ddmStorageEngineManager =
+		Mockito.mock(DDMStorageEngineManager.class);
 	private final DDMStructureLocalService _ddmStructureLocalService =
 		Mockito.mock(DDMStructureLocalService.class);
 	private final DLFileEntryMetadata _dlFileEntryMetadata = Mockito.mock(
@@ -348,8 +350,6 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 	private FileEntryMetadataOpenGraphTagsProvider
 		_fileEntryMetadataOpenGraphTagsProvider;
 	private final Portal _portal = Mockito.mock(Portal.class);
-	private final StorageEngine _storageEngine = Mockito.mock(
-		StorageEngine.class);
 	private final Value _value = Mockito.mock(Value.class);
 
 }

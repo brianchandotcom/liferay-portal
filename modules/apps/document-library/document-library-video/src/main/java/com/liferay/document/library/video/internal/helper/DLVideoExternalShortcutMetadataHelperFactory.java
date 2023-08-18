@@ -9,7 +9,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -34,9 +34,9 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 				dlVideoExternalShortcutMetadataHelper =
 					new DLVideoExternalShortcutMetadataHelper(
 						_ddmFormValuesToFieldsConverter,
-						_ddmStructureLocalService, dlFileEntry,
-						_dlFileEntryMetadataLocalService,
-						_fieldsToDDMFormValuesConverter, _storageEngine);
+						_ddmStorageEngineManager, _ddmStructureLocalService,
+						dlFileEntry, _dlFileEntryMetadataLocalService,
+						_fieldsToDDMFormValuesConverter);
 
 			if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
 				return dlVideoExternalShortcutMetadataHelper;
@@ -56,9 +56,9 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 				dlVideoExternalShortcutMetadataHelper =
 					new DLVideoExternalShortcutMetadataHelper(
 						_ddmFormValuesToFieldsConverter,
-						_ddmStructureLocalService, dlFileVersion,
-						_dlFileEntryMetadataLocalService,
-						_fieldsToDDMFormValuesConverter, _storageEngine);
+						_ddmStorageEngineManager, _ddmStructureLocalService,
+						dlFileVersion, _dlFileEntryMetadataLocalService,
+						_fieldsToDDMFormValuesConverter);
 
 			if (dlVideoExternalShortcutMetadataHelper.isExternalShortcut()) {
 				return dlVideoExternalShortcutMetadataHelper;
@@ -72,6 +72,9 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -79,8 +82,5 @@ public class DLVideoExternalShortcutMetadataHelperFactory {
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

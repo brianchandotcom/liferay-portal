@@ -34,7 +34,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRespo
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -853,7 +853,7 @@ public class FileEntryStagedModelDataHandler
 		structureFields.addAttribute("structureUuid", ddmStructure.getUuid());
 
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues =
-			_storageEngine.getDDMFormValues(
+			_ddmStorageEngineManager.getDDMFormValues(
 				dlFileEntryMetadata.getDDMStorageId());
 
 		ddmFormValues =
@@ -1264,6 +1264,9 @@ public class FileEntryStagedModelDataHandler
 			_ddmFormValuesExportImportContentProcessor;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -1301,9 +1304,6 @@ public class FileEntryStagedModelDataHandler
 
 	private ServiceTrackerList<DLPluggableContentDataHandler<?>>
 		_serviceTrackerList;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 	@Reference
 	private TrashHelper _trashHelper;

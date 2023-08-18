@@ -14,7 +14,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -34,14 +34,15 @@ import java.util.Map;
 public class FileEntryMetadataOpenGraphTagsProvider {
 
 	public FileEntryMetadataOpenGraphTagsProvider(
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
-		Portal portal, StorageEngine storageEngine) {
+		Portal portal) {
 
+		_ddmStorageEngineManager = ddmStorageEngineManager;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 		_portal = portal;
-		_storageEngine = storageEngine;
 	}
 
 	public Iterable<KeyValuePair> getFileEntryMetadataOpenGraphTagKeyValuePairs(
@@ -72,8 +73,9 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 				continue;
 			}
 
-			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-				fileEntryMetadata.getDDMStorageId());
+			DDMFormValues ddmFormValues =
+				_ddmStorageEngineManager.getDDMFormValues(
+					fileEntryMetadata.getDDMStorageId());
 
 			if (ddmFormValues == null) {
 				continue;
@@ -116,10 +118,10 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 		return value.getString(value.getDefaultLocale());
 	}
 
+	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DLFileEntryMetadataLocalService
 		_dlFileEntryMetadataLocalService;
 	private final Portal _portal;
-	private final StorageEngine _storageEngine;
 
 }

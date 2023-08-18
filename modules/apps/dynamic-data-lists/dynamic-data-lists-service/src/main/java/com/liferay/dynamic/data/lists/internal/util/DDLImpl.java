@@ -19,9 +19,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -85,7 +85,7 @@ public class DDLImpl implements DDL {
 		for (Field field :
 				_ddmFormValuesToFieldsConverter.convert(
 					ddmStructure,
-					_storageEngine.getDDMFormValues(
+					_ddmStorageEngineManager.getDDMFormValues(
 						recordVersion.getDDMStorageId()))) {
 
 			Object[] fieldValues = _getFieldValues(field, locale);
@@ -226,7 +226,7 @@ public class DDLImpl implements DDL {
 					record.getLatestRecordVersion();
 
 				DDMFormValues existingDDMFormValues =
-					_storageEngine.getDDMFormValues(
+					_ddmStorageEngineManager.getDDMFormValues(
 						recordVersion.getDDMStorageId());
 
 				Fields existingFields = _ddmFormValuesToFieldsConverter.convert(
@@ -404,6 +404,9 @@ public class DDLImpl implements DDL {
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -417,8 +420,5 @@ public class DDLImpl implements DDL {
 
 	@Reference
 	private LayoutService _layoutService;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

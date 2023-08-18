@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.web.internal.configuration.activator.DDLWe
 import com.liferay.dynamic.data.lists.web.internal.display.context.DDLDisplayContext;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -93,7 +93,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 				renderRequest, renderResponse, _ddl, _ddlRecordSetLocalService,
 				_ddlWebConfigurationActivator.getDDLWebConfiguration(),
 				_ddmDisplayRegistry, _ddmPermissionSupport,
-				_ddmTemplateLocalService, _storageEngine);
+				_ddmStorageEngineManager, _ddmTemplateLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddlDisplayContext);
@@ -217,6 +217,9 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	private DDMPermissionSupport _ddmPermissionSupport;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
@@ -229,8 +232,5 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.dynamic.data.lists.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

@@ -11,7 +11,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeReque
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -112,7 +112,7 @@ public class LayoutSEOEntryStagedModelDataHandler
 					_jsonDDMFormValuesSerializer.serialize(
 						DDMFormValuesSerializerSerializeRequest.Builder.
 							newBuilder(
-								_storageEngine.getDDMFormValues(
+								_ddmStorageEngineManager.getDDMFormValues(
 									layoutSEOEntry.getDDMStorageId())
 							).build());
 
@@ -254,6 +254,9 @@ public class LayoutSEOEntryStagedModelDataHandler
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -267,8 +270,5 @@ public class LayoutSEOEntryStagedModelDataHandler
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

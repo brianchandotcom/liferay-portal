@@ -10,7 +10,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.layout.seo.exception.NoSuchEntryException;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -288,7 +288,8 @@ public class LayoutSEOEntryLocalServiceImpl
 		DDMFormValues ddmFormValues = null;
 
 		if (copyDDMStorageId != 0) {
-			ddmFormValues = _storageEngine.getDDMFormValues(copyDDMStorageId);
+			ddmFormValues = _ddmStorageEngineManager.getDDMFormValues(
+				copyDDMStorageId);
 		}
 		else {
 			ddmFormValues = _ddm.getDDMFormValues(
@@ -363,18 +364,19 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		if (ListUtil.isEmpty(ddmFormValues.getDDMFormFieldValues())) {
 			if (ddmStorageId != 0) {
-				_storageEngine.deleteByClass(ddmStorageId);
+				_ddmStorageEngineManager.deleteByClass(ddmStorageId);
 			}
 
 			return 0;
 		}
 
 		if (ddmStorageId == 0) {
-			return _storageEngine.create(
+			return _ddmStorageEngineManager.create(
 				companyId, structureId, ddmFormValues, serviceContext);
 		}
 
-		_storageEngine.update(ddmStorageId, ddmFormValues, serviceContext);
+		_ddmStorageEngineManager.update(
+			ddmStorageId, ddmFormValues, serviceContext);
 
 		return ddmStorageId;
 	}
@@ -386,12 +388,12 @@ public class LayoutSEOEntryLocalServiceImpl
 	private DDM _ddm;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 }

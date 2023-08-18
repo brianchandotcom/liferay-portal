@@ -120,7 +120,6 @@
 					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
 				/>
 
-				<#list filterProductsByAppCategory(product) as category>
 				 	<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center card-image-title-container d-flex pb-3">
 							<div class="image-container rounded">
@@ -176,7 +175,6 @@
 					 		</div>
 				  		</div>
 				 	</a>
-				</#list>
 			</#list>
 		</div>
 	</#if>

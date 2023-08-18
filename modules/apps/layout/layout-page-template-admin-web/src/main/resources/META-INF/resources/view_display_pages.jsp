@@ -70,7 +70,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 						colspan="<%= 2 %>"
 					>
 						<clay:horizontal-card
-							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard(curLayoutPageTemplateCollection, renderRequest, searchContainer.getRowChecker()) %>"
+							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

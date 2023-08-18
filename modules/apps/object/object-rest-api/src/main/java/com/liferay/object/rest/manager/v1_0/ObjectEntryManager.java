@@ -50,11 +50,22 @@ public interface ObjectEntryManager {
 
 	public String getStorageType();
 
-	public ObjectEntry partialUpdateObjectEntry(
+	public default ObjectEntry partialUpdateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			ObjectEntry objectEntry, String scopeKey)
-		throws Exception;
+		throws Exception {
+
+		ObjectEntry existingObjectEntry = getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, scopeKey);
+
+		preparePatch(objectEntry, existingObjectEntry);
+
+		return updateObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			objectDefinition, existingObjectEntry, scopeKey);
+	}
 
 	public default void preparePatch(
 			ObjectEntry objectEntry, ObjectEntry existingObjectEntry)

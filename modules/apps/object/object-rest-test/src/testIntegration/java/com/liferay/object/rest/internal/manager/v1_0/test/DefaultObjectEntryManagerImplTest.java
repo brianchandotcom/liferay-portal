@@ -57,6 +57,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -162,7 +163,7 @@ import org.junit.runner.RunWith;
 @FeatureFlags({"LPS-164801", "LPS-172017"})
 @RunWith(Arquillian.class)
 public class DefaultObjectEntryManagerImplTest
-	extends BaseObjectEntryManagerImplTest {
+	extends BaseObjectEntryManagerImplTestCase {
 
 	@ClassRule
 	@Rule

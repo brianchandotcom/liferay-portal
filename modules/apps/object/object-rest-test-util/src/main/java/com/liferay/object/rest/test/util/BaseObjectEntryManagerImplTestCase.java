@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.rest.internal.manager.v1_0.test;
+package com.liferay.object.rest.test.util;
 
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -34,7 +34,7 @@ import org.junit.Before;
 /**
  * @author Paulo Albuquerque
  */
-public class BaseObjectEntryManagerImplTest {
+public abstract class BaseObjectEntryManagerImplTestCase {
 
 	@Before
 	public void setUp() throws Exception {

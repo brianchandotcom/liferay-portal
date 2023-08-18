@@ -16,7 +16,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
-import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTest;
+import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -58,7 +58,7 @@ import org.junit.runner.RunWith;
 @FeatureFlags("LPS-135430")
 @RunWith(Arquillian.class)
 public class SalesforceObjectEntryManagerImplTest
-	extends BaseObjectEntryManagerImplTest {
+	extends BaseObjectEntryManagerImplTestCase {
 
 	@ClassRule
 	@Rule

@@ -5,22 +5,35 @@
 
 import {getOpener} from 'frontend-js-web';
 
+export interface Props {
+	itemSelectorReturnType: string;
+	itemSelectorSelectedEvent: string;
+	namespace: string;
+}
+
 export default function ({
 	itemSelectorReturnType,
 	itemSelectorSelectedEvent,
 	namespace,
-}) {
+}: Props) {
+
+	// @ts-ignore
+
 	const searchContainer = Liferay.SearchContainer.get(`${namespace}entries`);
+
+	const searchContainerItems: HTMLElement[] = searchContainer.select
+		.getAllSelectedElements()
+		.getDOMNodes();
 
 	const searchContainerOnHandler = searchContainer.on('rowToggled', () => {
 		getOpener().Liferay.fire(itemSelectorSelectedEvent, {
 			data: {
 				returnType: itemSelectorReturnType,
-				value: searchContainer.select
-					.getAllSelectedElements()
-					.getDOMNodes()
-					.map((item) => item.closest('li, tr, dd'))
-					.filter((domElement) => domElement)
+				value: searchContainerItems
+					.map((item: HTMLElement) => item.closest('li, tr, dd'))
+					.filter((domElement): domElement is HTMLElement =>
+						Boolean(domElement)
+					)
 					.map((domElement) => domElement.dataset.value),
 			},
 		});

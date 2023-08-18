@@ -5,12 +5,22 @@
 
 import {delegate, getOpener} from 'frontend-js-web';
 
+export interface Props {
+	itemSelectorReturnType: string;
+	itemSelectorSelectedEvent: string;
+	namespace: string;
+}
+
+type DelegatedEvent<T extends Event> = T & {
+	delegateTarget: HTMLElement;
+};
+
 export default function ({
 	itemSelectorReturnType,
 	itemSelectorSelectedEvent,
 	namespace,
-}) {
-	const selectItem = (event) => {
+}: Props) {
+	const selectItem = (event: DelegatedEvent<KeyboardEvent | MouseEvent>) => {
 		getOpener().Liferay.fire(itemSelectorSelectedEvent, {
 			data: {
 				returnType: itemSelectorReturnType,
@@ -20,19 +30,19 @@ export default function ({
 	};
 
 	const onClickHandler = delegate(
-		document.getElementById(`${namespace}entriesContainer`),
+		document.getElementById(`${namespace}entriesContainer`)!,
 		'click',
 		'.entry',
-		(event) => {
+		(event: DelegatedEvent<MouseEvent>) => {
 			selectItem(event);
 		}
 	);
 
 	const onKeydownHandler = delegate(
-		document.getElementById(`${namespace}entriesContainer`),
+		document.getElementById(`${namespace}entriesContainer`)!,
 		'keydown',
 		'.entry',
-		(event) => {
+		(event: DelegatedEvent<KeyboardEvent>) => {
 			if (event.code === 'Enter') {
 				selectItem(event);
 			}

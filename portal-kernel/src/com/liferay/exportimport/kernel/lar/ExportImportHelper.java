@@ -38,6 +38,13 @@ public interface ExportImportHelper {
 	public Map<Long, Boolean> getAllLayoutIdsMap(
 		long groupId, boolean privateLayout);
 
+	public List<Portlet> getDataSiteAndInstanceLevelPortlets(long companyId)
+		throws Exception;
+
+	public List<Portlet> getDataSiteAndInstanceLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception;
+
 	public List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception;
 

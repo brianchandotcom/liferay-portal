@@ -9,7 +9,8 @@ Export-Package:\
 	com.liferay.saml.opensaml.integration.processor,\
 	com.liferay.saml.opensaml.integration.processor.context,\
 	com.liferay.saml.opensaml.integration.processor.factory,\
-	com.liferay.saml.opensaml.integration.resolver
+	com.liferay.saml.opensaml.integration.resolver,\
+	com.liferay.saml.opensaml.integration.session.util
 Import-Package:\
 	!bsh,\
 	\

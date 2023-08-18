@@ -166,6 +166,73 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				showChangesSaved: true,
 			};
 		}
+
+		case TYPES.CHANGE_NODE_VIEW: {
+			const {
+				definitionName,
+				hiddenNode,
+				leftSidebarItem,
+			} = action.payload;
+			const {edges, nodes} = store.getState();
+			const {leftSidebarItems} = state;
+			let isNodeSelected = false;
+
+			const updatedNodes = nodes.map(
+				(node: Node<ObjectDefinitionNodeData>) => {
+					if (node.data?.name === definitionName) {
+						return {
+							...node,
+							data: {...node.data, nodeSelected: false},
+							isHidden: !hiddenNode,
+						};
+					}
+
+					return node;
+				}
+			);
+
+			const updatedLeftSidebarItems = leftSidebarItems.map(
+				(sidebarItem) => {
+					if (sidebarItem.folderName === leftSidebarItem.folderName) {
+						const updatedObjectDefinitions = sidebarItem.objectDefinitions?.map(
+							(objectDefinition) => {
+								if (
+									objectDefinition.definitionName ===
+									definitionName
+								) {
+									isNodeSelected = objectDefinition.selected;
+
+									return {
+										...objectDefinition,
+										hiddenNode: !hiddenNode,
+										selected: false,
+									};
+								}
+
+								return objectDefinition;
+							}
+						);
+
+						return {
+							...sidebarItem,
+							objectDefinitions: updatedObjectDefinitions,
+						};
+					}
+
+					return sidebarItem;
+				}
+			);
+
+			return {
+				...state,
+				elements: [...edges, ...updatedNodes],
+				leftSidebarItems: updatedLeftSidebarItems,
+				rightSidebarType: isNodeSelected
+					? 'empty'
+					: state.rightSidebarType,
+			};
+		}
+
 		case TYPES.CREATE_MODEL_BUILDER_STRUCTURE: {
 			const {objectFolders} = action.payload;
 			const {
@@ -180,6 +247,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 						return {
 							definitionId: definition.id,
 							definitionName: definition.name,
+							hiddenNode: false,
 							name: getLocalizableLabel(
 								definition.defaultLanguageId,
 								definition.label,
@@ -394,6 +462,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
 			};
 		}
+
 		case TYPES.UPDATE_FOLDER_NODE: {
 			const {currentFolderName, updatedNode} = action.payload;
 

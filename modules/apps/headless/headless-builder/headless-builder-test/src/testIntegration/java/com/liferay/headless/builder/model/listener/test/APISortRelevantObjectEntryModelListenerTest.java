@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),

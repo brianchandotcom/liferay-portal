@@ -51,7 +51,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 	@Test
 	public void test() throws Exception {
-		String baseURL = RandomTestUtil.randomString();
+		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -85,7 +85,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
-		baseURL = RandomTestUtil.randomString();
+		baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -109,7 +109,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
-		baseURL = RandomTestUtil.randomString();
+		baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

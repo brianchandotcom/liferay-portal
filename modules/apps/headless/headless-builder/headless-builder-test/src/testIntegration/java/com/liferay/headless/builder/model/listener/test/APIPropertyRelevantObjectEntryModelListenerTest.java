@@ -53,7 +53,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),

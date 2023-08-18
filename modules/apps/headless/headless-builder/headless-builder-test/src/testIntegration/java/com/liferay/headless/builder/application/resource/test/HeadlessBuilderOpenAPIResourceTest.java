@@ -528,7 +528,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_APPLICATION_ERC =
 		RandomTestUtil.randomString();
 
-	private static final String _API_BASE_URL = RandomTestUtil.randomString();
+	private static final String _API_BASE_URL = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
 	private static final String _API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();

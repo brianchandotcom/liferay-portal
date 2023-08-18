@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -1171,9 +1172,11 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private static final String _API_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
-	private static final String _BASE_URL_1 = RandomTestUtil.randomString();
+	private static final String _BASE_URL_1 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
-	private static final String _BASE_URL_2 = RandomTestUtil.randomString();
+	private static final String _BASE_URL_2 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
 	private static DateFormat _dateFormat;
 	private static DateFormat _dateTimeFormat;

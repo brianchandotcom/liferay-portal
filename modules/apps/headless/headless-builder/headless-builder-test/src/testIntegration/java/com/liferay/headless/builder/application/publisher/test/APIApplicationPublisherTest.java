@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.Test;
@@ -133,8 +134,10 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 	private static final String _API_APPLICATION_ERC_2 =
 		RandomTestUtil.randomString();
 
-	private static final String _BASE_URL_1 = RandomTestUtil.randomString();
+	private static final String _BASE_URL_1 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
-	private static final String _BASE_URL_2 = RandomTestUtil.randomString();
+	private static final String _BASE_URL_2 = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
 }

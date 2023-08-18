@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -215,7 +216,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			).put(
 				"applicationStatus", "published"
 			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
 				"externalReferenceCode", RandomTestUtil.randomString()
 			).put(

@@ -306,7 +306,7 @@ definition {
 			key_name = ${key_oldName},
 			locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
-		MenuItem.click(menuItem = "View");
+		MenuItem.click(menuItem = "Edit");
 
 		Type(
 			key_type = "Name",

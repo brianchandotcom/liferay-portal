@@ -107,17 +107,15 @@ definition {
 
 	@description = "This is a use case for LPS-183360."
 	@priority = 3
-	test ConcurrentReindexNotAvailableWithSolr {
-		property custom.properties = "feature.flag.LPS-177664=true";
+	test ReindexModeNotAvailableWithSolr {
+		property custom.properties = "feature.flag.LPS-183661=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Go to Search Admin and assert Concurrent reindex is not available while using Solr") {
+		task ("Go to Search Admin and assert the Reindex mode selection is not available while using Solr") {
 			SearchAdministration.openIndexActions();
 
-			AssertElementNotPresent(
-				locator1 = "Radio#ANY",
-				radioLabel = "Concurrent");
+			AssertElementNotPresent(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
 		}
 	}
 

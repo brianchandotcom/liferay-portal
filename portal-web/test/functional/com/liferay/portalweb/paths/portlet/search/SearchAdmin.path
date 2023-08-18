@@ -36,6 +36,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REINDEX_MODE_DROPDOWN</td>
+	<td>//button[@id='executionMode']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REINDEX_MODE_DROPDOWN_ITEM</td>
+	<td>//button[contains(@class,'dropdown-item')]//div[contains(@class,'list-group-title') and contains(.,'${key_reindexMode}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ENGINE_VENDOR</td>
 	<td>//div[contains(@class,'value')][preceding-sibling::div[contains(.,'Search Engine Vendor')]]</td>
 	<td></td>

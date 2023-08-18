@@ -460,14 +460,14 @@ definition {
 	@description = "This is a use case for LPS-188222."
 	@priority = 4
 	test PerformConcurrentReindexAndSwitchElasticsearchConnections {
-		property custom.properties = "feature.flag.LPS-177664=true";
+		property custom.properties = "feature.flag.LPS-183661=true";
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Execute concurrent reindex while using sidecar") {
-			SearchAdministration.executeReindex(concurrentReindex = "true");
+			SearchAdministration.executeReindex(reindexMode = "Concurrent");
 		}
 
 		task ("Deploy remote Elasticsearch server and connect it to Portal") {
@@ -489,7 +489,7 @@ definition {
 		}
 
 		task ("Execute concurrent reindex while using remote Elasticsearch") {
-			SearchAdministration.executeReindex(concurrentReindex = "true");
+			SearchAdministration.executeReindex(reindexMode = "Concurrent");
 		}
 
 		task ("Perform a search and assert that no errors are thrown") {
@@ -512,7 +512,7 @@ definition {
 	@description = "This is a use case for LPS-184999."
 	@priority = 4
 	test ReindexSearchTuningWithSyncExecutionMode {
-		property custom.properties = "feature.flag.LPS-177668=true";
+		property custom.properties = "feature.flag.LPS-183661=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -563,13 +563,19 @@ definition {
 		task ("Begin a reindex using sync execution mode") {
 			SearchAdministration.openIndexActions();
 
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Sync");
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
 
 			Click(
-				key_action = "Reindex search indexes",
+				key_reindexMode = "Sync",
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
+
+			Click(
+				key_action = "All search indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Assert that the result ranking and synonym set is still available in the UI during the reindex") {
@@ -660,13 +666,13 @@ definition {
 	@description = "This is a use case for LPS-177665."
 	@priority = 4
 	test ReindexWithConcurrentExecutionMode {
-		property custom.properties = "feature.flag.LPS-177664=true";
+		property custom.properties = "feature.flag.LPS-183661=true";
 		property portal.release = "false";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Assert that indexNameCurrent and indexNameNext fields in the lportal.Company database table are empty when a Concurrent reindex has not been executed yet") {
+		task ("Assert that indexNameCurrent and indexNameNext fields in the database table 'Company' are empty when a Concurrent reindex has not been executed yet") {
 			var companyId = JSONCompany.getCompanyId();
 
 			SQL.assertTextNotInMySQLStatementResult(
@@ -677,9 +683,11 @@ definition {
 		task ("Begin a reindex of the primary Portal instance using concurrent execution mode") {
 			SearchAdministration.openIndexActions();
 
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Concurrent");
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
+
+			Click(
+				key_reindexMode = "Concurrent",
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
 
 			Check.checkNotVisible(
 				locator1 = "Radio#ANY",
@@ -690,11 +698,15 @@ definition {
 				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 
 			Click(
-				key_action = "Reindex search indexes",
+				key_action = "All search indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
-		task ("Assert that the indexNameNext field is now populated in the lportal.Company database table") {
+		task ("Assert that the indexNameNext field is now populated in the database table 'Company'") {
 			var companyId = JSONCompany.getCompanyId();
 
 			SQL.assertTextInMySQLStatementResult(
@@ -729,12 +741,20 @@ definition {
 
 			AssertElementPresent(locator1 = "//a[contains(text(),'liferay-${companyId}-2')]");
 		}
+
+		task ("Assert that the indexNameCurrent field is now populated in the database table 'Company'") {
+			var companyId = JSONCompany.getCompanyId();
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT indexNameCurrent FROM lportal.Company WHERE companyId LIKE '%${companyId}%'",
+				text = "liferay-${companyId}");
+		}
 	}
 
 	@description = "This is a use case for LPS-177670."
 	@priority = 4
 	test ReindexWithSyncExecutionMode {
-		property custom.properties = "feature.flag.LPS-177668=true";
+		property custom.properties = "feature.flag.LPS-183661=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -778,13 +798,19 @@ definition {
 		task ("Begin a reindex using sync execution mode") {
 			SearchAdministration.openIndexActions();
 
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Sync");
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
 
 			Click(
-				key_action = "Reindex search indexes",
+				key_reindexMode = "Sync",
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
+
+			Click(
+				key_action = "All search indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+			Click(
+				key_text = "Execute",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Assert that search results are still returned during the reindex") {

@@ -25,8 +25,9 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -219,11 +220,11 @@ public class CartItemDTOConverter
 	private Settings _getSettings(long cpInstanceId) {
 		Settings settings = new Settings();
 
-		int minOrderQuantity =
+		BigDecimal minOrderQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
-		int maxOrderQuantity =
+		BigDecimal maxOrderQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
-		int multipleQuantity =
+		BigDecimal multipleQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
 		CPDefinitionInventory cpDefinitionInventory = null;
@@ -243,20 +244,22 @@ public class CartItemDTOConverter
 			maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
 			multipleQuantity = cpDefinitionInventory.getMultipleOrderQuantity();
 
-			int[] allowedOrderQuantitiesArray =
+			BigDecimal[] allowedOrderQuantitiesArray =
 				cpDefinitionInventory.getAllowedOrderQuantitiesArray();
 
 			if ((allowedOrderQuantitiesArray != null) &&
 				(allowedOrderQuantitiesArray.length > 0)) {
 
 				settings.setAllowedQuantities(
-					ArrayUtil.toArray(allowedOrderQuantitiesArray));
+					TransformUtil.transformToArray(
+						ListUtil.fromArray(allowedOrderQuantitiesArray),
+						BigDecimal::intValue, Integer.class));
 			}
 		}
 
-		settings.setMinQuantity(minOrderQuantity);
-		settings.setMaxQuantity(maxOrderQuantity);
-		settings.setMultipleQuantity(multipleQuantity);
+		settings.setMinQuantity(minOrderQuantity.intValue());
+		settings.setMaxQuantity(maxOrderQuantity.intValue());
+		settings.setMultipleQuantity(multipleQuantity.intValue());
 
 		return settings;
 	}

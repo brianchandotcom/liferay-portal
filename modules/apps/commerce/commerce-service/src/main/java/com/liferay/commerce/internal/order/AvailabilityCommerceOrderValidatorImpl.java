@@ -13,6 +13,7 @@ import com.liferay.commerce.order.CommerceOrderValidator;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.availability.CPAvailabilityChecker;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -60,7 +61,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 		}
 
 		if (!_cpAvailabilityChecker.isAvailable(
-				commerceOrder.getGroupId(), cpInstance, quantity.intValue())) {
+				commerceOrder.getGroupId(), cpInstance, StringPool.BLANK,
+				quantity)) {
 
 			return new CommerceOrderValidatorResult(
 				false,
@@ -93,8 +95,8 @@ public class AvailabilityCommerceOrderValidatorImpl
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 
 		if (!_cpAvailabilityChecker.isAvailable(
-				commerceOrderItem.getGroupId(), cpInstance,
-				quantity.intValue()) &&
+				commerceOrderItem.getGroupId(), cpInstance, StringPool.BLANK,
+				quantity) &&
 			(commerceInventoryBookedQuantity == null)) {
 
 			return new CommerceOrderValidatorResult(

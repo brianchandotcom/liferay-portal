@@ -239,9 +239,7 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
 
 			commerceOrderImporterItemImpl.setQuantity(
-				BigDecimal.valueOf(
-					_cpDefinitionInventoryEngine.getMinOrderQuantity(
-						cpInstance)));
+				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
 			commerceOrderImporterItemImpl.setUnitOfMeasureKey(StringPool.BLANK);
 		}
 

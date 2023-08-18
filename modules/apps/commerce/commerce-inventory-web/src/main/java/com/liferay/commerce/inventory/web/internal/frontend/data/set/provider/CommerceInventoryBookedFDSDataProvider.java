@@ -60,12 +60,15 @@ public class CommerceInventoryBookedFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
+
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
 				_commerceInventoryBookedQuantityService.
 					getCommerceInventoryBookedQuantities(
 						_portal.getCompanyId(httpServletRequest),
-						fdsKeywords.getKeywords(), sku,
+						fdsKeywords.getKeywords(), sku, unitOfMeasureKey,
 						fdsPagination.getStartPosition(),
 						fdsPagination.getEndPosition());
 
@@ -78,23 +81,23 @@ public class CommerceInventoryBookedFDSDataProvider
 						commerceInventoryBookedQuantity.
 							getCommerceInventoryBookedQuantityId());
 
-			int bookedQuantity = 0;
+			BigDecimal bookedQuantity = BigDecimal.ZERO;
 
 			BigDecimal commerceInventoryWarehouseItemQuantity =
 				commerceInventoryBookedQuantity.getQuantity();
 
 			if (commerceInventoryWarehouseItemQuantity != null) {
-				bookedQuantity =
-					commerceInventoryWarehouseItemQuantity.intValue();
+				bookedQuantity = commerceInventoryWarehouseItemQuantity;
 			}
 
 			bookedQuantities.add(
 				new BookedQuantity(
 					_getAccountName(commerceOrderItem),
-					_getCommerceOrderId(commerceOrderItem), bookedQuantity,
+					_getCommerceOrderId(commerceOrderItem),
 					_getExpirationDate(
 						commerceInventoryBookedQuantity.getExpirationDate(),
-						httpServletRequest)));
+						httpServletRequest),
+					bookedQuantity));
 		}
 
 		return bookedQuantities;
@@ -107,10 +110,13 @@ public class CommerceInventoryBookedFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
+
 		return _commerceInventoryBookedQuantityService.
 			getCommerceInventoryBookedQuantitiesCount(
 				_portal.getCompanyId(httpServletRequest),
-				fdsKeywords.getKeywords(), sku);
+				fdsKeywords.getKeywords(), sku, unitOfMeasureKey);
 	}
 
 	private String _getAccountName(CommerceOrderItem commerceOrderItem)

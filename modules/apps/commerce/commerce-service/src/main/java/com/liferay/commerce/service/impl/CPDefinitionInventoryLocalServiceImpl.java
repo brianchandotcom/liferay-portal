@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+
+import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +43,9 @@ public class CPDefinitionInventoryLocalServiceImpl
 			long userId, long cpDefinitionId,
 			String cpDefinitionInventoryEngine, String lowStockActivity,
 			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
+			BigDecimal minStockQuantity, boolean backOrders,
+			BigDecimal minOrderQuantity, BigDecimal maxOrderQuantity,
+			String allowedOrderQuantities, BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		_validateOrderQuantity(
@@ -170,9 +173,10 @@ public class CPDefinitionInventoryLocalServiceImpl
 	public CPDefinitionInventory updateCPDefinitionInventory(
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, BigDecimal minStockQuantity,
+			boolean backOrders, BigDecimal minOrderQuantity,
+			BigDecimal maxOrderQuantity, String allowedOrderQuantities,
+			BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		_validateOrderQuantity(
@@ -210,23 +214,23 @@ public class CPDefinitionInventoryLocalServiceImpl
 	}
 
 	private void _validateOrderQuantity(
-			int minOrderQuantity, int maxOrderQuantity,
-			int multipleOrderQuantity)
+			BigDecimal minOrderQuantity, BigDecimal maxOrderQuantity,
+			BigDecimal multipleOrderQuantity)
 		throws CPDefinitionInventoryMaxOrderQuantityException,
 			   CPDefinitionInventoryMinOrderQuantityException,
 			   CPDefinitionInventoryMultipleOrderQuantityException {
 
-		if (minOrderQuantity < 1) {
+		if (BigDecimalUtil.lt(minOrderQuantity, BigDecimal.ONE)) {
 			throw new CPDefinitionInventoryMinOrderQuantityException(
 				"Minimum order quantity must be greater than or equal to 1");
 		}
 
-		if (maxOrderQuantity < 1) {
+		if (BigDecimalUtil.lt(maxOrderQuantity, BigDecimal.ONE)) {
 			throw new CPDefinitionInventoryMaxOrderQuantityException(
 				"Maximum order quantity must be greater than or equal to 1");
 		}
 
-		if (multipleOrderQuantity < 1) {
+		if (BigDecimalUtil.lt(multipleOrderQuantity, BigDecimal.ONE)) {
 			throw new CPDefinitionInventoryMultipleOrderQuantityException(
 				"Multiple order quantity must be greater than or equal to 1");
 		}

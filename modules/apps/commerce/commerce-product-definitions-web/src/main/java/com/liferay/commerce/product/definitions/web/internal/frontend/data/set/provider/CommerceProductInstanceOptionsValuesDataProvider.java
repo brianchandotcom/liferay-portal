@@ -445,8 +445,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		return BigDecimal.valueOf(
-			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
+		return cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
 	}
 
 	private long _getParameter(

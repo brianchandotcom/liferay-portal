@@ -83,7 +83,9 @@ public class PriceTag extends IncludeTag {
 					_productHelper.getProductSettingsModel(
 						_cpCatalogEntry.getCPDefinitionId());
 
-				_quantity = productSettingsModel.getMinQuantity();
+				BigDecimal minQuantity = productSettingsModel.getMinQuantity();
+
+				_quantity = minQuantity.intValue();
 			}
 
 			_displayDiscountLevels = _isDisplayDiscountLevels();

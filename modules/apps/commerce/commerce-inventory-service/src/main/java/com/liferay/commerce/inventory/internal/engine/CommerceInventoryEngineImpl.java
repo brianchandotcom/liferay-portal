@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.math.BigDecimal;
+
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,9 +38,9 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
 	public void consumeQuantity(
-			long userId, long commerceCatalogGroupId,
-			long commerceInventoryWarehouseId, String sku, int quantity,
-			long bookedQuantityId, Map<String, String> context)
+			long userId, long bookedQuantityId, long commerceCatalogGroupId,
+			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
+			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
@@ -49,8 +51,8 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		commerceInventoryMethod.consumeQuantity(
-			userId, commerceInventoryWarehouseId, sku, quantity,
-			bookedQuantityId, context);
+			userId, bookedQuantityId, commerceInventoryWarehouseId, quantity,
+			sku, unitOfMeasureKey, context);
 	}
 
 	@Override
@@ -59,20 +61,23 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 	)
 	public void decreaseStockQuantity(
 			long userId, long commerceCatalogGroupId,
-			long commerceInventoryWarehouseId, String sku, int quantity)
+			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
 			_getCommerceInventoryMethod(commerceCatalogGroupId);
 
 		commerceInventoryMethod.decreaseStockQuantity(
-			userId, commerceInventoryWarehouseId, sku, quantity);
+			userId, commerceInventoryWarehouseId, quantity, sku,
+			unitOfMeasureKey);
 	}
 
 	@Override
 	public String getAvailabilityStatus(
 		long companyId, long commerceCatalogGroupId,
-		long commerceChannelGroupId, int minStockQuantity, String sku) {
+		long commerceChannelGroupId, BigDecimal minStockQuantity, String sku,
+		String unitOfMeasureKey) {
 
 		CommerceInventoryMethod commerceInventoryMethod =
 			_getCommerceInventoryMethod(commerceCatalogGroupId);
@@ -82,44 +87,48 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		return commerceInventoryMethod.getAvailabilityStatus(
-			companyId, commerceChannelGroupId, minStockQuantity, sku);
+			companyId, commerceChannelGroupId, minStockQuantity, sku,
+			unitOfMeasureKey);
 	}
 
 	@Override
-	public int getStockQuantity(
+	public BigDecimal getStockQuantity(
 			long companyId, long commerceCatalogGroupId,
-			long commerceChannelGroupId, String sku)
+			long commerceChannelGroupId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
 			_getCommerceInventoryMethod(commerceCatalogGroupId);
 
 		if (commerceInventoryMethod == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		return commerceInventoryMethod.getStockQuantity(
-			companyId, commerceChannelGroupId, sku);
+			companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
 	}
 
 	@Override
-	public int getStockQuantity(
-			long companyId, long commerceCatalogGroupId, String sku)
+	public BigDecimal getStockQuantity(
+			long companyId, long commerceCatalogGroupId, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
 			_getCommerceInventoryMethod(commerceCatalogGroupId);
 
 		if (commerceInventoryMethod == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
-		return commerceInventoryMethod.getStockQuantity(companyId, sku);
+		return commerceInventoryMethod.getStockQuantity(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	@Override
 	public boolean hasStockQuantity(
-		long companyId, long commerceCatalogGroupId, String sku, int quantity) {
+		long companyId, long commerceCatalogGroupId, BigDecimal quantity,
+		String sku, String unitOfMeasureKey) {
 
 		CommerceInventoryMethod commerceInventoryMethod =
 			_getCommerceInventoryMethod(commerceCatalogGroupId);
@@ -129,7 +138,7 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		return commerceInventoryMethod.hasStockQuantity(
-			companyId, sku, quantity);
+			companyId, quantity, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -138,14 +147,16 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 	)
 	public void increaseStockQuantity(
 			long userId, long commerceCatalogGroupId,
-			long commerceInventoryWarehouseId, String sku, int quantity)
+			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
 			_getCommerceInventoryMethod(commerceCatalogGroupId);
 
 		commerceInventoryMethod.increaseStockQuantity(
-			userId, commerceInventoryWarehouseId, sku, quantity);
+			userId, commerceInventoryWarehouseId, quantity, sku,
+			unitOfMeasureKey);
 	}
 
 	private CommerceInventoryMethod _getCommerceInventoryMethod(

@@ -27,6 +27,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,8 +38,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
-
-import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Locale;
@@ -212,11 +211,10 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 					commerceChannelGroupId, cpInstance.getCPInstanceId());
 
-			BigDecimal quantity = commerceOrderItem.getQuantity();
-
 			if ((firstAvailableReplacementCPInstance != null) &&
 				!_cpAvailabilityChecker.check(
-					commerceChannelGroupId, cpInstance, quantity.intValue())) {
+					commerceChannelGroupId, cpInstance, StringPool.BLANK,
+					commerceOrderItem.getQuantity())) {
 
 				commerceOrderImporterItemImpl.setReplacingSKU(
 					cpInstance.getSku());

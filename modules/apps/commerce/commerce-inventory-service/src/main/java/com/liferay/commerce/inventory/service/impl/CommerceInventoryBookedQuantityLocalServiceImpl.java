@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -142,7 +143,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 	@Override
 	public BigDecimal getCommerceBookedQuantity(
-		long companyId, long commerceChannelGroupId, String sku) {
+		long companyId, long commerceChannelGroupId, String sku,
+		String unitOfMeasureKey) {
 
 		List<BigDecimal> result = dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -172,6 +174,15 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				).and(
 					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
 				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceInventoryBookedQuantityTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
+				).and(
 					GroupTable.INSTANCE.groupId.eq(commerceChannelGroupId)
 				)
 			));
@@ -184,7 +195,9 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
-	public BigDecimal getCommerceBookedQuantity(long companyId, String sku) {
+	public BigDecimal getCommerceBookedQuantity(
+		long companyId, String sku, String unitOfMeasureKey) {
+
 		List<BigDecimal> result = dslQuery(
 			DSLQueryFactoryUtil.select(
 				DSLFunctionFactoryUtil.sum(
@@ -199,6 +212,15 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 					companyId
 				).and(
 					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
+				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceInventoryBookedQuantityTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
 				)
 			));
 
@@ -212,20 +234,22 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	@Override
 	public List<CommerceInventoryBookedQuantity>
 		getCommerceInventoryBookedQuantities(
-			long companyId, String sku, int start, int end) {
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end) {
 
-		return commerceInventoryBookedQuantityPersistence.findByC_S(
-			companyId, sku, start, end);
+		return commerceInventoryBookedQuantityPersistence.findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
 	public List<CommerceInventoryBookedQuantity>
 			getCommerceInventoryBookedQuantities(
-				long companyId, String keywords, String sku, int start, int end)
+				long companyId, String keywords, String sku,
+				String unitOfMeasureKey, int start, int end)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
-			companyId, keywords, sku, start, end);
+			companyId, keywords, sku, unitOfMeasureKey, start, end);
 
 		BaseModelSearchResult<CommerceInventoryBookedQuantity>
 			baseModelSearchResult =
@@ -237,18 +261,20 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
-		return commerceInventoryBookedQuantityPersistence.countByC_S(
-			companyId, sku);
+		return commerceInventoryBookedQuantityPersistence.countByC_S_U(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	public int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String keywords, String sku)
+			long companyId, String keywords, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
-			companyId, keywords, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			companyId, keywords, sku, unitOfMeasureKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		return commerceInventoryBookedQuantityLocalService.
 			searchCommerceInventoryBookedQuantitiesCount(searchContext);
@@ -257,7 +283,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	@Override
 	public CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
 			long commerceBookedQuantityId, long userId, Date expirationDate,
-			BigDecimal quantity, String sku, Map<String, String> context)
+			BigDecimal quantity, String sku, String unitOfMeasureKey,
+			Map<String, String> context)
 		throws PortalException {
 
 		CommerceInventoryBookedQuantity commerceBookedQuantity =
@@ -276,11 +303,12 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			commerceBookedQuantity.setUserName(user.getFullName());
 			commerceBookedQuantity.setExpirationDate(expirationDate);
 			commerceBookedQuantity.setSku(sku);
+			commerceBookedQuantity.setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 		else {
 			quantity = quantity.add(commerceBookedQuantity.getQuantity());
 
-			if (quantity.compareTo(BigDecimal.ZERO) == -1) {
+			if (BigDecimalUtil.lt(quantity, BigDecimal.ZERO)) {
 				quantity = BigDecimal.ZERO;
 			}
 		}
@@ -294,7 +322,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity, sku,
-			StringPool.BLANK);
+			unitOfMeasureKey);
 
 		return commerceInventoryBookedQuantityPersistence.update(
 			commerceBookedQuantity);
@@ -319,7 +347,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context),
 			commerceInventoryBookedQuantity.getQuantity(),
-			commerceInventoryBookedQuantity.getSku(), StringPool.BLANK);
+			commerceInventoryBookedQuantity.getSku(),
+			commerceInventoryBookedQuantity.getUnitOfMeasureKey());
 
 		return commerceInventoryBookedQuantity;
 	}
@@ -397,7 +426,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	private SearchContext _buildSearchContext(
-		long companyId, String keywords, String sku, int start, int end) {
+		long companyId, String keywords, String sku, String unitOfMeasureKey,
+		int start, int end) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -407,6 +437,10 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		if (Validator.isNotNull(sku)) {
 			searchContext.setAttribute("sku", sku);
+		}
+
+		if (Validator.isNotNull(unitOfMeasureKey)) {
+			searchContext.setAttribute("unitOfMeasureKey", unitOfMeasureKey);
 		}
 
 		searchContext.setStart(start);

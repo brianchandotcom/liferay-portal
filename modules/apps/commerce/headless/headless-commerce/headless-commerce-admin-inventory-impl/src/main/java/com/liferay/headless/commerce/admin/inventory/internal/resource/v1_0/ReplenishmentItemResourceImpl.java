@@ -94,15 +94,15 @@ public class ReplenishmentItemResourceImpl
 		return Page.of(
 			transform(
 				_commerceInventoryReplenishmentItemService.
-					getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-						contextCompany.getCompanyId(), sku,
+					getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+						contextCompany.getCompanyId(), sku, StringPool.BLANK,
 						pagination.getStartPosition(),
 						pagination.getEndPosition()),
 				this::_toReplenishmentItem),
 			pagination,
 			_commerceInventoryReplenishmentItemService.
-				getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-					contextCompany.getCompanyId(), sku));
+				getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+					contextCompany.getCompanyId(), sku, StringPool.BLANK));
 	}
 
 	@Override
@@ -195,7 +195,8 @@ public class ReplenishmentItemResourceImpl
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
-				getCommerceInventoryWarehouseItem(warehouseId, sku);
+				getCommerceInventoryWarehouseItem(
+					warehouseId, sku, StringPool.BLANK);
 
 		return _toReplenishmentItem(
 			_commerceInventoryReplenishmentItemService.

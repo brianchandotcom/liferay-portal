@@ -15,10 +15,13 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,11 +75,15 @@ public class StockQuantityCPContentContributor implements CPContentContributor {
 			cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance);
 
 		if (displayStockQuantity) {
-			jsonObject.put(
-				CPContentContributorConstants.STOCK_QUANTITY_NAME,
+			BigDecimal stockQuantity =
 				_commerceInventoryEngine.getStockQuantity(
 					cpInstance.getCompanyId(), cpInstance.getGroupId(),
-					commerceChannel.getGroupId(), cpInstance.getSku()));
+					commerceChannel.getGroupId(), cpInstance.getSku(),
+					StringPool.BLANK);
+
+			jsonObject.put(
+				CPContentContributorConstants.STOCK_QUANTITY_NAME,
+				stockQuantity.intValue());
 		}
 
 		return jsonObject;

@@ -63,15 +63,19 @@ public class CommerceInventoryAuditLocalServiceImpl
 
 	@Override
 	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
-		long companyId, String sku, int start, int end) {
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end) {
 
-		return commerceInventoryAuditPersistence.findByC_S(
-			companyId, sku, start, end);
+		return commerceInventoryAuditPersistence.findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
-	public int getCommerceInventoryAuditsCount(long companyId, String sku) {
-		return commerceInventoryAuditPersistence.countByC_S(companyId, sku);
+	public int getCommerceInventoryAuditsCount(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return commerceInventoryAuditPersistence.countByC_S_U(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	@Reference

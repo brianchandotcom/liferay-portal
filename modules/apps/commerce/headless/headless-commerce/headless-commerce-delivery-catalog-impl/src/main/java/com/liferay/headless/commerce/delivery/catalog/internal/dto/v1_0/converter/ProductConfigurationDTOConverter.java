@@ -8,9 +8,12 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+
+import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,14 +49,34 @@ public class ProductConfigurationDTOConverter
 		return new ProductConfiguration() {
 			{
 				allowBackOrder = cpDefinitionInventory.isBackOrders();
-				allowedOrderQuantities = ArrayUtil.toArray(
-					cpDefinitionInventory.getAllowedOrderQuantitiesArray());
+				allowedOrderQuantities = TransformUtil.transformToArray(
+					ListUtil.fromArray(
+						cpDefinitionInventory.getAllowedOrderQuantitiesArray()),
+					BigDecimal::intValue, Integer.class);
 				inventoryEngine =
 					cpDefinitionInventory.getCPDefinitionInventoryEngine();
-				maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
-				minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
-				multipleOrderQuantity =
-					cpDefinitionInventory.getMultipleOrderQuantity();
+
+				setMaxOrderQuantity(
+					() -> {
+						BigDecimal maxOrderQuantity =
+							cpDefinitionInventory.getMaxOrderQuantity();
+
+						return maxOrderQuantity.intValue();
+					});
+				setMinOrderQuantity(
+					() -> {
+						BigDecimal minOrderQuantity =
+							cpDefinitionInventory.getMinOrderQuantity();
+
+						return minOrderQuantity.intValue();
+					});
+				setMultipleOrderQuantity(
+					() -> {
+						BigDecimal multipleOrderQuantity =
+							cpDefinitionInventory.getMultipleOrderQuantity();
+
+						return multipleOrderQuantity.intValue();
+					});
 			}
 		};
 	}

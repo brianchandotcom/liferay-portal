@@ -132,11 +132,11 @@ public class ProductHelperImpl implements ProductHelper {
 
 		ProductSettingsModel productSettingsModel = new ProductSettingsModel();
 
-		int minOrderQuantity =
+		BigDecimal minOrderQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
-		int maxOrderQuantity =
+		BigDecimal maxOrderQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
-		int multipleQuantity =
+		BigDecimal multipleQuantity =
 			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -148,7 +148,7 @@ public class ProductHelperImpl implements ProductHelper {
 			maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
 			multipleQuantity = cpDefinitionInventory.getMultipleOrderQuantity();
 
-			int[] allowedOrderQuantitiesArray =
+			BigDecimal[] allowedOrderQuantitiesArray =
 				cpDefinitionInventory.getAllowedOrderQuantitiesArray();
 
 			if ((allowedOrderQuantitiesArray != null) &&

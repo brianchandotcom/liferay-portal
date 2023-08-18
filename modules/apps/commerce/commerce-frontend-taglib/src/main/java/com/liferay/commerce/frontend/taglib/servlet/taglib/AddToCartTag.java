@@ -43,10 +43,13 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -98,15 +101,19 @@ public class AddToCartTag extends IncludeTag {
 				_productSettingsModel = _productHelper.getProductSettingsModel(
 					_cpCatalogEntry.getCPDefinitionId());
 
-				int multipleQuantity =
+				BigDecimal multipleQuantity =
 					_productSettingsModel.getMultipleQuantity();
 
-				int[] allowedQuantities = ArrayUtil.filter(
+				BigDecimal[] allowedQuantities = ArrayUtil.filter(
 					_productSettingsModel.getAllowedQuantities(),
 					quantity ->
-						(quantity >= _productSettingsModel.getMinQuantity()) &&
-						(quantity <= _productSettingsModel.getMaxQuantity()) &&
-						((quantity % multipleQuantity) == 0));
+						BigDecimalUtil.gte(
+							quantity, _productSettingsModel.getMinQuantity()) &&
+						BigDecimalUtil.lte(
+							quantity, _productSettingsModel.getMaxQuantity()) &&
+						BigDecimalUtil.eq(
+							quantity.remainder(multipleQuantity),
+							BigDecimal.ZERO));
 
 				_productSettingsModel.setAllowedQuantities(allowedQuantities);
 			}
@@ -131,10 +138,14 @@ public class AddToCartTag extends IncludeTag {
 			}
 
 			if (sku != null) {
-				_stockQuantity = _commerceInventoryEngine.getStockQuantity(
-					PortalUtil.getCompanyId(httpServletRequest),
-					_cpCatalogEntry.getGroupId(),
-					commerceContext.getCommerceChannelGroupId(), sku);
+				BigDecimal stockQuantity =
+					_commerceInventoryEngine.getStockQuantity(
+						PortalUtil.getCompanyId(httpServletRequest),
+						_cpCatalogEntry.getGroupId(),
+						commerceContext.getCommerceChannelGroupId(), sku,
+						StringPool.BLANK);
+
+				_stockQuantity = stockQuantity.intValue();
 
 				if (!_disabled) {
 					_disabled =

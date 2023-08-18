@@ -5,28 +5,30 @@
 
 package com.liferay.commerce.frontend.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Marco Leo
  */
 public class ProductSettingsModel {
 
-	public int[] getAllowedQuantities() {
+	public BigDecimal[] getAllowedQuantities() {
 		return _allowedQuantities;
 	}
 
-	public int getLowStockQuantity() {
+	public BigDecimal getLowStockQuantity() {
 		return _lowStockQuantity;
 	}
 
-	public int getMaxQuantity() {
+	public BigDecimal getMaxQuantity() {
 		return _maxQuantity;
 	}
 
-	public int getMinQuantity() {
+	public BigDecimal getMinQuantity() {
 		return _minQuantity;
 	}
 
-	public int getMultipleQuantity() {
+	public BigDecimal getMultipleQuantity() {
 		return _multipleQuantity;
 	}
 
@@ -38,7 +40,7 @@ public class ProductSettingsModel {
 		return _showAvailabilityDot;
 	}
 
-	public void setAllowedQuantities(int[] allowedQuantities) {
+	public void setAllowedQuantities(BigDecimal[] allowedQuantities) {
 		_allowedQuantities = allowedQuantities;
 	}
 
@@ -46,19 +48,19 @@ public class ProductSettingsModel {
 		_backOrders = backOrders;
 	}
 
-	public void setLowStockQuantity(int lowStockQuantity) {
+	public void setLowStockQuantity(BigDecimal lowStockQuantity) {
 		_lowStockQuantity = lowStockQuantity;
 	}
 
-	public void setMaxQuantity(int maxQuantity) {
+	public void setMaxQuantity(BigDecimal maxQuantity) {
 		_maxQuantity = maxQuantity;
 	}
 
-	public void setMinQuantity(int minQuantity) {
+	public void setMinQuantity(BigDecimal minQuantity) {
 		_minQuantity = minQuantity;
 	}
 
-	public void setMultipleQuantity(int multipleQuantity) {
+	public void setMultipleQuantity(BigDecimal multipleQuantity) {
 		_multipleQuantity = multipleQuantity;
 	}
 
@@ -66,12 +68,12 @@ public class ProductSettingsModel {
 		_showAvailabilityDot = showAvailabilityDot;
 	}
 
-	private int[] _allowedQuantities;
+	private BigDecimal[] _allowedQuantities;
 	private boolean _backOrders;
-	private int _lowStockQuantity;
-	private int _maxQuantity;
-	private int _minQuantity;
-	private int _multipleQuantity;
+	private BigDecimal _lowStockQuantity;
+	private BigDecimal _maxQuantity;
+	private BigDecimal _minQuantity;
+	private BigDecimal _multipleQuantity;
 	private boolean _showAvailabilityDot;
 
 }

@@ -450,13 +450,14 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public String getIncomingQuantityLabel(
-			long companyId, Locale locale, String sku, User user)
+			long companyId, Locale locale, String sku, String unitOfMeasureKey,
+			User user)
 		throws PortalException {
 
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
 			_commerceInventoryReplenishmentItemLocalService.
 				fetchCommerceInventoryReplenishmentItem(
-					companyId, sku,
+					companyId, sku, unitOfMeasureKey,
 					new CommerceInventoryReplenishmentItemAvailabilityDateComparator());
 
 		if (commerceInventoryReplenishmentItem == null) {
@@ -478,16 +479,20 @@ public class CPContentHelperImpl implements CPContentHelper {
 			});
 	}
 
-	public int getMinOrderQuantity(long cpDefinitionId) {
+	@Override
+	public BigDecimal getMinOrderQuantity(long cpDefinitionId) {
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 
-		if (cpDefinitionInventory == null) {
-			return CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+		BigDecimal minOrderQuantity =
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+
+		if (cpDefinitionInventory != null) {
+			minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
 		}
 
-		return cpDefinitionInventory.getMinOrderQuantity();
+		return minOrderQuantity;
 	}
 
 	@Override

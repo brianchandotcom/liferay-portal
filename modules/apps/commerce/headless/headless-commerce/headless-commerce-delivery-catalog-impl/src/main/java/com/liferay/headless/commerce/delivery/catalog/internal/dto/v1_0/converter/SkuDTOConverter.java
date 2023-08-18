@@ -113,8 +113,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				availability = _getAvailability(
 					cpInstance.getGroupId(),
 					commerceContext.getCommerceChannelGroupId(),
-					cpSkuDTOConverterConvertContext.getCompanyId(),
-					cpInstance.getSku(), cpInstance,
+					cpSkuDTOConverterConvertContext.getCompanyId(), cpInstance,
+					cpInstance.getSku(), StringPool.BLANK,
 					cpSkuDTOConverterConvertContext.getLocale());
 				DDMOptions = ddmOptions;
 				depth = cpInstance.getDepth();
@@ -129,7 +129,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					_cpContentHelper.getIncomingQuantityLabel(
 						cpSkuDTOConverterConvertContext.getCompanyId(),
 						cpSkuDTOConverterConvertContext.getLocale(),
-						cpInstance.getSku(),
+						cpInstance.getSku(), StringPool.BLANK,
 						cpSkuDTOConverterConvertContext.getUser());
 				manufacturerPartNumber = cpInstance.getManufacturerPartNumber();
 				price = _getPrice(
@@ -283,7 +283,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private Availability _getAvailability(
 			long commerceCatalogGroupId, long commerceChannelGroupId,
-			long companyId, String sku, CPInstance cpInstance, Locale locale)
+			long companyId, CPInstance cpInstance, String sku,
+			String unitOfMeasureKey, Locale locale)
 		throws Exception {
 
 		Availability availability = new Availability();
@@ -295,7 +296,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						commerceChannelGroupId,
 						_cpDefinitionInventoryEngine.getMinStockQuantity(
 							cpInstance),
-						cpInstance.getSku()),
+						cpInstance.getSku(), unitOfMeasureKey),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
 				availability.setLabel_i18n(_language.get(locale, "available"));
@@ -309,10 +310,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		}
 
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
-			availability.setStockQuantity(
+			BigDecimal stockQuantity =
 				_commerceInventoryEngine.getStockQuantity(
 					companyId, commerceCatalogGroupId, commerceChannelGroupId,
-					sku));
+					sku, unitOfMeasureKey);
+
+			availability.setStockQuantity(stockQuantity.intValue());
 		}
 
 		return availability;

@@ -36,7 +36,8 @@ public class CommerceInventoryBookedQuantityServiceImpl
 	@Override
 	public List<CommerceInventoryBookedQuantity>
 			getCommerceInventoryBookedQuantities(
-				long companyId, String sku, int start, int end)
+				long companyId, String sku, String unitOfMeasureKey, int start,
+				int end)
 		throws PrincipalException {
 
 		_portletResourcePermission.check(
@@ -44,13 +45,15 @@ public class CommerceInventoryBookedQuantityServiceImpl
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryBookedQuantityLocalService.
-			getCommerceInventoryBookedQuantities(companyId, sku, start, end);
+			getCommerceInventoryBookedQuantities(
+				companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
 	public List<CommerceInventoryBookedQuantity>
 			getCommerceInventoryBookedQuantities(
-				long companyId, String keywords, String sku, int start, int end)
+				long companyId, String keywords, String sku,
+				String unitOfMeasureKey, int start, int end)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -59,12 +62,12 @@ public class CommerceInventoryBookedQuantityServiceImpl
 
 		return commerceInventoryBookedQuantityLocalService.
 			getCommerceInventoryBookedQuantities(
-				companyId, keywords, sku, start, end);
+				companyId, keywords, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String sku)
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PrincipalException {
 
 		_portletResourcePermission.check(
@@ -72,12 +75,14 @@ public class CommerceInventoryBookedQuantityServiceImpl
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryBookedQuantityLocalService.
-			getCommerceInventoryBookedQuantitiesCount(companyId, sku);
+			getCommerceInventoryBookedQuantitiesCount(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
-			long companyId, String keywords, String sku)
+			long companyId, String keywords, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -85,7 +90,8 @@ public class CommerceInventoryBookedQuantityServiceImpl
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryBookedQuantityLocalService.
-			getCommerceInventoryBookedQuantitiesCount(companyId, keywords, sku);
+			getCommerceInventoryBookedQuantitiesCount(
+				companyId, keywords, sku, unitOfMeasureKey);
 	}
 
 	@Reference(

@@ -63,12 +63,15 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
+
 		List<CommerceInventoryReplenishmentItem>
 			commerceInventoryReplenishmentItems =
 				_commerceInventoryReplenishmentItemService.
-					getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
+					getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 						_portal.getCompanyId(httpServletRequest), sku,
-						fdsPagination.getStartPosition(),
+						unitOfMeasureKey, fdsPagination.getStartPosition(),
 						fdsPagination.getEndPosition());
 
 		for (CommerceInventoryReplenishmentItem
@@ -79,13 +82,13 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 				commerceInventoryReplenishmentItem.
 					getCommerceInventoryWarehouse();
 
-			int quantity = 0;
+			BigDecimal quantity = BigDecimal.ZERO;
 
 			BigDecimal commerceInventoryWarehouseItemQuantity =
 				commerceInventoryReplenishmentItem.getQuantity();
 
 			if (commerceInventoryWarehouseItemQuantity != null) {
-				quantity = commerceInventoryWarehouseItemQuantity.intValue();
+				quantity = commerceInventoryWarehouseItemQuantity;
 			}
 
 			replenishments.add(
@@ -110,9 +113,13 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
+
 		return _commerceInventoryReplenishmentItemService.
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				_portal.getCompanyId(httpServletRequest), sku);
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+				_portal.getCompanyId(httpServletRequest), sku,
+				unitOfMeasureKey);
 	}
 
 	@Reference

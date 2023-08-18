@@ -50,11 +50,14 @@ public class CommerceInventoryWarehouseFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
+
 		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems =
 			_commerceInventoryWarehouseItemService.
-				getCommerceInventoryWarehouseItemsByCompanyIdAndSku(
+				getCommerceInventoryWarehouseItemsByCompanyIdSkuAndUnitOfMeasureKey(
 					_portal.getCompanyId(httpServletRequest), sku,
-					fdsPagination.getStartPosition(),
+					unitOfMeasureKey, fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition());
 
 		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
@@ -63,38 +66,37 @@ public class CommerceInventoryWarehouseFDSDataProvider
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
-			int stockQuantity = 0;
+			BigDecimal stockQuantity = BigDecimal.ZERO;
 
 			BigDecimal commerceInventoryWarehouseItemQuantity =
 				commerceInventoryWarehouseItem.getQuantity();
 
 			if (commerceInventoryWarehouseItemQuantity != null) {
-				stockQuantity =
-					commerceInventoryWarehouseItemQuantity.intValue();
+				stockQuantity = commerceInventoryWarehouseItemQuantity;
 			}
 
-			int reservedQuantity = 0;
+			BigDecimal reservedQuantity = BigDecimal.ZERO;
 
 			BigDecimal commerceInventoryWarehouseItemReservedQuantity =
 				commerceInventoryWarehouseItem.getReservedQuantity();
 
 			if (commerceInventoryWarehouseItemReservedQuantity != null) {
 				reservedQuantity =
-					commerceInventoryWarehouseItemReservedQuantity.intValue();
+					commerceInventoryWarehouseItemReservedQuantity;
 			}
 
-			int replenishmentQuantity = 0;
+			BigDecimal replenishmentQuantity = BigDecimal.ZERO;
 
 			BigDecimal commerceInventoryReplenishmentItemsCount =
 				_commerceInventoryReplenishmentItemService.
 					getCommerceInventoryReplenishmentItemsCount(
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
-						sku);
+						sku, unitOfMeasureKey);
 
 			if (commerceInventoryReplenishmentItemsCount != null) {
 				replenishmentQuantity =
-					commerceInventoryReplenishmentItemsCount.intValue();
+					commerceInventoryReplenishmentItemsCount;
 			}
 
 			warehouses.add(
@@ -103,7 +105,7 @@ public class CommerceInventoryWarehouseFDSDataProvider
 						getCommerceInventoryWarehouseItemId(),
 					commerceInventoryWarehouse.getName(
 						_portal.getLocale(httpServletRequest)),
-					stockQuantity, reservedQuantity, replenishmentQuantity));
+					replenishmentQuantity, reservedQuantity, stockQuantity));
 		}
 
 		return warehouses;
@@ -116,9 +118,13 @@ public class CommerceInventoryWarehouseFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
+
 		return _commerceInventoryWarehouseItemService.
 			getCommerceInventoryWarehouseItemsCount(
-				_portal.getCompanyId(httpServletRequest), sku);
+				_portal.getCompanyId(httpServletRequest), sku,
+				unitOfMeasureKey);
 	}
 
 	@Reference

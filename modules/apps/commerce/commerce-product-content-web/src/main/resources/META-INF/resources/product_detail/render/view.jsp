@@ -88,7 +88,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="m-0" data-text-cp-instance-incoming-quantity-label>
 					<c:if test="<%= cpSku != null %>">
-						<%= cpContentHelper.getIncomingQuantityLabel(company.getCompanyId(), locale, cpSku.getSku(), user) %>
+						<%= cpContentHelper.getIncomingQuantityLabel(company.getCompanyId(), locale, cpSku.getSku(), StringPool.BLANK, user) %>
 					</c:if>
 				</p>
 
@@ -179,12 +179,12 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 			</c:if>
 
 			<%
-			int minOrderQuantity = cpContentHelper.getMinOrderQuantity(cpDefinitionId);
+			BigDecimal minOrderQuantity = cpContentHelper.getMinOrderQuantity(cpDefinitionId);
 			%>
 
-			<c:if test="<%= minOrderQuantity > CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY %>">
+			<c:if test="<%= BigDecimalUtil.gt(minOrderQuantity, CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY) %>">
 				<span class="min-quantity-per-order">
-					<liferay-ui:message arguments="<%= minOrderQuantity %>" key="minimum-quantity-per-order-x" />
+					<liferay-ui:message arguments="<%= minOrderQuantity.intValue() %>" key="minimum-quantity-per-order-x" />
 				</span>
 			</c:if>
 

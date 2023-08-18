@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -259,21 +260,23 @@ public class CommerceOrderGenerator {
 				_cpDefinitionInventoryEngineRegistry.
 					getCPDefinitionInventoryEngine(cpDefinitionInventory);
 
-			int maxOrderQuantity = _getMaxOrderQuantity(
+			BigDecimal maxOrderQuantity = _getMaxOrderQuantity(
 				cpInstance, cpDefinitionInventoryEngine);
 
-			if (maxOrderQuantity < 1) {
+			if (BigDecimalUtil.lt(maxOrderQuantity, BigDecimal.ONE)) {
 				continue;
 			}
 
 			// Add commerce order item
 
 			try {
+				BigDecimal minOrderQuantity =
+					cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
+
 				BigDecimal quantity = BigDecimal.valueOf(
 					_randomInt(
-						cpDefinitionInventoryEngine.getMinOrderQuantity(
-							cpInstance),
-						maxOrderQuantity));
+						minOrderQuantity.intValue(),
+						maxOrderQuantity.intValue()));
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(
 					commerceOrder.getUserId(),
@@ -425,19 +428,19 @@ public class CommerceOrderGenerator {
 		return commerceShippingMethod.getCommerceShippingMethodId();
 	}
 
-	private int _getMaxOrderQuantity(
+	private BigDecimal _getMaxOrderQuantity(
 			CPInstance cpInstance,
 			CPDefinitionInventoryEngine cpDefinitionInventoryEngine)
 		throws PortalException {
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+		BigDecimal stockQuantity = _commerceInventoryEngine.getStockQuantity(
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
-			cpInstance.getSku());
+			cpInstance.getSku(), StringPool.BLANK);
 
-		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
-			cpInstance);
+		BigDecimal maxOrderQuantity =
+			cpDefinitionInventoryEngine.getMaxOrderQuantity(cpInstance);
 
-		if (stockQuantity < maxOrderQuantity) {
+		if (BigDecimalUtil.lt(stockQuantity, maxOrderQuantity)) {
 			return stockQuantity;
 		}
 

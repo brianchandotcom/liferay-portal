@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.inventory.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
@@ -12,20 +14,21 @@ package com.liferay.commerce.inventory.model;
 public class CIWarehouseItem {
 
 	public CIWarehouseItem(
-		String skuCode, int stockQuantity, int bookedQuantity,
-		int replenishmentQuantity) {
+		String skuCode, String unitOfMeasureKey, BigDecimal bookedQuantity,
+		BigDecimal replenishmentQuantity, BigDecimal stockQuantity) {
 
 		_skuCode = skuCode;
-		_stockQuantity = stockQuantity;
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_bookedQuantity = bookedQuantity;
 		_replenishmentQuantity = replenishmentQuantity;
+		_stockQuantity = stockQuantity;
 	}
 
-	public int getBookedQuantity() {
+	public BigDecimal getBookedQuantity() {
 		return _bookedQuantity;
 	}
 
-	public int getReplenishmentQuantity() {
+	public BigDecimal getReplenishmentQuantity() {
 		return _replenishmentQuantity;
 	}
 
@@ -33,15 +36,19 @@ public class CIWarehouseItem {
 		return _skuCode;
 	}
 
-	public int getStockQuantity() {
+	public BigDecimal getStockQuantity() {
 		return _stockQuantity;
 	}
 
-	public void setBookedQuantity(int bookedQuantity) {
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
+	public void setBookedQuantity(BigDecimal bookedQuantity) {
 		_bookedQuantity = bookedQuantity;
 	}
 
-	public void setReplenishmentQuantity(int replenishmentQuantity) {
+	public void setReplenishmentQuantity(BigDecimal replenishmentQuantity) {
 		_replenishmentQuantity = replenishmentQuantity;
 	}
 
@@ -49,13 +56,18 @@ public class CIWarehouseItem {
 		_skuCode = skuCode;
 	}
 
-	public void setStockQuantity(int stockQuantity) {
+	public void setStockQuantity(BigDecimal stockQuantity) {
 		_stockQuantity = stockQuantity;
 	}
 
-	private int _bookedQuantity;
-	private int _replenishmentQuantity;
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	private BigDecimal _bookedQuantity;
+	private BigDecimal _replenishmentQuantity;
 	private String _skuCode;
-	private int _stockQuantity;
+	private BigDecimal _stockQuantity;
+	private String _unitOfMeasureKey;
 
 }

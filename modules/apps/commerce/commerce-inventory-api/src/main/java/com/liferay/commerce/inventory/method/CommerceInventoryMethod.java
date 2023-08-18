@@ -7,6 +7,8 @@ package com.liferay.commerce.inventory.method;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -16,35 +18,40 @@ import java.util.Map;
 public interface CommerceInventoryMethod {
 
 	public void consumeQuantity(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity, long bookedQuantityId, Map<String, String> context)
+			long userId, long bookedQuantityId,
+			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
+			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException;
 
 	public void decreaseStockQuantity(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
+			long userId, long commerceInventoryWarehouseId, BigDecimal quantity,
+			String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public String getAvailabilityStatus(
-		long companyId, long commerceChannelGroupId, int minStockQuantity,
-		String sku);
+		long companyId, long commerceChannelGroupId,
+		BigDecimal minStockQuantity, String sku, String unitOfMeasureKey);
 
 	public String getKey();
 
 	public String getLabel(Locale locale);
 
-	public int getStockQuantity(
-			long companyId, long commerceChannelGroupId, String sku)
+	public BigDecimal getStockQuantity(
+			long companyId, long commerceChannelGroupId, String sku,
+			String unitOfMeasureKey)
 		throws PortalException;
 
-	public int getStockQuantity(long companyId, String sku)
+	public BigDecimal getStockQuantity(
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
-	public boolean hasStockQuantity(long companyId, String sku, int quantity);
+	public boolean hasStockQuantity(
+		long companyId, BigDecimal quantity, String sku,
+		String unitOfMeasureKey);
 
 	public void increaseStockQuantity(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
+			long userId, long commerceInventoryWarehouseId, BigDecimal quantity,
+			String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 }

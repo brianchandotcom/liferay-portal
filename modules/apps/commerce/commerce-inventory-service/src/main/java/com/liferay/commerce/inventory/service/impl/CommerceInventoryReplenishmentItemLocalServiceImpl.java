@@ -92,20 +92,20 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 
 	@Override
 	public void deleteCommerceInventoryReplenishmentItems(
-		long companyId, String sku) {
+		long companyId, String sku, String unitOfMeasureKey) {
 
-		commerceInventoryReplenishmentItemPersistence.removeByC_S(
-			companyId, sku);
+		commerceInventoryReplenishmentItemPersistence.removeByC_S_U(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	public CommerceInventoryReplenishmentItem
 		fetchCommerceInventoryReplenishmentItem(
-			long companyId, String sku,
+			long companyId, String sku, String unitOfMeasureKey,
 			OrderByComparator<CommerceInventoryReplenishmentItem>
 				orderByComparator) {
 
-		return commerceInventoryReplenishmentItemPersistence.fetchByC_S_First(
-			companyId, sku, orderByComparator);
+		return commerceInventoryReplenishmentItemPersistence.fetchByC_S_U_First(
+			companyId, sku, unitOfMeasureKey, orderByComparator);
 	}
 
 	@Override
@@ -120,16 +120,18 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 
 	@Override
 	public List<CommerceInventoryReplenishmentItem>
-		getCommerceInventoryReplenishmentItemsByCompanyIdAndSku(
-			long companyId, String sku, int start, int end) {
+		getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end) {
 
-		return commerceInventoryReplenishmentItemPersistence.findByC_S(
-			companyId, sku, start, end);
+		return commerceInventoryReplenishmentItemPersistence.findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
 	public BigDecimal getCommerceInventoryReplenishmentItemsCount(
-		long commerceInventoryWarehouseId, String sku) {
+		long commerceInventoryWarehouseId, String sku,
+		String unitOfMeasureKey) {
 
 		DynamicQuery dynamicQuery =
 			commerceInventoryReplenishmentItemLocalService.dynamicQuery();
@@ -146,6 +148,13 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 		Property skuProperty = PropertyFactoryUtil.forName("sku");
 
 		dynamicQuery.add(skuProperty.eq(sku));
+
+		if (Validator.isNotNull(unitOfMeasureKey)) {
+			Property unitOfMeasureKeyProperty = PropertyFactoryUtil.forName(
+				"unitOfMeasureKey");
+
+			dynamicQuery.add(unitOfMeasureKeyProperty.eq(unitOfMeasureKey));
+		}
 
 		List<BigDecimal> results =
 			commerceInventoryReplenishmentItemLocalService.dynamicQuery(
@@ -168,11 +177,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-		long companyId, String sku) {
+	public int
+		getCommerceInventoryReplenishmentItemsCountByCompanyIdSkuAndUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey) {
 
-		return commerceInventoryReplenishmentItemPersistence.countByC_S(
-			companyId, sku);
+		return commerceInventoryReplenishmentItemPersistence.countByC_S_U(
+			companyId, sku, unitOfMeasureKey);
 	}
 
 	@Override

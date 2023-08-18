@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -100,16 +103,18 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+		BigDecimal stockQuantity = _commerceInventoryEngine.getStockQuantity(
 			commerceOrderItem.getCompanyId(), cpInstance.getGroupId(),
-			commerceOrderItem.getSku());
+			commerceOrderItem.getSku(),
+			commerceOrderItem.getUnitOfMeasureKey());
 
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (stockQuantity <= cpDefinitionInventoryEngine.getMinStockQuantity(
-				cpInstance)) {
+		if (BigDecimalUtil.lte(
+				stockQuantity,
+				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance))) {
 
 			commerceLowStockActivity.execute(cpInstance);
 		}

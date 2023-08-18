@@ -311,7 +311,8 @@ public class CSVCommerceOrderImporterTypeImpl
 
 			if ((firstAvailableReplacementCPInstance != null) &&
 				!_cpAvailabilityChecker.check(
-					commerceChannelGroupId, cpInstance, quantity.intValue())) {
+					commerceChannelGroupId, cpInstance, StringPool.BLANK,
+					quantity)) {
 
 				commerceOrderImporterItemImpl.setReplacingSKU(
 					cpInstance.getSku());

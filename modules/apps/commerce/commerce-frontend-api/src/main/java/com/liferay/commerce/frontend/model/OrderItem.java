@@ -5,14 +5,17 @@
 
 package com.liferay.commerce.frontend.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alec Sloan
  */
 public class OrderItem {
 
 	public OrderItem(
-		int available, Icon icon, long orderId, long orderItemId, int quantity,
-		String shippingMethodAndOptionName, String sku) {
+		BigDecimal available, Icon icon, long orderId, long orderItemId,
+		BigDecimal quantity, String shippingMethodAndOptionName, String sku,
+		String unitOfMeasureKey) {
 
 		_available = available;
 		_icon = icon;
@@ -21,9 +24,10 @@ public class OrderItem {
 		_quantity = quantity;
 		_shippingMethodAndOptionName = shippingMethodAndOptionName;
 		_sku = sku;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
-	public int getAvailable() {
+	public BigDecimal getAvailable() {
 		return _available;
 	}
 
@@ -39,7 +43,7 @@ public class OrderItem {
 		return _orderItemId;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -51,12 +55,17 @@ public class OrderItem {
 		return _sku;
 	}
 
-	private final int _available;
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
+	private final BigDecimal _available;
 	private final Icon _icon;
 	private final long _orderId;
 	private final long _orderItemId;
-	private final int _quantity;
+	private final BigDecimal _quantity;
 	private final String _shippingMethodAndOptionName;
 	private final String _sku;
+	private final String _unitOfMeasureKey;
 
 }

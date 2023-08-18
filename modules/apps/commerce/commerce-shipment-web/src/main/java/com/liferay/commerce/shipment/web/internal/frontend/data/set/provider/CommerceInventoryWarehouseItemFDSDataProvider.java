@@ -129,7 +129,8 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 				_commerceInventoryWarehouseItemService.
 					fetchCommerceInventoryWarehouseItem(
 						commerceInventoryWarehouseId,
-						commerceOrderItem.getSku());
+						commerceOrderItem.getSku(),
+						commerceOrderItem.getUnitOfMeasureKey());
 
 			if (commerceInventoryWarehouseItem != null) {
 				int quantity = 0;
@@ -198,7 +199,8 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 		return _commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsCount(
 				_portal.getCompanyId(httpServletRequest),
-				commerceOrderItem.getGroupId(), commerceOrderItem.getSku());
+				commerceOrderItem.getGroupId(), commerceOrderItem.getSku(),
+				commerceOrderItem.getUnitOfMeasureKey());
 	}
 
 	@Reference

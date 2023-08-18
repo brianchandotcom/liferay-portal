@@ -34,7 +34,8 @@ public class CommerceInventoryAuditServiceImpl
 
 	@Override
 	public List<CommerceInventoryAudit> getCommerceInventoryAudits(
-			long companyId, String sku, int start, int end)
+			long companyId, String sku, String unitOfMeasureKey, int start,
+			int end)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -42,11 +43,12 @@ public class CommerceInventoryAuditServiceImpl
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryAuditLocalService.getCommerceInventoryAudits(
-			companyId, sku, start, end);
+			companyId, sku, unitOfMeasureKey, start, end);
 	}
 
 	@Override
-	public int getCommerceInventoryAuditsCount(long companyId, String sku)
+	public int getCommerceInventoryAuditsCount(
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -54,7 +56,7 @@ public class CommerceInventoryAuditServiceImpl
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryAuditLocalService.
-			getCommerceInventoryAuditsCount(companyId, sku);
+			getCommerceInventoryAuditsCount(companyId, sku, unitOfMeasureKey);
 	}
 
 	@Reference(

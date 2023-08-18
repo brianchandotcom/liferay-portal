@@ -86,7 +86,7 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		return _commerceInventoryWarehouseItemService.
 			fetchCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				cpInstance.getSku());
+				cpInstance.getSku(), StringPool.BLANK);
 	}
 
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()

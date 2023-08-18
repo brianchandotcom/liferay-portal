@@ -149,8 +149,7 @@ public class PriceCPContentContributor implements CPContentContributor {
 		commerceProductPriceRequest.setCpInstanceId(
 			cpInstance.getCPInstanceId());
 		commerceProductPriceRequest.setQuantity(
-			BigDecimal.valueOf(
-				cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance)));
+			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
 		commerceProductPriceRequest.setSecure(false);
 		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
 

@@ -112,7 +112,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
 			_cpAvailabilityChecker.check(
-				commerceChannelGroupId, cpInstance,
+				commerceChannelGroupId, cpInstance, StringPool.BLANK,
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {
 
 			return null;
@@ -813,7 +813,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		if ((cpInstance == null) || !cpInstance.isDiscontinued() ||
 			_cpAvailabilityChecker.check(
-				commerceChannelGroupId, cpInstance,
+				commerceChannelGroupId, cpInstance, StringPool.BLANK,
 				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance))) {
 
 			return cpInstance;

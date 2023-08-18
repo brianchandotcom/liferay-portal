@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -48,7 +50,7 @@ public class ConsumeQuantityCommerceInventoryAuditTypeImpl
 	}
 
 	@Override
-	public String formatQuantity(int quantity, Locale locale) {
+	public String formatQuantity(BigDecimal quantity, Locale locale) {
 		return StringPool.MINUS + StringPool.SPACE + quantity;
 	}
 

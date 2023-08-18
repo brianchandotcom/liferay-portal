@@ -52,10 +52,12 @@ public class TransferQuantitiesMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "toCommerceInventoryWarehouseId");
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		String sku = ParamUtil.getString(actionRequest, "sku");
+		String unitOfMeasureKey = ParamUtil.getString(
+			actionRequest, "unitOfMeasureKey");
 
 		_commerceInventoryWarehouseItemService.moveQuantitiesBetweenWarehouses(
 			fromCommerceInventoryWarehouseId, toCommerceInventoryWarehouseId,
-			BigDecimal.valueOf(quantity), sku);
+			BigDecimal.valueOf(quantity), sku, unitOfMeasureKey);
 	}
 
 	@Reference

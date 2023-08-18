@@ -100,12 +100,16 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long companyId = _portal.getCompanyId(actionRequest);
 
 		String sku = ParamUtil.getString(actionRequest, "sku");
+		String unitOfMeasureKey = ParamUtil.getString(
+			actionRequest, "unitOfMeasureKey");
 
 		_commerceInventoryWarehouseItemService.
-			deleteCommerceInventoryWarehouseItems(companyId, sku);
+			deleteCommerceInventoryWarehouseItems(
+				companyId, sku, unitOfMeasureKey);
 
 		_commerceInventoryReplenishmentItemService.
-			deleteCommerceInventoryReplenishmentItems(companyId, sku);
+			deleteCommerceInventoryReplenishmentItems(
+				companyId, sku, unitOfMeasureKey);
 	}
 
 	private void _updateCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -114,20 +118,22 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		String unitOfMeasureKey = ParamUtil.getString(
+			actionRequest, "unitOfMeasureKey");
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				fetchCommerceInventoryWarehouseItem(
-					commerceInventoryWarehouseId, sku);
+					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
 					StringPool.BLANK, commerceInventoryWarehouseId,
-					BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
+					BigDecimal.valueOf(quantity), sku, unitOfMeasureKey);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.

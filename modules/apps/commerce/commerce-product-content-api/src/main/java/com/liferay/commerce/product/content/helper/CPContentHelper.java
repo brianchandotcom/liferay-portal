@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -125,10 +127,11 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public String getIncomingQuantityLabel(
-			long companyId, Locale locale, String sku, User user)
+			long companyId, Locale locale, String sku, String unitOfMeasureKey,
+			User user)
 		throws PortalException;
 
-	public int getMinOrderQuantity(long cpDefinitionId);
+	public BigDecimal getMinOrderQuantity(long cpDefinitionId);
 
 	public String getReplacementCommerceProductFriendlyURL(
 			CPSku cpSku, ThemeDisplay themeDisplay)

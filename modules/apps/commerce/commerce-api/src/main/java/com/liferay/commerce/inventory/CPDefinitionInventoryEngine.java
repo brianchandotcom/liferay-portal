@@ -8,6 +8,8 @@ package com.liferay.commerce.inventory;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 /**
@@ -25,16 +27,16 @@ public interface CPDefinitionInventoryEngine {
 
 	public String getLabel(Locale locale);
 
-	public int getMaxOrderQuantity(CPInstance cpInstance)
+	public BigDecimal getMaxOrderQuantity(CPInstance cpInstance)
 		throws PortalException;
 
-	public int getMinOrderQuantity(CPInstance cpInstance)
+	public BigDecimal getMinOrderQuantity(CPInstance cpInstance)
 		throws PortalException;
 
-	public int getMinStockQuantity(CPInstance cpInstance)
+	public BigDecimal getMinStockQuantity(CPInstance cpInstance)
 		throws PortalException;
 
-	public int getMultipleOrderQuantity(CPInstance cpInstance)
+	public BigDecimal getMultipleOrderQuantity(CPInstance cpInstance)
 		throws PortalException;
 
 	public boolean isBackOrderAllowed(CPInstance cpInstance)

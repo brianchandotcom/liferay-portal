@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.inventory.type;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public interface CommerceInventoryAuditType {
 	public String formatLog(long userId, String context, Locale locale)
 		throws Exception;
 
-	public String formatQuantity(int quantity, Locale locale);
+	public String formatQuantity(BigDecimal quantity, Locale locale);
 
 	public String getLog(Map<String, String> context);
 

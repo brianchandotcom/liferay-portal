@@ -116,14 +116,17 @@ public class CommerceShippableOrderItemsFDSDataProvider
 							commerceOrderItem.getCompanyId(),
 							commerceCatalogGroupId,
 							commerceOrderItem.getGroupId(),
-							commerceOrderItem.getSku()),
+							commerceOrderItem.getSku(),
+							commerceOrderItem.getUnitOfMeasureKey()),
 						icon, commerceOrderItem.getCommerceOrderId(),
 						commerceOrderItem.getCommerceOrderItemId(),
-						quantity.intValue() -
-							commerceOrderItem.getShippedQuantity(),
+						quantity.subtract(
+							BigDecimal.valueOf(
+								commerceOrderItem.getShippedQuantity())),
 						_getShippingMethodAndOptionName(
 							commerceOrder, httpServletRequest),
-						commerceOrderItem.getSku()));
+						commerceOrderItem.getSku(),
+						commerceOrderItem.getUnitOfMeasureKey()));
 			}
 		}
 

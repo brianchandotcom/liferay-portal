@@ -9,6 +9,7 @@ import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -39,21 +40,21 @@ public class ProductConfigurationUtil {
 			GetterUtil.get(
 				productConfiguration.getDisplayStockQuantity(),
 				cpDefinitionInventory.isDisplayStockQuantity()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				productConfiguration.getMinStockQuantity(),
 				cpDefinitionInventory.getMinStockQuantity()),
 			GetterUtil.get(
 				productConfiguration.getAllowBackOrder(),
 				cpDefinitionInventory.isBackOrders()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				productConfiguration.getMinOrderQuantity(),
 				cpDefinitionInventory.getMinOrderQuantity()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				productConfiguration.getMaxOrderQuantity(),
 				cpDefinitionInventory.getMaxOrderQuantity()),
 			_getAllowedOrderQuantities(
 				cpDefinitionInventory, productConfiguration),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				productConfiguration.getMultipleOrderQuantity(),
 				cpDefinitionInventory.getMultipleOrderQuantity()));
 	}

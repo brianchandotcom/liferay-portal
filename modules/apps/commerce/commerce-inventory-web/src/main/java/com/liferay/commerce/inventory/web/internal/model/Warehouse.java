@@ -5,6 +5,10 @@
 
 package com.liferay.commerce.inventory.web.internal.model;
 
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+
+import java.math.BigDecimal;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
@@ -12,25 +16,26 @@ package com.liferay.commerce.inventory.web.internal.model;
 public class Warehouse {
 
 	public Warehouse(
-		long commerceInventoryWarehouseItemId, String warehouse, int quantity,
-		int reserved, long incoming) {
+		long commerceInventoryWarehouseItemId, String warehouse,
+		BigDecimal incoming, BigDecimal reserved, BigDecimal quantity) {
 
 		_commerceInventoryWarehouseItemId = commerceInventoryWarehouseItemId;
 		_warehouse = warehouse;
-		_quantity = quantity;
+		_incoming = incoming;
 		_reserved = reserved;
+		_quantity = quantity;
 
-		if ((quantity > 0) && (reserved >= 0)) {
-			_available = quantity - reserved;
+		if (BigDecimalUtil.gt(quantity, BigDecimal.ZERO) &&
+			BigDecimalUtil.gte(reserved, BigDecimal.ZERO)) {
+
+			_available = quantity.subtract(reserved);
 		}
 		else {
-			_available = 0;
+			_available = BigDecimal.ZERO;
 		}
-
-		_incoming = incoming;
 	}
 
-	public int getAvailable() {
+	public BigDecimal getAvailable() {
 		return _available;
 	}
 
@@ -38,15 +43,15 @@ public class Warehouse {
 		return _commerceInventoryWarehouseItemId;
 	}
 
-	public long getIncoming() {
+	public BigDecimal getIncoming() {
 		return _incoming;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
-	public int getReserved() {
+	public BigDecimal getReserved() {
 		return _reserved;
 	}
 
@@ -54,11 +59,11 @@ public class Warehouse {
 		return _warehouse;
 	}
 
-	private final int _available;
+	private final BigDecimal _available;
 	private final long _commerceInventoryWarehouseItemId;
-	private final long _incoming;
-	private final int _quantity;
-	private final int _reserved;
+	private final BigDecimal _incoming;
+	private final BigDecimal _quantity;
+	private final BigDecimal _reserved;
 	private final String _warehouse;
 
 }

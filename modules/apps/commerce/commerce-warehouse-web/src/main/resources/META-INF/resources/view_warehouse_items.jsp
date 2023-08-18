@@ -59,19 +59,19 @@ if (Validator.isNotNull(backURL)) {
 							CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventoryWarehouseItemsDisplayContext.getCommerceInventoryWarehouseItem(commerceInventoryWarehouse);
 
 							long commerceInventoryWarehouseItemId = 0;
-							int quantity = 0;
+							BigDecimal quantity = BigDecimal.ZERO;
 							long mvccVersion = 0;
 
 							if (commerceInventoryWarehouseItem != null) {
 								commerceInventoryWarehouseItemId = commerceInventoryWarehouseItem.getCommerceInventoryWarehouseItemId();
 
+								mvccVersion = commerceInventoryWarehouseItem.getMvccVersion();
+
 								BigDecimal commerceInventoryWarehouseItemQuantity = commerceInventoryWarehouseItem.getQuantity();
 
 								if (commerceInventoryWarehouseItemQuantity != null) {
-									quantity = commerceInventoryWarehouseItemQuantity.intValue();
+									quantity = commerceInventoryWarehouseItemQuantity;
 								}
-
-								mvccVersion = commerceInventoryWarehouseItem.getMvccVersion();
 							}
 
 							int curIndex = commerceInventoryWarehouses.indexOf(commerceInventoryWarehouse);
@@ -82,7 +82,7 @@ if (Validator.isNotNull(backURL)) {
 									<%= HtmlUtil.escape(commerceInventoryWarehouse.getName(locale)) %>
 								</td>
 								<td>
-									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= quantity %>" wrapperCssClass="m-0" />
+									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= quantity.intValue() %>" wrapperCssClass="m-0" />
 								</td>
 								<td class="text-center">
 									<aui:button cssClass="warehouse-save-btn" name='<%= "saveButton" + curIndex %>' primary="<%= true %>" value="save" />

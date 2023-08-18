@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -37,9 +39,10 @@ public class CPDefinitionInventoryServiceImpl
 	public CPDefinitionInventory addCPDefinitionInventory(
 			long cpDefinitionId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, BigDecimal minStockQuantity,
+			boolean backOrders, BigDecimal minOrderQuantity,
+			BigDecimal maxOrderQuantity, String allowedOrderQuantities,
+			BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
@@ -83,41 +86,14 @@ public class CPDefinitionInventoryServiceImpl
 		return cpDefinitionInventory;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CPDefinitionInventory updateCPDefinitionInventory(
-			long groupId, long cpDefinitionInventoryId,
-			String cpDefinitionInventoryEngine, String lowStockActivity,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minOrderQuantity,
-			int maxOrderQuantity, String allowedOrderQuantities,
-			int multipleOrderQuantity)
-		throws PortalException {
-
-		CPDefinitionInventory cpDefinitionInventory =
-			cpDefinitionInventoryLocalService.getCPDefinitionInventory(
-				cpDefinitionInventoryId);
-
-		_checkCommerceCatalog(
-			cpDefinitionInventory.getCPDefinitionId(), ActionKeys.UPDATE);
-
-		return cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
-			cpDefinitionInventoryId, cpDefinitionInventoryEngine,
-			lowStockActivity, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
-			allowedOrderQuantities, multipleOrderQuantity);
-	}
-
 	@Override
 	public CPDefinitionInventory updateCPDefinitionInventory(
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
-			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
-			String allowedOrderQuantities, int multipleOrderQuantity)
+			boolean displayStockQuantity, BigDecimal minStockQuantity,
+			boolean backOrders, BigDecimal minOrderQuantity,
+			BigDecimal maxOrderQuantity, String allowedOrderQuantities,
+			BigDecimal multipleOrderQuantity)
 		throws PortalException {
 
 		CPDefinitionInventory cpDefinitionInventory =

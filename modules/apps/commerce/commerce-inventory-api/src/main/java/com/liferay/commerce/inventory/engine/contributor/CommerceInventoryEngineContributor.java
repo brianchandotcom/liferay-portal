@@ -7,6 +7,8 @@ package com.liferay.commerce.inventory.engine.contributor;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import java.util.Map;
 
 /**
@@ -15,18 +17,19 @@ import java.util.Map;
 public interface CommerceInventoryEngineContributor {
 
 	public void consumeQuantityContribute(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity, long bookedQuantityId, Map<String, String> context)
+			long userId, long bookedQuantityId,
+			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
+			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException;
 
 	public void decreaseStockQuantityContribute(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
+			long userId, long commerceInventoryWarehouseId, BigDecimal quantity,
+			String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public void increaseStockQuantityContribute(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
+			long userId, long commerceInventoryWarehouseId, BigDecimal quantity,
+			String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 }

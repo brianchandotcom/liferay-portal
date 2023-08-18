@@ -5,35 +5,44 @@
 
 package com.liferay.commerce.inventory.web.internal.model;
 
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+
+import java.math.BigDecimal;
+
 /**
  * @author Luca Pellizzon
  */
 public class InventoryItem {
 
-	public InventoryItem(String sku, int stock, int booked, int incoming) {
+	public InventoryItem(
+		String sku, String unitOfMeasureKey, BigDecimal booked,
+		BigDecimal incoming, BigDecimal stock) {
+
 		_sku = sku;
-		_stock = stock;
-
-		if ((stock > 0) && (booked >= 0)) {
-			_available = stock - booked;
-		}
-		else {
-			_available = 0;
-		}
-
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_booked = booked;
 		_incoming = incoming;
+		_stock = stock;
+
+		if (BigDecimalUtil.gt(stock, BigDecimal.ZERO) &&
+			BigDecimalUtil.gte(booked, BigDecimal.ZERO)) {
+
+			_available = stock.subtract(booked);
+		}
+		else {
+			_available = BigDecimal.ZERO;
+		}
 	}
 
-	public int getAvailable() {
+	public BigDecimal getAvailable() {
 		return _available;
 	}
 
-	public int getBooked() {
+	public BigDecimal getBooked() {
 		return _booked;
 	}
 
-	public int getIncoming() {
+	public BigDecimal getIncoming() {
 		return _incoming;
 	}
 
@@ -41,14 +50,19 @@ public class InventoryItem {
 		return _sku;
 	}
 
-	public int getStock() {
+	public BigDecimal getStock() {
 		return _stock;
 	}
 
-	private final int _available;
-	private final int _booked;
-	private final int _incoming;
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
+	private final BigDecimal _available;
+	private final BigDecimal _booked;
+	private final BigDecimal _incoming;
 	private final String _sku;
-	private final int _stock;
+	private final BigDecimal _stock;
+	private final String _unitOfMeasureKey;
 
 }

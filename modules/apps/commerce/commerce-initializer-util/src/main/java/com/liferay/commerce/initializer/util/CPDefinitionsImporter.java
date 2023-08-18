@@ -590,19 +590,26 @@ public class CPDefinitionsImporter {
 			"displayAvailability");
 		boolean displayStockQuantity = jsonObject.getBoolean(
 			"displayStockQuantity");
-		int minStockQuantity = jsonObject.getInt("minStockQuantity");
+		BigDecimal minStockQuantity = BigDecimal.valueOf(
+			jsonObject.getInt("minStockQuantity"));
 		boolean backOrders = jsonObject.getBoolean("backOrders");
-		int minOrderQuantity = jsonObject.getInt(
-			"minOrderQuantity",
-			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY);
-		int maxOrderQuantity = jsonObject.getInt(
-			"maxOrderQuantity",
-			CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY);
+		BigDecimal minOrderQuantity = BigDecimal.valueOf(
+			jsonObject.getInt(
+				"minOrderQuantity",
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY.
+					intValue()));
+		BigDecimal maxOrderQuantity = BigDecimal.valueOf(
+			jsonObject.getInt(
+				"maxOrderQuantity",
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY.
+					intValue()));
 		String allowedOrderQuantities = jsonObject.getString(
 			"allowedOrderQuantities");
-		int multipleOrderQuantity = jsonObject.getInt(
-			"multipleOrderQuantity",
-			CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY);
+		BigDecimal multipleOrderQuantity = BigDecimal.valueOf(
+			jsonObject.getInt(
+				"multipleOrderQuantity",
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY.
+					intValue()));
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.

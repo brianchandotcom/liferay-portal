@@ -444,7 +444,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	}
 
 	private CommerceInventoryWarehouseItem _fetchCommerceInventoryWarehouseItem(
-			long commerceShipmentItemId, String sku)
+			long commerceShipmentItemId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceShipmentItem commerceShipmentItem =
@@ -453,7 +453,8 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		return _commerceInventoryWarehouseItemLocalService.
 			fetchCommerceInventoryWarehouseItem(
-				commerceShipmentItem.getCommerceInventoryWarehouseId(), sku);
+				commerceShipmentItem.getCommerceInventoryWarehouseId(), sku,
+				unitOfMeasureKey);
 	}
 
 	private void _restoreStockQuantity(
@@ -472,13 +473,15 @@ public class CommerceShipmentItemLocalServiceImpl
 		_commerceInventoryEngine.increaseStockQuantity(
 			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
 			commerceShipmentItem.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getSku(), quantity);
+			BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
+			commerceOrderItem.getUnitOfMeasureKey());
 
 		_commerceInventoryBookedQuantityLocalService.
 			resetCommerceBookedQuantity(
 				commerceOrderItem.getBookedQuantityId(),
 				commerceOrderItem.getUserId(), null,
 				BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
+				commerceOrderItem.getUnitOfMeasureKey(),
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.ORDER_ID,
 					String.valueOf(commerceOrderItem.getCommerceOrderId())
@@ -502,7 +505,8 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_fetchCommerceInventoryWarehouseItem(
-				commerceShipmentItemId, commerceOrderItem.getSku());
+				commerceShipmentItemId, commerceOrderItem.getSku(),
+				commerceOrderItem.getUnitOfMeasureKey());
 
 		if (commerceInventoryWarehouseItem == null) {
 			return;
@@ -521,10 +525,11 @@ public class CommerceShipmentItemLocalServiceImpl
 		}
 
 		_commerceInventoryEngine.consumeQuantity(
-			commerceShipmentItem.getUserId(), commerceCatalogGroupId,
+			commerceShipmentItem.getUserId(),
+			commerceOrderItem.getBookedQuantityId(), commerceCatalogGroupId,
 			commerceShipmentItem.getCommerceInventoryWarehouseId(),
-			commerceOrderItem.getSku(), quantity,
-			commerceOrderItem.getBookedQuantityId(),
+			BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
+			commerceOrderItem.getUnitOfMeasureKey(),
 			HashMapBuilder.put(
 				CommerceInventoryAuditTypeConstants.ORDER_ID,
 				String.valueOf(commerceOrderItem.getCommerceOrderId())

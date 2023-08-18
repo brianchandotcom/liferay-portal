@@ -136,7 +136,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				cpInstance.getCompanyId(), cpInstance.getGroupId(),
 				commerceChannel.getGroupId(),
 				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
-				cpInstance.getSku());
+				cpInstance.getSku(), StringPool.BLANK);
 		}
 
 		return StringPool.BLANK;
@@ -568,9 +568,13 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					getCommerceChannelGroupIdBySiteGroupId(
 						themeDisplay.getScopeGroupId());
 
-			return _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceChannelGroupId, cpInstance.getSku());
+			BigDecimal stockQuantity =
+				_commerceInventoryEngine.getStockQuantity(
+					cpInstance.getCompanyId(), cpInstance.getGroupId(),
+					commerceChannelGroupId, cpInstance.getSku(),
+					StringPool.BLANK);
+
+			return stockQuantity.intValue();
 		}
 
 		return null;

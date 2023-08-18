@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.inventory.web.internal.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
@@ -13,7 +15,7 @@ public class Replenishment {
 
 	public Replenishment(
 		long commerceInventoryReplenishmentItemId, String warehouse,
-		String date, int quantity) {
+		String date, BigDecimal quantity) {
 
 		_commerceInventoryReplenishmentItemId =
 			commerceInventoryReplenishmentItemId;
@@ -30,7 +32,7 @@ public class Replenishment {
 		return _date;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -40,7 +42,7 @@ public class Replenishment {
 
 	private final long _commerceInventoryReplenishmentItemId;
 	private final String _date;
-	private final int _quantity;
+	private final BigDecimal _quantity;
 	private final String _warehouse;
 
 }

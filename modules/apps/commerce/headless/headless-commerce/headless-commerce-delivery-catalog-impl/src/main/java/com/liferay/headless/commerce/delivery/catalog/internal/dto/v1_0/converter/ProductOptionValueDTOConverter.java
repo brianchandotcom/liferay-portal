@@ -246,8 +246,7 @@ public class ProductOptionValueDTOConverter
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		return BigDecimal.valueOf(
-			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
+		return cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance);
 	}
 
 	private boolean _updateJSONArray(

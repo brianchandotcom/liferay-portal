@@ -36,6 +36,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.PrintWriter;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +83,7 @@ public class SelectCommerceOptionTypeImpl implements CommerceOptionType {
 		}
 
 		AccountEntry accountEntry = null;
-		int minQuantity = 1;
+		BigDecimal minQuantity = BigDecimal.ONE;
 		Object productOption = null;
 		Sku sku = null;
 
@@ -141,8 +143,8 @@ public class SelectCommerceOptionTypeImpl implements CommerceOptionType {
 					new SkuDTOConverterContext(
 						commerceContext,
 						_portal.getCompanyId(httpServletRequest), cpDefinition,
-						_portal.getLocale(httpServletRequest), minQuantity,
-						defaultCPInstanceId, null,
+						_portal.getLocale(httpServletRequest),
+						minQuantity.intValue(), defaultCPInstanceId, null,
 						_portal.getUser(httpServletRequest)));
 			}
 		}

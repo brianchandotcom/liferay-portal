@@ -14,6 +14,9 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
+
+import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,10 +29,12 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 	@Override
 	public boolean check(
-			long commerceChannelGroupId, CPInstance cpInstance, int quantity)
+			long commerceChannelGroupId, CPInstance cpInstance,
+			String unitOfMeasure, BigDecimal quantity)
 		throws PortalException {
 
-		if (isAvailable(commerceChannelGroupId, cpInstance, quantity) &&
+		if (isAvailable(
+				commerceChannelGroupId, cpInstance, unitOfMeasure, quantity) &&
 			isPurchasable(cpInstance)) {
 
 			return true;
@@ -40,7 +45,8 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 
 	@Override
 	public boolean isAvailable(
-			long commerceChannelGroupId, CPInstance cpInstance, int quantity)
+			long commerceChannelGroupId, CPInstance cpInstance,
+			String unitOfMeasure, BigDecimal quantity)
 		throws PortalException {
 
 		if (cpInstance == null) {
@@ -62,20 +68,20 @@ public class CPAvailabilityCheckerImpl implements CPAvailabilityChecker {
 			return true;
 		}
 
-		int stockQuantity;
+		BigDecimal stockQuantity = BigDecimal.ZERO;
 
 		if (commerceChannelGroupId > 0) {
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(
 				cpInstance.getCompanyId(), cpInstance.getGroupId(),
-				commerceChannelGroupId, cpInstance.getSku());
+				commerceChannelGroupId, cpInstance.getSku(), unitOfMeasure);
 		}
 		else {
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(
 				cpInstance.getCompanyId(), cpDefinition.getGroupId(),
-				cpInstance.getSku());
+				cpInstance.getSku(), unitOfMeasure);
 		}
 
-		if (quantity > stockQuantity) {
+		if (BigDecimalUtil.gt(quantity, stockQuantity)) {
 			return false;
 		}
 

@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import java.util.Locale;
 
@@ -69,9 +72,10 @@ public class AvailabilityEstimateCPContentContributor
 
 		boolean available = false;
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+		BigDecimal stockQuantity = _commerceInventoryEngine.getStockQuantity(
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
-			commerceChannel.getGroupId(), cpInstance.getSku());
+			commerceChannel.getGroupId(), cpInstance.getSku(),
+			StringPool.BLANK);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
@@ -82,10 +86,10 @@ public class AvailabilityEstimateCPContentContributor
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		int minStockQuantity = cpDefinitionInventoryEngine.getMinStockQuantity(
-			cpInstance);
+		if (BigDecimalUtil.gt(
+				stockQuantity,
+				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance))) {
 
-		if (stockQuantity > minStockQuantity) {
 			available = true;
 		}
 

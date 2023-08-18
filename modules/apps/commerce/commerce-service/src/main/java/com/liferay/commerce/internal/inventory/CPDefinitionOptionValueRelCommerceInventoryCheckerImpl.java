@@ -58,7 +58,7 @@ public class CPDefinitionOptionValueRelCommerceInventoryCheckerImpl
 		BigDecimal quantity = cpDefinitionOptionValueRel.getQuantity();
 
 		return isAvailable(
-			cpDefinitionOptionValueRel.fetchCPInstance(), quantity.intValue());
+			cpDefinitionOptionValueRel.fetchCPInstance(), quantity);
 	}
 
 }

@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -28,7 +30,7 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 		try {
 			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 				cpDefinition.getUserId(), cpDefinition.getCPDefinitionId(),
-				"default", null, false, false, 0, true,
+				"default", null, false, false, BigDecimal.ZERO, true,
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
 				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY);

@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ public class BookedQuantityCommerceInventoryAuditTypeImpl
 	}
 
 	@Override
-	public String formatQuantity(int quantity, Locale locale) {
+	public String formatQuantity(BigDecimal quantity, Locale locale) {
 		return StringPool.MINUS + StringPool.SPACE + quantity;
 	}
 

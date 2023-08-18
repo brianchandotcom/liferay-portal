@@ -64,6 +64,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.math.BigDecimal;
+
 import java.net.URL;
 
 import java.util.Calendar;
@@ -615,17 +617,21 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryService.addCPDefinitionInventory(
 				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity, minStockQuantity,
-				backOrders, minOrderQuantity, maxOrderQuantity,
-				allowedOrderQuantities, multipleOrderQuantity);
+				displayAvailability, displayStockQuantity,
+				BigDecimal.valueOf(minStockQuantity), backOrders,
+				BigDecimal.valueOf(minOrderQuantity),
+				BigDecimal.valueOf(maxOrderQuantity), allowedOrderQuantities,
+				BigDecimal.valueOf(multipleOrderQuantity));
 		}
 		else {
 			_cpDefinitionInventoryService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(),
 				cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity, minStockQuantity,
-				backOrders, minOrderQuantity, maxOrderQuantity,
-				allowedOrderQuantities, multipleOrderQuantity);
+				displayAvailability, displayStockQuantity,
+				BigDecimal.valueOf(minStockQuantity), backOrders,
+				BigDecimal.valueOf(minOrderQuantity),
+				BigDecimal.valueOf(maxOrderQuantity), allowedOrderQuantities,
+				BigDecimal.valueOf(multipleOrderQuantity));
 		}
 
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(

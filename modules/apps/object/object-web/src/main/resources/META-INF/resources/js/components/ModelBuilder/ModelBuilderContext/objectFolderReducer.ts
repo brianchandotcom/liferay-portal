@@ -4,7 +4,7 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {Edge, Node, useStore} from 'react-flow-renderer';
+import {ArrowHeadType, Edge, Node, useStore} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarkerEnd';
@@ -373,33 +373,67 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							}
 						);
 
+						let selfRelationships: ObjectRelationship[] = objectDefinition.objectRelationships.filter(
+							(relationship) =>
+								relationship.objectDefinitionName2 ===
+								objectDefinition.name
+						);
+
+						selfRelationships = selfRelationships.filter(
+							(relationship) => !relationship.reverse
+						);
+
+						const hasOneSelfRelationship =
+							selfRelationships?.length === 1;
+
 						if (objectDefinition.objectRelationships.length) {
 							objectDefinition.objectRelationships.forEach(
 								(relationship) => {
 									if (!relationship.reverse) {
+										const isSelfRelationship =
+											objectDefinition.name ===
+											relationship.objectDefinitionName2;
+
 										allEdges.push({
+											arrowHeadType: isSelfRelationship
+												? ArrowHeadType.ArrowClosed
+												: undefined,
 											data: {
-												label: getLocalizableLabel(
+												defaultLanguageId:
 													objectDefinition.defaultLanguageId,
-													relationship.label,
-													relationship.name
-												),
+												label:
+													!isSelfRelationship ||
+													(isSelfRelationship &&
+														hasOneSelfRelationship)
+														? getLocalizableLabel(
+																objectDefinition.defaultLanguageId,
+																relationship.label,
+																relationship.name
+														  )
+														: selfRelationships.length.toString(),
 												markerEndId: manyMarkerId,
 												markerStartId:
 													relationship.type ===
 													'manyToMany'
 														? manyMarkerId
 														: oneMarkerId,
+												selfRelationships,
 												sourceY: 0,
 												targetY: 0,
 												type: relationship.type,
 											},
-											id: `reactflow__edge-object-relationship-${relationship.name}-parent-${relationship.objectDefinitionExternalReferenceCode1}-child-${relationship.objectDefinitionExternalReferenceCode2}`,
+											id: `reactflow__edge-object-relationship-${relationship.name}-parent-${relationship.objectDefinitionId1}-child-${relationship.objectDefinitionId2}`,
 											source: `${objectDefinition.id}`,
-											sourceHandle: `${objectDefinition.id}`,
+											sourceHandle: isSelfRelationship
+												? 'fixedLeftHandle'
+												: `${objectDefinition.id}`,
 											target: `${relationship.objectDefinitionId2}`,
-											targetHandle: `${relationship.objectDefinitionId2}`,
-											type: 'floating',
+											targetHandle: isSelfRelationship
+												? 'fixedRightHandle'
+												: `${relationship.objectDefinitionId2}`,
+											type: isSelfRelationship
+												? 'self'
+												: 'default',
 										});
 									}
 								}
@@ -424,6 +458,8 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 									.actions.delete,
 								hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
 									.actions.permissions,
+								hasSelfRelationships:
+									selfRelationships?.length > 0,	
 								id: objectDefinition.id,
 								isLinkedNode: false,
 								label: getLocalizableLabel(

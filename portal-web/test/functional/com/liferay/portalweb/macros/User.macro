@@ -1867,10 +1867,7 @@ definition {
 		UserBar.signOut();
 
 		if (isSet(virtualHostsURL)) {
-			var defaultPortalURL = ${virtualHostsURL};
-		}
-		else {
-			var defaultPortalURL = JSONCompany.getDefaultPortalURL();
+			var portalURL = ${virtualHostsURL};
 		}
 
 		var isLXC = JSONUtil2.getLXCEnvironment();
@@ -1881,7 +1878,7 @@ definition {
 
 			JSONUser.agreeToTermsAndAnswerReminderQuery(
 				password = ${password},
-				portalURL = ${defaultPortalURL},
+				portalURL = ${portalURL},
 				userEmailAddress = ${userEmailAddress});
 		}
 

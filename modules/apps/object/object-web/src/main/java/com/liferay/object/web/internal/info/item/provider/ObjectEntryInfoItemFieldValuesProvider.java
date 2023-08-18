@@ -318,14 +318,16 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					_getDisplayPageURL(objectEntry, themeDisplay)));
 		}
 
-		objectEntryFieldValues.addAll(
-			_getObjectFieldsInfoFieldValues(
-				_getObjectEntry(
-					objectEntry.getExternalReferenceCode(), _objectDefinition,
-					themeDisplay),
-				_objectFieldLocalService.getObjectFields(
-					objectEntry.getObjectDefinitionId(), false),
-				themeDisplay));
+		if (themeDisplay != null) {
+			objectEntryFieldValues.addAll(
+				_getObjectFieldsInfoFieldValues(
+					_getObjectEntry(
+						objectEntry.getExternalReferenceCode(),
+						_objectDefinition, themeDisplay),
+					_objectFieldLocalService.getObjectFields(
+						objectEntry.getObjectDefinitionId(), false),
+					themeDisplay));
+		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
 			objectEntryFieldValues.addAll(

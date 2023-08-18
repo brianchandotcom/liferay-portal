@@ -21,10 +21,12 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.list.retriever.KeyListObjectReference;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverContext;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
@@ -66,6 +68,14 @@ public class InfoCollectionProviderLayoutListRetriever
 		}
 
 		CollectionQuery collectionQuery = new CollectionQuery();
+
+		Pagination pagination = layoutListRetrieverContext.getPagination();
+
+		if (pagination == null) {
+			pagination = Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		collectionQuery.setPagination(pagination);
 
 		if (infoCollectionProvider instanceof
 				ConfigurableInfoCollectionProvider) {

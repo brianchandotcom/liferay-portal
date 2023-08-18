@@ -20,6 +20,11 @@ public class PoshiRunnerFunctionalTest extends PoshiRunnerTestCase {
 	}
 
 	@Test
+	public void testEscapeRegexChars() throws Exception {
+		runPoshiTest("RegexUtil#EscapeRegexChars");
+	}
+
+	@Test
 	public void testExternalMethodExecuteMethodStringArguments()
 		throws Exception {
 

@@ -2411,33 +2411,11 @@ definition {
 
 		SearchAdministration.openFieldMappings();
 
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-instances",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-nodes",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-processes",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-sla-instance-results",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-sla-task-results",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-tasks",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		AssertElementPresent(
-			key_index = "liferay-${companyId}-workflow-metrics-transitions",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		for (var key_navNested : list "instances,nodes,processes,sla-instance-results,sla-task-results,tasks,transitions") {
+			AssertElementPresent(
+				key_navNested = "liferay-${companyId}-workflow-metrics-${key_navNested}",
+				locator1 = "NavNested#NAV_NESTED_LINK");
+		}
 	}
 
 	@description = "LRQA-53661 Automate LPS-89119: [SLA] Define the SLA timer calendar"

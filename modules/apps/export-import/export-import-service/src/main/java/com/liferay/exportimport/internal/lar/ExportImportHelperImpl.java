@@ -153,6 +153,57 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public List<Portlet> getDataSiteAndInstanceLevelPortlets(long companyId)
+		throws Exception {
+
+		return getDataSiteAndInstanceLevelPortlets(companyId, false);
+	}
+
+	@Override
+	public List<Portlet> getDataSiteAndInstanceLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
+		List<Portlet> dataSiteAndInstanceLevelPortlets = new ArrayList<>();
+
+		Map<Integer, List<Portlet>> rankedPortletsMap = new TreeMap<>();
+
+		for (Portlet portlet : _portletLocalService.getPortlets(companyId)) {
+			if (!portlet.isActive()) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) ||
+				portletDataHandler.isDataPortalLevel() ||
+				(excludeDataAlwaysStaged &&
+				 portletDataHandler.isDataAlwaysStaged())) {
+
+				continue;
+			}
+
+			List<Portlet> rankedPortlets = rankedPortletsMap.get(
+				portletDataHandler.getRank());
+
+			if (rankedPortlets == null) {
+				rankedPortlets = new ArrayList<>();
+			}
+
+			rankedPortlets.add(portlet);
+
+			rankedPortletsMap.put(portletDataHandler.getRank(), rankedPortlets);
+		}
+
+		for (List<Portlet> rankedPortlets : rankedPortletsMap.values()) {
+			dataSiteAndInstanceLevelPortlets.addAll(rankedPortlets);
+		}
+
+		return dataSiteAndInstanceLevelPortlets;
+	}
+
+	@Override
 	public List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 

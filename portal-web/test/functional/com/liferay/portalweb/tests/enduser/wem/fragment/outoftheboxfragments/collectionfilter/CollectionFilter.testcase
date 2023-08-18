@@ -1164,36 +1164,39 @@ definition {
 	@description = "This is a test for LPS-113926. The user can filter collection items in Collection Display by multiple keywords."
 	@priority = 4
 	test FilterResultsOfCollectionDisplayByMultipleKeywords {
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Levis 501");
 		}
 
 		task ("Add a blog") {
 			HeadlessBlog.addBlogEntry(
 				content = "LeBron VIII",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "LeBron VIII");
 		}
 
 		task ("Add a document") {
 			JSONDocument.addFile(
 				dmDocumentTitle = "AirPods",
-				groupName = ${randomSiteName});
+				repositoryId = ${groupId});
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				layoutName = "Test Page Name",
 				type = "content");
 		}

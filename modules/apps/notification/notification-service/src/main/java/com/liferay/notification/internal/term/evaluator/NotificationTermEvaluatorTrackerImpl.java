@@ -10,16 +10,17 @@ import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -82,13 +83,31 @@ public class NotificationTermEvaluatorTrackerImpl
 		return notificationTermEvaluators;
 	}
 
-	@Reference
-	private DefaultNotificationTermEvaluator _defaultNotificationTermEvaluator;
-
+	private final DefaultNotificationTermEvaluator
+		_defaultNotificationTermEvaluator =
+			new DefaultNotificationTermEvaluator();
 	private ServiceTrackerMap
 		<String,
 		 List
 			 <ServiceTrackerCustomizerFactory.ServiceWrapper
 				 <NotificationTermEvaluator>>> _serviceTrackerMap;
+
+	private static class DefaultNotificationTermEvaluator
+		implements NotificationTermEvaluator {
+
+		@Override
+		public String evaluate(Context context, Object object, String termName)
+			throws PortalException {
+
+			if (!(object instanceof Map)) {
+				return termName;
+			}
+
+			Map<String, String> termValues = (Map<String, String>)object;
+
+			return termValues.get(termName);
+		}
+
+	}
 
 }

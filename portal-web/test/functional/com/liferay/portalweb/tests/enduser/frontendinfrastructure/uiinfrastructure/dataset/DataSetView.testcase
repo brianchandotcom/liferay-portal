@@ -587,7 +587,7 @@ definition {
 		}
 
 		task ("And clicks on the View option") {
-			MenuItem.click(menuItem = "View");
+			MenuItem.click(menuItem = "Edit");
 		}
 
 		task ("Then the Details tab appears") {

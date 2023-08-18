@@ -197,15 +197,17 @@ definition {
 	}
 
 	macro updateLayoutTemplateOfPublicLayout {
-		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
+		Variables.assertDefined(parameterList = "${layoutName},${layoutTemplate}");
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
-		var groupId = JSONLayoutSetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONLayoutSetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = ${groupId},

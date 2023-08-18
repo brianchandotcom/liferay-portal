@@ -27,6 +27,7 @@ export interface DeletedObjectDefinition extends ObjectDefinition {
 export default function ViewObjectDefinitions({
 	apiURL,
 	baseResourceURL,
+	creationMenu,
 	id,
 	items,
 	objectFolderPermissionsURL,

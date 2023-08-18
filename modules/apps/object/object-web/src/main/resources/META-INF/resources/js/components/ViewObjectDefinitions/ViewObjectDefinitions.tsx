@@ -58,6 +58,7 @@ export interface DeletedObjectDefinition extends ObjectDefinition {
 export default function ViewObjectDefinitions({
 	apiURL,
 	baseResourceURL,
+	creationMenu,
 	id,
 	items,
 	objectFolderPermissionsURL,
@@ -119,7 +120,6 @@ export default function ViewObjectDefinitions({
 			</div>
 		);
 	}
-
 	const getURL = () => {
 		let url: string = '';
 
@@ -135,17 +135,7 @@ export default function ViewObjectDefinitions({
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL: Liferay.FeatureFlags['LPS-148856'] ? getURL() : apiURL,
-		creationMenu: {
-			primaryItems: [
-				{
-					href: 'addObjectDefinition',
-					id: 'addObjectDefinition',
-					label: Liferay.Language.get('create-new-object'),
-					target: 'event',
-					type: 'item',
-				},
-			],
-		},
+		creationMenu,
 		customDataRenderers: {
 			objectDefinitionLabelDataRenderer,
 			objectDefinitionModifiedDateDataRenderer,

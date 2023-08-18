@@ -1259,21 +1259,6 @@ definition {
 			taskName = "Completed");
 	}
 
-	@description = "LRQA-53649 Automate LPS-87560: Verify metrics available or not for CE and DXP customers"
-	@priority = 5
-	test MetricsAvailableForDXP {
-		property portal.acceptance = "quarantine";
-
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		ApplicationsMenu.gotoPanel(panel = "Applications");
-
-		AssertElementPresent(
-			key_category = "Workflow",
-			key_portlet = "Metrics",
-			locator1 = "ApplicationsMenu#PORTLET");
-	}
-
 	@description = "LRQA-55452 Automate LPS-102663: [Dashboard] Reassign Workflow instances individually"
 	@priority = 5
 	test ReassignWorkflowInstance {

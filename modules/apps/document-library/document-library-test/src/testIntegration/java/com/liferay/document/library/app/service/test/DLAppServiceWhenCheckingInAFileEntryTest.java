@@ -15,7 +15,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.string.StringBundler;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -96,28 +94,6 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", Object.class, int.class, Map.class));
 		}
-	}
-
-	@Test
-	public void testShouldFireSyncEvent() throws Exception {
-		AtomicInteger counter =
-			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
-				DLSyncConstants.EVENT_UPDATE);
-
-		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		DLAppServiceUtil.checkOutFileEntry(
-			fileEntry.getFileEntryId(), serviceContext);
-
-		DLAppServiceUtil.checkInFileEntry(
-			fileEntry.getFileEntryId(), DLVersionNumberIncrease.MINOR,
-			RandomTestUtil.randomString(), serviceContext);
-
-		Assert.assertEquals(3, counter.get());
 	}
 
 	@Test

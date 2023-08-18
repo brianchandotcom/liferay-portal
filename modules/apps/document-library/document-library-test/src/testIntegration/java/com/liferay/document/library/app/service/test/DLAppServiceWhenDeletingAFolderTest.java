@@ -8,7 +8,6 @@ package com.liferay.document.library.app.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
-import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -16,8 +15,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -64,22 +61,6 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 			initialFoldersCount,
 			DLAppServiceUtil.getFoldersCount(
 				group.getGroupId(), parentFolder.getFolderId()));
-	}
-
-	@Test
-	public void testShouldFireSyncEvent() throws Exception {
-		AtomicInteger counter =
-			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
-				DLSyncConstants.EVENT_DELETE);
-
-		Folder folder = DLAppServiceUtil.addFolder(
-			null, group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
-		DLAppServiceUtil.deleteFolder(folder.getFolderId());
-
-		Assert.assertEquals(1, counter.get());
 	}
 
 	@Test

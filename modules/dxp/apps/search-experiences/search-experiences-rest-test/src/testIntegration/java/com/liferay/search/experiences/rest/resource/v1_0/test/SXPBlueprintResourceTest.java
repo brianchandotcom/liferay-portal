@@ -227,6 +227,13 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Override
+	protected SXPBlueprint testPutSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		return _addSXPBlueprint(randomSXPBlueprint());
+	}
+
+	@Override
 	protected SXPBlueprint
 			testPutSXPBlueprintByExternalReferenceCode_addSXPBlueprint()
 		throws Exception {

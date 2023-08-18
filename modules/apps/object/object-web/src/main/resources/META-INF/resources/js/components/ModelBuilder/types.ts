@@ -66,6 +66,7 @@ export type TState = {
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
+	showChangesSaved: boolean;
 	storages: LabelValueObject[];
 	viewApiURL: string;
 };

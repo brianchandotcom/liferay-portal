@@ -1748,6 +1748,10 @@
 			<category name="Upgrade" />
 			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
 		</check>
+		<check name="UpgradePortletFTLCheck">
+			<category name="Upgrade" />
+			<description name="Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file" />
+		</check>
 		<check name="UpgradeRejectedExecutionHandlerCheck">
 			<category name="Upgrade" />
 			<description name="Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler" />

@@ -1077,6 +1077,12 @@ public class PoshiContext {
 			return true;
 		}
 
+		String testScope = (String)properties.get("test.scope");
+
+		if (Validator.isNotNull(testScope) && testScope.equals("global")) {
+			return true;
+		}
+
 		return false;
 	}
 

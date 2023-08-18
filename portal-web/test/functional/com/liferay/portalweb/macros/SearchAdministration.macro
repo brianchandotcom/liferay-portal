@@ -23,10 +23,12 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		if (${concurrentReindex} == "true") {
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Concurrent");
+		if (isSet(reindexMode)) {
+			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
+
+			Click(
+				key_reindexMode = ${reindexMode},
+				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
 		}
 
 		if (${executionScope} == "All Instances") {
@@ -55,6 +57,15 @@ definition {
 				Click(
 					key_action = ${action},
 					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+			}
+			else if (isSet(reindexMode)) {
+				Click(
+					key_action = "All search indexes",
+					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+				Click(
+					key_text = "Execute",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
 			}
 			else {
 				Click(

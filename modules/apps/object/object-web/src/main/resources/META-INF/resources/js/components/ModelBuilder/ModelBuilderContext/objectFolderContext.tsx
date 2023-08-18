@@ -37,6 +37,7 @@ const initialState = {
 	objectFolders: [] as ObjectFolder[],
 	rightSidebarType: 'empty' as RightSidebarType,
 	selectedFolderERC: '',
+	showChangesSaved: false,
 } as TState;
 
 export function FolderContextProvider({

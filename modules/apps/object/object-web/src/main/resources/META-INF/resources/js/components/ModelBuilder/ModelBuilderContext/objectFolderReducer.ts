@@ -26,6 +26,7 @@ import {TYPES} from './typesEnum';
 
 export function objectFolderReducer(state: TState, action: TAction) {
 	switch (action.type) {
+				showChangesSaved: true,
 		case TYPES.CREATE_MODEL_BUILDER_STRUCTURE: {
 			const {objectFolders} = action.payload;
 			const {

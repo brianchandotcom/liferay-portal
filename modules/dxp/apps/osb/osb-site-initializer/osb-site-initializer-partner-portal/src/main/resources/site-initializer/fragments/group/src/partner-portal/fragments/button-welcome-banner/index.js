@@ -6,11 +6,15 @@
 
 const videoButtons = fragmentElement.querySelectorAll('.video-tour-button');
 
+const randomTime = '?random=' + new Date().getTime() + Math.floor(Math.random() * 1000000);
+
 if (layoutMode !== 'edit') {
 	for (const videoButton of videoButtons) {
 		videoButton.onclick = () =>
 			Liferay.Util.openModal({
-				bodyHTML: `<iframe width="100%" height="500" src=${configuration.videoButtonLink} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+				bodyHTML: `<iframe width="100%" height="500" src=${
+					configuration.videoButtonLink + randomTime
+				} loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
 				size: 'lg',
 			});
 	}

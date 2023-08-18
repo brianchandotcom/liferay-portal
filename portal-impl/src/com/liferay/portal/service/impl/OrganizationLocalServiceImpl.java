@@ -294,6 +294,8 @@ public class OrganizationLocalServiceImpl
 
 		if (serviceContext != null) {
 			organization.setUuid(serviceContext.getUuid());
+			organization.setExternalReferenceCode(
+				serviceContext.getExternalReferenceCode());
 		}
 
 		organization.setCompanyId(user.getCompanyId());
@@ -2093,6 +2095,11 @@ public class OrganizationLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxWidth());
 
 		organization.setExpandoBridgeAttributes(serviceContext);
+
+		if (serviceContext != null) {
+			organization.setExternalReferenceCode(
+				serviceContext.getExternalReferenceCode());
+		}
 
 		organization = organizationPersistence.update(organization);
 

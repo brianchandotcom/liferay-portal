@@ -337,6 +337,15 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Returns the externalReferenceCode of an entity
+	 *
+	 * @return externalReferenceCode of an entity
+	 */
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	/**
 	 * Returns the date when an <code>aui:form</code> was generated in this
 	 * service context. The form date can be used in detecting situations in
 	 * which an entity has been modified while another client was editing that
@@ -1225,6 +1234,15 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
+	 * Sets the externalReferenceCode of an entity
+	 *
+	 * @param externalReferenceCode the externalReferenceCode of an entity
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
 	 * Sets whether portal exceptions should be handled as failures, possibly
 	 * halting processing, or if exceptions should be handled differently,
 	 * possibly allowing processing to continue in some manner.
@@ -1545,6 +1563,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private boolean _deriveDefaultPermissions;
 	private Map<String, Serializable> _expandoBridgeAttributes =
 		new LinkedHashMap<>();
+	private String _externalReferenceCode;
 	private boolean _failOnPortalException = true;
 	private Date _formDate;
 	private transient Map<String, String> _headers;

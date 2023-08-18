@@ -567,6 +567,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 				contextCompany.getCompanyId(), organization.getCustomFields(),
 				contextAcceptLanguage.getPreferredLocale()));
 
+		serviceContext.setExternalReferenceCode(
+			organization.getExternalReferenceCode());
+
 		return serviceContext;
 	}
 

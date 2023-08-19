@@ -1092,7 +1092,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write(" /><span class=\"input-group-inset-item");
 			jspWriter.write(" input-group-inset-item-after\"><button class=\"");
 			jspWriter.write(" navbar-breakpoint-d-none btn btn-monospaced");
-			jspWriter.write(" btn-unstyled\">");
+			jspWriter.write(" btn-unstyled\"");
 
 			if (disabled) {
 				jspWriter.write(" disabled");

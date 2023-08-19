@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.UserGroupRoleTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -55,14 +56,16 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 	@Override
 	public CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			String externalReferenceCode, long companyId, long userId,
+			long ctRemoteId, String name, String description)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, CTActionKeys.ADD_PUBLICATION);
 
 		return ctCollectionLocalService.addCTCollection(
-			companyId, userId, name, description);
+			externalReferenceCode, companyId, userId, ctRemoteId, name,
+			description);
 	}
 
 	@Override
@@ -217,6 +220,22 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 		return ctCollectionLocalService.updateCTCollection(
 			userId, ctCollectionId, name, description);
+	}
+
+	public CTCollection updateCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, long userId, String name,
+			String description)
+		throws PortalException {
+
+		CTCollection ctCollection =
+			ctCollectionLocalService.fetchCTCollectionByExternalReferenceCode(
+				externalReferenceCode, CompanyThreadLocal.getCompanyId());
+
+		_ctCollectionModelResourcePermission.check(
+			getPermissionChecker(), ctCollection, ActionKeys.UPDATE);
+
+		return ctCollectionLocalService.updateCTCollection(
+			userId, ctCollection.getCtCollectionId(), name, description);
 	}
 
 	private Predicate _getPredicate(

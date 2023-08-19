@@ -36,7 +36,8 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTRemote addCTRemote(
-			long userId, String name, String description, String url)
+			long userId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException {
 
 		long ctRemoteId = counterLocalService.increment(
@@ -52,6 +53,8 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 		ctRemote.setName(name);
 		ctRemote.setDescription(description);
 		ctRemote.setUrl(url);
+		ctRemote.setClientId(clientId);
+		ctRemote.setClientSecret(clientSecret);
 
 		ctRemote = ctRemotePersistence.update(ctRemote);
 
@@ -76,7 +79,8 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException {
 
 		CTRemote ctRemote = ctRemotePersistence.findByPrimaryKey(ctRemoteId);
@@ -84,6 +88,8 @@ public class CTRemoteLocalServiceImpl extends CTRemoteLocalServiceBaseImpl {
 		ctRemote.setName(name);
 		ctRemote.setDescription(description);
 		ctRemote.setUrl(url);
+		ctRemote.setClientId(clientId);
+		ctRemote.setClientSecret(clientSecret);
 
 		return ctRemotePersistence.update(ctRemote);
 	}

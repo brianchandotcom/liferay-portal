@@ -28,19 +28,20 @@ public class JSONUtil {
 		if (!equals(jsonObject1, jsonObject2)) {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
-					"\n is not equal to \n" + jsonObject2);
+					"\n is not equal to \n" + jsonObject2.toString());
 		}
 	}
 
 	public static void assertJSONValue(
-		String jsonContent, String jsonPath, String value) {
+			String jsonString, String jsonPath, String value)
+		throws Exception {
 
-		String jsonValue = getWithJSONPath(jsonContent, jsonPath);
+		String jsonValue = getWithJSONPath(jsonString, jsonPath);
 
 		if (!value.equals(jsonValue)) {
 			throw new RuntimeException(
-				"Expected JSON value: " + value + "\n Actual JSON value: " +
-					jsonValue);
+				"Expected JSON value: " + value +
+					" does not equal actual JSON value: " + jsonValue);
 		}
 	}
 
@@ -51,19 +52,20 @@ public class JSONUtil {
 		if (equals(jsonObject1, jsonObject2)) {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
-					"\n is equal to \n" + jsonObject2);
+					"\n is equal to \n" + jsonObject2.toString());
 		}
 	}
 
 	public static void assertNotJSONValue(
-		String jsonContent, String jsonPath, String value) {
+			String jsonString, String jsonPath, String value)
+		throws Exception {
 
-		String jsonValue = getWithJSONPath(jsonContent, jsonPath);
+		String jsonValue = getWithJSONPath(jsonString, jsonPath);
 
 		if (value.equals(jsonValue)) {
 			throw new RuntimeException(
 				"Expected JSON value: " + value +
-					"\n matches actual JSON value: " + jsonValue);
+					" equals actual JSON value: " + jsonValue);
 		}
 	}
 
@@ -74,7 +76,7 @@ public class JSONUtil {
 		if (similar(jsonObject1, jsonObject2)) {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
-					"\n is similar to \n" + jsonObject2);
+					"\n is similar to \n" + jsonObject2.toString());
 		}
 	}
 
@@ -85,7 +87,7 @@ public class JSONUtil {
 		if (!similar(jsonObject1, jsonObject2)) {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
-					"\n is not similar to \n" + jsonObject2);
+					"\n is not similar to \n" + jsonObject2.toString());
 		}
 	}
 
@@ -95,8 +97,8 @@ public class JSONUtil {
 		return jsonObject1.equals(jsonObject2);
 	}
 
-	public static String formatJSONString(String json) {
-		JSONObject jsonObject = toJSONObject(json);
+	public static String formatJSONString(String jsonString) {
+		JSONObject jsonObject = toJSONObject(jsonString);
 
 		return jsonObject.toString();
 	}
@@ -180,21 +182,21 @@ public class JSONUtil {
 		return jsonObject1.similar(jsonObject2);
 	}
 
-	public static JSONArray toJSONArray(String json) {
+	public static JSONArray toJSONArray(String jsonString) {
 		try {
-			return new JSONArray(json);
+			return new JSONArray(jsonString);
 		}
 		catch (JSONException jsonException) {
-			throw new RuntimeException("Invalid JSON: '" + json + "'");
+			throw new RuntimeException("Invalid JSON: '" + jsonString + "'");
 		}
 	}
 
-	public static JSONObject toJSONObject(String json) {
+	public static JSONObject toJSONObject(String jsonString) {
 		try {
-			return new JSONObject(json);
+			return new JSONObject(jsonString);
 		}
 		catch (JSONException jsonException) {
-			throw new RuntimeException("Invalid JSON: '" + json + "'");
+			throw new RuntimeException("Invalid JSON: '" + jsonString + "'");
 		}
 	}
 

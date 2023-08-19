@@ -167,8 +167,64 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 			};
 		}
 
+		case TYPES.BULK_CHANGE_NODE_VIEW: {
+			const {hiddenFolderNodes, leftSidebarItem} = action.payload;
+			const {edges, nodes} = store.getState();
+			const {leftSidebarItems} = state;
+
+			const updatedNodes = nodes.map(
+				(node: Node<ObjectDefinitionNodeData>) => {
+					return {
+						...node,
+						data: {...node.data, nodeSelected: false},
+						isHidden: !hiddenFolderNodes,
+					};
+				}
+			);
+
+			const updatedEdges = edges.map(
+				(edge: Edge<ObjectRelationshipEdgeData>) => {
+					return {
+						...edge,
+						isHidden: !hiddenFolderNodes,
+					};
+				}
+			);
+
+			const updatedLeftSidebarItems = leftSidebarItems.map(
+				(sidebarItem: LeftSidebarItemType) => {
+					const updatedObjectDefinitions = sidebarItem.objectDefinitions?.map(
+						(objectDefinition) => {
+							return {
+								...objectDefinition,
+								hiddenNode: !hiddenFolderNodes,
+								selected: false,
+							};
+						}
+					);
+					if (sidebarItem.folderName === leftSidebarItem.folderName) {
+						return {
+							...sidebarItem,
+							hiddenFolderNodes: !hiddenFolderNodes,
+							objectDefinitions: updatedObjectDefinitions,
+						};
+					}
+
+					return sidebarItem;
+				}
+			);
+
+			return {
+				...state,
+				elements: [...updatedEdges, ...updatedNodes],
+				leftSidebarItems: updatedLeftSidebarItems,
+				rightSidebarType: 'empty' as RightSidebarType,
+			};
+		}
+
 		case TYPES.CHANGE_NODE_VIEW: {
 			const {
+				definitionId,
 				definitionName,
 				hiddenNode,
 				leftSidebarItem,
@@ -176,6 +232,22 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 			const {edges, nodes} = store.getState();
 			const {leftSidebarItems} = state;
 			let isNodeSelected = false;
+
+			const updatedEdges = edges.map(
+				(edge: Edge<ObjectRelationshipEdgeData>) => {
+					if (
+						edge.source === definitionId.toString() ||
+						edge.target === definitionId.toString()
+					) {
+						return {
+							...edge,
+							isHidden: !hiddenNode,
+						};
+					}
+
+					return edge;
+				}
+			);
 
 			const updatedNodes = nodes.map(
 				(node: Node<ObjectDefinitionNodeData>) => {
@@ -225,7 +297,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 			return {
 				...state,
-				elements: [...edges, ...updatedNodes],
+				elements: [...updatedEdges, ...updatedNodes],
 				leftSidebarItems: updatedLeftSidebarItems,
 				rightSidebarType: isNodeSelected
 					? 'empty'
@@ -261,6 +333,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 				return {
 					folderName: folder.name,
+					hiddenFolderNodes: false,
 					name: getLocalizableLabel(
 						defaultLanguageId,
 						folder.label,

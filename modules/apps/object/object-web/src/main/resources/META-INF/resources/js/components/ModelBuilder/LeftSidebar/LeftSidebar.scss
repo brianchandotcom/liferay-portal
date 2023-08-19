@@ -6,6 +6,19 @@
 	padding: 1rem;
 	position: inherit;
 
+	&-current-folder-container {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		padding-right: 0.5rem;
+	}
+
+	&-current-folder-content {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+	}
+
 	.navbar-form,
 	.container-fluid {
 		padding: 0 !important;

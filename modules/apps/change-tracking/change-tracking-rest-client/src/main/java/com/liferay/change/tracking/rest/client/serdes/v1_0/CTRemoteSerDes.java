@@ -60,6 +60,34 @@ public class CTRemoteSerDes {
 			sb.append(_toJSON(ctRemote.getActions()));
 		}
 
+		if (ctRemote.getClientId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctRemote.getClientId()));
+
+			sb.append("\"");
+		}
+
+		if (ctRemote.getClientSecret() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientSecret\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctRemote.getClientSecret()));
+
+			sb.append("\"");
+		}
+
 		if (ctRemote.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -184,6 +212,20 @@ public class CTRemoteSerDes {
 			map.put("actions", String.valueOf(ctRemote.getActions()));
 		}
 
+		if (ctRemote.getClientId() == null) {
+			map.put("clientId", null);
+		}
+		else {
+			map.put("clientId", String.valueOf(ctRemote.getClientId()));
+		}
+
+		if (ctRemote.getClientSecret() == null) {
+			map.put("clientSecret", null);
+		}
+		else {
+			map.put("clientSecret", String.valueOf(ctRemote.getClientSecret()));
+		}
+
 		if (ctRemote.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -262,6 +304,16 @@ public class CTRemoteSerDes {
 					ctRemote.setActions(
 						(Map)CTRemoteSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "clientId")) {
+				if (jsonParserFieldValue != null) {
+					ctRemote.setClientId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "clientSecret")) {
+				if (jsonParserFieldValue != null) {
+					ctRemote.setClientSecret((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

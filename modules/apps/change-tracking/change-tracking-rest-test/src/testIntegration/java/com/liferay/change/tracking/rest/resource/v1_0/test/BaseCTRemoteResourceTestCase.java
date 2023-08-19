@@ -175,6 +175,8 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		CTRemote ctRemote = randomCTRemote();
 
+		ctRemote.setClientId(regex);
+		ctRemote.setClientSecret(regex);
 		ctRemote.setDescription(regex);
 		ctRemote.setName(regex);
 		ctRemote.setOwnerName(regex);
@@ -186,6 +188,8 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		ctRemote = CTRemoteSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, ctRemote.getClientId());
+		Assert.assertEquals(regex, ctRemote.getClientSecret());
 		Assert.assertEquals(regex, ctRemote.getDescription());
 		Assert.assertEquals(regex, ctRemote.getName());
 		Assert.assertEquals(regex, ctRemote.getOwnerName());
@@ -671,6 +675,22 @@ public abstract class BaseCTRemoteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("clientId", additionalAssertFieldName)) {
+				if (ctRemote.getClientId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientSecret", additionalAssertFieldName)) {
+				if (ctRemote.getClientSecret() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (ctRemote.getDescription() == null) {
 					valid = false;
@@ -822,6 +842,27 @@ public abstract class BaseCTRemoteResourceTestCase {
 				if (!equals(
 						(Map)ctRemote1.getActions(),
 						(Map)ctRemote2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctRemote1.getClientId(), ctRemote2.getClientId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("clientSecret", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctRemote1.getClientSecret(),
+						ctRemote2.getClientSecret())) {
 
 					return false;
 				}
@@ -1006,6 +1047,98 @@ public abstract class BaseCTRemoteResourceTestCase {
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("clientId")) {
+			Object object = ctRemote.getClientId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("clientSecret")) {
+			Object object = ctRemote.getClientSecret();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
@@ -1303,6 +1436,10 @@ public abstract class BaseCTRemoteResourceTestCase {
 	protected CTRemote randomCTRemote() throws Exception {
 		return new CTRemote() {
 			{
+				clientId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				clientSecret = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

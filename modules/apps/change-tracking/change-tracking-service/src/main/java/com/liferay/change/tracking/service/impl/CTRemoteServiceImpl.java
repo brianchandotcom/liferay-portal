@@ -44,14 +44,16 @@ import org.osgi.service.component.annotations.Reference;
 public class CTRemoteServiceImpl extends CTRemoteServiceBaseImpl {
 
 	@Override
-	public CTRemote addCTRemote(String name, String description, String url)
+	public CTRemote addCTRemote(
+			String name, String description, String url, String clientId,
+			String clientSecret)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, CTActionKeys.ADD_REMOTE);
 
 		return ctRemoteLocalService.addCTRemote(
-			getUserId(), name, description, url);
+			getUserId(), name, description, url, clientId, clientSecret);
 	}
 
 	@Override
@@ -132,14 +134,15 @@ public class CTRemoteServiceImpl extends CTRemoteServiceBaseImpl {
 
 	@Override
 	public CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException {
 
 		_ctRemoteModelResourcePermission.check(
 			getPermissionChecker(), ctRemoteId, ActionKeys.UPDATE);
 
 		return ctRemoteLocalService.updateCTRemote(
-			ctRemoteId, name, description, url);
+			ctRemoteId, name, description, url, clientId, clientSecret);
 	}
 
 	@Reference(

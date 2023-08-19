@@ -20,11 +20,7 @@ import org.json.JSONException;
  */
 public class ListUtil {
 
-	public static void add(List<Object> list, Object item) {
-		list.add(item);
-	}
-
-	public static void add(List<String> list, String item) {
+	public static <T> void add(List<T> list, T item) {
 		list.add(item);
 	}
 
@@ -36,15 +32,15 @@ public class ListUtil {
 		return new ArrayList<>(master);
 	}
 
-	public static String get(List<String> list, Integer index) {
+	public static <T> T get(List<T> list, Integer index) {
 		return list.get(index);
 	}
 
-	public static String get(List<String> list, Long index) {
+	public static <T> T get(List<T> list, Long index) {
 		return list.get(Math.toIntExact(index));
 	}
 
-	public static String get(List<String> list, String index) {
+	public static <T> T get(List<T> list, String index) {
 		try {
 			return list.get(Integer.parseInt(index));
 		}
@@ -103,11 +99,11 @@ public class ListUtil {
 		return new ArrayList<>();
 	}
 
-	public static void remove(List<String> list, String item) {
+	public static <T> void remove(List<T> list, T item) {
 		list.remove(item);
 	}
 
-	public static String size(List<String> list) {
+	public static <T> String size(List<T> list) {
 		int size = list.size();
 
 		return String.valueOf(size);

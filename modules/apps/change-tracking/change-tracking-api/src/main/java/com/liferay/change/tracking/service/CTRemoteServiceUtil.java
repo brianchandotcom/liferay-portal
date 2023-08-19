@@ -31,10 +31,12 @@ public class CTRemoteServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTRemoteServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CTRemote addCTRemote(
-			String name, String description, String url)
+			String name, String description, String url, String clientId,
+			String clientSecret)
 		throws PortalException {
 
-		return getService().addCTRemote(name, description, url);
+		return getService().addCTRemote(
+			name, description, url, clientId, clientSecret);
 	}
 
 	public static CTRemote deleteCTRemote(CTRemote ctRemote)
@@ -71,10 +73,12 @@ public class CTRemoteServiceUtil {
 	}
 
 	public static CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException {
 
-		return getService().updateCTRemote(ctRemoteId, name, description, url);
+		return getService().updateCTRemote(
+			ctRemoteId, name, description, url, clientId, clientSecret);
 	}
 
 	public static CTRemoteService getService() {

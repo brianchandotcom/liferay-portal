@@ -11,7 +11,6 @@ package com.liferay.commerce.shop.by.diagram.web.internal.constants;
 public class CSDiagramPortletKeys {
 
 	public static final String CS_DIAGRAM =
-		"com_liferay_commerce_shop_by_diagram_admin_web_portlet_" +
-			"CSDiagramPortlet";
+		"com_liferay_commerce_shop_by_diagram_web_portlet_CSDiagramPortlet";
 
 }

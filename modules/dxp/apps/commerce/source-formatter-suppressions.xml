@@ -2,6 +2,8 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="JavaComponentAnnotationsCheck" files="commerce-shop-by-diagram-web/src/main/java/com/liferay/commerce/shop/by/diagram/web/internal/info/item/renderer/CSDiagramEntryInfoItemRenderer\.java" />
+		<suppress checks="JavaComponentAnnotationsCheck" files="commerce-shop-by-diagram-web/src/main/java/com/liferay/commerce/shop/by/diagram/web/internal/info/item/renderer/DiagramCardInfoItemRenderer\.java" />
 		<suppress checks="JSPLanguageKeysCheck" files="commerce-machine-learning-forecast-alert-web/src/main/resources/META-INF/resources/forecast_alert_action\.jsp" />
 	</source-check>
 </suppressions>

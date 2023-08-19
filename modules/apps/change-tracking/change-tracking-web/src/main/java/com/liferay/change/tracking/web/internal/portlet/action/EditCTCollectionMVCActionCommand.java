@@ -67,8 +67,8 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				CTCollection ctCollection =
 					_ctCollectionService.addCTCollection(
-						themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-						name, description);
+						null, themeDisplay.getCompanyId(),
+						themeDisplay.getUserId(), 0, name, description);
 
 				CTPreferences ctPreferences =
 					_ctPreferencesLocalService.getCTPreferences(

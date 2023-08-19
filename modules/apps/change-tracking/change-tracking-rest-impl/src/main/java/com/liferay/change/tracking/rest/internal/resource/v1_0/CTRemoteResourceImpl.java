@@ -94,7 +94,8 @@ public class CTRemoteResourceImpl extends BaseCTRemoteResourceImpl {
 		return _toCTRemote(
 			_ctRemoteService.addCTRemote(
 				ctRemote.getName(), ctRemote.getDescription(),
-				ctRemote.getUrl()));
+				ctRemote.getUrl(), ctRemote.getClientId(),
+				ctRemote.getClientSecret()));
 	}
 
 	@Override
@@ -112,7 +113,8 @@ public class CTRemoteResourceImpl extends BaseCTRemoteResourceImpl {
 		return _toCTRemote(
 			_ctRemoteService.updateCTRemote(
 				ctRemoteId, ctRemote.getName(), ctRemote.getDescription(),
-				ctRemote.getUrl()));
+				ctRemote.getUrl(), ctRemote.getClientId(),
+				ctRemote.getClientSecret()));
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(

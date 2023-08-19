@@ -79,6 +79,12 @@ public interface CTCollectionLocalService
 			long companyId, long userId, String name, String description)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws PortalException;
+
 	public Map<Long, List<ConflictInfo>> checkConflicts(
 			CTCollection ctCollection)
 		throws PortalException;
@@ -234,6 +240,10 @@ public interface CTCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTCollection fetchCTCollectionByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTCollection fetchCTCollectionByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
 
 	/**
@@ -259,6 +269,11 @@ public interface CTCollectionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTCollection getCTCollection(long ctCollectionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CTCollection getCTCollectionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

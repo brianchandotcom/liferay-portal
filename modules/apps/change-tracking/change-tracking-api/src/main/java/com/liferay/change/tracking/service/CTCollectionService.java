@@ -48,6 +48,11 @@ public interface CTCollectionService extends BaseService {
 			long companyId, long userId, String name, String description)
 		throws PortalException;
 
+	public CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws PortalException;
+
 	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
 		throws PortalException;
 
@@ -92,6 +97,11 @@ public interface CTCollectionService extends BaseService {
 
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)
+		throws PortalException;
+
+	public CTCollection updateCTCollectionByExternalReferenceCode(
+			long userId, String externalReferenceCode, String name,
+			String description)
 		throws PortalException;
 
 }

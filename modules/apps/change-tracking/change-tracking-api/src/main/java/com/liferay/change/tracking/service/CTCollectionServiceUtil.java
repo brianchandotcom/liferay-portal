@@ -38,6 +38,16 @@ public class CTCollectionServiceUtil {
 			companyId, userId, name, description);
 	}
 
+	public static CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws PortalException {
+
+		return getService().addCTCollection(
+			companyId, userId, name, description, externalReferenceCode,
+			ctRemoteId);
+	}
+
 	public static void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
 		throws PortalException {
 
@@ -118,6 +128,15 @@ public class CTCollectionServiceUtil {
 
 		return getService().updateCTCollection(
 			userId, ctCollectionId, name, description);
+	}
+
+	public static CTCollection updateCTCollectionByExternalReferenceCode(
+			long userId, String externalReferenceCode, String name,
+			String description)
+		throws PortalException {
+
+		return getService().updateCTCollectionByExternalReferenceCode(
+			userId, externalReferenceCode, name, description);
 	}
 
 	public static CTCollectionService getService() {

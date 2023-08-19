@@ -35,6 +35,17 @@ public class CTCollectionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.addCTCollection(
+			companyId, userId, name, description, externalReferenceCode,
+			ctRemoteId);
+	}
+
+	@Override
 	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -132,6 +143,17 @@ public class CTCollectionServiceWrapper
 
 		return _ctCollectionService.updateCTCollection(
 			userId, ctCollectionId, name, description);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection
+			updateCTCollectionByExternalReferenceCode(
+				long userId, String externalReferenceCode, String name,
+				String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionService.updateCTCollectionByExternalReferenceCode(
+			userId, externalReferenceCode, name, description);
 	}
 
 	@Override

@@ -59,6 +59,16 @@ public class CTCollectionLocalServiceUtil {
 			companyId, userId, name, description);
 	}
 
+	public static CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws PortalException {
+
+		return getService().addCTCollection(
+			companyId, userId, name, description, externalReferenceCode,
+			ctRemoteId);
+	}
+
 	public static Map
 		<Long, List<com.liferay.change.tracking.conflict.ConflictInfo>>
 				checkConflicts(CTCollection ctCollection)
@@ -267,6 +277,13 @@ public class CTCollectionLocalServiceUtil {
 	}
 
 	public static CTCollection fetchCTCollectionByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchCTCollectionByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	public static CTCollection fetchCTCollectionByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 
 		return getService().fetchCTCollectionByExternalReferenceCode(
@@ -304,6 +321,14 @@ public class CTCollectionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCTCollection(ctCollectionId);
+	}
+
+	public static CTCollection getCTCollectionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getCTCollectionByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	public static CTCollection getCTCollectionByExternalReferenceCode(

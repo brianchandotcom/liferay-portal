@@ -56,6 +56,17 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.addCTCollection(
+			companyId, userId, name, description, externalReferenceCode,
+			ctRemoteId);
+	}
+
+	@Override
 	public java.util.Map
 		<Long,
 		 java.util.List<com.liferay.change.tracking.conflict.ConflictInfo>>
@@ -306,6 +317,16 @@ public class CTCollectionLocalServiceWrapper
 	@Override
 	public com.liferay.change.tracking.model.CTCollection
 		fetchCTCollectionByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _ctCollectionLocalService.
+			fetchCTCollectionByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection
+		fetchCTCollectionByExternalReferenceCode(
 			String externalReferenceCode, long companyId) {
 
 		return _ctCollectionLocalService.
@@ -348,6 +369,16 @@ public class CTCollectionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.getCTCollection(ctCollectionId);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection
+			getCTCollectionByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.getCTCollectionByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	@Override

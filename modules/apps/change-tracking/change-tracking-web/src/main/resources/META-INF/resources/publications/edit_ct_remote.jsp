@@ -46,6 +46,16 @@ else {
 				<aui:validator name="url" />
 			</aui:input>
 
+			<aui:input label="client-id" name="clientId" placeholder="ct-remote-client-id-placeholder" value='<%= (ctRemote != null) ? ctRemote.getClientId() : "" %>'>
+				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTRemote.class.getName(), "clientId") %></aui:validator>
+				<aui:validator name="required" />
+			</aui:input>
+
+			<aui:input label="client-secret" name="clientSecret" placeholder="ct-remote-client-secret-placeholder" type="password" value='<%= (ctRemote != null) ? ctRemote.getClientSecret() : "" %>'>
+				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTRemote.class.getName(), "clientSecret") %></aui:validator>
+				<aui:validator name="required" />
+			</aui:input>
+
 			<aui:button-row>
 				<aui:button id="saveButton" type="submit" value='<%= LanguageUtil.get(request, "submit") %>' />
 

@@ -68,7 +68,8 @@ public interface CTRemoteLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CTRemote addCTRemote(
-			long userId, String name, String description, String url)
+			long userId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException;
 
 	/**
@@ -223,6 +224,9 @@ public interface CTRemoteLocalService
 	public List<CTRemote> getCTRemotes(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTRemote> getCTRemotes(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTRemote> getCTRemotes(long companyId, int start, int end);
 
 	/**
@@ -266,7 +270,8 @@ public interface CTRemoteLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException;
 
 }

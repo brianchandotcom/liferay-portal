@@ -47,11 +47,12 @@ public class CTRemoteLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTRemote addCTRemote(
-			long userId, String name, String description, String url)
+			long userId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctRemoteLocalService.addCTRemote(
-			userId, name, description, url);
+			userId, name, description, url, clientId, clientSecret);
 	}
 
 	/**
@@ -276,6 +277,13 @@ public class CTRemoteLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTRemote>
+		getCTRemotes(long companyId) {
+
+		return _ctRemoteLocalService.getCTRemotes(companyId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTRemote>
 		getCTRemotes(long companyId, int start, int end) {
 
 		return _ctRemoteLocalService.getCTRemotes(companyId, start, end);
@@ -338,11 +346,12 @@ public class CTRemoteLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctRemoteLocalService.updateCTRemote(
-			ctRemoteId, name, description, url);
+			ctRemoteId, name, description, url, clientId, clientSecret);
 	}
 
 	@Override

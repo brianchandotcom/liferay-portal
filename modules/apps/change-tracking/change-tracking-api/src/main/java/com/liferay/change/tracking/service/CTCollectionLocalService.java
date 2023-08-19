@@ -76,7 +76,8 @@ public interface CTCollectionLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			String externalReferenceCode, long companyId, long userId,
+			long ctRemoteId, String name, String description)
 		throws PortalException;
 
 	public Map<Long, List<ConflictInfo>> checkConflicts(

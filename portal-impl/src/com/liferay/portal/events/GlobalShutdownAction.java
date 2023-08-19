@@ -6,10 +6,6 @@
 package com.liferay.portal.events;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
@@ -23,9 +19,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.sql.Connection;
-import java.sql.Statement;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,21 +91,6 @@ public class GlobalShutdownAction extends SimpleAction {
 	}
 
 	protected void shutdownLevel4() {
-
-		// Hypersonic
-
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
-			try (Connection connection = DataAccess.getConnection();
-				Statement statement = connection.createStatement()) {
-
-				statement.executeUpdate("SHUTDOWN");
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
-		}
 	}
 
 	protected void shutdownLevel5() {

@@ -27,10 +27,12 @@ public class CTRemoteServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTRemote addCTRemote(
-			String name, String description, String url)
+			String name, String description, String url, String clientId,
+			String clientSecret)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _ctRemoteService.addCTRemote(name, description, url);
+		return _ctRemoteService.addCTRemote(
+			name, description, url, clientId, clientSecret);
 	}
 
 	@Override
@@ -78,11 +80,12 @@ public class CTRemoteServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctRemoteService.updateCTRemote(
-			ctRemoteId, name, description, url);
+			ctRemoteId, name, description, url, clientId, clientSecret);
 	}
 
 	@Override

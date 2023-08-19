@@ -45,7 +45,8 @@ public interface CTCollectionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTCollectionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ct collection remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CTCollectionServiceUtil} if injection and service tracking are not available.
 	 */
 	public CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			String externalReferenceCode, long companyId, long userId,
+			long ctRemoteId, String name, String description)
 		throws PortalException;
 
 	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId)
@@ -92,6 +93,11 @@ public interface CTCollectionService extends BaseService {
 
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)
+		throws PortalException;
+
+	public CTCollection updateCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, long userId, String name,
+			String description)
 		throws PortalException;
 
 }

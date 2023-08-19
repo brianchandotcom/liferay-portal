@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_TOGGLE_BUTTON_WITH_LABEL</td>
-	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//label[normalize-space()='${key_fieldLabel}']//following-sibling::div//button[contains(@class,'dropdown-toggle')] | //label[normalize-space()='${key_fieldLabel}']//following-sibling::button[contains(@class,'select')]</td>
 	<td></td>
 </tr>
 <tr>

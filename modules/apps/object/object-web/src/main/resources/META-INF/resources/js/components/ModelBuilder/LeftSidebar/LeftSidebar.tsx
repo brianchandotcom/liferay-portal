@@ -47,6 +47,22 @@ export default function LeftSidebar({
 	const {setCenter} = useZoomPanHelper();
 	const store = useStore();
 
+	const changeNodeViewButton = (hiddenNode: boolean, dispatch: Function) => (
+		<ClayButtonWithIcon
+			aria-label={
+				hiddenNode
+					? Liferay.Language.get('hidden')
+					: Liferay.Language.get('show')
+			}
+			displayType="unstyled"
+			onClick={(event) => {
+				event.stopPropagation();
+				dispatch();
+			}}
+			symbol={hiddenNode ? 'hidden' : 'view'}
+		/>
+	);
+
 	const filteredItems = useMemo(() => {
 		return leftSidebarItems.map((sidebarItem) => {
 			if (!sidebarItem.objectDefinitions) {
@@ -186,13 +202,33 @@ export default function LeftSidebar({
 				{(item: LeftSidebarItemType) => (
 					<TreeView.Item>
 						<TreeView.ItemStack>
-							<Icon symbol={TYPES_TO_SYMBOLS[item.type]} />
+							<div className="lfr-objects__model-builder-left-sidebar-current-folder-container">
+								<div className="lfr-objects__model-builder-left-sidebar-current-folder-content">
+									<Icon
+										symbol={TYPES_TO_SYMBOLS[item.type]}
+									/>
 
-							<Text weight="semi-bold">{item.name}</Text>
+									<Text weight="semi-bold">{item.name}</Text>
+								</div>
+
+								{changeNodeViewButton(
+									item.hiddenFolderNodes,
+									() =>
+										dispatch({
+											payload: {
+												hiddenFolderNodes:
+													item.hiddenFolderNodes,
+												leftSidebarItem: item,
+											},
+											type: TYPES.BULK_CHANGE_NODE_VIEW,
+										})
+								)}
+							</div>
 						</TreeView.ItemStack>
 
 						<TreeView.Group items={item.objectDefinitions}>
 							{({
+								definitionId,
 								definitionName,
 								hiddenNode,
 								name,
@@ -228,36 +264,20 @@ export default function LeftSidebar({
 												/>
 											</>
 										) : (
-											<ClayButtonWithIcon
-												aria-label={
-													hiddenNode
-														? Liferay.Language.get(
-																'hidden'
-														  )
-														: Liferay.Language.get(
-																'show'
-														  )
-												}
-												displayType="unstyled"
-												onClick={(event) => {
-													event.stopPropagation();
-
+											changeNodeViewButton(
+												hiddenNode,
+												() =>
 													dispatch({
 														payload: {
+															definitionId,
 															definitionName,
 															hiddenNode,
 															leftSidebarItem: item,
 														},
 														type:
 															TYPES.CHANGE_NODE_VIEW,
-													});
-												}}
-												symbol={
-													hiddenNode
-														? 'hidden'
-														: 'view'
-												}
-											/>
+													})
+											)
 										)
 									}
 									active={selected}

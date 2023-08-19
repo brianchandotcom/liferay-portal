@@ -40,6 +40,14 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
+				hiddenFolderNodes: boolean;
+				leftSidebarItem: LeftSidebarItemType;
+			};
+			type: TYPES.BULK_CHANGE_NODE_VIEW;
+	  }
+	| {
+			payload: {
+				definitionId: number;
 				definitionName: string;
 				hiddenNode: boolean;
 				leftSidebarItem: LeftSidebarItemType;
@@ -98,12 +106,13 @@ export declare type TState = {
 };
 export declare type LeftSidebarItemType = {
 	folderName: string;
+	hiddenFolderNodes: boolean;
 	name: string;
 	objectDefinitions?: LeftSidebarDefinitionItemType[];
 	type: 'objectFolder' | 'objectDefinition';
 };
 export declare type LeftSidebarDefinitionItemType = {
-	definitionId: string;
+	definitionId: number;
 	definitionName: string;
 	hiddenNode: boolean;
 	name: string;

@@ -98,7 +98,7 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default String getSearchFormName() {
-		return null;
+		return "fm";
 	}
 
 	public default String getSearchInputName() {

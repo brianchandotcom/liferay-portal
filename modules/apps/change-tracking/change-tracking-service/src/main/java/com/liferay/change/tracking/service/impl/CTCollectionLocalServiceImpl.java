@@ -128,6 +128,16 @@ public class CTCollectionLocalServiceImpl
 			long companyId, long userId, String name, String description)
 		throws PortalException {
 
+		return addCTCollection(companyId, userId, name, description, null, 0);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CTCollection addCTCollection(
+			long companyId, long userId, String name, String description,
+			String externalReferenceCode, long ctRemoteId)
+		throws PortalException {
+
 		_validate(name, description);
 
 		long ctCollectionId = counterLocalService.increment(
@@ -145,8 +155,10 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setSchemaVersionId(
 			latestCTSchemaVersion.getSchemaVersionId());
 
+		ctCollection.setExternalReferenceCode(externalReferenceCode);
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
+		ctCollection.setCtRemoteId(ctRemoteId);
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);

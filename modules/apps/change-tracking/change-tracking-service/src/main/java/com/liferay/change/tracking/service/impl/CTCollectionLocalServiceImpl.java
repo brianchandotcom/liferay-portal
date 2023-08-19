@@ -541,6 +541,23 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
+	public CTCollection fetchCTCollectionByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return ctCollectionPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public CTCollection getCTCollectionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return ctCollectionPersistence.findByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public List<CTCollection> getCTCollections(
 		long companyId, int status, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {

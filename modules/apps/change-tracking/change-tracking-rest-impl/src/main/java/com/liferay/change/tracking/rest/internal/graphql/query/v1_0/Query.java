@@ -243,7 +243,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTRemote(id: ___){actions, dateCreated, dateModified, description, id, name, ownerName, url}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTRemote(id: ___){actions, clientId, clientSecret, dateCreated, dateModified, description, id, name, ownerName, url}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public CTRemote cTRemote(@GraphQLName("id") Long id) throws Exception {

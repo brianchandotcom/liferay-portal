@@ -49,6 +49,48 @@ public class CTRemote implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	public void setClientId(
+		UnsafeSupplier<String, Exception> clientIdUnsafeSupplier) {
+
+		try {
+			clientId = clientIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String clientId;
+
+	public String getClientSecret() {
+		return clientSecret;
+	}
+
+	public void setClientSecret(String clientSecret) {
+		this.clientSecret = clientSecret;
+	}
+
+	public void setClientSecret(
+		UnsafeSupplier<String, Exception> clientSecretUnsafeSupplier) {
+
+		try {
+			clientSecret = clientSecretUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String clientSecret;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

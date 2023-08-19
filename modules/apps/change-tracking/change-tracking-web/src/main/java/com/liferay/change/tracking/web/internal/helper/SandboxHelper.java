@@ -146,7 +146,7 @@ public class SandboxHelper {
 		}
 
 		return _ctCollectionLocalService.addCTCollection(
-			user.getCompanyId(), user.getUserId(), name, description);
+			null, user.getCompanyId(), user.getUserId(), 0, name, description);
 	}
 
 	private CTCollection _findUserCTCollection(CTPreferences ctPreferences) {

@@ -11,6 +11,7 @@ import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomize
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -179,6 +180,8 @@ public class VerifyProcessTrackerOSGiCommands {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		_bundleContext = bundleContext;
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, VerifyProcess.class, null,
 			new ServiceReferenceMapper<String, VerifyProcess>() {
@@ -194,14 +197,15 @@ public class VerifyProcessTrackerOSGiCommands {
 				}
 
 			},
-			new EagerServiceTrackerCustomizer<VerifyProcess, VerifyProcess>() {
+			new EagerServiceTrackerCustomizer
+				<VerifyProcess, VerifyProcessHolder>() {
 
 				@Override
-				public VerifyProcess addingService(
+				public VerifyProcessHolder addingService(
 					ServiceReference<VerifyProcess> serviceReference) {
 
-					VerifyProcess verifyProcess = bundleContext.getService(
-						serviceReference);
+					VerifyProcessHolder verifyProcessHolder =
+						new VerifyProcessHolder(serviceReference);
 
 					Bundle bundle = serviceReference.getBundle();
 
@@ -221,7 +225,8 @@ public class VerifyProcessTrackerOSGiCommands {
 							 serviceReference.getProperty(
 								 "run.on.portal.upgrade")))) {
 
-						_executeVerifyProcess(verifyProcess, release);
+						_executeVerifyProcess(
+							verifyProcessHolder.getVerifyProcess(), release);
 					}
 					else if ((release == null) &&
 							 !_isServiceBundle(serviceReference.getBundle())) {
@@ -237,21 +242,21 @@ public class VerifyProcessTrackerOSGiCommands {
 						_releaseLocalService.updateRelease(release);
 					}
 
-					return verifyProcess;
+					return verifyProcessHolder;
 				}
 
 				@Override
 				public void modifiedService(
 					ServiceReference<VerifyProcess> serviceReference,
-					VerifyProcess verifyProcess) {
+					VerifyProcessHolder verifyProcessHolder) {
 				}
 
 				@Override
 				public void removedService(
 					ServiceReference<VerifyProcess> serviceReference,
-					VerifyProcess verifyProcess) {
+					VerifyProcessHolder verifyProcessHolder) {
 
-					bundleContext.ungetService(serviceReference);
+					verifyProcessHolder.ungetVerifyProcess();
 				}
 
 			});
@@ -344,18 +349,18 @@ public class VerifyProcessTrackerOSGiCommands {
 	}
 
 	private VerifyProcess _getVerifyProcess(
-		ServiceTrackerMap<String, VerifyProcess> verifyProcessTrackerMap,
+		ServiceTrackerMap<String, VerifyProcessHolder> verifyProcessTrackerMap,
 		String bundleSymbolicName) {
 
-		VerifyProcess verifyProcess = verifyProcessTrackerMap.getService(
-			bundleSymbolicName);
+		VerifyProcessHolder verifyProcessHolder =
+			verifyProcessTrackerMap.getService(bundleSymbolicName);
 
-		if (verifyProcess == null) {
+		if (verifyProcessHolder == null) {
 			throw new IllegalArgumentException(
 				"No verify processes exists for " + bundleSymbolicName);
 		}
 
-		return verifyProcess;
+		return verifyProcessHolder.getVerifyProcess();
 	}
 
 	private boolean _isInitialDeployment(
@@ -400,6 +405,8 @@ public class VerifyProcessTrackerOSGiCommands {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyProcessTrackerOSGiCommands.class);
 
+	private BundleContext _bundleContext;
+
 	@Reference
 	private CounterLocalService _counterLocalService;
 
@@ -410,6 +417,31 @@ public class VerifyProcessTrackerOSGiCommands {
 	private ReleaseLocalService _releaseLocalService;
 
 	private ServiceRegistration<?> _serviceRegistration;
-	private ServiceTrackerMap<String, VerifyProcess> _serviceTrackerMap;
+	private ServiceTrackerMap<String, VerifyProcessHolder> _serviceTrackerMap;
+
+	private class VerifyProcessHolder {
+
+		public VerifyProcess getVerifyProcess() {
+			return _verifyProcessDCLSingleton.getSingleton(
+				() -> _bundleContext.getService(_serviceReference));
+		}
+
+		public void ungetVerifyProcess() {
+			_verifyProcessDCLSingleton.destroy(
+				verifyProcess -> _bundleContext.ungetService(
+					_serviceReference));
+		}
+
+		private VerifyProcessHolder(
+			ServiceReference<VerifyProcess> serviceReference) {
+
+			_serviceReference = serviceReference;
+		}
+
+		private final ServiceReference<VerifyProcess> _serviceReference;
+		private final DCLSingleton<VerifyProcess> _verifyProcessDCLSingleton =
+			new DCLSingleton<>();
+
+	}
 
 }

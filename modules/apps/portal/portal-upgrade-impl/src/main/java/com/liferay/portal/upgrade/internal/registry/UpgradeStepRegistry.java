@@ -121,10 +121,8 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		Version finalSchemaVersion = null;
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
-			String toSchemaVersion = upgradeInfo.getToSchemaVersionString();
-
 			Version schemaVersion = Version.parseVersion(
-				toSchemaVersion.substring(0, 5));
+				upgradeInfo.getToSchemaVersionString());
 
 			if (finalSchemaVersion == null) {
 				finalSchemaVersion = schemaVersion;

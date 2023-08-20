@@ -203,7 +203,10 @@ public class VerifyProcessTrackerOSGiCommands {
 					VerifyProcess verifyProcess = bundleContext.getService(
 						serviceReference);
 
-					Release release = _fetchRelease(verifyProcess);
+					Bundle bundle = serviceReference.getBundle();
+
+					Release release = _releaseLocalService.fetchRelease(
+						bundle.getSymbolicName());
 
 					boolean initialDeployment = _isInitialDeployment(
 						bundleContext, release);
@@ -225,9 +228,6 @@ public class VerifyProcessTrackerOSGiCommands {
 
 						release = _releaseLocalService.createRelease(
 							_counterLocalService.increment());
-
-						Bundle bundle = FrameworkUtil.getBundle(
-							verifyProcess.getClass());
 
 						release.setServletContextName(bundle.getSymbolicName());
 

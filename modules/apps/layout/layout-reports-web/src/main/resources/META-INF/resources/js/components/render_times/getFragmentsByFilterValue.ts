@@ -24,8 +24,8 @@ export default function getFragmentsByFilterValue(
 	}
 
 	if (filters.type) {
-		filteredFragments = filteredFragments.filter(({fragment}) =>
-			filters.type === 'fragment' ? fragment : !fragment
+		filteredFragments = filteredFragments.filter(({isPortlet}) =>
+			filters.type === 'fragment' ? !isPortlet : isPortlet
 		);
 	}
 

@@ -55,6 +55,8 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			JSONUtil.put(
 				"objectFieldERC", RandomTestUtil.randomString()
 			).put(
+				"oDataSort", RandomTestUtil.randomString()
+			).put(
 				"order", "ascending"
 			).put(
 				"r_apiEndpointToAPISorts_c_apiEndpointId",
@@ -73,6 +75,8 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"objectFieldERC", RandomTestUtil.randomString()
+			).put(
+				"oDataSort", RandomTestUtil.randomString()
 			).put(
 				"order", "ascending"
 			).put(

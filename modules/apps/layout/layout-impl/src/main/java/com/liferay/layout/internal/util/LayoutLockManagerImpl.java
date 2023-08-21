@@ -122,7 +122,12 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				throw new LockedLayoutException(portalException);
 			}
 		}
-		else if (lock.getUserId() != themeDisplay.getUserId()) {
+		else if (lock.getUserId() == themeDisplay.getUserId()) {
+			_lockManager.refresh(
+				lock.getUuid(), lock.getCompanyId(),
+				LayoutModelImpl.LOCK_EXPIRATION_TIME);
+		}
+		else {
 			throw new LockedLayoutException();
 		}
 	}

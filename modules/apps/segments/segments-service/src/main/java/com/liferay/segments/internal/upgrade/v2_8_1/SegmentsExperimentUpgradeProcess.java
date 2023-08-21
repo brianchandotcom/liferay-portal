@@ -43,14 +43,14 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _deleteSegmentsExperimentRels(List<Long> experimentIds)
+	private void _deleteSegmentsExperimentRels(List<Long> segmentsExperimentIds)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("select segmentsExperimentRelId, segmentsExperienceId from ");
 		sb.append("SegmentsExperimentRel where segmentsExperimentId in (");
-		sb.append(StringUtil.merge(experimentIds));
+		sb.append(StringUtil.merge(segmentsExperimentIds));
 		sb.append(")");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
@@ -106,7 +106,7 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 			preparedStatement1.setLong(1, plid);
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				List<Long> experimentIds = new ArrayList<>();
+				List<Long> segmentsExperimentIds = new ArrayList<>();
 
 				boolean first = true;
 
@@ -130,13 +130,13 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.addBatch();
 
-					experimentIds.add(segmentsExperimentId);
+					segmentsExperimentIds.add(segmentsExperimentId);
 				}
 
-				if (!experimentIds.isEmpty()) {
+				if (!segmentsExperimentIds.isEmpty()) {
 					preparedStatement2.executeBatch();
 
-					_deleteSegmentsExperimentRels(experimentIds);
+					_deleteSegmentsExperimentRels(segmentsExperimentIds);
 				}
 			}
 		}

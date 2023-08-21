@@ -982,11 +982,19 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection getMessageBoardSection =
 			messageBoardSectionResource.
 				getSiteMessageBoardSectionByFriendlyUrlPath(
-					postMessageBoardSection.getSiteId(),
+					testGetSiteMessageBoardSectionByFriendlyUrlPath_getSiteId(
+						postMessageBoardSection),
 					postMessageBoardSection.getFriendlyUrlPath());
 
 		assertEquals(postMessageBoardSection, getMessageBoardSection);
 		assertValid(getMessageBoardSection);
+	}
+
+	protected Long testGetSiteMessageBoardSectionByFriendlyUrlPath_getSiteId(
+			MessageBoardSection messageBoardSection)
+		throws Exception {
+
+		return messageBoardSection.getSiteId();
 	}
 
 	protected MessageBoardSection
@@ -1017,8 +1025,10 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												messageBoardSection.
-													getSiteId() + "\"");
+												testGraphQLGetSiteMessageBoardSectionByFriendlyUrlPath_getSiteId(
+													messageBoardSection) +
+														"\"");
+
 										put(
 											"friendlyUrlPath",
 											"\"" +
@@ -1030,6 +1040,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/messageBoardSectionByFriendlyUrlPath"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteMessageBoardSectionByFriendlyUrlPath_getSiteId(
+				MessageBoardSection messageBoardSection)
+		throws Exception {
+
+		return messageBoardSection.getSiteId();
 	}
 
 	@Test
@@ -2462,9 +2480,47 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("friendlyUrlPath")) {
-			sb.append("'");
-			sb.append(String.valueOf(messageBoardSection.getFriendlyUrlPath()));
-			sb.append("'");
+			Object object = messageBoardSection.getFriendlyUrlPath();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

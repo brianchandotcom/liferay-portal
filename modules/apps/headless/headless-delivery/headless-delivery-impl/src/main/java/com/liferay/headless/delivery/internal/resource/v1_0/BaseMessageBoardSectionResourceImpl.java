@@ -269,16 +269,6 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				messageBoardSection.getFriendlyUrlPath());
 		}
 
-		if (messageBoardSection.getNumberOfMessageBoardSections() != null) {
-			existingMessageBoardSection.setNumberOfMessageBoardSections(
-				messageBoardSection.getNumberOfMessageBoardSections());
-		}
-
-		if (messageBoardSection.getNumberOfMessageBoardThreads() != null) {
-			existingMessageBoardSection.setNumberOfMessageBoardThreads(
-				messageBoardSection.getNumberOfMessageBoardThreads());
-		}
-
 		if (messageBoardSection.getParentMessageBoardSectionId() != null) {
 			existingMessageBoardSection.setParentMessageBoardSectionId(
 				messageBoardSection.getParentMessageBoardSectionId());
@@ -752,7 +742,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/sites/{siteId}/message-board-section/by-friendly-url-path/{friendlyUrlPath}"
+		"/sites/{siteId}/message-board-section/by-friendly-url-path/{friendlyUrlPath: .+}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override

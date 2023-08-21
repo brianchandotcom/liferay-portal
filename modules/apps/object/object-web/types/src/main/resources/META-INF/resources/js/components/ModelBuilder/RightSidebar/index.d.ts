@@ -10,6 +10,6 @@ import {RightSideBarRoot} from './RightSidebarRoot';
 export declare const RightSideBar: {
 	Empty: typeof RightSidebarEmpty;
 	ObjectDefinitionDetails: typeof RightSidebarObjectDefinitionDetails;
-	Relationship: typeof RightSidebarObjectRelationshipDetails;
+	ObjectRelationshipDetails: typeof RightSidebarObjectRelationshipDetails;
 	Root: typeof RightSideBarRoot;
 };

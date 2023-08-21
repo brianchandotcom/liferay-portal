@@ -70,7 +70,7 @@ public class DisplayPageDisplayContext {
 								TYPE_DISPLAY_PAGE,
 							displayPagesSearchContainer.getStart(),
 							displayPagesSearchContainer.getEnd(),
-							_getCollectionsOrderByComparator()),
+							displayPagesSearchContainer.getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(), getKeywords(),
@@ -89,7 +89,7 @@ public class DisplayPageDisplayContext {
 								TYPE_DISPLAY_PAGE,
 							displayPagesSearchContainer.getStart(),
 							displayPagesSearchContainer.getEnd(),
-							_getCollectionsOrderByComparator()),
+							displayPagesSearchContainer.getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),

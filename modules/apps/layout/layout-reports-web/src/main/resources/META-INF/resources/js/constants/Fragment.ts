@@ -17,6 +17,7 @@ export type Fragment = {
 	itemType: string;
 	name: string;
 	renderTime: number;
+	warnings: string[];
 };
 
 export const FILTER_NAMES: Record<

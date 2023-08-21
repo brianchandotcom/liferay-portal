@@ -3,13 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
+import {useId} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import getComponentType from '../utils/getComponentType';
 import normalizeFailingElements from '../utils/normalizeFailingElements';
 
 const ITEM_PAGE_SIZE = 10;
@@ -17,8 +22,74 @@ const ITEM_PAGE_SIZE = 10;
 export default function ItemDetail({selectedItem}) {
 	return (
 		<ClayPanel.Group className="c-px-3 panel-group-flush panel-group-sm">
-			<IssueDetail issue={selectedItem} />
+			{selectedItem.type === 'fragment' ? (
+				<FragmentDetail fragment={selectedItem} />
+			) : (
+				<IssueDetail issue={selectedItem} />
+			)}
 		</ClayPanel.Group>
+	);
+}
+
+function FragmentDetail({fragment}) {
+	const {cached, fromMaster, renderTime, warnings = []} = fragment;
+
+	const badge = warnings.length
+		? {
+				label: warnings.length >= 100 ? '+100' : warnings.length,
+				type: 'warning',
+		  }
+		: null;
+
+	return (
+		<>
+			<DetailPanel badge={badge} title={Liferay.Language.get('warnings')}>
+				{warnings.length ? (
+					<List ItemComponent={Warning} items={warnings} />
+				) : (
+					<ClayAlert
+						displayType="success"
+						title={Liferay.Language.get(
+							'no-issues-found-in-this-component'
+						)}
+						variant="feedback"
+					/>
+				)}
+			</DetailPanel>
+
+			<DetailPanel title={Liferay.Language.get('basic-information')}>
+				<TextSection
+					text={sub(Liferay.Language.get('x-ms'), renderTime)}
+					title={Liferay.Language.get('server-render-time')}
+				/>
+
+				<TextSection
+					labelType="secondary"
+					text={getComponentType(fragment)}
+					title={Liferay.Language.get('component-type')}
+				/>
+
+				<TextSection
+					labelType="secondary"
+					text={
+						fromMaster
+							? Liferay.Language.get('from-master')
+							: Liferay.Language.get('this-page')
+					}
+					title={Liferay.Language.get('origin')}
+				/>
+
+				<TextSection
+					labelType="primary"
+					text={
+						cached
+							? Liferay.Language.get('cached')
+							: Liferay.Language.get('not-cached')
+					}
+					title={Liferay.Language.get('cache-status')}
+				/>
+			</DetailPanel>
+		</>
 	);
 }
 
@@ -161,6 +232,42 @@ function FailingElement({item}) {
 						</ClayList.ItemText>
 					))}
 			</ClayList.ItemField>
+		</ClayList.Item>
+	);
+}
+
+function TextSection({labelType, text, title}) {
+	const titleId = useId();
+
+	return (
+		<>
+			<p className="font-weight-semi-bold mb-1" id={titleId}>
+				{title}
+			</p>
+
+			{labelType ? (
+				<ClayLabel
+					aria-describedby={titleId}
+					className="mb-3"
+					displayType={labelType}
+				>
+					{text}
+				</ClayLabel>
+			) : (
+				<p aria-describedby={titleId} className="text-secondary">
+					{text}
+				</p>
+			)}
+		</>
+	);
+}
+
+function Warning({item}) {
+	return (
+		<ClayList.Item className="border-0 c-p-0">
+			<ClayAlert displayType="warning" variant="feedback">
+				{item}
+			</ClayAlert>
 		</ClayList.Item>
 	);
 }

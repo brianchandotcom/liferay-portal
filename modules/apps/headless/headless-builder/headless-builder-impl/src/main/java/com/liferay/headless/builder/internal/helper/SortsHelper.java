@@ -11,6 +11,7 @@ import com.liferay.headless.builder.internal.odata.entity.APISchemaEntityModel;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityField;
@@ -41,26 +42,44 @@ public class SortsHelper {
 		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
 
 		try {
-			EntityModel entityModel = _entityModelProvider.getEntityModel(
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						responseSchema.
-							getMainObjectDefinitionExternalReferenceCode(),
-						companyId));
+			if (Validator.isNotNull(sortString)) {
+				APISchemaEntityModel apiSchemaEntityModel =
+					new APISchemaEntityModel(
+						_getEntityModel(companyId, responseSchema),
+						responseSchema);
 
-			if (Validator.isNull(sortString)) {
-				APIApplication.Sort sort = endpoint.getSort();
+				Map<String, EntityField> entityFieldsMap =
+					apiSchemaEntityModel.getEntityFieldsMap();
 
-				String oDataSortString =
-					(sort != null) ? sort.getODataSortString() : null;
+				return TransformUtil.transform(
+					SortUtil.getSorts(
+						acceptLanguage, apiSchemaEntityModel,
+						_sortParserProvider.provide(apiSchemaEntityModel),
+						sortString),
+					sort -> {
+						APIPropertyEntityField apiPropertyEntityField =
+							(APIPropertyEntityField)entityFieldsMap.get(
+								sort.getFieldName());
 
-				return SortUtil.getSorts(
-					acceptLanguage, entityModel,
-					_sortParserProvider.provide(entityModel), oDataSortString);
+						sort.setFieldName(
+							apiPropertyEntityField.getInternalName());
+
+						return sort;
+					},
+					Sort.class);
 			}
 
-			return _getSortsFromParamSortString(
-				acceptLanguage, entityModel, responseSchema, sortString);
+			APIApplication.Sort sort = endpoint.getSort();
+
+			if (sort != null) {
+				return SortUtil.getSorts(
+					acceptLanguage, _getEntityModel(companyId, responseSchema),
+					_sortParserProvider.provide(
+						_getEntityModel(companyId, responseSchema)),
+					sort.getODataSortString());
+			}
+
+			return null;
 		}
 		catch (WebApplicationException webApplicationException) {
 			throw webApplicationException;
@@ -71,30 +90,15 @@ public class SortsHelper {
 		}
 	}
 
-	private Sort[] _getSortsFromParamSortString(
-		AcceptLanguage acceptLanguage, EntityModel entityModel,
-		APIApplication.Schema schema, String sortString) {
+	private EntityModel _getEntityModel(
+			long companyId, APIApplication.Schema schema)
+		throws PortalException {
 
-		APISchemaEntityModel apiSchemaEntityModel = new APISchemaEntityModel(
-			entityModel, schema);
-
-		Map<String, EntityField> entityFieldsMap =
-			apiSchemaEntityModel.getEntityFieldsMap();
-
-		return TransformUtil.transform(
-			SortUtil.getSorts(
-				acceptLanguage, apiSchemaEntityModel,
-				_sortParserProvider.provide(apiSchemaEntityModel), sortString),
-			sort -> {
-				APIPropertyEntityField apiPropertyEntityField =
-					(APIPropertyEntityField)entityFieldsMap.get(
-						sort.getFieldName());
-
-				sort.setFieldName(apiPropertyEntityField.getInternalName());
-
-				return sort;
-			},
-			Sort.class);
+		return _entityModelProvider.getEntityModel(
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					schema.getMainObjectDefinitionExternalReferenceCode(),
+					companyId));
 	}
 
 	@Reference

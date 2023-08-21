@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>SCOPE_COG</td>
-	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'scope-selector')]//*[*[name()='svg'][contains(@class,'lexicon-icon-cog')]]</td>
+	<td>//div[contains(@class,'dropdown')]//button[contains(@class,'dropdown-toggle')]//*[*[name()='svg'][contains(@class,'lexicon-icon-cog')]]</td>
 	<td></td>
 </tr>
 <tr>

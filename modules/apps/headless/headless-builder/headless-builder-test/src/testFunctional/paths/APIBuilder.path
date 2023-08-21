@@ -11,28 +11,8 @@
 
 <tbody>
 <tr>
-	<td>DND_TR_WITH_TEXT</td>
-	<td>//div[contains(@class,'dnd-tr')]/div[contains(text(),'${text}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FROM_DATE</td>
-	<td>//input[contains(@id,'from-dateModified') and @placeholder='yyyy-mm-dd']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TO_DATE</td>
-	<td>//input[contains(@id,'to-dateModified') and @placeholder='yyyy-mm-dd']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DND_TR_BUTTON</td>
-	<td>//div[contains(@class,'dnd-tr')]//button[contains(.,'${value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LAST_UPDATED_IN_FILTER</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'Last updated')]</td>
+	<td>ADD_API_ENDPOINT</td>
+	<td>//button[contains(.,'Add API Endpoint')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,16 +23,6 @@
 <tr>
 	<td>ADD_NEW_SCHEMA</td>
 	<td>//button[contains(.,'Add New Schema')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_API_ENDPOINT</td>
-	<td>//button[contains(.,'Add API Endpoint')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CREATE_BUTTON</td>
-	<td>//button[contains(text(),'Create')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,8 +46,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COPY_URL</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Copy URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_BUTTON</td>
+	<td>//button[contains(text(),'Create')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_IN_DROPDOWN_MENU</td>
+	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION</td>
 	<td>//textarea[(@placeholder='Add a short description that describes this API.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TD_WITH_TEXT</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TR_WITH_TEXT</td>
+	<td>//div[contains(@class,'dnd-tr')]/div[contains(text(),'${text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DND_TR_BUTTON</td>
+	<td>//div[contains(@class,'dnd-tr')]//button[contains(.,'${value}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,18 +91,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COPY_URL</td>
-	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Copy URL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_IN_DROPDOWN_MENU</td>
-	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTER_TITLE</td>
 	<td>//input[(@placeholder='Enter title.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FROM_DATE</td>
+	<td>//input[contains(@id,'from-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_UPDATED_IN_FILTER</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'Last updated')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -111,13 +111,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TYPE_TITLE_IN_DELETE_MODAL</td>
-	<td>//input[@class='form-control']</td>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[contains(text(),'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_BUTTON</td>
-	<td>//button[contains(text(),'Publish')]</td>
+	<td>TABLE_LIST</td>
+	<td>xpath=(//div[(@class='table-list-title')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TO_DATE</td>
+	<td>//input[contains(@id,'to-dateModified') and @placeholder='yyyy-mm-dd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_TITLE_IN_DELETE_MODAL</td>
+	<td>//input[@class='form-control']</td>
 	<td></td>
 </tr>
 <tr>
@@ -126,13 +136,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WARNING_MESSAGE_IN_DELETE_DIALOG</td>
-	<td>//div[@class='form-feedback-item mt-2' and contains(text(),'Please type the API title mentioned above.')]</td>
+	<td>URL_LABEL</td>
+	<td>//p[@id='hostTextPreview']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TABLE_LIST</td>
-	<td>xpath=(//div[(@class='table-list-title')])[${index}]</td>
+	<td>URL_PROMPT_MESSAGE_IN_CREATE_APPLICATION_DIALOG</td>
+	<td>//span[contains(text(),'The URL can be modified.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_MESSAGE_IN_DIALOG</td>
+	<td>//div[@class='form-feedback-item mt-2' and contains(text(),'${key_text}')]</td>
 	<td></td>
 </tr>
 </tbody>

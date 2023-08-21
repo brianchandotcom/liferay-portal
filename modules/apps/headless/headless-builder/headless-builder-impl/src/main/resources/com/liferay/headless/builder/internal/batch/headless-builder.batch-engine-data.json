@@ -172,6 +172,35 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
+					"externalReferenceCode": "PATH PARAMETER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Path Parameter"
+					},
+					"listTypeDefinitionExternalReferenceCode": "PATH_PARAMETER_PICKLIST",
+					"name": "pathParameter",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "ID",
+										"objectStateTransitions": [
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
 					"defaultValue": "collection",
 					"externalReferenceCode": "RETRIEVE_TYPE",
 					"indexed": true,

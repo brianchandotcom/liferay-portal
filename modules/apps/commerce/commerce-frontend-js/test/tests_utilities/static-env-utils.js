@@ -5,6 +5,21 @@
 
 const Liferay = {
 	Language: {
+		available: {
+			ar_SA: 'Arabic (Saudi Arabia)',
+			ca_ES: 'Catalan (Spain)',
+			de_DE: 'German (Germany)',
+			en_US: 'English (United States)',
+			es_ES: 'Spanish (Spain)',
+			fi_FI: 'Finnish (Finland)',
+			fr_FR: 'French (France)',
+			hu_HU: 'Hungarian (Hungary)',
+			ja_JP: 'Japanese (Japan)',
+			nl_NL: 'Dutch (Netherlands)',
+			pt_BR: 'Portuguese (Brazil)',
+			sv_SE: 'Swedish (Sweden)',
+			zh_CN: 'Chinese (China)',
+		},
 		get: (key) => {
 			let counter = 0;
 

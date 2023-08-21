@@ -35,7 +35,10 @@ public abstract class BaseBuildReport implements BuildReport {
 
 	@Override
 	public JSONObject getBuildReportJSONObject() {
-		if (buildReportJSONObject != null) {
+		if ((buildReportJSONObject != null) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(
+				buildReportJSONObject.optString("result"))) {
+
 			return buildReportJSONObject;
 		}
 

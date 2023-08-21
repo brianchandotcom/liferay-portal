@@ -10,6 +10,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
+import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
@@ -31,10 +34,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -53,6 +55,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public static void setUpClass() throws Exception {
 		enableDBPartition();
 
+		entityCache.removeCache(ClassNameImpl.class.getName());
+		finderCache.removeCache(ClassNameImpl.class.getName());
+
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
 		addDBPartitions();
@@ -69,6 +74,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		dropTable(TEST_CONTROL_TABLE_NAME);
 
 		disableDBPartition();
+
+		entityCache.removeCache(ClassNameImpl.class.getName());
+		finderCache.removeCache(ClassNameImpl.class.getName());
 	}
 
 	@After
@@ -175,18 +183,24 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetClassName() throws Exception {
-		Set<ClassName> classNames = new LinkedHashSet<>();
+		CopyOnWriteArraySet<ClassName> classNames = new CopyOnWriteArraySet<>();
 
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> {
-				int count = classNames.size();
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> Assert.assertTrue(
+					classNames.add(
+						_classNameLocalService.getClassName(
+							"class.name.test"))));
 
-				classNames.add(
-					_classNameLocalService.getClassName("class.name.test"));
-
-				Assert.assertEquals(
-					classNames.toString(), count + 1, classNames.size());
-			});
+			Assert.assertEquals(
+				classNames.toString(), _companyLocalService.getCompaniesCount(),
+				classNames.size());
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _classNameLocalService.deleteClassName(
+					_classNameLocalService.fetchClassName("class.name.test")));
+		}
 	}
 
 	@Test
@@ -324,6 +338,12 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		private volatile List<Long> _companyIds = new CopyOnWriteArrayList<>();
 
 	}
+
+	@Inject
+	protected static EntityCache entityCache;
+
+	@Inject
+	protected static FinderCache finderCache;
 
 	private static final String _CLASS_NAME_VALUE = "class.name.test";
 

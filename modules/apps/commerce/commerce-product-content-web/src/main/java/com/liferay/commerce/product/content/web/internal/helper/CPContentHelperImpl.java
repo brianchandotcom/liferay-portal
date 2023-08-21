@@ -43,6 +43,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.type.CPType;
@@ -655,12 +656,24 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public boolean hasMultipleCPSkus(CPCatalogEntry cpCatalogEntry) {
-		int cpDefinitionInstancesCount =
-			_cpInstanceLocalService.getCPDefinitionInstancesCount(
+		List<CPInstance> cpDefinitionInstances =
+			_cpInstanceLocalService.getCPDefinitionInstances(
 				cpCatalogEntry.getCPDefinitionId(),
-				WorkflowConstants.STATUS_APPROVED);
+				WorkflowConstants.STATUS_APPROVED, 0, 2, null);
 
-		if (cpDefinitionInstancesCount > 1) {
+		if (cpDefinitionInstances.size() == 1) {
+			CPInstance cpInstance = cpDefinitionInstances.get(0);
+
+			int cpInstanceUnitOfMeasureCount =
+				_cpInstanceUnitOfMeasureLocalService.
+					getActiveCPInstanceUnitOfMeasuresCount(
+						cpInstance.getCPInstanceId());
+
+			if (cpInstanceUnitOfMeasureCount > 1) {
+				return true;
+			}
+		}
+		else if (cpDefinitionInstances.size() > 1) {
 			return true;
 		}
 
@@ -864,6 +877,10 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;

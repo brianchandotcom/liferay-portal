@@ -18,8 +18,10 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.petra.string.StringPool;
@@ -145,6 +147,8 @@ public class PriceTag extends IncludeTag {
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		_cpDefinitionOptionRelLocalService =
 			ServletContextUtil.getCPDefinitionOptionRelLocalService();
+		_cpInstanceUnitOfMeasureLocalService =
+			ServletContextUtil.getCPInstanceUnitOfMeasureLocalService();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
@@ -164,6 +168,7 @@ public class PriceTag extends IncludeTag {
 		_cpCatalogEntry = null;
 		_cpContentHelper = null;
 		_cpDefinitionOptionRelLocalService = null;
+		_cpInstanceUnitOfMeasureLocalService = null;
 		_displayDiscountLevels = false;
 		_namespace = StringPool.BLANK;
 		_netPrice = true;
@@ -205,6 +210,25 @@ public class PriceTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		if (cpInstanceId > 0) {
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+				_cpInstanceUnitOfMeasureLocalService.
+					getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+
+			if (cpInstanceUnitOfMeasures.size() > 1) {
+				return _productHelper.getMinPriceModel(
+					_cpCatalogEntry.getCPDefinitionId(), commerceContext,
+					themeDisplay.getLocale());
+			}
+
+			String unitOfMeasureKey = StringPool.BLANK;
+
+			if (cpInstanceUnitOfMeasures.size() == 1) {
+				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+					cpInstanceUnitOfMeasures.get(0);
+
+				unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
+			}
+
 			JSONArray jsonArray = CPJSONUtil.toJSONArray(
 				_cpDefinitionOptionRelLocalService.
 					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
@@ -212,7 +236,7 @@ public class PriceTag extends IncludeTag {
 
 			return _productHelper.getPriceModel(
 				cpInstanceId, jsonArray.toString(),
-				BigDecimal.valueOf(_quantity), StringPool.BLANK,
+				BigDecimal.valueOf(_quantity), unitOfMeasureKey,
 				commerceContext, themeDisplay.getLocale());
 		}
 
@@ -255,6 +279,8 @@ public class PriceTag extends IncludeTag {
 	private CPContentHelper _cpContentHelper;
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 	private boolean _displayDiscountLevels;
 	private String _namespace = StringPool.BLANK;
 	private boolean _netPrice = true;

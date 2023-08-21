@@ -32,13 +32,16 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -416,7 +419,7 @@ public class CommerceProductPriceCalculationV2Impl
 	@Override
 	public CommerceMoney getUnitMinPrice(
 			long cpDefinitionId, BigDecimal quantity, boolean secure,
-			String unitOfMeasureKey, CommerceContext commerceContext)
+			CommerceContext commerceContext)
 		throws PortalException {
 
 		CommerceMoney commerceMoney = commerceMoneyFactory.emptyCommerceMoney();
@@ -427,20 +430,30 @@ public class CommerceProductPriceCalculationV2Impl
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (CPInstance cpInstance : cpInstances) {
-			CommerceMoney cpInstanceCommerceMoney = getUnitPrice(
-				cpInstance.getCPInstanceId(), quantity,
-				commerceContext.getCommerceCurrency(), secure, unitOfMeasureKey,
-				commerceContext);
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+				_cpInstanceUnitOfMeasureLocalService.
+					getActiveCPInstanceUnitOfMeasures(
+						cpInstance.getCPInstanceId());
 
-			if (commerceMoney.isEmpty()) {
-				commerceMoney = cpInstanceCommerceMoney;
+			if (cpInstanceUnitOfMeasures.isEmpty()) {
+				commerceMoney = _getCommerceMoney(
+					commerceMoney,
+					getUnitPrice(
+						cpInstance.getCPInstanceId(), quantity,
+						commerceContext.getCommerceCurrency(), secure,
+						StringPool.BLANK, commerceContext));
 			}
-			else if (!cpInstanceCommerceMoney.isPriceOnApplication() &&
-					 BigDecimalUtil.gt(
-						 commerceMoney.getPrice(),
-						 cpInstanceCommerceMoney.getPrice())) {
+			else {
+				for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+						cpInstanceUnitOfMeasures) {
 
-				commerceMoney = cpInstanceCommerceMoney;
+					commerceMoney = _getCommerceMoney(
+						commerceMoney,
+						getUnitPrice(
+							cpInstance.getCPInstanceId(), quantity,
+							commerceContext.getCommerceCurrency(), secure,
+							cpInstanceUnitOfMeasure.getKey(), commerceContext));
+				}
 			}
 		}
 
@@ -449,12 +462,11 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Override
 	public CommerceMoney getUnitMinPrice(
-			long cpDefinitionId, BigDecimal quantity, String unitOfMeasureKey,
+			long cpDefinitionId, BigDecimal quantity,
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		return getUnitMinPrice(
-			cpDefinitionId, quantity, true, unitOfMeasureKey, commerceContext);
+		return getUnitMinPrice(cpDefinitionId, quantity, true, commerceContext);
 	}
 
 	@Override
@@ -676,6 +688,23 @@ public class CommerceProductPriceCalculationV2Impl
 
 		return _calculateCommerceDiscountValue(
 			values, quantity, finalPrice, commerceContext);
+	}
+
+	private CommerceMoney _getCommerceMoney(
+		CommerceMoney commerceMoney, CommerceMoney cpInstanceCommerceMoney) {
+
+		if (commerceMoney.isEmpty()) {
+			commerceMoney = cpInstanceCommerceMoney;
+		}
+		else if (!cpInstanceCommerceMoney.isPriceOnApplication() &&
+				 BigDecimalUtil.gt(
+					 commerceMoney.getPrice(),
+					 cpInstanceCommerceMoney.getPrice())) {
+
+			commerceMoney = cpInstanceCommerceMoney;
+		}
+
+		return commerceMoney;
 	}
 
 	private CommerceMoney _getCommerceMoney(
@@ -1230,6 +1259,10 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	private ServiceTrackerMap<String, CommercePriceListDiscovery>
 		_serviceTrackerMap;

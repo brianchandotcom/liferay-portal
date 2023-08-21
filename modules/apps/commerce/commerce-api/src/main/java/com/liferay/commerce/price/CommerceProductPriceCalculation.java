@@ -79,11 +79,11 @@ public interface CommerceProductPriceCalculation {
 
 	public CommerceMoney getUnitMinPrice(
 			long cpDefinitionId, BigDecimal quantity, boolean secure,
-			String unitOfMeasureKey, CommerceContext commerceContext)
+			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getUnitMinPrice(
-			long cpDefinitionId, BigDecimal quantity, String unitOfMeasureKey,
+			long cpDefinitionId, BigDecimal quantity,
 			CommerceContext commerceContext)
 		throws PortalException;
 

@@ -43,6 +43,12 @@ definition {
 		}
 	}
 
+	macro reloadPageAfterSuccessMessage {
+		Alert.viewSuccessMessageText(successMessage = ${successMessage});
+
+		Button.click(button = "Reload");
+	}
+
 	macro viewConversionMessage {
 		AssertVisible(
 			key_alertMessage = ${alertMessage},

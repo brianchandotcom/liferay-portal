@@ -455,7 +455,14 @@ public class SegmentsExperimentLocalServiceImpl
 
 		_sendNotificationEvent(segmentsExperiment);
 
-		return segmentsExperiment;
+		if (segmentsExperiment.getStatus() !=
+				SegmentsExperimentConstants.STATUS_TERMINATED) {
+
+			return segmentsExperiment;
+		}
+
+		return segmentsExperimentLocalService.deleteSegmentsExperiment(
+			segmentsExperiment);
 	}
 
 	private SegmentsExperiment _updateWinnerSegmentsExperienceId(

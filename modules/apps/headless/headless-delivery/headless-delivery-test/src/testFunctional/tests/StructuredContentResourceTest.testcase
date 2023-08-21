@@ -22,6 +22,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-190222. The user can get customized field reference value of options in GraphQL response."
+	@priority = 4
+	test GetCustomizedFieldReferenceValueInGraphQLResponse {
+		task ("Given the user has a structure with a select from list field using customized field reference value") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Select from List");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentSelectFromList = "Option 1",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get customized field reference value of options in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			TestUtils.assertEquals(
+				actual = ${data},
+				expected = "Option 1");
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			TestUtils.assertEquals(
+				actual = ${value},
+				expected = "Value1");
+		}
+	}
+
 	@description = "This is a test for LPS-190222. The user can get default field reference value of options in GraphQL response."
 	@priority = 4
 	test GetDefaultFieldReferenceValueInGraphQLResponse {

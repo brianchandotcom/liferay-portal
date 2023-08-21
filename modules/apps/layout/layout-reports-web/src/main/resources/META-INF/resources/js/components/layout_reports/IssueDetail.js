@@ -16,7 +16,7 @@ import {StoreStateContext} from '../../context/StoreContext';
 import normalizeFailingElements from '../../utils/normalizeFailingElements';
 
 export default function IssueDetail() {
-	const {selectedIssue} = useContext(StoreStateContext);
+	const {selectedItem} = useContext(StoreStateContext);
 
 	if (Liferay.FeatureFlags['LPS-187284']) {
 		return null;
@@ -30,18 +30,18 @@ export default function IssueDetail() {
 		>
 			<ClayPanel.Group className="panel-group-flush panel-group-sm">
 				<HtmlPanel
-					content={selectedIssue.description}
+					content={selectedItem.description}
 					title={Liferay.Language.get('description')}
 				/>
 
 				<HtmlPanel
-					content={selectedIssue.tips}
+					content={selectedItem.tips}
 					title={Liferay.Language.get('tips')}
 				/>
 
 				<FailingElementsPanel
-					failingElements={selectedIssue.failingElements}
-					issueType={selectedIssue.key}
+					failingElements={selectedItem.failingElements}
+					issueType={selectedItem.key}
 				/>
 			</ClayPanel.Group>
 		</div>

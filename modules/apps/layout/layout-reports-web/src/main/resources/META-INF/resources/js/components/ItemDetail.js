@@ -14,10 +14,10 @@ import normalizeFailingElements from '../utils/normalizeFailingElements';
 
 const ITEM_PAGE_SIZE = 10;
 
-export default function ItemDetail({selectedIssue}) {
+export default function ItemDetail({selectedItem}) {
 	return (
 		<ClayPanel.Group className="c-px-3 panel-group-flush panel-group-sm">
-			<IssueDetail issue={selectedIssue} />
+			<IssueDetail issue={selectedItem} />
 		</ClayPanel.Group>
 	);
 }

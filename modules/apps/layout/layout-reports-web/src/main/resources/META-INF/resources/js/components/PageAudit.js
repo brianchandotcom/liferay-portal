@@ -15,14 +15,14 @@ import {SidebarBody, SidebarHeader} from './Sidebar';
 import Tabs from './Tabs';
 
 import './PageAudit.scss';
-import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
+import {SET_SELECTED_ITEM} from '../constants/actionTypes';
 
 export default function PageAudit({panelIsOpen}) {
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	const {layoutReportsDataURL} = useContext(ConstantsContext);
-	const {selectedIssue} = useContext(StoreStateContext);
+	const {selectedItem} = useContext(StoreStateContext);
 	const dispatch = useContext(StoreDispatchContext);
 
 	useEffect(() => {
@@ -52,25 +52,25 @@ export default function PageAudit({panelIsOpen}) {
 
 	const onBack = () => {
 		dispatch({
-			issue: null,
-			type: SET_SELECTED_ISSUE,
+			item: null,
+			type: SET_SELECTED_ITEM,
 		});
 	};
 
 	return (
 		<>
 			<SidebarHeader
-				onBackButtonClick={selectedIssue ? onBack : null}
+				onBackButtonClick={selectedItem ? onBack : null}
 				title={
-					selectedIssue
-						? selectedIssue.title
+					selectedItem
+						? selectedItem.title
 						: Liferay.Language.get('page-audit')
 				}
 			/>
 
 			<SidebarBody>
-				{selectedIssue ? (
-					<ItemDetail selectedIssue={selectedIssue} />
+				{selectedItem ? (
+					<ItemDetail selectedItem={selectedItem} />
 				) : (
 					<Tabs
 						segments={data.segmentsExperienceSelectorData}

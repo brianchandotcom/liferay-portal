@@ -27,7 +27,7 @@ import NotConfigured from './NotConfigured';
 export default function LayoutReports({eventTriggered, url}) {
 	const isMounted = useIsMounted();
 
-	const {data, error, languageId, loading, selectedIssue} = useContext(
+	const {data, error, languageId, loading, selectedItem} = useContext(
 		StoreStateContext
 	);
 
@@ -123,7 +123,7 @@ export default function LayoutReports({eventTriggered, url}) {
 	const localizedIssues = data.layoutReportsIssues?.[languageId];
 	const notConfigured = !loading && !data.validConnection;
 	const showAlert =
-		!selectedIssue &&
+		!selectedItem &&
 		!loading &&
 		localizedIssues &&
 		data.validConnection &&
@@ -138,7 +138,7 @@ export default function LayoutReports({eventTriggered, url}) {
 		else if (notConfigured) {
 			return <NotConfigured />;
 		}
-		else if (selectedIssue && !Liferay.FeatureFlags['LPS-187284']) {
+		else if (selectedItem && !Liferay.FeatureFlags['LPS-187284']) {
 			return <IssueDetail />;
 		}
 		else {

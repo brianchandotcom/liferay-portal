@@ -11,7 +11,7 @@ import {
 	SET_ERROR,
 	SET_ISSUES,
 	SET_LANGUAGE_ID,
-	SET_SELECTED_ISSUE,
+	SET_SELECTED_ITEM,
 } from '../constants/actionTypes';
 
 const INITIAL_STATE = {
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 	error: null,
 	languageId: null,
 	loading: false,
-	selectedIssue: null,
+	selectedItem: null,
 };
 
 const noop = () => {};
@@ -77,10 +77,10 @@ function reducer(state = INITIAL_STATE, action) {
 			};
 			break;
 
-		case SET_SELECTED_ISSUE:
+		case SET_SELECTED_ITEM:
 			nextState = {
 				...state,
-				selectedIssue: action.issue,
+				selectedItem: action.item,
 			};
 			break;
 

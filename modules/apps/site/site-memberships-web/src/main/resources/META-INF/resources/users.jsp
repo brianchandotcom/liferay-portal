@@ -90,15 +90,15 @@ Role role = usersDisplayContext.getRole();
 							<c:otherwise>
 
 								<%
-								Set<String> names = new TreeSet<String>();
+								Set<String> roles = new TreeSet<String>();
 
-								names.addAll(ListUtil.toList(RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), Role.TITLE_ACCESSOR));
+								roles.addAll(ListUtil.toList(RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), Role.TITLE_ACCESSOR));
 
-								names.addAll(ListUtil.toList(UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR));
+								roles.addAll(ListUtil.toList(UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR));
 
-								List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), user2.getUserId());
+								Set<String> teams = new TreeSet<String>();
 
-								names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
+								teams.addAll(ListUtil.toList(TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), user2.getUserId()), Team.NAME_ACCESSOR));
 								%>
 
 								<c:choose>
@@ -118,8 +118,12 @@ Role role = usersDisplayContext.getRole();
 												<span><%= user2.getScreenName() %></span>
 											</h6>
 
+											<%
+											roles.addAll(teams);
+											%>
+
 											<h6>
-												<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>
+												<%= HtmlUtil.escape(StringUtil.merge(roles, StringPool.COMMA_AND_SPACE)) %>
 											</h6>
 										</liferay-ui:search-container-column-text>
 
@@ -151,8 +155,14 @@ Role role = usersDisplayContext.getRole();
 
 										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand table-cell-minw-200"
-											name="roles-and-teams"
-											value="<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>"
+											name="roles"
+											value="<%= HtmlUtil.escape(StringUtil.merge(roles, StringPool.COMMA_AND_SPACE)) %>"
+										/>
+
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-cell-minw-200"
+											name="teams"
+											value="<%= HtmlUtil.escape(StringUtil.merge(teams, StringPool.COMMA_AND_SPACE)) %>"
 										/>
 
 										<%

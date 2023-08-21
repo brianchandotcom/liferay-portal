@@ -232,15 +232,15 @@ public class LayoutPageTemplateEntryServiceImpl
 		OrderByComparator<Object> orderByComparator) {
 
 		Table<?> tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection =
-			_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable(
+			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 				groupId, type);
 
 		DSLQuery dslQuery =
-			_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionDSLQuery(
+			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryDSLQuery(
 				start, end, orderByComparator,
 				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection);
 
-		return _getLayoutPageTemplateEntriesAndLayoutPageTemplateCollection(
+		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			dslQuery);
 	}
 
@@ -250,15 +250,15 @@ public class LayoutPageTemplateEntryServiceImpl
 		OrderByComparator<Object> orderByComparator) {
 
 		Table<?> tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection =
-			_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable(
+			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 				groupId, name, type);
 
 		DSLQuery dslQuery =
-			_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionDSLQuery(
+			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryDSLQuery(
 				start, end, orderByComparator,
 				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection);
 
-		return _getLayoutPageTemplateEntriesAndLayoutPageTemplateCollection(
+		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			dslQuery);
 	}
 
@@ -267,8 +267,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, int type) {
 
 		DSLQuery dslQuery =
-			_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountDSLQuery(
-				_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
+			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountDSLQuery(
+				_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
 					groupId, type));
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(dslQuery);
@@ -279,8 +279,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, String name, int type) {
 
 		DSLQuery dslQuery =
-			_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountDSLQuery(
-				_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
+			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountDSLQuery(
+				_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
 					groupId, name, type));
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(dslQuery);
@@ -834,7 +834,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private List<Object>
-		_getLayoutPageTemplateEntriesAndLayoutPageTemplateCollection(
+		_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			DSLQuery dslQuery) {
 
 		List<Object> layoutPageTemplateEntriesAndLayoutPageTemplateCollections =
@@ -865,7 +865,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private JoinStep
-		_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountDSLQuery(
+		_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountDSLQuery(
 			Table<?>
 				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection) {
 
@@ -878,7 +878,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private DSLQuery
-		_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionDSLQuery(
+		_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryDSLQuery(
 			int start, int end, OrderByComparator<Object> orderByComparator,
 			Table<?>
 				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection) {
@@ -896,7 +896,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private Table<?>
-		_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
+		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
 			long groupId, int type) {
 
 		return DSLQueryFactoryUtil.select(
@@ -934,7 +934,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private Table<?>
-		_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
+		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
 			long groupId, String name, int type) {
 
 		return DSLQueryFactoryUtil.select(
@@ -974,7 +974,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private Table<?>
-		_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable(
+		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 			long groupId, int type) {
 
 		return DSLQueryFactoryUtil.select(
@@ -1012,7 +1012,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	private Table<?>
-		_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable(
+		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 			long groupId, String name, int type) {
 
 		return DSLQueryFactoryUtil.select(

@@ -118,7 +118,7 @@ export function DefinitionNode({
 						payload: {
 							edges,
 							nodes,
-							selectedObjectDefinitionId: id!.toString(),
+							selectedObjectDefinitionId: id.toString(),
 						},
 						type: TYPES.SET_SELECTED_NODE,
 					});

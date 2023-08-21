@@ -70,7 +70,7 @@ public class GetLayoutReportDataStrutsAction implements StrutsAction {
 					"id", "render-times"
 				).put(
 					"name",
-					_language.get(themeDisplay.getLocale(), "render-times")
+					_language.get(themeDisplay.getLocale(), "performance")
 				).put(
 					"url",
 					() -> {

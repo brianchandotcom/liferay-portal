@@ -71,6 +71,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 					>
 						<clay:horizontal-card
 							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+							propsTransformer="js/propsTransformers/LayoutPageTemplateCollectionPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

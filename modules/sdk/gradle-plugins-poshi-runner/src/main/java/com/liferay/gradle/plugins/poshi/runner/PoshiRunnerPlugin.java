@@ -86,6 +86,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	public static final String EXPAND_POSHI_RUNNER_TASK_NAME =
 		"expandPoshiRunner";
 
+	public static final String GENERATE_POSHI_REPORT_TASK_NAME =
+		"generatePoshiReport";
+
 	public static final String POSHI_RUNNER_CONFIGURATION_NAME = "poshiRunner";
 
 	public static final String POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME =
@@ -129,6 +132,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				project, poshiRunnerExtension);
 
 		final JavaExec validatePoshiTask = _addTaskValidatePoshi(project);
+		final JavaExec generatePoshiReportTask = _addTaskGeneratePoshiReport(
+			project);
 		final JavaExec writePoshiPropertiesTask = _addTaskWritePoshiProperties(
 			project);
 
@@ -155,6 +160,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 						runPoshiTask, poshiProperties, poshiRunnerExtension);
 					_configureTaskValidatePoshi(
 						validatePoshiTask, poshiProperties,
+						poshiRunnerExtension);
+					_configureTaskGeneratePoshiReport(
+						generatePoshiReportTask, poshiProperties,
 						poshiRunnerExtension);
 					_configureTaskWritePoshiProperties(
 						writePoshiPropertiesTask, poshiProperties,
@@ -402,6 +410,22 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	private JavaExec _addTaskGeneratePoshiReport(Project project) {
+		JavaExec javaExec = GradleUtil.addTask(
+			project, GENERATE_POSHI_REPORT_TASK_NAME, JavaExec.class);
+
+		javaExec.setDescription("Generate specialized Poshi reports.");
+		javaExec.setGroup("report");
+
+		Property<String> mainClass = javaExec.getMainClass();
+
+		mainClass.set("com.liferay.poshi.runner.report.PoshiReportGenerator");
+
+		javaExec.setClasspath(_getPoshiRunnerClasspath(project));
+
+		return javaExec;
+	}
+
 	@SuppressWarnings("rawtypes")
 	private Test _addTaskRunPoshi(
 		PoshiRunnerExtension poshiRunnerExtension, Project project) {
@@ -574,6 +598,15 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecutePQLQuery(
+		JavaExec javaExec, Properties poshiProperties,
+		PoshiRunnerExtension poshiRunnerExtension) {
+
+		_populateSystemProperties(
+			javaExec.getSystemProperties(), poshiProperties,
+			javaExec.getProject(), poshiRunnerExtension);
+	}
+
+	private void _configureTaskGeneratePoshiReport(
 		JavaExec javaExec, Properties poshiProperties,
 		PoshiRunnerExtension poshiRunnerExtension) {
 

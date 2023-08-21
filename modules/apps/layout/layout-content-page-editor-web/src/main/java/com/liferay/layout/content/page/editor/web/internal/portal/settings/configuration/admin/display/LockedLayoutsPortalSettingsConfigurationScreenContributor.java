@@ -5,13 +5,22 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portal.settings.configuration.admin.display;
 
+import com.liferay.layout.content.page.editor.web.internal.configuration.LockedLayoutsConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -19,7 +28,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = PortalSettingsConfigurationScreenContributor.class)
+@Component(
+	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.LockedLayoutsConfiguration",
+	service = PortalSettingsConfigurationScreenContributor.class
+)
 public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 	implements PortalSettingsConfigurationScreenContributor {
 
@@ -61,6 +73,31 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 
 		return true;
 	}
+
+	@Override
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			httpServletRequest.setAttribute(
+				LockedLayoutsConfigurationDisplayContext.class.getName(),
+				new LockedLayoutsConfigurationDisplayContext(
+					_configurationProvider.getCompanyConfiguration(
+						LockedLayoutsConfiguration.class,
+						themeDisplay.getCompanyId())));
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

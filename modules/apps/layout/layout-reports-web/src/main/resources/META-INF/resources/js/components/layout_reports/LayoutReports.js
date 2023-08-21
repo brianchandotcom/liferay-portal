@@ -138,7 +138,7 @@ export default function LayoutReports({eventTriggered, url}) {
 		else if (notConfigured) {
 			return <NotConfigured />;
 		}
-		else if (selectedIssue) {
+		else if (selectedIssue && !Liferay.FeatureFlags['LPS-187284']) {
 			return <IssueDetail />;
 		}
 		else {

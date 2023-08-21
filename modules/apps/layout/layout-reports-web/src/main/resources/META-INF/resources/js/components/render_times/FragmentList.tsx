@@ -10,7 +10,7 @@ import {ReactPortal} from '@liferay/frontend-js-react-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {Fragment} from '../../constants/fragments';
+import {Fragment} from '../../constants/Fragment';
 
 interface HighlightedFragment {
 	fragment: Element | null;

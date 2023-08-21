@@ -15,7 +15,7 @@ import {
 	FILTER_TYPE_NAMES,
 	FRAGMENT_FILTERS,
 	FragmentFilter,
-} from '../../constants/fragments';
+} from '../../constants/Fragment';
 
 interface Props {
 	filters: FragmentFilter;

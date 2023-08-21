@@ -20,7 +20,7 @@ import {
 	FILTER_NAMES,
 	Fragment,
 	FragmentFilter,
-} from '../../constants/fragments';
+} from '../../constants/Fragment';
 
 interface PropsResultsBar {
 	className: string;

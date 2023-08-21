@@ -23,9 +23,9 @@ public class LayoutPageTemplateResultRowSplitter implements ResultRowSplitter {
 		List<ResultRowSplitterEntry> resultRowSplitterEntries =
 			new ArrayList<>();
 
-		List<ResultRow> layoutPageTemplateEntryResultRows = new ArrayList<>();
 		List<ResultRow> layoutPageTemplateCollectionResultRows =
 			new ArrayList<>();
+		List<ResultRow> layoutPageTemplateEntryResultRows = new ArrayList<>();
 
 		for (ResultRow resultRow : resultRows) {
 			Object object = resultRow.getObject();

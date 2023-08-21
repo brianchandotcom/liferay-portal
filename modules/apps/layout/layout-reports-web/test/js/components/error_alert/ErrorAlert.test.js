@@ -4,15 +4,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import SidebarHeader from '../../../../src/main/resources/META-INF/resources/js/components/SidebarHeader';
-import ErrorAlert from '../../../../src/main/resources/META-INF/resources/js/components/error_alert/ErrorAlert';
 import BasicInformation from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/BasicInformation';
+import ErrorAlert from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/ErrorAlert';
 import {
 	PAGE_SPEED_API_KEY_ERROR_CODE,
 	PAGE_SPEED_API_KEY_INVALID_STATUS,

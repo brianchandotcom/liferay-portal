@@ -6,14 +6,11 @@
 import {act, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import {ConstantsContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/ConstantsContext';
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import PageAudit, {
-	PageAuditBody,
-} from '../../../src/main/resources/META-INF/resources/js/components/PageAudit';
+import PageAudit from '../../../src/main/resources/META-INF/resources/js/components/PageAudit';
 
 const mockTabs = [
 	{
@@ -62,70 +59,20 @@ jest.mock('frontend-js-web', () => ({
 		}),
 }));
 
-const renderPageAudit = ({panelIsOpen = true} = {}) =>
-	render(
-		<ConstantsContextProvider
-			constants={{
-				layoutReportsTabsURL: 'url',
-			}}
-		>
-			<PageAudit panelIsOpen={panelIsOpen} />
-		</ConstantsContextProvider>
-	);
-
-const renderPageAuditBody = ({segments = mockSegments, selectedIssue} = {}) =>
+const renderPageAudit = ({panelIsOpen = true, selectedItem} = {}) =>
 	render(
 		<StoreContextProvider
 			value={{
-				selectedIssue,
+				selectedItem,
 			}}
 		>
-			<PageAuditBody segments={segments} tabs={mockTabs}>
-				<div>This is the body</div>
-			</PageAuditBody>
+			<PageAudit panelIsOpen={panelIsOpen} />
 		</StoreContextProvider>
 	);
 
 describe('PageAudit', () => {
-	it('renders tabs', async () => {
-		await act(async () => renderPageAuditBody());
-
-		expect(screen.getByText('First Tab')).toBeInTheDocument();
-		expect(screen.getByText('Second Tab')).toBeInTheDocument();
-	});
-
-	it('does not render the experience selector when there is only the default experience', async () => {
-		await act(async () => renderPageAudit());
-
-		expect(
-			screen.queryByText('Experience Default')
-		).not.toBeInTheDocument();
-	});
-
-	it('renders experience selector if there is more than one experience', async () => {
-		const newSegments = {
-			...mockSegments,
-			segmentsExperiences: [
-				...mockSegments.segmentsExperiences,
-				{
-					active: true,
-					segmentsEntryId: '0',
-					segmentsEntryName: 'Anyone',
-					segmentsExperienceId: '33591',
-					segmentsExperienceName: 'Experience1',
-					statusLabel: 'Inactive',
-					url: 'url',
-				},
-			],
-		};
-
-		await act(async () => renderPageAuditBody({segments: newSegments}));
-
-		expect(screen.getByText('Experience Default')).toBeInTheDocument();
-	});
-
 	it('does not render tabs or experience selector if there is an issue selected', async () => {
-		const selectedIssue = {
+		const selectedItem = {
 			description: 'This is a description',
 			failingElements: [],
 			key: 'key',
@@ -134,11 +81,12 @@ describe('PageAudit', () => {
 			total: '1',
 		};
 
-		await act(async () => renderPageAuditBody({selectedIssue}));
+		await act(async () => renderPageAudit({selectedItem}));
 
 		expect(
 			screen.queryByText('Experience Default')
 		).not.toBeInTheDocument();
+
 		expect(screen.queryByText('First Tab')).not.toBeInTheDocument();
 	});
 });

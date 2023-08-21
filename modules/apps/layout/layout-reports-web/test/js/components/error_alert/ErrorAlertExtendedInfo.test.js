@@ -9,7 +9,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import ErrorAlertExtendedInfo from '../../../../src/main/resources/META-INF/resources/js/components/error_alert/ErrorAlertExtendedInfo';
+import ErrorAlertExtendedInfo from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/ErrorAlertExtendedInfo';
 
 const getExtendedInfoComponent = ({error = null} = {}) => {
 	return <ErrorAlertExtendedInfo error={error} />;

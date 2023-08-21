@@ -47,7 +47,7 @@ public class HeadlessBuilderResourceImpl {
 	}
 
 	@GET
-	@Path(HeadlessBuilderConstants.SITE_SCOPED_BASE_PATH + "/{path: .*}")
+	@Path(HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX + "/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
 			@QueryParam("filter") String filterString,

@@ -16,7 +16,7 @@ public class PathUtil {
 
 	public static String getPathPrefix(APIApplication.Endpoint.Scope scope) {
 		if (scope == APIApplication.Endpoint.Scope.GROUP) {
-			return HeadlessBuilderConstants.SITE_SCOPED_BASE_PATH;
+			return HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX;
 		}
 
 		return StringPool.BLANK;

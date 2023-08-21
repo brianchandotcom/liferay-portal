@@ -1684,8 +1684,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-190491. Verify that oAuthApplication* client extension scopes will not lose in a clustered environment. Blocked by LPS-192126."
-	@ignore = "true"
+	@description = "This is a use case for LPS-190491. Verify that oAuthApplication* client extension scopes will not lose in a clustered environment."
 	@priority = 4
 	test OAuthApplicationClientExtensionScopesWorkWithClusteredPortals {
 		property app.server.bundles.size = "1";

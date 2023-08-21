@@ -11,16 +11,12 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.search.rest.client.dto.v1_0.Suggestion;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorResults;
 import com.liferay.portal.search.rest.client.pagination.Page;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,15 +26,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		super.setUp();
-	}
-
+	@Override
 	@Test
 	public void testPostSuggestionsPage() throws Exception {
 		String displayGroupName = "Suggestions";
@@ -47,15 +35,13 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 
 		_addJournalArticle(title);
 
-		SuggestionsContributorConfiguration[]
-			suggestionsContributorConfigurations = {
-				_getSuggestionsContributorConfiguration(
-					"basic", displayGroupName)
-			};
-
 		Page<SuggestionsContributorResults> suggestionPage =
 			_postSuggestionsPage(
-				"Document", suggestionsContributorConfigurations);
+				"Document",
+				new SuggestionsContributorConfiguration[] {
+					_getSuggestionsContributorConfiguration(
+						"basic", displayGroupName)
+				});
 
 		Assert.assertEquals(1, suggestionPage.getTotalCount());
 
@@ -81,7 +67,7 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 	}
 
 	private JournalArticle _addJournalArticle(String title) throws Exception {
-		return JournalTestUtil.addArticle(_group.getGroupId(), title, "");
+		return JournalTestUtil.addArticle(testGroup.getGroupId(), title, "");
 	}
 
 	private JSONObject _getSuggestionAttributesAsJSONObject(
@@ -118,11 +104,11 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 
 		return suggestionResource.postSuggestionsPage(
 			"http://localhost:8080/web/guest/home", "%2Fsearch",
-			_group.getGroupId(), "q", _layout.getPlid(), "everything", search,
-			suggestionsContributorConfigurations);
+			testGroup.getGroupId(), "q",
+			LayoutTestUtil.addTypePortletLayout(
+				testGroup
+			).getPlid(),
+			"everything", search, suggestionsContributorConfigurations);
 	}
-
-	private Group _group;
-	private Layout _layout;
 
 }

@@ -37,6 +37,19 @@ definition {
 			locator1 = "Modal#INPUT_WITH_LABEL",
 			value1 = ${title});
 
+		if (isSet(baseURL)) {
+			Type(
+				key_fieldLabel = "URL",
+				locator1 = "Modal#INPUT_WITH_LABEL",
+				value1 = ${baseURL});
+		}
+
+		if (isSet(description)) {
+			Type(
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = ${description});
+		}
+
 		Click(locator1 = "APIBuilder#CREATE_BUTTON");
 	}
 

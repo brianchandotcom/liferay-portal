@@ -528,7 +528,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 	}
 
 	public static int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		HttpPrincipal httpPrincipal, long groupId, String name, int[] types) {
+		HttpPrincipal httpPrincipal, long groupId, int type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -537,7 +537,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 				_getLayoutPageCollectionsAndLayoutPageTemplateEntriesCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, types);
+				methodKey, groupId, type);
 
 			Object returnObj = null;
 
@@ -561,7 +561,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 	}
 
 	public static int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		HttpPrincipal httpPrincipal, long groupId, int[] types) {
+		HttpPrincipal httpPrincipal, long groupId, String name, int type) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -570,7 +570,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 				_getLayoutPageCollectionsAndLayoutPageTemplateEntriesCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, types);
+				methodKey, groupId, name, type);
 
 			Object returnObj = null;
 
@@ -2398,10 +2398,10 @@ public class LayoutPageTemplateEntryServiceHttp {
 			};
 	private static final Class<?>[]
 		_getLayoutPageCollectionsAndLayoutPageTemplateEntriesCountParameterTypes12 =
-			new Class[] {long.class, String.class, int[].class};
+			new Class[] {long.class, int.class};
 	private static final Class<?>[]
 		_getLayoutPageCollectionsAndLayoutPageTemplateEntriesCountParameterTypes13 =
-			new Class[] {long.class, int[].class};
+			new Class[] {long.class, String.class, int.class};
 	private static final Class<?>[]
 		_getLayoutPageTemplateEntriesParameterTypes14 = new Class[] {
 			long.class, int.class, int.class, int.class, int.class,

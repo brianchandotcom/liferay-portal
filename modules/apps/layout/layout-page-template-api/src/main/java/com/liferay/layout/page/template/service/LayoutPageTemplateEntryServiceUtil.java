@@ -143,19 +143,19 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, int[] types) {
+		long groupId, int type) {
 
 		return getService().
 			getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-				groupId, types);
+				groupId, type);
 	}
 
 	public static int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, String name, int[] types) {
+		long groupId, String name, int type) {
 
 		return getService().
 			getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-				groupId, name, types);
+				groupId, name, type);
 	}
 
 	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(

@@ -93,13 +93,9 @@ definition {
 		}
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 5464);
+			StringUtil.assertEquals(5464, ${width});
 
-			TestUtils.assertEquals(
-				actual = ${fileSizeDesktop},
-				expected = 4405);
+			StringUtil.assertEquals(4405, ${fileSizeDesktop});
 		}
 
 		task ("Change to the Tablet viewport") {
@@ -128,9 +124,7 @@ definition {
 		}
 
 		task ("Assert the Width of selected image resolution is 1000px") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 1000);
+			StringUtil.assertEquals(1000, ${width});
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
@@ -261,13 +255,9 @@ definition {
 		}
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 5464);
+			StringUtil.assertEquals(5464, ${width});
 
-			TestUtils.assertEquals(
-				actual = ${fileSizeDesktop},
-				expected = 4405);
+			StringUtil.assertEquals(4405, ${fileSizeDesktop});
 		}
 
 		task ("Change to the Portrait Phone viewport") {
@@ -304,9 +294,7 @@ definition {
 		}
 
 		task ("Assert the Width of selected image resolution is 1000px") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 1000);
+			StringUtil.assertEquals(1000, ${width});
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {
@@ -436,13 +424,9 @@ definition {
 		}
 
 		task ("Assert the Width and File Size of image resolution equal with orignal image") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 5464);
+			StringUtil.assertEquals(5464, ${width});
 
-			TestUtils.assertEquals(
-				actual = ${fileSizeDesktop},
-				expected = 4405);
+			StringUtil.assertEquals(4405, ${fileSizeDesktop});
 		}
 
 		task ("Change to the Landscape Phone viewport") {
@@ -478,9 +462,7 @@ definition {
 		}
 
 		task ("Assert the Width of selected image resolution is 1000px") {
-			TestUtils.assertEquals(
-				actual = ${width},
-				expected = 1000);
+			StringUtil.assertEquals(1000, ${width});
 		}
 
 		task ("Assert the File Size become smaller than Desktop viewport") {

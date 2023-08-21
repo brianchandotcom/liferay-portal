@@ -125,9 +125,7 @@ definition {
 		}
 
 		task ("View plid is the same after conversion") {
-			TestUtils.assertEquals(
-				actual = ${plid2},
-				expected = ${plid1});
+			StringUtil.assertEquals(${plid1}, ${plid2});
 		}
 
 		task ("View fragments and widgets sidebar at edit mode") {
@@ -224,21 +222,9 @@ definition {
 		task ("View output content") {
 			var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 
-			echo(${output});
+			StringUtil.contains(${output}, "Convertible layouts before conversion:[${plidsBeforeConversion}]", "");
 
-			if (contains(${output}, "Convertible layouts before conversion:[${plidsBeforeConversion}]")) {
-				echo("Returned convertible layouts plids array is correct");
-			}
-			else {
-				fail("Returned convertible layout plids array is wrong");
-			}
-
-			if (contains(${output}, "Convertible layouts after conversion: []")) {
-				echo("No convertiable layouts left");
-			}
-			else {
-				fail("There are convertiable layouts left");
-			}
+			StringUtil.contains(${output}, "Convertible layouts after conversion: []", "");
 		}
 
 		task ("Get plids of converted pages") {
@@ -265,18 +251,11 @@ definition {
 		}
 
 		task ("View output content") {
-			if (contains(${output}, "Converted layouts:[${plidsAfterConversion}]")) {
-				echo("Returned converted layouts plids array is correct");
-			}
-			else {
-				fail("Returned converted layout plids array is wrong");
-			}
+			StringUtil.contains(${output}, "Converted layouts:[${plidsAfterConversion}]", "");
 		}
 
 		task ("View plids are the same after conversion") {
-			TestUtils.assertEquals(
-				actual = ${plidsAfterConversion},
-				expected = ${plidsBeforeConversion});
+			StringUtil.assertEquals(${plidsBeforeConversion}, ${plidsAfterConversion});
 		}
 
 		task ("View current page type after conversion") {

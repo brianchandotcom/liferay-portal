@@ -521,9 +521,7 @@ definition {
 			var blockWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__collection__block')]");
 			var collectionDisplayWidth = selenium.getElementWidth("//div[@aria-label='Collection Display']//div[contains(@class,'page-editor__topper__content')]");
 
-			TestUtils.assertEquals(
-				actual = ${blockWidth},
-				expected = ${collectionDisplayWidth});
+			StringUtil.assertEquals(${collectionDisplayWidth}, ${blockWidth});
 		}
 
 		task ("When the page creator changes the align items to End") {

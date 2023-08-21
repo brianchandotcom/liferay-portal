@@ -607,10 +607,9 @@ definition {
 			var scrollBarWidth = ${offsetWidth} - ${clientWidth};
 			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
 			var pageContentWidth = ${gridFragmentWidth} + ${scrollBarWidth};
+			var difference = ${bodyWidth} - ${bothSidebarWidth};
 
-			TestUtils.assertEquals(
-				actual = MathUtil.difference(${bodyWidth}, ${bothSidebarWidth}),
-				expected = ${pageContentWidth});
+			StringUtil.assertEquals(${pageContentWidth}, ${difference});
 		}
 	}
 
@@ -1119,9 +1118,9 @@ definition {
 
 			var bothSidebarWidth = ${leftSidebarWidth} + ${rightSidebarWidth};
 
-			TestUtils.assertEquals(
-				actual = MathUtil.difference(${bodyWidth}, ${bothSidebarWidth}),
-				expected = ${headingFragmentWidth});
+			var difference = ${bodyWidth} - ${bothSidebarWidth};
+
+			StringUtil.assertEquals(${headingFragmentWidth}, ${difference});
 		}
 	}
 

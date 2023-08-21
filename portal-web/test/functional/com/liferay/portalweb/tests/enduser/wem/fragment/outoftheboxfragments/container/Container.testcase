@@ -281,9 +281,7 @@ definition {
 				property = "scrollHeight");
 			var containerHeight = selenium.getElementHeight("//div[@aria-label='Container']//div[contains(@class,'page-editor__topper__content')]");
 
-			TestUtils.assertEquals(
-				actual = ${totalHeight},
-				expected = ${containerHeight});
+			StringUtil.assertEquals(${containerHeight}, ${totalHeight});
 		}
 	}
 

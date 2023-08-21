@@ -497,9 +497,7 @@ definition {
 
 		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
 
-		TestUtils.assertEquals(
-			actual = ${actualExternalReferenceCodeValue},
-			expected = ${expectedExternalReferenceCodeValue});
+		StringUtil.assertEquals(${expectedExternalReferenceCodeValue}, ${actualExternalReferenceCodeValue});
 	}
 
 	macro assertInFacetsWithCorrectValue {
@@ -507,42 +505,32 @@ definition {
 
 		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.facets..facetValues[?(@.term=='${structuredContentId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
 
-		TestUtils.assertEquals(
-			actual = ${actualValue},
-			expected = ${expectedValue});
+		StringUtil.assertEquals(${expectedValue}, ${actualValue});
 	}
 
 	macro assertPriorityFieldWithCorrectValue {
 		var actualPriorityValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..priority");
 
-		TestUtils.assertEquals(
-			actual = ${actualPriorityValue},
-			expected = ${expectedPriorityValue});
+		StringUtil.assertEquals(${expectedPriorityValue}, ${actualPriorityValue});
 	}
 
 	macro assertProperNumberOfItems {
 		var actualTotalElement = JSONUtil.getWithJSONPath(${responseToParse}, "$..['totalCount']");
 
-		TestUtils.assertEquals(
-			actual = ${actualTotalElement},
-			expected = ${expectedTotalElement});
+		StringUtil.assertEquals(${expectedTotalElement}, ${actualTotalElement});
 	}
 
 	macro assertStructuredContentIdIsFilteredWithCorrectValue {
 		var editStructuredContentId = JSONUtil.getWithJSONPath(${editStructuredContentId}, "$.['id']");
 		var filterStructuredContentId = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].id");
 
-		TestUtils.assertEquals(
-			actual = ${filterStructuredContentId},
-			expected = ${editStructuredContentId});
+		StringUtil.assertEquals(${editStructuredContentId}, ${filterStructuredContentId});
 	}
 
 	macro assertTitleFieldWithCorrectName {
 		var actualTitleName = JSONUtil.getWithJSONPath(${responseToParse}, "$..title");
 
-		TestUtils.assertEquals(
-			actual = ${actualTitleName},
-			expected = ${expectedTitleName});
+		StringUtil.assertEquals(${expectedTitleName}, ${actualTitleName});
 	}
 
 	macro createStructuredContent {

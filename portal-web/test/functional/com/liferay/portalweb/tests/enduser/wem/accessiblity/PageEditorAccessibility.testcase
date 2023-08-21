@@ -746,9 +746,7 @@ definition {
 		task ("Then the page title doesn't have (Editing)") {
 			var viewModeTitle = selenium.getTitle();
 
-			TestUtils.assertEquals(
-				actual = ${viewModeTitle},
-				expected = "Test Page Name - ${randomSiteName} - ${defaultSiteName}");
+			StringUtil.assertEquals("Test Page Name - ${randomSiteName} - ${defaultSiteName}", ${viewModeTitle});
 		}
 
 		task ("When the page creator accesses to the content page at edit mode") {
@@ -758,9 +756,7 @@ definition {
 		task ("Then the title has (Editing)") {
 			var editModeTitle = selenium.getTitle();
 
-			TestUtils.assertEquals(
-				actual = ${editModeTitle},
-				expected = "Test Page Name - ${randomSiteName} - ${defaultSiteName} (Editing)");
+			StringUtil.assertEquals("Test Page Name - ${randomSiteName} - ${defaultSiteName} (Editing)", ${editModeTitle});
 		}
 	}
 

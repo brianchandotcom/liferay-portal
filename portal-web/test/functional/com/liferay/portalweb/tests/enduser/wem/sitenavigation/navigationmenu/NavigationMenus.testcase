@@ -1240,9 +1240,7 @@ definition {
 				element = "//div[contains(@class,'site_navigation_menu_editor_AppLayout-content')]",
 				property = "scrollTop");
 
-			TestUtils.assertEquals(
-				actual = ${scrollTop},
-				expected = ${persistenceScrollTop});
+			StringUtil.assertEquals(${persistenceScrollTop}, ${scrollTop});
 		}
 	}
 
@@ -1403,9 +1401,7 @@ definition {
 				element = "//div[contains(@class,'site_navigation_menu_editor_AppLayout-content')]",
 				property = "scrollTop");
 
-			TestUtils.assertEquals(
-				actual = ${scrollTop},
-				expected = 0);
+			StringUtil.assertEquals(0, ${scrollTop});
 
 			ScrollWebElementIntoView(
 				key_itemName = "Test Page Name 15",
@@ -1419,9 +1415,7 @@ definition {
 				element = "//div[contains(@class,'site_navigation_menu_editor_AppLayout-content')]",
 				property = "scrollTop");
 
-			TestUtils.assertEquals(
-				actual = ${scrollTop},
-				expected = 0);
+			StringUtil.assertEquals(0, ${scrollTop});
 		}
 	}
 

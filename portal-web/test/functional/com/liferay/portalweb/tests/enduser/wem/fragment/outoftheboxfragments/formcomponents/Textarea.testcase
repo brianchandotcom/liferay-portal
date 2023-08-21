@@ -116,9 +116,7 @@ definition {
 				attribute = "height",
 				element = "//div[contains(@id,'fragment-')]/div[contains(@class,'textarea')]//textarea[contains(@id,'textarea')]");
 
-			TestUtils.assertEquals(
-				actual = ${height},
-				expected = "64px");
+			StringUtil.assertEquals("64px", ${height});
 		}
 
 		task ("When the pages designer leaves the Number of Lines empty") {
@@ -132,9 +130,7 @@ definition {
 				attribute = "height",
 				element = "//div[contains(@id,'fragment-')]/div[contains(@class,'textarea')]//textarea[contains(@id,'textarea')]");
 
-			TestUtils.assertEquals(
-				actual = ${height},
-				expected = "64px");
+			StringUtil.assertEquals("64px", ${height});
 		}
 	}
 

@@ -695,9 +695,7 @@ definition {
 		}
 
 		task ("View the naturalWidth doesn't change") {
-			TestUtils.assertEquals(
-				actual = ${editedNaturalWidth},
-				expected = ${naturalWidth});
+			StringUtil.assertEquals(${naturalWidth}, ${editedNaturalWidth});
 		}
 
 		task ("View the naturalHeight becomes smaller") {
@@ -723,9 +721,7 @@ definition {
 		}
 
 		task ("View the naturalWidth doesn't change") {
-			TestUtils.assertEquals(
-				actual = ${editedNaturalWidth},
-				expected = ${naturalWidth});
+			StringUtil.assertEquals(${naturalWidth}, ${editedNaturalWidth});
 		}
 
 		task ("View the naturalHeight becomes smaller") {
@@ -1393,9 +1389,7 @@ definition {
 				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1\\.jpg')]]",
 				pseudo = ":after");
 
-			TestUtils.assertEquals(
-				actual = ${backgroundImageOutlineStyle},
-				expected = "dashed");
+			StringUtil.assertEquals("dashed", ${backgroundImageOutlineStyle});
 		}
 	}
 

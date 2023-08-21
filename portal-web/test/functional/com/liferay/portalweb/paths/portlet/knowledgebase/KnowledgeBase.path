@@ -316,6 +316,16 @@
 	<td>//li[contains(@class,'knowledge-base-navigation-item-active')]//span[contains(@class,'component-text') and contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MOVE_MODAL_SEARCH_BAR</td>
+	<td>//div[contains(@class,'container-fluid')]//div[contains(@class,'input-group-sm')]//input[@placeholder='Search for']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_MODAL_SEARCH_RESULT</td>
+	<td>//ul[contains(@class,'list-group')]//div[contains(@class,'autofit-col')]//span[contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
 
 <!--PAGE_TREE-->
 

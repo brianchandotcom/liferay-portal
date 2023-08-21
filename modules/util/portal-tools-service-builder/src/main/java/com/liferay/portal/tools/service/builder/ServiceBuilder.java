@@ -2682,6 +2682,13 @@ public class ServiceBuilder {
 						content, "PortalException", "NoSuchModelException");
 				}
 
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+					"yyyy");
+
+				content = content.replaceFirst(
+					Pattern.quote("{$year}"),
+					simpleDateFormat.format(new Date()));
+
 				content = StringUtil.replace(content, "\r\n", "\n");
 
 				ToolsUtil.writeFileRaw(

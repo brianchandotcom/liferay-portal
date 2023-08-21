@@ -23,17 +23,7 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select plid from SegmentsExperiment group by plid")) {
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long plid = resultSet.getLong("plid");
-
-					_deleteSegmentsExperiments(plid);
-				}
-			}
-		}
+		_deleteSegmentsExperiments();
 	}
 
 	private void _deleteSegmentsExperiences(List<Long> segmentsExperienceIds)
@@ -86,6 +76,20 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.executeBatch();
 
 					_deleteSegmentsExperiences(segmentsExperienceIds);
+				}
+			}
+		}
+	}
+
+	private void _deleteSegmentsExperiments() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select plid from SegmentsExperiment group by plid")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long plid = resultSet.getLong("plid");
+
+					_deleteSegmentsExperiments(plid);
 				}
 			}
 		}

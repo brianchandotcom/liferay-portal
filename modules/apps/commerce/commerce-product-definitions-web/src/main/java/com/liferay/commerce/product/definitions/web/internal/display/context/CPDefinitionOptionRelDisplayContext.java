@@ -91,38 +91,39 @@ public class CPDefinitionOptionRelDisplayContext
 
 		List<MultiselectItem> multiselectItems = new ArrayList<>();
 
-		if (!Validator.isBlank(infoItemServiceKey)) {
-			ConfigurableInfoCollectionProvider<?>
-				configurableInfoCollectionProvider =
-					(ConfigurableInfoCollectionProvider<?>)
-						_infoItemServiceRegistry.getInfoItemService(
-							RelatedInfoItemCollectionProvider.class,
-							infoItemServiceKey);
+		if (Validator.isBlank(infoItemServiceKey)) {
+			return multiselectItems;
+		}
 
-			if (configurableInfoCollectionProvider != null) {
-				InfoForm infoForm =
-					configurableInfoCollectionProvider.
-						getConfigurationInfoForm();
+		ConfigurableInfoCollectionProvider<?>
+			configurableInfoCollectionProvider =
+				(ConfigurableInfoCollectionProvider<?>)
+					_infoItemServiceRegistry.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						infoItemServiceKey);
 
-				List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
+		if (configurableInfoCollectionProvider == null) {
+			return multiselectItems;
+		}
 
-				InfoField infoField = infoFields.get(0);
+		InfoForm infoForm =
+			configurableInfoCollectionProvider.getConfigurationInfoForm();
 
-				List<OptionInfoFieldType> optionInfoFieldTypes =
-					(List<OptionInfoFieldType>)infoField.getAttribute(
-						MultiselectInfoFieldType.OPTIONS);
+		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
 
-				for (OptionInfoFieldType optionInfoFieldType :
-						optionInfoFieldTypes) {
+		InfoField infoField = infoFields.get(0);
 
-					multiselectItems.add(
-						MultiselectItemBuilder.setLabel(
-							optionInfoFieldType.getLabel(locale)
-						).setValue(
-							optionInfoFieldType.getValue()
-						).build());
-				}
-			}
+		List<OptionInfoFieldType> optionInfoFieldTypes =
+			(List<OptionInfoFieldType>)infoField.getAttribute(
+				MultiselectInfoFieldType.OPTIONS);
+
+		for (OptionInfoFieldType optionInfoFieldType : optionInfoFieldTypes) {
+			multiselectItems.add(
+				MultiselectItemBuilder.setLabel(
+					optionInfoFieldType.getLabel(locale)
+				).setValue(
+					optionInfoFieldType.getValue()
+				).build());
 		}
 
 		return multiselectItems;
@@ -300,49 +301,50 @@ public class CPDefinitionOptionRelDisplayContext
 		String infoItemServiceKey =
 			cpDefinitionOptionRel.getInfoItemServiceKey();
 
-		if (!Validator.isBlank(infoItemServiceKey)) {
-			ConfigurableInfoCollectionProvider<?>
-				configurableInfoCollectionProvider =
-					(ConfigurableInfoCollectionProvider<?>)
-						_infoItemServiceRegistry.getInfoItemService(
-							RelatedInfoItemCollectionProvider.class,
-							infoItemServiceKey);
+		if (Validator.isBlank(infoItemServiceKey)) {
+			return multiselectItems;
+		}
 
-			if (configurableInfoCollectionProvider != null) {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					cpDefinitionOptionRel.getTypeSettingsUnicodeProperties();
+		ConfigurableInfoCollectionProvider<?>
+			configurableInfoCollectionProvider =
+				(ConfigurableInfoCollectionProvider<?>)
+					_infoItemServiceRegistry.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						infoItemServiceKey);
 
-				String[] categoryIds = GetterUtil.getStringValues(
-					StringUtil.split(
-						typeSettingsUnicodeProperties.getProperty(
-							"categoryIds", StringPool.BLANK)));
+		if (configurableInfoCollectionProvider == null) {
+			return multiselectItems;
+		}
 
-				InfoForm infoForm =
-					configurableInfoCollectionProvider.
-						getConfigurationInfoForm();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			cpDefinitionOptionRel.getTypeSettingsUnicodeProperties();
 
-				List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
+		String[] categoryIds = GetterUtil.getStringValues(
+			StringUtil.split(
+				typeSettingsUnicodeProperties.getProperty(
+					"categoryIds", StringPool.BLANK)));
 
-				InfoField infoField = infoFields.get(0);
+		InfoForm infoForm =
+			configurableInfoCollectionProvider.getConfigurationInfoForm();
 
-				List<OptionInfoFieldType> optionInfoFieldTypes =
-					(List<OptionInfoFieldType>)infoField.getAttribute(
-						MultiselectInfoFieldType.OPTIONS);
+		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
 
-				for (OptionInfoFieldType optionInfoFieldType :
-						optionInfoFieldTypes) {
+		InfoField infoField = infoFields.get(0);
 
-					if (ArrayUtil.contains(
-							categoryIds, optionInfoFieldType.getValue())) {
+		List<OptionInfoFieldType> optionInfoFieldTypes =
+			(List<OptionInfoFieldType>)infoField.getAttribute(
+				MultiselectInfoFieldType.OPTIONS);
 
-						multiselectItems.add(
-							MultiselectItemBuilder.setLabel(
-								optionInfoFieldType.getLabel(locale)
-							).setValue(
-								optionInfoFieldType.getValue()
-							).build());
-					}
-				}
+		for (OptionInfoFieldType optionInfoFieldType : optionInfoFieldTypes) {
+			if (ArrayUtil.contains(
+					categoryIds, optionInfoFieldType.getValue())) {
+
+				multiselectItems.add(
+					MultiselectItemBuilder.setLabel(
+						optionInfoFieldType.getLabel(locale)
+					).setValue(
+						optionInfoFieldType.getValue()
+					).build());
 			}
 		}
 

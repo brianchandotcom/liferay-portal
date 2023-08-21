@@ -217,8 +217,8 @@ public class CommerceOptionValueHelperImpl
 					jsonObject, "value");
 
 				for (int j = 0; j < valueJSONArray.length(); j++) {
-					for (CPDefinitionOptionValueRel
-							cpDefinitionOptionValueRel : entry.getValue()) {
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+							entry.getValue()) {
 
 						if (!Objects.equqals(
 								cpDefinitionOptionValueRel.getKey(),
@@ -240,14 +240,10 @@ public class CommerceOptionValueHelperImpl
 						commerceOptionValueBuilder.quantity(
 							cpDefinitionOptionValueRel.getQuantity());
 
-						CPInstance
-							cpDefinitionOptionValueRelCPInstance =
-								cpDefinitionOptionValueRel.
-									fetchCPInstance();
+						CPInstance cpDefinitionOptionValueRelCPInstance =
+							cpDefinitionOptionValueRel.fetchCPInstance();
 
-						if (cpDefinitionOptionValueRelCPInstance ==
-								null) {
-
+						if (cpDefinitionOptionValueRelCPInstance == null) {
 							continue;
 						}
 

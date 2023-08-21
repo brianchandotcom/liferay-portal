@@ -53,8 +53,8 @@ public class CommerceOptionValueHelperImpl
 
 		if (!cpDefinitionOptionValueRelMap.isEmpty()) {
 			_filterCPDefinitionOptionValueRelMap(
-				_getCPDefinitionOptionValueRelMap(cpDefinitionId), json,
-				commerceOptionValues);
+				_getCPDefinitionOptionValueRelMap(cpDefinitionId),
+				commerceOptionValues, json);
 		}
 
 		Map<Long, List<Long>>
@@ -180,7 +180,7 @@ public class CommerceOptionValueHelperImpl
 	private void _filterCPDefinitionOptionValueRelMap(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionValueRelMap,
-			String json, List<CommerceOptionValue> commerceOptionValues)
+			List<CommerceOptionValue> commerceOptionValues, String json)
 		throws JSONException {
 
 		if (CPJSONUtil.isEmpty(json)) {

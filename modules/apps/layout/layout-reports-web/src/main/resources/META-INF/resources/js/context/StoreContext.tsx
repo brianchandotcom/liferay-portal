@@ -5,7 +5,9 @@
 
 import React, {createContext, useReducer} from 'react';
 
+import {Fragment} from '../constants/Fragment';
 import {
+	Action,
 	LOAD_DATA,
 	SET_DATA,
 	SET_ERROR,
@@ -13,28 +15,34 @@ import {
 	SET_LANGUAGE_ID,
 	SET_SELECTED_ITEM,
 } from '../constants/actionTypes';
+import {Issue} from '../constants/types/Issue';
+import {LayoutReportsData} from '../constants/types/LayoutReports';
 
-const INITIAL_STATE = {
-	data: null,
-	error: null,
-	languageId: null,
+interface State {
+	data?: LayoutReportsData;
+	error?: string | null;
+	languageId?: string;
+	loading: boolean;
+	selectedItem?: Fragment | Issue | null;
+}
+
+const INITIAL_STATE: State = {
 	loading: false,
-	selectedItem: null,
 };
 
 const noop = () => {};
 
-export const StoreDispatchContext = createContext(noop);
-export const StoreStateContext = createContext([INITIAL_STATE, noop]);
+export const StoreDispatchContext = createContext<React.Dispatch<Action>>(noop);
+export const StoreStateContext = createContext<State>(INITIAL_STATE);
 
-function reducer(state = INITIAL_STATE, action) {
-	let nextState = state;
+function reducer(state = INITIAL_STATE, action: Action) {
+	let nextState: State = state;
 
 	switch (action.type) {
 		case LOAD_DATA:
 			nextState = {
 				...state,
-				error: false,
+				error: null,
 				loading: true,
 			};
 			break;
@@ -62,7 +70,7 @@ function reducer(state = INITIAL_STATE, action) {
 				data: {
 					...state.data,
 					layoutReportsIssues: {
-						...state.data.layoutReportsIssues,
+						...state.data?.layoutReportsIssues,
 						[action.languageId]: action.layoutReportsIssues,
 					},
 				},
@@ -91,7 +99,13 @@ function reducer(state = INITIAL_STATE, action) {
 	return nextState;
 }
 
-export function StoreContextProvider({children, value}) {
+export function StoreContextProvider({
+	children,
+	value,
+}: {
+	children: React.ReactNode;
+	value: State;
+}) {
 	const [state, dispatch] = useReducer(reducer, {...INITIAL_STATE, ...value});
 
 	return (

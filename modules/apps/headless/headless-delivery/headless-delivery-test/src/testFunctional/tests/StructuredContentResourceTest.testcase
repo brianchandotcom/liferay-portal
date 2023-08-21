@@ -1,0 +1,97 @@
+@component-name = "portal-wcm"
+@disable-webdriver = "true"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
+	property testray.main.component.name = "Echo Headless";
+
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+	}
+
+	@description = "This is a test for LPS-190222. The user can get default field reference value of options in GraphQL response."
+	@priority = 4
+	test GetDefaultFieldReferenceValueInGraphQLResponse {
+		task ("Given the user has a structure with a multiple selection field using default field reference value") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Multiple Selection");
+
+			Click(
+				key_fieldFieldLabel = "Multiple Selection",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+			DataEngine.addFieldOption(
+				index = 1,
+				optionFieldLabel = "Options",
+				optionValue = "First");
+
+			DataEngine.addFieldOption(
+				index = 2,
+				optionFieldLabel = "Options",
+				optionValue = "Second");
+
+			DataEngine.addFieldOption(
+				index = 3,
+				optionFieldLabel = "Options",
+				optionValue = "Third");
+
+			var value1 = selenium.getElementValue("xpath=(//label[normalize-space(text())='Options']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[1]");
+			var value2 = selenium.getElementValue("xpath=(//label[normalize-space(text())='Options']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[2]");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentMultipleSelection = "First",
+				webContentTitle = "Web Content Title");
+
+			WebContent.addWithStructureCP(webContentMultipleSelection = "Second");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get default field reference value of options in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			TestUtils.assertEquals(
+				actual = ${data},
+				expected = "[\"First\",\"Second\"]");
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			TestUtils.assertEquals(
+				actual = ${value},
+				expected = "[\"${value1}\",\"${value2}\"]");
+		}
+	}
+
+}

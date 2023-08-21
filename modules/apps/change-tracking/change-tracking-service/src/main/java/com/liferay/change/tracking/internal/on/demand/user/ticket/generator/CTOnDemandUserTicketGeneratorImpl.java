@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.internal.on.demand.user.ticket.generator;
 
 import com.liferay.change.tracking.constants.CTOnDemandUserConstants;
+import com.liferay.change.tracking.constants.CTRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.on.demand.user.ticket.generator.CTOnDemandUserTicketGenerator;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -16,14 +17,24 @@ import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.security.audit.event.generators.util.AuditMessageBuilder;
 
@@ -101,14 +112,17 @@ public class CTOnDemandUserTicketGeneratorImpl
 
 		Date date = new Date();
 
+		Role role = _roleLocalService.getRole(
+			ctCollection.getCompanyId(), CTRoleConstants.PUBLICATIONS_REVIEWER);
+
 		user = _userLocalService.addUser(
 			PrincipalThreadLocal.getUserId(), company.getCompanyId(), false,
 			password, password, true, screenName,
 			StringBundler.concat(screenName, StringPool.AT, company.getMx()),
 			company.getLocale(), "guest", null, "guest", 0, 0, true,
 			date.getMonth(), date.getDay(), date.getYear(), null,
-			UserConstants.TYPE_ON_DEMAND_USER, null, null, null, null, false,
-			new ServiceContext());
+			UserConstants.TYPE_ON_DEMAND_USER, null, null,
+			new long[] {role.getRoleId()}, null, false, new ServiceContext());
 
 		user.setEmailAddressVerified(true);
 
@@ -116,7 +130,30 @@ public class CTOnDemandUserTicketGeneratorImpl
 
 		ctCollection.setOnDemandUserId(user.getUserId());
 
-		_ctCollectionLocalService.updateCTCollection(ctCollection);
+		ctCollection = _ctCollectionLocalService.updateCTCollection(
+			ctCollection);
+
+		Group group = _groupLocalService.fetchGroup(
+			ctCollection.getCompanyId(),
+			_classNameLocalService.getClassNameId(CTCollection.class),
+			ctCollection.getCtCollectionId());
+
+		if (group == null) {
+			group = _groupLocalService.addGroup(
+				ctCollection.getUserId(),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				CTCollection.class.getName(), ctCollection.getCtCollectionId(),
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), ctCollection.getName()
+				).build(),
+				null, GroupConstants.TYPE_SITE_PRIVATE, false,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
+				true, null);
+		}
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), group.getGroupId(), role.getRoleId());
 
 		return user;
 	}
@@ -125,13 +162,28 @@ public class CTOnDemandUserTicketGeneratorImpl
 	private AuditRouter _auditRouter;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private TicketLocalService _ticketLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

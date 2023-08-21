@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {Liferay} from '../services/liferay/liferay';
+import {Liferay} from '../services/liferay/liferay.js';
 
 let oAuth2Client;
 

@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import config from '../config';
+import config from '../config.js';
 
 async function* walk(dir) {
 	if (fs.existsSync(dir) === false) {

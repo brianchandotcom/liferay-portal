@@ -6,9 +6,9 @@
 import express from 'express';
 import fetch from 'node-fetch';
 
-import config from './util/configTreePath';
-import {corsWithReady, liferayJWT} from './util/liferay-oauth2-resource-server';
-import {logger} from './util/logger';
+import config from './util/configTreePath.js';
+import {corsWithReady, liferayJWT} from './util/liferay-oauth2-resource-server.js';
+import {logger} from './util/logger.js';
 
 const serverPort = config['server.port'];
 const app = express();

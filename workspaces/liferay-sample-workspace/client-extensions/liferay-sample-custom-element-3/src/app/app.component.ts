@@ -6,7 +6,7 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-	selector: 'app-root',
+	selector: 'liferay-sample-custom-element-3',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css'],
 })

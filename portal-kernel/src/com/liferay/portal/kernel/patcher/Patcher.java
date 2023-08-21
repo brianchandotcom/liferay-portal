@@ -5,10 +5,6 @@
 
 package com.liferay.portal.kernel.patcher;
 
-import java.io.File;
-
-import java.util.Properties;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -24,44 +20,8 @@ public interface Patcher {
 	public static final String PATCHER_SERVICE_PROPERTIES =
 		"patcher-service.properties";
 
-	public static final String PROPERTY_FIXED_ISSUES = "fixed.issues";
-
 	public static final String PROPERTY_INSTALLED_PATCHES = "installed.patches";
 
-	public static final String PROPERTY_PATCH_DIRECTORY = "patch.directory";
-
-	public static final String PROPERTY_PATCH_LEVELS = "patch.levels";
-
-	public static final String PROPERTY_PATCHING_TOOL_VERSION =
-		"patching.tool.version";
-
-	public static final String PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME =
-		"patching.tool.version.display.name";
-
-	public static final String PROPERTY_SEPARATED = "separated";
-
-	public static final String PROPERTY_SEPARATION_ID = "separation.id";
-
-	public boolean applyPatch(File patchFile);
-
-	public String[] getFixedIssues();
-
 	public String[] getInstalledPatches();
-
-	public File getPatchDirectory();
-
-	public int getPatchingToolVersion();
-
-	public String getPatchingToolVersionDisplayName();
-
-	public String[] getPatchLevels();
-
-	public Properties getProperties();
-
-	public String getSeparationId();
-
-	public boolean isConfigured();
-
-	public boolean isSeparated();
 
 }

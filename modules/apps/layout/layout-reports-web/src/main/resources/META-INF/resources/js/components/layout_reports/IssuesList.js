@@ -15,7 +15,7 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import {SET_SELECTED_ISSUE} from '../../constants/actionTypes';
+import {SET_SELECTED_ITEM} from '../../constants/actionTypes';
 import {
 	StoreDispatchContext,
 	StoreStateContext,
@@ -217,7 +217,7 @@ const Issue = ({issue}) => {
 		issueTotal > 0 && (
 			<ClayButton
 				displayType="unstyled"
-				onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
+				onClick={() => dispatch({item: issue, type: SET_SELECTED_ITEM})}
 			>
 				<span
 					className="align-items-center c-inner c-pb-3 d-flex justify-content-between text-secondary"

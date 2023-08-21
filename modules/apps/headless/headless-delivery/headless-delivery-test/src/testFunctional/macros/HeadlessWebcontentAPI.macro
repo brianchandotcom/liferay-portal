@@ -97,9 +97,12 @@ definition {
 
 	macro _allStructuredContent {
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
+
+		if (!(isSet(siteId))) {
+			var siteId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				site = "true");
+		}
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents \
@@ -657,7 +660,11 @@ definition {
 	macro getStructuredContentIdByTitle {
 		Variables.assertDefined(parameterList = ${title});
 
-		var response = HeadlessWebcontentAPI._allStructuredContent();
+		if (isSet(groupName)) {
+			var siteId = JSONGroupSetter.setGroupId(groupName = ${groupName});
+		}
+
+		var response = HeadlessWebcontentAPI._allStructuredContent(siteId = ${siteId});
 
 		var structuredContentId = JSONUtil.getWithJSONPath(${response}, "$..['items'][?(@.title == '${title}')].id");
 

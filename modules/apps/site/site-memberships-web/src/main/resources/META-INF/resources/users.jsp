@@ -13,6 +13,8 @@ UsersDisplayContext usersDisplayContext = new UsersDisplayContext(request, rende
 UsersManagementToolbarDisplayContext usersManagementToolbarDisplayContext = new UsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, usersDisplayContext);
 
 Role role = usersDisplayContext.getRole();
+
+Team team = usersDisplayContext.getTeam();
 %>
 
 <clay:navigation-bar
@@ -50,6 +52,7 @@ Role role = usersDisplayContext.getRole();
 				<aui:input name="navigation" type="hidden" value="<%= usersDisplayContext.getNavigation() %>" />
 				<aui:input name="addUserIds" type="hidden" />
 				<aui:input name="roleId" type="hidden" value="<%= (role != null) ? role.getRoleId() : 0 %>" />
+				<aui:input name="teamId" type="hidden" value="<%= (team != null) ? team.getTeamId() : 0 %>" />
 
 				<liferay-site-navigation:breadcrumb
 					breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"

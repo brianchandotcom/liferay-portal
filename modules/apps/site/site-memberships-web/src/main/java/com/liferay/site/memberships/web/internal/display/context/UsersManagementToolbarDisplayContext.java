@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -229,6 +230,8 @@ public class UsersManagementToolbarDisplayContext
 	public List<LabelItem> getFilterLabelItems() {
 		Role role = _usersDisplayContext.getRole();
 
+		Team team = _usersDisplayContext.getTeam();
+
 		return LabelItemListBuilder.add(
 			() -> role != null,
 			labelItem -> {
@@ -243,6 +246,21 @@ public class UsersManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 				labelItem.setLabel(role.getTitle(_themeDisplay.getLocale()));
+			}
+		).add(
+			() -> team != null,
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse)
+					).setParameter(
+						"teamId", "0"
+					).buildString());
+
+				labelItem.setCloseable(true);
+				labelItem.setLabel(team.getName());
 			}
 		).build();
 	}
@@ -303,7 +321,8 @@ public class UsersManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(Objects.equals(getNavigation(), "all"));
 				dropdownItem.setHref(
-					getPortletURL(), "navigation", "all", "roleId", "0");
+					getPortletURL(), "navigation", "all", "roleId", "0",
+					"teamId", "0");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "all"));
 			}
@@ -332,6 +351,32 @@ public class UsersManagementToolbarDisplayContext
 					Objects.equals(getNavigation(), "roles"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "roles"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "selectTeams");
+				dropdownItem.putData(
+					"selectTeamsURL", _getSelectorURL("/select_team.jsp"));
+				dropdownItem.putData(
+					"viewTeamURL",
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCPath(
+						"/view.jsp"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setNavigation(
+						"teams"
+					).setTabs1(
+						"users"
+					).setParameter(
+						"groupId", _usersDisplayContext.getGroupId()
+					).buildString());
+
+				dropdownItem.setActive(
+					Objects.equals(getNavigation(), "teams"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "teams"));
 			}
 		).build();
 	}

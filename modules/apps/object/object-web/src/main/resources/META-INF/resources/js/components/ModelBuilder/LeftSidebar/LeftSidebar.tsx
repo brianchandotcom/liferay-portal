@@ -211,18 +211,20 @@ export default function LeftSidebar({
 									<Text weight="semi-bold">{item.name}</Text>
 								</div>
 
-								{changeNodeViewButton(
-									item.hiddenFolderNodes,
-									() =>
-										dispatch({
-											payload: {
-												hiddenFolderNodes:
-													item.hiddenFolderNodes,
-												leftSidebarItem: item,
-											},
-											type: TYPES.BULK_CHANGE_NODE_VIEW,
-										})
-								)}
+								{!showActions &&
+									changeNodeViewButton(
+										item.hiddenFolderNodes,
+										() =>
+											dispatch({
+												payload: {
+													hiddenFolderNodes:
+														item.hiddenFolderNodes,
+													leftSidebarItem: item,
+												},
+												type:
+													TYPES.BULK_CHANGE_NODE_VIEW,
+											})
+									)}
 							</div>
 						</TreeView.ItemStack>
 

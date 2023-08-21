@@ -431,8 +431,8 @@ public class JournalArticleLocalServiceImpl
 			try {
 				validateReferences(
 					groupId, ddmStructure.getStructureId(), ddmTemplateKey,
-					layoutUuid, smallImage, smallImageURL, smallImageBytes, 0,
-					content);
+					layoutUuid, smallImage, smallImageURL, smallImageBytes,
+					smallImageId, smallImageSource, content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {
@@ -4784,7 +4784,7 @@ public class JournalArticleLocalServiceImpl
 				validateReferences(
 					groupId, latestArticle.getDDMStructureId(), ddmTemplateKey,
 					layoutUuid, smallImage, smallImageURL, smallImageBytes,
-					latestArticle.getSmallImageId(), content);
+					latestArticle.getSmallImageId(), smallImageSource, content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {
@@ -7274,12 +7274,14 @@ public class JournalArticleLocalServiceImpl
 	protected void validateReferences(
 			long groupId, long ddmStructureId, String ddmTemplateKey,
 			String layoutUuid, boolean smallImage, String smallImageURL,
-			byte[] smallImageBytes, long smallImageId, String content)
+			byte[] smallImageBytes, long smallImageId, int smallImageSource,
+			String content)
 		throws PortalException {
 
 		_getModelValidator().validateReferences(
 			groupId, ddmStructureId, ddmTemplateKey, layoutUuid, smallImage,
-			smallImageURL, smallImageBytes, smallImageId, content);
+			smallImageURL, smallImageBytes, smallImageId, smallImageSource,
+			content);
 	}
 
 	@Reference

@@ -66,8 +66,8 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 
 	private void _deleteSegmentsExperiments(long plid) throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select segmentsExperimentId, status from SegmentsExperiment " +
-					"where plid = ? order by createDate desc");
+				"select segmentsExperimentId from SegmentsExperiment where " +
+					"plid = ? order by createDate desc");
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"delete from SegmentsExperiment where segmentsExperimentId = " +
 					"?");
@@ -83,12 +83,6 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 				while (resultSet.next()) {
 					if (first) {
 						first = false;
-
-						continue;
-					}
-
-					if (resultSet.getInt("status") !=
-							SegmentsExperimentConstants.STATUS_TERMINATED) {
 
 						continue;
 					}

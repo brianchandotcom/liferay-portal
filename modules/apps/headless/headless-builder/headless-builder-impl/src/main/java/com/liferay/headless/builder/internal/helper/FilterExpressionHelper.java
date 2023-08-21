@@ -21,8 +21,6 @@ import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
 
-import javax.ws.rs.NotFoundException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,7 +31,9 @@ import org.osgi.service.component.annotations.Reference;
 public class FilterExpressionHelper {
 
 	public Expression getExpression(
-		long companyId, APIApplication.Endpoint endpoint, String filterString) {
+			long companyId, APIApplication.Endpoint endpoint,
+			String filterString)
+		throws PortalException {
 
 		APIApplication.Filter filter = endpoint.getFilter();
 
@@ -43,8 +43,13 @@ public class FilterExpressionHelper {
 
 		APIApplication.Schema schema = endpoint.getResponseSchema();
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
-			companyId, schema.getMainObjectDefinitionExternalReferenceCode());
+		String objectDefinitionExternalReferenceCode =
+			schema.getMainObjectDefinitionExternalReferenceCode();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode, companyId);
 
 		EntityModel entityModel = _entityModelProvider.getEntityModel(
 			objectDefinition);
@@ -87,19 +92,6 @@ public class FilterExpressionHelper {
 		return _expressionFactory.createBinaryExpression(
 			endpointFilterExpression, BinaryExpression.Operation.AND,
 			requestFilterExpression);
-	}
-
-	private ObjectDefinition _getObjectDefinition(
-		long companyId, String objectDefinitionExternalReferenceCode) {
-
-		try {
-			return _objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode, companyId);
-		}
-		catch (PortalException portalException) {
-			throw new NotFoundException(portalException);
-		}
 	}
 
 	@Reference

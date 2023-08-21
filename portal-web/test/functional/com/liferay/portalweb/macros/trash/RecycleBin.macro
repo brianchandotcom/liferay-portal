@@ -143,7 +143,7 @@ definition {
 			locator1 = "RecycleBin#RECYCLE_BIN_WARNING_SELECT_RESTORE_FOLDER",
 			value1 = "The original Folder of this file does not exist anymore. Choose a different Folder to restore ${assetName}.");
 
-		Button.click(button = "Select Folder");
+		Button.click(button = "Select Home");
 
 		SelectFrameTop();
 

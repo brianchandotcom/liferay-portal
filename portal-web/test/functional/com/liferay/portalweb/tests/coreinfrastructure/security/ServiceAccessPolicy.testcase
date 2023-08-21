@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-42767. Service access policy smoke. Blocked by POSHI-354."
+	@description = "This is a use case for LRQA-42767. Service access policy smoke."
 	@priority = 5
 	test ServiceAccessPolicySmoke {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.auth.token.hosts.allowed=${line.separator}json.service.serialize.throwable=true";

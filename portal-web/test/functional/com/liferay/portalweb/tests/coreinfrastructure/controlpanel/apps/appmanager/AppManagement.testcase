@@ -858,7 +858,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Portlet#HEADER_DUPLICATE");
 	}
 
-	@description = "This test view purchased apps in marketplace purchased page. Blocked by LRQA-76114"
+	@description = "This test view purchased apps in marketplace purchased page."
 	@priority = 3
 	test ViewPurchasedApp {
 		property test.liferay.virtual.instance = "false";

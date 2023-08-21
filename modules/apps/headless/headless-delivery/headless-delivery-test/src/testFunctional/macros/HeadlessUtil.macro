@@ -1,0 +1,18 @@
+definition {
+
+	macro executeGraphQLQuery {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/graphql \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {"query":"${query}"}
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+}

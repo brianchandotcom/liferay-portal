@@ -72,19 +72,19 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 		}
 
 		String redirect = getRedirectURL(
-			actionResponse, layoutPageTemplateCollection);
+			actionRequest, actionResponse, layoutPageTemplateCollection);
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	protected String getRedirectURL(
-		ActionResponse actionResponse,
+		ActionRequest actionRequest, ActionResponse actionResponse,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setTabs1(
-			"page-templates"
+			ParamUtil.getString(actionRequest, "tabs1")
 		).setParameter(
 			"layoutPageTemplateCollectionId",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()

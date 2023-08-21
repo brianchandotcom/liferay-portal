@@ -318,6 +318,15 @@
 	<td>//table[contains(@class,'table-list')]//tr[contains(@class,'orderable-table-row') and contains(.,'${key_nameField}')]//td[@class="drag-handle-cell"]//button[@aria-label="Drag Item"]</td>
 	<td></td>
 </tr>
+
+<!-- DATA SET FRAGMENT -->
+
+<tr>
+	<td>SELECT_DATA_SET_VIEW</td>
+	<td>//input[contains(@class,'content-input')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

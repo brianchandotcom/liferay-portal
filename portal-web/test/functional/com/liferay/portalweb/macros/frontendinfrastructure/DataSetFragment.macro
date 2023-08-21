@@ -1,4 +1,5 @@
 definition {
+
 	macro addDataSetView {
 		PageEditor.gotoConfiguration(fragmentName = "Data Set");
 
@@ -9,18 +10,18 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 
 		Click.clickAtNotVisible(
-			key_radioOption = "${dataSetViewName}",
+			key_radioOption = ${dataSetViewName},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Button.clickSave();
 	}
 
-
-    macro viewColumnTitle {
+	macro viewColumnTitle {
 		for (var key_colunmTitle : list ${key_colunmTitleList}) {
 			AssertElementPresent(
 				key_field = ${key_colunmTitle},
 				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 		}
 	}
+
 }

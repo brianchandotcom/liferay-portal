@@ -30,129 +30,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-			
+
 			DataSetAdmin.deleteAllDataSetEntries();
-		}
-	}
-
-    @description = "LPS-172443. Assert if 'Data Set' can be categorized as 'Data Set'"
-	@priority = 3
-	test CanBeCategorizedInAddWidgetList {
-        task ("And When on Content Page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Data Set Test Page",
-				siteName = "test-site-name");
-		}
-
-        task ("And When access add widget list") {
-			Type(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-				value1 = "Data Set");
-		}
-
-		task ("Then Data Set is available under category 'Content Display'") {
-			AssertTextEquals(
-				key_collectionName = "Content Display",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL",
-				value1 = "Content Display");
-
-			AssertTextEquals(
-				key_fragmentName = "Data Set",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS",
-				value1 = "Data Set");
-		}
-    }
-
-    @description = "LPS-172443. Smoke test to verify Data Set Fragment can be removed"
-	@priority = 5
-	test CanRemoveFragment {
-		task ("Given a portlet on public page") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("And the Dataset fragment is added to the page created") {
-			PageEditor.addFragment(
-					collectionName = "Content Display",
-					fragmentName = "Data Set");
-		}
-
-		task ("When delete Data Set Fragment on Test Page") {
-			PageEditor.removeFragment(fragmentName = "Data Set");
-		}
-
-		task ("Then Data Set Fragment is not present on page") {
-			PageEditor.viewFragmentNotPresent(fragmentName = "Data Set");
-		}
-	}
-
-    @description = "LPS-172443. Smoke test to verify options relates to Data Set Fragment"
-	@priority = 5
-	test ViewInfoFields {
-		task ("When viewing the configuration menu of the portlet") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("Then configuration model is present") {
-			PageEditor.gotoConfiguration(fragmentName = "Data Set");
-		}
-
-		task ("And assert that General, Styles and Advanced tabs are present.") {
-			Navigator.viewNavTab(navTab = "General");
-
-            Navigator.viewNavTab(navTab = "Styles");
-            
-			Navigator.viewNavTab(navTab = "Advanced");
-		}
-
-        task ("And Confirm the button Select Data Set View is displayed") {
-			AssertElementPresent(
-                key_value = "Select Data Set View",
-				locator1 = "Button#SECONDARY_BY_TITLE");
-			
-			AssertElementPresent(locator1 = "Button#PLUS");
-		}
-	}
-
-	@description = "LPS-172443. Confirm empty message when no view was created"
-	@priority = 4
-	test ViewEmptyMenssage {
-		task ("When add a dataset fragment") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("Then Confirm that the portlet shows the message: Select a dataset view.") {
-			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Data Set",
-				messageInfo = "Select a data set view.");
-		}
-
-		task ("When clicking on Select Data Set View") {
-			PageEditor.gotoConfiguration(fragmentName = "Data Set");
-			
-			Click.javaScriptClick(
-				key_value = "Select Data Set View",
-				locator1 = "Button#SECONDARY_BY_TITLE");
-		}
-
-        task ("Then confirm that the Dataset view modal is opened") {
-			AssertTextEquals(
-				locator1 = "DataEngineModal#MODAL_TITLE",
-				value1 = "Select");
-		}
-		task ("And confirm that there is no created views") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
 		}
 	}
 
@@ -162,14 +41,14 @@ definition {
 		task ("Given creating a Data Set entry, view and fields") {
 			DataSetAdmin.createAndConfigureDataSetEntry(
 				dataSetName = "Countries",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country",
 				dataSetViewDescription = "View Description",
 				dataSetViewName = "Full countries View",
-				key_fieldList = "id,name,number");
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
 		}
-		
+
 		task ("When the user accesses the edit page And add a dataset fragment") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -199,116 +78,33 @@ definition {
 		}
 	}
 
-	@description = "LPS-172443. Confirm that the select view button changes to the name of the selected view"
-	@priority = 4
-	test NameOfViewIsDisplayedOnButton {
-		task ("Given creating a Data Set entry, view and fields") {
-			DataSetAdmin.createAndConfigureDataSetEntry(
-				dataSetName = "Countries",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country",
-				dataSetViewDescription = "View Description",
-				dataSetViewName = "Full countries View",
-				key_fieldList = "id,name,number");
-		}
-		
-		task ("When the user accesses the edit page And add a dataset fragment") {
+	@description = "LPS-172443. Assert if 'Data Set' can be categorized as 'Data Set'"
+	@priority = 3
+	test CanBeCategorizedInAddWidgetList {
+		task ("And When on Content Page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Data Set Test Page",
 				siteName = "test-site-name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
 		}
 
-		task ("And Select Full countries View ") {
-			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+		task ("And When access add widget list") {
+			Type(
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
+				value1 = "Data Set");
 		}
 
-		task ("Then Confirm that the select view button changes to the name of the selected view") {
-			SelectFrameTop();
+		task ("Then Data Set is available under category 'Content Display'") {
+			AssertTextEquals(
+				key_collectionName = "Content Display",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL",
+				value1 = "Content Display");
 
-			AssertAttributeValue(
-				attribute1 = "title",
-				locator1 = "DataSet#SELECT_DATA_SET_VIEW",
-				value1 = "Full countries View");
-		}
-	}
-
-	@description = "LPS-172443. Smoke test to check if it is possible to change the view "
-	@priority = 5
-	test CanChangeDataSetView {
-		task ("Given creating a Data Set entry, view and fields") {
-			DataSetAdmin.createAndConfigureDataSetEntry(
-				dataSetName = "Countries",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country",
-				dataSetViewDescription = "View Description",
-				dataSetViewName = "Full countries View",
-				key_fieldList = "id,name,number");
-		}
-		
-		task ("Create a second view with diferents fields") {
-			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Countries");
-
-			DataSetAdmin.createDataSetView(
-				description = "Abbreviations view Description",
-				key_name = "Abbreviations view");
-
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Countries",
-				key_viewName = "Abbreviations view");
-
-			DataSetAdmin.goToTab(tabName = "Fields");
-
-			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
-		}
-		
-		task ("When the user accesses the edit page And add a dataset fragment") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Data Set Test Page",
-				siteName = "test-site-name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}	
-
-		task ("And Select Full countries View and Publish page") {
-			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
-
-			SelectFrameTop();
-
-			Button.clickPublish();
-		}
-
-		task ("And accesses the edit page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Data Set Test Page",
-				siteName = "test-site-name");
-		}
-
-		task ("And Change de View for Abbreviations view And Publish page") {
-			DataSetFragment.addDataSetView(dataSetViewName = "Abbreviations view");
-
-			SelectFrameTop();
-
-			Button.clickPublish();
-		}
-		
-		task ("Then Confirm that the column data matches the fields of the Abbreviations view") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoPage(pageName = "Data Set Test Page");
-
-			DataSetFragment.viewColumnTitle(key_colunmTitleList = "name,a3,a2");
+			AssertTextEquals(
+				key_fragmentName = "Data Set",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_RESULTS",
+				value1 = "Data Set");
 		}
 	}
 
@@ -318,14 +114,14 @@ definition {
 		task ("Given creating a Data Set entry, view and fields") {
 			DataSetAdmin.createAndConfigureDataSetEntry(
 				dataSetName = "Countries",
-				restApplication = "/headless-admin-address/v1.0",
-				restEndpoint = "/v1.0/countries",
-				restSchema = "Country",
 				dataSetViewDescription = "View Description",
 				dataSetViewName = "Full countries View",
-				key_fieldList = "id,name,number");
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
 		}
-		
+
 		task ("Create a second view with diferents fields") {
 			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Countries");
 
@@ -341,7 +137,7 @@ definition {
 
 			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
 		}
-		
+
 		task ("When the user accesses the edit page And add a dataset fragment") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -352,7 +148,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Data Set");
-		}	
+		}
 
 		task ("And Select Full countries View and Publish page") {
 			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
@@ -382,15 +178,15 @@ definition {
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 		}
 
-		task("And clicking back button on the top of the page"){
+		task ("And clicking back button on the top of the page") {
 			Button.clickCancel();
 		}
 
-		task("And Publish page"){
+		task ("And Publish page") {
 			SelectFrameTop();
 
 			Button.clickPublish();
-		}	
+		}
 
 		task ("Then Confirm that the column data matches the fields of the Full countries View") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
@@ -400,4 +196,210 @@ definition {
 			DataSetFragment.viewColumnTitle(key_colunmTitleList = "id,name,number");
 		}
 	}
+
+	@description = "LPS-172443. Smoke test to check if it is possible to change the view "
+	@priority = 5
+	test CanChangeDataSetView {
+		task ("Given creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Countries",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Full countries View",
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("Create a second view with diferents fields") {
+			DataSetAdmin.goToDataSetViewAdminPage(dataSetName = "Countries");
+
+			DataSetAdmin.createDataSetView(
+				description = "Abbreviations view Description",
+				key_name = "Abbreviations view");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Countries",
+				key_viewName = "Abbreviations view");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,a3,a2");
+		}
+
+		task ("When the user accesses the edit page And add a dataset fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And Select Full countries View and Publish page") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("And accesses the edit page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+		}
+
+		task ("And Change de View for Abbreviations view And Publish page") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Abbreviations view");
+
+			SelectFrameTop();
+
+			Button.clickPublish();
+		}
+
+		task ("Then Confirm that the column data matches the fields of the Abbreviations view") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoPage(pageName = "Data Set Test Page");
+
+			DataSetFragment.viewColumnTitle(key_colunmTitleList = "name,a3,a2");
+		}
+	}
+
+	@description = "LPS-172443. Smoke test to verify Data Set Fragment can be removed"
+	@priority = 5
+	test CanRemoveFragment {
+		task ("Given a portlet on public page") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And the Dataset fragment is added to the page created") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("When delete Data Set Fragment on Test Page") {
+			PageEditor.removeFragment(fragmentName = "Data Set");
+		}
+
+		task ("Then Data Set Fragment is not present on page") {
+			PageEditor.viewFragmentNotPresent(fragmentName = "Data Set");
+		}
+	}
+
+	@description = "LPS-172443. Confirm that the select view button changes to the name of the selected view"
+	@priority = 4
+	test NameOfViewIsDisplayedOnButton {
+		task ("Given creating a Data Set entry, view and fields") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Countries",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Full countries View",
+				key_fieldList = "id,name,number",
+				restApplication = "/headless-admin-address/v1.0",
+				restEndpoint = "/v1.0/countries",
+				restSchema = "Country");
+		}
+
+		task ("When the user accesses the edit page And add a dataset fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Data Set Test Page",
+				siteName = "test-site-name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And Select Full countries View ") {
+			DataSetFragment.addDataSetView(dataSetViewName = "Full countries View");
+		}
+
+		task ("Then Confirm that the select view button changes to the name of the selected view") {
+			SelectFrameTop();
+
+			AssertAttributeValue(
+				attribute1 = "title",
+				locator1 = "DataSet#SELECT_DATA_SET_VIEW",
+				value1 = "Full countries View");
+		}
+	}
+
+	@description = "LPS-172443. Confirm empty message when no view was created"
+	@priority = 4
+	test ViewEmptyMenssage {
+		task ("When add a dataset fragment") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("Then Confirm that the portlet shows the message: Select a dataset view.") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Data Set",
+				messageInfo = "Select a data set view.");
+		}
+
+		task ("When clicking on Select Data Set View") {
+			PageEditor.gotoConfiguration(fragmentName = "Data Set");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+		}
+
+		task ("Then confirm that the Dataset view modal is opened") {
+			AssertTextEquals(
+				locator1 = "DataEngineModal#MODAL_TITLE",
+				value1 = "Select");
+		}
+
+		task ("And confirm that there is no created views") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
+	@description = "LPS-172443. Smoke test to verify options relates to Data Set Fragment"
+	@priority = 5
+	test ViewInfoFields {
+		task ("When viewing the configuration menu of the portlet") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("Then configuration model is present") {
+			PageEditor.gotoConfiguration(fragmentName = "Data Set");
+		}
+
+		task ("And assert that General, Styles and Advanced tabs are present.") {
+			Navigator.viewNavTab(navTab = "General");
+
+			Navigator.viewNavTab(navTab = "Styles");
+
+			Navigator.viewNavTab(navTab = "Advanced");
+		}
+
+		task ("And Confirm the button Select Data Set View is displayed") {
+			AssertElementPresent(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			AssertElementPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

@@ -32,10 +32,11 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
-import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.message.boards.web.internal.util.MBRequestUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -87,7 +88,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.WindowState;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -104,6 +108,17 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MBMessageFormatUploadHandler.class, "format");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -543,7 +558,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				MBMessageFormatUploadHandler formatHandler =
-					_formatHandlerProvider.provide(message.getFormat());
+					_serviceTrackerMap.getService(message.getFormat());
 
 				if (formatHandler != null) {
 					List<FileEntry> tempMBAttachmentFileEntries =
@@ -566,7 +581,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				message = _mbMessageService.getMessage(messageId);
 
 				MBMessageFormatUploadHandler formatHandler =
-					_formatHandlerProvider.provide(message.getFormat());
+					_serviceTrackerMap.getService(message.getFormat());
 
 				if (formatHandler != null) {
 					List<FileEntry> tempMBAttachmentFileEntries =
@@ -638,9 +653,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private MBMessageFormatUploadHandlerProvider _formatHandlerProvider;
-
-	@Reference
 	private MBCategoryService _mbCategoryService;
 
 	@Reference
@@ -665,6 +677,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	private ServiceTrackerMap<String, MBMessageFormatUploadHandler>
+		_serviceTrackerMap;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

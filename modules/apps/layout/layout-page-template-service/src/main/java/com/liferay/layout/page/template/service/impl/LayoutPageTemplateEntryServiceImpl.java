@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -231,17 +232,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, int type, int start, int end,
 		OrderByComparator<Object> orderByComparator) {
 
-		Table<?> tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection =
-			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, type);
-
-		DSLQuery dslQuery =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryDSLQuery(
-				start, end, orderByComparator,
-				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection);
-
-		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
-			dslQuery);
+		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+			groupId, null, type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -266,12 +258,8 @@ public class LayoutPageTemplateEntryServiceImpl
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 		long groupId, int type) {
 
-		DSLQuery dslQuery =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountDSLQuery(
-				_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
-					groupId, type));
-
-		return layoutPageTemplateEntryPersistence.dslQueryCount(dslQuery);
+		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+			groupId, null, type);
 	}
 
 	@Override
@@ -897,44 +885,6 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
-			long groupId, int type) {
-
-		return DSLQueryFactoryUtil.select(
-			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
-			new Scalar<>(
-				0L
-			).as(
-				"layoutPageTemplateCollectionId"
-			)
-		).from(
-			LayoutPageTemplateEntryTable.INSTANCE
-		).where(
-			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
-			)
-		).unionAll(
-			DSLQueryFactoryUtil.select(
-				new Scalar<>(
-					0L
-				).as(
-					"layoutPageTemplateEntryId"
-				),
-				LayoutPageTemplateCollectionTable.INSTANCE.
-					layoutPageTemplateCollectionId
-			).from(
-				LayoutPageTemplateCollectionTable.INSTANCE
-			).where(
-				LayoutPageTemplateCollectionTable.INSTANCE.groupId.eq(groupId)
-			)
-		).as(
-			"tempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable"
-		);
-	}
-
-	private Table<?>
-		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountTable(
 			long groupId, String name, int type) {
 
 		return DSLQueryFactoryUtil.select(
@@ -950,45 +900,14 @@ public class LayoutPageTemplateEntryServiceImpl
 			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
 				groupId
 			).and(
-				LayoutPageTemplateEntryTable.INSTANCE.name.eq(name)
-			).and(
-				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
-			)
-		).unionAll(
-			DSLQueryFactoryUtil.select(
-				new Scalar<>(
-					0L
-				).as(
-					"layoutPageTemplateEntryId"
-				),
-				LayoutPageTemplateCollectionTable.INSTANCE.
-					layoutPageTemplateCollectionId
-			).from(
-				LayoutPageTemplateCollectionTable.INSTANCE
-			).where(
-				LayoutPageTemplateCollectionTable.INSTANCE.groupId.eq(groupId)
-			)
-		).as(
-			"tempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable"
-		);
-	}
+				() -> {
+					if (Validator.isNotNull(name)) {
+						return LayoutPageTemplateEntryTable.INSTANCE.name.eq(
+							name);
+					}
 
-	private Table<?>
-		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-			long groupId, int type) {
-
-		return DSLQueryFactoryUtil.select(
-			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
-			new Scalar<>(
-				0L
-			).as(
-				"layoutPageTemplateCollectionId"
-			)
-		).from(
-			LayoutPageTemplateEntryTable.INSTANCE
-		).where(
-			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
-				groupId
+					return null;
+				}
 			).and(
 				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
 			)
@@ -1028,7 +947,14 @@ public class LayoutPageTemplateEntryServiceImpl
 			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
 				groupId
 			).and(
-				LayoutPageTemplateEntryTable.INSTANCE.name.eq(name)
+				() -> {
+					if (Validator.isNotNull(name)) {
+						return LayoutPageTemplateEntryTable.INSTANCE.name.eq(
+							name);
+					}
+
+					return null;
+				}
 			).and(
 				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
 			)

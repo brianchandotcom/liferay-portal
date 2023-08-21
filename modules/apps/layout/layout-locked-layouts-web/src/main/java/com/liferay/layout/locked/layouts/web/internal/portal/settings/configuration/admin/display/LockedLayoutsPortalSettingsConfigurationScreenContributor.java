@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.content.page.editor.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.layout.locked.layouts.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.layout.content.page.editor.web.internal.configuration.LockedLayoutsConfiguration;
-import com.liferay.layout.content.page.editor.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
+import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration;
+import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.LockedLayoutsConfiguration",
+	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration",
 	service = PortalSettingsConfigurationScreenContributor.class
 )
 public class LockedLayoutsPortalSettingsConfigurationScreenContributor
@@ -139,7 +139,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 	private Language _language;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.content.page.editor.web)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.locked.layouts.web)"
 	)
 	private ServletContext _servletContext;
 

@@ -70,7 +70,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class GetLayoutReportsDataStrutsActionTest {
+public class GetLayoutReportsGooglePageSpeedDataStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -170,7 +170,8 @@ public class GetLayoutReportsDataStrutsActionTest {
 				RandomTestUtil.randomString(), true, _group.getGroupId(),
 				() -> {
 					Bundle bundle = FrameworkUtil.getBundle(
-						GetLayoutReportsDataStrutsActionTest.class);
+						GetLayoutReportsGooglePageSpeedDataStrutsActionTest.
+							class);
 
 					BundleContext bundleContext = bundle.getBundleContext();
 
@@ -443,7 +444,7 @@ public class GetLayoutReportsDataStrutsActionTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsDataStrutsAction"
+		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsGooglePageSpeedDataStrutsAction"
 	)
 	private StrutsAction _getLayoutReportsDataStrutsAction;
 

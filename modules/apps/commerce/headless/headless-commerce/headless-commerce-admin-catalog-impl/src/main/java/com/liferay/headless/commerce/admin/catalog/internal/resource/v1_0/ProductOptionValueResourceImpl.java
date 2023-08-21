@@ -7,24 +7,27 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductOptionValueUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionValueResource;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +44,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 @CTAware
 public class ProductOptionValueResourceImpl
 	extends BaseProductOptionValueResourceImpl {
+
+	@Override
+	public void deleteProductOptionValue(Long id) throws Exception {
+		_cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(id);
+	}
 
 	@NestedField(
 		parentClass = ProductOption.class, value = "productOptionValues"
@@ -71,10 +79,60 @@ public class ProductOptionValueResourceImpl
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(), search);
 
 		return Page.of(
-			_toProductOptionValues(
-				cpDefinitionOptionValueRelBaseModelSearchResult.
-					getBaseModels()),
+			transform(
+				cpDefinitionOptionValueRelBaseModelSearchResult.getBaseModels(),
+				cpDefinitionOptionValueRel -> _toProductOptionValue(
+					cpDefinitionOptionValueRel)),
 			pagination, totalItems);
+	}
+
+	@Override
+	public ProductOptionValue getProductOptionValue(Long id) throws Exception {
+		return _toProductOptionValue(id);
+	}
+
+	@Override
+	public ProductOptionValue patchProductOptionValue(
+			Long id, ProductOptionValue productOptionValue)
+		throws Exception {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRel(
+				id);
+
+		long cpInstanceId = 0;
+
+		CPInstance cpInstance = _cpInstanceService.fetchCProductInstance(
+			cpDefinitionOptionValueRel.getCProductId(),
+			cpDefinitionOptionValueRel.getCPInstanceUuid());
+
+		if (cpInstance != null) {
+			cpInstanceId = cpInstance.getCPInstanceId();
+		}
+
+		Map<String, String> nameMap = productOptionValue.getName();
+
+		if ((cpDefinitionOptionValueRel != null) && (nameMap == null)) {
+			nameMap = LanguageUtils.getLanguageIdMap(
+				cpDefinitionOptionValueRel.getNameMap());
+		}
+
+		return _toProductOptionValue(
+			_cpDefinitionOptionValueRelService.updateCPDefinitionOptionValueRel(
+				id, cpInstanceId,
+				GetterUtil.get(
+					productOptionValue.getKey(),
+					cpDefinitionOptionValueRel.getKey()),
+				LanguageUtils.getLocalizedMap(nameMap),
+				cpDefinitionOptionValueRel.isPreselected(),
+				cpDefinitionOptionValueRel.getPrice(),
+				GetterUtil.getDouble(
+					productOptionValue.getPriority(),
+					cpDefinitionOptionValueRel.getPriority()),
+				cpDefinitionOptionValueRel.getQuantity(),
+				cpDefinitionOptionValueRel.getUnitOfMeasureKey(),
+				_serviceContextHelper.getServiceContext(
+					cpDefinitionOptionValueRel.getGroupId())));
 	}
 
 	@Override
@@ -105,6 +163,14 @@ public class ProductOptionValueResourceImpl
 	}
 
 	private ProductOptionValue _toProductOptionValue(
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
+		throws Exception {
+
+		return _toProductOptionValue(
+			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+	}
+
+	private ProductOptionValue _toProductOptionValue(
 			Long cpDefinitionOptionValueRelId)
 		throws Exception {
 
@@ -114,30 +180,15 @@ public class ProductOptionValueResourceImpl
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
-	private List<ProductOptionValue> _toProductOptionValues(
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels)
-		throws Exception {
-
-		List<ProductOptionValue> productOptionValues = new ArrayList<>();
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			productOptionValues.add(
-				_toProductOptionValue(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId()));
-		}
-
-		return productOptionValues;
-	}
-
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.ProductOptionValueDTOConverter)"

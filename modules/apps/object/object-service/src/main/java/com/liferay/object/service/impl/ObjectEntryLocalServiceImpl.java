@@ -2086,7 +2086,7 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable,
 		DynamicObjectDefinitionTable
 			relatedExtensionDynamicObjectDefinitionTable,
-		boolean objectRelationshipSelf) {
+		boolean selfObjectRelationship) {
 
 		Column<?, ?> column = null;
 
@@ -2099,7 +2099,7 @@ public class ObjectEntryLocalServiceImpl
 				GetterUtil.getString(
 					objectFieldSettingsValues.get("objectFieldName")));
 
-			if (objectRelationshipSelf) {
+			if (selfObjectRelationship) {
 				if (column.getTable(
 					).getTableName(
 					).equals(
@@ -2788,21 +2788,21 @@ public class ObjectEntryLocalServiceImpl
 							objectRelationship.getType(),
 							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-					String objectDefinitionDBColumnName =
+					String pkObjectFieldDBColumnName =
 						objectDefinition.getPKObjectFieldDBColumnName();
-					String relatedObjectDefinitionDBColumnName =
+					String relatedPKObjectFieldDBColumnName =
 						relatedObjectDefinition.getPKObjectFieldDBColumnName();
 
 					if (objectRelationship.isSelf()) {
-						objectDefinitionDBColumnName += "1";
-						relatedObjectDefinitionDBColumnName += "2";
+						pkObjectFieldDBColumnName += "1";
+						relatedPKObjectFieldDBColumnName += "2";
 					}
 
 					DynamicObjectRelationshipMappingTable
 						dynamicObjectRelationshipMappingTable =
 							new DynamicObjectRelationshipMappingTable(
-								objectDefinitionDBColumnName,
-								relatedObjectDefinitionDBColumnName,
+								pkObjectFieldDBColumnName,
+								relatedPKObjectFieldDBColumnName,
 								objectRelationship.getDBTableName());
 
 					Column<DynamicObjectRelationshipMappingTable, Long>

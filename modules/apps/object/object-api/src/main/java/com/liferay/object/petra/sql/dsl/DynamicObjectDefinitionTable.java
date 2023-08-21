@@ -63,12 +63,13 @@ public class DynamicObjectDefinitionTable
 
 	@Override
 	public DynamicObjectDefinitionTable as(String alias) {
-		DynamicObjectDefinitionTable table = new DynamicObjectDefinitionTable(
-			_objectDefinition, _objectFields, _tableName);
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			new DynamicObjectDefinitionTable(
+				_objectDefinition, _objectFields, _tableName);
 
-		table.setAlias(alias);
+		dynamicObjectDefinitionTable.setAlias(alias);
 
-		return table;
+		return dynamicObjectDefinitionTable;
 	}
 
 	/**

@@ -243,8 +243,10 @@ public class SiteNavigationMenuServiceTest {
 
 		int originalSiteNavigationMenusCount = siteNavigationMenus.size();
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
+		SiteNavigationMenu siteNavigationMenu1 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
+		SiteNavigationMenu siteNavigationMenu2 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
 
 		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
 			_group.getGroupId());
@@ -254,6 +256,9 @@ public class SiteNavigationMenuServiceTest {
 		Assert.assertEquals(
 			originalSiteNavigationMenusCount + 2,
 			actualSiteNavigationMenusCount);
+
+		Assert.assertTrue(siteNavigationMenus.contains(siteNavigationMenu1));
+		Assert.assertTrue(siteNavigationMenus.contains(siteNavigationMenu2));
 	}
 
 	@Test

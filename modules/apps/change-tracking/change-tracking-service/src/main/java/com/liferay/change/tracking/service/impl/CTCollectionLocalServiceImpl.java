@@ -147,6 +147,7 @@ public class CTCollectionLocalServiceImpl
 
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
+		ctCollection.setShareable(false);
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);

@@ -451,7 +451,7 @@ definition {
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Date");
 
 		AssertElementPresent(
-			key_entry = "1/1/21",
+			key_entry = "Jan 1, 2021",
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 
 		PageEditor.publish();
@@ -461,7 +461,7 @@ definition {
 			pageName = "Test Content Page Name");
 
 		AssertElementPresent(
-			key_entry = "1/1/21",
+			key_entry = "Jan 1, 2021",
 			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
 	}
 

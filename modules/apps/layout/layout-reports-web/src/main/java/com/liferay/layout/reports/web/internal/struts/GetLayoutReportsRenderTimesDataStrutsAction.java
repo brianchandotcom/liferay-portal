@@ -155,8 +155,6 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 					JSONUtil.put(
 						"cached", false
 					).put(
-						"fragment", false
-					).put(
 						"fragmentCollectionURL", StringPool.BLANK
 					).put(
 						"fromMaster",
@@ -166,6 +164,8 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 						_getLayoutStructureHierarchy(
 							layoutStructure, layoutStructureItem,
 							themeDisplay.getLocale())
+					).put(
+						"isPortlet", false
 					).put(
 						"itemId", layoutStructureItem.getItemId()
 					).put(
@@ -191,8 +191,6 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 				JSONUtil.put(
 					"cached", fragmentEntryLink.isCacheable()
 				).put(
-					"fragment", !fragmentEntryLink.isTypePortlet()
-				).put(
 					"fragmentCollectionURL",
 					_getFragmentCollectionURL(
 						fragmentEntry, httpServletRequest, themeDisplay)
@@ -205,6 +203,8 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 					_getLayoutStructureHierarchy(
 						layoutStructure, layoutStructureItem,
 						themeDisplay.getLocale())
+				).put(
+					"isPortlet", fragmentEntryLink.isTypePortlet()
 				).put(
 					"itemId", layoutStructureItem.getItemId()
 				).put(

@@ -9,10 +9,10 @@ export type Entries<T> = {
 
 export type Fragment = {
 	cached: boolean;
-	fragment: boolean;
 	fragmentCollectionURL: string;
 	fromMaster: boolean;
 	hierarchy: string;
+	isPortlet: boolean;
 	itemId: string;
 	itemType: string;
 	name: string;

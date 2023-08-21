@@ -53,14 +53,29 @@ definition {
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateType = "Widget Page Template");
 
-			var script = '''
-	import com.liferay.portal.kernel.model.LayoutPrototype;
-	import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
-	import com.liferay.sites.kernel.util.SitesUtil;
+			var script = '''import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 
-	LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototype(${layoutPrototypeId});
-	SitesUtil.setMergeFailCount(layoutPrototype, 4);
-			''';
+import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
+
+LayoutPrototype layoutPrototype = LayoutPrototypeLocalServiceUtil.getLayoutPrototype(${layoutPrototypeId});
+
+ServiceTracker<LayoutSetPrototypeHelper, LayoutSetPrototypeHelper> serviceTracker;
+
+BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+serviceTracker = new ServiceTracker<>(bundleContext, LayoutSetPrototypeHelper.class, null);
+
+serviceTracker.open();
+
+Object layoutSetPrototypeHelperImpl = serviceTracker.getService();
+
+layoutSetPrototypeHelperImpl.setMergeFailCount(layoutPrototype, 4);
+
+serviceTracker.close();''';
 
 			ServerAdministration.openServerAdmin();
 

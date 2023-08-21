@@ -18,12 +18,16 @@ import {
 import classNames from 'classnames';
 import {openToast, sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
-import {useStore, useZoomPanHelper} from 'react-flow-renderer';
+import {Node, useStore, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import {LeftSidebarDefinitionItemType, LeftSidebarItemType} from '../types';
+import {
+	LeftSidebarDefinitionItemType,
+	LeftSidebarItemType,
+	ObjectDefinitionNodeData,
+} from '../types';
 
 const TYPES_TO_SYMBOLS = {
 	objectDefinition: 'catalog',
@@ -180,9 +184,11 @@ export default function LeftSidebar({
 							type: TYPES.SET_SELECTED_NODE,
 						});
 
-						const selectedNode = nodes.find(
+						const selectedNode = (nodes as Node<
+							ObjectDefinitionNodeData
+						>[]).find(
 							(definitionNode) =>
-								definitionNode.data.name ===
+								definitionNode.data?.name ===
 								(item as LeftSidebarDefinitionItemType)
 									.definitionName
 						);

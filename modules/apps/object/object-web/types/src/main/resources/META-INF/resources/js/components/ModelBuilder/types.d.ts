@@ -126,28 +126,18 @@ export interface ObjectFieldNode extends Partial<ObjectField> {
 	selected: boolean;
 }
 export interface ObjectDefinitionNodeData
-	extends Partial<Omit<ObjectDefinition, 'objectFields' | 'label'>> {
-	defaultLanguageId: Liferay.Language.Locale;
+	extends Omit<ObjectDefinition, 'objectFields' | 'label'> {
 	editObjectDefinitionURL: string;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
 	hasSelfRelationships: boolean;
-	id: number;
 	isLinkedNode: boolean;
 	label: string;
-	name: string;
 	nodeSelected: boolean;
 	objectDefinitionPermissionsURL: string;
 	objectFields: ObjectFieldNode[];
-	objectRelationships: ObjectRelationship[];
-	status: {
-		code: number;
-		label: string;
-		label_i18n: string;
-	};
-	system: boolean;
 }
 export interface ObjectRelationshipEdgeData {
 	defaultLanguageId?: Liferay.Language.Locale;

@@ -5,8 +5,4 @@
 		<suppress checks="CompanyIterationCheck" files=".*" />
 		<suppress checks="ComponentExposureCheck" files="portal-search-tuning-rankings-web/src/main/java/com/liferay/portal/search/tuning/rankings/web/internal/util/RankingResultUtil\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaUpgradeVersionCheck" files="portal-search-tuning-rankings-web/src/main/java/com/liferay/portal/search/tuning/rankings/web/internal/upgrade/registry/RankingsWebUpgradeStepRegistrator\.java" />
-		<suppress checks="JavaUpgradeVersionCheck" files="portal-search-tuning-synonyms-web/src/main/java/com/liferay/portal/search/tuning/synonyms/web/internal/upgrade/registry/SynonymsWebUpgradeStepRegistrator\.java" />
-	</source-check>
 </suppressions>

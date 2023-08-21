@@ -220,44 +220,45 @@ public class CommerceOptionValueHelperImpl
 					for (CPDefinitionOptionValueRel
 							cpDefinitionOptionValueRel : entry.getValue()) {
 
-						if (cpDefinitionOptionValueRel.getKey(
-							).equals(
-								valueJSONArray.getString(j)
-							)) {
+						if (!Objects.equqals(
+								cpDefinitionOptionValueRel.getKey(),
+								valueJSONArray.getString(j))) {
 
-							commerceOptionValueBuilder.optionKey(
-								cpDefinitionOptionRel.getKey());
-							commerceOptionValueBuilder.optionValueKey(
-								cpDefinitionOptionValueRel.getKey());
+							continue;
+						}
 
-							commerceOptionValueBuilder.priceType(
-								cpDefinitionOptionRel.getPriceType());
+						commerceOptionValueBuilder.optionKey(
+							cpDefinitionOptionRel.getKey());
+						commerceOptionValueBuilder.optionValueKey(
+							cpDefinitionOptionValueRel.getKey());
 
+						commerceOptionValueBuilder.priceType(
+							cpDefinitionOptionRel.getPriceType());
+
+						commerceOptionValueBuilder.price(
+							cpDefinitionOptionValueRel.getPrice());
+						commerceOptionValueBuilder.quantity(
+							cpDefinitionOptionValueRel.getQuantity());
+
+						CPInstance
+							cpDefinitionOptionValueRelCPInstance =
+								cpDefinitionOptionValueRel.
+									fetchCPInstance();
+
+						if (cpDefinitionOptionValueRelCPInstance ==
+								null) {
+
+							continue;
+						}
+
+						commerceOptionValueBuilder.cpInstanceId(
+							cpDefinitionOptionValueRelCPInstance.
+								getCPInstanceId());
+
+						if (cpDefinitionOptionRel.isPriceTypeDynamic()) {
 							commerceOptionValueBuilder.price(
-								cpDefinitionOptionValueRel.getPrice());
-							commerceOptionValueBuilder.quantity(
-								cpDefinitionOptionValueRel.getQuantity());
-
-							CPInstance
-								cpDefinitionOptionValueRelCPInstance =
-									cpDefinitionOptionValueRel.
-										fetchCPInstance();
-
-							if (cpDefinitionOptionValueRelCPInstance !=
-									null) {
-
-								commerceOptionValueBuilder.cpInstanceId(
-									cpDefinitionOptionValueRelCPInstance.
-										getCPInstanceId());
-
-								if (cpDefinitionOptionRel.
-										isPriceTypeDynamic()) {
-
-									commerceOptionValueBuilder.price(
-										cpDefinitionOptionValueRelCPInstance.
-											getPrice());
-								}
-							}
+								cpDefinitionOptionValueRelCPInstance.
+									getPrice());
 						}
 					}
 				}

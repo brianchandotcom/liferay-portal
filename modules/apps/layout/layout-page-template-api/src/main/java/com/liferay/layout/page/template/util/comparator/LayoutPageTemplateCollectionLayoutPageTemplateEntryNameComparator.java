@@ -15,9 +15,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator
 	extends OrderByComparator<Object> {
 
-	public static final String ORDER_BY_ASC = "type DESC, name ASC";
+	public static final String ORDER_BY_ASC = "name ASC";
 
-	public static final String ORDER_BY_DESC = "type DESC, name DESC";
+	public static final String ORDER_BY_DESC = "name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 

@@ -8,7 +8,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
@@ -167,8 +165,5 @@ public class ClassNameLocalServiceImpl
 	private static final Map<String, ClassName> _classNames =
 		new ConcurrentHashMap<>();
 	private static final ClassName _nullClassName = new ClassNameImpl();
-
-	@BeanReference(type = CompanyLocalService.class)
-	private CompanyLocalService _companyLocalService;
 
 }

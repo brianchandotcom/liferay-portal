@@ -37,7 +37,7 @@ public class FDSViewRegistryImpl implements FDSViewRegistry {
 		if (fdsViewServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set view is associated with " + fdsName);
+					"No FDSView is associated with " + fdsName);
 			}
 
 			return Collections.emptyList();

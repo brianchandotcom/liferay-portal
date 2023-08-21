@@ -41,7 +41,7 @@ public class FDSActionProviderRegistryImpl
 		if (fdsActionProviderServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set action provider is associated with " +
+					"No FDSActionProvider is associated with " +
 						fdsActionProviderKey);
 			}
 

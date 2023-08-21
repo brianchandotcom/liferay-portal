@@ -37,7 +37,7 @@ public class FDSFilterRegistryImpl implements FDSFilterRegistry {
 		if (fdsFilterServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set filter is associated with " +
+					"No FDSFilter is associated with " +
 						fdsName);
 			}
 

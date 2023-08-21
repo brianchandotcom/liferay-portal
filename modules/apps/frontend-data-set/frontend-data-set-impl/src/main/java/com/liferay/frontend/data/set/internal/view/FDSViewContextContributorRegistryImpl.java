@@ -41,7 +41,7 @@ public class FDSViewContextContributorRegistryImpl
 		if (fdsViewContextContributorServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set view context contributor is " +
+					"No FDSViewContextContributor is " +
 						"associated with " + fdsViewName);
 			}
 

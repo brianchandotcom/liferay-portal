@@ -41,7 +41,7 @@ public class FDSFilterContextContributorRegistryImpl
 		if (fdsFilterContextContributorServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set filter context contributor is " +
+					"No FDSFilter context contributor is " +
 						"associated with " + fdsFilterType);
 			}
 

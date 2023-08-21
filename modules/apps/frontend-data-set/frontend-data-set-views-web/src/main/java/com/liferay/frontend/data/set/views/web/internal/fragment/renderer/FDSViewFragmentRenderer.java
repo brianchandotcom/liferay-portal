@@ -152,7 +152,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to get frontend data set view with " +
+							"Unable to get FDSView with " +
 								"external reference code " +
 									externalReferenceCode,
 							exception);

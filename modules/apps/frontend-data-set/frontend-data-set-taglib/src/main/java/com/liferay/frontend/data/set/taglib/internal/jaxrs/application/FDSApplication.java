@@ -120,7 +120,7 @@ public class FDSApplication extends Application {
 
 		if ((fdsDataProvider == null) && _log.isDebugEnabled()) {
 			_log.debug(
-				"No frontend data set data provider is associated with " +
+				"No FDSDataProvider is associated with " +
 					fdsDataProviderKey);
 		}
 

@@ -55,7 +55,7 @@ public class FDSKeywordsFactoryRegistryImpl
 		if (fdsKeywordsFactory == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set keywords factory is associated " +
+					"No FDSKeywordsFactory is associated " +
 						"with " + fdsDataProviderKey);
 			}
 

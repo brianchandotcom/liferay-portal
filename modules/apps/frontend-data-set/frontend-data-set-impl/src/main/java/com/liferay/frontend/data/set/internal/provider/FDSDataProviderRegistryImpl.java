@@ -38,7 +38,7 @@ public class FDSDataProviderRegistryImpl implements FDSDataProviderRegistry {
 		if (fdsDataProviderServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No frontend data set data provider is associated with " +
+					"No FDSDataProvider is associated with " +
 						fdsDataProviderKey);
 			}
 

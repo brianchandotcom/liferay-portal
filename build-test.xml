@@ -11447,6 +11447,21 @@ ${update.properties}</echo>
 		<get-database-property property.name="database.url" />
 		<get-database-property property.name="database.username" />
 		<get-database-property property.name="database.version" />
+		<get-testcase-property property.name="database.partition.enabled" />
+		<get-testcase-property property.name="portal.version" />
+
+		<if>
+			<and>
+				<isset property="database.partition.enabled" />
+				<isset property="portal.version" />
+			</and>
+			<then>
+				<property name="maximumPoolSize" value="50" />
+			</then>
+			<else>
+				<property name="maximumPoolSize" value="30" />
+			</else>
+		</if>
 
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 
@@ -11461,7 +11476,7 @@ jdbc.default.password=${database.password}
 // HikariCP
 
 jdbc.default.connectionTimeout=600000
-jdbc.default.maximumPoolSize=30
+jdbc.default.maximumPoolSize=${maximumPoolSize}
 jdbc.default.minimumIdle=0
 
 enterprise.product.notification.enabled=false

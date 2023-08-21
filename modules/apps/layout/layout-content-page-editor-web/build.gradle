@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.jsoup", name: "jsoup", version: "1.15.3"
+	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:adaptive-media:adaptive-media-content-transformer-api")
@@ -47,6 +48,7 @@ dependencies {
 	compileOnly project(":apps:learn:learn-api")
 	compileOnly project(":apps:mentions:mentions-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")

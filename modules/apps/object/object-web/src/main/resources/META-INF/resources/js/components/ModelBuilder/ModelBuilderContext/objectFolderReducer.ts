@@ -133,6 +133,8 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 						.actions.delete,
 					hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
 						.actions.permissions,
+					hasObjectDefinitionUpdateResourcePermission: !!newObjectDefinition
+						.actions.update,
 					id: newObjectDefinition.id,
 					isLinkedNode: false,
 					label: getLocalizableLabel(
@@ -401,6 +403,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 											data: {
 												defaultLanguageId:
 													objectDefinition.defaultLanguageId,
+												edgeSelected: false,
 												label:
 													!isSelfRelationship ||
 													(isSelfRelationship &&
@@ -417,6 +420,8 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 													'manyToMany'
 														? manyMarkerId
 														: oneMarkerId,
+												objectRelationshipId:
+													relationship.id,
 												selfRelationships,
 												sourceY: 0,
 												targetY: 0,
@@ -458,6 +463,8 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 									.actions.delete,
 								hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
 									.actions.permissions,
+								hasObjectDefinitionUpdateResourcePermission: !!objectDefinition
+									.actions.update,
 								hasSelfRelationships:
 									selfRelationships?.length > 0,	
 								id: objectDefinition.id,
@@ -535,6 +542,47 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 			};
 		}
 
+		case TYPES.SET_SELECTED_EDGE: {
+			const {edges, nodes, selectedObjectRelationshipId} = action.payload;
+
+			const newObjectRelationshipEdges = edges.map(
+				(relationshipEdge) => ({
+					...relationshipEdge,
+					data: {
+						...relationshipEdge.data,
+						edgeSelected:
+							relationshipEdge.data?.objectRelationshipId.toString() ===
+							selectedObjectRelationshipId,
+					},
+				})
+			);
+
+			const selectedNode = nodes.find(
+				(definitionNode) => definitionNode.data?.nodeSelected
+			);
+
+			const newObjectDefinitionNodes = nodes;
+
+			if (selectedNode?.data) {
+				const selectedNodeIndex = nodes.findIndex(
+					(definitionNode) => definitionNode.data?.nodeSelected
+				);
+
+				selectedNode.data.nodeSelected = false;
+
+				newObjectDefinitionNodes[selectedNodeIndex] = selectedNode;
+			}
+
+			return {
+				...state,
+				elements: [
+					...newObjectRelationshipEdges,
+					...newObjectDefinitionNodes,
+				],
+				rightSidebarType: 'objectRelationshipDetails' as RightSidebarType,
+			};
+		}
+
 		case TYPES.SET_SELECTED_NODE: {
 			const {edges, nodes, selectedObjectDefinitionId} = action.payload;
 
@@ -565,9 +613,28 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				};
 			});
 
+			const selectedEdge = edges.find(
+				(relationshipEdge) => relationshipEdge.data?.edgeSelected
+			);
+
+			const newObjectRelationshipEdges = edges;
+
+			if (selectedEdge?.data) {
+				const selectedEdgeIndex = nodes.findIndex(
+					(definitionNode) => definitionNode.data?.nodeSelected
+				);
+
+				selectedEdge.data.edgeSelected = false;
+
+				newObjectRelationshipEdges[selectedEdgeIndex] = selectedEdge;
+			}
+
 			return {
 				...state,
-				elements: [...edges, ...newObjectDefinitionNodes],
+				elements: [
+					...newObjectRelationshipEdges,
+					...newObjectDefinitionNodes,
+				],
 				leftSidebarItems: newLeftSidebarItems,
 				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
 			};

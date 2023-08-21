@@ -320,6 +320,7 @@ portalSourcesJar {
 
 	baseName = "portal"
 	classifier = "sources"
+	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
 	version = _getReleaseInfoVersion()
 

@@ -11,6 +11,7 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {Fragment} from '../../constants/Fragment';
+import getComponentType from '../../utils/getComponentType';
 
 interface HighlightedFragment {
 	fragment: Element | null;
@@ -92,120 +93,112 @@ export default function FragmentList({
 						? a.renderTime - b.renderTime
 						: b.renderTime - a.renderTime
 				)
-				.map(
-					({
+				.map((fragment) => {
+					const {
 						cached,
-						fragment,
 						fragmentCollectionURL,
 						fromMaster,
 						hierarchy,
 						itemId,
 						name,
 						renderTime,
-					}) => {
-						return (
-							<div
-								className="c-p-2 d-flex flex-column page-audit__fragment"
-								key={itemId}
-								onMouseLeave={removeHighlightFromFragment}
-								onMouseOver={() =>
-									highlightFragment({
-										itemId,
-										name,
-									})
-								}
-							>
-								<span className="font-weight-bold position-relative">
-									{name}
+					} = fragment;
 
-									<span className="page-audit__fragment__buttons">
+					return (
+						<div
+							className="c-p-2 d-flex flex-column page-audit__fragment"
+							key={itemId}
+							onMouseLeave={removeHighlightFromFragment}
+							onMouseOver={() =>
+								highlightFragment({
+									itemId,
+									name,
+								})
+							}
+						>
+							<span className="font-weight-bold position-relative">
+								{name}
+
+								<span className="page-audit__fragment__buttons">
+									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get(
+												'locate-x-in-page'
+											),
+											name
+										)}
+										displayType="unstyled"
+										onBlur={removeHighlightFromFragment}
+										onClick={() =>
+											highlightFragment({
+												hierarchy,
+												itemId,
+												name,
+											})
+										}
+										size="sm"
+										symbol="search"
+										title={sub(
+											Liferay.Language.get(
+												'locate-x-in-page'
+											),
+											name
+										)}
+									/>
+
+									{fragmentCollectionURL ? (
 										<ClayButtonWithIcon
 											aria-label={sub(
 												Liferay.Language.get(
-													'locate-x-in-page'
+													'open-x-in-fragment-library'
 												),
 												name
 											)}
+											className="c-ml-2"
 											displayType="unstyled"
-											onBlur={removeHighlightFromFragment}
 											onClick={() =>
-												highlightFragment({
-													hierarchy,
-													itemId,
-													name,
-												})
+												window.open(
+													fragmentCollectionURL,
+													'_blank'
+												)
 											}
 											size="sm"
-											symbol="search"
+											symbol="shortcut"
 											title={sub(
 												Liferay.Language.get(
-													'locate-x-in-page'
+													'open-x-in-fragment-library'
 												),
 												name
 											)}
 										/>
-
-										{fragmentCollectionURL ? (
-											<ClayButtonWithIcon
-												aria-label={sub(
-													Liferay.Language.get(
-														'open-x-in-fragment-library'
-													),
-													name
-												)}
-												className="c-ml-2"
-												displayType="unstyled"
-												onClick={() =>
-													window.open(
-														fragmentCollectionURL,
-														'_blank'
-													)
-												}
-												size="sm"
-												symbol="shortcut"
-												title={sub(
-													Liferay.Language.get(
-														'open-x-in-fragment-library'
-													),
-													name
-												)}
-											/>
-										) : null}
-									</span>
+									) : null}
 								</span>
+							</span>
 
-								<span>
-									{sub(
-										Liferay.Language.get('x-ms'),
-										renderTime
-									)}
-								</span>
+							<span>
+								{sub(Liferay.Language.get('x-ms'), renderTime)}
+							</span>
 
-								<span>
+							<span>
+								<ClayLabel displayType="secondary">
+									{getComponentType(fragment)}
+								</ClayLabel>
+
+								{fromMaster && (
 									<ClayLabel displayType="secondary">
-										{fragment
-											? Liferay.Language.get('fragment')
-											: Liferay.Language.get('widget')}
+										{Liferay.Language.get('from-master')}
 									</ClayLabel>
+								)}
 
-									{fromMaster && (
-										<ClayLabel displayType="secondary">
-											{Liferay.Language.get(
-												'from-master'
-											)}
-										</ClayLabel>
-									)}
-
-									{cached && (
-										<ClayLabel displayType="info">
-											{Liferay.Language.get('cached')}
-										</ClayLabel>
-									)}
-								</span>
-							</div>
-						);
-					}
-				)}
+								{cached && (
+									<ClayLabel displayType="info">
+										{Liferay.Language.get('cached')}
+									</ClayLabel>
+								)}
+							</span>
+						</div>
+					);
+				})}
 
 			{highlightedFragment ? (
 				<ReactPortal container={document.body}>

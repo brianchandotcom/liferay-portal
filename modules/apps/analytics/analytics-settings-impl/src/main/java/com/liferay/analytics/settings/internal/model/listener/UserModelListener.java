@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 
@@ -31,9 +30,7 @@ public class UserModelListener
 		if ((user == null) ||
 			Objects.equals(
 				user.getScreenName(),
-				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN) ||
-			Objects.equals(
-				user.getStatus(), WorkflowConstants.STATUS_INACTIVE)) {
+				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN)) {
 
 			return false;
 		}

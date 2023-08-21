@@ -10,18 +10,16 @@ import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
@@ -38,46 +36,39 @@ public class HeadlessBuilderResourceImpl {
 	@Path("/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
-			@Context Expression filterExpression,
+			@QueryParam("filter") String filterString,
 			@Context Pagination pagination, @PathParam("path") String path,
-			@Context Sort[] sorts)
+			@QueryParam("sort") String sortString)
 		throws Exception {
 
 		return _get(
-			filterExpression, pagination, path,
-			APIApplication.Endpoint.Scope.COMPANY, null, sorts);
+			filterString, pagination, path,
+			APIApplication.Endpoint.Scope.COMPANY, null, sortString);
 	}
 
 	@GET
 	@Path(HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX + "/{path: .*}")
 	@Produces({"application/json", "application/xml"})
 	public Response get(
-			@Context Expression filterExpression,
+			@QueryParam("filter") String filterString,
 			@Context Pagination pagination, @PathParam("path") String path,
-			@PathParam("scopeKey") String scopeKey, @Context Sort[] sorts)
+			@PathParam("scopeKey") String scopeKey,
+			@QueryParam("sort") String sortString)
 		throws Exception {
 
 		return _get(
-			filterExpression, pagination, path,
-			APIApplication.Endpoint.Scope.GROUP, scopeKey, sorts);
+			filterString, pagination, path, APIApplication.Endpoint.Scope.GROUP,
+			scopeKey, sortString);
 	}
 
-	@Context
-	protected APIApplication contextAPIApplication;
-
-	@Context
-	protected Company contextCompany;
-
-	@Context
-	protected HttpServletRequest contextHttpServletRequest;
-
 	private Response _get(
-			Expression filterExpression, Pagination pagination, String path,
-			APIApplication.Endpoint.Scope scope, String scopeKey, Sort[] sorts)
+			String filterString, Pagination pagination, String path,
+			APIApplication.Endpoint.Scope scope, String scopeKey,
+			String sortString)
 		throws Exception {
 
 		for (APIApplication.Endpoint endpoint :
-				contextAPIApplication.getEndpoints()) {
+				_apiApplication.getEndpoints()) {
 
 			if ((endpoint.getScope() != scope) ||
 				!Objects.equals(endpoint.getPath(), "/" + path)) {
@@ -92,16 +83,25 @@ public class HeadlessBuilderResourceImpl {
 
 			return Response.ok(
 				_endpointHelper.getResponseEntityMapsPage(
-					contextCompany.getCompanyId(), endpoint, filterExpression,
-					pagination, scopeKey, sorts)
+					_acceptLanguage, _company.getCompanyId(), endpoint,
+					filterString, pagination, scopeKey, sortString)
 			).build();
 		}
 
 		throw new NoSuchModelException(
 			String.format(
 				"Endpoint /%s does not exist for %s", path,
-				contextAPIApplication.getTitle()));
+				_apiApplication.getTitle()));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Context
+	private APIApplication _apiApplication;
+
+	@Context
+	private Company _company;
 
 	private final EndpointHelper _endpointHelper;
 

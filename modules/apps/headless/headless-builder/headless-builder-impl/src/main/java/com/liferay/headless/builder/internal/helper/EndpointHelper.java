@@ -7,10 +7,9 @@ package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.odata.filter.expression.Expression;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -34,9 +33,9 @@ import org.osgi.service.component.annotations.Reference;
 public class EndpointHelper {
 
 	public Page<Map<String, Object>> getResponseEntityMapsPage(
-			long companyId, APIApplication.Endpoint endpoint,
-			Expression filterExpression, Pagination pagination, String scopeKey,
-			Sort[] sorts)
+			AcceptLanguage acceptLanguage, long companyId,
+			APIApplication.Endpoint endpoint, String filterString,
+			Pagination pagination, String scopeKey, String sortString)
 		throws Exception {
 
 		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
@@ -53,10 +52,14 @@ public class EndpointHelper {
 
 		Page<ObjectEntry> objectEntriesPage =
 			_objectEntryHelper.getObjectEntriesPage(
-				companyId, filterExpression,
+				companyId,
+				_filterExpressionHelper.getExpression(
+					companyId, endpoint, filterString),
 				ListUtil.fromCollection(relationshipsNames), pagination,
 				responseSchema.getMainObjectDefinitionExternalReferenceCode(),
-				scopeKey, sorts);
+				scopeKey,
+				_sortsHelper.getSorts(
+					acceptLanguage, companyId, endpoint, sortString));
 
 		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 			Map<String, Object> responseEntityMap = new HashMap<>();
@@ -141,6 +144,12 @@ public class EndpointHelper {
 	}
 
 	@Reference
+	private FilterExpressionHelper _filterExpressionHelper;
+
+	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
+
+	@Reference
+	private SortsHelper _sortsHelper;
 
 }

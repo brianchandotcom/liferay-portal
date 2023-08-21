@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.builder.internal.jaxrs.context.resolver;
+package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.odata.entity.APISchemaEntityModel;
@@ -13,8 +13,6 @@ import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.InvalidFilterException;
@@ -22,49 +20,31 @@ import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
  */
-@Provider
-public class APIApplicationFilterContextResolver
-	implements ContextResolver<Expression> {
+@Component(service = FilterExpressionHelper.class)
+public class FilterExpressionHelper {
 
-	public APIApplicationFilterContextResolver(
-		EntityModelProvider entityModelProvider,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectDefinitionFilterParser objectDefinitionFilterParser,
-		ExpressionFactory expressionFactory) {
+	public Expression getExpression(
+		long companyId, APIApplication.Endpoint endpoint, String filterString) {
 
-		_entityModelProvider = entityModelProvider;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectDefinitionFilterParser = objectDefinitionFilterParser;
-		_expressionFactory = expressionFactory;
-	}
-
-	@Override
-	public Expression getContext(Class<?> aClass) {
-		APIApplication.Filter filter = _endpoint.getFilter();
-		String filterString = ParamUtil.getString(
-			_httpServletRequest, "filter");
+		APIApplication.Filter filter = endpoint.getFilter();
 
 		if ((filter == null) && Validator.isNull(filterString)) {
 			return null;
 		}
 
-		APIApplication.Schema schema = _endpoint.getResponseSchema();
+		APIApplication.Schema schema = endpoint.getResponseSchema();
 
 		ObjectDefinition objectDefinition = _getObjectDefinition(
-			_company.getCompanyId(),
-			schema.getMainObjectDefinitionExternalReferenceCode());
+			companyId, schema.getMainObjectDefinitionExternalReferenceCode());
 
 		EntityModel entityModel = _entityModelProvider.getEntityModel(
 			objectDefinition);
@@ -80,7 +60,7 @@ public class APIApplicationFilterContextResolver
 
 		if (Validator.isNotNull(filterString)) {
 			EntityModel apiSchemaEntityModel = new APISchemaEntityModel(
-				entityModel, _endpoint.getResponseSchema());
+				entityModel, endpoint.getResponseSchema());
 
 			Expression expression = _objectDefinitionFilterParser.parse(
 				apiSchemaEntityModel, filterString, objectDefinition);
@@ -122,22 +102,16 @@ public class APIApplicationFilterContextResolver
 		}
 	}
 
-	@Context
-	private Company _company;
+	@Reference
+	private EntityModelProvider _entityModelProvider;
 
-	@Context
-	private AcceptLanguage _contextAcceptLanguage;
+	@Reference
+	private ExpressionFactory _expressionFactory;
 
-	@Context
-	private APIApplication.Endpoint _endpoint;
+	@Reference
+	private ObjectDefinitionFilterParser _objectDefinitionFilterParser;
 
-	private final EntityModelProvider _entityModelProvider;
-	private final ExpressionFactory _expressionFactory;
-
-	@Context
-	private HttpServletRequest _httpServletRequest;
-
-	private final ObjectDefinitionFilterParser _objectDefinitionFilterParser;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

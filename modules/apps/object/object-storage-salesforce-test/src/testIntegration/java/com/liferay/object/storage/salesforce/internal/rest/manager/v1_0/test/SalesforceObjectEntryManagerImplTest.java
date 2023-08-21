@@ -268,14 +268,19 @@ public class SalesforceObjectEntryManagerImplTest {
 			},
 			null);
 
-		ObjectEntry newObjectEntry = _objectEntryManager.getObjectEntry(
+		objectEntry = _objectEntryManager.getObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
 			objectEntry.getExternalReferenceCode(), _objectDefinition,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Map<String, Object> properties = newObjectEntry.getProperties();
+		Map<String, Object> properties = objectEntry.getProperties();
 
 		Assert.assertEquals("Able", properties.get("title"));
+
+		_objectEntryManager.deleteObjectEntry(
+			TestPropsValues.getCompanyId(), _getDTOConverterContext(),
+			objectEntry.getExternalReferenceCode(), _objectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	private DTOConverterContext _getDTOConverterContext() throws Exception {

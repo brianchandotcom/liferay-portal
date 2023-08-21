@@ -29,15 +29,12 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 	private void _deleteSegmentsExperiences(List<Long> segmentsExperienceIds)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("delete from SegmentsExperimentRel where ");
-		sb.append("segmentsExperimentRelId in (");
-		sb.append(StringUtil.merge(segmentsExperienceIds));
-		sb.append(") and active is true");
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+				StringBundler.concat(
+					"delete from SegmentsExperimentRel where ",
+					"segmentsExperimentRelId in (",
+					StringUtil.merge(segmentsExperienceIds),
+					") and active is true"))) {
 
 			preparedStatement.execute();
 		}
@@ -46,15 +43,11 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 	private void _deleteSegmentsExperimentRels(List<Long> segmentsExperimentIds)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("select segmentsExperimentRelId, segmentsExperienceId from ");
-		sb.append("SegmentsExperimentRel where segmentsExperimentId in (");
-		sb.append(StringUtil.merge(segmentsExperimentIds));
-		sb.append(")");
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				sb.toString());
+				StringBundler.concat(
+					"select segmentsExperimentRelId, segmentsExperienceId ",
+					"from SegmentsExperimentRel where segmentsExperimentId in ",
+					"(", StringUtil.merge(segmentsExperimentIds), ")"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"delete from SegmentsExperimentRel where " +
 					"segmentsExperimentRelId = ?")) {

@@ -6,6 +6,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+const api = async (url, options = {}) => {
+	return fetch(window.location.origin + '/' + url, {
+		headers: {
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		...options,
+	});
+};
+
 class CustomElement extends HTMLElement {
 	constructor() {
 		super();
@@ -23,6 +33,25 @@ class CustomElement extends HTMLElement {
 		ReactDOM.render(Greeting, root);
 
 		this.appendChild(root);
+
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			api('o/headless-admin-user/v1.0/my-user-account')
+				.then((response) => response.json())
+				.then((response) => {
+					if (response.givenName) {
+						const nameElements =
+							document.getElementsByTagName('i');
+
+						if (nameElements.length) {
+							nameElements[0].innerHTML = response.givenName;
+						}
+					}
+				})
+				.catch((error) => {
+					// eslint-disable-next-line no-console
+					console.log(error);
+				});
+		}
 	}
 }
 

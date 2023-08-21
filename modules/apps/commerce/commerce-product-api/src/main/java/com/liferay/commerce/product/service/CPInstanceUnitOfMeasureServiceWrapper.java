@@ -77,6 +77,23 @@ public class CPInstanceUnitOfMeasureServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CPInstanceUnitOfMeasure>
+			getActiveCPInstanceUnitOfMeasures(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+	}
+
+	@Override
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			getActiveCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId)
 		throws com.liferay.portal.kernel.exception.PortalException {

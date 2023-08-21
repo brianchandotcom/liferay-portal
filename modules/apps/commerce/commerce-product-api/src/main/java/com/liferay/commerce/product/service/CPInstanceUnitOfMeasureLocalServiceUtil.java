@@ -267,6 +267,19 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<CPInstanceUnitOfMeasure>
+		getActiveCPInstanceUnitOfMeasures(long cpInstanceId) {
+
+		return getService().getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+	}
+
+	public static int getActiveCPInstanceUnitOfMeasuresCount(
+		long cpInstanceId) {
+
+		return getService().getActiveCPInstanceUnitOfMeasuresCount(
+			cpInstanceId);
+	}
+
 	/**
 	 * Returns the cp instance unit of measure with the primary key.
 	 *

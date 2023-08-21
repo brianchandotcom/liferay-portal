@@ -241,6 +241,13 @@ public interface CPInstanceUnitOfMeasureLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstanceUnitOfMeasure> getActiveCPInstanceUnitOfMeasures(
+		long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId);
+
 	/**
 	 * Returns the cp instance unit of measure with the primary key.
 	 *

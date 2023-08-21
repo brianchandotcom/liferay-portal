@@ -265,6 +265,14 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByC_K() throws Exception {
 		_persistence.countByC_K(RandomTestUtil.nextLong(), "");
 

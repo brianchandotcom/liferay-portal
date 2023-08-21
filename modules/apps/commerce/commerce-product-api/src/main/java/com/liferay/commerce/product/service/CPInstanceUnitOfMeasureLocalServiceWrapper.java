@@ -300,6 +300,20 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 		return _cpInstanceUnitOfMeasureLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<CPInstanceUnitOfMeasure>
+		getActiveCPInstanceUnitOfMeasures(long cpInstanceId) {
+
+		return _cpInstanceUnitOfMeasureLocalService.
+			getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+	}
+
+	@Override
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
+		return _cpInstanceUnitOfMeasureLocalService.
+			getActiveCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
 	/**
 	 * Returns the cp instance unit of measure with the primary key.
 	 *

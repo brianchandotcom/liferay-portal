@@ -223,6 +223,92 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.product.model.CPInstanceUnitOfMeasure>
+				getActiveCPInstanceUnitOfMeasures(
+					HttpPrincipal httpPrincipal, long cpInstanceId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"getActiveCPInstanceUnitOfMeasures",
+				_getActiveCPInstanceUnitOfMeasuresParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.product.model.CPInstanceUnitOfMeasure>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getActiveCPInstanceUnitOfMeasuresCount(
+			HttpPrincipal httpPrincipal, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPInstanceUnitOfMeasureServiceUtil.class,
+				"getActiveCPInstanceUnitOfMeasuresCount",
+				_getActiveCPInstanceUnitOfMeasuresCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPInstanceUnitOfMeasure
 			getCPInstanceUnitOfMeasure(
 				HttpPrincipal httpPrincipal, long cpInstanceUnitOfMeasureId)
@@ -232,7 +318,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"getCPInstanceUnitOfMeasure",
-				_getCPInstanceUnitOfMeasureParameterTypes4);
+				_getCPInstanceUnitOfMeasureParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceUnitOfMeasureId);
@@ -275,7 +361,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"getCPInstanceUnitOfMeasure",
-				_getCPInstanceUnitOfMeasureParameterTypes5);
+				_getCPInstanceUnitOfMeasureParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, key);
@@ -323,7 +409,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"getCPInstanceUnitOfMeasures",
-				_getCPInstanceUnitOfMeasuresParameterTypes6);
+				_getCPInstanceUnitOfMeasuresParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId, start, end, orderByComparator);
@@ -366,7 +452,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"getCPInstanceUnitOfMeasuresCount",
-				_getCPInstanceUnitOfMeasuresCountParameterTypes7);
+				_getCPInstanceUnitOfMeasuresCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceId);
@@ -413,7 +499,7 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CPInstanceUnitOfMeasureServiceUtil.class,
 				"updateCPInstanceUnitOfMeasure",
-				_updateCPInstanceUnitOfMeasureParameterTypes8);
+				_updateCPInstanceUnitOfMeasureParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpInstanceUnitOfMeasureId, cpInstanceId, active,
@@ -472,21 +558,29 @@ public class CPInstanceUnitOfMeasureServiceHttp {
 		_fetchCPInstanceUnitOfMeasureParameterTypes3 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes4 =
+	private static final Class<?>[]
+		_getActiveCPInstanceUnitOfMeasuresParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getActiveCPInstanceUnitOfMeasuresCountParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes5 =
+	private static final Class<?>[] _getCPInstanceUnitOfMeasureParameterTypes7 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCPInstanceUnitOfMeasuresParameterTypes6 = new Class[] {
+		_getCPInstanceUnitOfMeasuresParameterTypes8 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCPInstanceUnitOfMeasuresCountParameterTypes7 = new Class[] {
+		_getCPInstanceUnitOfMeasuresCountParameterTypes9 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_updateCPInstanceUnitOfMeasureParameterTypes8 = new Class[] {
+		_updateCPInstanceUnitOfMeasureParameterTypes10 = new Class[] {
 			long.class, long.class, boolean.class, java.math.BigDecimal.class,
 			String.class, java.util.Map.class, int.class, boolean.class,
 			double.class, java.math.BigDecimal.class, String.class

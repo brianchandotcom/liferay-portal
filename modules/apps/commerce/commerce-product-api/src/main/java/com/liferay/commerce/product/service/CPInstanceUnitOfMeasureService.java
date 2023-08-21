@@ -73,6 +73,15 @@ public interface CPInstanceUnitOfMeasureService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstanceUnitOfMeasure> getActiveCPInstanceUnitOfMeasures(
+			long cpInstanceId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActiveCPInstanceUnitOfMeasuresCount(long cpInstanceId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId)
 		throws PortalException;

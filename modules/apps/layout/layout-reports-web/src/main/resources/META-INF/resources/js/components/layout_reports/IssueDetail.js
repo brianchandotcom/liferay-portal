@@ -18,6 +18,10 @@ import normalizeFailingElements from '../../utils/normalizeFailingElements';
 export default function IssueDetail() {
 	const {selectedIssue} = useContext(StoreStateContext);
 
+	if (Liferay.FeatureFlags['LPS-187284']) {
+		return null;
+	}
+
 	return (
 		<div
 			className={classNames('c-pb-3', {

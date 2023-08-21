@@ -13,6 +13,10 @@ import loadIssues from '../utils/loadIssues';
 export default function SidebarHeader() {
 	const {selectedIssue} = useContext(StoreStateContext);
 
+	if (Liferay.FeatureFlags['LPS-187284']) {
+		return null;
+	}
+
 	return selectedIssue ? (
 		<IssueDetailSidebarHeader />
 	) : (
@@ -33,7 +37,7 @@ const DefaultSidebarHeader = () => {
 			</span>
 
 			<div>
-				{!Liferay.FeatureFlags['LPS-187284'] && showRefreshButton && (
+				{showRefreshButton && (
 					<ClayButtonWithIcon
 						className="component-action mr-2 sidenav-relaunch text-secondary"
 						disabled={loading}

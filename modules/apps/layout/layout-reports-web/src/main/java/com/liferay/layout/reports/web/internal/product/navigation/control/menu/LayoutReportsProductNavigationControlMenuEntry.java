@@ -134,7 +134,13 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		IconTag iconTag = new IconTag();
 
 		iconTag.setCssClass("icon-monospaced");
-		iconTag.setSymbol("info-circle");
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
+			iconTag.setSymbol("search-experiences");
+		}
+		else {
+			iconTag.setSymbol("info-circle");
+		}
 
 		try {
 			values.put(

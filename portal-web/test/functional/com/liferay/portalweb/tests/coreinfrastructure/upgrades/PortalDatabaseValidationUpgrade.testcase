@@ -188,7 +188,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas6130 {
 		property custom.properties = "feature.flag.LPS-157670=true";
@@ -212,7 +211,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas7210 {
 		property data.archive.type = "data-archive-portal";
@@ -279,7 +277,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas70106 {
 		property data.archive.type = "data-archive-portal";
@@ -302,7 +299,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas71103 {
 		property data.archive.type = "data-archive-portal";
@@ -325,7 +321,6 @@ definition {
 			upgradedDBSchemaName = "lportal");
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CompareUpgradedAndFreshDatabaseSchemas621021 {
 		property data.archive.type = "data-archive-portal";

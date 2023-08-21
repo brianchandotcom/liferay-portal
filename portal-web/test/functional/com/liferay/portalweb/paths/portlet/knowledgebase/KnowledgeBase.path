@@ -311,6 +311,11 @@
 	<td>//div[contains(@id,'knowledge_base_web') and contains(@id,'newParent')]//label[contains(@class,'control-label') and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MOVE_MODAL_DESTINATION_ITEM</td>
+	<td>//li[contains(@class,'knowledge-base-navigation-item-active')]//span[contains(@class,'component-text') and contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
 
 <!--PAGE_TREE-->
 

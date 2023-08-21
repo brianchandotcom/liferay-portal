@@ -56,7 +56,7 @@ public abstract class BaseCommerceProductPriceCalculation
 		throws PortalException {
 
 		CommerceMoney commerceMoney = getUnitMinPrice(
-			cpDefinitionId, BigDecimal.ONE, StringPool.BLANK, commerceContext);
+			cpDefinitionId, BigDecimal.ONE, commerceContext);
 
 		if (commerceMoney.isEmpty()) {
 			return commerceMoney;

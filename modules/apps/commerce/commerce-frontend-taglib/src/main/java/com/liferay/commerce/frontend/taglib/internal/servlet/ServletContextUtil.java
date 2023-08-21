@@ -11,6 +11,7 @@ import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPCompareHelper;
@@ -93,6 +94,12 @@ public class ServletContextUtil {
 		return _cpInstanceHelperSnapshot.get();
 	}
 
+	public static CPInstanceUnitOfMeasureLocalService
+		getCPInstanceUnitOfMeasureLocalService() {
+
+		return _cpInstanceUnitOfMeasureLocalServiceSnapshot.get();
+	}
+
 	public static CPSubscriptionTypeRegistry getCPSubscriptionTypeRegistry() {
 		return _cpSubscriptionTypeRegistrySnapshot.get();
 	}
@@ -149,6 +156,10 @@ public class ServletContextUtil {
 		new Snapshot<>(ServletContextUtil.class, CPFriendlyURL.class);
 	private static final Snapshot<CPInstanceHelper> _cpInstanceHelperSnapshot =
 		new Snapshot<>(ServletContextUtil.class, CPInstanceHelper.class);
+	private static final Snapshot<CPInstanceUnitOfMeasureLocalService>
+		_cpInstanceUnitOfMeasureLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class,
+			CPInstanceUnitOfMeasureLocalService.class);
 	private static final Snapshot<CPSubscriptionTypeRegistry>
 		_cpSubscriptionTypeRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, CPSubscriptionTypeRegistry.class);

@@ -9,7 +9,7 @@ import {SearchResultsMessage} from '@liferay/layout-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {Fragment, FragmentFilter} from '../../constants/fragments';
+import {Fragment, FragmentFilter} from '../../constants/Fragment';
 import Filter from './Filter';
 import FragmentList from './FragmentList';
 import ResultsBar from './ResultsBar';

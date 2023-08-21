@@ -848,6 +848,28 @@ definition {
 			value1 = "Select");
 	}
 
+	macro moveArticleCPViaMoveModal {
+		var key_rowEntry = ${kbArticleTitle};
+		var key_itemName = ${destinationItem};
+
+		if (IsElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
+			Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+		}
+		else {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		}
+
+		MenuItem.click(menuItem = "Move");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "KnowledgeBase#MOVE_MODAL_DESTINATION_ITEM");
+
+		SelectFrameTop();
+
+		Button.clickSave();
+	}
+
 	macro openPageTreePanel {
 		if (${section} == "Folders and Articles") {
 			WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");

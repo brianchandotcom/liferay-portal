@@ -832,8 +832,18 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					File bndFile = getBndFile(new File(testClassFilePath));
 
+					if (bndFile == null) {
+						throw new Exception("Unable to find bnd.bnd file for " + testClassFilePath);
+					}
+
+					String testProjectName = getTestProjectName(bndFile);
+
+					if (testProjectName == null) {
+						throw new Exception("Unable to find corresponding project name for module test. Please add project name to modules/modules.properties.");
+					}
+
 					project.setProperty("test.name", getTestName(testClassFilePath));
-					project.setProperty("test.project.name", getTestProjectName(bndFile));
+					project.setProperty("test.project.name", testProjectName);
 					project.setProperty("test.project.results.dir", getTestProjectResultsDir(bndFile));
 				]]>
 			</beanshell>

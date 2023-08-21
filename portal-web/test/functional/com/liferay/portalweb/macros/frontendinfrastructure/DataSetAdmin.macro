@@ -138,6 +138,53 @@ definition {
 			restSchema = ${restSchema});
 	}
 
+	macro createAndConfigureDataSetEntry {
+		DataSetAdmin.goToDataSetAdminPage();
+
+		DataSetAdmin.createDataSetEntryViaAPI(
+			dataSetName = ${dataSetName},
+			restApplication = ${restApplication},
+			restEndpoint = ${restEndpoint},
+			restSchema = ${restSchema});
+
+		Refresh();
+
+		DataSetAdmin.goToViews(dataSetName = "${dataSetName}");
+
+		DataSetAdmin.createDataSetView(
+			description = "${dataSetViewDescription}",
+			key_name = "${dataSetViewName}");
+
+		DataSetAdmin.goToSpecificViewPage(
+			dataSetName = ${dataSetName},
+			key_viewName = ${dataSetViewName});
+
+		if (isSet(key_fieldList)) {
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = ${key_fieldList});
+
+			Button.clickSave();
+		}
+
+		if (isSet(key_ListItemsPerPage)) {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+
+			Type(
+				key_label = "List of Items per Page",
+				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				value1 = ${key_ListItemsPerPage});
+
+			Type(
+				key_type = "Default Items per Page",
+				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
+				value1 = ${key_DefaultItemsperPage});
+
+			Button.clickSave();
+		}
+	}
+
+
 	macro createDataSetView {
 		if (isSet(key_name)) {
 			var key_dataSetViewNameList = ${key_name};

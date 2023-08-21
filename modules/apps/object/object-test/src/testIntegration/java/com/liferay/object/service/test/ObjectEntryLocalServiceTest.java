@@ -115,7 +115,6 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 import java.sql.Connection;
@@ -772,7 +771,8 @@ public class ObjectEntryLocalServiceTest {
 			resultSet.next();
 
 			Assert.assertEquals(
-				_encryptor.encrypt(_getKey("AES", key), "test"),
+				_encryptor.encrypt(
+					new SecretKeySpec(Base64.decode(key), "AES"), "test"),
 				resultSet.getString(1));
 		}
 
@@ -2519,10 +2519,6 @@ public class ObjectEntryLocalServiceTest {
 		BigDecimal bigDecimal = BigDecimal.valueOf(value);
 
 		return bigDecimal.setScale(16);
-	}
-
-	private Key _getKey(String algorithm, String key) throws PortalException {
-		return new SecretKeySpec(Base64.decode(key), algorithm);
 	}
 
 	private Map<String, Serializable> _getValuesFromCacheField(

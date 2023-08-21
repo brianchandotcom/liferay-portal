@@ -41,6 +41,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -195,12 +196,12 @@ public class SiteNavigationMenuServiceTest {
 	}
 
 	@Test
-	public void testGetSiteNavigationMenuByCreateDateComparatorAndKeywordsAsc()
+	public void testGetSiteNavigationMenuByCreateDateComparatorAndKeywords()
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		SiteNavigationMenu siteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu1 =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, Timestamp.valueOf(localDateTime), "CC Name");
 
@@ -211,56 +212,27 @@ public class SiteNavigationMenuServiceTest {
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "AA Name");
-
-		SiteNavigationMenuCreateDateComparator
-			siteNavigationMenuCreateDateComparator =
-				new SiteNavigationMenuCreateDateComparator(true);
-
-		List<SiteNavigationMenu> siteNavigationMenus =
-			_siteNavigationMenuService.getSiteNavigationMenus(
-				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, siteNavigationMenuCreateDateComparator);
-
-		SiteNavigationMenu firstSiteNavigationMenu = siteNavigationMenus.get(0);
-
-		Assert.assertEquals(siteNavigationMenu, firstSiteNavigationMenu);
-	}
-
-	@Test
-	public void testGetSiteNavigationMenuByCreateDateComparatorAndKeywordsDesc()
-		throws Exception {
-
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		SiteNavigationMenu siteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu2 =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, Timestamp.valueOf(localDateTime), "CC Name");
-
-		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "BB");
-
-		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "AA Name");
-
-		SiteNavigationMenuCreateDateComparator
-			siteNavigationMenuCreateDateComparator =
-				new SiteNavigationMenuCreateDateComparator(false);
+				_group, Timestamp.valueOf(localDateTime), "AA Name");
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, siteNavigationMenuCreateDateComparator);
+				QueryUtil.ALL_POS,
+				new SiteNavigationMenuCreateDateComparator(true));
 
-		SiteNavigationMenu lastSiteNavigationMenu = siteNavigationMenus.get(
-			siteNavigationMenus.size() - 1);
+		Assert.assertEquals(
+			Arrays.asList(siteNavigationMenu1, siteNavigationMenu2),
+			siteNavigationMenus);
 
-		Assert.assertEquals(siteNavigationMenu, lastSiteNavigationMenu);
+		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
+			_group.getGroupId(), "Name", QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new SiteNavigationMenuCreateDateComparator(false));
+
+		Assert.assertEquals(
+			Arrays.asList(siteNavigationMenu2, siteNavigationMenu1),
+			siteNavigationMenus);
 	}
 
 	@Test
@@ -285,166 +257,104 @@ public class SiteNavigationMenuServiceTest {
 	}
 
 	@Test
-	public void testGetSiteNavigationMenusByCreateDateComparatorAsc()
+	public void testGetSiteNavigationMenusByCreateDateComparator()
 		throws Exception {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		SiteNavigationMenu siteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu1 =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 				_group, Timestamp.valueOf(localDateTime), "CC Name");
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "BB Name");
-
-		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "AA Name");
-
-		SiteNavigationMenuCreateDateComparator
-			siteNavigationMenuCreateDateComparator =
-				new SiteNavigationMenuCreateDateComparator(true);
-
-		List<SiteNavigationMenu> siteNavigationMenus =
-			_siteNavigationMenuService.getSiteNavigationMenus(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				siteNavigationMenuCreateDateComparator);
-
-		SiteNavigationMenu firstSiteNavigationMenu = siteNavigationMenus.get(0);
-
-		Assert.assertEquals(siteNavigationMenu, firstSiteNavigationMenu);
-	}
-
-	@Test
-	public void testGetSiteNavigationMenusByCreateDateComparatorDesc()
-		throws Exception {
-
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		SiteNavigationMenu siteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu2 =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-				_group, Timestamp.valueOf(localDateTime), "CC Name");
+				_group, Timestamp.valueOf(localDateTime), "BB Name");
 
 		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "BB Name");
-
-		localDateTime = localDateTime.plus(1, ChronoUnit.SECONDS);
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
-			_group, Timestamp.valueOf(localDateTime), "AA Name");
-
-		SiteNavigationMenuCreateDateComparator
-			siteNavigationMenuCreateDateComparator =
-				new SiteNavigationMenuCreateDateComparator(false);
+		SiteNavigationMenu siteNavigationMenu3 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+				_group, Timestamp.valueOf(localDateTime), "AA Name");
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				siteNavigationMenuCreateDateComparator);
+				new SiteNavigationMenuCreateDateComparator(true));
 
-		SiteNavigationMenu lastSiteNavigationMenu = siteNavigationMenus.get(
-			siteNavigationMenus.size() - 1);
+		Assert.assertEquals(
+			Arrays.asList(
+				siteNavigationMenu1, siteNavigationMenu2, siteNavigationMenu3),
+			siteNavigationMenus);
 
-		Assert.assertEquals(siteNavigationMenu, lastSiteNavigationMenu);
+		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
+			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new SiteNavigationMenuCreateDateComparator(false));
+
+		Assert.assertEquals(
+			Arrays.asList(
+				siteNavigationMenu3, siteNavigationMenu2, siteNavigationMenu1),
+			siteNavigationMenus);
 	}
 
 	@Test
-	public void testGetSiteNavigationMenusByNameComparatorAndKeywordsAsc()
+	public void testGetSiteNavigationMenusByNameComparator() throws Exception {
+		SiteNavigationMenu siteNavigationMenu1 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "CC Name");
+		SiteNavigationMenu siteNavigationMenu2 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "BB Name");
+		SiteNavigationMenu siteNavigationMenu3 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "AA Name");
+
+		List<SiteNavigationMenu> siteNavigationMenus =
+			_siteNavigationMenuService.getSiteNavigationMenus(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new SiteNavigationMenuNameComparator(true));
+
+		Assert.assertEquals(
+			Arrays.asList(
+				siteNavigationMenu3, siteNavigationMenu2, siteNavigationMenu1),
+			siteNavigationMenus);
+
+		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
+			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new SiteNavigationMenuNameComparator(false));
+
+		Assert.assertEquals(
+			Arrays.asList(
+				siteNavigationMenu1, siteNavigationMenu2, siteNavigationMenu3),
+			siteNavigationMenus);
+	}
+
+	@Test
+	public void testGetSiteNavigationMenusByNameComparatorAndKeywords()
 		throws Exception {
 
-		SiteNavigationMenu siteNavigationMenu =
+		SiteNavigationMenu siteNavigationMenu1 =
 			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "BB Name");
 
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "AA");
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "CC Name");
 
-		SiteNavigationMenuNameComparator siteNavigationMenuNameComparator =
-			new SiteNavigationMenuNameComparator(true);
+		SiteNavigationMenu siteNavigationMenu2 =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "CC Name");
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			_siteNavigationMenuService.getSiteNavigationMenus(
 				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, siteNavigationMenuNameComparator);
+				QueryUtil.ALL_POS, new SiteNavigationMenuNameComparator(true));
 
-		SiteNavigationMenu firstSiteNavigationMenu = siteNavigationMenus.get(0);
+		Assert.assertEquals(
+			Arrays.asList(siteNavigationMenu1, siteNavigationMenu2),
+			siteNavigationMenus);
 
-		Assert.assertEquals(siteNavigationMenu, firstSiteNavigationMenu);
-	}
+		siteNavigationMenus = _siteNavigationMenuService.getSiteNavigationMenus(
+			_group.getGroupId(), "Name", QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new SiteNavigationMenuNameComparator(false));
 
-	@Test
-	public void testGetSiteNavigationMenusByNameComparatorAndKeywordsDesc()
-		throws Exception {
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "BB Name");
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "AA");
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "CC Name");
-
-		SiteNavigationMenuNameComparator siteNavigationMenuNameComparator =
-			new SiteNavigationMenuNameComparator(false);
-
-		List<SiteNavigationMenu> siteNavigationMenus =
-			_siteNavigationMenuService.getSiteNavigationMenus(
-				_group.getGroupId(), "Name", QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, siteNavigationMenuNameComparator);
-
-		SiteNavigationMenu lastSiteNavigationMenu = siteNavigationMenus.get(
-			siteNavigationMenus.size() - 1);
-
-		Assert.assertEquals(siteNavigationMenu, lastSiteNavigationMenu);
-	}
-
-	@Test
-	public void testGetSiteNavigationMenusByNameComparatorAsc()
-		throws Exception {
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "CC Name");
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "BB Name");
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "AA Name");
-
-		SiteNavigationMenuNameComparator siteNavigationMenuNameComparator =
-			new SiteNavigationMenuNameComparator(true);
-
-		List<SiteNavigationMenu> siteNavigationMenus =
-			_siteNavigationMenuService.getSiteNavigationMenus(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				siteNavigationMenuNameComparator);
-
-		SiteNavigationMenu lastSiteNavigationMenu = siteNavigationMenus.get(
-			siteNavigationMenus.size() - 1);
-
-		Assert.assertEquals(siteNavigationMenu, lastSiteNavigationMenu);
-	}
-
-	@Test
-	public void testGetSiteNavigationMenusByNameComparatorDesc()
-		throws Exception {
-
-		SiteNavigationMenu siteNavigationMenu =
-			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "CC Name");
-
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "BB Name");
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group, "AA Name");
-
-		SiteNavigationMenuNameComparator siteNavigationMenuNameComparator =
-			new SiteNavigationMenuNameComparator(false);
-
-		List<SiteNavigationMenu> siteNavigationMenus =
-			_siteNavigationMenuService.getSiteNavigationMenus(
-				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				siteNavigationMenuNameComparator);
-
-		SiteNavigationMenu firstSiteNavigationMenu = siteNavigationMenus.get(0);
-
-		Assert.assertEquals(siteNavigationMenu, firstSiteNavigationMenu);
+		Assert.assertEquals(
+			Arrays.asList(siteNavigationMenu2, siteNavigationMenu1),
+			siteNavigationMenus);
 	}
 
 	@Test

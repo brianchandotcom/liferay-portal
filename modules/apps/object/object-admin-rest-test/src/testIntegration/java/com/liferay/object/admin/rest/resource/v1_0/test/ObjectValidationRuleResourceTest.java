@@ -7,7 +7,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
-import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -39,16 +39,8 @@ public class ObjectValidationRuleResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		String value = "A" + RandomTestUtil.randomString();
-
 		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, false, false,
-				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
-				LocalizedMapUtil.getLocalizedMap(value), true,
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList());
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

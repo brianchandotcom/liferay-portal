@@ -86,6 +86,25 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
+	public void testIsShowWithGooglePageSpeedDisabledAndLayoutTypePortlet()
+		throws Exception {
+
+		_layout.setType(LayoutConstants.TYPE_PORTLET);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		User user = TestPropsValues.getUser();
+
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				StringPool.BLANK, false, _group.getGroupId(),
+				() -> Assert.assertFalse(
+					_productNavigationControlMenuEntry.isShow(
+						_getHttpServletRequest(
+							PermissionCheckerFactoryUtil.create(user), user))));
+	}
+
+	@Test
 	public void testIsShowWithLayoutTypeAssetDisplay() throws Exception {
 		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 

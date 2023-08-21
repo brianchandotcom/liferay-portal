@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -140,34 +141,46 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 			String pathString = (String)values.get("path");
 
-			Matcher matcher = _pathPattern.matcher(pathString);
+			if (StringUtil.equals(
+					(String)values.get("retrieveType"), "singleElement")) {
 
-			if (!matcher.matches()) {
-				User user = _userLocalService.getUser(objectEntry.getUserId());
+				_validateSingleElementPath(
+					objectEntry, (String)values.get("pathParameter"),
+					pathString);
+			}
+			else {
+				Matcher matcher = _pathPattern.matcher(pathString);
 
-				ObjectField objectField =
-					_objectFieldLocalService.getObjectField(
-						objectEntry.getObjectDefinitionId(), "path");
+				if (!matcher.matches()) {
+					User user = _userLocalService.getUser(
+						objectEntry.getUserId());
 
-				String message = null;
-				String messageKey = null;
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectEntry.getObjectDefinitionId(), "path");
 
-				if (pathString.startsWith(StringPool.FORWARD_SLASH)) {
-					message =
-						"%s can have a maximum of 255 alphanumeric characters";
-					messageKey =
-						"x-can-have-a-maximum-of-255-alphanumeric-characters";
+					String message = null;
+					String messageKey = null;
+
+					if (pathString.startsWith(StringPool.FORWARD_SLASH)) {
+						message =
+							"%s can have a maximum of 255 alphanumeric " +
+								"characters";
+						messageKey =
+							"x-can-have-a-maximum-of-255-alphanumeric-" +
+								"characters";
+					}
+					else {
+						message = "%s must start with the \"/\" character";
+						messageKey = "x-must-start-with-the-x-character";
+					}
+
+					String label = objectField.getLabel(user.getLocale());
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						Arrays.asList(label, "\"/\""),
+						String.format(message, label), messageKey);
 				}
-				else {
-					message = "%s must start with the \"/\" character";
-					messageKey = "x-must-start-with-the-x-character";
-				}
-
-				String label = objectField.getLabel(user.getLocale());
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					Arrays.asList(label, "\"/\""),
-					String.format(message, label), messageKey);
 			}
 
 			String filterString = StringBundler.concat(
@@ -237,8 +250,55 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
+	private void _validateSingleElementPath(
+			ObjectEntry objectEntry, String pathParameter, String pathString)
+		throws Exception {
+
+		if (pathParameter == null) {
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				null,
+				"Path parameter can not be null in a single element endpoint",
+				"path-parameter-can-not-be-null-in-a-single-element-endpoint");
+		}
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectEntry.getObjectDefinitionId(), "path");
+
+		User user = _userLocalService.getUser(objectEntry.getUserId());
+
+		if (!pathString.startsWith(StringPool.FORWARD_SLASH)) {
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(objectField.getLabel(user.getLocale()), "\"/\""),
+				"%s must start with the \"/\" character",
+				"x-must-start-with-the-x-character");
+		}
+
+		Matcher individualMatcher = _individualPathPattern.matcher(pathString);
+
+		Matcher leftForwardMatcher = _leftSlashForwardPattern.matcher(
+			pathString);
+
+		Matcher rightForwardMatcher = _rightSlashForwardPattern.matcher(
+			pathString);
+
+		if ((leftForwardMatcher.matches() || rightForwardMatcher.matches()) &&
+			!individualMatcher.matches()) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(objectField.getLabel(user.getLocale())),
+				"%s can have a maximum of 255 alphanumeric characters",
+				"x-can-have-a-maximum-of-255-alphanumeric-characters");
+		}
+	}
+
+	private static final Pattern _individualPathPattern = Pattern.compile(
+		"/[a-zA-Z0-9][a-zA-Z0-9-/-{-}]{1,253}");
+	private static final Pattern _leftSlashForwardPattern = Pattern.compile(
+		".*[{].");
 	private static final Pattern _pathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/]{1,253}");
+	private static final Pattern _rightSlashForwardPattern = Pattern.compile(
+		".*[}].");
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

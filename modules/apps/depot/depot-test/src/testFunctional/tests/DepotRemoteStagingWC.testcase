@@ -812,6 +812,8 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitle = "WC WebContent Title");
 
+		Refresh();
+
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");

@@ -721,6 +721,8 @@ definition {
 
 		Staging.publishToLive();
 
+		Refresh();
+
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = "Blogs Entry Title",
 			layoutName = "Test Page",

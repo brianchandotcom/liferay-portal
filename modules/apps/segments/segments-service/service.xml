@@ -328,6 +328,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DuplicateSegmentsExperiment</exception>
 		<exception>LockedSegmentsExperiment</exception>
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>RequiredSegmentsExperience</exception>

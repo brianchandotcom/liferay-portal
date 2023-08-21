@@ -195,7 +195,8 @@ definition {
 
 		task ("Then I can see message about type the API title") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "APIBuilder#WARNING_MESSAGE_IN_DELETE_DIALOG",
+				key_text = "Please type the API title mentioned above.",
+				locator1 = "APIBuilder#WARNING_MESSAGE_IN_DIALOG",
 				value1 = "Please type the API title mentioned above.");
 		}
 

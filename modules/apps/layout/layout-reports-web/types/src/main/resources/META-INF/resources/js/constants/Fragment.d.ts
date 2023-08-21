@@ -8,14 +8,15 @@ export declare type Entries<T> = {
 }[keyof T][];
 export declare type Fragment = {
 	cached: boolean;
-	fragment: boolean;
 	fragmentCollectionURL: string;
 	fromMaster: boolean;
 	hierarchy: string;
+	isPortlet: boolean;
 	itemId: string;
 	itemType: string;
 	name: string;
 	renderTime: number;
+	warnings: string[];
 };
 export declare const FILTER_NAMES: Record<
 	typeof FRAGMENT_FILTERS[keyof typeof FRAGMENT_FILTERS][number],

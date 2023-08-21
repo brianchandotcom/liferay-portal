@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {Fragment} from '../../constants/fragments';
+import {Fragment} from '../../constants/Fragment';
 export default function FragmentList({
 	ascendingSort,
 	fragments,

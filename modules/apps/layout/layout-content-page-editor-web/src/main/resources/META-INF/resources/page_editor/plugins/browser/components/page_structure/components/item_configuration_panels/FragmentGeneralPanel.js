@@ -102,7 +102,7 @@ export function FragmentGeneralPanel({item}) {
 			{selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				fieldSets.map((fieldSet, index) => {
 					return (
-						<div className="mb-1" key={index}>
+						<div className="mb-1 panel-group-sm" key={index}>
 							<FieldSet
 								description={fieldSet.description}
 								fields={fieldSet.fields}

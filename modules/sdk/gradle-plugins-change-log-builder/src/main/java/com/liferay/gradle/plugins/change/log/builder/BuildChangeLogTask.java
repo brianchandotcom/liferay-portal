@@ -35,11 +35,8 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 
@@ -146,8 +143,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		return dirs(Arrays.asList(dirs));
 	}
 
-	@InputFile
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getChangeLogFile() {
 		return GradleUtil.toFile(getProject(), _changeLogFile);
 	}

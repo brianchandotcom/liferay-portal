@@ -74,10 +74,8 @@ public class DisplayPageDisplayContext {
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(), getKeywords(),
-						new int[] {
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE
-						}));
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE));
 		}
 		else {
 			displayPagesSearchContainer.setResultsAndTotal(
@@ -93,10 +91,8 @@ public class DisplayPageDisplayContext {
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
-						new int[] {
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE
-						}));
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE));
 		}
 
 		displayPagesSearchContainer.setRowChecker(

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -265,24 +264,24 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, int[] types) {
+		long groupId, int type) {
 
 		DSLQuery dslQuery =
 			_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountDSLQuery(
 				_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
-					groupId, types));
+					groupId, type));
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, String name, int[] types) {
+		long groupId, String name, int type) {
 
 		DSLQuery dslQuery =
 			_getLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountDSLQuery(
 				_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
-					groupId, name, types));
+					groupId, name, type));
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(dslQuery);
 	}
@@ -898,7 +897,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
-			long groupId, int[] types) {
+			long groupId, int type) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -913,8 +912,7 @@ public class LayoutPageTemplateEntryServiceImpl
 			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
 				groupId
 			).and(
-				LayoutPageTemplateEntryTable.INSTANCE.type.in(
-					ArrayUtil.toArray(types))
+				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
 			)
 		).unionAll(
 			DSLQueryFactoryUtil.select(
@@ -937,7 +935,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getTempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionCountTable(
-			long groupId, String name, int[] types) {
+			long groupId, String name, int type) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -954,8 +952,7 @@ public class LayoutPageTemplateEntryServiceImpl
 			).and(
 				LayoutPageTemplateEntryTable.INSTANCE.name.eq(name)
 			).and(
-				LayoutPageTemplateEntryTable.INSTANCE.type.in(
-					ArrayUtil.toArray(types))
+				LayoutPageTemplateEntryTable.INSTANCE.type.eq(type)
 			)
 		).unionAll(
 			DSLQueryFactoryUtil.select(

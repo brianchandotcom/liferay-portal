@@ -72,6 +72,22 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 		return getService().fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
 	}
 
+	public static List<CPInstanceUnitOfMeasure>
+			getActiveCPInstanceUnitOfMeasures(long cpInstanceId, boolean active)
+		throws PortalException {
+
+		return getService().getActiveCPInstanceUnitOfMeasures(
+			cpInstanceId, active);
+	}
+
+	public static int getActiveCPInstanceUnitOfMeasuresCount(
+			long cpInstanceId, boolean active)
+		throws PortalException {
+
+		return getService().getActiveCPInstanceUnitOfMeasuresCount(
+			cpInstanceId, active);
+	}
+
 	public static CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId)
 		throws PortalException {

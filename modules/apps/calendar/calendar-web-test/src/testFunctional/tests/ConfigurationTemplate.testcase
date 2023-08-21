@@ -133,7 +133,7 @@ definition {
 
 		IFrame.selectModalFrame();
 
-		ManagementBar.setFilterAndOrder(orderBy = "Name");
+		ManagementBar.viewFilterAndOrderSelectedItem(menuItem = "Name");
 
 		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "First Configuration Templates Name,Second Configuration Templates Name");
 

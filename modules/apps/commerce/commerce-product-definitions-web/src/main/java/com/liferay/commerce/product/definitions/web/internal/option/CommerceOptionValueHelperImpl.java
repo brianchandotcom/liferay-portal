@@ -206,54 +206,56 @@ public class CommerceOptionValueHelperImpl
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
 
-				if (Objects.equals(
+				if (!Objects.equals(
 						cpDefinitionOptionRel.getKey(),
 						jsonObject.getString("key"))) {
 
-					JSONArray valueJSONArray = CPJSONUtil.getJSONArray(
-						jsonObject, "value");
+					continue;
+				}
 
-					for (int j = 0; j < valueJSONArray.length(); j++) {
-						for (CPDefinitionOptionValueRel
-								cpDefinitionOptionValueRel : entry.getValue()) {
+				JSONArray valueJSONArray = CPJSONUtil.getJSONArray(
+					jsonObject, "value");
 
-							if (cpDefinitionOptionValueRel.getKey(
-								).equals(
-									valueJSONArray.getString(j)
-								)) {
+				for (int j = 0; j < valueJSONArray.length(); j++) {
+					for (CPDefinitionOptionValueRel
+							cpDefinitionOptionValueRel : entry.getValue()) {
 
-								commerceOptionValueBuilder.optionKey(
-									cpDefinitionOptionRel.getKey());
-								commerceOptionValueBuilder.optionValueKey(
-									cpDefinitionOptionValueRel.getKey());
+						if (cpDefinitionOptionValueRel.getKey(
+							).equals(
+								valueJSONArray.getString(j)
+							)) {
 
-								commerceOptionValueBuilder.priceType(
-									cpDefinitionOptionRel.getPriceType());
+							commerceOptionValueBuilder.optionKey(
+								cpDefinitionOptionRel.getKey());
+							commerceOptionValueBuilder.optionValueKey(
+								cpDefinitionOptionValueRel.getKey());
 
-								commerceOptionValueBuilder.price(
-									cpDefinitionOptionValueRel.getPrice());
-								commerceOptionValueBuilder.quantity(
-									cpDefinitionOptionValueRel.getQuantity());
+							commerceOptionValueBuilder.priceType(
+								cpDefinitionOptionRel.getPriceType());
 
-								CPInstance
-									cpDefinitionOptionValueRelCPInstance =
-										cpDefinitionOptionValueRel.
-											fetchCPInstance();
+							commerceOptionValueBuilder.price(
+								cpDefinitionOptionValueRel.getPrice());
+							commerceOptionValueBuilder.quantity(
+								cpDefinitionOptionValueRel.getQuantity());
 
-								if (cpDefinitionOptionValueRelCPInstance !=
-										null) {
+							CPInstance
+								cpDefinitionOptionValueRelCPInstance =
+									cpDefinitionOptionValueRel.
+										fetchCPInstance();
 
-									commerceOptionValueBuilder.cpInstanceId(
+							if (cpDefinitionOptionValueRelCPInstance !=
+									null) {
+
+								commerceOptionValueBuilder.cpInstanceId(
+									cpDefinitionOptionValueRelCPInstance.
+										getCPInstanceId());
+
+								if (cpDefinitionOptionRel.
+										isPriceTypeDynamic()) {
+
+									commerceOptionValueBuilder.price(
 										cpDefinitionOptionValueRelCPInstance.
-											getCPInstanceId());
-
-									if (cpDefinitionOptionRel.
-											isPriceTypeDynamic()) {
-
-										commerceOptionValueBuilder.price(
-											cpDefinitionOptionValueRelCPInstance.
-												getPrice());
-									}
+											getPrice());
 								}
 							}
 						}

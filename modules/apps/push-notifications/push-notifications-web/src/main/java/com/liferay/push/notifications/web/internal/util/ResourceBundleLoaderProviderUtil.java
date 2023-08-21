@@ -13,20 +13,18 @@ import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Andrea Di Giorgi
  */
-@Component(service = ResourceBundleLoaderProvider.class)
-public class ResourceBundleLoaderProvider {
+public class ResourceBundleLoaderProviderUtil {
 
-	public ResourceBundleLoader getResourceBundleLoader(String platform) {
+	public static ResourceBundleLoader getResourceBundleLoader(
+		String platform) {
+
 		ResourceBundleLoader resourceBundleLoader =
 			_serviceTrackerMap.getService(platform);
 
@@ -39,10 +37,16 @@ public class ResourceBundleLoaderProvider {
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final ServiceTrackerMap<String, ResourceBundleLoader>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			ResourceBundleLoaderProviderUtil.class);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PushNotificationsSender.class, "platform",
+			bundle.getBundleContext(), PushNotificationsSender.class,
+			"platform",
 			new ServiceTrackerCustomizer
 				<PushNotificationsSender, ResourceBundleLoader>() {
 
@@ -72,12 +76,5 @@ public class ResourceBundleLoaderProvider {
 
 			});
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
-	private ServiceTrackerMap<String, ResourceBundleLoader> _serviceTrackerMap;
 
 }

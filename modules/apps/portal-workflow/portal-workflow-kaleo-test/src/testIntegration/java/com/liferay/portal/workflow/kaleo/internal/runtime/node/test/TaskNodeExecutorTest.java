@@ -362,7 +362,7 @@ public class TaskNodeExecutorTest {
 	private ServiceContext _serviceContext;
 
 	@Inject(
-		filter = "component.name=com.liferay.portal.workflow.kaleo.runtime.internal.node.TimerExecutor",
+		filter = "component.name=com.liferay.portal.workflow.kaleo.runtime.internal.timer.TimerExecutor",
 		type = Inject.NoType.class
 	)
 	private Object _timerExecutor;

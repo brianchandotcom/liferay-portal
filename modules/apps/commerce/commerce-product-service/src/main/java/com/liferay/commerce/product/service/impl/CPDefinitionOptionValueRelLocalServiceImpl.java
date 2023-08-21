@@ -8,9 +8,9 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemUnitOfMeasureKeyException;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelCPInstanceException;
-import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
+import com.liferay.commerce.product.exception.DuplicateCPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionOptionValueRelException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
@@ -929,7 +929,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			(cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId() !=
 				cpDefinitionOptionValueRelId)) {
 
-			throw new CPDefinitionOptionValueRelKeyException();
+			throw new DuplicateCPDefinitionOptionValueRelKeyException();
 		}
 
 		if (cpInstanceId > 0) {

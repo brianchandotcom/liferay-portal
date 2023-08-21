@@ -548,6 +548,33 @@ definition {
 			value1 = "Knowledge Base Article Title");
 	}
 
+	@description = "This test ensures that a user can move the kb entry from the Move Modal."
+	@priority = 4
+	test CanMoveArticleFromMoveModal {
+		JSONKnowledgeBase.addkBFolder(
+			groupName = "Guest",
+			kbFolderName = "KB Folder");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.moveArticleCPViaMoveModal(
+			destinationItem = "KB Folder",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
+
+		KBFolder.gotoCP(kbFolderName = "KB Folder");
+
+		KBArticle.viewCP(
+			kbArticleContent = "Knowledge Base Article Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@description = "This test ensures that a user can move the kb entry from the navigation pane."
 	@priority = 5
 	test CanMoveArticleFromNavigationPane {

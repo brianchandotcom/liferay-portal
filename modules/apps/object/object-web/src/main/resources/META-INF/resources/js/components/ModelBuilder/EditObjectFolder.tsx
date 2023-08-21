@@ -115,7 +115,7 @@ export default function EditObjectFolder({
 					)}
 
 					{rightSidebarType === 'objectRelationshipDetails' && (
-						<RightSideBar.Relationship
+						<RightSideBar.ObjectRelationshipDetails
 							deletionTypes={deletionTypes}
 						/>
 					)}

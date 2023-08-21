@@ -49,13 +49,33 @@ public class ObjectDefinitionTestUtil {
 			List<ObjectField> objectFields)
 		throws Exception {
 
+		return addObjectDefinition(
+			0, enableLocalization, objectDefinitionLocalService, objectFields);
+	}
+
+	public static ObjectDefinition addObjectDefinition(
+			long objectFolderId, boolean enableLocalization,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			List<ObjectField> objectFields)
+		throws Exception {
+
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), 0, false, enableLocalization, false,
+			TestPropsValues.getUserId(), objectFolderId, false,
+			enableLocalization, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			true, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+	}
+
+	public static ObjectDefinition addObjectDefinition(
+			long objectFolderId,
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws Exception {
+
+		return addObjectDefinition(
+			objectFolderId, false, objectDefinitionLocalService, null);
 	}
 
 	public static ObjectDefinition addObjectDefinition(

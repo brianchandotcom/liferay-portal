@@ -48,6 +48,11 @@ public class OpenAPIUtilTest {
 			"getWhateverPage",
 			OpenAPIUtil.getOperationId(
 				Http.Method.GET, "/whatever", "CamelSchema"));
+		Assert.assertEquals(
+			"getScopeScopeKeySiteScopedPathPage",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/scopes/{scopeKey}/site-scoped-path",
+				"Schema"));
 	}
 
 }

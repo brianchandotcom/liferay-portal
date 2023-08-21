@@ -343,7 +343,7 @@
 		},
 		"/scopes/{scopeKey}/site-scoped-path": {
 			"get": {
-				"operationId": "getScopesSiteScopedPathPage",
+				"operationId": "getScopeScopeKeySiteScopedPathPage",
 				"parameters": [
 					{
 						"in": "query",

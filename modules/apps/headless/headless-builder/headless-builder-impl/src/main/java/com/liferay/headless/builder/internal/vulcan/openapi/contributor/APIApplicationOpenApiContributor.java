@@ -179,7 +179,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		}
 
 		String operationId = OpenAPIUtil.getOperationId(
-			endpoint.getMethod(), endpoint.getPath(), schemaName);
+			endpoint.getMethod(), _formatPath(endpoint), schemaName);
 
 		operation.setOperationId(operationId);
 

@@ -41,7 +41,7 @@ public class OpenAPIUtil {
 		for (int i = 0; i < pathParts.length; i++) {
 			String pathPart = pathParts[i];
 
-			String pathName = CamelCaseUtil.toCamelCase(pathPart);
+			String pathName = _toCamelCase(pathPart);
 
 			if (StringUtil.equalsIgnoreCase(pathName, pluralSchemaName)) {
 				pathName = pluralSchemaName;
@@ -121,6 +121,7 @@ public class OpenAPIUtil {
 
 	private static String _toCamelCase(String path) {
 		path = path.replaceAll("/\\{.*\\}", StringPool.BLANK);
+		path = path.replaceAll("[{}]", StringPool.BLANK);
 
 		return CamelCaseUtil.toCamelCase(
 			path.replaceAll(StringPool.MINUS, StringPool.SLASH),

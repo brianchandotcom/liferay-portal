@@ -18,7 +18,36 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_deleteAllTerminatedSegmentsExperiments();
 		_deleteSegmentsExperiments();
+	}
+
+	private void _deleteAllTerminatedSegmentsExperiments() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select segmentsExperimentId, status from SegmentsExperiment");
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"delete from SegmentsExperiment where segmentsExperimentId = " +
+					"?")) {
+
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					int status = resultSet.getInt("status");
+
+					if (status ==
+							SegmentsExperimentConstants.STATUS_TERMINATED) {
+
+						long segmentsExperimentId = resultSet.getLong(
+							"segmentsExperimentId");
+
+						preparedStatement2.setLong(1, segmentsExperimentId);
+
+						preparedStatement2.addBatch();
+					}
+				}
+			}
+
+			preparedStatement2.executeBatch();
+		}
 	}
 
 	private void _deleteSegmentsExperiments() throws Exception {

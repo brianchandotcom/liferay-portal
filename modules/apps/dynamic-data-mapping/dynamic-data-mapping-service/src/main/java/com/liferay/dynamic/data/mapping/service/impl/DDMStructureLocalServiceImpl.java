@@ -17,7 +17,6 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
-import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerRegistry;
 import com.liferay.dynamic.data.mapping.internal.constants.DDMDestinationNames;
 import com.liferay.dynamic.data.mapping.internal.search.helper.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
@@ -56,6 +55,8 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -114,6 +115,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -1602,6 +1605,13 @@ public class DDMStructureLocalServiceImpl
 		return structure;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMStructureIndexer.class,
+			"ddm.structure.indexer.class.name");
+	}
+
 	private void _addDataProviderInstanceLinks(
 		long groupId, long structureId, DDMForm ddmForm) {
 
@@ -1982,9 +1992,8 @@ public class DDMStructureLocalServiceImpl
 			return;
 		}
 
-		DDMStructureIndexer ddmStructureIndexer =
-			_ddmStructureIndexerRegistry.getDDMStructureIndexer(
-				structure.getClassName());
+		DDMStructureIndexer ddmStructureIndexer = _serviceTrackerMap.getService(
+			structure.getClassName());
 
 		if (ddmStructureIndexer == null) {
 			return;
@@ -1995,6 +2004,8 @@ public class DDMStructureLocalServiceImpl
 				Message message = new Message();
 
 				message.put("structureId", structure.getStructureId());
+
+				message.put("ddmStructureIndexer", ddmStructureIndexer);
 
 				_messageBus.sendMessage(
 					DDMDestinationNames.DDM_STRUCTURE_REINDEX, message);
@@ -2348,9 +2359,6 @@ public class DDMStructureLocalServiceImpl
 	private DDMSearchHelper _ddmSearchHelper;
 
 	@Reference
-	private DDMStructureIndexerRegistry _ddmStructureIndexerRegistry;
-
-	@Reference
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
 	@Reference
@@ -2391,6 +2399,8 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	private ServiceTrackerMap<String, DDMStructureIndexer> _serviceTrackerMap;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

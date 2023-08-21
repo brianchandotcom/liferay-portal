@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.exception.DuplicateSegmentsExperimentException;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.exception.RunSegmentsExperimentException;
@@ -85,7 +86,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		_validate(name, goal, status, status);
 
-		_deleteSegmentsExperiment(
+		_validateDuplicatedSegmentsExperiment(
 			serviceContext.getScopeGroupId(), segmentsExperienceId, plid);
 
 		SegmentsExperiment segmentsExperiment =
@@ -339,23 +340,6 @@ public class SegmentsExperimentLocalServiceImpl
 			winnerSegmentsExperienceId, status);
 	}
 
-	private void _deleteSegmentsExperiment(
-			long groupId, long segmentsExperienceId, long plid)
-		throws PortalException {
-
-		SegmentsExperiment segmentsExperiment =
-			segmentsExperimentPersistence.fetchByG_S_P(
-				groupId, segmentsExperienceId, plid);
-
-		if ((segmentsExperiment != null) &&
-			(segmentsExperiment.getStatus() ==
-				SegmentsExperimentConstants.STATUS_TERMINATED)) {
-
-			segmentsExperimentLocalService.deleteSegmentsExperiment(
-				segmentsExperiment);
-		}
-	}
-
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(
 		long segmentsEntryId) {
 
@@ -538,6 +522,21 @@ public class SegmentsExperimentLocalServiceImpl
 				"Confidence level " + confidenceLevel +
 					" is not a value between 0.8 and 0.99");
 		}
+	}
+
+	private void _validateDuplicatedSegmentsExperiment(
+			long groupId, long segmentsExperienceId, long plid)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.fetchByG_S_P(
+				groupId, segmentsExperienceId, plid);
+
+		if (segmentsExperiment == null) {
+			return;
+		}
+
+		throw new DuplicateSegmentsExperimentException();
 	}
 
 	private void _validateEditableStatus(int status) throws PortalException {

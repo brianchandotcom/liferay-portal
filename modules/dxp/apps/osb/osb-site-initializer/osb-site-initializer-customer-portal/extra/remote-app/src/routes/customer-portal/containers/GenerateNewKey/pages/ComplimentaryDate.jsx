@@ -87,7 +87,12 @@ const ComplimentaryDate = ({
 							<Button
 								className="btn btn-secondary mr-3"
 								displayType="secundary"
-								onClick={() => setStep(0)}
+								onClick={() => {
+									setInfoSelectedKey(() => ({
+										selectedSubscription: {},
+									}));
+									setStep(0);
+								}}
 							>
 								{i18n.translate('previous')}
 							</Button>

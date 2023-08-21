@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "path=/layout_reports/get_layout_reports_data",
 	service = StrutsAction.class
 )
-public class GetLayoutReportDataStrutsAction implements StrutsAction {
+public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(
@@ -359,7 +359,7 @@ public class GetLayoutReportDataStrutsAction implements StrutsAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetLayoutReportDataStrutsAction.class);
+		GetLayoutReportsDataStrutsAction.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

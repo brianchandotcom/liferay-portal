@@ -1726,6 +1726,48 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteProductOptionValue(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productOptionValueResource ->
+				productOptionValueResource.deleteProductOptionValue(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteProductOptionValueBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productOptionValueResource ->
+				productOptionValueResource.deleteProductOptionValueBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public ProductOptionValue patchProductOptionValue(
+			@GraphQLName("id") Long id,
+			@GraphQLName("productOptionValue") ProductOptionValue
+				productOptionValue)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			productOptionValueResource ->
+				productOptionValueResource.patchProductOptionValue(
+					id, productOptionValue));
+	}
+
+	@GraphQLField
 	public ProductOptionValue createProductOptionIdProductOptionValue(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productOptionValue") ProductOptionValue

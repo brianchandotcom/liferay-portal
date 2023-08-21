@@ -48,6 +48,18 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ProductOptionValueResource {
 
+	public void deleteProductOptionValue(Long id) throws Exception;
+
+	public Response deleteProductOptionValueBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public ProductOptionValue getProductOptionValue(Long id) throws Exception;
+
+	public ProductOptionValue patchProductOptionValue(
+			Long id, ProductOptionValue productOptionValue)
+		throws Exception;
+
 	public Page<ProductOptionValue> getProductOptionIdProductOptionValuesPage(
 			Long id, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;

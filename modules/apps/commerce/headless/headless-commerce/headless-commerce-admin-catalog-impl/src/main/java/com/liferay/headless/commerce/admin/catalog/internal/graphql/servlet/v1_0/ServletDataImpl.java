@@ -746,6 +746,21 @@ public class ServletDataImpl implements ServletData {
 							ProductOptionResourceImpl.class,
 							"postProductIdProductOptionsPage"));
 					put(
+						"mutation#deleteProductOptionValue",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"deleteProductOptionValue"));
+					put(
+						"mutation#deleteProductOptionValueBatch",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"deleteProductOptionValueBatch"));
+					put(
+						"mutation#patchProductOptionValue",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"patchProductOptionValue"));
+					put(
 						"mutation#createProductOptionIdProductOptionValue",
 						new ObjectValuePair<>(
 							ProductOptionValueResourceImpl.class,
@@ -1188,6 +1203,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ProductOptionResourceImpl.class,
 							"getProductIdProductOptionsPage"));
+					put(
+						"query#productOptionValue",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"getProductOptionValue"));
 					put(
 						"query#productOptionIdProductOptionValues",
 						new ObjectValuePair<>(

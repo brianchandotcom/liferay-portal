@@ -23,6 +23,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -187,6 +188,179 @@ public abstract class BaseProductOptionValueResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteProductOptionValue() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductOptionValue productOptionValue =
+			testDeleteProductOptionValue_addProductOptionValue();
+
+		assertHttpResponseStatusCode(
+			204,
+			productOptionValueResource.deleteProductOptionValueHttpResponse(
+				productOptionValue.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productOptionValueResource.getProductOptionValueHttpResponse(
+				productOptionValue.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			productOptionValueResource.getProductOptionValueHttpResponse(
+				productOptionValue.getId()));
+	}
+
+	protected ProductOptionValue
+			testDeleteProductOptionValue_addProductOptionValue()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteProductOptionValue() throws Exception {
+		ProductOptionValue productOptionValue =
+			testGraphQLDeleteProductOptionValue_addProductOptionValue();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductOptionValue",
+						new HashMap<String, Object>() {
+							{
+								put("id", productOptionValue.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteProductOptionValue"));
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"productOptionValue",
+					new HashMap<String, Object>() {
+						{
+							put("id", productOptionValue.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ProductOptionValue
+			testGraphQLDeleteProductOptionValue_addProductOptionValue()
+		throws Exception {
+
+		return testGraphQLProductOptionValue_addProductOptionValue();
+	}
+
+	@Test
+	public void testGetProductOptionValue() throws Exception {
+		ProductOptionValue postProductOptionValue =
+			testGetProductOptionValue_addProductOptionValue();
+
+		ProductOptionValue getProductOptionValue =
+			productOptionValueResource.getProductOptionValue(
+				postProductOptionValue.getId());
+
+		assertEquals(postProductOptionValue, getProductOptionValue);
+		assertValid(getProductOptionValue);
+	}
+
+	protected ProductOptionValue
+			testGetProductOptionValue_addProductOptionValue()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductOptionValue() throws Exception {
+		ProductOptionValue productOptionValue =
+			testGraphQLGetProductOptionValue_addProductOptionValue();
+
+		Assert.assertTrue(
+			equals(
+				productOptionValue,
+				ProductOptionValueSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productOptionValue",
+								new HashMap<String, Object>() {
+									{
+										put("id", productOptionValue.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productOptionValue"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductOptionValueNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productOptionValue",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ProductOptionValue
+			testGraphQLGetProductOptionValue_addProductOptionValue()
+		throws Exception {
+
+		return testGraphQLProductOptionValue_addProductOptionValue();
+	}
+
+	@Test
+	public void testPatchProductOptionValue() throws Exception {
+		ProductOptionValue postProductOptionValue =
+			testPatchProductOptionValue_addProductOptionValue();
+
+		ProductOptionValue randomPatchProductOptionValue =
+			randomPatchProductOptionValue();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductOptionValue patchProductOptionValue =
+			productOptionValueResource.patchProductOptionValue(
+				postProductOptionValue.getId(), randomPatchProductOptionValue);
+
+		ProductOptionValue expectedPatchProductOptionValue =
+			postProductOptionValue.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchProductOptionValue, expectedPatchProductOptionValue);
+
+		ProductOptionValue getProductOptionValue =
+			productOptionValueResource.getProductOptionValue(
+				patchProductOptionValue.getId());
+
+		assertEquals(expectedPatchProductOptionValue, getProductOptionValue);
+		assertValid(getProductOptionValue);
+	}
+
+	protected ProductOptionValue
+			testPatchProductOptionValue_addProductOptionValue()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetProductOptionIdProductOptionValuesPage()
 		throws Exception {
 
@@ -244,6 +418,12 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			page,
 			testGetProductOptionIdProductOptionValuesPage_getExpectedActions(
 				id));
+
+		productOptionValueResource.deleteProductOptionValue(
+			productOptionValue1.getId());
+
+		productOptionValueResource.deleteProductOptionValue(
+			productOptionValue2.getId());
 	}
 
 	protected Map<String, Map<String, String>>

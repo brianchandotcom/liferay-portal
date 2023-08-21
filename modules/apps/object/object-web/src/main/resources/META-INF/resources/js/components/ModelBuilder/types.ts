@@ -79,6 +79,14 @@ export type TAction =
 			payload: {
 				edges: Edge<ObjectRelationshipEdgeData>[];
 				nodes: Node<ObjectDefinitionNodeData>[];
+				selectedObjectRelationshipId: string;
+			};
+			type: TYPES.SET_SELECTED_EDGE;
+	  }
+	| {
+			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
+				nodes: Node<ObjectDefinitionNodeData>[];
 				selectedObjectDefinitionId: string;
 			};
 			type: TYPES.SET_SELECTED_NODE;
@@ -150,9 +158,11 @@ export interface ObjectDefinitionNodeData
 
 export interface ObjectRelationshipEdgeData {
 	defaultLanguageId?: Liferay.Language.Locale;
+	edgeSelected: boolean;
 	label: string;
 	markerEndId: string;
 	markerStartId: string;
+	objectRelationshipId: number;
 	selfRelationships?: ObjectRelationship[];
 	sourceY: number;
 	targetY: number;

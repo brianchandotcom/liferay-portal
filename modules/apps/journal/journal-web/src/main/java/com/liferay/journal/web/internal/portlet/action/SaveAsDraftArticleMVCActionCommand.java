@@ -315,11 +315,19 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 			smallImage = true;
 		}
 
+		long smallImageId = 0;
 		String smallImageURL = StringPool.BLANK;
 		File smallFile = null;
 
 		if (smallImageSource ==
-				JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) {
+				JournalArticleConstants.
+					SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA) {
+
+			smallImageId = ParamUtil.getLong(
+				uploadPortletRequest, "smallImageId");
+		}
+		else if (smallImageSource ==
+					JournalArticleConstants.SMALL_IMAGE_SOURCE_URL) {
 
 			smallImageURL = ParamUtil.getString(
 				uploadPortletRequest, "smallImageURL");
@@ -358,8 +366,9 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
 				reviewDateDay, reviewDateYear, reviewDateHour, reviewDateMinute,
-				neverReview, indexable, smallImage, smallImageSource, 0,
-				smallImageURL, smallFile, null, articleURL, serviceContext);
+				neverReview, indexable, smallImage, smallImageId,
+				smallImageSource, smallImageURL, smallFile, null, articleURL,
+				serviceContext);
 		}
 		else {
 
@@ -381,8 +390,8 @@ public class SaveAsDraftArticleMVCActionCommand extends BaseMVCActionCommand {
 					expirationDateHour, expirationDateMinute, neverExpire,
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, neverReview, indexable,
-					smallImage, 0, smallImageSource, smallImageURL, smallFile,
-					null, articleURL, serviceContext);
+					smallImage, smallImageId, smallImageSource, smallImageURL,
+					smallFile, null, articleURL, serviceContext);
 			}
 		}
 

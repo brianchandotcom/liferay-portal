@@ -18,7 +18,6 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -241,17 +240,21 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, String name, int type, int start, int end,
 		OrderByComparator<Object> orderByComparator) {
 
-		Table<?> tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection =
+		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 				groupId, name, type);
 
-		DSLQuery dslQuery =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryDSLQuery(
-				start, end, orderByComparator,
-				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection);
-
 		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
-			dslQuery);
+			DSLQueryFactoryUtil.select(
+				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry
+			).from(
+				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry
+			).orderBy(
+				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry,
+				orderByComparator
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
@@ -266,12 +269,17 @@ public class LayoutPageTemplateEntryServiceImpl
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 		long groupId, String name, int type) {
 
-		DSLQuery dslQuery =
-			_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountDSLQuery(
-				_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-					groupId, name, type));
+		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
+			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
+				groupId, name, type);
 
-		return layoutPageTemplateEntryPersistence.dslQueryCount(dslQuery);
+		return layoutPageTemplateEntryPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry.
+					getColumn("layoutPageTemplateEntryId")
+			).from(
+				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry
+			));
 	}
 
 	@Override
@@ -852,37 +860,6 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntriesAndLayoutPageTemplateCollections;
 	}
 
-	private JoinStep
-		_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryCountDSLQuery(
-			Table<?>
-				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection) {
-
-		return DSLQueryFactoryUtil.countDistinct(
-			tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection.
-				getColumn("layoutPageTemplateEntryId")
-		).from(
-			tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection
-		);
-	}
-
-	private DSLQuery
-		_getLayoutPageTemplateCollectionAndLayoutPageTemplateEntryDSLQuery(
-			int start, int end, OrderByComparator<Object> orderByComparator,
-			Table<?>
-				tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection) {
-
-		return DSLQueryFactoryUtil.select(
-			tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection
-		).from(
-			tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection
-		).orderBy(
-			tempLayoutPageTemplateEntryAndLayoutPageTemplateCollection,
-			orderByComparator
-		).limit(
-			start, end
-		);
-	}
-
 	private Table<?>
 		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 			long groupId, String name, int type) {
@@ -926,7 +903,7 @@ public class LayoutPageTemplateEntryServiceImpl
 				LayoutPageTemplateCollectionTable.INSTANCE.groupId.eq(groupId)
 			)
 		).as(
-			"tempLayoutPageTemplateEntryAndLayoutPageTemplateCollectionTable"
+			"tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable"
 		);
 	}
 

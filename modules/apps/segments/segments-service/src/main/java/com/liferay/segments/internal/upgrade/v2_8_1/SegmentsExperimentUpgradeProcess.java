@@ -5,16 +5,11 @@
 
 package com.liferay.segments.internal.upgrade.v2_8_1;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Marcos Martins
@@ -24,54 +19,6 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_deleteSegmentsExperiments();
-	}
-
-	private void _deleteSegmentsExperiences(List<Long> segmentsExperienceIds)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"delete from SegmentsExperimentRel where ",
-					"segmentsExperimentRelId in (",
-					StringUtil.merge(segmentsExperienceIds),
-					") and active is true"))) {
-
-			preparedStatement.execute();
-		}
-	}
-
-	private void _deleteSegmentsExperimentRels(List<Long> segmentsExperimentIds)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select segmentsExperimentRelId, segmentsExperienceId ",
-					"from SegmentsExperimentRel where segmentsExperimentId in ",
-					"(", StringUtil.merge(segmentsExperimentIds), ")"));
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"delete from SegmentsExperimentRel where " +
-					"segmentsExperimentRelId = ?")) {
-
-			List<Long> segmentsExperienceIds = new ArrayList<>();
-
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					preparedStatement2.setLong(
-						1, resultSet.getLong("segmentsExperimentRelId"));
-
-					preparedStatement2.addBatch();
-
-					segmentsExperienceIds.add(
-						resultSet.getLong("segmentsExperienceId"));
-				}
-
-				if (!segmentsExperienceIds.isEmpty()) {
-					preparedStatement2.executeBatch();
-
-					_deleteSegmentsExperiences(segmentsExperienceIds);
-				}
-			}
-		}
 	}
 
 	private void _deleteSegmentsExperiments() throws Exception {
@@ -94,13 +41,14 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 					"where plid = ? order by createDate desc");
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"delete from SegmentsExperiment where segmentsExperimentId = " +
-					"?")) {
+					"?");
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
+				"delete from SegmentsExperimentRel where " +
+					"segmentsExperimentId = ?")) {
 
 			preparedStatement1.setLong(1, plid);
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				List<Long> segmentsExperimentIds = new ArrayList<>();
-
 				boolean first = true;
 
 				while (resultSet.next()) {
@@ -123,14 +71,13 @@ public class SegmentsExperimentUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.addBatch();
 
-					segmentsExperimentIds.add(segmentsExperimentId);
+					preparedStatement3.setLong(1, segmentsExperimentId);
+
+					preparedStatement3.addBatch();
 				}
 
-				if (!segmentsExperimentIds.isEmpty()) {
-					preparedStatement2.executeBatch();
-
-					_deleteSegmentsExperimentRels(segmentsExperimentIds);
-				}
+				preparedStatement2.executeBatch();
+				preparedStatement3.executeBatch();
 			}
 		}
 	}

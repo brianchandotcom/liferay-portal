@@ -381,12 +381,14 @@ public class SiteNavigationMenuServiceTest {
 			_siteNavigationMenuService.getSiteNavigationMenusCount(
 				_group.getGroupId());
 
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
-		SiteNavigationMenuTestUtil.addSiteNavigationMenu(_group);
+		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+			_group, RandomTestUtil.randomString() + " Name");
+		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
+			_group, RandomTestUtil.randomString() + " Name");
 
 		int actualSiteNavigationMenusCount =
 			_siteNavigationMenuService.getSiteNavigationMenusCount(
-				_group.getGroupId());
+				_group.getGroupId(), "Name");
 
 		Assert.assertEquals(
 			originalSiteNavigationMenusCount + 2,

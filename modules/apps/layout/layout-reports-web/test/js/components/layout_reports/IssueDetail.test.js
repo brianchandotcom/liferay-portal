@@ -237,11 +237,11 @@ const MOCK_ISSUES = {
 	},
 };
 
-const renderIssueDetail = (selectedIssue) =>
+const renderIssueDetail = (selectedItem) =>
 	render(
 		<StoreContextProvider
 			value={{
-				selectedIssue,
+				selectedItem,
 			}}
 		>
 			<IssueDetail />
@@ -274,7 +274,7 @@ const checkContentOfElementWithNode = (issue) => {
 	});
 };
 
-describe('IssuesList', () => {
+describe('IssueDetail', () => {
 	afterEach(cleanup);
 
 	it('renders description, tips and failing elements sections', () => {

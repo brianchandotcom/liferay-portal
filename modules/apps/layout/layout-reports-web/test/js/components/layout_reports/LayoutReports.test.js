@@ -10,7 +10,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import LayoutReports from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/LayoutReports';
 import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
-import {layoutReportsIssues, pageURLs, selectedIssue} from '../../mocks';
+import {layoutReportsIssues, pageURLs, selectedItem} from '../../mocks';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
@@ -22,7 +22,7 @@ const getLayoutReportsComponent = ({
 	layoutReportsIssues = null,
 	loading = false,
 	privateLayout = false,
-	selectedIssue = null,
+	selectedItem = null,
 	validConnection = true,
 } = {}) => {
 	return (
@@ -38,7 +38,7 @@ const getLayoutReportsComponent = ({
 				error,
 				languageId: 'en-US',
 				loading,
-				selectedIssue,
+				selectedItem,
 			}}
 		>
 			<LayoutReports eventTriggered={true} />
@@ -105,11 +105,11 @@ describe('LayoutReports renders proper component', () => {
 	it('Renders issue detail if available', () => {
 		const {getByText} = render(
 			getLayoutReportsComponent({
-				selectedIssue,
+				selectedItem,
 			})
 		);
 
-		expect(getByText(selectedIssue.tips)).toBeInTheDocument();
+		expect(getByText(selectedItem.tips)).toBeInTheDocument();
 
 		languageSelectorIsInTheDocument({fn: getByText});
 	});

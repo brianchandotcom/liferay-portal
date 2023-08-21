@@ -13,10 +13,10 @@ import FragmentList from '../../../../src/main/resources/META-INF/resources/js/c
 const FRAGMENTS = [
 	{
 		cached: false,
-		fragment: true,
 		fragmentCollectionURL: 'url',
 		fromMaster: false,
 		hierarchy: 'Container',
+		isPortlet: false,
 		itemId: 'fragment-1',
 		itemType: 'fragment',
 		name: 'Container',
@@ -24,10 +24,10 @@ const FRAGMENTS = [
 	},
 	{
 		cached: true,
-		fragment: false,
 		fragmentCollectionURL: 'url',
 		fromMaster: false,
 		hierarchy: 'Container > Heading',
+		isPortlet: true,
 		itemId: 'fragment-2',
 		itemType: 'fragment',
 		name: 'Heading',
@@ -35,10 +35,10 @@ const FRAGMENTS = [
 	},
 	{
 		cached: false,
-		fragment: false,
 		fragmentCollectionURL: 'url',
 		fromMaster: true,
 		hierarchy: 'Container > Image',
+		isPortlet: true,
 		itemId: 'fragment-3',
 		itemType: 'fragment',
 		name: 'Image',
@@ -72,8 +72,12 @@ describe('FragmentList', () => {
 		const container = screen.getByText('Container');
 		const heading = screen.getByText('Heading');
 
-		expect(container.parentElement.textContent).not.toContain('cached');
-		expect(heading.parentElement.textContent).toContain('cached');
+		expect(
+			container.closest('.page-audit__fragment').textContent
+		).not.toContain('cached');
+		expect(heading.closest('.page-audit__fragment').textContent).toContain(
+			'cached'
+		);
 	});
 
 	it('shows the label "fragment" or "widget" depending the type of the fragment', () => {
@@ -82,16 +86,22 @@ describe('FragmentList', () => {
 		const heading = screen.getByText('Heading');
 		const container = screen.getByText('Container');
 
-		expect(heading.parentElement.textContent).toContain('widget');
-		expect(container.parentElement.textContent).toContain('fragment');
+		expect(heading.closest('.page-audit__fragment').textContent).toContain(
+			'widget'
+		);
+		expect(
+			container.closest('.page-audit__fragment').textContent
+		).toContain('fragment');
 	});
 
 	it('shows the label "from master" if the fragment belongs to a master page', () => {
 		renderComponent();
 
-		const image = screen.getByText('Image').parentElement;
+		const image = screen.getByText('Image');
 
-		expect(image.textContent).toContain('from-master');
+		expect(image.closest('.page-audit__fragment').textContent).toContain(
+			'from-master'
+		);
 	});
 
 	it('sorts the fragments list by default in descending order', () => {

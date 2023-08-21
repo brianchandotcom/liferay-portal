@@ -22,7 +22,7 @@ export const pageURLs = [
 	},
 ];
 
-export const selectedIssue = {
+export const selectedItem = {
 	description:
 		'Background and foreground colors do not have a sufficient contrast ratio. Low contrast ratio is difficult or impossible for many users to read. <a href="https://web.dev/color-contrast" target="_blank">Learn more about Low Contrast Ratio.</a>',
 	failingElements: [

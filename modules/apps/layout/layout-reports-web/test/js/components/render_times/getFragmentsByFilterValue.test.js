@@ -8,38 +8,38 @@ import getFragmentsByFilterValue from '../../../../src/main/resources/META-INF/r
 const FRAGMENTS = [
 	{
 		cached: true,
-		fragment: true,
 		fromMaster: false,
+		isPortlet: false,
 		name: 'Heading',
 	},
 	{
 		cached: false,
-		fragment: true,
 		fromMaster: false,
+		isPortlet: false,
 		name: 'Container',
 	},
 	{
 		cached: true,
-		fragment: true,
 		fromMaster: true,
+		isPortlet: false,
 		name: 'Header',
 	},
 	{
 		cached: false,
-		fragment: false,
 		fromMaster: false,
+		isPortlet: true,
 		name: 'Asset',
 	},
 	{
 		cached: false,
-		fragment: true,
 		fromMaster: true,
+		isPortlet: false,
 		name: 'Grid',
 	},
 	{
 		cached: true,
-		fragment: false,
 		fromMaster: true,
+		isPortlet: true,
 		name: 'Footer',
 	},
 ];

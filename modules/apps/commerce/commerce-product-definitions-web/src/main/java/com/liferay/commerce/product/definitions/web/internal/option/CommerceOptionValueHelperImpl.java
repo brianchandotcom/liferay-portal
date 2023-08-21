@@ -255,11 +255,12 @@ public class CommerceOptionValueHelperImpl
 							cpDefinitionOptionValueRelCPInstance.
 								getCPInstanceId());
 
-						if (cpDefinitionOptionRel.isPriceTypeDynamic()) {
-							commerceOptionValueBuilder.price(
-								cpDefinitionOptionValueRelCPInstance.
-									getPrice());
+						if (!cpDefinitionOptionRel.isPriceTypeDynamic()) {
+							continue;
 						}
+
+						commerceOptionValueBuilder.price(
+							cpDefinitionOptionValueRelCPInstance.getPrice());
 					}
 				}
 			}
@@ -281,12 +282,14 @@ public class CommerceOptionValueHelperImpl
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinitionOptionRels) {
 
-			if (cpDefinitionOptionRel.isDefinedExternally()) {
-				cpDefinitionOptionRelsMap.put(
-					cpDefinitionOptionRel,
-					_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
-						cpDefinitionOptionRel, null, null));
+			if (!cpDefinitionOptionRel.isDefinedExternally()) {
+				continue;
 			}
+
+			cpDefinitionOptionRelsMap.put(
+				cpDefinitionOptionRel,
+				_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel, null, null));
 		}
 
 		return cpDefinitionOptionRelsMap;

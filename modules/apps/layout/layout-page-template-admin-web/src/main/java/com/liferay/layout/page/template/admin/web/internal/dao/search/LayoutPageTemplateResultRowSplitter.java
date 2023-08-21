@@ -47,7 +47,7 @@ public class LayoutPageTemplateResultRowSplitter implements ResultRowSplitter {
 		if (!layoutPageTemplateEntryResultRows.isEmpty()) {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
-					"layoutPageTemplate", layoutPageTemplateEntryResultRows));
+					"display-pages", layoutPageTemplateEntryResultRows));
 		}
 
 		return resultRowSplitterEntries;

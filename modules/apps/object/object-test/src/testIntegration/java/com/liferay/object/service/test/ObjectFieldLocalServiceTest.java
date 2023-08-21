@@ -1527,7 +1527,7 @@ public class ObjectFieldLocalServiceTest {
 			String algorithm, boolean enabled, String key, String storageType)
 		throws Exception {
 
-		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			algorithm, enabled, key,
 			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false,

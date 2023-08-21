@@ -41,7 +41,7 @@ public class ObjectFieldTestUtil {
 		return Base64.encode(key.getEncoded());
 	}
 
-	public static void testWithEncryptedObjectFieldProperties(
+	public static void withEncryptedObjectFieldProperties(
 			String algorithm, Boolean enabled, String key,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {

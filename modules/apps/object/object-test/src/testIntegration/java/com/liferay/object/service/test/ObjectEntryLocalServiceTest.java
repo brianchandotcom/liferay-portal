@@ -626,13 +626,13 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddObjectEntryWithEncryptedObjectField() throws Exception {
 		String key = ObjectFieldTestUtil.generateKey("AES");
 
-		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			"AES", true, key,
 			() -> {
 				_addCustomObjectField(
 					new EncryptedObjectFieldBuilder(
 					).externalReferenceCode(
-						"encryptedFieldErc"
+						"encryptedObjectFieldERC"
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
@@ -650,7 +650,7 @@ public class ObjectEntryLocalServiceTest {
 					).put(
 						"encrypted", "test"
 					).put(
-						"externalReferenceCode", "objectEntryErc"
+						"externalReferenceCode", "objectEntryERC"
 					).put(
 						"listTypeEntryKeyRequired", "listTypeEntryKey1"
 					).build());
@@ -666,9 +666,9 @@ public class ObjectEntryLocalServiceTest {
 			});
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			"objectEntryErc", _objectDefinition.getObjectDefinitionId());
+			"objectEntryERC", _objectDefinition.getObjectDefinitionId());
 
-		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			"", true, key,
 			() -> {
 				AssertUtils.assertFailure(
@@ -702,7 +702,7 @@ public class ObjectEntryLocalServiceTest {
 				_assertCount(1);
 			});
 
-		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			"AES", true, "",
 			() -> {
 				AssertUtils.assertFailure(
@@ -729,7 +729,7 @@ public class ObjectEntryLocalServiceTest {
 				_assertCount(1);
 			});
 
-		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+		ObjectFieldTestUtil.withEncryptedObjectFieldProperties(
 			"", true, "",
 			() -> {
 				AssertUtils.assertFailure(
@@ -757,7 +757,8 @@ public class ObjectEntryLocalServiceTest {
 			});
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			"encryptedFieldErc", _objectDefinition.getObjectDefinitionId());
+			"encryptedObjectFieldERC",
+			_objectDefinition.getObjectDefinitionId());
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(

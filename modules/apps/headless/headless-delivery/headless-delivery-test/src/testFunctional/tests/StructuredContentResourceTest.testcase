@@ -142,4 +142,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-190222. The user can get field reference value of Grid’s options in GraphQL response."
+	@priority = 4
+	test GetFieldReferenceValueOfGridOptionsInGraphQLResponse {
+		task ("Given the user has a structure with a Grid field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Grid");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the user add a web content based on the structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				column = 1,
+				row = 1,
+				webContentGrid = "true",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could get field reference value of Grid's options in GraphQL response") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			var response = HeadlessUtil.executeGraphQLQuery(query = "{structuredContent(structuredContentId: ${structuredContentId}) {contentFields {contentFieldValue {data value}}}}");
+
+			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
+
+			var data = StringUtil.extractLast(${data}, "{%0A");
+
+			var data = StringUtil.extractFirst(${data}, "%0A}");
+
+			var data = StringUtil.trim(${data});
+
+			TestUtils.assertEquals(
+				actual = ${data},
+				expected = "\"Row 1\": \"Column 1\"");
+
+			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
+
+			var value = StringUtil.extractLast(${value}, "{%0A");
+
+			var value = StringUtil.extractFirst(${value}, "%0A}");
+
+			var value = StringUtil.trim(${value});
+
+			TestUtils.assertEquals(
+				actual = ${value},
+				expected = "\"R1\": \"C1\"");
+		}
+	}
+
 }

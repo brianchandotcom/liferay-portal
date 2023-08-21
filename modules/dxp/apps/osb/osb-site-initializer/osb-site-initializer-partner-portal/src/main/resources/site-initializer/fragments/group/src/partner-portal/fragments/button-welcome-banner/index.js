@@ -6,7 +6,8 @@
 
 const videoButtons = fragmentElement.querySelectorAll('.video-tour-button');
 
-const randomTime = '?random=' + new Date().getTime() + Math.floor(Math.random() * 1000000);
+const randomTime =
+	'?random=' + new Date().getTime() + Math.floor(Math.random() * 1000000);
 
 if (layoutMode !== 'edit') {
 	for (const videoButton of videoButtons) {

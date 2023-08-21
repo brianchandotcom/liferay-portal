@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		componentId="moveObjectModalId"
+		componentId="scheduleModalId"
 		module="admin/js/components/ScheduleModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(

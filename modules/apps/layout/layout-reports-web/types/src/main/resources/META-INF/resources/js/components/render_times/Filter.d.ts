@@ -4,7 +4,7 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-import {FragmentFilter} from '../../constants/fragments';
+import {FragmentFilter} from '../../constants/Fragment';
 interface Props {
 	filters: FragmentFilter;
 	isAscendingSort: boolean;

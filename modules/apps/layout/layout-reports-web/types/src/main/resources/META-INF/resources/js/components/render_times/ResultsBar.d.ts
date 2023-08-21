@@ -4,7 +4,7 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-import {Fragment, FragmentFilter} from '../../constants/fragments';
+import {Fragment, FragmentFilter} from '../../constants/Fragment';
 interface PropsResultsBar {
 	className: string;
 	filters: FragmentFilter;

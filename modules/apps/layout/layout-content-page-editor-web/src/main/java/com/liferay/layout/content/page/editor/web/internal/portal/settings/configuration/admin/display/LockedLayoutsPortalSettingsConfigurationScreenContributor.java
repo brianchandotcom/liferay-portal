@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.layout.content.page.editor.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
@@ -20,9 +19,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(service = SiteSettingsConfigurationScreenContributor.class)
-public class LockedLayoutsSiteSettingsConfigurationScreenContributor
-	implements SiteSettingsConfigurationScreenContributor {
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class LockedLayoutsPortalSettingsConfigurationScreenContributor
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
@@ -31,12 +30,12 @@ public class LockedLayoutsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/site_settings/locked_layouts.jsp";
+		return "/configuration/locked_layouts.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-locked-pages";
+		return "locked-layouts-portal-settings";
 	}
 
 	@Override
@@ -45,23 +44,30 @@ public class LockedLayoutsSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
+	public String getSaveMVCActionCommandName() {
+		return null;
+	}
+
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
 
 	@Override
-	public boolean isVisible(Group group) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
-			return true;
+	public boolean isVisible() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Reference
 	private Language _language;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.content.page.editor.web)"
+	)
 	private ServletContext _servletContext;
 
 }

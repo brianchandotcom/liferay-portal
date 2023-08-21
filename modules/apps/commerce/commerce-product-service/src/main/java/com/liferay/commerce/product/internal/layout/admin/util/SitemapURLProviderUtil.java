@@ -7,6 +7,9 @@ package com.liferay.commerce.product.internal.layout.admin.util;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
@@ -41,6 +44,23 @@ public class SitemapURLProviderUtil {
 		}
 
 		return alternateFriendlyURLs;
+	}
+
+	protected static boolean layoutContainsPortletId(
+		Layout layout, String portletId) {
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		for (Portlet portlet : layoutTypePortlet.getAllNonembeddedPortlets()) {
+			if (portletId.equals(portlet.getPortletId()) ||
+				portletId.equals(portlet.getRootPortletId())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

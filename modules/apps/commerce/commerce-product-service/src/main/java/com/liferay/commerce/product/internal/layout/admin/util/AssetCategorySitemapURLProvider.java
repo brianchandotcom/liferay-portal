@@ -57,17 +57,16 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		long plid = _portal.getPlidFromPortletId(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
-
-		Layout layout = _layoutLocalService.fetchLayout(plid);
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			layoutUuid, layoutSet.getGroupId(), layoutSet.isPrivateLayout());
 
 		if (layout == null) {
 			return;
 		}
 
-		if (layoutUuid.equals(layout.getUuid())) {
+		if (SitemapURLProviderUtil.layoutContainsPortletId(
+				layout, CPPortletKeys.CP_CATEGORY_CONTENT_WEB)) {
+
 			Group group = layoutSet.getGroup();
 
 			Company company = _companyLocalService.getCompany(

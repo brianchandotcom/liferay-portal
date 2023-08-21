@@ -129,12 +129,10 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 					editObjectDefinitionURL,
 					externalReferenceCode:
 						newObjectDefinition.externalReferenceCode,
-					hasObjectDefinitionDeleteResourcePermission:
-						typeof newObjectDefinition.actions.delete !==
-						'undefined',
-					hasObjectDefinitionManagePermissionsResourcePermission:
-						typeof newObjectDefinition.actions.permissions !==
-						'undefined',
+					hasObjectDefinitionDeleteResourcePermission: !!newObjectDefinition
+						.actions.delete,
+					hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
+						.actions.permissions,
 					id: newObjectDefinition.id,
 					isLinkedNode: false,
 					label: getLocalizableLabel(
@@ -251,7 +249,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 			const updatedNodes = nodes.map(
 				(node: Node<ObjectDefinitionNodeData>) => {
-					if (node.data?.name === definitionName) {
+					if (node.data?.id === definitionId) {
 						return {
 							...node,
 							data: {...node.data, nodeSelected: false},
@@ -426,6 +424,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 									.actions.delete,
 								hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
 									.actions.permissions,
+								id: objectDefinition.id,
 								isLinkedNode: false,
 								label: getLocalizableLabel(
 									objectDefinition.defaultLanguageId,

@@ -20,14 +20,12 @@ import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
 import {
 	ObjectDefinitionNodeData,
-	ObjectFieldNode,
 	nonRelationshipObjectFieldsInfo,
 } from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
-import {fieldsCustomSort} from '../ModelBuilderContext/objectFolderReducerUtil';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePair: KeyValuePair[];
@@ -153,46 +151,18 @@ export function RightSidebarObjectDefinitionDetails({
 					(element as Node<ObjectDefinitionNodeData>).id ===
 						objectDefinition.id?.toString()
 				) {
-					const objectFields = objectDefinition.objectFields?.map(
-						(field) => {
-							return {
-								businessType: field.businessType,
-								externalReferenceCode:
-									field.externalReferenceCode,
-								label: getLocalizableLabel(
-									objectDefinition.defaultLanguageId!,
-									field.label,
-									field.name
-								),
-								name: field.name,
-								primaryKey: field.name === 'id',
-								required: field.required,
-								selected: false,
-							} as ObjectFieldNode;
-						}
-					);
-
 					newObjectDefinition = {
-						...objectDefinition,
-						hasObjectDefinitionDeleteResourcePermission:
-							typeof objectDefinition.actions?.delete !==
-							'undefined',
-						hasObjectDefinitionManagePermissionsResourcePermission:
-							typeof objectDefinition.actions?.permissions !==
-							'undefined',
+						...element.data,
 						label: getLocalizableLabel(
 							objectDefinition.defaultLanguageId!,
 							objectDefinition.label,
 							objectDefinition.name
 						),
 						name: objectDefinition.name,
-						nodeSelected: true,
-						objectDefinitionId: objectDefinition.id,
-						objectFields: fieldsCustomSort(objectFields!),
 						pluralLabel: {
 							[objectDefinition.defaultLanguageId!]: objectDefinition.pluralLabel,
 						},
-					} as Partial<ObjectDefinition>;
+					};
 
 					return {
 						...element,

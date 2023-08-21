@@ -48,7 +48,6 @@ export function DefinitionNode({
 		label,
 		name,
 		nodeSelected,
-		objectDefinitionId,
 		objectDefinitionPermissionsURL,
 		objectFields,
 		status,
@@ -94,10 +93,7 @@ export function DefinitionNode({
 		});
 	};
 
-	const viewDetailsUrl = formatActionURL(
-		editObjectDefinitionURL,
-		objectDefinitionId
-	);
+	const viewDetailsUrl = formatActionURL(editObjectDefinitionURL, id);
 
 	return (
 		<>
@@ -217,7 +213,7 @@ export function DefinitionNode({
 							if (
 								isNode(element) &&
 								(element as Node<ObjectDefinitionNodeData>)
-									.id === objectDefinitionId?.toString()
+									.id === id?.toString()
 							) {
 								return {
 									...element,
@@ -238,10 +234,8 @@ export function DefinitionNode({
 							type: TYPES.SET_ELEMENTS,
 						});
 					}}
-					onGetEntity={() =>
-						API.getObjectDefinitionById(objectDefinitionId)
-					}
-					saveURL={`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`}
+					onGetEntity={() => API.getObjectDefinitionById(id)}
+					saveURL={`/o/object-admin/v1.0/object-definitions/${id}`}
 					setExternalReferenceCode={setNewExternalReferenceCode}
 				/>
 			)}

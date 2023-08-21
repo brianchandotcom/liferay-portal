@@ -133,11 +133,11 @@ export interface ObjectDefinitionNodeData
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
+	id: number;
 	isLinkedNode: boolean;
 	label: string;
 	name: string;
 	nodeSelected: boolean;
-	objectDefinitionId: number;
 	objectDefinitionPermissionsURL: string;
 	objectFields: ObjectFieldNode[];
 	objectRelationships: ObjectRelationship[];

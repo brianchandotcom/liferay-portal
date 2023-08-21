@@ -20,7 +20,6 @@ export declare function DefinitionNode({
 		label,
 		name,
 		nodeSelected,
-		objectDefinitionId,
 		objectDefinitionPermissionsURL,
 		objectFields,
 		status,

@@ -1,0 +1,35 @@
+definition {
+
+	macro fillGoalsChat {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = ${siteSettingsStrategy});
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = ${chatProviderId});
+	}
+
+	macro getPassword {
+		var clickToChatPassword = PropsUtil.get("click.to.chat.${chatProviderChoosen}.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = ${clickToChatPassword});
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+	}
+
+	macro typePassword {
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = ${key_Password});
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+	}
+
+}

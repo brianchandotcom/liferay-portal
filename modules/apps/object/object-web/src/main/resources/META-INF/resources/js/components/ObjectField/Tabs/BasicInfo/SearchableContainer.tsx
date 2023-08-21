@@ -59,7 +59,10 @@ export function SearchableContainer({
 
 			<ClayForm.Group>
 				<Toggle
-					disabled={objectField.businessType === 'Encrypted'}
+					disabled={
+						objectField.businessType === 'Encrypted' ||
+						objectField.system
+					}
 					label={Liferay.Language.get('searchable')}
 					name="indexed"
 					onToggle={(indexed) => setValues({indexed})}

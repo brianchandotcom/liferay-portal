@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
 import java.util.List;

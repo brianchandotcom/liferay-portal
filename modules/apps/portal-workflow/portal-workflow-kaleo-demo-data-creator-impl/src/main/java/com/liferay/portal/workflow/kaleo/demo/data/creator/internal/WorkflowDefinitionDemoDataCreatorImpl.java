@@ -8,10 +8,10 @@ package com.liferay.portal.workflow.kaleo.demo.data.creator.internal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowDefinitionDemoDataCreator;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.Date;
 import java.util.List;

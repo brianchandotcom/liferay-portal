@@ -14,9 +14,9 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

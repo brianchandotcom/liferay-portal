@@ -97,7 +97,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -109,6 +108,7 @@ import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
 import java.util.Collections;

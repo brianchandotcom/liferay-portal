@@ -8,8 +8,8 @@ package com.liferay.portal.workflow.util;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.List;
 

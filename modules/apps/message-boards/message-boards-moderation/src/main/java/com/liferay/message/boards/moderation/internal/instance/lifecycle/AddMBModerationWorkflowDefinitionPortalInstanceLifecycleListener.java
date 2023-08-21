@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.HashMap;
 import java.util.Locale;

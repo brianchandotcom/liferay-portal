@@ -8,5 +8,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:headless:headless-admin-workflow:headless-admin-workflow-client")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:portal-workflow:portal-workflow-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

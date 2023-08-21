@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -32,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.Workf
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoDefinitionOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
 import java.util.Collections;

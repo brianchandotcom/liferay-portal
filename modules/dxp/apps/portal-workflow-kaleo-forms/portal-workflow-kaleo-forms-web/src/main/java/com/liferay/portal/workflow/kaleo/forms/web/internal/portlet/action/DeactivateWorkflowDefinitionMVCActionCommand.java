@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

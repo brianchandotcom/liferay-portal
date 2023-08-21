@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.Arrays;
 import java.util.HashMap;

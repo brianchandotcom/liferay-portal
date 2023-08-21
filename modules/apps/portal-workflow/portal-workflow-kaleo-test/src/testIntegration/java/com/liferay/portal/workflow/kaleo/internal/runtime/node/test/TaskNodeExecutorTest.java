@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -50,6 +49,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServ
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.Serializable;
 

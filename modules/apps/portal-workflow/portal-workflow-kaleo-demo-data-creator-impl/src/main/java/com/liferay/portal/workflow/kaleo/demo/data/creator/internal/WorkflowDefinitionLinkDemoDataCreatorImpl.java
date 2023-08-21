@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowDefinitionLinkDemoDataCreator;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.kaleo.runtime.internal.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.InputStream;
 

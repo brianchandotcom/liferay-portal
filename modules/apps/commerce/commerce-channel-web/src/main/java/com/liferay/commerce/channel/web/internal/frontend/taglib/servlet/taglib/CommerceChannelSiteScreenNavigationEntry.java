@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.io.IOException;
 

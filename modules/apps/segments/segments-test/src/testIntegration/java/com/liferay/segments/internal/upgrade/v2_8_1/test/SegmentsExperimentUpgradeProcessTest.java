@@ -6,8 +6,6 @@
 package com.liferay.segments.internal.upgrade.v2_8_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -21,16 +19,9 @@ import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
-import com.liferay.segments.service.persistence.SegmentsExperimentPersistence;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,37 +45,16 @@ public class SegmentsExperimentUpgradeProcessTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		SegmentsExperience segmentsExperience = _addSegmentsExperience(1);
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(_group.getGroupId(), 1);
 
 		_addSegmentsExperiment(
 			_group.getGroupId(), 1,
-			segmentsExperience.getSegmentsExperienceId(), 1,
-			SegmentsExperimentConstants.STATUS_TERMINATED);
-
-		_addSegmentsExperiment(
-			_group.getGroupId(), 1,
-			segmentsExperience.getSegmentsExperienceId(), 2,
-			SegmentsExperimentConstants.STATUS_TERMINATED);
-
-		_addSegmentsExperiment(
-			_group.getGroupId(), 1,
-			segmentsExperience.getSegmentsExperienceId(), 3,
-			SegmentsExperimentConstants.STATUS_TERMINATED);
-
-		_addSegmentsExperiment(
-			_group.getGroupId(), 1,
-			segmentsExperience.getSegmentsExperienceId(), 4,
-			SegmentsExperimentConstants.STATUS_RUNNING);
+			segmentsExperience.getSegmentsExperienceId(), 1);
 
 		_addSegmentsExperiment(
 			_group.getGroupId(), 2,
-			segmentsExperience.getSegmentsExperienceId(), 5,
-			SegmentsExperimentConstants.STATUS_TERMINATED);
-
-		_addSegmentsExperiment(
-			_group.getGroupId(), 2,
-			segmentsExperience.getSegmentsExperienceId(), 6,
-			SegmentsExperimentConstants.STATUS_TERMINATED);
+			segmentsExperience.getSegmentsExperienceId(), 2);
 
 		_upgradeStepRegistrator.register(
 			new UpgradeStepRegistrator.Registry() {
@@ -109,75 +79,16 @@ public class SegmentsExperimentUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgrade() throws Exception, IOException {
-		List<SegmentsExperiment> segmentsExperiments = _getSegmentsExperiments(
-			1);
-
-		Collections.sort(
-			segmentsExperiments,
-			Comparator.comparing(
-				SegmentsExperiment::getCreateDate
-			).reversed());
-
-		long expectedSegmentsExperimentId1 = segmentsExperiments.get(
-			0
-		).getSegmentsExperimentId();
-
-		Assert.assertEquals(
-			segmentsExperiments.toString(), 4, segmentsExperiments.size());
-
-		segmentsExperiments = _getSegmentsExperiments(2);
-
-		Collections.sort(
-			segmentsExperiments,
-			Comparator.comparing(
-				SegmentsExperiment::getCreateDate
-			).reversed());
-
-		long expectedSegmentsExperimentId2 = segmentsExperiments.get(
-			0
-		).getSegmentsExperimentId();
-
-		Assert.assertEquals(
-			segmentsExperiments.toString(), 2, segmentsExperiments.size());
-
+	public void testUpgrade() throws Exception {
 		_upgradeProcess.upgrade();
 
-		EntityCacheUtil.clearCache();
-
-		segmentsExperiments = _getSegmentsExperiments(1);
-
 		Assert.assertEquals(
-			segmentsExperiments.toString(), 1, segmentsExperiments.size());
-
-		Assert.assertEquals(
-			expectedSegmentsExperimentId1,
-			segmentsExperiments.get(
-				0
-			).getSegmentsExperimentId());
-
-		segmentsExperiments = _getSegmentsExperiments(2);
-
-		Assert.assertEquals(
-			segmentsExperiments.toString(), 1, segmentsExperiments.size());
-
-		Assert.assertEquals(
-			expectedSegmentsExperimentId2,
-			segmentsExperiments.get(
-				0
-			).getSegmentsExperimentId());
+			0, _segmentsExperimentLocalService.getSegmentsExperimentsCount());
 	}
 
-	private SegmentsExperience _addSegmentsExperience(long plid)
-		throws Exception {
-
-		return SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), plid);
-	}
-
-	private SegmentsExperiment _addSegmentsExperiment(
+	private void _addSegmentsExperiment(
 		long groupId, long plid, long segmentsExperienceId,
-		long segmentsExperimentId, int status) {
+		long segmentsExperimentId) {
 
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentLocalService.createSegmentsExperiment(
@@ -187,25 +98,11 @@ public class SegmentsExperimentUpgradeProcessTest {
 		segmentsExperiment.setCreateDate(new Date());
 		segmentsExperiment.setSegmentsExperienceId(segmentsExperienceId);
 		segmentsExperiment.setPlid(plid);
-		segmentsExperiment.setStatus(status);
+		segmentsExperiment.setStatus(
+			SegmentsExperimentConstants.STATUS_TERMINATED);
 
-		return _segmentsExperimentLocalService.addSegmentsExperiment(
+		_segmentsExperimentLocalService.addSegmentsExperiment(
 			segmentsExperiment);
-	}
-
-	private List<SegmentsExperiment> _getSegmentsExperiments(long plid) {
-		List<SegmentsExperiment> segmentsExperiments = new ArrayList<>();
-
-		for (SegmentsExperiment segmentsExperiment :
-				_segmentsExperimentLocalService.getSegmentsExperiments(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-			if (segmentsExperiment.getPlid() == plid) {
-				segmentsExperiments.add(segmentsExperiment);
-			}
-		}
-
-		return segmentsExperiments;
 	}
 
 	private static final String _CLASS_NAME =
@@ -222,9 +119,6 @@ public class SegmentsExperimentUpgradeProcessTest {
 
 	@Inject
 	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
-
-	@Inject
-	private SegmentsExperimentPersistence _segmentsExperimentPersistence;
 
 	private UpgradeProcess _upgradeProcess;
 

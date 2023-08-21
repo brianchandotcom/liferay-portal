@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -205,10 +206,9 @@ public class CommerceOptionValueHelperImpl
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 				CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
 
-				if (cpDefinitionOptionRel.getKey(
-					).equals(
-						jsonObject.getString("key")
-					)) {
+				if (Objects.equals(
+						cpDefinitionOptionRel.getKey(),
+						jsonObject.getString("key"))) {
 
 					JSONArray valueJSONArray = CPJSONUtil.getJSONArray(
 						jsonObject, "value");

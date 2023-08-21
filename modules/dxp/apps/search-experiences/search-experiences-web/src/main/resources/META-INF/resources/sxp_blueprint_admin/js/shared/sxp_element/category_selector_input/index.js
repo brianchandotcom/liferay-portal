@@ -350,7 +350,9 @@ function CategorySelectorInput({
 					: [
 							{
 								descriptiveName: Liferay.Language.get('global'),
-								id: Liferay.ThemeDisplay.getCompanyGroupId(),
+								id: Number(
+									Liferay.ThemeDisplay.getCompanyGroupId()
+								),
 							},
 							...items,
 					  ];

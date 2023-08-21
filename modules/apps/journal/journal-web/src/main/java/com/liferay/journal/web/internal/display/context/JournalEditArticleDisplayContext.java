@@ -9,6 +9,7 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.item.selector.DDMTemplateItemSelectorReturnType;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -807,6 +809,67 @@ public class JournalEditArticleDisplayContext {
 							_httpServletRequest),
 						_liferayPortletResponse.getNamespace() + "selectImage",
 						itemSelectorCriterion));
+			}
+		).put(
+			"previewURL",
+			() -> {
+				if (_article == null) {
+					return null;
+				}
+
+				return _article.getArticleImageURL(_themeDisplay);
+			}
+		).put(
+			"smallImageId",
+			() -> {
+				if ((_article != null) &&
+					(_article.getSmallImageSource() ==
+						JournalArticleConstants.
+							SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA)) {
+
+					return _article.getSmallImageId();
+				}
+
+				return 0;
+			}
+		).put(
+			"smallImageName",
+			() -> {
+				if ((_article != null) && _article.isSmallImage() &&
+					(_article.getSmallImageSource() ==
+						JournalArticleConstants.
+							SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA)) {
+
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						_article.getSmallImageId());
+
+					if (fileEntry != null) {
+						return fileEntry.getTitle();
+					}
+				}
+
+				return StringPool.BLANK;
+			}
+		).put(
+			"smallImageSource",
+			() -> {
+				if (_article == null) {
+					return JournalArticleConstants.SMALL_IMAGE_SOURCE_NONE;
+				}
+
+				return _article.getSmallImageSource();
+			}
+		).put(
+			"smallImageURL",
+			() -> {
+				if ((_article != null) && _article.isSmallImage() &&
+					(_article.getSmallImageSource() ==
+						JournalArticleConstants.SMALL_IMAGE_SOURCE_URL)) {
+
+					return _article.getSmallImageURL();
+				}
+
+				return StringPool.BLANK;
 			}
 		).build();
 	}

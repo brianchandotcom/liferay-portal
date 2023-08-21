@@ -32,18 +32,18 @@ const SMALL_IMAGE_SOURCE_OPTIONS = [
 export default function SmallImage({
 	itemSelectorURL,
 	portletNamespace,
-	previewURL,
+	previewURL: initialPreviewURL,
 	smallImageId: initialSmallImageId,
 	smallImageName: initialSmallImageName,
 	smallImageSource: initialSmallImageSource,
 	smallImageURL: initialSmallImageURL,
 }) {
+	const [previewURL, setPreviewURL] = useState(initialPreviewURL);
 	const [smallImageId, setSmallImageId] = useState(initialSmallImageId);
 	const [smallImageName, setSmallImageName] = useState(initialSmallImageName);
 	const [smallImageSource, setSmallImageSource] = useState(
 		initialSmallImageSource
 	);
-
 	const [smallImageURL, setSmallImageURL] = useState(initialSmallImageURL);
 
 	const fileInputRef = useRef();
@@ -67,17 +67,19 @@ export default function SmallImage({
 			<ClayForm.Group>
 				<label
 					className="sr-only"
-					htmlFor={`${portletNamespace}imageSource`}
+					htmlFor={`${portletNamespace}smallImageSource`}
 				>
 					{Liferay.Language.get('image-source')}
 				</label>
 
 				<ClaySelectWithOption
-					id={`${portletNamespace}imageSource`}
-					name={`${portletNamespace}imageSource`}
-					onChange={(event) =>
-						setSmallImageSource(parseInt(event.target.value, 10))
-					}
+					id={`${portletNamespace}smallImageSource`}
+					name={`${portletNamespace}smallImageSource`}
+					onChange={(event) => {
+						setSmallImageSource(parseInt(event.target.value, 10));
+						setSmallImageName('');
+						setPreviewURL('');
+					}}
 					options={SMALL_IMAGE_SOURCE_OPTIONS}
 					value={smallImageSource}
 				/>
@@ -88,7 +90,7 @@ export default function SmallImage({
 					<img
 						alt={Liferay.Language.get('preview')}
 						className="aspect-ratio-item-fluid"
-						src={smallImageURL}
+						src={previewURL}
 					/>
 				</div>
 			) : null}
@@ -107,7 +109,7 @@ export default function SmallImage({
 							<input
 								className="sr-only"
 								id={`${portletNamespace}smallFile`}
-								name={name}
+								name={`${portletNamespace}smallFile`}
 								onChange={(event) =>
 									setSmallImageName(
 										event.target.files?.[0]?.name || ''
@@ -155,14 +157,14 @@ export default function SmallImage({
 				<ClayForm.Group>
 					<label
 						className="sr-only"
-						htmlFor={`${portletNamespace}smallFileURL`}
+						htmlFor={`${portletNamespace}smallImageURL`}
 					>
 						{Liferay.Language.get('image-url')}
 					</label>
 
 					<ClayInput
-						id={`${portletNamespace}smallFileURL`}
-						name={`${portletNamespace}smallFileURL`}
+						id={`${portletNamespace}smallImageURL`}
+						name={`${portletNamespace}smallImageURL`}
 						onChange={(event) =>
 							setSmallImageURL(event.target.value)
 						}
@@ -177,7 +179,7 @@ export default function SmallImage({
 				<ClayForm.Group>
 					<label
 						className="sr-only"
-						htmlFor={`${portletNamespace}smallFileId`}
+						htmlFor={`${portletNamespace}smallImageId`}
 					>
 						{Liferay.Language.get('image')}
 					</label>
@@ -185,14 +187,14 @@ export default function SmallImage({
 					<ClayInput.Group small>
 						<ClayInput.GroupItem>
 							<input
-								name={`${portletNamespace}smallFileId`}
+								name={`${portletNamespace}smallImageId`}
 								readOnly
 								type="hidden"
 								value={smallImageId}
 							/>
 
 							<ClayInput
-								id={`${portletNamespace}smallFileId`}
+								id={`${portletNamespace}smallImageId`}
 								onClick={() => openItemSelector()}
 								placeholder={Liferay.Language.get(
 									'select-image'

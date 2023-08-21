@@ -84,7 +84,10 @@
 			<div class="sheet-footer">
 				<c:if test="<%= !user.isAgreedToTermsOfUse() %>">
 					<aui:button-row>
-						<aui:button type="submit" value="i-agree" />
+						<clay:button
+							label="i-agree"
+							type="submit"
+						/>
 
 						<%
 						String disagreeMessage = UnicodeLanguageUtil.get(request, "you-must-agree-with-the-terms-of-use-to-continue");
@@ -92,7 +95,12 @@
 						String taglibOnClick = String.format("Liferay.Util.openAlertModal({message: '%s'})", disagreeMessage, disagreeMessage);
 						%>
 
-						<aui:button onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />
+						<clay:button
+							displayType="secondary"
+							label="i-disagree"
+							onClick="<%= taglibOnClick %>"
+							type="cancel"
+						/>
 					</aui:button-row>
 				</c:if>
 			</div>

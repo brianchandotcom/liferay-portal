@@ -25,7 +25,7 @@ definition {
 	macro typePassword {
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${key_Password});
+			value1 = ${key_password});
 
 		SystemSettings.saveConfiguration();
 

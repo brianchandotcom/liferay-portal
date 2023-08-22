@@ -15,19 +15,18 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.document.Document;
@@ -120,34 +119,20 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 		return false;
 	}
 
-	private Layout _fetchLayoutByFriendlyURL(long groupId, String friendlyURL) {
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, friendlyURL);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		return _layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, true, friendlyURL);
-	}
-
 	private String _getAssetURL(
 		AssetRenderer<?> assetRenderer,
 		AssetRendererFactory<?> assetRendererFactory, String entryClassName,
 		long entryClassPK, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, Layout searchLayout) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		try {
-			if (searchLayout == null) {
-				return StringPool.BLANK;
-			}
-
 			PortletURL viewContentURL =
 				PortletURLBuilder.createLiferayPortletURL(
-					liferayPortletResponse, searchLayout.getPlid(),
+					liferayPortletResponse,
 					SearchResultsPortletKeys.SEARCH_RESULTS,
 					PortletRequest.RENDER_PHASE
+				).setRedirect(
+					_portal.getCurrentURL(liferayPortletRequest)
 				).setPortletMode(
 					PortletMode.VIEW
 				).setWindowState(
@@ -237,7 +222,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 	private Suggestion _getSuggestion(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Locale locale,
-		SearchHit searchHit, Layout searchLayout) {
+		SearchHit searchHit) {
 
 		Document document = searchHit.getDocument();
 
@@ -279,7 +264,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 					_getAssetURL(
 						assetRenderer, assetRendererFactory, entryClassName,
 						entryClassPK, liferayPortletRequest,
-						liferayPortletResponse, searchLayout));
+						liferayPortletResponse));
 
 				text = assetRenderer.getTitle(locale);
 			}
@@ -326,16 +311,6 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 		LiferayPortletResponse liferayPortletResponse,
 		SearchContext searchContext, List<SearchHit> searchHits) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout searchLayout = _fetchLayoutByFriendlyURL(
-			themeDisplay.getScopeGroupId(),
-			GetterUtil.getString(
-				searchContext.getAttribute(
-					"search.suggestions.destination.friendly.url")));
-
 		return _suggestionsContributorResultsBuilderFactory.builder(
 		).displayGroupName(
 			displayGroupName
@@ -344,7 +319,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 				searchHits,
 				searchHit -> _getSuggestion(
 					liferayPortletRequest, liferayPortletResponse,
-					searchContext.getLocale(), searchHit, searchLayout))
+					searchContext.getLocale(), searchHit))
 		).build();
 	}
 
@@ -357,7 +332,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private Portal _portal;
 
 	@Reference
 	private Searcher _searcher;

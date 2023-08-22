@@ -131,6 +131,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="S_S" return-type="Collection">
 			<finder-column name="system" />
 			<finder-column name="status" />

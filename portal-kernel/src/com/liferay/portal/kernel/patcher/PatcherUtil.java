@@ -26,11 +26,6 @@ public class PatcherUtil {
 
 	private static final String[] _INSTALLED_PATCH_NAMES;
 
-	private static final String _PATCHER_PROPERTIES = "patcher.properties";
-
-	private static final String _PROPERTY_INSTALLED_PATCHES =
-		"installed.patches";
-
 	private static final Log _log = LogFactoryUtil.getLog(PatcherUtil.class);
 
 	static {
@@ -39,11 +34,11 @@ public class PatcherUtil {
 		ClassLoader classLoader = PatcherUtil.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				_PATCHER_PROPERTIES)) {
+				"patcher.properties")) {
 
 			if (inputStream == null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to load " + _PATCHER_PROPERTIES);
+					_log.debug("Unable to load patcher.properties");
 				}
 			}
 			else {
@@ -57,7 +52,7 @@ public class PatcherUtil {
 		}
 
 		_INSTALLED_PATCH_NAMES = StringUtil.split(
-			properties.getProperty(_PROPERTY_INSTALLED_PATCHES));
+			properties.getProperty("installed.patches"));
 	}
 
 }

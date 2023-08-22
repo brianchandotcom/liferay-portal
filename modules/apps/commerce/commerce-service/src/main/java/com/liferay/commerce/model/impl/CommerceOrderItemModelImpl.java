@@ -116,9 +116,10 @@ public class CommerceOrderItemModelImpl
 		{"subscription", Types.BOOLEAN}, {"subscriptionLength", Types.INTEGER},
 		{"subscriptionType", Types.VARCHAR},
 		{"subscriptionTypeSettings", Types.VARCHAR},
-		{"unitOfMeasureKey", Types.VARCHAR}, {"unitPrice", Types.DECIMAL},
-		{"unitPriceWithTaxAmount", Types.DECIMAL}, {"weight", Types.DOUBLE},
-		{"width", Types.DOUBLE}
+		{"unitOfMeasureKey", Types.VARCHAR},
+		{"UOMIncrementalOrderQuantity", Types.DECIMAL},
+		{"unitPrice", Types.DECIMAL}, {"unitPriceWithTaxAmount", Types.DECIMAL},
+		{"weight", Types.DOUBLE}, {"width", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -188,6 +189,7 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("subscriptionType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subscriptionTypeSettings", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("UOMIncrementalOrderQuantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("unitPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("unitPriceWithTaxAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
@@ -195,7 +197,7 @@ public class CommerceOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
+		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -469,6 +471,9 @@ public class CommerceOrderItemModelImpl
 				CommerceOrderItem::getSubscriptionTypeSettings);
 			attributeGetterFunctions.put(
 				"unitOfMeasureKey", CommerceOrderItem::getUnitOfMeasureKey);
+			attributeGetterFunctions.put(
+				"unitOfMeasureIncrementalOrderQuantity",
+				CommerceOrderItem::getUnitOfMeasureIncrementalOrderQuantity);
 			attributeGetterFunctions.put(
 				"unitPrice", CommerceOrderItem::getUnitPrice);
 			attributeGetterFunctions.put(
@@ -751,6 +756,11 @@ public class CommerceOrderItemModelImpl
 				"unitOfMeasureKey",
 				(BiConsumer<CommerceOrderItem, String>)
 					CommerceOrderItem::setUnitOfMeasureKey);
+			attributeSetterBiConsumers.put(
+				"unitOfMeasureIncrementalOrderQuantity",
+				(BiConsumer<CommerceOrderItem, BigDecimal>)
+					CommerceOrderItem::
+						setUnitOfMeasureIncrementalOrderQuantity);
 			attributeSetterBiConsumers.put(
 				"unitPrice",
 				(BiConsumer<CommerceOrderItem, BigDecimal>)
@@ -2081,6 +2091,24 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
+	public BigDecimal getUnitOfMeasureIncrementalOrderQuantity() {
+		return _unitOfMeasureIncrementalOrderQuantity;
+	}
+
+	@Override
+	public void setUnitOfMeasureIncrementalOrderQuantity(
+		BigDecimal unitOfMeasureIncrementalOrderQuantity) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_unitOfMeasureIncrementalOrderQuantity =
+			unitOfMeasureIncrementalOrderQuantity;
+	}
+
+	@JSON
+	@Override
 	public BigDecimal getUnitPrice() {
 		return _unitPrice;
 	}
@@ -2331,6 +2359,8 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemImpl.setSubscriptionTypeSettings(
 			getSubscriptionTypeSettings());
 		commerceOrderItemImpl.setUnitOfMeasureKey(getUnitOfMeasureKey());
+		commerceOrderItemImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			getUnitOfMeasureIncrementalOrderQuantity());
 		commerceOrderItemImpl.setUnitPrice(getUnitPrice());
 		commerceOrderItemImpl.setUnitPriceWithTaxAmount(
 			getUnitPriceWithTaxAmount());
@@ -2481,6 +2511,9 @@ public class CommerceOrderItemModelImpl
 			this.<String>getColumnOriginalValue("subscriptionTypeSettings"));
 		commerceOrderItemImpl.setUnitOfMeasureKey(
 			this.<String>getColumnOriginalValue("unitOfMeasureKey"));
+		commerceOrderItemImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			this.<BigDecimal>getColumnOriginalValue(
+				"UOMIncrementalOrderQuantity"));
 		commerceOrderItemImpl.setUnitPrice(
 			this.<BigDecimal>getColumnOriginalValue("unitPrice"));
 		commerceOrderItemImpl.setUnitPriceWithTaxAmount(
@@ -2836,6 +2869,9 @@ public class CommerceOrderItemModelImpl
 			commerceOrderItemCacheModel.unitOfMeasureKey = null;
 		}
 
+		commerceOrderItemCacheModel.unitOfMeasureIncrementalOrderQuantity =
+			getUnitOfMeasureIncrementalOrderQuantity();
+
 		commerceOrderItemCacheModel.unitPrice = getUnitPrice();
 
 		commerceOrderItemCacheModel.unitPriceWithTaxAmount =
@@ -2972,6 +3008,7 @@ public class CommerceOrderItemModelImpl
 	private String _subscriptionType;
 	private String _subscriptionTypeSettings;
 	private String _unitOfMeasureKey;
+	private BigDecimal _unitOfMeasureIncrementalOrderQuantity;
 	private BigDecimal _unitPrice;
 	private BigDecimal _unitPriceWithTaxAmount;
 	private double _weight;
@@ -3098,6 +3135,9 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put(
 			"subscriptionTypeSettings", _subscriptionTypeSettings);
 		_columnOriginalValues.put("unitOfMeasureKey", _unitOfMeasureKey);
+		_columnOriginalValues.put(
+			"UOMIncrementalOrderQuantity",
+			_unitOfMeasureIncrementalOrderQuantity);
 		_columnOriginalValues.put("unitPrice", _unitPrice);
 		_columnOriginalValues.put(
 			"unitPriceWithTaxAmount", _unitPriceWithTaxAmount);
@@ -3125,6 +3165,9 @@ public class CommerceOrderItemModelImpl
 		attributeNames.put(
 			"discountPctLevel4WithTaxAmount",
 			"discountPercentageLevel4WithTaxAmount");
+		attributeNames.put(
+			"UOMIncrementalOrderQuantity",
+			"unitOfMeasureIncrementalOrderQuantity");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}

@@ -273,6 +273,9 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setUnitOfMeasureKey(RandomTestUtil.randomString());
 
+		newCommerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
 		newCommerceOrderItem.setUnitPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -483,6 +486,10 @@ public class CommerceOrderItemPersistenceTest {
 			existingCommerceOrderItem.getUnitOfMeasureKey(),
 			newCommerceOrderItem.getUnitOfMeasureKey());
 		Assert.assertEquals(
+			existingCommerceOrderItem.
+				getUnitOfMeasureIncrementalOrderQuantity(),
+			newCommerceOrderItem.getUnitOfMeasureIncrementalOrderQuantity());
+		Assert.assertEquals(
 			existingCommerceOrderItem.getUnitPrice(),
 			newCommerceOrderItem.getUnitPrice());
 		Assert.assertEquals(
@@ -668,8 +675,9 @@ public class CommerceOrderItemPersistenceTest {
 			true, "shippedQuantity", true, "shippingExtraPrice", true, "sku",
 			true, "subscription", true, "subscriptionLength", true,
 			"subscriptionType", true, "subscriptionTypeSettings", true,
-			"unitOfMeasureKey", true, "unitPrice", true,
-			"unitPriceWithTaxAmount", true, "weight", true, "width", true);
+			"unitOfMeasureKey", true, "unitOfMeasureIncrementalOrderQuantity",
+			true, "unitPrice", true, "unitPriceWithTaxAmount", true, "weight",
+			true, "width", true);
 	}
 
 	@Test
@@ -1127,6 +1135,9 @@ public class CommerceOrderItemPersistenceTest {
 			RandomTestUtil.randomString());
 
 		commerceOrderItem.setUnitOfMeasureKey(RandomTestUtil.randomString());
+
+		commerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceOrderItem.setUnitPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));

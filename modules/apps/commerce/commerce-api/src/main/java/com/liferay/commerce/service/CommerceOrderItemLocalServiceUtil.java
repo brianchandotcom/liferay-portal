@@ -581,13 +581,15 @@ public class CommerceOrderItemLocalServiceUtil {
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, java.math.BigDecimal quantity,
 			int shippedQuantity, String unitOfMeasureKey,
+			java.math.BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().importCommerceOrderItem(
 			userId, externalReferenceCode, commerceOrderItemId, commerceOrderId,
 			cpInstanceId, cpMeasurementUnitKey, quantity, shippedQuantity,
-			unitOfMeasureKey, serviceContext);
+			unitOfMeasureKey, unitOfMeasureIncrementalOrderQuantity,
+			serviceContext);
 	}
 
 	public static CommerceOrderItem incrementShippedQuantity(

@@ -222,6 +222,7 @@ create table CommerceOrderItem (
 	subscriptionType VARCHAR(75) null,
 	subscriptionTypeSettings VARCHAR(75) null,
 	unitOfMeasureKey VARCHAR(75) null,
+	UOMIncrementalOrderQuantity BIGDECIMAL null,
 	unitPrice BIGDECIMAL null,
 	unitPriceWithTaxAmount BIGDECIMAL null,
 	weight DOUBLE,

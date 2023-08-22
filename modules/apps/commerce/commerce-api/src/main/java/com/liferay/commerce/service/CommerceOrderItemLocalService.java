@@ -448,6 +448,7 @@ public interface CommerceOrderItemLocalService
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal quantity,
 			int shippedQuantity, String unitOfMeasureKey,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException;
 

@@ -240,6 +240,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		createColumn(
 			"unitOfMeasureKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, BigDecimal>
+		unitOfMeasureIncrementalOrderQuantity = createColumn(
+			"UOMIncrementalOrderQuantity", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, BigDecimal> unitPrice =
 		createColumn(
 			"unitPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);

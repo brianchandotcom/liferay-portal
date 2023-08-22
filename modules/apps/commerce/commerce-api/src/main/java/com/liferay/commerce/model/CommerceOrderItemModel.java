@@ -1138,6 +1138,21 @@ public interface CommerceOrderItemModel
 	public void setUnitOfMeasureKey(String unitOfMeasureKey);
 
 	/**
+	 * Returns the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @return the unit of measure incremental order quantity of this commerce order item
+	 */
+	public BigDecimal getUnitOfMeasureIncrementalOrderQuantity();
+
+	/**
+	 * Sets the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @param unitOfMeasureIncrementalOrderQuantity the unit of measure incremental order quantity of this commerce order item
+	 */
+	public void setUnitOfMeasureIncrementalOrderQuantity(
+		BigDecimal unitOfMeasureIncrementalOrderQuantity);
+
+	/**
 	 * Returns the unit price of this commerce order item.
 	 *
 	 * @return the unit price of this commerce order item

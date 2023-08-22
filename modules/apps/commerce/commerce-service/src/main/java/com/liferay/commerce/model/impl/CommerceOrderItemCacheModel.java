@@ -71,7 +71,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(135);
+		StringBundler sb = new StringBundler(137);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -199,6 +199,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(subscriptionTypeSettings);
 		sb.append(", unitOfMeasureKey=");
 		sb.append(unitOfMeasureKey);
+		sb.append(", unitOfMeasureIncrementalOrderQuantity=");
+		sb.append(unitOfMeasureIncrementalOrderQuantity);
 		sb.append(", unitPrice=");
 		sb.append(unitPrice);
 		sb.append(", unitPriceWithTaxAmount=");
@@ -412,6 +414,8 @@ public class CommerceOrderItemCacheModel
 			commerceOrderItemImpl.setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 
+		commerceOrderItemImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 		commerceOrderItemImpl.setUnitPrice(unitPrice);
 		commerceOrderItemImpl.setUnitPriceWithTaxAmount(unitPriceWithTaxAmount);
 		commerceOrderItemImpl.setWeight(weight);
@@ -523,6 +527,8 @@ public class CommerceOrderItemCacheModel
 		subscriptionType = objectInput.readUTF();
 		subscriptionTypeSettings = objectInput.readUTF();
 		unitOfMeasureKey = objectInput.readUTF();
+		unitOfMeasureIncrementalOrderQuantity =
+			(BigDecimal)objectInput.readObject();
 		unitPrice = (BigDecimal)objectInput.readObject();
 		unitPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
 
@@ -714,6 +720,7 @@ public class CommerceOrderItemCacheModel
 			objectOutput.writeUTF(unitOfMeasureKey);
 		}
 
+		objectOutput.writeObject(unitOfMeasureIncrementalOrderQuantity);
 		objectOutput.writeObject(unitPrice);
 		objectOutput.writeObject(unitPriceWithTaxAmount);
 
@@ -785,6 +792,7 @@ public class CommerceOrderItemCacheModel
 	public String subscriptionType;
 	public String subscriptionTypeSettings;
 	public String unitOfMeasureKey;
+	public BigDecimal unitOfMeasureIncrementalOrderQuantity;
 	public BigDecimal unitPrice;
 	public BigDecimal unitPriceWithTaxAmount;
 	public double weight;

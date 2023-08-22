@@ -49,6 +49,9 @@ public abstract class CommerceOrderItemFinderBaseImpl
 		dbColumnNames.put(
 			"discountPercentageLevel4WithTaxAmount",
 			"discountPctLevel4WithTaxAmount");
+		dbColumnNames.put(
+			"unitOfMeasureIncrementalOrderQuantity",
+			"UOMIncrementalOrderQuantity");
 
 		setDBColumnNames(dbColumnNames);
 	}

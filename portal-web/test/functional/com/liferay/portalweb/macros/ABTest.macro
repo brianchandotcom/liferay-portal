@@ -100,16 +100,18 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
 	}
 
+	macro assertDXPABTestEmptyState {
+		AssertVisible(
+				key_title = "No active tests were found for the selected experience.",
+				locator1 = "Header#H4_TITLE");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+			AssertVisible(
+				key_message = "Create a new A/B test to optimize your page or experience.",
+				locator1 = "ABTest#SIDEBAR_MESSAGE");
 
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-		Alert.viewSuccessMessage();
+			AssertElementPresent(
+				key_text = "Create Test",
+				locator1 = "Button#ANY");
 	}
 
 	@summary = "Default summary"

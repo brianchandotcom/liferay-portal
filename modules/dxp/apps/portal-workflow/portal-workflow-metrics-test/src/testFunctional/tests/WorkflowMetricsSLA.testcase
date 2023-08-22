@@ -1211,7 +1211,7 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.viewSLASuccessMessage();
+		Alert.viewSuccessMessageText(successMessage = "SLA was saved.");
 	}
 
 	@description = "LPS-89014 - Verify the successful message when deleting a SLA"

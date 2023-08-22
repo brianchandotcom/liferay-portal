@@ -500,7 +500,7 @@ definition {
 
 		ProcessBuilderListView.searchForWorkflow(workflowName = "Approver");
 
-		Click(locator1 = "ManagementBar#CLEAR_FILTER");
+		ManagementBar.clearFilter();
 
 		AssertElementNotPresent(locator1 = "ManagementBar#CLEAR_FILTER");
 

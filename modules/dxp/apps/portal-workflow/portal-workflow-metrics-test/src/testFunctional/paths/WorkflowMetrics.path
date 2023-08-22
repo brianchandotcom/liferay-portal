@@ -81,11 +81,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_CLEAR_ALL</td>
-	<td>//span[contains(text(),'Clear All')] | //button[contains(text(),'Clear All')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERFORMANCE_COMPLETED_ITEMS_BY_STATUS</td>
 	<td>//div[@class='header'][span[contains(text(),'${key_status}')]]/following-sibling::div[1]</td>
 	<td></td>

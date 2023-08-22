@@ -221,7 +221,7 @@ definition {
 
 		WorkflowMetrics.viewButtonUpdateDueDateIsNotAvailable();
 
-		WorkflowMetrics.viewKebabMenuOptionsIsNotAvailable();
+		AssertElementNotPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user@liferay.com",

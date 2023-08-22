@@ -379,10 +379,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro clearAllFilter {
-		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
-	}
-
 	macro createAlternativeBlogInstances {
 		var iterator = 1;
 		var numberOfBlogInstances = ${numberOfBlogInstances} + 1;
@@ -500,6 +496,14 @@ definition {
 		ServerAdministration.executeScript(
 			language = "Groovy",
 			script = ${scriptContent});
+	}
+
+	macro deleteSLA {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = ${slaName});
+
+		AssertConfirm(value1 = "Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?");
 	}
 
 	macro executeIndexActions {
@@ -679,44 +683,12 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_workflowFilterOption}_ITEMS_TITLE");
 	}
 
-	macro deleteSLA {
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Delete",
-			rowEntry = ${slaName});
-
-		AssertConfirm(value1 = "Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?");
-	}
-
 	macro goToEditSLA {
 		var key_slaName = ${slaName};
 
 		Click(locator1 = "WorkflowMetricsSLA#SLA_RECORD_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
-	}
-
-	macro goToKebabMenuOptions {
-		Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-		var dropdownItem = ${dropdownItem};
-
-		if (${dropdownItem} == "Reassign Task") {
-			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if (${dropdownItem} == "Transition") {
-			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if (${dropdownItem} == "Update Due Date") {
-			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if (${dropdownItem} == "Track Workflow") {
-			Click(
-				key_menuOption = ${dropdownItem},
-				locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
 	}
 
 	macro goToReassignSelectTask {
@@ -1518,10 +1490,6 @@ definition {
 		}
 	}
 
-	macro viewKebabMenuOptionsIsNotAvailable {
-		AssertElementNotPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
-	}
-
 	macro viewNameHoverTransition {
 		SelectFrame(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
 
@@ -1592,16 +1560,6 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_ALL_ITEMS_PROCESS_STEP_DISPLAYS_UPDATE_STATUS");
-	}
-
-	macro viewSLAErrorMessage {
-		var key_errorMessage = ${errorMessage};
-
-		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-	}
-
-	macro viewSLASuccessMessage {
-		WaitForElementPresent(locator1 = "WorkflowMetricsSLA#SLA_SUCCESS_MESSAGE");
 	}
 
 	macro viewTableSizeInTheAllItems {

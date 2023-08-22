@@ -76,7 +76,9 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "Please fill in the required fields.");
 
-		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "A name is required.");
+		AssertElementPresent(
+			key_feedbackMessage = "A name is required.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -93,7 +95,9 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "At least one parameter is required.");
+		AssertElementPresent(
+			key_feedbackMessage = "At least one parameter is required.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -110,7 +114,9 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "At least one parameter is required.");
+		AssertElementPresent(
+			key_feedbackMessage = "At least one parameter is required.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -128,7 +134,9 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "A duration time is required.");
+		AssertElementPresent(
+			key_feedbackMessage = "A duration time is required.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -160,7 +168,9 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "Value must be an hour below 23:59.");
+		AssertElementPresent(
+			key_feedbackMessage = "Value must be an hour below 23:59.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",
@@ -196,7 +206,9 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.viewSLAErrorMessage(errorMessage = "An SLA with the same name already exists.");
+		AssertElementPresent(
+			key_feedbackMessage = "An SLA with the same name already exists.",
+			locator1 = "Form#FEEDBACK_MESSAGE");
 
 		Type(
 			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
@@ -204,7 +216,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewSuccessMessage();
+		Alert.viewSuccessMessageText(successMessage = "SLA was saved.");
 
 		AssertElementPresent(
 			key_slaTitle = "SLA Name1",
@@ -385,7 +397,7 @@ definition {
 			overdueTaskCount = 0,
 			totalPendingTaskCount = 1);
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -412,7 +424,7 @@ definition {
 			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.viewWorkloadByAssignee(
 			assigneeName = "1user user1",
@@ -1380,7 +1392,7 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_NO_RESULTS_FOUND");
 
-		Click(locator1 = "WorkflowMetrics#FILTER_CLEAR_ALL");
+		ManagementBar.clearFilter();
 
 		WorkflowMetricsPerformanceByStep.viewPerformanceByStepValues(
 			avgCompletionTimeValue = "1min",
@@ -1472,7 +1484,7 @@ definition {
 			isNotPresent = "2user user2,3user user3",
 			taskCount = 1);
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.searchForAssigneeName(assigneeName = "1user");
 
@@ -1488,7 +1500,7 @@ definition {
 			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "No results were found.");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.viewPerformanceByAssignee(
 			assignee = "1user user1",

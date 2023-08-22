@@ -20,9 +20,7 @@ public class CommerceIndexConfigurationContributor
 	implements IndexConfigurationContributor {
 
 	@Override
-	public void contributeMappings(
-		String indexName, TypeMappingsHelper typeMappingsHelper) {
-
+	public void contributeMappings(TypeMappingsHelper typeMappingsHelper) {
 		String typeMappings = StringUtil.read(
 			getClass(), "dependencies/additional-type-mappings.json");
 

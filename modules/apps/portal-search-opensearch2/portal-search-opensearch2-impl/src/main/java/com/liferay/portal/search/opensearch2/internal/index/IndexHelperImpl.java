@@ -87,7 +87,7 @@ public class IndexHelperImpl implements IndexHelper {
 		if (Validator.isNull(
 				_openSearchConfigurationWrapper.overrideTypeMappings())) {
 
-			_executeMappingsContributors(indexName, mappingsFactory);
+			_executeMappingsContributors(mappingsFactory);
 
 			mappingsFactory.addOptionalDefaultMappings();
 		}
@@ -399,14 +399,12 @@ public class IndexHelperImpl implements IndexHelper {
 			_dotNotationSettingsToJSONObject(contributedSettings));
 	}
 
-	private void _executeMappingsContributors(
-		String indexName, MappingsFactory mappingsFactory) {
+	private void _executeMappingsContributors(MappingsFactory mappingsFactory) {
 
 		for (IndexConfigurationContributor indexConfigurationContributor :
 				_indexConfigurationContributorServiceTrackerList) {
 
-			indexConfigurationContributor.contributeMappings(
-				indexName, mappingsFactory);
+			indexConfigurationContributor.contributeMappings(mappingsFactory);
 		}
 	}
 
@@ -437,7 +435,6 @@ public class IndexHelperImpl implements IndexHelper {
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> indexConfigurationContributor.contributeMappings(
-					getIndexName(companyId),
 					new MappingsFactory(
 						getIndexName(companyId), _jsonFactory,
 						openSearchClient.indices(),

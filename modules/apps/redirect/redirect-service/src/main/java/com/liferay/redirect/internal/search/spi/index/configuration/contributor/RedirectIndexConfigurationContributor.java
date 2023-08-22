@@ -20,9 +20,7 @@ public class RedirectIndexConfigurationContributor
 	implements IndexConfigurationContributor {
 
 	@Override
-	public void contributeMappings(
-		String indexName, TypeMappingsHelper typeMappingsHelper) {
-
+	public void contributeMappings(TypeMappingsHelper typeMappingsHelper) {
 		typeMappingsHelper.putTypeMappings(
 			StringUtil.read(
 				getClass(), "dependencies/additional-type-mappings.json"));

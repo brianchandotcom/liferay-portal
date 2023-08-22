@@ -360,7 +360,6 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 
 					@Override
 					public void contributeMappings(
-						String indexName,
 						TypeMappingsHelper typeMappingsHelper) {
 					}
 
@@ -409,7 +408,6 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 
 					@Override
 					public void contributeMappings(
-						String indexName,
 						TypeMappingsHelper typeMappingsHelper) {
 
 						typeMappingsHelper.putTypeMappings(
@@ -663,8 +661,7 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 		implements IndexConfigurationContributor {
 
 		@Override
-		public void contributeMappings(
-			String indexName, TypeMappingsHelper typeMappingsHelper) {
+		public void contributeMappings(TypeMappingsHelper typeMappingsHelper) {
 		}
 
 		@Override

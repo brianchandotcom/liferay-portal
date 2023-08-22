@@ -65,16 +65,16 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 				continue;
 			}
 
-			ObjectDefinition parentObjectDefinition =
+			ObjectDefinition objectDefinition1 =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			if (parentObjectDefinition.getRootObjectDefinitionId() == 0) {
+			if (objectDefinition1.getRootObjectDefinitionId() == 0) {
 				edgeCandidatesJSONArray.put(
 					JSONUtil.put(
 						"label",
 						StringUtil.appendParentheticalSuffix(
-							parentObjectDefinition.getLabel(locale),
+							objectDefinition1.getLabel(locale),
 							objectRelationship.getLabel(locale))
 					).put(
 						"objectRelationshipId",
@@ -85,16 +85,16 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 			}
 
 			Tree tree = _treeFactory.create(
-				parentObjectDefinition.getRootObjectDefinitionId());
+				objectDefinition1.getRootObjectDefinitionId());
 
 			int depth = ParamUtil.getInteger(resourceRequest, "depth");
 
-			if (!_meetsTreeMaxHeight(depth, parentObjectDefinition, tree)) {
+			if (!_meetsTreeMaxHeight(depth, objectDefinition1, tree)) {
 				continue;
 			}
 
 			List<Edge> edges = tree.getAncestorsPath(
-				parentObjectDefinition.getObjectDefinitionId());
+				objectDefinition1.getObjectDefinitionId());
 
 			JSONArray ancestorsJSONArray = jsonFactory.createJSONArray();
 
@@ -129,15 +129,15 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 				).put(
 					"label",
 					StringUtil.appendParentheticalSuffix(
-						parentObjectDefinition.getLabel(locale),
+						objectDefinition1.getLabel(locale),
 						objectRelationship.getLabel(locale))
 				).put(
 					"objectRelationshipId",
 					objectRelationship.getObjectRelationshipId()
 				).put(
 					"root",
-					parentObjectDefinition.getObjectDefinitionId() ==
-						parentObjectDefinition.getRootObjectDefinitionId()
+					objectDefinition1.getObjectDefinitionId() ==
+						objectDefinition1.getRootObjectDefinitionId()
 				));
 		}
 

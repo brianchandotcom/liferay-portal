@@ -34,14 +34,14 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 
 	@Override
 	public boolean isEdgeCandidate() throws PortalException {
-		ObjectDefinition parentObjectDefinition =
+		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 				getObjectDefinitionId1());
 
 		if (isSelf() ||
 			!Objects.equals(
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, getType()) ||
-			parentObjectDefinition.isUnmodifiableSystemObject()) {
+			objectDefinition1.isUnmodifiableSystemObject()) {
 
 			return false;
 		}

@@ -88,6 +88,14 @@ public class OpenAPIUtil {
 		return StringUtil.merge(methodNameParts, "");
 	}
 
+	public static String getPathParameter(String path) {
+		String pathParameter = path.substring(path.lastIndexOf("/") + 1);
+
+		pathParameter = pathParameter.replaceAll("\\{", StringPool.BLANK);
+
+		return pathParameter.replaceAll("\\}", StringPool.BLANK);
+	}
+
 	private static String _formatSingular(String s) {
 		if (s.endsWith("ases")) {
 

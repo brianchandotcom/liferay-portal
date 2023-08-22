@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -179,13 +180,33 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			schemaName = responseSchema.getName();
 		}
 
-		String operationId = OpenAPIUtil.getOperationId(
-			endpoint.getMethod(), _formatPath(endpoint), schemaName);
+		operation.setOperationId(
+			OpenAPIUtil.getOperationId(
+				endpoint.getMethod(), _formatPath(endpoint),
+				endpoint.getRetrieveType(), schemaName));
 
-		operation.setOperationId(operationId);
+		if (Objects.equals(
+				endpoint.getRetrieveType(),
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
+
+			operation.setParameters(
+				ListUtil.fromArray(
+					new Parameter() {
+						{
+							setIn("path");
+							setName(
+								OpenAPIUtil.getPathParameter(
+									endpoint.getPath()));
+							setRequired(true);
+							setSchema(new StringSchema());
+						}
+					}));
+		}
 
 		if (Objects.equals(endpoint.getMethod(), Http.Method.GET) &&
-			operationId.endsWith("Page")) {
+			Objects.equals(
+				endpoint.getRetrieveType(),
+				APIApplication.Endpoint.RetrieveType.COLLECTION)) {
 
 			List<Parameter> parameters = new ArrayList<>();
 
@@ -229,7 +250,16 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 					setSchema(
 						new Schema() {
 							{
-								set$ref("Page" + responseSchema.getName());
+								if (Objects.equals(
+										endpoint.getRetrieveType(),
+										APIApplication.Endpoint.RetrieveType.
+											COLLECTION)) {
+
+									set$ref("Page" + responseSchema.getName());
+								}
+								else {
+									set$ref(responseSchema.getName());
+								}
 							}
 						});
 				}

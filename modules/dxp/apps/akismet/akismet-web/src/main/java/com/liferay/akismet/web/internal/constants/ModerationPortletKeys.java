@@ -11,6 +11,6 @@ package com.liferay.akismet.web.internal.constants;
 public class ModerationPortletKeys {
 
 	public static final String MODERATION =
-		"com_liferay_osb_community_web_ModerationPortlet";
+		"com_liferay_akismet_web_portlet_ModerationPortlet";
 
 }

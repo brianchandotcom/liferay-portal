@@ -21,6 +21,7 @@ export declare type ViewObjectDefinitionsModals = {
 	deleteObjectDefinition: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
+	unbindFromRootObject: boolean;
 };
 export interface DeletedObjectDefinition extends ObjectDefinition {
 	hasObjectRelationship: boolean;

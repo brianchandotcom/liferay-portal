@@ -146,6 +146,7 @@ interface ObjectDefinition {
 	pluralLabel: LocalizedValue<string>;
 	portlet: boolean;
 	restContextPath: string;
+	rootObjectDefinitionExternalReferenceCode: string;
 	scope: string;
 	status: {
 		code: number;

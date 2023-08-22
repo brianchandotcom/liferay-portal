@@ -26,13 +26,6 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 			keyProperty="teamId"
 			modelVar="team"
 		>
-
-			<%
-			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"id", team.getTeamId()
-			).build();
-			%>
-
 			<c:choose>
 				<c:when test='<%= Objects.equals(selectTeamsDisplayContext.getDisplayStyle(), "icon") %>'>
 					<liferay-ui:search-container-column-text>
@@ -46,9 +39,12 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
-								<%= HtmlUtil.escape(team.getName()) %>
-							</aui:a>
+							<clay:link
+								cssClass="selector-button"
+								href="javascript:void(0);"
+								id="<%= String.valueOf(team.getTeamId()) %>"
+								title="<%= HtmlUtil.escape(team.getName()) %>"
+							/>
 						</h5>
 
 						<h6 class="text-default">
@@ -62,9 +58,12 @@ SelectTeamsDisplayContext selectTeamsDisplayContext = new SelectTeamsDisplayCont
 						name="title"
 						truncate="<%= true %>"
 					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
-							<%= HtmlUtil.escape(team.getName()) %>
-						</aui:a>
+						<clay:link
+							cssClass="selector-button"
+							href="javascript:void(0);"
+							id="<%= String.valueOf(team.getTeamId()) %>"
+							title="<%= HtmlUtil.escape(team.getName()) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

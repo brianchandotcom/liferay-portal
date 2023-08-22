@@ -9,6 +9,8 @@ import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,10 +23,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,6 +99,7 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.copyFolder(
 				sourceRepositoryId, sourceFolderId, destinationRepositoryId,
 				destinationParentFolderId,
+				_getFileEntryTypeIds(group.getGroupId(), sourceFolderId),
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						group.getGroupId()),
@@ -114,11 +121,36 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private Map<Long, Long> _getFileEntryTypeIds(long groupId, long folderId)
+		throws PortalException {
+
+		DLFolder folder = _dlFolderService.getFolder(folderId);
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+
+		if (ArrayUtil.isEmpty(groupIds) ||
+			!ArrayUtil.contains(groupIds, folder.getGroupId())) {
+
+			return new HashMap<>();
+		}
+
+		return _dlFileEntryLocalService.getFileEntryTypeIds(
+			folder.getCompanyId(), folder.getGroupId(), folder.getTreePath());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyFolderMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFolderService _dlFolderService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

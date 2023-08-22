@@ -16,6 +16,7 @@ import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -86,9 +88,11 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
@@ -732,7 +736,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFileEntry(
 			getRepository(destinationRepositoryId),
 			sourceRepository.getFileEntry(fileEntryId), destinationFolderId,
-			groupIds, serviceContext);
+			ParamUtil.getLong(serviceContext, "fileEntryTypeId"), groupIds,
+			serviceContext);
 	}
 
 	@Override
@@ -755,7 +760,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,
-			long[] groupIds, ServiceContext serviceContext)
+			Map<Long, Long> fileEntryTypeIds, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (sourceRepositoryId == destinationRepositoryId) {
@@ -766,7 +772,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFolder(
 			sourceFolderId, destinationParentFolderId,
 			getRepository(sourceRepositoryId),
-			getRepository(destinationRepositoryId), groupIds, serviceContext);
+			getRepository(destinationRepositoryId), fileEntryTypeIds, groupIds,
+			serviceContext);
 	}
 
 	/**
@@ -3124,7 +3131,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected FileEntry copyFileEntry(
 			Repository toRepository, FileEntry fileEntry, long targetFolderId,
-			long[] groupIds, ServiceContext serviceContext)
+			long fileEntryTypeId, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		List<FileVersion> fileVersions = fileEntry.getFileVersions(
@@ -3137,7 +3145,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		_populateServiceContext(
 			serviceContext, DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(), groupIds,
+			fileEntry.getFileEntryId(), fileEntryTypeId, groupIds,
 			toRepository.getRepositoryId());
 
 		FileEntry targetFileEntry = toRepository.addFileEntry(
@@ -3202,13 +3210,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		return copyFileEntry(
-			toRepository, fileEntry, targetFolderId, null, serviceContext);
+			toRepository, fileEntry, targetFolderId,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			serviceContext);
 	}
 
 	protected Folder copyFolder(
 			long sourceFolderId, long parentFolderId, Repository fromRepository,
-			Repository toRepository, long[] groupIds,
-			ServiceContext serviceContext)
+			Repository toRepository, Map<Long, Long> fileEntryTypeIds,
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		Folder targetFolder = null;
@@ -3236,7 +3246,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			copyFolderDependencies(
 				sourceFolder, targetFolder, fromRepository, toRepository,
-				groupIds, serviceContext);
+				fileEntryTypeIds, groupIds, serviceContext);
 
 			return targetFolder;
 		}
@@ -3317,8 +3327,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected void copyFolderDependencies(
 			Folder sourceFolder, Folder targetFolder, Repository fromRepository,
-			Repository toRepository, long[] groupIds,
-			ServiceContext serviceContext)
+			Repository toRepository, Map<Long, Long> fileEntryTypeIds,
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		List<RepositoryEntry> repositoryEntries =
@@ -3332,13 +3342,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 				long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
 				String[] assetTagNames = serviceContext.getAssetTagNames();
+				long fileEntryTypeId = ParamUtil.getLong(
+					serviceContext, "fileEntryTypeId");
 
 				copyFileEntry(
 					toRepository, fileEntry, targetFolder.getFolderId(),
+					fileEntryTypeIds.getOrDefault(
+						fileEntry.getFileEntryId(),
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT),
 					groupIds, serviceContext);
 
 				serviceContext.setAssetCategoryIds(assetCategoryIds);
 				serviceContext.setAssetTagNames(assetTagNames);
+				serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
 			}
 			else if (repositoryEntry instanceof FileShortcut) {
 				if (targetFolder.isSupportsShortcuts()) {
@@ -3374,7 +3391,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 				copyFolderDependencies(
 					currentFolder, newFolder, fromRepository, toRepository,
-					groupIds, serviceContext);
+					fileEntryTypeIds, groupIds, serviceContext);
 			}
 		}
 	}
@@ -3474,8 +3491,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		Folder newFolder = copyFolder(
-			folderId, parentFolderId, fromRepository, toRepository, null,
-			serviceContext);
+			folderId, parentFolderId, fromRepository, toRepository,
+			new HashMap<>(), null, serviceContext);
 
 		fromRepository.deleteFolder(folderId);
 
@@ -3567,12 +3584,19 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	private void _populateServiceContext(
 		ServiceContext serviceContext, String className, long classPK,
-		long[] groupIds, long repositoryId) {
+		long fileEntryTypeId, long[] groupIds, long repositoryId) {
 
 		serviceContext.setAssetCategoryIds(
 			_getAssetCategoryIds(className, classPK, groupIds, repositoryId));
 		serviceContext.setAssetTagNames(
 			_getAssetTagNames(className, classPK, groupIds));
+
+		if (!Objects.equals(
+				fileEntryTypeId,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+
+			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		}
 	}
 
 	private void _validateFolders(

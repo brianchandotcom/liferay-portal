@@ -221,6 +221,8 @@ definition {
 			ObjectAdmin.gotoRelationshipsTab();
 
 			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry D");
+
+			Refresh();
 		}
 
 		task ("When the admin user deletes the user's personal data and reactivates the user in Users and Organizations") {

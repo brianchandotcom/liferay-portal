@@ -365,6 +365,10 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
+		WaitForElementPresent(
+			key_nodeLabel = "review",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL");
+
 		Workflow.updateDefinition(workflowDefinitionTitle = "New Process Title");
 
 		Navigator.gotoBack();

@@ -101,11 +101,11 @@ definition {
 
 			var getHeader = StringUtil.regexReplaceAll(${sqlResults}, "[\r\n]", "");
 
-			var getRecord = StringUtil.replace(${getHeader}, "mvccVersion,backgroundTaskId,groupId,companyId,userId,userName,createDate,modifiedDate,name,servletContextNames,taskExecutorClassName,taskContextMap,completed,completionDate,status,statusMessage", "Empty set");
+			var getRecord = StringUtil.replace(${getHeader}, "mvccVersion,backgroundTaskId,groupId,companyId,userId,userName,createDate,modifiedDate,name,servletContextNames,taskExecutorClassName,taskContextMap,completed,completionDate,status,statusMessage", "");
 
-			TestUtils.assertPartialEquals(
+			TestUtils.assertEquals(
 				actual = ${getRecord},
-				expected = "Empty set");
+				expected = "");
 		}
 	}
 

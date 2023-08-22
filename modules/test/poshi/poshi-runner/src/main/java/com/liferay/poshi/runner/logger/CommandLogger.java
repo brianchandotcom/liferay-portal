@@ -121,11 +121,6 @@ public final class CommandLogger {
 				element, arguments, returnValue));
 
 		_commandLogLoggerElement.addChildLoggerElement(lineGroupLoggerElement);
-
-		LoggerElement scriptLoggerElement = syntaxLogger.getSyntaxLoggerElement(
-			_poshiStackTrace.getSimpleStackTraceMessage());
-
-		_linkLoggerElements(scriptLoggerElement);
 	}
 
 	public void logMessage(Element element, SyntaxLogger syntaxLogger)
@@ -722,24 +717,6 @@ public final class CommandLogger {
 			StringUtil.toLowerCase(element.getName()), "fail");
 	}
 
-	private void _linkLoggerElements(LoggerElement scriptLoggerElement) {
-		String functionLinkID = scriptLoggerElement.getAttributeValue(
-			"data-functionlinkid");
-
-		if (functionLinkID != null) {
-			_functionLinkId = GetterUtil.getInteger(
-				functionLinkID.substring(15));
-		}
-
-		scriptLoggerElement.setAttribute(
-			"data-functionlinkid", "functionLinkId-" + _functionLinkId);
-
-		lineGroupLoggerElement.setAttribute(
-			"data-functionlinkid", "functionLinkId-" + _functionLinkId);
-
-		_functionLinkId++;
-	}
-
 	private void _ocularLineGroupLoggerElement(
 			Element element, LoggerElement lineGroupLoggerElement)
 		throws Exception {
@@ -827,7 +804,6 @@ public final class CommandLogger {
 	private Element _commandElement;
 	private final LoggerElement _commandLogLoggerElement;
 	private int _detailsLinkId;
-	private int _functionLinkId;
 	private final PoshiProperties _poshiProperties;
 	private final PoshiStackTrace _poshiStackTrace;
 	private final PoshiVariablesContext _poshiVariablesContext;

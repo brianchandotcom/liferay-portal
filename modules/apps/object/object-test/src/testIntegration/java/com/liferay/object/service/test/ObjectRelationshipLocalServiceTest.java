@@ -290,19 +290,6 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship1.getLabelMap());
 
 		ObjectRelationship objectRelationship2 =
-			_addObjectRelationshipSystemObjectDefinition();
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Object relationship must not be between unmodifiable system " +
-				"object definitions to be an edge of a root context",
-			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship2.getObjectRelationshipId(), 0,
-				objectRelationship2.getDeletionType(), true,
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString())));
-
-		ObjectRelationship objectRelationship3 =
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
@@ -316,12 +303,12 @@ public class ObjectRelationshipLocalServiceTest {
 			"Object relationship must be one to many to be an edge of a root " +
 				"context",
 			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship3.getObjectRelationshipId(), 0,
-				objectRelationship3.getDeletionType(), true,
+				objectRelationship2.getObjectRelationshipId(), 0,
+				objectRelationship2.getDeletionType(), true,
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString())));
 
-		ObjectRelationship objectRelationship4 =
+		ObjectRelationship objectRelationship3 =
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
@@ -335,7 +322,21 @@ public class ObjectRelationshipLocalServiceTest {
 			"Object relationship must not be a self-relationship to be an " +
 				"edge of a root context",
 			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship4.getObjectRelationshipId(), 0,
+				objectRelationship3.getObjectRelationshipId(), 0,
+				objectRelationship3.getDeletionType(), true,
+				LocalizedMapUtil.getLocalizedMap(
+					RandomTestUtil.randomString())));
+
+		ObjectRelationship objectRelationship4 =
+			_addObjectRelationshipSystemObjectDefinition();
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Object relationship must not be between unmodifiable system " +
+				"object definitions to be an edge of a root context",
+			() -> _objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship4.getObjectRelationshipId(),
+				objectRelationship4.getParameterObjectFieldId(),
 				objectRelationship4.getDeletionType(), true,
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString())));

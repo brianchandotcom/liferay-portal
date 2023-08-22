@@ -18,7 +18,7 @@ export declare function ObjectFolderReducer(
 	objectFolders: ObjectFolder[];
 	rightSidebarType: RightSidebarType;
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
-	selectedFolderERC: string;
+	selectedFolder: ObjectFolder;
 	selectedObjectRelationship: ObjectRelationship;
 	showChangesSaved: boolean;
 	storages: LabelValueObject[];

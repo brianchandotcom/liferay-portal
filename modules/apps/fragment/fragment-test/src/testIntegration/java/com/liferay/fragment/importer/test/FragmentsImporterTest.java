@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -554,7 +554,7 @@ public class FragmentsImporterTest {
 	}
 
 	private File _generateResourcesZipFile() throws Exception {
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		_addZipWriterEntry(
 			zipWriter, _PATH_DEPENDENCIES + "resources-collection",
@@ -567,7 +567,7 @@ public class FragmentsImporterTest {
 	}
 
 	private File _generateZipFile() throws Exception {
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		URL collectionURL = _bundle.getEntry(
 			_PATH_FRAGMENTS +
@@ -583,7 +583,7 @@ public class FragmentsImporterTest {
 	}
 
 	private File _generateZipFileWithFolderResources() throws Exception {
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		URL collectionURL = _bundle.getEntry(
 			_PATH_FRAGMENTS_WITH_FOLDER_RESOURCES +
@@ -801,5 +801,8 @@ public class FragmentsImporterTest {
 
 	private File _resourcesFile;
 	private User _user;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

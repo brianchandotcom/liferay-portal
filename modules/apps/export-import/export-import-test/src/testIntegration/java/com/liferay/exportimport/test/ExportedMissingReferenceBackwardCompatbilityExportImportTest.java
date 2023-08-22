@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -201,7 +201,7 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 
 			ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter(
+			ZipWriter zipWriter = _zipWriterFactory.getZipWriter(
 				new File(larFilePath));
 
 			for (String zipEntry : zipReader.getEntries()) {
@@ -282,5 +282,8 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

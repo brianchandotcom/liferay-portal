@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -106,7 +106,7 @@ public class ImportMVCResourceCommandTest {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			_RESOURCES_PATH, "*", true);
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -132,5 +132,8 @@ public class ImportMVCResourceCommandTest {
 
 	@Inject(filter = "mvc.command.name=/fragment/import")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

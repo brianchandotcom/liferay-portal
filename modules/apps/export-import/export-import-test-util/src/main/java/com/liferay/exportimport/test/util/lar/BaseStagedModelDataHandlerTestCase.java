@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
@@ -693,7 +693,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void initExport(Group exportGroup) throws Exception {
-		zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		zipWriter = _zipWriterFactory.getZipWriter();
 
 		portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -1209,5 +1209,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

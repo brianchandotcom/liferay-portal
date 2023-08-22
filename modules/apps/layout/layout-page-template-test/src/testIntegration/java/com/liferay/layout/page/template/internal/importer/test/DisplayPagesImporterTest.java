@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -225,7 +225,7 @@ public class DisplayPagesImporterTest {
 	}
 
 	private File _generateZipFile(String testCaseName) throws Exception {
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			StringBundler.concat(
@@ -380,5 +380,8 @@ public class DisplayPagesImporterTest {
 	private LayoutsImporter _layoutsImporter;
 
 	private User _user;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

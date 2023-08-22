@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -73,7 +73,7 @@ public class FragmentCompositionExportImportTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext());
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		fragmentComposition.populateZipWriter(zipWriter, "test");
 
@@ -116,5 +116,8 @@ public class FragmentCompositionExportImportTest {
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

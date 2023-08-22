@@ -34,7 +34,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public class PortletDataContextReferencesTest {
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				new HashMap<String, String[]>(), null, null,
-				ZipWriterFactoryUtil.getZipWriter());
+				_zipWriterFactory.getZipWriter());
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -338,7 +339,7 @@ public class PortletDataContextReferencesTest {
 
 	@Test
 	public void testNotReferenceMissingReference() throws Exception {
-		_portletDataContext.setZipWriter(ZipWriterFactoryUtil.getZipWriter());
+		_portletDataContext.setZipWriter(_zipWriterFactory.getZipWriter());
 
 		Element bookmarksEntryElement =
 			_portletDataContext.getExportDataElement(_bookmarksEntry);
@@ -445,5 +446,8 @@ public class PortletDataContextReferencesTest {
 
 	private PortletDataContext _portletDataContext;
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

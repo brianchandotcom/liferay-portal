@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -812,7 +812,7 @@ public class ExportImportHelperUtilTest {
 		String xml = replaceParameters(
 			getContent("missing_references.txt"), getFileEntry());
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		zipWriter.addEntry("/manifest.xml", xml);
 
@@ -921,6 +921,9 @@ public class ExportImportHelperUtilTest {
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 	private class ExportImportTestParameterMapBuilder {
 

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.BooleanWrapper;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -150,7 +150,7 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private InputStream _toInputStream(String dirName) throws Exception {
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		String basePath = StringBundler.concat(
 			"com/liferay/batch/engine/internal/test/dependencies/", dirName,
@@ -192,5 +192,8 @@ public class BatchEngineBundleTrackerTest {
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

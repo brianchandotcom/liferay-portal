@@ -82,6 +82,42 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
+	public void testGetRenderTimesDataOfAContentLayoutWithACollection()
+		throws Exception {
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		layoutStructure.addCollectionStyledLayoutStructureItem(
+			layoutStructure.getMainItemId(), 0);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_layout.getGroupId(), _layout.getPlid(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				layoutStructure.toString());
+
+		JSONArray jsonArray = _serveResource();
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertNotNull(jsonObject);
+		Assert.assertFalse(jsonObject.getBoolean("cached"));
+		Assert.assertNotNull(jsonObject.get("itemId"));
+		Assert.assertFalse(jsonObject.getBoolean("fragment"));
+		Assert.assertEquals("collection", jsonObject.getString("itemType"));
+		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
+		Assert.assertEquals(
+			StringPool.BLANK, jsonObject.getString("fragmentCollectionURL"));
+		Assert.assertEquals(
+			"collection-display", jsonObject.getString("hierarchy"));
+		Assert.assertEquals("collection-display", jsonObject.getString("name"));
+		Assert.assertNotNull(jsonObject.get("renderTime"));
+	}
+
+	@Test
 	public void testGetRenderTimesDataOfAContentLayoutWithACreatedFragmentEntry()
 		throws Exception {
 

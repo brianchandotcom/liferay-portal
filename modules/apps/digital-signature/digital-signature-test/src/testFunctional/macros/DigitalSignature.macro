@@ -1,5 +1,17 @@
 definition {
 
+	macro assertAlertMessage {
+		AssertElementPresent(
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_ALERT",
+			modalAlert = ${alertMessage});
+	}
+
+	macro assertDigitalSignaturePage {
+		AssertElementPresent(
+			key_title = ${assertPage},
+			locator1 = "Header#H1_TITLE");
+	}
+
 	macro createEnvelope {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -123,6 +135,18 @@ definition {
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
 	}
 
+	macro deleteCreatedDM {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		PortletEntry.selectAll();
+
+		DigitalSignature.selectDMFolder(checkboxDM = "_com_liferay_document_library_web_portlet_DLAdminPortlet_rowIdsFolder");
+
+		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+	}
+
 	macro deleteEnvelope {
 		Refresh();
 
@@ -135,6 +159,16 @@ definition {
 		var value = selenium.getElementValue("TextInput#HIDDEN");
 
 		Navigator.openSpecificURL(url = ${value});
+	}
+
+	macro documentDigitalSignature {
+		for (var documentTitle : list ${documentlist}) {
+			Click(
+				dmDocumentTitle = ${documentTitle},
+				locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+		}
+
+		Click(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 	}
 
 	macro enableDigitalSignature {
@@ -171,6 +205,18 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro goToDigitalSignature {
+		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
+	}
+
+	macro goToDigitalSignatureEllipsis {
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = ${dmDocumentTitle},
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		Click(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
+	}
+
 	macro goToDigitalSignatureSettings {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -180,6 +226,12 @@ definition {
 		Click(
 			key_itemName = "Digital Signature",
 			locator1 = "ListGroupItem#ITEM_TEXT");
+	}
+
+	macro selectDMFolder {
+		Click.javaScriptClick(
+			key_fieldName = ${checkboxDM},
+			locator1 = "Checkbox#CHECKBOX_NAME");
 	}
 
 }

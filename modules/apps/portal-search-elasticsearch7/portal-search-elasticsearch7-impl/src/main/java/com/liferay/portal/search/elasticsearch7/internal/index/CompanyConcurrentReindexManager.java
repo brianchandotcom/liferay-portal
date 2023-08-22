@@ -48,7 +48,7 @@ public class CompanyConcurrentReindexManager
 
 	@Override
 	public void createNextIndex(long companyId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661") ||
 			(companyId == CompanyConstants.SYSTEM)) {
 
 			return;
@@ -83,7 +83,7 @@ public class CompanyConcurrentReindexManager
 
 	@Override
 	public void deleteNextIndex(long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
 			return;
 		}
 
@@ -112,7 +112,7 @@ public class CompanyConcurrentReindexManager
 	public void replaceCurrentIndexWithNextIndex(long companyId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661") ||
 			(companyId == CompanyConstants.SYSTEM)) {
 
 			return;

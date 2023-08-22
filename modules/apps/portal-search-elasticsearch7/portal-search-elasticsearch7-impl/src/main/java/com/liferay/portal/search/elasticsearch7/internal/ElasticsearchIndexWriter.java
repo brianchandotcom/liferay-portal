@@ -404,7 +404,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	}
 
 	private String _getIndexNameNext(long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
 			return null;
 		}
 

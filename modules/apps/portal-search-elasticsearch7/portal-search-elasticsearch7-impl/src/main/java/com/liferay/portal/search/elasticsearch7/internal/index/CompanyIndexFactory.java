@@ -60,7 +60,7 @@ public class CompanyIndexFactory
 	public void deleteIndices(IndicesClient indicesClient, long companyId) {
 		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
 			Company company = _companyLocalService.fetchCompany(companyId);
 
 			if ((company != null) &&

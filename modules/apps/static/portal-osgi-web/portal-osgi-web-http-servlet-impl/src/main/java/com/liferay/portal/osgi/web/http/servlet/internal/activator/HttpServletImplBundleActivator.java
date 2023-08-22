@@ -36,7 +36,6 @@ import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionTracker;
 import org.eclipse.equinox.http.servlet.internal.servlet.ProxyServlet;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -199,26 +198,9 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 					}
 				).build();
 
-			attributesMap.putIfAbsent(Constants.SERVICE_VENDOR, "Liferay.com");
-			attributesMap.putIfAbsent(
-				Constants.SERVICE_DESCRIPTION,
-				"Liferay Portal OSGi Http Servlet");
-
-			BundleContext trackingBundleContext = _bundleContext;
-
-			if (Boolean.parseBoolean(
-					_bundleContext.getProperty(
-						"equinox.http.global.whiteboard"))) {
-
-				Bundle systemBundle = _bundleContext.getBundle(
-					Constants.SYSTEM_BUNDLE_LOCATION);
-
-				trackingBundleContext = systemBundle.getBundleContext();
-			}
-
 			HttpServiceRuntimeImpl httpServiceRuntimeImpl =
 				new HttpServiceRuntimeImpl(
-					trackingBundleContext, _bundleContext, servletContext,
+					_bundleContext, _bundleContext, servletContext,
 					Collections.unmodifiableMap(attributesMap));
 
 			proxyServlet.setHttpServiceRuntimeImpl(httpServiceRuntimeImpl);

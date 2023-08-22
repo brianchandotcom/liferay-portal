@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -129,8 +130,25 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
-	public void testGetRenderTimesDataOfAContentLayoutWithACreatedFragmentEntryInsideAColumn()
+	public void testGetRenderTimesDataOfAContentLayoutWithACreatedFragmentEntryInsideAGrid()
 		throws Exception {
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		LayoutStructureItem layoutStructureItem1 =
+			layoutStructure.addRowStyledLayoutStructureItem(
+				layoutStructure.getMainItemId(), 0, 1);
+
+		LayoutStructureItem layoutStructureItem2 =
+			layoutStructure.addColumnLayoutStructureItem(
+				layoutStructureItem1.getItemId(), 0);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_layout.getGroupId(), _layout.getPlid(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				layoutStructure.toString());
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(true);
 
@@ -145,11 +163,19 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
 				null, fragmentEntry.getType(), _serviceContext);
 
-		_addFragmentStyledLayoutStructureItem(fragmentEntryLink);
+		_addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink, layoutStructureItem2.getItemId());
 
 		JSONArray jsonArray = _serveResource();
 
 		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertNotNull(jsonObject);
+		Assert.assertEquals(
+			"grid > " + fragmentEntry.getName(),
+			jsonObject.getString("hierarchy"));
 	}
 
 	@Test
@@ -215,17 +241,20 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 			FragmentEntryLink fragmentEntryLink)
 		throws Exception {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
+		LayoutStructure layoutStructure = _getLayoutStructure();
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		_addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink, layoutStructure.getMainItemId());
+	}
+
+	private void _addFragmentStyledLayoutStructureItem(
+			FragmentEntryLink fragmentEntryLink, String parentItemId)
+		throws Exception {
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			layoutStructure.getMainItemId(), 0);
+			fragmentEntryLink.getFragmentEntryLinkId(), parentItemId, 0);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -233,6 +262,16 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				layoutStructure.toString());
+	}
+
+	private LayoutStructure _getLayoutStructure() {
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					_layout.getGroupId(), _layout.getPlid());
+
+		return LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 	}
 
 	private JSONArray _serveResource() throws Exception {

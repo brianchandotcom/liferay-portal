@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/digital-agent",
+	"friendlyURL": "/veriday-digital-agent",
 	"hidden": true,
 	"name": "Digital Agent",
 	"name_i18n": {

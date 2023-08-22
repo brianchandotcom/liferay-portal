@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/intranet-8020",
+	"friendlyURL": "/ariadne-intranet-8020",
 	"hidden": true,
 	"name": "Intranet 8020",
 	"name_i18n": {

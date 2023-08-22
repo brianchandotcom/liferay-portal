@@ -142,10 +142,11 @@
 					productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US), 150, "...")
 					portalURL = portalUtil.getLayoutURL(themeDisplay)
 					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
+					desiredProductURL = productURL?replace("/solutions-marketplace", "")
 					productSpecifications = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + product.productId + "/productSpecifications").items
 				/>
 
-				<a class="bg-white d-flex flex-column mb-0 p-4 rounded solutions-search-results-card text-dark text-decoration-none" href="${productURL}">
+				<a class="bg-white d-flex flex-column mb-0 p-4 rounded solutions-search-results-card text-dark text-decoration-none" href="${desiredProductURL}">
 					<div class="align-items-center d-flex image-container justify-content-center rounded">
 						<img
 							alt="${product.name.en_US}"

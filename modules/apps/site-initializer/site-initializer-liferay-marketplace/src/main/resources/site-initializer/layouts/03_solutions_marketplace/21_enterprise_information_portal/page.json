@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/enterprise-information-portal",
+	"friendlyURL": "/fansysoft-enterprise-information-portal",
 	"hidden": true,
 	"name": "Enterprise Information Portal",
 	"name_i18n": {

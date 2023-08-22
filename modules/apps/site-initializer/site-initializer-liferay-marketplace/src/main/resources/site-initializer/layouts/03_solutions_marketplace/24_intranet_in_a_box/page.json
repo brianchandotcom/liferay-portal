@@ -1,7 +1,7 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/intranet-in-a-box",
+	"friendlyURL": "/veriday-intranet-in-a-box",
 	"hidden": true,
 	"name": "Intranet in a Box",
 	"name_i18n": {

@@ -411,7 +411,7 @@
 															"showStagedResults": "false",
 															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
 															"suggestionsDisplayThreshold": "2",
-															"suggestionsEnabled": "true",
+															"suggestionsEnabled": "false",
 															"useAdvancedSearchSyntax": "false"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"

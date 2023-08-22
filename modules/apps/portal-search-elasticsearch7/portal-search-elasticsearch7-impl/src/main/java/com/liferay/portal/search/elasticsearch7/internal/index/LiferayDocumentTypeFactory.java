@@ -41,8 +41,10 @@ import org.elasticsearch.xcontent.XContentType;
 public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 	public LiferayDocumentTypeFactory(
-		IndicesClient indicesClient, JSONFactory jsonFactory) {
+		String indexName, IndicesClient indicesClient,
+		JSONFactory jsonFactory) {
 
+		_indexName = indexName;
 		_indicesClient = indicesClient;
 		_jsonFactory = jsonFactory;
 	}
@@ -243,6 +245,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayDocumentTypeFactory.class);
 
+	private final String _indexName;
 	private final IndicesClient _indicesClient;
 	private final JSONFactory _jsonFactory;
 

@@ -68,6 +68,15 @@ liferayOSGi {
 	expandCompileInclude = true
 }
 
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifact distTar
+			artifact distZip
+		}
+	}
+}
+
 updateFileVersions {
 	match(/<artifactId>com\.liferay\.source\.formatter<\/artifactId>\s+<version>(.+)<\/version>/, "../../etl/talend/pom.xml")
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")

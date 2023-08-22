@@ -6,6 +6,7 @@
 package com.liferay.user.associated.data.exporter;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.user.associated.data.component.UADComponent;
 
 import java.io.File;
@@ -47,7 +48,8 @@ public interface UADExporter<T> extends UADComponent<T> {
 	 * @return a file containing the exported data
 	 * @throws PortalException if a portal exception occurred
 	 */
-	public File exportAll(long userId) throws PortalException;
+	public File exportAll(long userId, ZipWriterFactory zipWriterFactory)
+		throws PortalException;
 
 	/**
 	 * Returns the number of export data items of type {@code T} entities

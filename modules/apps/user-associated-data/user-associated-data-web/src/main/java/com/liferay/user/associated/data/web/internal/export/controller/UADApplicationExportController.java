@@ -65,7 +65,7 @@ public class UADApplicationExportController {
 			UADExporter<?> uadExporter = _uadRegistry.getUADExporter(
 				uadRegistryKey);
 
-			File file = uadExporter.exportAll(userId);
+			File file = uadExporter.exportAll(userId, _zipWriterFactory);
 
 			if (file.exists()) {
 				try {

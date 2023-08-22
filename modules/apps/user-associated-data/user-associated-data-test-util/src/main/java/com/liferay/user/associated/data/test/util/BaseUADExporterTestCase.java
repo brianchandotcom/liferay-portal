@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
@@ -55,7 +56,7 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 	public void testExportAll() throws Exception {
 		addBaseModel(user.getUserId());
 
-		File file = uadExporter.exportAll(user.getUserId());
+		File file = uadExporter.exportAll(user.getUserId(), _zipWriterFactory);
 
 		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
@@ -116,5 +117,8 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

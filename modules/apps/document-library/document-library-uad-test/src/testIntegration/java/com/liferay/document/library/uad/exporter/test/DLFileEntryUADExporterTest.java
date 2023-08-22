@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
@@ -63,7 +64,7 @@ public class DLFileEntryUADExporterTest
 	public void testExportAll() throws Exception {
 		addBaseModel(user.getUserId());
 
-		File file = _uadExporter.exportAll(user.getUserId());
+		File file = _uadExporter.exportAll(user.getUserId(), _zipWriterFactory);
 
 		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
@@ -88,7 +89,7 @@ public class DLFileEntryUADExporterTest
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName());
 
-		File file = _uadExporter.exportAll(user.getUserId());
+		File file = _uadExporter.exportAll(user.getUserId(), _zipWriterFactory);
 
 		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
@@ -133,5 +134,8 @@ public class DLFileEntryUADExporterTest
 
 	@Inject
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Inject
+	private ZipWriterFactory _zipWriterFactory;
 
 }

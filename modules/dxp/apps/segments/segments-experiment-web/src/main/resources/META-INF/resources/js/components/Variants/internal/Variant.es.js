@@ -14,7 +14,7 @@ import React, {useContext, useState} from 'react';
 import SegmentsExperimentsContext from '../../../context.es';
 import {navigateToExperience} from '../../../util/navigation.es';
 import {indexToPercentageString} from '../../../util/percentages.es';
-import {DeleteModal} from '../../DeleteModal.es';
+import {ConfirmModal} from '../../ConfirmModal';
 
 function Variant({
 	active,
@@ -161,14 +161,15 @@ function Variant({
 			</ClayList.Item>
 
 			{deleteModalActive && (
-				<DeleteModal
+				<ConfirmModal
 					modalObserver={observer}
 					onCancel={onClose}
-					onDelete={() => {
+					onConfirm={() => {
 						onVariantDeletion(variantId);
 
 						onClose();
 					}}
+					submitTitle={Liferay.Language.get('delete')}
 					title={Liferay.Language.get('delete-variant')}
 				>
 					<p className="font-weight-bold text-secondary">
@@ -176,7 +177,7 @@ function Variant({
 							'are-you-sure-you-want-to-delete-this'
 						)}
 					</p>
-				</DeleteModal>
+				</ConfirmModal>
 			)}
 		</>
 	);

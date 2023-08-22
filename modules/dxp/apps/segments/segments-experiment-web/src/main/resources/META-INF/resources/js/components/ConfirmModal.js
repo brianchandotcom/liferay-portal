@@ -7,7 +7,14 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React from 'react';
 
-function DeleteModal({children, modalObserver, onCancel, onDelete, title}) {
+function ConfirmModal({
+	children,
+	modalObserver,
+	onCancel,
+	onConfirm,
+	submitTitle,
+	title,
+}) {
 	return (
 		<ClayModal observer={modalObserver} status="warning">
 			<ClayModal.Header>{title}</ClayModal.Header>
@@ -21,8 +28,8 @@ function DeleteModal({children, modalObserver, onCancel, onDelete, title}) {
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="warning" onClick={onDelete}>
-							{Liferay.Language.get('delete')}
+						<ClayButton displayType="warning" onClick={onConfirm}>
+							{submitTitle}
 						</ClayButton>
 					</ClayButton.Group>
 				}
@@ -31,4 +38,4 @@ function DeleteModal({children, modalObserver, onCancel, onDelete, title}) {
 	);
 }
 
-export {DeleteModal};
+export {ConfirmModal};

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.akismet.internal.component.enabler;
+package com.liferay.akismet.web.internal.component.enabler;
 
 import com.liferay.akismet.client.AkismetClient;
-import com.liferay.akismet.internal.application.list.ModerationPanelApp;
-import com.liferay.akismet.internal.portlet.ModerationPortlet;
-import com.liferay.akismet.internal.portlet.action.AkismetEditMessageMVCActionCommand;
-import com.liferay.akismet.internal.servlet.taglib.MBMessageHeaderJSPDynamicInclude;
+import com.liferay.akismet.web.internal.application.list.ModerationPanelApp;
+import com.liferay.akismet.web.internal.portlet.ModerationPortlet;
+import com.liferay.akismet.web.internal.portlet.action.AkismetEditMessageMVCActionCommand;
+import com.liferay.akismet.web.internal.servlet.taglib.MBMessageHeaderJSPDynamicInclude;
 import com.liferay.osgi.util.ComponentUtil;
 
 import org.osgi.service.component.ComponentContext;

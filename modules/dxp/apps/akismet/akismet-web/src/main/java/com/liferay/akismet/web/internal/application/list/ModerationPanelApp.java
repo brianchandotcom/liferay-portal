@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.akismet.internal.application.list;
+package com.liferay.akismet.web.internal.application.list;
 
-import com.liferay.akismet.internal.constants.ModerationPortletKeys;
+import com.liferay.akismet.web.internal.constants.ModerationPortletKeys;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;

@@ -5,7 +5,6 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {Fragment} from '../constants/Fragment';
 import {
 	Action,
 	LOAD_DATA,
@@ -15,15 +14,15 @@ import {
 	SET_LANGUAGE_ID,
 	SET_SELECTED_ITEM,
 } from '../constants/actionTypes';
-import {Issue} from '../constants/types/Issue';
 import {LayoutReportsData} from '../constants/types/LayoutReports';
+import {SelectedItem} from '../constants/types/SelectedItem';
 
 interface State {
 	data?: LayoutReportsData;
 	error?: string | null;
 	languageId?: string;
 	loading: boolean;
-	selectedItem?: Fragment | Issue | null;
+	selectedItem?: SelectedItem | null;
 }
 
 const INITIAL_STATE: State = {

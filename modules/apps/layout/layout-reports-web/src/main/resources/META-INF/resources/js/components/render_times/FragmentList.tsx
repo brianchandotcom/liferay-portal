@@ -4,14 +4,16 @@
  */
 
 import ClayBadge from '@clayui/badge';
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {Fragment} from '../../constants/Fragment';
+import {SET_SELECTED_ITEM} from '../../constants/actionTypes';
+import {StoreDispatchContext} from '../../context/StoreContext';
 import getComponentType from '../../utils/getComponentType';
 
 interface HighlightedFragment {
@@ -42,6 +44,8 @@ export default function FragmentList({
 		highlightedFragment,
 		setHighlightedFragment,
 	] = useState<HighlightedFragment | null>(null);
+
+	const dispatch = useContext(StoreDispatchContext);
 
 	const highlightFragment = ({
 		hierarchy,
@@ -85,6 +89,16 @@ export default function FragmentList({
 
 		setHighlightedFragment(null);
 	};
+
+	const selectFragment = (fragment: Fragment) =>
+		dispatch({
+			item: {
+				...fragment,
+				title: fragment.name,
+				type: 'fragment',
+			},
+			type: SET_SELECTED_ITEM,
+		});
 
 	return (
 		<div className="page-audit__fragmentList">
@@ -132,6 +146,27 @@ export default function FragmentList({
 								</span>
 
 								<div className="page-audit__fragment__buttons">
+									<ClayButton
+										aria-label={sub(
+											Liferay.Language.get('select-x'),
+											name
+										)}
+										className="select-fragment-button"
+										displayType="unstyled"
+										onBlur={removeHighlightFromFragment}
+										onClick={() => {
+											selectFragment(fragment);
+
+											removeHighlightFromFragment();
+										}}
+										onFocus={() =>
+											highlightFragment({
+												itemId,
+												name,
+											})
+										}
+									/>
+
 									<ClayButtonWithIcon
 										aria-label={sub(
 											Liferay.Language.get(

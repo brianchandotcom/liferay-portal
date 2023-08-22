@@ -1,7 +1,6 @@
 @component-name = "portal-platform-experience-and-design-system"
 definition {
 
-	property osgi.modules.includes = "accessibility-menu-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Accessibility Menu";
@@ -15,7 +14,7 @@ definition {
 		User.firstLoginPG();
 
 		task ("Given Accessibility Menu enabled at Instance Settings level") {
-			AccessibilityMenu.activateAccessibilityMenu();
+			AccessibilityMenu.activateAccessibilityMenu(portlet = "Instance Settings");
 		}
 
 		task ("And navigate to home page") {
@@ -36,85 +35,21 @@ definition {
 		}
 	}
 
-	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed.."
+	@description = "LPS-178192. Verifies that the user can disable it by Instance Settings"
 	@priority = 5
-	test BrowserLocalStorageSmoke {
+	test CanBeDisabledByInstanceSettings {
 		property portal.acceptance = "true";
 
-		task ("Given created new user A") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfnA",
-				userLastName = "userlnA",
-				userScreenName = "usersnA");
-		}
-
-		task ("And signed out as guest user") {
-			SignOut.signOut();
-		}
-
-		task ("When the toggle shows underline to ON state") {
-			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
-
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-
-		task ("And sign in as a new user for first time") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfnA userlnA");
-		}
-
-		task ("And the toggle shows under to OFF") {
-			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
-		}
-
-		task ("And user signs out") {
-			SignOut.signOut();
-		}
-
-		task ("Then the toggle shows underline is set to ON") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-
-		task ("And When guest user toggles show underline to OFF") {
+		task ("Given user with admin privileges") {
 			Navigator.openURL();
-
-			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		task ("And When guest user toggles show underline to ON") {
-			Navigator.openURL();
-
-			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
-
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		task ("When Accessibility Menu is reset to default values") {
+			AccessibilityMenu.resetDefaultValues(portlet = "Instance Settings");
 		}
 
-		task ("And sign in as user A") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfnA userlnA");
-		}
-
-		task ("Then show underline is set to OFF state") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		task ("Then Accessibility Menu cannot be accessed") {
+			AccessibilityMenu.assertCannotAccessAccessibilityMenuModal();
 		}
 	}
 
@@ -281,7 +216,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178192. Verifies that the guest preferences extend and persist to other users"
+	@description = "LPS-178192. Verifies that the guest preferences extend and persist to other users."
 	@priority = 4
 	test FirstTimeSignInConfigUsesLocalStorageIfConfigNotChangedWhileSignedIn {
 		property portal.acceptance = "true";
@@ -324,7 +259,7 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		task ("And toggle show underline to OFF") {
+		task ("And toggle show underline to OFF state") {
 			Refresh();
 
 			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");

@@ -166,4 +166,5 @@ definition {
 			key_menuItem = "Reset Default Values",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
+
 }

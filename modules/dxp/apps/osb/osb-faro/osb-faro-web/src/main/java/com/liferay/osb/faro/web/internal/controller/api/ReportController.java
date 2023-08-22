@@ -172,7 +172,7 @@ public class ReportController extends BaseFaroController {
 		};
 
 		return Response.ok(
-			streamingOutput, "applization/zip"
+			streamingOutput, "application/zip"
 		).build();
 	}
 

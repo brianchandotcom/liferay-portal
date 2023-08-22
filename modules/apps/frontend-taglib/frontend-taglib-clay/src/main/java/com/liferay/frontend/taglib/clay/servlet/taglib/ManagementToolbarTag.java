@@ -1092,11 +1092,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write(" /><span class=\"input-group-inset-item");
 			jspWriter.write(" input-group-inset-item-after\"><button class=\"");
 			jspWriter.write(" navbar-breakpoint-d-none btn btn-monospaced");
-			jspWriter.write(" btn-unstyled\"");
-
-			if (disabled) {
-				jspWriter.write(" disabled");
-			}
+			jspWriter.write(" btn-unstyled\" disabled");
 
 			jspWriter.write(" type=\"button\">");
 
@@ -1109,11 +1105,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("</button><button aria-label=\"");
 			jspWriter.write(LanguageUtil.get(resourceBundle, "search"));
 			jspWriter.write("\" class=\"btn btn-monospaced");
-			jspWriter.write(" btn-unstyled\"");
-
-			if (disabled) {
-				jspWriter.write(" disabled");
-			}
+			jspWriter.write(" btn-unstyled\" disabled");
 
 			jspWriter.write(" type=\"submit\">");
 

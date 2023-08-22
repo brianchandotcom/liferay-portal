@@ -61,7 +61,7 @@ public class TreeFactoryTest {
 			Assert.assertEquals(queue.poll(), objectDefinition.getShortName());
 		}
 
-		Assert.assertTrue(queue.toString(), queue.isEmpty());
+		Assert.assertTrue(queue.isEmpty());
 	}
 
 	@Inject

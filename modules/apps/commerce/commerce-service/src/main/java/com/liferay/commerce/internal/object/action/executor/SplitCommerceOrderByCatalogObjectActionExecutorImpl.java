@@ -278,6 +278,10 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 					newCommerceOrderItem.setDiscountManuallyAdjusted(true);
 					newCommerceOrderItem.setManuallyAdjusted(true);
 					newCommerceOrderItem.setPriceManuallyAdjusted(true);
+					newCommerceOrderItem.
+						setUnitOfMeasureIncrementalOrderQuantity(
+							commerceOrderItem.
+								getUnitOfMeasureIncrementalOrderQuantity());
 					newCommerceOrderItem.setUnitOfMeasureKey(
 						commerceOrderItem.getUnitOfMeasureKey());
 

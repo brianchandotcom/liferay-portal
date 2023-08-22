@@ -84,7 +84,7 @@ public class OrderItemUtil {
 					BigDecimal.valueOf(
 						GetterUtil.get(orderItem.getQuantity(), 0)),
 					GetterUtil.get(orderItem.getShippedQuantity(), 0),
-					StringPool.BLANK, serviceContext);
+					BigDecimal.ONE, StringPool.BLANK, serviceContext);
 		}
 
 		commerceOrderItem =
@@ -261,7 +261,7 @@ public class OrderItemUtil {
 					quantity,
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
-					StringPool.BLANK, serviceContext);
+					BigDecimal.ONE, StringPool.BLANK, serviceContext);
 		}
 
 		commerceOrderItem =

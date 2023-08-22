@@ -84,11 +84,22 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	@summary = "Default summary"
-	macro deleteABTest() {
-		Click(locator1 = "ABTest#KEBAB_AB_TEST");
+	macro deleteABTest {
+		if (${deleteWay} == "kebab") {
+			Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
-		MenuItem.clickNoError(menuItem = "Delete");
+			MenuItem.clickNoError(menuItem = "Delete");
+		}
+
+		AssertTextEquals.assertPartialText(
+					locator1 = "Modal#MODAL_CONTENT",
+					value1 = "Are you sure you want to delete this? It will be deleted immediately. You will lose all data related to it. You will not be able to undo this operation.");
+		
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
+	}
+
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",

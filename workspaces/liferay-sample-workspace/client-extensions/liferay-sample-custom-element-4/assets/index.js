@@ -39,8 +39,7 @@ class CustomElement extends HTMLElement {
 				.then((response) => response.json())
 				.then((response) => {
 					if (response.givenName) {
-						const nameElements =
-							document.getElementsByTagName('i');
+						const nameElements = document.getElementsByTagName('i');
 
 						if (nameElements.length) {
 							nameElements[0].innerHTML = response.givenName;

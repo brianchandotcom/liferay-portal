@@ -62,8 +62,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		// Get object relationships where there is a parent who is inside a
-		// hierarchical structure and is not the root
+		// Object Definition inside a hierarchical structure and is not the root
 
 		ObjectDefinition objectDefinitionAAAA =
 			ObjectDefinitionTestUtil.addObjectDefinition(
@@ -139,9 +138,8 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				0, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
-		// Get object relationship edges candidates where there is a parent who
-		// is inside a hierarchical structure but the parent depth plus child
-		// depth is greater than 4
+		// Object Definition inside a hierarchical structure and is the maximum
+		// height
 
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
@@ -153,8 +151,41 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationshipAAA_AAAA.getObjectRelationshipId());
 
-		// Get object relationship edges candidates where there is a parent who
-		// is not inside a hierarchical structure
+		// Object Definition inside a hierarchical structure and is the root
+
+		ObjectRelationship objectRelationshipA_AAAA =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId(),
+				objectDefinitionAAAA.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		Assert.assertEquals(
+			_jsonFactory.createJSONArray(
+			).put(
+				JSONUtil.put(
+					"ancestors", _jsonFactory.createJSONArray()
+				).put(
+					"label",
+					_getEdgeLabel(objectDefinitionA, objectRelationshipA_AAAA)
+				).put(
+					"objectRelationshipId",
+					objectRelationshipA_AAAA.getObjectRelationshipId()
+				).put(
+					"root", true
+				)
+			).toString(),
+			_getObjectRelationshipEdgeCandidatesJSONArray(
+				0, objectDefinitionAAAA.getObjectDefinitionId()
+			).toString());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationshipA_AAAA.getObjectRelationshipId());
+
+		// Object Definition is not inside a hierarchical structure
 
 		ObjectDefinition objectDefinitionBBB =
 			ObjectDefinitionTestUtil.addObjectDefinition(
@@ -188,38 +219,6 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationshipBBB_AAAA.getObjectRelationshipId());
-
-		// Get object relationship edges candidates where there is a parent who
-		// is inside a hierarchical structure and is the root
-
-		ObjectRelationship objectRelationshipA_AAAA =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				objectDefinitionA.getObjectDefinitionId(),
-				objectDefinitionAAAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		Assert.assertEquals(
-			_jsonFactory.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"ancestors", _jsonFactory.createJSONArray()
-				).put(
-					"label",
-					_getEdgeLabel(objectDefinitionA, objectRelationshipA_AAAA)
-				).put(
-					"objectRelationshipId",
-					objectRelationshipA_AAAA.getObjectRelationshipId()
-				).put(
-					"root", true
-				)
-			).toString(),
-			_getObjectRelationshipEdgeCandidatesJSONArray(
-				0, objectDefinitionAAAA.getObjectDefinitionId()
-			).toString());
 	}
 
 	private String _getEdgeLabel(

@@ -1123,6 +1123,21 @@ public interface CommerceOrderItemModel
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings);
 
 	/**
+	 * Returns the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @return the unit of measure incremental order quantity of this commerce order item
+	 */
+	public BigDecimal getUnitOfMeasureIncrementalOrderQuantity();
+
+	/**
+	 * Sets the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @param unitOfMeasureIncrementalOrderQuantity the unit of measure incremental order quantity of this commerce order item
+	 */
+	public void setUnitOfMeasureIncrementalOrderQuantity(
+		BigDecimal unitOfMeasureIncrementalOrderQuantity);
+
+	/**
 	 * Returns the unit of measure key of this commerce order item.
 	 *
 	 * @return the unit of measure key of this commerce order item

@@ -120,6 +120,9 @@ public class CommerceOrderItemWrapper
 		attributes.put("subscriptionType", getSubscriptionType());
 		attributes.put(
 			"subscriptionTypeSettings", getSubscriptionTypeSettings());
+		attributes.put(
+			"unitOfMeasureIncrementalOrderQuantity",
+			getUnitOfMeasureIncrementalOrderQuantity());
 		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("unitPrice", getUnitPrice());
 		attributes.put("unitPriceWithTaxAmount", getUnitPriceWithTaxAmount());
@@ -534,6 +537,14 @@ public class CommerceOrderItemWrapper
 
 		if (subscriptionTypeSettings != null) {
 			setSubscriptionTypeSettings(subscriptionTypeSettings);
+		}
+
+		BigDecimal unitOfMeasureIncrementalOrderQuantity =
+			(BigDecimal)attributes.get("unitOfMeasureIncrementalOrderQuantity");
+
+		if (unitOfMeasureIncrementalOrderQuantity != null) {
+			setUnitOfMeasureIncrementalOrderQuantity(
+				unitOfMeasureIncrementalOrderQuantity);
 		}
 
 		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
@@ -1363,6 +1374,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public String getSubscriptionTypeSettings() {
 		return model.getSubscriptionTypeSettings();
+	}
+
+	/**
+	 * Returns the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @return the unit of measure incremental order quantity of this commerce order item
+	 */
+	@Override
+	public BigDecimal getUnitOfMeasureIncrementalOrderQuantity() {
+		return model.getUnitOfMeasureIncrementalOrderQuantity();
 	}
 
 	/**
@@ -2253,6 +2274,19 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
 		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
+	}
+
+	/**
+	 * Sets the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @param unitOfMeasureIncrementalOrderQuantity the unit of measure incremental order quantity of this commerce order item
+	 */
+	@Override
+	public void setUnitOfMeasureIncrementalOrderQuantity(
+		BigDecimal unitOfMeasureIncrementalOrderQuantity) {
+
+		model.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 	}
 
 	/**

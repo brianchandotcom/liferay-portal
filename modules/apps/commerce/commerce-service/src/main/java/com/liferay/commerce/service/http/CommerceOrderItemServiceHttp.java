@@ -883,6 +883,7 @@ public class CommerceOrderItemServiceHttp {
 				long commerceOrderItemId, long commerceOrderId,
 				long cpInstanceId, String cpMeasurementUnitKey,
 				java.math.BigDecimal quantity, int shippedQuantity,
+				java.math.BigDecimal unitOfMeasureIncrementalOrderQuantity,
 				String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -895,7 +896,8 @@ public class CommerceOrderItemServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceOrderItemId,
 				commerceOrderId, cpInstanceId, cpMeasurementUnitKey, quantity,
-				shippedQuantity, unitOfMeasureKey, serviceContext);
+				shippedQuantity, unitOfMeasureIncrementalOrderQuantity,
+				unitOfMeasureKey, serviceContext);
 
 			Object returnObj = null;
 
@@ -1786,8 +1788,8 @@ public class CommerceOrderItemServiceHttp {
 	private static final Class<?>[] _importCommerceOrderItemParameterTypes20 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, String.class,
-			java.math.BigDecimal.class, int.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			java.math.BigDecimal.class, int.class, java.math.BigDecimal.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _searchCommerceOrderItemsParameterTypes21 =
 		new Class[] {

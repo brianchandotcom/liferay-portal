@@ -71,7 +71,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(135);
+		StringBundler sb = new StringBundler(137);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -197,6 +197,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(subscriptionType);
 		sb.append(", subscriptionTypeSettings=");
 		sb.append(subscriptionTypeSettings);
+		sb.append(", unitOfMeasureIncrementalOrderQuantity=");
+		sb.append(unitOfMeasureIncrementalOrderQuantity);
 		sb.append(", unitOfMeasureKey=");
 		sb.append(unitOfMeasureKey);
 		sb.append(", unitPrice=");
@@ -405,6 +407,9 @@ public class CommerceOrderItemCacheModel
 				subscriptionTypeSettings);
 		}
 
+		commerceOrderItemImpl.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
+
 		if (unitOfMeasureKey == null) {
 			commerceOrderItemImpl.setUnitOfMeasureKey("");
 		}
@@ -522,6 +527,8 @@ public class CommerceOrderItemCacheModel
 		subscriptionLength = objectInput.readInt();
 		subscriptionType = objectInput.readUTF();
 		subscriptionTypeSettings = objectInput.readUTF();
+		unitOfMeasureIncrementalOrderQuantity =
+			(BigDecimal)objectInput.readObject();
 		unitOfMeasureKey = objectInput.readUTF();
 		unitPrice = (BigDecimal)objectInput.readObject();
 		unitPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
@@ -707,6 +714,8 @@ public class CommerceOrderItemCacheModel
 			objectOutput.writeUTF(subscriptionTypeSettings);
 		}
 
+		objectOutput.writeObject(unitOfMeasureIncrementalOrderQuantity);
+
 		if (unitOfMeasureKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -784,6 +793,7 @@ public class CommerceOrderItemCacheModel
 	public int subscriptionLength;
 	public String subscriptionType;
 	public String subscriptionTypeSettings;
+	public BigDecimal unitOfMeasureIncrementalOrderQuantity;
 	public String unitOfMeasureKey;
 	public BigDecimal unitPrice;
 	public BigDecimal unitPriceWithTaxAmount;

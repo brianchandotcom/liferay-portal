@@ -232,6 +232,7 @@
 		<field name="subscriptionLength" type="int" />
 		<field name="subscriptionType" type="String" />
 		<field name="subscriptionTypeSettings" type="String" />
+		<field name="unitOfMeasureIncrementalOrderQuantity" type="BigDecimal" />
 		<field name="unitOfMeasureKey" type="String" />
 		<field name="unitPrice" type="BigDecimal" />
 		<field name="unitPriceWithTaxAmount" type="BigDecimal" />

@@ -451,15 +451,24 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			return StringPool.BLANK;
 		}
 
-		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoFieldValue(
-				infoItem, displayPage);
+		try {
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValuesProvider.getInfoFieldValue(
+					infoItem, displayPage);
 
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
+			if (infoFieldValue == null) {
+				return StringPool.BLANK;
+			}
+
+			return GetterUtil.getString(infoFieldValue.getValue());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
-		return GetterUtil.getString(infoFieldValue.getValue());
+		return StringPool.BLANK;
 	}
 
 	private InfoItemIdentifier _getInfoItemIdentifier(

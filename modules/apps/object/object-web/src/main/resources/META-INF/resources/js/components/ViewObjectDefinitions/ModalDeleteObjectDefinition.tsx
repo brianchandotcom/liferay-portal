@@ -82,7 +82,7 @@ export function ModalDeleteObjectDefinition({
 						'confirm-object-definition-name'
 					)}
 					title={Liferay.Language.get('delete-object-definition')}
-					token={objectDefinition?.name}
+					token={objectDefinition ? objectDefinition.name : ''}
 				>
 					<p>
 						{Liferay.Language.get(

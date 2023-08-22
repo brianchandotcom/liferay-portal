@@ -38,6 +38,9 @@ public class PublicationsConfigurationDisplayContext {
 				themeDisplay.getCompanyId());
 
 		_publicationsEnabled = ctSettingsConfiguration.enabled();
+		_remoteEnabled = ctSettingsConfiguration.remoteEnabled();
+		_remoteClientId = ctSettingsConfiguration.remoteClientId();
+		_remoteClientSecret = ctSettingsConfiguration.remoteClientSecret();
 		_sandboxOnlyEnabled = ctSettingsConfiguration.sandboxEnabled();
 		_unapprovedChangesAllowed =
 			ctSettingsConfiguration.unapprovedChangesAllowed();
@@ -67,8 +70,20 @@ public class PublicationsConfigurationDisplayContext {
 		return _navigation;
 	}
 
+	public String getRemoteClientId() {
+		return _remoteClientId;
+	}
+
+	public String getRemoteClientSecret() {
+		return _remoteClientSecret;
+	}
+
 	public boolean isPublicationsEnabled() {
 		return _publicationsEnabled;
+	}
+
+	public boolean isRemoteEnabled() {
+		return _remoteEnabled;
 	}
 
 	public boolean isSandboxOnlyEnabled() {
@@ -82,6 +97,9 @@ public class PublicationsConfigurationDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private final boolean _publicationsEnabled;
+	private final String _remoteClientId;
+	private final String _remoteClientSecret;
+	private final boolean _remoteEnabled;
 	private final RenderResponse _renderResponse;
 	private final boolean _sandboxOnlyEnabled;
 	private final boolean _unapprovedChangesAllowed;

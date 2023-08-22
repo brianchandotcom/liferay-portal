@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,20 +18,16 @@ import java.util.Properties;
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
  */
-public class PatcherUtil {
+public class PatcherValues {
 
-	public static String[] getInstalledPatches() {
-		return _INSTALLED_PATCH_NAMES;
-	}
+	public static final String[] INSTALLED_PATCH_NAMES;
 
-	private static final String[] _INSTALLED_PATCH_NAMES;
-
-	private static final Log _log = LogFactoryUtil.getLog(PatcherUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(PatcherValues.class);
 
 	static {
 		Properties properties = new Properties();
 
-		ClassLoader classLoader = PatcherUtil.class.getClassLoader();
+		ClassLoader classLoader = PatcherValues.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
 				"patcher.properties")) {
@@ -51,7 +47,7 @@ public class PatcherUtil {
 			}
 		}
 
-		_INSTALLED_PATCH_NAMES = StringUtil.split(
+		INSTALLED_PATCH_NAMES = StringUtil.split(
 			properties.getProperty("installed.patches"));
 	}
 

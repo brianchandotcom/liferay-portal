@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String[] installedPatches = PatcherUtil.getInstalledPatches();
+String[] installedPatches = PatcherValues.INSTALLED_PATCH_NAMES;
 
 Date modifiedDate = PortalUtil.getUptime();
 

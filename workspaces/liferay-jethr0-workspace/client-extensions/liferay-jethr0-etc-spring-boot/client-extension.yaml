@@ -1,5 +1,5 @@
 liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
-    .serverAddress: localhost:58081
+    .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay Jethr0 Etc Spring Boot OAuth Application Headless Server
     scopes:
@@ -19,3 +19,23 @@ liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
         - C_TestSuite.everything
     type: oAuthApplicationHeadlessServer
     userAccountEmailAddress: test@liferay.com
+liferay-jethr0-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Jethr0 Etc Spring Boot OAuth Application User Agent
+    scopes:
+        - C_Build.everything
+        - C_BuildParameter.everything
+        - C_BuildRun.everything
+        - C_Environment.everything
+        - C_GitBranch.everything
+        - C_JenkinsCohort.everything
+        - C_JenkinsNode.everything
+        - C_JenkinsServer.everything
+        - C_Project.everything
+        - C_ProjectComparator.everything
+        - C_ProjectPrioritizer.everything
+        - C_Task.everything
+        - C_TaskRun.everything
+        - C_TestSuite.everything
+    type: oAuthApplicationUserAgent

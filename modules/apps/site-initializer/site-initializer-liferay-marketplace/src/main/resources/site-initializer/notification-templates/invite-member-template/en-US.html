@@ -128,8 +128,8 @@
 				</p>
 
 				<p>Your role(s) are:</p>
-
-				<#assign roles = ObjectField_roles.getData()>
+				
+                <#assign roles = ObjectField_roles.getData()>
 				<ul>
 					<#list roles?split("/") as role>
 						<#if role != "">
@@ -138,16 +138,16 @@
 					</#list>
 				</ul>
 
-				<a href="${ObjectField_inviteURL.getData()}" style=" background-color: #0b5fff; padding: 0.5rem 1.5rem; border-radius: 8px; text-decoration: none; width: 10.938rem; height: 2.5rem; margin-top: 2.5rem; color: #fff; border: none; ">Accept invitation</a>
-					<p style="color: #6b6c7e">
-						Or copy and paste the link below into you browser
-					</p>
+			<a href="${ObjectField_inviteURL.getData()}" style=" background-color: #0b5fff; padding: 0.5rem 1.5rem; border-radius: 8px; text-decoration: none; width: 10.938rem; height: 2.5rem; margin-top: 2.5rem; color: #fff; border: none; ">Accept invitation</a>
+				<p style="color: #6b6c7e">
+					Or copy and paste the link below into you browser
+				</p>
 
-				<a href="${ObjectField_inviteURL.getData()}" style="color: #6b6c7e">${ObjectField_inviteURL.getData()}</a>
+			<a href="${ObjectField_inviteURL.getData()}" style="color: #6b6c7e">${ObjectField_inviteURL.getData()}</a>
 			</main>
 
 			<footer>
-				<div style=" background-color: #eef2fa; width: 37rem; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; margin-top: 3.5rem; ">
+			<div style=" background-color: #eef2fa; width: 37rem; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; margin-top: 3.5rem; ">
 					<p>
 						Contacts that don't exist in the system will receive a
 						separate email to activate their account. You should
@@ -156,7 +156,7 @@
 
 					<p>
 						If you don't receive the email please
-						<a href="https://help.liferay.com/hc/en-us/articles/360017784212  ">contact support.</a>
+					<a href="https://help.liferay.com/hc/en-us/articles/360017784212  ">contact support.</a>
 					</p>
 				</div>
 			</footer>

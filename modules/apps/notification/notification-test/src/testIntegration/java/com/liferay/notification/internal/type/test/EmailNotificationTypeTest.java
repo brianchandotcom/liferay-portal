@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.model.NotificationQueueEntry;
-import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.test.util.NotificationTemplateUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
@@ -36,6 +35,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +93,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationQueueEntries.toString(), 1,
 			notificationQueueEntries.size());
 
-		_assetNotificationQueueEntry(
+		_assertNotificationQueueEntry(
 			false,
 			StringBundler.concat(
 				user1.getEmailAddress(), StringPool.COMMA,
@@ -120,19 +120,33 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		_addObjectEntry();
 
-		notificationQueueEntries =
+		notificationQueueEntries = ListUtil.sort(
 			notificationQueueEntryLocalService.getNotificationEntries(
 				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
+				NotificationQueueEntryConstants.STATUS_SENT),
+			Comparator.comparing(
+				notificationQueueEntry -> {
+					Map<String, Object> notificationRecipientSettingsMap =
+						NotificationRecipientSettingUtil.
+							getNotificationRecipientSettingsMap(
+								notificationQueueEntry);
+
+					return String.valueOf(
+						notificationRecipientSettingsMap.get("to"));
+				}));
 
 		Assert.assertEquals(
 			notificationQueueEntries.toString(), 2,
 			notificationQueueEntries.size());
 
-		_assetNotificationQueueEntry(
-			true, user1.getEmailAddress(), notificationQueueEntries.get(0));
-		_assetNotificationQueueEntry(
-			true, user2.getEmailAddress(), notificationQueueEntries.get(1));
+		List<String> expectedToRecipients = ListUtil.sort(
+			Arrays.asList(user1.getEmailAddress(), user2.getEmailAddress()));
+
+		_assertNotificationQueueEntry(
+			true, expectedToRecipients.get(0), notificationQueueEntries.get(0));
+
+		_assertNotificationQueueEntry(
+			true, expectedToRecipients.get(1), notificationQueueEntries.get(1));
 
 		for (NotificationQueueEntry notificationQueueEntry :
 				notificationQueueEntries) {
@@ -202,7 +216,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	private void _assetNotificationQueueEntry(
+	private void _assertNotificationQueueEntry(
 		boolean expectedSingleRecipient, String expectedToRecipient,
 		NotificationQueueEntry notificationQueueEntry) {
 
@@ -218,12 +232,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.COMMA));
 
-		NotificationRecipient notificationRecipient =
-			notificationQueueEntry.getNotificationRecipient();
-
 		Map<String, Object> notificationRecipientSettingsMap =
-			NotificationRecipientSettingUtil.toMap(
-				notificationRecipient.getNotificationRecipientSettings());
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
 		Assert.assertEquals(
 			user2.getEmailAddress() + ",bcc@liferay.com",
@@ -241,34 +252,16 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			expectedSingleRecipient,
 			notificationRecipientSettingsMap.get("singleRecipient"));
 
-		String actualToRecipient = String.valueOf(
-			notificationRecipientSettingsMap.get("to"));
+		String[] actualEmailAddresses = StringUtil.split(
+			String.valueOf(notificationRecipientSettingsMap.get("to")));
 
-		String[] actualEmailAddresses = StringUtil.split(actualToRecipient);
+		Arrays.sort(actualEmailAddresses);
 
 		String[] expectedEmailAddresses = StringUtil.split(expectedToRecipient);
 
-		Assert.assertEquals(
-			Arrays.toString(actualEmailAddresses),
-			expectedEmailAddresses.length, actualEmailAddresses.length);
+		Arrays.sort(expectedEmailAddresses);
 
-		for (String expectedEmailAddress : expectedEmailAddresses) {
-			boolean containsEmailAddress = false;
-
-			for (String actualEmailAddress : actualEmailAddresses) {
-				if (StringUtil.equals(
-						expectedEmailAddress, actualEmailAddress)) {
-
-					containsEmailAddress = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(
-				actualToRecipient + " does not contain " + expectedToRecipient,
-				containsEmailAddress);
-		}
+		Assert.assertArrayEquals(expectedEmailAddresses, actualEmailAddresses);
 	}
 
 }

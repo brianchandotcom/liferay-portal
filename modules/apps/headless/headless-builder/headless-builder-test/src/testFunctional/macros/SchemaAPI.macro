@@ -14,6 +14,14 @@ definition {
 
 		var api = "headless-builder/schemas";
 
+		if (isSet(requestSchemaId) && isSet(endpointId)) {
+			var api = "${api}/${requestSchemaId}/requestAPISchemaToAPIEndpoints/${endpointId}";
+		}
+
+		if (isSet(responseSchemaId) && isSet(endpointId)) {
+			var api = "${api}/${responseSchemaId}/responseAPISchemaToAPIEndpoints/${endpointId}";
+		}
+
 		var curl = '''
 			${portalURL}/o/${api} \
 				-u test@liferay.com:test \
@@ -63,6 +71,38 @@ definition {
 		var response = JSONCurlUtil.get(${curl});
 
 		return ${response};
+	}
+
+	macro relateRequestSchemaToEndpointByIds {
+		Variables.assertDefined(parameterList = "${requestSchemaId},${endpointId}");
+
+		var curl = SchemaAPI._curlAPISchema(
+			endpointId = ${endpointId},
+			requestSchemaId = ${requestSchemaId});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		var schemaId = JSONUtil.getWithJSONPath(${response}, "$.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId");
+
+		TestUtils.assertEquals(
+			actual = ${schemaId},
+			expected = ${requestSchemaId});
+	}
+
+	macro relateResponseSchemaToEndpointByIds {
+		Variables.assertDefined(parameterList = "${responseSchemaId},${endpointId}");
+
+		var curl = SchemaAPI._curlAPISchema(
+			endpointId = ${endpointId},
+			responseSchemaId = ${responseSchemaId});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		var schemaId = JSONUtil.getWithJSONPath(${response}, "$.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId");
+
+		TestUtils.assertEquals(
+			actual = ${schemaId},
+			expected = ${responseSchemaId});
 	}
 
 }

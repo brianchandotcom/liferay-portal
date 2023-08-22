@@ -51,7 +51,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONArray objectRelationshipsJSONArray = jsonFactory.createJSONArray();
+		JSONArray edgeCandidatesJSONArray = jsonFactory.createJSONArray();
 
 		Locale locale = _portal.getLocale(resourceRequest);
 
@@ -70,7 +70,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 					objectRelationship.getObjectDefinitionId1());
 
 			if (parentObjectDefinition.getRootObjectDefinitionId() == 0) {
-				objectRelationshipsJSONArray.put(
+				edgeCandidatesJSONArray.put(
 					JSONUtil.put(
 						"label",
 						StringUtil.appendParentheticalSuffix(
@@ -123,7 +123,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 					));
 			}
 
-			objectRelationshipsJSONArray.put(
+			edgeCandidatesJSONArray.put(
 				JSONUtil.put(
 					"ancestors", ancestorsJSONArray
 				).put(
@@ -142,7 +142,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, objectRelationshipsJSONArray);
+			resourceRequest, resourceResponse, edgeCandidatesJSONArray);
 	}
 
 	@Reference

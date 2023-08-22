@@ -1953,7 +1953,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		WorkflowMetrics.goToDeleteSLA(slaName = "One day Edit");
+		WorkflowMetrics.deleteSLA(slaName = "One day Edit");
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_EMPTY_MESSAGE");
 	}

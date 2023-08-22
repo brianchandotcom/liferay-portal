@@ -232,7 +232,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToDeleteSLA(slaName = "Test");
+		WorkflowMetrics.deleteSLA(slaName = "Test");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -295,7 +295,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
 
-		WorkflowMetrics.goToDeleteSLA(slaName = "SLA Name");
+		WorkflowMetrics.deleteSLA(slaName = "SLA Name");
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_EMPTY_MESSAGE");
 

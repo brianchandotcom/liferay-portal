@@ -5,8 +5,8 @@
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 interface ObjectDefinition {
-	active: boolean;
 	actions: DefinitionActions;
+	active: boolean;
 	dateCreated: string;
 	dateModified: string;
 	defaultLanguageId: string;

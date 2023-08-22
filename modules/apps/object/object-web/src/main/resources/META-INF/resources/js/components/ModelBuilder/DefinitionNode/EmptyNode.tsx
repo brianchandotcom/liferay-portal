@@ -10,9 +10,12 @@ import {NodeProps} from 'react-flow-renderer';
 import './DefinitionNode.scss';
 
 import './EmptyNode.scss';
+import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 
 interface EmptyNodeProps {
-	setShowModal: (value: boolean) => void;
+	setShowModal: (
+		value: React.SetStateAction<ViewObjectDefinitionsModals>
+	) => void;
 }
 
 export function EmptyNode({data: {setShowModal}}: NodeProps<EmptyNodeProps>) {
@@ -33,7 +36,14 @@ export function EmptyNode({data: {setShowModal}}: NodeProps<EmptyNodeProps>) {
 
 				<ClayButton
 					displayType="primary"
-					onClick={() => setShowModal(true)}
+					onClick={() =>
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								addObjectDefinition: true,
+							})
+						)
+					}
 				>
 					<span>{Liferay.Language.get('create-new-object')}</span>
 				</ClayButton>

@@ -32,7 +32,7 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 	viewApiURL,
 }) => {
 	const urlParams = new URLSearchParams(window.location.search);
-	const folderERC = urlParams.get('folderERC');
+	const folderName = urlParams.get('folderName');
 
 	return (
 		<ReactFlowProvider>
@@ -41,7 +41,6 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 					baseResourceURL,
 					editObjectDefinitionURL,
 					objectDefinitionPermissionsURL,
-					selectedFolderERC: folderERC,
 					storages,
 					viewApiURL,
 				}}
@@ -49,6 +48,7 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 				<EditObjectFolder
 					companyKeyValuePair={companyKeyValuePair}
 					deletionTypes={deletionTypes}
+					folderName={folderName ?? ''}
 					siteKeyValuePair={siteKeyValuePair}
 				/>
 			</FolderContextProvider>

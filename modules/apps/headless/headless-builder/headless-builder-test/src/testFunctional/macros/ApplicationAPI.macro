@@ -50,6 +50,17 @@ definition {
 			var body = StringUtil.add(${body}, ", ${relatedEndpoint}", "");
 		}
 
+		if (isSet(relatedSchema)) {
+			var relatedSchema = '''
+				"apiApplicationToAPISchemas": [{
+					"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
+					"name": "${schemaName}"
+				}]
+			''';
+
+			var body = StringUtil.add(${body}, ", ${relatedSchema}", "");
+		}
+
 		var curl = StringUtil.add(${curl}, " -d {${body}}", "");
 
 		var response = JSONCurlUtil.post(${curl});

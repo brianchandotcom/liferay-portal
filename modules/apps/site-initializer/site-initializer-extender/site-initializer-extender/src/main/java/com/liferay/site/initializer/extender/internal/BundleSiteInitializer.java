@@ -167,7 +167,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -302,7 +302,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
-		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
+		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory,
+		ZipWriterFactory zipWriterFactory) {
 
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountEntryOrganizationRelLocalService =
@@ -388,6 +389,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
+		_zipWriterFactory = zipWriterFactory;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -900,7 +902,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -1115,7 +1117,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -1229,7 +1231,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -4227,7 +4229,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -5225,6 +5227,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_workflowDefinitionLinkLocalService;
 	private final WorkflowDefinitionResource.Factory
 		_workflowDefinitionResourceFactory;
+	private final ZipWriterFactory _zipWriterFactory;
 
 	private class SiteNavigationMenuItemSetting {
 

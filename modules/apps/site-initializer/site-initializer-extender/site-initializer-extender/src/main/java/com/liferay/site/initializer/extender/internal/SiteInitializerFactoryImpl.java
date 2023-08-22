@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -154,7 +155,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_themeLocalService, _userAccountResourceFactory,
 			_userGroupLocalService, _userLocalService,
 			_workflowDefinitionLinkLocalService,
-			_workflowDefinitionResourceFactory);
+			_workflowDefinitionResourceFactory, _zipWriterFactory);
 
 		ServiceReference<CommerceSiteInitializer>
 			commerceSiteInitializerServiceReference =
@@ -421,5 +422,8 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	@Reference
 	private WorkflowDefinitionResource.Factory
 		_workflowDefinitionResourceFactory;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

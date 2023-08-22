@@ -25,7 +25,63 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
  */
 public class TreeTestUtil {
 
-	public static ObjectDefinition bindObjectDefinition(
+	public static Tree createTree(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			TreeFactory treeFactory)
+		throws PortalException {
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"A", objectDefinitionLocalService);
+
+		objectDefinitionLocalService.updateRootObjectDefinitionId(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionA.getObjectDefinitionId());
+
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"AA", objectDefinitionLocalService);
+
+		_bindObjectDefinition(
+			objectDefinitionAA, objectDefinitionLocalService,
+			objectRelationshipLocalService, objectDefinitionA,
+			objectDefinitionA);
+		_bindObjectDefinition(
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"AAA", objectDefinitionLocalService),
+			objectDefinitionLocalService, objectRelationshipLocalService,
+			objectDefinitionAA, objectDefinitionA);
+		_bindObjectDefinition(
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"AAB", objectDefinitionLocalService),
+			objectDefinitionLocalService, objectRelationshipLocalService,
+			objectDefinitionAA, objectDefinitionA);
+
+		_bindObjectDefinition(
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"AB", objectDefinitionLocalService),
+			objectDefinitionLocalService, objectRelationshipLocalService,
+			objectDefinitionA, objectDefinitionA);
+
+		return treeFactory.create(objectDefinitionA.getObjectDefinitionId());
+	}
+
+	public static ObjectRelationship getEdgeObjectRelationship(
+			ObjectDefinition objectDefinition,
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			Tree tree)
+		throws PortalException {
+
+		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+
+		Edge edge = node.getEdge();
+
+		return objectRelationshipLocalService.getObjectRelationship(
+			edge.getObjectRelationshipId());
+	}
+
+	private static ObjectDefinition _bindObjectDefinition(
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -51,62 +107,6 @@ public class TreeTestUtil {
 		return objectDefinitionLocalService.updateRootObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId(),
 			rootObjectDefinition.getObjectDefinitionId());
-	}
-
-	public static Tree createTree(
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectRelationshipLocalService objectRelationshipLocalService,
-			TreeFactory treeFactory)
-		throws PortalException {
-
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"A", objectDefinitionLocalService);
-
-		objectDefinitionLocalService.updateRootObjectDefinitionId(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionA.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"AA", objectDefinitionLocalService);
-
-		bindObjectDefinition(
-			objectDefinitionAA, objectDefinitionLocalService,
-			objectRelationshipLocalService, objectDefinitionA,
-			objectDefinitionA);
-		bindObjectDefinition(
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"AAA", objectDefinitionLocalService),
-			objectDefinitionLocalService, objectRelationshipLocalService,
-			objectDefinitionAA, objectDefinitionA);
-		bindObjectDefinition(
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"AAB", objectDefinitionLocalService),
-			objectDefinitionLocalService, objectRelationshipLocalService,
-			objectDefinitionAA, objectDefinitionA);
-
-		bindObjectDefinition(
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"AB", objectDefinitionLocalService),
-			objectDefinitionLocalService, objectRelationshipLocalService,
-			objectDefinitionA, objectDefinitionA);
-
-		return treeFactory.create(objectDefinitionA.getObjectDefinitionId());
-	}
-
-	public static ObjectRelationship getEdgeObjectRelationship(
-			ObjectDefinition objectDefinition,
-			ObjectRelationshipLocalService objectRelationshipLocalService,
-			Tree tree)
-		throws PortalException {
-
-		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
-
-		Edge edge = node.getEdge();
-
-		return objectRelationshipLocalService.getObjectRelationship(
-			edge.getObjectRelationshipId());
 	}
 
 }

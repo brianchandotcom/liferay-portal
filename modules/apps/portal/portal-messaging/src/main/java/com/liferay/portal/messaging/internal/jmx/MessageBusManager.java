@@ -5,10 +5,7 @@
 
 package com.liferay.portal.messaging.internal.jmx;
 
-import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -16,19 +13,21 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
-import java.util.Set;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
 import javax.management.StandardMBean;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -50,9 +49,7 @@ public class MessageBusManager
 
 	@Override
 	public int getDestinationCount() {
-		Set<String> destinationNames = _serviceTrackerMap.keySet();
-
-		return destinationNames.size();
+		return _serviceTracker.size();
 	}
 
 	@Override
@@ -67,13 +64,16 @@ public class MessageBusManager
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, Destination.class, "(destination.name=*)",
-			ServiceReferenceMapperFactory.create(
-				bundleContext,
-				(destination, emitter) -> emitter.emit(destination.getName())),
-			new EagerServiceTrackerCustomizer
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", Destination.class.getName(),
+					")(destination.name=*))")),
+			new ServiceTrackerCustomizer
 				<Destination, ServiceRegistration<DynamicMBean>>() {
 
 				@Override
@@ -135,11 +135,13 @@ public class MessageBusManager
 				}
 
 			});
+
+		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_serviceTracker.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -148,7 +150,7 @@ public class MessageBusManager
 	@Reference
 	private MessageBus _messageBus;
 
-	private ServiceTrackerMap<String, ServiceRegistration<DynamicMBean>>
-		_serviceTrackerMap;
+	private ServiceTracker<Destination, ServiceRegistration<DynamicMBean>>
+		_serviceTracker;
 
 }

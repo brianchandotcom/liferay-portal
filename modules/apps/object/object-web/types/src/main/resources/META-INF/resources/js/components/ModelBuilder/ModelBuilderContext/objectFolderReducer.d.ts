@@ -4,13 +4,7 @@
  */
 
 import {Node} from 'react-flow-renderer';
-import {
-	LeftSidebarItemType,
-	ObjectDefinitionNodeData,
-	RightSidebarType,
-	TAction,
-	TState,
-} from '../types';
+import {LeftSidebarItemType, RightSidebarType, TAction, TState} from '../types';
 export declare function ObjectFolderReducer(
 	state: TState,
 	action: TAction

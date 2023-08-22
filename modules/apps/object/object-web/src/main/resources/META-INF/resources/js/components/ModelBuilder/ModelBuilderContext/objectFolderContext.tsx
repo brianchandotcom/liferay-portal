@@ -8,7 +8,6 @@ import {Elements} from 'react-flow-renderer';
 
 import {
 	LeftSidebarItemType,
-	ObjectDefinitionNodeData,
 	ObjectRelationshipEdgeData,
 	RightSidebarType,
 	TAction,

@@ -343,6 +343,25 @@ interface ObjectValidation {
 	script: string;
 }
 
+interface ObjectFieldNode extends Partial<ObjectField> {
+	primaryKey: boolean;
+	required: boolean;
+	selected: boolean;
+}
+
+interface ObjectDefinitionNodeData
+	extends Omit<ObjectDefinition, 'objectFields' | 'label'> {
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	hasObjectDefinitionUpdateResourcePermission: boolean;
+	hasObjectDefinitionViewResourcePermission: boolean;
+	hasSelfRelationships: boolean;
+	label: string;
+	linkedDefinition: boolean;
+	nodeSelected: boolean;
+	objectFields: ObjectFieldNode[];
+}
+
 interface PickListItem {
 	externalReferenceCode: string;
 	id: number;

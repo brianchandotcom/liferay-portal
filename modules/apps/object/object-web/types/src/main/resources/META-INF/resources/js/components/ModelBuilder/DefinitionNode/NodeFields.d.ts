@@ -5,7 +5,6 @@
 
 /// <reference types="react" />
 
-import {ObjectFieldNode} from '../types';
 import './NodeFields.scss';
 interface NodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;

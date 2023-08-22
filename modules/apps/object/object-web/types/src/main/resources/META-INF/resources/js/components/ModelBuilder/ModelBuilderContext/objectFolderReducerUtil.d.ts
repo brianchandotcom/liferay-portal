@@ -4,7 +4,7 @@
  */
 
 import {Edge} from 'react-flow-renderer';
-import {ObjectFieldNode, ObjectRelationshipEdgeData} from '../types';
+import {ObjectRelationshipEdgeData} from '../types';
 export declare function fieldsCustomSort(
 	objectFields: ObjectFieldNode[]
 ): ObjectFieldNode[];

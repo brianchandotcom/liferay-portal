@@ -128,25 +128,6 @@ export declare type LeftSidebarDefinitionItemType = {
 	type: 'objectDefinition';
 };
 export declare type ObjectDefinitionNodeTypes = 'objectDefinition';
-export interface ObjectFieldNode extends Partial<ObjectField> {
-	primaryKey: boolean;
-	required: boolean;
-	selected: boolean;
-}
-export interface ObjectDefinitionNodeData
-	extends Omit<ObjectDefinition, 'objectFields' | 'label'> {
-	editObjectDefinitionURL: string;
-	hasObjectDefinitionDeleteResourcePermission: boolean;
-	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
-	hasObjectDefinitionUpdateResourcePermission: boolean;
-	hasObjectDefinitionViewResourcePermission: boolean;
-	hasSelfRelationships: boolean;
-	isLinkedNode: boolean;
-	label: string;
-	nodeSelected: boolean;
-	objectDefinitionPermissionsURL: string;
-	objectFields: ObjectFieldNode[];
-}
 export interface ObjectRelationshipEdgeData {
 	defaultLanguageId?: Liferay.Language.Locale;
 	edgeSelected: boolean;

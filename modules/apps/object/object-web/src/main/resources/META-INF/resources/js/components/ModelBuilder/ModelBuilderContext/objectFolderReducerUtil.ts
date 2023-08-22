@@ -5,7 +5,7 @@
 
 import {Edge} from 'react-flow-renderer';
 
-import {ObjectFieldNode, ObjectRelationshipEdgeData} from '../types';
+import {ObjectRelationshipEdgeData} from '../types';
 
 export function fieldsCustomSort(objectFields: ObjectFieldNode[]) {
 	const fieldOrder = ['id', 'externalReferenceCode'];

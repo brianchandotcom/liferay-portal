@@ -29,7 +29,7 @@ interface ScopeContainerProps {
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
-	isLinkedNode?: boolean;
+	linkedDefinition?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	siteKeyValuePair: KeyValuePair[];
 	values: Partial<ObjectDefinition>;
@@ -40,7 +40,7 @@ export function ScopeContainer({
 	errors,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
-	isLinkedNode,
+	linkedDefinition,
 	setValues,
 	siteKeyValuePair,
 	values,
@@ -97,7 +97,7 @@ export function ScopeContainer({
 					isApproved ||
 					!hasUpdateObjectDefinitionPermission ||
 					values.storageType === 'salesforce' ||
-					isLinkedNode
+					linkedDefinition
 				}
 				error={errors.titleObjectFieldId}
 				label={Liferay.Language.get('scope')}
@@ -122,7 +122,7 @@ export function ScopeContainer({
 						? !values.modifiable && values.system
 						: values.system) ||
 					!hasUpdateObjectDefinitionPermission ||
-					isLinkedNode
+					linkedDefinition
 				}
 				emptyStateMessage={Liferay.Language.get(
 					'no-options-were-found'

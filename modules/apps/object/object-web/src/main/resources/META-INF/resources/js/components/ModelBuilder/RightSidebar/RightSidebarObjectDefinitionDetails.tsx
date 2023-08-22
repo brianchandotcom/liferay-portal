@@ -18,10 +18,7 @@ import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
 import {EntryDisplayContainer} from '../../ObjectDetails/EntryDisplayContainer';
 import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
-import {
-	ObjectDefinitionNodeData,
-	nonRelationshipObjectFieldsInfo,
-} from '../types';
+import {nonRelationshipObjectFieldsInfo} from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
@@ -235,7 +232,7 @@ export function RightSidebarObjectDefinitionDetails({
 						!!values.actions?.update
 					}
 					isApproved={values.status?.label === 'approved'}
-					isLinkedNode={selectedNode.data!.isLinkedNode}
+					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>
@@ -244,7 +241,7 @@ export function RightSidebarObjectDefinitionDetails({
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 				<EntryDisplayContainer
 					errors={errors}
-					isLinkedNode={selectedNode.data!.isLinkedNode}
+					linkedDefinition={selectedNode.data!.linkedDefinition}
 					nonRelationshipObjectFieldsInfo={
 						nonRelationshipObjectFieldsInfo ?? []
 					}
@@ -258,7 +255,7 @@ export function RightSidebarObjectDefinitionDetails({
 					errors={errors}
 					hasUpdateObjectDefinitionPermission={true}
 					isApproved={values.status?.label === 'approved'}
-					isLinkedNode={selectedNode.data!.isLinkedNode}
+					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					siteKeyValuePair={siteKeyValuePair}
 					values={values as ObjectDefinition}
@@ -272,7 +269,7 @@ export function RightSidebarObjectDefinitionDetails({
 					<AccountRestrictionContainer
 						errors={errors}
 						isApproved={values?.status?.label === 'approved'}
-						isLinkedNode={selectedNode.data!.isLinkedNode}
+						linkedDefinition={selectedNode.data!.linkedDefinition}
 						objectFields={
 							(values?.objectFields as ObjectField[]) ?? []
 						}
@@ -287,7 +284,7 @@ export function RightSidebarObjectDefinitionDetails({
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
-					isLinkedNode={selectedNode.data!.isLinkedNode}
+					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>

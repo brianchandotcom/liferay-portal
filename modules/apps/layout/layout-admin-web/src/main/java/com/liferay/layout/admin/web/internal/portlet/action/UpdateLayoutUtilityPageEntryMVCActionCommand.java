@@ -6,7 +6,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.handler.LayoutUtilityPageEntryPortalExceptionRequestHandler;
+import com.liferay.layout.admin.web.internal.handler.LayoutUtilityPageEntryPortalExceptionRequestHandlerUtil;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -67,15 +67,11 @@ public class UpdateLayoutUtilityPageEntryMVCActionCommand
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_layoutUtilityPageEntryPortalExceptionRequestHandler.
+			LayoutUtilityPageEntryPortalExceptionRequestHandlerUtil.
 				handlePortalException(
 					actionRequest, actionResponse, portalException);
 		}
 	}
-
-	@Reference
-	private LayoutUtilityPageEntryPortalExceptionRequestHandler
-		_layoutUtilityPageEntryPortalExceptionRequestHandler;
 
 	@Reference
 	private LayoutUtilityPageEntryService _layoutUtilityPageEntryService;

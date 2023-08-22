@@ -367,8 +367,8 @@ public class EntityCacheImpl
 			MethodHandler methodHandler = new MethodHandler(
 				_notifyMethodKey,
 				new Object[] {
-					className, baseModel, removePortalCache,
-					CompanyThreadLocal.getCompanyId()
+					CompanyThreadLocal.getCompanyId(), className, baseModel,
+					removePortalCache
 				});
 
 			ClusterRequest clusterRequest =

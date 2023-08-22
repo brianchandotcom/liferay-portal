@@ -38,6 +38,7 @@ import com.liferay.commerce.internal.upgrade.v9_3_0.ConfigurationUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v9_4_0.AccountRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v9_6_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
+import com.liferay.commerce.model.impl.CPDefinitionInventoryModelImpl;
 import com.liferay.commerce.model.impl.CommerceAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
 import com.liferay.commerce.model.impl.CommerceShipmentItemModelImpl;
@@ -612,6 +613,21 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommercePermissionUpgradeProcess(
 					_resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService));
+
+		registry.register(
+			"10.0.1", "10.1.0",
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME, "minStockQuantity",
+				"BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME, "minOrderQuantity",
+				"BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME, "maxOrderQuantity",
+				"BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				CPDefinitionInventoryModelImpl.TABLE_NAME,
+				"multipleOrderQuantity", "BIGDECIMAL null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

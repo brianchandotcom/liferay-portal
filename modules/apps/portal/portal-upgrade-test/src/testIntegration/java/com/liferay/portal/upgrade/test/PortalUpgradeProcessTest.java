@@ -346,7 +346,7 @@ public class PortalUpgradeProcessTest {
 		}
 	}
 
-	private void _updateSchemaVersion(Version version) throws SQLException {
+	private void _updateSchemaVersion(Version version) throws Exception {
 		_innerPortalUpgradeProcess.updateSchemaVersion(version);
 	}
 

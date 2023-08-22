@@ -13,15 +13,7 @@ interface Actions {
 	permissions: HTTPMethod;
 	update: HTTPMethod;
 }
-interface Folder {
-	actions: [];
-	dateCreated: string;
-	dateModified: string;
-	externalReferenceCode: string;
-	id: number;
-	label: LocalizedValue<string>;
-	name: string;
-}
+
 declare type NotificationTemplateType = 'email' | 'userNotification';
 declare type RecipientType = 'role' | 'term' | 'user';
 declare type Recipient = {
@@ -119,7 +111,7 @@ export declare function fetchJSON<T>(
 ): Promise<T>;
 export declare function getAllFolders(): Promise<ObjectFolder[]>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
-export declare function getAllObjectFolders(): Promise<Folder[]>;
+export declare function getAllObjectFolders(): Promise<ObjectFolder[]>;
 export declare function getFolderByERC(
 	folderERC: string
 ): Promise<ObjectFolder>;

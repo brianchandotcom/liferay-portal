@@ -11,8 +11,6 @@ import {manyMarkerId} from '../Edges/ManyMarkerEnd';
 import {oneMarkerId} from '../Edges/OneMarkerEnd';
 import {
 	LeftSidebarItemType,
-	ObjectDefinitionNodeData,
-	ObjectFieldNode,
 	ObjectRelationshipEdgeData,
 	RightSidebarType,
 	TAction,
@@ -31,12 +29,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 		case TYPES.ADD_NEW_NODE_TO_FOLDER: {
 			const {newObjectDefinition, selectedFolderName} = action.payload;
 			const {nodes} = store.getState();
-			const {
-				editObjectDefinitionURL,
-				elements,
-				leftSidebarItems,
-				objectDefinitionPermissionsURL,
-			} = state;
+			const {elements, leftSidebarItems} = state;
 			let newPosition = {
 				x: 2 * 300,
 				y: 2 * 400,
@@ -125,29 +118,23 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 			});
 			const newNode = {
 				data: {
-					defaultLanguageId: newObjectDefinition.defaultLanguageId,
-					editObjectDefinitionURL,
-					externalReferenceCode:
-						newObjectDefinition.externalReferenceCode,
+					...newObjectDefinition,
 					hasObjectDefinitionDeleteResourcePermission: !!newObjectDefinition
 						.actions.delete,
 					hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
 						.actions.permissions,
 					hasObjectDefinitionUpdateResourcePermission: !!newObjectDefinition
 						.actions.update,
-					id: newObjectDefinition.id,
-					isLinkedNode: false,
+					hasObjectDefinitionViewResourcePermission: false,
+					hasSelfRelationships: false,
 					label: getLocalizableLabel(
 						newObjectDefinition.defaultLanguageId,
 						newObjectDefinition.label,
 						newObjectDefinition.name
 					),
-					name: newObjectDefinition.name,
+					linkedDefinition: false,
 					nodeSelected: true,
-					objectDefinitionPermissionsURL,
 					objectFields: fieldsCustomSort(objectFields),
-					status: newObjectDefinition.status,
-					system: newObjectDefinition.system,
 				},
 				id: newObjectDefinition.id.toString(),
 				position: newPosition,
@@ -307,11 +294,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 		case TYPES.CREATE_MODEL_BUILDER_STRUCTURE: {
 			const {objectFolders} = action.payload;
-			const {
-				editObjectDefinitionURL,
-				objectDefinitionPermissionsURL,
-				selectedFolderERC,
-			} = state;
+			const {selectedFolderERC} = state;
 
 			const newLeftSidebar = objectFolders.map((folder) => {
 				const folderDefinitions = folder.definitions?.map(
@@ -320,11 +303,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							definitionId: definition.id,
 							definitionName: definition.name,
 							hiddenNode: false,
-							name: getLocalizableLabel(
-								definition.defaultLanguageId,
-								definition.label,
-								definition.name
-							),
+							name: definition.label,
 							selected: false,
 							type: 'objectDefinition',
 						};
@@ -356,25 +335,6 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 				newObjectDefinitionNodes = currentFolder.definitions!.map(
 					(objectDefinition, index) => {
-						const objectFields = objectDefinition.objectFields.map(
-							(field) => {
-								return {
-									businessType: field.businessType,
-									externalReferenceCode:
-										field.externalReferenceCode,
-									label: getLocalizableLabel(
-										objectDefinition.defaultLanguageId,
-										field.label,
-										field.name
-									),
-									name: field.name,
-									primaryKey: field.name === 'id',
-									required: field.required,
-									selected: false,
-								} as ObjectFieldNode;
-							}
-						);
-
 						let selfRelationships: ObjectRelationship[] = objectDefinition.objectRelationships.filter(
 							(relationship) =>
 								relationship.objectDefinitionName2 ===
@@ -454,32 +414,12 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 						return {
 							data: {
-								defaultLanguageId:
-									objectDefinition.defaultLanguageId,
-								editObjectDefinitionURL,
-								externalReferenceCode:
-									objectDefinition.externalReferenceCode,
-								hasObjectDefinitionDeleteResourcePermission: !!objectDefinition
-									.actions.delete,
-								hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
-									.actions.permissions,
-								hasObjectDefinitionUpdateResourcePermission: !!objectDefinition
-									.actions.update,
+								...objectDefinition,
 								hasSelfRelationships:
-									selfRelationships?.length > 0,	
-								id: objectDefinition.id,
-								isLinkedNode: false,
-								label: getLocalizableLabel(
-									objectDefinition.defaultLanguageId,
-									objectDefinition.label,
-									objectDefinition.name
+									selfRelationships?.length > 0,
+								objectFields: fieldsCustomSort(
+									objectDefinition.objectFields
 								),
-								name: objectDefinition.name,
-								nodeSelected: false,
-								objectDefinitionPermissionsURL,
-								objectFields: fieldsCustomSort(objectFields),
-								status: objectDefinition.status,
-								system: objectDefinition.system,
 							},
 							id: objectDefinition.id.toString(),
 							position: {

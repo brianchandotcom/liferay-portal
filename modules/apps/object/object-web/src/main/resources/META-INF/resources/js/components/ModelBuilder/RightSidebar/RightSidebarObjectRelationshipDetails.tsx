@@ -17,7 +17,7 @@ import {firstLetterUppercase} from '../../../utils/string';
 import {TDeletionType} from '../../ObjectRelationship/EditRelationship';
 import {useObjectRelationshipForm} from '../../ObjectRelationship/ObjectRelationshipFormBase';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
-import {ObjectDefinitionNodeData, ObjectRelationshipEdgeData} from '../types';
+import {ObjectRelationshipEdgeData} from '../types';
 
 interface RightSidebarObjectRelationshipDetailsProps {
 	deletionTypes: TDeletionType[];

@@ -12,7 +12,6 @@ import {
 	API,
 	CustomVerticalBar,
 	ManagementToolbarSearch,
-	getLocalizableLabel,
 	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
@@ -23,11 +22,7 @@ import {Node, useStore, useZoomPanHelper} from 'react-flow-renderer';
 import './LeftSidebar.scss';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import {
-	LeftSidebarDefinitionItemType,
-	LeftSidebarItemType,
-	ObjectDefinitionNodeData,
-} from '../types';
+import {LeftSidebarDefinitionItemType, LeftSidebarItemType} from '../types';
 
 const TYPES_TO_SYMBOLS = {
 	objectDefinition: 'catalog',
@@ -104,9 +99,9 @@ export default function LeftSidebar({
 
 		const objectDefinition = folderDefinitions.find(
 			(definition) => definition.name === definitionName
-		) as ObjectDefinition;
+		) as ObjectDefinitionNodeData;
 
-		const movedObjectDefinition: ObjectDefinition = {
+		const movedObjectDefinition: ObjectDefinitionNodeData = {
 			...objectDefinition,
 			objectFolderExternalReferenceCode: selectedFolderERC,
 		};
@@ -138,11 +133,7 @@ export default function LeftSidebar({
 			openToast({
 				message: sub(
 					Liferay.Language.get('x-was-moved-successfully'),
-					`<strong>${getLocalizableLabel(
-						movedObjectDefinition.defaultLanguageId,
-						movedObjectDefinition.label,
-						movedObjectDefinition.name
-					)}</strong>`
+					`<strong>${movedObjectDefinition.label}</strong>`
 				),
 				type: 'success',
 			});

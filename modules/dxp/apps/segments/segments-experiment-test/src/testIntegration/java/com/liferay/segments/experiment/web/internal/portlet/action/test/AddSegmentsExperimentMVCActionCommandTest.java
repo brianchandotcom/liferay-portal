@@ -33,6 +33,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.DuplicateSegmentsExperimentException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -64,6 +65,41 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+	}
+
+	@Test(expected = DuplicateSegmentsExperimentException.class)
+	public void testAddDuplicatedSegmentsExperiment() throws Exception {
+		SegmentsExperimentConstants.Goal goal =
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE;
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience(
+			RandomTestUtil.randomString());
+
+		SegmentsTestUtil.addSegmentsExperiment(
+			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
+			_layout.getPlid());
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				RandomTestUtil.randomString(), goal.getLabel(),
+				RandomTestUtil.randomString(), segmentsExperience);
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsURL", "http://localhost:8080/"
+						).build())) {
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_addSegmentsExperiment",
+				new Class<?>[] {ActionRequest.class},
+				mockLiferayPortletActionRequest);
+		}
 	}
 
 	@Test
@@ -156,6 +192,62 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 		}
 	}
 
+	@Test
+	public void testAddSegmentsExperimentWithExistingTerminatedSegmentsExperiment()
+		throws Exception {
+
+		SegmentsExperimentConstants.Goal goal =
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE;
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience(
+			RandomTestUtil.randomString());
+
+		SegmentsExperiment segmentsExperiment =
+			SegmentsTestUtil.addSegmentsExperiment(
+				_group.getGroupId(),
+				segmentsExperience.getSegmentsExperienceId(),
+				_layout.getPlid());
+
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			SegmentsExperimentConstants.STATUS_TERMINATED);
+
+		String name = RandomTestUtil.randomString();
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				RandomTestUtil.randomString(), goal.getLabel(), name,
+				segmentsExperience);
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsURL", "http://localhost:8080/"
+						).build())) {
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "_addSegmentsExperiment",
+				new Class<?>[] {ActionRequest.class},
+				mockLiferayPortletActionRequest);
+
+			segmentsExperiment =
+				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					_group.getGroupId(),
+					segmentsExperience.getSegmentsExperienceId(),
+					_layout.getPlid());
+
+			Assert.assertNotNull(segmentsExperience);
+			Assert.assertEquals(name, segmentsExperiment.getName());
+		}
+	}
+
 	private SegmentsExperience _addSegmentsExperience(String segmentsEntryName)
 		throws Exception {
 
@@ -164,10 +256,8 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			segmentsEntryName, RandomTestUtil.randomString(), StringPool.BLANK,
 			SegmentsEntryConstants.SOURCE_DEFAULT);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		return SegmentsTestUtil.addSegmentsExperience(
-			segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
+			segmentsEntry.getSegmentsEntryId(), _layout.getPlid(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
@@ -212,6 +302,8 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject(
 		filter = "mvc.command.name=/segments_experiment/add_segments_experiment"

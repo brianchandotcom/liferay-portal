@@ -43,22 +43,22 @@ public class TreeTestUtil {
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				"AA", objectDefinitionLocalService);
 
-		_bindObjectDefinition(
+		_bind(
 			objectDefinitionAA, objectDefinitionLocalService,
 			objectRelationshipLocalService, objectDefinitionA,
 			objectDefinitionA);
-		_bindObjectDefinition(
+		_bind(
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				"AAA", objectDefinitionLocalService),
 			objectDefinitionLocalService, objectRelationshipLocalService,
 			objectDefinitionAA, objectDefinitionA);
-		_bindObjectDefinition(
+		_bind(
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				"AAB", objectDefinitionLocalService),
 			objectDefinitionLocalService, objectRelationshipLocalService,
 			objectDefinitionAA, objectDefinitionA);
 
-		_bindObjectDefinition(
+		_bind(
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				"AB", objectDefinitionLocalService),
 			objectDefinitionLocalService, objectRelationshipLocalService,
@@ -81,7 +81,7 @@ public class TreeTestUtil {
 			edge.getObjectRelationshipId());
 	}
 
-	private static ObjectDefinition _bindObjectDefinition(
+	private static ObjectDefinition _bind(
 			ObjectDefinition objectDefinition,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,

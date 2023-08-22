@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -99,25 +100,35 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.unapprovedChangesAllowed();
 	}
 
-	public void save(
-			long companyId, long defaultCTCollectionTemplateId,
-			long defaultSandboxCTCollectionTemplateId, boolean enabled,
-			boolean sandboxEnabled, boolean unapprovedChangesAllowed)
+	public void save(long companyId, HashMap<String, Object> properties)
 		throws PortalException {
+
+		CTSettingsConfiguration ctSettingsConfiguration =
+			_getCTSettingsConfiguration(companyId);
+
+		properties.putIfAbsent(
+			"defaultCTCollectionTemplateId",
+			ctSettingsConfiguration.defaultCTCollectionTemplateId());
+		properties.putIfAbsent(
+			"defaultSandboxCTCollectionTemplateId",
+			ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId());
+		properties.putIfAbsent("enabled", ctSettingsConfiguration.enabled());
+		properties.putIfAbsent(
+			"remoteEnabled", ctSettingsConfiguration.remoteEnabled());
+		properties.putIfAbsent(
+			"remoteClientId", ctSettingsConfiguration.remoteClientId());
+		properties.putIfAbsent(
+			"remoteClientSecret", ctSettingsConfiguration.remoteClientSecret());
+		properties.putIfAbsent(
+			"sandboxEnabled", ctSettingsConfiguration.sandboxEnabled());
+		properties.putIfAbsent(
+			"unapprovedChangesAllowed",
+			ctSettingsConfiguration.unapprovedChangesAllowed());
 
 		_configurationProvider.saveCompanyConfiguration(
 			CTSettingsConfiguration.class, companyId,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"defaultCTCollectionTemplateId", defaultCTCollectionTemplateId
-			).put(
-				"defaultSandboxCTCollectionTemplateId",
-				defaultSandboxCTCollectionTemplateId
-			).put(
-				"enabled", enabled
-			).put(
-				"sandboxEnabled", sandboxEnabled
-			).put(
-				"unapprovedChangesAllowed", unapprovedChangesAllowed
+			HashMapDictionaryBuilder.putAll(
+				properties
 			).build());
 	}
 

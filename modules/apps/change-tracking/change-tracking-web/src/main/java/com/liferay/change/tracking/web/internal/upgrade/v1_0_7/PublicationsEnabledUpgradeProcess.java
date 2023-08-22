@@ -11,6 +11,7 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.List;
 
@@ -40,7 +41,10 @@ public class PublicationsEnabledUpgradeProcess extends UpgradeProcess {
 					))) {
 
 			_ctSettingsConfigurationHelper.save(
-				ctPreferences.getCompanyId(), 0, 0, true, false, false);
+				ctPreferences.getCompanyId(),
+				HashMapBuilder.<String, Object>put(
+					"enabled", true
+				).build());
 
 			_ctPreferencesLocalService.deleteCTPreferences(ctPreferences);
 		}

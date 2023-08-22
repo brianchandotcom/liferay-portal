@@ -53,9 +53,10 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.test.util.RatingsTestUtil;
@@ -721,7 +722,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		userIdStrategy = new TestUserIdStrategy();
 
-		zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
+		zipReader = _zipReaderFactory.getZipReader(zipWriter.getFile());
 
 		String xml = zipReader.getEntryAsString("/manifest.xml");
 
@@ -734,7 +735,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 			zipWriter.addEntry("/manifest.xml", document.asXML());
 
-			zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
+			zipReader = _zipReaderFactory.getZipReader(zipWriter.getFile());
 		}
 
 		portletDataContext =
@@ -1205,5 +1206,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		private final long _userId;
 
 	}
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

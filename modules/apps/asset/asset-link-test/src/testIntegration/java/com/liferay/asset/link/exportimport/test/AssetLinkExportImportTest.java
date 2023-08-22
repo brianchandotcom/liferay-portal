@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -295,7 +295,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
 			ExportImportHelperUtil.getUserIdStrategy(
 				TestPropsValues.getUserId(), userIdStrategyString),
-			ZipReaderFactoryUtil.getZipReader(larFile));
+			_zipReaderFactory.getZipReader(larFile));
 	}
 
 	private BookmarksEntry _bookmarksEntry;
@@ -304,5 +304,8 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 	private ConfigurationProvider _configurationProvider;
 
 	private JournalArticle _journalArticle;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

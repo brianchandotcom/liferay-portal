@@ -31,7 +31,8 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
@@ -272,8 +273,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		try (InputStream inputStream =
 				portletDataContext.getZipEntryAsInputStream(modelPath)) {
 
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-				inputStream);
+			ZipReader zipReader = _zipReaderFactory.getZipReader(inputStream);
 
 			Document document = UnsecureSAXReaderUtil.read(
 				zipReader.getEntryAsString("manifest.xml"));
@@ -422,5 +422,8 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	private LayoutPrototype _layoutPrototype;
 	private final Map<String, List<Layout>> _layouts = new HashMap<>();
 	private LayoutSetPrototype _layoutSetPrototype;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

@@ -38,7 +38,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -195,7 +196,7 @@ public class ExportedMissingReferenceExportImportTest
 				ExportImportHelperUtil.getUserIdStrategy(
 					TestPropsValues.getUserId(),
 					TestUserIdStrategy.CURRENT_USER_ID),
-				ZipReaderFactoryUtil.getZipReader(larFile));
+				_zipReaderFactory.getZipReader(larFile));
 
 		Element missingReferencesElement =
 			portletDataContext.getMissingReferencesElement();
@@ -396,5 +397,8 @@ public class ExportedMissingReferenceExportImportTest
 	private StagedModelRepository<DummyReference>
 		_dummyReferenceStagedModelRepository;
 	private StagedModelRepository<Dummy> _dummyStagedModelRepository;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

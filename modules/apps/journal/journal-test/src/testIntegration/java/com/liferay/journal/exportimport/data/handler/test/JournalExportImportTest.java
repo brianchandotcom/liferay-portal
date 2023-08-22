@@ -73,7 +73,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -568,7 +568,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
 			ExportImportHelperUtil.getUserIdStrategy(
 				TestPropsValues.getUserId(), userIdStrategyString),
-			ZipReaderFactoryUtil.getZipReader(larFile));
+			_zipReaderFactory.getZipReader(larFile));
 	}
 
 	@Override
@@ -677,5 +677,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

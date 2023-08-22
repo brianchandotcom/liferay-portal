@@ -43,10 +43,11 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.impl.PortletImpl;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
@@ -815,7 +816,7 @@ public class ExportImportHelperUtilTest {
 
 		zipWriter.addEntry("/manifest.xml", xml);
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+		ZipReader zipReader = _zipReaderFactory.getZipReader(
 			zipWriter.getFile());
 
 		PortletDataContext portletDataContextImport =
@@ -917,6 +918,9 @@ public class ExportImportHelperUtilTest {
 
 	@DeleteAfterTestRun
 	private Group _stagingGroup;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 	private class ExportImportTestParameterMapBuilder {
 

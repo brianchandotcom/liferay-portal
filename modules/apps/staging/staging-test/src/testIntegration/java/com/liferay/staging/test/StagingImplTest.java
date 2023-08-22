@@ -64,9 +64,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.configuration.StagingConfiguration;
@@ -449,7 +450,7 @@ public class StagingImplTest {
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				_group.getCompanyId(), _group.getGroupId(), parameterMap,
-				userIdStrategy, ZipReaderFactoryUtil.getZipReader(larFile));
+				userIdStrategy, _zipReaderFactory.getZipReader(larFile));
 
 		String journalPortletPath = ExportImportPathUtil.getPortletPath(
 			portletDataContext, JournalPortletKeys.JOURNAL);
@@ -828,5 +829,8 @@ public class StagingImplTest {
 
 	@DeleteAfterTestRun
 	private Group _remoteStagingGroup;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

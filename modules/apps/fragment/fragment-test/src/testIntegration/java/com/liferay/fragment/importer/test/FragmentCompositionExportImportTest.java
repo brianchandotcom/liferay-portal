@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -77,7 +77,7 @@ public class FragmentCompositionExportImportTest {
 
 		fragmentComposition.populateZipWriter(zipWriter, "test");
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+		ZipReader zipReader = _zipReaderFactory.getZipReader(
 			zipWriter.getFile());
 
 		for (String entry : zipReader.getEntries()) {
@@ -113,5 +113,8 @@ public class FragmentCompositionExportImportTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

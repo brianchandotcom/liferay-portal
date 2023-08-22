@@ -13,7 +13,7 @@
 
 <tr>
 	<td>QUICK_LINK</td>
-	<td>//*[@aria-label="Quick Links"]//li//*[contains(text(),"${key_link}")]</td>
+	<td>//*[@aria-label="Quick Links"]//*[contains(text(),"${key_link}")]</td>
 	<td></td>
 </tr>
 <tr>

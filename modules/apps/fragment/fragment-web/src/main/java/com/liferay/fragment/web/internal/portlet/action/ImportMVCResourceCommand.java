@@ -52,8 +52,6 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -67,7 +65,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		boolean overwrite = ParamUtil.getBoolean(resourceRequest, "overwrite");
 
-		_importFragmentEntries(
+		JSONObject jsonObject = _importFragmentEntries(
 			file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLocale(), overwrite, themeDisplay.getUserId());
 

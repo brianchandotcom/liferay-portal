@@ -528,6 +528,11 @@ public class DDMServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.3.2", "5.3.3", new BrowserSnifferTemplateUpgradeProcess());
+
+		registry.register(
+			"5.3.3", "5.4.0",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_0.
+				DDMFieldUpgradeProcess());
 	}
 
 	@Activate

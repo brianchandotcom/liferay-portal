@@ -10,6 +10,7 @@ create index IX_5C293E0D on ObjectDefinition (companyId, active_, system_, statu
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:255$]);
 create unique index IX_F861636D on ObjectDefinition (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
+create index IX_E5612EB6 on ObjectDefinition (companyId, status);
 create index IX_8D232754 on ObjectDefinition (objectFolderId);
 create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_B929D94C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);

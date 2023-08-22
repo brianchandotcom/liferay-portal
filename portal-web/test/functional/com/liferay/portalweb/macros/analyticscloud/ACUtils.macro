@@ -739,6 +739,10 @@ definition {
 			var emailAddress = "test@liferay.com";
 		}
 
+		while ((IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE"))) {
+			Refresh();
+		}
+
 		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
 			if (!(isSet(password))) {
 				ACLogin.loginAs(emailAddress = ${emailAddress});

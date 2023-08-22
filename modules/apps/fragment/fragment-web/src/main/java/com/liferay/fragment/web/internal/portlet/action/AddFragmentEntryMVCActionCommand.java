@@ -9,7 +9,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
+import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandlerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,7 +109,7 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_fragmentEntryExceptionRequestHandler.handlePortalException(
+			FragmentEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
@@ -127,10 +127,6 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			"fragmentEntryId", fragmentEntry.getFragmentEntryId()
 		).buildString();
 	}
-
-	@Reference
-	private FragmentEntryExceptionRequestHandler
-		_fragmentEntryExceptionRequestHandler;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

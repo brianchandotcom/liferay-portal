@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,7 +12,7 @@ import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -22,16 +22,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = FragmentEntryExceptionRequestHandler.class)
-public class FragmentEntryExceptionRequestHandler {
+public class FragmentEntryExceptionRequestHandlerUtil {
 
-	public void handlePortalException(
+	public static void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			PortalException portalException)
 		throws Exception {
@@ -43,11 +39,11 @@ public class FragmentEntryExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String errorMessage = _language.get(
+		String errorMessage = LanguageUtil.get(
 			themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
 		if (portalException instanceof FragmentEntryConfigurationException) {
-			errorMessage = _language.get(
+			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"please-provide-a-valid-configuration-for-the-fragment");
 		}
@@ -55,12 +51,12 @@ public class FragmentEntryExceptionRequestHandler {
 			errorMessage = portalException.getLocalizedMessage();
 		}
 		else if (portalException instanceof FragmentEntryFieldTypesException) {
-			errorMessage = _language.get(
+			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"please-provide-a-valid-field-types-for-the-fragment");
 		}
 		else if (portalException instanceof FragmentEntryNameException) {
-			errorMessage = _language.get(
+			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "please-enter-a-valid-name");
 		}
 		else {
@@ -74,9 +70,6 @@ public class FragmentEntryExceptionRequestHandler {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryExceptionRequestHandler.class);
-
-	@Reference
-	private Language _language;
+		FragmentEntryExceptionRequestHandlerUtil.class);
 
 }

@@ -261,9 +261,6 @@
 		<property name="xmlRpc" ref="com.liferay.portal.kernel.xmlrpc.XmlRpc" />
 	</bean>
 	<bean class="com.liferay.portal.zip.ZipReaderFactoryImpl" id="com.liferay.portal.kernel.zip.ZipReaderFactory" />
-	<bean class="com.liferay.portal.kernel.zip.ZipReaderFactoryUtil" id="com.liferay.portal.kernel.zip.ZipReaderFactoryUtil">
-		<property name="zipReaderFactory" ref="com.liferay.portal.kernel.zip.ZipReaderFactory" />
-	</bean>
 	<bean class="com.liferay.portal.zip.ZipWriterFactoryImpl" id="com.liferay.portal.kernel.zip.ZipWriterFactory" />
 	<bean class="com.liferay.portal.kernel.zip.ZipWriterFactoryUtil" id="com.liferay.portal.kernel.zip.ZipWriterFactoryUtil">
 		<property name="zipWriterFactory" ref="com.liferay.portal.kernel.zip.ZipWriterFactory" />

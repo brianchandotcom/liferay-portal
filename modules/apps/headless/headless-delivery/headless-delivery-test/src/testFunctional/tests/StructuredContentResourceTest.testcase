@@ -58,15 +58,11 @@ definition {
 
 			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
 
-			TestUtils.assertEquals(
-				actual = ${data},
-				expected = "Option 1");
+			StringUtil.assertEquals("Option 1", ${data});
 
 			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
 
-			TestUtils.assertEquals(
-				actual = ${value},
-				expected = "Value1");
+			StringUtil.assertEquals("Value1", ${value});
 		}
 	}
 
@@ -130,15 +126,11 @@ definition {
 
 			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
 
-			TestUtils.assertEquals(
-				actual = ${data},
-				expected = "[\"First\",\"Second\"]");
+			StringUtil.assertEquals("[\"First\",\"Second\"]", ${data});
 
 			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
 
-			TestUtils.assertEquals(
-				actual = ${value},
-				expected = "[\"${value1}\",\"${value2}\"]");
+			StringUtil.assertEquals("[\"${value1}\",\"${value2}\"]", ${value});
 		}
 	}
 
@@ -186,9 +178,7 @@ definition {
 
 			var data = StringUtil.trim(${data});
 
-			TestUtils.assertEquals(
-				actual = ${data},
-				expected = "\"Row 1\": \"Column 1\"");
+			StringUtil.assertEquals("\"Row 1\": \"Column 1\"", ${data});
 
 			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
 
@@ -198,9 +188,7 @@ definition {
 
 			var value = StringUtil.trim(${value});
 
-			TestUtils.assertEquals(
-				actual = ${value},
-				expected = "\"R1\": \"C1\"");
+			StringUtil.assertEquals("\"R1\": \"C1\"", ${value});
 		}
 	}
 
@@ -240,15 +228,11 @@ definition {
 
 			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
 
-			TestUtils.assertEquals(
-				actual = ${data},
-				expected = "Option 3");
+			StringUtil.assertEquals("Option 3", ${data});
 
 			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
 
-			TestUtils.assertEquals(
-				actual = ${value},
-				expected = "Value3");
+			StringUtil.assertEquals("Value3", ${value});
 		}
 	}
 

@@ -38,6 +38,15 @@ public interface CTSettingsConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
+	@Meta.AD(deflt = "false", name = "remote-enabled", required = false)
+	public boolean remoteEnabled();
+
+	@Meta.AD(name = "remote-client-id", required = false)
+	public String remoteClientId();
+
+	@Meta.AD(name = "remote-client-secret", required = false)
+	public String remoteClientSecret();
+
 	@Meta.AD(deflt = "false", name = "sandbox-enabled", required = false)
 	public boolean sandboxEnabled();
 

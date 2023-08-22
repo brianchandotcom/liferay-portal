@@ -6,124 +6,199 @@
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
-	.adt-solutions-search-results .app-solutions-results-card:hover {
+	.adt-solutions-search-results .solutions-search-results-card:hover {
 		color: var(--black);
 	}
 
 	.adt-solutions-search-results .card-image-title-container .image-container {
 		height: 3rem;
-		min-width: 3rem;
+	  	min-width: 3rem;
+	}
+
+	.adt-solutions-search-results .labels .category-names {
+		background-color: #2c3a4b;
+		bottom: 26px;
+		display: none;
+		width: 14.5rem;
+	}
+
+	.adt-solutions-search-results .labels .category-names::after {
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		border-top: 8px solid var(--neutral-1);
+		bottom: -7px;
+		content:'';
+		left: 0;
+		margin: 0 auto;
+		position: absolute;
+		right: 0;
+		width: 0;
+	}
+
+	.adt-solutions-search-results .labels .category-label {
+		background-color: #ebeef2;
+		color: #545D69;
+	}
+
+	.adt-solutions-search-results .labels .category-label-remainder:hover .category-names {
+		display: block;
+	}
+
+	.productSpec{
+		color: #545d69;
 	}
 
 	@media screen and (max-width: 599px) {
-
 		.adt-solutions-search-results .cards-container {
-			grid-template-columns: 288px;
 			grid-row-gap: 1rem;
+			grid-template-columns: 288px;
 			justify-content: center;
-		}
-
-		.adt-solutions-search-results .solutions-search-results-card {
-			height: 281px;
 		}
 	}
 
-	@media screen and (min-width: 600px) and (max-width: 899px) {
+	@media screen and (min-width:600px) and (max-width: 899px) {
 		.adt-solutions-search-results .cards-container {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 </style>
 
-<#assign searchContainer = cpSearchResultsDisplayContext.getSearchContainer() />
+<script>
+	window.onload = () => {
+		const numberOfProductsInfo = document.querySelector("#ocerSearchContainerPageIterator_ariaPaginationResults");
+		const productsCount = document.querySelector("#freemarkervar").value;
+		let infoList = numberOfProductsInfo.textContent.split(" ");
+		infoList[infoList.length - 2] = productsCount;
+		const newInfo = infoList.join(" ");
+		numberOfProductsInfo.textContent = newInfo;
+	}
+</script>
+
+<#assign siteURL = (themeDisplay.getURLCurrent()?keep_after("?"))! />
+
+<#function getFilterByUrlParams siteURL>
+	<#if siteURL??>
+		<#assign urlParams = "" />
+		<#list siteURL?split("&") as params>
+			<#if !params?contains("delta") && !params?contains("start")>
+				<#assign categoryId = params?keep_after("=") />
+				<#if categoryId?has_content>
+					<#assign urlParams = urlParams + " (params eq '" + categoryId + "') and" />
+				</#if>
+			</#if>
+		</#list>
+	</#if>
+
+	<#return urlParams?keep_before_last(" ")?trim />
+</#function>
+
+<#if siteURL??>
+	<#list siteURL?split("&") as params>
+		<#if params?contains("delta")>
+			<#assign pageSize = params?keep_after("=") />
+		</#if>
+		<#if params?contains("start")>
+			<#assign page = params?keep_after("=") />
+		</#if>
+	</#list>
+</#if>
+
+<#assign
+	pageSize = pageSize?has_content?then(pageSize, 15)
+	page = page?has_content?then(page, 1)
+	taxonomyVocabularyName = "Marketplace Product Type"
+	categoryName = "Solution"
+	taxonomyVocabulary = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?fields=id&filter=name eq '${taxonomyVocabularyName}'").items
+	vocabularyCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabulary[0].id}/taxonomy-categories?fields=id&filter=name eq '${categoryName}'").items
+	productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?filter=categoryIds/any(params:params eq '${vocabularyCategory[0].id}')&pageSize=" + pageSize + "&page=" + page)
+	numberFilteredProducts = 0
+	filterCategoriesByUrlParams = getFilterByUrlParams(siteURL)
+/>
+
+<#if filterCategoriesByUrlParams?has_content>
+	<#assign
+		productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?filter=categoryIds/any(params:${filterCategoriesByUrlParams} and (params eq '${vocabularyCategory[0].id}'))&pageSize=" + pageSize + "&page=" + page)
+	/>
+</#if>
+
+<#if productsList.items?has_content>
+	<#list productsList.items as productList>
+		<#assign numberFilteredProducts = numberFilteredProducts + 1 />
+	</#list>
+</#if>
 
 <div class="adt-solutions-search-results">
-	<div class="color-neutral-3 d-md-block d-none pb-4 solutions-count">
-		<#if entries?has_content>
-			<strong class='color-black'>${searchContainer.getTotal()}</strong> Apps Available
-		</#if>
-	</div>
+	<#if productsList.items?has_content>
+		<input id="freemarkervar" type="hidden" value="${productsList.totalCount}" />
 
-	<div class="cards-container pb-6">
-		<#if entries?has_content>
-			<#list entries as curCPCatalogEntry>
+		<div class="color-neutral-3 d-md-block d-none pb-4">
+			<strong class='color-black'>${numberFilteredProducts!}</strong>&nbsp;${categoryName}s Available
+		</div>
+
+		<div class="cards-container pb-6">
+			<#list productsList.items as product>
 				<#assign
-					channelId = ""
-					channels = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels")
-					cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
-					developerName = ""
-					productName = curCPCatalogEntry.getName()
-					productDescription = (stringUtil.shorten(htmlUtil.stripHtml(curCPCatalogEntry.getDescription()), 150,"..."))
-					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
-					priceModel = ""
-					productImageURL = "https://www.liferay.com/documents/448812852/0/icon.png/5da637ed-9593-5531-a6f0-bcd1c5ad20d8/icon.png?t=1656341514206"
-					images = cpContentHelper.getImages(cpDefinitionId, themeDisplay)
+					productCategories = product.categories
+					productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US), 150, "...")
+					portalURL = portalUtil.getLayoutURL(themeDisplay)
+					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
+					productSpecifications = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + product.productId + "/productSpecifications").items
 				/>
 
-				<#list channels.items as channel>
-					<#if channel.name == "Marketplace Channel">
-						<#assign channelId = channel.id />
-					</#if>
-				</#list>
+				<a class="bg-white d-flex flex-column mb-0 p-4 rounded solutions-search-results-card text-dark text-decoration-none" href="${productURL}">
+					<div class="align-items-center d-flex image-container justify-content-center rounded">
+						<img
+							alt="${product.name.en_US}"
+							class="h-100 mw-100"
+							src="${product.thumbnail}"
+						/>
+					</div>
 
-				<#if (curCPCatalogEntry.getCProductId())??>
-					<#assign specifications = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/" + channelId + "/products/" + curCPCatalogEntry.getCProductId() + "/product-specifications") />
-				</#if>
+					<#if productSpecifications?has_content>
+						<#assign productDeveloperName = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
 
-				<#if specifications?has_content && specifications.items?has_content>
-					<#list specifications.items as specification>
-						<#if specification.specificationKey?has_content && specification.specificationKey == "developer-name">
-							<#assign developerName = specification.value />
-						<#elseif specification.specificationKey?has_content && specification.specificationKey == "price-model">
-							<#assign priceModel = specification.value />
-						</#if>
-					</#list>
-				</#if>
-
-				<#list images as image>
-					<#assign title = image.getTitle()!"" />
-
-					<#if title?contains("App Icon")>
-						<#assign productImageURL = image.getURL() />
-					</#if>
-				</#list>
-
-				<a class="solutions-search-results-card bg-white d-flex flex-column mb-0 p-3 rounded text-decoration-none" href=${friendlyURL} style="color: var(--black);">
-					<div class="card-image-title-container d-flex pb-3">
-						<#if productImageURL?has_content>
-							<div class="image-container rounded">
-								<img
-									alt=${productName}
-									class="h-100 image mw-100"
-									src="${productImageURL}"
-								/>
+						<#list productDeveloperName as productSpec>
+							<div class="productSpec color-neutral-3 font-size-paragraph-small mt-1">
+								${productSpec.value.en_US}
 							</div>
-						</#if>
+						</#list>
+					</#if>
 
-						<div class="pl-2 title-description-text">
-							<h5 class="font-weight-semi-bold mb-0 title" style="font-size: 1.375rem; line-height: 1.244;">
-								${productName}
-							</h5>
-
-							<div class="developer-name font-size-paragraph-small font-weight-normal" style="color: var(--gray-700);">
-								${developerName}
+					<div class="align-items-center card-image-title-container d-flex pb-1">
+						<div class="">
+							<div class="font-weight-semi-bold h2 mt-1">
+								${product.name.en_US}
 							</div>
 						</div>
 					</div>
 
-					<div class="d-flex description-price-container flex-column font-size-paragraph-small h-100 justify-content-between" style="color: var(--black);">
-						<div class="description-price-text">
-							<div class="description font-weight-normal mb-2">
+					<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
+							<div class="font-weight-normal mb-2">
 								${productDescription}
 							</div>
-
-							<div class="font-weight-semi-bold price-model">
-								${priceModel}
-							</div>
-						</div>
 					</div>
+					<#if productCategories?has_content>
+						<div class="align-center d-flex labels">
+							<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1">
+								${productCategories[0].name}
+							</div>
+
+							<#if (productCategories?size > 1)>
+								<div class="category-label-remainder pl-2 position-relative text-primary">
+									+${productCategories?size - 1}
+									<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
+										<#list productCategories as category>
+											<#if !category?is_first>
+												${category.name}<#sep>, </#sep>
+											</#if>
+										</#list>
+									</div>
+								</div>
+							</#if>
+						</div>
+					</#if>
 				</a>
 			</#list>
-		</#if>
-	</div>
+		</div>
+	</#if>
 </div>

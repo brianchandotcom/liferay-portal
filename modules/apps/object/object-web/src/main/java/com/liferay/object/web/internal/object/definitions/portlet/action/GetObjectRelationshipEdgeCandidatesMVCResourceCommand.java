@@ -53,8 +53,6 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		int depth = ParamUtil.getInteger(resourceRequest, "depth");
-
 		JSONArray objectRelationshipsJSONArray = jsonFactory.createJSONArray();
 
 		Locale locale = _portal.getLocale(resourceRequest);
@@ -90,6 +88,8 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 
 			Tree tree = _treeFactory.create(
 				parentObjectDefinition.getRootObjectDefinitionId());
+
+			int depth = ParamUtil.getInteger(resourceRequest, "depth");
 
 			if (!_meetsTreeMaxHeight(depth, parentObjectDefinition, tree)) {
 				continue;

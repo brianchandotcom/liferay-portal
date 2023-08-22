@@ -114,7 +114,11 @@ definition {
 				accountUserName = ${accountUserName});
 		}
 	}
-
+	macro clickInTableKeyByName{
+		Click(
+				key_text = ${keyName},
+				locator1 = "CP2ActivationKeys#RESPONSIVE_TABLE");
+	}
 	macro changeCardStatus {
 		var key_text = ${text};
 

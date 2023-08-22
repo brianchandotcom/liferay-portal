@@ -82,14 +82,14 @@ definition {
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
-		IFrame.addCP(sourceURL = "http://iscaliforniaonfire.com");
+		IFrame.addCP(sourceURL = "http://whereiscaliforniaonfire.com");
 
 		Navigator.gotoPage(pageName = "IFrame Page");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
 
 		AssertVisible(
-			key_title = "Yes",
+			key_title = "Fires",
 			locator1 = "Header#H1_TITLE");
 
 		SelectFrameTop();

@@ -19,6 +19,7 @@ const ACTIONS = {
 	moveEntry(itemData, portletNamespace) {
 		openSelectionModal({
 			height: '70vh',
+			iframeBodyCssClass: '',
 			onSelect: (event) => {
 				const selectContainerForm = document.getElementById(
 					`${portletNamespace}selectContainerForm`

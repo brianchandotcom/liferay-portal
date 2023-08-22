@@ -19,13 +19,13 @@ String lastElementBreadcrumbTitle = StringUtil.upperCaseFirstLetter(trashDisplay
 	<portlet:param name="mvcPath" value="/view_container_model.jsp" />
 </portlet:actionURL>
 
-<p class="p-3 text-secondary">
+<p class="c-px-4 c-py-3 text-secondary">
 	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-of-this-file-does-not-exist-anymore" translateArguments="<%= false %>" />
 </p>
 
 <liferay-frontend:edit-form
 	action="<%= viewContainerModelURL %>"
-	cssClass="c-px-3 container-fluid container-fluid-max-xl"
+	cssClass="c-px-4 container-fluid container-fluid-max-xl"
 	method="post"
 	name="selectContainerFm"
 >
@@ -34,6 +34,7 @@ String lastElementBreadcrumbTitle = StringUtil.upperCaseFirstLetter(trashDisplay
 	/>
 
 	<liferay-ui:search-container
+		emptyResultsMessage='<%= LanguageUtil.format(request, "no-folders-were-found-in-x", lastElementBreadcrumbTitle) %>'
 		searchContainer="<%= trashContainerModelDisplayContext.getSearchContainer() %>"
 		total="<%= trashContainerModelDisplayContext.getContainerModelsCount() %>"
 	>
@@ -95,7 +96,7 @@ String lastElementBreadcrumbTitle = StringUtil.upperCaseFirstLetter(trashDisplay
 			markupView="lexicon"
 		/>
 
-		<aui:button-row>
+		<aui:button-row cssClass="position-fixed">
 			<clay:button
 				cssClass="selector-button"
 				data-classname='<%= trashContainerModelDisplayContext.getClassName() %>'

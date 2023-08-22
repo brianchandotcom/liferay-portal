@@ -17,6 +17,12 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 	<clay:content-col
 		expand="<%= true %>"
 	>
+		<c:if test="<%= !lockedLayoutsConfigurationDisplayContext.hasConfiguration() %>">
+			<clay:alert
+				message="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default"
+			/>
+		</c:if>
+
 		<p class="text-secondary"><liferay-ui:message key="pages-that-are-already-being-edited-get-locked-for-other-users-so-just-one-user-can-edit-at-a-time" /></p>
 	</clay:content-col>
 </clay:content-row>

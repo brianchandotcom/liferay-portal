@@ -8,13 +8,19 @@ package com.liferay.layout.content.page.editor.web.internal.portal.settings.conf
 import com.liferay.layout.content.page.editor.web.internal.configuration.LockedLayoutsConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+
+import java.io.IOException;
 
 import java.util.Locale;
 
@@ -22,6 +28,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -87,6 +96,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 			httpServletRequest.setAttribute(
 				LockedLayoutsConfigurationDisplayContext.class.getName(),
 				new LockedLayoutsConfigurationDisplayContext(
+					_hasConfiguration(themeDisplay.getCompanyId()),
 					_configurationProvider.getCompanyConfiguration(
 						LockedLayoutsConfiguration.class,
 						themeDisplay.getCompanyId())));
@@ -95,6 +105,32 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 			ReflectionUtil.throwException(portalException);
 		}
 	}
+
+	private boolean _hasConfiguration(long companyId)
+		throws ConfigurationException {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
+				LockedLayoutsConfiguration.class.getName(), ".scoped",
+				")(companyId=", companyId, "))");
+
+			Configuration[] configuration =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (ArrayUtil.isEmpty(configuration)) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ConfigurationException(exception);
+		}
+	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

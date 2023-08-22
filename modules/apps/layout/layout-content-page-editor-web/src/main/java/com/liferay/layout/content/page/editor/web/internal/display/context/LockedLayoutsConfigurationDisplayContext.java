@@ -13,8 +13,10 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.LockedL
 public class LockedLayoutsConfigurationDisplayContext {
 
 	public LockedLayoutsConfigurationDisplayContext(
+		boolean hasConfiguration,
 		LockedLayoutsConfiguration lockedLayoutsConfiguration) {
 
+		_hasConfiguration = hasConfiguration;
 		_lockedLayoutsConfiguration = lockedLayoutsConfiguration;
 	}
 
@@ -26,10 +28,15 @@ public class LockedLayoutsConfigurationDisplayContext {
 		return _lockedLayoutsConfiguration.timeWithoutAutosave();
 	}
 
+	public boolean hasConfiguration() {
+		return _hasConfiguration;
+	}
+
 	public boolean isAllowAutomaticUnlockingProcess() {
 		return _lockedLayoutsConfiguration.allowAutomaticUnlockingProcess();
 	}
 
+	private final boolean _hasConfiguration;
 	private final LockedLayoutsConfiguration _lockedLayoutsConfiguration;
 
 }

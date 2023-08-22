@@ -54,18 +54,16 @@ public class PatcherUtil {
 
 	private static final String _PATCHER_PROPERTIES = "patcher.properties";
 
-	private static final Properties _PROPERTIES;
-
 	private static final String _PROPERTY_INSTALLED_PATCHES =
 		"installed.patches";
 
 	private static final Log _log = LogFactoryUtil.getLog(PatcherUtil.class);
 
 	static {
-		_PROPERTIES = _getProperties();
+		Properties properties = _getProperties();
 
 		_INSTALLED_PATCH_NAMES = StringUtil.split(
-			_PROPERTIES.getProperty(_PROPERTY_INSTALLED_PATCHES));
+			properties.getProperty(_PROPERTY_INSTALLED_PATCHES));
 	}
 
 }

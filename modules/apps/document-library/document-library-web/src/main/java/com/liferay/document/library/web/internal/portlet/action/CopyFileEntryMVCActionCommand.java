@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -87,13 +90,18 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkDestinationGroup(group);
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				DLFileEntry.class.getName(), actionRequest);
+
+			_populateServiceContext(
+				serviceContext, group.getGroupId(), fileEntryId);
+
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						group.getGroupId()),
-				ServiceContextFactory.getInstance(
-					DLFileEntry.class.getName(), actionRequest));
+				serviceContext);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, _jsonFactory.createJSONObject());
@@ -108,6 +116,28 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+	}
+
+	private void _populateServiceContext(
+			ServiceContext serviceContext, long groupId, long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+
+		if (ArrayUtil.isEmpty(groupIds) ||
+			!ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
+
+			return;
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

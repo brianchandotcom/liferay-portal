@@ -37,11 +37,8 @@ public class ReindexExecutionModeConfigurationFieldOptionsProvider
 
 		executionModes.add("regular");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-177664")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
 			executionModes.add("concurrent");
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-177668")) {
 			executionModes.add("sync");
 		}
 

@@ -5,31 +5,30 @@
 
 package com.liferay.portal.messaging.internal.jmx;
 
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.management.DynamicMBean;
 import javax.management.NotCompliantMBeanException;
 import javax.management.StandardMBean;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -51,7 +50,9 @@ public class MessageBusManager
 
 	@Override
 	public int getDestinationCount() {
-		return _mbeanServiceRegistrations.size();
+		Set<String> destinationNames = _serviceTrackerMap.keySet();
+
+		return destinationNames.size();
 	}
 
 	@Override
@@ -67,83 +68,87 @@ public class MessageBusManager
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, Destination.class, "(destination.name=*)",
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(destination, emitter) -> emitter.emit(destination.getName())),
+			new EagerServiceTrackerCustomizer
+				<Destination, ServiceRegistration<DynamicMBean>>() {
 
-		for (Destination destination : _queuedDestinations) {
-			addDestination(destination);
-		}
+				@Override
+				public ServiceRegistration<DynamicMBean> addingService(
+					ServiceReference<Destination> serviceReference) {
 
-		_queuedDestinations.clear();
-	}
+					ServiceRegistration<DynamicMBean> serviceRegistration =
+						null;
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)"
-	)
-	protected void addDestination(Destination destination) {
-		if (_bundleContext == null) {
-			_queuedDestinations.add(destination);
+					Destination destination = bundleContext.getService(
+						serviceReference);
 
-			return;
-		}
+					try {
+						DestinationStatisticsManager
+							destinationStatisticsManager =
+								new DestinationStatisticsManager(destination);
 
-		try {
-			DestinationStatisticsManager destinationStatisticsManager =
-				new DestinationStatisticsManager(destination);
+						Dictionary<String, Object> mBeanProperties =
+							HashMapDictionaryBuilder.<String, Object>put(
+								"jmx.objectname",
+								destinationStatisticsManager.getObjectName()
+							).put(
+								"jmx.objectname.cache.key",
+								destinationStatisticsManager.
+									getObjectNameCacheKey()
+							).build();
 
-			Dictionary<String, Object> mBeanProperties =
-				HashMapDictionaryBuilder.<String, Object>put(
-					"jmx.objectname",
-					destinationStatisticsManager.getObjectName()
-				).put(
-					"jmx.objectname.cache.key",
-					destinationStatisticsManager.getObjectNameCacheKey()
-				).build();
+						serviceRegistration = bundleContext.registerService(
+							DynamicMBean.class, destinationStatisticsManager,
+							mBeanProperties);
+					}
+					catch (NotCompliantMBeanException
+								notCompliantMBeanException) {
 
-			ServiceRegistration<DynamicMBean> serviceRegistration =
-				_bundleContext.registerService(
-					DynamicMBean.class, destinationStatisticsManager,
-					mBeanProperties);
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Unable to register destination mbean",
+								notCompliantMBeanException);
+						}
+					}
 
-			_mbeanServiceRegistrations.put(
-				destination.getName(), serviceRegistration);
-		}
-		catch (NotCompliantMBeanException notCompliantMBeanException) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unable to register destination mbean",
-					notCompliantMBeanException);
-			}
-		}
+					return serviceRegistration;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<Destination> serviceReference,
+					ServiceRegistration<DynamicMBean> serviceRegistration) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<Destination> serviceReference,
+					ServiceRegistration<DynamicMBean> serviceRegistration) {
+
+					bundleContext.ungetService(serviceReference);
+
+					serviceRegistration.unregister();
+				}
+
+			});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_mbeanServiceRegistrations.clear();
-	}
-
-	protected void removeDestination(Destination destination) {
-		ServiceRegistration<DynamicMBean> mbeanServiceRegistration =
-			_mbeanServiceRegistrations.remove(destination.getName());
-
-		if (mbeanServiceRegistration != null) {
-			mbeanServiceRegistration.unregister();
-		}
+		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageBusManager.class);
 
-	private BundleContext _bundleContext;
-	private final Map<String, ServiceRegistration<DynamicMBean>>
-		_mbeanServiceRegistrations = new ConcurrentHashMap<>();
-
 	@Reference
 	private MessageBus _messageBus;
 
-	private final Set<Destination> _queuedDestinations =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private ServiceTrackerMap<String, ServiceRegistration<DynamicMBean>>
+		_serviceTrackerMap;
 
 }

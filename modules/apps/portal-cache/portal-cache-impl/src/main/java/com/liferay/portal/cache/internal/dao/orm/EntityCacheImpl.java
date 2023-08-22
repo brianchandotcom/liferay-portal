@@ -319,33 +319,39 @@ public class EntityCacheImpl
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
-			FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
+			_notify(className, baseModel, removePortalCache);
+		}
+	}
 
-			if (finderCacheImpl == null) {
-				return;
-			}
+	private void _notify(
+		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
 
-			if (removePortalCache == null) {
-				finderCacheImpl.updateByEntityCache(className, baseModel);
-			}
-			else if (baseModel != null) {
-				finderCacheImpl.removeByEntityCache(className, baseModel);
-			}
-			else if (removePortalCache) {
-				if (className == null) {
-					finderCacheImpl.dispose();
-				}
-				else {
-					finderCacheImpl.removeCacheByEntityCache(className);
-				}
+		FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
+
+		if (finderCacheImpl == null) {
+			return;
+		}
+
+		if (removePortalCache == null) {
+			finderCacheImpl.updateByEntityCache(className, baseModel);
+		}
+		else if (baseModel != null) {
+			finderCacheImpl.removeByEntityCache(className, baseModel);
+		}
+		else if (removePortalCache) {
+			if (className == null) {
+				finderCacheImpl.dispose();
 			}
 			else {
-				if (className == null) {
-					finderCacheImpl.clearCache();
-				}
-				else {
-					finderCacheImpl.clearByEntityCache(className);
-				}
+				finderCacheImpl.removeCacheByEntityCache(className);
+			}
+		}
+		else {
+			if (className == null) {
+				finderCacheImpl.clearCache();
+			}
+			else {
+				finderCacheImpl.clearByEntityCache(className);
 			}
 		}
 	}
@@ -353,9 +359,7 @@ public class EntityCacheImpl
 	private void _notifyFinderCache(
 		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
 
-		_notify(
-			CompanyThreadLocal.getCompanyId(), className, baseModel,
-			removePortalCache);
+		_notify(className, baseModel, removePortalCache);
 
 		if (!_clusterExecutor.isEnabled() ||
 			!ClusterInvokeThreadLocal.isEnabled()) {

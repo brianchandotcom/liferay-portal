@@ -83,7 +83,7 @@ public class StatsClusterRequestExecutorImpl
 			}
 
 			return new StatsClusterResponse(
-				availableSpace, totalSpace, clusterHealthStatus, responseBody);
+				availableSpace, clusterHealthStatus, responseBody, totalSpace);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

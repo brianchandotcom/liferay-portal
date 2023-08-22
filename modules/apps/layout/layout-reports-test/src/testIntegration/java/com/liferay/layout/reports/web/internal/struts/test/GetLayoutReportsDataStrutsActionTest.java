@@ -1,0 +1,184 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.layout.reports.web.internal.struts.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
+/**
+ * @author Mikel Lorza
+ */
+@RunWith(Arquillian.class)
+public class GetLayoutReportsDataStrutsActionTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetLayoutReportsDataStrutsActionWithContentLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		JSONObject jsonObject = _serveResource(layout);
+
+		JSONObject segmentsExperienceSelectorDataJSONObject =
+			jsonObject.getJSONObject("segmentsExperienceSelectorData");
+
+		Assert.assertNotNull(segmentsExperienceSelectorDataJSONObject);
+
+		JSONObject selectedSegmentsExperienceJSONObject =
+			segmentsExperienceSelectorDataJSONObject.getJSONObject(
+				"selectedSegmentsExperience");
+
+		Assert.assertNotNull(selectedSegmentsExperienceJSONObject);
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		Assert.assertTrue(
+			selectedSegmentsExperienceJSONObject.getBoolean("active"));
+		Assert.assertEquals(
+			0, selectedSegmentsExperienceJSONObject.getLong("segmentsEntryId"));
+		Assert.assertEquals(
+			"Anyone",
+			selectedSegmentsExperienceJSONObject.getString(
+				"segmentsEntryName"));
+		Assert.assertEquals(
+			defaultSegmentsExperienceId,
+			selectedSegmentsExperienceJSONObject.getLong(
+				"segmentsExperienceId"));
+		Assert.assertEquals(
+			"Default",
+			selectedSegmentsExperienceJSONObject.getString(
+				"segmentsExperienceName"));
+		Assert.assertEquals(
+			"Active",
+			selectedSegmentsExperienceJSONObject.getString("statusLabel"));
+
+		JSONArray segmentsExperiencesJSONArray =
+			segmentsExperienceSelectorDataJSONObject.getJSONArray(
+				"segmentsExperiences");
+
+		Assert.assertNotNull(segmentsExperiencesJSONArray);
+
+		Assert.assertEquals(1, segmentsExperiencesJSONArray.length());
+
+		JSONArray tabsDataJSONArray = jsonObject.getJSONArray("tabsData");
+
+		Assert.assertNotNull(tabsDataJSONArray);
+
+		Assert.assertEquals(2, tabsDataJSONArray.length());
+
+		JSONObject renderTimesTabJSONObject = tabsDataJSONArray.getJSONObject(
+			0);
+
+		Assert.assertNotNull(renderTimesTabJSONObject);
+
+		Assert.assertEquals(
+			"render-times", renderTimesTabJSONObject.getString("id"));
+		Assert.assertEquals(
+			"Render Times", renderTimesTabJSONObject.getString("name"));
+		Assert.assertEquals(
+			"http://localhost:8080/layout_reports" +
+				"/get_render_times_data?p_l_id=" +
+					String.valueOf(layout.getPlid()),
+			renderTimesTabJSONObject.getString("url"));
+
+		JSONObject googlePageSpeedInsightsTabJSONObject =
+			tabsDataJSONArray.getJSONObject(1);
+
+		Assert.assertNotNull(googlePageSpeedInsightsTabJSONObject);
+
+		Assert.assertEquals(
+			"page-speed-insights",
+			googlePageSpeedInsightsTabJSONObject.getString("id"));
+		Assert.assertEquals(
+			"PageSpeed Insights",
+			googlePageSpeedInsightsTabJSONObject.getString("name"));
+		Assert.assertEquals(
+			"http://localhost:8080/layout_reports" +
+				"/get_google_page_speed_data?p_l_id=" +
+					String.valueOf(layout.getPlid()),
+			googlePageSpeedInsightsTabJSONObject.getString("url"));
+	}
+
+	private JSONObject _serveResource(Layout layout) throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_getLayoutReportsDataStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		return JSONFactoryUtil.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
+	}
+
+	@Inject(
+		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsDataStrutsAction"
+	)
+	private StrutsAction _getLayoutReportsDataStrutsAction;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+}

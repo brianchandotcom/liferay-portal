@@ -174,20 +174,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			if ((fdsViewObjectEntry == null) &&
 				fragmentRendererContext.isEditMode()) {
 
-				String betaBadgeComponentId =
-					fragmentRendererContext.getFragmentElementId() + "_beta";
-
-				ComponentDescriptor componentDescriptor =
-					new ComponentDescriptor(
-						"{BetaBadge} from frontend-js-components-web",
-						betaBadgeComponentId, null, true);
-
-				Writer writer = new CharArrayWriter();
-
-				_reactRenderer.renderReact(
-					componentDescriptor, new HashMap<>(), httpServletRequest,
-					writer);
-
 				printWriter.write("<div class=\"portlet-msg-info\">");
 				printWriter.write("<ul class=\"navbar-nav\">");
 				printWriter.write("<li class=\"nav-item\">");
@@ -195,9 +181,27 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					_language.get(
 						httpServletRequest, "select-a-data-set-view"));
 				printWriter.write("</li><li class=\"nav-item\"><div id=\"");
+
+				String betaBadgeComponentId =
+					fragmentRendererContext.getFragmentElementId() + "_beta";
+
 				printWriter.write(betaBadgeComponentId);
+
 				printWriter.write("\">");
+
+				Writer writer = new CharArrayWriter();
+
+				ComponentDescriptor componentDescriptor =
+					new ComponentDescriptor(
+						"{BetaBadge} from frontend-js-components-web",
+						betaBadgeComponentId, null, true);
+
+				_reactRenderer.renderReact(
+					componentDescriptor, new HashMap<>(), httpServletRequest,
+					writer);
+
 				printWriter.write(writer.toString());
+
 				printWriter.write("</div></li></ul></div>");
 			}
 

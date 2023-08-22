@@ -57,7 +57,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return null;
+		return "/instance_settings/save_locked_layouts_configuration";
 	}
 
 	@Override

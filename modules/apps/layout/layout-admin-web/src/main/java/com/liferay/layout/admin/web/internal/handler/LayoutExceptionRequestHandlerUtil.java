@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -35,16 +35,12 @@ import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutExceptionRequestHandler.class)
-public class LayoutExceptionRequestHandler {
+public class LayoutExceptionRequestHandlerUtil {
 
-	public void handleException(
+	public static void handleException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			Exception exception)
 		throws Exception {
@@ -64,7 +60,7 @@ public class LayoutExceptionRequestHandler {
 		throw exception;
 	}
 
-	private String _handleLayoutTypeException(
+	private static String _handleLayoutTypeException(
 		ActionRequest actionRequest, int exceptionType) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -85,14 +81,14 @@ public class LayoutExceptionRequestHandler {
 			"content.Language", themeDisplay.getLocale(),
 			layoutTypeController.getClass());
 
-		String layoutTypeName = _language.get(
+		String layoutTypeName = LanguageUtil.get(
 			layoutTypeResourceBundle, "layout.types." + type);
 
-		return _language.format(
+		return LanguageUtil.format(
 			themeDisplay.getRequest(), errorMessage, layoutTypeName);
 	}
 
-	private void _handlePortalException(
+	private static void _handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			PortalException portalException)
 		throws Exception {
@@ -123,7 +119,7 @@ public class LayoutExceptionRequestHandler {
 			if (assetCategoryException.getType() ==
 					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
 
-				errorMessage = _language.format(
+				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"please-select-at-least-one-category-for-x",
 					assetVocabularyTitle);
@@ -131,7 +127,7 @@ public class LayoutExceptionRequestHandler {
 			else if (assetCategoryException.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
 
-				errorMessage = _language.format(
+				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"you-cannot-select-more-than-one-category-for-x",
 					assetVocabularyTitle);
@@ -140,7 +136,7 @@ public class LayoutExceptionRequestHandler {
 		else if (portalException instanceof
 					DuplicateFriendlyURLEntryException) {
 
-			errorMessage = _language.get(
+			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"the-friendly-url-is-already-in-use.-please-enter-a-unique-" +
 					"friendly-url");
@@ -150,14 +146,14 @@ public class LayoutExceptionRequestHandler {
 				(LayoutNameException)portalException;
 
 			if (layoutNameException.getType() == LayoutNameException.TOO_LONG) {
-				errorMessage = _language.format(
+				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"page-name-cannot-exceed-x-characters",
 					ModelHintsUtil.getMaxLength(
 						Layout.class.getName(), "friendlyURL"));
 			}
 			else {
-				errorMessage = _language.get(
+				errorMessage = LanguageUtil.get(
 					themeDisplay.getRequest(),
 					"please-enter-a-valid-name-for-the-page");
 			}
@@ -176,13 +172,13 @@ public class LayoutExceptionRequestHandler {
 			}
 		}
 		else if (portalException instanceof PrincipalException) {
-			errorMessage = _language.get(
+			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(),
 				"you-do-not-have-the-required-permissions");
 		}
 
 		if (Validator.isNull(errorMessage)) {
-			errorMessage = _language.get(
+			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
 			_log.error(portalException);
@@ -195,9 +191,6 @@ public class LayoutExceptionRequestHandler {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutExceptionRequestHandler.class);
-
-	@Reference
-	private Language _language;
+		LayoutExceptionRequestHandlerUtil.class);
 
 }

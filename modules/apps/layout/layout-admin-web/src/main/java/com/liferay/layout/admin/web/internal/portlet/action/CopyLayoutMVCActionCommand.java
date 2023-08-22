@@ -6,7 +6,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
+import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -125,16 +125,13 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_layoutExceptionRequestHandler.handleException(
+			LayoutExceptionRequestHandlerUtil.handleException(
 				actionRequest, actionResponse, exception);
 		}
 	}
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
-
-	@Reference
-	private LayoutExceptionRequestHandler _layoutExceptionRequestHandler;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -38,6 +38,10 @@ public class CPInstancePriceEntryTableFDSView extends BaseTableFDSView {
 		).add(
 			"unitPrice", "unit-price"
 		).add(
+			"priceOnApplication", "price-on-application",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
+		).add(
 			"createDate", "create-date"
 		).build();
 	}

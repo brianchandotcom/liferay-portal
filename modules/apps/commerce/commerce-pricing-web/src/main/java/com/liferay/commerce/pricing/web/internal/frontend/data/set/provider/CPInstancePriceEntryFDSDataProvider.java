@@ -77,6 +77,7 @@ public class CPInstancePriceEntryFDSDataProvider
 						httpServletRequest, "x-ago", createDateDescription,
 						false),
 					commercePriceList.getName(),
+					commercePriceEntry.isPriceOnApplication(),
 					HtmlUtil.escape(
 						priceCommerceMoney.format(
 							_portal.getLocale(httpServletRequest)))));

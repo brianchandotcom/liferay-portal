@@ -12,11 +12,12 @@ public class InstancePriceEntry {
 
 	public InstancePriceEntry(
 		long priceEntryId, String createDateString, String name,
-		String unitPrice) {
+		boolean priceOnApplication, String unitPrice) {
 
 		_priceEntryId = priceEntryId;
 		_createDateString = createDateString;
 		_name = name;
+		_priceOnApplication = priceOnApplication;
 		_unitPrice = unitPrice;
 	}
 
@@ -36,9 +37,14 @@ public class InstancePriceEntry {
 		return _unitPrice;
 	}
 
+	public boolean isPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
 	private final String _createDateString;
 	private final String _name;
 	private final long _priceEntryId;
+	private final boolean _priceOnApplication;
 	private final String _unitPrice;
 
 }

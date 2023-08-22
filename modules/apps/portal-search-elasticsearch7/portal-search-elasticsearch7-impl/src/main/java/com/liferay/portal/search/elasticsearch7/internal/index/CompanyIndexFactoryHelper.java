@@ -95,7 +95,7 @@ public class CompanyIndexFactoryHelper {
 
 			SearchLogHelperUtil.logActionResponse(_log, actionResponse);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-177664") &&
+			if (FeatureFlagManagerUtil.isEnabled("LPS-183661") &&
 				(companyId != CompanyConstants.SYSTEM)) {
 
 				if (resetBothIndexNames) {

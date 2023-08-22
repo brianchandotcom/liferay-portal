@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -22,7 +23,9 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.exception.DuplicateSegmentsExperimentException;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -92,18 +95,38 @@ public class AddSegmentsExperimentMVCActionCommand
 	private JSONObject _addSegmentsExperiment(ActionRequest actionRequest)
 		throws Exception {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			actionRequest, "segmentsExperienceId");
+		long plid = ParamUtil.getLong(actionRequest, "plid");
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentService.fetchSegmentsExperiment(
+				serviceContext.getScopeGroupId(), segmentsExperienceId, plid);
+
+		if (segmentsExperiment != null) {
+			if (segmentsExperiment.getStatus() ==
+					SegmentsExperimentConstants.STATUS_TERMINATED) {
+
+				_segmentsExperimentService.deleteSegmentsExperiment(
+					segmentsExperiment.getSegmentsExperimentId());
+			}
+			else {
+				throw new DuplicateSegmentsExperimentException();
+			}
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentService.addSegmentsExperiment(
-				ParamUtil.getLong(actionRequest, "segmentsExperienceId"),
-				ParamUtil.getLong(actionRequest, "plid"),
-				ParamUtil.getString(actionRequest, "name"),
-				ParamUtil.getString(actionRequest, "description"),
-				ParamUtil.getString(actionRequest, "goal"),
-				ParamUtil.getString(actionRequest, "goalTarget"),
-				ServiceContextFactory.getInstance(actionRequest));
+		segmentsExperiment = _segmentsExperimentService.addSegmentsExperiment(
+			segmentsExperienceId, plid,
+			ParamUtil.getString(actionRequest, "name"),
+			ParamUtil.getString(actionRequest, "description"),
+			ParamUtil.getString(actionRequest, "goal"),
+			ParamUtil.getString(actionRequest, "goalTarget"), serviceContext);
 
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelService.getSegmentsExperimentRel(

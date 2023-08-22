@@ -83,7 +83,9 @@ definition {
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
-			Segmentation.addSecondProperty(propertyOption = "Hierarchy Path");
+			Segmentation.addProperties(
+				indexNumber = 2,
+				propertyOption = "Hierarchy Path");
 
 			Segmentation.fillProperty(
 				criterionValue = "Organization Name",

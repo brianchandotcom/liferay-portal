@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_FIELD_POSITION_N</td>
+	<td>xpath=(//*[contains(@class, 'criteria-group-item-root')]/div[1])[${indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FIELD_POSITION_EDIT</td>
 	<td>//*[contains(@class, 'edit-container')]</td>
 	<td></td>

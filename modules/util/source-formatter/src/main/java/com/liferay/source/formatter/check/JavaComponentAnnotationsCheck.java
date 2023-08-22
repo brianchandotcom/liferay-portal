@@ -79,11 +79,12 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			false);
 
 		if (extendedClassNames.contains("MVCPortlet")) {
-			annotation = _formatMVCPortletProperties(absolutePath, annotation);
+			annotation = _formatMVCPortletPropertyAttribute(
+				absolutePath, annotation);
 		}
 
 		if (fileName.endsWith("ResourceImpl.java")) {
-			annotation = _formatResourceImplProperties(
+			annotation = _formatResourceImplPropertyAttribute(
 				absolutePath, javaClass, annotation);
 		}
 
@@ -473,36 +474,36 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
-	private String _formatMVCPortletProperties(
+	private String _formatMVCPortletPropertyAttribute(
 		String absolutePath, String annotation) {
 
-		String properties = _getPropertyAttribute(annotation);
+		String propertyAttribute = _getPropertyAttribute(annotation);
 
-		if (properties == null) {
+		if (propertyAttribute == null) {
 			return annotation;
 		}
 
-		String newProperties = StringUtil.replace(
-			properties,
+		String newPropertyAttribute = StringUtil.replace(
+			propertyAttribute,
 			new String[] {
 				"\"javax.portlet.supports.mime-type=text/html\",",
 				"\"javax.portlet.supports.mime-type=text/html\""
 			},
 			new String[] {StringPool.BLANK, StringPool.BLANK});
 
-		if (newProperties.contains(
+		if (newPropertyAttribute.contains(
 				"\"javax.portlet.init-param.config-template=") &&
-			!newProperties.contains("javax.portlet.portlet-mode=")) {
+			!newPropertyAttribute.contains("javax.portlet.portlet-mode=")) {
 
-			newProperties = _addNewProperties(
-				newProperties,
+			newPropertyAttribute = _addNewProperties(
+				newPropertyAttribute,
 				"\"javax.portlet.portlet-mode=text/html;config\"");
 		}
 
 		if (isAttributeValue(_CHECK_PORTLET_VERSION_KEY, absolutePath) &&
 			!absolutePath.contains("/modules/apps/archived/") &&
 			!absolutePath.contains("/modules/sdk/") &&
-			!newProperties.contains("\"javax.portlet.version=3.0\"")) {
+			!newPropertyAttribute.contains("\"javax.portlet.version=3.0\"")) {
 
 			String serviceAttributeValue = getAnnotationAttributeValue(
 				annotation, "service");
@@ -518,15 +519,16 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 				serviceAttributeValue, StringPool.COMMA);
 
 			if (serviceAttributeValues.contains("Portlet.class")) {
-				newProperties = _addNewProperties(
-					newProperties, "\"javax.portlet.version=3.0\"");
+				newPropertyAttribute = _addNewProperties(
+					newPropertyAttribute, "\"javax.portlet.version=3.0\"");
 			}
 		}
 
-		return StringUtil.replace(annotation, properties, newProperties);
+		return StringUtil.replace(
+			annotation, propertyAttribute, newPropertyAttribute);
 	}
 
-	private String _formatResourceImplProperties(
+	private String _formatResourceImplPropertyAttribute(
 		String absolutePath, JavaClass javaClass, String annotation) {
 
 		if (!isAttributeValue(_CHECK_RESOURCE_IMPL_KEY, absolutePath)) {
@@ -555,7 +557,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 						"\"nested.field.support")) {
 
 				annotation = annotation.replaceFirst(
-					"\"nested.field.support=\\w+\"",
+					"\"nested.field.support=false\"",
 					"\"nested.field.support=true\"");
 			}
 			else {

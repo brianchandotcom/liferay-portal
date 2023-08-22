@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
@@ -102,6 +103,7 @@ export default function FragmentList({
 						itemId,
 						name,
 						renderTime,
+						warnings = [],
 					} = fragment;
 
 					return (
@@ -117,7 +119,17 @@ export default function FragmentList({
 							}
 						>
 							<div className="align-items-center d-flex justify-content-between">
-								<span className="font-weight-bold">{name}</span>
+								<span className="font-weight-bold">
+									{name}
+
+									{warnings.length ? (
+										<ClayBadge
+											className="ml-2"
+											displayType="warning"
+											label={warnings.length}
+										/>
+									) : null}
+								</span>
 
 								<div className="page-audit__fragment__buttons">
 									<ClayButtonWithIcon

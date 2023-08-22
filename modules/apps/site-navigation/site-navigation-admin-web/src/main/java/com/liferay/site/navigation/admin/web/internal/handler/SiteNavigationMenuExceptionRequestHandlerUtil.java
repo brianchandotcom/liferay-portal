@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,7 +8,7 @@ package com.liferay.site.navigation.admin.web.internal.handler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -20,16 +20,12 @@ import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = SiteNavigationMenuExceptionRequestHandler.class)
-public class SiteNavigationMenuExceptionRequestHandler {
+public class SiteNavigationMenuExceptionRequestHandlerUtil {
 
-	public void handlePortalException(
+	public static void handlePortalException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			PortalException portalException)
 		throws Exception {
@@ -54,16 +50,13 @@ public class SiteNavigationMenuExceptionRequestHandler {
 		}
 
 		JSONObject jsonObject = JSONUtil.put(
-			"error", _language.get(themeDisplay.getLocale(), errorMessage));
+			"error", LanguageUtil.get(themeDisplay.getLocale(), errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuExceptionRequestHandler.class);
-
-	@Reference
-	private Language _language;
+		SiteNavigationMenuExceptionRequestHandlerUtil.class);
 
 }

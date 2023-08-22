@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.admin.web.internal.handler.SiteNavigationMenuExceptionRequestHandler;
+import com.liferay.site.navigation.admin.web.internal.handler.SiteNavigationMenuExceptionRequestHandlerUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;
@@ -65,7 +65,7 @@ public class UpdateSiteNavigationMenuMVCActionCommand
 		catch (PortalException portalException) {
 			hideDefaultSuccessMessage(actionRequest);
 
-			_siteNavigationMenuExceptionRequestHandler.handlePortalException(
+			SiteNavigationMenuExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
@@ -80,10 +80,6 @@ public class UpdateSiteNavigationMenuMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SiteNavigationMenuExceptionRequestHandler
-		_siteNavigationMenuExceptionRequestHandler;
 
 	@Reference
 	private SiteNavigationMenuService _siteNavigationMenuService;

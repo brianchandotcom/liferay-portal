@@ -93,10 +93,10 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 				continue;
 			}
 
+			JSONArray ancestorsJSONArray = jsonFactory.createJSONArray();
+
 			List<Edge> edges = tree.getAncestorsPath(
 				objectDefinition1.getObjectDefinitionId());
-
-			JSONArray ancestorsJSONArray = jsonFactory.createJSONArray();
 
 			for (Edge edge : edges) {
 				ancestorsJSONArray.put(

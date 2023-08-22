@@ -679,14 +679,12 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_workflowFilterOption}_ITEMS_TITLE");
 	}
 
-	macro goToDeleteSLA {
-		var key_slaName = ${slaName};
+	macro deleteSLA {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = ${slaName});
 
-		Click(locator1 = "WorkflowMetricsSLA#SLA_RECORD_ELLIPSIS");
-
-		Click(locator1 = "WorkflowMetricsSLA#DELETE_SLA_BUTTON");
-
-		Click(locator1 = "WorkflowMetricsSLA#SLA_REMOVE_CONFIRMATION_BUTTON");
+		AssertConfirm(value1 = "Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?");
 	}
 
 	macro goToEditSLA {

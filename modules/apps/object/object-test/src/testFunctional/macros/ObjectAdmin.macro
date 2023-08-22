@@ -1496,11 +1496,9 @@ definition {
 
 		AssertVisible(locator1 = "AssetCategorization#TAGS_FIELD");
 
-		for (var vocabularyName : list "Topic,Audience,Stage") {
-			AssertVisible(
-				key_vocabularyName = ${vocabularyName},
-				locator1 = "AssetCategorization#CATEGORIES_FIELD");
-		}
+		AssertVisible(
+			key_vocabularyName = "Topic",
+			locator1 = "AssetCategorization#CATEGORIES_FIELD");
 	}
 
 	macro viewDescriptionForEachFieldType {

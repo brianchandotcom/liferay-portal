@@ -34,13 +34,6 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_TITLE");
 	}
 
-	macro assertAllItemsCurrentAssignee {
-		AssertElementPresent(
-			key_workflowInstanceAssignee = ${workflowInstanceAssignee},
-			key_workflowInstanceName = ${workflowInstanceName},
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-	}
-
 	macro assertAllItemsValues {
 		var key_assigneeName = ${assigneeName};
 		var key_taskName = ${taskName};
@@ -74,32 +67,6 @@ definition {
 		}
 	}
 
-	macro assertAssignees {
-		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
-
-		AssertElementPresent(
-			key_nameOfAssignee = "Test Test",
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
-
-		AssertElementNotPresent(
-			key_nameOfAssignee = "userfn userls",
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
-	}
-
-	macro assertBulkCount {
-		Check.checkNotVisible(
-			key_rowNumber = 1,
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
-
-		AssertTextEquals(
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECTED_TEXT",
-			value1 = "1 of 5 Selected");
-
-		Uncheck.uncheckToggleSwitch(
-			key_rowNumber = 1,
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
-	}
-
 	macro assertChartIsPresent {
 		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART");
 
@@ -117,14 +84,6 @@ definition {
 			value1 = ${velocityUnitTotal});
 
 		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_VALUE",
-			value1 = ${velocityValueTotal});
-	}
-
-	macro assertChartTotalValueNotEquals {
-		var key_completionVelocityValueTotal = ${velocityValueTotal};
-
-		AssertTextNotEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_VALUE",
 			value1 = ${velocityValueTotal});
 	}
@@ -166,24 +125,6 @@ definition {
 		}
 	}
 
-	macro assertDefaultChartRangesAndUnits {
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
-			value1 = "Last 30 Days");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
-			value1 = "Last 30 Days");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN",
-			value1 = "Inst / Day");
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
-			value1 = "inst / day");
-	}
-
 	macro assertDueDatePopoverInfo {
 		MouseOver(
 			key_itemPosition = ${itemPosition},
@@ -195,15 +136,6 @@ definition {
 			key_slaPosition = ${slaPosition},
 			locator1 = "WorkflowAllItems#DUE_DATE_POPOVER_SLA_INFO",
 			value1 = ${slaName});
-	}
-
-	macro assertErrorSlaPresent {
-		AssertElementPresent(locator1 = "Message#ERROR");
-
-		AssertTextEquals.assertPartialText(
-			key_errorMessage = ${errorMessage},
-			locator1 = "Message#ERROR",
-			value1 = ${errorMessage});
 	}
 
 	macro assertFilterOrder {
@@ -254,49 +186,12 @@ definition {
 			value1 = "New Assignee");
 	}
 
-	macro assertNoAssignees {
-		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
-
-		AssertElementPresent(
-			key_nameOfAssignee = "No results were found.",
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
-	}
-
-	macro assertSelectTasksModalTable {
-		AssertTextEquals(
-			key_columnName = "ID",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "ID");
-
-		AssertTextEquals(
-			key_columnName = "Item Subject",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "Item Subject");
-
-		AssertTextEquals(
-			key_columnName = "Process Step",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "Process Step");
-
-		AssertTextEquals(
-			key_columnName = "Current Assignee",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "Current Assignee");
-	}
-
 	macro assertSLAMetricsCalculated {
 		while ((IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE")) && (maxIterations = "25")) {
 			Refresh();
 		}
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE");
-	}
-
-	macro assertSlaPosition {
-		AssertElementPresent(
-			key_slaPosition = ${slaPosition},
-			key_slaTitle = ${slaTitle},
-			locator1 = "WorkflowMetricsSLA#SLA_POSITION_BY_TITLE");
 	}
 
 	macro assertSLAProcessingDate {
@@ -342,22 +237,6 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowTransitionModal#TRANSITION_TO_OPTION");
 	}
 
-	macro assertTransitionTaskPresent {
-		var key_taskName = ${taskName};
-
-		AssertElementPresent(locator1 = "WorkflowTransitionModal#TASK_PANEL");
-	}
-
-	macro assertWarningBlockedSlaNotPresent {
-		var key_warningMessage = ${warningMessage};
-
-		while ((IsElementPresent(locator1 = "Message#WARNING_SPECIFIC")) && (maxIterations = "30")) {
-			Refresh();
-		}
-
-		AssertElementNotPresent(locator1 = "Message#WARNING_SPECIFIC");
-	}
-
 	macro assertWarningBlockedSlaPresent {
 		var key_warningMessage = ${warningMessage};
 
@@ -368,25 +247,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#WARNING_SPECIFIC",
 			value1 = ${warningMessage});
-	}
-
-	macro assertWorkflowProcessPresent {
-		AssertElementPresent(
-			key_workflowProcessName = ${workflowProcessName},
-			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
-	}
-
-	macro assertWorkloadByAssigneeCardEmptyMessage {
-		var key_tabName = ${tabName};
-		var key_emptyMessage = ${emptyMessage};
-
-		Click(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB",
-			value1 = ${tabName});
-
-		AssertTextEquals(
-			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE",
-			value1 = ${emptyMessage});
 	}
 
 	macro bulkReassignExceptionsSetup {
@@ -497,12 +357,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_VALUE_TOTAL_PENDING",
 			value1 = ${key_totalPendingValue});
-	}
-
-	macro checkWorkflowTaskCrossover {
-		AssertElementNotPresent(
-			key_itemName = "Blogs Alternative",
-			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 	}
 
 	macro chooseTransitionPerStep {

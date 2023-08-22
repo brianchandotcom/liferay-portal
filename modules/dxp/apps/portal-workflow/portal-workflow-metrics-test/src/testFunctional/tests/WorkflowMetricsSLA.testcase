@@ -96,7 +96,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.assertWarningBlockedSlaNotPresent(warningMessage = "1 SLA is blocked. Fix the SLA configuration to resume accurate reporting.");
+		AssertElementNotPresent(
+			key_warningMessage = "1 SLA is blocked. Fix the SLA configuration to resume accurate reporting.",
+			locator1 = "Message#WARNING_SPECIFIC");
 	}
 
 	@description = "LPS-89014 - Verify the system allow users to navigate between fields and buttons by pressing tab key considering the following order: Name > Description > Start > Pause > Stop > Days > Hours > Save button > Cancel button"
@@ -429,13 +431,19 @@ definition {
 			key_slaWarning = "Set Up SLAs",
 			locator1 = "WorkflowMetricsSLA#SLA_SETUP_WARNING_BUTTON");
 
-		WorkflowMetrics.assertErrorSlaPresent(errorMessage = "Fix blocked SLAs to resume accurate reporting.");
+		AssertTextEquals.assertPartialText(
+			key_errorMessage = "Fix blocked SLAs to resume accurate reporting.",
+			locator1 = "Message#ERROR",
+			value1 = "Fix blocked SLAs to resume accurate reporting.");
 
 		Click(
 			key_slaTitle = "SLA Name",
 			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
 
-		WorkflowMetrics.assertErrorSlaPresent(errorMessage = "The time frame options changed in the workflow definition. Please select new time frames.");
+		AssertTextEquals.assertPartialText(
+			key_errorMessage = "The time frame options changed in the workflow definition. Please select new time frames.",
+			locator1 = "Message#ERROR",
+			value1 = "The time frame options changed in the workflow definition. Please select new time frames.");
 	}
 
 	@description = "LPS-89014 - Verify that the field Name should be in focus at the SLA page when the user selects to edit or to create a new SLA"
@@ -1095,9 +1103,10 @@ definition {
 
 		Button.clickSave();
 
-		WorkflowMetrics.assertSlaPosition(
-			slaPosition = 1,
-			slaTitle = "SLA Name 2");
+		AssertElementPresent(
+			key_slaPosition = 1,
+			key_slaTitle = "SLA Name 2",
+			locator1 = "WorkflowMetricsSLA#SLA_POSITION_BY_TITLE");
 
 		WorkflowMetrics.goToEditSLA(slaName = "SLA Name 1");
 
@@ -1109,9 +1118,10 @@ definition {
 
 		Button.clickUpdate();
 
-		WorkflowMetrics.assertSlaPosition(
-			slaPosition = 1,
-			slaTitle = "SLA Name 1");
+		AssertElementPresent(
+			key_slaPosition = 1,
+			key_slaTitle = "SLA Name 1",
+			locator1 = "WorkflowMetricsSLA#SLA_POSITION_BY_TITLE");
 	}
 
 	@description = "LPS-89014 - Verify that the SLA settings is available when accessing the metrics page of a process"

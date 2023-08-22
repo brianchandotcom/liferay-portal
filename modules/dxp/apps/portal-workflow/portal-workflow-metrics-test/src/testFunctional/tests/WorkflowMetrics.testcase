@@ -290,7 +290,12 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
 
-		WorkflowMetrics.assertSelectTasksModalTable();
+		for (var columnName : list "ID,Item Subject,Process Step,Current Assignee") {
+			AssertTextEquals(
+				key_columnName = ${columnName},
+				locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+				value1 = ${columnName});
+		}
 
 		WorkflowMetrics.selectAllReassignTasks(
 			taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4",
@@ -304,61 +309,20 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 2",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 3",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 4",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 5",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 6",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		for (var workflowInstanceNumber : list "1,2,3,4,5,6") {
+			AssertElementPresent(
+				key_workflowInstanceAssignee = "Test Test",
+				key_workflowInstanceName = "Blogs Entry: Blogs Entry Title ${workflowInstanceNumber}",
+				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		}
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 1",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 2",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 3",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 4",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 5",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 6",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		for (var workflowInstanceNumber : list "1,2,3,4,5,6") {
+			AssertElementPresent(
+				key_workflowAssetTitle = "Blogs Entry Title ${workflowInstanceNumber}",
+				locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		}
 	}
 
 	@description = "LRQA-53633 Automate LPS-103368: [Dashboard] Apply searches in the workload distribution for all assignees"
@@ -473,8 +437,6 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
 
-		WorkflowMetrics.assertSelectTasksModalTable();
-
 		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
 
 		WorkflowMetrics.assertNewAssigneeModalTable();
@@ -558,11 +520,23 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.assertBulkCount();
+		Check.checkNotVisible(
+			key_rowNumber = 1,
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
+
+		AssertTextEquals(
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECTED_TEXT",
+			value1 = "1 of 5 Selected");
+
+		Uncheck.uncheckToggleSwitch(
+			key_rowNumber = 1,
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ROW");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
-		WorkflowMetrics.checkWorkflowTaskCrossover();
+		AssertElementNotPresent(
+			key_itemName = "Blogs Alternative",
+			locator1 = "WorkflowReassignModal#ITEM_SUBJECT_CHECK");
 
 		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
 
@@ -625,9 +599,11 @@ definition {
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
-		WorkflowMetrics.assertTransitionTaskPresent(taskName = "Board Member Review 5");
+		for (var transitionNumber : list "5,6") {
+			var key_taskName = "Board Member Review ${transitionNumber}";
 
-		WorkflowMetrics.assertTransitionTaskPresent(taskName = "Board Member Review 6");
+			AssertElementPresent(locator1 = "WorkflowTransitionModal#TASK_PANEL");
+		}
 
 		WorkflowMetrics.assertTransitionTaskOptionPresent(
 			taskName = "Board Member Review 5",
@@ -926,7 +902,23 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
-		WorkflowMetrics.assertDefaultChartRangesAndUnits();
+		//Assert default chart ranges and units();
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
+			value1 = "Last 30 Days");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
+			value1 = "Last 30 Days");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN",
+			value1 = "Inst / Day");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+			value1 = "inst / day");
 
 		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
 			completionVelocityDateRange = "Today",
@@ -1276,7 +1268,15 @@ definition {
 
 		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
 
-		WorkflowMetrics.assertAssignees();
+		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+
+		AssertElementPresent(
+			key_nameOfAssignee = "Test Test",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+
+		AssertElementNotPresent(
+			key_nameOfAssignee = "userfn userls",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
 
 		WorkflowMetrics.selectNewAssignee(
 			nameOfAssignee = "Test Test",
@@ -1294,7 +1294,9 @@ definition {
 
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 
-		WorkflowMetrics.assertNoAssignees();
+		AssertElementPresent(
+			key_nameOfAssignee = "No results were found.",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
 
 		Click(locator1 = "WorkflowReassignModal#CLOSE_MODAL_BUTTON");
 
@@ -2216,15 +2218,11 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "Single Approver");
-
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 1");
-
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 2");
-
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 3");
-
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 4");
+		for (var workflowProcessName : list "Single Approver,New Workflow 1,New Workflow 2,New Workflow 3,New Workflow 4") {
+			AssertElementPresent(
+				key_workflowProcessName = ${workflowProcessName},
+				locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
+		}
 	}
 
 	@description = "View that Custom Range is selected with shown input date"
@@ -2267,8 +2265,6 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
-
-		WorkflowMetrics.assertDefaultChartRangesAndUnits();
 
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / day",
@@ -3237,17 +3233,32 @@ definition {
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "Update");
 
-		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
-			emptyMessage = "There are no assigned items overdue at the moment.",
-			tabName = "Overdue");
+		Click(
+			key_tabName = "Overdue",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB",
+			value1 = "Overdue");
 
-		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
-			emptyMessage = "There are no assigned items on time at the moment.",
-			tabName = "On Time");
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE",
+			value1 = "There are no assigned items overdue at the moment.");
 
-		WorkflowMetrics.assertWorkloadByAssigneeCardEmptyMessage(
-			emptyMessage = "There are no items assigned to users at the moment.",
-			tabName = "Total");
+		Click(
+			key_tabName = "On Time",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB",
+			value1 = "On Time");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE",
+			value1 = "There are no assigned items on time at the moment.");
+
+		Click(
+			key_tabName = "Total",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_TAB",
+			value1 = "Total");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_EMPTY_MESSAGE",
+			value1 = "There are no items assigned to users at the moment.");
 	}
 
 	@description = "LRQA-53630 Automate LPS-98518: [Dashboard] View workload distribution for all assignees"

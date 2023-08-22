@@ -34,7 +34,9 @@ definition {
 	test CanSearchBySimilarWords {
 		WorkflowMetricsProcessListView.metricsWorkflowSearch(workflowSearchName = "Single Ap");
 
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "Single Approver");
+		AssertElementPresent(
+			key_workflowProcessName = "Single Approver",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 	}
 
 	@description = "LPS-88573 - Verify that the Clear All option cleans the search results"

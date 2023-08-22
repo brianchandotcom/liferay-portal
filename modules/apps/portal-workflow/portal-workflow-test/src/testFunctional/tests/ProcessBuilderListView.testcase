@@ -543,7 +543,9 @@ definition {
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE",
 			value1 = "Not Published");
 
-		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "Single Approver");
+		AssertElementPresent(
+			key_workflowProcessName = "Single Approver",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 	}
 
 	@description = "Verify that hovering the + button will display the text New Workflow"

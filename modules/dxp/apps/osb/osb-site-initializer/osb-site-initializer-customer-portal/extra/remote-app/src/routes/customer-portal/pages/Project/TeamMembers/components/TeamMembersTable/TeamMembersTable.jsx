@@ -6,6 +6,7 @@
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
+import {getHighPriorityContacts} from '~/common/services/liferay/api';
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
@@ -24,6 +25,12 @@ import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccoun
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
 
+export const HIGH_PRIORITY_CONTACT_CATEGORIES = {
+	criticalIncident: i18n.translate('critical-incident'),
+	privacyBreach: i18n.translate('privacy-breach'),
+	securityBreach: i18n.translate('security-breach'),
+};
+
 const TeamMembersTable = ({
 	koroneikiAccount,
 	loading: koroneikiAccountLoading,
@@ -41,6 +48,9 @@ const TeamMembersTable = ({
 	const [currentUserEditing, setCurrentUserEditing] = useState();
 	const [currentUserRemoving, setCurrentUserRemoving] = useState();
 	const [selectedAccountRoleItem, setSelectedAccountRoleItem] = useState();
+	const [highPriorityContactsNames, setHighPriorityContactsNames] = useState(
+		[]
+	);
 
 	const {
 		data: myUserAccountData,
@@ -82,6 +92,79 @@ const TeamMembersTable = ({
 	const {paginationConfig, teamMembersByStatusPaginated} = usePagination(
 		userAccounts
 	);
+
+	const mapFilterToContactsCategory = (filter) => {
+		const lowerCaseFirstLetter =
+			filter.charAt(0).toLowerCase() + filter.slice(1);
+
+		return {
+			contactsCategory: {
+				key: lowerCaseFirstLetter.replace(/\s/g, ''),
+				name: `${filter}`,
+			},
+			filterRequest: `contactsCategory eq '${lowerCaseFirstLetter.replace(
+				/\s/g,
+				''
+			)}'`,
+		};
+	};
+
+	const getHighPriorityContactsByFilter = async (filter) => {
+		try {
+			const {filterRequest} = mapFilterToContactsCategory(filter);
+			const response = await getHighPriorityContacts(filterRequest);
+			const highPriorityContactsFiltered = response?.items;
+
+			const mappedContacts = highPriorityContactsFiltered?.map(
+				(contact, index) => {
+					const {r_userToHighPriorityContacts_user} = contact;
+
+					return {
+						label: `${r_userToHighPriorityContacts_user?.givenName} ${r_userToHighPriorityContacts_user?.familyName}`,
+						value: (index + 1).toString(),
+					};
+				}
+			);
+
+			return mappedContacts;
+		} catch (error) {
+			console.error(
+				i18n.translate('error-high-priority-contacts'),
+				error
+			);
+		}
+	};
+
+	useEffect(() => {
+		const fetchHighPriorityContacts = async () => {
+			try {
+				const updatedFilteredContacts = {};
+
+				for (const filter of Object.keys(
+					HIGH_PRIORITY_CONTACT_CATEGORIES
+				)) {
+					const contacts = await getHighPriorityContactsByFilter(
+						filter
+					);
+					updatedFilteredContacts[filter] = contacts;
+				}
+
+				const names = Object.values(
+					updatedFilteredContacts
+				).flatMap((contacts) =>
+					contacts.map((contact) => contact.label)
+				);
+				setHighPriorityContactsNames(names);
+			} catch (error) {
+				console.error(
+					i18n.translate('error-fetching-high-priority-contacts'),
+					error
+				);
+			}
+		};
+
+		fetchHighPriorityContacts();
+	}, []);
 
 	const {
 		data: accountRolesData,
@@ -211,6 +294,9 @@ const TeamMembersTable = ({
 												userAccount?.id ===
 												currentUserEditing?.id
 											}
+											highPriorityContactsNames={
+												highPriorityContactsNames
+											}
 											onCancel={() => {
 												setCurrentUserEditing();
 												setSelectedAccountRoleItem();
@@ -231,6 +317,7 @@ const TeamMembersTable = ({
 												!selectedAccountRoleItem ||
 												updating
 											}
+											userAccount={userAccount}
 										/>
 									),
 									role: (

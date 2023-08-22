@@ -10,8 +10,9 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {useField, useFormikContext} from 'formik';
 import {useEffect} from 'react';
+import i18n from '~/common/I18n';
 import {Badge} from '../..';
-import {required, validateEmailsArray} from '../../../utils/validations.form';
+import {validateEmailsArray} from '../../../utils/validations.form';
 
 const MultiSelect = ({
 	groupStyle,
@@ -25,11 +26,6 @@ const MultiSelect = ({
 	...props
 }) => {
 	const formik = useFormikContext();
-	if (props.required) {
-		validations = validations
-			? [...validations, () => required(values.length)]
-			: [() => required(values.length)];
-	}
 
 	const validateMultiSelect = () => {
 		const unfilledField = validations
@@ -59,6 +55,21 @@ const MultiSelect = ({
 		metaErrorCallback(meta.error);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [meta.error]);
+
+	const requiredMultiSelect = (value) => {
+		if (!value) {
+			return i18n.sub(
+				'one-or-more-contacts-are-required-please-select-a-contact-for-x',
+				[label]
+			);
+		}
+	};
+
+	if (props.required) {
+		validations = validations
+			? [...validations, () => requiredMultiSelect(values.length)]
+			: [() => requiredMultiSelect(values.length)];
+	}
 
 	return (
 		<div className="multi-select-container">

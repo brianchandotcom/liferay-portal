@@ -55,9 +55,11 @@ const ButtonDropDown = ({
 							disabled={disabled}
 							key={label}
 							onClick={onClick}
-							title={disabled ? tooltip : null}
 						>
-							<div className="d-flex">
+							<div
+								className="d-flex"
+								title={disabled ? tooltip : null}
+							>
 								{icon && <div className="mr-1">{icon}</div>}
 
 								{label}

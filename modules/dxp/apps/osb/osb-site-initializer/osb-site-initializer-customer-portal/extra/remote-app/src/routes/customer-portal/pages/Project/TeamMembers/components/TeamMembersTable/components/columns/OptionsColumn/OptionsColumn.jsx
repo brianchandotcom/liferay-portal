@@ -4,28 +4,37 @@
  */
 
 import {ButtonWithIcon} from '@clayui/core';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import i18n from '../../../../../../../../../../common/I18n';
 import {ButtonDropDown} from '../../../../../../../../../../common/components';
 import MenuUserActions from './components/MenuUserActions';
 
 const OptionsColumn = ({
 	edit,
+	highPriorityContactsNames,
 	onCancel,
 	onEdit,
 	onRemove,
 	onSave,
 	saveDisabled,
+	userAccount,
 }) => {
 	const userOptions = [
 		{
 			customOptionStyle: 'pr-5',
 			label: i18n.translate('edit'),
-			onClick: () => onEdit(),
+			onClick: () => {
+				onEdit();
+			},
 		},
 		{
 			customOptionStyle: 'pr-5',
+			disabled: highPriorityContactsNames.includes(userAccount.name),
 			label: i18n.translate('remove'),
 			onClick: () => onRemove(),
+			tooltip: i18n.translate(
+				'this-team-member-is-assigned-as-an-incident-contact-and-cannot-be-removed'
+			),
 		},
 	];
 
@@ -36,16 +45,26 @@ const OptionsColumn = ({
 			saveDisabled={saveDisabled}
 		/>
 	) : (
-		<ButtonDropDown
-			customDropDownButton={
-				<ButtonWithIcon displayType="null" small symbol="ellipsis-v" />
-			}
-			items={userOptions}
-			menuElementAttrs={{
-				className: 'p-0',
-			}}
-			menuWidth="shrink"
-		/>
+		<>
+			<ClayTooltipProvider>
+				<span>
+					<ButtonDropDown
+						customDropDownButton={
+							<ButtonWithIcon
+								displayType="null"
+								small
+								symbol="ellipsis-v"
+							/>
+						}
+						items={userOptions}
+						menuElementAttrs={{
+							className: 'p-0',
+						}}
+						menuWidth="shrink"
+					/>
+				</span>
+			</ClayTooltipProvider>
+		</>
 	);
 };
 

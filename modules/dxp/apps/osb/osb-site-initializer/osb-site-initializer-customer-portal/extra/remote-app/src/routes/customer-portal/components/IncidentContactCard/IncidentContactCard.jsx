@@ -108,7 +108,7 @@ const IncidentContactCard = ({accountSubscriptionGroupsNames}) => {
 	const criticalIncidentContacts = currentHighPriorityContacts.criticalIncident?.map(
 		({contact, email, index, label}) => {
 			const criticalIncidentContactsBody = (
-				<div key={index}>
+				<div className="customer-portal-cards" key={index}>
 					<div className="customer-portal-card-lexicon d-flex">
 						<h4>{email}</h4>
 					</div>
@@ -127,7 +127,7 @@ const IncidentContactCard = ({accountSubscriptionGroupsNames}) => {
 						</>
 					)}
 
-					<br></br>
+					<p></p>
 				</div>
 			);
 
@@ -192,20 +192,23 @@ const IncidentContactCard = ({accountSubscriptionGroupsNames}) => {
 									<div
 										className={`${
 											currentHighPriorityContacts
-												.privacyBreach?.length >
+												.securityBreach?.length >
 											incidentContactStandard
 												? 'customer-portal-card-description-scroll scroller'
 												: ''
 										}`}
 									>
-										{currentHighPriorityContacts?.privacyBreach?.map(
+										{currentHighPriorityContacts?.securityBreach?.map(
 											({
 												contact,
 												email,
 												index,
 												label,
 											}) => (
-												<div key={index}>
+												<div
+													className="customer-portal-cards"
+													key={index}
+												>
 													<h4>{email}</h4>
 
 													<h5>{label}</h5>
@@ -241,20 +244,23 @@ const IncidentContactCard = ({accountSubscriptionGroupsNames}) => {
 									<div
 										className={`${
 											currentHighPriorityContacts
-												.securityBreach?.length >
+												.privacyBreach?.length >
 											incidentContactStandard
 												? 'customer-portal-card-description-scroll scroller'
 												: ''
 										}`}
 									>
-										{currentHighPriorityContacts?.securityBreach?.map(
+										{currentHighPriorityContacts?.privacyBreach?.map(
 											({
 												contact,
 												email,
 												index,
 												label,
 											}) => (
-												<div key={index}>
+												<div
+													className="customer-portal-cards"
+													key={index}
+												>
 													<h4>{email}</h4>
 
 													<h5>{label}</h5>

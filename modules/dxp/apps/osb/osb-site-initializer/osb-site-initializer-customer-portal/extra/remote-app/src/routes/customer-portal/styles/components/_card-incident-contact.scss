@@ -37,6 +37,7 @@
 
 	p {
 		color: var(--color-neutral-7);
+		margin-bottom: 0.5rem;
 	}
 
 	h3 {
@@ -58,6 +59,10 @@
 		color: var(--color-neutral-5);
 		margin-bottom: 0;
 	}
+}
+
+.customer-portal-cards {
+	height: 4.688rem;
 }
 
 .customer-portal-card-description-scroll {

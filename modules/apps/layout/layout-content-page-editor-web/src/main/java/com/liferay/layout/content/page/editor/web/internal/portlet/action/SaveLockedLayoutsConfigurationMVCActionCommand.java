@@ -10,6 +10,9 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.LockedL
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -18,6 +21,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +46,17 @@ public class SaveLockedLayoutsConfigurationMVCActionCommand
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+			PrincipalException principalException =
+				new PrincipalException.MustBeCompanyAdmin(
+					permissionChecker.getUserId());
+
+			throw new PortletException(principalException);
+		}
 
 		_configurationProvider.saveCompanyConfiguration(
 			LockedLayoutsConfiguration.class, themeDisplay.getCompanyId(),

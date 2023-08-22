@@ -212,7 +212,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 		Assert.assertNotNull(fragmentCollectionURL);
 		Assert.assertTrue(
 			fragmentCollectionURL.contains(
-				"fragmentCollectionId=" +
+				"/fragments/fragment_collection/" +
 					fragmentEntry.getFragmentCollectionId()));
 
 		Assert.assertEquals(

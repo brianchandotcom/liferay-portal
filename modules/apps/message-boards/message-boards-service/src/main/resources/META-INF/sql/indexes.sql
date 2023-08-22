@@ -11,10 +11,10 @@ create index IX_E88617BF on MBCategory (categoryId, groupId, parentCategoryId, s
 create index IX_FADEB62D on MBCategory (companyId, ctCollectionId);
 create index IX_40852A13 on MBCategory (companyId, status, ctCollectionId);
 create index IX_B4A1A06F on MBCategory (groupId, ctCollectionId);
+create unique index IX_1C6A43E1 on MBCategory (groupId, friendlyURL[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_22F8EB66 on MBCategory (groupId, parentCategoryId, ctCollectionId);
 create index IX_DCD7164C on MBCategory (groupId, parentCategoryId, status, ctCollectionId);
 create index IX_DF62B255 on MBCategory (groupId, status, ctCollectionId);
-create unique index IX_E4C86E6A on MBCategory (groupId, urlCategory[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_2541AACB on MBCategory (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_52822F39 on MBCategory (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_5DD5248D on MBCategory (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

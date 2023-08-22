@@ -94,12 +94,12 @@ public class MBCategoryCacheModel
 		sb.append(parentCategoryId);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", urlCategory=");
-		sb.append(urlCategory);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", displayStyle=");
 		sb.append(displayStyle);
+		sb.append(", friendlyURL=");
+		sb.append(friendlyURL);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -164,13 +164,6 @@ public class MBCategoryCacheModel
 			mbCategoryImpl.setName(name);
 		}
 
-		if (urlCategory == null) {
-			mbCategoryImpl.setUrlCategory("");
-		}
-		else {
-			mbCategoryImpl.setUrlCategory(urlCategory);
-		}
-
 		if (description == null) {
 			mbCategoryImpl.setDescription("");
 		}
@@ -183,6 +176,13 @@ public class MBCategoryCacheModel
 		}
 		else {
 			mbCategoryImpl.setDisplayStyle(displayStyle);
+		}
+
+		if (friendlyURL == null) {
+			mbCategoryImpl.setFriendlyURL("");
+		}
+		else {
+			mbCategoryImpl.setFriendlyURL(friendlyURL);
 		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
@@ -234,9 +234,9 @@ public class MBCategoryCacheModel
 
 		parentCategoryId = objectInput.readLong();
 		name = objectInput.readUTF();
-		urlCategory = objectInput.readUTF();
 		description = objectInput.readUTF();
 		displayStyle = objectInput.readUTF();
+		friendlyURL = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -286,13 +286,6 @@ public class MBCategoryCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (urlCategory == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(urlCategory);
-		}
-
 		if (description == null) {
 			objectOutput.writeUTF("");
 		}
@@ -305,6 +298,13 @@ public class MBCategoryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(displayStyle);
+		}
+
+		if (friendlyURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(friendlyURL);
 		}
 
 		objectOutput.writeLong(lastPublishDate);
@@ -335,9 +335,9 @@ public class MBCategoryCacheModel
 	public long modifiedDate;
 	public long parentCategoryId;
 	public String name;
-	public String urlCategory;
 	public String description;
 	public String displayStyle;
+	public String friendlyURL;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

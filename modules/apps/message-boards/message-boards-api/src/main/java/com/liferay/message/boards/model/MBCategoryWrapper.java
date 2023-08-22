@@ -48,9 +48,9 @@ public class MBCategoryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentCategoryId", getParentCategoryId());
 		attributes.put("name", getName());
-		attributes.put("urlCategory", getUrlCategory());
 		attributes.put("description", getDescription());
 		attributes.put("displayStyle", getDisplayStyle());
+		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -134,12 +134,6 @@ public class MBCategoryWrapper
 			setName(name);
 		}
 
-		String urlCategory = (String)attributes.get("urlCategory");
-
-		if (urlCategory != null) {
-			setUrlCategory(urlCategory);
-		}
-
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
@@ -150,6 +144,12 @@ public class MBCategoryWrapper
 
 		if (displayStyle != null) {
 			setDisplayStyle(displayStyle);
+		}
+
+		String friendlyURL = (String)attributes.get("friendlyURL");
+
+		if (friendlyURL != null) {
+			setFriendlyURL(friendlyURL);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -280,6 +280,16 @@ public class MBCategoryWrapper
 	@Override
 	public String getDisplayStyle() {
 		return model.getDisplayStyle();
+	}
+
+	/**
+	 * Returns the friendly url of this message boards category.
+	 *
+	 * @return the friendly url of this message boards category
+	 */
+	@Override
+	public String getFriendlyURL() {
+		return model.getFriendlyURL();
 	}
 
 	/**
@@ -437,16 +447,6 @@ public class MBCategoryWrapper
 	@Override
 	public long getTrashEntryClassPK() {
 		return model.getTrashEntryClassPK();
-	}
-
-	/**
-	 * Returns the url category of this message boards category.
-	 *
-	 * @return the url category of this message boards category
-	 */
-	@Override
-	public String getUrlCategory() {
-		return model.getUrlCategory();
 	}
 
 	/**
@@ -660,6 +660,16 @@ public class MBCategoryWrapper
 	}
 
 	/**
+	 * Sets the friendly url of this message boards category.
+	 *
+	 * @param friendlyURL the friendly url of this message boards category
+	 */
+	@Override
+	public void setFriendlyURL(String friendlyURL) {
+		model.setFriendlyURL(friendlyURL);
+	}
+
+	/**
 	 * Sets the group ID of this message boards category.
 	 *
 	 * @param groupId the group ID of this message boards category
@@ -787,16 +797,6 @@ public class MBCategoryWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
-	}
-
-	/**
-	 * Sets the url category of this message boards category.
-	 *
-	 * @param urlCategory the url category of this message boards category
-	 */
-	@Override
-	public void setUrlCategory(String urlCategory) {
-		model.setUrlCategory(urlCategory);
 	}
 
 	/**

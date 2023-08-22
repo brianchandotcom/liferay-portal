@@ -47,12 +47,12 @@ public class MBCategoryTable extends BaseTable<MBCategoryTable> {
 		"parentCategoryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<MBCategoryTable, String> urlCategory = createColumn(
-		"urlCategory", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> displayStyle = createColumn(
 		"displayStyle", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<MBCategoryTable, String> friendlyURL = createColumn(
+		"friendlyURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, Integer> status = createColumn(

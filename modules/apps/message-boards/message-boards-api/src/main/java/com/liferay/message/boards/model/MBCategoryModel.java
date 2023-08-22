@@ -264,21 +264,6 @@ public interface MBCategoryModel
 	public void setName(String name);
 
 	/**
-	 * Returns the url category of this message boards category.
-	 *
-	 * @return the url category of this message boards category
-	 */
-	@AutoEscape
-	public String getUrlCategory();
-
-	/**
-	 * Sets the url category of this message boards category.
-	 *
-	 * @param urlCategory the url category of this message boards category
-	 */
-	public void setUrlCategory(String urlCategory);
-
-	/**
 	 * Returns the description of this message boards category.
 	 *
 	 * @return the description of this message boards category
@@ -307,6 +292,21 @@ public interface MBCategoryModel
 	 * @param displayStyle the display style of this message boards category
 	 */
 	public void setDisplayStyle(String displayStyle);
+
+	/**
+	 * Returns the friendly url of this message boards category.
+	 *
+	 * @return the friendly url of this message boards category
+	 */
+	@AutoEscape
+	public String getFriendlyURL();
+
+	/**
+	 * Sets the friendly url of this message boards category.
+	 *
+	 * @param friendlyURL the friendly url of this message boards category
+	 */
+	public void setFriendlyURL(String friendlyURL);
 
 	/**
 	 * Returns the last publish date of this message boards category.

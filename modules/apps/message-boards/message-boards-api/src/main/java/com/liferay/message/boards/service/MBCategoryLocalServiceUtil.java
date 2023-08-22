@@ -285,10 +285,10 @@ public class MBCategoryLocalServiceUtil {
 		return getService().fetchMBCategory(categoryId);
 	}
 
-	public static MBCategory fetchMBCategoryByUrlSubject(
-		long groupId, String urlCategory) {
+	public static MBCategory fetchMBCategoryByFriendlyURL(
+		long groupId, String friendlyURL) {
 
-		return getService().fetchMBCategoryByUrlSubject(groupId, urlCategory);
+		return getService().fetchMBCategoryByFriendlyURL(groupId, friendlyURL);
 	}
 
 	/**

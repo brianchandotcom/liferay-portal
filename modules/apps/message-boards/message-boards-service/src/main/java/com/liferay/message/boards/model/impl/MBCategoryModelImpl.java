@@ -71,8 +71,8 @@ public class MBCategoryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"parentCategoryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"urlCategory", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"displayStyle", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
+		{"description", Types.VARCHAR}, {"displayStyle", Types.VARCHAR},
+		{"friendlyURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -93,9 +93,9 @@ public class MBCategoryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("parentCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("urlCategory", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayStyle", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("friendlyURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -104,7 +104,7 @@ public class MBCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,urlCategory VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (categoryId, ctCollectionId))";
+		"create table MBCategory (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,categoryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,friendlyURL VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (categoryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table MBCategory";
 
@@ -136,25 +136,25 @@ public class MBCategoryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long FRIENDLYURL_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 16L;
+	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URLCATEGORY_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -294,11 +294,12 @@ public class MBCategoryModelImpl
 			attributeGetterFunctions.put(
 				"parentCategoryId", MBCategory::getParentCategoryId);
 			attributeGetterFunctions.put("name", MBCategory::getName);
-			attributeGetterFunctions.put("urlCategory", MBCategory::getUrlCategory);
 			attributeGetterFunctions.put(
 				"description", MBCategory::getDescription);
 			attributeGetterFunctions.put(
 				"displayStyle", MBCategory::getDisplayStyle);
+			attributeGetterFunctions.put(
+				"friendlyURL", MBCategory::getFriendlyURL);
 			attributeGetterFunctions.put(
 				"lastPublishDate", MBCategory::getLastPublishDate);
 			attributeGetterFunctions.put("status", MBCategory::getStatus);
@@ -358,14 +359,14 @@ public class MBCategoryModelImpl
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<MBCategory, String>)MBCategory::setName);
 			attributeSetterBiConsumers.put(
-				"urlCategory",
-				(BiConsumer<MBCategory, String>)MBCategory::setUrlCategory);
-			attributeSetterBiConsumers.put(
 				"description",
 				(BiConsumer<MBCategory, String>)MBCategory::setDescription);
 			attributeSetterBiConsumers.put(
 				"displayStyle",
 				(BiConsumer<MBCategory, String>)MBCategory::setDisplayStyle);
+			attributeSetterBiConsumers.put(
+				"friendlyURL",
+				(BiConsumer<MBCategory, String>)MBCategory::setFriendlyURL);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<MBCategory, Date>)MBCategory::setLastPublishDate);
@@ -656,35 +657,6 @@ public class MBCategoryModelImpl
 
 	@JSON
 	@Override
-	public String getUrlCategory() {
-		if (_urlCategory == null) {
-			return "";
-		}
-		else {
-			return _urlCategory;
-		}
-	}
-
-	@Override
-	public void setUrlCategory(String urlCategory) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_urlCategory = urlCategory;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalUrlCategory() {
-		return getColumnOriginalValue("urlCategory");
-	}
-
-	@JSON
-	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return "";
@@ -721,6 +693,35 @@ public class MBCategoryModelImpl
 		}
 
 		_displayStyle = displayStyle;
+	}
+
+	@JSON
+	@Override
+	public String getFriendlyURL() {
+		if (_friendlyURL == null) {
+			return "";
+		}
+		else {
+			return _friendlyURL;
+		}
+	}
+
+	@Override
+	public void setFriendlyURL(String friendlyURL) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_friendlyURL = friendlyURL;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalFriendlyURL() {
+		return getColumnOriginalValue("friendlyURL");
 	}
 
 	@JSON
@@ -1023,9 +1024,9 @@ public class MBCategoryModelImpl
 		mbCategoryImpl.setModifiedDate(getModifiedDate());
 		mbCategoryImpl.setParentCategoryId(getParentCategoryId());
 		mbCategoryImpl.setName(getName());
-		mbCategoryImpl.setUrlCategory(getUrlCategory());
 		mbCategoryImpl.setDescription(getDescription());
 		mbCategoryImpl.setDisplayStyle(getDisplayStyle());
+		mbCategoryImpl.setFriendlyURL(getFriendlyURL());
 		mbCategoryImpl.setLastPublishDate(getLastPublishDate());
 		mbCategoryImpl.setStatus(getStatus());
 		mbCategoryImpl.setStatusByUserId(getStatusByUserId());
@@ -1061,12 +1062,12 @@ public class MBCategoryModelImpl
 		mbCategoryImpl.setParentCategoryId(
 			this.<Long>getColumnOriginalValue("parentCategoryId"));
 		mbCategoryImpl.setName(this.<String>getColumnOriginalValue("name"));
-		mbCategoryImpl.setUrlCategory(
-			this.<String>getColumnOriginalValue("urlCategory"));
 		mbCategoryImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
 		mbCategoryImpl.setDisplayStyle(
 			this.<String>getColumnOriginalValue("displayStyle"));
+		mbCategoryImpl.setFriendlyURL(
+			this.<String>getColumnOriginalValue("friendlyURL"));
 		mbCategoryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		mbCategoryImpl.setStatus(
@@ -1222,14 +1223,6 @@ public class MBCategoryModelImpl
 			mbCategoryCacheModel.name = null;
 		}
 
-		mbCategoryCacheModel.urlCategory = getUrlCategory();
-
-		String urlCategory = mbCategoryCacheModel.urlCategory;
-
-		if ((urlCategory != null) && (urlCategory.length() == 0)) {
-			mbCategoryCacheModel.urlCategory = null;
-		}
-
 		mbCategoryCacheModel.description = getDescription();
 
 		String description = mbCategoryCacheModel.description;
@@ -1244,6 +1237,14 @@ public class MBCategoryModelImpl
 
 		if ((displayStyle != null) && (displayStyle.length() == 0)) {
 			mbCategoryCacheModel.displayStyle = null;
+		}
+
+		mbCategoryCacheModel.friendlyURL = getFriendlyURL();
+
+		String friendlyURL = mbCategoryCacheModel.friendlyURL;
+
+		if ((friendlyURL != null) && (friendlyURL.length() == 0)) {
+			mbCategoryCacheModel.friendlyURL = null;
 		}
 
 		Date lastPublishDate = getLastPublishDate();
@@ -1350,9 +1351,9 @@ public class MBCategoryModelImpl
 	private boolean _setModifiedDate;
 	private long _parentCategoryId;
 	private String _name;
-	private String _urlCategory;
 	private String _description;
 	private String _displayStyle;
+	private String _friendlyURL;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1401,9 +1402,9 @@ public class MBCategoryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("parentCategoryId", _parentCategoryId);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("urlCategory", _urlCategory);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("displayStyle", _displayStyle);
+		_columnOriginalValues.put("friendlyURL", _friendlyURL);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1456,11 +1457,11 @@ public class MBCategoryModelImpl
 
 		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("urlCategory", 4096L);
+		columnBitmasks.put("description", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("displayStyle", 8192L);
 
-		columnBitmasks.put("displayStyle", 16384L);
+		columnBitmasks.put("friendlyURL", 16384L);
 
 		columnBitmasks.put("lastPublishDate", 32768L);
 

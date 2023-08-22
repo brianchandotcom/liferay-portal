@@ -30,11 +30,11 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="urlCategory" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="displayStyle" type="String" />
+		<field name="friendlyURL" type="String" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

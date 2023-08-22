@@ -322,11 +322,11 @@ public class MBCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public MBCategory fetchMBCategoryByUrlSubject(
-		long groupId, String urlCategory) {
+	public MBCategory fetchMBCategoryByFriendlyURL(
+		long groupId, String friendlyURL) {
 
-		return _mbCategoryLocalService.fetchMBCategoryByUrlSubject(
-			groupId, urlCategory);
+		return _mbCategoryLocalService.fetchMBCategoryByFriendlyURL(
+			groupId, friendlyURL);
 	}
 
 	/**

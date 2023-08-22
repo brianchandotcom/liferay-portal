@@ -28,6 +28,340 @@ definition {
 		}
 	}
 
+	@description = "LPS-181546 Confirm that the data set information is created and displayed correctly"
+	@priority = 5
+	test AssertTheInformationsInDataSet {
+		task ("When the user creates a new data entry") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Blog Posts Posts",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
+				restSchema = "BlogPosting");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the Data Set has been created and the information is shown correctly.") {
+			AssertElementPresent(
+				key_text = "Blog Posts Posts",
+				locator1 = "CP2Utils#ANY_TEXT");
+
+			AssertElementPresent(
+				key_text = "/headless-delivery/v1.0",
+				locator1 = "CP2Utils#ANY_TEXT");
+
+			AssertElementPresent(
+				key_text = "/v1.0/sites/{siteId}/blog-postings",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the new data set information is created and displayed correctly in the page content"
+	@priority = 5
+	test AssertTheValueInFieldsName {
+		task ("And create a user creates a new data Set entry") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Blog Posts Posts",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
+				restSchema = "BlogPosting");
+
+			Refresh();
+		}
+
+		task ("And Add a view //Name: Blogs posting view") {
+			DataSetAdmin.goToViews(dataSetName = "Blog Posts Posts");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "Blog Posting View");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Blog Posts Posts",
+				key_viewName = "Blog Posting View");
+		}
+
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And Add some fields //Add headline, id and Siteid") {
+			DataSetAdmin.addFields(key_fieldList = "headline,id,siteId");
+		}
+
+		task ("And change the fields names /headline to Title /id to Blog Id /Siteid to Site Id") {
+			Click(
+				key_fieldName = "headline",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Title");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			Click(
+				key_fieldName = "id",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Blog Id");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			Click(
+				key_fieldName = "siteId",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				key_text = "Label",
+				locator1 = "TextInput#ANY",
+				value1 = "Site Id");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+
+		task ("And Add a new blog /Title: New Blog /Description: Description test") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			Blogs.addEntry(
+				entryContent = "Description test",
+				entryTitle = "New Blogs");
+		}
+
+		task ("And add a new content page and Add a data set fragment to content page created") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Test Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And selected Blogs posting view") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Blog Posting View",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then confirm that the information of the blog created and the site ID is displayed") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Test Page Name");
+
+			AssertElementPresent(
+				key_sortFieldName = "Blog Id",
+				locator1 = "CommerceNavigation#SORT_FIELD");
+
+			AssertElementPresent(
+				key_sortFieldName = "Site Id",
+				locator1 = "CommerceNavigation#SORT_FIELD");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the rest app /scopes/{scopeKey} is displayed in the data set, and the other information"
+	@priority = 5
+	test CanAssertTheEndpointObjectInDataSetCreated {
+		task ("Given an object definition 'Student' with name field and Scope: Site created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Student");
+
+			Refresh();
+
+			Click(
+				key_termsAndConditionsName = "Student",
+				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME");
+
+			Click(
+				key_sorting = "Company",
+				locator1 = "ObjectCustomViews#EDIT_SORTING");
+
+			Click(
+				key_menuItem = "Site",
+				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToFieldsTab();
+
+			Refresh();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Button#PLUS");
+
+			Type(
+				locator1 = "ObjectField#LABEL_INPUT",
+				value1 = "SiteCreated");
+
+			ObjectField.selectType(fieldType = "Precision Decimal");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			ObjectCustomValidation.gotoTab(tabName = "Details");
+
+			Button.clickPublish();
+		}
+
+		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema//Name: Students//REST App: /c/Student//REST Schema: Student") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Students",
+				restApplication = "/c/Student",
+				restEndpoint = "/scopes/{scopeKey}",
+				restSchema = "Student");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {
+			AssertElementPresent(
+				key_text = "/scopes/{scopeKey}",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the rest endpoint /scopes/{scopeKey} is displayed in the data set"
+	@priority = 4
+	test CanAssertTheEndpointObjectInDataSetModal {
+		task ("Given an object definition 'Student' with name field and Scope: Site created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Student",
+				objectName = "Student",
+				pluralLabelName = "Student");
+
+			Refresh();
+
+			Click(
+				key_termsAndConditionsName = "Student",
+				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME");
+
+			Click(
+				key_sorting = "Company",
+				locator1 = "ObjectCustomViews#EDIT_SORTING");
+
+			Click(
+				key_menuItem = "Site",
+				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+			Button.clickSave();
+
+			ObjectAdmin.goToFieldsTab();
+
+			Refresh();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Button#PLUS");
+
+			Type(
+				locator1 = "ObjectField#LABEL_INPUT",
+				value1 = "SiteCreated");
+
+			ObjectField.selectType(fieldType = "Precision Decimal");
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+
+			ObjectCustomValidation.gotoTab(tabName = "Details");
+
+			Button.clickPublish();
+		}
+
+		task ("And the Data Set admin page and fill in the fields Name, REST App and REST Schema//Name: Students//REST App: /c/Student//REST Schema: Student") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Data Set Test");
+
+			DataSetAdmin.selectProvider(key_type = "/c/students");
+		}
+
+		task ("Then confirm that the option /scopes/{scopeKey} is displayed") {
+			AssertElementPresent(
+				dropdownLabel = "/scopes/{scopeKey}",
+				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
+		}
+	}
+
+	@description = "LPS-181546 Confirm that the /v1.0/sites/{siteId}/blog-postings endpoint is displayed correctly when creating the data set"
+	@priority = 5
+	test CanAssertTheRestEndpointIsCorrect {
+		task ("When the user creates a new data entry") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/blog-postings",
+				restSchema = "BlogPosting");
+
+			Refresh();
+		}
+
+		task ("Then confirm that the option /v1.0/sites/{siteid}/blog-postings is displayed") {
+			AssertElementPresent(
+				key_text = "/v1.0/sites/{siteId}/blog-postings",
+				locator1 = "CP2Utils#ANY_TEXT");
+		}
+	}
+
 	@description = "Blocked by LPS-187299. Confirm that the user can change the pagination on the data set admin page"
 	@ignore = "true"
 	@priority = 4

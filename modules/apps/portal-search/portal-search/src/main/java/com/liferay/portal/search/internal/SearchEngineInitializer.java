@@ -99,7 +99,7 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	private boolean _isExecuteConcurrentReindex() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-177664") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183661") &&
 			(_concurrentReindexManager != null) && (_executionMode != null) &&
 			_executionMode.equals("concurrent") &&
 			(_companyId != CompanyConstants.SYSTEM)) {

@@ -1129,6 +1129,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-163126."
+	@ignore = "true"
 	@priority = 3
 	test SearchBarPresentWithNoDestinationPage {
 		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "nothing");

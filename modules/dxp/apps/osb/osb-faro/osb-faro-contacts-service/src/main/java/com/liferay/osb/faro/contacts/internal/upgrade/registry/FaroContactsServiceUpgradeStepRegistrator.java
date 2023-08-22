@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.faro.internal.upgrade.registry;
+package com.liferay.osb.faro.contacts.internal.upgrade.registry;
 
-import com.liferay.osb.faro.internal.upgrade.v2_0_0.UpgradeContactsCriterionUpgradeProcess;
-import com.liferay.osb.faro.internal.upgrade.v2_1_0.UpgradeCompanyId;
+import com.liferay.osb.faro.contacts.internal.upgrade.v2_0_0.UpgradeContactsCriterionUpgradeProcess;
+import com.liferay.osb.faro.contacts.internal.upgrade.v2_1_0.UpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

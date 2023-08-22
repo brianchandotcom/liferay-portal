@@ -923,7 +923,25 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	private String _getUniqueUrlCategory(
 		long groupId, long categoryId, String name) {
 
-		String urlSubject = _getUrlCategory(categoryId, name);
+		String urlSubject;
+
+		if (Validator.isNull(name)) {
+			urlSubject = String.valueOf(categoryId);
+		}
+		else {
+			name = StringUtil.toLowerCase(name.trim());
+
+			if (Validator.isNull(name) || Validator.isNumber(name)) {
+				name = String.valueOf(categoryId);
+			}
+			else {
+				name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+					name);
+			}
+
+			urlSubject = ModelHintsUtil.trimString(
+				MBCategory.class.getName(), "urlCategory", name);
+		}
 
 		String uniqueUrlSubject = urlSubject;
 
@@ -938,24 +956,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 
 		return uniqueUrlSubject;
-	}
-
-	private String _getUrlCategory(long categoryId, String name) {
-		if (name == null) {
-			return String.valueOf(categoryId);
-		}
-
-		name = StringUtil.toLowerCase(name.trim());
-
-		if (Validator.isNull(name) || Validator.isNumber(name)) {
-			name = String.valueOf(categoryId);
-		}
-		else {
-			name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(name);
-		}
-
-		return ModelHintsUtil.trimString(
-			MBCategory.class.getName(), "urlCategory", name);
 	}
 
 	private void _mergeCategories(MBCategory fromCategory, long toCategoryId)

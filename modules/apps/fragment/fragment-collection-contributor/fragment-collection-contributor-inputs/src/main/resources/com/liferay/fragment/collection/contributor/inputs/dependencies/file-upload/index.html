@@ -3,7 +3,11 @@
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-file-upload-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
-			<button class="btn btn-secondary" id="${fragmentEntryLinkNamespace}-file-upload-button-label" type="button">[@clay["icon"] symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</button>
+			<div class="position-relative">
+				<button class="btn btn-secondary" id="${fragmentEntryLinkNamespace}-file-upload-button-label" type="button">[@clay["icon"] symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</button>
+
+				<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="file-upload-input" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="text" [#if input.value??]value="${input.value}"[/#if] tabIndex="-1" />
+			</div>
 
 			<small class="inline-item inline-item-after">
 				<strong class="forms-file-upload-file-name">
@@ -14,8 +18,6 @@
 			<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none ml-1" id="${fragmentEntryLinkNamespace}-file-upload-remove-button" type="button">
 				[@clay["icon"] symbol="times-circle-full" /]
 			</button>
-
-			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="text" [#if input.value??]value="${input.value}"[/#if] />
 		</div>
 
 		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]

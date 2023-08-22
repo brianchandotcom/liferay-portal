@@ -895,6 +895,12 @@ const Fields = ({
 							onClick: handleDelete,
 						},
 					]}
+					creationMenuItems={[
+						{
+							label: Liferay.Language.get('add-fields'),
+							onClick: onCreationButtonClick,
+						},
+					]}
 					fields={[
 						{
 							label: Liferay.Language.get('name'),
@@ -940,7 +946,6 @@ const Fields = ({
 					)}
 					noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
 					onCancelButtonClick={() => navigate(fdsViewsURL)}
-					onCreationButtonClick={onCreationButtonClick}
 					onOrderChange={({
 						orderedItems,
 					}: {

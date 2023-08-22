@@ -4,7 +4,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -219,6 +219,10 @@ const OrderableTableRow = ({
 
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
+	creationMenuItems?: React.ComponentProps<
+		typeof ClayDropDownWithItems
+	>['items'];
+	creationMenuLabel?: string;
 	disableSave?: boolean;
 	fields: Array<IField>;
 	items: Array<any>;
@@ -226,7 +230,6 @@ interface IOrderableTableProps {
 	noItemsDescription: string;
 	noItemsTitle: string;
 	onCancelButtonClick: Function;
-	onCreationButtonClick: Function;
 	onOrderChange: (args: {orderedItems: any[]}) => void;
 	onSaveButtonClick: Function;
 	title: string;
@@ -234,6 +237,8 @@ interface IOrderableTableProps {
 
 const OrderableTable = ({
 	actions,
+	creationMenuItems,
+	creationMenuLabel = Liferay.Language.get('add'),
 	disableSave,
 	fields,
 	items: initialItems,
@@ -241,7 +246,6 @@ const OrderableTable = ({
 	noItemsDescription,
 	noItemsTitle,
 	onCancelButtonClick,
-	onCreationButtonClick,
 	onOrderChange,
 	onSaveButtonClick,
 	title,
@@ -306,14 +310,37 @@ const OrderableTable = ({
 							<Search onSearch={onSearch} query={query} />
 						</ManagementToolbar.Item>
 
-						<ManagementToolbar.Item>
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('add')}
-								className="nav-btn nav-btn-monospaced"
-								onClick={() => onCreationButtonClick()}
-								symbol="plus"
-							/>
-						</ManagementToolbar.Item>
+						{creationMenuItems?.length && (
+							<ManagementToolbar.Item>
+								{creationMenuItems.length > 1 ? (
+									<ClayDropDownWithItems
+										items={creationMenuItems}
+										trigger={
+											<ClayButtonWithIcon
+												aria-label={creationMenuLabel}
+												className="nav-btn nav-btn-monospaced"
+												symbol="plus"
+												title={creationMenuLabel}
+											/>
+										}
+									/>
+								) : (
+									<ClayButtonWithIcon
+										aria-label={
+											creationMenuItems[0].label ??
+											creationMenuLabel
+										}
+										className="nav-btn nav-btn-monospaced"
+										onClick={creationMenuItems[0].onClick}
+										symbol="plus"
+										title={
+											creationMenuItems[0].label ??
+											creationMenuLabel
+										}
+									/>
+								)}
+							</ManagementToolbar.Item>
+						)}
 					</ManagementToolbar.ItemList>
 				</ManagementToolbar.Container>
 
@@ -366,12 +393,28 @@ const OrderableTable = ({
 						description={noItemsDescription}
 						title={noItemsTitle}
 					>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onCreationButtonClick()}
-						>
-							{noItemsButtonLabel}
-						</ClayButton>
+						{creationMenuItems?.length &&
+							(creationMenuItems.length > 1 ? (
+								<ClayDropDownWithItems
+									alignmentPosition={4}
+									items={creationMenuItems}
+									trigger={
+										<ClayButton
+											aria-label={creationMenuLabel}
+											displayType="secondary"
+										>
+											{noItemsButtonLabel}
+										</ClayButton>
+									}
+								/>
+							) : (
+								<ClayButton
+									displayType="secondary"
+									onClick={creationMenuItems[0].onClick}
+								>
+									{noItemsButtonLabel}
+								</ClayButton>
+							))}
 					</ClayEmptyState>
 				)}
 			</ClayLayout.SheetSection>

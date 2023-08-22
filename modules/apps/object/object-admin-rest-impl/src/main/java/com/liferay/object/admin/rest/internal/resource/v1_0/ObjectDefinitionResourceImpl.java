@@ -235,6 +235,12 @@ public class ObjectDefinitionResourceImpl
 			throw new ObjectDefinitionEnableLocalizationException();
 		}
 
+		if (Validator.isNotNull(objectDefinition.getEnableObjectEntryDraft()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
@@ -435,6 +441,12 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		// TODO Move logic to service
+
+		if (Validator.isNotNull(objectDefinition.getEnableObjectEntryDraft()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		if (Validator.isNotNull(objectDefinition.getModifiable()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
@@ -1004,8 +1016,11 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableLocalization();
 				}
 
-				enableObjectEntryDraft =
-					objectDefinition.getEnableObjectEntryDraft();
+				if (FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
+					enableObjectEntryDraft =
+						objectDefinition.getEnableObjectEntryDraft();
+				}
+
 				enableObjectEntryHistory =
 					objectDefinition.getEnableObjectEntryHistory();
 				externalReferenceCode =

@@ -46,6 +46,11 @@ definition {
 		task ("Then the new API application is created successfully") {
 			Alert.viewSuccessMessageText(successMessage = "New API Application was created.");
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
+
 			AssertElementPresent(
 				key_name = "test",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");

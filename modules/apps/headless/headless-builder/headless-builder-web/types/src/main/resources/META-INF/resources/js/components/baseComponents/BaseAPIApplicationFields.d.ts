@@ -10,16 +10,16 @@ declare type DataError = {
 };
 interface BaseAPIApplicationFieldsProps {
 	basePath: string;
-	data: Partial<APIApplicationItem>;
+	data: Partial<APIApplicationUIData>;
+	disableURLAutoFill?: boolean;
 	displayError: DataError;
-	setData: Dispatch<SetStateAction<Partial<APIApplicationItem>>>;
-	urlAutoFill?: boolean;
+	setData: Dispatch<SetStateAction<APIApplicationUIData>>;
 }
 export default function BaseAPIApplicationFields({
 	basePath,
 	data,
+	disableURLAutoFill,
 	displayError,
 	setData,
-	urlAutoFill,
 }: BaseAPIApplicationFieldsProps): JSX.Element;
 export {};

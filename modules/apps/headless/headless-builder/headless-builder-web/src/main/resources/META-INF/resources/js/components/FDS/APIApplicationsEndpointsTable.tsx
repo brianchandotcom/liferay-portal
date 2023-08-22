@@ -4,8 +4,9 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 
+import {EditAPIApplicationContext} from '../EditAPIApplicationContext';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPIApplicationsEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
 
@@ -23,6 +24,8 @@ export default function APIApplicationsEndpointsTable({
 	currentAPIApplicationId,
 	portletId,
 }: APIApplicationsTableProps) {
+	const {setHideManagementButtons} = useContext(EditAPIApplicationContext);
+
 	const createAPIApplicationEndpoint = {
 		label: Liferay.Language.get('add-api-endpoint'),
 	};
@@ -42,6 +45,11 @@ export default function APIApplicationsEndpointsTable({
 			);
 		}
 	}
+
+	useEffect(() => {
+		setHideManagementButtons(true);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<FrontendDataSet

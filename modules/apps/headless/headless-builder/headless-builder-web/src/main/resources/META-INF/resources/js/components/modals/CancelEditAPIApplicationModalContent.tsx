@@ -9,9 +9,16 @@ import React from 'react';
 
 export function CancelEditAPIApplicationModalContent({
 	closeModal,
+	onConfirm,
 }: {
 	closeModal: voidReturn;
+	onConfirm: voidReturn;
 }) {
+	const handleClick = () => {
+		onConfirm();
+		closeModal();
+	};
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -47,7 +54,7 @@ export function CancelEditAPIApplicationModalContent({
 						<ClayButton
 							displayType="warning"
 							id="modalConfirmCancelEditButton"
-							onClick={() => history.back()}
+							onClick={handleClick}
 							type="button"
 						>
 							{Liferay.Language.get('continue-without-saving')}

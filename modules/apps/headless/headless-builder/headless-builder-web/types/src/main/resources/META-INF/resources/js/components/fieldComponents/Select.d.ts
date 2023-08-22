@@ -11,14 +11,18 @@ interface Option {
 }
 interface SelectProps {
 	cleanUp?: voidReturn;
+	disabled?: boolean;
 	onClick: (value: string) => void;
 	options: Option[];
 	placeholder?: string;
+	selectedOption?: string;
 }
 export declare function Select({
 	cleanUp,
+	disabled,
 	onClick,
 	options,
 	placeholder,
+	selectedOption,
 }: SelectProps): JSX.Element;
 export {};

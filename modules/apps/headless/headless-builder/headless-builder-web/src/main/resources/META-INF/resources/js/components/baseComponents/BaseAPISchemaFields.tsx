@@ -18,13 +18,15 @@ type DataError = {
 };
 
 interface BaseAPIApplicationFieldsProps {
-	data: Partial<APIApplicationSchemaItem>;
+	data: Partial<APISchemaUIData>;
+	disableObjectSelect?: boolean;
 	displayError: DataError;
-	setData: Dispatch<SetStateAction<Partial<APIApplicationSchemaItem>>>;
+	setData: Dispatch<SetStateAction<APISchemaUIData>>;
 }
 
 export default function BaseAPISchemaFields({
 	data,
+	disableObjectSelect,
 	displayError,
 	setData,
 }: BaseAPIApplicationFieldsProps) {
@@ -126,11 +128,12 @@ export default function BaseAPISchemaFields({
 				<Select
 					cleanUp={() =>
 						setData((previousValue) => {
-							delete previousValue.mainObjectDefinitionERC;
+							previousValue.mainObjectDefinitionERC = '';
 
 							return {...previousValue};
 						})
 					}
+					disabled={disableObjectSelect}
 					onClick={handleSelectObject}
 					options={
 						objectDefinitions
@@ -142,8 +145,9 @@ export default function BaseAPISchemaFields({
 							: []
 					}
 					placeholder={Liferay.Language.get(
-						'select-a-liferay-object'
+						'select-an-object-definition'
 					)}
+					selectedOption={data.mainObjectDefinitionERC}
 				/>
 
 				<div className="feedback-container">

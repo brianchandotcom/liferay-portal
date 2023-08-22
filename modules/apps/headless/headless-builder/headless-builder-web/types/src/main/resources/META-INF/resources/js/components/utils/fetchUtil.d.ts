@@ -12,14 +12,14 @@ export declare function fetchJSON<T>({
 	input: RequestInfo;
 }): Promise<T>;
 export declare function getItems<T>({url}: {url: string}): Promise<T[]>;
-export declare function updateData({
+export declare function updateData<T>({
 	dataToUpdate,
 	onError,
 	onSuccess,
 	url,
 }: {
-	dataToUpdate: Partial<APIApplicationItem>;
+	dataToUpdate: Partial<T>;
 	onError: (error: string) => void;
-	onSuccess: voidReturn;
+	onSuccess: (responseJSON: T) => void;
 	url: string;
 }): Promise<void>;

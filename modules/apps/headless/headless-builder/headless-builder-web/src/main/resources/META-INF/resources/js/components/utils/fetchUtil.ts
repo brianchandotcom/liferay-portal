@@ -29,15 +29,15 @@ export async function getItems<T>({url}: {url: string}) {
 	return items;
 }
 
-export async function updateData({
+export async function updateData<T>({
 	dataToUpdate,
 	onError,
 	onSuccess,
 	url,
 }: {
-	dataToUpdate: Partial<APIApplicationItem>;
+	dataToUpdate: Partial<T>;
 	onError: (error: string) => void;
-	onSuccess: voidReturn;
+	onSuccess: (responseJSON: T) => void;
 	url: string;
 }) {
 	fetch(url, {
@@ -47,18 +47,18 @@ export async function updateData({
 	})
 		.then((response) => {
 			if (response.ok) {
-				onSuccess();
-			}
-			else {
 				return response.json();
 			}
-		})
-		.then((errorResponse) => {
-			if (errorResponse) {
-				throw new Error(errorResponse.title);
+			else {
+				throw response.json();
 			}
 		})
+		.then((responseJSON) => {
+			onSuccess(responseJSON);
+		})
 		.catch((error) => {
-			onError(error);
+			error.then((response: {message: string; title: string}) => {
+				onError(response.title ?? response.message);
+			});
 		});
 }

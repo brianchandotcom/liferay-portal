@@ -868,7 +868,11 @@ public class LayoutPageTemplateEntryServiceImpl
 				0L
 			).as(
 				"layoutPageTemplateCollectionId"
-			)
+			),
+			LayoutPageTemplateEntryTable.INSTANCE.name.as("name"),
+			LayoutPageTemplateEntryTable.INSTANCE.createDate.as("createDate"),
+			LayoutPageTemplateEntryTable.INSTANCE.modifiedDate.as(
+				"modifiedDate")
 		).from(
 			LayoutPageTemplateEntryTable.INSTANCE
 		).where(
@@ -895,7 +899,12 @@ public class LayoutPageTemplateEntryServiceImpl
 					"layoutPageTemplateEntryId"
 				),
 				LayoutPageTemplateCollectionTable.INSTANCE.
-					layoutPageTemplateCollectionId
+					layoutPageTemplateCollectionId,
+				LayoutPageTemplateCollectionTable.INSTANCE.name.as("name"),
+				LayoutPageTemplateCollectionTable.INSTANCE.createDate.as(
+					"createDate"),
+				LayoutPageTemplateCollectionTable.INSTANCE.modifiedDate.as(
+					"modifiedDate")
 			).from(
 				LayoutPageTemplateCollectionTable.INSTANCE
 			).where(

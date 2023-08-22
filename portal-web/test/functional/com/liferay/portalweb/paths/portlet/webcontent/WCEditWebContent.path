@@ -237,6 +237,14 @@
 	<td>xpath=//div[contains(@class,'ddm-field') and contains(@data-field-name,'${key_fieldReference}')][${key_index}]</td>
 	<td></td>
 </tr>
+
+<!--CHECKBOX_WEB_CONTENT_ENTRY-->
+
+<tr>
+	<td>SELECT_CHECKBOX_WC</td>
+	<td>//dd[contains(@class,'list-group-item list-group-item-flex') and contains(.,'${key_title}')]//div[@class="checkbox"]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

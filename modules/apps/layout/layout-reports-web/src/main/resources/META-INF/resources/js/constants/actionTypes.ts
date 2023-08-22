@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Issue} from './types/Issue';
 import {LayoutReportsData, LayoutReportsIssues} from './types/LayoutReports';
+import {SelectedItem} from './types/SelectedItem';
 
 export const LOAD_DATA = 'LOAD_DATA' as const;
 export const SET_DATA = 'SET_DATA' as const;
@@ -39,7 +39,7 @@ interface SetLanguageIdAction {
 }
 
 interface SetSelectedItemAction {
-	item: Issue;
+	item: SelectedItem;
 	type: typeof SET_SELECTED_ITEM;
 }
 

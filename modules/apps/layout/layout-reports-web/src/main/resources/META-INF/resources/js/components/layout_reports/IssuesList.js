@@ -217,7 +217,12 @@ const Issue = ({issue}) => {
 		issueTotal > 0 && (
 			<ClayButton
 				displayType="unstyled"
-				onClick={() => dispatch({item: issue, type: SET_SELECTED_ITEM})}
+				onClick={() =>
+					dispatch({
+						item: {...issue, type: 'issue'},
+						type: SET_SELECTED_ITEM,
+					})
+				}
 			>
 				<span
 					className="align-items-center c-inner c-pb-3 d-flex justify-content-between text-secondary"

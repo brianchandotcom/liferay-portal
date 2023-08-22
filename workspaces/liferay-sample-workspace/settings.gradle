@@ -1,27 +1,7 @@
 buildscript {
 	dependencies {
-		classpath files("...entire path.../liferay-portal/modules/sdk/gradle-plugins-workspace/build/tmp/jar/com.liferay.gradle.plugins.workspace-8.0.6.jar")
-		classpath files("...entire path.../liferay-portal/modules/sdk/gradle-plugins-workspace/lib/com.liferay.workspace.bundle.url.codec-1.0.0.jar")
 		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "5.3.0"
-		classpath group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
-		classpath group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.12.5"
-		classpath group: "com.github.docker-java", name: "docker-java", version: "3.2.8"
-		classpath group: "com.google.code.gson", name: "gson", version: "2.9.0"
-		classpath group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.10"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "14.0.161"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.8"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.76"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.45"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.13"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.24"
-		classpath group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
-		classpath group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
-		classpath group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.3"
-		classpath group: "com.liferay", name: "com.liferay.portal.tools.soy.builder", version: "3.0.4"
-		classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
-		classpath group: "net.java.dev.jna", name: "jna", version: "5.8.0"
-		classpath group: "net.saliman", name: "gradle-properties-plugin", version: "1.4.6"
-		classpath group: "org.ow2.asm", name: "asm", version: "5.1"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "8.0.6"
 	}
 
 	repositories {

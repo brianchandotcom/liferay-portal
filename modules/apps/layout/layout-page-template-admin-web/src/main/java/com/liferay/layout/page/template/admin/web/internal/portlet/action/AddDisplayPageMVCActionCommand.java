@@ -7,7 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
+import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
@@ -149,7 +149,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 					"name",
 					() -> {
 						JSONObject jsonObject =
-							_layoutPageTemplateEntryExceptionRequestHandler.
+							LayoutPageTemplateEntryExceptionRequestHandlerUtil.
 								createErrorJSONObject(
 									actionRequest, portalException);
 
@@ -169,10 +169,6 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryExceptionRequestHandler
-		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

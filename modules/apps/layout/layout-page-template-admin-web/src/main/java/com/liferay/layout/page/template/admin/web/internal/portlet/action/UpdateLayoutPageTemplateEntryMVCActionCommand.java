@@ -6,7 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
+import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -67,15 +67,11 @@ public class UpdateLayoutPageTemplateEntryMVCActionCommand
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_layoutPageTemplateEntryExceptionRequestHandler.
+			LayoutPageTemplateEntryExceptionRequestHandlerUtil.
 				handlePortalException(
 					actionRequest, actionResponse, portalException);
 		}
 	}
-
-	@Reference
-	private LayoutPageTemplateEntryExceptionRequestHandler
-		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

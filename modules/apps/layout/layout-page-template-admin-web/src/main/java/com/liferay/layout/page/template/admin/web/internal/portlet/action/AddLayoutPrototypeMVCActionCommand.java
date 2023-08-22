@@ -6,7 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
+import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -160,7 +160,7 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 					layoutPageTemplateEntryNameException =
 						(LayoutPageTemplateEntryNameException)throwable;
 
-				_layoutPageTemplateEntryExceptionRequestHandler.
+				LayoutPageTemplateEntryExceptionRequestHandlerUtil.
 					handlePortalException(
 						actionRequest, actionResponse,
 						layoutPageTemplateEntryNameException);
@@ -186,10 +186,6 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutPageTemplateEntryExceptionRequestHandler
-		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

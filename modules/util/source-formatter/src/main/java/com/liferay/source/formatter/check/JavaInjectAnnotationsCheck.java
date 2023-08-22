@@ -65,8 +65,7 @@ public class JavaInjectAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		checkComponentName(
-			fileName, absolutePath, javaClass, annotation, filterAttributeValue,
-			false);
+			fileName, absolutePath, javaClass, filterAttributeValue, false);
 	}
 
 }

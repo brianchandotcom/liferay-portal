@@ -194,8 +194,7 @@ public class CompanyIndexFactoryHelper {
 			return;
 		}
 
-		liferayDocumentTypeFactory.addTypeMappings(
-			indexName,
+		liferayDocumentTypeFactory.putTypeMappings(
 			_elasticsearchConfigurationWrapper.additionalTypeMappings());
 	}
 

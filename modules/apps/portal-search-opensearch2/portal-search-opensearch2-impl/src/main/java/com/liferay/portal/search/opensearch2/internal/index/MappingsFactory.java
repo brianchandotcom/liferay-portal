@@ -56,43 +56,7 @@ public class MappingsFactory implements TypeMappingsHelper {
 			MappingsConstants.LIFERAY_MAPPING_FILE_NAME, ".json",
 			"-optional-defaults.json");
 
-		addTypeMappings(ResourceUtil.getResourceAsString(getClass(), name));
-	}
-
-	@Override
-	public void addTypeMappings(String source) {
-		PutMappingRequest.Builder builder = new PutMappingRequest.Builder();
-
-		builder.index(_indexName);
-
-		JSONObject mappingsJSONObject = _removeLegacyDocumentType(
-			_createJSONObject(source));
-
-		_mergeExistingDynamicTemplates(mappingsJSONObject);
-
-		List<Map<String, DynamicTemplate>> dynamicTemplates =
-			IndexUtil.getDynamicTemplatesMap(mappingsJSONObject);
-
-		if (dynamicTemplates != null) {
-			builder.dynamicTemplates(dynamicTemplates);
-		}
-
-		Map<String, Property> properties = IndexUtil.getPropertiesMap(
-			mappingsJSONObject);
-
-		if (properties != null) {
-			builder.properties(properties);
-		}
-
-		try {
-			PutMappingResponse putMappingResponse =
-				_openSearchIndicesClient.putMapping(builder.build());
-
-			JsonpUtil.logInfoResponse(putMappingResponse, _log);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		putTypeMappings(ResourceUtil.getResourceAsString(getClass(), name));
 	}
 
 	public String getMappings(String indexName) {
@@ -136,6 +100,42 @@ public class MappingsFactory implements TypeMappingsHelper {
 		}
 
 		return mappingsJSONObject;
+	}
+
+	@Override
+	public void putTypeMappings(String source) {
+		PutMappingRequest.Builder builder = new PutMappingRequest.Builder();
+
+		builder.index(_indexName);
+
+		JSONObject mappingsJSONObject = _removeLegacyDocumentType(
+			_createJSONObject(source));
+
+		_mergeExistingDynamicTemplates(mappingsJSONObject);
+
+		List<Map<String, DynamicTemplate>> dynamicTemplates =
+			IndexUtil.getDynamicTemplatesMap(mappingsJSONObject);
+
+		if (dynamicTemplates != null) {
+			builder.dynamicTemplates(dynamicTemplates);
+		}
+
+		Map<String, Property> properties = IndexUtil.getPropertiesMap(
+			mappingsJSONObject);
+
+		if (properties != null) {
+			builder.properties(properties);
+		}
+
+		try {
+			PutMappingResponse putMappingResponse =
+				_openSearchIndicesClient.putMapping(builder.build());
+
+			JsonpUtil.logInfoResponse(putMappingResponse, _log);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private JSONObject _createJSONObject(String jsonString) {

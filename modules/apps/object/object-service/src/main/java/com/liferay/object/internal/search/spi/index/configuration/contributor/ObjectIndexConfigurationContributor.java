@@ -23,8 +23,7 @@ public class ObjectIndexConfigurationContributor
 	public void contributeMappings(
 		String indexName, TypeMappingsHelper typeMappingsHelper) {
 
-		typeMappingsHelper.addTypeMappings(
-			indexName,
+		typeMappingsHelper.putTypeMappings(
 			StringUtil.read(
 				getClass(), "dependencies/additional-type-mappings.json"));
 	}

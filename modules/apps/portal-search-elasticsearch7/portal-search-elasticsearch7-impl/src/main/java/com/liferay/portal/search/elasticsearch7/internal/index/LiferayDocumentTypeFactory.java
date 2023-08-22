@@ -50,11 +50,11 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	}
 
 	@Override
-	public void addTypeMappings(String indexName, String source) {
-		PutMappingRequest putMappingRequest = new PutMappingRequest(indexName);
+	public void putTypeMappings(String source) {
+		PutMappingRequest putMappingRequest = new PutMappingRequest(_indexName);
 
 		putMappingRequest.source(
-			_mergeDynamicTemplates(source, indexName), XContentType.JSON);
+			_mergeDynamicTemplates(source, _indexName), XContentType.JSON);
 
 		try {
 			ActionResponse actionResponse = _indicesClient.putMapping(
@@ -92,7 +92,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		String optionalDefaultTypeMappings = ResourceUtil.getResourceAsString(
 			getClass(), name);
 
-		addTypeMappings(indexName, optionalDefaultTypeMappings);
+		putTypeMappings(optionalDefaultTypeMappings);
 	}
 
 	public void createRequiredDefaultAnalyzers(

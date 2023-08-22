@@ -9,11 +9,13 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,6 +61,21 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return addObjectDefinition(false, objectDefinitionLocalService, null);
+	}
+
+	public static ObjectDefinition addObjectDefinition(
+			String name,
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws PortalException {
+
+		return objectDefinitionLocalService.addCustomObjectDefinition(
+			TestPropsValues.getUserId(), 0, false, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			name, null, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			false, ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			Collections.emptyList());
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(

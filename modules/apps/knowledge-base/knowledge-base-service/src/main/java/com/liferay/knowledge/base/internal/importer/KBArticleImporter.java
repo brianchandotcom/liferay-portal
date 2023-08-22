@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,13 +46,14 @@ public class KBArticleImporter {
 	public KBArticleImporter(
 		MarkdownConverter markdownConverter, KBArchiveFactory kbArchiveFactory,
 		KBArticleLocalService kbArticleLocalService, Portal portal,
-		DLURLHelper dlURLHelper) {
+		DLURLHelper dlURLHelper, ZipReaderFactory zipReaderFactory) {
 
 		_markdownConverter = markdownConverter;
 		_kbArchiveFactory = kbArchiveFactory;
 		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
 		_dlURLHelper = dlURLHelper;
+		_zipReaderFactory = zipReaderFactory;
 	}
 
 	public int processZipFile(
@@ -66,8 +67,7 @@ public class KBArticleImporter {
 		}
 
 		try {
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-				inputStream);
+			ZipReader zipReader = _zipReaderFactory.getZipReader(inputStream);
 
 			return _processKBArticleFiles(
 				userId, groupId, parentKBFolderId, prioritizeByNumericalPrefix,
@@ -332,5 +332,6 @@ public class KBArticleImporter {
 	private final KBArticleLocalService _kbArticleLocalService;
 	private final MarkdownConverter _markdownConverter;
 	private final Portal _portal;
+	private final ZipReaderFactory _zipReaderFactory;
 
 }

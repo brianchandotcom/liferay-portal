@@ -151,10 +151,14 @@ public class CommerceOrderItemLocalServiceImpl
 			cpInstance.getCPDefinitionId(), cpInstance.getCPInstanceId(), json,
 			quantity, unitOfMeasureKey, commerceContext);
 
+		BigDecimal unitOfMeasureIncrementalOrderQuantity =
+			commerceProductPrice.getUnitOfMeasureIncrementalOrderQuantity();
+
 		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
 			commerceOrder.getGroupId(), user, commerceOrder,
 			commerceProductPrice, cpInstance, 0, json, quantity,
-			shippedQuantity, unitOfMeasureKey, serviceContext);
+			shippedQuantity, unitOfMeasureKey,
+			unitOfMeasureIncrementalOrderQuantity, serviceContext);
 
 		commerceOrderItem.setReplacedCPInstanceId(replacedCPInstanceId);
 
@@ -180,9 +184,6 @@ public class CommerceOrderItemLocalServiceImpl
 			BigDecimal currentQuantity = quantity.multiply(
 				commerceOptionValue.getQuantity());
 
-			BigDecimal unitOfMeasureIncrementalOrderQuantity =
-				commerceProductPrice.getUnitOfMeasureIncrementalOrderQuantity();
-
 			currentQuantity = currentQuantity.divide(
 				unitOfMeasureIncrementalOrderQuantity,
 				unitOfMeasureIncrementalOrderQuantity.scale(),
@@ -199,7 +200,7 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceProductPrice, commerceOptionValueCPInstance,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOptionValue.toJSON(), currentQuantity, 0,
-				StringPool.BLANK, serviceContext);
+				StringPool.BLANK, null, serviceContext);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				childCommerceOrderItem = commerceOrderItemPersistence.update(
@@ -576,6 +577,7 @@ public class CommerceOrderItemLocalServiceImpl
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal quantity,
 			int shippedQuantity, String unitOfMeasureKey,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -603,13 +605,14 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem = _createCommerceOrderItem(
 				commerceOrder.getGroupId(), user, commerceOrder, null,
 				cpInstance, 0, null, quantity, shippedQuantity,
-				unitOfMeasureKey, serviceContext);
+				unitOfMeasureKey, unitOfMeasureIncrementalOrderQuantity,
+				serviceContext);
 		}
 		else {
 			commerceOrderItem = _updateCommerceOrderItem(
 				commerceOrderItem, externalReferenceCode, user, commerceOrder,
 				cpInstance, quantity, shippedQuantity, unitOfMeasureKey,
-				serviceContext);
+				unitOfMeasureIncrementalOrderQuantity, serviceContext);
 		}
 
 		if (!Validator.isBlank(cpMeasurementUnitKey)) {
@@ -1306,6 +1309,7 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceProductPrice commerceProductPrice, CPInstance cpInstance,
 			long parentCommerceOrderItemId, String json, BigDecimal quantity,
 			int shippedQuantity, String unitOfMeasureKey,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1347,6 +1351,8 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setSku(cpInstance.getSku());
 		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
 		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 
 		_setDimensions(commerceOrderItem, cpInstance);
 		_setSubscriptionInfo(commerceOrderItem, cpInstance);
@@ -2208,6 +2214,7 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceOrderItem commerceOrderItem, String externalReferenceCode,
 			User user, CommerceOrder commerceOrder, CPInstance cpInstance,
 			BigDecimal quantity, int shippedQuantity, String unitOfMeasureKey,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2242,6 +2249,8 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setSku(cpInstance.getSku());
 		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
 		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 
 		_setDimensions(commerceOrderItem, cpInstance);
 		_setSubscriptionInfo(commerceOrderItem, cpInstance);

@@ -364,6 +364,7 @@ public class CommerceOrderItemServiceImpl
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal quantity,
 			int shippedQuantity, String unitOfMeasureKey,
+			BigDecimal unitOfMeasureIncrementalOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -373,7 +374,8 @@ public class CommerceOrderItemServiceImpl
 		return commerceOrderItemLocalService.importCommerceOrderItem(
 			getUserId(), externalReferenceCode, commerceOrderItemId,
 			commerceOrderId, cpInstanceId, cpMeasurementUnitKey, quantity,
-			shippedQuantity, unitOfMeasureKey, serviceContext);
+			shippedQuantity, unitOfMeasureKey,
+			unitOfMeasureIncrementalOrderQuantity, serviceContext);
 	}
 
 	@Override

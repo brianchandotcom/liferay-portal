@@ -6,15 +6,19 @@
 package com.liferay.asset.publisher.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.list.exception.AssetListEntryTitleException;
+import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
-import com.liferay.asset.publisher.web.internal.handler.AssetListExceptionRequestHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -104,9 +108,42 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_assetListExceptionRequestHandler.handlePortalException(
+			_handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
+	}
+
+	private void _handlePortalException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			PortalException portalException)
+		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(portalException);
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String errorMessage = "an-unexpected-error-occurred";
+
+		if (portalException instanceof AssetListEntryTitleException) {
+			errorMessage = "please-enter-a-valid-title";
+		}
+		else if (portalException instanceof
+					DuplicateAssetListEntryTitleException) {
+
+			errorMessage = "a-collection-with-that-title-already-exists";
+		}
+		else {
+			_log.error(portalException);
+		}
+
+		JSONObject jsonObject = JSONUtil.put(
+			"error", _language.get(themeDisplay.getRequest(), errorMessage));
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	private void _saveDynamicAssetList(
@@ -197,13 +234,16 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			assetEntryIds, serviceContext);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AddAssetListMVCActionCommand.class);
+
 	@Reference
 	private AssetListEntryService _assetListEntryService;
 
 	@Reference
-	private AssetListExceptionRequestHandler _assetListExceptionRequestHandler;
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
-	private AssetPublisherHelper _assetPublisherHelper;
+	private Language _language;
 
 }

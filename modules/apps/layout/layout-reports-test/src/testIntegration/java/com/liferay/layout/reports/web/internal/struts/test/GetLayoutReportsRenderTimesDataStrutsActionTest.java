@@ -13,7 +13,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -26,8 +29,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -111,6 +116,58 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(
 			StringPool.BLANK, jsonObject.getString("fragmentCollectionURL"));
+		Assert.assertEquals(
+			"collection-display", jsonObject.getString("hierarchy"));
+		Assert.assertEquals("collection-display", jsonObject.getString("name"));
+		Assert.assertNotNull(jsonObject.get("renderTime"));
+	}
+
+	@Test
+	public void testGetRenderTimesDataOfAContentLayoutWithACollectionInheritedFromMaster()
+		throws Exception {
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		LayoutStructure layoutStructure = _getLayoutStructure(
+			masterLayoutPageTemplateEntry.getGroupId(),
+			masterLayoutPageTemplateEntry.getPlid());
+
+		layoutStructure.addCollectionStyledLayoutStructureItem(
+			layoutStructure.getMainItemId(), 0);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				masterLayoutPageTemplateEntry.getGroupId(),
+				masterLayoutPageTemplateEntry.getPlid(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(
+						masterLayoutPageTemplateEntry.getPlid()),
+				layoutStructure.toString());
+
+		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		JSONArray jsonArray = _serveResource();
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertNotNull(jsonObject);
+		Assert.assertFalse(jsonObject.getBoolean("cached"));
+		Assert.assertNotNull(jsonObject.get("itemId"));
+		Assert.assertFalse(jsonObject.getBoolean("fragment"));
+		Assert.assertEquals("collection", jsonObject.getString("itemType"));
+		Assert.assertTrue(jsonObject.getBoolean("fromMaster"));
+		Assert.assertEquals(
+			StringPool.BLANK, jsonObject.get("fragmentCollectionURL"));
 		Assert.assertEquals(
 			"collection-display", jsonObject.getString("hierarchy"));
 		Assert.assertEquals("collection-display", jsonObject.getString("name"));
@@ -301,10 +358,13 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	private LayoutStructure _getLayoutStructure() {
+		return _getLayoutStructure(_layout.getGroupId(), _layout.getPlid());
+	}
+
+	private LayoutStructure _getLayoutStructure(long groupId, long plid) {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
+				fetchLayoutPageTemplateStructure(groupId, plid);
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
@@ -322,9 +382,13 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)_layout.getLayoutType());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
@@ -365,6 +429,13 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

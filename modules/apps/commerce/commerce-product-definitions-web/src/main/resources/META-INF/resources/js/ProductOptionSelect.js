@@ -255,7 +255,6 @@ const ProductOptionSelect = ({
 
 					currentSkuOptions[curIndex] = {
 						...currentCPInstanceSkuOption,
-						cpInstanceId: currentProductOptionValue.skuId,
 						key: productOption.key,
 					};
 				}

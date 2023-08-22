@@ -9,6 +9,8 @@ import React, {useEffect, useState} from 'react';
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
+import {ModalEditFolder} from '../ViewObjectDefinitions/ModalEditFolder';
+import {ViewObjectDefinitionsModals} from '../ViewObjectDefinitions/ViewObjectDefinitions';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
@@ -19,31 +21,41 @@ import {RightSideBar} from './RightSidebar/index';
 interface EditObjectFolder {
 	companyKeyValuePair: KeyValuePair[];
 	deletionTypes: TDeletionType[];
+	folderName: string;
 	siteKeyValuePair: KeyValuePair[];
 }
 export default function EditObjectFolder({
 	companyKeyValuePair,
 	deletionTypes,
+	folderName,
 	siteKeyValuePair,
 }: EditObjectFolder) {
 	const [
-		{rightSidebarType, selectedFolderERC, storages, viewApiURL},
+		{rightSidebarType, selectedFolder, storages, viewApiURL},
 		dispatch,
 	] = useFolderContext();
-	const [showModal, setShowModal] = useState(false);
 
-	const [selectedFolderName, setSelectedFolderName] = useState('');
+	const [showModal, setShowModal] = useState<ViewObjectDefinitionsModals>({
+		addFolder: false,
+		addObjectDefinition: false,
+		bindToRootObjectDefinition: false,
+		deleteFolder: false,
+		deleteObjectDefinition: false,
+		deletionNotAllowed: false,
+		editERC: false,
+		editFolder: false,
+		moveObjectDefinition: false,
+		redirectEditObjectDefinition: false,
+		unbindFromRootObjectDefinition: false,
+	});
 
 	useEffect(() => {
 		const makeFetch = async () => {
 			const folderResponse = await API.getAllFolders();
 
-			setSelectedFolderName(
-				folderResponse.find(
-					(folder) =>
-						folder.externalReferenceCode === selectedFolderERC
-				)!.name
-			);
+			const currentFolder = folderResponse.find(
+				(folder) => folder.name === folderName
+			) as ObjectFolder;
 
 			const objectFoldersWithDefinitions: ObjectFolder[] = await Promise.all(
 				folderResponse.map(async (folder) => {
@@ -169,7 +181,10 @@ export default function EditObjectFolder({
 			);
 
 			dispatch({
-				payload: {objectFolders: objectFoldersWithDefinitions},
+				payload: {
+					objectFolders: objectFoldersWithDefinitions,
+					selectedFolder: currentFolder,
+				},
 				type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE,
 			});
 		};
@@ -181,18 +196,25 @@ export default function EditObjectFolder({
 
 	return (
 		<>
-			{showModal && (
+			{showModal.addObjectDefinition && (
 				<ModalAddObjectDefinition
 					apiURL={viewApiURL}
-					handleOnClose={() => {
-						setShowModal(false);
-					}}
-					objectFolderExternalReferenceCode={selectedFolderERC}
+					handleOnClose={() =>
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								addObjectDefinition: false,
+							})
+						)
+					}
+					objectFolderExternalReferenceCode={
+						selectedFolder.externalReferenceCode
+					}
 					onAfterSubmit={(newObjectDefinition) => {
 						dispatch({
 							payload: {
 								newObjectDefinition,
-								selectedFolderName,
+								selectedFolderName: selectedFolder.name,
 							},
 							type: TYPES.ADD_NEW_NODE_TO_FOLDER,
 						});
@@ -201,14 +223,32 @@ export default function EditObjectFolder({
 					storages={storages}
 				/>
 			)}
+
+			{showModal.editFolder && (
+				<ModalEditFolder
+					externalReferenceCode={selectedFolder.externalReferenceCode}
+					folderID={selectedFolder.id}
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								editFolder: false,
+							})
+						);
+					}}
+					initialLabel={selectedFolder.label}
+					name={selectedFolder.name}
+				/>
+			)}
+
 			<Header
-				folderExternalReferenceCode={selectedFolderERC}
-				folderName={selectedFolderName}
+				folder={selectedFolder}
 				hasDraftObjectDefinitions={false}
+				setShowModal={setShowModal}
 			/>
 			<div className="lfr-objects__model-builder-diagram-container">
 				<LeftSidebar
-					selectedFolderName={selectedFolderName}
+					selectedFolderName={selectedFolder.name}
 					setShowModal={setShowModal}
 				/>
 

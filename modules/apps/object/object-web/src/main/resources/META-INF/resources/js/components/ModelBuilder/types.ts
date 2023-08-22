@@ -59,6 +59,7 @@ export type TAction =
 	| {
 			payload: {
 				objectFolders: ObjectFolder[];
+				selectedFolder: ObjectFolder;
 			};
 			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
 	  }
@@ -109,7 +110,7 @@ export type TState = {
 	objectFolders: ObjectFolder[];
 	rightSidebarType: RightSidebarType;
 	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
-	selectedFolderERC: string;
+	selectedFolder: ObjectFolder;
 	selectedObjectRelationship: ObjectRelationship;
 	showChangesSaved: boolean;
 	storages: LabelValueObject[];

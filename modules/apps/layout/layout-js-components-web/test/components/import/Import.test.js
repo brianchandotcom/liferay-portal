@@ -5,13 +5,14 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {Import} from '@liferay/layout-js-components-web';
-import {act, fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
+	fetch: () => Promise.resolve({json: () => ({valid: false})}),
 	navigate: jest.fn(),
 }));
 
@@ -38,7 +39,7 @@ describe('Import', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders file input and overwrite checkbox', () => {
+	it('renders file input', () => {
 		render(<Import portletNamespace="namespace" />);
 
 		act(() => {
@@ -46,10 +47,6 @@ describe('Import', () => {
 		});
 
 		expect(screen.getByLabelText('file-upload')).toBeInTheDocument();
-
-		expect(
-			screen.getByLabelText('overwrite-existing-entries')
-		).toBeInTheDocument();
 	});
 
 	it('renders submit button disabled until file input has a valid value', () => {
@@ -122,5 +119,26 @@ describe('Import', () => {
 		);
 
 		expect(getByText('Learn more')).toBeInTheDocument();
+	});
+
+	it('renders Import Options modal', async () => {
+		const {getByText} = render(<Import portletNamespace="namespace" />);
+
+		const button = screen.getByRole('button', {name: /import/i});
+		const file = new File(['(⌐□_□)'], 'example.zip', {
+			type: 'image/png',
+		});
+
+		fireEvent.change(screen.getByLabelText('file-upload'), {
+			target: {files: [file]},
+		});
+
+		expect(button.disabled).toBeFalsy();
+
+		userEvent.click(button);
+
+		await waitFor(() =>
+			expect(getByText('import-options')).toBeInTheDocument()
+		);
 	});
 });

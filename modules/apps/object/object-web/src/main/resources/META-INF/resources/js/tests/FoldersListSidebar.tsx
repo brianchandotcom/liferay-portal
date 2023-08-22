@@ -8,25 +8,34 @@ import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import FoldersListSideBar from '../components/ViewObjectDefinitions/FoldersListSidebar';
+const emptyAction = {href: '', method: ''};
 
-const uncategorizedFolder = {
-	actions: {},
-	dateCreated: '2023-08-07T14:42:21Z',
-	dateModified: '2023-08-07T14:42:21Z',
-	externalReferenceCode: 'uncategorized',
-	id: 1010,
-	label: {en_US: 'Uncategorized'},
-	name: 'Uncategorized',
+const folderActions = {
+	delete: emptyAction,
+	get: emptyAction,
+	permissions: emptyAction,
+	update: emptyAction,
 };
 
 const ticketFolder = {
-	actions: {},
+	actions: folderActions,
 	dateCreated: '2023-08-07T14:45:00Z',
 	dateModified: '2023-08-07T14:45:00Z',
 	externalReferenceCode: 'ticketERC',
 	id: 2020,
 	label: {en_US: 'Ticket System'},
 	name: 'TicketName',
+};
+
+const uncategorizedFolder = {
+	actions: folderActions,
+	dateCreated: '2023-08-07T14:42:21Z',
+	dateModified: '2023-08-07T14:42:21Z',
+	externalReferenceCode: 'uncategorized',
+	id: 1010,
+	label: {en_US: 'Uncategorized'},
+	name: 'Uncategorized',
+	objectFolderItems: [],
 };
 
 describe('The FoldersListSidebar component should', () => {

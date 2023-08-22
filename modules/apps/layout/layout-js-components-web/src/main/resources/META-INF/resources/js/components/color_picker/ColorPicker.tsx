@@ -187,7 +187,7 @@ export default function ColorPicker({
 		setTokenLabel(label);
 		onValueSelect(field.name, name ?? value);
 
-		if (value === null) {
+		if (value === '') {
 			setClearedValue(true);
 		}
 		else {

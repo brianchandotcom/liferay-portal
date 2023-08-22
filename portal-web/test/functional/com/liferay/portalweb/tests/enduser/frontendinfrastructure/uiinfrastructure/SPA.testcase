@@ -19,6 +19,164 @@ definition {
 		}
 	}
 
+	@description = "LPS-172764 Confirm that filtering the WCs does not deselect them"
+	@priority = 4
+	test CanAssertTheWCAreNotDeselected {
+		task ("And there are 6 web content articles") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent${i}",
+					description = "Description${i}",
+					groupName = "Guest",
+					title = "WebContentTitle${i}");
+			}
+		}
+
+		task ("And pagination is set to 4") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("When I filter using the management bar") {
+			Click(
+				key_text = "Filter and Order",
+				locator1 = "Button#ANY_WITH_SPAN");
+
+			Click(
+				key_value = "Recent",
+				locator1 = "ProcessBuilderListView#DROPDOWN_ITEM");
+		}
+
+		task ("And two articles are selected, one from each page") {
+			Click(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Click(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+
+		task ("And clear the filters") {
+			Click(locator1 = "ManagementBar#CLEAR_FILTER");
+		}
+
+		task ("Then the selections should still be kept") {
+			AssertElementPresent(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			Click(locator1 = "Pagination#FIRST_LINK");
+
+			AssertElementPresent(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+	}
+
+	@description = "LPS-172764 Confirm that WC is deselected when you go to another tab and come back to WC"
+	@priority = 4
+	test CanAssertWCDoesNotStaySelected {
+		task ("And there are 6 web content articles") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent${i}",
+					description = "Description${i}",
+					groupName = "Guest",
+					title = "WebContentTitle${i}");
+			}
+		}
+
+		task ("And pagination is set to 4") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("And two articles are selected, one from each page") {
+			Click(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Click(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+
+		task ("When I navigate away from Web Content") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Blogs");
+		}
+
+		task ("And navigate back to Web Content") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+		}
+
+		task ("Then both itens should still be selected and be displayed at the top of both pages.") {
+			AssertElementPresent(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			AssertElementPresent(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+	}
+
+	@description = "LPS-172764 Confirm that WC can be excluded in two pages of pagination"
+	@priority = 4
+	test IsPossibleToDeleteWCOnEachPage {
+		task ("And there are 6 web content articles") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent${i}",
+					description = "Description${i}",
+					groupName = "Guest",
+					title = "WebContentTitle${i}");
+			}
+		}
+
+		task ("And pagination is set to 4") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("and two articles are selected, one from each page") {
+			Click(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Click(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+
+		task ("When I delete the articles from the toolbar") {
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+		}
+
+		task ("Then both itens from both pages should be deleted.") {
+			Alert.viewSuccessMessageText(successMessage = "2 items were moved to the Recycle Bin.");
+		}
+	}
+
 	@description = "Verify loading bar can be visible during new location based SPA load event"
 	@priority = 5
 	@refactordone
@@ -84,6 +242,144 @@ definition {
 			AssertTextEquals(
 				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 				value1 = "Timeout notification warning triggered");
+		}
+	}
+
+	@description = "LPS-172764 Confirm that the first selection is displayed at the top of the first Web Content page"
+	@priority = 4
+	test TheItemsListIsCorrectInFirstPage {
+		task ("And there are 6 web content articles") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent${i}",
+					description = "Description${i}",
+					groupName = "Guest",
+					title = "WebContentTitle${i}");
+			}
+		}
+
+		task ("And pagination is set to 4") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("When I select article from both pages") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Click(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+
+		task ("and go back to the first page") {
+			Click(locator1 = "Pagination#FIRST_LINK");
+		}
+
+		task ("Then both itens should still be selected and be displayed at the top of both pages.") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ManagementBar#NAVBAR_TEXT",
+				value1 = "1 of 6 Items Selected");
+		}
+	}
+
+	@description = "LPS-172764 Confirm that the first selection is displayed at the top of the second Web Content page"
+	@priority = 4
+	test TheItemsListIsCorrectInSecondPage {
+		task ("And there are 6 web content articles") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent${i}",
+					description = "Description${i}",
+					groupName = "Guest",
+					title = "WebContentTitle${i}");
+			}
+		}
+
+		task ("And pagination is set to 4") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("When I select an item on the first page") {
+			Click(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ManagementBar#NAVBAR_TEXT",
+				value1 = "1 of 6 Items Selected");
+		}
+
+		task ("And navigate to the second page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Click(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+
+		task ("Then the first selection should be displayed at the top of the second page.") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ManagementBar#NAVBAR_TEXT",
+				value1 = "2 of 6 Items Selected");
+		}
+	}
+
+	@description = "LPS-172764 Confirm that WC is deselected when exiting and entering the Web Content tab"
+	@priority = 4
+	test WCDoesNotStaySelectedIfLeavingTheWCTab {
+		task ("And there are 6 web content articles") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WebContent${i}",
+					description = "Description${i}",
+					groupName = "Guest",
+					title = "WebContentTitle${i}");
+			}
+		}
+
+		task ("And pagination is set to 4") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Pagination.changePagination(itemsPerPage = 4);
+		}
+
+		task ("And two articles are selected, one from each page") {
+			Click(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Click(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+		}
+
+		task ("And navigate back to Web Content") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+		}
+
+		task ("Then both itens should still be selected and be displayed at the top of both pages.") {
+			AssertElementPresent(
+				key_title = "WebContentTitle2",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
+
+			AssertElementPresent(
+				key_title = "WebContentTitle6",
+				locator1 = "WCEditWebContent#SELECT_CHECKBOX_WC");
 		}
 	}
 

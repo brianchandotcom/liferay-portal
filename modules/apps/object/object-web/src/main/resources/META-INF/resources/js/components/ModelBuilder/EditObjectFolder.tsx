@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API} from '@liferay/object-js-components-web';
+import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
@@ -47,9 +47,119 @@ export default function EditObjectFolder({
 
 			const objectFoldersWithDefinitions: ObjectFolder[] = await Promise.all(
 				folderResponse.map(async (folder) => {
-					const folderDefinitions = await API.getObjectDefinitions(
+					const folderDefinitions: ObjectDefinitionNodeData[] = [];
+
+					const folderDefinitionsResponse = await API.getObjectDefinitions(
 						`filter=objectFolderExternalReferenceCode eq '${folder.externalReferenceCode}'`
 					);
+
+					const linkedObjectDefinitions: ObjectDefinition[] = [];
+
+					await Promise.all(
+						folder.objectFolderItems
+							.filter((folderItem) => folderItem.linkedDefinition)
+							.map(async (folderItem) => {
+								const response = await API.getObjectDefinitionByExternalReferenceCode(
+									folderItem.objectDefinitionExternalReferenceCode
+								);
+
+								linkedObjectDefinitions.push(response);
+							})
+					);
+
+					folderDefinitionsResponse.forEach((folderDefinition) => {
+						const folderItem = folder.objectFolderItems.find(
+							(folderItem) =>
+								folderItem.objectDefinitionExternalReferenceCode ===
+								folderDefinition.externalReferenceCode
+						);
+
+						if (folderItem) {
+							folderDefinitions.push({
+								...folderDefinition,
+								hasObjectDefinitionDeleteResourcePermission: !!folderDefinition
+									.actions.delete,
+								hasObjectDefinitionManagePermissionsResourcePermission: !!folderDefinition
+									.actions.permissions,
+								hasObjectDefinitionUpdateResourcePermission: !!folderDefinition
+									.actions.update,
+								hasObjectDefinitionViewResourcePermission: !!folderDefinition
+									.actions.get,
+								hasSelfRelationships: false,
+								label: getLocalizableLabel(
+									folderDefinition.defaultLanguageId,
+									folderDefinition.label,
+									folderDefinition.name
+								),
+								linkedDefinition: false,
+								nodeSelected: false,
+								objectFields: folderDefinition.objectFields.map(
+									(field) =>
+										({
+											businessType: field.businessType,
+											externalReferenceCode:
+												field.externalReferenceCode,
+											label: getLocalizableLabel(
+												folderDefinition.defaultLanguageId,
+												field.label,
+												field.name
+											),
+											name: field.name,
+											primaryKey: field.name === 'id',
+											required: field.required,
+											selected: false,
+										} as ObjectFieldNode)
+								),
+							});
+						}
+					});
+
+					linkedObjectDefinitions.forEach((folderDefinition) => {
+						const folderItem = folder.objectFolderItems.find(
+							(folderItem) =>
+								folderItem.objectDefinitionExternalReferenceCode ===
+								folderDefinition.externalReferenceCode
+						);
+
+						if (folderItem) {
+							folderDefinitions.push({
+								...folderDefinition,
+								hasObjectDefinitionDeleteResourcePermission: !!folderDefinition
+									.actions.delete,
+								hasObjectDefinitionManagePermissionsResourcePermission: !!folderDefinition
+									.actions.permissions,
+								hasObjectDefinitionUpdateResourcePermission: !!folderDefinition
+									.actions.update,
+								hasObjectDefinitionViewResourcePermission: !!folderDefinition
+									.actions.get,
+								hasSelfRelationships: false,
+								label: getLocalizableLabel(
+									folderDefinition.defaultLanguageId,
+									folderDefinition.label,
+									folderDefinition.name
+								),
+								linkedDefinition: true,
+								nodeSelected: false,
+								objectFields: folderDefinition.objectFields.map(
+									(field) =>
+										({
+											businessType: field.businessType,
+											externalReferenceCode:
+												field.externalReferenceCode,
+											label: getLocalizableLabel(
+												folderDefinition.defaultLanguageId,
+												field.label,
+												field.name
+											),
+											name: field.name,
+											primaryKey: field.name === 'id',
+											required: field.required,
+											selected: false,
+										} as ObjectFieldNode)
+								),
+							});
+						}
+					});
 
 					return {
 						...folder,

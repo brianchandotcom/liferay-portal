@@ -9,10 +9,18 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.petra.string.StringPool;
 
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Luis Miguel Barcos
  */
 public class PathUtil {
+
+	public static String getPathParameterValue(String path) {
+		return path.substring(path.lastIndexOf('/') + 1);
+	}
 
 	public static String getPathPrefix(APIApplication.Endpoint.Scope scope) {
 		if (scope == APIApplication.Endpoint.Scope.GROUP) {
@@ -22,12 +30,37 @@ public class PathUtil {
 		return StringPool.BLANK;
 	}
 
-	public static String removeBasePath(String path) {
-		if (path.startsWith(HeadlessBuilderConstants.BASE_PATH)) {
-			path = path.substring(HeadlessBuilderConstants.BASE_PATH.length());
+	public static boolean matchEndpoint(
+		APIApplication.Endpoint endpoint, String path) {
+
+		String endpointPath = endpoint.getPath();
+
+		if (Objects.equals(path, endpointPath)) {
+			return true;
 		}
 
-		return path;
+		Pattern endpointPattern = null;
+
+		endpointPath = endpointPath.substring(0, endpointPath.lastIndexOf("/"));
+
+		endpointPath = endpointPath + StringPool.FORWARD_SLASH;
+
+		if (Objects.equals(
+				endpoint.getRetrieveType(),
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT) &&
+			Objects.equals(
+				endpoint.getPathParameter(),
+				APIApplication.Endpoint.PathParameter.ID)) {
+
+			endpointPattern = Pattern.compile(endpointPath + "\\d+");
+		}
+		else {
+			endpointPattern = Pattern.compile(endpointPath + "\\D+");
+		}
+
+		Matcher matcher = endpointPattern.matcher(path);
+
+		return matcher.matches();
 	}
 
 }

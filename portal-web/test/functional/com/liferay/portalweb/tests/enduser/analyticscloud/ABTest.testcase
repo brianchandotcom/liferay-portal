@@ -160,4 +160,69 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-14220 | Automation ID: LRAC-14444 | Test Summary: Draft AB test delete button redirects to DXP"
+	@priority = 3
+	test ABTestDraftDeleteButtonRedirectsToDXP {
+		var nameABTest = "Draft Test";
+
+		task ("Connect DXP to Analytics Cloud") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.launchDXP();
+
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Get site assigned property name and get data source name") {
+			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
+		}
+
+		task ("Create an AB Test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = ${nameABTest});
+
+			ABTest.createVariant(variantName = "Variant name");	
+		}
+		
+		task ("Go to AC > Tests > Open your test") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACNavigation.openItem(itemName = ${nameABTest});
+		}
+
+		task ("Click on the delete button on the top") {
+			Button.clickDelete(button = "Delete");
+		}
+
+		task ("Click on the new tab open") {
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+
+			ABTest.deleteABTest();
+		}
+
+		task ("Assert the empty state after the test is deleted") {
+			ABTest.assertDXPABTestEmptyState();
+		}
+
+		task ("Go to AC > Tests > Assert the empty state") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACUtils.viewGenericText(textValueList = "There are no tests found.");
+
+			ACUtils.viewGenericText(textValueList = "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.");
+		}
+	}
 }

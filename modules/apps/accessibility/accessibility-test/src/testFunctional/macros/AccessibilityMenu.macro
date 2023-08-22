@@ -4,7 +4,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Instance Settings");
+			portlet = ${portlet});
 
 		Click(
 			key_itemName = "Accessibility",
@@ -15,15 +15,94 @@ definition {
 				checkboxName = "Enable Accessibility Menu",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			if (IsElementPresent(locator1 = "Button#SAVE")) {
-				Click(locator1 = "Button#SAVE");
-			}
-			else {
-				Click(locator1 = "Button#UPDATE");
-			}
-
-			Alert.viewSuccessMessage();
+			SystemSettings.saveConfiguration();
 		}
+	}
+
+	macro activateAccessibilityMenuBySiteSettings {
+		Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+
+		Click(
+			key_itemName = "Accessibility",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		if (!(IsElementPresent(checkboxName = "Enable Accessibility Menu", locator1 = "Checkbox#ANY_CHECKBOX_CHECKED"))) {
+			Check.checkNotVisible(
+				checkboxName = "Enable Accessibility Menu",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		SystemSettings.saveConfiguration();
+	}
+
+	macro assertCanAccessAccessibilityMenuModal {
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\TAB");
+
+		KeyPress(
+			key_link = "Skip to Main Content",
+			locator1 = "AccessibilityMenu#QUICK_LINK",
+			value1 = "\TAB");
+
+		KeyPress(
+			key_link = "Open Accessibility Menu",
+			locator1 = "AccessibilityMenu#QUICK_LINK",
+			value1 = "\ENTER");
+
+		AssertElementPresent(
+			key_modal_title = "Accessibility Menu",
+			locator1 = "AccessibilityMenu#MODAL_TITLE");
+	}
+
+	macro assertCannotAccessAccessibilityMenuModal {
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\TAB");
+
+		KeyPress(
+			key_link = "Skip to Main Content",
+			locator1 = "AccessibilityMenu#QUICK_LINK",
+			value1 = "\TAB");
+
+		AssertElementNotPresent(
+			key_link = "Open Accessibility Menu",
+			locator1 = "AccessibilityMenu#QUICK_LINK");
+	}
+
+	macro deactivateAccessibilityMenu {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = ${portlet});
+
+		Click(
+			key_itemName = "Accessibility",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		if (!(IsElementPresent(checkboxName = "Enable Accessibility Menu", locator1 = "Checkbox#ANY_CHECKBOX_CHECKED"))) {
+			Check.checkNotVisible(
+				checkboxName = "Enable Accessibility Menu",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			SystemSettings.saveConfiguration();
+		}
+	}
+
+	macro deactivateAccessibilityMenuBySiteSettings {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Click(
+			key_itemName = "Accessibility",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Uncheck.uncheckNotVisible(
+			checkboxName = "Enable Accessibility Menu",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		SystemSettings.saveConfiguration();
 	}
 
 	macro disableSpecificOption {
@@ -69,4 +148,22 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro resetDefaultValues {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = ${portlet});
+
+		Click(
+			key_itemName = "Accessibility",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Click(
+			key_text = "Accessibility Menu",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		Click(
+			key_menuItem = "Reset Default Values",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
 }

@@ -135,7 +135,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 					"root", false
 				)
 			).toString(),
-			_getJSONArray(
+			_getObjectRelationshipEdgeCandidatesJSONArray(
 				0, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
@@ -146,7 +146,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		Assert.assertEquals(
 			_jsonFactory.createJSONArray(
 			).toString(),
-			_getJSONArray(
+			_getObjectRelationshipEdgeCandidatesJSONArray(
 				3, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
@@ -182,7 +182,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 					objectRelationshipBBB_AAAA.getObjectRelationshipId()
 				)
 			).toString(),
-			_getJSONArray(
+			_getObjectRelationshipEdgeCandidatesJSONArray(
 				0, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
@@ -217,7 +217,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 					"root", true
 				)
 			).toString(),
-			_getJSONArray(
+			_getObjectRelationshipEdgeCandidatesJSONArray(
 				0, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 	}
@@ -231,7 +231,8 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 			objectRelationship.getLabel(LocaleUtil.getSiteDefault()));
 	}
 
-	private JSONArray _getJSONArray(int depth, long objectDefinitionId)
+	private JSONArray _getObjectRelationshipEdgeCandidatesJSONArray(
+			int depth, long objectDefinitionId)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =

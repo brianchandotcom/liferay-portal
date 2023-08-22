@@ -6,7 +6,6 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -63,13 +61,13 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 					_getObjectDefinitionId(resourceRequest));
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!objectRelationship.isEdgeCandidate()) {
+				continue;
+			}
+
 			ObjectDefinition parentObjectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
-
-			if (!_meetsEdgeCriteria(objectRelationship)) {
-				continue;
-			}
 
 			if (parentObjectDefinition.getRootObjectDefinitionId() == 0) {
 				objectRelationshipsJSONArray.put(
@@ -165,25 +163,6 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 		}
 
 		return ParamUtil.getLong(resourceRequest, "objectDefinitionId");
-	}
-
-	private boolean _meetsEdgeCriteria(ObjectRelationship objectRelationship)
-		throws Exception {
-
-		ObjectDefinition parentObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		if (objectRelationship.isSelf() ||
-			!Objects.equals(
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
-				objectRelationship.getType()) ||
-			parentObjectDefinition.isUnmodifiableSystemObject()) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _meetsTreeMaxHeight(

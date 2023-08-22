@@ -55,14 +55,14 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 
 		int depth = ParamUtil.getInteger(resourceRequest, "depth");
 
+		JSONArray objectRelationshipsJSONArray = jsonFactory.createJSONArray();
+
+		Locale locale = _portal.getLocale(resourceRequest);
+
 		List<ObjectRelationship> objectRelationships =
 			_objectRelationshipLocalService.
 				getObjectRelationshipsByObjectDefinitionId2(
 					_getObjectDefinitionId(resourceRequest));
-
-		JSONArray objectRelationshipsJSONArray = jsonFactory.createJSONArray();
-
-		Locale locale = _portal.getLocale(resourceRequest);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			ObjectDefinition parentObjectDefinition =

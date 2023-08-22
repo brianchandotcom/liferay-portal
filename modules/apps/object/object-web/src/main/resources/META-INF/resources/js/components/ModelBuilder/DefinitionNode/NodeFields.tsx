@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {getBusinessTypeLabel} from '../../../utils/businessTypeLabel';
-import {ObjectFieldNode} from '../types';
 
 import './NodeFields.scss';
 

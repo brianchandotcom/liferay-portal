@@ -30,7 +30,6 @@ import {
 import {getDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import {ObjectDefinitionNodeData} from '../types';
 import NodeFields from './NodeFields';
 import NodeFooter from './NodeFooter';
 import NodeHeader from './NodeHeader';
@@ -45,24 +44,25 @@ const selfRelationshipHandleStyle = {
 export function DefinitionNode({
 	data: {
 		defaultLanguageId,
-		editObjectDefinitionURL,
 		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
 		hasSelfRelationships,
 		id,
-		isLinkedNode,
 		label,
+		linkedDefinition,
 		name,
 		nodeSelected,
-		objectDefinitionPermissionsURL,
 		objectFields,
 		status,
 		system,
 	},
 }: NodeProps<ObjectDefinitionNodeData>) {
 	const [showAllFields, setShowAllFields] = useState<boolean>(false);
-	const [{elements}, dispatch] = useFolderContext();
+	const [
+		{editObjectDefinitionURL, elements, objectDefinitionPermissionsURL},
+		dispatch,
+	] = useFolderContext();
 	const store = useStore();
 
 	const [showModal, setShowModal] = useState<
@@ -138,7 +138,7 @@ export function DefinitionNode({
 						setDeletedObjectDefinition,
 						status,
 					})}
-					isLinkedNode={isLinkedNode}
+					isLinkedNode={linkedDefinition}
 					objectDefinitionLabel={label}
 					status={status!}
 					system={system}

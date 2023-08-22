@@ -112,6 +112,9 @@ public class ClientExtensionProjectConfigurator
 
 	@Override
 	public void apply(Project project) {
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider =
 				GradleUtil.addTaskProvider(
@@ -135,7 +138,7 @@ public class ClientExtensionProjectConfigurator
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
 			createClientExtensionConfigTaskProvider,
-			validateClientExtensionIdsTaskProvider);
+			validateClientExtensionIdsTaskProvider, workspaceExtension);
 
 		Map<String, JsonNode> profileJsonNodes =
 			_configureClientExtensionJsonNodes(
@@ -244,9 +247,7 @@ public class ClientExtensionProjectConfigurator
 
 		_addDockerTasks(
 			project, assembleClientExtensionTaskProvider,
-			createClientExtensionConfigTaskProvider,
-			GradleUtil.getExtension(
-				(ExtensionAware)project.getGradle(), WorkspaceExtension.class));
+			createClientExtensionConfigTaskProvider, workspaceExtension);
 	}
 
 	@Override
@@ -399,7 +400,8 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Zip> buildClientExtensionZipTaskProvider,
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider,
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider) {
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider,
+		WorkspaceExtension workspaceExtension) {
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
@@ -411,9 +413,6 @@ public class ClientExtensionProjectConfigurator
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
-
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		configureLiferay(project, workspaceExtension);
 

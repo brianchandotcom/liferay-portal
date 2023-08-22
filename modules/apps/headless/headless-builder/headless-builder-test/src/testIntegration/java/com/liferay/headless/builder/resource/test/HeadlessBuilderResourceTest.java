@@ -1238,14 +1238,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		throws Exception {
 
 		assertSuccessfulHttpCode(
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					"oDataSort", sortString
-				).put(
-					"r_apiEndpointToAPISorts_c_apiEndpointERC",
-					apiEndpointExternalReferenceCode
-				).toString(),
-				"headless-builder/sorts", Http.Method.POST));
+			JSONUtil.put(
+				"oDataSort", sortString
+			).put(
+				"r_apiEndpointToAPISorts_c_apiEndpointERC",
+				apiEndpointExternalReferenceCode
+			).toString(),
+			"headless-builder/sorts", Http.Method.POST);
 	}
 
 	private ObjectEntry _addCustomObjectEntry(

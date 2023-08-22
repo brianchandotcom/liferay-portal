@@ -29,13 +29,4 @@ public class CPDefinitionOptionRelPriceTypeException extends PortalException {
 		super(throwable);
 	}
 
-	public static class MustBePriceTypeDynamic
-		extends CPDefinitionOptionRelPriceTypeException {
-
-		public MustBePriceTypeDynamic() {
-			super("Price type must be dynamic");
-		}
-
-	}
-
 }

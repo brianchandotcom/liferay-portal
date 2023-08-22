@@ -1017,8 +1017,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		if (definedExternally &&
 			!priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC)) {
 
-			throw new CPDefinitionOptionRelPriceTypeException.
-				MustBePriceTypeDynamic();
+			throw new CPDefinitionOptionRelPriceTypeException(
+				"Price type must be dynamic");
 		}
 
 		if (cpDefinitionOptionRel.isNew() ||

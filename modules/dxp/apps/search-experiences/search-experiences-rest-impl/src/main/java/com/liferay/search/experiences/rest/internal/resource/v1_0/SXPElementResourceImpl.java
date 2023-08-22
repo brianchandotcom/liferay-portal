@@ -304,22 +304,21 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 		sxpElement.setId(sxpElementId);
 
-		if (serviceBuilderSxpElement != null) {
-			if (serviceBuilderSxpElement.getReadOnly()) {
-				return _sxpElementDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.isAcceptAllLanguages(),
-						new HashMap<>(), _dtoConverterRegistry,
-						contextHttpServletRequest, sxpElementId,
-						contextAcceptLanguage.getPreferredLocale(),
-						contextUriInfo, contextUser),
-					_sxpElementService.getSXPElement(sxpElementId));
-			}
-
-			return _updateSxpElement(sxpElementId, sxpElement);
+		if (serviceBuilderSxpElement == null) {
+			return postSXPElement(sxpElement);
 		}
 
-		return postSXPElement(sxpElement);
+		if (!serviceBuilderSxpElement.getReadOnly()) {
+			return _updateSXPElement(sxpElementId, sxpElement);
+		}
+
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest, sxpElementId,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			serviceBuilderSxpElement);
 	}
 
 	@Override
@@ -334,24 +333,23 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 		sxpElement.setExternalReferenceCode(externalReferenceCode);
 
-		if (serviceBuilderSxpElement != null) {
-			if (serviceBuilderSxpElement.getReadOnly()) {
-				return _sxpElementDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						contextAcceptLanguage.isAcceptAllLanguages(),
-						new HashMap<>(), _dtoConverterRegistry,
-						contextHttpServletRequest,
-						serviceBuilderSxpElement.getSXPElementId(),
-						contextAcceptLanguage.getPreferredLocale(),
-						contextUriInfo, contextUser),
-					serviceBuilderSxpElement);
-			}
+		if (serviceBuilderSxpElement == null) {
+			return postSXPElement(sxpElement);
+		}
 
-			return _updateSxpElement(
+		if (!serviceBuilderSxpElement.getReadOnly()) {
+			return _updateSXPElement(
 				serviceBuilderSxpElement.getSXPElementId(), sxpElement);
 		}
 
-		return postSXPElement(sxpElement);
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				serviceBuilderSxpElement.getSXPElementId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			serviceBuilderSxpElement);
 	}
 
 	private String _getElementDefinitionJSON(SXPElement sxpElement) {
@@ -424,7 +422,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		return "1.0";
 	}
 
-	private SXPElement _updateSxpElement(
+	private SXPElement _updateSXPElement(
 			Long sxpElementId, SXPElement sxpElement)
 		throws Exception {
 

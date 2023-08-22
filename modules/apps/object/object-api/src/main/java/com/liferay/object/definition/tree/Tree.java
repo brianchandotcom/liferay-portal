@@ -19,6 +19,8 @@ import java.util.Queue;
  */
 public class Tree {
 
+	public static final int MAX_HEIGHT = 4;
+
 	public Tree(Node rootNode) {
 		this.rootNode = rootNode;
 	}

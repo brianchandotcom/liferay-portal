@@ -115,35 +115,32 @@
 				<div>
 					<h2 style="font-size: 2rem">
 						Dear
-					<span style="color: #0b5fff">${ObjectField_userFirstName.getData()}</span>
+					<span style="color: #0b5fff">[%USERADDITIONALINFO_USERFIRSTNAME%]</span>
 					</h2>
 				</div>
 
 				<p>
-				<b>${ObjectEntry_author.getData()}</b>
+				<b>[%USERADDITIONALINFO_AUTHOR_FIRST_NAME%]&nbsp;[%USERADDITIONALINFO_AUTHOR_LAST_NAME%]</b>
 					has invited you to become a member of
-					<b>${ObjectField_accountName.getData()}</b> so you can
+					<b>[%USERADDITIONALINFO_ACCOUNTNAME%]</b> so you can
 					participate in the Liferay Marketplace. Here is your
-					password: ${ObjectField_mothersName.getData()}
+					password: [%USERADDITIONALINFO_MOTHERSNAME%]
 				</p>
 
 				<p>Your role(s) are:</p>
-				
-                <#assign roles = ObjectField_roles.getData()>
+
 				<ul>
-					<#list roles?split("/") as role>
-						<#if role != "">
-							<li>${role}</li>
-						</#if>
-					</#list>
+					<li>
+						<b>[%USERADDITIONALINFO_ROLES%]</b>
+					</li>
 				</ul>
 
-			<a href="${ObjectField_inviteURL.getData()}" style=" background-color: #0b5fff; padding: 0.5rem 1.5rem; border-radius: 8px; text-decoration: none; width: 10.938rem; height: 2.5rem; margin-top: 2.5rem; color: #fff; border: none; ">Accept invitation</a>
+			<a href="[%USERADDITIONALINFO_INVITEURL%]" style=" background-color: #0b5fff; padding: 0.5rem 1.5rem; border-radius: 8px; text-decoration: none; width: 10.938rem; height: 2.5rem; margin-top: 2.5rem; color: #fff; border: none; ">Accept invitation</a>
 				<p style="color: #6b6c7e">
 					Or copy and paste the link below into you browser
 				</p>
 
-			<a href="${ObjectField_inviteURL.getData()}" style="color: #6b6c7e">${ObjectField_inviteURL.getData()}</a>
+			<a href="[%USERADDITIONALINFO_INVITEURL%]" style="color: #6b6c7e">[%USERADDITIONALINFO_INVITEURL%]</a>
 			</main>
 
 			<footer>

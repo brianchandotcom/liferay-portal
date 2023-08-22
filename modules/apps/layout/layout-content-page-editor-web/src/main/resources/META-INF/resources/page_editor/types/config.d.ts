@@ -119,6 +119,7 @@ export interface Config {
 	getCollectionItemCountURL: string;
 	getCollectionMappingFieldsURL: string;
 	getCollectionSupportedFiltersURL: string;
+	getCollectionWarningMessageURL: string;
 	getExperienceDataURL: string;
 	getIframeContentCssURL: string;
 	getIframeContentURL: string;

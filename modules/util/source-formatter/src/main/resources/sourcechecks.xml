@@ -686,6 +686,7 @@
 			<property name="checkHasMultipleConfigurationPids" value="false" />
 			<property name="checkHasMultipleServiceTypes" value="false" />
 			<property name="checkMismatchedServiceAttribute" value="false" />
+			<property name="checkResourceImpl" value="false" />
 			<property name="checkSelfRegistration" value="false" />
 		</check>
 		<check name="JavaDeprecatedJavadocCheck">

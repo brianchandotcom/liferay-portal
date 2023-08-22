@@ -82,6 +82,11 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			annotation = _formatMVCPortletProperties(absolutePath, annotation);
 		}
 
+		if (fileName.endsWith("ResourceImpl.java")) {
+			annotation = _formatResourceImplProperties(
+				absolutePath, javaClass, annotation);
+		}
+
 		return annotation;
 	}
 
@@ -471,23 +476,11 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 	private String _formatMVCPortletProperties(
 		String absolutePath, String annotation) {
 
-		int x = annotation.indexOf("property = {");
+		String properties = _getPropertyAttribute(annotation);
 
-		if (x == -1) {
+		if (properties == null) {
 			return annotation;
 		}
-
-		int y = x;
-
-		while (true) {
-			y = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, y + 1);
-
-			if (!ToolsUtil.isInsideQuotes(annotation, y)) {
-				break;
-			}
-		}
-
-		String properties = annotation.substring(x, y);
 
 		String newProperties = StringUtil.replace(
 			properties,
@@ -531,6 +524,68 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		return StringUtil.replace(annotation, properties, newProperties);
+	}
+
+	private String _formatResourceImplProperties(
+		String absolutePath, JavaClass javaClass, String annotation) {
+
+		if (!isAttributeValue(_CHECK_RESOURCE_IMPL_KEY, absolutePath)) {
+			return annotation;
+		}
+
+		boolean hasNestedField = false;
+
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (childJavaTerm.hasAnnotation("NestedField")) {
+				hasNestedField = true;
+
+				break;
+			}
+		}
+
+		String propertyAttributeValue = getAnnotationAttributeValue(
+			annotation, "property");
+
+		if (hasNestedField) {
+			if (propertyAttributeValue == null) {
+				annotation = _addAttribute(
+					annotation, "property", "\"nested.field.support=true\"");
+			}
+			else if (propertyAttributeValue.contains(
+						"\"nested.field.support")) {
+
+				annotation = annotation.replaceFirst(
+					"\"nested.field.support=\\w+\"",
+					"\"nested.field.support=true\"");
+			}
+			else {
+				String property = _getPropertyAttribute(annotation);
+
+				if (property == null) {
+					return annotation;
+				}
+
+				annotation = StringUtil.replace(
+					annotation, property,
+					_addNewProperties(
+						property, "\"nested.field.support=true\""));
+			}
+		}
+		else if ((propertyAttributeValue != null) &&
+				 propertyAttributeValue.contains("\"nested.field.support")) {
+
+			List<String> propertyValues = ListUtil.fromString(
+				propertyAttributeValue, StringPool.COMMA_AND_SPACE);
+
+			if (propertyValues.size() == 1) {
+				return _removePropertyAttribute(annotation);
+			}
+
+			return annotation.replaceFirst(
+				"\"nested.field.support=\\w+\",?\\s*", StringPool.BLANK);
+		}
+
+		return annotation;
 	}
 
 	private String _formatServiceAttribute(
@@ -640,12 +695,63 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return javaMethods;
 	}
 
+	private String _getPropertyAttribute(String annotation) {
+		int x = annotation.indexOf("property = {");
+
+		if (x == -1) {
+			return null;
+		}
+
+		int y = x;
+
+		while (true) {
+			y = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, y + 1);
+
+			if (!ToolsUtil.isInsideQuotes(annotation, y)) {
+				break;
+			}
+		}
+
+		return annotation.substring(x, y);
+	}
+
 	private synchronized String _getRootDirName(String absolutePath) {
 		if (_rootDirName == null) {
 			_rootDirName = SourceUtil.getRootDirName(absolutePath);
 		}
 
 		return _rootDirName;
+	}
+
+	private String _removePropertyAttribute(String annotation) {
+		if (!annotation.contains("(")) {
+			return annotation;
+		}
+
+		int x = annotation.indexOf("property = {");
+		char closingChar = CharPool.CLOSE_CURLY_BRACE;
+
+		if (x == -1) {
+			x = annotation.indexOf("property = \"");
+			closingChar = CharPool.QUOTE;
+		}
+
+		if (x == -1) {
+			return annotation;
+		}
+
+		int y = x;
+
+		while (true) {
+			y = annotation.indexOf(closingChar, y + 1);
+
+			if (!ToolsUtil.isInsideQuotes(annotation, y)) {
+				break;
+			}
+		}
+
+		return annotation.replaceFirst(
+			annotation.substring(x, y + 1) + ",\\s*", StringPool.BLANK);
 	}
 
 	private static final String _ALLOWED_IMMEDIATE_ATTRIBUTE_CLASS_NAMES_KEY =
@@ -675,6 +781,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 	private static final String _CHECK_PORTLET_VERSION_KEY =
 		"checkPortletVersion";
+
+	private static final String _CHECK_RESOURCE_IMPL_KEY = "checkResourceImpl";
 
 	private static final String _CHECK_SELF_REGISTRATION_KEY =
 		"checkSelfRegistration";

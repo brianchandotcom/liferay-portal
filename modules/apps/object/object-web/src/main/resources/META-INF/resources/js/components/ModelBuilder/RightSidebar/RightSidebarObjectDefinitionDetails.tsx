@@ -55,7 +55,7 @@ export function RightSidebarObjectDefinitionDetails({
 	companyKeyValuePair,
 	siteKeyValuePair,
 }: RightSidebarObjectDefinitionDetailsProps) {
-	const [{elements, selectedFolderERC}, dispatch] = useFolderContext();
+	const [{elements, selectedFolder}, dispatch] = useFolderContext();
 
 	const selectedNode = elements.find((element) => {
 		if (isNode(element)) {
@@ -122,12 +122,6 @@ export function RightSidebarObjectDefinitionDetails({
 
 	const onSubmit = async () => {
 		const validationErrors = handleValidate();
-
-		const folderResponse = await API.getAllFolders();
-
-		const selectedFolderName = folderResponse.find(
-			(folder) => folder.externalReferenceCode === selectedFolderERC
-		)!.name;
 
 		if (!Object.keys(validationErrors).length) {
 			delete values.objectRelationships;
@@ -198,7 +192,7 @@ export function RightSidebarObjectDefinitionDetails({
 
 			dispatch({
 				payload: {
-					currentFolderName: selectedFolderName,
+					currentFolderName: selectedFolder.name,
 					updatedNode: newObjectDefinition,
 				},
 				type: TYPES.UPDATE_FOLDER_NODE,

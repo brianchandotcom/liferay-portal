@@ -76,8 +76,7 @@ export default function CardHeader({
 				displayType="secondary"
 				onClick={() => {
 					window.location.href =
-						`${modelBuilderURL}` +
-						`&folderERC=${externalReferenceCode}`;
+						`${modelBuilderURL}` + `&folderName=${name}`;
 				}}
 			>
 				{Liferay.Language.get('view-in-model-builder')}

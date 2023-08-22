@@ -20,6 +20,7 @@ import './Diagram.scss';
 
 import React, {useCallback} from 'react';
 
+import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import DefaultEdge from '../Edges/DefaultEdge';
 import SelfEdge from '../Edges/SelfEdge';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -38,7 +39,7 @@ const EDGE_TYPES = {
 function DiagramBuilder({
 	setShowModal,
 }: {
-	setShowModal: (value: boolean) => void;
+	setShowModal: (value: ViewObjectDefinitionsModals) => void;
 }) {
 	const [{elements}, dispatch] = useFolderContext();
 

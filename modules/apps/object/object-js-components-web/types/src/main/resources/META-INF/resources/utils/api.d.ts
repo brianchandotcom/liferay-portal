@@ -13,7 +13,6 @@ interface Actions {
 	permissions: HTTPMethod;
 	update: HTTPMethod;
 }
-
 declare type NotificationTemplateType = 'email' | 'userNotification';
 declare type RecipientType = 'role' | 'term' | 'user';
 declare type Recipient = {

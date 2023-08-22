@@ -111,10 +111,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setUserName(user.getFullName());
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
-		category.setUrlCategory(
-			_getUniqueUrlCategory(groupId, categoryId, name));
 		category.setDescription(description);
 		category.setDisplayStyle(displayStyle);
+		category.setFriendlyURL(
+			_getMBCategoryFriendlyURL(groupId, categoryId, name));
 		category.setExpandoBridgeAttributes(serviceContext);
 
 		category = mbCategoryPersistence.update(category);
@@ -304,10 +304,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbCategoryLocalService.deleteMBCategory(category);
 	}
 
-	public MBCategory fetchMBCategoryByUrlSubject(
-		long groupId, String urlCategory) {
+	public MBCategory fetchMBCategoryByFriendlyURL(
+		long groupId, String friendlyURL) {
 
-		return mbCategoryPersistence.fetchByG_UC(groupId, urlCategory);
+		return mbCategoryPersistence.fetchByG_F(groupId, friendlyURL);
 	}
 
 	@Override
@@ -866,6 +866,41 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		return mbCategoryPersistence.update(category);
 	}
 
+	private String _getMBCategoryFriendlyURL(
+		long groupId, long categoryId, String name) {
+
+		if (Validator.isNull(name)) {
+			return String.valueOf(categoryId);
+		}
+		else {
+			name = StringUtil.toLowerCase(name.trim());
+
+			if (Validator.isNull(name) || Validator.isNumber(name)) {
+				name = String.valueOf(categoryId);
+			}
+			else {
+				name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+					name);
+			}
+
+			name = ModelHintsUtil.trimString(
+				MBCategory.class.getName(), "friendlyURL", name);
+		}
+
+		String friendlyURL = name;
+
+		MBCategory mbCategory = mbCategoryPersistence.fetchByG_F(
+			groupId, friendlyURL);
+
+		for (int i = 1; mbCategory != null; i++) {
+			friendlyURL = name + StringPool.DASH + i;
+
+			mbCategory = mbCategoryPersistence.fetchByG_F(groupId, friendlyURL);
+		}
+
+		return friendlyURL;
+	}
+
 	private long _getParentCategoryId(long groupId, long parentCategoryId) {
 		if ((parentCategoryId !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
@@ -918,44 +953,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 
 		return parentCategoryId;
-	}
-
-	private String _getUniqueUrlCategory(
-		long groupId, long categoryId, String name) {
-
-		String urlSubject;
-
-		if (Validator.isNull(name)) {
-			urlSubject = String.valueOf(categoryId);
-		}
-		else {
-			name = StringUtil.toLowerCase(name.trim());
-
-			if (Validator.isNull(name) || Validator.isNumber(name)) {
-				name = String.valueOf(categoryId);
-			}
-			else {
-				name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
-					name);
-			}
-
-			urlSubject = ModelHintsUtil.trimString(
-				MBCategory.class.getName(), "urlCategory", name);
-		}
-
-		String uniqueUrlSubject = urlSubject;
-
-		MBCategory mbCategory = mbCategoryPersistence.fetchByG_UC(
-			groupId, uniqueUrlSubject);
-
-		for (int i = 1; mbCategory != null; i++) {
-			uniqueUrlSubject = urlSubject + StringPool.DASH + i;
-
-			mbCategory = mbCategoryPersistence.fetchByG_UC(
-				groupId, uniqueUrlSubject);
-		}
-
-		return uniqueUrlSubject;
 	}
 
 	private void _mergeCategories(MBCategory fromCategory, long toCategoryId)

@@ -102,11 +102,13 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		mbCategoryLocalService.deleteCategory(categoryId);
 	}
 
-	public MBCategory fetchMBMessageByUrlCategory(long groupId, String name)
+	public MBCategory fetchMBCategoryByFriendlyURL(
+			long groupId, String friendlyURL)
 		throws PortalException {
 
 		MBCategory mbCategory =
-			mbCategoryLocalService.fetchMBCategoryByUrlSubject(groupId, name);
+			mbCategoryLocalService.fetchMBCategoryByFriendlyURL(
+				groupId, friendlyURL);
 
 		if (mbCategory == null) {
 			return null;

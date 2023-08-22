@@ -64,9 +64,9 @@
 
 		<column name="parentCategoryId" parent-container-model="true" type="long" />
 		<column name="name" type="String" uad-nonanonymizable="true" />
-		<column name="urlCategory" type="String" uad-nonanonymizable="true" />
 		<column name="description" type="String" uad-nonanonymizable="true" />
 		<column name="displayStyle" type="String" />
+		<column name="friendlyURL" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -92,9 +92,9 @@
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="parentCategoryId" />
 		</finder>
-		<finder name="G_UC" return-type="MBCategory" unique="true">
+		<finder name="G_F" return-type="MBCategory" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="urlCategory" />
+			<finder-column name="friendlyURL" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />

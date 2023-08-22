@@ -24,7 +24,16 @@ public class PatcherUtil {
 		return _INSTALLED_PATCH_NAMES;
 	}
 
-	private static Properties _getProperties() {
+	private static final String[] _INSTALLED_PATCH_NAMES;
+
+	private static final String _PATCHER_PROPERTIES = "patcher.properties";
+
+	private static final String _PROPERTY_INSTALLED_PATCHES =
+		"installed.patches";
+
+	private static final Log _log = LogFactoryUtil.getLog(PatcherUtil.class);
+
+	static {
 		Properties properties = new Properties();
 
 		ClassLoader classLoader = PatcherUtil.class.getClassLoader();
@@ -46,21 +55,6 @@ public class PatcherUtil {
 				_log.warn(ioException);
 			}
 		}
-
-		return properties;
-	}
-
-	private static final String[] _INSTALLED_PATCH_NAMES;
-
-	private static final String _PATCHER_PROPERTIES = "patcher.properties";
-
-	private static final String _PROPERTY_INSTALLED_PATCHES =
-		"installed.patches";
-
-	private static final Log _log = LogFactoryUtil.getLog(PatcherUtil.class);
-
-	static {
-		Properties properties = _getProperties();
 
 		_INSTALLED_PATCH_NAMES = StringUtil.split(
 			properties.getProperty(_PROPERTY_INSTALLED_PATCHES));

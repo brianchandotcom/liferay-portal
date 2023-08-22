@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.internal.SearchPermissionFieldContributorRegistry;
+import com.liferay.portal.search.internal.SearchPermissionFieldContributorRegistryUtil;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
 
@@ -95,7 +95,7 @@ public class SearchPermissionDocumentContributorImpl
 		String viewActionId, Document document) {
 
 		for (SearchPermissionFieldContributor searchPermissionFieldContributor :
-				_searchPermissionFieldContributorRegistry.
+				SearchPermissionFieldContributorRegistryUtil.
 					getSearchPermissionFieldContributors()) {
 
 			searchPermissionFieldContributor.contribute(
@@ -169,9 +169,5 @@ public class SearchPermissionDocumentContributorImpl
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private SearchPermissionFieldContributorRegistry
-		_searchPermissionFieldContributorRegistry;
 
 }

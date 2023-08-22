@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
@@ -103,10 +102,6 @@ public class SearchPermissionCheckerImplTest {
 			"_searchPermissionCheckerConfiguration",
 			_searchPermissionCheckerConfiguration);
 		ReflectionTestUtil.setFieldValue(
-			_searchPermissionCheckerImpl,
-			"_searchPermissionFieldContributorRegistry",
-			_searchPermissionFieldContributorRegistry);
-		ReflectionTestUtil.setFieldValue(
 			_searchPermissionCheckerImpl, "_userLocalService",
 			_userLocalService);
 
@@ -165,11 +160,6 @@ public class SearchPermissionCheckerImplTest {
 		_searchPermissionCheckerConfiguration = Mockito.mock(
 			SearchPermissionCheckerConfiguration.class);
 	private SearchPermissionCheckerImpl _searchPermissionCheckerImpl;
-
-	@Inject
-	private SearchPermissionFieldContributorRegistry
-		_searchPermissionFieldContributorRegistry;
-
 	private final User _user = Mockito.mock(User.class);
 	private final UserBag _userBag = Mockito.mock(UserBag.class);
 	private final UserLocalService _userLocalService = Mockito.mock(

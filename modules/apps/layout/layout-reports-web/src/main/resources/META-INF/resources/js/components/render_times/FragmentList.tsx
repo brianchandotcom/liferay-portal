@@ -106,7 +106,7 @@ export default function FragmentList({
 
 					return (
 						<div
-							className="c-p-2 d-flex flex-column page-audit__fragment"
+							className="c-p-2 page-audit__fragment position-relative"
 							key={itemId}
 							onMouseLeave={removeHighlightFromFragment}
 							onMouseOver={() =>
@@ -116,10 +116,10 @@ export default function FragmentList({
 								})
 							}
 						>
-							<span className="font-weight-bold position-relative">
-								{name}
+							<div className="align-items-center d-flex justify-content-between">
+								<span className="font-weight-bold">{name}</span>
 
-								<span className="page-audit__fragment__buttons">
+								<div className="page-audit__fragment__buttons">
 									<ClayButtonWithIcon
 										aria-label={sub(
 											Liferay.Language.get(
@@ -127,7 +127,9 @@ export default function FragmentList({
 											),
 											name
 										)}
-										displayType="unstyled"
+										borderless
+										className="position-relative"
+										displayType="secondary"
 										onBlur={removeHighlightFromFragment}
 										onClick={() =>
 											highlightFragment({
@@ -154,8 +156,9 @@ export default function FragmentList({
 												),
 												name
 											)}
-											className="c-ml-2"
-											displayType="unstyled"
+											borderless
+											className="c-ml-2 position-relative"
+											displayType="secondary"
 											onClick={() =>
 												window.open(
 													fragmentCollectionURL,
@@ -172,14 +175,14 @@ export default function FragmentList({
 											)}
 										/>
 									) : null}
-								</span>
-							</span>
+								</div>
+							</div>
 
-							<span>
+							<p className="mb-0">
 								{sub(Liferay.Language.get('x-ms'), renderTime)}
-							</span>
+							</p>
 
-							<span>
+							<p className="mb-0">
 								<ClayLabel displayType="secondary">
 									{getComponentType(fragment)}
 								</ClayLabel>
@@ -195,7 +198,7 @@ export default function FragmentList({
 										{Liferay.Language.get('cached')}
 									</ClayLabel>
 								)}
-							</span>
+							</p>
 						</div>
 					);
 				})}

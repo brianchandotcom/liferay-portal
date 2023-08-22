@@ -22,6 +22,7 @@ import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_WINNER,
+	STATUS_RUNNING,
 	statusToLabelDisplayType,
 } from '../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../util/toasts.es';
@@ -230,6 +231,16 @@ function Experiments({
 								</ClayDropDown.ItemList>
 							</ClayDropDown>
 						)}
+
+						{!experiment.editable &&
+							!experiment.status.value === STATUS_RUNNING && (
+								<ClayButton
+									displayType="secondary"
+									onClick={onDeleteSegmentsExperiment}
+								>
+									<ClayIcon symbol="trash" />
+								</ClayButton>
+							)}
 					</div>
 
 					<ClayLabel
@@ -293,6 +304,7 @@ function Experiments({
 					/>
 
 					<SegmentsExperimentsActions
+						onCreateSegmentsExperiment={onCreateSegmentsExperiment}
 						onEditSegmentsExperimentStatus={
 							onEditSegmentsExperimentStatus
 						}

@@ -79,6 +79,20 @@ export function openDeletionModal() {
 	};
 }
 
+export function closeTerminateModal() {
+	return {
+		payload: {active: false},
+		type: 'TERMINATE_EXPERIMENT',
+	};
+}
+
+export function openTerminateModal() {
+	return {
+		payload: {active: true},
+		type: 'TERMINATE_EXPERIMENT',
+	};
+}
+
 export function openEditionModal(payload) {
 	return {
 		payload,

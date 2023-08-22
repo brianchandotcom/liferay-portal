@@ -63,6 +63,14 @@ export function reducer(state, action) {
 				},
 			};
 
+		case 'TERMINATE_EXPERIMENT':
+			return {
+				...state,
+				terminateExperimentModal: {
+					active: action.payload.active,
+				},
+			};
+
 		case 'EDIT_EXPERIMENT':
 			return _editExperiment(state, action.payload);
 

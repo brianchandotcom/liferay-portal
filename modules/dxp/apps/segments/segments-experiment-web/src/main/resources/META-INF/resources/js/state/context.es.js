@@ -15,6 +15,7 @@ const DEFAULT_STATE = {
 	experimentHistory: [],
 	reviewExperimentModal: {active: false},
 	selectedExperienceId: null,
+	terminateExperimentModal: {active: false},
 	variants: [],
 };
 

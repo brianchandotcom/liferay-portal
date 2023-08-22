@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 	service = PortletConfigurationIcon.class
 )
-public class TemplatesPortletConfigurationIcon
+public class CTCollectionTemplatesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override

@@ -24,6 +24,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:learn:learn-api")
+	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal-template:portal-template-react-renderer-api")
 	compileOnly project(":apps:portal:portal-aop-api")

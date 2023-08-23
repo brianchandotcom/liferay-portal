@@ -311,8 +311,9 @@ public class CompanyIndexFactoryHelper {
 		catch (ElasticsearchConnectionNotInitializedException
 					elasticsearchConnectionNotInitializedException) {
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Skipping index settings contributor");
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping contributor " + indexConfigurationContributor);
 			}
 
 			return;

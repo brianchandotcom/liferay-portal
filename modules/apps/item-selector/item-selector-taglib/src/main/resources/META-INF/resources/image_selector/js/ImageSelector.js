@@ -131,7 +131,21 @@ const ImageSelector = ({
 	const handleFileSelect = (event) => {
 		rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
 
-		const file = event.fileList[0];
+		const fileList = event.fileList;
+
+		if (fileList.length > 1) {
+			setErrorMessage(
+				sub(
+					Liferay.Language.get(
+						'multiple-file-upload-is-not-supported-please-enter-a-single-file'
+					)
+				)
+			);
+
+			return;
+		}
+
+		const file = fileList[0];
 
 		if (file.get('size') > maxFileSize) {
 			setErrorMessage(

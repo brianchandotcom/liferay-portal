@@ -21,11 +21,11 @@ export default function ({
 
 	const searchContainer = Liferay.SearchContainer.get(`${namespace}entries`);
 
-	const searchContainerItems: HTMLElement[] = searchContainer.select
-		.getAllSelectedElements()
-		.getDOMNodes();
-
 	const searchContainerOnHandler = searchContainer.on('rowToggled', () => {
+		const searchContainerItems: HTMLElement[] = searchContainer.select
+			.getAllSelectedElements()
+			.getDOMNodes();
+
 		getOpener().Liferay.fire(itemSelectorSelectedEvent, {
 			data: {
 				returnType: itemSelectorReturnType,
@@ -41,7 +41,7 @@ export default function ({
 
 	return {
 		dispose() {
-			searchContainerOnHandler.dispose();
+			searchContainerOnHandler.detach();
 		},
 	};
 }

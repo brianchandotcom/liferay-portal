@@ -69,11 +69,6 @@ public class SXPServiceUpgradeStepRegistrator
 				DummyUpgradeProcess());
 
 		registry.register(
-			"1.3.0", "2.0.0",
-			new com.liferay.search.experiences.internal.upgrade.v2_0_0.
-				DummyUpgradeProcess());
-
-		registry.register(
 			"2.0.0", "2.0.1",
 			new com.liferay.search.experiences.internal.upgrade.v2_0_1.
 				SXPBlueprintUpgradeProcess());

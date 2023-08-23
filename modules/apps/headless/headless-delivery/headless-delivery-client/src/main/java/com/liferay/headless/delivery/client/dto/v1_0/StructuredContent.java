@@ -449,6 +449,35 @@ public class StructuredContent implements Cloneable, Serializable {
 
 	protected Integer numberOfComments;
 
+	public com.liferay.headless.delivery.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.headless.delivery.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.delivery.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected com.liferay.headless.delivery.client.permission.Permission[]
+		permissions;
+
 	public Double getPriority() {
 		return priority;
 	}

@@ -354,6 +354,28 @@ public class StructuredContentSerDes {
 			sb.append(structuredContent.getNumberOfComments());
 		}
 
+		if (structuredContent.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < structuredContent.getPermissions().length;
+				 i++) {
+
+				sb.append(structuredContent.getPermissions()[i]);
+
+				if ((i + 1) < structuredContent.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (structuredContent.getPriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -741,6 +763,15 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getNumberOfComments()));
 		}
 
+		if (structuredContent.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(structuredContent.getPermissions()));
+		}
+
 		if (structuredContent.getPriority() == null) {
 			map.put("priority", null);
 		}
@@ -1013,6 +1044,26 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.delivery.client.permission.Permission[]
+						permissionsArray = new
+						com.liferay.headless.delivery.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.delivery.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					structuredContent.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {

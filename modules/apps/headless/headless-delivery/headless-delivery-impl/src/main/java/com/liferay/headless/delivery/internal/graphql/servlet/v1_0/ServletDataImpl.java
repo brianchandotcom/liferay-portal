@@ -2521,11 +2521,6 @@ public class ServletDataImpl implements ServletData {
 							MessageBoardMessageResourceImpl.class,
 							"getMessageBoardMessagePermissionsPage"));
 					put(
-						"query#StructuredContent.permissions",
-						new ObjectValuePair<>(
-							StructuredContentResourceImpl.class,
-							"getStructuredContentPermissionsPage"));
-					put(
 						"query#KnowledgeBaseArticle.permissions",
 						new ObjectValuePair<>(
 							KnowledgeBaseArticleResourceImpl.class,

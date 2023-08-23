@@ -295,6 +295,7 @@ interface ObjectRelationship {
 	objectRelationshipId: number;
 	parameterObjectFieldName?: string;
 	reverse: boolean;
+	treeEdge: boolean;
 	type: ObjectRelationshipType;
 }
 

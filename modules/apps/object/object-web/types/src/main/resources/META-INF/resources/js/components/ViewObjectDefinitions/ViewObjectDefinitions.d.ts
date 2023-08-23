@@ -19,6 +19,7 @@ export declare type ViewObjectDefinitionsModals = {
 	bindToRootObject: boolean;
 	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
+	deletionNotAllowed: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
 	unbindFromRootObject: boolean;

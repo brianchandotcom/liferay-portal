@@ -73,6 +73,7 @@ interface ObjectRelationship {
 	objectRelationshipId: number;
 	parameterObjectFieldId?: number;
 	reverse: boolean;
+	treeEdge: boolean;
 	type: ObjectRelationshipType;
 }
 declare type RecipientType = 'role' | 'term' | 'user';

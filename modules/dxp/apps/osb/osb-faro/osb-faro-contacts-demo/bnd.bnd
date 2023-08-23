@@ -8,6 +8,7 @@ Import-Package:\
 	\
 	!org.yaml.snakeyaml.*,\
 	\
+	com.liferay.petra.function.transform;version="[1.2.0,9999.0.0)",\
 	com.liferay.portal.kernel.json;version="[12.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.log;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.model;version="[29.0.0,9999.0.0)",\

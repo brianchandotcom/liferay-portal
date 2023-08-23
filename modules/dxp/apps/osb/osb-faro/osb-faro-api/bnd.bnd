@@ -9,6 +9,10 @@ Export-Package:\
 	com.liferay.osb.faro.service.persistence,\
 	com.liferay.osb.faro.util
 Import-Package:\
+	com.liferay.petra.function.transform;version="[1.2.0,9999.0.0)",\
+	com.liferay.petra.sql.dsl;version="[1.0.0,9999.0.0)",\
+	com.liferay.petra.sql.dsl.base;version="[1.0.0,9999.0.0)",\
+	com.liferay.petra.sql.dsl.query;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.annotation;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.bean;version="[1.0.0,9999.0.0)",\
 	com.liferay.portal.kernel.dao.orm;version="[12.0.0,9999.0.0)",\

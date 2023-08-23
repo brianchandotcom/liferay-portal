@@ -862,8 +862,9 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				BigDecimal.ZERO, null, serviceContext);
 		}
 		else {
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price,
+			_commercePriceEntryLocalService.updatePricingInfo(
+				commercePriceEntry.getCommercePriceEntryId(),
+				commercePriceEntry.isBulkPricing(), price,
 				commercePriceEntry.isPriceOnApplication(), BigDecimal.ZERO,
 				null, serviceContext);
 		}

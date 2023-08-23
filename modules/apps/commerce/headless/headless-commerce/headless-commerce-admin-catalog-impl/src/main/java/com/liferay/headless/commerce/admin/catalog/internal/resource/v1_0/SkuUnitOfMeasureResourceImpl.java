@@ -307,8 +307,9 @@ public class SkuUnitOfMeasureResourceImpl
 				cpInstanceUnitOfMeasure.getKey());
 
 		if (commercePriceEntry != null) {
-			_commercePriceEntryService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price,
+			_commercePriceEntryService.updatePricingInfo(
+				commercePriceEntry.getCommercePriceEntryId(),
+				commercePriceEntry.isBulkPricing(), price,
 				commercePriceEntry.isPriceOnApplication(),
 				commercePriceEntry.getPromoPrice(),
 				cpInstanceUnitOfMeasure.getKey(),

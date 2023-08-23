@@ -420,8 +420,9 @@ public class SkuUtil {
 				null, serviceContext);
 		}
 		else {
-			commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price,
+			commercePriceEntryLocalService.updatePricingInfo(
+				commercePriceEntry.getCommercePriceEntryId(),
+				commercePriceEntry.isBulkPricing(), price,
 				commercePriceEntry.isPriceOnApplication(), null, null,
 				serviceContext);
 		}

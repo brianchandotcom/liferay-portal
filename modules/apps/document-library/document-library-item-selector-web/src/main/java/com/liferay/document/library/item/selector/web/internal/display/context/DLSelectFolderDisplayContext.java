@@ -233,27 +233,12 @@ public class DLSelectFolderDisplayContext {
 				return getFolderName();
 			}
 		).put(
-			"repositoryid",
-			() -> {
-				if (folder != null) {
-					return folder.getRepositoryId();
-				}
-
-				return getRepositoryId();
-			}
+			"repositoryid", _getRepositoryId(folder)
 		).put(
 			"repositoryname",
 			() -> {
-				long repositoryId;
-
-				if (folder != null) {
-					repositoryId = folder.getRepositoryId();
-				}
-				else {
-					repositoryId = getRepositoryId();
-				}
-
-				Group group = GroupServiceUtil.getGroup(repositoryId);
+				Group group = GroupServiceUtil.getGroup(
+					_getRepositoryId(folder));
 
 				return group.getDescriptiveName(_themeDisplay.getLocale());
 			}
@@ -317,6 +302,14 @@ public class DLSelectFolderDisplayContext {
 		).setParameter(
 			"showMountFolder", _isMountFolderVisible()
 		).buildRenderURL();
+	}
+
+	private long _getRepositoryId(Folder folder) {
+		if (folder != null) {
+			return folder.getRepositoryId();
+		}
+
+		return getRepositoryId();
 	}
 
 	private boolean _isAddFolderButtonVisible() {

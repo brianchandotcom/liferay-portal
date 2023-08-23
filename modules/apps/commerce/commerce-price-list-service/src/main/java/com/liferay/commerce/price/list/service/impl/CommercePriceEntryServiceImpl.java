@@ -378,6 +378,26 @@ public class CommercePriceEntryServiceImpl
 			externalReferenceCode, commercePriceEntry);
 	}
 
+	@Override
+	public CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
+			String unitOfMeasureKey, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryLocalService.getCommercePriceEntry(
+				commercePriceEntryId);
+
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceEntry.getCommercePriceListId(),
+			ActionKeys.UPDATE);
+
+		return commercePriceEntryLocalService.updatePricingInfo(
+			commercePriceEntryId, bulkPricing, price, priceOnApplication,
+			promoPrice, unitOfMeasureKey, serviceContext);
+	}
+
 	@Reference
 	private CommercePriceListFinder _commercePriceListFinder;
 

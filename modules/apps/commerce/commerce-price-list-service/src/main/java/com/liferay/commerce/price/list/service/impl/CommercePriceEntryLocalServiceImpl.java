@@ -771,6 +771,27 @@ public class CommercePriceEntryLocalServiceImpl
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}
 
+	@Override
+	public CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
+			String unitOfMeasureKey, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryLocalService.getCommercePriceEntry(
+				commercePriceEntryId);
+
+		commercePriceEntry.setBulkPricing(bulkPricing);
+		commercePriceEntry.setPrice(price);
+		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+		commercePriceEntry.setPromoPrice(promoPrice);
+		commercePriceEntry.setUnitOfMeasureKey(unitOfMeasureKey);
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
+
+		return commercePriceEntryPersistence.update(commercePriceEntry);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry updateStatus(

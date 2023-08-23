@@ -155,15 +155,13 @@ function ImportResultsSection({
 										{result.name}
 									</div>
 
-									{result.message ||
-										(defaultMessage && (
-											<div
-												className={`list-group-subtext ${cssClass}`}
-											>
-												{result.message ||
-													defaultMessage}
-											</div>
-										))}
+									{(result.message || defaultMessage) && (
+										<div
+											className={`list-group-subtext ${cssClass}`}
+										>
+											{result.message || defaultMessage}
+										</div>
+									)}
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol>

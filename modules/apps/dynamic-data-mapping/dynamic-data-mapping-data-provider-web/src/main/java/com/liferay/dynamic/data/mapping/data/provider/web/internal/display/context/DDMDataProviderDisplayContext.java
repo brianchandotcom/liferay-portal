@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.display.DDMDataProviderDisplay;
-import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.DDMDataProviderDisplayRegistry;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.display.context.helper.DDMDataProviderRequestHelper;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.search.DDMDataProviderSearch;
 import com.liferay.dynamic.data.mapping.data.provider.web.internal.security.permission.resource.DDMDataProviderInstancePermission;
@@ -40,6 +39,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -79,6 +80,10 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author Leonardo Barros
  */
@@ -86,7 +91,6 @@ public class DDMDataProviderDisplayContext {
 
 	public DDMDataProviderDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		DDMDataProviderDisplayRegistry ddmDataProviderDisplayRegistry,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		DDMDataProviderRegistry ddmDataProviderRegistry,
 		DDMFormRenderer ddmFormRenderer,
@@ -95,7 +99,6 @@ public class DDMDataProviderDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_ddmDataProviderDisplayRegistry = ddmDataProviderDisplayRegistry;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 		_ddmDataProviderRegistry = ddmDataProviderRegistry;
 		_ddmFormRenderer = ddmFormRenderer;
@@ -644,8 +647,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	private DDMDataProviderDisplay _getDDMDataProviderDisplay() {
-		return _ddmDataProviderDisplayRegistry.getDDMDataProviderDisplay(
-			_getRefererPortletName());
+		return _serviceTrackerMap.getService(_getRefererPortletName());
 	}
 
 	private Set<String> _getDDMDataProviderTypes() {
@@ -753,8 +755,19 @@ public class DDMDataProviderDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
-	private final DDMDataProviderDisplayRegistry
-		_ddmDataProviderDisplayRegistry;
+	private static final ServiceTrackerMap<String, DDMDataProviderDisplay>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			DDMDataProviderDisplayContext.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMDataProviderDisplay.class, "javax.portlet.name");
+	}
+
 	private DDMDataProviderInstance _ddmDataProviderInstance;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;

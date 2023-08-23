@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class TaskRunRepository extends BaseEntityRepository<TaskRun> {
 
 	@Override
-	public TaskRunDALO getEntityDALO() {
+	public TaskRunDALO getEntityDefinitionDALO() {
 		return _taskRunDALO;
 	}
 

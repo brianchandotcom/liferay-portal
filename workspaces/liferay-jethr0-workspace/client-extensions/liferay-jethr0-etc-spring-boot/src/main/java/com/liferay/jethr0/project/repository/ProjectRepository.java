@@ -49,7 +49,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	}
 
 	@Override
-	public ProjectDALO getEntityDALO() {
+	public ProjectDALO getEntityDefinitionDALO() {
 		return _projectDALO;
 	}
 

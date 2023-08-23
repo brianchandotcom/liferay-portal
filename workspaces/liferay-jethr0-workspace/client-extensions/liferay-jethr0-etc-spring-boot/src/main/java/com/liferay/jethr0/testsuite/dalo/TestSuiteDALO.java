@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.testsuite.dalo;
 
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.testsuite.TestSuiteFactory;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TestSuiteDALO extends BaseEntityDALO<TestSuite> {
+public class TestSuiteDALO extends BaseEntityDefinitionDALO<TestSuite> {
 
 	@Override
 	protected EntityFactory<TestSuite> getEntityFactory() {

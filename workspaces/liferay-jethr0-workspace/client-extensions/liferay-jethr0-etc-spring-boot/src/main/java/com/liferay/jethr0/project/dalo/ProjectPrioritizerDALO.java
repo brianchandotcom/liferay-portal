@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project.dalo;
 
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
@@ -17,7 +17,8 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerDALO extends BaseEntityDALO<ProjectPrioritizer> {
+public class ProjectPrioritizerDALO
+	extends BaseEntityDefinitionDALO<ProjectPrioritizer> {
 
 	@Override
 	protected EntityFactory<ProjectPrioritizer> getEntityFactory() {

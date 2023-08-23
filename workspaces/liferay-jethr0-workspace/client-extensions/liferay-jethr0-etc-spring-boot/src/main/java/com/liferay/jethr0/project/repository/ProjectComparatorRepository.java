@@ -77,7 +77,7 @@ public class ProjectComparatorRepository
 	}
 
 	@Override
-	public ProjectComparatorDALO getEntityDALO() {
+	public ProjectComparatorDALO getEntityDefinitionDALO() {
 		return _projectComparatorDALO;
 	}
 

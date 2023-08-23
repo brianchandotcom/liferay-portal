@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.gitbranch.dalo;
 
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.gitbranch.GitBranchFactory;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitBranchDALO extends BaseEntityDALO<GitBranch> {
+public class GitBranchDALO extends BaseEntityDefinitionDALO<GitBranch> {
 
 	@Override
 	protected EntityFactory<GitBranch> getEntityFactory() {

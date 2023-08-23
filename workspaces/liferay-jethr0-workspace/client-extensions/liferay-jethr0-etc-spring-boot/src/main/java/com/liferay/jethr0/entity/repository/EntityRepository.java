@@ -6,7 +6,7 @@
 package com.liferay.jethr0.entity.repository;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.entity.dalo.EntityDALO;
+import com.liferay.jethr0.entity.dalo.EntityDefinitionDALO;
 
 import java.util.Set;
 
@@ -27,7 +27,7 @@ public interface EntityRepository<T extends Entity> {
 
 	public T getById(long id);
 
-	public EntityDALO<T> getEntityDALO();
+	public EntityDefinitionDALO<T> getEntityDefinitionDALO();
 
 	public void initialize();
 

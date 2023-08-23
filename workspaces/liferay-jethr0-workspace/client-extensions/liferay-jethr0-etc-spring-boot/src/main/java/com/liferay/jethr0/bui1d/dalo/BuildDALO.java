@@ -7,7 +7,7 @@ package com.liferay.jethr0.bui1d.dalo;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.BuildFactory;
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildDALO extends BaseEntityDALO<Build> {
+public class BuildDALO extends BaseEntityDefinitionDALO<Build> {
 
 	@Override
 	protected EntityFactory<Build> getEntityFactory() {

@@ -45,7 +45,7 @@ public class GitBranchRepository extends BaseEntityRepository<GitBranch> {
 	}
 
 	@Override
-	public GitBranchDALO getEntityDALO() {
+	public GitBranchDALO getEntityDefinitionDALO() {
 		return _gitBranchDALO;
 	}
 

@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.dalo.BuildRunDALO;
 import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsDALO;
 import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.entity.dalo.EntityDALO;
+import com.liferay.jethr0.entity.dalo.EntityDefinitionDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
 import java.util.HashSet;
@@ -60,7 +60,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 	}
 
 	@Override
-	public EntityDALO<BuildRun> getEntityDALO() {
+	public EntityDefinitionDALO<BuildRun> getEntityDefinitionDALO() {
 		return _buildRunDALO;
 	}
 

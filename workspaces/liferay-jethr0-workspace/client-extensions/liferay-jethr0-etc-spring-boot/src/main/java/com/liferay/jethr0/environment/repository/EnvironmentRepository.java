@@ -45,7 +45,7 @@ public class EnvironmentRepository extends BaseEntityRepository<Environment> {
 	}
 
 	@Override
-	public EnvironmentDALO getEntityDALO() {
+	public EnvironmentDALO getEntityDefinitionDALO() {
 		return _environmentDALO;
 	}
 

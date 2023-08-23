@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.task.dalo;
 
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.task.run.TaskRun;
 import com.liferay.jethr0.task.run.TaskRunFactory;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskRunDALO extends BaseEntityDALO<TaskRun> {
+public class TaskRunDALO extends BaseEntityDefinitionDALO<TaskRun> {
 
 	@Override
 	protected EntityFactory<TaskRun> getEntityFactory() {

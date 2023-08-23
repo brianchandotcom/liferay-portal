@@ -36,8 +36,8 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Michael Hashimoto
  */
 @Configuration
-public abstract class BaseEntityDALO<T extends Entity>
-	implements EntityDALO<T> {
+public abstract class BaseEntityDefinitionDALO<T extends Entity>
+	implements EntityDefinitionDALO<T> {
 
 	@Override
 	public T create(JSONObject jsonObject) {

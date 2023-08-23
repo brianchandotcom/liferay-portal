@@ -66,7 +66,7 @@ public class TaskRepository extends BaseEntityRepository<Task> {
 	}
 
 	@Override
-	public TaskDALO getEntityDALO() {
+	public TaskDALO getEntityDefinitionDALO() {
 		return _taskDALO;
 	}
 

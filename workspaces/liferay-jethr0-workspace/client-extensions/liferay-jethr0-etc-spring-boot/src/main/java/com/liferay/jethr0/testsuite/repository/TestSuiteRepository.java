@@ -45,7 +45,7 @@ public class TestSuiteRepository extends BaseEntityRepository<TestSuite> {
 	}
 
 	@Override
-	public TestSuiteDALO getEntityDALO() {
+	public TestSuiteDALO getEntityDefinitionDALO() {
 		return _testSuiteDALO;
 	}
 

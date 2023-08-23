@@ -6,7 +6,7 @@
 package com.liferay.jethr0.entity.repository;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.entity.dalo.EntityDALO;
+import com.liferay.jethr0.entity.dalo.EntityDefinitionDALO;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,9 +24,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	@Override
 	public T add(JSONObject jsonObject) {
-		EntityDALO<T> entityDALO = getEntityDALO();
+		EntityDefinitionDALO<T> entityDefinitionDALO =
+			getEntityDefinitionDALO();
 
-		T entity = entityDALO.create(jsonObject);
+		T entity = entityDefinitionDALO.create(jsonObject);
 
 		addAll(Collections.singleton(entity));
 
@@ -48,11 +49,12 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		entities.removeAll(Collections.singleton(null));
 
-		EntityDALO<T> entityDALO = getEntityDALO();
+		EntityDefinitionDALO<T> entityDefinitionDALO =
+			getEntityDefinitionDALO();
 
 		for (T entity : entities) {
 			if (entity.getId() == 0) {
-				entity = entityDALO.create(entity);
+				entity = entityDefinitionDALO.create(entity);
 			}
 
 			_entitiesMap.put(entity.getId(), entity);
@@ -73,9 +75,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	@Override
 	public void initialize() {
-		EntityDALO<T> entityDALO = getEntityDALO();
+		EntityDefinitionDALO<T> entityDefinitionDALO =
+			getEntityDefinitionDALO();
 
-		addAll(entityDALO.getAll());
+		addAll(entityDefinitionDALO.getAll());
 	}
 
 	public void initializeRelationships() {
@@ -89,12 +92,13 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		entities.removeAll(Collections.singleton(null));
 
-		EntityDALO<T> entityDALO = getEntityDALO();
+		EntityDefinitionDALO<T> entityDefinitionDALO =
+			getEntityDefinitionDALO();
 
 		for (T entity : entities) {
 			_entitiesMap.remove(entity.getId());
 
-			entityDALO.delete(entity);
+			entityDefinitionDALO.delete(entity);
 		}
 	}
 
@@ -109,9 +113,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 			throw new RuntimeException("Unable to update entity");
 		}
 
-		EntityDALO<T> entityDALO = getEntityDALO();
+		EntityDefinitionDALO<T> entityDefinitionDALO =
+			getEntityDefinitionDALO();
 
-		entity = entityDALO.update(entity);
+		entity = entityDefinitionDALO.update(entity);
 
 		_entitiesMap.put(entity.getId(), entity);
 

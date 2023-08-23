@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.jenkins.dalo;
 
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeFactory;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsNodeDALO extends BaseEntityDALO<JenkinsNode> {
+public class JenkinsNodeDALO extends BaseEntityDefinitionDALO<JenkinsNode> {
 
 	@Override
 	protected EntityFactory<JenkinsNode> getEntityFactory() {

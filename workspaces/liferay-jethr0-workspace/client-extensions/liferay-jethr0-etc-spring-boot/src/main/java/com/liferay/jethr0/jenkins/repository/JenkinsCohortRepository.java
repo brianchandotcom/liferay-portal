@@ -50,7 +50,7 @@ public class JenkinsCohortRepository
 	}
 
 	@Override
-	public JenkinsCohortDALO getEntityDALO() {
+	public JenkinsCohortDALO getEntityDefinitionDALO() {
 		return _jenkinsCohortDALO;
 	}
 

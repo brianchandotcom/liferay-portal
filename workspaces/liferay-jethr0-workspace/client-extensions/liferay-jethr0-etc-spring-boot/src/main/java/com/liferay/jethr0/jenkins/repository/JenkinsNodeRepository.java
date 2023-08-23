@@ -170,7 +170,7 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 	}
 
 	@Override
-	public JenkinsNodeDALO getEntityDALO() {
+	public JenkinsNodeDALO getEntityDefinitionDALO() {
 		return _jenkinsNodeDALO;
 	}
 

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project.dalo;
 
-import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
+import com.liferay.jethr0.entity.dalo.BaseEntityDefinitionDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectFactory;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectDALO extends BaseEntityDALO<Project> {
+public class ProjectDALO extends BaseEntityDefinitionDALO<Project> {
 
 	public Set<Project> getProjectsByState(Project.State... states) {
 		Set<Project> projects = new HashSet<>();

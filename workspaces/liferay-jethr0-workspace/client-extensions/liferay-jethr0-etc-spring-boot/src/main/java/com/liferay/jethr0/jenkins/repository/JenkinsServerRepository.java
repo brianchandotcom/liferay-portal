@@ -112,7 +112,7 @@ public class JenkinsServerRepository
 	}
 
 	@Override
-	public JenkinsServerDALO getEntityDALO() {
+	public JenkinsServerDALO getEntityDefinitionDALO() {
 		return _jenkinsServerDALO;
 	}
 

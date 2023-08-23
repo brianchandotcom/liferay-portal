@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.dalo.BuildParameterDALO;
 import com.liferay.jethr0.bui1d.dalo.BuildToBuildParametersDALO;
 import com.liferay.jethr0.bui1d.parameter.BuildParameter;
-import com.liferay.jethr0.entity.dalo.EntityDALO;
+import com.liferay.jethr0.entity.dalo.EntityDefinitionDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
 import java.util.HashSet;
@@ -59,7 +59,7 @@ public class BuildParameterRepository
 	}
 
 	@Override
-	public EntityDALO<BuildParameter> getEntityDALO() {
+	public EntityDefinitionDALO<BuildParameter> getEntityDefinitionDALO() {
 		return _buildParameterDALO;
 	}
 

@@ -46,7 +46,7 @@ public class ProjectPrioritizerRepository
 	}
 
 	@Override
-	public ProjectPrioritizerDALO getEntityDALO() {
+	public ProjectPrioritizerDALO getEntityDefinitionDALO() {
 		return _projectPrioritizerDALO;
 	}
 

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Objects;
 
@@ -215,7 +216,8 @@ public class GetCollectionWarningMessageCheckMVCResourceCommand
 		throws Exception {
 
 		if (_isPaginated(httpServletRequest, themeDisplay) ||
-			(_getTotalCount(httpServletRequest, layoutObjectReference) < 200)) {
+			(_getTotalCount(httpServletRequest, layoutObjectReference) <
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
 
 			return false;
 		}

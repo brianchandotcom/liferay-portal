@@ -25,6 +25,7 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -177,6 +178,23 @@ public class TaxonomyCategoryResourceTest
 			Http.Method.GET);
 
 		Assert.assertNotNull(jsonObject.get("taxonomyCategoryUsageCount"));
+
+		_addTaxonomyCategoryWithParentTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomTaxonomyCategory());
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"headless-admin-taxonomy/v1.0/taxonomy-categories/",
+				postTaxonomyCategory.getId(), "/taxonomy-categories",
+				"?nestedFields=taxonomyCategoryUsageCount"),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = (JSONArray)jsonObject.get("items");
+
+		JSONObject itemJSONObject = (JSONObject)itemsJSONArray.get(0);
+
+		Assert.assertNotNull(itemJSONObject.get("taxonomyCategoryUsageCount"));
 	}
 
 	@Override

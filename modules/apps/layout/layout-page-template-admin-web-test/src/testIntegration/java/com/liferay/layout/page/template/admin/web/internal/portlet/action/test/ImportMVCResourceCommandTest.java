@@ -6,7 +6,6 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -96,20 +95,20 @@ public class ImportMVCResourceCommandTest {
 		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
 			"importResults");
 
-		JSONArray ignoredJSONArray = importResultsJSONObject.getJSONArray(
-			LayoutsImporterResultEntry.Status.IGNORED.getLabel());
+		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
+			"error");
 
-		Assert.assertEquals(1, ignoredJSONArray.length());
+		Assert.assertEquals(1, invalidJSONArray.length());
 
 		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
-			LayoutsImporterResultEntry.Status.IMPORTED.getLabel());
+			"success");
 
 		Assert.assertEquals(2, importedJSONArray.length());
 
-		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
-			LayoutsImporterResultEntry.Status.INVALID.getLabel());
+		JSONArray ignoredJSONArray = importResultsJSONObject.getJSONArray(
+			"warning");
 
-		Assert.assertEquals(1, invalidJSONArray.length());
+		Assert.assertEquals(1, ignoredJSONArray.length());
 	}
 
 	private File _getFile() throws Exception {

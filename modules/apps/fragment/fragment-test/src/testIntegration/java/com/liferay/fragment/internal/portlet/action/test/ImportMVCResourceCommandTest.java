@@ -6,7 +6,6 @@
 package com.liferay.fragment.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -86,20 +85,20 @@ public class ImportMVCResourceCommandTest {
 		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
 			"importResults");
 
+		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
+			"error");
+
+		Assert.assertEquals(2, invalidJSONArray.length());
+
 		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
-			FragmentsImporterResultEntry.Status.IMPORTED.getLabel());
+			"success");
 
 		Assert.assertEquals(4, importedJSONArray.length());
 
 		JSONArray importedDraftJSONArray = importResultsJSONObject.getJSONArray(
-			FragmentsImporterResultEntry.Status.IMPORTED_DRAFT.getLabel());
+			"warning");
 
 		Assert.assertEquals(2, importedDraftJSONArray.length());
-
-		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
-			FragmentsImporterResultEntry.Status.INVALID.getLabel());
-
-		Assert.assertEquals(2, invalidJSONArray.length());
 	}
 
 	private File _getFile() throws Exception {

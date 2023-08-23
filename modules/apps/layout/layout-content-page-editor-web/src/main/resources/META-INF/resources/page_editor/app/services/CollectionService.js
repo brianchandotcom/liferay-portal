@@ -179,4 +179,35 @@ export default {
 			() => {}
 		);
 	},
+
+	/**
+	 * @param {object} options
+	 * @param {string} options.segmentsExperienceId
+	 * @param {string} options.layoutDataItemId,
+	 * @param {string} options.layoutObjectReference
+	 * @param {string} [options.classNameId]
+	 * @param {string} [options.classPK]
+	 * @returns {Promise<{warningMessage: string}>}
+	 */
+	getCollectionWarningMessage({
+		classNameId,
+		classPK,
+		layoutDataItemId,
+		layoutObjectReference,
+		segmentsExperienceId,
+	}) {
+		return serviceFetch(
+			config.getCollectionWarningMessageURL,
+			{
+				body: {
+					classNameId,
+					classPK,
+					itemId: layoutDataItemId,
+					layoutObjectReference,
+					segmentsExperienceId,
+				},
+			},
+			() => {}
+		);
+	},
 };

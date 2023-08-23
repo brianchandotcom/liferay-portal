@@ -6,16 +6,31 @@
 import ClayTable from '@clayui/table';
 import React from 'react';
 
-import entities from '../services/entity.js';
+import {Liferay} from '../services/liferay/liferay';
+
+let oAuth2Client;
+
+try {
+	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
+	);
+}
+catch (error) {
+	console.error(error);
+}
 
 function BuildQueue() {
 	const [data, setData] = React.useState(null);
 
-	projects()
-		.then((projects) => {
-			setData(projects);
-		})
-		.catch(() => setData(null));
+	React.useEffect(() => {
+		oAuth2Client
+			?.fetch('/build-queue')
+			.then((response) => response.text())
+			.then((data) => {
+				setData(JSON.parse(data));
+			})
+			.catch((error) => console.log(error));
+	}, []);
 
 	if (!data) {
 		return <div>Loading...</div>;
@@ -50,25 +65,6 @@ function BuildQueue() {
 			</ClayTable.Head>
 			<ClayTable.Body>
 				{data.map((project) => {
-					let completedBuilds = 0;
-					let queuedBuilds = 0;
-					let runningBuilds = 0;
-					let totalBuilds = 0;
-
-					for (const build of project.builds) {
-						if (build.state.key === 'completed') {
-							completedBuilds++;
-						}
-						else if (build.state.key === 'running') {
-							runningBuilds++;
-						}
-						else {
-							queuedBuilds++;
-						}
-
-						totalBuilds++;
-					}
-
 					return (
 						<ClayTable.Row key={project.id}>
 							<ClayTable.Cell headingCell>
@@ -91,13 +87,13 @@ function BuildQueue() {
 
 							<ClayTable.Cell>{project.type.name}</ClayTable.Cell>
 
-							<ClayTable.Cell>{queuedBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>{project.queuedBuilds}</ClayTable.Cell>
 
-							<ClayTable.Cell>{runningBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>{project.runningBuilds}</ClayTable.Cell>
 
-							<ClayTable.Cell>{completedBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>{project.completedBuilds}</ClayTable.Cell>
 
-							<ClayTable.Cell>{totalBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>{project.totalBuilds}</ClayTable.Cell>
 						</ClayTable.Row>
 					);
 				})}
@@ -105,28 +101,5 @@ function BuildQueue() {
 		</ClayTable>
 	);
 }
-
-const projects = async () => {
-	const projects = [];
-
-	await entities(
-		'projects',
-		"((state eq 'opened') or (state eq 'queued') or (state eq 'running'))",
-		'position:asc'
-	).then(async (data) => {
-		for (const project of data.items) {
-			await entities(
-				'builds',
-				"r_projectToBuilds_c_projectId eq '" + project.id + "'"
-			).then((data) => {
-				project.builds = data.items;
-			});
-
-			projects.push(project);
-		}
-	});
-
-	return projects;
-};
 
 export default BuildQueue;

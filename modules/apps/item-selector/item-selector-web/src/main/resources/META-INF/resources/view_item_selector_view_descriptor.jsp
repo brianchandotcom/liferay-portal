@@ -195,13 +195,124 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 	</liferay-ui:search-container>
 </clay:container-fluid>
 
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"itemSelectorReturnType", itemSelectorViewDescriptorRendererDisplayContext.getReturnType()
-		).put(
-			"itemSelectorSelectedEvent", itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName()
-		).build()
-	%>'
-	module='<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() ? "js/ViewItemSelectorViewDescriptorMultiple" : "js/ViewItemSelectorViewDescriptor" %>'
-/>
+<c:choose>
+	<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isMultipleSelection() %>">
+		<aui:script use="liferay-search-container">
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />entries'
+			);
+
+			searchContainer.on('rowToggled', (event) => {
+				var searchContainerItems = event.elements.allSelectedElements;
+
+				var arr = [];
+
+				searchContainerItems.each(function () {
+					var domElement = this.ancestor('li');
+
+					if (domElement == null) {
+						domElement = this.ancestor('tr');
+					}
+
+					if (domElement == null) {
+						domElement = this.ancestor('dd');
+					}
+
+					if (domElement != null) {
+						var itemValue = domElement.getDOM().dataset.value;
+
+						arr.push(itemValue);
+					}
+				});
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
+					{
+						data: {
+							returnType:
+								'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
+							value: arr,
+						},
+					}
+				);
+			});
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<aui:script require="frontend-js-web/index as frontendJsWeb">
+			var {delegate} = frontendJsWeb;
+
+			var selectItem = () => {
+				var activeCards = document.querySelectorAll('.form-check-card.active');
+
+				if (activeCards.length) {
+					activeCards.forEach((card) => {
+						card.classList.remove('active');
+					});
+				}
+
+				var target = event.delegateTarget;
+
+				var newSelectedCard = target.closest('.form-check-card');
+
+				if (newSelectedCard) {
+					newSelectedCard.classList.add('active');
+				}
+
+				var domElement = target.closest('li');
+
+				if (domElement == null) {
+					domElement = target.closest('tr');
+				}
+
+				if (domElement == null) {
+					domElement = target.closest('dd');
+				}
+
+				var itemValue = '';
+
+				if (domElement != null) {
+					itemValue = domElement.dataset.value;
+				}
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= itemSelectorViewDescriptorRendererDisplayContext.getItemSelectedEventName() %>',
+					{
+						data: {
+							returnType:
+								'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
+							value: itemValue,
+						},
+					}
+				);
+			};
+
+			var onClickHandler = delegate(
+				document.querySelector('#<portlet:namespace />entriesContainer'),
+				'click',
+				'.entry',
+				(event) => {
+					selectItem();
+				}
+			);
+
+			var onKeydownHandler = delegate(
+				document.querySelector('#<portlet:namespace />entriesContainer'),
+				'keydown',
+				'.entry',
+				(event) => {
+					if (event.code === 'Enter') {
+						selectItem();
+					}
+				}
+			);
+
+			Liferay.on('destroyPortlet', function removeListener() {
+				onClickHandler.dispose();
+				onKeydownHandler.dispose();
+
+				Liferay.detach('destroyPortlet', removeListener);
+			});
+		</aui:script>
+	</c:otherwise>
+</c:choose>

@@ -5,5 +5,5 @@ liferay-ticket-etc-cron-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Ticket Etc Cron Oauth Application Headless Server
     scopes:
-        - C_Ticket.everything
+        - C_J3Y7Ticket.everything
     type: oAuthApplicationHeadlessServer

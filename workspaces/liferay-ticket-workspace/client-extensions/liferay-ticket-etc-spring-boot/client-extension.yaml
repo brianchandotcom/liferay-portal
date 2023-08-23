@@ -5,7 +5,7 @@ liferay-ticket-etc-spring-boot-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay Ticket Etc Spring Boot OAuth Application User Agent
     scopes:
-        - C_Ticket.everything
+        - C_J3Y7Ticket.everything
     type: oAuthApplicationUserAgent
 liferay-ticket-etc-spring-boot-object-action-ticket:
     name: Liferay Ticket Etc Spring Boot Object Action Ticket

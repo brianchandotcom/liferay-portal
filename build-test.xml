@@ -11222,6 +11222,10 @@ ${update.properties}</echo>
 		<prepare-gcs-store-configuration />
 	</target>
 
+	<target name="prepare-ibm-s3-configuration">
+		<prepare-ibm-s3-configuration />
+	</target>
+
 	<target name="prepare-log4j-ext-xml">
 		<var name="dialect.detector.log.level" value="INFO" />
 
@@ -11787,7 +11791,13 @@ dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
 		</if>
 
 		<if>
-			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<and>
+				<equals arg1="${ibm.store.enabled}" arg2="true" />
+				<not>
+					<equals arg1="${store.migration.test}" arg2="true" />
+				</not>
+			</and>
+
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
@@ -15669,7 +15679,14 @@ mail.send.blacklist=</echo>
 
 				<ant antfile="build-test-s3-store.xml" target="create-s3-bucket" />
 
-				<prepare-ibm-s3-configuration />
+				<if>
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+					<then>
+						<prepare-ibm-s3-configuration />
+					</then>
+				</if>
 			</then>
 		</if>
 

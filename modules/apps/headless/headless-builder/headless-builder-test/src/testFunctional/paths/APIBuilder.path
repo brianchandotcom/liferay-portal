@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXCLUDE_TOGGLE</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @id='autocomplete-exclude-applicationStatus']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FROM_DATE</td>
 	<td>//input[contains(@id,'from-dateModified') and @placeholder='yyyy-mm-dd']</td>
 	<td></td>
@@ -118,6 +123,11 @@
 <tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(text(),'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_IN_FILTER</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'Status')]</td>
 	<td></td>
 </tr>
 <tr>

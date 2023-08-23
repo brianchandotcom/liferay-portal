@@ -10,7 +10,6 @@ import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,22 +82,8 @@ public class NotificationTermEvaluatorTrackerImpl
 		return notificationTermEvaluators;
 	}
 
-	private final DefaultNotificationTermEvaluator
-		_defaultNotificationTermEvaluator =
-			new DefaultNotificationTermEvaluator();
-	private ServiceTrackerMap
-		<String,
-		 List
-			 <ServiceTrackerCustomizerFactory.ServiceWrapper
-				 <NotificationTermEvaluator>>> _serviceTrackerMap;
-
-	private static class DefaultNotificationTermEvaluator
-		implements NotificationTermEvaluator {
-
-		@Override
-		public String evaluate(Context context, Object object, String termName)
-			throws PortalException {
-
+	private static final NotificationTermEvaluator
+		_defaultNotificationTermEvaluator = (context, object, termName) -> {
 			if (!(object instanceof Map)) {
 				return termName;
 			}
@@ -106,8 +91,12 @@ public class NotificationTermEvaluatorTrackerImpl
 			Map<String, String> termValues = (Map<String, String>)object;
 
 			return termValues.get(termName);
-		}
+		};
 
-	}
+	private ServiceTrackerMap
+		<String,
+		 List
+			 <ServiceTrackerCustomizerFactory.ServiceWrapper
+				 <NotificationTermEvaluator>>> _serviceTrackerMap;
 
 }

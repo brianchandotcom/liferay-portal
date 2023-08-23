@@ -37,7 +37,8 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	public List<DropdownItem> getActionDropdownItems(
-		LayoutPageTemplateCollection layoutPageTemplateCollection, String tab) {
+		LayoutPageTemplateCollection layoutPageTemplateCollection,
+		String tabs1) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -60,7 +61,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								).setRedirect(
 									themeDisplay.getURLCurrent()
 								).setTabs1(
-									tab
+									tabs1
 								).setParameter(
 									"layoutPageTemplateCollectionId",
 									layoutPageTemplateCollection.
@@ -127,7 +128,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									PortletURLBuilder.createRenderURL(
 										_renderResponse
 									).setTabs1(
-										tab
+										tabs1
 									).buildString()
 								).setParameter(
 									"layoutPageTemplateCollectionId",

@@ -85,6 +85,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -552,15 +553,15 @@ public class ObjectDefinitionResourceImpl
 
 		List<ObjectField> objectFields = ListUtil.fromArray(
 			objectDefinition.getObjectFields());
+
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
-			ListUtil.copy(
+			new ArrayList<>(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
 		if (SystemUtil.allowManageSystemEntities()) {
 			objectFields.removeIf(
-				objectField ->
-					(objectField.getSystem() == null) ||
-					!objectField.getSystem());
+				objectField -> !GetterUtil.getBoolean(objectField.getSystem()));
+
 			serviceBuilderObjectFields.removeIf(
 				serviceBuilderObjectField ->
 					!serviceBuilderObjectField.isSystem() ||
@@ -568,9 +569,8 @@ public class ObjectDefinitionResourceImpl
 		}
 		else {
 			objectFields.removeIf(
-				objectField ->
-					(objectField.getSystem() != null) &&
-					objectField.getSystem());
+				objectField -> GetterUtil.getBoolean(objectField.getSystem()));
+
 			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
 		}
 

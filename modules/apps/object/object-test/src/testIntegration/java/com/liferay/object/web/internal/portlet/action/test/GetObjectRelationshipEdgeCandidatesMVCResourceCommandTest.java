@@ -59,19 +59,19 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 	@Test
 	public void testGetObjectRelationships() throws Exception {
 
-		// Object definition, hierarchical structure, not root
+		// Object definition, hierarchical structure, maximum height
 
 		Tree tree = TreeTestUtil.createTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		ObjectDefinition objectDefinitionAAAA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"AAAA", _objectDefinitionLocalService);
-
 		ObjectDefinition objectDefinitionAAA =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_AAA");
+
+		ObjectDefinition objectDefinitionAAAA =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"AAAA", _objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationshipAAA_AAAA =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -82,6 +82,15 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		Assert.assertEquals(
+			_jsonFactory.createJSONArray(
+			).toString(),
+			_getObjectRelationshipEdgeCandidatesJSONArray(
+				3, objectDefinitionAAAA.getObjectDefinitionId()
+			).toString());
+
+		// Object definition, hierarchical structure, not root
 
 		ObjectDefinition objectDefinitionAA =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -137,15 +146,6 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 			).toString(),
 			_getObjectRelationshipEdgeCandidatesJSONArray(
 				0, objectDefinitionAAAA.getObjectDefinitionId()
-			).toString());
-
-		// Object definition, hierarchical structure, maximum height
-
-		Assert.assertEquals(
-			_jsonFactory.createJSONArray(
-			).toString(),
-			_getObjectRelationshipEdgeCandidatesJSONArray(
-				3, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(

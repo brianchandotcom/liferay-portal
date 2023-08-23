@@ -11,7 +11,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {REQUIRED_MSG} from '../utils/constants';
 import CodeEditor, {SidebarCategory} from './CodeEditor/index';
-import {FieldBase} from './FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 export function ExpressionBuilder({
 	buttonDisabled,

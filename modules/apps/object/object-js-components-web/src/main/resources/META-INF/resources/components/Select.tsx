@@ -6,7 +6,7 @@
 import {ClaySelect} from '@clayui/form';
 import React from 'react';
 
-import {FieldBase} from './FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	disabled?: boolean;

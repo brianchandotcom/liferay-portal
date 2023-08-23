@@ -14,7 +14,7 @@ import ClayLayout from '@clayui/layout';
 import {ClassicEditor, IEditor} from 'frontend-editor-ckeditor-web';
 import React, {useEffect, useRef, useState} from 'react';
 
-import {FieldBase} from './FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 import './RichTextLocalized.scss';
 

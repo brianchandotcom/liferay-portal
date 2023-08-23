@@ -10,13 +10,12 @@ import {
 	AutoComplete,
 	Card,
 	CodeEditor,
-	InputLocalized,
 	RadioField,
 	SidebarCategory,
 	filterArrayByQuery,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
+import {InputLocalized, LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {TabProps} from './useObjectValidationForm';

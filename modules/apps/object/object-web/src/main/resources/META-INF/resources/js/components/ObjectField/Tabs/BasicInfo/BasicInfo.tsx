@@ -3,12 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	API,
-	Card,
-	Input,
-	InputLocalized,
-} from '@liferay/object-js-components-web';
+import {API, Card, Input} from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {updateFieldSettings} from '../../../../utils/fieldSettings';

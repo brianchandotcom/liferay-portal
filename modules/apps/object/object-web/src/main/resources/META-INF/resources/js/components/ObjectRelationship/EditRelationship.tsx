@@ -8,12 +8,12 @@ import {
 	API,
 	Card,
 	Input,
-	InputLocalized,
 	SidePanelForm,
 	SingleSelect,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {firstLetterUppercase} from '../../utils/string';

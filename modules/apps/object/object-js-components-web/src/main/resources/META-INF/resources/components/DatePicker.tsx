@@ -18,7 +18,7 @@ import {
 	generateDateConfigurations,
 	generateInputMask,
 } from '../utils/datetime';
-import {FieldBase} from './FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 interface DatePickerProps
 	extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {

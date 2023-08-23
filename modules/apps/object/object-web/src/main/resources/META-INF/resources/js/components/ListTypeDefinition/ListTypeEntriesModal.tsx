@@ -9,10 +9,10 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {
 	API,
 	Input,
-	InputLocalized,
 	REQUIRED_MSG,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 

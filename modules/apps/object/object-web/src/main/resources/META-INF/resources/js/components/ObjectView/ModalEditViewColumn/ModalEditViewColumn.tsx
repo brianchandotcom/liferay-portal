@@ -7,7 +7,8 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {Input, InputLocalized} from '@liferay/object-js-components-web';
+import {Input} from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React, {FormEvent, useState} from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';

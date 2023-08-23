@@ -7,12 +7,12 @@ import {
 	AutoComplete,
 	Card,
 	Input,
-	InputLocalized,
 	RadioField,
 	Toggle,
 	filterArrayByQuery,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {TriggerEventContainer} from './TriggerEventContainer';

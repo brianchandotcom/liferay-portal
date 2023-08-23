@@ -7,11 +7,11 @@ import ClayAlert from '@clayui/alert';
 import {
 	Card,
 	CustomItem,
-	InputLocalized,
 	SidebarCategory,
 	SingleSelect,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';

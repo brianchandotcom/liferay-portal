@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {ReactNode, cloneElement, useRef} from 'react';
 
-import {FieldBase} from '../FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 import './index.scss';
 

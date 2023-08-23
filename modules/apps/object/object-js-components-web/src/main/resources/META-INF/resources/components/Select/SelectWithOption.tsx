@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
 import './index.scss';
-import {FieldBase} from '../FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 type Item = {
 	label: string;

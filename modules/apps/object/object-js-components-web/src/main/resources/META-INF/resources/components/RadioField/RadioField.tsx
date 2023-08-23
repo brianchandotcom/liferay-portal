@@ -6,7 +6,7 @@
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import React, {ReactText} from 'react';
 
-import {FieldBase} from '../FieldBase';
+import { FieldBase } from 'frontend-js-components-web';
 
 interface RadioFieldProps {
 	defaultValue?: string;

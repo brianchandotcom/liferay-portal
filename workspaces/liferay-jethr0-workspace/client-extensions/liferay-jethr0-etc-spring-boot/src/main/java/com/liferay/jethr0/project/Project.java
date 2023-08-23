@@ -98,8 +98,9 @@ public interface Project extends Entity {
 
 	public enum State {
 
-		BLOCKED("blocked"), COMPLETED("completed"), OPENED("opened"),
-		QUEUED("queued"), RUNNING("running");
+		BLOCKED("blocked", "Blocked"), COMPLETED("completed", "Completed"),
+		OPENED("opened", "Opened"), QUEUED("queued", "Queued"),
+		RUNNING("running", "Running");
 
 		public static State get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));
@@ -110,15 +111,28 @@ public interface Project extends Entity {
 		}
 
 		public JSONObject getJSONObject() {
-			return new JSONObject("{\"key\": \"" + getKey() + "\"}");
+			JSONObject jsonObject = new JSONObject();
+
+			jsonObject.put(
+				"key", getKey()
+			).put(
+				"name", getName()
+			);
+
+			return jsonObject;
 		}
 
 		public String getKey() {
 			return _key;
 		}
 
-		private State(String key) {
+		public String getName() {
+			return _name;
+		}
+
+		private State(String key, String name) {
 			_key = key;
+			_name = name;
 		}
 
 		private static final Map<String, State> _states = new HashMap<>();
@@ -130,14 +144,17 @@ public interface Project extends Entity {
 		}
 
 		private final String _key;
+		private final String _name;
 
 	}
 
 	public enum Type {
 
-		DEFAULT_JOB("defaultJob"), MAINTENANCE_JOB("maintenanceJob"),
-		PULL_REQUEST_JOB("pullRequestJob"), UPSTREAM_JOB("upstreamJob"),
-		VERIFICATION_JOB("verificationJob");
+		DEFAULT_JOB("defaultJob", "Default Job"),
+		MAINTENANCE_JOB("maintenanceJob", "Maintenance Job"),
+		PULL_REQUEST_JOB("pullRequestJob", "Pull Request Job"),
+		UPSTREAM_JOB("upstreamJob", "Upstream Job"),
+		VERIFICATION_JOB("verificationJob", "Verification Job");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));
@@ -152,15 +169,28 @@ public interface Project extends Entity {
 		}
 
 		public JSONObject getJSONObject() {
-			return new JSONObject("{\"key\": \"" + getKey() + "\"}");
+			JSONObject jsonObject = new JSONObject();
+
+			jsonObject.put(
+				"key", getKey()
+			).put(
+				"name", getName()
+			);
+
+			return jsonObject;
 		}
 
 		public String getKey() {
 			return _key;
 		}
 
-		private Type(String key) {
+		public String getName() {
+			return _name;
+		}
+
+		private Type(String key, String name) {
 			_key = key;
+			_name = name;
 		}
 
 		private static final Map<String, Type> _types = new HashMap<>();
@@ -172,6 +202,7 @@ public interface Project extends Entity {
 		}
 
 		private final String _key;
+		private final String _name;
 
 	}
 

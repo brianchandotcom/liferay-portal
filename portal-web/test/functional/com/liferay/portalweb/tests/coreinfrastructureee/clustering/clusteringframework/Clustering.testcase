@@ -181,6 +181,57 @@ definition {
 		GogoShell.viewOutput(outputContent = "Liferay Portal");
 	}
 
+	@description = "This is a usecase for LPS-151178. Verify a category can be added to a document on a slave node."
+	@priority = 3
+	test CanAddCategoryToDocumentOnSlaveNode {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a category") {
+			JSONCategory.addVocabulary(
+				groupName = "Guest",
+				title = "Vocabulary Name 1");
+
+			JSONCategory.addCategory(
+				groupName = "Guest",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name 1");
+		}
+
+		task ("And given a document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest",
+				mimeType = "application/docx",
+				sourceFileName = "Document_1.docx");
+		}
+
+		task ("When the user clicks on the document from the slave node") {
+			User.loginPG(
+				nodePort = 9080,
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			DMNavigator.openDocumentsAndMediaAdmin(
+				baseURL = "http://localhost:9080",
+				siteURLKey = "guest");
+		}
+
+		task ("And adds the category to the document") {
+			LexiconCard.checkCardCheckbox(card = "DM Document Title");
+
+			DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit Categories");
+
+			DMDocument.editCategoryTags(categoryNameList = "Category Name 1");
+		}
+
+		task ("Then the category is saved on the document") {
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.viewCategoriesInfo(categoryNameList = "Category Name 1");
+		}
+	}
+
 	@description = "This is a use case for LPS-170924."
 	@priority = 5
 	test CanCreateVirtualInstanceWithClusterDBPartitioningAndLOLProperties {

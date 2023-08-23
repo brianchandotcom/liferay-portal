@@ -298,10 +298,6 @@
 	<bean class="com.liferay.social.kernel.service.permission.SocialActivityPermissionUtil" id="com.liferay.social.kernel.service.permission.SocialActivityPermissionUtil">
 		<property name="socialActivityPermission" ref="com.liferay.social.kernel.service.permission.SocialActivityPermission" />
 	</bean>
-	<bean class="com.liferay.portlet.social.service.permission.SocialRequestPermissionImpl" id="com.liferay.social.kernel.service.permission.SocialRequestPermission" />
-	<bean class="com.liferay.social.kernel.service.permission.SocialRequestPermissionUtil" id="com.liferay.social.kernel.service.permission.SocialRequestPermissionUtil">
-		<property name="socialRequestPermission" ref="com.liferay.social.kernel.service.permission.SocialRequestPermission" />
-	</bean>
 	<bean class="com.liferay.portlet.social.util.SocialConfigurationImpl" id="com.liferay.social.kernel.util.SocialConfiguration" />
 	<bean class="com.liferay.social.kernel.util.SocialConfigurationUtil" id="com.liferay.social.kernel.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.social.kernel.util.SocialConfiguration" />

@@ -6,7 +6,7 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import {getOpener, sub} from 'frontend-js-web';
+import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
@@ -48,9 +48,14 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 		setSearchActive(isSearchActive);
 	};
 
+	const handleSearchOnclickItem = () => {
+		console.log('click search item in move modal');
+	};
+
 	return (
 		<div className="container-fluid p-3">
 			<SearchField
+				handleOnclickItem={handleSearchOnclickItem}
 				handleSearchChange={handleSearchChange}
 				items={searchItems}
 			/>

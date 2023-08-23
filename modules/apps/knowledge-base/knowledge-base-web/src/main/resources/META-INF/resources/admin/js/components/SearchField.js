@@ -35,7 +35,7 @@ const highlithKeywordInText = (text, keyword) => {
 	);
 };
 
-const SearchResult = ({filteredItems, keyword}) => {
+const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
 	return filteredItems.length ? (
 		<ClayList role="list">
 			{filteredItems.map((item) => {
@@ -44,7 +44,8 @@ const SearchResult = ({filteredItems, keyword}) => {
 						<ClayLink
 							className="p-1"
 							displayType="secondary"
-							href={item.href}
+							href={handleOnclickItem ? '#' : item.href}
+							onClick={handleOnclickItem}
 						>
 							<ClayIcon
 								className="mr-2"
@@ -72,7 +73,11 @@ const SearchResult = ({filteredItems, keyword}) => {
 	);
 };
 
-export default function SearchField({handleSearchChange, items}) {
+export default function SearchField({
+	handleOnclickItem,
+	handleSearchChange,
+	items,
+}) {
 	const initialSearchInfo = {
 		filteredItems: [],
 		query: '',
@@ -145,6 +150,7 @@ export default function SearchField({handleSearchChange, items}) {
 			{searchActive && (
 				<SearchResult
 					filteredItems={searchInfo.filteredItems}
+					handleOnclickItem={handleOnclickItem}
 					keyword={searchInfo.query}
 				/>
 			)}

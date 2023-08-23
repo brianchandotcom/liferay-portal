@@ -26,20 +26,6 @@
 	],
 	"items": [
 		{
-			"actions": {
-				"get": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44302",
-					"method": "GET"
-				},
-				"permissions": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44302",
-					"method": "PATCH"
-				},
-				"update": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44302",
-					"method": "PUT"
-				}
-			},
 			"dateCreated": "2023-05-04T19:27:24Z",
 			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_PRIORITIES",
@@ -96,20 +82,6 @@
 			}
 		},
 		{
-			"actions": {
-				"get": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44303",
-					"method": "GET"
-				},
-				"permissions": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44303",
-					"method": "PATCH"
-				},
-				"update": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44303",
-					"method": "PUT"
-				}
-			},
 			"dateCreated": "2023-05-04T19:27:24Z",
 			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_RESOLUTIONS",
@@ -184,20 +156,6 @@
 			}
 		},
 		{
-			"actions": {
-				"get": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44304",
-					"method": "GET"
-				},
-				"permissions": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44304",
-					"method": "PATCH"
-				},
-				"update": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44304",
-					"method": "PUT"
-				}
-			},
 			"dateCreated": "2023-05-04T19:27:24Z",
 			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_REGIONS",
@@ -245,20 +203,6 @@
 			}
 		},
 		{
-			"actions": {
-				"get": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44305",
-					"method": "GET"
-				},
-				"permissions": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44305",
-					"method": "PATCH"
-				},
-				"update": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44305",
-					"method": "PUT"
-				}
-			},
 			"dateCreated": "2023-05-04T19:27:24Z",
 			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_STATUSES",
@@ -351,20 +295,6 @@
 			}
 		},
 		{
-			"actions": {
-				"get": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44315",
-					"method": "GET"
-				},
-				"permissions": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44315",
-					"method": "PATCH"
-				},
-				"update": {
-					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44315",
-					"method": "PUT"
-				}
-			},
 			"dateCreated": "2023-05-04T19:27:24Z",
 			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_TYPES",

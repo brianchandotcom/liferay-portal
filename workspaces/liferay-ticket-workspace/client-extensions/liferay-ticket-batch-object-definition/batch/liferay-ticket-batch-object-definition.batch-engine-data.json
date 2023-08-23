@@ -21,16 +21,6 @@
 	"items": [
 		{
 			"accountEntryRestricted": false,
-			"actions": {
-				"delete": {
-				},
-				"get": {
-				},
-				"permissions": {
-				},
-				"update": {
-				}
-			},
 			"active": true,
 			"defaultLanguageId": "en_US",
 			"enableCategorization": true,

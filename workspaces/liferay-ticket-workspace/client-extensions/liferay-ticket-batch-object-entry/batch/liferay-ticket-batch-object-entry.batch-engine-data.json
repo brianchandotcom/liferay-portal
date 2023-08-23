@@ -35,28 +35,6 @@
 	],
 	"items": [
 		{
-			"actions": {
-				"delete": {
-					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
-					"method": "DELETE"
-				},
-				"get": {
-					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
-					"method": "GET"
-				},
-				"permissions": {
-					"href": "http://localhost:8080/o/c/f4e4tickets/44547/permissions",
-					"method": "GET"
-				},
-				"replace": {
-					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
-					"method": "PUT"
-				},
-				"update": {
-					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
-					"method": "PATCH"
-				}
-			},
 			"creator": {
 				"additionalName": "",
 				"contentType": "UserAccount",

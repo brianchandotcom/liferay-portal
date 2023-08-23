@@ -613,6 +613,83 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-189070. TC3: Verify that the user can manage and invite Users when the “Manage Users” and the new “Invite User” permission were added."
+	@priority = 5
+	test AccountAdminCanManageAndInviteUserToAccount {
+		property custom.properties = "feature.flag.LPS-188798=true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: There is an Account Administrator assigned to a Business Account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Account Name",
+				accountRole = "Account Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("And: Update account admin role to include the new “Invite User” permission") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "INVITE_USER",
+				resourceName = "com.liferay.account.model.AccountEntry",
+				roleTitle = "Account Administrator",
+				roleType = "account");
+		}
+
+		task ("When: The Account Admin logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Then: Verify that the account admin user can manage and invite users to account") {
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			Account.goToEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Account Name");
+
+			Account.inviteUser(
+				accountName = "Account Name",
+				userEmailAddress = "test@liferay.com");
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			Account.goToEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Assign Users");
+
+			SelectFrame(
+				key_title = "Assign Users to Account Name",
+				locator1 = "IFrame#MODAL_ANY");
+
+			LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+		}
+	}
+
 	@description = "This test asserts that an Account Admin cannot add a user wtih an email domain that is blocked."
 	@priority = 4
 	test AccountAdminCannotAddUserWithBlockedDomain {

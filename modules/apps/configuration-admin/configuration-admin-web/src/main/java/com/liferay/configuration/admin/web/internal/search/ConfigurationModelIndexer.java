@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -14,10 +14,13 @@ import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderPro
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -34,6 +37,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.index.IndexStatusManager;
@@ -47,6 +52,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -171,6 +177,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		try {
+			_initialize();
+
 			Hits hits = doSearch(searchContext);
 
 			processHits(searchContext, hits);
@@ -371,6 +379,17 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		}
 	}
 
+	private static void _initialize(String osgiServiceIdentifier)
+		throws Exception {
+
+		ConfigurationModelIndexer configurationModelIndexer =
+			(ConfigurationModelIndexer)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
+
+		configurationModelIndexer._initialize();
+	}
+
 	private void _addLocalizedText(
 		Document document, ResourceBundleLoader resourceBundleLoader,
 		List<TranslationHelper> translationHelpers) {
@@ -453,6 +472,41 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			configurationModel.getFactoryPid());
 	}
 
+	private void _initialize() throws PortletException {
+		if (_initialized) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			if (_clusterMasterExecutor.isMaster()) {
+				initialize();
+			}
+			else {
+				NoticeableFuture<Void> noticeableFuture =
+					_clusterMasterExecutor.executeOnMaster(
+						new MethodHandler(
+							_initializeMethodKey,
+							_clusterConfigurationModelIndexer.
+								getOSGiServiceIdentifier()));
+
+				try {
+					noticeableFuture.get();
+				}
+				catch (Exception exception) {
+					throw new PortletException(
+						"Unable to initialize configuration model index",
+						exception);
+				}
+			}
+
+			_initialized = true;
+		}
+	}
+
 	private void _setUID(
 		Document document, ConfigurationModel configurationModel) {
 
@@ -464,7 +518,16 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationModelIndexer.class);
 
+	private static final MethodKey _initializeMethodKey = new MethodKey(
+		ConfigurationModelIndexer.class, "_initialize", String.class);
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ClusterConfigurationModelIndexer _clusterConfigurationModelIndexer;
+
+	@Reference
+	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
@@ -477,6 +540,8 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	private volatile boolean _initialized;
 
 	@Reference
 	private Language _language;

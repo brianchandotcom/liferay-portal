@@ -10,15 +10,12 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.Collection;
-
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,39 +39,6 @@ public class ClusterConfigurationModelIndexer
 		return ClusterConfigurationModelIndexer.class.getName();
 	}
 
-	public void initialize() throws PortletException {
-		if (_initialized) {
-			return;
-		}
-
-		synchronized (this) {
-			if (_initialized) {
-				return;
-			}
-
-			if (_clusterMasterExecutor.isMaster()) {
-				_bundleTracker = _configurationModelIndexer.initialize();
-			}
-			else {
-				NoticeableFuture<Void> noticeableFuture =
-					_clusterMasterExecutor.executeOnMaster(
-						new MethodHandler(
-							_initializeMethodKey, getOSGiServiceIdentifier()));
-
-				try {
-					noticeableFuture.get();
-				}
-				catch (Exception exception) {
-					throw new PortletException(
-						"Unable to initialize configuration model index",
-						exception);
-				}
-			}
-
-			_initialized = true;
-		}
-	}
-
 	@Activate
 	protected void activate() {
 		if (_clusterExecutor.isEnabled()) {
@@ -96,17 +60,6 @@ public class ClusterConfigurationModelIndexer
 		_stopBundleTracker();
 	}
 
-	private static void _initialize(String osgiServiceIdentifier)
-		throws Exception {
-
-		ClusterConfigurationModelIndexer clusterConfigurationModelIndexer =
-			(ClusterConfigurationModelIndexer)
-				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
-					osgiServiceIdentifier);
-
-		clusterConfigurationModelIndexer.initialize();
-	}
-
 	private static void _reset(String osgiServiceIdentifier) {
 		ClusterConfigurationModelIndexer clusterConfigurationModelIndexer =
 			(ClusterConfigurationModelIndexer)
@@ -124,8 +77,6 @@ public class ClusterConfigurationModelIndexer
 		}
 	}
 
-	private static final MethodKey _initializeMethodKey = new MethodKey(
-		ClusterConfigurationModelIndexer.class, "_initialize", String.class);
 	private static final MethodKey _resetMethodKey = new MethodKey(
 		ClusterConfigurationModelIndexer.class, "_reset", String.class);
 
@@ -136,9 +87,6 @@ public class ClusterConfigurationModelIndexer
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Reference
-	private ConfigurationModelIndexer _configurationModelIndexer;
 
 	private ConfigurationModelsClusterMasterTokenTransitionListener
 		_configurationModelsClusterMasterTokenTransitionListener;

@@ -307,6 +307,8 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"expanded", true
 			).put(
+				"hasChildren", true
+			).put(
 				"icon", "home"
 			).put(
 				"id", "0"

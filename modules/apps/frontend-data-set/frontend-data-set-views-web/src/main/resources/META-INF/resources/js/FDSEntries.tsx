@@ -1046,11 +1046,13 @@ const FDSEntries = ({
 					{
 						data: {
 							permissionKey: 'permissions',
+							size: 'full-screen',
+							title: Liferay.Language.get('permissions'),
 						},
 						href: permissionsURL,
 						icon: 'password-policies',
 						label: Liferay.Language.get('permissions'),
-						target: 'modal-permissions',
+						target: 'modal',
 					},
 					{
 						separator: true,

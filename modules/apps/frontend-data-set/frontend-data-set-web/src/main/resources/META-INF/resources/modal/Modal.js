@@ -6,7 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
 	CLOSE_MODAL,
@@ -31,6 +31,8 @@ function Modal({
 	const [title, setTitle] = useState(titleProp);
 	const [url, setURL] = useState(urlProp);
 	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
+
+	const iframeRef = useRef(null);
 
 	const doClose = useCallback(
 		(successNotification) => {
@@ -72,9 +74,7 @@ function Modal({
 				setTitle(data.title);
 			}
 
-			if (!data.size) {
-				setSize(INITIAL_MODAL_SIZE);
-			}
+			setSize(data.size || INITIAL_MODAL_SIZE);
 		}
 
 		function handleCloseModal({
@@ -108,6 +108,8 @@ function Modal({
 			Liferay.detach(CLOSE_MODAL, handleCloseModal);
 			Liferay.detach(IS_LOADING_MODAL, handleSetLoading);
 			Liferay.detach('destroyPortlet', cleanUpListeners);
+
+			iframeRef.current?.removeEventListener('load', handleIFrameLoad);
 		}
 
 		if (Liferay.on) {
@@ -116,6 +118,12 @@ function Modal({
 			Liferay.on(IS_LOADING_MODAL, handleSetLoading);
 			Liferay.on('destroyPortlet', cleanUpListeners);
 		}
+
+		function handleIFrameLoad() {
+			setLoading(false);
+		}
+
+		iframeRef.current?.addEventListener('load', handleIFrameLoad);
 
 		return () => cleanUpListeners();
 	}, [id, closeOnIframeRefresh, visible, doClose]);
@@ -142,7 +150,7 @@ function Modal({
 							maxHeight: '100%',
 						}}
 					>
-						<iframe src={url} title={title} />
+						<iframe ref={iframeRef} src={url} title={title} />
 
 						{loading && (
 							<div className="loader-container">

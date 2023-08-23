@@ -82,6 +82,8 @@ export interface IItemsActions {
 		id?: string;
 		method?: 'delete' | 'get';
 		permissionKey?: string;
+		size?: 'sm' | 'lg' | 'full-screen';
+		title?: string;
 	};
 	href?: string;
 	icon?: string;

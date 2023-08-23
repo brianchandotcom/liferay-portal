@@ -1,13 +1,15 @@
 definition {
 
 	macro deleteLayoutUtilityPage {
-		Variables.assertDefined(parameterList = "${groupName},${layoutUtilityPageName}");
+		Variables.assertDefined(parameterList = ${layoutUtilityPageName});
 
-		var groupId = JSONGroupSetter.setGroupId(
-			groupName = ${groupName},
-			portalInstanceName = ${portalInstanceName},
-			portalURL = ${portalURL},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONGroupSetter.setGroupId(
+				groupName = ${groupName},
+				portalInstanceName = ${portalInstanceName},
+				portalURL = ${portalURL},
+				site = ${site});
+		}
 
 		var layoutUtilityPageEntryId = JSONLayoututilitypageAPI._getLayoutUtilityPageEntryId(
 			groupId = ${groupId},

@@ -11,8 +11,11 @@ import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 /**
  * @author Alessio Antonio Rendina
@@ -27,7 +30,7 @@ public class ShipmentItemUtil {
 		throws Exception {
 
 		long defaultOrderItemId = 0;
-		int defaultQuantity = 0;
+		BigDecimal defaultQuantity = BigDecimal.ZERO;
 		long defaultWarehouseId = 0;
 
 		ServiceContext serviceContext =
@@ -55,7 +58,7 @@ public class ShipmentItemUtil {
 				shipmentItem.getOrderItemId(), defaultOrderItemId),
 			GetterUtil.getLong(
 				shipmentItem.getWarehouseId(), defaultWarehouseId),
-			GetterUtil.getInteger(shipmentItem.getQuantity(), defaultQuantity),
+			BigDecimalUtil.get(shipmentItem.getQuantity(), defaultQuantity),
 			null,
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true),
 			serviceContext);

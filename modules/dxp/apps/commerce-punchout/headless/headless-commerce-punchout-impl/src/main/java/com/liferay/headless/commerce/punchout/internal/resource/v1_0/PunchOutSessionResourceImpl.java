@@ -409,8 +409,8 @@ public class PunchOutSessionResourceImpl
 				commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
 				cartItem.getSkuId(), null,
 				BigDecimal.valueOf(cartItem.getQuantity()), 0,
-				cartItem.getShippedQuantity(), StringPool.BLANK,
-				commerceContext,
+				BigDecimal.valueOf(cartItem.getShippedQuantity()),
+				StringPool.BLANK, commerceContext,
 				_serviceContextHelper.getServiceContext(groupId));
 		}
 

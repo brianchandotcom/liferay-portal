@@ -17,6 +17,8 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,7 +71,6 @@ public class PlacedOrderItemShipmentDTOConverter
 				estimatedShippingDate = commerceShipment.getShippingDate();
 				id = commerceShipment.getCommerceShipmentId();
 				modifiedDate = commerceShipment.getModifiedDate();
-				quantity = commerceShipmentItem.getQuantity();
 				shippingAddressId = commerceShipment.getCommerceAddressId();
 				shippingMethodId =
 					commerceShipment.getCommerceShippingMethodId();
@@ -91,6 +92,14 @@ public class PlacedOrderItemShipmentDTOConverter
 						isSupplierShipment();
 				trackingNumber = commerceShipment.getTrackingNumber();
 				trackingURL = commerceShipment.getTrackingURL();
+
+				setQuantity(
+					() -> {
+						BigDecimal shipmentItemQuantity =
+							commerceShipmentItem.getQuantity();
+
+						return shipmentItemQuantity.intValue();
+					});
 			}
 		};
 	}

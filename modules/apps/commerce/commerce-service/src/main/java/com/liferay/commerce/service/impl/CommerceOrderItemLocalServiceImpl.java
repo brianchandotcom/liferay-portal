@@ -203,7 +203,7 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceProductPrice, commerceOptionValueCPInstance,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOptionValue.toJSON(), currentQuantity, BigDecimal.ZERO,
-				StringPool.BLANK, serviceContext);
+				BigDecimal.ZERO, StringPool.BLANK, serviceContext);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				childCommerceOrderItem = commerceOrderItemPersistence.update(

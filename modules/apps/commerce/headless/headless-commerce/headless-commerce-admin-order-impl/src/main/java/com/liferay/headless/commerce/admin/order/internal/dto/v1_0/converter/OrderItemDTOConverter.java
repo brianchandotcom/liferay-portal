@@ -119,7 +119,6 @@ public class OrderItemDTOConverter
 				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
-				shippedQuantity = commerceOrderItem.getShippedQuantity();
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 				sku = commerceOrderItem.getSku();
 				skuExternalReferenceCode = _getSkuExternalReferenceCode(
@@ -135,6 +134,13 @@ public class OrderItemDTOConverter
 						BigDecimal quantity = commerceOrderItem.getQuantity();
 
 						return quantity.intValue();
+					});
+				setShippedQuantity(
+					() -> {
+						BigDecimal shippedQuantity =
+							commerceOrderItem.getShippedQuantity();
+
+						return shippedQuantity.intValue();
 					});
 				setUnitOfMeasure(
 					() -> {

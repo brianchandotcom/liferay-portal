@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
@@ -146,8 +148,8 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long commerceOrderItemId : commerceOrderItemIds) {
 			_commerceShipmentItemService.addCommerceShipmentItem(
-				null, commerceShipmentId, commerceOrderItemId, 0, 0, null, true,
-				serviceContext);
+				null, commerceShipmentId, commerceOrderItemId, 0,
+				BigDecimal.ZERO, null, true, serviceContext);
 		}
 	}
 

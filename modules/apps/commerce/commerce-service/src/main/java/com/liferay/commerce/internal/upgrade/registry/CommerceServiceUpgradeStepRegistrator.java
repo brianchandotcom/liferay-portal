@@ -613,7 +613,7 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommercePermissionUpgradeProcess(
 					_resourceActionLocalService,
 					_resourcePermissionLocalService, _roleLocalService));
-		
+
 		registry.register(
 			"10.0.1", "10.1.0",
 			UpgradeProcessFactory.alterColumnType(

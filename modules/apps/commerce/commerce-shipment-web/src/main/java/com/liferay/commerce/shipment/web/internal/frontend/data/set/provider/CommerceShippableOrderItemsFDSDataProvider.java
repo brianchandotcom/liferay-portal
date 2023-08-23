@@ -121,8 +121,7 @@ public class CommerceShippableOrderItemsFDSDataProvider
 						icon, commerceOrderItem.getCommerceOrderId(),
 						commerceOrderItem.getCommerceOrderItemId(),
 						quantity.subtract(
-							BigDecimal.valueOf(
-								commerceOrderItem.getShippedQuantity())),
+							commerceOrderItem.getShippedQuantity()),
 						_getShippingMethodAndOptionName(
 							commerceOrder, httpServletRequest),
 						commerceOrderItem.getSku(),

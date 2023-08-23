@@ -16,6 +16,7 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShipmentItemUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentItemResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +27,8 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.math.BigDecimal;
 
 import java.util.Map;
 
@@ -153,7 +156,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			GetterUtil.get(
 				shipmentItem.getWarehouseId(),
 				commerceShipmentItem.getCommerceInventoryWarehouseId()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				shipmentItem.getQuantity(), commerceShipmentItem.getQuantity()),
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true));
 
@@ -187,7 +190,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			GetterUtil.get(
 				shipmentItem.getWarehouseId(),
 				commerceShipmentItem.getCommerceInventoryWarehouseId()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				shipmentItem.getQuantity(), commerceShipmentItem.getQuantity()),
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true));
 
@@ -203,7 +206,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			_commerceShipmentItemService.addCommerceShipmentItem(
 				shipmentItem.getExternalReferenceCode(), shipmentId,
 				shipmentItem.getOrderItemId(), shipmentItem.getWarehouseId(),
-				shipmentItem.getQuantity(), null,
+				BigDecimal.valueOf(shipmentItem.getQuantity()), null,
 				GetterUtil.getBoolean(
 					shipmentItem.getValidateInventory(), true),
 				_serviceContextHelper.getServiceContext(contextUser));

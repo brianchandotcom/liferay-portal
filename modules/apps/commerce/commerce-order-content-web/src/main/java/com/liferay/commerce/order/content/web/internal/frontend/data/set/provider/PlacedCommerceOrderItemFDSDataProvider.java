@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -185,6 +187,8 @@ public class PlacedCommerceOrderItemFDSDataProvider
 				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 					commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
+			BigDecimal shippedQuantity = commerceOrderItem.getShippedQuantity();
+
 			orderItems.add(
 				new OrderItem(
 					commerceOrderItem.getCPInstanceId(),
@@ -205,8 +209,7 @@ public class PlacedCommerceOrderItemFDSDataProvider
 						commerceOrderItemPrice, _language, locale),
 					CommerceOrderItemUtil.formatPromoPrice(
 						commerceOrderItemPrice, locale),
-					commerceOrderItem.getShippedQuantity(),
-					commerceOrderItem.getSku(),
+					shippedQuantity.intValue(), commerceOrderItem.getSku(),
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
 						CommerceUtil.getCommerceAccountId(
 							(CommerceContext)httpServletRequest.getAttribute(

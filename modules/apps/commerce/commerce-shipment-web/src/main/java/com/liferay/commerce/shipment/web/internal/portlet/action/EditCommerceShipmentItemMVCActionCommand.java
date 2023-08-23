@@ -33,10 +33,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -248,10 +251,12 @@ public class EditCommerceShipmentItemMVCActionCommand
 					commerceShipmentId, commerceOrderItemId,
 					commerceInventoryWarehouseId);
 
-			int quantity = ParamUtil.getInteger(
+			BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
 				actionRequest, commerceInventoryWarehouseId + "_quantity");
 
-			if ((initialCommerceShipmentItem != null) && (quantity > 0)) {
+			if ((initialCommerceShipmentItem != null) &&
+				BigDecimalUtil.gt(quantity, BigDecimal.ZERO)) {
+
 				commerceShipmentItem =
 					_commerceShipmentItemService.updateCommerceShipmentItem(
 						initialCommerceShipmentItem.getCommerceShipmentItemId(),
@@ -259,7 +264,9 @@ public class EditCommerceShipmentItemMVCActionCommand
 
 				initialCommerceShipmentItem = null;
 			}
-			else if ((commerceShipmentItem == null) && (quantity > 0)) {
+			else if ((commerceShipmentItem == null) &&
+					 BigDecimalUtil.gt(quantity, BigDecimal.ZERO)) {
+
 				commerceShipmentItem =
 					_commerceShipmentItemService.addCommerceShipmentItem(
 						null, commerceShipmentId, commerceOrderItemId,
@@ -274,7 +281,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 						commerceShipmentItem.getCommerceShipmentItemId(),
 						commerceInventoryWarehouseId, quantity, true);
 
-				if (quantity == 0) {
+				if (BigDecimalUtil.eq(quantity, BigDecimal.ZERO)) {
 					commerceShipmentItem =
 						_commerceShipmentItemService.updateCommerceShipmentItem(
 							commerceShipmentItem.getCommerceShipmentItemId(), 0,

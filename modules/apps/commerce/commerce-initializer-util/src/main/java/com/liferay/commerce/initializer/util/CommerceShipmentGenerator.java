@@ -11,6 +11,8 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalSer
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -45,7 +47,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -157,7 +158,7 @@ public class CommerceShipmentGenerator {
 				commerceOrderItem.getQuantity();
 
 			BigDecimal quantity = commerceOrderItemQuantity.subtract(
-				BigDecimal.valueOf(commerceOrderItem.getShippedQuantity()));
+				commerceOrderItem.getShippedQuantity());
 
 			BigDecimal commerceInventoryWarehouseItemQuantity =
 				_getRandomCommerceInventoryWarehouseItemQuantity(
@@ -173,7 +174,7 @@ public class CommerceShipmentGenerator {
 				null, commerceShipmentId,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItemQuantity.intValue(), null, true,
+				commerceInventoryWarehouseItemQuantity, null, true,
 				serviceContext);
 		}
 	}
@@ -245,10 +246,10 @@ public class CommerceShipmentGenerator {
 			BigDecimal quantity)
 		throws Exception {
 
-		BigDecimal commerceInventoryWarehouseItemQuantity = BigDecimal.valueOf(
+		BigDecimal commerceInventoryWarehouseItemQuantity =
 			_commerceOrderItemService.getCommerceInventoryWarehouseItemQuantity(
 				commerceOrderItem.getCommerceOrderItemId(),
-				commerceInventoryWarehouse.getCommerceInventoryWarehouseId()));
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		if (BigDecimalUtil.lt(
 				quantity, commerceInventoryWarehouseItemQuantity)) {
@@ -262,11 +263,14 @@ public class CommerceShipmentGenerator {
 			return commerceInventoryWarehouseItemQuantity;
 		}
 
-		ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			_cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasures(
+				commerceOrderItem.getCompanyId(), commerceOrderItem.getSku());
 
-		return BigDecimal.valueOf(
-			threadLocalRandom.nextDouble(
-				0, commerceInventoryWarehouseItemQuantity.doubleValue()));
+		return _randomQuantity(
+			BigDecimal.ONE, commerceInventoryWarehouseItemQuantity,
+			(cpInstanceUnitOfMeasures == null) ? null :
+				cpInstanceUnitOfMeasures.get(0));
 	}
 
 	private int _getRandomCommerceShipmentStatus() {
@@ -301,6 +305,31 @@ public class CommerceShipmentGenerator {
 		}
 
 		return (value % range) + min;
+	}
+
+	private BigDecimal _randomQuantity(
+		BigDecimal min, BigDecimal max,
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
+
+		if (BigDecimalUtil.lt(max, min)) {
+			throw new IllegalArgumentException(
+				"Max value must be greater than or equal to the min value");
+		}
+
+		int randomInt = _random.nextInt();
+
+		if (cpInstanceUnitOfMeasure == null) {
+			int range = max.intValue() + 1 - min.intValue();
+
+			return BigDecimal.valueOf(
+				Math.floorMod(randomInt, range) + min.intValue());
+		}
+
+		return max.min(
+			cpInstanceUnitOfMeasure.getIncrementalOrderQuantity(
+			).multiply(
+				BigDecimal.valueOf(randomInt)
+			));
 	}
 
 	private void _setPermissionChecker(long groupId) throws Exception {
@@ -352,6 +381,10 @@ public class CommerceShipmentGenerator {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

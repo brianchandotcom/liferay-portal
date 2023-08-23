@@ -388,7 +388,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
 			cartItem.getOptions(),
 			BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
-			GetterUtil.getLong(cartItem.getReplacedSkuId()), 0,
+			GetterUtil.getLong(cartItem.getReplacedSkuId()), BigDecimal.ZERO,
 			StringPool.BLANK, commerceContext, serviceContext);
 	}
 

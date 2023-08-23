@@ -204,13 +204,11 @@ public class CommerceOrderStatusNotificationTest {
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				commerceInventoryWarehouses.get(0);
 
-			BigDecimal quantity = commerceOrderItem.getQuantity();
-
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				quantity.intValue(), null, true, _serviceContext);
+				commerceOrderItem.getQuantity(), null, true, _serviceContext);
 		}
 
 		_commerceShipmentLocalService.updateStatus(

@@ -12,6 +12,8 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,12 +50,18 @@ public class ShipmentItemDTOConverter
 				id = commerceShipmentItem.getCommerceShipmentItemId();
 				modifiedDate = commerceShipmentItem.getModifiedDate();
 				orderItemId = commerceShipmentItem.getCommerceOrderItemId();
-				quantity = commerceShipmentItem.getQuantity();
 				shipmentId = commerceShipmentItem.getCommerceShipmentId();
 				userName = commerceShipmentItem.getUserName();
 				warehouseId =
 					commerceShipmentItem.getCommerceInventoryWarehouseId();
 
+				setQuantity(
+					() -> {
+						BigDecimal shipmentItemQuantity =
+							commerceShipmentItem.getQuantity();
+
+						return shipmentItemQuantity.intValue();
+					});
 				setShipmentExternalReferenceCode(
 					() -> {
 						CommerceShipment commerceShipment =

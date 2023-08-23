@@ -381,8 +381,9 @@ public class CommerceInventoryEngineTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), commerceOrder.getCommerceOrderId(),
-				_cpInstance1.getCPInstanceId(), null, bookQuantity, 0, 0,
-				StringPool.BLANK, _commerceContext, _serviceContext);
+				_cpInstance1.getCPInstanceId(), null, bookQuantity, 0,
+				BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+				_serviceContext);
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			_commerceInventoryBookedQuantityLocalService.

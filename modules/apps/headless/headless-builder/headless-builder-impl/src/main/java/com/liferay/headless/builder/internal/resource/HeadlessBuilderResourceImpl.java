@@ -8,6 +8,7 @@ package com.liferay.headless.builder.internal.resource;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
+import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -71,13 +72,23 @@ public class HeadlessBuilderResourceImpl {
 				_apiApplication.getEndpoints()) {
 
 			if ((endpoint.getScope() != scope) ||
-				!Objects.equals(endpoint.getPath(), "/" + path)) {
+				!PathUtil.matchEndpoint(endpoint, "/" + path)) {
 
 				continue;
 			}
 
 			if (endpoint.getResponseSchema() == null) {
 				return Response.noContent(
+				).build();
+			}
+
+			if (Objects.equals(
+					endpoint.getRetrieveType(),
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
+
+				return Response.ok(
+					_endpointHelper.getResponseEntityMap(
+						_company.getCompanyId(), endpoint, path)
 				).build();
 			}
 

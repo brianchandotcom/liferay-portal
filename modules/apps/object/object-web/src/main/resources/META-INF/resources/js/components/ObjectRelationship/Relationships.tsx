@@ -19,6 +19,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import {ModalDeletionNotAllowed} from '../ModalDeletionNotAllowed';
 
 interface ItemData {
 	id: number;
@@ -38,6 +39,13 @@ export default function Relationships({
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();
+
+	const [
+		selectedObjectRelationship,
+		setSelectedObjectRelationship,
+	] = useState<ObjectRelationship>();
+
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -114,6 +122,13 @@ export default function Relationships({
 			itemData: ObjectRelationship;
 		}) {
 			if (action.data.id === 'deleteObjectRelationship') {
+				if (itemData.treeEdge && Liferay.FeatureFlags['LPS-187142']) {
+					setSelectedObjectRelationship(itemData);
+					setShowModal(true);
+
+					return;
+				}
+
 				Liferay.fire('deleteObjectRelationship', {itemData});
 			}
 		},
@@ -164,5 +179,20 @@ export default function Relationships({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return (
+		<>
+			<FrontendDataSet {...dataSetProps} />
+
+			{showModal && Liferay.FeatureFlags['LPS-187142'] && (
+				<ModalDeletionNotAllowed
+					onVisibilityChange={() => setShowModal(false)}
+					selectedItemLabel={getLocalizableLabel(
+						creationLanguageId as Liferay.Language.Locale,
+						selectedObjectRelationship?.label,
+						selectedObjectRelationship?.name
+					)}
+				/>
+			)}
+		</>
+	);
 }

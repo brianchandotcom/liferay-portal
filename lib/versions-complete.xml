@@ -2667,18 +2667,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-logging.jar</file-name>
-				<version>1.2</version>
-				<project-name>Apache Commons Logging</project-name>
-				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!elasticsearch-cli.jar</file-name>
 				<version>7.16.3</version>
 				<project-name>org.elasticsearch#elasticsearch-cli;7.16.3</project-name>
@@ -2919,6 +2907,18 @@
 					<license>
 						<license-name>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license-name>
 						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!org.apache.commons.logging.jar</file-name>
+				<version>1.2.LIFERAY-PATCHED-1</version>
+				<project-name>Apache Commons Logging</project-name>
+				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3360,18 +3360,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.gcs.jar!commons-logging.jar</file-name>
-				<version>1.2</version>
-				<project-name>Apache Commons Logging</project-name>
-				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!gax-httpjson.jar</file-name>
 				<version>0.79.0</version>
 				<project-name>GAX (Google Api eXtensions) for Java</project-name>
@@ -3594,6 +3582,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.store.gcs.jar!org.apache.commons.logging.jar</file-name>
+				<version>1.2.LIFERAY-PATCHED-1</version>
+				<project-name>Apache Commons Logging</project-name>
+				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!proto-google-common-protos.jar</file-name>
 				<version>2.1.0</version>
 				<project-name>proto-google-common-protos</project-name>
@@ -3690,18 +3690,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.store.s3.jar!commons-logging.jar</file-name>
-				<version>1.2</version>
-				<project-name>Apache Commons Logging</project-name>
-				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.store.s3.jar!ibm-cos-java-sdk-core.jar</file-name>
 				<version>2.9.0</version>
 				<project-name>IBM COS SDK for Java - Core</project-name>
@@ -3758,6 +3746,18 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!org.apache.commons.logging.jar</file-name>
+				<version>1.2.LIFERAY-PATCHED-1</version>
+				<project-name>Apache Commons Logging</project-name>
+				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5337,18 +5337,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!commons-logging.jar</file-name>
-				<version>1.2</version>
-				<project-name>Apache Commons Logging</project-name>
-				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!gax-httpjson.jar</file-name>
 				<version>0.79.0</version>
 				<project-name>GAX (Google Api eXtensions) for Java</project-name>
@@ -5579,6 +5567,18 @@
 					<license>
 						<license-name>The Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.site.initializer.testray.dispatch.task.executor.jar!org.apache.commons.logging.jar</file-name>
+				<version>1.2.LIFERAY-PATCHED-1</version>
+				<project-name>Apache Commons Logging</project-name>
+				<project-url>http://commons.apache.org/proper/commons-logging/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6897,7 +6897,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-logging.jar</file-name>
-				<version>1.2</version>
+				<version>1.2.LIFERAY-PATCHED-1</version>
 				<project-name>Commons Logging</project-name>
 				<project-url>http://commons.apache.org/logging</project-url>
 				<licenses>

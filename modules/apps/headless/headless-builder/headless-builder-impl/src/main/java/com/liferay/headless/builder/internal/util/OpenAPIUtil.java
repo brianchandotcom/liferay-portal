@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.internal.util;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -21,7 +23,8 @@ import java.util.List;
 public class OpenAPIUtil {
 
 	public static String getOperationId(
-		Http.Method method, String path, String schemaName) {
+		Http.Method method, String path,
+		APIApplication.Endpoint.RetrieveType retrieveType, String schemaName) {
 
 		List<String> methodNameParts = new ArrayList<>();
 
@@ -34,7 +37,8 @@ public class OpenAPIUtil {
 		for (int i = 0; i < pathParts.length; i++) {
 			String pathPart = pathParts[i];
 
-			String pathName = _toCamelCase(pathPart);
+			String pathName = _toCamelCase(
+				pathPart.replaceAll("\\{|-id|}|Id}", ""));
 
 			if (StringUtil.equalsIgnoreCase(pathName, pluralSchemaName)) {
 				pathName = pluralSchemaName;
@@ -43,7 +47,11 @@ public class OpenAPIUtil {
 				pathName = StringUtil.upperCaseFirstLetter(pathName);
 			}
 
-			if (i == (pathParts.length - 1)) {
+			if ((i == (pathParts.length - 1)) &&
+				Objects.equals(
+					retrieveType,
+					APIApplication.Endpoint.RetrieveType.COLLECTION)) {
+
 				String previousMethodNamePart = methodNameParts.get(
 					methodNameParts.size() - 1);
 
@@ -59,6 +67,16 @@ public class OpenAPIUtil {
 				}
 
 				methodNameParts.add(pathName + "Page");
+			}
+			else if (pathPart.contains("{") && (schemaName != null)) {
+				String previousMethodNameSegment = methodNameParts.get(
+					methodNameParts.size() - 1);
+
+				if (!previousMethodNameSegment.endsWith(pathName) &&
+					!previousMethodNameSegment.endsWith(schemaName)) {
+
+					methodNameParts.add(pathName);
+				}
 			}
 			else {
 				String methodNamePart = _formatSingular(pathName);

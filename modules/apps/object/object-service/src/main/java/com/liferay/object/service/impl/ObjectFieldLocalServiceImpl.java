@@ -25,6 +25,7 @@ import com.liferay.object.exception.ObjectFieldReadOnlyException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
+import com.liferay.object.exception.ObjectFieldSystemException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -52,6 +53,7 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.object.system.util.SystemUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -865,6 +867,14 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 		objectField.setState(state);
 		objectField.setSystem(system);
+
+		if (system && !objectField.isMetadata() &&
+			objectDefinition.isModifiable() &&
+			!SystemUtil.allowManageSystemEntities()) {
+
+			throw new ObjectFieldSystemException(
+				"Only allowed bundles can create system fields");
+		}
 
 		return objectFieldPersistence.update(objectField);
 	}

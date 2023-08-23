@@ -45,7 +45,7 @@ const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
 							className="p-1"
 							displayType="secondary"
 							href={handleOnclickItem ? '#' : item.href}
-							onClick={handleOnclickItem}
+							onClick={() => handleOnclickItem(item)}
 						>
 							<ClayIcon
 								className="mr-2"

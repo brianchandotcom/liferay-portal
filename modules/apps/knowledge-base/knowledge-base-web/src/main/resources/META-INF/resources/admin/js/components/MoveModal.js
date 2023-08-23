@@ -37,9 +37,7 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 		});
 	};
 
-	const onItemClick = (destinationItem, event) => {
-		event.stopPropagation();
-
+	const onItemClick = (destinationItem) => {
 		const index = {next: destinationItem.children.length};
 		getOpener().Liferay.fire(SELECT_EVENT_NAME, {destinationItem, index});
 	};
@@ -48,8 +46,20 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 		setSearchActive(isSearchActive);
 	};
 
-	const handleSearchOnclickItem = () => {
-		console.log('click search item in move modal');
+	const handleSearchOnclickItem = (searchItem) => {
+		const selectedItem = items.reduce(function reducer(acc, item) {
+			if (item.id === searchItem.id) {
+				acc.push(item);
+			}
+
+			if (item.children) {
+				item.children.reduce(reducer, acc);
+			}
+
+			return acc;
+		}, []);
+
+		onItemClick(selectedItem[0]);
 	};
 
 	return (
@@ -77,11 +87,13 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 									),
 								})}
 								onClick={(event) => {
+									event.stopPropagation();
+
 									if (!selection.has(item.id)) {
 										selection.toggle(item.id);
 									}
 
-									onItemClick(item, event);
+									onItemClick(item);
 								}}
 							>
 								<ClayTreeView.ItemStack>

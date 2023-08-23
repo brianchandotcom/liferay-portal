@@ -92,13 +92,41 @@ Role role = usersDisplayContext.getRole();
 								<%
 								Set<String> roles = new TreeSet<String>();
 
-								roles.addAll(ListUtil.toList(RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), Role.TITLE_ACCESSOR));
+								List<Role> userRoles = new ArrayList<Role>();
 
-								roles.addAll(ListUtil.toList(UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()), UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR));
+								userRoles.addAll(RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()));
+
+								for (Role userRole : userRoles) {
+									if (RolePermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), userRole.getRoleId(), ActionKeys.VIEW)) {
+										roles.add(userRole.getTitle(locale));
+									}
+								}
+
+								List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+
+								userGroupRoles.addAll(UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()));
+
+								for (UserGroupRole userGroupRole : userGroupRoles) {
+									if (RolePermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), userGroupRole.getRoleId(), ActionKeys.VIEW)) {
+										roles.add(
+											userGroupRole.getRole(
+											).getTitle(
+												locale
+											));
+									}
+								}
 
 								Set<String> teams = new TreeSet<String>();
 
-								teams.addAll(ListUtil.toList(TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), user2.getUserId()), Team.NAME_ACCESSOR));
+								List<Team> userTeams = new ArrayList<>();
+
+								userTeams.addAll(TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), user2.getUserId()));
+
+								for (Team userTeam : userTeams) {
+									if (TeamPermissionUtil.contains(permissionChecker, userTeam, ActionKeys.VIEW)) {
+										teams.add(userTeam.getName());
+									}
+								}
 								%>
 
 								<c:choose>

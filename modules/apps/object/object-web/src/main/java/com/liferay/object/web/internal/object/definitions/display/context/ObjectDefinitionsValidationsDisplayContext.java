@@ -8,7 +8,6 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.learn.LearnMessageUtil;
-import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
@@ -45,12 +44,10 @@ public class ObjectDefinitionsValidationsDisplayContext
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectScriptConfiguration objectScriptConfiguration,
 		ObjectValidationRuleEngineRegistry objectValidationRuleEngineRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
-		_objectScriptConfiguration = objectScriptConfiguration;
 		_objectValidationRuleEngineRegistry =
 			objectValidationRuleEngineRegistry;
 
@@ -90,8 +87,14 @@ public class ObjectDefinitionsValidationsDisplayContext
 				"delete", "delete", "async"));
 	}
 
-	public List<Map<String, String>> getObjectValidationRuleEngines() {
+	public List<Map<String, String>> getObjectValidationRuleEngines()
+		throws PortalException {
+
 		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		boolean hasPermissionExecuteCode =
+			ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+				_objectRequestHelper.getPermissionChecker());
 
 		return ListUtil.sort(
 			TransformUtil.transform(
@@ -104,10 +107,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 						!StringUtil.equals(
 							objectValidationRuleEngine.getKey(),
 							ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) ||
-						ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
-							_objectRequestHelper.getPermissionChecker(),
-							_objectScriptConfiguration.
-								allowInstanceAdminExecuteCode())),
+						hasPermissionExecuteCode),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
 					objectValidationRuleEngine.getLabel(
@@ -180,7 +180,6 @@ public class ObjectDefinitionsValidationsDisplayContext
 	}
 
 	private final ObjectRequestHelper _objectRequestHelper;
-	private final ObjectScriptConfiguration _objectScriptConfiguration;
 	private final ObjectValidationRuleEngineRegistry
 		_objectValidationRuleEngineRegistry;
 

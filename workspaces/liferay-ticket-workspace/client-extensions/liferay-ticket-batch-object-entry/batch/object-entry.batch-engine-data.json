@@ -43,16 +43,16 @@
 				"key": "minor",
 				"name": "Minor"
 			},
+			"region": {
+				"key": "lATAM",
+				"name": "LATAM"
+			},
 			"status": {
 				"code": 0,
 				"label": "approved",
 				"label_i18n": "Approved"
 			},
 			"subject": "Website is not responding",
-			"supportRegion": {
-				"key": "lATAM",
-				"name": "LATAM"
-			},
 			"ticketStatus": {
 				"key": "open",
 				"name": "Open"

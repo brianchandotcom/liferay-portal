@@ -90,6 +90,7 @@ interface ObjectRelationship {
 	objectRelationshipId: number;
 	parameterObjectFieldId?: number;
 	reverse: boolean;
+	treeEdge: boolean;
 	type: ObjectRelationshipType;
 }
 

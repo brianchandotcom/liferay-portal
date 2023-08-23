@@ -53,10 +53,6 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 			<SearchField
 				handleSearchChange={handleSearchChange}
 				items={searchItems}
-				placeholder={sub(
-					Liferay.Language.get('search-in-x'),
-					'destination-folders'
-				)}
 			/>
 
 			{!searchActive && (

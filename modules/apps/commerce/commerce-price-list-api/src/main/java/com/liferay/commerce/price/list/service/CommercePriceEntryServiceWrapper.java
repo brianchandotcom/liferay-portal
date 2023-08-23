@@ -232,19 +232,6 @@ public class CommercePriceEntryServiceWrapper
 
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, java.math.BigDecimal price,
-			boolean priceOnApplication, java.math.BigDecimal promoPrice,
-			String unitOfMeasureKey,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePriceEntryService.updateCommercePriceEntry(
-			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			unitOfMeasureKey, serviceContext);
-	}
-
-	@Override
-	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
@@ -276,6 +263,19 @@ public class CommercePriceEntryServiceWrapper
 
 		return _commercePriceEntryService.updateExternalReferenceCode(
 			externalReferenceCode, commercePriceEntry);
+	}
+
+	@Override
+	public CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing,
+			java.math.BigDecimal price, boolean priceOnApplication,
+			java.math.BigDecimal promoPrice, String unitOfMeasureKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceEntryService.updatePricingInfo(
+			commercePriceEntryId, bulkPricing, price, priceOnApplication,
+			promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override

@@ -446,13 +446,6 @@ public interface CommercePriceEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
-			boolean priceOnApplication, BigDecimal promoPrice,
-			String unitOfMeasureKey, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
@@ -468,6 +461,12 @@ public interface CommercePriceEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateExternalReferenceCode(
 			String externalReferenceCode, CommercePriceEntry commercePriceEntry)
+		throws PortalException;
+
+	public CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -747,12 +747,13 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
 			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
+			boolean bulkPricing,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntryId, price, promoPrice, minQuantity,
-			serviceContext);
+			bulkPricing, serviceContext);
 	}
 
 	@Override

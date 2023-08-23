@@ -101,6 +101,11 @@ definition {
 			APIBuilderUI.createAPIApplication(
 				description = "This is an application",
 				title = "M*y Title 123");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "API Builder");
 		}
 
 		task ("Then the API is created in API Builder with correct title, url, description and UNPUBLISHED status") {

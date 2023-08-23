@@ -13,7 +13,6 @@ Import-Package:\
 	\
 	!org.apache.avalon.framework.logger,\
 	!org.apache.log,\
-	!org.apache.log4j,\
 	\
 	!org.ietf.jgss,\
 	\

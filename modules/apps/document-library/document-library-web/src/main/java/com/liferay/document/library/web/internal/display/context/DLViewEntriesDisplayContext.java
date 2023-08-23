@@ -125,13 +125,17 @@ public class DLViewEntriesDisplayContext {
 			}
 		}
 
+		if (DLFileEntryPermission.contains(
+				permissionChecker, fileEntry, ActionKeys.DOWNLOAD) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-182512") &&
+			!RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+
+			availableActions.add("copy");
+		}
+
 		if ((fileEntry.getSize() > 0) &&
 			DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.DOWNLOAD)) {
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-182512")) {
-				availableActions.add("copy");
-			}
 
 			availableActions.add("download");
 		}

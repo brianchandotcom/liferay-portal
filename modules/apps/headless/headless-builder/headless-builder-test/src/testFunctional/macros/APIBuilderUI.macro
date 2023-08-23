@@ -102,13 +102,33 @@ definition {
 
 		Click.pauseClickAt(locator1 = "APIBuilder#LAST_UPDATED_IN_FILTER");
 
-		Type(
+		Type.sendKeys(
 			locator1 = "APIBuilder#FROM_DATE",
 			value1 = ${fromDate});
 
-		Type(
+		Type.sendKeys(
 			locator1 = "APIBuilder#TO_DATE",
 			value1 = ${toDate});
+
+		Click(
+			key_text = "Add Filter",
+			locator1 = "Button#ANY");
+	}
+
+	macro filterByStatus {
+		Variables.assertDefined(parameterList = ${labelName});
+
+		Click.pauseClickAt(locator1 = "Dropdown#FILTER");
+
+		Click.pauseClickAt(locator1 = "APIBuilder#STATUS_IN_FILTER");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = ${labelName});
+
+		if (isSet(exclude)) {
+			Check.checkToggleSwitch(locator1 = "APIBuilder#EXCLUDE_TOGGLE");
+		}
 
 		Click(
 			key_text = "Add Filter",

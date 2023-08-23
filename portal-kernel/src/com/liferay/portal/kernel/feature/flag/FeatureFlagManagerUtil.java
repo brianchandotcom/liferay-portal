@@ -7,6 +7,8 @@ package com.liferay.portal.kernel.feature.flag;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,12 +64,21 @@ public class FeatureFlagManagerUtil {
 			return function.apply(featureFlagManager);
 		}
 
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"No FeatureFlagManager service found. Returning the default " +
+					"value.");
+		}
+
 		return supplier.get();
 	}
 
 	private static final String _JSON = String.valueOf(
 		JSONFactoryUtil.createJSONObject(
 			PropsUtil.getProperties("feature.flag.", true)));
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FeatureFlagManagerUtil.class);
 
 	private static final ServiceTracker<FeatureFlagManager, FeatureFlagManager>
 		_serviceTracker;

@@ -5,6 +5,8 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+
 import java.util.List;
 import java.util.Locale;
 

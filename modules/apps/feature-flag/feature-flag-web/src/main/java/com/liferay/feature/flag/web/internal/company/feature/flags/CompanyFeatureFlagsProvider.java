@@ -5,10 +5,8 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.feature.flag.web.internal.model.DependencyAwareFeatureFlag;
-import com.liferay.feature.flag.web.internal.model.FeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
@@ -17,6 +15,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

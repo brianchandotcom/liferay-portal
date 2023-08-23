@@ -36,7 +36,12 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 						<portlet:param name="portletResource" value="<%= portletResource %>" />
 					</portlet:renderURL>
 
-					<aui:button href="<%= addConfigurationTemplateURL %>" value="save-current-configuration-as-template" />
+					<clay:link
+						displayType="secondary"
+						href="<%= addConfigurationTemplateURL %>"
+						label="save-current-configuration-as-template"
+						type="button"
+					/>
 				</div>
 
 				<liferay-ui:search-container

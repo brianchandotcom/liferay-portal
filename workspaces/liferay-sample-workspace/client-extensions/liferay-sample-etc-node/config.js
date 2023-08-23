@@ -4,6 +4,9 @@
  */
 
 export default {
+	'com.liferay.lxc.dxp.domains': 'localhost:8080',
+	'com.liferay.lxc.dxp.mainDomain': 'localhost:8080',
+	'com.liferay.lxc.dxp.server.protocol': 'http',
 	'configTreePaths': [
 		process.env.LIFERAY_ROUTES_CLIENT_EXTENSION,
 		process.env.LIFERAY_ROUTES_DXP,

@@ -28,8 +28,18 @@ import OrderableTable from '../components/OrderableTable';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
+enum filterTypes {
+	DATE_RANGE = 'DATE_RANGE',
+	SELECTION = 'SELECTION',
+}
+
+enum fieldFormats {
+	DATE_TIME = 'date-time',
+	STRING = 'string',
+}
+
 interface IField {
-	format: string;
+	format: fieldFormats;
 	label: string;
 	name: string;
 	type: string;
@@ -48,20 +58,21 @@ interface IDateFilter extends IFilter {
 	to: string;
 }
 
-interface IDynamicFilter extends IFilter {
+interface ISelectionFilter extends IFilter {
 	include: boolean;
 	listTypeDefinitionId: string;
 	multiple: boolean;
 	preselectedValues: string;
 }
 
-type FilterCollection = Array<IDateFilter | IDynamicFilter>;
+type FilterCollection = Array<IDateFilter | ISelectionFilter>;
 
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
 	fdsView: FDSViewType;
 	fields: IField[];
-	filter?: IDateFilter | IDynamicFilter;
+	filter?: IDateFilter | ISelectionFilter;
+	filterType?: filterTypes;
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;
 }
@@ -71,6 +82,7 @@ function AddFDSFilterModalContent({
 	fdsView,
 	fields,
 	filter,
+	filterType,
 	namespace,
 	onSave,
 }: IPropsAddFDSFilterModalContent) {
@@ -79,7 +91,7 @@ function AddFDSFilterModalContent({
 	);
 	const [includeMode, setIncludeMode] = useState<string>(
 		filter
-			? (filter as IDynamicFilter)?.include
+			? (filter as ISelectionFilter)?.include
 				? 'include'
 				: 'exclude'
 			: 'include'
@@ -87,7 +99,7 @@ function AddFDSFilterModalContent({
 	const [isValidDateRange, setIsValidDateRange] = useState(true);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [multiple, setMultiple] = useState<boolean>(
-		(filter as IDynamicFilter)?.multiple ?? true
+		(filter as ISelectionFilter)?.multiple ?? true
 	);
 	const [name, setName] = useState(filter?.name || '');
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
@@ -116,7 +128,8 @@ function AddFDSFilterModalContent({
 				setPreselectedValues(
 					newVal.listTypeEntries.filter((item) =>
 						JSON.parse(
-							(filter as IDynamicFilter).preselectedValues || '[]'
+							(filter as ISelectionFilter).preselectedValues ||
+								'[]'
 						).includes(item.id)
 					)
 				);
@@ -170,8 +183,7 @@ function AddFDSFilterModalContent({
 			};
 
 			displayType = Liferay.Language.get('date-filter');
-		}
-		else {
+		} else {
 			url = API_URL.FDS_DYNAMIC_FILTERS;
 
 			body = {
@@ -309,7 +321,7 @@ function AddFDSFilterModalContent({
 					/>
 				</ClayForm.Group>
 
-				{selectedField?.format === 'date-time' && (
+				{selectedField?.format === fieldFormats.DATE_TIME && (
 					<ClayForm.Group className="form-group-autofit">
 						<div
 							className={classNames('form-group-item', {
@@ -369,7 +381,7 @@ function AddFDSFilterModalContent({
 					</ClayForm.Group>
 				)}
 
-				{selectedField?.format === 'string' && (
+				{selectedField?.format === fieldFormats.STRING && (
 					<>
 						<ClayForm.Group>
 							<label htmlFor={sourceOptionFormElementId}>
@@ -623,7 +635,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			] as IDateFilter[];
 			const dynamicFiltersOrderer = responseJSON[
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER
-			] as IDynamicFilter[];
+			] as ISelectionFilter[];
 
 			let filtersOrdered: FilterCollection = [
 				...dateFiltersOrderer.map((item) => ({
@@ -662,7 +674,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 		getFields(fdsView).then((newFields) => {
 			if (newFields) {
-				setFields(newFields);
+				setFields(newFields as IField[]);
 			}
 		});
 
@@ -719,7 +731,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			disableAutoClose: true,
 		});
 
-	const handleEdit = ({item}: {item: IDateFilter | IDynamicFilter}) =>
+	const handleEdit = ({item}: {item: IDateFilter | ISelectionFilter}) =>
 		openModal({
 			className: 'overflow-auto',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (

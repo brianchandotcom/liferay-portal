@@ -28,8 +28,6 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 	@Override
 	@Test
 	public void testPostSuggestionsPage() throws Exception {
-		String displayGroupName = "Suggestions";
-
 		String title = "Document Title";
 
 		JournalTestUtil.addArticle(testGroup.getGroupId(), title, "");
@@ -46,7 +44,7 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 					new SuggestionsContributorConfiguration() {
 						{
 							setContributorName("basic");
-							setDisplayGroupName(displayGroupName);
+							setDisplayGroupName("Suggestions");
 						}
 					}
 				});
@@ -57,8 +55,7 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 			suggestionPage.fetchFirstItem();
 
 		Assert.assertEquals(
-			displayGroupName,
-			suggestionsContributorResults.getDisplayGroupName());
+			"Suggestions", suggestionsContributorResults.getDisplayGroupName());
 
 		Suggestion[] suggestions =
 			suggestionsContributorResults.getSuggestions();

@@ -602,7 +602,7 @@ definition {
 				key_settingFieldName = "Include Thumbnails And Previews During Staging",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			SystemSettings.viewSettingsText(settingsText = "If checked, then the generated previews and thumbnails will be included during staging process.");
+			SystemSettings.viewSettingsText(settingsText = "If checked, then the generated previews and thumbnails will be included during the staging process.");
 
 			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
 
@@ -610,7 +610,7 @@ definition {
 				key_settingFieldName = "Include Thumbnails And Previews During Staging",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			SystemSettings.viewSettingsText(settingsText = "If checked, then the generated previews and thumbnails will be included during staging process.");
+			SystemSettings.viewSettingsText(settingsText = "If checked, then the generated previews and thumbnails will be included during the staging process.");
 		}
 
 		task ("And: Enable local staging and add a new file to DM") {

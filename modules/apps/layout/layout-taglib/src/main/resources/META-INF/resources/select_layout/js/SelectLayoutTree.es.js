@@ -25,11 +25,15 @@ const nodeByName = (items, name) => {
 };
 
 export function SelectLayoutTree({
-	filter,
+	checkDisplayPage,
 	config,
+	filter,
+	groupId,
+	itemSelectorReturnType,
 	itemSelectorSaveEvent,
 	items: initialItems = [],
 	onItemsCountChange,
+	privateLayout,
 	multiSelection,
 	selectedLayoutIds,
 }) {
@@ -172,7 +176,12 @@ export function SelectLayoutTree({
 
 			return fetch(loadMoreItemsURL, {
 				body: Liferay.Util.objectToURLSearchParams({
+					[`${namespace}checkDisplayPage`]: checkDisplayPage,
+					[`${namespace}groupId`]: groupId,
+					[`${namespace}itemSelectorReturnType`]: itemSelectorReturnType,
+					[`${namespace}layoutUuid`]: item.id,
 					[`${namespace}parentLayoutId`]: item.layoutId,
+					[`${namespace}privateLayout`]: privateLayout,
 					[`${namespace}redirect`]:
 						window.location.pathname + window.location.search,
 					[`${namespace}start`]: cursor * maxPageSize,
@@ -194,7 +203,15 @@ export function SelectLayoutTree({
 					})
 				);
 		},
-		[loadMoreItemsURL, maxPageSize, namespace]
+		[
+			checkDisplayPage,
+			groupId,
+			itemSelectorReturnType,
+			loadMoreItemsURL,
+			privateLayout,
+			maxPageSize,
+			namespace,
+		]
 	);
 
 	return filteredItems.length ? (

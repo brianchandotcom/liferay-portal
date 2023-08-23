@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.redirect.RedirectURLSettingsUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -113,8 +115,8 @@ public abstract class FindStrutsAction implements StrutsAction {
 			String redirect = null;
 
 			if (inheritRedirect) {
-				String noSuchEntryRedirect = ParamUtil.getString(
-					httpServletRequest, "noSuchEntryRedirect");
+				String noSuchEntryRedirect = _getNoSuchEntryRedirect(
+					httpServletRequest);
 
 				redirect = HttpComponentsUtil.getParameter(
 					noSuchEntryRedirect, "redirect", false);
@@ -139,8 +141,8 @@ public abstract class FindStrutsAction implements StrutsAction {
 			httpServletResponse.sendRedirect(portletURL.toString());
 		}
 		catch (Exception exception) {
-			String noSuchEntryRedirect = ParamUtil.getString(
-				httpServletRequest, "noSuchEntryRedirect");
+			String noSuchEntryRedirect = _getNoSuchEntryRedirect(
+				httpServletRequest);
 
 			noSuchEntryRedirect = PortalUtil.escapeRedirect(
 				noSuchEntryRedirect);
@@ -210,6 +212,32 @@ public abstract class FindStrutsAction implements StrutsAction {
 		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
 		return layout;
+	}
+
+	private String _getNoSuchEntryRedirect(
+		HttpServletRequest httpServletRequest) {
+
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+		String securityMode = RedirectURLSettingsUtil.getSecurityMode(
+			companyId);
+
+		String noSuchEntryRedirect = ParamUtil.getString(
+			httpServletRequest, "noSuchEntryRedirect");
+
+		if ((securityMode.equals("domain") &&
+			 ArrayUtil.contains(
+				 RedirectURLSettingsUtil.getAllowedDomains(companyId),
+				 HttpComponentsUtil.getDomain(noSuchEntryRedirect))) ||
+			(securityMode.equals("ip") &&
+			 ArrayUtil.contains(
+				 RedirectURLSettingsUtil.getAllowedIPs(companyId),
+				 HttpComponentsUtil.getIpAddress(noSuchEntryRedirect)))) {
+
+			return noSuchEntryRedirect;
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

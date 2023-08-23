@@ -10,6 +10,8 @@ import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,6 +63,27 @@ public class ObjectRelationshipUtil {
 		}
 
 		throw new ObjectRelationshipReverseException();
+	}
+
+	public static Set<String> getObjectRelationshipTypes(
+		ObjectDefinition objectDefinition,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			return _defaultObjectRelationshipTypes;
+		}
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
+
+		if (systemObjectDefinitionManager == null) {
+			return Collections.emptySet();
+		}
+
+		return systemObjectDefinitionManager.
+			getAllowedObjectRelationshipTypes();
 	}
 
 	public static Map<String, String> getPKObjectFieldDBColumnNames(

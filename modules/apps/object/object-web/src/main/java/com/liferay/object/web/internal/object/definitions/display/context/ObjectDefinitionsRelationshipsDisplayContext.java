@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -187,20 +186,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 	public Set<String> getObjectRelationshipTypes(
 		ObjectDefinition objectDefinition) {
 
-		if (!objectDefinition.isUnmodifiableSystemObject()) {
-			return ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();
-		}
-
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager(objectDefinition.getName());
-
-		if (systemObjectDefinitionManager == null) {
-			return Collections.emptySet();
-		}
-
-		return systemObjectDefinitionManager.
-			getAllowedObjectRelationshipTypes();
+		return ObjectRelationshipUtil.getObjectRelationshipTypes(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
 	public String getRESTContextPath(ObjectDefinition objectDefinition) {

@@ -16,7 +16,8 @@ export default function ImportFragments(props: Props) {
 	return (
 		<Import
 			helpLink={{
-				href: 'https://portal.liferay.dev/docs',
+				href:
+					'https://learn.liferay.com/en/w/dxp/site-building/creating-pages/adding-pages/exporting-and-importing-page-templates',
 				message: Liferay.Language.get(
 					'read-more-about-exporting-and-importing-page-templates'
 				),

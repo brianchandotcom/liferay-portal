@@ -73,7 +73,7 @@ public class LogSource {
 
         // Is Log4J Available?
         try {
-            log4jIsAvailable = null != Class.forName("org.apache.log4j.Logger");
+            log4jIsAvailable = null != Class.forName("org.apache.logging.log4j.Logger");
         } catch (Throwable t) {
             log4jIsAvailable = false;
         }
@@ -217,3 +217,4 @@ public class LogSource {
         return (String[]) logs.keySet().toArray(new String[logs.size()]);
     }
 }
+/* @generated */

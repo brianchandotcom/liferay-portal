@@ -53,7 +53,7 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.system.util.SystemUtil;
+import com.liferay.object.system.util.SystemObjectDefinitionManagementChecker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -870,7 +870,7 @@ public class ObjectFieldLocalServiceImpl
 
 		if (system && !objectField.isMetadata() &&
 			objectDefinition.isModifiable() &&
-			!SystemUtil.allowManageSystemEntities()) {
+			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
 
 			throw new ObjectFieldSystemException(
 				"Only allowed bundles can create system fields");
@@ -1019,7 +1019,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		if (objectField.isSystem() && objectDefinition.isModifiable() &&
-			!SystemUtil.allowManageSystemEntities()) {
+			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
 
 			throw new ObjectFieldSystemException(
 				"Only allowed bundles can delete system object fields");

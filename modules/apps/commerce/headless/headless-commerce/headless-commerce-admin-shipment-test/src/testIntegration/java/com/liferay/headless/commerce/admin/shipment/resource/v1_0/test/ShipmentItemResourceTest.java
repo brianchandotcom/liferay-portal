@@ -282,7 +282,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				5, null, true, _serviceContext);
+				BigDecimal.valueOf(5), null, true, _serviceContext);
 
 		_commerceShipmentItems.add(_commerceShipmentItem);
 
@@ -309,11 +309,18 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				id = commerceShipmentItem.getCommerceShipmentItemId();
 				modifiedDate = commerceShipmentItem.getModifiedDate();
 				orderItemId = commerceShipmentItem.getCommerceOrderItemId();
-				quantity = commerceShipmentItem.getQuantity();
 				shipmentId = commerceShipmentItem.getCommerceShipmentId();
 				userName = commerceShipmentItem.getUserName();
 				warehouseId =
 					commerceShipmentItem.getCommerceInventoryWarehouseId();
+
+				setQuantity(
+					() -> {
+						BigDecimal shipmentItemQuantity =
+							commerceShipmentItem.getQuantity();
+
+						return shipmentItemQuantity.intValue();
+					});
 			}
 		};
 	}

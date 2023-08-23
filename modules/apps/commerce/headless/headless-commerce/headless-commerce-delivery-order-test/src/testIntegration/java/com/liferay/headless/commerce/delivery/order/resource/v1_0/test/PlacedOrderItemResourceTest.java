@@ -220,7 +220,8 @@ public class PlacedOrderItemResourceTest
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				placedOrderItem.getSkuId(), null,
 				BigDecimal.valueOf(placedOrderItem.getQuantity()), 0,
-				placedOrderItem.getQuantity(), StringPool.BLANK,
+				BigDecimal.valueOf(placedOrderItem.getQuantity()),
+				StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),

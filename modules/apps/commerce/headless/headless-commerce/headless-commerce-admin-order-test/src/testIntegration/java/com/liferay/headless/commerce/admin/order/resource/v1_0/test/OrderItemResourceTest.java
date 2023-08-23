@@ -320,7 +320,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				orderItem.getSkuId(), null,
 				BigDecimal.valueOf(orderItem.getQuantity()), 0,
-				orderItem.getQuantity(), StringPool.BLANK,
+				BigDecimal.valueOf(orderItem.getQuantity()), StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),
@@ -346,7 +346,6 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				printedNote = commerceOrderItem.getPrintedNote();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
-				shippedQuantity = commerceOrderItem.getShippedQuantity();
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 				sku = commerceOrderItem.getSku();
 				skuExternalReferenceCode =
@@ -359,6 +358,13 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 						BigDecimal quantity = commerceOrderItem.getQuantity();
 
 						return quantity.intValue();
+					});
+				setShippedQuantity(
+					() -> {
+						BigDecimal shippedQuantity =
+							commerceOrderItem.getShippedQuantity();
+
+						return shippedQuantity.intValue();
 					});
 				setVirtualItemURLs(
 					() -> {

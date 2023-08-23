@@ -1012,7 +1012,7 @@ public class CommerceOrderLocalServiceImpl
 				userId, newCommerceOrder.getCommerceOrderId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(),
-				commerceOrderItem.getReplacedCPInstanceId(), 0,
+				commerceOrderItem.getReplacedCPInstanceId(), BigDecimal.ZERO,
 				commerceOrderItem.getUnitOfMeasureKey(), commerceContext,
 				serviceContext);
 		}

@@ -120,7 +120,8 @@ public class PlacedOrderItemShipmentResourceTest
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				_cpInstance.getCPInstanceId(), null,
 				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)), 0,
-				RandomTestUtil.randomInt(1, 10), StringPool.BLANK,
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
+				StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),
@@ -220,8 +221,8 @@ public class PlacedOrderItemShipmentResourceTest
 				RandomTestUtil.randomString(),
 				commerceShipment.getCommerceShipmentId(),
 				_commerceOrderItem.getCommerceOrderItemId(), 0,
-				placedOrderItemShipment.getQuantity(), null, false,
-				_serviceContext);
+				BigDecimal.valueOf(placedOrderItemShipment.getQuantity()), null,
+				false, _serviceContext);
 
 		_commerceShipmentItems.add(commerceShipmentItem);
 
@@ -237,10 +238,17 @@ public class PlacedOrderItemShipmentResourceTest
 				id = commerceShipmentItem.getCommerceShipmentItemId();
 				modifiedDate = commerceShipmentItem.getModifiedDate();
 				orderId = _commerceOrder.getCommerceOrderId();
-				quantity = commerceShipmentItem.getQuantity();
 				shippingAddressId = commerceShipment.getCommerceAddressId();
 				shippingOptionName = commerceShipment.getShippingOptionName();
 				trackingNumber = commerceShipment.getTrackingNumber();
+
+				setQuantity(
+					() -> {
+						BigDecimal quantity =
+							commerceShipmentItem.getQuantity();
+
+						return quantity.intValue();
+					});
 			}
 		};
 	}

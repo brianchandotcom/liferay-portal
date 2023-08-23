@@ -542,7 +542,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		return commerceMoney.format(themeDisplay.getLocale());
 	}
 
-	private Integer _getInventory(
+	private BigDecimal _getInventory(
 			CPInstance cpInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -568,13 +568,9 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					getCommerceChannelGroupIdBySiteGroupId(
 						themeDisplay.getScopeGroupId());
 
-			BigDecimal stockQuantity =
-				_commerceInventoryEngine.getStockQuantity(
-					cpInstance.getCompanyId(), cpInstance.getGroupId(),
-					commerceChannelGroupId, cpInstance.getSku(),
-					StringPool.BLANK);
-
-			return stockQuantity.intValue();
+			return _commerceInventoryEngine.getStockQuantity(
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				commerceChannelGroupId, cpInstance.getSku(), StringPool.BLANK);
 		}
 
 		return null;

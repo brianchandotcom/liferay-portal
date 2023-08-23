@@ -128,8 +128,8 @@ public class ShippingAddressResourceTest
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				user.getUserId(), commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0, 1,
-				StringPool.BLANK,
+				cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0,
+				BigDecimal.ONE, StringPool.BLANK,
 				new TestCommerceContext(
 					accountEntry, commerceCurrency, commerceChannel, user,
 					testGroup, commerceOrder),

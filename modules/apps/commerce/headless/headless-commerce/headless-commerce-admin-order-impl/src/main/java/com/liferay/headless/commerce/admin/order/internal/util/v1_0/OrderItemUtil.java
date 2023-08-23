@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -70,7 +71,8 @@ public class OrderItemUtil {
 				GetterUtil.getString(orderItem.getOptions(), null),
 				BigDecimal.valueOf(GetterUtil.get(orderItem.getQuantity(), 0)),
 				GetterUtil.getLong(orderItem.getReplacedSkuId()),
-				GetterUtil.get(orderItem.getShippedQuantity(), 0),
+				BigDecimalUtil.get(
+					orderItem.getShippedQuantity(), BigDecimal.ZERO),
 				StringPool.BLANK, commerceContext, serviceContext);
 		}
 		else {
@@ -83,8 +85,9 @@ public class OrderItemUtil {
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
 					BigDecimal.valueOf(
 						GetterUtil.get(orderItem.getQuantity(), 0)),
-					GetterUtil.get(orderItem.getShippedQuantity(), 0),
-					BigDecimal.ONE, StringPool.BLANK, serviceContext);
+					BigDecimalUtil.get(
+						orderItem.getShippedQuantity(), BigDecimal.ZERO),
+					BigDecimal.ZERO, StringPool.BLANK, serviceContext);
 		}
 
 		commerceOrderItem =
@@ -208,7 +211,7 @@ public class OrderItemUtil {
 		String json = null;
 		String printedNote = StringPool.BLANK;
 		BigDecimal quantity = BigDecimal.ZERO;
-		int shippedQuantity = 0;
+		BigDecimal shippedQuantity = BigDecimal.ZERO;
 		long shippingAddressId = 0;
 
 		CommerceOrderItem commerceOrderItem =
@@ -243,7 +246,7 @@ public class OrderItemUtil {
 						GetterUtil.get(
 							orderItem.getQuantity(), quantity.intValue())),
 					GetterUtil.getLong(orderItem.getReplacedSkuId()),
-					GetterUtil.get(
+					BigDecimalUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
 					StringPool.BLANK, commerceContext, serviceContext);
 		}
@@ -259,7 +262,7 @@ public class OrderItemUtil {
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
 					quantity,
-					GetterUtil.get(
+					BigDecimalUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
 					BigDecimal.ONE, StringPool.BLANK, serviceContext);
 		}

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -102,11 +103,11 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 			BigDecimal commerceOrderItemQuantity =
 				commerceOrderItem.getQuantity();
 
-			int maxShippableQuantity =
-				commerceOrderItemQuantity.intValue() -
-					commerceOrderItem.getShippedQuantity();
+			BigDecimal maxShippableQuantity =
+				commerceOrderItemQuantity.subtract(
+					commerceOrderItem.getShippedQuantity());
 
-			int shipmentItemWarehouseItemQuantity = 0;
+			BigDecimal shipmentItemWarehouseItemQuantity = BigDecimal.ZERO;
 
 			long commerceShipmentId = ParamUtil.getLong(
 				httpServletRequest, "commerceShipmentId");
@@ -121,8 +122,8 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 				shipmentItemWarehouseItemQuantity =
 					commerceShipmentItem.getQuantity();
 
-				maxShippableQuantity =
-					maxShippableQuantity + commerceShipmentItem.getQuantity();
+				maxShippableQuantity = maxShippableQuantity.add(
+					commerceShipmentItem.getQuantity());
 			}
 
 			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -133,16 +134,15 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 						commerceOrderItem.getUnitOfMeasureKey());
 
 			if (commerceInventoryWarehouseItem != null) {
-				int quantity = 0;
+				BigDecimal quantity = BigDecimal.ZERO;
 				BigDecimal commerceInventoryWarehouseItemQuantity =
 					commerceInventoryWarehouseItem.getQuantity();
 
 				if (commerceInventoryWarehouseItemQuantity != null) {
-					quantity =
-						commerceInventoryWarehouseItemQuantity.intValue();
+					quantity = commerceInventoryWarehouseItemQuantity;
 				}
 
-				if (maxShippableQuantity > quantity) {
+				if (BigDecimalUtil.gt(maxShippableQuantity, quantity)) {
 					maxShippableQuantity = quantity;
 				}
 
@@ -150,9 +150,9 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					new Warehouse(
 						commerceInventoryWarehouseId,
 						new WarehouseItem(
-							inputName, maxShippableQuantity, 0,
-							shipmentItemWarehouseItemQuantity),
-						quantity, StringPool.BLANK,
+							inputName, maxShippableQuantity.intValue(), 0,
+							shipmentItemWarehouseItemQuantity.intValue()),
+						quantity.intValue(), StringPool.BLANK,
 						commerceInventoryWarehouse.getName(
 							_portal.getLocale(httpServletRequest))));
 			}
@@ -161,8 +161,9 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					new Warehouse(
 						commerceInventoryWarehouseId,
 						new WarehouseItem(
-							inputName, shipmentItemWarehouseItemQuantity, 0,
-							shipmentItemWarehouseItemQuantity),
+							inputName,
+							shipmentItemWarehouseItemQuantity.intValue(), 0,
+							shipmentItemWarehouseItemQuantity.intValue()),
 						0, StringPool.BLANK,
 						commerceInventoryWarehouse.getName(
 							_portal.getLocale(httpServletRequest))));

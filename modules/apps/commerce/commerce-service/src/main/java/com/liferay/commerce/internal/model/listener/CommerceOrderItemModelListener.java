@@ -79,19 +79,23 @@ public class CommerceOrderItemModelListener
 					_commerceOrderItemLocalService.getCommerceOrderItem(
 						customerCommerceOrderItemId);
 
-				int originalShippedQuantity =
+				BigDecimal originalShippedQuantity =
 					originalCommerceOrderItem.getShippedQuantity();
-				int newShippedQuantity = commerceOrderItem.getShippedQuantity();
+				BigDecimal newShippedQuantity =
+					commerceOrderItem.getShippedQuantity();
 
 				boolean update = false;
 
 				if (originalShippedQuantity != newShippedQuantity) {
-					int commerceShippedQuantity =
+					BigDecimal commerceShippedQuantity =
 						customerCommerceOrderItem.getShippedQuantity();
 
 					customerCommerceOrderItem.setShippedQuantity(
-						commerceShippedQuantity - originalShippedQuantity +
-							newShippedQuantity);
+						commerceShippedQuantity.subtract(
+							originalShippedQuantity
+						).add(
+							newShippedQuantity
+						));
 
 					update = true;
 				}

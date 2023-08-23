@@ -667,27 +667,22 @@ definition {
 
 		Navigator.openURL();
 
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Category 1",
-			vocabularyName = "Topic");
-
-		JSONCategory.addCategory(
-			groupName = "Global",
-			title = "Category 2",
-			vocabularyName = "Stage");
+		for (var categories : list "Category 1,Category 2") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = ${categories},
+				vocabularyName = "Topic");
+		}
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject200");
 
 		LexiconEntry.gotoAdd();
 
-		ObjectAdmin.selectCategoryInObjectEntry(
-			categoryNameList = "Category 1",
-			vocabularyName = "Topic");
-
-		ObjectAdmin.selectCategoryInObjectEntry(
-			categoryNameList = "Category 2",
-			vocabularyName = "Stage");
+		for (var categories : list "Category 1,Category 2") {
+			ObjectAdmin.selectCategoryInObjectEntry(
+				categoryNameList = ${categories},
+				vocabularyName = "Topic");
+		}
 
 		PortletEntry.save();
 

@@ -4682,6 +4682,310 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPutByExternalReferenceCodeManyToManyRelationshipWithSelf()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+			).put(
+				_objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2
+					).put(
+						"externalReferenceCode", _ERC_VALUE_2
+					),
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_3
+					).put(
+						"externalReferenceCode", _ERC_VALUE_3
+					))
+			).toString(),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/", _ERC_VALUE_1),
+			Http.Method.PUT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2
+					).put(
+						"externalReferenceCode", _ERC_VALUE_2
+					),
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_3
+					).put(
+						"externalReferenceCode", _ERC_VALUE_3
+					))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 2
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+					jsonObject.get("id"), StringPool.SLASH,
+					_objectRelationship1.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testPutByExternalReferenceCodeMultipleManyToManyRelationships()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition3, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				).put(
+					_objectRelationship1.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {RandomTestUtil.randomString()},
+						_OBJECT_FIELD_NAME_2,
+						new String[] {RandomTestUtil.randomString()})
+				).put(
+					_objectRelationship2.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {_ERC_VALUE_3},
+						RandomTestUtil.randomString(),
+						new String[] {RandomTestUtil.randomString()})
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					_objectRelationship1.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {_ERC_VALUE_2}, _OBJECT_FIELD_NAME_2,
+						new String[] {_NEW_OBJECT_FIELD_VALUE_2})
+				).toString(),
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/", _ERC_VALUE_1),
+				Http.Method.PUT));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+			).put(
+				_objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put("externalReferenceCode", _ERC_VALUE_2))
+			).put(
+				_objectRelationship2.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put("externalReferenceCode", _ERC_VALUE_3))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/", _ERC_VALUE_1,
+					"?nestedFields=", _objectRelationship1.getName(), ",",
+					_objectRelationship2.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testPutByExternalReferenceCodeMultipleOneToManyRelationships()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition3, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", _ERC_VALUE_2
+			).put(
+				_objectRelationship1.getName(),
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				)
+			).put(
+				_objectRelationship2.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
+					).put(
+						"externalReferenceCode", _ERC_VALUE_3
+					),
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_3, RandomTestUtil.randomString()
+					).put(
+						"externalReferenceCode", RandomTestUtil.randomString()
+					))
+			).toString(),
+			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2
+				).put(
+					_objectRelationship2.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {_ERC_VALUE_3}, _OBJECT_FIELD_NAME_3,
+						new String[] {_NEW_OBJECT_FIELD_VALUE_3})
+				).toString(),
+				StringBundler.concat(
+					_objectDefinition2.getRESTContextPath(),
+					"/by-external-reference-code/", _ERC_VALUE_2),
+				Http.Method.PUT));
+
+		String objectEntryId = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/", _ERC_VALUE_1),
+			Http.Method.GET
+		).get(
+			"id"
+		).toString();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2
+					).put(
+						"externalReferenceCode", _ERC_VALUE_2
+					))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+					objectEntryId, StringPool.SLASH,
+					_objectRelationship1.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_3, _NEW_OBJECT_FIELD_VALUE_3
+					).put(
+						"externalReferenceCode", _ERC_VALUE_3
+					))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
+					jsonObject.get("id"), StringPool.SLASH,
+					_objectRelationship2.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testPutByExternalReferenceCodeWithNonexistentValueOneToManyRelationship()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					_objectRelationship1.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {_ERC_VALUE_2}, _OBJECT_FIELD_NAME_2,
+						new String[] {_NEW_OBJECT_FIELD_VALUE_2})
+				).toString(),
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/", _ERC_VALUE_1),
+				Http.Method.PUT));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+			).put(
+				_objectRelationship1.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put("externalReferenceCode", _ERC_VALUE_2))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/", _ERC_VALUE_1,
+					"?nestedFields=", _objectRelationship1.getName()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
 	public void testPutCustomObjectEntryUnlinkNestedCustomObjectEntries()
 		throws Exception {
 
@@ -5756,6 +6060,8 @@ public class ObjectEntryResourceTest {
 
 	private static final String _ERC_VALUE_2 = RandomTestUtil.randomString();
 
+	private static final String _ERC_VALUE_3 = RandomTestUtil.randomString();
+
 	private static final String _LIST_TYPE_ENTRY_KEY =
 		"x" + RandomTestUtil.randomString();
 
@@ -5763,6 +6069,9 @@ public class ObjectEntryResourceTest {
 		RandomTestUtil.randomString();
 
 	private static final String _NEW_OBJECT_FIELD_VALUE_2 =
+		RandomTestUtil.randomString();
+
+	private static final String _NEW_OBJECT_FIELD_VALUE_3 =
 		RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_1 =

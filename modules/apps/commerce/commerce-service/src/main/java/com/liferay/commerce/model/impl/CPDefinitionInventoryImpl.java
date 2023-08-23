@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.math.BigDecimal;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina

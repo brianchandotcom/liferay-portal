@@ -5,7 +5,6 @@
 
 package com.liferay.jethr0.entity.dalo;
 
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenConfiguration;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.util.BaseRetryable;
@@ -25,7 +24,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -37,7 +35,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 public abstract class BaseEntityDefinitionDALO<T extends Entity>
-	implements EntityDefinitionDALO<T> {
+	extends BaseEntityDALO implements EntityDefinitionDALO<T> {
 
 	@Override
 	public T create(JSONObject jsonObject) {
@@ -156,9 +154,7 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 					).contentType(
 						MediaType.APPLICATION_JSON
 					).header(
-						"Authorization",
-						_liferayOAuth2AccessTokenConfiguration.
-							getAuthorization()
+						"Authorization", getAuthorization()
 					).body(
 						BodyInserters.fromValue(requestJSONObject.toString())
 					).retrieve(
@@ -167,7 +163,7 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 					).block();
 				}
 				catch (Exception exception) {
-					_liferayOAuth2AccessTokenConfiguration.refresh();
+					refresh();
 
 					throw new RuntimeException(exception);
 				}
@@ -217,16 +213,14 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 					).accept(
 						MediaType.APPLICATION_JSON
 					).header(
-						"Authorization",
-						_liferayOAuth2AccessTokenConfiguration.
-							getAuthorization()
+						"Authorization", getAuthorization()
 					).retrieve(
 					).bodyToMono(
 						Void.class
 					).block();
 				}
 				catch (Exception exception) {
-					_liferayOAuth2AccessTokenConfiguration.refresh();
+					refresh();
 
 					throw new RuntimeException(exception);
 				}
@@ -293,16 +287,14 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 							).accept(
 								MediaType.APPLICATION_JSON
 							).header(
-								"Authorization",
-								_liferayOAuth2AccessTokenConfiguration.
-									getAuthorization()
+								"Authorization", getAuthorization()
 							).retrieve(
 							).bodyToMono(
 								String.class
 							).block();
 						}
 						catch (Exception exception) {
-							_liferayOAuth2AccessTokenConfiguration.refresh();
+							refresh();
 
 							throw new RuntimeException(exception);
 						}
@@ -427,9 +419,7 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 					).contentType(
 						MediaType.APPLICATION_JSON
 					).header(
-						"Authorization",
-						_liferayOAuth2AccessTokenConfiguration.
-							getAuthorization()
+						"Authorization", getAuthorization()
 					).body(
 						BodyInserters.fromValue(requestJSONObject.toString())
 					).retrieve(
@@ -438,7 +428,7 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 					).block();
 				}
 				catch (Exception exception) {
-					_liferayOAuth2AccessTokenConfiguration.refresh();
+					refresh();
 
 					throw new RuntimeException(exception);
 				}
@@ -484,10 +474,6 @@ public abstract class BaseEntityDefinitionDALO<T extends Entity>
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseEntityDALO.class);
-
-	@Autowired
-	private LiferayOAuth2AccessTokenConfiguration
-		_liferayOAuth2AccessTokenConfiguration;
 
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;

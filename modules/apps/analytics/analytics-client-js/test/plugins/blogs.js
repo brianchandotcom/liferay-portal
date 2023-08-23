@@ -26,6 +26,29 @@ const createBlogElement = (assetId, assetTitle) => {
 	return blogElement;
 };
 
+function createDynamicBlogElement(attrs) {
+	const element = document.createElement('div');
+
+	for (let index = 0; index < Object.keys(attrs).length; index++) {
+		element.dataset[Object.keys(attrs)[index]] = attrs[index];
+	}
+
+	element.innerText =
+		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
+
+	document.body.appendChild(element);
+
+	const paragraph = document.createElement('p');
+
+	paragraph.href = googleUrl;
+
+	setInnerHTML(paragraph, 'Paragraph inside a Blog');
+
+	element.appendChild(paragraph);
+
+	return [element, paragraph];
+}
+
 describe('Blogs Plugin', () => {
 	let Analytics;
 
@@ -34,7 +57,6 @@ describe('Blogs Plugin', () => {
 		// Force attaching DOM Content Loaded event
 
 		Object.defineProperty(document, 'readyState', {
-			value: 'loading',
 			writable: false,
 		});
 
@@ -192,5 +214,44 @@ describe('Blogs Plugin', () => {
 
 			document.body.removeChild(blogElement);
 		});
+	});
+
+	describe('blogClicked required attributes', () => {
+		it.each([
+			[
+				'assetId',
+				{
+					analyticsAssetTitle: 'assetTitle',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetTitle',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetType',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'assetTitle',
+				},
+			],
+		])(
+			'is not fired if asset missing %s attribute',
+			async (label, attrs) => {
+				const [element, paragraph] = await createDynamicBlogElement(
+					attrs
+				);
+
+				await userEvent.click(paragraph);
+
+				expect(Analytics.getEvents()).toEqual([]);
+
+				document.body.removeChild(element);
+			}
+		);
 	});
 });

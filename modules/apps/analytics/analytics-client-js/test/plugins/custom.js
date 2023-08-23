@@ -46,6 +46,28 @@ const createCustomAssetElementWithForm = () => {
 	return customAssetElement;
 };
 
+const createDynamicCustomAssetElement = (attrs) => {
+	const element = document.createElement('div');
+
+	element.dataset.analyticsAssetCategory = 'custom-asset-category';
+
+	for (let index = 0; index < Object.keys(attrs).length; index++) {
+		element.dataset[Object.keys(attrs)[index]] = attrs[index];
+	}
+
+	document.body.appendChild(element);
+
+	const paragraph = document.createElement('p');
+
+	paragraph.href = googleUrl;
+
+	setInnerHTML(paragraph, 'Paragraph inside a Custom Asset');
+
+	element.appendChild(paragraph);
+
+	return [element, paragraph];
+};
+
 describe('Custom Asset Plugin', () => {
 	let Analytics;
 
@@ -276,5 +298,45 @@ describe('Custom Asset Plugin', () => {
 
 			document.body.removeChild(customAssetElement);
 		});
+	});
+
+	describe('assetClicked required attributes', () => {
+		it.each([
+			[
+				'assetId',
+				{
+					analyticsAssetTitle: 'assetTitle',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetTitle',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetType',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'assetTitle',
+				},
+			],
+		])(
+			'is not fired if asset missing %s attribute',
+			async (label, attrs) => {
+				const [
+					element,
+					paragraph,
+				] = await createDynamicCustomAssetElement(attrs);
+
+				await userEvent.click(paragraph);
+
+				expect(Analytics.getEvents()).toEqual([]);
+
+				document.body.removeChild(element);
+			}
+		);
 	});
 });

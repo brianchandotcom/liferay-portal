@@ -4672,6 +4672,21 @@ public class JenkinsResultsParserUtil {
 					NotificationUtil.sendSlackNotification(
 						sb.toString(), "#ci-notifications", ":liferay-ci:",
 						"Secondary Rate Limit exceeded", "Liferay CI");
+
+					if ((retryPeriodOverride == null) ||
+						(retryPeriodOverride == 0)) {
+
+						retryPeriodOverride = (long)retryPeriod;
+
+						for (int i = 0; i < retryCount; i++) {
+							retryPeriodOverride *= retryPeriodOverride;
+						}
+					}
+
+					if (retryPeriodOverride > _SECONDS_RETRY_PERIOD_MAX) {
+						throw new GitHubSecondaryRateLimitIOException(
+							retryPeriodOverride, ioException);
+					}
 				}
 
 				long retryPeriodMillis = 1000 * retryPeriod;
@@ -5487,6 +5502,25 @@ public class JenkinsResultsParserUtil {
 		}
 
 		protected String token;
+
+	}
+
+	public static class GitHubSecondaryRateLimitIOException
+		extends IOException {
+
+		public GitHubSecondaryRateLimitIOException(
+			long retryAfterSeconds, IOException ioException) {
+
+			super(ioException);
+
+			_retryAfterSeconds = retryAfterSeconds;
+		}
+
+		public long getRetryAfterSeconds() {
+			return _retryAfterSeconds;
+		}
+
+		private final long _retryAfterSeconds;
 
 	}
 
@@ -6379,6 +6413,8 @@ public class JenkinsResultsParserUtil {
 	private static final int _RETRIES_SIZE_MAX_DEFAULT = 3;
 
 	private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
+
+	private static final int _SECONDS_RETRY_PERIOD_MAX = 60 * 30;
 
 	private static final String _URL_LOAD_BALANCER =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/load_balancer";

@@ -157,6 +157,7 @@ PackageinfoBNDExportPackageCheck | packageinfo | Finds legacy `packageinfo` file
 PersistenceCallCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds illegal persistence calls across component boundaries. |
 [PersistenceUpdateCheck](check/persistence_update_check.markdown#persistenceupdatecheck) | .java | Checks that there are no stale references in service code from persistence updates. |
 PoshiDependenciesFileLocationCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Checks that dependencies files are located in the correct directory. |
+PoshiSmokeTestCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Checks for missing and unnecessary `property ci.retries.disabled = true` in smoke test. |
 PrimitiveWrapperInstantiationCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `new Type` is used for primitive types (use `Type.valueOf` instead). |
 PrincipalExceptionCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds calls to `PrincipalException.class.getName()` (use `PrincipalException.getNestedClasses()` instead). |
 PropertiesArchivedModulesCheck | .eslintignore, .prettierignore or .properties | Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`. |

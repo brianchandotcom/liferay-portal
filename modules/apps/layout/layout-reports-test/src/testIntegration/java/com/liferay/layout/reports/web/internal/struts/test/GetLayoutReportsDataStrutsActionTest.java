@@ -6,6 +6,7 @@
 package com.liferay.layout.reports.web.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.reports.web.internal.util.LayoutReportsTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -82,32 +83,38 @@ public class GetLayoutReportsDataStrutsActionTest {
 				"segmentsExperiences");
 
 		Assert.assertNotNull(segmentsExperiencesJSONArray);
-
 		Assert.assertEquals(1, segmentsExperiencesJSONArray.length());
 
 		JSONArray tabsDataJSONArray = jsonObject.getJSONArray("tabsData");
 
 		Assert.assertNotNull(tabsDataJSONArray);
-
 		Assert.assertEquals(2, tabsDataJSONArray.length());
-
-		JSONObject renderTimesTabJSONObject = tabsDataJSONArray.getJSONObject(
-			0);
-
-		Assert.assertNotNull(renderTimesTabJSONObject);
-
-		Assert.assertEquals(
-			"render-times", renderTimesTabJSONObject.getString("id"));
-		Assert.assertEquals(
-			"Render Times", renderTimesTabJSONObject.getString("name"));
-		Assert.assertEquals(
-			"http://localhost:8080/layout_reports" +
-				"/get_render_times_data?p_l_id=" +
-					String.valueOf(layout.getPlid()),
-			renderTimesTabJSONObject.getString("url"));
-
+		_assertRenderTimesTabJSONObject(
+			layout, tabsDataJSONArray.getJSONObject(0));
 		_assertGooglePageSpeedInsightsTabJSONObject(
 			layout, tabsDataJSONArray.getJSONObject(1));
+	}
+
+	@Test
+	public void testGetLayoutReportsDataStrutsActionWithContentLayoutAndGooglePageSpeedDisabled()
+		throws Exception {
+
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), false, _group.getGroupId(),
+				() -> {
+					Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+					JSONObject jsonObject = _serveResource(layout);
+
+					JSONArray tabsDataJSONArray = jsonObject.getJSONArray(
+						"tabsData");
+
+					Assert.assertNotNull(tabsDataJSONArray);
+					Assert.assertEquals(1, tabsDataJSONArray.length());
+					_assertRenderTimesTabJSONObject(
+						layout, tabsDataJSONArray.getJSONObject(0));
+				});
 	}
 
 	@Test
@@ -203,6 +210,18 @@ public class GetLayoutReportsDataStrutsActionTest {
 		Assert.assertEquals(
 			"http://localhost:8080/layout_reports" +
 				"/get_google_page_speed_data?p_l_id=" +
+					String.valueOf(layout.getPlid()),
+			jsonObject.getString("url"));
+	}
+
+	private void _assertRenderTimesTabJSONObject(
+		Layout layout, JSONObject jsonObject) {
+
+		Assert.assertEquals("render-times", jsonObject.getString("id"));
+		Assert.assertEquals("Render Times", jsonObject.getString("name"));
+		Assert.assertEquals(
+			"http://localhost:8080/layout_reports" +
+				"/get_render_times_data?p_l_id=" +
 					String.valueOf(layout.getPlid()),
 			jsonObject.getString("url"));
 	}

@@ -554,6 +554,13 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163066");
 		}
 
+		task ("Create an Entry (via API)") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject163066",
+				value = "Entry Test");
+		}
+
 		task ("Go to Custom Object and change the panel category key") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -562,13 +569,6 @@ definition {
 			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Users");
 
 			Button.clickSave();
-		}
-
-		task ("Create an Entry (via API)") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customField",
-				objectName = "CustomObject163066",
-				value = "Entry Test");
 		}
 
 		task ("Restart portal") {

@@ -188,6 +188,8 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 					).put(
 						"path", _API_APPLICATION_PATH
 					).put(
+						"retrieveType", "collection"
+					).put(
 						"scope", "company"
 					))
 			).put(

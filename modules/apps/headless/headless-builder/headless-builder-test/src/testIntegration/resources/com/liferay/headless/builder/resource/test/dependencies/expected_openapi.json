@@ -50,6 +50,16 @@
 					"name": "FileEntry"
 				}
 			},
+			"IndividualSchemaName": {
+				"description": "individual description",
+				"properties": {
+					"individualTextProperty": {
+						"description": "individualTextProperty description",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"Link": {
 				"properties": {
 					"href": {
@@ -274,6 +284,41 @@
 	},
 	"openapi": "3.0.1",
 	"paths": {
+		"/individual-path/{individualPathId}": {
+			"get": {
+				"operationId": "getIndividualPath",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "individualPathId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IndividualSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/IndividualSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"IndividualSchemaName"
+				]
+			}
+		},
 		"/openapi.{type}": {
 			"get": {
 				"operationId": "getOpenAPI",

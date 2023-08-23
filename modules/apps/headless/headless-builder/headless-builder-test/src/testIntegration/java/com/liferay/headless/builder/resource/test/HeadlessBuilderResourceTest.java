@@ -78,6 +78,7 @@ import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -173,12 +174,41 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetIndividualEndpoint() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, "ID", "singleElement",
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		ObjectEntry objectEntry = _addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1");
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textProperty", "value1"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1,
+					StringPool.FORWARD_SLASH, objectEntry.getObjectEntryId()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
 	public void testGetWithAPIFilter() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_1, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPIFilter(
 			_API_ENDPOINT_ERC_1,
@@ -241,7 +271,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_1, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPISort(_API_ENDPOINT_ERC_1, String.format("%s:asc", "textField"));
 
@@ -409,7 +440,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_1, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPISort(_API_ENDPOINT_ERC_1, String.format("%s:desc", "textField"));
 
@@ -577,12 +609,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_1, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 		_addAPIApplication(
 			_API_APPLICATION_ERC_2, _API_ENDPOINT_ERC_2, _BASE_URL_2,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_2, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_2, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		String endpoint1 = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 		String scopedEndpoint1 = StringBundler.concat(
@@ -710,7 +744,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_1, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -752,7 +787,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, APIApplication.Endpoint.Scope.COMPANY);
+			_API_APPLICATION_PATH_1, null, "collection",
+			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -935,7 +971,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectDefinition1.getExternalReferenceCode(),
 			_siteScopedObjectRelationship1.getName(),
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
-			APIApplication.Endpoint.Scope.GROUP);
+			null, "collection", APIApplication.Endpoint.Scope.GROUP);
 
 		String endpointPath = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 		String scopedEndpointPath = StringBundler.concat(
@@ -1059,7 +1095,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			String apiEndpointExternalReferenceCode, String baseURL,
 			String objectDefinitionExternalReferenceCode,
 			String objectRelationshipName1, String objectRelationshipName2,
-			String path, APIApplication.Endpoint.Scope scope)
+			String path, String pathParameter, String retrieveType,
+			APIApplication.Endpoint.Scope scope)
 		throws Exception {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
@@ -1067,21 +1104,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		assertSuccessfulHttpCode(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
-				JSONUtil.put(
-					JSONUtil.put(
-						"description", "description"
-					).put(
-						"externalReferenceCode",
-						apiEndpointExternalReferenceCode
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "name"
-					).put(
-						"path", path
-					).put(
-						"scope", StringUtil.toLowerCase(scope.name())
-					))
+				_createAPIEndpoint(
+					apiEndpointExternalReferenceCode, path, pathParameter,
+					retrieveType, scope)
 			).put(
 				"apiApplicationToAPISchemas",
 				JSONUtil.put(
@@ -1497,6 +1522,52 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(
 			String.valueOf(expectedObjectFieldValue),
 			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
+	}
+
+	private JSONArray _createAPIEndpoint(
+		String apiEndpointExternalReferenceCode, String path,
+		String pathParameter, String retrieveType,
+		APIApplication.Endpoint.Scope scope) {
+
+		if (Objects.equals(retrieveType, "singleElement") &&
+			(pathParameter != null)) {
+
+			return JSONUtil.put(
+				JSONUtil.put(
+					"description", "description"
+				).put(
+					"externalReferenceCode", apiEndpointExternalReferenceCode
+				).put(
+					"httpMethod", "get"
+				).put(
+					"name", "name"
+				).put(
+					"path", path + "/{pathId}"
+				).put(
+					"pathParameter", pathParameter
+				).put(
+					"retrieveType", retrieveType
+				).put(
+					"scope", StringUtil.toLowerCase(scope.name())
+				));
+		}
+
+		return JSONUtil.put(
+			JSONUtil.put(
+				"description", "description"
+			).put(
+				"externalReferenceCode", apiEndpointExternalReferenceCode
+			).put(
+				"httpMethod", "get"
+			).put(
+				"name", "name"
+			).put(
+				"path", path
+			).put(
+				"retrieveType", retrieveType
+			).put(
+				"scope", StringUtil.toLowerCase(scope.name())
+			));
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

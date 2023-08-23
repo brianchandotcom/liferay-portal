@@ -47,6 +47,8 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
 			).put(
+				"retrieveType", "collection"
+			).put(
 				"scope", "company"
 			).toString(),
 			"headless-builder/endpoints", Http.Method.POST);

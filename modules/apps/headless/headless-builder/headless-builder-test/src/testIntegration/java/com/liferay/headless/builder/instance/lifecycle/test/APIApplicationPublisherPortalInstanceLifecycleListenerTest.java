@@ -111,6 +111,8 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 						"path",
 						StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
 					).put(
+						"retrieveType", "collection"
+					).put(
 						"scope", "company"
 					))
 			).put(

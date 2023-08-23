@@ -770,32 +770,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					import java.util.regex.Matcher;
 					import java.util.regex.Pattern;
 
-					public static File getBndFile(File file) {
-						if (file == null) {
-							return null;
-						}
-
-						File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
-
-						File parentFile = canonicalFile.getParentFile();
-
-						if ((parentFile == null) || !parentFile.exists()) {
-							return file;
-						}
-
-						if (!canonicalFile.isDirectory()) {
-							return getBndFile(parentFile);
-						}
-
-						File bndFile = new File(canonicalFile, "bnd.bnd");
-
-						if (!bndFile.exists()) {
-							return getBndFile(parentFile);
-						}
-
-						return bndFile;
-					}
-
 					public static String getTestName(String testClassFilePath) {
 						Pattern pattern = Pattern.compile("/([^/]+)\\.java");
 
@@ -808,20 +782,26 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						return null;
 					}
 
-					public static String getTestProjectName(File bndFile) {
-						Properties bndFileProperties = JenkinsResultsParserUtil.getProperties(new File[] {bndFile});
+					public static String getTestProjectName(String testClassFilePath) {
+						String projectDir = project.getProperty("project.dir");
 
-						String bundleSymbolicName = bndFileProperties.getProperty("Bundle-SymbolicName");
+						String regex = projectDir + "/modules(\\/+.+)/src/test";
 
-						File modulesPropertiesFile = new File(project.getProperty("project.dir") + "/modules/modules.properties");
+						Pattern pattern = Pattern.compile(regex);
 
-						Properties modulesProperties = JenkinsResultsParserUtil.getProperties(new File[] {modulesPropertiesFile});
+						Matcher matcher = pattern.matcher(testClassFilePath);
 
-						return modulesProperties.getProperty("project.name[" + bundleSymbolicName + "]");
+						if (matcher.find()) {
+							String testProjectName = matcher.group(1);
+
+							return testProjectName.replaceAll("/", ":");
+						}
+
+						return null;
 					}
 
-					public static String getTestProjectResultsDir(File bndFile) {
-						String testProjectName = getTestProjectName(bndFile);
+					public static String getTestProjectResultsDir(String testClassFilePath) {
+						String testProjectName = getTestProjectName(testClassFilePath);
 
 						File testProjectResultsDir = new File(project.getProperty("project.dir") + "/modules/" + testProjectName.replaceAll(":", "/") + "/test-results/");
 
@@ -830,21 +810,15 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					String testClassFilePath = project.getProperty("test.class.file.path");
 
-					File bndFile = getBndFile(new File(testClassFilePath));
-
-					if (bndFile == null) {
-						throw new Exception("Unable to find bnd.bnd file for " + testClassFilePath);
-					}
-
-					String testProjectName = getTestProjectName(bndFile);
+					String testProjectName = getTestProjectName(testClassFilePath);
 
 					if (testProjectName == null) {
-						throw new Exception("Unable to find corresponding project name for module test. Please add project name to modules/modules.properties.");
+						throw new Exception("Unable to find corresponding project name for " + testClassFilePath + ".");
 					}
 
 					project.setProperty("test.name", getTestName(testClassFilePath));
 					project.setProperty("test.project.name", testProjectName);
-					project.setProperty("test.project.results.dir", getTestProjectResultsDir(bndFile));
+					project.setProperty("test.project.results.dir", getTestProjectResultsDir(testClassFilePath));
 				]]>
 			</beanshell>
 		</sequential>

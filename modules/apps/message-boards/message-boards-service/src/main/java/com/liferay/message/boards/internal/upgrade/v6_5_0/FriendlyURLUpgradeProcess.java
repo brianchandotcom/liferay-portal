@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 /**
  * @author Nilton Vieira
  */
-public class UrlCategoryUpgradeProcess extends UpgradeProcess {
+public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

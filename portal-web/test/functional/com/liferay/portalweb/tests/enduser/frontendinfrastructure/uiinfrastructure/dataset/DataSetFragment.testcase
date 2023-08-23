@@ -9,6 +9,8 @@ definition {
 	property testray.main.component.name = "Frontend Data Set";
 
 	setUp {
+		var portalURL = PropsUtil.get("portal.url");
+
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -35,7 +37,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-172443. Smoke test to check if it is possible to add a view to the fragment"
+	@description = "LPS-172403. Smoke test to check if it is possible to add a view to the fragment"
 	@priority = 5
 	test CanAddDataSetView {
 		task ("Given creating a Data Set entry, view and fields") {
@@ -70,15 +72,17 @@ definition {
 		}
 
 		task ("Then Confirm the names of the columns are the same for the fields.") {
+			var portalURL = PropsUtil.get("portal.url");
+
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Navigator.gotoPage(pageName = "Data Set Test Page");
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
 
 			DataSetFragment.viewColumnTitle(key_colunmTitleList = "id,name,number");
 		}
 	}
 
-	@description = "LPS-172443. Assert if 'Data Set' can be categorized as 'Data Set'"
+	@description = "LPS-172403. Assert if 'Data Set' can be categorized as 'Data Set'"
 	@priority = 3
 	test CanBeCategorizedInAddWidgetList {
 		task ("And When on Content Page") {
@@ -108,7 +112,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-172443. Smoke test to check if it is possible cancel change the view "
+	@description = "LPS-172403. Smoke test to check if it is possible cancel change the view "
 	@priority = 4
 	test CanCancelChangeDataSetView {
 		task ("Given creating a Data Set entry, view and fields") {
@@ -189,15 +193,17 @@ definition {
 		}
 
 		task ("Then Confirm that the column data matches the fields of the Full countries View") {
+			var portalURL = PropsUtil.get("portal.url");
+
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Navigator.gotoPage(pageName = "Data Set Test Page");
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
 
 			DataSetFragment.viewColumnTitle(key_colunmTitleList = "id,name,number");
 		}
 	}
 
-	@description = "LPS-172443. Smoke test to check if it is possible to change the view "
+	@description = "LPS-172403. Smoke test to check if it is possible to change the view "
 	@priority = 5
 	test CanChangeDataSetView {
 		task ("Given creating a Data Set entry, view and fields") {
@@ -262,15 +268,17 @@ definition {
 		}
 
 		task ("Then Confirm that the column data matches the fields of the Abbreviations view") {
+			var portalURL = PropsUtil.get("portal.url");
+
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			Navigator.gotoPage(pageName = "Data Set Test Page");
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
 
 			DataSetFragment.viewColumnTitle(key_colunmTitleList = "name,a3,a2");
 		}
 	}
 
-	@description = "LPS-172443. Smoke test to verify Data Set Fragment can be removed"
+	@description = "LPS-172403. Smoke test to verify Data Set Fragment can be removed"
 	@priority = 5
 	test CanRemoveFragment {
 		task ("Given a portlet on public page") {
@@ -294,7 +302,45 @@ definition {
 		}
 	}
 
-	@description = "LPS-172443. Confirm that the select view button changes to the name of the selected view"
+	@description = "LPS-172403. Confirm empty message when no view was created"
+	@priority = 4
+	test EmptyMessageDisplayedWhenNoViewCreated {
+		task ("When add a dataset fragment") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("Then Confirm that the portlet shows the message: Select a dataset view.") {
+			PageEditor.viewFragmentMessageInfo(
+				fragmentName = "Data Set",
+				messageInfo = "Select a data set view.");
+		}
+
+		task ("When clicking on Select Data Set View") {
+			PageEditor.gotoConfiguration(fragmentName = "Data Set");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+		}
+
+		task ("Then confirm that the Dataset view modal is opened") {
+			AssertTextEquals(
+				locator1 = "DataEngineModal#MODAL_TITLE",
+				value1 = "Select");
+		}
+
+		task ("And confirm that there is no created views") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
+	@description = "LPS-172403. Confirm that the select view button changes to the name of the selected view"
 	@priority = 4
 	test NameOfViewIsDisplayedOnButton {
 		task ("Given creating a Data Set entry, view and fields") {
@@ -334,45 +380,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-172443. Confirm empty message when no view was created"
-	@priority = 4
-	test ViewEmptyMenssage {
-		task ("When add a dataset fragment") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Data Set");
-		}
-
-		task ("Then Confirm that the portlet shows the message: Select a dataset view.") {
-			PageEditor.viewFragmentMessageInfo(
-				fragmentName = "Data Set",
-				messageInfo = "Select a data set view.");
-		}
-
-		task ("When clicking on Select Data Set View") {
-			PageEditor.gotoConfiguration(fragmentName = "Data Set");
-
-			Click.javaScriptClick(
-				key_value = "Select Data Set View",
-				locator1 = "Button#SECONDARY_BY_TITLE");
-		}
-
-		task ("Then confirm that the Dataset view modal is opened") {
-			AssertTextEquals(
-				locator1 = "DataEngineModal#MODAL_TITLE",
-				value1 = "Select");
-		}
-
-		task ("And confirm that there is no created views") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
-		}
-	}
-
-	@description = "LPS-172443. Smoke test to verify options relates to Data Set Fragment"
+	@description = "LPS-172403. Smoke test to verify options relates to Data Set Fragment"
 	@priority = 5
 	test ViewInfoFields {
 		task ("When viewing the configuration menu of the portlet") {

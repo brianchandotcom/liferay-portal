@@ -11,7 +11,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesDeserializeUtil;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -275,9 +274,6 @@ public class DDMFormInstanceStagedModelDataHandler
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;

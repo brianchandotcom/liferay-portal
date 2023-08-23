@@ -2731,6 +2731,16 @@ definition {
 				labelName = "Custom Object",
 				objectName = "CustomObject",
 				pluralLabelName = "Custom Objects");
+
+			// Workaround for LPS-193897
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
 		}
 
 		task ("Add Relationship Account to Custom Object (via API)") {

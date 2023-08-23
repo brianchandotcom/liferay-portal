@@ -5,7 +5,6 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
-import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
@@ -14,7 +13,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsValidationsDisplayContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -23,22 +21,17 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Selton Guedes
  */
 @Component(
-	configurationPid = "com.liferay.object.configuration.ObjectScriptConfiguration",
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
 		"mvc.command.name=/object_definitions/edit_object_validation_rule"
@@ -70,7 +63,6 @@ public class EditObjectValidationRuleMVCRenderCommand
 				new ObjectDefinitionsValidationsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
-					_objectScriptConfiguration,
 					_objectValidationRuleEngineRegistry));
 		}
 		catch (PortalException portalException) {
@@ -78,13 +70,6 @@ public class EditObjectValidationRuleMVCRenderCommand
 		}
 
 		return "/object_definitions/edit_object_validation.jsp";
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_objectScriptConfiguration = ConfigurableUtil.createConfigurable(
-			ObjectScriptConfiguration.class, properties);
 	}
 
 	@Reference
@@ -95,8 +80,6 @@ public class EditObjectValidationRuleMVCRenderCommand
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
-
-	private volatile ObjectScriptConfiguration _objectScriptConfiguration;
 
 	@Reference
 	private ObjectValidationRuleEngineRegistry

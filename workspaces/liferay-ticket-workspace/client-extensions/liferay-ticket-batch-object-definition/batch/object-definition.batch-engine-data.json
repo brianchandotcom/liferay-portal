@@ -89,6 +89,7 @@
 					],
 					"required": false,
 					"state": false,
+					"system": false,
 					"type": "Long"
 				},
 				{
@@ -106,6 +107,7 @@
 					],
 					"required": false,
 					"state": false,
+					"system": false,
 					"type": "Clob"
 				},
 				{
@@ -124,6 +126,7 @@
 					],
 					"required": true,
 					"state": false,
+					"system": false,
 					"type": "String"
 				},
 				{
@@ -142,6 +145,7 @@
 					],
 					"required": true,
 					"state": false,
+					"system": false,
 					"type": "String"
 				},
 				{
@@ -160,6 +164,7 @@
 					],
 					"required": false,
 					"state": false,
+					"system": false,
 					"type": "String"
 				},
 				{
@@ -177,6 +182,7 @@
 					],
 					"required": true,
 					"state": false,
+					"system": false,
 					"type": "String"
 				},
 				{
@@ -194,6 +200,7 @@
 					],
 					"required": false,
 					"state": false,
+					"system": false,
 					"type": "Clob"
 				},
 				{
@@ -481,6 +488,7 @@
 					],
 					"required": true,
 					"state": true,
+					"system": false,
 					"type": "String"
 				},
 				{
@@ -499,6 +507,7 @@
 					],
 					"required": true,
 					"state": false,
+					"system": false,
 					"type": "String"
 				}
 			],
@@ -523,6 +532,7 @@
 				"label": "approved",
 				"label_i18n": "Approved"
 			},
+			"system": false,
 			"titleObjectFieldName": "id"
 		}
 	]

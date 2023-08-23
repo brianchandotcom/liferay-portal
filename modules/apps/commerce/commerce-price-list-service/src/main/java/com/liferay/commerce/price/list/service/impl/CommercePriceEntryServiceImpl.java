@@ -315,26 +315,6 @@ public class CommercePriceEntryServiceImpl
 
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
-			boolean priceOnApplication, BigDecimal promoPrice,
-			String unitOfMeasureKey, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryLocalService.getCommercePriceEntry(
-				commercePriceEntryId);
-
-		_commercePriceListModelResourcePermission.check(
-			getPermissionChecker(), commercePriceEntry.getCommercePriceListId(),
-			ActionKeys.UPDATE);
-
-		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			unitOfMeasureKey, serviceContext);
-	}
-
-	@Override
-	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,

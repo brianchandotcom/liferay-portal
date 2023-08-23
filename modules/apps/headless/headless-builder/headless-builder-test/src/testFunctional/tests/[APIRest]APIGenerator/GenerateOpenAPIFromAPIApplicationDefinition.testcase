@@ -26,8 +26,6 @@ definition {
 	@priority = 5
 	test CanGenerateOpenApiFromApiApplicationDefinition {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		task ("Given APIApplication ‘my-app’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
@@ -85,8 +83,6 @@ definition {
 	@priority = 4
 	test CanHideApiApplicationOnRestApplicationsListByUnbublishing {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		task ("Given APIApplication ‘my-app’ of status ‘published’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
@@ -122,8 +118,6 @@ definition {
 	@priority = 4
 	test CannotSeeUnpublishedApiApplicationListedAsRestApplication {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		task ("When APIApplication ‘my-app’ of status ‘unpublished’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
@@ -161,8 +155,6 @@ definition {
 	@priority = 4
 	test CanSeePublishedApiApplicationListedAsRestApplication {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		task ("Given APIApplication ‘my-app’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(

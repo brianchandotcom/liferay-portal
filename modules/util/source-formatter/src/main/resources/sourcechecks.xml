@@ -1367,7 +1367,7 @@
 		</check>
 		<check name="PoshiSmokeTestCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks for missing and incorrect use of `ci.retries.disabled = true` in smoke test." />
+			<description name="Checks for missing and unnecessary `property ci.retries.disabled = true` in smoke test." />
 		</check>
 		<check name="PoshiStylingCheck">
 			<category name="Styling" />

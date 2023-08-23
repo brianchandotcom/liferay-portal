@@ -305,7 +305,7 @@ export function SelectLayoutTree({
 							item.paginated && (
 								<ClayButton
 									borderless
-									className="ml-3 text-light"
+									className="ml-3 mt-2 text-secondary"
 									displayType="secondary"
 									onClick={() => load.loadMore(item.id, item)}
 								>

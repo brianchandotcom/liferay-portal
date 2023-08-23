@@ -23,6 +23,7 @@ import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -54,11 +55,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/layout_content_page_editor/get_collection_warning_message_check"
+		"mvc.command.name=/layout_content_page_editor/get_collection_warning_message"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetCollectionWarningMessageCheckMVCResourceCommand
+public class GetCollectionWarningMessageMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -76,8 +77,8 @@ public class GetCollectionWarningMessageCheckMVCResourceCommand
 
 		try {
 			jsonObject = JSONUtil.put(
-				"showWarningMessage",
-				_showWarningMessage(
+				"warningMessage",
+				_getWarningMessage(
 					_portal.getHttpServletRequest(resourceRequest),
 					layoutObjectReference, themeDisplay));
 		}
@@ -173,6 +174,26 @@ public class GetCollectionWarningMessageCheckMVCResourceCommand
 		return infoPage.getTotalCount();
 	}
 
+	private String _getWarningMessage(
+			HttpServletRequest httpServletRequest, String layoutObjectReference,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (_isPaginated(httpServletRequest, themeDisplay) ||
+			(_getTotalCount(httpServletRequest, layoutObjectReference) <
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
+
+			return StringPool.BLANK;
+		}
+
+		return _language.format(
+			httpServletRequest,
+			"this-setting-can-affect-page-performance-severely-if-the-number-" +
+				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
+					"pagination-instead",
+			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
+	}
+
 	private boolean _isPaginated(
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -210,23 +231,8 @@ public class GetCollectionWarningMessageCheckMVCResourceCommand
 		return false;
 	}
 
-	private boolean _showWarningMessage(
-			HttpServletRequest httpServletRequest, String layoutObjectReference,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (_isPaginated(httpServletRequest, themeDisplay) ||
-			(_getTotalCount(httpServletRequest, layoutObjectReference) <
-				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
-
-			return false;
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetCollectionWarningMessageCheckMVCResourceCommand.class);
+		GetCollectionWarningMessageMVCResourceCommand.class);
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

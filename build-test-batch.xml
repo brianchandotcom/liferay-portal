@@ -757,6 +757,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<fileset
 					dir="modules"
 					includes="**/${test.class.java}"
+					excludes="**/node_modules/**"
 				/>
 			</first>
 

@@ -215,8 +215,40 @@
 							"value": {
 								"objectStates": [
 									{
-										"key": "open",
+										"key": "answered",
 										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "closed",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
 											{
 												"key": "verifying"
 											},
@@ -237,6 +269,32 @@
 											},
 											{
 												"key": "waiting"
+											}
+										]
+									},
+									{
+										"key": "escalated",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
 											},
 											{
 												"key": "closed"
@@ -244,10 +302,68 @@
 										]
 									},
 									{
-										"key": "verifying",
+										"key": "inProgress",
 										"objectStateTransitions": [
 											{
 												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "inReview",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "open",
+										"objectStateTransitions": [
+											{
+												"key": "verifying"
 											},
 											{
 												"key": "queued"
@@ -302,100 +418,10 @@
 										]
 									},
 									{
-										"key": "inProgress",
+										"key": "verifying",
 										"objectStateTransitions": [
 											{
 												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "answered"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "waiting"
-											},
-											{
-												"key": "closed"
-											}
-										]
-									},
-									{
-										"key": "answered",
-										"objectStateTransitions": [
-											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "waiting"
-											},
-											{
-												"key": "closed"
-											}
-										]
-									},
-									{
-										"key": "escalated",
-										"objectStateTransitions": [
-											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
-												"key": "answered"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "waiting"
-											},
-											{
-												"key": "closed"
-											}
-										]
-									},
-									{
-										"key": "inReview",
-										"objectStateTransitions": [
-											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
 											},
 											{
 												"key": "queued"
@@ -408,6 +434,9 @@
 											},
 											{
 												"key": "escalated"
+											},
+											{
+												"key": "inReview"
 											},
 											{
 												"key": "waiting"
@@ -443,35 +472,6 @@
 											},
 											{
 												"key": "closed"
-											}
-										]
-									},
-									{
-										"key": "closed",
-										"objectStateTransitions": [
-											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
-												"key": "answered"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "waiting"
 											}
 										]
 									}

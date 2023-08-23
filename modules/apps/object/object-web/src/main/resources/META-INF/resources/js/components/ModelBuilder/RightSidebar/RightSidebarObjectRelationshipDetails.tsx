@@ -11,9 +11,9 @@ import './RightSidebarObjectRelationshipDetails.scss';
 
 import {
 	Input,
-	InputLocalized,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 
 import {firstLetterUppercase} from '../../../utils/string';
 import {TDeletionType} from '../../ObjectRelationship/EditRelationship';

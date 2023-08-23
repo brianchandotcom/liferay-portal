@@ -1,0 +1,30 @@
+{
+	"dependencies": {
+		"@clayui/alert": "^3.93.0",
+		"@clayui/icon": "^3.56.0",
+		"@clayui/pagination": "^3.94.0",
+		"@clayui/pagination-bar": "^3.94.0",
+		"@yaireo/relative-time": "^1.0.3",
+		"axios": "^1.4.0",
+		"react": "^18.2.0",
+		"react-data-grid": "^7.0.0-beta.30",
+		"react-dom": "^18.2.0",
+		"react-query": "^3.39.3"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"@vitejs/plugin-react": "^4.0.0",
+		"vite": "^4.3.9",
+		"vite-plugin-eslint": "^1.8.1"
+	},
+	"name": "liferay-ticket-custom-element",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}

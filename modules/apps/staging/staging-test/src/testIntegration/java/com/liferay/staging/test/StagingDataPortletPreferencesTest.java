@@ -115,8 +115,13 @@ public class StagingDataPortletPreferencesTest
 			"formDDMTemplateId",
 			new String[] {String.valueOf(formDDMTemplate.getTemplateId())}
 		).put(
+			"groupId", new String[] {String.valueOf(ddlRecordSet.getGroupId())}
+		).put(
 			"recordSetId",
 			new String[] {String.valueOf(ddlRecordSet.getRecordSetId())}
+		).put(
+			"recordSetKey",
+			new String[] {String.valueOf(ddlRecordSet.getRecordSetKey())}
 		).build();
 
 		String portletId = publishLayoutWithDisplayPortlet(
@@ -131,8 +136,8 @@ public class StagingDataPortletPreferencesTest
 			livePortletPreferences.getValue(
 				"formDDMTemplateId", StringPool.BLANK));
 		Assert.assertEquals(
-			String.valueOf(ddlRecordSet.getRecordSetId()),
-			livePortletPreferences.getValue("recordSetId", StringPool.BLANK));
+			String.valueOf(ddlRecordSet.getRecordSetKey()),
+			livePortletPreferences.getValue("recordSetKey", StringPool.BLANK));
 
 		publishPortlet(DDLPortletKeys.DYNAMIC_DATA_LISTS);
 
@@ -158,8 +163,8 @@ public class StagingDataPortletPreferencesTest
 			livePortletPreferences.getValue(
 				"formDDMTemplateId", StringPool.BLANK));
 		Assert.assertEquals(
-			String.valueOf(liveDDLRecordSet.getRecordSetId()),
-			livePortletPreferences.getValue("recordSetId", StringPool.BLANK));
+			String.valueOf(liveDDLRecordSet.getRecordSetKey()),
+			livePortletPreferences.getValue("recordSetKey", StringPool.BLANK));
 	}
 
 	@Test

@@ -872,20 +872,18 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if (Validator.isNull(name)) {
 			return String.valueOf(categoryId);
 		}
-		else {
-			name = StringUtil.toLowerCase(name.trim());
 
-			if (Validator.isNull(name) || Validator.isNumber(name)) {
-				name = String.valueOf(categoryId);
-			}
-			else {
-				name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
-					name);
-			}
+		name = StringUtil.toLowerCase(name.trim());
 
-			name = ModelHintsUtil.trimString(
-				MBCategory.class.getName(), "friendlyURL", name);
+		if (Validator.isNull(name) || Validator.isNumber(name)) {
+			name = String.valueOf(categoryId);
 		}
+		else {
+			name = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(name);
+		}
+
+		name = ModelHintsUtil.trimString(
+			MBCategory.class.getName(), "friendlyURL", name);
 
 		String friendlyURL = name;
 

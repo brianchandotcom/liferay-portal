@@ -4404,6 +4404,8 @@ public class JenkinsResultsParserUtil {
 		int retryCount = 0;
 
 		while (true) {
+			URLConnection urlConnection = null;
+
 			try {
 				if (debug) {
 					System.out.println("Downloading " + url);
@@ -4502,7 +4504,7 @@ public class JenkinsResultsParserUtil {
 
 				URL urlObject = new URL(url);
 
-				URLConnection urlConnection = urlObject.openConnection();
+				urlConnection = urlObject.openConnection();
 
 				if (urlConnection instanceof HttpURLConnection) {
 					HttpURLConnection httpURLConnection =
@@ -4631,16 +4633,43 @@ public class JenkinsResultsParserUtil {
 						retryPeriod, timeout, httpAuthorizationHeader);
 				}
 
+				String exceptionMessage = ioException.getMessage();
+
+				Long retryPeriodOverride = null;
+
+				if (exceptionMessage.matches(
+						".*HTTP response code\\: 403 .*") &&
+					(urlConnection != null)) {
+
+					try {
+						retryPeriodOverride = Long.parseLong(
+							urlConnection.getHeaderField("retry-after"));
+					}
+					catch (NumberFormatException numberFormatException) {
+						retryPeriodOverride = null;
+					}
+				}
+
+				long retryPeriodMillis = 1000 * retryPeriod;
+
+				if ((retryPeriodOverride != null) &&
+					(retryPeriodOverride > 0)) {
+
+					retryPeriodMillis = 1000 * retryPeriodOverride;
+				}
+
+				System.out.println(
+					combine(
+						"Retrying ", url, " in ",
+						toDurationString(retryPeriodMillis)));
+
 				retryCount++;
 
 				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
 					throw ioException;
 				}
 
-				System.out.println(
-					"Retrying " + url + " in " + retryPeriod + " seconds");
-
-				sleep(1000 * retryPeriod);
+				sleep(retryPeriodMillis);
 			}
 		}
 	}

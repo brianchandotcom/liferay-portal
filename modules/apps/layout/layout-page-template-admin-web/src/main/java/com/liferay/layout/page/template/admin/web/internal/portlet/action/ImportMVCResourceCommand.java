@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -20,12 +21,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,6 +79,28 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
+	private String _getKey(
+		LayoutsImporterResultEntry.Status status, boolean hasWarningMessages) {
+
+		if (status == LayoutsImporterResultEntry.Status.IGNORED) {
+			return "warning";
+		}
+
+		if (status == LayoutsImporterResultEntry.Status.IMPORTED) {
+			if (hasWarningMessages) {
+				return "warning";
+			}
+
+			return "success";
+		}
+
+		if (status == LayoutsImporterResultEntry.Status.INVALID) {
+			return "error";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private JSONObject _importFile(
 		File file, long groupId, long layoutPageTemplateCollectionId,
 		Locale locale, boolean overwrite, long userId) {
@@ -93,11 +119,12 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			for (LayoutsImporterResultEntry layoutsImporterResultEntry :
 					layoutsImporterResultEntries) {
 
-				LayoutsImporterResultEntry.Status status =
-					layoutsImporterResultEntry.getStatus();
+				String key = _getKey(
+					layoutsImporterResultEntry.getStatus(),
+					ArrayUtil.isNotEmpty(
+						layoutsImporterResultEntry.getWarningMessages()));
 
-				JSONArray jsonArray = importResultsJSONObject.getJSONArray(
-					status.getLabel());
+				JSONArray jsonArray = importResultsJSONObject.getJSONArray(key);
 
 				if (jsonArray == null) {
 					jsonArray = _jsonFactory.createJSONArray();
@@ -105,14 +132,32 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 				jsonArray.put(
 					JSONUtil.put(
-						"message", layoutsImporterResultEntry.getErrorMessage()
+						"messages",
+						() -> {
+							if (ArrayUtil.isNotEmpty(
+									layoutsImporterResultEntry.
+										getWarningMessages())) {
+
+								return layoutsImporterResultEntry.
+									getWarningMessages();
+							}
+
+							if (Validator.isNotNull(
+									layoutsImporterResultEntry.
+										getErrorMessage())) {
+
+								return Collections.singletonList(
+									layoutsImporterResultEntry.
+										getErrorMessage());
+							}
+
+							return Collections.emptyList();
+						}
 					).put(
 						"name", layoutsImporterResultEntry.getName()
-					).put(
-						"type", layoutsImporterResultEntry.getType()
 					));
 
-				importResultsJSONObject.put(status.getLabel(), jsonArray);
+				importResultsJSONObject.put(key, jsonArray);
 			}
 
 			jsonObject.put("importResults", importResultsJSONObject);

@@ -8,6 +8,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -22,10 +23,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -68,6 +71,22 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 				themeDisplay.getUserId()));
 	}
 
+	private String _getKey(FragmentsImporterResultEntry.Status status) {
+		if (status == FragmentsImporterResultEntry.Status.IMPORTED) {
+			return "success";
+		}
+
+		if (status == FragmentsImporterResultEntry.Status.IMPORTED_DRAFT) {
+			return "warning";
+		}
+
+		if (status == FragmentsImporterResultEntry.Status.INVALID) {
+			return "error";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private JSONObject _importFragmentEntries(
 		File file, long fragmentCollectionId, long groupId, Locale locale,
 		boolean overwrite, long userId) {
@@ -85,11 +104,9 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			for (FragmentsImporterResultEntry fragmentsImporterResultEntry :
 					fragmentsImporterResultEntries) {
 
-				FragmentsImporterResultEntry.Status status =
-					fragmentsImporterResultEntry.getStatus();
+				String key = _getKey(fragmentsImporterResultEntry.getStatus());
 
-				JSONArray jsonArray = importResultsJSONObject.getJSONArray(
-					status.getLabel());
+				JSONArray jsonArray = importResultsJSONObject.getJSONArray(key);
 
 				if (jsonArray == null) {
 					jsonArray = _jsonFactory.createJSONArray();
@@ -97,21 +114,24 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 				jsonArray.put(
 					JSONUtil.put(
-						"message",
-						fragmentsImporterResultEntry.getErrorMessage()
+						"messages",
+						() -> {
+							if (Validator.isNotNull(
+									fragmentsImporterResultEntry.
+										getErrorMessage())) {
+
+								return Collections.singletonList(
+									fragmentsImporterResultEntry.
+										getErrorMessage());
+							}
+
+							return Collections.emptyList();
+						}
 					).put(
 						"name", fragmentsImporterResultEntry.getName()
-					).put(
-						"type",
-						() -> {
-							FragmentsImporterResultEntry.Type type =
-								fragmentsImporterResultEntry.getType();
-
-							return type.getLabel();
-						}
 					));
 
-				importResultsJSONObject.put(status.getLabel(), jsonArray);
+				importResultsJSONObject.put(key, jsonArray);
 			}
 
 			jsonObject.put("importResults", importResultsJSONObject);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.workflow.kaleo.internal.runtime.node.test;
+package com.liferay.portal.workflow.kaleo.internal.runtime.timer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -78,7 +78,7 @@ import org.osgi.framework.ServiceRegistration;
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
-public class TaskNodeExecutorTest {
+public class TimerExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -88,7 +88,7 @@ public class TaskNodeExecutorTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		Bundle bundle = FrameworkUtil.getBundle(TaskNodeExecutorTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(TimerExecutorTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -99,7 +99,7 @@ public class TaskNodeExecutorTest {
 				new Class<?>[] {WorkflowHandler.class},
 				(proxy, method, args) -> {
 					if (Objects.equals(method.getName(), "getClassName")) {
-						return TaskNodeExecutorTest.class.getName();
+						return TimerExecutorTest.class.getName();
 					}
 
 					if (Objects.equals(method.getName(), "getTitle")) {
@@ -113,7 +113,7 @@ public class TaskNodeExecutorTest {
 					return null;
 				}),
 			HashMapDictionaryBuilder.put(
-				"model.class.name=", TaskNodeExecutorTest.class.getName()
+				"model.class.name=", TimerExecutorTest.class.getName()
 			).build());
 	}
 
@@ -128,7 +128,7 @@ public class TaskNodeExecutorTest {
 
 		_workflowContext = HashMapBuilder.<String, Serializable>put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
-			TaskNodeExecutorTest.class.getName()
+			TimerExecutorTest.class.getName()
 		).put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_PK,
 			String.valueOf(RandomTestUtil.randomLong())

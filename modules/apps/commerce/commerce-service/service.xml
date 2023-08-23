@@ -325,7 +325,7 @@
 
 		<!-- Other fields -->
 
-		<column name="bookedQuantityId" type="long" />
+		<column db-name="CIBookedQuantityId" name="commerceInventoryBookedQuantityId" type="long" />
 		<column name="commerceOrderId" type="long" />
 		<column name="commercePriceListId" type="long" />
 		<column name="CPInstanceId" type="long" />
@@ -392,8 +392,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="BookedQuantityId" return-type="CommerceOrderItem">
-			<finder-column name="bookedQuantityId" />
+		<finder name="CommerceInventoryBookedQuantityId" return-type="CommerceOrderItem">
+			<finder-column name="commerceInventoryBookedQuantityId" />
 		</finder>
 		<finder name="CommerceOrderId" return-type="Collection">
 			<finder-column name="commerceOrderId" />

@@ -1,11 +1,3 @@
 Bundle-Name: Liferay Commerce Theme Minium Implementation
 Bundle-SymbolicName: com.liferay.commerce.theme.minium.impl
 Bundle-Version: 5.0.28
-Provide-Capability:\
-	soy;\
-		type="commerce-theme-minium-impl";\
-		version:Version="${Bundle-Version}"
-Require-Capability:\
-	soy;\
-		filter:="(type=commerce-frontend-taglib)"
-Web-ContextPath: /commerce-theme-minium-impl

@@ -682,7 +682,6 @@ module.exports = {
 			'commerce-organization-web',
 			'commerce-product-content-web',
 			'commerce-product-options-web',
-			'commerce-theme-minium-impl',
 			'contacts-web',
 			'content-dashboard-web',
 			'data-engine-js-components-web',

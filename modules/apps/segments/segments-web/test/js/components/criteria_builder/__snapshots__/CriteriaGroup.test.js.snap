@@ -6,7 +6,7 @@ exports[`CriteriaGroup renders 1`] = `
     class="color--user criteria-group-item"
   >
     <div
-      class="empty-drop-zone p-6 rounded border-secondary empty-drop-zone-dashed"
+      class="empty-drop-zone p-6 rounded border-secondary-light empty-drop-zone--dashed"
     />
   </div>
 </DocumentFragment>

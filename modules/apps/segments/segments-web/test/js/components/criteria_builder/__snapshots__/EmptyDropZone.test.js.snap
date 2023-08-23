@@ -3,7 +3,7 @@
 exports[`EmptyDropZone renders 1`] = `
 <DocumentFragment>
   <div
-    class="empty-drop-zone p-6 rounded border-secondary empty-drop-zone-dashed"
+    class="empty-drop-zone p-6 rounded border-secondary-light empty-drop-zone--dashed"
   />
 </DocumentFragment>
 `;

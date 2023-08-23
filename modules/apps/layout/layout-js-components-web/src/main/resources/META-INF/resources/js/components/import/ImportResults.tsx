@@ -39,7 +39,6 @@ const RESULTS_DATA: ResultsData = {
 interface Result {
 	message: string;
 	name: string;
-	type: 'fragment' | 'composition';
 }
 
 export interface Results {

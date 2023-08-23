@@ -106,22 +106,8 @@ public class GetLayoutReportsDataStrutsActionTest {
 					String.valueOf(layout.getPlid()),
 			renderTimesTabJSONObject.getString("url"));
 
-		JSONObject googlePageSpeedInsightsTabJSONObject =
-			tabsDataJSONArray.getJSONObject(1);
-
-		Assert.assertNotNull(googlePageSpeedInsightsTabJSONObject);
-
-		Assert.assertEquals(
-			"page-speed-insights",
-			googlePageSpeedInsightsTabJSONObject.getString("id"));
-		Assert.assertEquals(
-			"PageSpeed Insights",
-			googlePageSpeedInsightsTabJSONObject.getString("name"));
-		Assert.assertEquals(
-			"http://localhost:8080/layout_reports" +
-				"/get_google_page_speed_data?p_l_id=" +
-					String.valueOf(layout.getPlid()),
-			googlePageSpeedInsightsTabJSONObject.getString("url"));
+		_assertGooglePageSpeedInsightsTabJSONObject(
+			layout, tabsDataJSONArray.getJSONObject(1));
 	}
 
 	@Test
@@ -182,11 +168,49 @@ public class GetLayoutReportsDataStrutsActionTest {
 			"Inactive", segmentsExperienceJSONObject.getString("statusLabel"));
 	}
 
+	@Test
+	public void testGetLayoutReportsDataStrutsActionWithPortletLayout()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		JSONObject jsonObject = _serveResource(layout);
+
+		JSONObject segmentsExperienceSelectorDataJSONObject =
+			jsonObject.getJSONObject("segmentsExperienceSelectorData");
+
+		Assert.assertNotNull(segmentsExperienceSelectorDataJSONObject);
+		Assert.assertEquals(
+			0,
+			segmentsExperienceSelectorDataJSONObject.getJSONArray(
+				"segmentsExperiences"
+			).length());
+
+		JSONArray tabsDataJSONArray = jsonObject.getJSONArray("tabsData");
+
+		Assert.assertNotNull(tabsDataJSONArray);
+		Assert.assertEquals(1, tabsDataJSONArray.length());
+		_assertGooglePageSpeedInsightsTabJSONObject(
+			layout, tabsDataJSONArray.getJSONObject(0));
+	}
+
+	private void _assertGooglePageSpeedInsightsTabJSONObject(
+		Layout layout, JSONObject jsonObject) {
+
+		Assert.assertNotNull(jsonObject);
+		Assert.assertEquals("page-speed-insights", jsonObject.getString("id"));
+		Assert.assertEquals("PageSpeed Insights", jsonObject.getString("name"));
+		Assert.assertEquals(
+			"http://localhost:8080/layout_reports" +
+				"/get_google_page_speed_data?p_l_id=" +
+					String.valueOf(layout.getPlid()),
+			jsonObject.getString("url"));
+	}
+
 	private void _assertSelectedSegmentsExperienceJSONObject(
 		Layout layout, JSONObject selectedSegmentsExperienceJSONObject) {
 
 		Assert.assertNotNull(selectedSegmentsExperienceJSONObject);
-
 		Assert.assertTrue(
 			selectedSegmentsExperienceJSONObject.getBoolean("active"));
 		Assert.assertEquals(

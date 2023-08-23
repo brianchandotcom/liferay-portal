@@ -220,7 +220,7 @@ public class CommerceOptionValueHelperImpl
 					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 							entry.getValue()) {
 
-						if (!Objects.equqals(
+						if (!Objects.equals(
 								cpDefinitionOptionValueRel.getKey(),
 								valueJSONArray.getString(j))) {
 

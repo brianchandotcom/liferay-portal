@@ -41,12 +41,11 @@ public class ObjectsDataProvider implements DDMDataProvider {
 
 			List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
-			List<ObjectDefinition> objectDefinitions =
-				_objectDefinitionLocalService.getObjectDefinitions(
-					ddmDataProviderRequest.getCompanyId(), true, false,
-					WorkflowConstants.STATUS_APPROVED);
+			for (ObjectDefinition objectDefinition :
+					_objectDefinitionLocalService.getObjectDefinitions(
+						ddmDataProviderRequest.getCompanyId(), true, false,
+						WorkflowConstants.STATUS_APPROVED)) {
 
-			for (ObjectDefinition objectDefinition : objectDefinitions) {
 				keyValuePairs.add(
 					new KeyValuePair(
 						String.valueOf(

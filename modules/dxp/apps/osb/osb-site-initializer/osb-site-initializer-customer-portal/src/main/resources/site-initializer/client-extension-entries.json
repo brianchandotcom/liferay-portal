@@ -14,7 +14,7 @@
 		},
 		"portletCategoryName": "category.client-extensions",
 		"properties": {
-			"feature-flags": "LPS-185001,LPS-185004,LPS-186175,LPS-148342,LPS-180001,LPS-185063,LPS-191380,LPS-159359",
+			"feature-flags": "LPS-185001,LPS-185004,LPS-186175,LPS-148342,LPS-180001,LPS-185063,LPS-191380,LPS-159359,LPS-194304",
 			"okta-session-api": "https://login-dev.liferay.com/api/v1/sessions",
 			"provisioning-server-api": "https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0"
 		},

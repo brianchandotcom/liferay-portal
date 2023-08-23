@@ -4,6 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import i18n from '../../../../../common/I18n';
 import {TOOLTIP_CLASSNAMES_TYPES} from './constants';
 import {
@@ -22,7 +23,12 @@ export function getActivationKeysDownloadItems(
 	selectedKeysObjects,
 	projectName
 ) {
-	return [
+	const dropdownItemsSelectedDownload = [];
+
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const {featureFlags} = useAppPropertiesContext();
+
+	dropdownItemsSelectedDownload.push(
 		{
 			disabled: !isAbleToDownloadAggregateKeys,
 			icon: (
@@ -56,8 +62,11 @@ export function getActivationKeysDownloadItems(
 				return handleMultipleAlertStatus(downloadedMultiple);
 			},
 			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
-		},
-		{
+		}
+	);
+
+	if (featureFlags.includes('LPS-194304')) {
+		dropdownItemsSelectedDownload.push({
 			icon: (
 				<ClayIcon className="mr-1 text-neutral-4" symbol="download" />
 			),
@@ -71,6 +80,8 @@ export function getActivationKeysDownloadItems(
 
 				return handleAlertStatus(downloadedAggregated);
 			},
-		},
-	];
+		});
+	}
+
+	return dropdownItemsSelectedDownload;
 }

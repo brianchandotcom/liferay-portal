@@ -7,10 +7,10 @@ package com.liferay.feature.flag.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.feature.flag.web.internal.configuration.admin.category.FeatureFlagConfigurationCategory;
-import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.feature.flag.web.internal.display.FeatureFlagsDisplayContextFactory;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;

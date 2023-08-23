@@ -5,9 +5,11 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
-import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.CompanyWrapper;

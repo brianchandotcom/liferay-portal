@@ -6,6 +6,7 @@
 package com.liferay.feature.flag.web.internal.model;
 
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**

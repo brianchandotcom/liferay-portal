@@ -5,10 +5,10 @@
 
 package com.liferay.feature.flag.web.internal.company.feature.flags;
 
-import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
-import com.liferay.feature.flag.web.internal.model.FeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

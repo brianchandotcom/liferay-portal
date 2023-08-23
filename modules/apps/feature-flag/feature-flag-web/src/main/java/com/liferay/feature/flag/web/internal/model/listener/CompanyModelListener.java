@@ -7,9 +7,9 @@ package com.liferay.feature.flag.web.internal.model.listener;
 
 import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlags;
 import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlagsProvider;
-import com.liferay.feature.flag.web.internal.model.FeatureFlag;
-import com.liferay.feature.flag.web.internal.model.FeatureFlagType;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;

@@ -5,7 +5,7 @@
 
 package com.liferay.feature.flag.web.internal.manager;
 
-import com.liferay.feature.flag.web.internal.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;

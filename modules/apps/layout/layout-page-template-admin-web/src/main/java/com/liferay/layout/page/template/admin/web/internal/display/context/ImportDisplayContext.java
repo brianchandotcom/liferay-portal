@@ -9,7 +9,6 @@ import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -262,12 +261,7 @@ public class ImportDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"backURL",
-			PortletURLBuilder.create(
-				_renderResponse.createRenderURL()
-			).setTabs1(
-				ParamUtil.getString(_httpServletRequest, "tabs1")
-			).buildString()
+			"backURL", ParamUtil.getString(_httpServletRequest, "backURL")
 		).put(
 			"importURL",
 			ResourceURLBuilder.createResourceURL(

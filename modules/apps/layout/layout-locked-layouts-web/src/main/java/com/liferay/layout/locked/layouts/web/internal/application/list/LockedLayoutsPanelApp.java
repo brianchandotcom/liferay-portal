@@ -9,7 +9,11 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.locked.layouts.web.internal.constants.LockedLayoutsPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,6 +38,17 @@ public class LockedLayoutsPanelApp extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return LockedLayoutsPortletKeys.LOCKED_LAYOUTS_PORTLET;
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
 	}
 
 	@Reference(

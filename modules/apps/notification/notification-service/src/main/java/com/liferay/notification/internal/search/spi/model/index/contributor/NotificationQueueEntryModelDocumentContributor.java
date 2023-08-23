@@ -6,7 +6,6 @@
 package com.liferay.notification.internal.search.spi.model.index.contributor;
 
 import com.liferay.notification.model.NotificationQueueEntry;
-import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -29,12 +28,9 @@ public class NotificationQueueEntryModelDocumentContributor
 	public void contribute(
 		Document document, NotificationQueueEntry notificationQueueEntry) {
 
-		NotificationRecipient notificationRecipient =
-			notificationQueueEntry.getNotificationRecipient();
-
 		Map<String, Object> notificationRecipientSettingsMap =
-			NotificationRecipientSettingUtil.toMap(
-				notificationRecipient.getNotificationRecipientSettings());
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
 		document.addKeyword(
 			"fromName",

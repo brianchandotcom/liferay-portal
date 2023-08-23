@@ -5,6 +5,8 @@
 
 package com.liferay.notification.util;
 
+import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -19,6 +21,15 @@ import java.util.Map;
  * @author Feliphe Marinho
  */
 public class NotificationRecipientSettingUtil {
+
+	public static Map<String, Object> getNotificationRecipientSettingsMap(
+		NotificationQueueEntry notificationQueueEntry) {
+
+		NotificationRecipient notificationRecipient =
+			notificationQueueEntry.getNotificationRecipient();
+
+		return toMap(notificationRecipient.getNotificationRecipientSettings());
+	}
 
 	public static Map<String, Object> toMap(
 		List<NotificationRecipientSetting> notificationRecipientSettings) {

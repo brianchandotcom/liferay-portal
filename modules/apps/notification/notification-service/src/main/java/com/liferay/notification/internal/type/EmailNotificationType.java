@@ -95,12 +95,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Override
 	public String getFromName(NotificationQueueEntry notificationQueueEntry) {
-		NotificationRecipient notificationRecipient =
-			notificationQueueEntry.getNotificationRecipient();
-
 		Map<String, Object> notificationRecipientSettingsMap =
-			NotificationRecipientSettingUtil.toMap(
-				notificationRecipient.getNotificationRecipientSettings());
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
 		return String.valueOf(notificationRecipientSettingsMap.get("fromName"));
 	}
@@ -109,12 +106,9 @@ public class EmailNotificationType extends BaseNotificationType {
 	public String getRecipientSummary(
 		NotificationQueueEntry notificationQueueEntry) {
 
-		NotificationRecipient notificationRecipient =
-			notificationQueueEntry.getNotificationRecipient();
-
 		Map<String, Object> notificationRecipientSettingsMap =
-			NotificationRecipientSettingUtil.toMap(
-				notificationRecipient.getNotificationRecipientSettings());
+			NotificationRecipientSettingUtil.
+				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
 		return String.valueOf(notificationRecipientSettingsMap.get("to"));
 	}
@@ -316,13 +310,10 @@ public class EmailNotificationType extends BaseNotificationType {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				try {
-					NotificationRecipient notificationRecipient =
-						notificationQueueEntry.getNotificationRecipient();
-
 					Map<String, Object> notificationRecipientSettingsMap =
-						NotificationRecipientSettingUtil.toMap(
-							notificationRecipient.
-								getNotificationRecipientSettings());
+						NotificationRecipientSettingUtil.
+							getNotificationRecipientSettingsMap(
+								notificationQueueEntry);
 
 					MailMessage mailMessage = new MailMessage(
 						new InternetAddress(

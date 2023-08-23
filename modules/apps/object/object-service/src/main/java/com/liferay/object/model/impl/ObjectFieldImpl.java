@@ -49,7 +49,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 
 	@Override
 	public boolean isDeletionAllowed() throws PortalException {
-		if (isSystem() || Validator.isNotNull(getRelationshipType())) {
+		if (Validator.isNotNull(getRelationshipType())) {
 			return false;
 		}
 
@@ -58,12 +58,6 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		if (objectDefinition.isUnmodifiableSystemObject() &&
 			!Objects.equals(
 				objectDefinition.getExtensionDBTableName(), getDBTableName())) {
-
-			return false;
-		}
-
-		if (objectDefinition.isApproved() && objectDefinition.isModifiable() &&
-			objectDefinition.isSystem()) {
 
 			return false;
 		}

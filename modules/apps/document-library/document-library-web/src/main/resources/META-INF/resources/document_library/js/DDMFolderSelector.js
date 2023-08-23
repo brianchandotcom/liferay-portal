@@ -38,6 +38,9 @@ const DDMFolderSelector = ({
 		-1
 	);
 	const [destinationRepositoryId, setDestinationRepositoryId] = useState(-1);
+	const [destinationRepositoryName, setDestinationRepositoryName] = useState(
+		''
+	);
 
 	const handleSelectButtonClick = (event) => {
 		event.preventDefault();
@@ -51,6 +54,7 @@ const DDMFolderSelector = ({
 				setDestinationParentFolderName(selectedItem.foldername);
 				setDestinationParentFolderId(selectedItem.folderid);
 				setDestinationRepositoryId(selectedItem.repositoryid);
+				setDestinationRepositoryName(selectedItem.repositoryname);
 				setCopyButtonDisabled(false);
 			},
 			selectEventName: `${portletNamespace}folderSelected`,

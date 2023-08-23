@@ -12,7 +12,7 @@ import React, {useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
-export default function ChangeTrackingDiscardView({
+export default function ChangeTrackingRelatedEntriesView({
 	ctEntriesJSONArray,
 	spritemap,
 	typeNames,
@@ -174,7 +174,7 @@ export default function ChangeTrackingDiscardView({
 			>
 				<ClayModal.Header>
 					<div className="autofit-row">
-						<div className="autofit-col publications-discard-user-portrait">
+						<div className="autofit-col publications-related-entries-user-portrait">
 							<ClaySticker
 								className={`sticker-user-icon ${
 									viewEntry.portraitURL

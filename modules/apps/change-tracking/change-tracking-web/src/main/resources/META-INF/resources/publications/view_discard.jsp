@@ -8,9 +8,9 @@
 <%@ include file="/publications/init.jsp" %>
 
 <%
-ViewDiscardDisplayContext viewDiscardDisplayContext = (ViewDiscardDisplayContext)request.getAttribute(CTWebKeys.VIEW_DISCARD_DISPLAY_CONTEXT);
+ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext = (ViewRelatedEntriesDisplayContext)request.getAttribute(CTWebKeys.VIEW_RELATED_ENTRIES_DISPLAY_CONTEXT);
 
-portletDisplay.setURLBack(viewDiscardDisplayContext.getRedirectURL());
+portletDisplay.setURLBack(viewRelatedEntriesDisplayContext.getRedirectURL());
 
 portletDisplay.setShowBackIcon(true);
 
@@ -18,7 +18,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 %>
 
 <clay:container-fluid
-	cssClass="publications-discard-container"
+	cssClass="publications-related-entries-container"
 >
 	<div class="sheet">
 		<clay:sheet-section>
@@ -30,16 +30,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 
 			<div>
 				<react:component
-					data="<%= viewDiscardDisplayContext.getReactData() %>"
-					module="publications/js/views/ChangeTrackingDiscardView"
+					data="<%= viewRelatedEntriesDisplayContext.getReactData() %>"
+					module="publications/js/views/ChangeTrackingRelatedEntriesView"
 				/>
 			</div>
 		</clay:sheet-section>
 
 		<clay:sheet-footer>
-			<aui:button href="<%= viewDiscardDisplayContext.getSubmitURL() %>" primary="true" value="discard" />
+			<aui:button href="<%= viewRelatedEntriesDisplayContext.getSubmitURL() %>" primary="true" value="discard" />
 
-			<aui:button href="<%= viewDiscardDisplayContext.getRedirectURL() %>" type="cancel" />
+			<aui:button href="<%= viewRelatedEntriesDisplayContext.getRedirectURL() %>" type="cancel" />
 		</clay:sheet-footer>
 	</div>
 </clay:container-fluid>

@@ -9,7 +9,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
-import com.liferay.change.tracking.web.internal.display.context.ViewDiscardDisplayContext;
+import com.liferay.change.tracking.web.internal.display.context.ViewRelatedEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -36,14 +36,15 @@ public class ViewDiscardMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		ViewDiscardDisplayContext viewDiscardDisplayContext =
-			new ViewDiscardDisplayContext(
+		ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext =
+			new ViewRelatedEntriesDisplayContext(
 				_ctCollectionLocalService, _ctDisplayRendererRegistry,
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
 				renderResponse, _userLocalService);
 
 		renderRequest.setAttribute(
-			CTWebKeys.VIEW_DISCARD_DISPLAY_CONTEXT, viewDiscardDisplayContext);
+			CTWebKeys.VIEW_RELATED_ENTRIES_DISPLAY_CONTEXT,
+			viewRelatedEntriesDisplayContext);
 
 		return "/publications/view_discard.jsp";
 	}

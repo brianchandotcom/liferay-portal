@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Samuel Trong Tran
  */
-public class ViewDiscardDisplayContext {
+public class ViewRelatedEntriesDisplayContext {
 
-	public ViewDiscardDisplayContext(
+	public ViewRelatedEntriesDisplayContext(
 		CTCollectionLocalService ctCollectionLocalService,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,

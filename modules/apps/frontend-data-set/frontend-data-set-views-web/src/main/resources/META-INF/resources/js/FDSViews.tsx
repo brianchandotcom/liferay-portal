@@ -207,7 +207,7 @@ const FDSViews = ({
 	fdsViewURL,
 	namespace,
 }: IFDSViewsInterface) => {
-	const getViewURL = (itemData: FDSViewType) => {
+	const getEditURL = (itemData: FDSViewType) => {
 		const url = new URL(fdsViewURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, fdsEntryId);
@@ -218,8 +218,8 @@ const FDSViews = ({
 		return url;
 	};
 
-	const onViewClick = ({itemData}: {itemData: FDSViewType}) => {
-		navigate(getViewURL(itemData));
+	const onEditClick = ({itemData}: {itemData: FDSViewType}) => {
+		navigate(getEditURL(itemData));
 	};
 
 	const onDeleteClick = ({
@@ -302,7 +302,7 @@ const FDSViews = ({
 	const TitleRenderer = ({itemData}: {itemData: FDSViewType}) => {
 		return (
 			<div className="table-list-title">
-				<ClayLink href={getViewURL(itemData).toString()}>
+				<ClayLink href={getEditURL(itemData).toString()}>
 					{itemData.label}
 				</ClayLink>
 			</div>
@@ -344,7 +344,11 @@ const FDSViews = ({
 				{
 					icon: 'pencil',
 					label: Liferay.Language.get('edit'),
-					onClick: onViewClick,
+					onClick: onEditClick,
+				},
+				{
+					separator: true,
+					type: 'group',
 				},
 				{
 					icon: 'trash',

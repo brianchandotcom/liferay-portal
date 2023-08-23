@@ -16,12 +16,17 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.junit.Assert;
@@ -69,31 +74,8 @@ public class GetLayoutReportsDataStrutsActionTest {
 			segmentsExperienceSelectorDataJSONObject.getJSONObject(
 				"selectedSegmentsExperience");
 
-		Assert.assertNotNull(selectedSegmentsExperienceJSONObject);
-
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
-		Assert.assertTrue(
-			selectedSegmentsExperienceJSONObject.getBoolean("active"));
-		Assert.assertEquals(
-			0, selectedSegmentsExperienceJSONObject.getLong("segmentsEntryId"));
-		Assert.assertEquals(
-			"Anyone",
-			selectedSegmentsExperienceJSONObject.getString(
-				"segmentsEntryName"));
-		Assert.assertEquals(
-			defaultSegmentsExperienceId,
-			selectedSegmentsExperienceJSONObject.getLong(
-				"segmentsExperienceId"));
-		Assert.assertEquals(
-			"Default",
-			selectedSegmentsExperienceJSONObject.getString(
-				"segmentsExperienceName"));
-		Assert.assertEquals(
-			"Active",
-			selectedSegmentsExperienceJSONObject.getString("statusLabel"));
+		_assertSelectedSegmentsExperienceJSONObject(
+			layout, selectedSegmentsExperienceJSONObject);
 
 		JSONArray segmentsExperiencesJSONArray =
 			segmentsExperienceSelectorDataJSONObject.getJSONArray(
@@ -140,6 +122,91 @@ public class GetLayoutReportsDataStrutsActionTest {
 				"/get_google_page_speed_data?p_l_id=" +
 					String.valueOf(layout.getPlid()),
 			googlePageSpeedInsightsTabJSONObject.getString("url"));
+	}
+
+	@Test
+	public void testGetLayoutReportsDataStrutsActionWithContentLayoutAndSomeExperiences()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomLong(), layout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JSONObject jsonObject = _serveResource(layout);
+
+		JSONObject segmentsExperienceSelectorDataJSONObject =
+			jsonObject.getJSONObject("segmentsExperienceSelectorData");
+
+		Assert.assertNotNull(segmentsExperienceSelectorDataJSONObject);
+
+		JSONObject selectedSegmentsExperienceJSONObject =
+			segmentsExperienceSelectorDataJSONObject.getJSONObject(
+				"selectedSegmentsExperience");
+
+		_assertSelectedSegmentsExperienceJSONObject(
+			layout, selectedSegmentsExperienceJSONObject);
+
+		JSONArray segmentsExperiencesJSONArray =
+			segmentsExperienceSelectorDataJSONObject.getJSONArray(
+				"segmentsExperiences");
+
+		Assert.assertNotNull(segmentsExperiencesJSONArray);
+
+		Assert.assertEquals(2, segmentsExperiencesJSONArray.length());
+
+		JSONObject segmentsExperienceJSONObject =
+			segmentsExperiencesJSONArray.getJSONObject(1);
+
+		Assert.assertNotNull(segmentsExperienceJSONObject);
+
+		Assert.assertFalse(segmentsExperienceJSONObject.getBoolean("active"));
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsEntryId(),
+			segmentsExperienceJSONObject.getLong("segmentsEntryId"));
+		Assert.assertEquals(
+			"Anyone",
+			segmentsExperienceJSONObject.getString("segmentsEntryName"));
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperienceJSONObject.getLong("segmentsExperienceId"));
+		Assert.assertEquals(
+			segmentsExperience.getName(_group.getDefaultLanguageId()),
+			segmentsExperienceJSONObject.getString("segmentsExperienceName"));
+		Assert.assertEquals(
+			"Inactive", segmentsExperienceJSONObject.getString("statusLabel"));
+	}
+
+	private void _assertSelectedSegmentsExperienceJSONObject(
+		Layout layout, JSONObject selectedSegmentsExperienceJSONObject) {
+
+		Assert.assertNotNull(selectedSegmentsExperienceJSONObject);
+
+		Assert.assertTrue(
+			selectedSegmentsExperienceJSONObject.getBoolean("active"));
+		Assert.assertEquals(
+			0, selectedSegmentsExperienceJSONObject.getLong("segmentsEntryId"));
+		Assert.assertEquals(
+			"Anyone",
+			selectedSegmentsExperienceJSONObject.getString(
+				"segmentsEntryName"));
+		Assert.assertEquals(
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()),
+			selectedSegmentsExperienceJSONObject.getLong(
+				"segmentsExperienceId"));
+		Assert.assertEquals(
+			"Default",
+			selectedSegmentsExperienceJSONObject.getString(
+				"segmentsExperienceName"));
+		Assert.assertEquals(
+			"Active",
+			selectedSegmentsExperienceJSONObject.getString("statusLabel"));
 	}
 
 	private JSONObject _serveResource(Layout layout) throws Exception {

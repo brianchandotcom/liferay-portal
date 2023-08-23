@@ -5,7 +5,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
@@ -14,7 +13,6 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.service.base.ObjectValidationRuleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -25,16 +23,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.object.configuration.ObjectScriptConfiguration",
 	property = {
 		"json.web.service.context.name=object",
 		"json.web.service.context.path=ObjectValidationRule"
@@ -122,17 +117,6 @@ public class ObjectValidationRuleServiceImpl
 			objectValidationRuleSettings);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		ObjectScriptConfiguration objectScriptConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ObjectScriptConfiguration.class, properties);
-
-		_allowInstanceAdminExecuteCode =
-			objectScriptConfiguration.allowInstanceAdminExecuteCode();
-	}
-
 	private void _validateScriptConfiguration(
 			String engine, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -140,14 +124,12 @@ public class ObjectValidationRuleServiceImpl
 		if (Objects.equals(
 				engine, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) &&
 			!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
-				permissionChecker, _allowInstanceAdminExecuteCode)) {
+				permissionChecker)) {
 
 			throw new ObjectValidationRuleEngineException.
 				MustHavePermissionEngineGroovy();
 		}
 	}
-
-	private volatile boolean _allowInstanceAdminExecuteCode;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

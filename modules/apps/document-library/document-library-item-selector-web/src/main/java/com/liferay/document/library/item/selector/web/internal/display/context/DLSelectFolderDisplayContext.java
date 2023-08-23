@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -238,6 +240,22 @@ public class DLSelectFolderDisplayContext {
 				}
 
 				return getRepositoryId();
+			}
+		).put(
+			"repositoryname",
+			() -> {
+				long repositoryId;
+
+				if (folder != null) {
+					repositoryId = folder.getRepositoryId();
+				}
+				else {
+					repositoryId = getRepositoryId();
+				}
+
+				Group group = GroupServiceUtil.getGroup(repositoryId);
+
+				return group.getDescriptiveName(_themeDisplay.getLocale());
 			}
 		).build();
 	}

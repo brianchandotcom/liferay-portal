@@ -28,7 +28,50 @@ public class UrlCategoryUpgradeProcess extends UpgradeProcess {
 		try (SafeCloseable safeCloseable = addTemporaryIndex(
 				"MBCategory", false, "name")) {
 
-			_populateURLCategory();
+			try (PreparedStatement preparedStatement1 =
+					connection.prepareStatement(
+						"select categoryId, name from MBCategory order by " +
+							"name, categoryId asc");
+				ResultSet resultSet = preparedStatement1.executeQuery();
+				PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection,
+						"update MBCategory set friendlyURL = ?" +
+							"where categoryId = ?")) {
+
+				int count = 0;
+				String currentFriendlyURL = null;
+				String previousFriendlyURL = null;
+
+				while (resultSet.next()) {
+					long categoryId = resultSet.getLong(1);
+					String name = resultSet.getString(2);
+
+					currentFriendlyURL = _getFriendlyURL(categoryId, name);
+
+					String suffix = null;
+
+					if (StringUtil.equals(
+							previousFriendlyURL, currentFriendlyURL)) {
+
+						count++;
+						suffix = StringPool.DASH + count;
+					}
+					else {
+						count = 0;
+						previousFriendlyURL = currentFriendlyURL;
+						suffix = StringPool.BLANK;
+					}
+
+					preparedStatement2.setString(
+						1, currentFriendlyURL + suffix);
+					preparedStatement2.setLong(2, categoryId);
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
+			}
 		}
 	}
 
@@ -40,7 +83,7 @@ public class UrlCategoryUpgradeProcess extends UpgradeProcess {
 		};
 	}
 
-	private String _getURLCategory(long id, String name) {
+	private String _getFriendlyURL(long id, String name) {
 		if (name == null) {
 			return String.valueOf(id);
 		}
@@ -58,49 +101,6 @@ public class UrlCategoryUpgradeProcess extends UpgradeProcess {
 		}
 
 		return name.substring(0, Math.min(name.length(), 254));
-	}
-
-	private void _populateURLCategory() throws Exception {
-		String sql =
-			"update MBCategory set friendlyURL = ? where categoryId = ?";
-
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select categoryId, name from MBCategory order by name, " +
-					"categoryId asc");
-			ResultSet resultSet = preparedStatement1.executeQuery();
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(connection, sql)) {
-
-			int count = 0;
-			String curURLCategory = null;
-			String previousURLCategory = null;
-
-			while (resultSet.next()) {
-				long categoryId = resultSet.getLong(1);
-				String name = resultSet.getString(2);
-
-				curURLCategory = _getURLCategory(categoryId, name);
-
-				String suffix = null;
-
-				if (StringUtil.equals(previousURLCategory, curURLCategory)) {
-					count++;
-					suffix = StringPool.DASH + count;
-				}
-				else {
-					count = 0;
-					previousURLCategory = curURLCategory;
-					suffix = StringPool.BLANK;
-				}
-
-				preparedStatement2.setString(1, curURLCategory + suffix);
-				preparedStatement2.setLong(2, categoryId);
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
-		}
 	}
 
 }

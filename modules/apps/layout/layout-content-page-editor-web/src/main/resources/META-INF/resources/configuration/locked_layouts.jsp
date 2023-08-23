@@ -27,7 +27,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 	</clay:content-col>
 </clay:content-row>
 
-<clay:sheet-section>
+<clay:sheet-section role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "automaticUnlockingTitle" %>'>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="c-mb-3 sheet-subtitle"
@@ -35,7 +35,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<span class="heading-text"><liferay-ui:message key="automatic-unlocking" /></span>
+			<span class="heading-text" id="<portlet:namespace />automaticUnlockingTitle"><liferay-ui:message key="automatic-unlocking" /></span>
 		</clay:content-col>
 	</clay:content-row>
 

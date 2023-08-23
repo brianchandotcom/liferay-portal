@@ -2047,6 +2047,56 @@ public class PoshiValidation {
 		_exceptions.add(new ValidationException(element, message, filePath));
 	}
 
+	private static String _buildExceptionString(Set<Exception> exceptions) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n\n");
+		sb.append(exceptions.size());
+		sb.append(" errors in POSHI\n\n");
+
+		for (Exception exception : exceptions) {
+			sb.append(exception.getMessage());
+			sb.append("\n\n");
+		}
+
+		return sb.toString();
+	}
+
+	private static void _filterExceptions() {
+		for (Exception exception : _exceptions) {
+			if (exception instanceof PoshiElementException) {
+				PoshiElementException poshiElementException =
+					(PoshiElementException)exception;
+
+				String filePath = poshiElementException.getFilePath();
+
+				if (filePath.contains("com.liferay.poshi.runner.resources")) {
+					String fileExtension = filePath.substring(
+						filePath.lastIndexOf(".") + 1);
+
+					PoshiProperties poshiProperties =
+						PoshiProperties.getPoshiProperties();
+
+					List<String> validationResourceFileTypes =
+						poshiProperties.validationResourceFileTypes;
+
+					for (String validFileType : validationResourceFileTypes) {
+						if (validFileType.equals(fileExtension)) {
+							_filteredExceptions.add(exception);
+
+							continue;
+						}
+
+						_warnings.add(exception);
+					}
+				}
+			}
+			else {
+				_filteredExceptions.add(exception);
+			}
+		}
+	}
+
 	private static String _getFilePath(PoshiElement poshiElement) {
 		URL filePathURL = poshiElement.getFilePathURL();
 
@@ -2064,20 +2114,28 @@ public class PoshiValidation {
 	}
 
 	private static void _throwExceptions() throws Exception {
-		StringBuilder sb = new StringBuilder();
+		_filterExceptions();
 
-		sb.append("\n\n");
-		sb.append(_exceptions.size());
-		sb.append(" errors in POSHI\n\n");
-
-		for (Exception exception : _exceptions) {
-			sb.append(exception.getMessage());
-			sb.append("\n\n");
+		if (!_warnings.isEmpty()) {
+			_throwWarnings();
 		}
 
-		System.out.println(sb.toString());
+		if (!_filteredExceptions.isEmpty()) {
+			System.out.println(_buildExceptionString(_filteredExceptions));
 
-		throw new Exception();
+			throw new Exception();
+		}
+	}
+
+	private static void _throwWarnings() {
+		for (Exception exception : _warnings) {
+			if (exception instanceof PoshiElementException) {
+				PoshiElementException poshiElementException =
+					(PoshiElementException)exception;
+
+				_logger.warning(poshiElementException.getMessageNoSnippet());
+			}
+		}
 	}
 
 	private static final Logger _logger = Logger.getLogger(
@@ -2123,12 +2181,14 @@ public class PoshiValidation {
 			}
 		};
 	private static final Set<Exception> _exceptions = new HashSet<>();
+	private static final Set<Exception> _filteredExceptions = new HashSet<>();
 	private static final Pattern _invalidMethodParameterPattern =
 		Pattern.compile("(?<invalidSyntax>(?:locator|value)[1-3]?[\\s]*=)");
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
 	private static final Pattern _seleniumGetterMethodPattern = Pattern.compile(
 		"^selenium#(?<methodName>[A-z]+)" +
 			"(?:\\((?<methodParameters>.*|)\\))?$");
+	private static final Set<Exception> _warnings = new HashSet<>();
 
 	private static class ValidationException extends Exception {
 

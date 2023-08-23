@@ -68,7 +68,8 @@ public class SXPBlueprintInfoCollectionProvider
 				searchRequestBuilder.build());
 
 			return InfoPage.of(
-				_assetHelper.getAssetEntries(searchResponse.getSearchHits()));
+				_assetHelper.getAssetEntries(searchResponse.getSearchHits()),
+				collectionQuery.getPagination(), searchResponse.getTotalHits());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);

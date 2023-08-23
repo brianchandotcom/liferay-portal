@@ -55,7 +55,7 @@ public class MessageBoardSectionDTOConverter
 				dateCreated = mbCategory.getCreateDate();
 				dateModified = mbCategory.getModifiedDate();
 				description = mbCategory.getDescription();
-				friendlyUrlPath = mbCategory.getUrlCategory();
+				friendlyUrlPath = mbCategory.getFriendlyURL();
 				id = mbCategory.getCategoryId();
 				numberOfMessageBoardSections =
 					_mbCategoryService.getCategoriesCount(

@@ -141,7 +141,7 @@ public class MessageBoardSectionResourceImpl
 		throws Exception {
 
 		return _toMessageBoardSection(
-			_mbCategoryService.fetchMBCategoryByUrlSubject(
+			_mbCategoryService.fetchMBCategoryByFriendlyURL(
 				siteId, friendlyUrlPath));
 	}
 

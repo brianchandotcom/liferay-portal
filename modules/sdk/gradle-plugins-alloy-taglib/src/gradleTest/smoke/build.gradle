@@ -13,6 +13,7 @@ buildTaglibs {
 }
 
 dependencies {
+	alloyTaglib group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-1"
 	alloyTaglib group: "com.liferay.alloy-taglibs", name: "alloy-taglib", version: "1.1.14"
 	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.16.0"
 	alloyTaglib group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.32.0"
@@ -23,7 +24,6 @@ dependencies {
 	alloyTaglib group: "commons-digester", name: "commons-digester", version: "2.1"
 	alloyTaglib group: "commons-io", name: "commons-io", version: "2.11.0"
 	alloyTaglib group: "commons-lang", name: "commons-lang", version: "2.6"
-	alloyTaglib group: "commons-logging", name: "commons-logging", version: "1.2"
 	alloyTaglib group: "easyconf", name: "easyconf", transitive: false, version: "0.9.5"
 	alloyTaglib group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	alloyTaglib group: "org.apache.tika", name: "tika-core", version: "1.28.5"

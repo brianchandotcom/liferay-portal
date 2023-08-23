@@ -1,6 +1,6 @@
 dependencies {
+	compileOnly group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "commons-logging", name: "commons-logging", version: "1.2"
 	compileOnly group: "javax.el", name: "javax.el-api", version: "3.0.0"
 	compileOnly group: "javax.mvc", name: "javax.mvc-api", version: "1.0.0"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"

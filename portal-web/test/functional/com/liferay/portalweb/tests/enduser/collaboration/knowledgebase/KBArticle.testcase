@@ -551,6 +551,8 @@ definition {
 	@description = "This test ensures that a user can move the kb entry from the Move Modal."
 	@priority = 4
 	test CanMoveArticleFromMoveModal {
+		property custom.properties = "feature.flag.LPS-180292=true";
+
 		JSONKnowledgeBase.addkBFolder(
 			groupName = "Guest",
 			kbFolderName = "KB Folder");
@@ -1081,6 +1083,8 @@ definition {
 	@description = "This test ensures that a user can search the kb entry from the Move Modal."
 	@priority = 4
 	test CanSearchArticleInMoveModal {
+		property custom.properties = "feature.flag.LPS-180292=true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",

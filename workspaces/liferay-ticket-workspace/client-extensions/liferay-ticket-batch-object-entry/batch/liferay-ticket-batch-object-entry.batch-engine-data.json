@@ -38,7 +38,7 @@
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "When I access my site, I receive a 404 error.",
-			"externalReferenceCode": "F4E4_ENTRY_1",
+			"externalReferenceCode": "TICKET-1",
 			"priority": {
 				"key": "minor",
 				"name": "Minor"

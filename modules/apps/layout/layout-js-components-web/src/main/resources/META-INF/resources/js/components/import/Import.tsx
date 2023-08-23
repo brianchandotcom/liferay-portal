@@ -119,11 +119,11 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 					openToast({
 						message: sub(
 							Liferay.Language.get(
-								'something-went-wrong-and-the-x-could-not-be-imported'
+								'no-new-items-have-been-imported'
 							),
 							fileName || ''
 						),
-						type: 'danger',
+						type: 'info',
 					});
 				}
 

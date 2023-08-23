@@ -9,6 +9,7 @@ import {TOOLTIP_CLASSNAMES_TYPES} from './constants';
 import {
 	downloadAggregatedActivationKey,
 	downloadMultipleActivationKey,
+	downloadSelectedKeysDetails,
 } from './downloadActivationLicenseKey';
 
 export function getActivationKeysDownloadItems(
@@ -55,6 +56,21 @@ export function getActivationKeysDownloadItems(
 				return handleMultipleAlertStatus(downloadedMultiple);
 			},
 			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
+		},
+		{
+			icon: (
+				<ClayIcon className="mr-1 text-neutral-4" symbol="download" />
+			),
+			label: i18n.translate('export-selected-key-details-csv'),
+			onClick: async () => {
+				const downloadedAggregated = await downloadSelectedKeysDetails(
+					selectedKeysIDs,
+					provisioningServerAPI,
+					sessionId
+				);
+
+				return handleAlertStatus(downloadedAggregated);
+			},
 		},
 	];
 }

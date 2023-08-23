@@ -7,6 +7,7 @@ import {
 	getActivationDownloadKey,
 	getAggregatedActivationDownloadKey,
 	getExportedLicenseKeys,
+	getExportedSelectedLicenseKeys,
 	getMultipleActivationDownloadKey,
 } from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
@@ -127,6 +128,26 @@ export async function downloadMultipleActivationKey(
 			licenseBlob,
 			`activation-key-${projectFileName}${extensionFile}`
 		);
+	}
+}
+
+export async function downloadSelectedKeysDetails(
+	selectedKeysIDs,
+	provisioningServerAPI,
+	sessionId
+) {
+	const license = await getExportedSelectedLicenseKeys(
+		selectedKeysIDs,
+		provisioningServerAPI,
+		sessionId
+	);
+
+	if (license.status === STATUS_CODE.success) {
+		const contentType = license.headers.get('content-type');
+		const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
+		const licenseBlob = await license.blob();
+
+		return downloadFromBlob(licenseBlob, `activation-keys${extensionFile}`);
 	}
 }
 

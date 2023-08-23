@@ -123,6 +123,25 @@ export async function getExportedLicenseKeys(
 	return response;
 }
 
+export async function getExportedSelectedLicenseKeys(
+	selectedKeysIDs,
+	provisioningServerAPI,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/license-keys/export?${selectedKeysIDs}`,
+
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+		}
+	);
+
+	return response;
+}
+
 export async function associateContactRoleNameByEmailByProject({
 	accountKey,
 	emailURI,

@@ -320,7 +320,9 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				HashMapBuilder.put(
 					"delete",
 					() -> {
-						if (!objectField.isDeletionAllowed()) {
+						if (!objectField.isDeletionAllowed() ||
+							objectField.isSystem()) {
+
 							return null;
 						}
 

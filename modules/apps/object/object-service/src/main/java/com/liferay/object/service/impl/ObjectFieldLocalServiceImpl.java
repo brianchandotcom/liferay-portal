@@ -1018,9 +1018,8 @@ public class ObjectFieldLocalServiceImpl
 			throw new RequiredObjectFieldException();
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-190890") &&
-			objectDefinition.isApproved() && objectDefinition.isModifiable() &&
-			objectDefinition.isSystem()) {
+		if (objectField.isSystem() && objectDefinition.isModifiable() &&
+			!SystemUtil.allowManageSystemEntities()) {
 
 			throw new UnsupportedOperationException();
 		}

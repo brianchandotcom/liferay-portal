@@ -12,7 +12,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 %>
 
 <clay:content-row
-	cssClass="c-mt-2"
+	cssClass="c-mt-3"
 >
 	<clay:content-col
 		expand="<%= true %>"
@@ -30,7 +30,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 <clay:sheet-section>
 	<clay:content-row
 		containerElement="h3"
-		cssClass="sheet-subtitle"
+		cssClass="c-mb-3 sheet-subtitle"
 	>
 		<clay:content-col
 			expand="<%= true %>"
@@ -57,13 +57,11 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		</clay:content-col>
 	</clay:content-row>
 
-	<clay:content-row
-		cssClass="c-mt-2"
-	>
+	<clay:content-row>
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "lockReviewFrequencyHiddenDescription" %>' label="lock-review-frequency" name="lockReviewFrequency" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getLockReviewFrequency() %>">
+			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "lockReviewFrequencyHiddenDescription" %>' label="lock-review-frequency" name="lockReviewFrequency" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getLockReviewFrequency() %>" wrapperCssClass="c-mb-1">
 				<aui:validator name="number" />
 				<aui:validator name="min">1</aui:validator>
 				<aui:validator name="max">99999</aui:validator>
@@ -79,7 +77,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "timeWithoutAutosaveHiddenDescription" %>' label="time-without-autosave" name="timeWithoutAutosave" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getTimeWithoutAutosave() %>">
+			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "timeWithoutAutosaveHiddenDescription" %>' label="time-without-autosave" name="timeWithoutAutosave" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getTimeWithoutAutosave() %>" wrapperCssClass="c-mb-1">
 				<aui:validator name="number" />
 				<aui:validator name="min">5</aui:validator>
 				<aui:validator name="max">99999</aui:validator>

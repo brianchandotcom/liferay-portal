@@ -83,14 +83,34 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		if (modelClassName.equals(Contact.class.getName())) {
 			Contact contact = (Contact)model;
 
-			if (isUserExcluded(
-					userLocalService.fetchUser(contact.getClassPK()))) {
+			User user = userLocalService.fetchUser(contact.getClassPK());
 
+			if (!StringUtil.equalsIgnoreCase(eventType, "delete")) {
+				if ((user == null) ||
+					Objects.equals(
+						user.getStatus(), WorkflowConstants.STATUS_INACTIVE) ||
+					isUserExcluded(user)) {
+
+					return;
+				}
+			}
+			else if (isUserExcluded(user)) {
 				return;
 			}
 		}
 		else if (modelClassName.equals(User.class.getName())) {
-			if (isUserExcluded((User)model)) {
+			User user = (User)model;
+
+			if (!StringUtil.equalsIgnoreCase(eventType, "delete")) {
+				if ((user == null) ||
+					Objects.equals(
+						user.getStatus(), WorkflowConstants.STATUS_INACTIVE) ||
+					isUserExcluded(user)) {
+
+					return;
+				}
+			}
+			else if (isUserExcluded(user)) {
 				return;
 			}
 		}
@@ -341,9 +361,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		if ((user == null) ||
 			Objects.equals(
 				user.getScreenName(),
-				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN) ||
-			Objects.equals(
-				user.getStatus(), WorkflowConstants.STATUS_INACTIVE)) {
+				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN)) {
 
 			return true;
 		}
@@ -708,7 +726,10 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			User user = userLocalService.fetchUser((long)associationClassPK);
 
 			if (!eventType.equals("deleteAssociation") &&
-				isUserExcluded(user)) {
+				((user == null) ||
+				 Objects.equals(
+					 user.getStatus(), WorkflowConstants.STATUS_INACTIVE) ||
+				 isUserExcluded(user))) {
 
 				return;
 			}

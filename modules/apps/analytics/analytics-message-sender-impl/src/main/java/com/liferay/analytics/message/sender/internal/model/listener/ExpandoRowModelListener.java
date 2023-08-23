@@ -16,9 +16,11 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,8 +56,16 @@ public class ExpandoRowModelListener
 		}
 
 		if (isCustomField(User.class.getName(), expandoRow.getTableId())) {
-			return isUserExcluded(
-				userLocalService.fetchUser(expandoRow.getClassPK()));
+			User user = userLocalService.fetchUser(expandoRow.getClassPK());
+
+			if ((user == null) ||
+				Objects.equals(
+					user.getStatus(), WorkflowConstants.STATUS_INACTIVE)) {
+
+				return true;
+			}
+
+			return isUserExcluded(user);
 		}
 
 		return true;

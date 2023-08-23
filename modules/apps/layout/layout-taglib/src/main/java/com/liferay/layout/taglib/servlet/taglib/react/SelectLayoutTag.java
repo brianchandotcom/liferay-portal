@@ -160,7 +160,22 @@ public class SelectLayoutTag extends IncludeTag {
 			getRequest(), "layoutUuid");
 
 		return HashMapBuilder.<String, Object>put(
+			"checkDisplayPage", _checkDisplayPage
+		).put(
 			"config", this::_getConfigData
+		).put(
+			"groupId",
+			() -> {
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getScopeGroupId();
+			}
+		).put(
+			"itemSelectorReturnType", _itemSelectorReturnType
 		).put(
 			"itemSelectorSaveEvent", _itemSelectorSaveEvent
 		).put(
@@ -169,6 +184,8 @@ public class SelectLayoutTag extends IncludeTag {
 			"namespace", _namespace
 		).put(
 			"nodes", _getLayoutsJSONArray(selectedLayoutIds)
+		).put(
+			"privateLayout", _privateLayout
 		).put(
 			"selectedLayoutIds", selectedLayoutIds
 		).build();

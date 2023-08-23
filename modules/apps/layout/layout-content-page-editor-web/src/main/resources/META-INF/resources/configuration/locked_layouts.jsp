@@ -35,7 +35,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<span class="heading-text" id="<portlet:namespace />automaticUnlockingTitle"><liferay-ui:message key="automatic-unlocking" /></span>
+			<span class="heading-text text-secondary" id="<portlet:namespace />automaticUnlockingTitle"><liferay-ui:message key="automatic-unlocking" /></span>
 		</clay:content-col>
 	</clay:content-row>
 

@@ -5,10 +5,16 @@
 
 package com.liferay.portal.kernel.feature.flag;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 /**
  * @author Drew Brokke
  */
 public interface FeatureFlagManager {
+
+	public List<FeatureFlag> getFeatureFlags(
+		long companyId, Predicate<FeatureFlag> predicate);
 
 	public String getJSON(long companyId);
 

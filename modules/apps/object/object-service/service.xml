@@ -996,6 +996,7 @@
 		<exception>ObjectFieldSettingName</exception>
 		<exception>ObjectFieldSettingValue</exception>
 		<exception>ObjectFieldState</exception>
+		<exception>ObjectFieldSystem</exception>
 		<exception>ObjectFilter</exception>
 		<exception>ObjectFolderLabel</exception>
 		<exception>ObjectFolderName</exception>

@@ -20,11 +20,32 @@ export default function ({
 	itemSelectorSelectedEvent,
 	namespace,
 }: Props) {
-	const selectItem = (event: DelegatedEvent<KeyboardEvent | MouseEvent>) => {
+	const updateSelectedCard = (
+		event: DelegatedEvent<KeyboardEvent | MouseEvent>
+	) => {
+		document.querySelectorAll('.form-check-card.active').forEach((card) => {
+			card.classList.remove('active');
+		});
+
+		const newSelectedCard = event.delegateTarget.closest(
+			'.form-check-card'
+		);
+
+		if (newSelectedCard) {
+			newSelectedCard.classList.add('active');
+		}
+	};
+
+	const dispatchSelectEvent = (
+		event: DelegatedEvent<KeyboardEvent | MouseEvent>
+	) => {
+		const element = event.delegateTarget.closest('li, tr, dd');
+		const value = element instanceof HTMLElement && element.dataset.value;
+
 		getOpener().Liferay.fire(itemSelectorSelectedEvent, {
 			data: {
 				returnType: itemSelectorReturnType,
-				value: event.delegateTarget.dataset.value,
+				value: value || '',
 			},
 		});
 	};
@@ -34,7 +55,8 @@ export default function ({
 		'click',
 		'.entry',
 		(event: DelegatedEvent<MouseEvent>) => {
-			selectItem(event);
+			updateSelectedCard(event);
+			dispatchSelectEvent(event);
 		}
 	);
 
@@ -44,7 +66,8 @@ export default function ({
 		'.entry',
 		(event: DelegatedEvent<KeyboardEvent>) => {
 			if (event.code === 'Enter') {
-				selectItem(event);
+				updateSelectedCard(event);
+				dispatchSelectEvent(event);
 			}
 		}
 	);

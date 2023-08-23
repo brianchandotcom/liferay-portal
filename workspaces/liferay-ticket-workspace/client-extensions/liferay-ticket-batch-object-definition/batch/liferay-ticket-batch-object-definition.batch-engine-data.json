@@ -218,28 +218,28 @@
 										"key": "answered",
 										"objectStateTransitions": [
 											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
+												"key": "closed"
 											},
 											{
 												"key": "escalated"
 											},
 											{
+												"key": "inProgress"
+											},
+											{
 												"key": "inReview"
 											},
 											{
-												"key": "waiting"
+												"key": "open"
 											},
 											{
-												"key": "closed"
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
 											}
 										]
 									},
@@ -247,25 +247,25 @@
 										"key": "closed",
 										"objectStateTransitions": [
 											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
 												"key": "answered"
 											},
 											{
 												"key": "escalated"
 											},
 											{
+												"key": "inProgress"
+											},
+											{
 												"key": "inReview"
+											},
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
 											},
 											{
 												"key": "waiting"
@@ -276,28 +276,28 @@
 										"key": "escalated",
 										"objectStateTransitions": [
 											{
-												"key": "open"
+												"key": "answered"
 											},
 											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
+												"key": "closed"
 											},
 											{
 												"key": "inProgress"
 											},
 											{
-												"key": "answered"
-											},
-											{
 												"key": "inReview"
 											},
 											{
-												"key": "waiting"
+												"key": "open"
 											},
 											{
-												"key": "closed"
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
 											}
 										]
 									},
@@ -305,16 +305,10 @@
 										"key": "inProgress",
 										"objectStateTransitions": [
 											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
 												"key": "answered"
+											},
+											{
+												"key": "closed"
 											},
 											{
 												"key": "escalated"
@@ -323,10 +317,16 @@
 												"key": "inReview"
 											},
 											{
-												"key": "waiting"
+												"key": "open"
 											},
 											{
-												"key": "closed"
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
 											}
 										]
 									},
@@ -334,28 +334,28 @@
 										"key": "inReview",
 										"objectStateTransitions": [
 											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
 												"key": "answered"
+											},
+											{
+												"key": "closed"
 											},
 											{
 												"key": "escalated"
 											},
 											{
-												"key": "waiting"
+												"key": "inProgress"
 											},
 											{
-												"key": "closed"
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
 											}
 										]
 									},
@@ -363,28 +363,28 @@
 										"key": "open",
 										"objectStateTransitions": [
 											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
 												"key": "answered"
+											},
+											{
+												"key": "closed"
 											},
 											{
 												"key": "escalated"
 											},
 											{
+												"key": "inProgress"
+											},
+											{
 												"key": "inReview"
 											},
 											{
-												"key": "waiting"
+												"key": "queued"
 											},
 											{
-												"key": "closed"
+												"key": "verifying"
+											},
+											{
+												"key": "waiting"
 											}
 										]
 									},
@@ -392,28 +392,28 @@
 										"key": "queued",
 										"objectStateTransitions": [
 											{
+												"key": "answered"
+											},
+											{
+												"key": "closed"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "inReview"
+											},
+											{
 												"key": "open"
 											},
 											{
 												"key": "verifying"
 											},
 											{
-												"key": "inProgress"
-											},
-											{
-												"key": "answered"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inReview"
-											},
-											{
 												"key": "waiting"
-											},
-											{
-												"key": "closed"
 											}
 										]
 									},
@@ -450,28 +450,28 @@
 										"key": "waiting",
 										"objectStateTransitions": [
 											{
-												"key": "open"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
 												"key": "answered"
+											},
+											{
+												"key": "closed"
 											},
 											{
 												"key": "escalated"
 											},
 											{
+												"key": "inProgress"
+											},
+											{
 												"key": "inReview"
 											},
 											{
-												"key": "closed"
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "verifying"
 											}
 										]
 									}

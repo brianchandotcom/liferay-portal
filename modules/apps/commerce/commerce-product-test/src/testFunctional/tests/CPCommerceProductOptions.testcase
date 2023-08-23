@@ -1692,6 +1692,178 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12167.User can see SKU updated on the product details page when values are selected from multiple options."
+	@priority = 5
+	test CanSKUUpdateSuccessfullyWhenSelectingValuesFromMultipleOptions {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a simple product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIM1001");
+		}
+
+		task ("And 2 SKU contributor static options with 2 values with a delta price, each linked to a SKU are created") {
+			for (var optionNameWithKey : list "A:white,B:red") {
+				var name = StringUtil.extractFirst(${optionNameWithKey}, ":");
+				var key = StringUtil.extractLast(${optionNameWithKey}, ":");
+
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = "select",
+					optionKey = ${key},
+					optionName = ${name},
+					optionValues = "value1:value1:1,value2:value2:2",
+					skuContributor = "true");
+
+				CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+					fieldType = "select",
+					optionKey = ${key},
+					optionName = ${name},
+					productName = "Test Simple Product");
+			}
+
+			for (var optionName : list "A,B") {
+				var count = 0;
+
+				CommerceProducts.openProductsAdmin();
+
+				CommerceNavigator.searchEntry(entryName = "Simple");
+
+				CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+				CommerceProductOptions.editProductOption(
+					key_fieldType = "Select from List",
+					key_option = ${optionName},
+					key_priceType = "Static",
+					productOptionFieldType = "true",
+					productOptionPriceType = "true");
+
+				for (var skuAndDeltaPrice : list "MIN55861:60.00,MIN93027:70.00") {
+					var count = ${count} + 1;
+					var sku = StringUtil.extractFirst(${skuAndDeltaPrice}, ":");
+					var deltaPriceValue = StringUtil.extractLast(${skuAndDeltaPrice}, ":");
+
+					CommerceOptions.setDeltaPrice(
+						deltaPrice = ${deltaPriceValue},
+						key_index = "value${count}",
+						key_optionIndex = "Option Select from List",
+						productSKU = ${sku});
+
+					Click(locator1 = "Icon#CLOSE");
+
+					SelectFrameTop();
+
+					Click(
+						key_index = ${optionName},
+						locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+					SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+				}
+			}
+		}
+
+		task ("And from the SKUs tab, plus button is clicked, Generate all SKUs combination button is selected") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then all configured data is shown correctly upon clicking different options in store front") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+
+			AssertElementPresent(
+				key_fieldLabel = "A",
+				key_value = "value1",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "B",
+				key_value = "value1",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "A",
+				key_value = "value2 + $ 10.00",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "120.00");
+
+			AssertElementPresent(
+				key_fieldLabel = "B",
+				key_value = "value1",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			Select(
+				key_optionName = "B",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "value2 + $ 10.00");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+				value1 = "130.00");
+
+			Select(
+				key_optionName = "A",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "value2 + $ 10.00");
+
+			AssertElementPresent(
+				key_productSku = "VALUE2VALUE2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "Test Simple Product",
+				cartItemOption = "value2, value2",
+				cartItemQuantity = 1,
+				cartItemSku = "VALUE2VALUE2");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9830. CanViewOptionOnTheOptionFacetWidget"
 	@priority = 5
 	test CanViewOptionOnTheOptionFacetWidget {

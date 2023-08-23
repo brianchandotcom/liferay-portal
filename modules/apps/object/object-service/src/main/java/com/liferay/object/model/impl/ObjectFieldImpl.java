@@ -5,16 +5,15 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -66,7 +65,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 	}
 
 	public boolean isMetadata() {
-		return _metadataObjectFieldNames.contains(getName());
+		return ObjectFieldUtil.isMetadata(getName());
 	}
 
 	@Override
@@ -76,9 +75,6 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		_objectFieldSettings = objectFieldSettings;
 	}
 
-	private final Set<String> _metadataObjectFieldNames = SetUtil.fromArray(
-		"createDate", "creator", "id", "modifiedDate", "status",
-		"externalReferenceCode");
 	private List<ObjectFieldSetting> _objectFieldSettings;
 
 }

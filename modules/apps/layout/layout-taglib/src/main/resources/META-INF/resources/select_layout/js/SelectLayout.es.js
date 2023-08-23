@@ -22,11 +22,15 @@ import {SelectLayoutTree} from './SelectLayoutTree.es';
  */
 
 const SelectLayout = ({
+	checkDisplayPage,
 	config,
+	groupId,
+	itemSelectorReturnType,
 	itemSelectorSaveEvent,
 	multiSelection,
 	namespace,
 	nodes,
+	privateLayout,
 	selectedLayoutIds,
 }) => {
 	const [filter, setFilter] = useState();
@@ -82,12 +86,16 @@ const SelectLayout = ({
 					)}
 
 					<SelectLayoutTree
+						checkDisplayPage={checkDisplayPage}
 						config={{...config, namespace}}
 						filter={filter}
+						groupId={groupId}
+						itemSelectorReturnType={itemSelectorReturnType}
 						itemSelectorSaveEvent={itemSelectorSaveEvent}
 						items={nodes}
 						multiSelection={multiSelection}
 						onItemsCountChange={setSelectedItemsCount}
+						privateLayout={privateLayout}
 						selectedLayoutIds={selectedLayoutIds}
 					/>
 				</>

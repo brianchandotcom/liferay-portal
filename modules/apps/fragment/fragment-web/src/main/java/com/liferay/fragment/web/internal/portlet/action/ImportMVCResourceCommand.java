@@ -55,22 +55,17 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			resourceRequest, "fragmentCollectionId");
-
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(resourceRequest);
 
-		File file = uploadPortletRequest.getFile("file");
-
-		boolean overwrite = ParamUtil.getBoolean(resourceRequest, "overwrite");
-
-		JSONObject jsonObject = _importFragmentEntries(
-			file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLocale(), overwrite, themeDisplay.getUserId());
-
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse,
+			_importFragmentEntries(
+				uploadPortletRequest.getFile("file"),
+				ParamUtil.getLong(resourceRequest, "fragmentCollectionId"),
+				themeDisplay.getScopeGroupId(), themeDisplay.getLocale(),
+				ParamUtil.getBoolean(resourceRequest, "overwrite"),
+				themeDisplay.getUserId()));
 	}
 
 	private JSONObject _importFragmentEntries(

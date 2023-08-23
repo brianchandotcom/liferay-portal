@@ -4,6 +4,7 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback, useEffect, useState} from 'react';
 
 import {useDispatch} from '../contexts/StoreContext';
@@ -27,7 +28,11 @@ export default function useCache({fetcher, key}) {
 	useEffect(() => {
 		const {data, loadPromise, status} = getCacheItem(cacheKey);
 
-		if (!data && cacheKey && status !== CACHE_STATUS.loading) {
+		if (
+			isNullOrUndefined(data) &&
+			cacheKey &&
+			status !== CACHE_STATUS.loading
+		) {
 			const nextLoadPromise = fetcher();
 
 			setCacheItem({

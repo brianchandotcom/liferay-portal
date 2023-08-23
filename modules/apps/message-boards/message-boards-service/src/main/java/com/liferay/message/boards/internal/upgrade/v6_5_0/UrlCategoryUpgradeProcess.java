@@ -36,7 +36,7 @@ public class UrlCategoryUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				"MBCategory", "urlCategory VARCHAR(255)")
+				"MBCategory", "friendlyURL VARCHAR(255)")
 		};
 	}
 
@@ -62,7 +62,7 @@ public class UrlCategoryUpgradeProcess extends UpgradeProcess {
 
 	private void _populateURLCategory() throws Exception {
 		String sql =
-			"update MBCategory set urlCategory = ? where categoryId = ?";
+			"update MBCategory set friendlyURL = ? where categoryId = ?";
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select categoryId, name from MBCategory order by name, " +

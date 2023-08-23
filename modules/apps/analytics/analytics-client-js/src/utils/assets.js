@@ -42,7 +42,19 @@ function getNumberOfWords({innerText}) {
 	return innerText !== '' ? words.length : 0;
 }
 
-export {closest, getClosestAssetElement, getNumberOfWords};
+function isTrackable(element, customDatasetList) {
+	const datasetList = customDatasetList || [
+		'analyticsAssetId',
+		'analyticsAssetTitle',
+		'analyticsAssetType',
+	];
+
+	return (
+		element && datasetList.every((dataset) => dataset in element.dataset)
+	);
+}
+
+export {closest, getClosestAssetElement, getNumberOfWords, isTrackable};
 
 /**
  * Polyfill for .matches in IE11

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {closest, getClosestAssetElement} from '../utils/assets';
+import {closest, getClosestAssetElement, isTrackable} from '../utils/assets';
 import {DOCUMENT} from '../utils/constants';
 import {onReady} from '../utils/events';
 
@@ -28,15 +28,6 @@ function getDocumentPayload({dataset}) {
 }
 
 /**
- * Wether a Document is trackable or not.
- * @param {Object} element The Document DOM element
- * @returns {boolean} True if the element is trackable.
- */
-function isTrackableDocument(documentElement) {
-	return documentElement && 'analyticsAssetId' in documentElement.dataset;
-}
-
-/**
  * Sends information when user clicks on a Document.
  * @param {Object} The Analytics client instance
  */
@@ -49,7 +40,7 @@ function trackDocumentDownloaded(analytics) {
 
 		const documentElement = getClosestAssetElement(target, 'document');
 
-		if (actionElement && isTrackableDocument(documentElement)) {
+		if (actionElement && isTrackable(documentElement)) {
 			analytics.send(
 				'documentDownloaded',
 				applicationId,
@@ -75,7 +66,7 @@ function trackDocumentPreviewed(analytics) {
 					'[data-analytics-asset-action="preview"]'
 				)
 			)
-			.filter((element) => isTrackableDocument(element))
+			.filter((element) => isTrackable(element))
 			.forEach((element) => {
 				const payload = getDocumentPayload(element);
 

@@ -201,6 +201,26 @@ public class GetLayoutReportsDataStrutsActionTest {
 			layout, tabsDataJSONArray.getJSONObject(0));
 	}
 
+	@Test
+	public void testGetLayoutReportsDataStrutsActionWithPortletLayoutAndGooglePageSpeedDisabled()
+		throws Exception {
+
+		LayoutReportsTestUtil.
+			withLayoutReportsGooglePageSpeedGroupConfiguration(
+				RandomTestUtil.randomString(), false, _group.getGroupId(),
+				() -> {
+					Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+					JSONObject jsonObject = _serveResource(layout);
+
+					JSONArray tabsDataJSONArray = jsonObject.getJSONArray(
+						"tabsData");
+
+					Assert.assertNotNull(tabsDataJSONArray);
+					Assert.assertEquals(0, tabsDataJSONArray.length());
+				});
+	}
+
 	private void _assertGooglePageSpeedInsightsTabJSONObject(
 		Layout layout, JSONObject jsonObject) {
 

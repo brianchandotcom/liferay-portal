@@ -147,6 +147,7 @@
 	"expiration-notifications": "Expiration Notifications",
 	"expired": "Expired",
 	"export-all-key-details-csv": "Export All Key Details (csv)",
+	"export-selected-key-details-csv": "Export Selected Key Details (csv)",
 	"fill-out-the-information-required-to-generate-the-activation-key": "Fill out the information required to generate the activation key",
 	"filter": "Filter",
 	"find-a-project": "Find a project",

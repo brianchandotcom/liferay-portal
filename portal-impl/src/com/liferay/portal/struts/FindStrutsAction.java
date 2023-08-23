@@ -115,13 +115,10 @@ public abstract class FindStrutsAction implements StrutsAction {
 			String redirect = null;
 
 			if (inheritRedirect) {
-				String noSuchEntryRedirect = _getNoSuchEntryRedirect(
-					httpServletRequest);
-
-				redirect = HttpComponentsUtil.getParameter(
-					noSuchEntryRedirect, "redirect", false);
-
-				redirect = HttpComponentsUtil.decodeURL(redirect);
+				redirect = HttpComponentsUtil.decodeURL(
+					HttpComponentsUtil.getParameter(
+						_getNoSuchEntryRedirect(httpServletRequest), "redirect",
+						false));
 			}
 			else {
 				redirect = ParamUtil.getString(httpServletRequest, "redirect");
@@ -141,11 +138,8 @@ public abstract class FindStrutsAction implements StrutsAction {
 			httpServletResponse.sendRedirect(portletURL.toString());
 		}
 		catch (Exception exception) {
-			String noSuchEntryRedirect = _getNoSuchEntryRedirect(
-				httpServletRequest);
-
-			noSuchEntryRedirect = PortalUtil.escapeRedirect(
-				noSuchEntryRedirect);
+			String noSuchEntryRedirect = PortalUtil.escapeRedirect(
+				_getNoSuchEntryRedirect(httpServletRequest));
 
 			if (Validator.isNotNull(noSuchEntryRedirect) &&
 				(exception instanceof NoSuchLayoutException ||

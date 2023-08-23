@@ -1771,6 +1771,10 @@
 			<category name="Upgrade" />
 			<description name="Replace parameters of addUser and updateStatus methods in UserServices" />
 		</check>
+		<check name="UpgradeJSONLiferayThemeCheck">
+			<category name="Upgrade" />
+			<description name="Replace liferay theme version in package.json of themes" />
+		</check>
 		<check name="UpgradeJSPFieldSetGroupCheck">
 			<category name="Upgrade" />
 			<description name="Run code to remove 'fieldset-group' tag" />

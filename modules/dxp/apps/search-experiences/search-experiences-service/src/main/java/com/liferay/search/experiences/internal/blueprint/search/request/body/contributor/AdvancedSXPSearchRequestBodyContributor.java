@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration;
@@ -29,7 +30,19 @@ public class AdvancedSXPSearchRequestBodyContributor
 			return;
 		}
 
-		Source source = advancedConfiguration.getSource();
+		_setSourceFields(
+			searchRequestBuilder, advancedConfiguration.getSource());
+		_setStoredFields(
+			searchRequestBuilder, advancedConfiguration.getStored_fields());
+	}
+
+	@Override
+	public String getName() {
+		return "advancedConfiguration";
+	}
+
+	private void _setSourceFields(
+		SearchRequestBuilder searchRequestBuilder, Source source) {
 
 		if (source == null) {
 			return;
@@ -48,9 +61,19 @@ public class AdvancedSXPSearchRequestBodyContributor
 		}
 	}
 
-	@Override
-	public String getName() {
-		return "advancedConfiguration";
+	private void _setStoredFields(
+		SearchRequestBuilder searchRequestBuilder, String[] storedFields) {
+
+		if (storedFields == null) {
+			return;
+		}
+
+		if (storedFields.length == 0) {
+			searchRequestBuilder.fields(StringPool.BLANK);
+		}
+		else {
+			searchRequestBuilder.fields(storedFields);
+		}
 	}
 
 }

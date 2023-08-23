@@ -12,6 +12,7 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -93,6 +94,11 @@ public class AddDefaultRolesPortalInstanceLifecycleListener
 
 	private static final List<String> _portletResourceActions = Arrays.asList(
 		ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW);
+
+	@Reference(
+		target = "(javax.portlet.name=" + CTPortletKeys.PUBLICATIONS + ")"
+	)
+	private Portlet _portlet;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

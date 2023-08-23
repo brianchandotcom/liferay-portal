@@ -26,8 +26,6 @@
 	],
 	"items": [
 		{
-			"dateCreated": "2023-05-04T19:27:24Z",
-			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_PRIORITIES",
 			"listTypeEntries": [
 				{
@@ -77,8 +75,6 @@
 			}
 		},
 		{
-			"dateCreated": "2023-05-04T19:27:24Z",
-			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_RESOLUTIONS",
 			"listTypeEntries": [
 				{
@@ -144,8 +140,6 @@
 			}
 		},
 		{
-			"dateCreated": "2023-05-04T19:27:24Z",
-			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_REGIONS",
 			"listTypeEntries": [
 				{
@@ -187,8 +181,6 @@
 			}
 		},
 		{
-			"dateCreated": "2023-05-04T19:27:24Z",
-			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_STATUSES",
 			"listTypeEntries": [
 				{
@@ -270,8 +262,6 @@
 			}
 		},
 		{
-			"dateCreated": "2023-05-04T19:27:24Z",
-			"dateModified": "2023-05-04T19:27:24Z",
 			"externalReferenceCode": "F4E4_LIST_TICKET_TYPES",
 			"listTypeEntries": [
 				{

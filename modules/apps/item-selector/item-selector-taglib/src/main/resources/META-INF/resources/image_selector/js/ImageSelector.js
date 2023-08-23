@@ -171,7 +171,7 @@ const ImageSelector = ({
 			queue.startUpload();
 		}
 
-		uploader.uploadThese(event.fileList);
+		uploader.upload(file);
 	};
 
 	const handleImageCropped = (cropRegion) => {

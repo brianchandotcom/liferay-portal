@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.index.IndexInformation;
 
@@ -49,6 +50,45 @@ public class SearchAdminDisplayContextBuilder {
 	public SearchAdminDisplayContext build() {
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			new SearchAdminDisplayContext();
+
+		searchAdminDisplayContext.setIndexerMap(getIndexerMap());
+
+		searchAdminDisplayContext.setIndexReindexerClassNames(
+			_indexReindexerClassNames);
+
+		NavigationItemList navigationItemList = new NavigationItemList();
+		String selectedTab = getSelectedTab();
+
+		_addNavigationItemList(navigationItemList, "connections", selectedTab);
+
+		_addNavigationItemList(
+			navigationItemList, "index-actions", selectedTab);
+
+		if (_isIndexInformationAvailable()) {
+			_addNavigationItemList(
+				navigationItemList, "field-mappings", selectedTab);
+		}
+
+		searchAdminDisplayContext.setNavigationItemList(navigationItemList);
+		searchAdminDisplayContext.setSelectedTab(selectedTab);
+
+		return searchAdminDisplayContext;
+	}
+
+	public void setIndexInformation(IndexInformation indexInformation) {
+		_indexInformation = indexInformation;
+	}
+
+	public void setIndexReindexerClassNames(
+		List<String> indexReindexerClassNames) {
+
+		_indexReindexerClassNames = indexReindexerClassNames;
+	}
+
+	protected Map<String, List<Indexer<?>>> getIndexerMap() {
+		if (Validator.isNull(IndexerRegistryUtil.getIndexers())) {
+			return Collections.emptyMap();
+		}
 
 		List<Indexer<?>> indexers = new ArrayList<>(
 			IndexerRegistryUtil.getIndexers());
@@ -93,38 +133,7 @@ public class SearchAdminDisplayContextBuilder {
 			}
 		}
 
-		searchAdminDisplayContext.setIndexerMap(new TreeMap<>(indexerMap));
-
-		searchAdminDisplayContext.setIndexReindexerClassNames(
-			_indexReindexerClassNames);
-
-		NavigationItemList navigationItemList = new NavigationItemList();
-		String selectedTab = getSelectedTab();
-
-		_addNavigationItemList(navigationItemList, "connections", selectedTab);
-
-		_addNavigationItemList(
-			navigationItemList, "index-actions", selectedTab);
-
-		if (_isIndexInformationAvailable()) {
-			_addNavigationItemList(
-				navigationItemList, "field-mappings", selectedTab);
-		}
-
-		searchAdminDisplayContext.setNavigationItemList(navigationItemList);
-		searchAdminDisplayContext.setSelectedTab(selectedTab);
-
-		return searchAdminDisplayContext;
-	}
-
-	public void setIndexInformation(IndexInformation indexInformation) {
-		_indexInformation = indexInformation;
-	}
-
-	public void setIndexReindexerClassNames(
-		List<String> indexReindexerClassNames) {
-
-		_indexReindexerClassNames = indexReindexerClassNames;
+		return new TreeMap<>(indexerMap);
 	}
 
 	protected String getSelectedTab() {

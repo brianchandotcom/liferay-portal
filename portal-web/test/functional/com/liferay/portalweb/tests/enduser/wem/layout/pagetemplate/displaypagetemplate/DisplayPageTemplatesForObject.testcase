@@ -122,7 +122,13 @@ definition {
 
 			AssertTextNotPresent(value1 = "Thank you. Your information was successfully received.");
 
-			Alert.viewRequiredField();
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				fieldLabel = "Upload",
+				index = 2,
+				locator1 = "Fragment#INPUT_FIELD_WITH_LABEL",
+				type = "file-upload",
+				value1 = "Please fill out this field.");
 		}
 	}
 

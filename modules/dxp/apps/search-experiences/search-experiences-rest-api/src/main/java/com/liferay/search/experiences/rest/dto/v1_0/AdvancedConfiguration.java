@@ -79,6 +79,34 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Source source;
 
+	@Schema
+	public String[] getStored_fields() {
+		return stored_fields;
+	}
+
+	public void setStored_fields(String[] stored_fields) {
+		this.stored_fields = stored_fields;
+	}
+
+	@JsonIgnore
+	public void setStored_fields(
+		UnsafeSupplier<String[], Exception> stored_fieldsUnsafeSupplier) {
+
+		try {
+			stored_fields = stored_fieldsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] stored_fields;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -115,6 +143,30 @@ public class AdvancedConfiguration implements Serializable {
 			sb.append("\"source\": ");
 
 			sb.append(String.valueOf(source));
+		}
+
+		if (stored_fields != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stored_fields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < stored_fields.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(stored_fields[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < stored_fields.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

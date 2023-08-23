@@ -56,6 +56,32 @@ public class AdvancedConfigurationSerDes {
 			sb.append(String.valueOf(advancedConfiguration.getSource()));
 		}
 
+		if (advancedConfiguration.getStored_fields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"stored_fields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < advancedConfiguration.getStored_fields().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(advancedConfiguration.getStored_fields()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < advancedConfiguration.getStored_fields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -85,6 +111,15 @@ public class AdvancedConfigurationSerDes {
 				"source", String.valueOf(advancedConfiguration.getSource()));
 		}
 
+		if (advancedConfiguration.getStored_fields() == null) {
+			map.put("stored_fields", null);
+		}
+		else {
+			map.put(
+				"stored_fields",
+				String.valueOf(advancedConfiguration.getStored_fields()));
+		}
+
 		return map;
 	}
 
@@ -110,6 +145,12 @@ public class AdvancedConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					advancedConfiguration.setSource(
 						SourceSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "stored_fields")) {
+				if (jsonParserFieldValue != null) {
+					advancedConfiguration.setStored_fields(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 		}

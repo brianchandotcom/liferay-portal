@@ -46,6 +46,27 @@ public class AdvancedConfiguration implements Cloneable, Serializable {
 
 	protected Source source;
 
+	public String[] getStored_fields() {
+		return stored_fields;
+	}
+
+	public void setStored_fields(String[] stored_fields) {
+		this.stored_fields = stored_fields;
+	}
+
+	public void setStored_fields(
+		UnsafeSupplier<String[], Exception> stored_fieldsUnsafeSupplier) {
+
+		try {
+			stored_fields = stored_fieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] stored_fields;
+
 	@Override
 	public AdvancedConfiguration clone() throws CloneNotSupportedException {
 		return (AdvancedConfiguration)super.clone();

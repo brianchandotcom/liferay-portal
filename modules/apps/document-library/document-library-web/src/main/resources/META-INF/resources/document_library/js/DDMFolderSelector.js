@@ -14,7 +14,7 @@ import {
 	openToast,
 	sub,
 } from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const DDMFolderSelector = ({
 	copyActionURL,
@@ -41,6 +41,27 @@ const DDMFolderSelector = ({
 	const [destinationRepositoryName, setDestinationRepositoryName] = useState(
 		''
 	);
+	const [placeholder, setPlaceholder] = useState('');
+
+	useEffect(() => {
+		if (
+			destinationRepositoryId === -1 ||
+			sourceRepositoryId === undefined ||
+			sourceRepositoryId === destinationRepositoryId
+		) {
+			setPlaceholder(destinationParentFolderName);
+		}
+		else {
+			setPlaceholder(
+				`(${destinationRepositoryName}) ${destinationParentFolderName}`
+			);
+		}
+	}, [
+		destinationRepositoryName,
+		destinationRepositoryId,
+		destinationParentFolderName,
+		sourceRepositoryId,
+	]);
 
 	const handleSelectButtonClick = (event) => {
 		event.preventDefault();
@@ -140,7 +161,7 @@ const DDMFolderSelector = ({
 						<ClayInput
 							disabled
 							id={`${portletNamespace}copyToInput`}
-							placeholder={destinationParentFolderName}
+							placeholder={placeholder}
 							type="text"
 						/>
 					</ClayInput.GroupItem>

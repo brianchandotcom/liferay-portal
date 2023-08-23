@@ -83,7 +83,7 @@ public class ObjectActionTicketRestController extends BaseRestController {
 		).retrieve(
 		).bodyToMono(
 			Void.class
-		).block();
+		).subscribe();
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

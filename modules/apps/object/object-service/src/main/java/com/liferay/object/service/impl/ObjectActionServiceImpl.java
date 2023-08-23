@@ -5,7 +5,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.configuration.ObjectScriptConfiguration;
 import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
@@ -13,7 +12,6 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.base.ObjectActionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -24,16 +22,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.object.configuration.ObjectScriptConfiguration",
 	property = {
 		"json.web.service.context.name=object",
 		"json.web.service.context.path=ObjectAction"
@@ -120,17 +115,6 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			parametersUnicodeProperties);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		ObjectScriptConfiguration objectScriptConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ObjectScriptConfiguration.class, properties);
-
-		_allowInstanceAdminExecuteCode =
-			objectScriptConfiguration.allowInstanceAdminExecuteCode();
-	}
-
 	private void _validateScriptConfiguration(
 			String objectActionExecutorKey, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -139,15 +123,13 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 				objectActionExecutorKey,
 				ObjectActionExecutorConstants.KEY_GROOVY) &&
 			!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
-				permissionChecker, _allowInstanceAdminExecuteCode)) {
+				permissionChecker)) {
 
 			throw new ObjectActionExecutorKeyException(
 				"The user must have permission to choose object action " +
 					"executor key groovy");
 		}
 	}
-
-	private volatile boolean _allowInstanceAdminExecuteCode;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

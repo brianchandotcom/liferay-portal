@@ -377,9 +377,5 @@
 				"en-US": "F4E4 LIST_TICKET_TYPES"
 			}
 		}
-	],
-	"lastPage": 1,
-	"page": 1,
-	"pageSize": 20,
-	"totalCount": 5
+	]
 }

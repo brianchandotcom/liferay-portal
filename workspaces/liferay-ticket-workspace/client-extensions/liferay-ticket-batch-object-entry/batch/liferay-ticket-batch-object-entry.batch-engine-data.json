@@ -75,9 +75,5 @@
 				"name": "Site Issue"
 			}
 		}
-	],
-	"lastPage": 1,
-	"page": 1,
-	"pageSize": 20,
-	"totalCount": 1
+	]
 }

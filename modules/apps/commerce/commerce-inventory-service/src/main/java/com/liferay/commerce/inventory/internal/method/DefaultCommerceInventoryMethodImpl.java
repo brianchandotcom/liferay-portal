@@ -54,14 +54,15 @@ public class DefaultCommerceInventoryMethodImpl
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
 	public void consumeQuantity(
-			long userId, long commerceBookedQuantityId,
+			long userId, long commerceInventoryBookedQuantityId,
 			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
 			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
-		if (commerceBookedQuantityId > 0) {
-			_commerceBookedQuantityLocalService.consumeCommerceBookedQuantity(
-				commerceBookedQuantityId, quantity);
+		if (commerceInventoryBookedQuantityId > 0) {
+			_commerceInventoryBookedQuantityLocalService.
+				consumeCommerceInventoryBookedQuantity(
+					commerceInventoryBookedQuantityId, quantity);
 		}
 
 		decreaseStockQuantity(
@@ -83,8 +84,9 @@ public class DefaultCommerceInventoryMethodImpl
 						getCommerceInventoryEngineContributors()) {
 
 			commerceInventoryEngineContributor.consumeQuantityContribute(
-				userId, commerceBookedQuantityId, commerceInventoryWarehouseId,
-				quantity, sku, unitOfMeasureKey, context);
+				userId, commerceInventoryBookedQuantityId,
+				commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey,
+				context);
 		}
 	}
 
@@ -159,8 +161,9 @@ public class DefaultCommerceInventoryMethodImpl
 				companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
 
 		return stockQuantity.subtract(
-			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
-				companyId, commerceChannelGroupId, sku, unitOfMeasureKey));
+			_commerceInventoryBookedQuantityLocalService.
+				getCommerceInventoryBookedQuantity(
+					companyId, commerceChannelGroupId, sku, unitOfMeasureKey));
 	}
 
 	@Override
@@ -172,8 +175,9 @@ public class DefaultCommerceInventoryMethodImpl
 				companyId, sku, unitOfMeasureKey);
 
 		return stockQuantity.subtract(
-			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
-				companyId, sku, unitOfMeasureKey));
+			_commerceInventoryBookedQuantityLocalService.
+				getCommerceInventoryBookedQuantity(
+					companyId, sku, unitOfMeasureKey));
 	}
 
 	@Override
@@ -267,16 +271,16 @@ public class DefaultCommerceInventoryMethodImpl
 		DefaultCommerceInventoryMethodImpl.class);
 
 	@Reference
-	private CommerceInventoryBookedQuantityLocalService
-		_commerceBookedQuantityLocalService;
-
-	@Reference
 	private CommerceInventoryAuditLocalService
 		_commerceInventoryAuditLocalService;
 
 	@Reference
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
+
+	@Reference
+	private CommerceInventoryBookedQuantityLocalService
+		_commerceInventoryBookedQuantityLocalService;
 
 	@Reference
 	private CommerceInventoryEngineContributorRegistry

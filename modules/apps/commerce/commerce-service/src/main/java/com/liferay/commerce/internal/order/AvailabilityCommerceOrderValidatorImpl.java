@@ -90,7 +90,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			_commerceInventoryBookedQuantityLocalService.
 				fetchCommerceInventoryBookedQuantity(
-					commerceOrderItem.getBookedQuantityId());
+					commerceOrderItem.getCommerceInventoryBookedQuantityId());
 
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 

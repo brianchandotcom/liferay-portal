@@ -17,7 +17,7 @@ import java.util.Map;
 public interface CommerceInventoryEngineContributor {
 
 	public void consumeQuantityContribute(
-			long userId, long commerceBookedQuantityId,
+			long userId, long commerceInventoryBookedQuantityId,
 			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
 			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException;

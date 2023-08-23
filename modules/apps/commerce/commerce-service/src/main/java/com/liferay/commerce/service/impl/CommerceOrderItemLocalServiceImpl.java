@@ -400,11 +400,13 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrderItem fetchCommerceOrderItemByBookedQuantityId(
-		long bookedQuantityId) {
+	public CommerceOrderItem
+		fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId) {
 
-		return commerceOrderItemPersistence.fetchByBookedQuantityId(
-			bookedQuantityId);
+		return commerceOrderItemPersistence.
+			fetchByCommerceInventoryBookedQuantityId(
+				commerceInventoryBookedQuantityId);
 	}
 
 	@Override
@@ -732,16 +734,18 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long bookedQuantityId)
+			long commerceOrderItemId, long commerceInventoryBookedQuantityId)
 		throws NoSuchOrderItemException {
 
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		commerceOrderItem.setBookedQuantityId(bookedQuantityId);
+		commerceOrderItem.setCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 
 		try {
-			_reindexCommerceInventoryBookedQuantity(bookedQuantityId);
+			_reindexCommerceInventoryBookedQuantity(
+				commerceInventoryBookedQuantityId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -1258,9 +1262,10 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem.setPriceManuallyAdjusted(true);
 		}
 
-		_updateBookedQuantity(
-			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
-			quantity, commerceOrderItem.getQuantity());
+		_updateCommerceInventoryBookedQuantity(
+			userId, commerceOrderItem,
+			commerceOrderItem.getCommerceInventoryBookedQuantityId(), quantity,
+			commerceOrderItem.getQuantity());
 
 		commerceOrderItem.setManuallyAdjusted(true);
 		commerceOrderItem.setQuantity(quantity);
@@ -1442,13 +1447,14 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItemPersistence.remove(commerceOrderItem);
 
-		// Booked quantities
+		// Commerce Inventory Booked quantities
 
-		if (commerceOrderItem.getBookedQuantityId() > 0) {
+		if (commerceOrderItem.getCommerceInventoryBookedQuantityId() > 0) {
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
 					fetchCommerceInventoryBookedQuantity(
-						commerceOrderItem.getBookedQuantityId());
+						commerceOrderItem.
+							getCommerceInventoryBookedQuantityId());
 
 			if (commerceInventoryBookedQuantity != null) {
 				_commerceInventoryBookedQuantityLocalService.
@@ -2217,15 +2223,19 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 	}
 
-	private void _updateBookedQuantity(
+	private void _updateCommerceInventoryBookedQuantity(
 			long userId, CommerceOrderItem commerceOrderItem,
-			long bookedQuantityId, BigDecimal quantity, BigDecimal oldQuantity)
+			long commerceInventoryBookedQuantityId, BigDecimal quantity,
+			BigDecimal oldQuantity)
 		throws PortalException {
 
-		if ((oldQuantity.compareTo(quantity) != 0) && (bookedQuantityId > 0)) {
+		if ((oldQuantity.compareTo(quantity) != 0) &&
+			(commerceInventoryBookedQuantityId > 0)) {
+
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
-					fetchCommerceInventoryBookedQuantity(bookedQuantityId);
+					fetchCommerceInventoryBookedQuantity(
+						commerceInventoryBookedQuantityId);
 
 			if (commerceInventoryBookedQuantity != null) {
 				_commerceInventoryBookedQuantityLocalService.
@@ -2333,9 +2343,10 @@ public class CommerceOrderItemLocalServiceImpl
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
 
-		_updateBookedQuantity(
-			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
-			quantity, commerceOrderItem.getQuantity());
+		_updateCommerceInventoryBookedQuantity(
+			userId, commerceOrderItem,
+			commerceOrderItem.getCommerceInventoryBookedQuantityId(), quantity,
+			commerceOrderItem.getQuantity());
 
 		commerceOrder = _updateWorkflow(userId, commerceOrder);
 
@@ -2393,9 +2404,10 @@ public class CommerceOrderItemLocalServiceImpl
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
 
-		_updateBookedQuantity(
-			userId, commerceOrderItem, commerceOrderItem.getBookedQuantityId(),
-			quantity, commerceOrderItem.getQuantity());
+		_updateCommerceInventoryBookedQuantity(
+			userId, commerceOrderItem,
+			commerceOrderItem.getCommerceInventoryBookedQuantityId(), quantity,
+			commerceOrderItem.getQuantity());
 
 		_updateWorkflow(userId, commerceOrder);
 

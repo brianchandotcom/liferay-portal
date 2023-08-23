@@ -331,7 +331,8 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 
 		return new OrderItem() {
 			{
-				bookedQuantityId = commerceOrderItem.getBookedQuantityId();
+				bookedQuantityId =
+					commerceOrderItem.getCommerceInventoryBookedQuantityId();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountManuallyAdjusted =
 					commerceOrderItem.isDiscountManuallyAdjusted();

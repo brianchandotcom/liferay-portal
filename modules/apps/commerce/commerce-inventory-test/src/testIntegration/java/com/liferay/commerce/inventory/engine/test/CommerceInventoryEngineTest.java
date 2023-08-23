@@ -218,9 +218,10 @@ public class CommerceInventoryEngineTest {
 
 		BigDecimal bookedQuantity = new BigDecimal(7);
 
-		_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-			_user.getUserId(), null, bookedQuantity, _cpInstance1.getSku(),
-			StringPool.BLANK, Collections.emptyMap());
+		_commerceInventoryBookedQuantityLocalService.
+			addCommerceInventoryBookedQuantity(
+				_user.getUserId(), null, bookedQuantity, _cpInstance1.getSku(),
+				StringPool.BLANK, Collections.emptyMap());
 
 		BigDecimal remainingCompanyStockQuantity =
 			_commerceInventoryEngine.getStockQuantity(
@@ -291,10 +292,12 @@ public class CommerceInventoryEngineTest {
 
 		BigDecimal bookedQuantity = new BigDecimal(12);
 
-		CommerceInventoryBookedQuantity commerceBookedQuantity =
-			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-				_user.getUserId(), null, bookedQuantity, _cpInstance1.getSku(),
-				StringPool.BLANK, Collections.emptyMap());
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+			_commerceInventoryBookedQuantityLocalService.
+				addCommerceInventoryBookedQuantity(
+					_user.getUserId(), null, bookedQuantity,
+					_cpInstance1.getSku(), StringPool.BLANK,
+					Collections.emptyMap());
 
 		BigDecimal consumedQuantity = BigDecimal.ZERO;
 
@@ -302,7 +305,8 @@ public class CommerceInventoryEngineTest {
 
 		_commerceInventoryEngine.consumeQuantity(
 			_user.getUserId(),
-			commerceBookedQuantity.getCommerceInventoryBookedQuantityId(),
+			commerceInventoryBookedQuantity.
+				getCommerceInventoryBookedQuantityId(),
 			_cpInstance1.getGroupId(),
 			commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 			quantity, _cpInstance1.getSku(), StringPool.BLANK,
@@ -324,7 +328,8 @@ public class CommerceInventoryEngineTest {
 
 		_commerceInventoryEngine.consumeQuantity(
 			_user.getUserId(),
-			commerceBookedQuantity.getCommerceInventoryBookedQuantityId(),
+			commerceInventoryBookedQuantity.
+				getCommerceInventoryBookedQuantityId(),
 			_cpInstance1.getGroupId(),
 			commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 			quantity, _cpInstance1.getSku(), StringPool.BLANK,
@@ -379,15 +384,18 @@ public class CommerceInventoryEngineTest {
 				_cpInstance1.getCPInstanceId(), null, bookQuantity, 0, 0,
 				StringPool.BLANK, _commerceContext, _serviceContext);
 
-		CommerceInventoryBookedQuantity commerceBookedQuantity =
-			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-				_user.getUserId(), null, bookQuantity, _cpInstance1.getSku(),
-				StringPool.BLANK, Collections.emptyMap());
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+			_commerceInventoryBookedQuantityLocalService.
+				addCommerceInventoryBookedQuantity(
+					_user.getUserId(), null, bookQuantity,
+					_cpInstance1.getSku(), StringPool.BLANK,
+					Collections.emptyMap());
 
 		commerceOrderItem =
 			_commerceOrderItemLocalService.updateCommerceOrderItem(
 				commerceOrderItem.getCommerceOrderItemId(),
-				commerceBookedQuantity.getCommerceInventoryBookedQuantityId());
+				commerceInventoryBookedQuantity.
+					getCommerceInventoryBookedQuantityId());
 
 		BigDecimal quantity = _commerceInventoryWarehouseItem1.getQuantity();
 
@@ -401,7 +409,8 @@ public class CommerceInventoryEngineTest {
 
 		_commerceInventoryEngine.consumeQuantity(
 			_user.getUserId(),
-			commerceBookedQuantity.getCommerceInventoryBookedQuantityId(),
+			commerceInventoryBookedQuantity.
+				getCommerceInventoryBookedQuantityId(),
 			_cpInstance1.getGroupId(),
 			_commerceInventoryWarehouseItem1.getCommerceInventoryWarehouseId(),
 			bookQuantity, _cpInstance1.getSku(), StringPool.BLANK,
@@ -417,8 +426,10 @@ public class CommerceInventoryEngineTest {
 					_commerceChannel.getGroupId(), _cpInstance1.getSku(),
 					StringPool.BLANK)));
 
-		_commerceBookedQuantityLocalService.getCommerceInventoryBookedQuantity(
-			commerceBookedQuantity.getCommerceInventoryBookedQuantityId());
+		_commerceInventoryBookedQuantityLocalService.
+			getCommerceInventoryBookedQuantity(
+				commerceInventoryBookedQuantity.
+					getCommerceInventoryBookedQuantityId());
 	}
 
 	@Test
@@ -986,11 +997,6 @@ public class CommerceInventoryEngineTest {
 	private static User _user;
 
 	private AccountEntry _accountEntry;
-
-	@Inject
-	private CommerceInventoryBookedQuantityLocalService
-		_commerceBookedQuantityLocalService;
-
 	private CommerceChannel _commerceChannel;
 
 	@Inject
@@ -1000,6 +1006,10 @@ public class CommerceInventoryEngineTest {
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceInventoryBookedQuantityLocalService
+		_commerceInventoryBookedQuantityLocalService;
 
 	@Inject
 	private CommerceInventoryEngine _commerceInventoryEngine;

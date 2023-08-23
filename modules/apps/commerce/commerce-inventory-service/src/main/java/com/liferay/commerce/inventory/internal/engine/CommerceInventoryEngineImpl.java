@@ -38,9 +38,10 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
 	public void consumeQuantity(
-			long userId, long bookedQuantityId, long commerceCatalogGroupId,
-			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
-			String unitOfMeasureKey, Map<String, String> context)
+			long userId, long commerceInventoryBookedQuantityId,
+			long commerceCatalogGroupId, long commerceInventoryWarehouseId,
+			BigDecimal quantity, String sku, String unitOfMeasureKey,
+			Map<String, String> context)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
@@ -51,8 +52,9 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		commerceInventoryMethod.consumeQuantity(
-			userId, bookedQuantityId, commerceInventoryWarehouseId, quantity,
-			sku, unitOfMeasureKey, context);
+			userId, commerceInventoryBookedQuantityId,
+			commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey,
+			context);
 	}
 
 	@Override

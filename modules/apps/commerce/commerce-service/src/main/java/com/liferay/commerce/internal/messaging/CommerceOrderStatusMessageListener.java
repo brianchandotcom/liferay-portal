@@ -53,7 +53,8 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 
 			if ((CommerceOrderConstants.ORDER_STATUS_CANCELLED !=
 					orderStatus) ||
-				(commerceOrderItem.getBookedQuantityId() <= 0)) {
+				(commerceOrderItem.getCommerceInventoryBookedQuantityId() <=
+					0)) {
 
 				continue;
 			}
@@ -61,7 +62,8 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
 					fetchCommerceInventoryBookedQuantity(
-						commerceOrderItem.getBookedQuantityId());
+						commerceOrderItem.
+							getCommerceInventoryBookedQuantityId());
 
 			if (commerceInventoryBookedQuantity == null) {
 				continue;
@@ -72,7 +74,7 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 			_commerceInventoryBookedQuantityLocalService.
 				restockCommerceInventoryBookedQuantity(
 					currentUser.getUserId(),
-					commerceOrderItem.getBookedQuantityId(),
+					commerceOrderItem.getCommerceInventoryBookedQuantityId(),
 					HashMapBuilder.put(
 						CommerceInventoryAuditTypeConstants.ORDER_ID,
 						String.valueOf(commerceOrderItem.getCommerceOrderId())

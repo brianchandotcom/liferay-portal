@@ -76,7 +76,7 @@ public class CommerceInventoryBookedFDSDataProvider
 
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemLocalService.
-					fetchCommerceOrderItemByBookedQuantityId(
+					fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
 						commerceInventoryBookedQuantity.
 							getCommerceInventoryBookedQuantityId());
 

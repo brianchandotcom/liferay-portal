@@ -38,7 +38,7 @@ public class CommerceInventoryBookedQuantityModelDocumentContributor
 		try {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemLocalService.
-					fetchCommerceOrderItemByBookedQuantityId(
+					fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
 						commerceInventoryBookedQuantity.
 							getCommerceInventoryBookedQuantityId());
 

@@ -60,7 +60,8 @@ public class OrderItemDTOConverter
 
 		return new OrderItem() {
 			{
-				bookedQuantityId = commerceOrderItem.getBookedQuantityId();
+				bookedQuantityId =
+					commerceOrderItem.getCommerceInventoryBookedQuantityId();
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
 					CommerceOrderItem.class.getName(),

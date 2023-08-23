@@ -282,7 +282,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
-					addCommerceBookedQuantity(
+					addCommerceInventoryBookedQuantity(
 						commerceOrderItem.getUserId(), null,
 						commerceOrderItem.getQuantity(),
 						commerceOrderItem.getSku(), StringPool.BLANK,

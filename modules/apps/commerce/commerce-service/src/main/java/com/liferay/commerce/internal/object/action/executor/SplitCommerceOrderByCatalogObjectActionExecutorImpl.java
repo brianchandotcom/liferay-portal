@@ -130,7 +130,7 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 				CommerceInventoryBookedQuantity
 					commerceInventoryBookedQuantity =
 						_commerceInventoryBookedQuantityLocalService.
-							addCommerceBookedQuantity(
+							addCommerceInventoryBookedQuantity(
 								commerceOrderItem.getUserId(), null,
 								commerceOrderItem.getQuantity(),
 								commerceOrderItem.getSku(), StringPool.BLANK,
@@ -270,7 +270,8 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 							commerceChannel.getGroupId());
 					}
 
-					newCommerceOrderItem.setBookedQuantityId(0);
+					newCommerceOrderItem.setCommerceInventoryBookedQuantityId(
+						0);
 					newCommerceOrderItem.setCommerceOrderId(newCommerceOrderId);
 					newCommerceOrderItem.setCustomerCommerceOrderItemId(
 						commerceOrderItem.getCommerceOrderItemId());
@@ -406,9 +407,9 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			_commerceInventoryBookedQuantityLocalService.
 				deleteCommerceInventoryBookedQuantity(
-					commerceOrderItem.getBookedQuantityId());
+					commerceOrderItem.getCommerceInventoryBookedQuantityId());
 
-			commerceOrderItem.setBookedQuantityId(0);
+			commerceOrderItem.setCommerceInventoryBookedQuantityId(0);
 
 			_commerceOrderItemLocalService.updateCommerceOrderItem(
 				commerceOrderItem);

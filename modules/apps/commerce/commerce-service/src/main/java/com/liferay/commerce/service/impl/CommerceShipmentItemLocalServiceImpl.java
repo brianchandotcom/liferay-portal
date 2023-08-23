@@ -477,8 +477,8 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceOrderItem.getUnitOfMeasureKey());
 
 		_commerceInventoryBookedQuantityLocalService.
-			resetCommerceBookedQuantity(
-				commerceOrderItem.getBookedQuantityId(),
+			resetCommerceInventoryBookedQuantity(
+				commerceOrderItem.getCommerceInventoryBookedQuantityId(),
 				commerceOrderItem.getUserId(), null,
 				BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
 				commerceOrderItem.getUnitOfMeasureKey(),
@@ -526,7 +526,8 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		_commerceInventoryEngine.consumeQuantity(
 			commerceShipmentItem.getUserId(),
-			commerceOrderItem.getBookedQuantityId(), commerceCatalogGroupId,
+			commerceOrderItem.getCommerceInventoryBookedQuantityId(),
+			commerceCatalogGroupId,
 			commerceShipmentItem.getCommerceInventoryWarehouseId(),
 			BigDecimal.valueOf(quantity), commerceOrderItem.getSku(),
 			commerceOrderItem.getUnitOfMeasureKey(),

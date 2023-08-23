@@ -1571,9 +1571,9 @@ definition {
 				portletBody = "Please configure this portlet to make it visible to all users.",
 				portletName = "Wiki Display");
 
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Error:The record set could not be found.");
+			Portlet.viewPG(
+				portletBody = "Select an existing list or add a list to be displayed in this application.",
+				portletName = "Dynamic Data Lists Display");
 		}
 	}
 

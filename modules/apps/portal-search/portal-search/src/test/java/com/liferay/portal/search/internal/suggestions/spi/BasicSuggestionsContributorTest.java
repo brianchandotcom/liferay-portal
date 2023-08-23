@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,7 +64,6 @@ public class BasicSuggestionsContributorTest {
 
 		_setUpAssetEntryLocalService();
 		_setUpBasicSuggestionsContributor();
-		_setUpLayoutLocalService();
 		_setUpLiferayPortletRequest();
 		_setUpSearchContext();
 		_setUpSearchRequestBuilderFactory();
@@ -259,9 +257,6 @@ public class BasicSuggestionsContributorTest {
 			_basicSuggestionsContributor, "_assetEntryLocalService",
 			_assetEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_basicSuggestionsContributor, "_layoutLocalService",
-			_layoutLocalService);
-		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_searchRequestBuilderFactory",
@@ -273,16 +268,6 @@ public class BasicSuggestionsContributorTest {
 		ReflectionTestUtil.setFieldValue(
 			_basicSuggestionsContributor, "_suggestionBuilderFactory",
 			new SuggestionBuilderFactoryImpl());
-	}
-
-	private void _setUpLayoutLocalService() {
-		Mockito.doReturn(
-			null
-		).when(
-			_layoutLocalService
-		).fetchLayoutByFriendlyURL(
-			Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyString()
-		);
 	}
 
 	private void _setUpLiferayPortletRequest() {
@@ -437,9 +422,6 @@ public class BasicSuggestionsContributorTest {
 	private AssetRendererFactory<?> _assetRendererFactory;
 
 	private BasicSuggestionsContributor _basicSuggestionsContributor;
-
-	@Mock
-	private LayoutLocalService _layoutLocalService;
 
 	@Mock
 	private LiferayPortletRequest _liferayPortletRequest;

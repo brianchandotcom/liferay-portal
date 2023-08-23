@@ -36,8 +36,7 @@
 					"name": "Minor",
 					"name_i18n": {
 						"en-US": "Minor"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "MODERATE_PRIORITY",
@@ -45,8 +44,7 @@
 					"name": "Moderate",
 					"name_i18n": {
 						"en-US": "Moderate"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "MAJOR_PRIORITY",
@@ -54,8 +52,7 @@
 					"name": "Major",
 					"name_i18n": {
 						"en-US": "Major"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "CRITICAL_PRIORITY",
@@ -63,8 +60,7 @@
 					"name": "Critical",
 					"name_i18n": {
 						"en-US": "Critical"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "UNASSIGNED_PRIORITY",
@@ -72,8 +68,7 @@
 					"name": "Unassigned",
 					"name_i18n": {
 						"en-US": "Unassigned"
-					},
-					"type": ""
+					}
 				}
 			],
 			"name": "F4E4_LIST_TICKET_PRIORITIES",
@@ -92,8 +87,7 @@
 					"name": "Unresolved",
 					"name_i18n": {
 						"en-US": "Unresolved"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "FIXED_RESOLUTION",
@@ -101,8 +95,7 @@
 					"name": "Fixed",
 					"name_i18n": {
 						"en-US": "Fixed"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "DUPLICATE_RESOLUTION",
@@ -110,8 +103,7 @@
 					"name": "Duplicate",
 					"name_i18n": {
 						"en-US": "Duplicate"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "EXPIRED_RESOLUTION",
@@ -119,8 +111,7 @@
 					"name": "Expired",
 					"name_i18n": {
 						"en-US": "Expired"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "DONE_RESOLUTION",
@@ -128,8 +119,7 @@
 					"name": "Done",
 					"name_i18n": {
 						"en-US": "Done"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "APPROVED_RESOLUTION",
@@ -137,8 +127,7 @@
 					"name": "Approved",
 					"name_i18n": {
 						"en-US": "Approved"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "REJECTED_RESOLUTION",
@@ -146,8 +135,7 @@
 					"name": "Rejected",
 					"name_i18n": {
 						"en-US": "Rejected"
-					},
-					"type": ""
+					}
 				}
 			],
 			"name": "F4E4_LIST_TICKET_RESOLUTIONS",
@@ -166,8 +154,7 @@
 					"name": "NORAM",
 					"name_i18n": {
 						"en-US": "NORAM"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "LATAM_REGION",
@@ -175,8 +162,7 @@
 					"name": "LATAM",
 					"name_i18n": {
 						"en-US": "LATAM"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "EMEA_REGION",
@@ -184,8 +170,7 @@
 					"name": "EMEA",
 					"name_i18n": {
 						"en-US": "EMEA"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "APAC_REGION",
@@ -193,8 +178,7 @@
 					"name": "APAC",
 					"name_i18n": {
 						"en-US": "APAC"
-					},
-					"type": ""
+					}
 				}
 			],
 			"name": "F4E4_LIST_TICKET_REGIONS",
@@ -213,8 +197,7 @@
 					"name": "Open",
 					"name_i18n": {
 						"en-US": "Open"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "VERIFYING_STATUS",
@@ -222,8 +205,7 @@
 					"name": "Verifying",
 					"name_i18n": {
 						"en-US": "Verifying"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "QUEUED_STATUS",
@@ -231,8 +213,7 @@
 					"name": "Queued",
 					"name_i18n": {
 						"en-US": "Queued"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "IN_PROGRESS_STATUS",
@@ -240,8 +221,7 @@
 					"name": "In Progress",
 					"name_i18n": {
 						"en-US": "In Progress"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "ANSWERED_STATUS",
@@ -249,8 +229,7 @@
 					"name": "Answered",
 					"name_i18n": {
 						"en-US": "Answered"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "ESCALATED_STATUS",
@@ -258,8 +237,7 @@
 					"name": "Escalated",
 					"name_i18n": {
 						"en-US": "Escalated"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "IN_REVIEW_STATUS",
@@ -267,8 +245,7 @@
 					"name": "In Review",
 					"name_i18n": {
 						"en-US": "In Review"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "WAITING_STATUS",
@@ -276,8 +253,7 @@
 					"name": "Waiting",
 					"name_i18n": {
 						"en-US": "Waiting"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "CLOSED_STATUS",
@@ -285,8 +261,7 @@
 					"name": "Closed",
 					"name_i18n": {
 						"en-US": "Closed"
-					},
-					"type": ""
+					}
 				}
 			],
 			"name": "F4E4_LIST_TICKET_STATUSES",
@@ -305,8 +280,7 @@
 					"name": "Application",
 					"name_i18n": {
 						"en-US": "Application"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "CREDIT_LIMIT_TYPE",
@@ -314,8 +288,7 @@
 					"name": "Credit Limit Increase",
 					"name_i18n": {
 						"en-US": "Credit Limit Increase"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "ACCOUNT_ISSUE_TYPE",
@@ -323,8 +296,7 @@
 					"name": "Account Issue",
 					"name_i18n": {
 						"en-US": "Account Issue"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "PRODUCT_ISSUE_TYPE",
@@ -332,8 +304,7 @@
 					"name": "Product Issue",
 					"name_i18n": {
 						"en-US": "Product Issue"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "ORDER_ISSUE_TYPE",
@@ -341,8 +312,7 @@
 					"name": "Order Issue",
 					"name_i18n": {
 						"en-US": "Order Issue"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "DELIVERY_ISSUE_TYPE",
@@ -350,8 +320,7 @@
 					"name": "Delivery Issue",
 					"name_i18n": {
 						"en-US": "Delivery Issue"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "SITE_ISSUE_TYPE",
@@ -359,8 +328,7 @@
 					"name": "Site Issue",
 					"name_i18n": {
 						"en-US": "Site Issue"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "OTHER_TYPE",
@@ -368,8 +336,7 @@
 					"name": "Other",
 					"name_i18n": {
 						"en-US": "Other"
-					},
-					"type": ""
+					}
 				}
 			],
 			"name": "F4E4_LIST_TICKET_TYPES",

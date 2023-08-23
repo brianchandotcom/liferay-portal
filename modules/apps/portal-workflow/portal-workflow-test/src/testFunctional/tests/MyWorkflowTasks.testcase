@@ -166,6 +166,8 @@ definition {
 	@description = "LPS-135888 - Verify that the user with Account role can view the order details through the My Workflow Tasks page"
 	@priority = 3
 	test AccountUserCanViewOrderDetails {
+		property test.liferay.virtual.instance = "true";
+
 		task ("Given a Minium site with a Account Administrator user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

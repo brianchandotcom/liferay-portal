@@ -22,7 +22,7 @@ renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTempl
 
 <portlet:actionURL name="/layout_page_template_admin/edit_layout_page_template_collection" var="editLayoutPageTemplateCollectionURL">
 	<portlet:param name="mvcRenderCommandName" value="/layout_page_template_admin/edit_layout_page_template_collection" />
-	<portlet:param name="tabs1" value='<%= ParamUtil.getString(request, "tabs1") %>' />
+	<portlet:param name="tabs1" value='<%= ParamUtil.getString(request, "tabs1", "page-templates") %>' />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

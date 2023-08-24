@@ -123,16 +123,9 @@ public class DispatchConfigurator {
 				true, dispatchTaskClusterMode);
 
 		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
-			try {
-				_dispatchTriggerHelper.unscheduleSchedulerJob(
-					dispatchTrigger.getDispatchTriggerId(),
-					dispatchTaskClusterMode.getStorageType());
-			}
-			catch (DispatchTriggerSchedulerException
-						dispatchTriggerSchedulerException) {
-
-				_log.error(dispatchTriggerSchedulerException);
-			}
+			_dispatchTriggerHelper.deleteSchedulerJob(
+				dispatchTrigger.getDispatchTriggerId(),
+				dispatchTaskClusterMode.getStorageType());
 		}
 	}
 

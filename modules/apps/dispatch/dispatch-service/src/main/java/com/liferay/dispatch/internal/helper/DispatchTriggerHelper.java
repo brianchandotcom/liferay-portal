@@ -115,23 +115,6 @@ public class DispatchTriggerHelper {
 		return _schedulerEngineHelper.getPreviousFireTime(schedulerResponse);
 	}
 
-	public void unscheduleSchedulerJob(
-			long dispatchTriggerId, StorageType storageType)
-		throws DispatchTriggerSchedulerException {
-
-		try {
-			_schedulerEngineHelper.unschedule(
-				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), storageType);
-		}
-		catch (SchedulerException schedulerException) {
-			throw new DispatchTriggerSchedulerException(
-				"Unable to unschedule scheduler job for dispatch Trigger " +
-					dispatchTriggerId,
-				schedulerException);
-		}
-	}
-
 	private String _getGroupName(long dispatchTriggerId) {
 		return String.format("DISPATCH_GROUP_%07d", dispatchTriggerId);
 	}

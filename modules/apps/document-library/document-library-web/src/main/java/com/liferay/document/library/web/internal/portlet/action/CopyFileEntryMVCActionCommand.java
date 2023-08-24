@@ -64,11 +64,38 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationGroup(Group group) throws PortalException {
-		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+	private void _checkDestinationGroup(
+			long fileEntryId, Group group, long[] groupIds)
+		throws PortalException {
+
 		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-file-entries-to-the-live-version-of-a-group");
+		}
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		long sourceGroupId = fileEntry.getGroupId();
+
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		if (group.isDepot() ^ sourceGroup.isDepot()) {
+			long[] connectedGroupIds = groupIds;
+
+			if (group.isDepot()) {
+				connectedGroupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							sourceGroup.getGroupId());
+			}
+
+			if (ArrayUtil.isEmpty(connectedGroupIds) ||
+				!ArrayUtil.contains(connectedGroupIds, sourceGroupId)) {
+
+				throw new PortalException(
+					"the-item-is-not-copied-because-the-site-and-asset-" +
+						"library-are-not-connected");
+			}
 		}
 	}
 
@@ -88,14 +115,17 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			Group group = _groupLocalService.getGroup(destinationRepositoryId);
 
-			_checkDestinationGroup(group);
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId());
+
+			_checkDestinationGroup(fileEntryId, group, groupIds);
 
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
 				_getFileEntryTypeId(destinationRepositoryId, fileEntryId),
-				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						group.getGroupId()),
+				groupIds,
 				ServiceContextFactory.getInstance(
 					DLFileEntry.class.getName(), actionRequest));
 

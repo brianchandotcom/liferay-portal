@@ -401,10 +401,6 @@ public class SocialRelationLocalServiceImpl
 	}
 
 	private boolean _isTypeBi(int type) {
-		return !_isTypeUni(type);
-	}
-
-	private boolean _isTypeUni(int type) {
 		if ((type == SocialRelationConstants.TYPE_UNI_CHILD) ||
 			(type == SocialRelationConstants.TYPE_UNI_ENEMY) ||
 			(type == SocialRelationConstants.TYPE_UNI_FOLLOWER) ||
@@ -412,10 +408,10 @@ public class SocialRelationLocalServiceImpl
 			(type == SocialRelationConstants.TYPE_UNI_SUBORDINATE) ||
 			(type == SocialRelationConstants.TYPE_UNI_SUPERVISOR)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@BeanReference(type = UserPersistence.class)

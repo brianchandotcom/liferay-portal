@@ -12,7 +12,6 @@ import SegmentsExperimentsContext from '../context.es';
 import {
 	addSegmentsExperiment,
 	addVariant,
-	archiveExperiment,
 	closeCreationModal,
 	closeDeletionModal,
 	closeEditionModal,
@@ -27,6 +26,7 @@ import {
 	reviewClickTargetElement,
 	updateSegmentsExperimentStatus,
 	updateSegmentsExperimentTarget,
+	updateVariants,
 } from '../state/actions.es';
 import {
 	DispatchContext,
@@ -44,7 +44,6 @@ import {
 	navigateToExperience,
 } from '../util/navigation.es';
 import {
-	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_RUNNING,
 	STATUS_TERMINATED,
@@ -313,6 +312,8 @@ function SegmentsExperimentsSidebar({
 
 				openSuccessToast();
 
+				dispatch(updateVariants([]));
+
 				dispatch(addVariant(segmentsExperimentRel));
 
 				dispatch(closeCreationModal());
@@ -354,24 +355,12 @@ function SegmentsExperimentsSidebar({
 			.then(function _successCallback(objectResponse) {
 				const {editable, status} = objectResponse.segmentsExperiment;
 
-				if (
-					status.value === STATUS_TERMINATED ||
-					status.value === STATUS_COMPLETED
-				) {
-					dispatch(
-						archiveExperiment({
-							status,
-						})
-					);
-				}
-				else {
-					dispatch(
-						updateSegmentsExperimentStatus({
-							editable,
-							status,
-						})
-					);
-				}
+				dispatch(
+					updateSegmentsExperimentStatus({
+						editable,
+						status,
+					})
+				);
 			})
 			.catch(function _errorCallback() {
 				openToast({

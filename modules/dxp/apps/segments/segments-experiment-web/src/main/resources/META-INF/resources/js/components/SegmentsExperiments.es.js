@@ -23,6 +23,7 @@ import {
 	STATUS_DRAFT,
 	STATUS_FINISHED_WINNER,
 	STATUS_RUNNING,
+	STATUS_TERMINATED,
 	statusToLabelDisplayType,
 } from '../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../util/toasts.es';
@@ -137,6 +138,7 @@ function Experiments({
 	onTargetChange,
 }) {
 	const [dropdown, setDropdown] = useState(false);
+	const [dimissAlert, setDimissAlert] = useState(true);
 	const {APIService, imagesPath} = useContext(SegmentsExperimentsContext);
 	const dispatch = useContext(DispatchContext);
 	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
@@ -233,9 +235,11 @@ function Experiments({
 						)}
 
 						{!experiment.editable &&
-							!experiment.status.value === STATUS_RUNNING && (
+							experiment.status.value !== STATUS_RUNNING && (
 								<ClayButton
-									displayType="secondary"
+									className="text-secondary"
+									displayType={null}
+									monospaced
 									onClick={onDeleteSegmentsExperiment}
 								>
 									<ClayIcon symbol="trash" />
@@ -250,6 +254,20 @@ function Experiments({
 					>
 						{experiment.status.label}
 					</ClayLabel>
+
+					{experiment.status.value === STATUS_TERMINATED &&
+						dimissAlert && (
+							<ClayAlert
+								className="mt-3"
+								displayType="warning"
+								onClose={() => setDimissAlert(false)}
+								title={Liferay.Language.get('alert')}
+							>
+								{Liferay.Language.get(
+									'the-test-has-not-gathered-sufficient-data-to-confidently-determine-a-winner.-however,-variants-can-still-be-published'
+								)}
+							</ClayAlert>
+						)}
 
 					{experiment.status.value === STATUS_FINISHED_WINNER && (
 						<ClayAlert className="mt-3" displayType="success">

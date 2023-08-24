@@ -21,32 +21,27 @@ function VariantList({
 }) {
 	return (
 		<ClayList>
-			{variants.map((variant) => {
-				const publishableVariant =
-					publishable && !!(!variant.control || variant.winner);
-
-				return (
-					<Variant
-						active={
-							variant.segmentsExperienceId ===
-							selectedSegmentsExperienceId
-						}
-						control={variant.control}
-						editable={editable}
-						key={variant.segmentsExperimentRelId}
-						name={variant.name}
-						onVariantDeletion={onVariantDeletion}
-						onVariantEdition={onVariantEdition}
-						onVariantPublish={onVariantPublish}
-						publishable={publishableVariant}
-						segmentsExperienceId={variant.segmentsExperienceId}
-						showSplit={!publishable && !editable}
-						split={variant.split}
-						variantId={variant.segmentsExperimentRelId}
-						winner={variant.winner}
-					/>
-				);
-			})}
+			{variants.map((variant) => (
+				<Variant
+					active={
+						variant.segmentsExperienceId ===
+						selectedSegmentsExperienceId
+					}
+					control={variant.control}
+					editable={editable}
+					key={variant.segmentsExperimentRelId}
+					name={variant.name}
+					onVariantDeletion={onVariantDeletion}
+					onVariantEdition={onVariantEdition}
+					onVariantPublish={onVariantPublish}
+					publishable={publishable}
+					segmentsExperienceId={variant.segmentsExperienceId}
+					showSplit={!publishable && !editable}
+					split={variant.split}
+					variantId={variant.segmentsExperimentRelId}
+					winner={variant.winner}
+				/>
+			))}
 		</ClayList>
 	);
 }

@@ -288,6 +288,5 @@ function _updateExperimentStatus(state, updatedValues) {
 		...state,
 		errors: {},
 		experiment: {...state.experiment, ...updatedValues},
-		variants: [],
 	};
 }

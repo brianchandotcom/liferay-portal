@@ -23,7 +23,6 @@ function Variant({
 	name,
 	onVariantDeletion,
 	onVariantEdition,
-	onVariantPublish,
 	publishable,
 	segmentsExperienceId,
 	showSplit,
@@ -44,7 +43,11 @@ function Variant({
 	return (
 		<>
 			<ClayList.Item active={active} flex>
-				<ClayList.ItemField expand>
+				<ClayList.ItemField
+					className="mr-2 text-truncate"
+					expand={!publishable}
+					style={{width: 102}}
+				>
 					<ClayList.ItemTitle>
 						<ClayButton
 							className="lfr-portal-tooltip text-truncate"
@@ -134,7 +137,7 @@ function Variant({
 					</>
 				)}
 
-				{showSplit && (
+				{showSplit && !publishable && (
 					<ClayList.ItemField>
 						<span
 							aria-label={Liferay.Language.get('traffic-split')}
@@ -142,20 +145,6 @@ function Variant({
 						>
 							{indexToPercentageString(split)}
 						</span>
-					</ClayList.ItemField>
-				)}
-
-				{publishable && (
-					<ClayList.ItemField>
-						<ClayButton
-							displayType={winner ? 'primary' : 'secondary'}
-							onClick={() =>
-								onVariantPublish(segmentsExperienceId)
-							}
-							small
-						>
-							{Liferay.Language.get('publish')}
-						</ClayButton>
 					</ClayList.ItemField>
 				)}
 			</ClayList.Item>

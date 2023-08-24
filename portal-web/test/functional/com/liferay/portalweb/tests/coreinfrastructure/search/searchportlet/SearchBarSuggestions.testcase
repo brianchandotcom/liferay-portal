@@ -20,7 +20,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-159730 and LPS-164852."
+	@description = "This is a use case for LPS-182927 and LPS-164852."
 	@priority = 4
 	test AssertURLforSuggestionsResults {
 		JSONWebcontent.addWebContent(
@@ -33,41 +33,31 @@ definition {
 			groupName = "Guest",
 			layoutName = "New Search Page");
 
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "/new-search-page");
+		Navigator.gotoPage(pageName = "New Search Page");
 
-		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Apple");
-
-		SearchBarSuggestions.viewSuggestions(
-			searchAssetDescription = "WC WebContent Description",
+		SearchBarSuggestions.viewSuggestionResultDetailsURL(
+			expectedURL = "/new-search-page",
 			searchAssetTitle = "Apple");
 
-		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple");
-
-		SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple");
-
-		Navigator.openURL();
-
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "New Search Page");
-
-		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "Apple");
-
-		SearchBarSuggestions.viewSuggestions(
-			searchAssetDescription = "WC WebContent Description",
-			searchAssetTitle = "Apple");
-
-		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = "Apple");
-
-		SearchBarSuggestions.viewSuggestionResultDetails(searchAssetTitle = "Apple");
+		Navigator.gotoBack();
 
 		var currentURL = selenium.getCurrentUrl();
 
 		if (!(contains(${currentURL}, "/new-search-page"))) {
-			fail("URL should contain /new-search-page");
+			fail("Clicking the in-page back button should take the user to the page they came from");
 		}
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "New Search Page");
+
+		SearchBarSuggestions.viewSuggestionResultDetailsURL(
+			expectedURL = "/new-search-page",
+			searchAssetTitle = "Apple");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "");
+
+		SearchBarSuggestions.viewSuggestionResultDetailsURL(
+			expectedURL = "/new-search-page",
+			searchAssetTitle = "Apple");
 	}
 
 	@priority = 4

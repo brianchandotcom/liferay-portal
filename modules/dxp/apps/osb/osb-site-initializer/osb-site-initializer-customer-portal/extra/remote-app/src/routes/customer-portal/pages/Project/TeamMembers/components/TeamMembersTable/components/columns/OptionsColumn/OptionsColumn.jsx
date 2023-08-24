@@ -45,26 +45,24 @@ const OptionsColumn = ({
 			saveDisabled={saveDisabled}
 		/>
 	) : (
-		<>
-			<ClayTooltipProvider>
-				<span>
-					<ButtonDropDown
-						customDropDownButton={
-							<ButtonWithIcon
-								displayType="null"
-								small
-								symbol="ellipsis-v"
-							/>
-						}
-						items={userOptions}
-						menuElementAttrs={{
-							className: 'p-0',
-						}}
-						menuWidth="shrink"
-					/>
-				</span>
-			</ClayTooltipProvider>
-		</>
+		<ClayTooltipProvider>
+			<span>
+				<ButtonDropDown
+					customDropDownButton={
+						<ButtonWithIcon
+							displayType="null"
+							small
+							symbol="ellipsis-v"
+						/>
+					}
+					items={userOptions}
+					menuElementAttrs={{
+						className: 'p-0',
+					}}
+					menuWidth="shrink"
+				/>
+			</span>
+		</ClayTooltipProvider>
 	);
 };
 

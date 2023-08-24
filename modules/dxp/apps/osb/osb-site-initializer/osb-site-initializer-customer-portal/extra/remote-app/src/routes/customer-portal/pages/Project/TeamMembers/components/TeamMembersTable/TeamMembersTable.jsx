@@ -6,6 +6,7 @@
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import {getHighPriorityContacts} from '~/common/services/liferay/api';
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
@@ -24,6 +25,9 @@ import usePagination from './hooks/usePaginationTeamMembers';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
+
+const MAXIMUM_REQUESTORS_DEFAULT = -1;
+const UNLIMITED_RESQUESTORS = 9999;
 
 export const HIGH_PRIORITY_CONTACT_CATEGORIES = {
 	criticalIncident: i18n.translate('critical-incident'),
@@ -78,10 +82,22 @@ const TeamMembersTable = ({
 		koroneikiAccountLoading
 	);
 
-	let availableSupportSeatsCount =
-		koroneikiAccount?.maxRequestors - supportSeatsCount;
-	availableSupportSeatsCount =
-		availableSupportSeatsCount < 0 ? 0 : availableSupportSeatsCount;
+	const [
+		availableSupportSeatsCount,
+		setAvailableSupportSeatsCount,
+	] = useState(1);
+
+	useEffect(() => {
+		let remainingAdmins =
+			koroneikiAccount?.maxRequestors - supportSeatsCount;
+		remainingAdmins = remainingAdmins < 0 ? 0 : remainingAdmins;
+
+		setAvailableSupportSeatsCount(
+			koroneikiAccount?.maxRequestors === MAXIMUM_REQUESTORS_DEFAULT
+				? UNLIMITED_RESQUESTORS
+				: remainingAdmins
+		);
+	}, [koroneikiAccount, supportSeatsCount]);
 
 	const userAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.items;
@@ -100,12 +116,12 @@ const TeamMembersTable = ({
 		return {
 			contactsCategory: {
 				key: lowerCaseFirstLetter.replace(/\s/g, ''),
-				name: `${filter}`,
+				name: filter,
 			},
-			filterRequest: `contactsCategory eq '${lowerCaseFirstLetter.replace(
-				/\s/g,
-				''
-			)}'`,
+			filterRequest: SearchBuilder.eq(
+				'contactsCategory',
+				lowerCaseFirstLetter.replace(/\s/g, '')
+			),
 		};
 	};
 
@@ -143,18 +159,16 @@ const TeamMembersTable = ({
 				for (const filter of Object.keys(
 					HIGH_PRIORITY_CONTACT_CATEGORIES
 				)) {
-					const contacts = await getHighPriorityContactsByFilter(
+					updatedFilteredContacts[
 						filter
-					);
-					updatedFilteredContacts[filter] = contacts;
+					] = await getHighPriorityContactsByFilter(filter);
 				}
 
-				const names = Object.values(
-					updatedFilteredContacts
-				).flatMap((contacts) =>
-					contacts.map((contact) => contact.label)
+				setHighPriorityContactsNames(
+					Object.values(updatedFilteredContacts).flatMap((contacts) =>
+						contacts.map((contact) => contact.label)
+					)
 				);
-				setHighPriorityContactsNames(names);
 			} catch (error) {
 				console.error(
 					i18n.translate('error-fetching-high-priority-contacts'),

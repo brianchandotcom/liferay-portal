@@ -258,40 +258,6 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	@Test
-	public void testInitJobState() throws Exception {
-		List<SchedulerResponse> schedulerResponses =
-			_quartzSchedulerEngine.getScheduledJobs(
-				_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		Assert.assertEquals(
-			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER,
-			schedulerResponses.size());
-
-		MockScheduler mockScheduler = ReflectionTestUtil.getFieldValue(
-			_quartzSchedulerEngine, "_persistedScheduler");
-
-		mockScheduler.addJob(
-			_TEST_JOB_NAME_PREFIX + "persisted", _PERSISTED_TEST_GROUP_NAME,
-			StorageType.PERSISTED, null);
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		Assert.assertEquals(
-			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER + 1,
-			schedulerResponses.size());
-
-		_quartzSchedulerEngine.initJobState();
-
-		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
-			_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
-
-		Assert.assertEquals(
-			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER,
-			schedulerResponses.size());
-	}
-
-	@Test
 	public void testMaxLengthValues() {
 		int descriptionMaxLength =
 			_quartzSchedulerEngine.getDescriptionMaxLength() +
@@ -557,9 +523,19 @@ public class QuartzSchedulerEngineTest {
 
 		@Override
 		public void addJob(JobDetail jobDetail, boolean replace) {
-			_jobs.put(
-				jobDetail.getKey(),
-				new Tuple(jobDetail, null, TriggerState.UNSCHEDULED));
+			Tuple tuple = _jobs.get(jobDetail.getKey());
+
+			if (tuple == null) {
+				_jobs.put(
+					jobDetail.getKey(),
+					new Tuple(jobDetail, null, TriggerState.UNSCHEDULED));
+			}
+			else {
+				_jobs.put(
+					jobDetail.getKey(),
+					new Tuple(
+						jobDetail, tuple.getObject(1), tuple.getObject(2)));
+			}
 		}
 
 		public final void addJob(

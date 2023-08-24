@@ -28,7 +28,7 @@ public class UpgradeJavaAddFolderParameterCheck
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
 
-		if (parameterList.size() == 7) {
+		if (parameterList.size() >= 7) {
 			return newContent;
 		}
 

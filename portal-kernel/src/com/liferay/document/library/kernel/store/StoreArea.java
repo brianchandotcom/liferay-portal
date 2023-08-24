@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -185,8 +186,11 @@ public enum StoreArea {
 		StringBundler sb = new StringBundler(
 			5 + (ArrayUtil.getLength(path) * 2));
 
-		sb.append(_namespace);
-		sb.append(StringPool.SLASH);
+		if (Validator.isNotNull(_namespace)) {
+			sb.append(_namespace);
+			sb.append(StringPool.SLASH);
+		}
+
 		sb.append(String.valueOf(companyId));
 		sb.append(StringPool.SLASH);
 		sb.append(String.valueOf(repositoryId));

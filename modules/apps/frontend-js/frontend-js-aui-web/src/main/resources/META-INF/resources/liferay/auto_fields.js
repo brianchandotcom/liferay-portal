@@ -150,7 +150,7 @@ AUI.add(
 
 					let clonedRow;
 
-					if (inputsLocalized && !paletteIsCloned) {
+					if (inputsLocalized._nodes.length > 0 && !paletteIsCloned) {
 						const palette = document.querySelector(
 							"[id$='PaletteBoundingBox']"
 						);
@@ -163,7 +163,7 @@ AUI.add(
 
 						trigger.placeAfter(list);
 
-						list.append(palette);
+						list.append(palette.cloneNode(true));
 					}
 
 					if (instance.url) {

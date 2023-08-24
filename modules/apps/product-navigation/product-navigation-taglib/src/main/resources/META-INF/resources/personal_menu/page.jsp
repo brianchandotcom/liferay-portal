@@ -52,7 +52,11 @@ if (size != null) {
 			<div><%= label %></div>
 		</c:when>
 		<c:otherwise>
-			<button aria-expanded="true" aria-haspopup="true" class="btn btn-unstyled dropdown-toggle" id="<%= namespace %>personal_menu_dropdown_toggle" ref="triggerButton" type="button">
+			<clay:button
+				cssClass="dropdown-toggle"
+				displayType="unstyled"
+				id='<%= namespace + "personal_menu_dropdown_toggle" %>'
+			>
 				<span class="<%= userStickerCssClasses %>">
 					<liferay-ui:user-portrait
 						cssClass="bg-white sticker-user-icon"
@@ -71,7 +75,7 @@ if (size != null) {
 						</span>
 					</c:if>
 				</span>
-			</button>
+			</clay:button>
 		</c:otherwise>
 	</c:choose>
 

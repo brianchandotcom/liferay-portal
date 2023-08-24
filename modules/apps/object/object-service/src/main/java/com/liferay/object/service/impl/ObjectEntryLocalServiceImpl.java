@@ -46,7 +46,6 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
-import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceRegistry;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -78,6 +77,8 @@ import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.Column;
@@ -215,8 +216,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.io.IOUtils;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -1451,8 +1454,22 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectFilterParser.class, "filter.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properties) {
 		_objectConfiguration = ConfigurableUtil.createConfigurable(
 			ObjectConfiguration.class, properties);
 	}
@@ -2841,9 +2858,8 @@ public class ObjectEntryLocalServiceImpl
 						}
 
 						ObjectFilterParser objectFilterParser =
-							_objectFilterParserServiceRegistry.
-								getObjectFilterParser(
-									objectFilter.getFilterType());
+							_serviceTrackerMap.getService(
+								objectFilter.getFilterType());
 
 						return objectFilterParser.parse(objectFilter);
 					});
@@ -4424,10 +4440,6 @@ public class ObjectEntryLocalServiceImpl
 	private ObjectFieldSettingPersistence _objectFieldSettingPersistence;
 
 	@Reference
-	private ObjectFilterParserServiceRegistry
-		_objectFilterParserServiceRegistry;
-
-	@Reference
 	private ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
 
@@ -4461,6 +4473,8 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	private ServiceTrackerMap<String, ObjectFilterParser> _serviceTrackerMap;
 
 	@Reference
 	private Sorts _sorts;

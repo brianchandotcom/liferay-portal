@@ -95,7 +95,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
-	public void testGetRenderTimesDataOfAContentLayoutWithACollection()
+	public void testGetRenderTimesDataOfContentLayoutWithCollection()
 		throws Exception {
 
 		LayoutStructure layoutStructure = _getLayoutStructure();
@@ -131,7 +131,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
-	public void testGetRenderTimesDataOfAContentLayoutWithACollectionInheritedFromMaster()
+	public void testGetRenderTimesDataOfContentLayoutWithCollectionInheritedFromMaster()
 		throws Exception {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -183,7 +183,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
-	public void testGetRenderTimesDataOfAContentLayoutWithACreatedFragmentEntry()
+	public void testGetRenderTimesDataOfContentLayoutWithFragmentEntry()
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(true);
@@ -231,7 +231,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
-	public void testGetRenderTimesDataOfAContentLayoutWithACreatedFragmentEntryInsideAGrid()
+	public void testGetRenderTimesDataOfContentLayoutWithFragmentEntryInGrid()
 		throws Exception {
 
 		LayoutStructure layoutStructure = _getLayoutStructure();
@@ -280,7 +280,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	}
 
 	@Test
-	public void testGetRenderTimesDataOfAContentLayoutWithAPortletFragmentEntry()
+	public void testGetRenderTimesDataOfContentLayoutWithPortletFragmentEntry()
 		throws Exception {
 
 		String portletId = "com_liferay_test_portlet_LayoutTestPortlet";

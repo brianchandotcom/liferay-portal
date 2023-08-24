@@ -6,9 +6,18 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-export function WarningMessage({message}: {message: string}) {
+export function WarningMessage({
+	fontWeight = 'bold',
+	message,
+}: {
+	fontWeight?: 'bold' | 'normal';
+	message: string;
+}) {
 	return (
-		<div className="font-weight-bold mt-1 small text-warning" role="status">
+		<div
+			className={`font-weight-${fontWeight} mt-1 small text-warning`}
+			role="status"
+		>
 			<span className="mr-2">
 				<ClayIcon symbol="warning-full" />
 			</span>

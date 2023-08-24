@@ -84,12 +84,7 @@ export function NoPaginationOptions({
 	};
 
 	return (
-		<ClayForm.Group
-			className={classNames({
-				'has-warning': warningMessage,
-			})}
-			small
-		>
+		<ClayForm.Group small>
 			<div className="mb-2 pt-1">
 				<ClayCheckbox
 					checked={displayAllItems}
@@ -136,7 +131,9 @@ export function NoPaginationOptions({
 				</ClayForm.Group>
 			)}
 
-			{warningMessage && <WarningMessage message={warningMessage} />}
+			{warningMessage && (
+				<WarningMessage fontWeight="normal" message={warningMessage} />
+			)}
 		</ClayForm.Group>
 	);
 }

@@ -1,0 +1,284 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
+	property testray.main.component.name = "Control Menu";
+
+	static var randomSiteName = StringUtil.randomString(8);
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+	static var randomRoleKey = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site with a Public Page") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+	}
+
+	@description = "This is for LPS-189839. Verify that users accessing the admin Page directly will see the Control Menu."
+	@priority = 4
+	test SeeControlMenuInWebContentAdminAsUserWithRoleOutsideRolesThatCanSeeTheControlMenu {
+		task ("Given the site administrator enables the Show Control Menu by Role") {
+			JSONRole.addRegularRole(roleTitle = ${randomRoleKey});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = ${randomRoleKey});
+
+			JSONRole.assignRoleToUser(
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("When a user with role outside roles that can see the control menu accesses to the Web Content Admin") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.updateURL(url = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+
+			PageEditor.publish();
+
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssertElementNotPresent(locator1 = "Portlet#HEADER");
+
+			Button.click(button = "Go Somewhere");
+		}
+
+		task ("Then the user will be able to see the control menu") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Web Content");
+		}
+	}
+
+	@description = "This is for LPS-189839. Verify when a new role is created, new users will be able to see the Control Menu through it."
+	@priority = 4
+	test ShowControlMenuByNewRole {
+		task ("Given the site administrator enables the Show Control Menu by Role") {
+			JSONRole.addRegularRole(roleTitle = ${randomRoleKey});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = ${randomRoleKey});
+
+			JSONRole.assignRoleToUser(
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteName});
+		}
+
+		task ("When the site administrator accesses to the Site Configuration") {
+			Click(
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			MenuBar.click(menuBar = "Menu Access");
+
+			Check.checkToggleSwitch(
+				checkboxName = "Show Control Menu by Role",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then the site administrator could select new role to see control menu") {
+			Site.selectRoleToSeeControlMenu(roleTitle = ${randomRoleKey});
+
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("When the new user accesses to the page") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the new user could see the control menu") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+		}
+
+		task ("When the site administrator removes the new role from roles that can see control menu") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteName});
+
+			Click(
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			MenuBar.click(menuBar = "Menu Access");
+
+			Click(
+				key_tableEntry = ${randomRoleKey},
+				key_text = "times-circle",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user will be not able to see the control menu") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${randomUserEmailAddress}@liferay.com",
+				userLoginFullName = "${userFirstName} ${userLastName}");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssertElementNotPresent(locator1 = "Portlet#HEADER");
+		}
+	}
+
+	@description = "This is for LPS-189839. Verify is possible to hide or show Control Menu of a Role and that Administrator and Site Administrator cannot be deleted."
+	@priority = 4
+	test ShowControlMenuByOOTBRoles {
+		task ("Given the site administrator accesses to the Site Configuration") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Power User");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "${randomUserEmailAddress}@liferay.com");
+
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteName});
+
+			Click(
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("When the site administrator enables Show Control Menu by Role") {
+			MenuBar.click(menuBar = "Menu Access");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Show Control Menu by Role",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Check.checkToggleSwitch(
+				checkboxName = "Show Control Menu by Role",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Show Control Menu by Role",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then the site administrator cannot remove Administrator and Site Administrator from Roles that can see the control menu") {
+			for (var accountUsers : list "Administrator,Site Administrator") {
+				AssertElementNotPresent(
+					key_tableEntry = ${accountUsers},
+					key_text = "times-circle",
+					locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+			}
+		}
+
+		task ("When the site administrator select the Power User to see control menu") {
+			Site.selectRoleToSeeControlMenu(roleTitle = "Power User");
+
+			AssertElementPresent(
+				key_tableEntry = "Power User",
+				key_text = "times-circle",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("Then the user will be able to see the control menu") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${randomUserEmailAddress}@liferay.com",
+				userLoginFullName = "${userFirstName} ${userLastName}");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+		}
+
+		task ("When the site administrator remove the Power User from Roles that can see control menu") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteName});
+
+			Click(
+				key_itemName = "Site Configuration",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			MenuBar.click(menuBar = "Menu Access");
+
+			Click(
+				key_tableEntry = "Power User",
+				key_text = "times-circle",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user will be not able to see the control menu") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssertElementNotPresent(locator1 = "Portlet#HEADER");
+		}
+	}
+
+}

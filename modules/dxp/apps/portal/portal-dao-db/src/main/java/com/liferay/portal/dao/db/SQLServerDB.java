@@ -396,7 +396,20 @@ public class SQLServerDB extends BaseDB {
 			sb.append(sourcePrimaryKeyColumnNames[i]);
 		}
 
-		sb.append(") as res");
+		sb.append(") as res where ");
+
+		for (int i = 0; i < sourcePrimaryKeyColumnNames.length; i++) {
+			if (i > 0) {
+				sb.append(" and ");
+			}
+
+			sb.append("res.");
+			sb.append(sourcePrimaryKeyColumnNames[i]);
+			sb.append(" = ");
+			sb.append(targetTableName);
+			sb.append(StringPool.PERIOD);
+			sb.append(targetPrimaryKeyColumnNames[i]);
+		}
 
 		runSQL(connection, sb.toString());
 	}

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -157,17 +158,18 @@ public class UserDisplayContext {
 
 	public List<Organization> getOrganizations() throws PortalException {
 		if (_selUser != null) {
-			if (!_initDisplayContext.isFilterManageableOrganizations()) {
-				List<Organization> organizations = _selUser.getOrganizations();
+			List<Organization> organizations = _selUser.getOrganizations();
 
+			if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
 				organizations.addAll(_getParentOrganizations(organizations));
+			}
 
+			if (!_initDisplayContext.isFilterManageableOrganizations()) {
 				return organizations;
 			}
 
 			return UsersAdminUtil.filterOrganizations(
-				_themeDisplay.getPermissionChecker(),
-				_selUser.getOrganizations());
+				_themeDisplay.getPermissionChecker(), organizations);
 		}
 
 		String organizationIds = ParamUtil.getString(

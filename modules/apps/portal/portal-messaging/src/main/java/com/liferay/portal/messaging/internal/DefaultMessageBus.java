@@ -163,8 +163,6 @@ public class DefaultMessageBus implements MessageBus {
 		_serviceRegistration.unregister();
 
 		_serviceTrackerMap.close();
-
-		shutdown(true);
 	}
 
 	private void _updateDestination(

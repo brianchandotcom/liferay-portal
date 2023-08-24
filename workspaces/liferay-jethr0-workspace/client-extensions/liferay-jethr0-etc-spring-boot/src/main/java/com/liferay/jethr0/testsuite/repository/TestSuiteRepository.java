@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.testsuite.dalo.ProjectsToTestSuitesEntityRelationshipDALO;
-import com.liferay.jethr0.testsuite.dalo.TestSuiteDALO;
+import com.liferay.jethr0.testsuite.dalo.TestSuiteEntityDALO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,8 +46,8 @@ public class TestSuiteRepository extends BaseEntityRepository<TestSuite> {
 	}
 
 	@Override
-	public TestSuiteDALO getEntityDALO() {
-		return _testSuiteDALO;
+	public TestSuiteEntityDALO getEntityDALO() {
+		return _testSuiteEntityDALO;
 	}
 
 	@Autowired
@@ -55,6 +55,6 @@ public class TestSuiteRepository extends BaseEntityRepository<TestSuite> {
 		_projectsToTestSuitesEntityRelationshipDALO;
 
 	@Autowired
-	private TestSuiteDALO _testSuiteDALO;
+	private TestSuiteEntityDALO _testSuiteEntityDALO;
 
 }

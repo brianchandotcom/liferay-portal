@@ -8,7 +8,7 @@ package com.liferay.jethr0.project.repository;
 import com.liferay.jethr0.bui1d.repository.BuildRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.dalo.ProjectDALO;
+import com.liferay.jethr0.project.dalo.ProjectEntityDALO;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -49,14 +49,14 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	}
 
 	@Override
-	public ProjectDALO getEntityDALO() {
-		return _projectDALO;
+	public ProjectEntityDALO getEntityDALO() {
+		return _projectEntityDALO;
 	}
 
 	@Override
 	public void initialize() {
 		addAll(
-			_projectDALO.getProjectsByState(
+			_projectEntityDALO.getProjectsByState(
 				Project.State.QUEUED, Project.State.RUNNING));
 	}
 
@@ -81,7 +81,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	private boolean _initializedRelationships;
 
 	@Autowired
-	private ProjectDALO _projectDALO;
+	private ProjectEntityDALO _projectEntityDALO;
 
 	@Autowired
 	private ProjectToBuildsEntityRelationshipDALO

@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.environment.dalo;
+package com.liferay.jethr0.project.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.environment.EnvironmentFactory;
+import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class EnvironmentDALO extends BaseEntityDALO<Environment> {
+public class ProjectComparatorEntityDALO extends BaseEntityDALO<ProjectComparator> {
 
 	@Override
-	protected EntityFactory<Environment> getEntityFactory() {
-		return _environmentFactory;
+	public EntityFactory<ProjectComparator> getEntityFactory() {
+		return _projectComparatorFactory;
 	}
 
 	@Autowired
-	private EnvironmentFactory _environmentFactory;
+	private ProjectComparatorFactory _projectComparatorFactory;
 
 }

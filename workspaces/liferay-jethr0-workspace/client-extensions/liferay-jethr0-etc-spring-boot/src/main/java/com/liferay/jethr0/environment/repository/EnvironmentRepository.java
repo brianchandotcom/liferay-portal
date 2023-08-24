@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.dalo.BuildToEnvironmentsEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.environment.dalo.EnvironmentDALO;
+import com.liferay.jethr0.environment.dalo.EnvironmentEntityDALO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,8 +45,8 @@ public class EnvironmentRepository extends BaseEntityRepository<Environment> {
 	}
 
 	@Override
-	public EnvironmentDALO getEntityDALO() {
-		return _environmentDALO;
+	public EnvironmentEntityDALO getEntityDALO() {
+		return _environmentEntityDALO;
 	}
 
 	@Autowired
@@ -54,6 +54,6 @@ public class EnvironmentRepository extends BaseEntityRepository<Environment> {
 		_buildToEnvironmentsEntityRelationshipDALO;
 
 	@Autowired
-	private EnvironmentDALO _environmentDALO;
+	private EnvironmentEntityDALO _environmentEntityDALO;
 
 }

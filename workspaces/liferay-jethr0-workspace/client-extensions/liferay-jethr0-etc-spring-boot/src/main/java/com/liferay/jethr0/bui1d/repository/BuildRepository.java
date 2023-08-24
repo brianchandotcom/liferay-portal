@@ -6,7 +6,7 @@
 package com.liferay.jethr0.bui1d.repository;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.dalo.BuildDALO;
+import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
@@ -68,7 +68,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 
 	@Override
 	public EntityDALO<Build> getEntityDALO() {
-		return _buildDALO;
+		return _buildEntityDALO;
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	}
 
 	@Autowired
-	private BuildDALO _buildDALO;
+	private BuildEntityDALO _buildEntityDALO;
 
 	private BuildParameterRepository _buildParameterRepository;
 	private BuildRunRepository _buildRunRepository;

@@ -7,7 +7,7 @@ package com.liferay.jethr0.project.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.dalo.ProjectComparatorDALO;
+import com.liferay.jethr0.project.dalo.ProjectComparatorEntityDALO;
 import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
@@ -77,8 +77,8 @@ public class ProjectComparatorRepository
 	}
 
 	@Override
-	public ProjectComparatorDALO getEntityDALO() {
-		return _projectComparatorDALO;
+	public ProjectComparatorEntityDALO getEntityDALO() {
+		return _projectComparatorEntityDALO;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class ProjectComparatorRepository
 	}
 
 	@Autowired
-	private ProjectComparatorDALO _projectComparatorDALO;
+	private ProjectComparatorEntityDALO _projectComparatorEntityDALO;
 
 	private ProjectPrioritizerRepository _projectPrioritizerRepository;
 

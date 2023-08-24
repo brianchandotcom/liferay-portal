@@ -11,7 +11,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.task.Task;
-import com.liferay.jethr0.task.dalo.TaskDALO;
+import com.liferay.jethr0.task.dalo.TaskEntityDALO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -68,8 +68,8 @@ public class TaskRepository extends BaseEntityRepository<Task> {
 	}
 
 	@Override
-	public TaskDALO getEntityDALO() {
-		return _taskDALO;
+	public TaskEntityDALO getEntityDALO() {
+		return _taskEntityDALO;
 	}
 
 	@Autowired
@@ -81,6 +81,6 @@ public class TaskRepository extends BaseEntityRepository<Task> {
 		_projectToTasksEntityRelationshipDALO;
 
 	@Autowired
-	private TaskDALO _taskDALO;
+	private TaskEntityDALO _taskEntityDALO;
 
 }

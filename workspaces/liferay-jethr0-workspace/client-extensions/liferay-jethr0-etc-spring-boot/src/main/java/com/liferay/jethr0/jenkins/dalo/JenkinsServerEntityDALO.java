@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.bui1d.dalo;
+package com.liferay.jethr0.jenkins.dalo;
 
-import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.bui1d.run.BuildRunFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildRunDALO extends BaseEntityDALO<BuildRun> {
+public class JenkinsServerEntityDALO extends BaseEntityDALO<JenkinsServer> {
 
 	@Override
-	protected EntityFactory<BuildRun> getEntityFactory() {
-		return _buildRunFactory;
+	protected EntityFactory<JenkinsServer> getEntityFactory() {
+		return _jenkinsServerFactory;
 	}
 
 	@Autowired
-	private BuildRunFactory _buildRunFactory;
+	private JenkinsServerFactory _jenkinsServerFactory;
 
 }

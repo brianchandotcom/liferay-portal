@@ -8,7 +8,7 @@ package com.liferay.jethr0.jenkins.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.dalo.JenkinsNodeDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerDALO;
-import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesEntityRelationshipDALO;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
@@ -152,7 +152,8 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 		Set<JenkinsNode> jenkinsNodes = new HashSet<>();
 
 		Set<Long> jenkinsNodeIds =
-			_jenkinsServerToJenkinsNodesDALO.getChildEntityIds(jenkinsServer);
+			_jenkinsServerToJenkinsNodesEntityRelationshipDALO.
+				getChildEntityIds(jenkinsServer);
 
 		for (JenkinsNode jenkinsNode : getAll()) {
 			if (!jenkinsNodeIds.contains(jenkinsNode.getId())) {
@@ -212,6 +213,7 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 	private JenkinsServerRepository _jenkinsServerRepository;
 
 	@Autowired
-	private JenkinsServerToJenkinsNodesDALO _jenkinsServerToJenkinsNodesDALO;
+	private JenkinsServerToJenkinsNodesEntityRelationshipDALO
+		_jenkinsServerToJenkinsNodesEntityRelationshipDALO;
 
 }

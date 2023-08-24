@@ -7,7 +7,7 @@ package com.liferay.jethr0.bui1d.repository;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.dalo.BuildRunDALO;
-import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsDALO;
+import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsEntityRelationshipDALO;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
@@ -50,7 +50,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 
 	public Set<BuildRun> getAll(Build build) {
 		Set<BuildRun> buildRuns = new HashSet<>(
-			_buildToBuildRunsDALO.getChildEntities(build));
+			_buildToBuildRunsEntityRelationshipDALO.getChildEntities(build));
 
 		for (BuildRun buildRun : buildRuns) {
 			buildRun.setBuild(build);
@@ -95,6 +95,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 	private BuildRunDALO _buildRunDALO;
 
 	@Autowired
-	private BuildToBuildRunsDALO _buildToBuildRunsDALO;
+	private BuildToBuildRunsEntityRelationshipDALO
+		_buildToBuildRunsEntityRelationshipDALO;
 
 }

@@ -12,7 +12,7 @@ import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
 import com.liferay.jethr0.environment.repository.EnvironmentRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
+import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 import com.liferay.jethr0.task.repository.TaskRepository;
@@ -183,7 +183,8 @@ public class BuildQueue {
 	private ProjectRepository _projectRepository;
 
 	@Autowired
-	private ProjectToBuildsDALO _projectToBuildsDALO;
+	private ProjectToBuildsEntityRelationshipDALO
+		_projectToBuildsEntityRelationshipDALO;
 
 	private final List<Build> _sortedBuilds = new ArrayList<>();
 

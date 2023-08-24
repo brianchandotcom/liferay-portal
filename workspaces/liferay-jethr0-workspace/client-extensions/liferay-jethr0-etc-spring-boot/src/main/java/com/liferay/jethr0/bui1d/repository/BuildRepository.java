@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.dalo.BuildDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
+import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import java.util.HashSet;
@@ -57,7 +57,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 
 	public Set<Build> getAll(Project project) {
 		Set<Build> builds = new HashSet<>(
-			_projectToBuildsDALO.getChildEntities(project));
+			_projectToBuildsEntityRelationshipDALO.getChildEntities(project));
 
 		for (Build build : builds) {
 			build.setProject(project);
@@ -125,6 +125,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	private ProjectRepository _projectRepository;
 
 	@Autowired
-	private ProjectToBuildsDALO _projectToBuildsDALO;
+	private ProjectToBuildsEntityRelationshipDALO
+		_projectToBuildsEntityRelationshipDALO;
 
 }

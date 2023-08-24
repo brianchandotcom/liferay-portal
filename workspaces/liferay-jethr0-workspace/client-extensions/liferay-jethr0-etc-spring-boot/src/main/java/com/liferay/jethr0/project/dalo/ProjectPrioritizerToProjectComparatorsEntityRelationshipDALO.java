@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerToProjectComparatorsDALO
+public class ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<ProjectPrioritizer, ProjectComparator> {
 
 	@Override

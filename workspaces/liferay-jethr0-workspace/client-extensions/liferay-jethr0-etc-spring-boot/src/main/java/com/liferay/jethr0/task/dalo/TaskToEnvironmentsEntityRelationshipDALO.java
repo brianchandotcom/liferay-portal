@@ -7,10 +7,10 @@ package com.liferay.jethr0.task.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.environment.EnvironmentFactory;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.task.TaskFactory;
-import com.liferay.jethr0.task.run.TaskRun;
-import com.liferay.jethr0.task.run.TaskRunFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskToTaskRunsDALO
-	extends BaseEntityRelationshipDALO<Task, TaskRun> {
+public class TaskToEnvironmentsEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<Task, Environment> {
 
 	@Override
-	public EntityFactory<TaskRun> getChildEntityFactory() {
-		return _taskRunFactory;
+	public EntityFactory<Environment> getChildEntityFactory() {
+		return _environmentFactory;
 	}
 
 	@Override
@@ -34,13 +34,13 @@ public class TaskToTaskRunsDALO
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "taskToTaskRuns";
+		return "taskToEnvironments";
 	}
 
 	@Autowired
-	private TaskFactory _taskFactory;
+	private EnvironmentFactory _environmentFactory;
 
 	@Autowired
-	private TaskRunFactory _taskRunFactory;
+	private TaskFactory _taskFactory;
 
 }

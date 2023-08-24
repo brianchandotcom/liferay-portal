@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.repository.BuildRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectDALO;
-import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
+import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
@@ -84,6 +84,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	private ProjectDALO _projectDALO;
 
 	@Autowired
-	private ProjectToBuildsDALO _projectToBuildsDALO;
+	private ProjectToBuildsEntityRelationshipDALO
+		_projectToBuildsEntityRelationshipDALO;
 
 }

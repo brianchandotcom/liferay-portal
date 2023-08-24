@@ -63,9 +63,9 @@ public class CopyFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 	private void _checkDestinationRepository(long repositoryId)
 		throws PortalException {
 
-		Group group = _groupLocalService.fetchGroup(repositoryId);
+		Group group = _groupLocalService.getGroup(repositoryId);
 
-		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-file-shortcuts-to-the-live-version-of-a-group");
 		}

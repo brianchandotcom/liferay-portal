@@ -162,6 +162,13 @@ public class PoshiLogger {
 
 		_commandLogger.logExternalMethodCommand(
 			element, arguments, returnValue, _syntaxLogger);
+
+		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
+
+		syntaxLoggerElement.setAttribute("data-status01", "pending");
+
+		_linkLoggerElements(
+			syntaxLoggerElement, _commandLogger.lineGroupLoggerElement);
 	}
 
 	public void logMessage(Element element) throws PoshiRunnerLoggerException {

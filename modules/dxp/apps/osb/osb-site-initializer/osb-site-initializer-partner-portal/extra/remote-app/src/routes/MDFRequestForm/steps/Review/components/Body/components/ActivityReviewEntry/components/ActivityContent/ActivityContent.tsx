@@ -5,6 +5,7 @@
 
 import Table from '../../../../../../../../../../common/components/Table';
 import MDFRequestActivity from '../../../../../../../../../../common/interfaces/mdfRequestActivity';
+import getBooleanValidation from '../../../../../../../../../../common/utils/getBooleanValidation';
 import getBooleanValue from '../../../../../../../../../../common/utils/getBooleanValue';
 import getIntlNumberFormat from '../../../../../../../../../../common/utils/getIntlNumberFormat';
 
@@ -23,7 +24,7 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 	];
 
 	if (
-		getBooleanValue(
+		getBooleanValidation(
 			mdfRequestActivity?.activityDescription?.leadGenerated as string
 		)
 	) {

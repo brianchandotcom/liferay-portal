@@ -7,11 +7,13 @@ package com.liferay.comment.taglib.internal.struts;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -35,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.NamespaceServletRequest;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -248,7 +249,12 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 		// Subscription
 
-		if (PropsValues.DISCUSSION_SUBSCRIBE) {
+		CommentGroupServiceConfiguration commentGroupServiceConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				CommentGroupServiceConfiguration.class,
+				themeDisplay.getScopeGroupId());
+
+		if (commentGroupServiceConfiguration.subscribe()) {
 			_commentManager.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
@@ -273,6 +279,9 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DiscussionPermission _discussionPermission;

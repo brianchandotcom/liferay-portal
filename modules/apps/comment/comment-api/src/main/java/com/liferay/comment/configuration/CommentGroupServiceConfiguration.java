@@ -67,4 +67,10 @@ public interface CommentGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap discussionEmailUpdatedSubject();
 
+	@Meta.AD(
+		deflt = "true", description = "subscribe-help", name = "subscribe",
+		required = false
+	)
+	public boolean subscribe();
+
 }

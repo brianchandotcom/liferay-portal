@@ -8,7 +8,7 @@
 [/#if]
 
 <div class="file-upload">
-	<div class="form-group [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
+	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-file-upload-label">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
@@ -17,7 +17,7 @@
 
 				<input id="${fragmentEntryLinkNamespace}-file-upload-hidden" [#if localFileUploaded]name="${input.name}"[/#if] type="hidden" value="${input.value}" />
 
-				<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="file-upload-input" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" [#if !localFileUploaded]name="${input.name}"[/#if] ${input.required?then('required', '' )} type="${showDocumentLibrarySelector?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] tabIndex="-1" />
+				<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-file-upload-label ${fragmentEntryLinkNamespace}-file-upload-button-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-file-upload-error-message[/#if]" class="file-upload-input" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" [#if !localFileUploaded]name="${input.name}"[/#if] ${input.required?then('required', '' )} type="${showDocumentLibrarySelector?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] tabIndex="-1" />
 			</div>
 
 			<small class="inline-item inline-item-after">
@@ -31,7 +31,7 @@
 			</button>
 		</div>
 
-		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
+		[#if input.errorMessage?has_content]
 			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-file-upload-error-message">
 				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
 					<use xlink:href="${siteSpritemap}#info-circle" />

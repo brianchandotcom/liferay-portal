@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.segments.experiment.web.internal.portlet.action;
+package com.liferay.segments.asah.connector.internal.portlet.action;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.segments.asah.connector.internal.configuration.SegmentsExperimentConfiguration;
+import com.liferay.segments.asah.connector.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
-import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration",
+	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsExperimentConfiguration",
 	property = {
 		"javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
 		"mvc.command.name=/segments_experiment/get_data"

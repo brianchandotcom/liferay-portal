@@ -246,18 +246,18 @@ public class DBInspector {
 	public boolean hasTable(String tableName, boolean caseSensitive)
 		throws Exception {
 
-		if (caseSensitive) {
-			if (_hasTable(tableName)) {
-				return true;
-			}
-
-			return false;
-		}
-
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		if (_hasTable(normalizeName(tableName, databaseMetaData))) {
-			return true;
+		if (!caseSensitive) {
+			tableName = normalizeName(tableName, databaseMetaData);
+		}
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				getCatalog(), getSchema(), tableName, new String[] {"TABLE"})) {
+
+			while (resultSet.next()) {
+				return true;
+			}
 		}
 
 		return false;
@@ -392,20 +392,6 @@ public class DBInspector {
 		return databaseMetaData.getColumns(
 			getCatalog(), getSchema(),
 			normalizeName(tableName, databaseMetaData), columnName);
-	}
-
-	private boolean _hasTable(String tableName) throws Exception {
-		DatabaseMetaData metadata = _connection.getMetaData();
-
-		try (ResultSet resultSet = metadata.getTables(
-				getCatalog(), getSchema(), tableName, new String[] {"TABLE"})) {
-
-			while (resultSet.next()) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private boolean _isColumnNullable(String typeName) {

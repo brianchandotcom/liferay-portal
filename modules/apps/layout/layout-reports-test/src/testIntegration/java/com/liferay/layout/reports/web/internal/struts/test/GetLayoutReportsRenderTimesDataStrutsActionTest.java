@@ -118,14 +118,14 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(jsonObject.getBoolean("cached"));
-		Assert.assertNotNull(jsonObject.get("itemId"));
 		Assert.assertFalse(jsonObject.getBoolean("fragment"));
-		Assert.assertEquals("collection", jsonObject.getString("itemType"));
-		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(
 			StringPool.BLANK, jsonObject.getString("fragmentCollectionURL"));
+		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(
 			"collection-display", jsonObject.getString("hierarchy"));
+		Assert.assertNotNull(jsonObject.get("itemId"));
+		Assert.assertEquals("collection", jsonObject.getString("itemType"));
 		Assert.assertEquals("collection-display", jsonObject.getString("name"));
 		Assert.assertNotNull(jsonObject.get("renderTime"));
 	}
@@ -170,14 +170,14 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(jsonObject.getBoolean("cached"));
-		Assert.assertNotNull(jsonObject.get("itemId"));
 		Assert.assertFalse(jsonObject.getBoolean("fragment"));
-		Assert.assertEquals("collection", jsonObject.getString("itemType"));
-		Assert.assertTrue(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(
 			StringPool.BLANK, jsonObject.get("fragmentCollectionURL"));
+		Assert.assertTrue(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(
 			"collection-display", jsonObject.getString("hierarchy"));
+		Assert.assertNotNull(jsonObject.get("itemId"));
+		Assert.assertEquals("collection", jsonObject.getString("itemType"));
 		Assert.assertEquals("collection-display", jsonObject.getString("name"));
 		Assert.assertNotNull(jsonObject.get("renderTime"));
 	}
@@ -209,10 +209,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertTrue(jsonObject.getBoolean("cached"));
-		Assert.assertNotNull(jsonObject.get("itemId"));
 		Assert.assertTrue(jsonObject.getBoolean("fragment"));
-		Assert.assertEquals("fragment", jsonObject.getString("itemType"));
-		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 
 		String fragmentCollectionURL = jsonObject.getString(
 			"fragmentCollectionURL");
@@ -223,8 +220,11 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				"/fragments/fragment_collection/" +
 					fragmentEntry.getFragmentCollectionId()));
 
+		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(
 			fragmentEntry.getName(), jsonObject.getString("hierarchy"));
+		Assert.assertNotNull(jsonObject.get("itemId"));
+		Assert.assertEquals("fragment", jsonObject.getString("itemType"));
 		Assert.assertEquals(
 			fragmentEntry.getName(), jsonObject.getString("name"));
 		Assert.assertNotNull(jsonObject.get("renderTime"));
@@ -310,12 +310,12 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(jsonObject.getBoolean("cached"));
-		Assert.assertNotNull(jsonObject.get("itemId"));
 		Assert.assertFalse(jsonObject.getBoolean("fragment"));
-		Assert.assertEquals("fragment", jsonObject.getString("itemType"));
-		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertNotNull(jsonObject.get("fragmentCollectionURL"));
+		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(portletId, jsonObject.getString("hierarchy"));
+		Assert.assertNotNull(jsonObject.get("itemId"));
+		Assert.assertEquals("fragment", jsonObject.getString("itemType"));
 		Assert.assertEquals(portletId, jsonObject.getString("name"));
 		Assert.assertNotNull(jsonObject.get("renderTime"));
 	}

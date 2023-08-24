@@ -51,7 +51,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/configuration/locked_layouts.jsp";
+		return "/configuration/view.jsp";
 	}
 
 	@Override

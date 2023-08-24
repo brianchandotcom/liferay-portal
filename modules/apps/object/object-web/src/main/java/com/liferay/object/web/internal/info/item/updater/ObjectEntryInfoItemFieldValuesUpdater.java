@@ -57,7 +57,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		try {
 			return ObjectEntryUtil.toObjectEntry(
 				objectEntry.getObjectDefinitionId(),
-				objectEntryManager.updateObjectEntry(
+				objectEntryManager.partialUpdateObjectEntry(
 					objectEntry.getCompanyId(),
 					new DefaultDTOConverterContext(
 						false, null, null, null, null, themeDisplay.getLocale(),

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -32,8 +32,10 @@ public class ServiceContextBuilder {
 	}
 
 	public ServiceContextBuilder assetCategoryIds(Long[] assetCategoryIds) {
-		_serviceContext.setAssetCategoryIds(
-			ArrayUtil.toArray(assetCategoryIds));
+		if (assetCategoryIds != null) {
+			_serviceContext.setAssetCategoryIds(
+				ArrayUtil.toArray(assetCategoryIds));
+		}
 
 		return this;
 	}
@@ -51,7 +53,9 @@ public class ServiceContextBuilder {
 	public ServiceContextBuilder expandoBridgeAttributes(
 		Map<String, Serializable> expandoBridgeAttributes) {
 
-		_serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		if (expandoBridgeAttributes != null) {
+			_serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
 
 		return this;
 	}
@@ -72,19 +76,22 @@ public class ServiceContextBuilder {
 		long groupId, HttpServletRequest httpServletRequest,
 		String viewableBy) {
 
-		Map<String, String> headers = new HashMap<>();
+		if (httpServletRequest != null) {
+			Map<String, String> headers = new HashMap<>();
 
-		Enumeration<String> enumeration = httpServletRequest.getHeaderNames();
+			Enumeration<String> enumeration =
+				httpServletRequest.getHeaderNames();
 
-		while (enumeration.hasMoreElements()) {
-			String header = enumeration.nextElement();
+			while (enumeration.hasMoreElements()) {
+				String header = enumeration.nextElement();
 
-			String value = httpServletRequest.getHeader(header);
+				String value = httpServletRequest.getHeader(header);
 
-			headers.put(header, value);
+				headers.put(header, value);
+			}
+
+			_serviceContext.setHeaders(headers);
 		}
-
-		_serviceContext.setHeaders(headers);
 
 		if (StringUtil.equalsIgnoreCase(viewableBy, "anyone")) {
 			_serviceContext.setAddGroupPermissions(true);

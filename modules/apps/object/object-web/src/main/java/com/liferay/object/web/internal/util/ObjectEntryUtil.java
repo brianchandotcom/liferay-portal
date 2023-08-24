@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.text.DateFormat;
 import java.text.Format;
 
 import java.time.LocalDateTime;
@@ -103,22 +102,15 @@ public class ObjectEntryUtil {
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
 
-			Format dateFormat = FastDateFormatFactoryUtil.getDate(
-				DateFormat.DEFAULT, locale, timeZone);
-
-			return dateFormat.format(
-				DateUtil.parseDate("yyyy-MM-dd", value.toString(), locale));
+			return DateUtil.parseDate("yyyy-MM-dd", value.toString(), locale);
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
 
-			Format dateFormat = FastDateFormatFactoryUtil.getDateTime(
-				DateFormat.DEFAULT, DateFormat.DEFAULT, locale, timeZone);
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+				ObjectFieldUtil.getDateTimePattern(value.toString()));
 
-			return dateFormat.format(
-				DateUtil.parseDate(
-					ObjectFieldUtil.getDateTimePattern(value.toString()),
-					value.toString(), locale));
+			return LocalDateTime.parse(value.toString(), dateTimeFormatter);
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {

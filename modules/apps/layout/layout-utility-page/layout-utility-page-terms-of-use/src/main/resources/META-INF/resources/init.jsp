@@ -16,7 +16,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.kernel.util.HttpComponentsUtil" %><%@

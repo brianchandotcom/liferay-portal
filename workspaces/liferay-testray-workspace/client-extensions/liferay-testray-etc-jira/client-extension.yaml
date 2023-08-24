@@ -1,10 +1,13 @@
 assemble:
     - include: ".env"
-    - include: "Dockerfile"
-    - include: "LCP.json"
     - include: "package.json"
     - include: "src/**/*"
-liferay-testray-etc-jira-node-oauth-application-user-agent:
+liferay-testray-etc-jira-import-requirement-tickets:
+    name: Testray Jira Import Requirement Tickets
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-oauth-application-user-agent
+    resourcePath: /jira/import-requirement-tickets
+    type: objectAction
+liferay-testray-etc-jira-oauth-application-user-agent:
     .serviceAddress: 127.0.0.1:3001
     .serviceScheme: http
     name: Testray Jira OAuth Integration User Agent
@@ -14,23 +17,18 @@ liferay-testray-etc-jira-node-oauth-application-user-agent:
         - C_TestrayJiraOAuths.everything
         - Liferay.Headless.Admin.User.everything
     type: oAuthApplicationUserAgent
-testray-jira-import-requirement-tickets:
-    name: Testray Jira Import Requirement Tickets
-    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
-    resourcePath: /jira/import-requirement-tickets
-    type: objectAction
-testray-jira-preauthorize:
+liferay-testray-etc-jira-preauthorize:
     name: Testray Jira PreAuthorize
-    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-oauth-application-user-agent
     resourcePath: /jira/preauthorize
     type: objectAction
-testray-jira-update-ticket:
-    name: Testray Jira Update Tickets
-    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
-    resourcePath: /jira/update-tickets
-    type: objectAction
-testray-resync-jira-ticket:
+liferay-testray-etc-jira-resync-jira-ticket:
     name: Testray Resync Jira Ticket
-    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-node-oauth-application-user-agent
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-oauth-application-user-agent
     resourcePath: /jira/resync
+    type: objectAction
+liferay-testray-etc-jira-update-ticket:
+    name: Testray Jira Update Tickets
+    oAuth2ApplicationExternalReferenceCode: liferay-testray-etc-jira-oauth-application-user-agent
+    resourcePath: /jira/update-tickets
     type: objectAction

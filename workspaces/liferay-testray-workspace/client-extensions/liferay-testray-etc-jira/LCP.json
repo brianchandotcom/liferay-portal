@@ -5,7 +5,7 @@
 			"deploy": false
 		}
 	},
-	"id": "liferay-testray-etc-jira",
+	"id": "__PROJECT_ID__",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"httpGet": {

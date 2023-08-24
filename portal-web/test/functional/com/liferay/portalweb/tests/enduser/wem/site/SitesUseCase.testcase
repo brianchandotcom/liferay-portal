@@ -346,7 +346,7 @@ definition {
 		}
 
 		task ("Add a user group") {
-			JSONUserGroupSetter.setUserGroupId(userGroupName = "UG UserGroup Name");
+			JSONUserGroup.addUserGroup(userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign the user group to default site") {

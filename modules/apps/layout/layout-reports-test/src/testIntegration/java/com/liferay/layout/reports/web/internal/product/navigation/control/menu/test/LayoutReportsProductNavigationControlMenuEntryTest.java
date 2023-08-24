@@ -91,7 +91,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 	public void testIsShowWithGooglePageSpeedDisabledAndLayoutTypeAssetDisplay()
 		throws Exception {
 
-		_layout.setType(LayoutConstants.TYPE_CONTENT);
+		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 

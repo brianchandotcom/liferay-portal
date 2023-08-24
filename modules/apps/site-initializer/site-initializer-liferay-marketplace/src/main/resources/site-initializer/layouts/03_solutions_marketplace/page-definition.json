@@ -591,8 +591,8 @@
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"frequenciesVisible": "true",
 															"frequencyThreshold": "1",
-															"maxTerms": "10",
-															"order": "key:desc",
+															"maxTerms": "20",
+															"order": "key:asc",
 															"parameterName": "Category",
 															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Solution Category$]"
 														},
@@ -615,8 +615,8 @@
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"frequenciesVisible": "true",
 															"frequencyThreshold": "1",
-															"maxTerms": "10",
-															"order": "key:desc",
+															"maxTerms": "100",
+															"order": "key:asc",
 															"parameterName": "Tag",
 															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Solution Tags$]"
 														},

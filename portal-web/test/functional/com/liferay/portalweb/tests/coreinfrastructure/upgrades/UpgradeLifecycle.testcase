@@ -84,10 +84,10 @@ definition {
 
 	@description = "LPS-162455: Given a user starts the portal with a database created previously. When property upgrade.database.auto.run is set to false. Then portal does not run any UpgradeProcess or VerifyProcess."
 	@priority = 4
-	test UpgradeProcessAndVerifyProcessOnlyRunOnFreshDB {
+	test UpgradeProcessAndVerifyProcessDoNotRunOnStaleDB {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql";
 
-		AssertConsoleTextPresent(value1 = "UpgradeProcess");
+		AssertConsoleTextNotPresent(value1 = "UpgradeProcess");
 
 		AssertConsoleTextPresent(value1 = "VerifyProcess");
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Dictionary;
-import java.util.List;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -81,11 +80,10 @@ public class DispatchConfigurator {
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.ALL_NODES;
 
-		List<DispatchTrigger> dispatchTriggers =
-			_dispatchTriggerLocalService.getDispatchTriggers(
-				true, dispatchTaskClusterMode);
+		for (DispatchTrigger dispatchTrigger :
+				_dispatchTriggerLocalService.getDispatchTriggers(
+					true, dispatchTaskClusterMode)) {
 
-		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
 			try {
 				_dispatchTriggerHelper.addSchedulerJob(
 					dispatchTrigger.getDispatchTriggerId(),
@@ -108,11 +106,10 @@ public class DispatchConfigurator {
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.ALL_NODES;
 
-		List<DispatchTrigger> dispatchTriggers =
-			_dispatchTriggerLocalService.getDispatchTriggers(
-				true, dispatchTaskClusterMode);
+		for (DispatchTrigger dispatchTrigger :
+				_dispatchTriggerLocalService.getDispatchTriggers(
+					true, dispatchTaskClusterMode)) {
 
-		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
 			_dispatchTriggerHelper.deleteSchedulerJob(
 				dispatchTrigger.getDispatchTriggerId(),
 				dispatchTaskClusterMode.getStorageType());

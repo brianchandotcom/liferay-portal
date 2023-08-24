@@ -6,14 +6,13 @@
 /// <reference types="react" />
 
 interface Result {
-	message: string;
+	messages: string[];
 	name: string;
-	type: 'fragment' | 'composition';
 }
 export interface Results {
-	'imported': Result[];
-	'imported-draft': Result[];
-	'invalid': Result[];
+	error: Result[];
+	success: Result[];
+	warning: Result[];
 }
 interface ResultsProps {
 	fileName: string | null;

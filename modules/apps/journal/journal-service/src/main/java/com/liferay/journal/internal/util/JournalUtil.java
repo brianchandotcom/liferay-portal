@@ -321,7 +321,7 @@ public class JournalUtil {
 			}
 		}
 
-		if (!_customTokens.isEmpty()) {
+		if (MapUtil.isNotEmpty(_customTokens)) {
 			tokens.putAll(_customTokens);
 		}
 	}

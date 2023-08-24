@@ -30,6 +30,7 @@ UpgradeJavaCommerceCountryServiceCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf
 UpgradeJavaCommerceRegionCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the old methods of class `CommerceRegion` with the new equivalents in the `Region` class. |
 UpgradeJavaCookieKeysCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | CookieKeys class was replaced by CookiesManagerUtil and CookieConstants |
 UpgradeJavaCookieUtilCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters |
+UpgradeJavaDLFolderMethodCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil |
 UpgradeJavaExtractTextMethodCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class |
 UpgradeJavaFDSActionProviderCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface |
 UpgradeJavaFDSDataProviderCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface |

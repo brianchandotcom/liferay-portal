@@ -19,6 +19,7 @@ UpgradeJavaCommerceCountryServiceCheck | [Upgrade](upgrade_checks.markdown#upgra
 UpgradeJavaCommerceRegionCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the old methods of class `CommerceRegion` with the new equivalents in the `Region` class. |
 UpgradeJavaCookieKeysCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | CookieKeys class was replaced by CookiesManagerUtil and CookieConstants |
 UpgradeJavaCookieUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters |
+UpgradeJavaDLFolderMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil |
 UpgradeJavaExtractTextMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class |
 UpgradeJavaFDSActionProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface |
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface |

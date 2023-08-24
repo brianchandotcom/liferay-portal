@@ -868,8 +868,8 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setState(state);
 		objectField.setSystem(system);
 
-		if (system && !objectField.isMetadata() &&
-			objectDefinition.isModifiable() &&
+		if (system && objectDefinition.isModifiable() &&
+			!objectField.isMetadata() &&
 			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
 
 			throw new ObjectFieldSystemException(
@@ -1008,6 +1008,13 @@ public class ObjectFieldLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectField.getObjectDefinitionId());
 
+		if (objectDefinition.isSystem() && objectField.isSystem() &&
+			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
+
+			throw new ObjectFieldSystemException(
+				"Only allowed bundles can delete system object fields");
+		}
+
 		int customObjectFieldsCount =
 			objectFieldLocalService.getObjectFieldsCount(
 				objectField.getObjectDefinitionId(), false);
@@ -1016,13 +1023,6 @@ public class ObjectFieldLocalServiceImpl
 			(customObjectFieldsCount == 1)) {
 
 			throw new RequiredObjectFieldException();
-		}
-
-		if (objectField.isSystem() && objectDefinition.isModifiable() &&
-			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
-
-			throw new ObjectFieldSystemException(
-				"Only allowed bundles can delete system object fields");
 		}
 
 		if (Objects.equals(

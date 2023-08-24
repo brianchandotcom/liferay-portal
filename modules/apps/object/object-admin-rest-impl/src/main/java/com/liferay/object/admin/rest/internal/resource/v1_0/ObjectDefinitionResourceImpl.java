@@ -564,8 +564,8 @@ public class ObjectDefinitionResourceImpl
 
 			serviceBuilderObjectFields.removeIf(
 				serviceBuilderObjectField ->
-					!serviceBuilderObjectField.isSystem() ||
-					serviceBuilderObjectField.isMetadata());
+					serviceBuilderObjectField.isMetadata() ||
+					!serviceBuilderObjectField.isSystem());
 		}
 		else {
 			objectFields.removeIf(

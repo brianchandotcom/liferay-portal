@@ -169,10 +169,9 @@
 
 			<parallel>
 				<daemons>
-					<gradle-execute dir="${workspace.client.extension.dir}" task="bootRun">
-						<arg value="-Pliferay.workspace.home.dir=${liferay.home}" />
-						<arg value="-Pliferay.virtual.instance.id=@{virtual.instance.id}" />
-					</gradle-execute>
+					<execute dir="${workspace.client.extension.dir}">
+						../../gradlew bootRun -Pliferay.workspace.home.dir=${liferay.home} -Pliferay.virtual.instance.id=@{virtual.instance.id} &amp;
+					</execute>
 				</daemons>
 
 				<sequential>
@@ -207,6 +206,8 @@
 							substring="Started @{spring.boot.application.name} in"
 						/>
 					</waitfor>
+
+					<print-file file.name="${workspace.client.extension.dir}/logs/spring.log" />
 
 					<if>
 						<isset property="spring.boot.startup.timeout" />

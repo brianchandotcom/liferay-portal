@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
@@ -934,7 +935,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		_fragmentsImporter.importFragmentEntries(
-			serviceContext.getUserId(), groupId, 0, zipWriter.getFile(), true);
+			serviceContext.getUserId(), groupId, 0, zipWriter.getFile(),
+			FragmentsImportStrategy.OVERWRITE);
 	}
 
 	private void _addFragmentEntries(

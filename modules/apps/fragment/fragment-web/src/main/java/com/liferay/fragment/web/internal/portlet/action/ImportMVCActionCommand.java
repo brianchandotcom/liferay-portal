@@ -6,6 +6,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.portal.kernel.language.Language;
@@ -71,11 +72,18 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean overwrite = ParamUtil.getBoolean(actionRequest, "overwrite");
 
+		FragmentsImportStrategy fragmentsImportStrategy =
+			FragmentsImportStrategy.DO_NOT_OVERWRITE;
+
+		if (overwrite) {
+			fragmentsImportStrategy = FragmentsImportStrategy.OVERWRITE;
+		}
+
 		try {
 			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
 				_fragmentsImporter.importFragmentEntries(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					fragmentCollectionId, file, overwrite);
+					fragmentCollectionId, file, fragmentsImportStrategy);
 
 			if (ListUtil.isNotEmpty(fragmentsImporterResultEntries)) {
 				SessionMessages.add(

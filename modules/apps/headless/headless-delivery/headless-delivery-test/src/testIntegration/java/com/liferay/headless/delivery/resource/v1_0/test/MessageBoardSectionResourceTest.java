@@ -23,7 +23,7 @@ public class MessageBoardSectionResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"title"};
+		return new String[] {"friendlyUrlPath", "title"};
 	}
 
 	@Override

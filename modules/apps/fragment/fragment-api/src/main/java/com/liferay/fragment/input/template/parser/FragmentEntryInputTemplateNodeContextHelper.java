@@ -14,6 +14,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -59,6 +60,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.math.BigDecimal;
 
 import java.text.DateFormat;
+
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -681,6 +685,26 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 						"yyyy-MM-dd", locale);
 
 				return dateFormat.format(infoFieldValue.getValue());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse date from " +
+							infoFieldValue.getValue(),
+						exception);
+				}
+			}
+
+			return StringPool.BLANK;
+		}
+
+		if (infoField.getInfoFieldType() == DateTimeInfoFieldType.INSTANCE) {
+			try {
+				DateTimeFormatter dateTimeFormatter =
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+				return dateTimeFormatter.format(
+					(TemporalAccessor)infoFieldValue.getValue());
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

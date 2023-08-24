@@ -385,8 +385,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		try {
 			_persistedScheduler.start();
 
-			initJobState();
-
 			_memoryScheduler.start();
 		}
 		catch (Exception exception) {
@@ -497,6 +495,24 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			return null;
 		}
 
+		String jobName = jobKey.getName();
+		String groupName = jobKey.getGroup();
+
+		Trigger trigger = scheduler.getTrigger(
+			new TriggerKey(jobName, groupName));
+
+		if (trigger == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to find trigger for job (" + jobKey +
+						"), will delete it");
+			}
+
+			scheduler.deleteJob(jobKey);
+
+			return null;
+		}
+
 		SchedulerResponse schedulerResponse = new SchedulerResponse();
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
@@ -515,20 +531,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		schedulerResponse.setStorageType(
 			StorageType.valueOf(
 				jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
-
-		String jobName = jobKey.getName();
-		String groupName = jobKey.getGroup();
-
-		TriggerKey triggerKey = new TriggerKey(jobName, groupName);
-
-		Trigger trigger = scheduler.getTrigger(triggerKey);
-
-		if (trigger == null) {
-			schedulerResponse.setGroupName(groupName);
-			schedulerResponse.setJobName(jobName);
-
-			return schedulerResponse;
-		}
 
 		message.put(SchedulerEngine.END_TIME, trigger.getEndTime());
 		message.put(
@@ -567,35 +569,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		return schedulerResponses;
-	}
-
-	protected void initJobState() throws Exception {
-		List<String> groupNames = _persistedScheduler.getJobGroupNames();
-
-		for (String groupName : groupNames) {
-			Set<JobKey> jobKeys = _persistedScheduler.getJobKeys(
-				GroupMatcher.jobGroupEquals(groupName));
-
-			for (JobKey jobKey : jobKeys) {
-				Trigger trigger = _persistedScheduler.getTrigger(
-					new TriggerKey(jobKey.getName(), jobKey.getGroup()));
-
-				if (trigger != null) {
-					continue;
-				}
-
-				SchedulerEngineHelper schedulerEngineHelper =
-					_getSchedulerEngineHelper();
-
-				JobDetail jobDetail = _persistedScheduler.getJobDetail(jobKey);
-
-				schedulerEngineHelper.auditSchedulerJobs(
-					getMessage(jobDetail.getJobDataMap()),
-					TriggerState.EXPIRED);
-
-				_persistedScheduler.deleteJob(jobKey);
-			}
-		}
 	}
 
 	protected void schedule(

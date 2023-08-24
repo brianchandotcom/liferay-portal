@@ -102,10 +102,11 @@ export default function LayoutReports({eventTriggered, url}) {
 	};
 
 	useEffect(() => {
-		if (isPanelStateOpen && !data && !loading) {
-			getData(
-				Liferay.FeatureFlags['LPS-187284'] ? url : layoutReportsDataURL
-			);
+		if (Liferay.FeatureFlags['LPS-187284'] && !data && !loading) {
+			getData(url);
+		}
+		else if (isPanelStateOpen && !data && !loading) {
+			getData(layoutReportsDataURL);
 		}
 	}, [data, isPanelStateOpen, layoutReportsDataURL, loading, getData, url]);
 

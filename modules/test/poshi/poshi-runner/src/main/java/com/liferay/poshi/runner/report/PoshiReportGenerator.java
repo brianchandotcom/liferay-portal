@@ -247,8 +247,7 @@ public class PoshiReportGenerator {
 			reportLineItems.clear();
 
 			for (String testCaseNamespacedClassCommandName :
-					PoshiContext.
-						getTestCaseNamespacedClassCommandNamesNames()) {
+					PoshiContext.getTestCaseNamespacedClassCommandNames()) {
 
 				Pattern namespaceClassCommandNamePattern =
 					PoshiContext.getNamespaceClassCommandNamePattern();

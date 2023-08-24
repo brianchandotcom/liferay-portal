@@ -554,7 +554,7 @@ public class PoshiContext {
 		return _testCaseDescriptions.get(classCommandName);
 	}
 
-	public static List<String> getTestCaseNamespacedClassCommandNamesNames() {
+	public static List<String> getTestCaseNamespacedClassCommandNames() {
 		return _testCaseNamespacedClassCommandNames;
 	}
 

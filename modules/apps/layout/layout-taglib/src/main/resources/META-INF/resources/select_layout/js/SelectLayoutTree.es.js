@@ -231,6 +231,7 @@ export function SelectLayoutTree({
 			)}
 
 			<ClayTreeView
+				defaultExpandedKeys={new Set(['0'])}
 				items={filteredItems}
 				onItemsChange={(items) => setItems(items)}
 				onLoadMore={onLoadMore}

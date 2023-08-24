@@ -212,6 +212,7 @@ public class OracleDB extends BaseDB {
 		return template;
 	}
 
+	@Override
 	protected void createSyncDeleteTrigger(
 			Connection connection, String sourceTableName,
 			String targetTableName, String triggerName,
@@ -242,12 +243,14 @@ public class OracleDB extends BaseDB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	protected void createSyncInsertTrigger(
 			Connection connection, String sourceTableName,
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -267,8 +270,20 @@ public class OracleDB extends BaseDB {
 				sb.append(", ");
 			}
 
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
 			sb.append(":new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(")");
@@ -276,12 +291,14 @@ public class OracleDB extends BaseDB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	protected void createSyncUpdateTrigger(
 			Connection connection, String sourceTableName,
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -300,8 +317,22 @@ public class OracleDB extends BaseDB {
 			}
 
 			sb.append(targetColumnNames[i]);
-			sb.append(" = :new.");
+			sb.append(" = ");
+
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
+			sb.append(":new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" where ");

@@ -107,7 +107,9 @@ public class CPOptionFacetsPortletSharedSearchContributor
 
 			portletSharedSearchSettings.addFacet(serializableFacet);
 
-			for (Facet facet : getFacets(renderRequest)) {
+			for (Facet facet :
+					getFacets(frequencyThreshold, maxTerms, renderRequest)) {
+
 				String cpOptionKey =
 					CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(
 						facet.getFieldName());
@@ -169,12 +171,11 @@ public class CPOptionFacetsPortletSharedSearchContributor
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(
-		int frequencyThreshold, int maxTerms,
-		SerializableFacet serializableFacet) {
+		int frequencyThreshold, int maxTerms, Facet facet) {
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setFieldName(serializableFacet.getFieldName());
+		facetConfiguration.setFieldName(facet.getFieldName());
 
 		JSONObject jsonObject = facetConfiguration.getData();
 
@@ -233,7 +234,8 @@ public class CPOptionFacetsPortletSharedSearchContributor
 		return searchContext;
 	}
 
-	protected List<Facet> getFacets(RenderRequest renderRequest)
+	protected List<Facet> getFacets(
+			int frequencyThreshold, int maxTerms, RenderRequest renderRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -254,6 +256,9 @@ public class CPOptionFacetsPortletSharedSearchContributor
 		Facet facet = new SimpleFacet(searchContext);
 
 		facet.setFieldName(CPField.OPTION_NAMES);
+
+		facet.setFacetConfiguration(
+			buildFacetConfiguration(frequencyThreshold, maxTerms, facet));
 
 		searchContext.addFacet(facet);
 

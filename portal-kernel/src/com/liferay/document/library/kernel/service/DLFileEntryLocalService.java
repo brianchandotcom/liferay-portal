@@ -537,6 +537,10 @@ public interface DLFileEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, Long> getFileEntryTypeIds(
+		long companyId, long groupId, String treePath);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getGroupFileEntries(
 		long groupId, int start, int end);
 

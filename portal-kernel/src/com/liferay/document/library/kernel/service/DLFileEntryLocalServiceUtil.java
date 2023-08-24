@@ -720,6 +720,12 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static Map<Long, Long> getFileEntryTypeIds(
+		long companyId, long groupId, String treePath) {
+
+		return getService().getFileEntryTypeIds(companyId, groupId, treePath);
+	}
+
 	public static List<DLFileEntry> getGroupFileEntries(
 		long groupId, int start, int end) {
 

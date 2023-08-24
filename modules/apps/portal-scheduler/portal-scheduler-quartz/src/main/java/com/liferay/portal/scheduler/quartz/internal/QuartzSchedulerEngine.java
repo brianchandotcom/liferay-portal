@@ -821,7 +821,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 				SchedulerEngineHelper schedulerEngineHelper =
-					_getSchedulerEngineHelper();
+					_schedulerEngineHelperSnapshot.get();
 
 				schedulerEngineHelper.delete(
 					jobKey.getName(), jobKey.getGroup(),
@@ -838,6 +838,13 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		private void _audit(JobKey jobKey, TriggerState triggerState) {
+			SchedulerEngineHelper schedulerEngineHelper =
+				_schedulerEngineHelperSnapshot.get();
+
+			if (schedulerEngineHelper == null) {
+				return;
+			}
+
 			try {
 				JobDetail jobDetail = _scheduler.getJobDetail(jobKey);
 
@@ -847,9 +854,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 				message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
 
-				SchedulerEngineHelper schedulerEngineHelper =
-					_getSchedulerEngineHelper();
-
 				schedulerEngineHelper.auditSchedulerJobs(message, triggerState);
 			}
 			catch (Exception exception) {
@@ -857,18 +861,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 					"Unable to send audit message for scheduler job " + jobKey,
 					exception);
 			}
-		}
-
-		private SchedulerEngineHelper _getSchedulerEngineHelper() {
-			SchedulerEngineHelper schedulerEngineHelper =
-				_schedulerEngineHelperSnapshot.get();
-
-			if (schedulerEngineHelper == null) {
-				throw new IllegalStateException(
-					"Scheduler engine helper is null");
-			}
-
-			return schedulerEngineHelper;
 		}
 
 		private final Scheduler _scheduler;

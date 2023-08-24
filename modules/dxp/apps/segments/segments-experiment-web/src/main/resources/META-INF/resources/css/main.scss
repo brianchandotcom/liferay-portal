@@ -1,48 +1,40 @@
+@import 'atlas-variables';
 @import 'cadmin-variables';
 @import 'click-goal';
 
-html#{$cadmin-selector} {
-	.cadmin {
-		&.lfr-segments-experiment-panel {
-			&.open-admin-panel.sidenav-menu-slider {
-				visibility: visible;
-				width: 320px;
-			}
+html#{$cadmin-selector} .cadmin {
+	&.lfr-segments-experiment-panel {
+		&.open-admin-panel.sidenav-menu-slider {
+			visibility: visible;
+			width: 320px;
+		}
 
-			.sidebar {
-				border-left: 1px solid $cadmin-gray-300;
+		.btn-secondary {
+			svg.lexicon-icon-ellipsis-v {
+				fill: $gray-600;
 			}
 		}
 
-		.lfr-has-segments-experiment-panel {
-			overflow: auto;
-
-			.lfr-configurator-visibility {
-				display: none;
-			}
+		dt {
+			font-weight: $font-weight-semi-bold;
 		}
 
-		&.lfr-segments-experiment-panel {
-			.btn-secondary {
-				svg.lexicon-icon-ellipsis-v {
-					fill: #6b6c7e;
-				}
-			}
+		.sidebar {
+			border-left: 1px solid $cadmin-gray-300;
 
-			.sidebar .sidebar-header {
-				padding-bottom: 12px;
-				padding-top: 12px;
-
+			.sidebar-header {
 				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
 					padding-bottom: 12px;
 					padding-left: 24px;
 					padding-top: 12px;
 				}
-			}
-			.sidebar-header {
+
 				height: 64px;
 				line-height: 32px;
+				padding-bottom: 12px;
+				padding-top: 12px;
 			}
+
 			.sidebar-body {
 				bottom: 0;
 				left: 0;
@@ -51,22 +43,28 @@ html#{$cadmin-selector} {
 				right: 0;
 				top: 56px;
 			}
+		}
 
-			dt {
-				font-weight: 500;
-			}
+		.reference-mark {
+			font-size: 0.35rem !important;
+		}
 
-			.segments-experiment-details {
-				hyphens: auto;
-				overflow-wrap: break-word;
-			}
+		.segments-experiment-details {
+			hyphens: auto;
+			overflow-wrap: break-word;
+		}
 
-			.segments-experiments-empty-state {
-				&__image {
-					height: auto;
-					width: 185px;
-				}
-			}
+		.segments-experiments-empty-state__image {
+			height: auto;
+			width: 185px;
+		}
+	}
+
+	.lfr-has-segments-experiment-panel {
+		overflow: auto;
+
+		.lfr-configurator-visibility {
+			display: none;
 		}
 	}
 }

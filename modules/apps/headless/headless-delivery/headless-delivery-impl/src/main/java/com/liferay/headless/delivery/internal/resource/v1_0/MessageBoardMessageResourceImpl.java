@@ -10,7 +10,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -524,11 +524,12 @@ public class MessageBoardMessageResourceImpl
 	private ServiceContext _createServiceContext(
 		long groupId, MessageBoardMessage messageBoardMessage) {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				_getExpandoBridgeAttributes(messageBoardMessage), groupId,
-				contextHttpServletRequest,
-				messageBoardMessage.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			messageBoardMessage.getViewableByAsString()
+		).expandoBridgeAttributes(
+			_getExpandoBridgeAttributes(messageBoardMessage)
+		).build();
 
 		String link = contextHttpServletRequest.getHeader("Link");
 

@@ -9,7 +9,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -546,13 +546,16 @@ public class MessageBoardThreadResourceImpl
 	private ServiceContext _createServiceContext(
 		long groupId, MessageBoardThread messageBoardThread) {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				messageBoardThread.getTaxonomyCategoryIds(),
-				GetterUtil.getStringValues(messageBoardThread.getKeywords()),
-				_getExpandoBridgeAttributes(messageBoardThread), groupId,
-				contextHttpServletRequest,
-				messageBoardThread.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			messageBoardThread.getViewableByAsString()
+		).assetCategoryIds(
+			messageBoardThread.getTaxonomyCategoryIds()
+		).assetTagNames(
+			GetterUtil.getStringValues(messageBoardThread.getKeywords())
+		).expandoBridgeAttributes(
+			_getExpandoBridgeAttributes(messageBoardThread)
+		).build();
 
 		String link = contextHttpServletRequest.getHeader("Link");
 

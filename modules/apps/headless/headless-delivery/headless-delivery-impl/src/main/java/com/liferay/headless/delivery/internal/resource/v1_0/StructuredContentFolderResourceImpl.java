@@ -10,7 +10,7 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.StructuredContentFolderEntityModel;
@@ -374,10 +374,12 @@ public class StructuredContentFolderResourceImpl
 				journalFolder.getParentFolderId(),
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(structuredContentFolder),
+				ServiceContextBuilder.create(
 					journalFolder.getGroupId(), contextHttpServletRequest,
-					structuredContentFolder.getViewableByAsString())));
+					structuredContentFolder.getViewableByAsString()
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(structuredContentFolder)
+				).build()));
 	}
 
 	@Override
@@ -435,10 +437,12 @@ public class StructuredContentFolderResourceImpl
 				externalReferenceCode, siteId, parentFolderId,
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(structuredContentFolder),
+				ServiceContextBuilder.create(
 					siteId, contextHttpServletRequest,
-					structuredContentFolder.getViewableByAsString())));
+					structuredContentFolder.getViewableByAsString()
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(structuredContentFolder)
+				).build()));
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -550,10 +554,12 @@ public class StructuredContentFolderResourceImpl
 				siteId, folderId, parentFolderId,
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(structuredContentFolder),
+				ServiceContextBuilder.create(
 					siteId, contextHttpServletRequest,
-					structuredContentFolder.getViewableByAsString())));
+					structuredContentFolder.getViewableByAsString()
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(structuredContentFolder)
+				).build()));
 	}
 
 	@Reference

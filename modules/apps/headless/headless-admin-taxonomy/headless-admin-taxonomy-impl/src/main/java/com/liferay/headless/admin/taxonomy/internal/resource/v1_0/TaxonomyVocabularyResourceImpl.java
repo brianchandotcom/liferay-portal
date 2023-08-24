@@ -20,7 +20,7 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.VocabularyEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -399,9 +399,10 @@ public class TaxonomyVocabularyResourceImpl
 			descriptionMap,
 			_getSettings(taxonomyVocabulary.getAssetTypes(), siteId),
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-			ServiceContextRequestUtil.createServiceContext(
+			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest,
-				taxonomyVocabulary.getViewableByAsString()));
+				taxonomyVocabulary.getViewableByAsString()
+			).build());
 	}
 
 	private AssetType _getAssetType(

@@ -9,7 +9,7 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiPageEntityModel;
@@ -319,11 +319,15 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 	private ServiceContext _createServiceContext(
 		String command, Long groupId, WikiPage wikiPage) {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
-				_getExpandoBridgeAttributes(wikiPage), groupId,
-				contextHttpServletRequest, wikiPage.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, wikiPage.getViewableByAsString()
+		).assetCategoryIds(
+			wikiPage.getTaxonomyCategoryIds()
+		).assetTagNames(
+			wikiPage.getKeywords()
+		).expandoBridgeAttributes(
+			_getExpandoBridgeAttributes(wikiPage)
+		).build();
 
 		serviceContext.setCommand(command);
 

@@ -18,7 +18,7 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.CategoryEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -321,9 +321,10 @@ public class TaxonomyCategoryResourceImpl
 					_assetCategoryPropertyLocalService.getCategoryProperties(
 						assetCategory.getCategoryId()),
 					taxonomyCategory.getTaxonomyCategoryProperties()),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
 					assetCategory.getGroupId(), contextHttpServletRequest,
-					taxonomyCategory.getViewableByAsString())));
+					taxonomyCategory.getViewableByAsString()
+				).build()));
 	}
 
 	@Override
@@ -433,9 +434,10 @@ public class TaxonomyCategoryResourceImpl
 				descriptionMap, taxonomyVocabularyId,
 				_toStringArray(
 					taxonomyCategory.getTaxonomyCategoryProperties()),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest,
-					taxonomyCategory.getViewableByAsString())));
+					taxonomyCategory.getViewableByAsString()
+				).build()));
 	}
 
 	private AssetCategory _getAssetCategory(String taxonomyCategoryId)
@@ -679,9 +681,10 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory.getCategoryId(), parentAssetCategoryId, titleMap,
 			descriptionMap, assetVocabularyId,
 			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
-			ServiceContextRequestUtil.createServiceContext(
+			ServiceContextBuilder.create(
 				assetCategory.getGroupId(), contextHttpServletRequest,
-				taxonomyCategory.getViewableByAsString()));
+				taxonomyCategory.getViewableByAsString()
+			).build());
 	}
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();

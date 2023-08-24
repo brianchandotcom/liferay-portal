@@ -5,7 +5,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -243,10 +243,12 @@ public class KnowledgeBaseFolderResourceImpl
 				externalReferenceCode, groupId, _getClassNameId(),
 				parentResourcePrimKey, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), groupId,
-					contextHttpServletRequest,
-					knowledgeBaseFolder.getViewableByAsString())));
+				ServiceContextBuilder.create(
+					groupId, contextHttpServletRequest,
+					knowledgeBaseFolder.getViewableByAsString()
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(knowledgeBaseFolder)
+				).build()));
 	}
 
 	private long _getClassNameId() {
@@ -322,9 +324,11 @@ public class KnowledgeBaseFolderResourceImpl
 				_getClassNameId(), kbFolder.getParentKBFolderId(),
 				kbFolder.getKbFolderId(), knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
-					contextHttpServletRequest, null)));
+				ServiceContextBuilder.create(
+					0, contextHttpServletRequest, null
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(knowledgeBaseFolder)
+				).build()));
 	}
 
 	@Reference

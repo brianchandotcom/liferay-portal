@@ -16,7 +16,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTO
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountGroupEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -318,14 +318,14 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	private ServiceContext _getServiceContext(AccountGroup accountGroup)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				CustomFieldsUtil.toMap(
-					com.liferay.account.model.AccountGroup.class.getName(),
-					contextCompany.getCompanyId(),
-					accountGroup.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()),
-				contextCompany.getGroupId(), contextHttpServletRequest, null);
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				com.liferay.account.model.AccountGroup.class.getName(),
+				contextCompany.getCompanyId(), accountGroup.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 
 		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setUserId(contextUser.getUserId());

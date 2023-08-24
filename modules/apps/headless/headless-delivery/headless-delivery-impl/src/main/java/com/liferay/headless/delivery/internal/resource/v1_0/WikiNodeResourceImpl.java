@@ -5,7 +5,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiNodeEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
@@ -204,9 +204,10 @@ public class WikiNodeResourceImpl extends BaseWikiNodeResourceImpl {
 			_wikiNodeService.addNode(
 				externalReferenceCode, wikiNode.getName(),
 				wikiNode.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest,
-					wikiNode.getViewableByAsString())));
+					wikiNode.getViewableByAsString()
+				).build()));
 	}
 
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
@@ -248,10 +249,10 @@ public class WikiNodeResourceImpl extends BaseWikiNodeResourceImpl {
 			_wikiNodeService.updateNode(
 				serviceBuilderWikiNode.getNodeId(), wikiNode.getName(),
 				wikiNode.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
 					serviceBuilderWikiNode.getGroupId(),
-					contextHttpServletRequest,
-					wikiNode.getViewableByAsString())));
+					contextHttpServletRequest, wikiNode.getViewableByAsString()
+				).build()));
 	}
 
 	private static final EntityModel _entityModel = new WikiNodeEntityModel();

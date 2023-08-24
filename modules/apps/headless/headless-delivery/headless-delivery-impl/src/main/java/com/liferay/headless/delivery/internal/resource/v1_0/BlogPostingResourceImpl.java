@@ -14,7 +14,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
@@ -336,10 +336,16 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	private ServiceContext _createServiceContext(
 		BlogPosting blogPosting, long groupId) {
 
-		return ServiceContextRequestUtil.createServiceContext(
-			blogPosting.getTaxonomyCategoryIds(), blogPosting.getKeywords(),
-			_getExpandoBridgeAttributes(blogPosting), groupId,
-			contextHttpServletRequest, blogPosting.getViewableByAsString());
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			blogPosting.getViewableByAsString()
+		).assetCategoryIds(
+			blogPosting.getTaxonomyCategoryIds()
+		).assetTagNames(
+			blogPosting.getKeywords()
+		).expandoBridgeAttributes(
+			_getExpandoBridgeAttributes(blogPosting)
+		).build();
 	}
 
 	private String _getCaption(Image image) {

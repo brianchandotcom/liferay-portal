@@ -12,7 +12,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
@@ -477,10 +477,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			assetTagNames = sitePage.getKeywords();
 		}
 
-		return ServiceContextRequestUtil.createServiceContext(
-			assetCategoryIds, assetTagNames,
-			_getExpandoBridgeAttributes(sitePage), groupId,
-			contextHttpServletRequest, null);
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, null
+		).assetCategoryIds(
+			assetCategoryIds
+		).assetTagNames(
+			assetTagNames
+		).expandoBridgeAttributes(
+			_getExpandoBridgeAttributes(sitePage)
+		).build();
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {
@@ -1045,9 +1050,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			}
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				null, groupId, contextHttpServletRequest, null);
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, null
+		).build();
 
 		String ddmFormValues = _getDDMFormValues(pageSettings);
 

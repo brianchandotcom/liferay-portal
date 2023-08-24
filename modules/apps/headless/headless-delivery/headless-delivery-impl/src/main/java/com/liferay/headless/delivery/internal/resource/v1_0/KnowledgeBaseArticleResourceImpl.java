@@ -10,7 +10,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -504,12 +504,16 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, new Date(),
 				null, null, null,
-				ServiceContextRequestUtil.createServiceContext(
-					knowledgeBaseArticle.getTaxonomyCategoryIds(),
-					knowledgeBaseArticle.getKeywords(),
-					_getExpandoBridgeAttributes(knowledgeBaseArticle), groupId,
-					contextHttpServletRequest,
-					knowledgeBaseArticle.getViewableByAsString())));
+				ServiceContextBuilder.create(
+					groupId, contextHttpServletRequest,
+					knowledgeBaseArticle.getViewableByAsString()
+				).assetCategoryIds(
+					knowledgeBaseArticle.getTaxonomyCategoryIds()
+				).assetTagNames(
+					knowledgeBaseArticle.getKeywords()
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(knowledgeBaseArticle)
+				).build()));
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -671,13 +675,17 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null,
 				kbArticle.getDisplayDate(), null, null, null, null,
-				ServiceContextRequestUtil.createServiceContext(
-					taxonomyCategoryIds,
-					GetterUtil.getStringValues(
-						knowledgeBaseArticle.getKeywords()),
-					_getExpandoBridgeAttributes(knowledgeBaseArticle),
+				ServiceContextBuilder.create(
 					kbArticle.getGroupId(), contextHttpServletRequest,
-					knowledgeBaseArticle.getViewableByAsString())));
+					knowledgeBaseArticle.getViewableByAsString()
+				).assetCategoryIds(
+					taxonomyCategoryIds
+				).assetTagNames(
+					GetterUtil.getStringValues(
+						knowledgeBaseArticle.getKeywords())
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(knowledgeBaseArticle)
+				).build()));
 	}
 
 	@Reference

@@ -15,7 +15,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -395,13 +395,15 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			_dlAppService.addFolder(
 				externalReferenceCode, groupId, parentFolderId,
 				documentFolder.getName(), documentFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
+					groupId, contextHttpServletRequest,
+					documentFolder.getViewableByAsString()
+				).expandoBridgeAttributes(
 					CustomFieldsUtil.toMap(
 						DLFolder.class.getName(), contextCompany.getCompanyId(),
 						documentFolder.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					groupId, contextHttpServletRequest,
-					documentFolder.getViewableByAsString())));
+						contextAcceptLanguage.getPreferredLocale())
+				).build()));
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
@@ -576,12 +578,14 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			_dlAppService.updateFolder(
 				folder.getFolderId(), documentFolder.getName(),
 				documentFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
+				ServiceContextBuilder.create(
+					0, contextHttpServletRequest, null
+				).expandoBridgeAttributes(
 					CustomFieldsUtil.toMap(
 						DLFolder.class.getName(), contextCompany.getCompanyId(),
 						documentFolder.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale()),
-					0, contextHttpServletRequest, null)));
+						contextAcceptLanguage.getPreferredLocale())
+				).build()));
 	}
 
 	@Reference

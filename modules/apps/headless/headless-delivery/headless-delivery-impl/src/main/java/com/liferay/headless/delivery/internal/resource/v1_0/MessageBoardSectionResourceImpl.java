@@ -9,7 +9,7 @@ import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
@@ -228,9 +228,11 @@ public class MessageBoardSectionResourceImpl
 				messageBoardSection.getDescription(),
 				mbCategory.getDisplayStyle(), "", "", "", 0, false, "", "", 0,
 				"", false, "", 0, false, "", "", false, false, false,
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(messageBoardSection),
-					mbCategory.getGroupId(), contextHttpServletRequest, null)));
+				ServiceContextBuilder.create(
+					mbCategory.getGroupId(), contextHttpServletRequest, null
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(messageBoardSection)
+				).build()));
 	}
 
 	@Override
@@ -282,10 +284,12 @@ public class MessageBoardSectionResourceImpl
 				contextUser.getUserId(), parentMessageBoardSectionId,
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(messageBoardSection), siteId,
-					contextHttpServletRequest,
-					messageBoardSection.getViewableByAsString())));
+				ServiceContextBuilder.create(
+					siteId, contextHttpServletRequest,
+					messageBoardSection.getViewableByAsString()
+				).expandoBridgeAttributes(
+					_getExpandoBridgeAttributes(messageBoardSection)
+				).build()));
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(

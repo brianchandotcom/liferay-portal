@@ -22,7 +22,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -521,13 +521,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	private ServiceContext _getServiceContext(Account account)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				CustomFieldsUtil.toMap(
-					AccountEntry.class.getName(), contextCompany.getCompanyId(),
-					account.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()),
-				contextCompany.getGroupId(), contextHttpServletRequest, null);
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				AccountEntry.class.getName(), contextCompany.getCompanyId(),
+				account.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 
 		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setUserId(contextUser.getUserId());

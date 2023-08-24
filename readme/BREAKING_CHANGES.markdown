@@ -1643,3 +1643,25 @@ Message bus destination `liferay/hot_deploy` and test rule `DestinationAwaitClas
 ### Why was this change made?
 
 This destination is no longer used in Liferay.
+
+---------------------------------------
+
+## Removed unschedule API from scheduler engine platform
+- **Date:** 2023-August-24
+- **JIRA Ticket:** [LPS-194314](https://liferay.atlassian.net/browse/LPS-194314)
+
+### What changed?
+
+The method `unschedule` is removed from `com.liferay.portal.kernel.scheduler.SchedulerEngine`, `com.liferay.portal.kernel.scheduler.SchedulerEngineHelper` and `com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil`.
+
+### Who is affected?
+
+- Anyone who is using the removed API method.
+
+### How should I update my code?
+
+- Use `delete` method from same class instead.
+
+### Why was this change made?
+
+`unschedule` method is not needed in Liferay because Liferay will always add a new job and trigger together rather than reuse an unscheduled job which means unscheduled jobs will not be needed any more and should be deleted.

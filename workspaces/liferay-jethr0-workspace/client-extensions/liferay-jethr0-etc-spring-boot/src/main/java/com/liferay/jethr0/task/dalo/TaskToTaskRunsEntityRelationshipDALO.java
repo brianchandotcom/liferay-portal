@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.bui1d.dalo;
+package com.liferay.jethr0.task.dalo;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.BuildFactory;
-import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.bui1d.run.BuildRunFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
+import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskFactory;
+import com.liferay.jethr0.task.run.TaskRun;
+import com.liferay.jethr0.task.run.TaskRunFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,28 +19,28 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildToBuildRunsDALO
-	extends BaseEntityRelationshipDALO<Build, BuildRun> {
+public class TaskToTaskRunsEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<Task, TaskRun> {
 
 	@Override
-	public EntityFactory<BuildRun> getChildEntityFactory() {
-		return _buildRunFactory;
+	public EntityFactory<TaskRun> getChildEntityFactory() {
+		return _taskRunFactory;
 	}
 
 	@Override
-	public EntityFactory<Build> getParentEntityFactory() {
-		return _buildFactory;
+	public EntityFactory<Task> getParentEntityFactory() {
+		return _taskFactory;
 	}
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "buildToBuildRuns";
+		return "taskToTaskRuns";
 	}
 
 	@Autowired
-	private BuildFactory _buildFactory;
+	private TaskFactory _taskFactory;
 
 	@Autowired
-	private BuildRunFactory _buildRunFactory;
+	private TaskRunFactory _taskRunFactory;
 
 }

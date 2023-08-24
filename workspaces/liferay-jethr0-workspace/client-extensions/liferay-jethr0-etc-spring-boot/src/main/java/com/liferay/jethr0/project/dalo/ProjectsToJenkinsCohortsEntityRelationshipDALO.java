@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectsToJenkinsCohortsDALO
+public class ProjectsToJenkinsCohortsEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO<Project, JenkinsCohort> {
 
 	@Override

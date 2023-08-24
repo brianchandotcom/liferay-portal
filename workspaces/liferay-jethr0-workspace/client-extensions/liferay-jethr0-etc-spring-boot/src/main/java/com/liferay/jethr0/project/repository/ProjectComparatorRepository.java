@@ -8,7 +8,7 @@ package com.liferay.jethr0.project.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.dalo.ProjectComparatorDALO;
-import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsDALO;
+import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 
 import java.util.HashSet;
@@ -58,8 +58,8 @@ public class ProjectComparatorRepository
 		Set<ProjectComparator> projectComparators = new HashSet<>();
 
 		Set<Long> projectComparatorIds =
-			_projectPrioritizerToProjectComparatorsDALO.getChildEntityIds(
-				projectPrioritizer);
+			_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
+				getChildEntityIds(projectPrioritizer);
 
 		for (ProjectComparator projectComparator : getAll()) {
 			if (!projectComparatorIds.contains(projectComparator.getId())) {
@@ -109,7 +109,7 @@ public class ProjectComparatorRepository
 	private ProjectPrioritizerRepository _projectPrioritizerRepository;
 
 	@Autowired
-	private ProjectPrioritizerToProjectComparatorsDALO
-		_projectPrioritizerToProjectComparatorsDALO;
+	private ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO
+		_projectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 
 }

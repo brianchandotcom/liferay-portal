@@ -7,10 +7,10 @@ package com.liferay.jethr0.bui1d.dalo;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.BuildFactory;
+import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.task.Task;
-import com.liferay.jethr0.task.TaskFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildToTasksDALO extends BaseEntityRelationshipDALO<Build, Task> {
+public class BuildToBuildParametersEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<Build, BuildParameter> {
 
 	@Override
-	public EntityFactory<Task> getChildEntityFactory() {
-		return _taskFactory;
+	public EntityFactory<BuildParameter> getChildEntityFactory() {
+		return _buildParameterFactory;
 	}
 
 	@Override
@@ -33,13 +34,13 @@ public class BuildToTasksDALO extends BaseEntityRelationshipDALO<Build, Task> {
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "buildToTasks";
+		return "buildToBuildParameters";
 	}
 
 	@Autowired
 	private BuildFactory _buildFactory;
 
 	@Autowired
-	private TaskFactory _taskFactory;
+	private BuildParameterFactory _buildParameterFactory;
 
 }

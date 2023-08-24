@@ -7,7 +7,7 @@ package com.liferay.jethr0.bui1d.repository;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.dalo.BuildParameterDALO;
-import com.liferay.jethr0.bui1d.dalo.BuildToBuildParametersDALO;
+import com.liferay.jethr0.bui1d.dalo.BuildToBuildParametersEntityRelationshipDALO;
 import com.liferay.jethr0.bui1d.parameter.BuildParameter;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
@@ -49,7 +49,8 @@ public class BuildParameterRepository
 
 	public Set<BuildParameter> getAll(Build build) {
 		Set<BuildParameter> buildParameters = new HashSet<>(
-			_buildToBuildParametersDALO.getChildEntities(build));
+			_buildToBuildParametersEntityRelationshipDALO.getChildEntities(
+				build));
 
 		for (BuildParameter buildParameter : buildParameters) {
 			buildParameter.setBuild(build);
@@ -94,6 +95,7 @@ public class BuildParameterRepository
 	private BuildRepository _buildRepository;
 
 	@Autowired
-	private BuildToBuildParametersDALO _buildToBuildParametersDALO;
+	private BuildToBuildParametersEntityRelationshipDALO
+		_buildToBuildParametersEntityRelationshipDALO;
 
 }

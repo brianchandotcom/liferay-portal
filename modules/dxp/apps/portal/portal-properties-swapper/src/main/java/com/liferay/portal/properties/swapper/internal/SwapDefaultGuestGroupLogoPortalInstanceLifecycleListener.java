@@ -5,21 +5,27 @@
 
 package com.liferay.portal.properties.swapper.internal;
 
+import com.liferay.osgi.util.configuration.ConfigurationPersistenceUtil;
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Collections;
+
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,13 +33,23 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Shuyang Zhou
  */
-@Component(enabled = false, service = {})
-public class DefaultGuestGroupLogoSwapper {
+@Component(enabled = false, service = PortalInstanceLifecycleListener.class)
+public class SwapDefaultGuestGroupLogoPortalInstanceLifecycleListener
+	extends BasePortalInstanceLifecycleListener {
 
-	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
+	@Override
+	public long getLastModifiedTime() {
+		return _lastModifiedTime;
+	}
+
+	@Override
+	public void portalInstanceRegistered(Company company) throws Exception {
+		if (company.getCompanyId() != _portal.getDefaultCompanyId()) {
+			return;
+		}
+
 		Group group = _groupLocalService.getGroup(
-			_portal.getDefaultCompanyId(), GroupConstants.GUEST);
+			company.getCompanyId(), GroupConstants.GUEST);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
@@ -42,7 +58,8 @@ public class DefaultGuestGroupLogoSwapper {
 			return;
 		}
 
-		Bundle bundle = bundleContext.getBundle();
+		Bundle bundle = FrameworkUtil.getBundle(
+			SwapDefaultGuestGroupLogoPortalInstanceLifecycleListener.class);
 
 		URL url = bundle.getResource(
 			"com/liferay/portal/properties/swapper/internal" +
@@ -54,17 +71,22 @@ public class DefaultGuestGroupLogoSwapper {
 		}
 	}
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
+	@Activate
+	protected void activate() throws Exception {
+		_lastModifiedTime = ConfigurationPersistenceUtil.update(
+			this,
+			Collections.singletonMap(
+				PropsKeys.COMPANY_DEFAULT_WEB_ID,
+				PropsValues.COMPANY_DEFAULT_WEB_ID));
+	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	private long _lastModifiedTime;
+
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private Portal _portal;

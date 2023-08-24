@@ -9,8 +9,16 @@ import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-const RESULTS_DATA: ResultsData = {
-	'imported': {
+const RESULTS_DATA = {
+	error: {
+		cssClass: 'text-danger',
+		icon: 'exclamation-full',
+		titles: {
+			plural: Liferay.Language.get('x-items-could-not-be-imported'),
+			singular: Liferay.Language.get('x-item-could-not-be-imported'),
+		},
+	},
+	success: {
 		cssClass: 'text-success',
 		icon: 'check-circle-full',
 		titles: {
@@ -18,20 +26,12 @@ const RESULTS_DATA: ResultsData = {
 			singular: Liferay.Language.get('x-item-was-imported'),
 		},
 	},
-	'imported-draft': {
+	warning: {
 		cssClass: 'text-warning',
 		icon: 'warning-full',
 		titles: {
 			plural: Liferay.Language.get('x-items-were-imported-with-warnings'),
 			singular: Liferay.Language.get('x-item-was-imported-with-warnings'),
-		},
-	},
-	'invalid': {
-		cssClass: 'text-danger',
-		icon: 'exclamation-full',
-		titles: {
-			plural: Liferay.Language.get('x-items-could-not-be-imported'),
-			singular: Liferay.Language.get('x-item-could-not-be-imported'),
 		},
 	},
 };
@@ -42,9 +42,9 @@ interface Result {
 }
 
 export interface Results {
-	'imported': Result[];
-	'imported-draft': Result[];
-	'invalid': Result[];
+	error: Result[];
+	success: Result[];
+	warning: Result[];
 }
 
 interface ResultsProps {
@@ -56,31 +56,30 @@ export default function ImportResults({fileName, importResults}: ResultsProps) {
 	return (
 		<>
 			<ImportResultsSection
-				data={RESULTS_DATA.imported}
+				data={RESULTS_DATA.success}
 				fileName={fileName}
 				panelProps={{
 					collapsable: true,
 					collapseHeaderClassNames: 'c-p-0',
 					defaultExpanded:
-						!importResults['imported-draft'] &&
-						!importResults.invalid,
+						!importResults.warning && !importResults.error,
 				}}
-				results={importResults.imported}
+				results={importResults.success}
 			/>
 
 			<ImportResultsSection
-				data={RESULTS_DATA['imported-draft']}
+				data={RESULTS_DATA.warning}
 				fileName={fileName}
-				results={importResults['imported-draft']}
+				results={importResults.warning}
 			/>
 
 			<ImportResultsSection
-				data={RESULTS_DATA.invalid}
+				data={RESULTS_DATA.error}
 				defaultMessage={Liferay.Language.get(
 					'the-definition-of-the-item-is-invalid'
 				)}
 				fileName={fileName}
-				results={importResults.invalid}
+				results={importResults.error}
 			/>
 		</>
 	);

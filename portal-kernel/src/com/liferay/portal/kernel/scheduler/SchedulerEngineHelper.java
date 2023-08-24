@@ -76,8 +76,4 @@ public interface SchedulerEngineHelper {
 			String destinationName, Object payload)
 		throws SchedulerException;
 
-	public void unschedule(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException;
-
 }

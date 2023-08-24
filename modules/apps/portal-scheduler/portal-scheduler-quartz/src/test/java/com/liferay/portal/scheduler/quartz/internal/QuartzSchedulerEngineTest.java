@@ -8,7 +8,6 @@ package com.liferay.portal.scheduler.quartz.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
@@ -411,79 +410,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(
 			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER + 1,
 			schedulerResponses.size());
-	}
-
-	@Test
-	public void testUnschedule1() throws Exception {
-
-		// Unschedule memory job
-
-		SchedulerResponse schedulerResponse =
-			_quartzSchedulerEngine.getScheduledJob(
-				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		_quartzSchedulerEngine.unschedule(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-
-		// Unschedule persisted job
-
-		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _PERSISTED_TEST_GROUP_NAME,
-			StorageType.PERSISTED);
-
-		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		_quartzSchedulerEngine.unschedule(
-			_TEST_JOB_NAME_0, _PERSISTED_TEST_GROUP_NAME,
-			StorageType.PERSISTED);
-
-		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
-			_TEST_JOB_NAME_0, _PERSISTED_TEST_GROUP_NAME,
-			StorageType.PERSISTED);
-
-		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-	}
-
-	@Test
-	public void testUnschedule2() throws Exception {
-		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
-
-		Trigger trigger = _quartzTriggerFactory.createTrigger(
-			testJobName, _MEMORY_TEST_GROUP_NAME, null, null, _DEFAULT_INTERVAL,
-			TimeUnit.SECOND);
-
-		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, new Message(),
-			StorageType.MEMORY);
-
-		SchedulerResponse schedulerResponse =
-			_quartzSchedulerEngine.getScheduledJob(
-				testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-
-		_quartzSchedulerEngine.unschedule(
-			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
-			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
-
-		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-	}
-
-	public static class TestMessageListener implements MessageListener {
-
-		@Override
-		public void receive(Message message) {
-		}
-
 	}
 
 	private void _assertTriggerState(

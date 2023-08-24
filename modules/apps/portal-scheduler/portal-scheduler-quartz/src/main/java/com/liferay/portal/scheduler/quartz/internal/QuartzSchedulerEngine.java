@@ -396,31 +396,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	}
 
 	@Override
-	public void unschedule(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		try {
-			Scheduler scheduler = _getScheduler(storageType);
-
-			jobName = _fixMaxLength(jobName, _jobNameMaxLength, storageType);
-			groupName = _fixMaxLength(
-				groupName, _groupNameMaxLength, storageType);
-
-			JobKey jobKey = new JobKey(jobName, groupName);
-
-			unschedule(scheduler, jobKey);
-		}
-		catch (Exception exception) {
-			throw new SchedulerException(
-				StringBundler.concat(
-					"Unable to unschedule job {jobName=", jobName,
-					", groupName=", groupName, "}"),
-				exception);
-		}
-	}
-
-	@Override
 	public void validateTrigger(
 			com.liferay.portal.kernel.scheduler.Trigger trigger,
 			StorageType storageType)
@@ -671,47 +646,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 					objectAlreadyExistsException);
 			}
 		}
-	}
-
-	protected void unschedule(Scheduler scheduler, JobKey jobKey)
-		throws Exception {
-
-		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-
-		if (jobDetail == null) {
-			return;
-		}
-
-		TriggerKey triggerKey = new TriggerKey(
-			jobKey.getName(), jobKey.getGroup());
-
-		Trigger trigger = scheduler.getTrigger(triggerKey);
-
-		if (trigger == null) {
-			return;
-		}
-
-		JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-		JobState jobState = _getJobState(jobDataMap);
-
-		jobState.setTriggerDate(SchedulerEngine.END_TIME, new Date());
-		jobState.setTriggerDate(
-			SchedulerEngine.FINAL_FIRE_TIME, trigger.getPreviousFireTime());
-		jobState.setTriggerDate(SchedulerEngine.NEXT_FIRE_TIME, null);
-		jobState.setTriggerDate(
-			SchedulerEngine.PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
-		jobState.setTriggerDate(
-			SchedulerEngine.START_TIME, trigger.getStartTime());
-		jobState.setTriggerState(TriggerState.UNSCHEDULED);
-
-		jobDataMap.put(
-			SchedulerEngine.JOB_STATE,
-			JobStateSerializeUtil.serialize(jobState));
-
-		scheduler.unscheduleJob(triggerKey);
-
-		scheduler.addJob(jobDetail, true);
 	}
 
 	protected void update(

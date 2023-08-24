@@ -297,14 +297,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		schedule(trigger, storageType, description, destinationName, message);
 	}
 
-	@Override
-	public void unschedule(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		_schedulerEngine.unschedule(jobName, groupName, storageType);
-	}
-
 	@Activate
 	protected void activate(ComponentContext componentContext)
 		throws Exception {

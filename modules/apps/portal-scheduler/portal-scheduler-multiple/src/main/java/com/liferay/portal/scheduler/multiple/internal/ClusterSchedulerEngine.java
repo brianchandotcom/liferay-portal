@@ -374,32 +374,6 @@ public class ClusterSchedulerEngine
 		_portalReady = true;
 	}
 
-	@Clusterable(acceptor = SchedulerClusterInvokeAcceptor.class)
-	@Override
-	public void unschedule(
-			String jobName, String groupName, StorageType storageType)
-		throws SchedulerException {
-
-		boolean memoryClusteredSlaveJob = _isMemoryClusteredSlaveJob(
-			storageType);
-
-		_readLock.lock();
-
-		try {
-			if (memoryClusteredSlaveJob) {
-				_memoryClusteredJobs.remove(_getFullName(jobName, groupName));
-			}
-			else {
-				_schedulerEngine.unschedule(jobName, groupName, storageType);
-			}
-		}
-		finally {
-			_readLock.unlock();
-		}
-
-		setClusterableThreadLocal(storageType);
-	}
-
 	@Override
 	public void validateTrigger(Trigger trigger, StorageType storageType)
 		throws SchedulerException {

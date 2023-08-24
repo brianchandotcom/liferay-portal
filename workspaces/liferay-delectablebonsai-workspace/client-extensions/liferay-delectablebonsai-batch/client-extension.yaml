@@ -12,6 +12,5 @@ liferay-delectablebonsai-batch-oauth-application-headless-server:
     scopes:
         - Liferay.Headless.Admin.Workflow.everything
         - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer
     userAccountScreenName: default-service-account

@@ -9,6 +9,7 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -37,18 +38,22 @@ import javax.portlet.ResourceURL;
 public class FDSViewsDisplayContext {
 
 	public FDSViewsDisplayContext(
-		CETManager cetManager, ObjectDefinition fdsEntryObjectDefinition,
+		CETManager cetManager,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ServiceTrackerList<String> serviceTrackerList) {
 
 		_cetManager = cetManager;
-		_fdsEntryObjectDefinition = fdsEntryObjectDefinition;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_serviceTrackerList = serviceTrackerList;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_fdsEntryObjectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				_themeDisplay.getCompanyId(), "FDSEntry");
 	}
 
 	public JSONArray getFDSCellRendererCETsJSONArray() throws Exception {
@@ -74,6 +79,29 @@ public class FDSViewsDisplayContext {
 				RenderRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/fds_entries.jsp"
+		).buildString();
+	}
+
+	public String getFDSEntryPermissionsURL() {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_renderRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			PortletURLUtil.getCurrent(_renderRequest, _renderResponse)
+		).setParameter(
+			"modelResource", _fdsEntryObjectDefinition.getClassName()
+		).setParameter(
+			"modelResourceDescription",
+			_fdsEntryObjectDefinition.getLabel(_themeDisplay.getLocale())
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
 		).buildString();
 	}
 
@@ -108,29 +136,6 @@ public class FDSViewsDisplayContext {
 				RenderRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/fds_view.jsp"
-		).buildString();
-	}
-
-	public String getPermissionsURL() {
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_renderRequest,
-				"com_liferay_portlet_configuration_web_portlet_" +
-					"PortletConfigurationPortlet",
-				ActionRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_permissions.jsp"
-		).setRedirect(
-			PortletURLUtil.getCurrent(_renderRequest, _renderResponse)
-		).setParameter(
-			"modelResource", _fdsEntryObjectDefinition.getClassName()
-		).setParameter(
-			"modelResourceDescription",
-			_fdsEntryObjectDefinition.getLabel(_themeDisplay.getLocale())
-		).setParameter(
-			"resourcePrimKey", "{id}"
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).buildString();
 	}
 

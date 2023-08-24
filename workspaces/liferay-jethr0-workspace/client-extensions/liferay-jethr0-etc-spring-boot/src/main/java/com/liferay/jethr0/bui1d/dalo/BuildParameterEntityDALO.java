@@ -6,7 +6,7 @@
 package com.liferay.jethr0.bui1d.dalo;
 
 import com.liferay.jethr0.bui1d.parameter.BuildParameter;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterFactory;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
@@ -21,10 +21,10 @@ public class BuildParameterEntityDALO extends BaseEntityDALO<BuildParameter> {
 
 	@Override
 	protected EntityFactory<BuildParameter> getEntityFactory() {
-		return _buildParameterFactory;
+		return _buildParameterEntityFactory;
 	}
 
 	@Autowired
-	private BuildParameterFactory _buildParameterFactory;
+	private BuildParameterEntityFactory _buildParameterEntityFactory;
 
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.testsuite;
+package com.liferay.jethr0.bui1d.parameter;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -15,15 +15,16 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TestSuiteFactory extends BaseEntityFactory<TestSuite> {
+public class BuildParameterEntityFactory
+	extends BaseEntityFactory<BuildParameter> {
 
 	@Override
-	public TestSuite newEntity(JSONObject jsonObject) {
-		return new DefaultTestSuite(jsonObject);
+	public BuildParameter newEntity(JSONObject jsonObject) {
+		return new DefaultBuildParameter(jsonObject);
 	}
 
-	protected TestSuiteFactory() {
-		super(TestSuite.class);
+	protected BuildParameterEntityFactory() {
+		super(BuildParameter.class);
 	}
 
 }

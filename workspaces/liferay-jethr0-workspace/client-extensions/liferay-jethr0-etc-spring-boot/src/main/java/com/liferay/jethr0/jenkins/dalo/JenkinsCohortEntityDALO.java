@@ -8,7 +8,7 @@ package com.liferay.jethr0.jenkins.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohortFactory;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +21,10 @@ public class JenkinsCohortEntityDALO extends BaseEntityDALO<JenkinsCohort> {
 
 	@Override
 	protected EntityFactory<JenkinsCohort> getEntityFactory() {
-		return _jenkinsCohortFactory;
+		return _jenkinsCohortEntityFactory;
 	}
 
 	@Autowired
-	private JenkinsCohortFactory _jenkinsCohortFactory;
+	private JenkinsCohortEntityFactory _jenkinsCohortEntityFactory;
 
 }

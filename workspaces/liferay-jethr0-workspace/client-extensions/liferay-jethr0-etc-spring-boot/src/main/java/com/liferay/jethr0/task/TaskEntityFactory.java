@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.bui1d.parameter;
+package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildParameterFactory extends BaseEntityFactory<BuildParameter> {
+public class TaskEntityFactory extends BaseEntityFactory<Task> {
 
 	@Override
-	public BuildParameter newEntity(JSONObject jsonObject) {
-		return new DefaultBuildParameter(jsonObject);
+	public Task newEntity(JSONObject jsonObject) {
+		return new DefaultTask(jsonObject);
 	}
 
-	protected BuildParameterFactory() {
-		super(BuildParameter.class);
+	protected TaskEntityFactory() {
+		super(Task.class);
 	}
 
 }

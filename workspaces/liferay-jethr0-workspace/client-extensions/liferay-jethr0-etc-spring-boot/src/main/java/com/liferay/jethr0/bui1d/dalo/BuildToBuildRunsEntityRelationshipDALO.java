@@ -6,9 +6,9 @@
 package com.liferay.jethr0.bui1d.dalo;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.BuildFactory;
+import com.liferay.jethr0.bui1d.BuildEntityFactory;
 import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.bui1d.run.BuildRunFactory;
+import com.liferay.jethr0.bui1d.run.BuildRunEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
@@ -24,12 +24,12 @@ public class BuildToBuildRunsEntityRelationshipDALO
 
 	@Override
 	public EntityFactory<BuildRun> getChildEntityFactory() {
-		return _buildRunFactory;
+		return _buildRunEntityFactory;
 	}
 
 	@Override
 	public EntityFactory<Build> getParentEntityFactory() {
-		return _buildFactory;
+		return _buildEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class BuildToBuildRunsEntityRelationshipDALO
 	}
 
 	@Autowired
-	private BuildFactory _buildFactory;
+	private BuildEntityFactory _buildEntityFactory;
 
 	@Autowired
-	private BuildRunFactory _buildRunFactory;
+	private BuildRunEntityFactory _buildRunEntityFactory;
 
 }

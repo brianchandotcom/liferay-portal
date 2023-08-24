@@ -8,7 +8,7 @@ package com.liferay.jethr0.testsuite.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.testsuite.TestSuite;
-import com.liferay.jethr0.testsuite.TestSuiteFactory;
+import com.liferay.jethr0.testsuite.TestSuiteEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +21,10 @@ public class TestSuiteEntityDALO extends BaseEntityDALO<TestSuite> {
 
 	@Override
 	protected EntityFactory<TestSuite> getEntityFactory() {
-		return _testSuiteFactory;
+		return _testSuiteEntityFactory;
 	}
 
 	@Autowired
-	private TestSuiteFactory _testSuiteFactory;
+	private TestSuiteEntityFactory _testSuiteEntityFactory;
 
 }

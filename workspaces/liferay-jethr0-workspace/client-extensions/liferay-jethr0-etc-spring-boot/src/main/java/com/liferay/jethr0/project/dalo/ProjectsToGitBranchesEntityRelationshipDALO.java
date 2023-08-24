@@ -8,9 +8,9 @@ package com.liferay.jethr0.project.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.gitbranch.GitBranch;
-import com.liferay.jethr0.gitbranch.GitBranchFactory;
+import com.liferay.jethr0.gitbranch.GitBranchEntityFactory;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.ProjectFactory;
+import com.liferay.jethr0.project.ProjectEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +24,12 @@ public class ProjectsToGitBranchesEntityRelationshipDALO
 
 	@Override
 	public EntityFactory<GitBranch> getChildEntityFactory() {
-		return _gitBranchFactory;
+		return _gitBranchEntityFactory;
 	}
 
 	@Override
 	public EntityFactory<Project> getParentEntityFactory() {
-		return _projectFactory;
+		return _projectEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class ProjectsToGitBranchesEntityRelationshipDALO
 	}
 
 	@Autowired
-	private GitBranchFactory _gitBranchFactory;
+	private GitBranchEntityFactory _gitBranchEntityFactory;
 
 	@Autowired
-	private ProjectFactory _projectFactory;
+	private ProjectEntityFactory _projectEntityFactory;
 
 }

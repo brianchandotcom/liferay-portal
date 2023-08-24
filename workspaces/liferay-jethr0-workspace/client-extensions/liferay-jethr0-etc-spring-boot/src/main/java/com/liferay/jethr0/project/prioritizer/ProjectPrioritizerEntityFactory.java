@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.project;
+package com.liferay.jethr0.project.prioritizer;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectFactory extends BaseEntityFactory<Project> {
+public class ProjectPrioritizerEntityFactory
+	extends BaseEntityFactory<ProjectPrioritizer> {
 
-	@Override
-	public Project newEntity(JSONObject jsonObject) {
-		return new DefaultProject(jsonObject);
+	public ProjectPrioritizer newEntity(JSONObject jsonObject) {
+		return new DefaultProjectPrioritizer(jsonObject);
 	}
 
-	protected ProjectFactory() {
-		super(Project.class);
+	protected ProjectPrioritizerEntityFactory() {
+		super(ProjectPrioritizer.class);
 	}
 
 }

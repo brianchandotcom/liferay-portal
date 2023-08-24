@@ -8,9 +8,9 @@ package com.liferay.jethr0.jenkins.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohortFactory;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntityFactory;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
-import com.liferay.jethr0.jenkins.server.JenkinsServerFactory;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +24,12 @@ public class JenkinsCohortToJenkinsServersEntityRelationshipDALO
 
 	@Override
 	public EntityFactory<JenkinsServer> getChildEntityFactory() {
-		return _jenkinsServerFactory;
+		return _jenkinsServerEntityFactory;
 	}
 
 	@Override
 	public EntityFactory<JenkinsCohort> getParentEntityFactory() {
-		return _jenkinsCohortFactory;
+		return _jenkinsCohortEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class JenkinsCohortToJenkinsServersEntityRelationshipDALO
 	}
 
 	@Autowired
-	private JenkinsCohortFactory _jenkinsCohortFactory;
+	private JenkinsCohortEntityFactory _jenkinsCohortEntityFactory;
 
 	@Autowired
-	private JenkinsServerFactory _jenkinsServerFactory;
+	private JenkinsServerEntityFactory _jenkinsServerEntityFactory;
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.jethr0.bui1d.dalo;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.BuildFactory;
+import com.liferay.jethr0.bui1d.BuildEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
@@ -21,10 +21,10 @@ public class BuildEntityDALO extends BaseEntityDALO<Build> {
 
 	@Override
 	protected EntityFactory<Build> getEntityFactory() {
-		return _buildFactory;
+		return _buildEntityFactory;
 	}
 
 	@Autowired
-	private BuildFactory _buildFactory;
+	private BuildEntityFactory _buildEntityFactory;
 
 }

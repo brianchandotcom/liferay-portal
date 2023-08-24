@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.task;
+package com.liferay.jethr0.gitbranch;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -15,15 +15,20 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskFactory extends BaseEntityFactory<Task> {
+public class GitBranchEntityFactory extends BaseEntityFactory<GitBranch> {
 
 	@Override
-	public Task newEntity(JSONObject jsonObject) {
-		return new DefaultTask(jsonObject);
+	public String getEntityPluralLabel() {
+		return "Git Branches";
 	}
 
-	protected TaskFactory() {
-		super(Task.class);
+	@Override
+	public GitBranch newEntity(JSONObject jsonObject) {
+		return new DefaultGitBranch(jsonObject);
+	}
+
+	protected GitBranchEntityFactory() {
+		super(GitBranch.class);
 	}
 
 }

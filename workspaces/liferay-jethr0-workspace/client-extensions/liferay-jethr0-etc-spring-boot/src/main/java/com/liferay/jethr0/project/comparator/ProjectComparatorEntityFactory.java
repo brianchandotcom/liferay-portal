@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectComparatorFactory
+public class ProjectComparatorEntityFactory
 	extends BaseEntityFactory<ProjectComparator> {
 
 	@Override
@@ -36,7 +36,7 @@ public class ProjectComparatorFactory
 		throw new UnsupportedOperationException();
 	}
 
-	protected ProjectComparatorFactory() {
+	protected ProjectComparatorEntityFactory() {
 		super(ProjectComparator.class);
 	}
 

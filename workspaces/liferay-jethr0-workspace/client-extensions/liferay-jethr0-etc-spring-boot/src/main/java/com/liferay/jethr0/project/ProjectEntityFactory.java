@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.bui1d;
+package com.liferay.jethr0.project;
 
 import com.liferay.jethr0.entity.factory.BaseEntityFactory;
 
@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildFactory extends BaseEntityFactory<Build> {
+public class ProjectEntityFactory extends BaseEntityFactory<Project> {
 
 	@Override
-	public Build newEntity(JSONObject jsonObject) {
-		return new DefaultBuild(jsonObject);
+	public Project newEntity(JSONObject jsonObject) {
+		return new DefaultProject(jsonObject);
 	}
 
-	protected BuildFactory() {
-		super(Build.class);
+	protected ProjectEntityFactory() {
+		super(Project.class);
 	}
 
 }

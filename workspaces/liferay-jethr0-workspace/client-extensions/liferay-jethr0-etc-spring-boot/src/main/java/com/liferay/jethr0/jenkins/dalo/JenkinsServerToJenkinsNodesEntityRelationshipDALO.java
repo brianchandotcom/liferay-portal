@@ -8,9 +8,9 @@ package com.liferay.jethr0.jenkins.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jenkins.node.JenkinsNodeFactory;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntityFactory;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
-import com.liferay.jethr0.jenkins.server.JenkinsServerFactory;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +24,12 @@ public class JenkinsServerToJenkinsNodesEntityRelationshipDALO
 
 	@Override
 	public EntityFactory<JenkinsNode> getChildEntityFactory() {
-		return _jenkinsNodeFactory;
+		return _jenkinsNodeEntityFactory;
 	}
 
 	@Override
 	public EntityFactory<JenkinsServer> getParentEntityFactory() {
-		return _jenkinsServerFactory;
+		return _jenkinsServerEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class JenkinsServerToJenkinsNodesEntityRelationshipDALO
 	}
 
 	@Autowired
-	private JenkinsNodeFactory _jenkinsNodeFactory;
+	private JenkinsNodeEntityFactory _jenkinsNodeEntityFactory;
 
 	@Autowired
-	private JenkinsServerFactory _jenkinsServerFactory;
+	private JenkinsServerEntityFactory _jenkinsServerEntityFactory;
 
 }

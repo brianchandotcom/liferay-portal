@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsNodeFactory extends BaseEntityFactory<JenkinsNode> {
+public class JenkinsNodeEntityFactory extends BaseEntityFactory<JenkinsNode> {
 
 	@Override
 	public JenkinsNode newEntity(JSONObject jsonObject) {
@@ -32,7 +32,7 @@ public class JenkinsNodeFactory extends BaseEntityFactory<JenkinsNode> {
 		throw new UnsupportedOperationException();
 	}
 
-	protected JenkinsNodeFactory() {
+	protected JenkinsNodeEntityFactory() {
 		super(JenkinsNode.class);
 	}
 

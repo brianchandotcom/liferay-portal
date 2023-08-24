@@ -66,6 +66,7 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _checkDestinationGroup(Group group) throws PortalException {
 		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-file-entries-to-the-live-version-of-a-group");
 		}
@@ -85,8 +86,7 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationRepositoryId");
 
 		try {
-			Group group = _groupLocalService.fetchGroup(
-				destinationRepositoryId);
+			Group group = _groupLocalService.getGroup(destinationRepositoryId);
 
 			_checkDestinationGroup(group);
 

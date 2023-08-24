@@ -297,7 +297,7 @@ public class JournalUtil {
 			return;
 		}
 
-		if (MapUtil.isEmpty(_customTokens) &&
+		if ((_customTokens == null) &&
 			ArrayUtil.isNotEmpty(
 				journalServiceConfiguration.customTokenNames()) &&
 			ArrayUtil.isNotEmpty(

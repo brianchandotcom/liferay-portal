@@ -63,7 +63,7 @@
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [{ "title": "Target # of sends", "value": (activity.targetOfSends)!"-" },{ "title": "CTA", "value": (activity.cta)!"-" }] /]
 	[#elseif activity.tactic.name = "Print Advertising"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Publication", "value": (activity.publication)!"-" }, { "title": "CTA", "value": (activity.cta)!"-" }, { "title": "Expected Impressions", "value": (activity.expectedImpressions)!"-" } ] /]
-    [#elseif activity.tactic.name = "Outbound Telemarketing Sales"]
+	[#elseif activity.tactic.name = "Outbound Telemarketing Sales"]
 		[#assign miscellaneous_marketing_fields = miscellaneous_marketing_fields + [ { "title": "Audience Target", "value": (activity.audienceTarget)!"-" }, { "title": "Source and Size of call List", "value": (activity.sourceAndSizeOfCallList)!"-" }, { "title": "Resources necessary from Liferay", "value": (activity.resourcesNecessaryFromLiferay)!"-" } ] /]
 	[/#if]
 

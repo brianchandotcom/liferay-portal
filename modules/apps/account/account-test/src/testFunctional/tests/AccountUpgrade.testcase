@@ -436,4 +436,26 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-189070. TC6: Verify that invite user permission is separated from the manage user permission after upgrading from the previous version."
+	@priority = 5
+	test ViewAccountRolesPermissionAfterUpgrade7413u63 {
+		property data.archive.type = "data-archive-account-permission";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.4.13.u63";
+
+		task ("View the invite user permission is unchecked in Account Administrator role") {
+			ValidateUsersUpgrade.viewAccountUserRoleNoPermissions(
+				accountRoleTitle = "Account Administrator",
+				permissionDefinitionValue = "Invite User",
+				permissionNavigationValue = "Accounts > Account Entry");
+		}
+
+		task ("View the invite user permission is unchecked in Account Member role") {
+			ValidateUsersUpgrade.viewAccountUserRoleNoPermissions(
+				accountRoleTitle = "Account Member",
+				permissionDefinitionValue = "Invite User",
+				permissionNavigationValue = "Accounts > Account Entry");
+		}
+	}
+
 }

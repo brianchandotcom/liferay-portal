@@ -391,6 +391,19 @@ definition {
 			value1 = "No roles were found.");
 	}
 
+	macro viewNoPermissionCP {
+		var key_permissionDefinitionValue = ${permissionDefinitionValue};
+		var key_permissionNavigationValue = ${permissionNavigationValue};
+
+		AssertElementNotPresent(locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+
+		if (isSet(siteNameScope)) {
+			AssertElementNotPresent(
+				key_siteNameScope = ${siteNameScope},
+				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_SCOPE");
+		}
+	}
+
 	macro viewPermissionCP {
 		var key_permissionDefinitionValue = ${permissionDefinitionValue};
 		var key_permissionNavigationValue = ${permissionNavigationValue};

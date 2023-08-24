@@ -6,6 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -114,12 +115,15 @@ function ImportResultsSection({
 				displayTitle={
 					<ClayPanel.Title>
 						<ClayIcon
-							className={`text-4 ${cssClass}`}
+							className={classNames('text-4', cssClass)}
 							symbol={icon}
 						/>
 
 						<span
-							className={`c-ml-3 font-weight-semi-bold text-4 ${cssClass}`}
+							className={classNames(
+								'c-ml-3 font-weight-semi-bold text-4',
+								cssClass
+							)}
 						>
 							{sub(title, results.length)}
 						</span>
@@ -148,7 +152,10 @@ function ImportResultsSection({
 										{messages &&
 											messages.map((message) => (
 												<div
-													className={`list-group-subtext ${cssClass}`}
+													className={classNames(
+														'list-group-subtext',
+														cssClass
+													)}
 													key={message}
 												>
 													{message}

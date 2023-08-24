@@ -134,6 +134,17 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaDLFolderMethodCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaDLFolderMethodCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addFolder from DLFolderService, ",
+				"DLFolderLocalService, DLFolderServiceUtil and ",
+				"DLFolderLocalServiceUtil. Fill the new parameter manually, ",
+				"see LPS-194001."));
+	}
+
+	@Test
 	public void testUpgradeJavaExtractTextMethodCheck() throws Exception {
 		test("upgrade/UpgradeJavaExtractTextMethodCheck.testjava");
 	}

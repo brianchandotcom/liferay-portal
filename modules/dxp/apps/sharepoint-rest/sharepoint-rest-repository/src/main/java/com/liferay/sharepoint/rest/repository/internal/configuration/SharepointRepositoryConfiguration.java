@@ -13,7 +13,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Adolfo Pérez
  */
 @ExtendedObjectClassDefinition(
-	category = "documents-and-media", factoryInstanceLabelAttribute = "name"
+	category = "documents-and-media", factoryInstanceLabelAttribute = "name",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	factory = true,

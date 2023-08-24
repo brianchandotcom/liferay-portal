@@ -88,20 +88,9 @@ definition {
 		}
 
 		task ("Then I can see no API Application Found") {
-			AssertElementNotPresent(
-				key_status = "Published",
-				key_title = "test1",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-
-			AssertElementNotPresent(
-				key_status = "Unpublished",
-				key_title = "test2",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-
-			AssertElementNotPresent(
-				key_status = "Unpublished",
-				key_title = "test3",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No API Application Found");
 		}
 	}
 
@@ -159,20 +148,9 @@ definition {
 		}
 
 		task ("Then no API application were found") {
-			AssertElementNotPresent(
-				key_status = "Published",
-				key_title = "test1",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-
-			AssertElementNotPresent(
-				key_status = "Unpublished",
-				key_title = "test2",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
-
-			AssertElementNotPresent(
-				key_status = "Unpublished",
-				key_title = "test3",
-				locator1 = "APIBuilder#APPLICATION_STATUS");
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No API Application Found");
 		}
 	}
 

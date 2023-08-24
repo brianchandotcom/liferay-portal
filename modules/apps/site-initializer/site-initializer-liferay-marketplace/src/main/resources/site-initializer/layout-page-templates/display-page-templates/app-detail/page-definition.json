@@ -281,10 +281,12 @@
 																		{
 																			"id": "element-html",
 																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
+																				"html": {
 																					"mapping": {
+																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_apps_categories$]",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
 																					}
 																				}
 																			}
@@ -315,7 +317,11 @@
 													"id": "element-html",
 													"value": {
 														"html": {
-															"value_i18n": {
+															"mapping": {
+																"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_get_app_button$]",
+																"itemReference": {
+																	"contextSource": "DisplayPageItem"
+																}
 															}
 														}
 													}
@@ -522,7 +528,11 @@
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
+																							"mapping": {
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:markeptlace_tabs_description$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
 																							}
 																						}
 																					}
@@ -552,7 +562,11 @@
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
+																							"mapping": {
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_tabs_license$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
 																							}
 																						}
 																					}
@@ -582,7 +596,11 @@
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
+																							"mapping": {
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_tabs_release$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
 																							}
 																						}
 																					}
@@ -612,7 +630,11 @@
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
+																							"mapping": {
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_tabs_profile$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
 																							}
 																						}
 																					}
@@ -666,6 +688,14 @@
 																	"id": "element-text",
 																	"value": {
 																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_developer_name$]",
+																				"itemReference": {
+																					"contextSource": "DisplayPageItem"
+																				}
+																			}
 																		}
 																	}
 																}
@@ -1276,6 +1306,14 @@
 																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_type$]",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
 																				}
 																			}
 																		}
@@ -1296,6 +1334,14 @@
 																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
+																				},
+																				"text": {
+																					"mapping": {
+																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_price_model$]",
+																						"itemReference": {
+																							"contextSource": "DisplayPageItem"
+																						}
+																					}
 																				}
 																			}
 																		}
@@ -1619,7 +1665,11 @@
 																					"id": "element-html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {
+																							"mapping": {
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_share_link$]",
+																								"itemReference": {
+																									"contextSource": "DisplayPageItem"
+																								}
 																							}
 																						}
 																					}

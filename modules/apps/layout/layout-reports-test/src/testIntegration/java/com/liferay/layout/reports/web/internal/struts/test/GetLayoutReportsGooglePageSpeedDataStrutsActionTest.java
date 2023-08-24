@@ -429,7 +429,7 @@ public class GetLayoutReportsGooglePageSpeedDataStrutsActionTest {
 			LocaleThreadLocal.setSiteDefaultLocale(
 				_portal.getSiteDefaultLocale(_group.getGroupId()));
 
-			_getLayoutReportsDataStrutsAction.execute(
+			_getLayoutReportsGooglePageSpeedDataStrutsAction.execute(
 				mockHttpServletRequest, mockHttpServletResponse);
 		}
 		finally {
@@ -446,7 +446,7 @@ public class GetLayoutReportsGooglePageSpeedDataStrutsActionTest {
 	@Inject(
 		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsGooglePageSpeedDataStrutsAction"
 	)
-	private StrutsAction _getLayoutReportsDataStrutsAction;
+	private StrutsAction _getLayoutReportsGooglePageSpeedDataStrutsAction;
 
 	@DeleteAfterTestRun
 	private Group _group;

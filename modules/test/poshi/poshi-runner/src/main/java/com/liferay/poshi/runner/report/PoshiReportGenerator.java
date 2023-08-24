@@ -47,12 +47,23 @@ import org.json.JSONArray;
 public class PoshiReportGenerator {
 
 	public static void main(String[] args) throws Exception {
-		if (_poshiProperties.reportType.equals("usage")) {
-			_generateMacroUsageReport();
+		if (Validator.isNotNull(_poshiProperties.reportType) &&
+			_poshiProperties.reportType.equals("usage")) {
+
+			_generateMacroUsageHTMLReport();
+
+			return;
 		}
-		else if (_poshiProperties.reportType.equals("csv")) {
-			_writeTestCSVReportFile();
+		else if (Validator.isNotNull(_poshiProperties.reportType) &&
+				 _poshiProperties.reportType.equals("test-properties")) {
+
+			_generateTestPropertiesCSVReport();
+
+			return;
 		}
+
+		System.out.println(
+			"Please set 'test.report.type' to generate a report");
 	}
 
 	private static void _findMacroExecuteElementUsages() {
@@ -67,7 +78,7 @@ public class PoshiReportGenerator {
 		}
 	}
 
-	private static void _generateMacroUsageReport() throws Exception {
+	private static void _generateMacroUsageHTMLReport() throws Exception {
 		PoshiContext.readFiles();
 
 		_findMacroExecuteElementUsages();
@@ -75,6 +86,94 @@ public class PoshiReportGenerator {
 		_writeBaseUsageReportFiles();
 
 		_writeDataJavaScriptFile();
+	}
+
+	private static void _generateTestPropertiesCSVReport() throws Exception {
+		if (_poshiProperties.testCSVReportPropertyNames == null) {
+			return;
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+		File reportCSVFile = new File(
+			StringUtil.combine(
+				"Report_", simpleDateFormat.format(new Date()), ".csv"));
+
+		try (FileWriter reportCSVFileWriter = new FileWriter(reportCSVFile)) {
+			List<String> reportLineItems = new ArrayList<>();
+
+			reportLineItems.add("Namespace");
+			reportLineItems.add("Class Name");
+			reportLineItems.add("Command Name");
+
+			for (String propertyName :
+					_poshiProperties.testCSVReportPropertyNames) {
+
+				reportLineItems.add(propertyName);
+			}
+
+			reportCSVFileWriter.write(StringUtils.join(reportLineItems, ","));
+
+			reportLineItems.clear();
+
+			for (String testCaseNamespacedClassCommandName :
+					PoshiContext.getTestCaseNamespacedClassCommandNames()) {
+
+				Pattern namespaceClassCommandNamePattern =
+					PoshiContext.getNamespaceClassCommandNamePattern();
+
+				Matcher matcher = namespaceClassCommandNamePattern.matcher(
+					testCaseNamespacedClassCommandName);
+
+				if (!matcher.find()) {
+					throw new RuntimeException(
+						"Invalid namespaced class command name " +
+							testCaseNamespacedClassCommandName);
+				}
+
+				reportLineItems.add(matcher.group("namespace"));
+				reportLineItems.add(matcher.group("className"));
+				reportLineItems.add(matcher.group("commandName"));
+
+				Properties properties =
+					PoshiContext.getNamespacedClassCommandNameProperties(
+						testCaseNamespacedClassCommandName);
+
+				for (String propertyName :
+						_poshiProperties.testCSVReportPropertyNames) {
+
+					if (properties.containsKey(propertyName)) {
+						String propertyValue = properties.getProperty(
+							propertyName);
+
+						if (propertyValue.contains(",")) {
+							reportLineItems.add(
+								StringUtils.join(
+									ArrayUtils.toArray(
+										"\"", propertyValue, "\"")));
+						}
+						else {
+							reportLineItems.add(propertyValue);
+						}
+					}
+					else {
+						reportLineItems.add("");
+					}
+				}
+
+				reportCSVFileWriter.write(
+					"\n" + StringUtils.join(reportLineItems, ","));
+
+				reportLineItems.clear();
+			}
+		}
+		catch (IOException ioException) {
+			if (reportCSVFile.exists()) {
+				reportCSVFile.deleteOnExit();
+			}
+
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static void _storeMacroExecuteElements(Element element) {
@@ -216,94 +315,6 @@ public class PoshiReportGenerator {
 		sb.append(")");
 
 		FileUtil.write(_USAGE_DATA_JAVA_SCRIPT_FILE_PATH, sb.toString());
-	}
-
-	private static void _writeTestCSVReportFile() throws Exception {
-		if (_poshiProperties.testCSVReportPropertyNames == null) {
-			return;
-		}
-
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
-
-		File reportCSVFile = new File(
-			StringUtil.combine(
-				"Report_", simpleDateFormat.format(new Date()), ".csv"));
-
-		try (FileWriter reportCSVFileWriter = new FileWriter(reportCSVFile)) {
-			List<String> reportLineItems = new ArrayList<>();
-
-			reportLineItems.add("Namespace");
-			reportLineItems.add("Class Name");
-			reportLineItems.add("Command Name");
-
-			for (String propertyName :
-					_poshiProperties.testCSVReportPropertyNames) {
-
-				reportLineItems.add(propertyName);
-			}
-
-			reportCSVFileWriter.write(StringUtils.join(reportLineItems, ","));
-
-			reportLineItems.clear();
-
-			for (String testCaseNamespacedClassCommandName :
-					PoshiContext.getTestCaseNamespacedClassCommandNames()) {
-
-				Pattern namespaceClassCommandNamePattern =
-					PoshiContext.getNamespaceClassCommandNamePattern();
-
-				Matcher matcher = namespaceClassCommandNamePattern.matcher(
-					testCaseNamespacedClassCommandName);
-
-				if (!matcher.find()) {
-					throw new RuntimeException(
-						"Invalid namespaced class command name " +
-							testCaseNamespacedClassCommandName);
-				}
-
-				reportLineItems.add(matcher.group("namespace"));
-				reportLineItems.add(matcher.group("className"));
-				reportLineItems.add(matcher.group("commandName"));
-
-				Properties properties =
-					PoshiContext.getNamespacedClassCommandNameProperties(
-						testCaseNamespacedClassCommandName);
-
-				for (String propertyName :
-						_poshiProperties.testCSVReportPropertyNames) {
-
-					if (properties.containsKey(propertyName)) {
-						String propertyValue = properties.getProperty(
-							propertyName);
-
-						if (propertyValue.contains(",")) {
-							reportLineItems.add(
-								StringUtils.join(
-									ArrayUtils.toArray(
-										"\"", propertyValue, "\"")));
-						}
-						else {
-							reportLineItems.add(propertyValue);
-						}
-					}
-					else {
-						reportLineItems.add("");
-					}
-				}
-
-				reportCSVFileWriter.write(
-					"\n" + StringUtils.join(reportLineItems, ","));
-
-				reportLineItems.clear();
-			}
-		}
-		catch (IOException ioException) {
-			if (reportCSVFile.exists()) {
-				reportCSVFile.deleteOnExit();
-			}
-
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	private static final String _USAGE_DATA_JAVA_SCRIPT_FILE_PATH;

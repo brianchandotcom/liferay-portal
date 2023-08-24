@@ -49,7 +49,6 @@ import org.quartz.Calendar;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.JobPersistenceException;
 import org.quartz.ListenerManager;
@@ -62,7 +61,7 @@ import org.quartz.TriggerUtils;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore;
 import org.quartz.impl.matchers.GroupMatcher;
-import org.quartz.listeners.TriggerListenerSupport;
+import org.quartz.listeners.SchedulerListenerSupport;
 import org.quartz.spi.OperableTrigger;
 
 /**
@@ -745,7 +744,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		ListenerManager listenerManager = scheduler.getListenerManager();
 
-		listenerManager.addTriggerListener(new TriggerListenerSupportImpl());
+		listenerManager.addSchedulerListener(
+			new SchedulerListenerImpl(scheduler));
 
 		return scheduler;
 	}
@@ -807,70 +807,70 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	private volatile boolean _schedulerEngineEnabled;
 
-	private class TriggerListenerSupportImpl extends TriggerListenerSupport {
+	private class SchedulerListenerImpl extends SchedulerListenerSupport {
 
-		@Override
-		public String getName() {
-			return TriggerListenerSupportImpl.class.getName();
+		public void jobPaused(JobKey jobKey) {
+			_audit(jobKey, TriggerState.PAUSED);
 		}
 
-		@Override
-		public void triggerComplete(
-			Trigger trigger, JobExecutionContext jobExecutionContext,
-			Trigger.CompletedExecutionInstruction
-				completedExecutionInstruction) {
+		public void jobResumed(JobKey jobKey) {
+			_audit(jobKey, TriggerState.NORMAL);
+		}
 
-			if (jobExecutionContext.getNextFireTime() != null) {
-				return;
-			}
+		public void jobScheduled(Trigger trigger) {
+			_audit(trigger.getJobKey(), TriggerState.NORMAL);
+		}
 
-			TriggerKey triggerKey = trigger.getKey();
+		public void triggerFinalized(Trigger trigger) {
+			JobKey jobKey = trigger.getJobKey();
 
-			JobDetail jobDetail = jobExecutionContext.getJobDetail();
-
-			JobDataMap jobDataMap = jobDetail.getJobDataMap();
+			_audit(jobKey, TriggerState.COMPLETE);
 
 			try {
+				JobDetail jobDetail = _scheduler.getJobDetail(jobKey);
+
+				JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
 				SchedulerEngineHelper schedulerEngineHelper =
 					_getSchedulerEngineHelper();
 
 				schedulerEngineHelper.delete(
-					triggerKey.getName(), triggerKey.getGroup(),
+					jobKey.getName(), jobKey.getGroup(),
 					StorageType.valueOf(
 						jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
 			}
-			catch (SchedulerException schedulerException) {
-				_log.error(
-					"Unable to delete job " + triggerKey, schedulerException);
+			catch (Exception exception) {
+				_log.error("Unable to delete job " + jobKey, exception);
 			}
 		}
 
-		@Override
-		public void triggerFired(
-			Trigger trigger, JobExecutionContext jobExecutionContext) {
+		private SchedulerListenerImpl(Scheduler scheduler) {
+			_scheduler = scheduler;
+		}
 
-			JobDetail jobDetail = jobExecutionContext.getJobDetail();
-
-			JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-			Message message = new Message();
-
-			message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
-
+		private void _audit(JobKey jobKey, TriggerState triggerState) {
 			try {
+				JobDetail jobDetail = _scheduler.getJobDetail(jobKey);
+
+				JobDataMap jobDataMap = jobDetail.getJobDataMap();
+
+				Message message = new Message();
+
+				message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
+
 				SchedulerEngineHelper schedulerEngineHelper =
 					_getSchedulerEngineHelper();
 
-				schedulerEngineHelper.auditSchedulerJobs(
-					message, TriggerState.NORMAL);
+				schedulerEngineHelper.auditSchedulerJobs(message, triggerState);
 			}
-			catch (SchedulerException schedulerException) {
+			catch (Exception exception) {
 				_log.error(
-					"Unable to send audit message for scheduler job " +
-						trigger.getKey(),
-					schedulerException);
+					"Unable to send audit message for scheduler job " + jobKey,
+					exception);
 			}
 		}
+
+		private final Scheduler _scheduler;
 
 	}
 

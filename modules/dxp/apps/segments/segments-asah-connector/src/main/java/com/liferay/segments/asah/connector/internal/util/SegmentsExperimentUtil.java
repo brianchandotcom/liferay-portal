@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,13 +11,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.asah.connector.internal.client.model.DXPVariantMetric;
+import com.liferay.segments.asah.connector.internal.client.model.Experiment;
+import com.liferay.segments.asah.connector.internal.client.model.Metric;
+import com.liferay.segments.asah.connector.internal.util.comparator.MetricProcessedDateComparator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
+import java.util.Collections;
 import java.util.Locale;
 
 /**
@@ -85,11 +91,33 @@ public class SegmentsExperimentUtil {
 	}
 
 	public static JSONObject toSegmentsExperimentRelJSONObject(
-			Locale locale, SegmentsExperimentRel segmentsExperimentRel)
+			Experiment experiment, Locale locale,
+			SegmentsExperimentRel segmentsExperimentRel)
 		throws PortalException {
 
 		if (segmentsExperimentRel == null) {
 			return null;
+		}
+
+		String segmentsExperimentVariantImprovement = "-";
+
+		if ((experiment != null) && !segmentsExperimentRel.isControl() &&
+			ListUtil.isNotEmpty(experiment.getMetrics())) {
+
+			Metric metric = Collections.max(
+				experiment.getMetrics(),
+				new MetricProcessedDateComparator(true));
+
+			for (DXPVariantMetric dxpVariantMetric :
+					metric.getDXPVariantMetrics()) {
+
+				if (dxpVariantMetric.isControl()) {
+					continue;
+				}
+
+				segmentsExperimentVariantImprovement = String.valueOf(
+					dxpVariantMetric.getImprovement());
+			}
 		}
 
 		return JSONUtil.put(
@@ -105,6 +133,9 @@ public class SegmentsExperimentUtil {
 		).put(
 			"segmentsExperimentRelId",
 			String.valueOf(segmentsExperimentRel.getSegmentsExperimentRelId())
+		).put(
+			"segmentsExperimentVariantImprovement",
+			segmentsExperimentVariantImprovement
 		).put(
 			"split", segmentsExperimentRel.getSplit()
 		);

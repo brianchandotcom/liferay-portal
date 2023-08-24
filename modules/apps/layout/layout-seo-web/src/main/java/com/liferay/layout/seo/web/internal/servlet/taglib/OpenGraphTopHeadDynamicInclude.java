@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
-import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -308,10 +307,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			ConfigurableUtil.createConfigurable(
 				LayoutSEODynamicRenderingConfiguration.class, properties);
 		_openGraphImageProvider = new OpenGraphImageProvider(
-			_ddmStructureLocalService, _dlAppLocalService,
-			_dlFileEntryMetadataLocalService, _dlurlHelper,
-			_layoutSEOSiteLocalService, _layoutSEOTemplateProcessor, _portal,
-			_storageEngine);
+			_ddmStorageEngineManager, _ddmStructureLocalService,
+			_dlAppLocalService, _dlFileEntryMetadataLocalService, _dlurlHelper,
+			_layoutSEOSiteLocalService, _layoutSEOTemplateProcessor, _portal);
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
 	}
 
@@ -490,9 +488,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private StorageEngine _storageEngine;
 
 	private volatile TitleProvider _titleProvider;
 

@@ -15,7 +15,7 @@ import normalizeItems from '../utils/normalizeItems';
 import ActionsDropdown from './ActionsDropdown';
 
 const ITEM_TYPES_SYMBOL = {
-	folder: 'folder',
+	KBFolder: 'folder',
 	template: 'document-text',
 };
 

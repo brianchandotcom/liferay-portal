@@ -14,8 +14,8 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const ITEM_TYPES_SYMBOL = {
-	article: 'document-text',
-	folder: 'folder',
+	KBArticle: 'document-text',
+	KBFolder: 'folder',
 };
 
 const SEARCH_DELTA = 2;
@@ -57,7 +57,9 @@ const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
 							href={handleOnclickItem ? '#' : item.href}
 							onClick={() => {
 								setSelectedResultId(item.id);
-								handleOnclickItem(item);
+								if (handleOnclickItem) {
+									handleOnclickItem(item);
+								}
 							}}
 						>
 							<ClayIcon

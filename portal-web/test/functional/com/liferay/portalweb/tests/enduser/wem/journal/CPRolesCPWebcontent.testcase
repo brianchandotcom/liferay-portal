@@ -5,7 +5,6 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Roles";
 	property testray.main.component.name = "Web Content Administration";
 
@@ -17,6 +16,10 @@ definition {
 	static var randomRoleKey = StringUtil.randomString(8);
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}

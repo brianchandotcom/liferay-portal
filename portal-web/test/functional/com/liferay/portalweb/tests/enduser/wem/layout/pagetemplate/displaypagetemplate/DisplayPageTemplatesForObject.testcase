@@ -4,7 +4,6 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Display Page Templates";
 
 	static var randomSiteName = StringUtil.randomString(8);
@@ -15,6 +14,10 @@ definition {
 	static var randomObjectName = "A${randomLabelName}";
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}

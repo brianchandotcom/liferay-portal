@@ -5,7 +5,6 @@ definition {
 	property custom.properties = "feature.flag.LPS-179483=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Echo Accessibility";
 	property testray.main.component.name = "AI-Creator";
 
@@ -14,6 +13,10 @@ definition {
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
 		task ("Sign in") {
 			User.firstLoginPG();
 		}

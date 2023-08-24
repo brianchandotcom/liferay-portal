@@ -418,19 +418,21 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			JSONArray newValueJSONArray = new JSONArrayImpl();
 
-			for (int i = 0; i < valueJSONArray.length(); i++) {
-				if (StringUtil.equals(
-						(String)valueJSONArray.get(i),
-						objectEntry.getExternalReferenceCode())) {
+			if (valueJSONArray != null) {
+				for (int i = 0; i < valueJSONArray.length(); i++) {
+					if (StringUtil.equals(
+							(String)valueJSONArray.get(i),
+							objectEntry.getExternalReferenceCode())) {
 
-					if (!StringUtil.equals(
-							externalReferenceCode, StringPool.BLANK)) {
+						if (!StringUtil.equals(
+								externalReferenceCode, StringPool.BLANK)) {
 
-						newValueJSONArray.put(externalReferenceCode);
+							newValueJSONArray.put(externalReferenceCode);
+						}
 					}
-				}
-				else {
-					newValueJSONArray.put((String)valueJSONArray.get(i));
+					else {
+						newValueJSONArray.put((String)valueJSONArray.get(i));
+					}
 				}
 			}
 

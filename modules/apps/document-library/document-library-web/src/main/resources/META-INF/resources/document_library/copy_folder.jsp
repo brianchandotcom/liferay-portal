@@ -15,7 +15,7 @@ dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
 
 <div class="c-mt-3 sheet sheet-lg">
 	<react:component
-		module="document_library/js/DDMFolderSelector"
+		module="document_library/js/DLFolderSelector"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"copyActionURL", dlCopyFolderDisplayContext.getActionURL()

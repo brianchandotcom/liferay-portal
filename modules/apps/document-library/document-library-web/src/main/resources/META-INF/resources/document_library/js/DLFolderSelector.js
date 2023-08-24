@@ -16,7 +16,7 @@ import {
 } from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-const DDMFolderSelector = ({
+const DLFolderSelector = ({
 	copyActionURL,
 	fileShortcutId,
 	itemType,
@@ -197,4 +197,4 @@ const DDMFolderSelector = ({
 	);
 };
 
-export default DDMFolderSelector;
+export default DLFolderSelector;

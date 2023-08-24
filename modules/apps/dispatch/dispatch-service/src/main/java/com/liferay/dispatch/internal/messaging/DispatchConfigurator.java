@@ -78,17 +78,6 @@ public class DispatchConfigurator {
 		_serviceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 
-		_scheduleMemorySchedulerJobs();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_unscheduleMemorySchedulerJobs();
-
-		_serviceRegistration.unregister();
-	}
-
-	private void _scheduleMemorySchedulerJobs() {
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.ALL_NODES;
 
@@ -114,7 +103,8 @@ public class DispatchConfigurator {
 		}
 	}
 
-	private void _unscheduleMemorySchedulerJobs() {
+	@Deactivate
+	protected void deactivate() {
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.ALL_NODES;
 
@@ -127,6 +117,8 @@ public class DispatchConfigurator {
 				dispatchTrigger.getDispatchTriggerId(),
 				dispatchTaskClusterMode.getStorageType());
 		}
+
+		_serviceRegistration.unregister();
 	}
 
 	private static final int _MAXIMUM_QUEUE_SIZE = 100;

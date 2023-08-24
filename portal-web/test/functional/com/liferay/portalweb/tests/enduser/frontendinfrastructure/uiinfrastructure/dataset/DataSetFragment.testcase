@@ -302,6 +302,108 @@ definition {
 		}
 	}
 
+	@description = "LPS-190724. Confirm that the is possible to interact Web Content and Data Set fragment using StructuredContent schema"
+	@priority = 5
+	test CanUseStructuredContentSchema {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given a datasets entries") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Web contents",
+				restApplication = "/headless-delivery/v1.0",
+				restEndpoint = "/v1.0/sites/{siteId}/structured-contents",
+				restSchema = "StructuredContent");
+
+			Refresh();
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.goToViews(dataSetName = "Web contents");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Test");
+		}
+
+		task ("And the user adds fields to the view") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Web contents",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "title,siteId");
+		}
+
+		task ("When the user creates a new web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("And add a title in Portuguese") {
+			PortletEntry.changeLocale(locale = "pt-BR");
+
+			WebContent.addCP(webContentTitle = "Web Content Title pt-BR");
+		}
+
+		task ("And Publish it") {
+			PortletEntry.publish();
+		}
+
+		task ("When go to new content page created") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+		}
+
+		task ("And adds the data set fragment portlet") {
+			Click(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And adds the View Test view to the data set fragment portlet") {
+			DataSetFragment.addDataSetView(dataSetViewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then confirm the title of the web content created in the fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			AssertElementPresent(
+				key_color = "Web Content Title",
+				key_field = "title",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+
+		task ("When the page language is changed") {
+			Navigator.ensureLocaleURL(locale = "pt");
+		}
+
+		task ("Then confirm that the web content title shown has been translated") {
+			AssertElementPresent(
+				key_color = "Web Content Title pt-BR",
+				key_field = "title",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+	}
+
 	@description = "LPS-172403. Confirm empty message when no view was created"
 	@priority = 4
 	test EmptyMessageDisplayedWhenNoViewCreated {

@@ -1,20 +1,22 @@
-/* This is a hack to switch out a logo - just to show what is possible with themes */
+// This is a hack to switch out a logo - just to show what is possible with themes
 
-.logo img, .logo h1 {
+.logo img,
+.logo h1 {
 	display: none;
 }
 
 .logo:before {
-	content: url("../img/logo.svg");
+	content: url(../img/logo.svg);
 }
 
 .logo:after {
-	content: "Ticket CENTER";
+	content: 'Ticket CENTER';
 	font-size: 2rem;
 	margin-left: 1rem;
 }
 
-#wrapper > footer, #wrapper > header {
+#wrapper > footer,
+#wrapper > header {
 	border: none;
 }
 

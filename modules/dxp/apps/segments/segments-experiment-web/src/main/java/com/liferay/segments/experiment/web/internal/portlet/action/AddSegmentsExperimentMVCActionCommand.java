@@ -110,8 +110,11 @@ public class AddSegmentsExperimentMVCActionCommand
 			if (segmentsExperiment.getStatus() ==
 					SegmentsExperimentConstants.STATUS_TERMINATED) {
 
+				segmentsExperiment.setStatus(
+					SegmentsExperimentConstants.STATUS_DELETED_ON_DXP_ONLY);
+
 				_segmentsExperimentService.deleteSegmentsExperiment(
-					segmentsExperiment.getSegmentsExperimentId());
+					segmentsExperiment, false);
 			}
 			else {
 				throw new DuplicateSegmentsExperimentException();

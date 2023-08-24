@@ -38,12 +38,15 @@ public class LayoutKeywordQueryContributor implements KeywordQueryContributor {
 			booleanQuery, searchContext, Field.CONTENT, false);
 		_queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, Field.TITLE, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.NAME, false);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addHighlightFieldNames(
 			_searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {Field.CONTENT, Field.TITLE}, searchContext));
+				new String[] {Field.CONTENT, Field.NAME, Field.TITLE},
+				searchContext));
 	}
 
 	@Reference

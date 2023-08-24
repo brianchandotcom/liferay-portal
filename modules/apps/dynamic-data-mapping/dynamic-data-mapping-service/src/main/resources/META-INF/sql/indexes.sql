@@ -16,7 +16,6 @@ create index IX_C304699F on DDMDataProviderInstanceLink (structureId, ctCollecti
 
 create index IX_5378BAAD on DDMField (companyId, fieldType[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_582EBFF1 on DDMField (storageId, ctCollectionId);
-create index IX_600F8E00 on DDMField (storageId, fieldName[$COLUMN_LENGTH:2000000$], ctCollectionId);
 create unique index IX_1BB20E75 on DDMField (storageId, instanceId[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_5C0B8AE5 on DDMField (structureVersionId, ctCollectionId);
 

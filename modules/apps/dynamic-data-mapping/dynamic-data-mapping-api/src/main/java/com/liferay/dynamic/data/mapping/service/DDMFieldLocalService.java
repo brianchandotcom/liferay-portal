@@ -204,10 +204,6 @@ public interface DDMFieldLocalService
 	public DDMField fetchDDMField(long fieldId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFieldAttribute fetchDDMFieldAttribute(
-		long fieldId, String attributeName, String languageId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -237,9 +233,6 @@ public interface DDMFieldLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMField> getDDMFields(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMField> getDDMFields(long storageId, String fieldName);
 
 	/**
 	 * Returns the number of ddm fields.

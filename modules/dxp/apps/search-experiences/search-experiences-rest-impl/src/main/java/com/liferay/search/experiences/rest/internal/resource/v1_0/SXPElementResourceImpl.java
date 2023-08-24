@@ -299,10 +299,10 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		throws Exception {
 
 		com.liferay.search.experiences.model.SXPElement
-			serviceBuilderSxpElement = _sxpElementService.fetchSXPElementById(
+			serviceBuilderSXPElement = _sxpElementService.fetchSXPElementById(
 				sxpElementId);
 
-		return _putSXPElement(sxpElement, serviceBuilderSxpElement);
+		return _putSXPElement(serviceBuilderSXPElement, sxpElement);
 	}
 
 	@Override
@@ -311,13 +311,13 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 		throws Exception {
 
 		com.liferay.search.experiences.model.SXPElement
-			serviceBuilderSxpElement =
+			serviceBuilderSXPElement =
 				_sxpElementService.fetchSXPElementByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		sxpElement.setExternalReferenceCode(externalReferenceCode);
 
-		return _putSXPElement(sxpElement, serviceBuilderSxpElement);
+		return _putSXPElement(serviceBuilderSXPElement, sxpElement);
 	}
 
 	private String _getElementDefinitionJSON(SXPElement sxpElement) {
@@ -391,20 +391,21 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	}
 
 	private SXPElement _putSXPElement(
-			SXPElement sxpElement,
-			com.liferay.search.experiences.model.SXPElement sxpElementModel)
+			com.liferay.search.experiences.model.SXPElement
+				serviceBuilderSXPElement,
+			SXPElement sxpElement)
 		throws Exception {
 
-		if (sxpElementModel == null) {
+		if (serviceBuilderSXPElement == null) {
 			return postSXPElement(sxpElement);
 		}
 
-		if (!sxpElementModel.getReadOnly()) {
+		if (!serviceBuilderSXPElement.getReadOnly()) {
 			return _updateSXPElement(
-				sxpElementModel.getSXPElementId(), sxpElement);
+				serviceBuilderSXPElement.getSXPElementId(), sxpElement);
 		}
 
-		return getSXPElement(sxpElementModel.getSXPElementId());
+		return getSXPElement(serviceBuilderSXPElement.getSXPElementId());
 	}
 
 	private SXPElement _updateSXPElement(

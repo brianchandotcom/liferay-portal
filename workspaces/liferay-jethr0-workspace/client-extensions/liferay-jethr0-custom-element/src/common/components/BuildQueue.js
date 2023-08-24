@@ -29,6 +29,7 @@ function BuildQueue() {
 			.then((data) => {
 				setData(JSON.parse(data));
 			})
+			// eslint-disable-next-line no-console
 			.catch((error) => console.log(error));
 	}, []);
 
@@ -87,13 +88,21 @@ function BuildQueue() {
 
 							<ClayTable.Cell>{project.type.name}</ClayTable.Cell>
 
-							<ClayTable.Cell>{project.queuedBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>
+								{project.queuedBuilds}
+							</ClayTable.Cell>
 
-							<ClayTable.Cell>{project.runningBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>
+								{project.runningBuilds}
+							</ClayTable.Cell>
 
-							<ClayTable.Cell>{project.completedBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>
+								{project.completedBuilds}
+							</ClayTable.Cell>
 
-							<ClayTable.Cell>{project.totalBuilds}</ClayTable.Cell>
+							<ClayTable.Cell>
+								{project.totalBuilds}
+							</ClayTable.Cell>
 						</ClayTable.Row>
 					);
 				})}

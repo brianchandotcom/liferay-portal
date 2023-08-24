@@ -130,6 +130,8 @@ public class GetCollectionWarningMessageMVCResourceCommand
 	}
 
 	private int _getTotalCount(
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem,
 			HttpServletRequest httpServletRequest, String layoutObjectReference)
 		throws Exception {
 
@@ -171,31 +173,14 @@ public class GetCollectionWarningMessageMVCResourceCommand
 				layoutObjectReferenceJSONObject),
 			defaultLayoutListRetrieverContext);
 
-		return infoPage.getTotalCount();
+		return Math.min(
+			collectionStyledLayoutStructureItem.getNumberOfItems(),
+			infoPage.getTotalCount());
 	}
 
 	private String _getWarningMessage(
 			HttpServletRequest httpServletRequest, String layoutObjectReference,
 			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (_isPaginated(httpServletRequest, themeDisplay) ||
-			(_getTotalCount(httpServletRequest, layoutObjectReference) <
-				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
-
-			return StringPool.BLANK;
-		}
-
-		return _language.format(
-			httpServletRequest,
-			"this-setting-can-affect-page-performance-severely-if-the-number-" +
-				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
-					"pagination-instead",
-			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
-	}
-
-	private boolean _isPaginated(
-			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		long segmentsExperienceId = ParamUtil.getLong(
@@ -220,15 +205,25 @@ public class GetCollectionWarningMessageMVCResourceCommand
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)layoutStructureItem;
 
-		if (!collectionStyledLayoutStructureItem.isDisplayAllItems() ||
-			!Objects.equals(
-				collectionStyledLayoutStructureItem.getPaginationType(),
-				CollectionPaginationUtil.PAGINATION_TYPE_NONE)) {
+		int totalCount = _getTotalCount(
+			collectionStyledLayoutStructureItem, httpServletRequest,
+			layoutObjectReference);
 
-			return true;
+		if (Objects.equals(
+				collectionStyledLayoutStructureItem.getPaginationType(),
+				CollectionPaginationUtil.PAGINATION_TYPE_NONE) &&
+			(collectionStyledLayoutStructureItem.isDisplayAllItems() ||
+			 (totalCount > PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA))) {
+
+			return _language.format(
+				httpServletRequest,
+				"this-setting-can-affect-page-performance-severely-if-the-" +
+					"number-of-collection-items-is-above-x.-we-strongly-" +
+						"recommend-using-pagination-instead",
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 		}
 
-		return false;
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

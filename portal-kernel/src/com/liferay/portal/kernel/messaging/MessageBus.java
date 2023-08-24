@@ -18,8 +18,4 @@ public interface MessageBus {
 
 	public void sendMessage(String destinationName, Message message);
 
-	public void shutdown();
-
-	public void shutdown(boolean force);
-
 }

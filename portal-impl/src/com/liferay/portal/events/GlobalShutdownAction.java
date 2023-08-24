@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
@@ -84,10 +83,6 @@ public class GlobalShutdownAction extends SimpleAction {
 	}
 
 	protected void shutdownLevel3() {
-
-		// Messaging
-
-		MessageBusUtil.shutdown(true);
 	}
 
 	protected void shutdownLevel4() {

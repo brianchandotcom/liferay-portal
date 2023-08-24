@@ -41,4 +41,8 @@ public interface LayoutsImporter {
 			String pageElementJSON, int position, long segmentsExperienceId)
 		throws Exception;
 
+	public boolean validateFile(
+			long groupId, long layoutPageTemplateCollectionId, File file)
+		throws Exception;
+
 }

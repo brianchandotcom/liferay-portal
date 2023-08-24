@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -111,6 +112,10 @@ public final class CommandLogger {
 			Element element, List<String> arguments, Object returnValue,
 			SyntaxLogger syntaxLogger)
 		throws Exception {
+
+		_takeScreenshot("before", _detailsLinkId);
+
+		_commandElement = element;
 
 		lineGroupLoggerElement = new LoggerElement();
 
@@ -258,8 +263,12 @@ public final class CommandLogger {
 		LoggerElement childContainerLoggerElement =
 			lineGroupLoggerElement.loggerElement("ul");
 
-		List<LoggerElement> runLineLoggerElements =
-			childContainerLoggerElement.loggerElements("li");
+		List<LoggerElement> runLineLoggerElements = new ArrayList<>();
+
+		if (!(childContainerLoggerElement == null)) {
+			runLineLoggerElements = childContainerLoggerElement.loggerElements(
+				"li");
+		}
 
 		if (!runLineLoggerElements.isEmpty()) {
 			LoggerElement runLineLoggerElement = runLineLoggerElements.get(

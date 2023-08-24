@@ -116,7 +116,9 @@ AUI.add(
 
 					const trigger = instance._activeTrigger;
 
-					const overlay = instance._overlayMap.get(trigger.generateID());
+					const overlay = instance._overlayMap.get(
+						trigger.generateID()
+					);
 
 					if (overlay) {
 						overlay.hide();
@@ -392,7 +394,9 @@ AUI.add(
 				if (menu) {
 					const cssClass = trigger.attr(ATTR_CLASS_NAME);
 
-					const overlay = instance._overlayMap.get(trigger.generateID());
+					const overlay = instance._overlayMap.get(
+						trigger.generateID()
+					);
 
 					const align = overlay.get('align');
 
@@ -535,7 +539,9 @@ AUI.add(
 				const trigger = menuInstance._trigger;
 
 				if (!focusManager) {
-					const bodyNode = menuInstance._overlayMap.get(trigger.generateID()).bodyNode;
+					const bodyNode = menuInstance._overlayMap.get(
+						trigger.generateID()
+					).bodyNode;
 
 					bodyNode.plug(A.Plugin.NodeFocusManager, {
 						circular: true,

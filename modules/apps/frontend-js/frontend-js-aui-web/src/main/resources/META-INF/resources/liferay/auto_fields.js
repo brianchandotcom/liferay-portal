@@ -150,7 +150,7 @@ AUI.add(
 
 					let clonedRow;
 
-					if (inputsLocalized._nodes.length > 0 && !paletteIsCloned) {
+					if (!!inputsLocalized._nodes.length && !paletteIsCloned) {
 						const palette = document.querySelector(
 							"[id$='PaletteBoundingBox']"
 						);
@@ -362,7 +362,9 @@ AUI.add(
 
 					Liferay.InputLocalized.register(inputLocalizedNamespaceId, {
 						adminMode: inputLocalized.get('adminMode'),
-						availableLocales: inputLocalized.get('availableLocales'),
+						availableLocales: inputLocalized.get(
+							'availableLocales'
+						),
 						boundingBox: `#${inputLocalizedNamespaceId}PaletteBoundingBox`,
 						columns: inputLocalized.get('columns'),
 						contentBox: `#${inputLocalizedNamespaceId}PaletteContentBox`,
@@ -388,15 +390,21 @@ AUI.add(
 						inputPlaceholder: '#' + inputLocalizedNamespaceId,
 						items: inputLocalized.get('items'),
 						itemsError: inputLocalized.get('itemsError'),
-						languagesDropdownDirection: inputLocalized.get('languagesDropdownDirection'),
-						languagesTranslationsAriaLabels: inputLocalized.get('languagesTranslationsAriaLabels'),
+						languagesDropdownDirection: inputLocalized.get(
+							'languagesDropdownDirection'
+						),
+						languagesTranslationsAriaLabels: inputLocalized.get(
+							'languagesTranslationsAriaLabels'
+						),
 						lazy: inputLocalized.get('lazy'),
 						name: inputLocalizedId,
 						namespace: inputLocalized.get('namespace'),
 						selected: inputLocalized
 							.get('items')
 							.indexOf(inputLocalized.getSelectedLanguageId()),
-						selectedLanguageId: inputLocalized.get('selectedLanguageId'),
+						selectedLanguageId: inputLocalized.get(
+							'selectedLanguageId'
+						),
 						toggleSelection: inputLocalized.get('toggleSelection'),
 						translatedLanguages: inputLocalized.get(
 							'translatedLanguages'

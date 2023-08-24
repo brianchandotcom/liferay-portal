@@ -589,7 +589,7 @@ describe('SidebarPanelInfoView', () => {
 	});
 
 	it('renders Details and Versions tabs when getItemVersionsURL prop is received', () => {
-		const {getAllByRole} = render(
+		const {getAllByRole, getByText} = render(
 			_getSidebarComponent({
 				...mockedProps,
 				...mockedContentWithVersions,
@@ -600,7 +600,10 @@ describe('SidebarPanelInfoView', () => {
 
 		expect(tabs[0].innerHTML).toContain('details');
 		expect(tabs[1].innerHTML).toContain('categorization');
-		expect(tabs[2].innerHTML).toContain('versions');
+
+		userEvent.click(getByText('more'));
+
+		expect(getByText('versions').innerHTML).toContain('versions');
 	});
 
 	it('renders Details tab active by default', () => {

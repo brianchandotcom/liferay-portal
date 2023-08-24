@@ -154,7 +154,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
         class="c-mb-3 sidebar-section"
       >
         <ul
-          class="nav nav-tabs d-flex flex-nowrap justify-content-center"
+          class="nav nav-tabs c-px-3 d-flex flex-nowrap justify-content-start"
           role="tablist"
         >
           <li
@@ -187,21 +187,36 @@ exports[`SidebarPanelInfoView renders 1`] = `
               categorization
             </button>
           </li>
-          <li
-            class="nav-item flex-shrink-0"
-            role="none"
+          <div
+            class="dropdown"
+            innerprops="[object Object]"
           >
-            <button
-              aria-controls="versions"
-              aria-selected="false"
-              class="nav-link btn btn-unstyled"
-              role="tab"
-              tabindex="-1"
-              type="button"
+            <li
+              aria-controls="clay-dropdown-menu-1"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="nav-item dropdown-toggle"
+              role="none"
             >
-              versions
-            </button>
-          </li>
+              <button
+                aria-selected="false"
+                class="nav-link btn btn-unstyled"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                more
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#caret-bottom"
+                  />
+                </svg>
+              </button>
+            </li>
+          </div>
         </ul>
       </div>
       <div

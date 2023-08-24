@@ -28,6 +28,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-178858 Confirm the empty message on the Data Set administration page"
+	@priority = 5
+	test AssertEmptyMessageInDSAdmin {
+		task ("And the text “No Datasets Created. Start creating one to show your data.” is present on the page") {
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "No Data Sets Created");
+
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "Start creating one to show your data.");
+		}
+
+		task ("And “New Dataset” button is present on the page") {
+			CustomerPortal.assertButtonIsVisible(text = "New Data Set");
+		}
+	}
+
+	@description = "LPS-178858 Confirm that the new Data Set Modal is displayed by clicking on the add button"
+	@priority = 5
+	test AssertNewDataSetModal {
+		task ("When the user clicks on “Create Dataset” button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the New Dataset modal is displayed") {
+			AssertElementPresent(
+				key_modal_title = "New Data Set",
+				locator1 = "AccessibilityMenu#MODAL_TITLE");
+		}
+	}
+
 	@description = "LPS-181546 Confirm that the data set information is created and displayed correctly"
 	@priority = 5
 	test AssertTheInformationsInDataSet {
@@ -197,6 +229,58 @@ definition {
 			AssertElementPresent(
 				key_sortFieldName = "Site Id",
 				locator1 = "CommerceNavigation#SORT_FIELD");
+		}
+	}
+
+	@description = "LPS-178858 Confirm that the modal data set view is displayed"
+	@priority = 5
+	test CanAsserTheDataSetViewCanBeCreate {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "DataSet Test",
+				key_type = "/data-set-manager/fields");
+		}
+
+		task ("When the user goes to the Views admin page of the new dataset") {
+			DataSetAdmin.goToViews(dataSetName = "DataSet Test");
+		}
+
+		task ("And clicks on the “New Dataset View” button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the “New Dataset View” modal is displayed") {
+			AssertElementPresent(
+				key_modal_title = "New Data Set View",
+				locator1 = "AccessibilityMenu#MODAL_TITLE");
+		}
+	}
+
+	@description = "LPS-178858 Confirm the empty message in the Data Set View admin page"
+	@priority = 5
+	test CanAssertTheEmptyMessageInDataSetView {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "DataSet Test",
+				key_type = "/data-set-manager/fields");
+		}
+
+		task ("When the user goes to the Views admin page of the new dataset") {
+			DataSetAdmin.goToViews(dataSetName = "DataSet Test");
+		}
+
+		task ("And the text “No Views Created. Start creating one view to show your data” is present on the page") {
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "No Views Created");
+
+			AssertTextPresent(
+				locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT",
+				value1 = "Start creating one to show your data.");
+		}
+
+		task ("And “New Dataset View” button is present on the page") {
+			CustomerPortal.assertButtonIsVisible(text = "New Data Set View");
 		}
 	}
 

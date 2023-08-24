@@ -211,14 +211,14 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 		CPTestUtil.addCPInstanceUnitOfMeasure(
 			_group.getGroupId(), _cpInstance.getCPInstanceId(),
 			RandomTestUtil.randomString(),
-			BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+			BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
 			_cpInstance.getSku());
 
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 			CPTestUtil.addCPInstanceUnitOfMeasure(
 				_group.getGroupId(), _cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
 				_cpInstance.getSku());
 
 		List<CommercePriceEntry> commercePriceEntries =
@@ -269,7 +269,7 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			CPTestUtil.addCPInstanceUnitOfMeasure(
 				_group.getGroupId(), _cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
 				_cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =
@@ -317,7 +317,7 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			CPTestUtil.addCPInstanceUnitOfMeasure(
 				_group.getGroupId(), _cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
 				_cpInstance.getSku());
 
 		CommercePriceEntry commercePriceEntry =

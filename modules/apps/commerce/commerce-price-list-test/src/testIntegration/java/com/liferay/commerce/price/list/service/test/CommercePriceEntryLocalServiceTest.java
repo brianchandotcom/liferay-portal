@@ -663,7 +663,7 @@ public class CommercePriceEntryLocalServiceTest {
 			CPTestUtil.addCPInstanceUnitOfMeasure(
 				_group.getGroupId(), cpInstance.getCPInstanceId(),
 				RandomTestUtil.randomString(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10)),
 				cpInstance.getSku());
 
 		CommercePriceList commercePriceList =

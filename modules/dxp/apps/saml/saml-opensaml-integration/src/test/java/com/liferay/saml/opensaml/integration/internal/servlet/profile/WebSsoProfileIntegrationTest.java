@@ -13,7 +13,7 @@ import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
-import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelperImpl;
+import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelper;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
@@ -124,7 +124,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SamlSpSessionLocalService.class);
 
 		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_portalUUID", new PortalUUIDImpl());
+			_relayStateHelper, "_portalUUID", new PortalUUIDImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "identifierGenerationStrategyFactory",
@@ -133,7 +133,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_webSsoProfileImpl, "metadataManager", metadataManagerImpl);
 		ReflectionTestUtil.setFieldValue(_webSsoProfileImpl, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
-			_webSsoProfileImpl, "_relayStateHelper", _relayStateHelperImpl);
+			_webSsoProfileImpl, "_relayStateHelper", _relayStateHelper);
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "samlBindingProvider", samlBindingProvider);
 		ReflectionTestUtil.setFieldValue(
@@ -157,7 +157,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 				SamlSpIdpConnectionLocalService.class));
 
 		ReflectionTestUtil.invoke(
-			_relayStateHelperImpl, "activate", new Class<?>[0]);
+			_relayStateHelper, "activate", new Class<?>[0]);
 
 		_webSsoProfileImpl.activate(new HashMap<String, Object>());
 
@@ -312,8 +312,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLBindingContext.class);
 
 		Assert.assertEquals(
-			RELAY_STATE,
-			_relayStateHelperImpl.getRelayState(samlBindingContext));
+			RELAY_STATE, _relayStateHelper.getRelayState(samlBindingContext));
 
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}
@@ -374,8 +373,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLBindingContext.class);
 
 		Assert.assertEquals(
-			RELAY_STATE,
-			_relayStateHelperImpl.getRelayState(samlBindingContext));
+			RELAY_STATE, _relayStateHelper.getRelayState(samlBindingContext));
 
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}
@@ -485,8 +483,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SAMLBindingContext.class);
 
 		Assert.assertEquals(
-			RELAY_STATE,
-			_relayStateHelperImpl.getRelayState(samlBindingContext));
+			RELAY_STATE, _relayStateHelper.getRelayState(samlBindingContext));
 
 		Assert.assertNull(
 			mockHttpSession.getAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT));
@@ -1222,8 +1219,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
 			samlPeerEntityContext.getEntityId(),
-			_relayStateHelperImpl.getRelayState(samlBindingContext),
-			messageContext, userLocalService);
+			_relayStateHelper.getRelayState(samlBindingContext), messageContext,
+			userLocalService);
 
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
@@ -1266,8 +1263,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			metadataManagerImpl.getSignatureTrustEngine());
 	}
 
-	private final RelayStateHelperImpl _relayStateHelperImpl =
-		new RelayStateHelperImpl();
+	private final RelayStateHelper _relayStateHelper = new RelayStateHelper();
 	private SamlSpAuthRequestLocalService _samlSpAuthRequestLocalService;
 	private SamlSpSessionLocalService _samlSpSessionLocalService;
 	private final WebSsoProfileImpl _webSsoProfileImpl =

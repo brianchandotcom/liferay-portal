@@ -684,17 +684,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return _memoryScheduler;
 	}
 
-	private SchedulerEngineHelper _getSchedulerEngineHelper() {
-		SchedulerEngineHelper schedulerEngineHelper =
-			_schedulerEngineHelperSnapshot.get();
-
-		if (schedulerEngineHelper == null) {
-			throw new IllegalStateException("Scheduler engine helper is null");
-		}
-
-		return schedulerEngineHelper;
-	}
-
 	private Scheduler _initializeScheduler(
 			String propertiesPrefix, boolean useQuartzCluster)
 		throws Exception {
@@ -868,6 +857,18 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 					"Unable to send audit message for scheduler job " + jobKey,
 					exception);
 			}
+		}
+
+		private SchedulerEngineHelper _getSchedulerEngineHelper() {
+			SchedulerEngineHelper schedulerEngineHelper =
+				_schedulerEngineHelperSnapshot.get();
+
+			if (schedulerEngineHelper == null) {
+				throw new IllegalStateException(
+					"Scheduler engine helper is null");
+			}
+
+			return schedulerEngineHelper;
 		}
 
 		private final Scheduler _scheduler;

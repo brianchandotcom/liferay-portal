@@ -126,11 +126,15 @@ definition {
 
 			var data = JSONUtil.getWithJSONPath(${response}, "$..data..data");
 
-			StringUtil.assertEquals("[\"First\",\"Second\"]", ${data});
+			TestUtils.assertEquals(
+				actual = ${data},
+				expected = "[\"First\",\"Second\"]");
 
 			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
 
-			StringUtil.assertEquals("[\"${value1}\",\"${value2}\"]", ${value});
+			TestUtils.assertEquals(
+				actual = ${value},
+				expected = "[\"${value1}\",\"${value2}\"]");
 		}
 	}
 
@@ -178,7 +182,9 @@ definition {
 
 			var data = StringUtil.trim(${data});
 
-			StringUtil.assertEquals("\"Row 1\": \"Column 1\"", ${data});
+			TestUtils.assertEquals(
+				actual = ${data},
+				expected = "\"Row 1\": \"Column 1\"");
 
 			var value = JSONUtil.getWithJSONPath(${response}, "$..value");
 
@@ -188,7 +194,9 @@ definition {
 
 			var value = StringUtil.trim(${value});
 
-			StringUtil.assertEquals("\"R1\": \"C1\"", ${value});
+			TestUtils.assertEquals(
+				actual = ${value},
+				expected = "\"R1\": \"C1\"");
 		}
 	}
 

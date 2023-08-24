@@ -12,7 +12,7 @@
 
 	.adt-apps-search-results .card-image-title-container .image-container {
 		height: 3rem;
-	  	min-width: 3rem;
+		min-width: 3rem;
 	}
 
 	.adt-apps-search-results .labels .category-label-remainder:hover .category-names {
@@ -149,21 +149,10 @@
 	taxonomyVocabulary = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?fields=id&filter=name eq '${taxonomyVocabularyName}'").items
 	vocabularyCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabulary[0].id}/taxonomy-categories?fields=id&filter=name eq '${categoryName}'").items
 	productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?filter=categoryIds/any(params:params eq '${vocabularyCategory[0].id}')&pageSize=" + pageSize + "&page=" + page)
-	numberFilteredProducts = 0
 	filterCategoriesByUrlParams = getFilterByUrlParams(siteURL)
+	counter = 0
+	accountantList = []
 />
-
-<#if filterCategoriesByUrlParams?has_content>
-	<#assign
-		productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?filter=categoryIds/any(params:${filterCategoriesByUrlParams} or (params eq '${vocabularyCategory[0].id}'))&pageSize=" + pageSize + "&page=" + page)
-	/>
-</#if>
-
-<#if productsList.items?has_content>
-	<#list productsList.items as productList>
-		<#assign numberFilteredProducts = numberFilteredProducts + 1 />
-	</#list>
-</#if>
 
 <div class="adt-apps-search-results">
 	<#if productsList.items?has_content>
@@ -171,7 +160,7 @@
 		<input id="product-count-page" type="hidden" value="${productsList.items?size}" />
 
 		<div class="color-neutral-3 d-md-block d-none pb-4">
-			<strong class='color-black'>${numberFilteredProducts!}</strong> ${categoryName}s Available
+			<strong class='color-black' id="quantityOfProducts"></strong> ${categoryName}s Available
 		</div>
 
 		<div class="cards-container pb-6">
@@ -184,61 +173,88 @@
 					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
 				/>
 
-				<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
-					<div class="align-items-center card-image-title-container d-flex pb-3">
-						<div class="image-container rounded">
-							<#if productAttachments?has_content>
-								<#list productAttachments as attachmentFields>
-									<#list attachmentFields.customFields as field>
-										<#if (field.name == "App Icon") && (field.customValue.data[0] == "Yes")>
-											<#assign srcName = attachmentFields.src?keep_after("liferay.com") />
+				<#list productSpecifications as specification>
+					<#if filterCategoriesByUrlParams?has_content>
+						<#assign specificationPrice = [] />
+						<#list siteURL?split("&") as params>
+							<#if params?index_of("price=") != -1>
+								<#assign
+									priceValue = params?substring(params?index_of("price=") + 6)
+									specificationPrice = specificationPrice + [specification.value.en_US == priceValue]
+								/>
+							</#if>
+						</#list>
+						<#assign specificationPrice = specificationPrice?seq_contains(true) />
+					<#else>
+						<#assign specificationPrice = true />
+					</#if>
 
-											<img
-												alt=${product.name.en_US}
-												class="h-100 mw-100"
-												src="${srcName}"
-											/>
+					<#if specificationPrice>
+						<#assign
+							counter = counter + 1
+							accountantList = accountantList + [counter]
+							counter = accountantList?size
+						/>
+
+						<input id="freemarkervar" type="hidden" value="${counter}" />
+
+						<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
+							<div class="align-items-center card-image-title-container d-flex pb-3">
+								<div class="image-container rounded">
+									<#if productAttachments?has_content>
+										<#list productAttachments as attachmentFields>
+											<#list attachmentFields.customFields as field>
+												<#if (field.name == "App Icon") && (field.customValue.data[0] == "Yes")>
+													<#assign srcName = attachmentFields.src?keep_after("liferay.com") />
+
+													<img
+															alt=${product.name.en_US}
+															class="h-100 mw-100"
+															src="${srcName}"
+													/>
+												</#if>
+											</#list>
+										</#list>
+									</#if>
+								</div>
+
+								<div class="pl-2">
+									<div class="font-weight-semi-bold h2 mt-1">
+										${product.name.en_US}
+									</div>
+
+										<#if productSpecifications?has_content>
+											<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
+
+											<#list productPriceModel as product>
+												<div class="color-neutral-3 font-size-paragraph-small mt-1">
+													${product.value.en_US}
+												</div>
+												</#list>
 										</#if>
-									</#list>
-								</#list>
-							</#if>
-						</div>
-
-						<div class="pl-2">
-							<div class="font-weight-semi-bold h2 mt-1">
-								${product.name.en_US}
+								</div>
 							</div>
 
-							<#if productSpecifications?has_content>
-								<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
+						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
+							<div>
+								<div class="font-weight-normal mb-2">
+									${productDescription}
+								</div>
 
-								<#list productPriceModel as product>
-									<div class="color-neutral-3 font-size-paragraph-small mt-1">
-										${product.value.en_US}
-									</div>
-								</#list>
-							</#if>
-						</div>
-					</div>
+									<#if productSpecifications?has_content>
+										<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "price-model") />
 
-					<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
-						<div>
-							<div class="font-weight-normal mb-2">
-								${productDescription}
-							</div>
-
-							<#if productSpecifications?has_content>
-								<#assign productPriceModel = productSpecifications?filter(item -> item.specificationKey == "price-model") />
-
-								<#list productPriceModel as product>
-									<div class="font-weight-semi-bold mt-1">
-										${product.value.en_US}
-									</div>
-								</#list>
-							</#if>
-						</div>
-					</div>
-				</a>
+										<#list productPriceModel as product>
+											<div class="font-weight-semi-bold mt-1">
+													${product.value.en_US}
+											</div>
+										</#list>
+									</#if>
+								</div>
+								</div>
+						</a>
+					</#if>
+				</#list>
 			</#list>
 		</div>
 
@@ -339,3 +355,9 @@
 		</div>
 	</#if>
 </div>
+
+<script>
+	var counter = ${counter};
+	var quantityOfProducts = document.getElementById("quantityOfProducts");
+	quantityOfProducts.textContent = counter;
+</script>

@@ -70,7 +70,7 @@ export default function EditKBArticle({
 	const scheduleButtonOnClick = () => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('schedule'),
-			height: '50vh',
+			height: '60vh',
 			multiple: true,
 			onSelect: ({scheduledDate}) => {
 				console.log(scheduledDate);

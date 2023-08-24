@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerDALO extends BaseEntityDALO<ProjectPrioritizer> {
+public class ProjectPrioritizerEntityDALO extends BaseEntityDALO<ProjectPrioritizer> {
 
 	@Override
 	protected EntityFactory<ProjectPrioritizer> getEntityFactory() {

@@ -6,7 +6,7 @@
 package com.liferay.jethr0.bui1d.repository;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.dalo.BuildRunDALO;
+import com.liferay.jethr0.bui1d.dalo.BuildRunEntityDALO;
 import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsEntityRelationshipDALO;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
@@ -39,7 +39,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 			"state", state.getJSONObject()
 		);
 
-		BuildRun buildRun = _buildRunDALO.create(jsonObject);
+		BuildRun buildRun = _buildRunEntityDALO.create(jsonObject);
 
 		buildRun.setBuild(build);
 
@@ -61,7 +61,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 
 	@Override
 	public EntityDALO<BuildRun> getEntityDALO() {
-		return _buildRunDALO;
+		return _buildRunEntityDALO;
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 	private BuildRepository _buildRepository;
 
 	@Autowired
-	private BuildRunDALO _buildRunDALO;
+	private BuildRunEntityDALO _buildRunEntityDALO;
 
 	@Autowired
 	private BuildToBuildRunsEntityRelationshipDALO

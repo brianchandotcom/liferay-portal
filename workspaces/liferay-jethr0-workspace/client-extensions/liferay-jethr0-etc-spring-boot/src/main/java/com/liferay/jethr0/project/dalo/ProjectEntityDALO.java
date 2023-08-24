@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectDALO extends BaseEntityDALO<Project> {
+public class ProjectEntityDALO extends BaseEntityDALO<Project> {
 
 	public Set<Project> getProjectsByState(Project.State... states) {
 		Set<Project> projects = new HashSet<>();

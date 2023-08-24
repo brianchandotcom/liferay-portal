@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.dalo.JenkinsCohortDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsCohortEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsCohortToJenkinsServersEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -50,8 +50,8 @@ public class JenkinsCohortRepository
 	}
 
 	@Override
-	public JenkinsCohortDALO getEntityDALO() {
-		return _jenkinsCohortDALO;
+	public JenkinsCohortEntityDALO getEntityDALO() {
+		return _jenkinsCohortEntityDALO;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class JenkinsCohortRepository
 	}
 
 	@Autowired
-	private JenkinsCohortDALO _jenkinsCohortDALO;
+	private JenkinsCohortEntityDALO _jenkinsCohortEntityDALO;
 
 	@Autowired
 	private JenkinsCohortToJenkinsServersEntityRelationshipDALO

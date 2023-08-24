@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.gitbranch.dalo;
+package com.liferay.jethr0.testsuite.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.gitbranch.GitBranch;
-import com.liferay.jethr0.gitbranch.GitBranchFactory;
+import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.testsuite.TestSuiteFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitBranchDALO extends BaseEntityDALO<GitBranch> {
+public class TestSuiteEntityDALO extends BaseEntityDALO<TestSuite> {
 
 	@Override
-	protected EntityFactory<GitBranch> getEntityFactory() {
-		return _gitBranchFactory;
+	protected EntityFactory<TestSuite> getEntityFactory() {
+		return _testSuiteFactory;
 	}
 
 	@Autowired
-	private GitBranchFactory _gitBranchFactory;
+	private TestSuiteFactory _testSuiteFactory;
 
 }

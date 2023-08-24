@@ -7,7 +7,7 @@ package com.liferay.jethr0.gitbranch.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.gitbranch.GitBranch;
-import com.liferay.jethr0.gitbranch.dalo.GitBranchDALO;
+import com.liferay.jethr0.gitbranch.dalo.GitBranchEntityDALO;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectsToGitBranchesEntityRelationshipDALO;
 
@@ -46,12 +46,12 @@ public class GitBranchRepository extends BaseEntityRepository<GitBranch> {
 	}
 
 	@Override
-	public GitBranchDALO getEntityDALO() {
-		return _gitBranchDALO;
+	public GitBranchEntityDALO getEntityDALO() {
+		return _gitBranchEntityDALO;
 	}
 
 	@Autowired
-	private GitBranchDALO _gitBranchDALO;
+	private GitBranchEntityDALO _gitBranchEntityDALO;
 
 	@Autowired
 	private ProjectsToGitBranchesEntityRelationshipDALO

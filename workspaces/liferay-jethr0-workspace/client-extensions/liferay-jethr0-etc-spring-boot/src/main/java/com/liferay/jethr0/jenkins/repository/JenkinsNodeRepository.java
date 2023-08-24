@@ -6,8 +6,8 @@
 package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.jenkins.dalo.JenkinsNodeDALO;
-import com.liferay.jethr0.jenkins.dalo.JenkinsServerDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsNodeEntityDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsServerEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesEntityRelationshipDALO;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
@@ -128,7 +128,7 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 			nodeJSONObject.put("primaryLabel", primaryLabel);
 
-			JenkinsNode jenkinsNode = _jenkinsNodeDALO.create(nodeJSONObject);
+			JenkinsNode jenkinsNode = _jenkinsNodeEntityDALO.create(nodeJSONObject);
 
 			jenkinsNode.setJenkinsServer(jenkinsServer);
 
@@ -171,8 +171,8 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 	}
 
 	@Override
-	public JenkinsNodeDALO getEntityDALO() {
-		return _jenkinsNodeDALO;
+	public JenkinsNodeEntityDALO getEntityDALO() {
+		return _jenkinsNodeEntityDALO;
 	}
 
 	@Override
@@ -205,10 +205,10 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 		"nodeRAM=(\\d+)");
 
 	@Autowired
-	private JenkinsNodeDALO _jenkinsNodeDALO;
+	private JenkinsNodeEntityDALO _jenkinsNodeEntityDALO;
 
 	@Autowired
-	private JenkinsServerDALO _jenkinsServerDALO;
+	private JenkinsServerEntityDALO _jenkinsServerEntityDALO;
 
 	private JenkinsServerRepository _jenkinsServerRepository;
 

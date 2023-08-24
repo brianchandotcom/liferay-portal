@@ -6,7 +6,7 @@
 package com.liferay.jethr0.task.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.task.dalo.TaskRunDALO;
+import com.liferay.jethr0.task.dalo.TaskRunEntityDALO;
 import com.liferay.jethr0.task.run.TaskRun;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +19,11 @@ import org.springframework.context.annotation.Configuration;
 public class TaskRunRepository extends BaseEntityRepository<TaskRun> {
 
 	@Override
-	public TaskRunDALO getEntityDALO() {
-		return _taskRunDALO;
+	public TaskRunEntityDALO getEntityDALO() {
+		return _taskRunEntityDALO;
 	}
 
 	@Autowired
-	private TaskRunDALO _taskRunDALO;
+	private TaskRunEntityDALO _taskRunEntityDALO;
 
 }

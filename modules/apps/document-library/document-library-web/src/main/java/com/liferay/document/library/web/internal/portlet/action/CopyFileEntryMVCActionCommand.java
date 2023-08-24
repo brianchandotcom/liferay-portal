@@ -8,6 +8,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -90,18 +90,14 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkDestinationGroup(group);
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), actionRequest);
-
-			_populateServiceContext(
-				serviceContext, group.getGroupId(), fileEntryId);
-
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
+				_getFileEntryTypeId(destinationRepositoryId, fileEntryId),
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						group.getGroupId()),
-				serviceContext);
+				ServiceContextFactory.getInstance(
+					DLFileEntry.class.getName(), actionRequest));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, _jsonFactory.createJSONObject());
@@ -118,8 +114,7 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _populateServiceContext(
-			ServiceContext serviceContext, long groupId, long fileEntryId)
+	private long _getFileEntryTypeId(long groupId, long fileEntryId)
 		throws PortalException {
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
@@ -131,13 +126,12 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (ArrayUtil.isEmpty(groupIds) ||
 			!ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
 
-			return;
+			return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 		}
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		serviceContext.setAttribute(
-			"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
+		return dlFileEntry.getFileEntryTypeId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

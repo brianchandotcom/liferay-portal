@@ -726,7 +726,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@Override
 	public FileEntry copyFileEntry(
 			long fileEntryId, long destinationFolderId,
-			long destinationRepositoryId, long[] groupIds,
+			long destinationRepositoryId, long fileEntryTypeId, long[] groupIds,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -736,8 +736,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFileEntry(
 			getRepository(destinationRepositoryId),
 			sourceRepository.getFileEntry(fileEntryId), destinationFolderId,
-			ParamUtil.getLong(serviceContext, "fileEntryTypeId"), groupIds,
-			serviceContext);
+			fileEntryTypeId, groupIds, serviceContext);
 	}
 
 	@Override

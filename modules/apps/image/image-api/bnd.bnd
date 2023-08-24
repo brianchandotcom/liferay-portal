@@ -2,6 +2,5 @@ Bundle-Name: Liferay Image API
 Bundle-SymbolicName: com.liferay.image.api
 Bundle-Version: 1.1.0
 Export-Package:\
-	\com.liferay.image.upgrade,\
-	\
-	com.liferay.image
+	com.liferay.image,\
+	com.liferay.image.upgrade

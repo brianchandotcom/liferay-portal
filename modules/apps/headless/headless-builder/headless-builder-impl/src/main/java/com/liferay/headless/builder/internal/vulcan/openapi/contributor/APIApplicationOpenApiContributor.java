@@ -184,47 +184,46 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 		operation.setOperationId(operationId);
 
-		if (responseSchema != null) {
-			if (Objects.equals(endpoint.getMethod(), Http.Method.GET) &&
-				operationId.endsWith("Page")) {
+		if (Objects.equals(endpoint.getMethod(), Http.Method.GET) &&
+			operationId.endsWith("Page")) {
 
-				List<Parameter> parameters = new ArrayList<>();
+			List<Parameter> parameters = new ArrayList<>();
 
-				if (Objects.equals(
-						endpoint.getScope(),
-						APIApplication.Endpoint.Scope.GROUP)) {
-
-					parameters.add(
-						new Parameter() {
-							{
-								setIn("path");
-								setName("scopeKey");
-								setRequired(true);
-								setSchema(new StringSchema());
-							}
-						});
-				}
+			if (Objects.equals(
+					endpoint.getScope(), APIApplication.Endpoint.Scope.GROUP)) {
 
 				parameters.add(
 					new Parameter() {
 						{
-							setIn("query");
-							setName("page");
+							setIn("path");
+							setName("scopeKey");
+							setRequired(true);
 							setSchema(new StringSchema());
 						}
 					});
-				parameters.add(
-					new Parameter() {
-						{
-							setIn("query");
-							setName("pageSize");
-							setSchema(new StringSchema());
-						}
-					});
-
-				operation.setParameters(parameters);
 			}
 
+			parameters.add(
+				new Parameter() {
+					{
+						setIn("query");
+						setName("page");
+						setSchema(new StringSchema());
+					}
+				});
+			parameters.add(
+				new Parameter() {
+					{
+						setIn("query");
+						setName("pageSize");
+						setSchema(new StringSchema());
+					}
+				});
+
+			operation.setParameters(parameters);
+		}
+
+		if (responseSchema != null) {
 			MediaType mediaType = new MediaType() {
 				{
 					setSchema(
@@ -257,6 +256,19 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 				});
 
 			operation.setTags(Arrays.asList(responseSchema.getName()));
+		}
+		else {
+			operation.setResponses(
+				new ApiResponses() {
+					{
+						setDefault(
+							new ApiResponse() {
+								{
+									setDescription("default response");
+								}
+							});
+					}
+				});
 		}
 
 		return new PathItem() {

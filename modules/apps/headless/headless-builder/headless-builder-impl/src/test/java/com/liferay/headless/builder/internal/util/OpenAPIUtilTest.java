@@ -46,6 +46,10 @@ public class OpenAPIUtilTest {
 				Http.Method.GET, "/scopes/{scopeKey}/site-scoped-path",
 				"Schema"));
 		Assert.assertEquals(
+			"getScopeScopeKeyNoSchemaPage",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/scopes/{scopeKey}/no-schema", null));
+		Assert.assertEquals(
 			"getSegmentASegmentBPage",
 			OpenAPIUtil.getOperationId(
 				Http.Method.GET, "/segment-a/segment-b", "Schema"));

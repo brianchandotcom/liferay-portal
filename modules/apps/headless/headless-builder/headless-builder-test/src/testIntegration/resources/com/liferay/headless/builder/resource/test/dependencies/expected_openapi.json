@@ -341,6 +341,40 @@
 				]
 			}
 		},
+		"/scopes/{scopeKey}/no-schema": {
+			"get": {
+				"operationId": "getScopeScopeKeyNoSchemaPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "default response"
+					}
+				}
+			}
+		},
 		"/scopes/{scopeKey}/site-scoped-path": {
 			"get": {
 				"operationId": "getScopeScopeKeySiteScopedPathPage",

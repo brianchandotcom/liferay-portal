@@ -23,13 +23,6 @@ public class OpenAPIUtil {
 	public static String getOperationId(
 		Http.Method method, String path, String schemaName) {
 
-		String operationId =
-			StringUtil.toLowerCase(method.name()) + _toCamelCase(path) + "Page";
-
-		if (schemaName == null) {
-			return operationId;
-		}
-
 		List<String> methodNameParts = new ArrayList<>();
 
 		methodNameParts.add(StringUtil.toLowerCase(method.name()));
@@ -54,7 +47,8 @@ public class OpenAPIUtil {
 				String previousMethodNamePart = methodNameParts.get(
 					methodNameParts.size() - 1);
 
-				if (!pathName.endsWith(pluralSchemaName) &&
+				if ((schemaName != null) &&
+					!pathName.endsWith(pluralSchemaName) &&
 					previousMethodNamePart.endsWith(schemaName)) {
 
 					String methodNamePart = StringUtil.replaceLast(
@@ -72,7 +66,8 @@ public class OpenAPIUtil {
 				String methodNamePartLowerCase = StringUtil.toLowerCase(
 					methodNamePart);
 
-				if (methodNamePartLowerCase.endsWith(
+				if ((schemaName != null) &&
+					methodNamePartLowerCase.endsWith(
 						StringUtil.toLowerCase(schemaName))) {
 
 					char c = methodNamePart.charAt(
@@ -120,7 +115,6 @@ public class OpenAPIUtil {
 	}
 
 	private static String _toCamelCase(String path) {
-		path = path.replaceAll("/\\{.*\\}", StringPool.BLANK);
 		path = path.replaceAll("[{}]", StringPool.BLANK);
 
 		return CamelCaseUtil.toCamelCase(

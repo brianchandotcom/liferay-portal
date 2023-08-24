@@ -401,6 +401,20 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"path", "/site-scoped-path"
 					).put(
 						"scope", "group"
+					),
+					JSONUtil.put(
+						"description", "site scoped no schema description"
+					).put(
+						"externalReferenceCode",
+						_API_SITE_SCOPED_NO_SCHEMA_ENDPOINT_ERC
+					).put(
+						"httpMethod", "get"
+					).put(
+						"name", "site scoped no schema name"
+					).put(
+						"path", "/no-schema"
+					).put(
+						"scope", "group"
 					))
 			).put(
 				"apiApplicationToAPISchemas",
@@ -673,6 +687,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 		RandomTestUtil.randomString();
 
 	private static final String _API_SITE_SCOPED_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_SITE_SCOPED_NO_SCHEMA_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SITE_SCOPED_SCHEMA_ERC =

@@ -24,14 +24,6 @@ public class SocialRelationTypesUtil {
 		return _socialRelationTypes.getTypeLabel(type);
 	}
 
-	public static boolean isTypeBi(int type) {
-		return _socialRelationTypes.isTypeBi(type);
-	}
-
-	public static boolean isTypeUni(int type) {
-		return _socialRelationTypes.isTypeUni(type);
-	}
-
 	public void setSocialRelationTypes(
 		SocialRelationTypes socialRelationTypes) {
 

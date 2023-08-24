@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portlet.social.service.base.SocialRelationLocalServiceBaseImpl;
 import com.liferay.social.kernel.exception.RelationUserIdException;
 import com.liferay.social.kernel.model.SocialRelation;
-import com.liferay.social.kernel.util.SocialRelationTypesUtil;
+import com.liferay.social.kernel.model.SocialRelationConstants;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class SocialRelationLocalServiceImpl
 			relation = socialRelationPersistence.update(relation);
 		}
 
-		if (SocialRelationTypesUtil.isTypeBi(type)) {
+		if (_isTypeBi(type)) {
 			SocialRelation biRelation =
 				socialRelationPersistence.fetchByU1_U2_T(
 					userId2, userId1, type);
@@ -154,7 +154,7 @@ public class SocialRelationLocalServiceImpl
 	public void deleteRelation(SocialRelation relation) throws PortalException {
 		socialRelationPersistence.remove(relation);
 
-		if (SocialRelationTypesUtil.isTypeBi(relation.getType())) {
+		if (_isTypeBi(relation.getType())) {
 			SocialRelation biRelation = socialRelationPersistence.findByU1_U2_T(
 				relation.getUserId2(), relation.getUserId1(),
 				relation.getType());
@@ -398,6 +398,24 @@ public class SocialRelationLocalServiceImpl
 		}
 
 		return !hasRelation(userId1, userId2, type);
+	}
+
+	private boolean _isTypeBi(int type) {
+		return !_isTypeUni(type);
+	}
+
+	private boolean _isTypeUni(int type) {
+		if ((type == SocialRelationConstants.TYPE_UNI_CHILD) ||
+			(type == SocialRelationConstants.TYPE_UNI_ENEMY) ||
+			(type == SocialRelationConstants.TYPE_UNI_FOLLOWER) ||
+			(type == SocialRelationConstants.TYPE_UNI_PARENT) ||
+			(type == SocialRelationConstants.TYPE_UNI_SUBORDINATE) ||
+			(type == SocialRelationConstants.TYPE_UNI_SUPERVISOR)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@BeanReference(type = UserPersistence.class)

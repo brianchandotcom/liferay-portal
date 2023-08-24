@@ -1,0 +1,4 @@
+// Workaround for LPS-193507
+assembleClientExtension {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

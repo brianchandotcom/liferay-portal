@@ -1,0 +1,241 @@
+// Global Variables
+
+$clay-unset: clay-unset !default;
+
+// An alias for `$clay-unset`
+
+$c-unset: $clay-unset !default;
+
+$clay-unset-placeholder: clay-unset-placeholder !default;
+
+$enable-c-inner: true !default;
+$enable-lexicon-flat-colors: true !default;
+$enable-scaling-components: true !default;
+$scaling-breakpoint-down: sm !default;
+
+$enable-caret: false !default;
+$enable-deprecation-messages: true !default;
+$enable-gradients: false !default;
+$enable-grid-classes: true !default;
+$enable-pointer-cursor-for-buttons: true !default;
+$enable-prefers-reduced-motion-media-query: true !default;
+$enable-print-styles: true !default;
+$enable-responsive-font-sizes: false !default;
+$enable-rounded: true !default;
+$enable-shadows: true !default;
+$enable-transitions: true !default;
+$enable-validation-icons: true !default;
+
+// Deprecated, no longer affects any compiled CSS
+
+$enable-hover-media-query: false !default;
+
+// Theme Base Colors
+
+$black: #fff !default;
+$white: #000 !default;
+
+$gray-100: #272833 !default;
+$gray-200: #393a4a !default;
+$gray-300: #495057 !default;
+$gray-400: #6b6c7e !default;
+$gray-500: #a7a9bc !default;
+$gray-600: #cdced9 !default;
+$gray-700: #e7e7ed !default;
+$gray-800: #f1f2f5 !default;
+$gray-900: #f7f8f9 !default;
+
+$blue: if($enable-lexicon-flat-colors, #4b9fff, #0b5fff) !default;
+$cyan: if($enable-lexicon-flat-colors, #5fc8ff, #17a2b8) !default;
+$green: if($enable-lexicon-flat-colors, #9be169, #287d3d) !default;
+$indigo: if($enable-lexicon-flat-colors, #7785ff, #6610f2) !default;
+$orange: if($enable-lexicon-flat-colors, #ffb46e, #b95000) !default;
+$pink: if($enable-lexicon-flat-colors, #ff73c3, #e83e8c) !default;
+$purple: if($enable-lexicon-flat-colors, #af78ff, #6f42c1) !default;
+$red: if($enable-lexicon-flat-colors, #ff5f5f, #da1414) !default;
+$teal: if($enable-lexicon-flat-colors, #50d2a0, #20c997) !default;
+$yellow: if($enable-lexicon-flat-colors, #ffd76e, #ffc107) !default;
+
+$primary: #af84e1 !default;
+
+$primary-d1: darken($primary, 5.1) !default;
+$primary-d2: darken($primary, 10) !default;
+$primary-l1: lighten($primary, 22.94) !default;
+$primary-l2: lighten($primary, 32.94) !default;
+$primary-l3: lighten($primary, 44.9) !default;
+
+$secondary: #5e72a5 !default;
+
+$secondary-d1: darken(saturate($secondary, 4.82), 20) !default;
+$secondary-d2: darken(saturate($secondary, 5.36), 23.92) !default;
+$secondary-l1: lighten(
+	saturate(adjust-hue($secondary, -3), 5.39),
+	23.92
+) !default;
+$secondary-l2: lighten(
+	saturate(adjust-hue($secondary, -2), 5.48),
+	37.06
+) !default;
+$secondary-l3: lighten(
+	saturate(adjust-hue($secondary, 3), 6.13),
+	46.08
+) !default;
+
+$info: #2e5aac !default;
+
+$info-d1: darken($info, 5) !default;
+$info-d2: darken($info, 10) !default;
+$info-l1: lighten(saturate($info, 0.59), 28.04) !default;
+$info-l2: lighten(desaturate($info, 3.25), 52.94) !default;
+
+$success: #287d3c !default;
+
+$success-d1: darken($success, 5) !default;
+$success-d2: darken($success, 10) !default;
+$success-l1: lighten(desaturate($success, 0.14), 24.95) !default;
+$success-l2: lighten(desaturate($success, 1.52), 62.94) !default;
+
+$warning: #b95000 !default;
+
+$warning-d1: darken($warning, 5.1) !default;
+$warning-d2: darken($warning, 10) !default;
+$warning-l1: lighten($warning, 24.9) !default;
+$warning-l2: lighten($warning, 60) !default;
+
+$danger: #da1414 !default;
+
+$danger-d1: darken($danger, 5) !default;
+$danger-d2: darken($danger, 10) !default;
+$danger-l1: lighten(desaturate($danger, 0.25), 28.04) !default;
+$danger-l2: lighten(saturate($danger, 5.04), 50) !default;
+
+$light: #272833 !default;
+
+$light-d1: darken($light, 5.1) !default;
+$light-d2: darken($light, 10) !default;
+$light-l1: lighten(desaturate(adjust-hue($light, -15), 2.38), 1.96) !default;
+$light-l2: lighten(desaturate(adjust-hue($light, -225), 16.67), 4.71) !default;
+
+$dark: #f1f2f5 !default;
+
+$dark-d1: darken($dark, 5.1) !default;
+$dark-d2: darken($dark, 10) !default;
+$dark-l1: lighten(saturate($dark, 0.18), 4.12) !default;
+$dark-l2: lighten(desaturate($dark, 0.36), 8.04) !default;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+	(
+		'danger': $danger,
+		'dark': $dark,
+		'info': $info,
+		'light': $light,
+		'primary': $primary,
+		'secondary': $secondary,
+		'success': $success,
+		'warning': $warning,
+	),
+	$theme-colors
+);
+
+// Set a specific jump point for requesting color jumps
+
+$theme-color-interval: 8% !default;
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+
+$yiq-contrasted-threshold: 150 !default;
+
+$yiq-text-dark: $gray-900 !default;
+$yiq-text-light: $white !default;
+
+// Spacing
+
+$spacer: 1rem !default;
+$spacers: () !default;
+$spacers: map-deep-merge(
+	(
+		0: var(--spacer-0, 0),
+		1: var(--spacer-1, $spacer * 0.25),
+		2: var(--spacer-2, $spacer * 0.5),
+		3: var(--spacer-3, $spacer * 1),
+		4: var(--spacer-4, $spacer * 1.5),
+		5: var(--spacer-5, $spacer * 3),
+		6: var(--spacer-6, $spacer * 4.5),
+		7: var(--spacer-7, $spacer * 6),
+		8: var(--spacer-8, $spacer * 7.5),
+		9: var(--spacer-9, $spacer * 9),
+		10: var(--spacer-10, $spacer * 10),
+	),
+	$spacers
+);
+
+$moz-osx-font-smoothing: grayscale !default;
+$webkit-font-smoothing: antialiased !default;
+
+$font-import-url: null !default;
+
+$font-family-monospace: sfmono-regular, menlo, monaco, consolas,
+	'Liberation Mono', 'Courier New', monospace !default;
+$font-family-sans-serif: system-ui, -apple-system, blinkmacsystemfont,
+	'Segoe UI', roboto, oxygen-sans, ubuntu, cantarell, 'Helvetica Neue', arial,
+	sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !default;
+$font-family-serif: georgia, 'Times New Roman', times, serif !default;
+
+$font-family-base: var(--font-family-base, $font-family-sans-serif) !default;
+
+$font-size-base: 1rem !default;
+
+$font-size-lg: 1.125rem !default;
+$font-size-sm: 0.875rem !default;
+
+$font-size-base-mobile: $font-size-base !default;
+$font-size-lg-mobile: $font-size-lg !default;
+
+$font-weight-bold: var(--font-weight-bold, 700) !default;
+$font-weight-bolder: var(--font-weight-bolder, 900) !default;
+$font-weight-light: var(--font-weight-light, 300) !default;
+$font-weight-lighter: var(--font-weight-lighter, lighter) !default;
+$font-weight-normal: var(--font-weight-normal, 400) !default;
+$font-weight-semi-bold: var(--font-weight-semi-bold, 600) !default;
+
+$font-weight-base: $font-weight-normal !default;
+
+$h1-font-size: var(--h1-font-size, 1.625rem) !default;
+$h2-font-size: var(--h2-font-size, 1.375rem) !default;
+$h3-font-size: var(--h3-font-size, 1.1875rem) !default;
+$h4-font-size: var(--h4-font-size, 1rem) !default;
+$h5-font-size: var(--h5-font-size, 0.875rem) !default;
+$h6-font-size: var(--h6-font-size, 0.8125rem) !default;
+
+$h1-font-size-mobile: null !default;
+$h2-font-size-mobile: null !default;
+$h3-font-size-mobile: null !default;
+$h4-font-size-mobile: null !default;
+$h5-font-size-mobile: null !default;
+$h6-font-size-mobile: null !default;
+
+$headings-color: null !default;
+$headings-font-family: null !default;
+$headings-font-weight: $font-weight-bold !default;
+$headings-line-height: 1.2 !default;
+$headings-margin-bottom: $spacer * 0.5 !default;
+
+liferay-ticket-ui section main .rdg {
+	--rdg-color-scheme: dark;
+	--rdg-background-color: #000;
+	--rdg-color: #fff;
+	--rdg-border-color: #4c5672;
+	--rdg-summary-border-color: #4c5672;
+	--rdg-background-color: hsl(0deg 100% 0%);
+	--rdg-header-background-color: hsl(0deg 97.5% 0%);
+	--rdg-row-hover-background-color: hsl(0deg 96% 0%);
+	--rdg-row-selected-background-color: hsl(207deg 92% 76%);
+	--rdg-row-selected-hover-background-color: hsl(207deg 88% 76%);
+	--rdg-checkbox-color: hsl(207deg 100% 29%);
+	--rdg-checkbox-focus-color: hsl(207deg 100% 69%);
+	--rdg-checkbox-disabled-border-color: #ccc;
+	--rdg-checkbox-disabled-background-color: #ddd;
+	--rdg-selection-color: #66afe9;
+	--rdg-font-size: 14px;
+}

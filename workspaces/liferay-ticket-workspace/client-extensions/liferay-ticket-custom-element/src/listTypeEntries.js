@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import axios from 'axios';
 
 async function fetchListTypeEntries(externalReferenceCode) {
 	const {data} = await axios.get(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}/list-type-entries`,
 		{
-			"headers": {
+			headers: {
 				"accept": "application/json",
 				"x-csrf-token": Liferay.authToken
 			}

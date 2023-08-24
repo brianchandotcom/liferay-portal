@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import axios from 'axios';
 import {useQuery} from 'react-query';
 
@@ -19,7 +24,7 @@ export async function fetchTickets({queryKey}) {
 	const {data} = await axios.get(
 		`/o/c/j3y7tickets?pageSize=${pageSize}&sort=dateModified:desc&page=${page}${filterSnippet}${searchSnippet}`,
 		{
-			"headers": {
+			headers: {
 				"accept": "application/json",
 				"x-csrf-token": Liferay.authToken
 			}
@@ -33,7 +38,7 @@ export async function fetchRecentTickets() {
 	const {data} = await axios.get(
 		`/o/c/j3y7tickets?pageSize=3&page=1&sort=dateModified:desc`,
 		{
-			"headers": {
+			headers: {
 				"accept": "application/json",
 				"x-csrf-token": Liferay.authToken
 			}
@@ -91,7 +96,7 @@ export async function generateNewTicket() {
 			},
 		},
 		{
-			"headers": {
+			headers: {
 				"accept": "application/json",
 				"content-Type": "application/json",
 				"x-csrf-token": Liferay.authToken

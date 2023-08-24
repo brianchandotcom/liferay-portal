@@ -47,21 +47,6 @@ export interface Results {
 	'invalid': Result[];
 }
 
-interface ResultsDataEntry {
-	cssClass: string;
-	icon: string;
-	titles: {
-		plural: string;
-		singular: string;
-	};
-}
-
-interface ResultsData {
-	'imported': ResultsDataEntry;
-	'imported-draft': ResultsDataEntry;
-	'invalid': ResultsDataEntry;
-}
-
 interface ResultsProps {
 	fileName: string | null;
 	importResults: Results;
@@ -102,7 +87,7 @@ export default function ImportResults({fileName, importResults}: ResultsProps) {
 }
 
 interface SectionProps {
-	data: ResultsDataEntry;
+	data: typeof RESULTS_DATA[keyof typeof RESULTS_DATA];
 	defaultMessage?: string;
 	fileName: string | null;
 	panelProps?: object;
@@ -182,7 +167,7 @@ export function getResultsText(importResults: Results) {
 
 	Object.entries(importResults).forEach(([key, results]) => {
 		if (results.length) {
-			const {titles} = RESULTS_DATA[key as keyof ResultsData];
+			const {titles} = RESULTS_DATA[key as keyof typeof RESULTS_DATA];
 
 			const resultsText = sub(
 				results.length === 1 ? titles.singular : titles.plural,

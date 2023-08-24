@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.client.constants.FilterConstants;
+import com.liferay.segments.asah.connector.internal.client.data.binding.ExperimentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.IndividualSegmentJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
@@ -110,6 +111,26 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 				StringUtil.replace(
 					_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
 					experimentId));
+		}
+		catch (Exception exception) {
+			throw new NestableRuntimeException(
+				_ERROR_MSG + exception.getMessage(), exception);
+		}
+	}
+
+	@Override
+	public Experiment getExperiment(long companyId, String experimentId) {
+		if (experimentId == null) {
+			return null;
+		}
+
+		try {
+			return _get(
+				companyId, new MultivaluedHashMap<>(),
+				StringUtil.replace(
+					_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
+					experimentId),
+				_experimentJSONObjectMapper::map);
 		}
 		catch (Exception exception) {
 			throw new NestableRuntimeException(
@@ -503,6 +524,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahFaroBackendClientImpl.class);
 
+	private static final ExperimentJSONObjectMapper
+		_experimentJSONObjectMapper = new ExperimentJSONObjectMapper();
 	private static final IndividualJSONObjectMapper
 		_individualJSONObjectMapper = new IndividualJSONObjectMapper();
 	private static final IndividualSegmentJSONObjectMapper

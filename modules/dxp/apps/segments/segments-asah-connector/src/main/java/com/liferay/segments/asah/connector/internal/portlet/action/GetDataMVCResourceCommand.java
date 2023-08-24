@@ -10,6 +10,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,10 +28,15 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
+import com.liferay.segments.asah.connector.internal.client.model.Experiment;
+import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.asah.connector.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -43,6 +49,7 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
@@ -52,6 +59,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -71,6 +79,14 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	protected void activate(Map<String, Object> properties) {
 		_segmentsExperimentConfiguration = ConfigurableUtil.createConfigurable(
 			SegmentsExperimentConfiguration.class, properties);
+
+		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
+			_analyticsSettingsManager, _http);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_asahFaroBackendClient = null;
 	}
 
 	@Override
@@ -91,6 +107,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 			long segmentsExperienceId = ParamUtil.getLong(
 				resourceRequest, "segmentsExperienceId");
+
+			_syncExperimentStatus(plid, segmentsExperienceId);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -434,11 +452,50 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).buildString();
 	}
 
+	private void _syncExperimentStatus(long plid, long segmentsExperienceId)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentService.fetchSegmentsExperiment(
+				segmentsExperienceId, plid,
+				SegmentsExperimentConstants.Status.getExclusiveStatusValues());
+
+		if (segmentsExperiment == null) {
+			return;
+		}
+
+		Experiment experiment = _asahFaroBackendClient.getExperiment(
+			segmentsExperiment.getCompanyId(),
+			segmentsExperiment.getSegmentsExperimentKey());
+
+		ExperimentStatus experimentStatus = experiment.getExperimentStatus();
+
+		SegmentsExperimentConstants.Status status =
+			SegmentsExperimentConstants.Status.parse(experimentStatus.name());
+
+		if (status == null) {
+			return;
+		}
+
+		if (!Objects.equals(
+				segmentsExperiment.getStatus(), status.getValue())) {
+
+			_segmentsExperimentService.updateSegmentsExperimentStatus(
+				segmentsExperiment.getSegmentsExperimentId(),
+				status.getValue());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetDataMVCResourceCommand.class);
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	private AsahFaroBackendClient _asahFaroBackendClient;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private JSONFactory _jsonFactory;

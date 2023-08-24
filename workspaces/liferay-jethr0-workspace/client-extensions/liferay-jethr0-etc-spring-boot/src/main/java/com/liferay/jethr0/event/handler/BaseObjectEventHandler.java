@@ -6,9 +6,9 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -40,13 +40,14 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing ID from project");
 		}
 
-		ProjectRepository projectRepository = getProjectRepository();
+		ProjectEntityRepository projectEntityRepository =
+			getProjectRepository();
 
-		Project project = projectRepository.getById(projectId);
+		Project project = projectEntityRepository.getById(projectId);
 
-		BuildRepository buildRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildRepository.getAll(project);
+		buildEntityRepository.getAll(project);
 
 		return project;
 	}

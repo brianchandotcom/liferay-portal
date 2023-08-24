@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskRunRepository extends BaseEntityRepository<TaskRun> {
+public class TaskRunEntityRepository extends BaseEntityRepository<TaskRun> {
 
 	@Override
 	public TaskRunEntityDALO getEntityDALO() {

@@ -11,7 +11,7 @@ import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildRepository extends BaseEntityRepository<Build> {
+public class BuildEntityRepository extends BaseEntityRepository<Build> {
 
 	public Build add(Project project, JSONObject jsonObject) {
 		jsonObject.put("r_projectToBuilds_c_projectId", project.getId());
@@ -81,7 +81,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 			return;
 		}
 
-		_projectRepository.initializeRelationships();
+		_projectEntityRepository.initializeRelationships();
 
 		for (Build build : getAll()) {
 			Project project = null;
@@ -89,40 +89,45 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 			long projectId = build.getProjectId();
 
 			if (projectId != 0) {
-				project = _projectRepository.getById(projectId);
+				project = _projectEntityRepository.getById(projectId);
 			}
 
 			build.setProject(project);
 
-			build.addBuildParameters(_buildParameterRepository.getAll(build));
+			build.addBuildParameters(
+				_buildParameterEntityRepository.getAll(build));
 
-			build.addBuildRuns(_buildRunRepository.getAll(build));
+			build.addBuildRuns(_buildRunEntityRepository.getAll(build));
 		}
 
 		_initializedRelationships = true;
 	}
 
 	public void setBuildParameterRepository(
-		BuildParameterRepository buildParameterRepository) {
+		BuildParameterEntityRepository buildParameterEntityRepository) {
 
-		_buildParameterRepository = buildParameterRepository;
+		_buildParameterEntityRepository = buildParameterEntityRepository;
 	}
 
-	public void setBuildRunRepository(BuildRunRepository buildRunRepository) {
-		_buildRunRepository = buildRunRepository;
+	public void setBuildRunRepository(
+		BuildRunEntityRepository buildRunEntityRepository) {
+
+		_buildRunEntityRepository = buildRunEntityRepository;
 	}
 
-	public void setProjectRepository(ProjectRepository projectRepository) {
-		_projectRepository = projectRepository;
+	public void setProjectRepository(
+		ProjectEntityRepository projectEntityRepository) {
+
+		_projectEntityRepository = projectEntityRepository;
 	}
 
 	@Autowired
 	private BuildEntityDALO _buildEntityDALO;
 
-	private BuildParameterRepository _buildParameterRepository;
-	private BuildRunRepository _buildRunRepository;
+	private BuildParameterEntityRepository _buildParameterEntityRepository;
+	private BuildRunEntityRepository _buildRunEntityRepository;
 	private boolean _initializedRelationships;
-	private ProjectRepository _projectRepository;
+	private ProjectEntityRepository _projectEntityRepository;
 
 	@Autowired
 	private ProjectToBuildsEntityRelationshipDALO

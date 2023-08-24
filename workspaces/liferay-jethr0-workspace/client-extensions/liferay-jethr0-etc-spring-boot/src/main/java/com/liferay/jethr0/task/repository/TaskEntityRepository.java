@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskRepository extends BaseEntityRepository<Task> {
+public class TaskEntityRepository extends BaseEntityRepository<Task> {
 
 	public Set<Task> getAll(Build build) {
 		Set<Task> buildTasks = new HashSet<>();

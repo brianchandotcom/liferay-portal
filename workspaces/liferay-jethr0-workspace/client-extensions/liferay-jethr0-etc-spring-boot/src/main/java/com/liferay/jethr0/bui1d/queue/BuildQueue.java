@@ -6,16 +6,16 @@
 package com.liferay.jethr0.bui1d.queue;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
-import com.liferay.jethr0.environment.repository.EnvironmentRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.project.queue.ProjectQueue;
-import com.liferay.jethr0.project.repository.ProjectRepository;
-import com.liferay.jethr0.task.repository.TaskRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
+import com.liferay.jethr0.task.repository.TaskEntityRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,10 +83,10 @@ public class BuildQueue {
 	public void initialize() {
 		for (Project project : _projectQueue.getProjects()) {
 			for (Build build : project.getBuilds()) {
-				_buildRunRepository.getAll(build);
-				_buildParameterRepository.getAll(build);
-				_environmentRepository.getAll(build);
-				_taskRepository.getAll(build);
+				_buildRunEntityRepository.getAll(build);
+				_buildParameterEntityRepository.getAll(build);
+				_environmentEntityRepository.getAll(build);
+				_taskEntityRepository.getAll(build);
 			}
 		}
 
@@ -165,22 +165,22 @@ public class BuildQueue {
 	}
 
 	@Autowired
-	private BuildParameterRepository _buildParameterRepository;
+	private BuildEntityRepository _buildEntityRepository;
 
 	@Autowired
-	private BuildRepository _buildRepository;
+	private BuildParameterEntityRepository _buildParameterEntityRepository;
 
 	@Autowired
-	private BuildRunRepository _buildRunRepository;
+	private BuildRunEntityRepository _buildRunEntityRepository;
 
 	@Autowired
-	private EnvironmentRepository _environmentRepository;
+	private EnvironmentEntityRepository _environmentEntityRepository;
+
+	@Autowired
+	private ProjectEntityRepository _projectEntityRepository;
 
 	@Autowired
 	private ProjectQueue _projectQueue;
-
-	@Autowired
-	private ProjectRepository _projectRepository;
 
 	@Autowired
 	private ProjectToBuildsEntityRelationshipDALO
@@ -189,6 +189,6 @@ public class BuildQueue {
 	private final List<Build> _sortedBuilds = new ArrayList<>();
 
 	@Autowired
-	private TaskRepository _taskRepository;
+	private TaskEntityRepository _taskEntityRepository;
 
 }

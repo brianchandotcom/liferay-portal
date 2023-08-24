@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildParameterRepository
+public class BuildParameterEntityRepository
 	extends BaseEntityRepository<BuildParameter> {
 
 	public BuildParameter add(Build build, String name, String value) {
@@ -70,7 +70,7 @@ public class BuildParameterRepository
 
 	@Override
 	public synchronized void initializeRelationships() {
-		_buildRepository.initializeRelationships();
+		_buildEntityRepository.initializeRelationships();
 
 		for (BuildParameter buildParameter : getAll()) {
 			Build build = null;
@@ -78,21 +78,23 @@ public class BuildParameterRepository
 			long buildId = buildParameter.getBuildId();
 
 			if (buildId != 0) {
-				build = _buildRepository.getById(buildId);
+				build = _buildEntityRepository.getById(buildId);
 			}
 
 			buildParameter.setBuild(build);
 		}
 	}
 
-	public void setBuildRepository(BuildRepository buildRepository) {
-		_buildRepository = buildRepository;
+	public void setBuildRepository(
+		BuildEntityRepository buildEntityRepository) {
+
+		_buildEntityRepository = buildEntityRepository;
 	}
+
+	private BuildEntityRepository _buildEntityRepository;
 
 	@Autowired
 	private BuildParameterEntityDALO _buildParameterEntityDALO;
-
-	private BuildRepository _buildRepository;
 
 	@Autowired
 	private BuildToBuildParametersEntityRelationshipDALO

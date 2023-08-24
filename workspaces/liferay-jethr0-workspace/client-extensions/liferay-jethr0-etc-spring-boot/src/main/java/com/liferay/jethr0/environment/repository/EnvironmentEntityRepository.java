@@ -21,7 +21,8 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class EnvironmentRepository extends BaseEntityRepository<Environment> {
+public class EnvironmentEntityRepository
+	extends BaseEntityRepository<Environment> {
 
 	public Set<Environment> getAll(Build build) {
 		Set<Environment> buildEnvironments = new HashSet<>();

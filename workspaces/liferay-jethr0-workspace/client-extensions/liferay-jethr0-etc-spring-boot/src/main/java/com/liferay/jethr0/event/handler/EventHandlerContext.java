@@ -6,15 +6,15 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jms.JMSEventHandler;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,44 +25,44 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventHandlerContext {
 
-	public BuildParameterRepository getBuildParameterRepository() {
-		return _buildParameterRepository;
+	public BuildParameterEntityRepository getBuildParameterRepository() {
+		return _buildParameterEntityRepository;
 	}
 
 	public BuildQueue getBuildQueue() {
 		return _buildQueue;
 	}
 
-	public BuildRepository getBuildRepository() {
-		return _buildRepository;
+	public BuildEntityRepository getBuildRepository() {
+		return _buildEntityRepository;
 	}
 
-	public BuildRunRepository getBuildRunRepository() {
-		return _buildRunRepository;
+	public BuildRunEntityRepository getBuildRunRepository() {
+		return _buildRunEntityRepository;
 	}
 
-	public JenkinsCohortRepository getJenkinsCohortRepository() {
-		return _jenkinsCohortRepository;
+	public JenkinsCohortEntityRepository getJenkinsCohortRepository() {
+		return _jenkinsCohortEntityRepository;
 	}
 
-	public JenkinsNodeRepository getJenkinsNodeRepository() {
-		return _jenkinsNodeRepository;
+	public JenkinsNodeEntityRepository getJenkinsNodeRepository() {
+		return _jenkinsNodeEntityRepository;
 	}
 
 	public JenkinsQueue getJenkinsQueue() {
 		return _jenkinsQueue;
 	}
 
-	public JenkinsServerRepository getJenkinsServerRepository() {
-		return _jenkinsServerRepository;
+	public JenkinsServerEntityRepository getJenkinsServerRepository() {
+		return _jenkinsServerEntityRepository;
 	}
 
 	public JMSEventHandler getJMSEventHandler() {
 		return _jmsEventHandler;
 	}
 
-	public ProjectRepository getProjectRepository() {
-		return _projectRepository;
+	public ProjectEntityRepository getProjectRepository() {
+		return _projectEntityRepository;
 	}
 
 	public void setJMSEventHandler(JMSEventHandler jmsEventHandler) {
@@ -70,32 +70,32 @@ public class EventHandlerContext {
 	}
 
 	@Autowired
-	private BuildParameterRepository _buildParameterRepository;
+	private BuildEntityRepository _buildEntityRepository;
+
+	@Autowired
+	private BuildParameterEntityRepository _buildParameterEntityRepository;
 
 	@Autowired
 	private BuildQueue _buildQueue;
 
 	@Autowired
-	private BuildRepository _buildRepository;
+	private BuildRunEntityRepository _buildRunEntityRepository;
 
 	@Autowired
-	private BuildRunRepository _buildRunRepository;
+	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
 
 	@Autowired
-	private JenkinsCohortRepository _jenkinsCohortRepository;
-
-	@Autowired
-	private JenkinsNodeRepository _jenkinsNodeRepository;
+	private JenkinsNodeEntityRepository _jenkinsNodeEntityRepository;
 
 	@Autowired
 	private JenkinsQueue _jenkinsQueue;
 
 	@Autowired
-	private JenkinsServerRepository _jenkinsServerRepository;
+	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
 
 	private JMSEventHandler _jmsEventHandler;
 
 	@Autowired
-	private ProjectRepository _projectRepository;
+	private ProjectEntityRepository _projectEntityRepository;
 
 }

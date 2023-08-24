@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
+public class BuildRunEntityRepository extends BaseEntityRepository<BuildRun> {
 
 	public BuildRun add(Build build, BuildRun.State state) {
 		JSONObject jsonObject = new JSONObject();
@@ -70,7 +70,7 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 
 	@Override
 	public synchronized void initializeRelationships() {
-		_buildRepository.initializeRelationships();
+		_buildEntityRepository.initializeRelationships();
 
 		for (BuildRun buildRun : getAll()) {
 			Build build = null;
@@ -78,18 +78,20 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 			long buildId = buildRun.getBuildId();
 
 			if (buildId != 0) {
-				build = _buildRepository.getById(buildId);
+				build = _buildEntityRepository.getById(buildId);
 			}
 
 			buildRun.setBuild(build);
 		}
 	}
 
-	public void setBuildRepository(BuildRepository buildRepository) {
-		_buildRepository = buildRepository;
+	public void setBuildRepository(
+		BuildEntityRepository buildEntityRepository) {
+
+		_buildEntityRepository = buildEntityRepository;
 	}
 
-	private BuildRepository _buildRepository;
+	private BuildEntityRepository _buildEntityRepository;
 
 	@Autowired
 	private BuildRunEntityDALO _buildRunEntityDALO;

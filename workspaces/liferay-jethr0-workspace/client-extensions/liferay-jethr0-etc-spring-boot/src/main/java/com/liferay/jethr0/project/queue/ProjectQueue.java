@@ -6,20 +6,20 @@
 package com.liferay.jethr0.project.queue;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.gitbranch.repository.GitBranchRepository;
+import com.liferay.jethr0.gitbranch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.BaseProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
-import com.liferay.jethr0.project.repository.ProjectComparatorRepository;
-import com.liferay.jethr0.project.repository.ProjectPrioritizerRepository;
-import com.liferay.jethr0.project.repository.ProjectRepository;
-import com.liferay.jethr0.task.repository.TaskRepository;
-import com.liferay.jethr0.testsuite.repository.TestSuiteRepository;
+import com.liferay.jethr0.project.repository.ProjectComparatorEntityRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
+import com.liferay.jethr0.project.repository.ProjectPrioritizerEntityRepository;
+import com.liferay.jethr0.task.repository.TaskEntityRepository;
+import com.liferay.jethr0.testsuite.repository.TestSuiteEntityRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,41 +87,43 @@ public class ProjectQueue {
 	}
 
 	public void initialize() {
-		_projectComparatorRepository.initialize();
-		_projectPrioritizerRepository.initialize();
+		_projectComparatorEntityRepository.initialize();
+		_projectPrioritizerEntityRepository.initialize();
 
-		_projectComparatorRepository.setProjectPrioritizerRepository(
-			_projectPrioritizerRepository);
+		_projectComparatorEntityRepository.setProjectPrioritizerRepository(
+			_projectPrioritizerEntityRepository);
 
-		_projectPrioritizerRepository.setProjectComparatorRepository(
-			_projectComparatorRepository);
+		_projectPrioritizerEntityRepository.setProjectComparatorRepository(
+			_projectComparatorEntityRepository);
 
-		_projectComparatorRepository.initializeRelationships();
-		_projectPrioritizerRepository.initializeRelationships();
+		_projectComparatorEntityRepository.initializeRelationships();
+		_projectPrioritizerEntityRepository.initializeRelationships();
 
-		_buildParameterRepository.initialize();
-		_buildRepository.initialize();
-		_buildRunRepository.initialize();
-		_projectRepository.initialize();
+		_buildParameterEntityRepository.initialize();
+		_buildEntityRepository.initialize();
+		_buildRunEntityRepository.initialize();
+		_projectEntityRepository.initialize();
 
-		_buildRepository.setBuildParameterRepository(_buildParameterRepository);
-		_buildRepository.setBuildRunRepository(_buildRunRepository);
-		_buildRepository.setProjectRepository(_projectRepository);
+		_buildEntityRepository.setBuildParameterRepository(
+			_buildParameterEntityRepository);
+		_buildEntityRepository.setBuildRunRepository(_buildRunEntityRepository);
+		_buildEntityRepository.setProjectRepository(_projectEntityRepository);
 
-		_buildRunRepository.setBuildRepository(_buildRepository);
+		_buildRunEntityRepository.setBuildRepository(_buildEntityRepository);
 
-		_buildParameterRepository.setBuildRepository(_buildRepository);
+		_buildParameterEntityRepository.setBuildRepository(
+			_buildEntityRepository);
 
-		_projectRepository.setBuildRepository(_buildRepository);
+		_projectEntityRepository.setBuildRepository(_buildEntityRepository);
 
-		_buildParameterRepository.initializeRelationships();
-		_buildRepository.initializeRelationships();
-		_buildRunRepository.initializeRelationships();
-		_projectRepository.initializeRelationships();
+		_buildParameterEntityRepository.initializeRelationships();
+		_buildEntityRepository.initializeRelationships();
+		_buildRunEntityRepository.initializeRelationships();
+		_projectEntityRepository.initializeRelationships();
 
 		setProjectPrioritizer(_getDefaultProjectPrioritizer());
 
-		addProjects(_projectRepository.getAll());
+		addProjects(_projectEntityRepository.getAll());
 
 		update();
 	}
@@ -195,7 +197,7 @@ public class ProjectQueue {
 
 				project.setPosition(i + 1);
 
-				_projectRepository.update(project);
+				_projectEntityRepository.update(project);
 			}
 		}
 	}
@@ -218,7 +220,8 @@ public class ProjectQueue {
 						continue;
 					}
 
-					Set<BuildRun> buildRuns = _buildRunRepository.getAll(build);
+					Set<BuildRun> buildRuns = _buildRunEntityRepository.getAll(
+						build);
 
 					boolean blocked = false;
 
@@ -233,7 +236,7 @@ public class ProjectQueue {
 					if (blocked) {
 						build.setState(Build.State.BLOCKED);
 
-						_buildRepository.update(build);
+						_buildEntityRepository.update(build);
 					}
 
 					System.out.println("> " + build);
@@ -246,22 +249,23 @@ public class ProjectQueue {
 
 	private ProjectPrioritizer _getDefaultProjectPrioritizer() {
 		ProjectPrioritizer projectPrioritizer =
-			_projectPrioritizerRepository.getByName(_liferayProjectPrioritizer);
+			_projectPrioritizerEntityRepository.getByName(
+				_liferayProjectPrioritizer);
 
 		if (projectPrioritizer != null) {
 			return projectPrioritizer;
 		}
 
-		projectPrioritizer = _projectPrioritizerRepository.add(
+		projectPrioritizer = _projectPrioritizerEntityRepository.add(
 			_liferayProjectPrioritizer);
 
-		_projectComparatorRepository.add(
+		_projectComparatorEntityRepository.add(
 			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_START_DATE,
 			null);
-		_projectComparatorRepository.add(
+		_projectComparatorEntityRepository.add(
 			projectPrioritizer, 2, ProjectComparator.Type.PROJECT_PRIORITY,
 			null);
-		_projectComparatorRepository.add(
+		_projectComparatorEntityRepository.add(
 			projectPrioritizer, 3, ProjectComparator.Type.FIFO, null);
 
 		return projectPrioritizer;
@@ -270,40 +274,42 @@ public class ProjectQueue {
 	private static final Log _log = LogFactory.getLog(ProjectQueue.class);
 
 	@Autowired
-	private BuildParameterRepository _buildParameterRepository;
+	private BuildEntityRepository _buildEntityRepository;
 
 	@Autowired
-	private BuildRepository _buildRepository;
+	private BuildParameterEntityRepository _buildParameterEntityRepository;
 
 	@Autowired
-	private BuildRunRepository _buildRunRepository;
+	private BuildRunEntityRepository _buildRunEntityRepository;
 
 	@Autowired
-	private GitBranchRepository _gitBranchRepository;
+	private GitBranchEntityRepository _gitBranchEntityRepository;
 
 	@Value("${liferay.jethr0.project.prioritizer}")
 	private String _liferayProjectPrioritizer;
 
 	@Autowired
-	private ProjectComparatorRepository _projectComparatorRepository;
+	private ProjectComparatorEntityRepository
+		_projectComparatorEntityRepository;
+
+	@Autowired
+	private ProjectEntityRepository _projectEntityRepository;
 
 	private ProjectPrioritizer _projectPrioritizer;
 
 	@Autowired
-	private ProjectPrioritizerRepository _projectPrioritizerRepository;
-
-	@Autowired
-	private ProjectRepository _projectRepository;
+	private ProjectPrioritizerEntityRepository
+		_projectPrioritizerEntityRepository;
 
 	private final List<Project> _projects = new ArrayList<>();
 	private final List<ProjectComparator> _sortedProjectComparators =
 		new ArrayList<>();
 
 	@Autowired
-	private TaskRepository _taskRepository;
+	private TaskEntityRepository _taskEntityRepository;
 
 	@Autowired
-	private TestSuiteRepository _testSuiteRepository;
+	private TestSuiteEntityRepository _testSuiteEntityRepository;
 
 	private class PrioritizedProjectComparator implements Comparator<Project> {
 

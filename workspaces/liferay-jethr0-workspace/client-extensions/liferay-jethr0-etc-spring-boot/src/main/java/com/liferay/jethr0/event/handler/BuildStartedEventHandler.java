@@ -7,11 +7,11 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import java.util.Date;
 
@@ -39,22 +39,24 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 			project.setStartDate(new Date());
 			project.setState(Project.State.RUNNING);
 
-			ProjectRepository projectRepository = getProjectRepository();
+			ProjectEntityRepository projectEntityRepository =
+				getProjectRepository();
 
-			projectRepository.update(project);
+			projectEntityRepository.update(project);
 
 			BuildQueue buildQueue = getBuildQueue();
 
 			buildQueue.sort();
 		}
 
-		BuildRepository buildRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildRepository.update(build);
+		buildEntityRepository.update(build);
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		buildRunRepository.update(buildRun);
+		buildRunEntityRepository.update(buildRun);
 
 		return buildRun.toString();
 	}

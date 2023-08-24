@@ -6,15 +6,15 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jms.JMSEventHandler;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import org.json.JSONObject;
 
@@ -30,7 +30,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		_messageJSONObject = messageJSONObject;
 	}
 
-	protected BuildParameterRepository getBuildParameterRepository() {
+	protected BuildParameterEntityRepository getBuildParameterRepository() {
 		return _eventHandlerContext.getBuildParameterRepository();
 	}
 
@@ -38,19 +38,19 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getBuildQueue();
 	}
 
-	protected BuildRepository getBuildRepository() {
+	protected BuildEntityRepository getBuildRepository() {
 		return _eventHandlerContext.getBuildRepository();
 	}
 
-	protected BuildRunRepository getBuildRunRepository() {
+	protected BuildRunEntityRepository getBuildRunRepository() {
 		return _eventHandlerContext.getBuildRunRepository();
 	}
 
-	protected JenkinsCohortRepository getJenkinsCohortRepository() {
+	protected JenkinsCohortEntityRepository getJenkinsCohortRepository() {
 		return _eventHandlerContext.getJenkinsCohortRepository();
 	}
 
-	protected JenkinsNodeRepository getJenkinsNodeRepository() {
+	protected JenkinsNodeEntityRepository getJenkinsNodeRepository() {
 		return _eventHandlerContext.getJenkinsNodeRepository();
 	}
 
@@ -58,7 +58,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getJenkinsQueue();
 	}
 
-	protected JenkinsServerRepository getJenkinsServerRepository() {
+	protected JenkinsServerEntityRepository getJenkinsServerRepository() {
 		return _eventHandlerContext.getJenkinsServerRepository();
 	}
 
@@ -70,7 +70,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _messageJSONObject;
 	}
 
-	protected ProjectRepository getProjectRepository() {
+	protected ProjectEntityRepository getProjectRepository() {
 		return _eventHandlerContext.getProjectRepository();
 	}
 

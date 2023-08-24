@@ -6,11 +6,11 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONArray;
@@ -33,21 +33,22 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 		JSONArray buildsJSONArray = projectJSONObject.optJSONArray("builds");
 
 		if ((buildsJSONArray != null) && !buildsJSONArray.isEmpty()) {
-			BuildParameterRepository buildParameterRepository =
+			BuildParameterEntityRepository buildParameterEntityRepository =
 				getBuildParameterRepository();
-			BuildRepository buildRepository = getBuildRepository();
+			BuildEntityRepository buildEntityRepository = getBuildRepository();
 
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-				Build build = buildRepository.add(project, buildJSONObject);
+				Build build = buildEntityRepository.add(
+					project, buildJSONObject);
 
 				JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
 					"parameters");
 
 				if (parametersJSONObject != null) {
 					for (String key : parametersJSONObject.keySet()) {
-						buildParameterRepository.add(
+						buildParameterEntityRepository.add(
 							build, key, parametersJSONObject.getString(key));
 					}
 				}
@@ -60,7 +61,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 		if ((jenkinsCohortsJSONArray != null) &&
 			!jenkinsCohortsJSONArray.isEmpty()) {
 
-			JenkinsCohortRepository jenkinsCohortRepository =
+			JenkinsCohortEntityRepository jenkinsCohortEntityRepository =
 				getJenkinsCohortRepository();
 
 			for (int i = 0; i < jenkinsCohortsJSONArray.length(); i++) {
@@ -71,7 +72,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 
 				if (jenkinsCohortId != 0) {
 					project.addJenkinsCohort(
-						jenkinsCohortRepository.getById(jenkinsCohortId));
+						jenkinsCohortEntityRepository.getById(jenkinsCohortId));
 
 					continue;
 				}
@@ -84,7 +85,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 				}
 
 				project.addJenkinsCohort(
-					jenkinsCohortRepository.getByName(jenkinsCohortName));
+					jenkinsCohortEntityRepository.getByName(jenkinsCohortName));
 			}
 		}
 
@@ -98,9 +99,10 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 	}
 
 	private Project _createProject(JSONObject projectJSONObject) {
-		ProjectRepository projectRepository = getProjectRepository();
+		ProjectEntityRepository projectEntityRepository =
+			getProjectRepository();
 
-		return projectRepository.add(projectJSONObject);
+		return projectEntityRepository.add(projectJSONObject);
 	}
 
 }

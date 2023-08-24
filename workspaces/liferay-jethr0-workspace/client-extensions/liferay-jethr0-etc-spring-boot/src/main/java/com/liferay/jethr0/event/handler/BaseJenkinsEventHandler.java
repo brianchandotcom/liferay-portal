@@ -5,11 +5,11 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -82,9 +82,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			return null;
 		}
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		return buildRunRepository.getById(Long.valueOf(buildRunID));
+		return buildRunEntityRepository.getById(Long.valueOf(buildRunID));
 	}
 
 	protected BuildRun.Result getBuildRunResult() throws Exception {
@@ -138,14 +139,14 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected JenkinsNode getJenkinsNode() throws Exception {
 		JenkinsServer jenkinsServer = getJenkinsServer();
 
-		JenkinsNodeRepository jenkinsNodeRepository =
+		JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
 			getJenkinsNodeRepository();
 
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		String computerName = computerJSONObject.getString("name");
 
-		for (JenkinsNode jenkinsNode : jenkinsNodeRepository.getAll()) {
+		for (JenkinsNode jenkinsNode : jenkinsNodeEntityRepository.getAll()) {
 			if (!Objects.equals(
 					jenkinsServer, jenkinsNode.getJenkinsServer())) {
 
@@ -161,10 +162,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	}
 
 	protected JenkinsServer getJenkinsServer() throws Exception {
-		JenkinsServerRepository jenkinsServerRepository =
+		JenkinsServerEntityRepository jenkinsServerEntityRepository =
 			getJenkinsServerRepository();
 
-		return jenkinsServerRepository.getByURL(getJenkinsURL());
+		return jenkinsServerEntityRepository.getByURL(getJenkinsURL());
 	}
 
 	protected URL getJenkinsURL() throws Exception {

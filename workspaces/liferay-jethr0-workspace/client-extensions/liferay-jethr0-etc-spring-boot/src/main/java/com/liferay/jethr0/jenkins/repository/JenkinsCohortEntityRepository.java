@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsCohortRepository
+public class JenkinsCohortEntityRepository
 	extends BaseEntityRepository<JenkinsCohort> {
 
 	public JenkinsCohort add(String name) {
@@ -66,15 +66,15 @@ public class JenkinsCohortRepository
 				}
 
 				jenkinsCohort.addJenkinsServer(
-					_jenkinsServerRepository.getById(jenkinsServerId));
+					_jenkinsServerEntityRepository.getById(jenkinsServerId));
 			}
 		}
 	}
 
 	public void setJenkinsServerRepository(
-		JenkinsServerRepository jenkinsServerRepository) {
+		JenkinsServerEntityRepository jenkinsServerEntityRepository) {
 
-		_jenkinsServerRepository = jenkinsServerRepository;
+		_jenkinsServerEntityRepository = jenkinsServerEntityRepository;
 	}
 
 	@Autowired
@@ -84,6 +84,6 @@ public class JenkinsCohortRepository
 	private JenkinsCohortToJenkinsServersEntityRelationshipDALO
 		_jenkinsCohortToJenkinsServersEntityRelationshipDALO;
 
-	private JenkinsServerRepository _jenkinsServerRepository;
+	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
 
 }

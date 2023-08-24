@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsServerRepository
+public class JenkinsServerEntityRepository
 	extends BaseEntityRepository<JenkinsServer> {
 
 	public JenkinsServer add(
@@ -124,7 +124,7 @@ public class JenkinsServerRepository
 			long jenkinsCohortId = jenkinsServer.getJenkinsCohortId();
 
 			if (jenkinsCohortId != 0) {
-				jenkinsCohort = _jenkinsCohortRepository.getById(
+				jenkinsCohort = _jenkinsCohortEntityRepository.getById(
 					jenkinsCohortId);
 			}
 
@@ -139,31 +139,31 @@ public class JenkinsServerRepository
 				}
 
 				jenkinsServer.addJenkinsNode(
-					_jenkinsNodeRepository.getById(jenkinsNodeId));
+					_jenkinsNodeEntityRepository.getById(jenkinsNodeId));
 			}
 		}
 	}
 
 	public void setJenkinsCohortRepository(
-		JenkinsCohortRepository jenkinsCohortRepository) {
+		JenkinsCohortEntityRepository jenkinsCohortEntityRepository) {
 
-		_jenkinsCohortRepository = jenkinsCohortRepository;
+		_jenkinsCohortEntityRepository = jenkinsCohortEntityRepository;
 	}
 
 	public void setJenkinsNodeRepository(
-		JenkinsNodeRepository jenkinsNodeRepository) {
+		JenkinsNodeEntityRepository jenkinsNodeEntityRepository) {
 
-		_jenkinsNodeRepository = jenkinsNodeRepository;
+		_jenkinsNodeEntityRepository = jenkinsNodeEntityRepository;
 	}
 
 	private static final Pattern _jenkinsURLPattern = Pattern.compile(
 		"https?://(?<name>[^/]+)(\\.liferay\\.com)?(/.*)?");
 
 	@Autowired
-	private JenkinsCohortRepository _jenkinsCohortRepository;
+	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
 
 	@Autowired
-	private JenkinsNodeRepository _jenkinsNodeRepository;
+	private JenkinsNodeEntityRepository _jenkinsNodeEntityRepository;
 
 	@Autowired
 	private JenkinsServerEntityDALO _jenkinsServerEntityDALO;

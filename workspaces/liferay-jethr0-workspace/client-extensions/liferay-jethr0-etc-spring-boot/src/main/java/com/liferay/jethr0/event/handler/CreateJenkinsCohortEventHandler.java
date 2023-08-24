@@ -6,9 +6,9 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 
 import org.json.JSONArray;
@@ -35,19 +35,19 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 		if ((jenkinsServersJSONArray != null) &&
 			!jenkinsServersJSONArray.isEmpty()) {
 
-			JenkinsServerRepository jenkinsServerRepository =
+			JenkinsServerEntityRepository jenkinsServerEntityRepository =
 				getJenkinsServerRepository();
-			JenkinsNodeRepository jenkinsNodeRepository =
+			JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
 				getJenkinsNodeRepository();
 
 			for (int i = 0; i < jenkinsServersJSONArray.length(); i++) {
 				JSONObject jenkinsServerJSONObject =
 					jenkinsServersJSONArray.getJSONObject(i);
 
-				JenkinsServer jenkinsServer = jenkinsServerRepository.add(
+				JenkinsServer jenkinsServer = jenkinsServerEntityRepository.add(
 					jenkinsCohort, jenkinsServerJSONObject);
 
-				jenkinsNodeRepository.addAll(jenkinsServer);
+				jenkinsNodeEntityRepository.addAll(jenkinsServer);
 			}
 		}
 
@@ -63,10 +63,10 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 	private JenkinsCohort _createJenkinsCohort(
 		JSONObject jenkinsCohortJSONObject) {
 
-		JenkinsCohortRepository jenkinsCohortRepository =
+		JenkinsCohortEntityRepository jenkinsCohortEntityRepository =
 			getJenkinsCohortRepository();
 
-		return jenkinsCohortRepository.add(jenkinsCohortJSONObject);
+		return jenkinsCohortEntityRepository.add(jenkinsCohortJSONObject);
 	}
 
 }

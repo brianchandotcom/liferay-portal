@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TestSuiteRepository extends BaseEntityRepository<TestSuite> {
+public class TestSuiteEntityRepository extends BaseEntityRepository<TestSuite> {
 
 	public Set<TestSuite> getAll(Project project) {
 		Set<TestSuite> projectTestSuites = new HashSet<>();

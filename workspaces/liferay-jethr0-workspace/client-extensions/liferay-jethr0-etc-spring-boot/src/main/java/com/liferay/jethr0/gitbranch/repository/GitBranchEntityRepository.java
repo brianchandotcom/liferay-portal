@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitBranchRepository extends BaseEntityRepository<GitBranch> {
+public class GitBranchEntityRepository extends BaseEntityRepository<GitBranch> {
 
 	public Set<GitBranch> getAll(Project project) {
 		Set<GitBranch> projectGitBranches = new HashSet<>();

@@ -29,7 +29,8 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
+public class JenkinsNodeEntityRepository
+	extends BaseEntityRepository<JenkinsNode> {
 
 	public void addAll(JenkinsServer jenkinsServer) {
 		JSONObject jsonObject = jenkinsServer.getComputerJSONObject();
@@ -184,7 +185,7 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 			long jenkinsServerId = jenkinsNode.getJenkinsServerId();
 
 			if (jenkinsServerId != 0) {
-				jenkinsServer = _jenkinsServerRepository.getById(
+				jenkinsServer = _jenkinsServerEntityRepository.getById(
 					jenkinsServerId);
 			}
 
@@ -193,9 +194,9 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 	}
 
 	public void setJenkinsServerRepository(
-		JenkinsServerRepository jenkinsServerRepository) {
+		JenkinsServerEntityRepository jenkinsServerEntityRepository) {
 
-		_jenkinsServerRepository = jenkinsServerRepository;
+		_jenkinsServerEntityRepository = jenkinsServerEntityRepository;
 	}
 
 	private static final Pattern _goodBatteryPattern = Pattern.compile(
@@ -211,7 +212,7 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 	@Autowired
 	private JenkinsServerEntityDALO _jenkinsServerEntityDALO;
 
-	private JenkinsServerRepository _jenkinsServerRepository;
+	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
 
 	@Autowired
 	private JenkinsServerToJenkinsNodesEntityRelationshipDALO

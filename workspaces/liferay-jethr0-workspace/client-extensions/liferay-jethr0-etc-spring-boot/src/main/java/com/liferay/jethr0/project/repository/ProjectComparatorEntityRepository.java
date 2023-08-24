@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectComparatorRepository
+public class ProjectComparatorEntityRepository
 	extends BaseEntityRepository<ProjectComparator> {
 
 	public ProjectComparator add(
@@ -89,8 +89,9 @@ public class ProjectComparatorRepository
 			long jenkinsServerId = projectComparator.getProjectPrioritizerId();
 
 			if (jenkinsServerId != 0) {
-				projectPrioritizer = _projectPrioritizerRepository.getById(
-					jenkinsServerId);
+				projectPrioritizer =
+					_projectPrioritizerEntityRepository.getById(
+						jenkinsServerId);
 			}
 
 			projectComparator.setProjectPrioritizer(projectPrioritizer);
@@ -98,15 +99,17 @@ public class ProjectComparatorRepository
 	}
 
 	public void setProjectPrioritizerRepository(
-		ProjectPrioritizerRepository projectPrioritizerRepository) {
+		ProjectPrioritizerEntityRepository projectPrioritizerEntityRepository) {
 
-		_projectPrioritizerRepository = projectPrioritizerRepository;
+		_projectPrioritizerEntityRepository =
+			projectPrioritizerEntityRepository;
 	}
 
 	@Autowired
 	private ProjectComparatorEntityDALO _projectComparatorEntityDALO;
 
-	private ProjectPrioritizerRepository _projectPrioritizerRepository;
+	private ProjectPrioritizerEntityRepository
+		_projectPrioritizerEntityRepository;
 
 	@Autowired
 	private ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project.repository;
 
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectEntityDALO;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectRepository extends BaseEntityRepository<Project> {
+public class ProjectEntityRepository extends BaseEntityRepository<Project> {
 
 	public Project add(
 		String name, int position, int priority, Date startDate,
@@ -67,17 +67,19 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 		}
 
 		for (Project project : getAll()) {
-			project.addBuilds(_buildRepository.getAll(project));
+			project.addBuilds(_buildEntityRepository.getAll(project));
 		}
 
 		_initializedRelationships = true;
 	}
 
-	public void setBuildRepository(BuildRepository buildRepository) {
-		_buildRepository = buildRepository;
+	public void setBuildRepository(
+		BuildEntityRepository buildEntityRepository) {
+
+		_buildEntityRepository = buildEntityRepository;
 	}
 
-	private BuildRepository _buildRepository;
+	private BuildEntityRepository _buildEntityRepository;
 	private boolean _initializedRelationships;
 
 	@Autowired

@@ -7,13 +7,13 @@ package com.liferay.jethr0.jenkins;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.jms.JMSEventHandler;
 
@@ -34,24 +34,24 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class JenkinsQueue {
 
 	public void initialize() {
-		_jenkinsCohortRepository.initialize();
-		_jenkinsNodeRepository.initialize();
-		_jenkinsServerRepository.initialize();
+		_jenkinsCohortEntityRepository.initialize();
+		_jenkinsNodeEntityRepository.initialize();
+		_jenkinsServerEntityRepository.initialize();
 
-		_jenkinsCohortRepository.setJenkinsServerRepository(
-			_jenkinsServerRepository);
+		_jenkinsCohortEntityRepository.setJenkinsServerRepository(
+			_jenkinsServerEntityRepository);
 
-		_jenkinsNodeRepository.setJenkinsServerRepository(
-			_jenkinsServerRepository);
+		_jenkinsNodeEntityRepository.setJenkinsServerRepository(
+			_jenkinsServerEntityRepository);
 
-		_jenkinsServerRepository.setJenkinsCohortRepository(
-			_jenkinsCohortRepository);
-		_jenkinsServerRepository.setJenkinsNodeRepository(
-			_jenkinsNodeRepository);
+		_jenkinsServerEntityRepository.setJenkinsCohortRepository(
+			_jenkinsCohortEntityRepository);
+		_jenkinsServerEntityRepository.setJenkinsNodeRepository(
+			_jenkinsNodeEntityRepository);
 
-		_jenkinsCohortRepository.initializeRelationships();
-		_jenkinsNodeRepository.initializeRelationships();
-		_jenkinsServerRepository.initializeRelationships();
+		_jenkinsCohortEntityRepository.initializeRelationships();
+		_jenkinsNodeEntityRepository.initializeRelationships();
+		_jenkinsServerEntityRepository.initializeRelationships();
 
 		invoke();
 
@@ -80,13 +80,17 @@ public class JenkinsQueue {
 	}
 
 	public void update() {
-		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {
+		for (JenkinsServer jenkinsServer :
+				_jenkinsServerEntityRepository.getAll()) {
+
 			jenkinsServer.update();
 		}
 
 		_buildQueue.sort();
 
-		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {
+		for (JenkinsServer jenkinsServer :
+				_jenkinsServerEntityRepository.getAll()) {
+
 			for (JenkinsNode jenkinsNode : jenkinsServer.getJenkinsNodes()) {
 				if (!jenkinsNode.isAvailable()) {
 					continue;
@@ -100,15 +104,15 @@ public class JenkinsQueue {
 
 				build.setState(Build.State.QUEUED);
 
-				BuildRun buildRun = _buildRunRepository.add(
+				BuildRun buildRun = _buildRunEntityRepository.add(
 					build, BuildRun.State.QUEUED);
 
 				_jmsEventHandler.send(
 					jenkinsServer,
 					String.valueOf(buildRun.getInvokeJSONObject(jenkinsNode)));
 
-				_buildRepository.update(build);
-				_buildRunRepository.update(buildRun);
+				_buildEntityRepository.update(build);
+				_buildRunEntityRepository.update(buildRun);
 			}
 		}
 	}
@@ -116,24 +120,24 @@ public class JenkinsQueue {
 	private static final Log _log = LogFactory.getLog(JenkinsQueue.class);
 
 	@Autowired
+	private BuildEntityRepository _buildEntityRepository;
+
+	@Autowired
 	private BuildQueue _buildQueue;
 
 	@Autowired
-	private BuildRepository _buildRepository;
-
-	@Autowired
-	private BuildRunRepository _buildRunRepository;
+	private BuildRunEntityRepository _buildRunEntityRepository;
 
 	private boolean _initialized;
 
 	@Autowired
-	private JenkinsCohortRepository _jenkinsCohortRepository;
+	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
 
 	@Autowired
-	private JenkinsNodeRepository _jenkinsNodeRepository;
+	private JenkinsNodeEntityRepository _jenkinsNodeEntityRepository;
 
 	@Autowired
-	private JenkinsServerRepository _jenkinsServerRepository;
+	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
 
 	@Value("${jenkins.server.urls}")
 	private String _jenkinsServerURLs;

@@ -187,6 +187,28 @@ definition {
 			value1 = ${searchAssetTitle});
 	}
 
+	macro viewSuggestionResultDetailsURL {
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = ${searchAssetTitle});
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = ${searchAssetTitle});
+
+		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = ${searchAssetTitle});
+
+		AssertTextEquals(
+			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			value1 = ${searchAssetTitle});
+
+		var currentURL = selenium.getCurrentUrl();
+
+		if (!(contains(${currentURL}, ${expectedURL}))) {
+			fail("The suggestion result details page must use the URL of the page the user came from");
+		}
+	}
+
 	macro viewSuggestions {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
 			var suggestionContributorDisplayGroupName = "Suggestions";

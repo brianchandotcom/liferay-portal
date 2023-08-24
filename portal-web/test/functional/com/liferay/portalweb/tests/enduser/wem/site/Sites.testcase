@@ -13,7 +13,9 @@ definition {
 	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
-		User.firstLoginPG();
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
 	}
 
 	@description = "Inactive and reactive site."

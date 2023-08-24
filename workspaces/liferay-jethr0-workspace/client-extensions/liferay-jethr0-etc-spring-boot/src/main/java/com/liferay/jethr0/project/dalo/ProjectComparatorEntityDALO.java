@@ -17,7 +17,8 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectComparatorEntityDALO extends BaseEntityDALO<ProjectComparator> {
+public class ProjectComparatorEntityDALO
+	extends BaseEntityDALO<ProjectComparator> {
 
 	@Override
 	public EntityFactory<ProjectComparator> getEntityFactory() {

@@ -128,7 +128,8 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 			nodeJSONObject.put("primaryLabel", primaryLabel);
 
-			JenkinsNode jenkinsNode = _jenkinsNodeEntityDALO.create(nodeJSONObject);
+			JenkinsNode jenkinsNode = _jenkinsNodeEntityDALO.create(
+				nodeJSONObject);
 
 			jenkinsNode.setJenkinsServer(jenkinsServer);
 

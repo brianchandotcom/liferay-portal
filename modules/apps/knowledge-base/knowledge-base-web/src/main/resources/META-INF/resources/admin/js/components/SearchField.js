@@ -9,6 +9,7 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
+import classnames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -36,16 +37,28 @@ const highlithKeywordInText = (text, keyword) => {
 };
 
 const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
+	const [selectedResultId, setSelectedResultId] = useState();
+
 	return filteredItems.length ? (
 		<ClayList role="list">
 			{filteredItems.map((item) => {
 				return (
-					<ClayList.ItemField expand key={item.id}>
+					<ClayList.ItemField
+						className={classnames({
+							'knowledge-base-navigation-item-active':
+								item.id === selectedResultId,
+						})}
+						expand
+						key={item.id}
+					>
 						<ClayLink
 							className="p-1"
 							displayType="secondary"
 							href={handleOnclickItem ? '#' : item.href}
-							onClick={() => handleOnclickItem(item)}
+							onClick={() => {
+								setSelectedResultId(item.id);
+								handleOnclickItem(item);
+							}}
 						>
 							<ClayIcon
 								className="mr-2"

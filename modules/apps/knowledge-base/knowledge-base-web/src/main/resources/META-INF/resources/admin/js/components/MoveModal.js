@@ -62,6 +62,8 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 		onItemClick(selectedItem[0]);
 	};
 
+	const [selectedItemId, setSelectedItemId] = useState();
+
 	return (
 		<div className="container-fluid p-3">
 			<SearchField
@@ -78,20 +80,17 @@ export default function MoveModal({items: initialItems, moveParentKBObjectId}) {
 					onItemMove={handleItemMove}
 					showExpanderOnHover={false}
 				>
-					{(item, selection) => {
+					{(item) => {
 						return (
 							<ClayTreeView.Item
 								className={classnames({
-									'knowledge-base-navigation-item-active': selection.has(
-										item.id
-									),
+									'knowledge-base-navigation-item-active':
+										item.id === selectedItemId,
 								})}
 								onClick={(event) => {
 									event.stopPropagation();
 
-									if (!selection.has(item.id)) {
-										selection.toggle(item.id);
-									}
+									setSelectedItemId(item.id);
 
 									onItemClick(item);
 								}}

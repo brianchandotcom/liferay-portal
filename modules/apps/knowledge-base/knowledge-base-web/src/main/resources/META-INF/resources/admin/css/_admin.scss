@@ -65,16 +65,6 @@ $toolbarZIndex: 971;
 			border-right: 1px solid $gray-300;
 		}
 
-		.knowledge-base-navigation-item-active {
-			background-color: $gray-200;
-			color: $dark;
-			font-weight: 600;
-
-			a.link-secondary {
-				color: $dark;
-			}
-		}
-
 		.sidebar {
 			border-right: 1px solid $secondary-l3;
 			box-shadow: none;
@@ -94,6 +84,16 @@ $toolbarZIndex: 971;
 			.active {
 				background-color: $light-d1;
 			}
+		}
+	}
+
+	.knowledge-base-navigation-item-active {
+		background-color: $gray-200;
+		color: $dark;
+		font-weight: 600;
+
+		a.link-secondary {
+			color: $dark;
 		}
 	}
 

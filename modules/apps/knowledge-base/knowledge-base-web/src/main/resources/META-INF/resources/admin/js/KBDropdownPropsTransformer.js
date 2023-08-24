@@ -49,6 +49,7 @@ const ACTIONS = {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('save'),
 			height: '50vh',
+			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: ({destinationItem, index}) => {
 				if (

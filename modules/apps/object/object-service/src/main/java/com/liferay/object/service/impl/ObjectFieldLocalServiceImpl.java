@@ -31,7 +31,6 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
-import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributorRegistry;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -53,6 +52,8 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -95,7 +96,10 @@ import java.util.Set;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -786,6 +790,18 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldPersistence.update(objectField);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ObjectFieldSettingContributor.class,
+			"object.field.setting.type.key");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	private ObjectField _addObjectField(
 			String externalReferenceCode, long userId,
 			long listTypeDefinitionId, long objectDefinitionId,
@@ -924,9 +940,8 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			ObjectFieldSettingContributor objectFieldSettingContributor =
-				_objectFieldSettingContributorRegistry.
-					getObjectFieldSettingContributor(
-						newObjectFieldSetting.getName());
+				_getObjectFieldSettingContributor(
+					newObjectFieldSetting.getName());
 
 			if (oldObjectFieldSetting == null) {
 				objectFieldSettingContributor.addObjectFieldSetting(
@@ -1084,6 +1099,19 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return objectField;
+	}
+
+	private ObjectFieldSettingContributor _getObjectFieldSettingContributor(
+		String key) {
+
+		ObjectFieldSettingContributor objectFieldSettingContributor =
+			_serviceTrackerMap.getService(key);
+
+		if (objectFieldSettingContributor != null) {
+			return objectFieldSettingContributor;
+		}
+
+		return _serviceTrackerMap.getService("default");
 	}
 
 	private ObjectField _getObjectRelationshipField(
@@ -1527,10 +1555,6 @@ public class ObjectFieldLocalServiceImpl
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
-	private ObjectFieldSettingContributorRegistry
-		_objectFieldSettingContributorRegistry;
-
-	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
@@ -1558,6 +1582,8 @@ public class ObjectFieldLocalServiceImpl
 		"datemodified", "externalreferencecode", "groupid", "id",
 		"lastpublishdate", "modifieddate", "status", "statusbyuserid",
 		"statusbyusername", "statusdate", "userid", "username");
+	private ServiceTrackerMap<String, ObjectFieldSettingContributor>
+		_serviceTrackerMap;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

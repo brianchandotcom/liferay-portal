@@ -114,13 +114,13 @@ AUI.add(
 
 					handles.length = 0;
 
-					const overlay = instance._overlay;
+					const trigger = instance._activeTrigger;
+
+					const overlay = instance._overlayMap.get(trigger.generateID());
 
 					if (overlay) {
 						overlay.hide();
 					}
-
-					const trigger = instance._activeTrigger;
 
 					instance._activeMenu = null;
 					instance._activeTrigger = null;
@@ -204,7 +204,15 @@ AUI.add(
 			_getMenu(trigger) {
 				const instance = this;
 
-				let overlay = instance._overlay;
+				if (!instance._overlayMap) {
+					instance._overlayMap = new Map();
+				}
+
+				if (!instance._trigger) {
+					instance._trigger = trigger;
+				}
+
+				let overlay = instance._overlayMap.get(trigger.generateID());
 
 				if (!overlay) {
 					const MenuOverlay = A.Component.create({
@@ -243,7 +251,7 @@ AUI.add(
 						instance._overlay = null;
 					});
 
-					instance._overlay = overlay;
+					instance._overlayMap.set(trigger.generateID(), overlay);
 				}
 				else {
 					overlay.set('align.node', trigger);
@@ -384,7 +392,7 @@ AUI.add(
 				if (menu) {
 					const cssClass = trigger.attr(ATTR_CLASS_NAME);
 
-					const overlay = instance._overlay;
+					const overlay = instance._overlayMap.get(trigger.generateID());
 
 					const align = overlay.get('align');
 
@@ -524,8 +532,10 @@ AUI.add(
 
 				let focusManager = menuInstance._focusManager;
 
+				const trigger = menuInstance._trigger;
+
 				if (!focusManager) {
-					const bodyNode = menuInstance._overlay.bodyNode;
+					const bodyNode = menuInstance._overlayMap.get(trigger.generateID()).bodyNode;
 
 					bodyNode.plug(A.Plugin.NodeFocusManager, {
 						circular: true,

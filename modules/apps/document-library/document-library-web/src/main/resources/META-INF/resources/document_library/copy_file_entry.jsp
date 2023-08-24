@@ -31,6 +31,8 @@ dlCopyEntryDisplayContext.setViewAttributes();
 				"sourceFileEntryId", dlCopyEntryDisplayContext.getFileEntryId()
 			).put(
 				"sourceFileName", dlCopyEntryDisplayContext.getFileName()
+			).put(
+				"sourceRepositoryId", dlCopyEntryDisplayContext.getSourceRepositoryId()
 			).build()
 		%>'
 	/>

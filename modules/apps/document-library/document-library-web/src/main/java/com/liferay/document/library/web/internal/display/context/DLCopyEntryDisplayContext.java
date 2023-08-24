@@ -121,10 +121,16 @@ public class DLCopyEntryDisplayContext {
 		return String.valueOf(
 			itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-				_getGroup(_getSourceRepositoryId()),
+				_getGroup(getSourceRepositoryId()),
 				_themeDisplay.getScopeGroupId(), _getItemSelectedEventName(),
 				_getFolderItemSelectorCriterion(
-					_getSourceFolderId(), _getSourceRepositoryId())));
+					_getSourceFolderId(), getSourceRepositoryId())));
+	}
+
+	public long getSourceRepositoryId() throws PortalException {
+		Repository repository = _getSourceRepository();
+
+		return repository.getRepositoryId();
 	}
 
 	public void setViewAttributes() {
@@ -208,12 +214,6 @@ public class DLCopyEntryDisplayContext {
 		}
 
 		return _sourceRepository;
-	}
-
-	private long _getSourceRepositoryId() throws PortalException {
-		Repository repository = _getSourceRepository();
-
-		return repository.getRepositoryId();
 	}
 
 	private long _fileEntryId = -1;

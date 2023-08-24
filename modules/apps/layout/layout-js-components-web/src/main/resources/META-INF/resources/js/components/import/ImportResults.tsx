@@ -37,7 +37,7 @@ const RESULTS_DATA = {
 };
 
 interface Result {
-	message: string;
+	messages: string[];
 	name: string;
 }
 
@@ -128,32 +128,42 @@ function ImportResultsSection({
 			>
 				<ClayPanel.Body className="c-px-4 sheet-row">
 					<ul className="list-group sidebar-list-group">
-						{results.map((result, index) => (
-							<li
-								className="list-group-item list-group-item-flex p-0"
-								key={index}
-							>
-								<ClayLayout.ContentCol expand>
-									<div className="list-group-title">
-										{result.name}
-									</div>
+						{results.map((result, index) => {
+							const messages = result.messages
+								? result.messages
+								: defaultMessage
+								? [defaultMessage]
+								: null;
 
-									{(result.message || defaultMessage) && (
-										<div
-											className={`list-group-subtext ${cssClass}`}
-										>
-											{result.message || defaultMessage}
+							return (
+								<li
+									className="list-group-item list-group-item-flex p-0"
+									key={index}
+								>
+									<ClayLayout.ContentCol expand>
+										<div className="list-group-title">
+											{result.name}
 										</div>
-									)}
-								</ClayLayout.ContentCol>
 
-								<ClayLayout.ContentCol>
-									<div className="list-group-subtitle">
-										{fileName}
-									</div>
-								</ClayLayout.ContentCol>
-							</li>
-						))}
+										{messages &&
+											messages.map((message) => (
+												<div
+													className={`list-group-subtext ${cssClass}`}
+													key={message}
+												>
+													{message}
+												</div>
+											))}
+									</ClayLayout.ContentCol>
+
+									<ClayLayout.ContentCol>
+										<div className="list-group-subtitle">
+											{fileName}
+										</div>
+									</ClayLayout.ContentCol>
+								</li>
+							);
+						})}
 					</ul>
 				</ClayPanel.Body>
 			</ClayPanel>

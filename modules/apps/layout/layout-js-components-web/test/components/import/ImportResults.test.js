@@ -9,40 +9,33 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 const SUCCESS_RESULT = {
-	imported: [
+	success: [
 		{
-			message: '',
 			name: 'fragment 1',
-			type: 'fragment',
 		},
 	],
 };
 
 const SUCCESS_WARNING_AND_INVALID_RESULT = {
-	'imported': [
+	error: [
 		{
-			message: '',
-			name: 'fragment 1',
-			type: 'fragment',
-		},
-	],
-	'imported-draft': [
-		{
-			message: 'This is a warning message',
-			name: 'fragment 2',
-			type: 'fragment',
-		},
-		{
-			message: 'This is another warning message',
-			name: 'fragment 3',
-			type: 'fragment',
-		},
-	],
-	'invalid': [
-		{
-			message: 'This is an invalid message',
+			messages: ['This is an invalid message'],
 			name: 'fragment 4',
-			type: 'fragment',
+		},
+	],
+	success: [
+		{
+			name: 'fragment 1',
+		},
+	],
+	warning: [
+		{
+			messages: ['This is a warning message'],
+			name: 'fragment 2',
+		},
+		{
+			messages: ['This is another warning message'],
+			name: 'fragment 3',
 		},
 	],
 };

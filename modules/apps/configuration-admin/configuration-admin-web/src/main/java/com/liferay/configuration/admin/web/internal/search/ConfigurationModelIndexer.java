@@ -118,44 +118,6 @@ public class ConfigurationModelIndexer
 		return ConfigurationModelIndexer.class.getName();
 	}
 
-	public BundleTracker<Collection<ConfigurationModel>> initialize() {
-		Map<String, Collection<ConfigurationModel>> configurationModelsMap =
-			new ConcurrentHashMap<>();
-
-		Bundle[] bundles = _bundleContext.getBundles();
-
-		List<ConfigurationModel> configurationModelsList = new ArrayList<>();
-
-		for (Bundle bundle : bundles) {
-			if (bundle.getState() != Bundle.ACTIVE) {
-				continue;
-			}
-
-			Map<String, ConfigurationModel> configurationModels =
-				_configurationModelRetriever.getConfigurationModels(
-					bundle, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
-
-			configurationModelsList.addAll(configurationModels.values());
-
-			configurationModelsMap.put(
-				bundle.getSymbolicName(), configurationModels.values());
-		}
-
-		reindex(configurationModelsList);
-
-		_commit();
-
-		BundleTracker<Collection<ConfigurationModel>> bundleTracker =
-			new BundleTracker<>(
-				_bundleContext, Bundle.ACTIVE,
-				new ConfigurationModelsBundleTrackerCustomizer(
-					configurationModelsMap));
-
-		bundleTracker.open();
-
-		return bundleTracker;
-	}
-
 	@Override
 	public void reindex(Collection<ConfigurationModel> configurationModels) {
 		if (_indexStatusManager.isIndexReadOnly() ||
@@ -526,7 +488,41 @@ public class ConfigurationModelIndexer
 			}
 
 			if (_clusterMasterExecutor.isMaster()) {
-				initialize();
+				Map<String, Collection<ConfigurationModel>>
+					configurationModelsMap = new ConcurrentHashMap<>();
+
+				Bundle[] bundles = _bundleContext.getBundles();
+
+				List<ConfigurationModel> configurationModelsList =
+					new ArrayList<>();
+
+				for (Bundle bundle : bundles) {
+					if (bundle.getState() != Bundle.ACTIVE) {
+						continue;
+					}
+
+					Map<String, ConfigurationModel> configurationModels =
+						_configurationModelRetriever.getConfigurationModels(
+							bundle, ExtendedObjectClassDefinition.Scope.SYSTEM,
+							null);
+
+					configurationModelsList.addAll(
+						configurationModels.values());
+
+					configurationModelsMap.put(
+						bundle.getSymbolicName(), configurationModels.values());
+				}
+
+				reindex(configurationModelsList);
+
+				_commit();
+
+				_bundleTracker = new BundleTracker<>(
+					_bundleContext, Bundle.ACTIVE,
+					new ConfigurationModelsBundleTrackerCustomizer(
+						configurationModelsMap));
+
+				_bundleTracker.open();
 			}
 			else {
 				NoticeableFuture<Void> noticeableFuture =

@@ -115,7 +115,9 @@ Sets the port number assigned to the BrowserMob Proxy server.
 
 ### report.type
 
-Sets type of report to generate. The only supported type currently is `usage`.
+Sets the type of report to generate. Available report types are `test-properties` and `usage`.
+* `test-properties`: This generates a CSV file of tests and their properties specified in `test.csv.report.property.names`.
+* `usage`: This generates an HTML file showing usages of all macros in a project.
 
 ### save.screenshot
 

@@ -16,6 +16,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
@@ -40,6 +41,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -126,6 +128,7 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
 			_groupParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_groupParentFolder.getGroupId()),
@@ -172,6 +175,7 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
 			_groupParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_groupParentFolder.getGroupId()),
@@ -212,6 +216,7 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
 			_groupParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_groupParentFolder.getGroupId()),
@@ -254,6 +259,7 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _groupParentFolder.getFolderId(),
 			_groupParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_groupParentFolder.getGroupId()),
@@ -295,6 +301,7 @@ public class
 		Folder folder = _dlAppService.copyFolder(
 			_depotGroup.getGroupId(), _depotParentFolder.getFolderId(),
 			_group.getGroupId(), _groupParentFolder.getFolderId(),
+			new HashMap<>(),
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_groupParentFolder.getGroupId()),
@@ -348,6 +355,7 @@ public class
 		Folder folder = _dlAppService.copyFolder(
 			_depotGroup.getGroupId(), _depotParentFolder.getFolderId(),
 			_group.getGroupId(), _groupParentFolder.getFolderId(),
+			new HashMap<>(),
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_groupParentFolder.getGroupId()),

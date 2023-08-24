@@ -199,7 +199,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		// Scheduler
 
 		if (entry.isRepeating()) {
-			_schedulerEngineHelper.unschedule(
+			_schedulerEngineHelper.delete(
 				entry.getJobName(), entry.getSchedulerRequestName(),
 				StorageType.PERSISTED);
 		}
@@ -355,7 +355,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 
 		entry = entryPersistence.update(entry);
 
-		_schedulerEngineHelper.unschedule(
+		_schedulerEngineHelper.delete(
 			entry.getJobName(), entry.getSchedulerRequestName(),
 			StorageType.PERSISTED);
 	}

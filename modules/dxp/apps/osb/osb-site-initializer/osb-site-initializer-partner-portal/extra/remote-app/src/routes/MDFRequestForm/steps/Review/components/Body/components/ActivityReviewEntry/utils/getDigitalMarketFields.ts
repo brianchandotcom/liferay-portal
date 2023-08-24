@@ -5,6 +5,7 @@
 
 import {TacticKeys} from '../../../../../../../../../common/enums/mdfRequestTactics';
 import MDFRequestActivity from '../../../../../../../../../common/interfaces/mdfRequestActivity';
+import getBooleanValidation from '../../../../../../../../../common/utils/getBooleanValidation';
 import getBooleanValue from '../../../../../../../../../common/utils/getBooleanValue';
 
 export default function getDigitalMarketFields(
@@ -18,18 +19,24 @@ export default function getDigitalMarketFields(
 					?.overallMessageContentCTA,
 		},
 		{
+			title: 'How will the Liferay brand be used in the campaign?',
+			value: mdfRequestActivity.activityDescription?.howLiferayBrandUsed,
+		},
+		{
 			title: 'Do you require any assets from Liferay?',
 			value: getBooleanValue(
 				mdfRequestActivity.activityDescription
 					?.assetsLiferayRequired as string
 			),
 		},
-		{
-			title: 'How will the Liferay brand be used in the campaign?',
-			value: mdfRequestActivity.activityDescription?.howLiferayBrandUsed,
-		},
 	];
-	if (mdfRequestActivity.activityDescription?.assetsLiferayRequired) {
+
+	if (
+		getBooleanValidation(
+			mdfRequestActivity.activityDescription
+				?.assetsLiferayRequired as string
+		)
+	) {
 		digitalMarketingFields.push({
 			title: 'Please describe including specifications and due dates',
 			value:
@@ -37,6 +44,14 @@ export default function getDigitalMarketFields(
 					?.assetsLiferayDescription,
 		});
 	}
+
+	digitalMarketingFields.push({
+		title: 'Are you using any CIAB assets?',
+		value: getBooleanValue(
+			mdfRequestActivity.activityDescription?.usingCIABAssets as string
+		),
+	});
+
 	if (mdfRequestActivity.tactic.key === TacticKeys.EMAIL_CAMPAIGN) {
 		digitalMarketingFields.push(
 			{
@@ -51,19 +66,6 @@ export default function getDigitalMarketFields(
 				),
 			}
 		);
-		if (mdfRequestActivity.activityDescription?.nurtureDripCampaign) {
-			digitalMarketingFields.push({
-				title: 'How many in series?',
-				value: mdfRequestActivity.activityDescription?.manySeries,
-			});
-		}
-		digitalMarketingFields.push({
-			title: 'Are you using any CIAB assets?',
-			value: getBooleanValue(
-				mdfRequestActivity.activityDescription
-					?.usingCIABAssets as string
-			),
-		});
 	}
 	else {
 		digitalMarketingFields.push(
@@ -82,6 +84,18 @@ export default function getDigitalMarketFields(
 				value: mdfRequestActivity.activityDescription?.ad,
 			}
 		);
+	}
+
+	if (
+		getBooleanValidation(
+			mdfRequestActivity.activityDescription
+				?.nurtureDripCampaign as string
+		)
+	) {
+		digitalMarketingFields.push({
+			title: 'How many in series?',
+			value: mdfRequestActivity.activityDescription?.manySeries,
+		});
 	}
 
 	return digitalMarketingFields;

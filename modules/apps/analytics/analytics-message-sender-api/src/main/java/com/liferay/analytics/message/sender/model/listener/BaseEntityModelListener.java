@@ -85,32 +85,20 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 			User user = userLocalService.fetchUser(contact.getClassPK());
 
-			if (!StringUtil.equalsIgnoreCase(eventType, "delete")) {
-				if ((user == null) ||
-					Objects.equals(
-						user.getStatus(), WorkflowConstants.STATUS_INACTIVE) ||
-					isUserExcluded(user)) {
+			if ((!StringUtil.equalsIgnoreCase(eventType, "delete") &&
+				 !isUserActive(user)) ||
+				isUserExcluded(user)) {
 
-					return;
-				}
-			}
-			else if (isUserExcluded(user)) {
 				return;
 			}
 		}
 		else if (modelClassName.equals(User.class.getName())) {
 			User user = (User)model;
 
-			if (!StringUtil.equalsIgnoreCase(eventType, "delete")) {
-				if ((user == null) ||
-					Objects.equals(
-						user.getStatus(), WorkflowConstants.STATUS_INACTIVE) ||
-					isUserExcluded(user)) {
+			if ((!StringUtil.equalsIgnoreCase(eventType, "delete") &&
+				 !isUserActive(user)) ||
+				isUserExcluded(user)) {
 
-					return;
-				}
-			}
-			else if (isUserExcluded(user)) {
 				return;
 			}
 		}
@@ -355,6 +343,17 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		}
 
 		return false;
+	}
+
+	protected boolean isUserActive(User user) {
+		if ((user == null) ||
+			Objects.equals(
+				user.getStatus(), WorkflowConstants.STATUS_INACTIVE)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isUserExcluded(User user) {
@@ -726,10 +725,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			User user = userLocalService.fetchUser((long)associationClassPK);
 
 			if (!eventType.equals("deleteAssociation") &&
-				((user == null) ||
-				 Objects.equals(
-					 user.getStatus(), WorkflowConstants.STATUS_INACTIVE) ||
-				 isUserExcluded(user))) {
+				(!isUserActive(user) || isUserExcluded(user))) {
 
 				return;
 			}

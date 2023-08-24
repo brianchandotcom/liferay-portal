@@ -13,11 +13,9 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,10 +54,7 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 	protected boolean isExcluded(Contact contact) {
 		User user = userLocalService.fetchUser(contact.getClassPK());
 
-		if ((user == null) ||
-			Objects.equals(
-				user.getStatus(), WorkflowConstants.STATUS_INACTIVE)) {
-
+		if (!isUserActive(user)) {
 			return true;
 		}
 

@@ -255,6 +255,20 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			return fragmentCollection;
 		}
 		else if (Objects.equals(
+					FragmentsImportStrategy.KEEP_BOTH,
+					fragmentsImportStrategy)) {
+
+			fragmentCollection =
+				_fragmentCollectionService.addFragmentCollection(
+					groupId,
+					_fragmentCollectionLocalService.
+						generateFragmentCollectionKey(
+							groupId, fragmentCollectionKey),
+					_fragmentCollectionLocalService.
+						getUniqueFragmentCollectionName(groupId, name),
+					description, ServiceContextThreadLocal.getServiceContext());
+		}
+		else if (Objects.equals(
 					FragmentsImportStrategy.OVERWRITE,
 					fragmentsImportStrategy)) {
 
@@ -332,6 +346,20 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					groupId, fragmentCollectionId, fragmentEntryKey, name, css,
 					html, js, cacheable, configuration, icon, 0, type,
+					typeOptions, status,
+					ServiceContextThreadLocal.getServiceContext());
+			}
+			else if (Objects.equals(
+						FragmentsImportStrategy.KEEP_BOTH,
+						fragmentsImportStrategy)) {
+
+				fragmentEntry = _fragmentEntryService.addFragmentEntry(
+					groupId, fragmentCollectionId,
+					_fragmentEntryLocalService.generateFragmentEntryKey(
+						groupId, fragmentEntryKey),
+					_fragmentEntryLocalService.getUniqueFragmentEntryName(
+						groupId, fragmentCollectionId, name),
+					css, html, js, cacheable, configuration, icon, 0, type,
 					typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 			}
@@ -914,6 +942,23 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					fragmentComposition =
 						_fragmentCompositionService.addFragmentComposition(
 							groupId, fragmentCollectionId, entry.getKey(), name,
+							description, definitionData, 0L,
+							WorkflowConstants.STATUS_APPROVED,
+							ServiceContextThreadLocal.getServiceContext());
+				}
+				else if (Objects.equals(
+							FragmentsImportStrategy.KEEP_BOTH,
+							fragmentsImportStrategy)) {
+
+					fragmentComposition =
+						_fragmentCompositionService.addFragmentComposition(
+							groupId, fragmentCollectionId,
+							_fragmentCompositionLocalService.
+								generateFragmentCompositionKey(
+									groupId, entry.getKey()),
+							_fragmentCompositionLocalService.
+								getUniqueFragmentCompositionName(
+									groupId, fragmentCollectionId, name),
 							description, definitionData, 0L,
 							WorkflowConstants.STATUS_APPROVED,
 							ServiceContextThreadLocal.getServiceContext());

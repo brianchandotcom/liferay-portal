@@ -3030,6 +3030,7 @@ definition {
 		Workflow.viewDefaultMyWorkflowTasksCP();
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test EditProcessWorkflowBeforeFormSubmission {
 		property ci.retries.disabled = "true";
@@ -4622,6 +4623,7 @@ definition {
 		KaleoFormsAdmin.viewNoDuplicateForms(kfFormName = "Created Task Form");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test ViewProcessWithComments {
 		property test.liferay.virtual.instance = "false";

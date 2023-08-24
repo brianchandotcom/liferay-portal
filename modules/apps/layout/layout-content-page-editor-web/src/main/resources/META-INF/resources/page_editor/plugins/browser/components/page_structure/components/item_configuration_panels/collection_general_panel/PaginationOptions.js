@@ -20,6 +20,7 @@ export function PaginationOptions({
 	handleConfigurationChanged,
 	initialNumberOfItemsPerPage,
 	initialNumberOfPages,
+	warningMessage = '',
 }) {
 	const collectionNumberOfItemsPerPageId = useId();
 	const collectionNumberOfPagesId = useId();
@@ -117,7 +118,7 @@ export function PaginationOptions({
 
 			<ClayForm.Group
 				className={classNames({
-					'has-warning': numberOfItemsPerPageError,
+					'has-warning': numberOfItemsPerPageError || warningMessage,
 				})}
 				small
 			>
@@ -139,6 +140,8 @@ export function PaginationOptions({
 				{numberOfItemsPerPageError && (
 					<WarningMessage message={numberOfItemsPerPageError} />
 				)}
+
+				{warningMessage && <WarningMessage message={warningMessage} />}
 			</ClayForm.Group>
 		</>
 	);
@@ -149,4 +152,5 @@ PaginationOptions.propTypes = {
 	handleConfigurationChanged: PropTypes.func.isRequired,
 	initialNumberOfItemsPerPage: PropTypes.number.isRequired,
 	initialNumberOfPages: PropTypes.number.isRequired,
+	warningMessage: PropTypes.string,
 };

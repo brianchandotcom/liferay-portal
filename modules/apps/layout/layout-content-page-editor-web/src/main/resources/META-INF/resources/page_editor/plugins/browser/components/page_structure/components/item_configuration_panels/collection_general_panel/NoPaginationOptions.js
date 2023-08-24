@@ -22,6 +22,7 @@ export function NoPaginationOptions({
 	displayAllItems,
 	handleConfigurationChanged,
 	initialNumberOfItems,
+	warningMessage = '',
 }) {
 	const collectionNumberOfItemsId = useId();
 	const isMounted = useIsMounted();
@@ -83,7 +84,12 @@ export function NoPaginationOptions({
 	};
 
 	return (
-		<>
+		<ClayForm.Group
+			className={classNames({
+				'has-warning': warningMessage,
+			})}
+			small
+		>
 			<div className="mb-2 pt-1">
 				<ClayCheckbox
 					checked={displayAllItems}
@@ -92,23 +98,11 @@ export function NoPaginationOptions({
 				/>
 			</div>
 
-			{displayAllItems && (
-				<p className="mt-1 small text-secondary">
-					{sub(
-						Liferay.Language.get(
-							'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x.-we-strongly-recommend-using-pagination-instead'
-						),
-						config.searchContainerPageMaxDelta
-					)}
-				</p>
-			)}
-
 			{!displayAllItems && (
 				<ClayForm.Group
 					className={classNames({
 						'has-warning': numberOfItemsError,
 					})}
-					small
 				>
 					<label htmlFor={collectionNumberOfItemsId}>
 						{Liferay.Language.get(
@@ -127,10 +121,6 @@ export function NoPaginationOptions({
 						value={numberOfItems || ''}
 					/>
 
-					{numberOfItemsError && (
-						<WarningMessage message={numberOfItemsError} />
-					)}
-
 					<p className="mt-1 small text-secondary">
 						{sub(
 							Liferay.Language.get(
@@ -139,9 +129,15 @@ export function NoPaginationOptions({
 							config.searchContainerPageMaxDelta
 						)}
 					</p>
+
+					{numberOfItemsError && (
+						<WarningMessage message={numberOfItemsError} />
+					)}
 				</ClayForm.Group>
 			)}
-		</>
+
+			{warningMessage && <WarningMessage message={warningMessage} />}
+		</ClayForm.Group>
 	);
 }
 
@@ -150,4 +146,5 @@ NoPaginationOptions.propTypes = {
 	displayAllItems: PropTypes.bool.isRequired,
 	handleConfigurationChanged: PropTypes.func.isRequired,
 	initialNumberOfItems: PropTypes.number.isRequired,
+	warningMessage: PropTypes.string,
 };

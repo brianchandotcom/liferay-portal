@@ -110,6 +110,32 @@ export function CollectionGeneralPanel({item}) {
 		],
 	});
 
+	const warningMessage = useCache({
+		fetcher: async () => {
+			if (!collection) {
+				return '';
+			}
+
+			const {
+				warningMessage,
+			} = await CollectionService.getCollectionWarningMessage({
+				classNameId: collection.classNameId,
+				classPK: collection.classPK,
+				layoutDataItemId: item.itemId,
+				layoutObjectReference: JSON.stringify(collection),
+				segmentsExperienceId,
+			});
+
+			return warningMessage;
+		},
+		key: [
+			CACHE_KEYS.collectionWarningMessage,
+			segmentsExperienceId,
+			item.itemId,
+			JSON.stringify(item.config),
+		],
+	});
+
 	const previewItem = useDisplayPagePreviewItem();
 
 	const optionsMenuItems = useMemo(() => {
@@ -407,6 +433,7 @@ export function CollectionGeneralPanel({item}) {
 												initialNumberOfPages={
 													initialNumberOfPages
 												}
+												warningMessage={warningMessage}
 											/>
 										) : (
 											<NoPaginationOptions
@@ -420,6 +447,7 @@ export function CollectionGeneralPanel({item}) {
 												initialNumberOfItems={
 													initialNumberOfItems
 												}
+												warningMessage={warningMessage}
 											/>
 										)}
 									</>

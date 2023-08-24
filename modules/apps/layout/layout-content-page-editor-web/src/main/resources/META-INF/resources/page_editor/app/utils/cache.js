@@ -12,6 +12,7 @@ export const CACHE_KEYS = {
 	allowedInputTypes: 'allowedInputTypes',
 	collectionConfigurationUrl: 'collectionConfigurationUrl',
 	collectionVariations: 'collectionVariations',
+	collectionWarningMessage: 'collectionWarningMessage',
 	formFields: 'formFields',
 };
 

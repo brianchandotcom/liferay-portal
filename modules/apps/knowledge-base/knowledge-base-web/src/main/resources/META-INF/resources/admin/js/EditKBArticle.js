@@ -55,32 +55,32 @@ export default function EditKBArticle({
 	const form = document.getElementById(`${namespace}fm`);
 
 	let publishButton;
+	let scheduleItemOnClick;
+	let scheduleItem;
 
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
+
+		scheduleItem = document.getElementById(`${namespace}scheduleItem`);
+
+		scheduleItemOnClick = () => {
+			openSelectionModal({
+				buttonAddLabel: Liferay.Language.get('schedule'),
+				height: '60vh',
+				multiple: true,
+				onSelect: ({scheduledDate}) => {
+					console.log(scheduledDate);
+				},
+				selectEventName: `selectKBArticleScheduleDate`,
+				size: 'md',
+				title: Liferay.Language.get('schedule-publication'),
+				url: scheduleModalURL,
+			});
+		};
 	}
 	else {
 		publishButton = document.getElementById(`${namespace}publishButton`);
 	}
-	
-	const scheduleButton = document.getElementById(
-		`${namespace}scheduleButton`
-	);
-
-	const scheduleButtonOnClick = () => {
-		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('schedule'),
-			height: '60vh',
-			multiple: true,
-			onSelect: ({scheduledDate}) => {
-				console.log(scheduledDate);
-			},
-			selectEventName: `selectKBArticleScheduleDate`,
-			size: 'md',
-			title: Liferay.Language.get('schedule-publication'),
-			url: scheduleModalURL,
-		});
-	};
 
 	const updateMultipleKBArticleAttachments = function () {
 		const selectedFileNameContainer = document.getElementById(
@@ -135,18 +135,35 @@ export default function EditKBArticle({
 		}
 	};
 
-	const eventHandlers = [
-		attachListener(publishButton, 'click', publishButtonOnClick),
-		attachListener(scheduleButton, 'click', scheduleButtonOnClick),
-		attachListener(
-			contextualSidebarButton,
-			'click',
-			contextualSidebarButtonOnClick
-		),
-		attachListener(form, 'submit', () => {
-			beforeSubmit();
-		}),
-	];
+	let eventHandlers = null;
+
+	if (Liferay.FeatureFlags['LPS-188060']) {
+		eventHandlers = [
+			attachListener(publishButton, 'click', publishButtonOnClick),
+			attachListener(scheduleItem, 'click', scheduleItemOnClick),
+			attachListener(
+				contextualSidebarButton,
+				'click',
+				contextualSidebarButtonOnClick
+			),
+			attachListener(form, 'submit', () => {
+				beforeSubmit();
+			}),
+		];
+	}
+	else {
+		eventHandlers = [
+			attachListener(publishButton, 'click', publishButtonOnClick),
+			attachListener(
+				contextualSidebarButton,
+				'click',
+				contextualSidebarButtonOnClick
+			),
+			attachListener(form, 'submit', () => {
+				beforeSubmit();
+			}),
+		];
+	}
 
 	if (!kbArticle) {
 		eventHandlers.push(

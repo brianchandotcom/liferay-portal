@@ -119,6 +119,9 @@ public class EditKBArticleDisplayContext {
 			}
 		).add(
 			dropdownItem -> {
+				dropdownItem.put(
+					"id",
+					_liferayPortletResponse.getNamespace() + "scheduleItem");
 				dropdownItem.setIcon("date-time");
 				dropdownItem.setLabel(
 					LanguageUtil.get(

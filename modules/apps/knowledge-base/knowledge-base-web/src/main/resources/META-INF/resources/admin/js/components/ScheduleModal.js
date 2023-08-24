@@ -30,7 +30,7 @@ export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
 		}
 
 		getOpener().Liferay.fire(SELECT_EVENT_NAME, {scheduledDate});
-	}, [currentDate, scheduledDate]);
+	}, [scheduledDate]);
 
 	return (
 		<div className="container-fluid p-4">

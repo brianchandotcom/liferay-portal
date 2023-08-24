@@ -30,6 +30,7 @@ interface IOrderableTableProps {
 	creationMenuItems?: React.ComponentProps<
 		typeof ClayDropDownWithItems
 	>['items'];
+	creationMenuLabel?: string;
 	disableSave?: boolean;
 	fields: Array<IField>;
 	items: Array<any>;
@@ -37,7 +38,6 @@ interface IOrderableTableProps {
 	noItemsDescription: string;
 	noItemsTitle: string;
 	onCancelButtonClick: Function;
-	onCreationButtonClick: Function;
 	onOrderChange: (args: {orderedItems: any[]}) => void;
 	onSaveButtonClick: Function;
 	title: string;
@@ -45,6 +45,7 @@ interface IOrderableTableProps {
 declare const OrderableTable: ({
 	actions,
 	creationMenuItems,
+	creationMenuLabel,
 	disableSave,
 	fields,
 	items: initialItems,
@@ -52,7 +53,6 @@ declare const OrderableTable: ({
 	noItemsDescription,
 	noItemsTitle,
 	onCancelButtonClick,
-	onCreationButtonClick,
 	onOrderChange,
 	onSaveButtonClick,
 	title,

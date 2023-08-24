@@ -8,7 +8,7 @@ package com.liferay.object.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Marco Leo
+ * @author Gabriel Albuquerque
  */
 public class ObjectFieldSystemException extends PortalException {
 

@@ -16,7 +16,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -44,7 +43,9 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -187,22 +188,41 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			if (Objects.equals(endpoint.getMethod(), Http.Method.GET) &&
 				operationId.endsWith("Page")) {
 
-				operation.setParameters(
-					ListUtil.fromArray(
+				List<Parameter> parameters = new ArrayList<>();
+
+				if (Objects.equals(
+						endpoint.getScope(),
+						APIApplication.Endpoint.Scope.GROUP)) {
+
+					parameters.add(
 						new Parameter() {
 							{
-								setIn("query");
-								setName("page");
+								setIn("path");
+								setName("scopeKey");
+								setRequired(true);
 								setSchema(new StringSchema());
 							}
-						},
-						new Parameter() {
-							{
-								setIn("query");
-								setName("pageSize");
-								setSchema(new StringSchema());
-							}
-						}));
+						});
+				}
+
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("query");
+							setName("page");
+							setSchema(new StringSchema());
+						}
+					});
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("query");
+							setName("pageSize");
+							setSchema(new StringSchema());
+						}
+					});
+
+				operation.setParameters(parameters);
 			}
 
 			MediaType mediaType = new MediaType() {

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -296,7 +297,12 @@ public class JournalUtil {
 			return;
 		}
 
-		if (MapUtil.isEmpty(_customTokens)) {
+		if (MapUtil.isEmpty(_customTokens) &&
+			ArrayUtil.isNotEmpty(
+				journalServiceConfiguration.customTokenNames()) &&
+			ArrayUtil.isNotEmpty(
+				journalServiceConfiguration.customTokenValues())) {
+
 			synchronized (JournalUtil.class) {
 				_customTokens = new HashMap<>();
 

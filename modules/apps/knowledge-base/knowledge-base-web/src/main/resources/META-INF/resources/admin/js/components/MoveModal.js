@@ -141,5 +141,5 @@ itemShape.children = PropTypes.arrayOf(PropTypes.shape(itemShape));
 
 MoveModal.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.shape(itemShape)),
-	moveParentKBObjectId: PropTypes.number.isRequired,
+	moveParentKBObjectId: PropTypes.string.isRequired,
 };

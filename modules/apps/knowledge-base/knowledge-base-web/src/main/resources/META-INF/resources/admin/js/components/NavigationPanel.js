@@ -146,6 +146,7 @@ export default function NavigationPanel({
 									})}
 								>
 									<ClayIcon
+										aria-label={item.name}
 										symbol={ITEM_TYPES_SYMBOL[item.type]}
 									/>
 
@@ -167,6 +168,7 @@ export default function NavigationPanel({
 												}}
 											>
 												<ClayIcon
+													aria-label={item.name}
 													symbol={
 														ITEM_TYPES_SYMBOL[
 															item.type

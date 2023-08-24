@@ -306,10 +306,6 @@
 	<bean class="com.liferay.social.kernel.util.SocialConfigurationUtil" id="com.liferay.social.kernel.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.social.kernel.util.SocialConfiguration" />
 	</bean>
-	<bean class="com.liferay.portlet.social.util.SocialRelationTypesImpl" id="com.liferay.social.kernel.util.SocialRelationTypes" />
-	<bean class="com.liferay.social.kernel.util.SocialRelationTypesUtil" id="com.liferay.social.kernel.util.SocialRelationTypesUtil">
-		<property name="socialRelationTypes" ref="com.liferay.social.kernel.util.SocialRelationTypes" />
-	</bean>
 	<bean class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" id="com.liferay.users.admin.kernel.util.UsersAdmin" />
 	<bean class="com.liferay.users.admin.kernel.util.UsersAdminUtil" id="com.liferay.users.admin.kernel.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.users.admin.kernel.util.UsersAdmin" />

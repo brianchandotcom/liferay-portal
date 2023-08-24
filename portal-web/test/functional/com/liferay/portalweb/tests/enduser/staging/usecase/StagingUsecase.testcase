@@ -2109,6 +2109,9 @@ definition {
 
 	@priority = 4
 	test StagingWithPublishTemplateSmoke {
+		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+
 		task ("Given: User add a new Web Content and WC Display widget to the staging site") {
 			JSONLayout.addWidgetToPublicLayout(
 				column = 1,

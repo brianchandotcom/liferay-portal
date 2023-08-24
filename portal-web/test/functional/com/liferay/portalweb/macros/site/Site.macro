@@ -1206,6 +1206,22 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro selectRoleToSeeControlMenu {
+		Button.click(button = "Select");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Check.checkToggleSwitch(
+			key_checkboxName = ${roleTitle},
+			locator1 = "Checkbox#ENABLE_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickAdd();
+
+		Button.click(button = "Save");
+	}
+
 	macro selectSiteTemplateTab {
 		if (${siteTemplateTab} == "Custom Site Templates") {
 			Navigator.gotoNavTab(navTab = "Custom Site Templates");

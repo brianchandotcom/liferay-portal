@@ -10,81 +10,94 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClayTabs from '@clayui/tabs';
+import {InputLocalized} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import OrderableTable from '../components/OrderableTable';
 
-const types = [
+const TYPES = [
 	{
-		label: 'Async',
+		label: Liferay.Language.get('asynchronous'),
 		value: 'async',
 	},
 	{
-		label: 'Headless',
+		label: Liferay.Language.get('headless'),
 		value: 'headless',
 	},
 	{
-		label: 'Link',
+		label: Liferay.Language.get('link'),
 		value: 'link',
 	},
 	{
-		label: 'Modal',
+		label: Liferay.Language.get('modal'),
 		value: 'modal',
 	},
 	{
-		label: 'Side Panel',
+		label: Liferay.Language.get('side-panel'),
 		value: 'side-panel',
 	},
 ];
 
-const messageTypes = [
+const MESSAGE_TYPES = [
 	{
-		label: 'Info',
+		label: Liferay.Language.get('info'),
 		value: 'info',
 	},
 	{
-		label: 'Secondary',
+		label: Liferay.Language.get('secondary'),
 		value: 'secondary',
 	},
 	{
-		label: 'Success',
+		label: Liferay.Language.get('success'),
 		value: 'success',
 	},
 	{
-		label: 'Danger',
+		label: Liferay.Language.get('danger'),
 		value: 'danger',
 	},
 	{
-		label: 'Warning',
+		label: Liferay.Language.get('warning'),
 		value: 'warning',
 	},
 ];
 
+const SECTIONS = {
+	ACTIONS: 'actions',
+	NEW_ITEM_ACTION: 'new-item-action',
+};
+
 const noop = () => {};
 
 const Actions = () => {
-	const [activeBreadcrumb, setActiveBreadcrumb] = useState(0);
+	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
+	const [labelTranslations, setLabelTranslations] = useState({});
+	const [
+		confirmationMessageTranslations,
+		setConfirmationMessageTranslations,
+	] = useState({});
+	const [iconSymbol, setIconSymbol] = useState('bolt');
 
 	return (
 		<ClayLayout.ContainerFluid>
 			<ClayBreadcrumb
 				items={[
 					{
-						active: activeBreadcrumb === 0,
-						href: '#1',
+						active: activeSection === SECTIONS.ACTIONS,
 						label: Liferay.Language.get('actions'),
+						onClick: () => setActiveSection(SECTIONS.ACTIONS),
 					},
 					{
-						active: activeBreadcrumb === 1,
-						href: '#2',
+						active: activeSection === SECTIONS.NEW_ITEM_ACTION,
 						label: Liferay.Language.get('new-item-action'),
+						onClick: () =>
+							setActiveSection(SECTIONS.NEW_ITEM_ACTION),
 					},
 				]}
 			/>
 
 			<ClayLayout.ContainerFluid className="bg-white mb-4 p-0 rounded-sm">
-				{activeBreadcrumb === 0 && (
+				{activeSection === SECTIONS.ACTIONS && (
 					<>
 						<h2 className="mb-0 p-4">
 							{Liferay.Language.get('actions')}
@@ -101,14 +114,14 @@ const Actions = () => {
 							<ClayTabs.Item>
 								{Liferay.Language.get('creation-actions')}
 							</ClayTabs.Item>
-
-							<ClayTabs.Item>
-								{Liferay.Language.get('bulk-actions')}
-							</ClayTabs.Item>
 						</ClayTabs>
 
 						<ClayTabs.Content active={activeTab} fade>
-							<ClayTabs.TabPane aria-labelledby="tab-1">
+							<ClayTabs.TabPane
+								aria-labelledby={Liferay.Language.get(
+									'actions'
+								)}
+							>
 								<OrderableTable
 									className="mt-0 p-1"
 									fields={[
@@ -139,27 +152,28 @@ const Actions = () => {
 									)}
 									onCancelButtonClick={noop}
 									onCreationButtonClick={() =>
-										setActiveBreadcrumb(1)
+										setActiveSection(
+											SECTIONS.NEW_ITEM_ACTION
+										)
 									}
 									onOrderChange={noop}
 									onSaveButtonClick={noop}
 								/>
 							</ClayTabs.TabPane>
 
-							<ClayTabs.TabPane aria-labelledby="tab-2">
+							<ClayTabs.TabPane
+								aria-labelledby={Liferay.Language.get(
+									'new-item-action'
+								)}
+							>
 								2. Proin efficitur imperdiet dolor, a iaculis
-								orci lacinia eu.
-							</ClayTabs.TabPane>
-
-							<ClayTabs.TabPane aria-labelledby="tab-3">
-								3. Proin efficitur imperdiet dolor, a iaculis
 								orci lacinia eu.
 							</ClayTabs.TabPane>
 						</ClayTabs.Content>
 					</>
 				)}
 
-				{activeBreadcrumb === 1 && (
+				{activeSection === SECTIONS.NEW_ITEM_ACTION && (
 					<>
 						<h2 className="mb-0 p-4">
 							{Liferay.Language.get('new-item-action')}
@@ -175,21 +189,29 @@ const Actions = () => {
 							<ClayPanel.Body>
 								<ClayLayout.Row>
 									<ClayLayout.Col size={8}>
-										<ClayForm.Group>
-											<label htmlFor="actionLabelInput">
-												{Liferay.Language.get('label')}
-											</label>
-
-											<ClayInput
-												id="actionLabelInput"
-												placeholder={Liferay.Language.get(
-													'action-name'
-												)}
-											/>
-										</ClayForm.Group>
+										<InputLocalized
+											label={Liferay.Language.get(
+												'label'
+											)}
+											onChange={setLabelTranslations}
+											placeholder={Liferay.Language.get(
+												'action-name'
+											)}
+											translations={labelTranslations}
+										/>
 									</ClayLayout.Col>
 
-									<ClayLayout.Col size={4}>
+									<ClayLayout.Col
+										className="align-items-center d-flex justify-content-center"
+										size={1}
+									>
+										<ClayIcon
+											className="w-50"
+											symbol={iconSymbol}
+										/>
+									</ClayLayout.Col>
+
+									<ClayLayout.Col size={3}>
 										<ClayForm.Group>
 											<label htmlFor="iconInput">
 												{Liferay.Language.get('icon')}
@@ -197,9 +219,15 @@ const Actions = () => {
 
 											<ClayInput
 												id="iconInput"
+												onChange={(event) =>
+													setIconSymbol(
+														event?.target.value
+													)
+												}
 												placeholder={Liferay.Language.get(
 													'select-an-option'
 												)}
+												value={iconSymbol}
 											/>
 										</ClayForm.Group>
 									</ClayLayout.Col>
@@ -225,7 +253,7 @@ const Actions = () => {
 											<ClaySelectWithOption
 												defaultValue="link"
 												id="actionTypeSelect"
-												options={types}
+												options={TYPES}
 												placeholder={Liferay.Language.get(
 													'select-an-option'
 												)}
@@ -277,26 +305,19 @@ const Actions = () => {
 										<ClayLayout.Row>
 											<ClayLayout.Col size={8}>
 												<ClayForm.Group>
-													<label htmlFor="confirmationMessageInput">
-														{Liferay.Language.get(
+													<InputLocalized
+														label={Liferay.Language.get(
 															'confirmation-message'
 														)}
-
-														<span
-															className="label-icon lfr-portal-tooltip ml-2"
-															title={Liferay.Language.get(
-																'the-user-will-see-this-message-before-performing-the-action'
-															)}
-														>
-															<ClayIcon symbol="question-circle-full" />
-														</span>
-													</label>
-
-													<ClayInput
-														id="confirmationMessageInput"
+														onChange={
+															setConfirmationMessageTranslations
+														}
 														placeholder={Liferay.Language.get(
 															'add-a-message-here'
 														)}
+														translations={
+															confirmationMessageTranslations
+														}
 													/>
 												</ClayForm.Group>
 											</ClayLayout.Col>
@@ -312,7 +333,7 @@ const Actions = () => {
 													<ClaySelectWithOption
 														defaultValue="info"
 														id="messageTypeInput"
-														options={messageTypes}
+														options={MESSAGE_TYPES}
 													/>
 												</ClayForm.Group>
 											</ClayLayout.Col>

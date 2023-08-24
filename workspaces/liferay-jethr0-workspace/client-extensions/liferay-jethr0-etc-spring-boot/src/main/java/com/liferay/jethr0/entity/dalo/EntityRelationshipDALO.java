@@ -13,7 +13,8 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public interface EntityRelationshipDALO<T extends Entity, U extends Entity> {
+public interface EntityRelationshipDALO<T extends Entity, U extends Entity>
+	extends DALO {
 
 	public void create(T parentEntity, U childEntity);
 

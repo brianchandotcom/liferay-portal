@@ -14,7 +14,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface EntityDALO<T extends Entity> {
+public interface EntityDALO<T extends Entity> extends DALO {
 
 	public T create(JSONObject jsonObject);
 

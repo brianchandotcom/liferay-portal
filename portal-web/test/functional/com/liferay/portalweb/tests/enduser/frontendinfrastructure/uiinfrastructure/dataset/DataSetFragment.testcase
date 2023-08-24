@@ -404,6 +404,115 @@ definition {
 		}
 	}
 
+	@description = "LPS-190724. Confirm that the is possible to interact Roles and Data Set fragment using StructuredContent user schema"
+	@priority = 5
+	test CanUseStructuredContentUserSchema {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("Given a datasets entries") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Roles",
+				restApplication = "/headless-admin-user/v1.0",
+				restEndpoint = "/v1.0/roles",
+				restSchema = "Role");
+
+			Refresh();
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.goToViews(dataSetName = "Roles");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Test");
+		}
+
+		task ("And the user adds fields to the view") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Roles",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,id");
+		}
+
+		task ("When the user creates a new Role and add a title in Portuguese") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			LexiconEntry.gotoAdd();
+
+			AssertTextEquals(
+				locator1 = "Portlet#HEADER",
+				value1 = "New Role");
+
+			PortletEntry.inputTitle(title = "Role Title");
+
+			PortletEntry.changeLocale(
+				fieldName = "Title",
+				locale = "pt-BR");
+
+			PortletEntry.inputTitle(title = "Role Title pt-BR");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+		}
+
+		task ("When go to new content page created") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+		}
+
+		task ("And adds the data set fragment portlet") {
+			Click(locator1 = "ClientExtension#PENCIL_ICON_IN_CONFIG_ICON_POSITION");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And adds the View Test view to the data set fragment portlet") {
+			DataSetFragment.addDataSetView(dataSetViewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then confirm the title of the Role created in the fragment") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/data-set-test-page");
+
+			AssertElementPresent(
+				key_color = "Role Title",
+				key_field = "name",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+
+		task ("When the page language is changed") {
+			Navigator.ensureLocaleURL(locale = "pt");
+		}
+
+		task ("Then confirm that the Role title shown has been translated") {
+			AssertElementPresent(
+				key_color = "Role Title pt-BR",
+				key_field = "name",
+				locator1 = "FrontendDataSet#SEARCH_COLUMN_AND_ROW");
+		}
+	}
+
 	@description = "LPS-190724. Confirm that the is possible to interact Vocabulary and Data Set fragment using TaxonomyVocabulary schema"
 	@priority = 5
 	test CanUseTaxonomyCategorySchema {

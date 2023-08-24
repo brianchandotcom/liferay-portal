@@ -247,7 +247,7 @@ definition {
 			menuItem = "Copy To",
 			rowEntry = ${dmFolderName});
 
-		Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Only categories, tags, and ratings in the global scope or asset libraries connected to both sites will be copied.");
+		Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Only categories, tags, ratings and document types in the global scope or asset libraries connected to both sites will be copied. Document type fields will be displayed empty.");
 
 		AssertElementPresent(
 			key_fieldLabel = "Copy From",

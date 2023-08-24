@@ -131,9 +131,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			_addTaskDownloadWebDriverBrowserBinary(
 				project, poshiRunnerExtension);
 
-		final JavaExec validatePoshiTask = _addTaskValidatePoshi(project);
 		final JavaExec generatePoshiReportTask = _addTaskGeneratePoshiReport(
 			project);
+
+		final JavaExec validatePoshiTask = _addTaskValidatePoshi(project);
 		final JavaExec writePoshiPropertiesTask = _addTaskWritePoshiProperties(
 			project);
 
@@ -156,13 +157,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					_configureTaskEvaluatePoshiConsole(
 						evaluatePoshiConsoleTask, poshiProperties,
 						poshiRunnerExtension);
+					_configureTaskGeneratePoshiReport(
+						generatePoshiReportTask, poshiProperties,
+						poshiRunnerExtension);
 					_configureTaskRunPoshi(
 						runPoshiTask, poshiProperties, poshiRunnerExtension);
 					_configureTaskValidatePoshi(
 						validatePoshiTask, poshiProperties,
-						poshiRunnerExtension);
-					_configureTaskGeneratePoshiReport(
-						generatePoshiReportTask, poshiProperties,
 						poshiRunnerExtension);
 					_configureTaskWritePoshiProperties(
 						writePoshiPropertiesTask, poshiProperties,

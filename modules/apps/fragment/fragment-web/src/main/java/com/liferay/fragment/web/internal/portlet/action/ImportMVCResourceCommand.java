@@ -70,23 +70,41 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		File file = uploadPortletRequest.getFile("file");
 
+		String importType = ParamUtil.getString(resourceRequest, "importType");
+
 		boolean validFragmentEntries = true;
 
-		if (_featureFlagManager.isEnabled("LPS-174939")) {
+		if (_featureFlagManager.isEnabled("LPS-174939") &&
+			Validator.isNull(importType)) {
+
 			validFragmentEntries = _fragmentsImporter.validateFragmentEntries(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				fragmentCollectionId, file);
 		}
 
 		if (validFragmentEntries) {
-			boolean overwrite = ParamUtil.getBoolean(
-				resourceRequest, "overwrite");
+			FragmentsImportStrategy fragmentsImportStrategy;
 
-			FragmentsImportStrategy fragmentsImportStrategy =
-				FragmentsImportStrategy.DO_NOT_OVERWRITE;
+			if (_featureFlagManager.isEnabled("LPS-174939")) {
+				fragmentsImportStrategy = FragmentsImportStrategy.create(
+					importType);
 
-			if (overwrite) {
-				fragmentsImportStrategy = FragmentsImportStrategy.OVERWRITE;
+				if (fragmentsImportStrategy == null) {
+					fragmentsImportStrategy =
+						FragmentsImportStrategy.DO_NOT_OVERWRITE;
+				}
+			}
+			else {
+				boolean overwrite = ParamUtil.getBoolean(
+					resourceRequest, "overwrite");
+
+				if (overwrite) {
+					fragmentsImportStrategy = FragmentsImportStrategy.OVERWRITE;
+				}
+				else {
+					fragmentsImportStrategy =
+						FragmentsImportStrategy.DO_NOT_OVERWRITE;
+				}
 			}
 
 			jsonObject = _importFragmentEntries(

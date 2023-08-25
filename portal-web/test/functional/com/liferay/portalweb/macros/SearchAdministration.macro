@@ -60,16 +60,12 @@ definition {
 			}
 			else if (isSet(reindexMode)) {
 				Click(
-					key_action = "All search indexes",
+					key_action = "All Search Indexes",
 					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-
-				Click(
-					key_text = "Execute",
-					locator1 = "Modal#MODAL_FOOTER_BUTTON");
 			}
 			else {
 				Click(
-					key_action = "Reindex search indexes",
+					key_action = "Reindex Search Indexes",
 					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 			}
 

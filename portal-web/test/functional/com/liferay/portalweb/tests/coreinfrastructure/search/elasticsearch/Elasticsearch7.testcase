@@ -570,7 +570,7 @@ definition {
 				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
 
 			Click(
-				key_action = "All search indexes",
+				key_action = "All Search Indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 
 			Click(
@@ -698,7 +698,7 @@ definition {
 				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 
 			Click(
-				key_action = "All search indexes",
+				key_action = "All Search Indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 
 			Click(
@@ -805,7 +805,7 @@ definition {
 				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
 
 			Click(
-				key_action = "All search indexes",
+				key_action = "All Search Indexes",
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 
 			Click(

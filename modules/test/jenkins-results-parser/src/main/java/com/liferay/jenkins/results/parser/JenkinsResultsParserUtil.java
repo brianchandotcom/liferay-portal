@@ -5526,25 +5526,6 @@ public class JenkinsResultsParserUtil {
 
 	}
 
-	public static class GitHubSecondaryRateLimitIOException
-		extends IOException {
-
-		public GitHubSecondaryRateLimitIOException(
-			long retryAfterSeconds, IOException ioException) {
-
-			super(ioException);
-
-			_retryAfterSeconds = retryAfterSeconds;
-		}
-
-		public long getRetryAfterSeconds() {
-			return _retryAfterSeconds;
-		}
-
-		private final long _retryAfterSeconds;
-
-	}
-
 	public abstract static class HTTPAuthorization {
 
 		public Type getType() {

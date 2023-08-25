@@ -83,7 +83,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 			mappingsJSONObject.toString(), XContentType.JSON);
 	}
 
-	public void createOptionalDefaultTypeMappings(String indexName) {
+	public void createOptionalDefaultTypeMappings() {
 		String name = StringUtil.replace(
 			LiferayTypeMappingsConstants.
 				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME,

@@ -338,8 +338,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 					uuid, groupId);
 
 			return DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, true);
+				fileEntry, fileEntry.getFileVersion(), _themeDisplay,
+				StringPool.BLANK, false, true);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

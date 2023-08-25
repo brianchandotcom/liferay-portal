@@ -487,9 +487,16 @@ public class DLImpl implements DL {
 
 		String previewURL = sb.toString();
 
-		if ((themeDisplay != null) && themeDisplay.isAddSessionIdToURL()) {
-			return PortalUtil.getURLWithSessionId(
-				previewURL, themeDisplay.getSessionId());
+		if (themeDisplay != null) {
+			if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+				previewURL = PortalUtil.addPreservedParameters(
+					themeDisplay, previewURL, false, true);
+			}
+
+			if (themeDisplay.isAddSessionIdToURL()) {
+				previewURL = PortalUtil.getURLWithSessionId(
+					previewURL, themeDisplay.getSessionId());
+			}
 		}
 
 		return previewURL;

@@ -5,7 +5,21 @@
 
 import React from 'react';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
-interface BasicInfoProps {
+export interface AggregationFilters {
+	defaultSort?: boolean;
+	fieldLabel?: string;
+	filterBy?: string;
+	filterType?: string;
+	label: LocalizedValue<string>;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	priority?: number;
+	sortOrder?: string;
+	type?: string;
+	value?: string;
+	valueList?: LabelValueObject[];
+}
+interface BasicInfoTabProps {
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -20,7 +34,7 @@ interface BasicInfoProps {
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
-export declare function BasicInfo({
+export declare function BasicInfoTab({
 	errors,
 	filterOperators,
 	handleChange,
@@ -34,5 +48,5 @@ export declare function BasicInfo({
 	setValues,
 	values,
 	workflowStatusJSONArray,
-}: BasicInfoProps): JSX.Element;
+}: BasicInfoTabProps): JSX.Element;
 export {};

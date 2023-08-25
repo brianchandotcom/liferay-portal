@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
+import {ExpressionBuilder} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
@@ -39,7 +39,7 @@ export function FormulaContainer({
 	);
 
 	return (
-		<Card title={Liferay.Language.get('formula')}>
+		<>
 			<ExpressionBuilder
 				error={errors.script}
 				feedbackMessage={Liferay.Language.get(
@@ -86,6 +86,6 @@ export function FormulaContainer({
 				)}`}
 				value={(currentScript?.value as string) ?? ''}
 			/>
-		</Card>
+		</>
 	);
 }

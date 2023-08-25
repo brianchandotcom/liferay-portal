@@ -7,7 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {Card, Toggle} from '@liferay/object-js-components-web';
+import {Toggle} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import './TranslationOptionsContainer.scss';
@@ -32,7 +32,7 @@ export function TranslationOptionsContainer({
 		!values.system;
 
 	return (
-		<Card title={Liferay.Language.get('translation-options')}>
+		<>
 			{!translatableField && (
 				<ClayAlert
 					displayType="info"
@@ -80,6 +80,6 @@ export function TranslationOptionsContainer({
 					</span>
 				</ClayTooltipProvider>
 			</div>
-		</Card>
+		</>
 	);
 }

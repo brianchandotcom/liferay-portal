@@ -15,7 +15,7 @@ import React, {useEffect, useState} from 'react';
 
 import './EditObjectField.scss';
 import {AdvancedTab} from './Tabs/Advanced/AdvancedTab';
-import {BasicInfo} from './Tabs/BasicInfo/BasicInfo';
+import {BasicInfoTab} from './Tabs/BasicInfo/BasicInfoTab';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 interface EditObjectFieldProps {
@@ -161,7 +161,7 @@ export default function EditObjectField({
 
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						<ClayTabs.TabPane>
-							<BasicInfo
+							<BasicInfoTab
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
@@ -199,7 +199,7 @@ export default function EditObjectField({
 					</ClayTabs.Content>
 				</>
 			) : (
-				<BasicInfo
+				<BasicInfoTab
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}

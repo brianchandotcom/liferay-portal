@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {SidebarCategory} from '@liferay/object-js-components-web';
+import {Card, SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
@@ -31,37 +31,48 @@ export function AdvancedTab({
 	sidebarElements,
 	values,
 }: AdvancedTabProps) {
+	const disabledReadyOnly =
+		values.system ||
+		values.businessType === 'Aggregation' ||
+		values.businessType === 'Formula';
+
 	return (
 		<>
 			{Liferay.FeatureFlags['LPS-170122'] && isDefaultStorageType && (
-				<ReadOnlyContainer
-					disabled={
-						values.system ||
-						values.businessType === 'Aggregation' ||
-						values.businessType === 'Formula'
-					}
-					readOnlySidebarElements={readOnlySidebarElements}
-					requiredField={values.required as boolean}
-					setValues={setValues}
-					values={values}
-				/>
+				<Card
+					disabled={disabledReadyOnly}
+					title={Liferay.Language.get('read-only')}
+				>
+					<ReadOnlyContainer
+						disabled={disabledReadyOnly}
+						readOnlySidebarElements={readOnlySidebarElements}
+						requiredField={values.required as boolean}
+						setValues={setValues}
+						values={values}
+					/>
+				</Card>
 			)}
 
 			{values.businessType === 'Picklist' && (
-				<DefaultValueContainer
-					creationLanguageId={creationLanguageId}
-					errors={errors}
-					learnResources={learnResources}
-					objectFieldBusinessType={
-						values.businessType as ObjectFieldBusinessType
-					}
-					objectFieldSettings={
-						values.objectFieldSettings as ObjectFieldSetting[]
-					}
-					setValues={setValues}
-					sidebarElements={sidebarElements}
-					values={values}
-				/>
+				<Card
+					disabled={false}
+					title={Liferay.Language.get('default-value')}
+				>
+					<DefaultValueContainer
+						creationLanguageId={creationLanguageId}
+						errors={errors}
+						learnResources={learnResources}
+						objectFieldBusinessType={
+							values.businessType as ObjectFieldBusinessType
+						}
+						objectFieldSettings={
+							values.objectFieldSettings as ObjectFieldSetting[]
+						}
+						setValues={setValues}
+						sidebarElements={sidebarElements}
+						values={values}
+					/>
+				</Card>
 			)}
 		</>
 	);

@@ -7,18 +7,14 @@ import {API, Card, Input} from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {updateFieldSettings} from '../../../../utils/fieldSettings';
-import ObjectFieldFormBase, {
-	ObjectFieldErrors,
-} from '../../ObjectFieldFormBase';
+import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilterContainer} from './AggregationFilterContainer';
-import {AttachmentProperties} from './AttachmentProperties';
+import {BasicInfoContainer} from './BasicInfoContainer';
 import {FormulaContainer} from './FormulaContainer';
-import {MaxLengthProperties} from './MaxLengthProperties';
 import {SearchableContainer} from './SearchableContainer';
 import {TranslationOptionsContainer} from './TranslationOptionsContainer';
 
-interface AggregationFilters {
+export interface AggregationFilters {
 	defaultSort?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
@@ -33,7 +29,7 @@ interface AggregationFilters {
 	valueList?: LabelValueObject[];
 }
 
-interface BasicInfoProps {
+interface BasicInfoTabProps {
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -49,7 +45,7 @@ interface BasicInfoProps {
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
-export function BasicInfo({
+export function BasicInfoTab({
 	errors,
 	filterOperators,
 	handleChange,
@@ -63,7 +59,7 @@ export function BasicInfo({
 	setValues,
 	values,
 	workflowStatusJSONArray,
-}: BasicInfoProps) {
+}: BasicInfoTabProps) {
 	const [objectDefinition, setObjectDefinition] = useState<
 		Partial<ObjectDefinition>
 	>({enableLocalization: false});
@@ -78,20 +74,6 @@ export function BasicInfo({
 	const [creationLanguageId2, setCreationLanguageId2] = useState<
 		Liferay.Language.Locale
 	>();
-
-	const disableFieldFormBase = !!(
-		isApproved ||
-		values.system ||
-		values.relationshipType
-	);
-
-	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
-		setValues({
-			objectFieldSettings: updateFieldSettings(
-				values.objectFieldSettings,
-				{name, value}
-			),
-		});
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -108,62 +90,25 @@ export function BasicInfo({
 	return (
 		<>
 			<Card title={Liferay.Language.get('basic-info')}>
-				<InputLocalized
-					disableFlag={readOnly}
-					disabled={readOnly}
-					error={errors.label}
-					label={Liferay.Language.get('label')}
-					onChange={(label) => setValues({label})}
-					required
-					translations={values.label as LocalizedValue<string>}
-				/>
-
-				<ObjectFieldFormBase
-					creationLanguageId2={
-						creationLanguageId2 as Liferay.Language.Locale
-					}
-					disabled={disableFieldFormBase}
-					editingField
+				<BasicInfoContainer
+					creationLanguageId2={creationLanguageId2}
 					errors={errors}
 					handleChange={handleChange}
+					isApproved={isApproved}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
-					objectField={values}
 					objectFieldTypes={objectFieldTypes}
 					objectName={objectName}
 					objectRelationshipId={objectRelationshipId}
-					onAggregationFilterChange={setAggregationFilters}
-					onRelationshipChange={
+					readOnly={readOnly}
+					setAggregationFilters={setAggregationFilters}
+					setObjectDefinitionExternalReferenceCode2={
 						setObjectDefinitionExternalReferenceCode2
 					}
 					setValues={setValues}
-				>
-					{values.businessType === 'Attachment' && (
-						<AttachmentProperties
-							errors={errors}
-							objectFieldSettings={
-								values.objectFieldSettings as ObjectFieldSetting[]
-							}
-							onSettingsChange={handleSettingsChange}
-						/>
-					)}
-
-					{(values.businessType === 'Encrypted' ||
-						values.businessType === 'LongText' ||
-						values.businessType === 'Text') && (
-						<MaxLengthProperties
-							disabled={values.system}
-							errors={errors}
-							objectField={values}
-							objectFieldSettings={
-								values.objectFieldSettings as ObjectFieldSetting[]
-							}
-							onSettingsChange={handleSettingsChange}
-							setValues={setValues}
-						/>
-					)}
-				</ObjectFieldFormBase>
+					values={values}
+				/>
 			</Card>
 
 			{values.businessType === 'Aggregation' &&
@@ -185,32 +130,38 @@ export function BasicInfo({
 				)}
 
 			{values.businessType === 'Formula' && (
-				<FormulaContainer
-					errors={errors}
-					objectFieldSettings={
-						values.objectFieldSettings as ObjectFieldSetting[]
-					}
-					setValues={setValues}
-				/>
+				<Card title={Liferay.Language.get('formula')}>
+					<FormulaContainer
+						errors={errors}
+						objectFieldSettings={
+							values.objectFieldSettings as ObjectFieldSetting[]
+						}
+						setValues={setValues}
+					/>
+				</Card>
 			)}
 
 			{values.DBType !== 'Blob' && values.businessType !== 'Formula' && (
-				<SearchableContainer
-					errors={errors}
-					isApproved={isApproved}
-					objectField={values}
-					readOnly={readOnly}
-					setValues={setValues}
-				/>
+				<Card title={Liferay.Language.get('searchable')}>
+					<SearchableContainer
+						errors={errors}
+						isApproved={isApproved}
+						objectField={values}
+						readOnly={readOnly}
+						setValues={setValues}
+					/>
+				</Card>
 			)}
 
 			{Liferay.FeatureFlags['LPS-172017'] && (
-				<TranslationOptionsContainer
-					objectDefinition={objectDefinition}
-					published={isApproved}
-					setValues={setValues}
-					values={values}
-				/>
+				<Card title={Liferay.Language.get('translation-options')}>
+					<TranslationOptionsContainer
+						objectDefinition={objectDefinition}
+						published={isApproved}
+						setValues={setValues}
+						values={values}
+					/>
+				</Card>
 			)}
 
 			{Liferay.FeatureFlags['LPS-135430'] && !isDefaultStorageType && (

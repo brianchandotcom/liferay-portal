@@ -8,7 +8,6 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {
-	Card,
 	ExpressionBuilder,
 	SidebarCategory,
 	Toggle,
@@ -111,7 +110,7 @@ export function DefaultValueContainer({
 		];
 
 	return (
-		<Card disabled={false} title={Liferay.Language.get('default-value')}>
+		<>
 			{!values.state && (
 				<ClayAlert displayType="info" title="Info">
 					{Liferay.Language.get(
@@ -257,6 +256,6 @@ export function DefaultValueContainer({
 						}
 					/>
 				)}
-		</Card>
+		</>
 	);
 }

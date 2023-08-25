@@ -78,6 +78,11 @@
 		</task>
 
 		<var name="portalInstanceIds" method="StringUtil#regexReplaceAll('${portalInstanceIds}', '[\[\]&quot;]', '')"/>
+
+		<execute class="StringUtil" method="assertEquals">
+			<arg value="&quot;Row 1&quot;: &quot;Column 1&quot;"/>
+			<arg value="${data}"/>
+		</execute>
 	</command>
 
 	<command priority="5" name="AddUser">

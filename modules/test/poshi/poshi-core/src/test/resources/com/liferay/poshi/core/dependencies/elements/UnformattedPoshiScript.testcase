@@ -79,6 +79,8 @@ definition {
 		}
 
 		var portalInstanceIds = StringUtil.regexReplaceAll("${portalInstanceIds}", "[\[\]\"]", "");
+
+		StringUtil.assertEquals("\"Row 1\": \"Column 1\"", ${data});
 	}
 
 	@priority = "5"

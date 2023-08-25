@@ -237,7 +237,17 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, String name, int type, int start, int end,
+		long groupId, long layoutPageTemplateCollectionId, int type, int start,
+		int end, OrderByComparator<Object> orderByComparator) {
+
+		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+			groupId, null, type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type, int start, int end,
 		OrderByComparator<Object> orderByComparator) {
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
@@ -258,6 +268,15 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+		long groupId, String name, int type, int start, int end,
+		OrderByComparator<Object> orderByComparator) {
+
+		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
+			groupId, -1, name, type, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 		long groupId, int type) {
 
@@ -267,7 +286,16 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, String name, int type) {
+		long groupId, long layoutPageTemplateCollectionId, int type) {
+
+		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+			groupId, null, type);
+	}
+
+	@Override
+	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type) {
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
@@ -280,6 +308,14 @@ public class LayoutPageTemplateEntryServiceImpl
 			).from(
 				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry
 			));
+	}
+
+	@Override
+	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+		long groupId, String name, int type) {
+
+		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+			groupId, -1, name, type);
 	}
 
 	@Override

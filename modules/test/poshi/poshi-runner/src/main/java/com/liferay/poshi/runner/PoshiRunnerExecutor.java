@@ -886,8 +886,9 @@ public class PoshiRunnerExecutor {
 			throw throwable;
 		}
 
-		_poshiLogger.passCommand(executeElement);
 		_poshiLogger.updateStatus(executeElement, "pass");
+
+		_poshiLogger.passCommand(executeElement);
 	}
 
 	public void runReturnElement(Element returnElement) throws Exception {

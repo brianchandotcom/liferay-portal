@@ -66,7 +66,7 @@ public class UnbindObjectDefinitionMVCResourceCommandTest {
 				_portletLocalService, _treeFactory),
 			_objectDefinitionLocalService);
 
-		_unbindObjectDefinition("C_AA");
+		_unbind("C_AA");
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -83,7 +83,7 @@ public class UnbindObjectDefinitionMVCResourceCommandTest {
 
 		// Unbind object definition leaf node
 
-		_unbindObjectDefinition("C_AB");
+		_unbind("C_AB");
 
 		TreeTestUtil.assertTree(
 			LinkedHashMapBuilder.put(
@@ -94,15 +94,13 @@ public class UnbindObjectDefinitionMVCResourceCommandTest {
 
 		// Unbind object definition root node
 
-		_unbindObjectDefinition("C_A");
+		_unbind("C_A");
 
 		Assert.assertNull(
 			_treeFactory.create(objectDefinition.getObjectDefinitionId()));
 	}
 
-	private void _unbindObjectDefinition(String objectDefinitionName)
-		throws Exception {
-
+	private void _unbind(String objectDefinitionName) throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), objectDefinitionName);

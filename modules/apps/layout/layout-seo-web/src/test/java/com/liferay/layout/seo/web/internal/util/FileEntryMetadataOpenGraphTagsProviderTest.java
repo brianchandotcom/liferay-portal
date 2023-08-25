@@ -265,6 +265,13 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		);
 
 		Mockito.when(
+			_ddmFieldLocalService.fetchDDMFieldAttribute(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			_ddmFieldAttribute
+		);
+
+		Mockito.when(
 			_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 				Mockito.anyLong(), Mockito.anyLong())
 		).thenReturn(
@@ -276,13 +283,6 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 				_dlFileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_LENGTH")
 		).thenReturn(
 			Collections.singletonList(Mockito.mock(DDMField.class))
-		);
-
-		Mockito.when(
-			_ddmFieldLocalService.fetchDDMFieldAttribute(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString())
-		).thenReturn(
-			_ddmFieldAttribute
 		);
 
 		String expectedValue = StringUtil.randomString();

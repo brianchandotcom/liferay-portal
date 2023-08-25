@@ -15,7 +15,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ExtendedObjectClassDefinition(
-	category = "ldap", factoryInstanceLabelAttribute = "companyId",
+	category = "ldap", factoryInstanceLabelAttribute = "ldapServerId",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

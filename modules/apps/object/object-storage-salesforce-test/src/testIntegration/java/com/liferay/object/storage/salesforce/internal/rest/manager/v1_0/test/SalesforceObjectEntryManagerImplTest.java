@@ -120,18 +120,18 @@ public class SalesforceObjectEntryManagerImplTest
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				Arrays.asList(
 					ListTypeEntryUtil.createListTypeEntry(
-						"Queued", "queued",
-						Collections.singletonMap(LocaleUtil.US, "Queued")),
-					ListTypeEntryUtil.createListTypeEntry(
-						"Started", "started",
-						Collections.singletonMap(LocaleUtil.US, "Started")),
+						"Completed", "completed",
+						Collections.singletonMap(LocaleUtil.US, "Completed")),
 					ListTypeEntryUtil.createListTypeEntry(
 						"Not Completed", "notCompleted",
 						Collections.singletonMap(
 							LocaleUtil.US, "Not Completed")),
 					ListTypeEntryUtil.createListTypeEntry(
-						"Completed", "completed",
-						Collections.singletonMap(LocaleUtil.US, "Completed"))));
+						"Queued", "queued",
+						Collections.singletonMap(LocaleUtil.US, "Queued")),
+					ListTypeEntryUtil.createListTypeEntry(
+						"Started", "started",
+						Collections.singletonMap(LocaleUtil.US, "Started"))));
 
 		_objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(

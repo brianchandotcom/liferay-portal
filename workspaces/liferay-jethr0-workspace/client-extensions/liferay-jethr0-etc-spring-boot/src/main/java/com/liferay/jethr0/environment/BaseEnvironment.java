@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.environment;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.task.TaskEntity;
 
@@ -33,8 +33,8 @@ public abstract class BaseEnvironment
 	}
 
 	@Override
-	public Build getBuild() {
-		return _build;
+	public BuildEntity getBuildEntity() {
+		return _buildEntity;
 	}
 
 	@Override
@@ -111,8 +111,8 @@ public abstract class BaseEnvironment
 	}
 
 	@Override
-	public void setBuild(Build build) {
-		_build = build;
+	public void setBuildEntity(BuildEntity buildEntity) {
+		_buildEntity = buildEntity;
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public abstract class BaseEnvironment
 	private String _appServer;
 	private String _batchName;
 	private String _browser;
-	private Build _build;
+	private BuildEntity _buildEntity;
 	private String _database;
 	private String _javaVersion;
 	private LiferayBundle _liferayBundle;

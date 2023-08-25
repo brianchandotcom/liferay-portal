@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.bui1d.run;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 
@@ -19,11 +19,11 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface BuildRun extends Entity {
+public interface BuildRunEntity extends Entity {
 
-	public Build getBuild();
+	public BuildEntity getBuildEntity();
 
-	public long getBuildId();
+	public long getBuildEntityId();
 
 	public URL getBuildURL();
 
@@ -37,7 +37,7 @@ public interface BuildRun extends Entity {
 
 	public boolean isBlocked();
 
-	public void setBuild(Build build);
+	public void setBuildEntity(BuildEntity buildEntity);
 
 	public void setBuildURL(URL buildURL);
 

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.task;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
@@ -49,8 +49,8 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public Build getBuild() {
-		return _build;
+	public BuildEntity getBuildEntity() {
+		return _buildEntity;
 	}
 
 	@Override
@@ -62,12 +62,12 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		Build build = getBuild();
+		BuildEntity buildEntity = getBuildEntity();
 
 		jsonObject.put(
 			"name", getName()
 		).put(
-			"r_buildToTasks_c_buildId", build.getId()
+			"r_buildToTasks_c_buildId", buildEntity.getId()
 		);
 
 		return jsonObject;
@@ -109,8 +109,8 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public void setBuild(Build build) {
-		_build = build;
+	public void setBuildEntity(BuildEntity buildEntity) {
+		_buildEntity = buildEntity;
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 		_name = jsonObject.getString("name");
 	}
 
-	private Build _build;
+	private BuildEntity _buildEntity;
 	private final Set<Environment> _environments = new HashSet<>();
 	private String _name;
 	private Project _project;

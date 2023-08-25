@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.bui1d.dalo;
 
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.parameter.BuildParameterEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
@@ -17,10 +17,11 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildParameterEntityDALO extends BaseEntityDALO<BuildParameter> {
+public class BuildParameterEntityDALO
+	extends BaseEntityDALO<BuildParameterEntity> {
 
 	@Override
-	protected EntityFactory<BuildParameter> getEntityFactory() {
+	protected EntityFactory<BuildParameterEntity> getEntityFactory() {
 		return _buildParameterEntityFactory;
 	}
 

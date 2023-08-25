@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.environment;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.task.TaskEntity;
 
@@ -25,7 +25,7 @@ public interface Environment extends Entity {
 
 	public String getBrowser();
 
-	public Build getBuild();
+	public BuildEntity getBuildEntity();
 
 	public String getDatabase();
 
@@ -45,7 +45,7 @@ public interface Environment extends Entity {
 
 	public void setBrowser(String browser);
 
-	public void setBuild(Build build);
+	public void setBuildEntity(BuildEntity buildEntity);
 
 	public void setDatabase(String database);
 

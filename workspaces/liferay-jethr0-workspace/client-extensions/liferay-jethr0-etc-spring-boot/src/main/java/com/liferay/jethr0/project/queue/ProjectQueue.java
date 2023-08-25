@@ -5,11 +5,11 @@
 
 package com.liferay.jethr0.project.queue;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.gitbranch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.BaseProjectComparatorEntity;
@@ -172,8 +172,8 @@ public class ProjectQueue {
 			for (Project project : new ArrayList<>(_projects)) {
 				boolean keepProject = false;
 
-				for (Build build : project.getBuilds()) {
-					if (build.getState() != Build.State.COMPLETED) {
+				for (BuildEntity buildEntity : project.getBuildEntities()) {
+					if (buildEntity.getState() != BuildEntity.State.COMPLETED) {
 						keepProject = true;
 
 						break;
@@ -219,18 +219,18 @@ public class ProjectQueue {
 
 				System.out.println(project);
 
-				for (Build build : project.getBuilds()) {
-					if (build.getState() == Build.State.COMPLETED) {
+				for (BuildEntity buildEntity : project.getBuildEntities()) {
+					if (buildEntity.getState() == BuildEntity.State.COMPLETED) {
 						continue;
 					}
 
-					Set<BuildRun> buildRuns = _buildRunEntityRepository.getAll(
-						build);
+					Set<BuildRunEntity> buildRunEntities =
+						_buildRunEntityRepository.getAll(buildEntity);
 
 					boolean blocked = false;
 
-					for (BuildRun buildRun : buildRuns) {
-						if (buildRun.isBlocked()) {
+					for (BuildRunEntity buildRunEntity : buildRunEntities) {
+						if (buildRunEntity.isBlocked()) {
 							blocked = true;
 
 							break;
@@ -238,12 +238,12 @@ public class ProjectQueue {
 					}
 
 					if (blocked) {
-						build.setState(Build.State.BLOCKED);
+						buildEntity.setState(BuildEntity.State.BLOCKED);
 
-						_buildEntityRepository.update(build);
+						_buildEntityRepository.update(buildEntity);
 					}
 
-					System.out.println("> " + build);
+					System.out.println("> " + buildEntity);
 				}
 			}
 

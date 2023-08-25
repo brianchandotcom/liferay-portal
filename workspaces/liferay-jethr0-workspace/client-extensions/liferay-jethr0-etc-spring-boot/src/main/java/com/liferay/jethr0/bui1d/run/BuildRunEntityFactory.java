@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildRunEntityFactory extends BaseEntityFactory<BuildRun> {
+public class BuildRunEntityFactory extends BaseEntityFactory<BuildRunEntity> {
 
 	@Override
-	public BuildRun newEntity(JSONObject jsonObject) {
-		return new DefaultBuildRun(jsonObject);
+	public BuildRunEntity newEntity(JSONObject jsonObject) {
+		return new DefaultBuildRunEntity(jsonObject);
 	}
 
 	protected BuildRunEntityFactory() {
-		super(BuildRun.class);
+		super(BuildRunEntity.class);
 	}
 
 }

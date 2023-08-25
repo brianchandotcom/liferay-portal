@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
@@ -71,11 +71,11 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing job name from build");
 		}
 
-		Build.State state = Build.State.getByKey(
+		BuildEntity.State state = BuildEntity.State.getByKey(
 			buildJSONObject.optString("state"));
 
 		if (state == null) {
-			state = Build.State.OPENED;
+			state = BuildEntity.State.OPENED;
 		}
 
 		JSONObject jsonObject = new JSONObject();

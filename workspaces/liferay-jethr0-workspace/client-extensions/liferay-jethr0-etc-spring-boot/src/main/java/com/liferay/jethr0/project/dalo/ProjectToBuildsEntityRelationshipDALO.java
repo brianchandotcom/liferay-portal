@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project.dalo;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.BuildEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
@@ -20,10 +20,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectToBuildsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<Project, Build> {
+	extends BaseEntityRelationshipDALO<Project, BuildEntity> {
 
 	@Override
-	public EntityFactory<Build> getChildEntityFactory() {
+	public EntityFactory<BuildEntity> getChildEntityFactory() {
 		return _buildEntityFactory;
 	}
 

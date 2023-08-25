@@ -5,10 +5,10 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
@@ -21,24 +21,24 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		BuildRun buildRun = getBuildRun();
+		BuildRunEntity buildRunEntity = getBuildRun();
 
-		buildRun.setDuration(getBuildDuration());
-		buildRun.setResult(getBuildRunResult());
-		buildRun.setState(BuildRun.State.COMPLETED);
+		buildRunEntity.setDuration(getBuildDuration());
+		buildRunEntity.setResult(getBuildRunResult());
+		buildRunEntity.setState(BuildRunEntity.State.COMPLETED);
 
-		Build build = buildRun.getBuild();
+		BuildEntity buildEntity = buildRunEntity.getBuildEntity();
 
-		build.setState(Build.State.COMPLETED);
+		buildEntity.setState(BuildEntity.State.COMPLETED);
 
-		Project project = build.getProject();
+		Project project = buildEntity.getProject();
 
 		Project.State projectState = Project.State.COMPLETED;
 
-		for (Build projectBuild : project.getBuilds()) {
-			Build.State buildState = projectBuild.getState();
+		for (BuildEntity projectBuildEntity : project.getBuildEntities()) {
+			BuildEntity.State buildState = projectBuildEntity.getState();
 
-			if (buildState != Build.State.COMPLETED) {
+			if (buildState != BuildEntity.State.COMPLETED) {
 				projectState = Project.State.RUNNING;
 
 				break;
@@ -56,14 +56,14 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildEntityRepository.update(build);
+		buildEntityRepository.update(buildEntity);
 
 		BuildRunEntityRepository buildRunEntityRepository =
 			getBuildRunRepository();
 
-		buildRunEntityRepository.update(buildRun);
+		buildRunEntityRepository.update(buildRunEntity);
 
-		return buildRun.toString();
+		return buildRunEntity.toString();
 	}
 
 	protected BuildCompletedEventHandler(

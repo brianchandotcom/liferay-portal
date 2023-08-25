@@ -5,10 +5,10 @@
 
 package com.liferay.jethr0.bui1d.repository;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildRunEntityDALO;
 import com.liferay.jethr0.bui1d.dalo.BuildToBuildRunsEntityRelationshipDALO;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
@@ -24,43 +24,47 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildRunEntityRepository extends BaseEntityRepository<BuildRun> {
+public class BuildRunEntityRepository
+	extends BaseEntityRepository<BuildRunEntity> {
 
-	public BuildRun add(Build build, BuildRun.State state) {
+	public BuildRunEntity add(
+		BuildEntity buildEntity, BuildRunEntity.State state) {
+
 		JSONObject jsonObject = new JSONObject();
 
 		if (state == null) {
-			state = BuildRun.State.OPENED;
+			state = BuildRunEntity.State.OPENED;
 		}
 
 		jsonObject.put(
-			"r_buildToBuildRuns_c_buildId", build.getId()
+			"r_buildToBuildRuns_c_buildId", buildEntity.getId()
 		).put(
 			"state", state.getJSONObject()
 		);
 
-		BuildRun buildRun = _buildRunEntityDALO.create(jsonObject);
+		BuildRunEntity buildRunEntity = _buildRunEntityDALO.create(jsonObject);
 
-		buildRun.setBuild(build);
+		buildRunEntity.setBuildEntity(buildEntity);
 
-		build.addBuildRun(buildRun);
+		buildEntity.addBuildRunEntity(buildRunEntity);
 
-		return add(buildRun);
+		return add(buildRunEntity);
 	}
 
-	public Set<BuildRun> getAll(Build build) {
-		Set<BuildRun> buildRuns = new HashSet<>(
-			_buildToBuildRunsEntityRelationshipDALO.getChildEntities(build));
+	public Set<BuildRunEntity> getAll(BuildEntity buildEntity) {
+		Set<BuildRunEntity> buildRunEntities = new HashSet<>(
+			_buildToBuildRunsEntityRelationshipDALO.getChildEntities(
+				buildEntity));
 
-		for (BuildRun buildRun : buildRuns) {
-			buildRun.setBuild(build);
+		for (BuildRunEntity buildRunEntity : buildRunEntities) {
+			buildRunEntity.setBuildEntity(buildEntity);
 		}
 
-		return addAll(buildRuns);
+		return addAll(buildRunEntities);
 	}
 
 	@Override
-	public EntityDALO<BuildRun> getEntityDALO() {
+	public EntityDALO<BuildRunEntity> getEntityDALO() {
 		return _buildRunEntityDALO;
 	}
 
@@ -72,16 +76,16 @@ public class BuildRunEntityRepository extends BaseEntityRepository<BuildRun> {
 	public synchronized void initializeRelationships() {
 		_buildEntityRepository.initializeRelationships();
 
-		for (BuildRun buildRun : getAll()) {
-			Build build = null;
+		for (BuildRunEntity buildRunEntity : getAll()) {
+			BuildEntity buildEntity = null;
 
-			long buildId = buildRun.getBuildId();
+			long buildEntityId = buildRunEntity.getBuildEntityId();
 
-			if (buildId != 0) {
-				build = _buildEntityRepository.getById(buildId);
+			if (buildEntityId != 0) {
+				buildEntity = _buildEntityRepository.getById(buildEntityId);
 			}
 
-			buildRun.setBuild(build);
+			buildRunEntity.setBuildEntity(buildEntity);
 		}
 	}
 

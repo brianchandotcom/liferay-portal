@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.bui1d.run;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.Project;
@@ -23,16 +23,17 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
+public abstract class BaseBuildRunEntity
+	extends BaseEntity implements BuildRunEntity {
 
 	@Override
-	public Build getBuild() {
-		return _build;
+	public BuildEntity getBuildEntity() {
+		return _buildEntity;
 	}
 
 	@Override
-	public long getBuildId() {
-		return _buildId;
+	public long getBuildEntityId() {
+		return _buildEntityId;
 	}
 
 	@Override
@@ -49,24 +50,27 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	public JSONObject getInvokeJSONObject(JenkinsNodeEntity jenkinsNodeEntity) {
 		JSONObject invokeJSONObject = new JSONObject();
 
-		Build build = getBuild();
+		BuildEntity buildEntity = getBuildEntity();
 
-		invokeJSONObject.put("jobName", build.getJobName());
+		invokeJSONObject.put("jobName", buildEntity.getJobName());
 
 		JSONObject jobParametersJSONObject = new JSONObject();
 
-		for (BuildParameter buildParameter : build.getBuildParameters()) {
+		for (BuildParameterEntity buildParameterEntity :
+				buildEntity.getBuildParameterEntities()) {
+
 			jobParametersJSONObject.put(
-				buildParameter.getName(), buildParameter.getValue());
+				buildParameterEntity.getName(),
+				buildParameterEntity.getValue());
 		}
 
 		jobParametersJSONObject.put(
-			"BUILD_ID", String.valueOf(build.getId())
+			"BUILD_ID", String.valueOf(buildEntity.getId())
 		).put(
 			"BUILD_RUN_ID", String.valueOf(getId())
 		);
 
-		Project project = build.getProject();
+		Project project = buildEntity.getProject();
 
 		if (project != null) {
 			jobParametersJSONObject.put(
@@ -95,7 +99,7 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 		).put(
 			"duration", getDuration()
 		).put(
-			"r_buildToBuildRuns_c_buildId", getBuildId()
+			"r_buildToBuildRuns_c_buildId", getBuildEntityId()
 		);
 
 		if (result != null) {
@@ -140,14 +144,14 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	}
 
 	@Override
-	public void setBuild(Build build) {
-		_build = build;
+	public void setBuildEntity(BuildEntity buildEntity) {
+		_buildEntity = buildEntity;
 
-		if (_build != null) {
-			_buildId = build.getId();
+		if (_buildEntity != null) {
+			_buildEntityId = buildEntity.getId();
 		}
 		else {
-			_buildId = 0;
+			_buildEntityId = 0;
 		}
 	}
 
@@ -171,10 +175,10 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 		_state = state;
 	}
 
-	protected BaseBuildRun(JSONObject jsonObject) {
+	protected BaseBuildRunEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_buildId = jsonObject.optLong("r_buildToBuildRuns_c_buildId");
+		_buildEntityId = jsonObject.optLong("r_buildToBuildRuns_c_buildId");
 
 		String buildURL = jsonObject.optString("buildURL", "");
 
@@ -195,8 +199,8 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 
 	private static final long _MAX_DURATION_IN_QUEUE = 1000 * 60 * 2;
 
-	private Build _build;
-	private long _buildId;
+	private BuildEntity _buildEntity;
+	private long _buildEntityId;
 	private URL _buildURL;
 	private long _duration;
 	private Result _result;

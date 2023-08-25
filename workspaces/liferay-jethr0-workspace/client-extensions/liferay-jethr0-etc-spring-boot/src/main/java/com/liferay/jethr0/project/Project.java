@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
@@ -24,9 +24,9 @@ import org.json.JSONObject;
  */
 public interface Project extends Entity {
 
-	public void addBuild(Build build);
+	public void addBuildEntity(BuildEntity buildEntity);
 
-	public void addBuilds(Set<Build> builds);
+	public void addBuildEntities(Set<BuildEntity> buildEntities);
 
 	public void addGitBranch(GitBranch gitBranch);
 
@@ -45,7 +45,7 @@ public interface Project extends Entity {
 
 	public void addTestSuites(Set<TestSuite> testSuites);
 
-	public Set<Build> getBuilds();
+	public Set<BuildEntity> getBuildEntities();
 
 	public Set<GitBranch> getGitBranches();
 
@@ -67,9 +67,9 @@ public interface Project extends Entity {
 
 	public Type getType();
 
-	public void removeBuild(Build build);
+	public void removeBuildEntity(BuildEntity buildEntity);
 
-	public void removeBuilds(Set<Build> builds);
+	public void removeBuildEntities(Set<BuildEntity> buildEntities);
 
 	public void removeGitBranch(GitBranch gitBranch);
 

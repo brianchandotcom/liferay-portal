@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.jenkins.node;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
@@ -125,10 +125,12 @@ public class BaseJenkinsNodeEntity
 	}
 
 	@Override
-	public boolean isCompatible(Build build) {
-		if (!_hasCompatibleBattery(build) || !_hasCompatibleCohort(build) ||
-			!_hasCompatibleNodeCount(build) || !_hasCompatibleNodeRAM(build) ||
-			!_hasCompatibleNodeType(build)) {
+	public boolean isCompatible(BuildEntity buildEntity) {
+		if (!_hasCompatibleBattery(buildEntity) ||
+			!_hasCompatibleCohort(buildEntity) ||
+			!_hasCompatibleNodeCount(buildEntity) ||
+			!_hasCompatibleNodeRAM(buildEntity) ||
+			!_hasCompatibleNodeType(buildEntity)) {
 
 			return false;
 		}
@@ -238,16 +240,16 @@ public class BaseJenkinsNodeEntity
 		return new JSONObject(response);
 	}
 
-	private boolean _hasCompatibleBattery(Build build) {
-		if (!build.requiresGoodBattery() || getGoodBattery()) {
+	private boolean _hasCompatibleBattery(BuildEntity buildEntity) {
+		if (!buildEntity.requiresGoodBattery() || getGoodBattery()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private boolean _hasCompatibleCohort(Build build) {
-		Project project = build.getProject();
+	private boolean _hasCompatibleCohort(BuildEntity buildEntity) {
+		Project project = buildEntity.getProject();
 
 		Set<JenkinsCohortEntity> jenkinsCohortEntities =
 			project.getJenkinsCohortEntities();
@@ -261,24 +263,25 @@ public class BaseJenkinsNodeEntity
 		return false;
 	}
 
-	private boolean _hasCompatibleNodeCount(Build build) {
-		if (getNodeCount() <= build.getMaxNodeCount()) {
+	private boolean _hasCompatibleNodeCount(BuildEntity buildEntity) {
+		if (getNodeCount() <= buildEntity.getMaxNodeCount()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private boolean _hasCompatibleNodeRAM(Build build) {
-		if (getNodeRAM() >= build.getMinNodeRAM()) {
+	private boolean _hasCompatibleNodeRAM(BuildEntity buildEntity) {
+		if (getNodeRAM() >= buildEntity.getMinNodeRAM()) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private boolean _hasCompatibleNodeType(Build build) {
-		JenkinsNodeEntity.Type jenkinsNodeType = build.getJenkinsNodeType();
+	private boolean _hasCompatibleNodeType(BuildEntity buildEntity) {
+		JenkinsNodeEntity.Type jenkinsNodeType =
+			buildEntity.getJenkinsNodeType();
 
 		if ((jenkinsNodeType == null) || (jenkinsNodeType == getType())) {
 			return true;

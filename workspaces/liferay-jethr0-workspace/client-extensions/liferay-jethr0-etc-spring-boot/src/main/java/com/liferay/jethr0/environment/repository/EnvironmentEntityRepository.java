@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.environment.repository;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildToEnvironmentsEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.environment.Environment;
@@ -24,20 +24,21 @@ import org.springframework.context.annotation.Configuration;
 public class EnvironmentEntityRepository
 	extends BaseEntityRepository<Environment> {
 
-	public Set<Environment> getAll(Build build) {
+	public Set<Environment> getAll(BuildEntity buildEntity) {
 		Set<Environment> buildEnvironments = new HashSet<>();
 
 		Set<Long> environmentIds =
-			_buildToEnvironmentsEntityRelationshipDALO.getChildEntityIds(build);
+			_buildToEnvironmentsEntityRelationshipDALO.getChildEntityIds(
+				buildEntity);
 
 		for (Environment environment : getAll()) {
 			if (!environmentIds.contains(environment.getId())) {
 				continue;
 			}
 
-			build.addEnvironment(environment);
+			buildEntity.addEnvironment(environment);
 
-			environment.setBuild(build);
+			environment.setBuildEntity(buildEntity);
 
 			buildEnvironments.add(environment);
 		}

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
@@ -40,7 +40,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-				Build build = buildEntityRepository.add(
+				BuildEntity buildEntity = buildEntityRepository.add(
 					project, buildJSONObject);
 
 				JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
@@ -49,7 +49,8 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 				if (parametersJSONObject != null) {
 					for (String key : parametersJSONObject.keySet()) {
 						buildParameterEntityRepository.add(
-							build, key, parametersJSONObject.getString(key));
+							buildEntity, key,
+							parametersJSONObject.getString(key));
 					}
 				}
 			}

@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultBuildParameter extends BaseBuildParameter {
+public class DefaultBuildParameterEntity extends BaseBuildParameterEntity {
 
-	protected DefaultBuildParameter(JSONObject jsonObject) {
+	protected DefaultBuildParameterEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

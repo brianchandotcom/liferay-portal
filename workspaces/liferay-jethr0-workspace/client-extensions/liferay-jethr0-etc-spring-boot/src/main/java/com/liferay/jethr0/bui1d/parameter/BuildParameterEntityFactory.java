@@ -16,15 +16,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildParameterEntityFactory
-	extends BaseEntityFactory<BuildParameter> {
+	extends BaseEntityFactory<BuildParameterEntity> {
 
 	@Override
-	public BuildParameter newEntity(JSONObject jsonObject) {
-		return new DefaultBuildParameter(jsonObject);
+	public BuildParameterEntity newEntity(JSONObject jsonObject) {
+		return new DefaultBuildParameterEntity(jsonObject);
 	}
 
 	protected BuildParameterEntityFactory() {
-		super(BuildParameter.class);
+		super(BuildParameterEntity.class);
 	}
 
 }

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.task;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
@@ -26,7 +26,7 @@ public interface TaskEntity extends Entity {
 
 	public void addTaskRunEntity(TaskRunEntity taskRunEntity);
 
-	public Build getBuild();
+	public BuildEntity getBuildEntity();
 
 	public Set<Environment> getEnvironments();
 
@@ -44,7 +44,7 @@ public interface TaskEntity extends Entity {
 
 	public void removeTaskRunEntity(TaskRunEntity taskRunEntity);
 
-	public void setBuild(Build build);
+	public void setBuildEntity(BuildEntity buildEntity);
 
 	public void setName(String name);
 

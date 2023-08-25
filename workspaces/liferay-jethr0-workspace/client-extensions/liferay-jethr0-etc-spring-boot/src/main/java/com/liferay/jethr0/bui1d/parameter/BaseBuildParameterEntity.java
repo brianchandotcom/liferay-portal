@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.bui1d.parameter;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 
 import org.json.JSONObject;
@@ -13,16 +13,16 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuildParameter
-	extends BaseEntity implements BuildParameter {
+public abstract class BaseBuildParameterEntity
+	extends BaseEntity implements BuildParameterEntity {
 
 	@Override
-	public Build getBuild() {
-		return _build;
+	public BuildEntity getBuildEntity() {
+		return _buildEntity;
 	}
 
 	@Override
-	public long getBuildId() {
+	public long getBuildEntityId() {
 		return _buildId;
 	}
 
@@ -33,7 +33,7 @@ public abstract class BaseBuildParameter
 		jsonObject.put(
 			"name", getName()
 		).put(
-			"r_buildToBuildParameters_c_buildId", getBuildId()
+			"r_buildToBuildParameters_c_buildId", getBuildEntityId()
 		).put(
 			"value", getValue()
 		).put(
@@ -54,18 +54,18 @@ public abstract class BaseBuildParameter
 	}
 
 	@Override
-	public void setBuild(Build build) {
-		_build = build;
+	public void setBuildEntity(BuildEntity buildEntity) {
+		_buildEntity = buildEntity;
 
-		if (_build != null) {
-			_buildId = _build.getId();
+		if (_buildEntity != null) {
+			_buildId = _buildEntity.getId();
 		}
 		else {
 			_buildId = 0;
 		}
 	}
 
-	protected BaseBuildParameter(JSONObject jsonObject) {
+	protected BaseBuildParameterEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_buildId = jsonObject.optLong("r_buildToBuildParameters_c_buildId");
@@ -73,7 +73,7 @@ public abstract class BaseBuildParameter
 		_value = jsonObject.getString("value");
 	}
 
-	private Build _build;
+	private BuildEntity _buildEntity;
 	private long _buildId;
 	private final String _name;
 	private final String _value;

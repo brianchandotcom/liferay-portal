@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.bui1d;
 
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
@@ -22,15 +22,15 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Build extends Entity {
+public interface BuildEntity extends Entity {
 
-	public void addBuildParameter(BuildParameter buildParameter);
+	public void addBuildParameterEntity(BuildParameterEntity buildParameterEntity);
 
-	public void addBuildParameters(Set<BuildParameter> buildParameters);
+	public void addBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities);
 
-	public void addBuildRun(BuildRun buildRun);
+	public void addBuildRunEntity(BuildRunEntity buildRunEntity);
 
-	public void addBuildRuns(Set<BuildRun> buildRuns);
+	public void addBuildRunEntities(Set<BuildRunEntity> buildRunEntities);
 
 	public void addEnvironment(Environment environment);
 
@@ -42,13 +42,13 @@ public interface Build extends Entity {
 
 	public String getBuildName();
 
-	public BuildParameter getBuildParameter(String name);
+	public BuildParameterEntity getBuildParameterEntity(String name);
 
-	public Set<BuildParameter> getBuildParameters();
+	public Set<BuildParameterEntity> getBuildParameterEntities();
 
-	public Set<BuildRun> getBuildRuns();
+	public Set<BuildRunEntity> getBuildRunEntities();
 
-	public Set<Build> getChildBuilds();
+	public Set<BuildEntity> getChildBuildEntities();
 
 	public Set<Environment> getEnvironments();
 
@@ -60,7 +60,7 @@ public interface Build extends Entity {
 
 	public int getMinNodeRAM();
 
-	public Set<Build> getParentBuilds();
+	public Set<BuildEntity> getParentBuildEntities();
 
 	public Project getProject();
 
@@ -70,17 +70,17 @@ public interface Build extends Entity {
 
 	public Set<TaskEntity> getTaskEntities();
 
-	public boolean isChildBuild(Build parentBuild);
+	public boolean isChildBuildEntity(BuildEntity parentBuildEntity);
 
-	public boolean isParentBuild(Build build);
+	public boolean isParentBuildEntity(BuildEntity buildEntity);
 
-	public void removeBuildParameter(BuildParameter buildParameter);
+	public void removeBuildParameterEntity(BuildParameterEntity buildParameterEntity);
 
-	public void removeBuildParameters(Set<BuildParameter> buildParameters);
+	public void removeBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities);
 
-	public void removeBuildRun(BuildRun buildRun);
+	public void removeBuildRunEntity(BuildRunEntity buildRunEntity);
 
-	public void removeBuildRuns(Set<BuildRun> buildRuns);
+	public void removeBuildRunEntities(Set<BuildRunEntity> buildRunEntities);
 
 	public void removeEnvironment(Environment environment);
 

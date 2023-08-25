@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.bui1d.dalo;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.BuildEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildEntityDALO extends BaseEntityDALO<Build> {
+public class BuildEntityDALO extends BaseEntityDALO<BuildEntity> {
 
 	@Override
-	protected EntityFactory<Build> getEntityFactory() {
+	protected EntityFactory<BuildEntity> getEntityFactory() {
 		return _buildEntityFactory;
 	}
 

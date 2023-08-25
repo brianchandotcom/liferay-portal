@@ -6,7 +6,7 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
@@ -62,7 +62,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return buildJSONObject.optLong("number");
 	}
 
-	protected BuildRun getBuildRun() throws Exception {
+	protected BuildRunEntity getBuildRun() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (buildJSONObject == null) {
@@ -88,7 +88,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return buildRunEntityRepository.getById(Long.valueOf(buildRunID));
 	}
 
-	protected BuildRun.Result getBuildRunResult() throws Exception {
+	protected BuildRunEntity.Result getBuildRunResult() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (!buildJSONObject.has("result")) {
@@ -98,10 +98,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		String result = buildJSONObject.getString("result");
 
 		if (result.equals("SUCCESS")) {
-			return BuildRun.Result.PASSED;
+			return BuildRunEntity.Result.PASSED;
 		}
 
-		return BuildRun.Result.FAILED;
+		return BuildRunEntity.Result.FAILED;
 	}
 
 	protected URL getBuildURL() throws Exception {

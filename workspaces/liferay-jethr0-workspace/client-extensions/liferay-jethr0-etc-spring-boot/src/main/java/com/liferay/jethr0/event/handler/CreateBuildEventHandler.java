@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
@@ -33,7 +33,8 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 		JSONObject buildJSONObject = validateBuildJSONObject(
 			messageJSONObject.optJSONObject("build"));
 
-		Build build = buildEntityRepository.add(project, buildJSONObject);
+		BuildEntity buildEntity = buildEntityRepository.add(
+			project, buildJSONObject);
 
 		JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
 			"parameters");
@@ -43,13 +44,13 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 				getBuildParameterRepository();
 
 			for (String key : parametersJSONObject.keySet()) {
-				BuildParameter buildParameter =
+				BuildParameterEntity buildParameterEntity =
 					buildParameterEntityRepository.add(
-						build, key, parametersJSONObject.getString(key));
+						buildEntity, key, parametersJSONObject.getString(key));
 
-				build.addBuildParameter(buildParameter);
+				buildEntity.addBuildParameterEntity(buildParameterEntity);
 
-				buildParameter.setBuild(build);
+				buildParameterEntity.setBuildEntity(buildEntity);
 			}
 		}
 

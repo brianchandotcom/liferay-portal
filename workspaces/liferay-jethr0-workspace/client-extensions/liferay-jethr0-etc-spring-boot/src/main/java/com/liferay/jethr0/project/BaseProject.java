@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.project;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
@@ -24,13 +24,13 @@ import org.json.JSONObject;
 public abstract class BaseProject extends BaseEntity implements Project {
 
 	@Override
-	public void addBuild(Build build) {
-		addRelatedEntity(build);
+	public void addBuildEntity(BuildEntity buildEntity) {
+		addRelatedEntity(buildEntity);
 	}
 
 	@Override
-	public void addBuilds(Set<Build> builds) {
-		addRelatedEntities(builds);
+	public void addBuildEntities(Set<BuildEntity> buildEntities) {
+		addRelatedEntities(buildEntities);
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public Set<Build> getBuilds() {
-		return getRelatedEntities(Build.class);
+	public Set<BuildEntity> getBuildEntities() {
+		return getRelatedEntities(BuildEntity.class);
 	}
 
 	@Override
@@ -157,13 +157,13 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void removeBuild(Build build) {
-		removeRelatedEntity(build);
+	public void removeBuildEntity(BuildEntity buildEntity) {
+		removeRelatedEntity(buildEntity);
 	}
 
 	@Override
-	public void removeBuilds(Set<Build> builds) {
-		removeRelatedEntities(builds);
+	public void removeBuildEntities(Set<BuildEntity> buildEntities) {
+		removeRelatedEntities(buildEntities);
 	}
 
 	@Override

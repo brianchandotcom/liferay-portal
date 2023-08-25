@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
@@ -40,11 +40,11 @@ public class BuildQueueRestController {
 			int runningBuilds = 0;
 			int totalBuilds = 0;
 
-			for (Build build : project.getBuilds()) {
-				if (build.getState() == Build.State.COMPLETED) {
+			for (BuildEntity buildEntity : project.getBuildEntities()) {
+				if (buildEntity.getState() == BuildEntity.State.COMPLETED) {
 					completedBuilds++;
 				}
-				else if (build.getState() == Build.State.RUNNING) {
+				else if (buildEntity.getState() == BuildEntity.State.RUNNING) {
 					runningBuilds++;
 				}
 				else {

@@ -5,10 +5,10 @@
 
 package com.liferay.jethr0.bui1d.repository;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildParameterEntityDALO;
 import com.liferay.jethr0.bui1d.dalo.BuildToBuildParametersEntityRelationshipDALO;
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
@@ -25,42 +25,46 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildParameterEntityRepository
-	extends BaseEntityRepository<BuildParameter> {
+	extends BaseEntityRepository<BuildParameterEntity> {
 
-	public BuildParameter add(Build build, String name, String value) {
+	public BuildParameterEntity add(
+		BuildEntity buildEntity, String name, String value) {
+
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"name", name
 		).put(
-			"r_buildToBuildParameters_c_buildId", build.getId()
+			"r_buildToBuildParameters_c_buildId", buildEntity.getId()
 		).put(
 			"value", value
 		);
 
-		BuildParameter buildParameter = add(jsonObject);
+		BuildParameterEntity buildParameterEntity = add(jsonObject);
 
-		build.addBuildParameter(buildParameter);
+		buildEntity.addBuildParameterEntity(buildParameterEntity);
 
-		buildParameter.setBuild(build);
+		buildParameterEntity.setBuildEntity(buildEntity);
 
-		return buildParameter;
+		return buildParameterEntity;
 	}
 
-	public Set<BuildParameter> getAll(Build build) {
-		Set<BuildParameter> buildParameters = new HashSet<>(
+	public Set<BuildParameterEntity> getAll(BuildEntity buildEntity) {
+		Set<BuildParameterEntity> buildParameterEntities = new HashSet<>(
 			_buildToBuildParametersEntityRelationshipDALO.getChildEntities(
-				build));
+				buildEntity));
 
-		for (BuildParameter buildParameter : buildParameters) {
-			buildParameter.setBuild(build);
+		for (BuildParameterEntity buildParameterEntity :
+				buildParameterEntities) {
+
+			buildParameterEntity.setBuildEntity(buildEntity);
 		}
 
-		return addAll(buildParameters);
+		return addAll(buildParameterEntities);
 	}
 
 	@Override
-	public EntityDALO<BuildParameter> getEntityDALO() {
+	public EntityDALO<BuildParameterEntity> getEntityDALO() {
 		return _buildParameterEntityDALO;
 	}
 
@@ -72,16 +76,16 @@ public class BuildParameterEntityRepository
 	public synchronized void initializeRelationships() {
 		_buildEntityRepository.initializeRelationships();
 
-		for (BuildParameter buildParameter : getAll()) {
-			Build build = null;
+		for (BuildParameterEntity buildParameterEntity : getAll()) {
+			BuildEntity buildEntity = null;
 
-			long buildId = buildParameter.getBuildId();
+			long buildEntityId = buildParameterEntity.getBuildEntityId();
 
-			if (buildId != 0) {
-				build = _buildEntityRepository.getById(buildId);
+			if (buildEntityId != 0) {
+				buildEntity = _buildEntityRepository.getById(buildEntityId);
 			}
 
-			buildParameter.setBuild(build);
+			buildParameterEntity.setBuildEntity(buildEntity);
 		}
 	}
 

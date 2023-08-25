@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.bui1d.queue;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
@@ -32,28 +32,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildQueue {
 
-	public void addBuild(Build build) {
-		if (build == null) {
+	public void addBuildEntities(Set<BuildEntity> buildEntities) {
+		if (buildEntities == null) {
 			return;
 		}
 
-		_sortedBuilds.add(build);
+		buildEntities.removeAll(Collections.singleton(null));
+
+		if (buildEntities.isEmpty()) {
+			return;
+		}
+
+		_sortedBuildEntities.addAll(buildEntities);
 
 		sort();
 	}
 
-	public void addBuilds(Set<Build> builds) {
-		if (builds == null) {
+	public void addBuildEntity(BuildEntity buildEntity) {
+		if (buildEntity == null) {
 			return;
 		}
 
-		builds.removeAll(Collections.singleton(null));
-
-		if (builds.isEmpty()) {
-			return;
-		}
-
-		_sortedBuilds.addAll(builds);
+		_sortedBuildEntities.add(buildEntity);
 
 		sort();
 	}
@@ -70,9 +70,9 @@ public class BuildQueue {
 		sort();
 	}
 
-	public List<Build> getBuilds() {
-		synchronized (_sortedBuilds) {
-			return _sortedBuilds;
+	public List<BuildEntity> getBuildEntities() {
+		synchronized (_sortedBuildEntities) {
+			return _sortedBuildEntities;
 		}
 	}
 
@@ -82,38 +82,38 @@ public class BuildQueue {
 
 	public void initialize() {
 		for (Project project : _projectQueue.getProjects()) {
-			for (Build build : project.getBuilds()) {
-				_buildRunEntityRepository.getAll(build);
-				_buildParameterEntityRepository.getAll(build);
-				_environmentEntityRepository.getAll(build);
-				_taskEntityRepository.getAll(build);
+			for (BuildEntity buildEntity : project.getBuildEntities()) {
+				_buildRunEntityRepository.getAll(buildEntity);
+				_buildParameterEntityRepository.getAll(buildEntity);
+				_environmentEntityRepository.getAll(buildEntity);
+				_taskEntityRepository.getAll(buildEntity);
 			}
 		}
 
 		sort();
 
-		for (Build build : getBuilds()) {
-			System.out.println(build);
+		for (BuildEntity buildEntity : getBuildEntities()) {
+			System.out.println(buildEntity);
 		}
 	}
 
-	public Build nextBuild(JenkinsNodeEntity jenkinsNodeEntity) {
-		synchronized (_sortedBuilds) {
-			Build nextBuild = null;
+	public BuildEntity nextBuildEntity(JenkinsNodeEntity jenkinsNodeEntity) {
+		synchronized (_sortedBuildEntities) {
+			BuildEntity nextBuildEntity = null;
 
-			for (Build build : _sortedBuilds) {
-				if (!jenkinsNodeEntity.isCompatible(build)) {
+			for (BuildEntity buildEntity : _sortedBuildEntities) {
+				if (!jenkinsNodeEntity.isCompatible(buildEntity)) {
 					continue;
 				}
 
-				nextBuild = build;
+				nextBuildEntity = buildEntity;
 
 				break;
 			}
 
-			_sortedBuilds.remove(nextBuild);
+			_sortedBuildEntities.remove(nextBuildEntity);
 
-			return nextBuild;
+			return nextBuildEntity;
 		}
 	}
 
@@ -124,38 +124,40 @@ public class BuildQueue {
 	}
 
 	public void sort() {
-		synchronized (_sortedBuilds) {
-			_sortedBuilds.clear();
+		synchronized (_sortedBuildEntities) {
+			_sortedBuildEntities.clear();
 
 			_projectQueue.sort();
 
 			for (Project project : _projectQueue.getProjects()) {
-				List<Build> builds = new ArrayList<>(project.getBuilds());
+				List<BuildEntity> buildEntities = new ArrayList<>(
+					project.getBuildEntities());
 
-				builds.removeAll(Collections.singleton(null));
+				buildEntities.removeAll(Collections.singleton(null));
 
-				Collections.sort(builds, new ParentBuildComparator());
+				Collections.sort(buildEntities, new ParentBuildComparator());
 
-				for (Build build : builds) {
-					if ((build.getState() == Build.State.BLOCKED) ||
-						(build.getState() == Build.State.OPENED)) {
+				for (BuildEntity buildEntity : buildEntities) {
+					if ((buildEntity.getState() == BuildEntity.State.BLOCKED) ||
+						(buildEntity.getState() == BuildEntity.State.OPENED)) {
 
-						_sortedBuilds.add(build);
+						_sortedBuildEntities.add(buildEntity);
 					}
 				}
 			}
 		}
 	}
 
-	public static class ParentBuildComparator implements Comparator<Build> {
+	public static class ParentBuildComparator
+		implements Comparator<BuildEntity> {
 
 		@Override
-		public int compare(Build build1, Build build2) {
-			if (build1.isParentBuild(build2)) {
+		public int compare(BuildEntity buildEntity1, BuildEntity buildEntity2) {
+			if (buildEntity1.isParentBuildEntity(buildEntity2)) {
 				return -1;
 			}
 
-			if (build2.isParentBuild(build1)) {
+			if (buildEntity2.isParentBuildEntity(buildEntity1)) {
 				return 1;
 			}
 
@@ -186,7 +188,7 @@ public class BuildQueue {
 	private ProjectToBuildsEntityRelationshipDALO
 		_projectToBuildsEntityRelationshipDALO;
 
-	private final List<Build> _sortedBuilds = new ArrayList<>();
+	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
 
 	@Autowired
 	private TaskEntityRepository _taskEntityRepository;

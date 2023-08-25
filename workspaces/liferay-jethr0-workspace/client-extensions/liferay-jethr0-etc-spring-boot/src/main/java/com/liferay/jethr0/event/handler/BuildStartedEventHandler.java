@@ -5,11 +5,11 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
@@ -24,16 +24,16 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		BuildRun buildRun = getBuildRun();
+		BuildRunEntity buildRunEntity = getBuildRun();
 
-		buildRun.setBuildURL(getBuildURL());
-		buildRun.setState(BuildRun.State.RUNNING);
+		buildRunEntity.setBuildURL(getBuildURL());
+		buildRunEntity.setState(BuildRunEntity.State.RUNNING);
 
-		Build build = buildRun.getBuild();
+		BuildEntity buildEntity = buildRunEntity.getBuildEntity();
 
-		build.setState(Build.State.RUNNING);
+		buildEntity.setState(BuildEntity.State.RUNNING);
 
-		Project project = build.getProject();
+		Project project = buildEntity.getProject();
 
 		if (project.getState() != Project.State.RUNNING) {
 			project.setStartDate(new Date());
@@ -51,14 +51,14 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildEntityRepository.update(build);
+		buildEntityRepository.update(buildEntity);
 
 		BuildRunEntityRepository buildRunEntityRepository =
 			getBuildRunRepository();
 
-		buildRunEntityRepository.update(buildRun);
+		buildRunEntityRepository.update(buildRunEntity);
 
-		return buildRun.toString();
+		return buildRunEntity.toString();
 	}
 
 	protected BuildStartedEventHandler(

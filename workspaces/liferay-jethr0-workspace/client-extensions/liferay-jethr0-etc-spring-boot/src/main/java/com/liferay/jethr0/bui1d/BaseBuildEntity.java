@@ -5,8 +5,8 @@
 
 package com.liferay.jethr0.bui1d;
 
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
@@ -23,26 +23,27 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseBuild extends BaseEntity implements Build {
+public abstract class BaseBuildEntity
+	extends BaseEntity implements BuildEntity {
 
 	@Override
-	public void addBuildParameter(BuildParameter buildParameter) {
-		addRelatedEntity(buildParameter);
+	public void addBuildParameterEntity(BuildParameterEntity buildParameterEntity) {
+		addRelatedEntity(buildParameterEntity);
 	}
 
 	@Override
-	public void addBuildParameters(Set<BuildParameter> buildParameters) {
-		addRelatedEntities(buildParameters);
+	public void addBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities) {
+		addRelatedEntities(buildParameterEntities);
 	}
 
 	@Override
-	public void addBuildRun(BuildRun buildRun) {
-		addRelatedEntity(buildRun);
+	public void addBuildRunEntity(BuildRunEntity buildRunEntity) {
+		addRelatedEntity(buildRunEntity);
 	}
 
 	@Override
-	public void addBuildRuns(Set<BuildRun> buildRuns) {
-		addRelatedEntities(buildRuns);
+	public void addBuildRunEntities(Set<BuildRunEntity> buildRunEntities) {
+		addRelatedEntities(buildRunEntities);
 	}
 
 	@Override
@@ -71,10 +72,10 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public BuildParameter getBuildParameter(String name) {
-		for (BuildParameter buildParameter : getBuildParameters()) {
-			if (Objects.equals(name, buildParameter.getName())) {
-				return buildParameter;
+	public BuildParameterEntity getBuildParameterEntity(String name) {
+		for (BuildParameterEntity buildParameterEntity : getBuildParameterEntities()) {
+			if (Objects.equals(name, buildParameterEntity.getName())) {
+				return buildParameterEntity;
 			}
 		}
 
@@ -82,18 +83,18 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public Set<BuildParameter> getBuildParameters() {
-		return getRelatedEntities(BuildParameter.class);
+	public Set<BuildParameterEntity> getBuildParameterEntities() {
+		return getRelatedEntities(BuildParameterEntity.class);
 	}
 
 	@Override
-	public Set<BuildRun> getBuildRuns() {
-		return getRelatedEntities(BuildRun.class);
+	public Set<BuildRunEntity> getBuildRunEntities() {
+		return getRelatedEntities(BuildRunEntity.class);
 	}
 
 	@Override
-	public Set<Build> getChildBuilds() {
-		return _childBuilds;
+	public Set<BuildEntity> getChildBuildEntities() {
+		return _childBuildEntities;
 	}
 
 	@Override
@@ -103,14 +104,14 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public JenkinsNodeEntity.Type getJenkinsNodeType() {
-		BuildParameter buildParameter = getBuildParameter("NODE_TYPE");
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity("NODE_TYPE");
 
-		if (buildParameter == null) {
+		if (buildParameterEntity == null) {
 			return null;
 		}
 
 		JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.getByKey(
-			buildParameter.getValue());
+			buildParameterEntity.getValue());
 
 		if (type == null) {
 			return null;
@@ -145,13 +146,13 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public int getMaxNodeCount() {
-		BuildParameter buildParameter = getBuildParameter("MAX_NODE_COUNT");
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity("MAX_NODE_COUNT");
 
-		if (buildParameter == null) {
+		if (buildParameterEntity == null) {
 			return _DEFAULT_MAX_NODE_COUNT;
 		}
 
-		String value = buildParameter.getValue();
+		String value = buildParameterEntity.getValue();
 
 		if ((value == null) || !value.matches("\\d+")) {
 			return _DEFAULT_MAX_NODE_COUNT;
@@ -162,13 +163,13 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public int getMinNodeRAM() {
-		BuildParameter buildParameter = getBuildParameter("MIN_NODE_RAM");
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity("MIN_NODE_RAM");
 
-		if (buildParameter == null) {
+		if (buildParameterEntity == null) {
 			return _DEFAULT_MIN_NODE_RAM;
 		}
 
-		String value = buildParameter.getValue();
+		String value = buildParameterEntity.getValue();
 
 		if ((value == null) || !value.matches("\\d+")) {
 			return _DEFAULT_MIN_NODE_RAM;
@@ -177,8 +178,8 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		return Integer.valueOf(value);
 	}
 
-	public Set<Build> getParentBuilds() {
-		return _parentBuilds;
+	public Set<BuildEntity> getParentBuildEntities() {
+		return _parentBuildEntities;
 	}
 
 	@Override
@@ -202,37 +203,37 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
-	public boolean isChildBuild(Build parentBuild) {
-		Set<Build> parentBuilds = _getAllParentBuilds();
+	public boolean isChildBuildEntity(BuildEntity parentBuildEntity) {
+		Set<BuildEntity> parentBuildEntities = _getAllParentBuildEntities();
 
-		return parentBuilds.contains(parentBuild);
+		return parentBuildEntities.contains(parentBuildEntity);
 	}
 
 	@Override
-	public boolean isParentBuild(Build childBuild) {
-		Set<Build> childBuilds = _getAllChildBuilds();
+	public boolean isParentBuildEntity(BuildEntity childBuildEntity) {
+		Set<BuildEntity> childBuildEntities = _getAllChildBuildEntities();
 
-		return childBuilds.contains(childBuild);
+		return childBuildEntities.contains(childBuildEntity);
 	}
 
 	@Override
-	public void removeBuildParameter(BuildParameter buildParameter) {
-		removeRelatedEntity(buildParameter);
+	public void removeBuildParameterEntity(BuildParameterEntity buildParameterEntity) {
+		removeRelatedEntity(buildParameterEntity);
 	}
 
 	@Override
-	public void removeBuildParameters(Set<BuildParameter> buildParameters) {
-		removeRelatedEntities(buildParameters);
+	public void removeBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities) {
+		removeRelatedEntities(buildParameterEntities);
 	}
 
 	@Override
-	public void removeBuildRun(BuildRun buildRun) {
-		removeRelatedEntity(buildRun);
+	public void removeBuildRunEntity(BuildRunEntity buildRunEntity) {
+		removeRelatedEntity(buildRunEntity);
 	}
 
 	@Override
-	public void removeBuildRuns(Set<BuildRun> buildRuns) {
-		removeRelatedEntities(buildRuns);
+	public void removeBuildRunEntities(Set<BuildRunEntity> buildRunEntities) {
+		removeRelatedEntities(buildRunEntities);
 	}
 
 	@Override
@@ -257,14 +258,14 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 	@Override
 	public boolean requiresGoodBattery() {
-		BuildParameter buildParameter = getBuildParameter(
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
 			"REQUIRES_GOOD_BATTERY");
 
-		if (buildParameter == null) {
+		if (buildParameterEntity == null) {
 			return false;
 		}
 
-		String requiresGoodBattery = buildParameter.getValue();
+		String requiresGoodBattery = buildParameterEntity.getValue();
 
 		if ((requiresGoodBattery == null) ||
 			!Objects.equals(
@@ -298,7 +299,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		_state = state;
 	}
 
-	protected BaseBuild(JSONObject jsonObject) {
+	protected BaseBuildEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_buildName = jsonObject.getString("buildName");
@@ -307,24 +308,27 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
-	private Set<Build> _getAllChildBuilds() {
-		Set<Build> childBuilds = new HashSet<>(_childBuilds);
+	private Set<BuildEntity> _getAllChildBuildEntities() {
+		Set<BuildEntity> childBuildEntities = new HashSet<>(
+			_childBuildEntities);
 
-		for (Build childBuild : _childBuilds) {
-			childBuilds.addAll(childBuild.getChildBuilds());
+		for (BuildEntity childBuildEntity : _childBuildEntities) {
+			childBuildEntities.addAll(childBuildEntity.getChildBuildEntities());
 		}
 
-		return childBuilds;
+		return childBuildEntities;
 	}
 
-	private Set<Build> _getAllParentBuilds() {
-		Set<Build> parentBuilds = new HashSet<>(_parentBuilds);
+	private Set<BuildEntity> _getAllParentBuildEntities() {
+		Set<BuildEntity> parentBuildEntities = new HashSet<>(
+			_parentBuildEntities);
 
-		for (Build parentBuild : _parentBuilds) {
-			parentBuilds.addAll(parentBuild.getParentBuilds());
+		for (BuildEntity parentBuildEntity : _parentBuildEntities) {
+			parentBuildEntities.addAll(
+				parentBuildEntity.getParentBuildEntities());
 		}
 
-		return parentBuilds;
+		return parentBuildEntities;
 	}
 
 	private static final int _DEFAULT_MAX_NODE_COUNT = 2;
@@ -332,9 +336,9 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private static final int _DEFAULT_MIN_NODE_RAM = 12;
 
 	private final String _buildName;
-	private final Set<Build> _childBuilds = new HashSet<>();
+	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
 	private String _jobName;
-	private final Set<Build> _parentBuilds = new HashSet<>();
+	private final Set<BuildEntity> _parentBuildEntities = new HashSet<>();
 	private Project _project;
 	private long _projectId;
 	private State _state;

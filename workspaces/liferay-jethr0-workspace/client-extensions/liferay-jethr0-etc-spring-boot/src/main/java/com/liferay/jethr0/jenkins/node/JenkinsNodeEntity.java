@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.jenkins.node;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
@@ -44,7 +44,7 @@ public interface JenkinsNodeEntity extends Entity {
 
 	public boolean isAvailable();
 
-	public boolean isCompatible(Build build);
+	public boolean isCompatible(BuildEntity buildEntity);
 
 	public boolean isIdle();
 

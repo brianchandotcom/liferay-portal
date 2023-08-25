@@ -5,22 +5,22 @@
 
 package com.liferay.jethr0.bui1d.parameter;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 
 /**
  * @author Michael Hashimoto
  */
-public interface BuildParameter extends Entity {
+public interface BuildParameterEntity extends Entity {
 
-	public Build getBuild();
+	public BuildEntity getBuildEntity();
 
-	public long getBuildId();
+	public long getBuildEntityId();
 
 	public String getName();
 
 	public String getValue();
 
-	public void setBuild(Build build);
+	public void setBuildEntity(BuildEntity buildEntity);
 
 }

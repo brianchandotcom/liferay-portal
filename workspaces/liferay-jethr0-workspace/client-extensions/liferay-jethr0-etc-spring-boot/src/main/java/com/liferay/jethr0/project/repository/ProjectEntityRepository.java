@@ -67,7 +67,7 @@ public class ProjectEntityRepository extends BaseEntityRepository<Project> {
 		}
 
 		for (Project project : getAll()) {
-			project.addBuilds(_buildEntityRepository.getAll(project));
+			project.addBuildEntities(_buildEntityRepository.getAll(project));
 		}
 
 		_initializedRelationships = true;

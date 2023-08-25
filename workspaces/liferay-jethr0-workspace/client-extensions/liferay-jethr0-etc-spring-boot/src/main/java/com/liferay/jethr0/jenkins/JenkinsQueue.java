@@ -5,11 +5,11 @@
 
 package com.liferay.jethr0.jenkins;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
@@ -98,24 +98,25 @@ public class JenkinsQueue {
 					continue;
 				}
 
-				Build build = _buildQueue.nextBuild(jenkinsNodeEntity);
+				BuildEntity buildEntity = _buildQueue.nextBuildEntity(
+					jenkinsNodeEntity);
 
-				if (build == null) {
+				if (buildEntity == null) {
 					continue;
 				}
 
-				build.setState(Build.State.QUEUED);
+				buildEntity.setState(BuildEntity.State.QUEUED);
 
-				BuildRun buildRun = _buildRunEntityRepository.add(
-					build, BuildRun.State.QUEUED);
+				BuildRunEntity buildRunEntity = _buildRunEntityRepository.add(
+					buildEntity, BuildRunEntity.State.QUEUED);
 
 				_jmsEventHandler.send(
 					jenkinsServerEntity,
 					String.valueOf(
-						buildRun.getInvokeJSONObject(jenkinsNodeEntity)));
+						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));
 
-				_buildEntityRepository.update(build);
-				_buildRunEntityRepository.update(buildRun);
+				_buildEntityRepository.update(buildEntity);
+				_buildRunEntityRepository.update(buildRunEntity);
 			}
 		}
 	}

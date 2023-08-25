@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.task.repository;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
@@ -25,20 +25,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TaskEntityRepository extends BaseEntityRepository<TaskEntity> {
 
-	public Set<TaskEntity> getAll(Build build) {
+	public Set<TaskEntity> getAll(BuildEntity buildEntity) {
 		Set<TaskEntity> buildTaskEntities = new HashSet<>();
 
 		Set<Long> taskIds =
-			_buildToTasksEntityRelationshipDALO.getChildEntityIds(build);
+			_buildToTasksEntityRelationshipDALO.getChildEntityIds(buildEntity);
 
 		for (TaskEntity taskEntity : getAll()) {
 			if (!taskIds.contains(taskEntity.getId())) {
 				continue;
 			}
 
-			taskEntity.setBuild(build);
+			taskEntity.setBuildEntity(buildEntity);
 
-			build.addTaskEntity(taskEntity);
+			buildEntity.addTaskEntity(taskEntity);
 
 			buildTaskEntities.add(taskEntity);
 		}

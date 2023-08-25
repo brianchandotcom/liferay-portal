@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.bui1d.repository;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
@@ -25,22 +25,23 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class BuildEntityRepository extends BaseEntityRepository<Build> {
+public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
-	public Build add(Project project, JSONObject jsonObject) {
+	public BuildEntity add(Project project, JSONObject jsonObject) {
 		jsonObject.put("r_projectToBuilds_c_projectId", project.getId());
 
-		Build build = add(jsonObject);
+		BuildEntity buildEntity = add(jsonObject);
 
-		build.setProject(project);
+		buildEntity.setProject(project);
 
-		project.addBuild(build);
+		project.addBuildEntity(buildEntity);
 
-		return build;
+		return buildEntity;
 	}
 
-	public Build add(
-		Project project, String buildName, String jobName, Build.State state) {
+	public BuildEntity add(
+		Project project, String buildName, String jobName,
+		BuildEntity.State state) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -55,19 +56,19 @@ public class BuildEntityRepository extends BaseEntityRepository<Build> {
 		return add(project, jsonObject);
 	}
 
-	public Set<Build> getAll(Project project) {
-		Set<Build> builds = new HashSet<>(
+	public Set<BuildEntity> getAll(Project project) {
+		Set<BuildEntity> buildEntities = new HashSet<>(
 			_projectToBuildsEntityRelationshipDALO.getChildEntities(project));
 
-		for (Build build : builds) {
-			build.setProject(project);
+		for (BuildEntity buildEntity : buildEntities) {
+			buildEntity.setProject(project);
 		}
 
-		return addAll(builds);
+		return addAll(buildEntities);
 	}
 
 	@Override
-	public EntityDALO<Build> getEntityDALO() {
+	public EntityDALO<BuildEntity> getEntityDALO() {
 		return _buildEntityDALO;
 	}
 
@@ -83,21 +84,22 @@ public class BuildEntityRepository extends BaseEntityRepository<Build> {
 
 		_projectEntityRepository.initializeRelationships();
 
-		for (Build build : getAll()) {
+		for (BuildEntity buildEntity : getAll()) {
 			Project project = null;
 
-			long projectId = build.getProjectId();
+			long projectId = buildEntity.getProjectId();
 
 			if (projectId != 0) {
 				project = _projectEntityRepository.getById(projectId);
 			}
 
-			build.setProject(project);
+			buildEntity.setProject(project);
 
-			build.addBuildParameters(
-				_buildParameterEntityRepository.getAll(build));
+			buildEntity.addBuildParameterEntities(
+				_buildParameterEntityRepository.getAll(buildEntity));
 
-			build.addBuildRuns(_buildRunEntityRepository.getAll(build));
+			buildEntity.addBuildRunEntities(
+				_buildRunEntityRepository.getAll(buildEntity));
 		}
 
 		_initializedRelationships = true;

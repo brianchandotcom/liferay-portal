@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.helper.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.IndexSettingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
@@ -49,39 +50,11 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		_jsonFactory = jsonFactory;
 	}
 
-	public void createLiferayDocumentTypeMappings(
-		CreateIndexRequest createIndexRequest, String mappings) {
-
-		JSONObject mappingsJSONObject = createJSONObject(mappings);
-
-		if (mappingsJSONObject.has(
-				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE)) {
-
-			mappingsJSONObject = mappingsJSONObject.getJSONObject(
-				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE);
-		}
-
-		createIndexRequest.mapping(
-			mappingsJSONObject.toString(), XContentType.JSON);
-	}
-
 	public void loadDefaultAnalyzers(SettingsBuilder settingsBuilder) {
 		String defaultAnalyzers = ResourceUtil.getResourceAsString(
 			getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME);
 
 		settingsBuilder.loadFromSource(defaultAnalyzers);
-	}
-
-	public void createRequiredDefaultTypeMappings(
-		CreateIndexRequest createIndexRequest) {
-
-		String requiredDefaultMappings = ResourceUtil.getResourceAsString(
-			getClass(),
-			LiferayTypeMappingsConstants.
-				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME);
-
-		createLiferayDocumentTypeMappings(
-			createIndexRequest, requiredDefaultMappings);
 	}
 
 	public void putDefaultTypeMappingTemplate() {
@@ -112,6 +85,33 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	public void setMappings(CreateIndexRequest createIndexRequest) {
+		setMappings(createIndexRequest, null);
+	}
+
+	public void setMappings(
+		CreateIndexRequest createIndexRequest, String mappings) {
+
+		if (Validator.isNull(mappings)) {
+			mappings = ResourceUtil.getResourceAsString(
+				getClass(),
+				LiferayTypeMappingsConstants.
+					LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME);
+		}
+
+		JSONObject mappingsJSONObject = createJSONObject(mappings);
+
+		if (mappingsJSONObject.has(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE)) {
+
+			mappingsJSONObject = mappingsJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE);
+		}
+
+		createIndexRequest.mapping(
+			mappingsJSONObject.toString(), XContentType.JSON);
 	}
 
 	protected JSONObject createJSONObject(String mappings) {

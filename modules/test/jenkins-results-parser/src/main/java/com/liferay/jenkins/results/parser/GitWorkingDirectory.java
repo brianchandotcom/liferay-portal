@@ -419,10 +419,9 @@ public class GitWorkingDirectory {
 	}
 
 	public String createPullRequest(
-			final String body, final String pullRequestBranchName,
-			final String receiverUserName, final String senderUserName,
-			final String title)
-		throws IOException {
+		final String body, final String pullRequestBranchName,
+		final String receiverUserName, final String senderUserName,
+		final String title) {
 
 		Retryable<String> retryable = new Retryable<String>(true, 5, 0, true) {
 
@@ -449,8 +448,16 @@ public class GitWorkingDirectory {
 					responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
 						url, requestJSONObject.toString());
 				}
+				catch (GitHubSecondaryRateLimitIOException
+							gitHubSecondaryRateLimitIOException) {
+
+					throw new GitHubSecondaryRateLimitRuntimeException(
+						"Unable to create pull request",
+						gitHubSecondaryRateLimitIOException);
+				}
 				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
+					throw new RuntimeException(
+						"Unable to create pull request", ioException);
 				}
 
 				String pullRequestURL = responseJSONObject.getString(

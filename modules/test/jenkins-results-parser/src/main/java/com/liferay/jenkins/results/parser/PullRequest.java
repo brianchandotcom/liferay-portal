@@ -176,17 +176,9 @@ public class PullRequest {
 			throw new RuntimeException("Unable to push branch to GitHub");
 		}
 
-		try {
-			return gitWorkingDirectory.createPullRequest(
-				commentBody, forwardBranchName, forwardReceiverUsername,
-				forwardSenderUsername, getTitle());
-		}
-		catch (IOException ioException) {
-			ioException.printStackTrace();
-
-			throw new RuntimeException(
-				"Unable to create new pull request", ioException);
-		}
+		return gitWorkingDirectory.createPullRequest(
+			commentBody, forwardBranchName, forwardReceiverUsername,
+			forwardSenderUsername, getTitle());
 	}
 
 	public String getCIMergeSHA() {

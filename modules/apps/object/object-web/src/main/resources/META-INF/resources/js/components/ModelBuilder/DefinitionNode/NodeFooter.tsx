@@ -12,54 +12,58 @@ import React from 'react';
 import './NodeFooter.scss';
 
 interface NodeFooterProps {
+	isLinkedNode: boolean;
 	setShowAllFields: (value: boolean) => void;
 	showAllFields: boolean;
 }
 
 export default function NodeFooter({
+	isLinkedNode,
 	setShowAllFields,
 	showAllFields,
 }: NodeFooterProps) {
 	return (
 		<>
 			<div className="lfr-objects__model-builder-node-button-container">
-				<DropDown
-					alignmentPosition={4}
-					trigger={
-						<ClayButton displayType="secondary">
-							<span>
+				{!isLinkedNode && (
+					<DropDown
+						alignmentPosition={4}
+						trigger={
+							<ClayButton displayType="secondary">
+								<span>
+									{sub(
+										Liferay.Language.get('x-or-x'),
+										Liferay.Language.get('add-field'),
+										Liferay.Language.get('relationship')
+									)}
+								</span>
+							</ClayButton>
+						}
+					>
+						<DropDown.ItemList>
+							<DropDown.Item>
+								<ClayIcon
+									className="c-mr-3 text-4"
+									symbol="custom-field"
+								/>
+
+								{Liferay.Language.get('add-field')}
+							</DropDown.Item>
+
+							<DropDown.Item>
+								<ClayIcon
+									className="c-mr-3 text-4"
+									symbol="nodes"
+								/>
+
 								{sub(
-									Liferay.Language.get('x-or-x'),
-									Liferay.Language.get('add-field'),
+									Liferay.Language.get('add-x'),
 									Liferay.Language.get('relationship')
 								)}
-							</span>
-						</ClayButton>
-					}
-				>
-					<DropDown.ItemList>
-						<DropDown.Item>
-							<ClayIcon
-								className="c-mr-3 text-4"
-								symbol="custom-field"
-							/>
-
-							{Liferay.Language.get('add-field')}
-						</DropDown.Item>
-
-						<DropDown.Item>
-							<ClayIcon
-								className="c-mr-3 text-4"
-								symbol="nodes"
-							/>
-
-							{sub(
-								Liferay.Language.get('add-x'),
-								Liferay.Language.get('relationship')
-							)}
-						</DropDown.Item>
-					</DropDown.ItemList>
-				</DropDown>
+							</DropDown.Item>
+						</DropDown.ItemList>
+					</DropDown>
+				)}
 			</div>
 
 			<div className="lfr-objects__model-builder-node-show-all-fields-container">

@@ -27,7 +27,7 @@ definition {
 		task ("View an email notification template after Upgrade") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.viewNotificationTemplateDetails(
+			ObjectNotifications.viewEmailNotificationTemplateDetails(
 				bcc = "test@liferay.com",
 				cc = "test@liferay.com",
 				description = "Description",
@@ -67,7 +67,7 @@ definition {
 		}
 
 		task ("Add a new email notification template after Upgrade") {
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				bcc = "test@liferay.com",
 				cc = "test@liferay.com",
 				description = "Description for Template Add After Upgrade",

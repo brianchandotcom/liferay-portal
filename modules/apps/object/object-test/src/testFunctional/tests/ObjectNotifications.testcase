@@ -43,7 +43,7 @@ definition {
 		task ("And given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				fromAddress = "test@liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
@@ -160,7 +160,7 @@ definition {
 		task ("And given an email notification template using the attachment field from Object A") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
 				fromAddress = "[%USER_AUTHOR_FIRST_NAME%]",
@@ -204,15 +204,15 @@ definition {
 	test CanCreateEmailNotificationTemplate {
 		property portal.acceptance = "true";
 
-		task ("Given the user navigates to Notifications - Templates in the Control Panel") {
+		task ("Given the user navigates to notification templates in the Control Panel") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Notifications",
 				panel = "Control Panel",
 				portlet = "Templates");
 		}
 
-		task ("When the user creates a new Notification Template") {
-			ObjectNotifications.addNewNotificationTemplate(
+		task ("When the user creates a new Email Notification Template") {
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				bcc = "test3@liferay.com",
 				cc = "test2@liferay.com",
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -227,12 +227,12 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Then the Notification Template is saved with the correct values") {
+		task ("Then the email notification template is saved with the correct valuess") {
 			AssertElementPresent(
 				key_name = "Notification Template",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
-			ObjectNotifications.viewNotificationTemplateDetails(
+			ObjectNotifications.viewEmailNotificationTemplateDetails(
 				bcc = "test3@liferay.com",
 				cc = "test2@liferay.com",
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -269,7 +269,7 @@ definition {
 		}
 
 		task ("When the user adds a new user notification template") {
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewUserNotificationTemplate(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
 				name = "Notification Template",
 				notificationType = "User Notification",
@@ -285,7 +285,7 @@ definition {
 				key_name = "Notification Template",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
-			ObjectNotifications.viewNotificationTemplateDetails(
+			ObjectNotifications.viewUserNotificationTemplateDetails(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
 				name = "Notification Template",
 				notificationType = "User Notification",
@@ -324,7 +324,7 @@ definition {
 		task ("And given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				fromAddress = "test@liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
@@ -358,7 +358,7 @@ definition {
 		task ("Go to Templates and add a new Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				bcc = "test3@liferay.com",
 				cc = "test2@liferay.com",
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -471,7 +471,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Templates");
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewUserNotificationTemplate(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
 				name = "User Notification Template",
 				notificationType = "User Notification",
@@ -482,11 +482,11 @@ definition {
 			PortletEntry.save();
 			}
 
-		task ("When the user deletes the user notification template") {
+		task ("When delete the User Notification Template") {
 			ObjectNotifications.deleteNotificationTemplate(templateName = "Notification Template");
 		}
 
-		task ("Then the user notification template is no longer present in the table") {
+		task ("Then the User Notification Template is not present") {
 			Refresh();
 
 			AssertElementNotPresent(
@@ -504,7 +504,7 @@ definition {
 		task ("Given a user creates an email notification template") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				emailBody = "Email Body Content",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
@@ -571,7 +571,7 @@ definition {
 		}
 
 		task ("Then the email notification template is updated") {
-			ObjectNotifications.viewNotificationTemplateDetails(
+			ObjectNotifications.viewEmailNotificationTemplateDetails(
 				emailBody = "Email Body Content Edited",
 				entryTo = "test2@liferay.com",
 				externalReferenceCode = "ERC Edited",
@@ -601,7 +601,7 @@ definition {
 	@description = "LPS-161923 - Verify that it's possible to search for notifications"
 	@priority = 3
 	test CanSearchForNotifications {
-		task ("Go to Templates and add Notification Templates") {
+		task ("Given a Notification Templates") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			for (var templateName : list "Test,Liferay,Site") {
@@ -617,7 +617,7 @@ definition {
 			}
 		}
 
-		task ("Search for Liferay") {
+		task ("When search for Liferay") {
 			Refresh();
 
 			Type(
@@ -629,7 +629,7 @@ definition {
 				value1 = "\RETURN");
 		}
 
-		task ("Assert only Notification Liferay is present") {
+		task ("Then assert only Notification Liferay is present") {
 			AssertElementPresent(
 				key_name = "Notification Liferay",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
@@ -1096,7 +1096,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Templates");
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				emailBody = "[%RELATIONSHIP_CUSTOMOBJECTA_CUSTOMFIELD%] | [%CUSTOMOBJECTB_CUSTOMFIELD%]",
 				entryTo = "[%CUSTOMOBJECTB_AUTHOR_EMAIL_ADDRESS%]",
 				fromAddress = "[%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_EMAIL_ADDRESS%]",
@@ -1202,7 +1202,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Templates");
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				emailBody = "[%CUSTOMOBJECT182606_CUSTOMFIELD%]",
 				entryTo = "[%CUSTOMOBJECT182606_AUTHOR_EMAIL_ADDRESS%]",
 				fromAddress = "[%CUSTOMOBJECT182606_AUTHOR_EMAIL_ADDRESS%]",

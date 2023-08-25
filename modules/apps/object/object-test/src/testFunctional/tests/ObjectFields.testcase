@@ -1485,7 +1485,7 @@ definition {
 		task ("Given a notification template related to Custom Object that contains a Notification action") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",

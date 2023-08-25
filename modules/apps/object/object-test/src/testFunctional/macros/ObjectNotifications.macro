@@ -301,7 +301,7 @@ definition {
 		Click(
 			key_name = ${name},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
-		
+
 		AssertTextEquals(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",

@@ -688,6 +688,455 @@ definition {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	@description = "LPS-175197 - Verify if actions works with oldValue function when trigger is On After Add (Notification) using any field."
+	@priority = 5
+	test CanCreateActionNotificationUsingOldValueWithOnAfterAddTrigger {
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a notification template is created") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175197",
+				objectName = "CustomObject175197",
+				pluralLabelName = "Custom Objects 175197");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175197");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175197");
+		}
+
+		task ("And given a notification action with the trigger (On After Add) is created and the oldValue function is used in the condition tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175197");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when entry is added",
+				active = "true",
+				inputExpression = '''isEmpty(oldValue("customField"))''',
+				notificationName = "Email Template",
+				objectLabel = "Custom Object 175197",
+				thenAction = "Notification",
+				whenAction = "On After Add");
+		}
+
+		task ("When an entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175197");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+		}
+
+		task ("Then the action is triggered and the notification is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+	@description = "LPS-175192 - Verify if actions works with oldValue function when trigger is On After Delete (Notification) using any field."
+	@priority = 5
+	test CanCreateActionNotificationUsingOldValueWithOnAfterDeleteTrigger {
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a notification template is created") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175192",
+				objectName = "CustomObject175192",
+				pluralLabelName = "Custom Objects 175192");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175192");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175192");
+		}
+
+		task ("And given a notification action with the trigger (On After Delete) is created and the oldValue function is used in the condition tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175192");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when entry is deleted",
+				active = "true",
+				inputExpression = '''oldValue("customField") == "Entry Test"''',
+				notificationName = "Email Template",
+				objectLabel = "Custom Object 175192",
+				thenAction = "Notification",
+				whenAction = "On After Delete");
+		}
+
+		task ("When an entry is added and then deleted") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175192");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175192");
+
+			ObjectPortlet.deleteEntry(entry = "Entry Test");
+		}
+
+		task ("Then the action is triggered and the notification is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+	@description = "LPS-175191 - Verify if actions works with oldValue function when trigger is On After Update (Notification) using any field"
+	@priority = 5
+	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTrigger {
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a notification template is created") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an object with a field is created") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175191",
+				objectName = "CustomObject175191",
+				pluralLabelName = "Custom Objects 175191");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject175191");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175191");
+		}
+
+		task ("And given an action with the trigger (On After Update) are created and the oldValue function is used in the condition tab") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175191");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when entry is updated",
+				active = "true",
+				inputExpression = '''oldValue("customField") == "Entry Test"''',
+				notificationName = "Email Template",
+				objectLabel = "Custom Object 175191",
+				thenAction = "Notification",
+				whenAction = "On After Update");
+		}
+
+		task ("When an entry is added and updated") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject175191",
+				value = "Entry Test");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175191");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+
+			ObjectAdmin.editEntryName(newEntryValue = "Entry Test Edited");
+		}
+
+		task ("Then the action is triggered and the notification is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+	@description = "LPS-178410 - Verify if actions works with oldValue function when trigger is On After Update (Notification) in Account System"
+	@priority = 4
+	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTriggerOnAccountObject {
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a notification template is created") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given a notification action with the trigger (On After Update) is created and the oldValue function is used for the Account Name") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Account");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when account is updated",
+				active = "true",
+				inputExpression = '''oldValue("name") ==  "Accounts Name Test"''',
+				notificationName = "Email Template",
+				objectLabel = "Account",
+				thenAction = "Notification",
+				whenAction = "On After Update");
+
+			WaitForElementPresent(
+				key_actionLabel = "Notification action when account is updated",
+				locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
+		}
+
+		task ("When an account is added and then edited") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name Test",
+				accountEntryType = "Person");
+
+			Account.openAccountsAdmin();
+
+			Account.editCP(
+				accountName = "Accounts Name Test",
+				accountNameEdit = "Accounts Name Test Edited");
+		}
+
+		task ("Then the action is triggered and the notification is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+	@description = "LPS-178415 - Verify if actions works with oldValue function when trigger is On After Update (Notification) in User System Object"
+	@priority = 4
+	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTriggerOnUserObject {
+		property test.smtp.server.enabled = "true";
+
+		task ("Given: A notification template is created") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given a notification action with trigger (On After Update) and oldValue function is used in the condition tab for first name") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when first name is edited",
+				active = "true",
+				inputExpression = '''oldValue("givenName") ==  "userfn"''',
+				notificationName = "Email Template",
+				objectLabel = "User",
+				thenAction = "Notification",
+				whenAction = "On After Update");
+		}
+
+		task ("When a user is added and then the first name is edited") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.editUserInformation(userFirstNameEdit = "edituserfn");
+		}
+
+		task ("Then the action is triggered and the notification is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+	@description = "LPS-175198 - Verify if actions works with oldValue function when trigger is On Order Status Update (Notification) with order status field"
+	@priority = 5
+	test CanCreateActionNotificationUsingOldValueWithOnOrderStatusUpdateInSystemObject {
+		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given a notification template is created") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Email Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an Action is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Notification action when the order is updated",
+				active = "true",
+				inputExpression = '''oldValue("orderStatus") == 1''',
+				notificationName = "Email Template",
+				thenAction = "Notification",
+				whenAction = "On Order Status Update");
+		}
+
+		task ("And given an account, minium site and an order is created") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			Refresh();
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("When the user changes the order status.") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			// Workaround for LPS-193383
+
+			CommerceOrders.openOrdersAdmin();
+
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete all selected orders?");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Then the action is triggered and the notification is sent") {
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+>>>>>>> e0edc66 (LPS-182597 Wordsmith)
 	@description = "LPS-171793 - Verify it's possible to create a notification action with the trigger On Order Status Update"
 	@priority = 5
 	test CanCreateActionNotificationWithOnOrderStatusUpdate {
@@ -697,7 +1146,7 @@ definition {
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
@@ -803,7 +1252,7 @@ definition {
 		task ("Given a Notification Template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewEmailNotificationTemplate(
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
@@ -2231,6 +2680,106 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
 	}
 
+<<<<<<< HEAD
+=======
+	@description = "Verify an action with an oldValue function sends an email when the order payment status is updated"
+	@priority = 4
+	test CanSendEmailWhenPaymentStatusIsUpdated {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given an email notification template") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewEmailNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "test@liferay.com",
+				fromAddress = "test@liferay.com",
+				fromName = "Test Test",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "Subject Test");
+
+			PortletEntry.save();
+		}
+
+		task ("And given an action that uses the oldValue function and sends an email when the order payment status is updated") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Action Name",
+				active = "true",
+				inputExpression = '''oldValue("orderStatus") == 1''',
+				notificationName = "Notification Template",
+				thenAction = "Notification",
+				whenAction = "On Payment Status Update");
+		}
+
+		task ("And given an account, Minium site, and a commerce order") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("When the payment status is updated and the oldValue of the order status is Pending") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			CommercePaymentStatus.editPaymentStatus(statusValue = "Authorized");
+		}
+
+		task ("Then the action is triggered and an email is sent") {
+
+			// Workaround for LPS-193383
+
+			CommerceOrders.openOrdersAdmin();
+
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
+
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete all selected orders?");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
+		}
+	}
+
+>>>>>>> e0edc66 (LPS-182597 Wordsmith)
 	@description = "LPS-156343 - Verify that Action can be triggered after disabling the expression"
 	@priority = 4
 	test CanTriggerActionAfterDisablingExpression {

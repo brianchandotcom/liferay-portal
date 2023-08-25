@@ -1,0 +1,74 @@
+@component-name = "portal-calendar"
+definition {
+
+	property testray.main.component.name = "Calendar";
+
+	var pageName = "Calendar Page";
+	var portletName = "Calendar";
+
+	setUp {
+		var portalURL = PropsUtil.get("portal.url");
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given calendar portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Calendar Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Calendar Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Calendar Page",
+				widgetName = "Calendar");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/guest/calendar-page");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Calendar Page");
+
+			JSONCalendar.tearDown();
+
+			CalendarConfiguration.tearDown();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185844 Verifies that 'More Options' button is available after applying 200% zoom in to the page."
+	@priority = 3
+	test AddCalendarContentMustBeVisibleAt200Zoom {
+		task ("When access add a new calendar modal") {
+			CalendarNavigator.gotoAddMyCalendars();
+		}
+
+		task ("And zoom in on the page to 200%") {
+			BrowserZoom.setZoomTo200();
+		}
+
+		task ("And scroll all the way down") {
+			ScrollBy(value1 = "0, 1000");
+		}
+
+		task ("Then More options role is visible") {
+			AssertVisible(
+				key_text = "More Options",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+	}
+
+}

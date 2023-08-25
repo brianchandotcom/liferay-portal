@@ -8,7 +8,7 @@ package com.liferay.jethr0.bui1d.run;
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.bui1d.parameter.BuildParameter;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -46,7 +46,7 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	}
 
 	@Override
-	public JSONObject getInvokeJSONObject(JenkinsNode jenkinsNode) {
+	public JSONObject getInvokeJSONObject(JenkinsNodeEntity jenkinsNodeEntity) {
 		JSONObject invokeJSONObject = new JSONObject();
 
 		Build build = getBuild();
@@ -75,8 +75,9 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 
 		invokeJSONObject.put("jobParameters", jobParametersJSONObject);
 
-		if (jenkinsNode != null) {
-			invokeJSONObject.put("jenkinsNode", jenkinsNode.getJSONObject());
+		if (jenkinsNodeEntity != null) {
+			invokeJSONObject.put(
+				"jenkinsNode", jenkinsNodeEntity.getJSONObject());
 		}
 
 		return invokeJSONObject;

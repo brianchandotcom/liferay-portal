@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.project.queue.ProjectQueue;
@@ -97,12 +97,12 @@ public class BuildQueue {
 		}
 	}
 
-	public Build nextBuild(JenkinsNode jenkinsNode) {
+	public Build nextBuild(JenkinsNodeEntity jenkinsNodeEntity) {
 		synchronized (_sortedBuilds) {
 			Build nextBuild = null;
 
 			for (Build build : _sortedBuilds) {
-				if (!jenkinsNode.isCompatible(build)) {
+				if (!jenkinsNodeEntity.isCompatible(build)) {
 					continue;
 				}
 

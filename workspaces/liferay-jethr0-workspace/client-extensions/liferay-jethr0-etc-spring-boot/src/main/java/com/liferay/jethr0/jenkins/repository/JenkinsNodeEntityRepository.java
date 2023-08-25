@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.dalo.JenkinsNodeEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesEntityRelationshipDALO;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JenkinsNodeEntityRepository
-	extends BaseEntityRepository<JenkinsNode> {
+	extends BaseEntityRepository<JenkinsNodeEntity> {
 
 	public void addAll(JenkinsServer jenkinsServer) {
 		JSONObject jsonObject = jenkinsServer.getComputerJSONObject();
@@ -49,7 +49,7 @@ public class JenkinsNodeEntityRepository
 			String url = StringUtil.combine(
 				jenkinsServer.getURL(), "/computer/", name);
 
-			JenkinsNode.Type type = JenkinsNode.Type.SLAVE;
+			JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.SLAVE;
 
 			int nodeCount = 2;
 
@@ -59,7 +59,7 @@ public class JenkinsNodeEntityRepository
 
 				nodeCount = 1;
 				primaryLabel = "master";
-				type = JenkinsNode.Type.MASTER;
+				type = JenkinsNodeEntity.Type.MASTER;
 				url = StringUtil.combine(
 					jenkinsServer.getURL(), "/computer/(master)");
 			}
@@ -123,53 +123,53 @@ public class JenkinsNodeEntityRepository
 				}
 			}
 
-			if ((type == JenkinsNode.Type.MASTER) && !primaryLabelFound) {
+			if ((type == JenkinsNodeEntity.Type.MASTER) && !primaryLabelFound) {
 				primaryLabel = "built-in";
 			}
 
 			nodeJSONObject.put("primaryLabel", primaryLabel);
 
-			JenkinsNode jenkinsNode = _jenkinsNodeEntityDALO.create(
+			JenkinsNodeEntity jenkinsNodeEntity = _jenkinsNodeEntityDALO.create(
 				nodeJSONObject);
 
-			jenkinsNode.setJenkinsServer(jenkinsServer);
+			jenkinsNodeEntity.setJenkinsServer(jenkinsServer);
 
-			jenkinsServer.addJenkinsNode(jenkinsNode);
+			jenkinsServer.addJenkinsNodeEntity(jenkinsNodeEntity);
 
-			add(jenkinsNode);
+			add(jenkinsNodeEntity);
 		}
 	}
 
-	public JenkinsNode get(String jenkinsNodeName) {
-		for (JenkinsNode jenkinsNode : getAll()) {
-			if (Objects.equals(jenkinsNodeName, jenkinsNode.getName())) {
-				return jenkinsNode;
+	public JenkinsNodeEntity get(String jenkinsNodeName) {
+		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
+			if (Objects.equals(jenkinsNodeName, jenkinsNodeEntity.getName())) {
+				return jenkinsNodeEntity;
 			}
 		}
 
 		return null;
 	}
 
-	public Set<JenkinsNode> getAll(JenkinsServer jenkinsServer) {
-		Set<JenkinsNode> jenkinsNodes = new HashSet<>();
+	public Set<JenkinsNodeEntity> getAll(JenkinsServer jenkinsServer) {
+		Set<JenkinsNodeEntity> jenkinsNodeEntities = new HashSet<>();
 
 		Set<Long> jenkinsNodeIds =
 			_jenkinsServerToJenkinsNodesEntityRelationshipDALO.
 				getChildEntityIds(jenkinsServer);
 
-		for (JenkinsNode jenkinsNode : getAll()) {
-			if (!jenkinsNodeIds.contains(jenkinsNode.getId())) {
+		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
+			if (!jenkinsNodeIds.contains(jenkinsNodeEntity.getId())) {
 				continue;
 			}
 
-			jenkinsNode.setJenkinsServer(jenkinsServer);
+			jenkinsNodeEntity.setJenkinsServer(jenkinsServer);
 
-			jenkinsServer.addJenkinsNode(jenkinsNode);
+			jenkinsServer.addJenkinsNodeEntity(jenkinsNodeEntity);
 
-			jenkinsNodes.add(jenkinsNode);
+			jenkinsNodeEntities.add(jenkinsNodeEntity);
 		}
 
-		return jenkinsNodes;
+		return jenkinsNodeEntities;
 	}
 
 	@Override
@@ -179,17 +179,17 @@ public class JenkinsNodeEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (JenkinsNode jenkinsNode : getAll()) {
+		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
 			JenkinsServer jenkinsServer = null;
 
-			long jenkinsServerId = jenkinsNode.getJenkinsServerId();
+			long jenkinsServerId = jenkinsNodeEntity.getJenkinsServerId();
 
 			if (jenkinsServerId != 0) {
 				jenkinsServer = _jenkinsServerEntityRepository.getById(
 					jenkinsServerId);
 			}
 
-			jenkinsNode.setJenkinsServer(jenkinsServer);
+			jenkinsNodeEntity.setJenkinsServer(jenkinsServer);
 		}
 	}
 

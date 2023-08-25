@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.parameter.BuildParameter;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 
@@ -52,13 +52,13 @@ public interface Build extends Entity {
 
 	public Set<Environment> getEnvironments();
 
+	public JenkinsNodeEntity.Type getJenkinsNodeType();
+
 	public String getJobName();
 
 	public int getMaxNodeCount();
 
 	public int getMinNodeRAM();
-
-	public JenkinsNode.Type getNodeType();
 
 	public Set<Build> getParentBuilds();
 

@@ -7,7 +7,7 @@ package com.liferay.jethr0.bui1d.run;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 
 import java.net.URL;
 
@@ -29,7 +29,7 @@ public interface BuildRun extends Entity {
 
 	public long getDuration();
 
-	public JSONObject getInvokeJSONObject(JenkinsNode jenkinsNode);
+	public JSONObject getInvokeJSONObject(JenkinsNodeEntity jenkinsNodeEntity);
 
 	public Result getResult();
 

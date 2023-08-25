@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 
 import java.net.URL;
 
@@ -20,9 +20,10 @@ import org.json.JSONObject;
  */
 public interface JenkinsServer extends Entity {
 
-	public void addJenkinsNode(JenkinsNode jenkinsNode);
+	public void addJenkinsNodeEnitities(
+		Set<JenkinsNodeEntity> jenkinsNodeEntities);
 
-	public void addJenkinsNodes(Set<JenkinsNode> jenkinsNodes);
+	public void addJenkinsNodeEntity(JenkinsNodeEntity jenkinsNodeEntity);
 
 	public JSONObject getComputerJSONObject();
 
@@ -30,7 +31,7 @@ public interface JenkinsServer extends Entity {
 
 	public long getJenkinsCohortId();
 
-	public Set<JenkinsNode> getJenkinsNodes();
+	public Set<JenkinsNodeEntity> getJenkinsNodeEntities();
 
 	public String getJenkinsUserName();
 
@@ -40,9 +41,9 @@ public interface JenkinsServer extends Entity {
 
 	public URL getURL();
 
-	public void removeJenkinsNode(JenkinsNode jenkinsNode);
+	public void removeJenkinsNode(JenkinsNodeEntity jenkinsNodeEntity);
 
-	public void removeJenkinsNodes(Set<JenkinsNode> jenkinsNodes);
+	public void removeJenkinsNodes(Set<JenkinsNodeEntity> jenkinsNodeEntities);
 
 	public void setJenkinsCohort(JenkinsCohort jenkinsCohort);
 

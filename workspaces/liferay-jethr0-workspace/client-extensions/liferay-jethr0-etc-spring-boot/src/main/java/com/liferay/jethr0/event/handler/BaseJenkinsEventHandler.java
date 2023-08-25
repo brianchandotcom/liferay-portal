@@ -7,7 +7,7 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
@@ -136,25 +136,27 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return jenkinsJSONObject;
 	}
 
-	protected JenkinsNode getJenkinsNode() throws Exception {
+	protected JenkinsNodeEntity getJenkinsNodeEntity() throws Exception {
 		JenkinsServer jenkinsServer = getJenkinsServer();
 
 		JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
-			getJenkinsNodeRepository();
+			getJenkinsNodeEntityRepository();
 
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		String computerName = computerJSONObject.getString("name");
 
-		for (JenkinsNode jenkinsNode : jenkinsNodeEntityRepository.getAll()) {
+		for (JenkinsNodeEntity jenkinsNodeEntity :
+				jenkinsNodeEntityRepository.getAll()) {
+
 			if (!Objects.equals(
-					jenkinsServer, jenkinsNode.getJenkinsServer())) {
+					jenkinsServer, jenkinsNodeEntity.getJenkinsServer())) {
 
 				continue;
 			}
 
-			if (Objects.equals(computerName, jenkinsNode.getName())) {
-				return jenkinsNode;
+			if (Objects.equals(computerName, jenkinsNodeEntity.getName())) {
+				return jenkinsNodeEntity;
 			}
 		}
 
@@ -200,7 +202,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return jobJSONObject.optString("name");
 	}
 
-	protected JenkinsNode updateJenkinsNode() throws Exception {
+	protected JenkinsNodeEntity updateJenkinsNodeEntity() throws Exception {
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		computerJSONObject.put(
@@ -209,11 +211,11 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			"offline", !computerJSONObject.getBoolean("online")
 		);
 
-		JenkinsNode jenkinsNode = getJenkinsNode();
+		JenkinsNodeEntity jenkinsNodeEntity = getJenkinsNodeEntity();
 
-		jenkinsNode.update(computerJSONObject);
+		jenkinsNodeEntity.update(computerJSONObject);
 
-		return jenkinsNode;
+		return jenkinsNodeEntity;
 	}
 
 }

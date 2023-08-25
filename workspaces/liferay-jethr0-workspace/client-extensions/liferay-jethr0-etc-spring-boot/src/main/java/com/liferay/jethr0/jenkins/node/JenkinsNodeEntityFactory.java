@@ -15,25 +15,26 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsNodeEntityFactory extends BaseEntityFactory<JenkinsNode> {
+public class JenkinsNodeEntityFactory
+	extends BaseEntityFactory<JenkinsNodeEntity> {
 
 	@Override
-	public JenkinsNode newEntity(JSONObject jsonObject) {
-		JenkinsNode.Type type = JenkinsNode.Type.get(
+	public JenkinsNodeEntity newEntity(JSONObject jsonObject) {
+		JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.get(
 			jsonObject.getJSONObject("type"));
 
-		if (type == JenkinsNode.Type.MASTER) {
-			return new MasterJenkinsNode(jsonObject);
+		if (type == JenkinsNodeEntity.Type.MASTER) {
+			return new MasterJenkinsNodeEntity(jsonObject);
 		}
-		else if (type == JenkinsNode.Type.SLAVE) {
-			return new SlaveJenkinsNode(jsonObject);
+		else if (type == JenkinsNodeEntity.Type.SLAVE) {
+			return new SlaveJenkinsNodeEntity(jsonObject);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
 	protected JenkinsNodeEntityFactory() {
-		super(JenkinsNode.class);
+		super(JenkinsNodeEntity.class);
 	}
 
 }

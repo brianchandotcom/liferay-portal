@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.parameter.BuildParameter;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.util.StringUtil;
@@ -102,6 +102,24 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	}
 
 	@Override
+	public JenkinsNodeEntity.Type getJenkinsNodeType() {
+		BuildParameter buildParameter = getBuildParameter("NODE_TYPE");
+
+		if (buildParameter == null) {
+			return null;
+		}
+
+		JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.getByKey(
+			buildParameter.getValue());
+
+		if (type == null) {
+			return null;
+		}
+
+		return type;
+	}
+
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}
@@ -157,24 +175,6 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		}
 
 		return Integer.valueOf(value);
-	}
-
-	@Override
-	public JenkinsNode.Type getNodeType() {
-		BuildParameter buildParameter = getBuildParameter("NODE_TYPE");
-
-		if (buildParameter == null) {
-			return null;
-		}
-
-		JenkinsNode.Type type = JenkinsNode.Type.getByKey(
-			buildParameter.getValue());
-
-		if (type == null) {
-			return null;
-		}
-
-		return type;
 	}
 
 	public Set<Build> getParentBuilds() {

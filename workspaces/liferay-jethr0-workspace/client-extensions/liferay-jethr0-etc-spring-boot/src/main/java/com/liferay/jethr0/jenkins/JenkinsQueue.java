@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
@@ -46,7 +46,7 @@ public class JenkinsQueue {
 
 		_jenkinsServerEntityRepository.setJenkinsCohortRepository(
 			_jenkinsCohortEntityRepository);
-		_jenkinsServerEntityRepository.setJenkinsNodeRepository(
+		_jenkinsServerEntityRepository.setJenkinsNodeEntityRepository(
 			_jenkinsNodeEntityRepository);
 
 		_jenkinsCohortEntityRepository.initializeRelationships();
@@ -91,12 +91,14 @@ public class JenkinsQueue {
 		for (JenkinsServer jenkinsServer :
 				_jenkinsServerEntityRepository.getAll()) {
 
-			for (JenkinsNode jenkinsNode : jenkinsServer.getJenkinsNodes()) {
-				if (!jenkinsNode.isAvailable()) {
+			for (JenkinsNodeEntity jenkinsNodeEntity :
+					jenkinsServer.getJenkinsNodeEntities()) {
+
+				if (!jenkinsNodeEntity.isAvailable()) {
 					continue;
 				}
 
-				Build build = _buildQueue.nextBuild(jenkinsNode);
+				Build build = _buildQueue.nextBuild(jenkinsNodeEntity);
 
 				if (build == null) {
 					continue;
@@ -109,7 +111,8 @@ public class JenkinsQueue {
 
 				_jmsEventHandler.send(
 					jenkinsServer,
-					String.valueOf(buildRun.getInvokeJSONObject(jenkinsNode)));
+					String.valueOf(
+						buildRun.getInvokeJSONObject(jenkinsNodeEntity)));
 
 				_buildEntityRepository.update(build);
 				_buildRunEntityRepository.update(buildRun);

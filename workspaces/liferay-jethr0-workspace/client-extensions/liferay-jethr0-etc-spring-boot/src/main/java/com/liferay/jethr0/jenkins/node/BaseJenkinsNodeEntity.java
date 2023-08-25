@@ -26,7 +26,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * @author Michael Hashimoto
  */
-public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
+public class BaseJenkinsNodeEntity
+	extends BaseEntity implements JenkinsNodeEntity {
 
 	@Override
 	public boolean getGoodBattery() {
@@ -198,7 +199,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 		_offline = computerJSONObject.getBoolean("offline");
 	}
 
-	protected BaseJenkinsNode(JSONObject jsonObject) {
+	protected BaseJenkinsNodeEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_jenkinsServerId = jsonObject.optLong(
@@ -274,7 +275,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	}
 
 	private boolean _hasCompatibleNodeType(Build build) {
-		JenkinsNode.Type jenkinsNodeType = build.getNodeType();
+		JenkinsNodeEntity.Type jenkinsNodeType = build.getJenkinsNodeType();
 
 		if ((jenkinsNodeType == null) || (jenkinsNodeType == getType())) {
 			return true;

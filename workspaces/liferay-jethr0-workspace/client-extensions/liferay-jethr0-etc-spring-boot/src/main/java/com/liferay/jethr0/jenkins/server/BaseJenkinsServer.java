@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -31,13 +31,15 @@ public abstract class BaseJenkinsServer
 	extends BaseEntity implements JenkinsServer {
 
 	@Override
-	public void addJenkinsNode(JenkinsNode jenkinsNode) {
-		addRelatedEntity(jenkinsNode);
+	public void addJenkinsNodeEnitities(
+		Set<JenkinsNodeEntity> jenkinsNodeEntities) {
+
+		addRelatedEntities(jenkinsNodeEntities);
 	}
 
 	@Override
-	public void addJenkinsNodes(Set<JenkinsNode> jenkinsNodes) {
-		addRelatedEntities(jenkinsNodes);
+	public void addJenkinsNodeEntity(JenkinsNodeEntity jenkinsNodeEntity) {
+		addRelatedEntity(jenkinsNodeEntity);
 	}
 
 	@Override
@@ -71,8 +73,8 @@ public abstract class BaseJenkinsServer
 	}
 
 	@Override
-	public Set<JenkinsNode> getJenkinsNodes() {
-		return getRelatedEntities(JenkinsNode.class);
+	public Set<JenkinsNodeEntity> getJenkinsNodeEntities() {
+		return getRelatedEntities(JenkinsNodeEntity.class);
 	}
 
 	@Override
@@ -116,13 +118,13 @@ public abstract class BaseJenkinsServer
 	}
 
 	@Override
-	public void removeJenkinsNode(JenkinsNode jenkinsNode) {
-		removeRelatedEntity(jenkinsNode);
+	public void removeJenkinsNode(JenkinsNodeEntity jenkinsNodeEntity) {
+		removeRelatedEntity(jenkinsNodeEntity);
 	}
 
 	@Override
-	public void removeJenkinsNodes(Set<JenkinsNode> jenkinsNodes) {
-		removeRelatedEntities(jenkinsNodes);
+	public void removeJenkinsNodes(Set<JenkinsNodeEntity> jenkinsNodeEntities) {
+		removeRelatedEntities(jenkinsNodeEntities);
 	}
 
 	@Override
@@ -163,23 +165,23 @@ public abstract class BaseJenkinsServer
 
 		JSONArray computerJSONArray = jsonObject.getJSONArray("computer");
 
-		Map<String, JenkinsNode> jenkinsNodeMap = new HashMap<>();
+		Map<String, JenkinsNodeEntity> jenkinsNodeMap = new HashMap<>();
 
-		for (JenkinsNode jenkinsNode : getJenkinsNodes()) {
-			jenkinsNodeMap.put(jenkinsNode.getName(), jenkinsNode);
+		for (JenkinsNodeEntity jenkinsNodeEntity : getJenkinsNodeEntities()) {
+			jenkinsNodeMap.put(jenkinsNodeEntity.getName(), jenkinsNodeEntity);
 		}
 
 		for (int i = 0; i < computerJSONArray.length(); i++) {
 			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
 
-			JenkinsNode jenkinsNode = jenkinsNodeMap.get(
+			JenkinsNodeEntity jenkinsNodeEntity = jenkinsNodeMap.get(
 				computerJSONObject.getString("displayName"));
 
-			if (jenkinsNode == null) {
+			if (jenkinsNodeEntity == null) {
 				continue;
 			}
 
-			jenkinsNode.update(computerJSONObject);
+			jenkinsNodeEntity.update(computerJSONObject);
 		}
 	}
 

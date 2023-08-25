@@ -25,8 +25,8 @@ public abstract class BaseJenkinsCohort
 	}
 
 	@Override
-	public void addJenkinsServers(Set<JenkinsServer> jenkinsNodes) {
-		addRelatedEntities(jenkinsNodes);
+	public void addJenkinsServers(Set<JenkinsServer> jenkinsServers) {
+		addRelatedEntities(jenkinsServers);
 	}
 
 	@Override

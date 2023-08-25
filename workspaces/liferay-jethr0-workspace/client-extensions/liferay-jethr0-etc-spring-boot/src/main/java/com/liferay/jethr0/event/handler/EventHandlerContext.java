@@ -45,7 +45,7 @@ public class EventHandlerContext {
 		return _jenkinsCohortEntityRepository;
 	}
 
-	public JenkinsNodeEntityRepository getJenkinsNodeRepository() {
+	public JenkinsNodeEntityRepository getJenkinsNodeEntityRepository() {
 		return _jenkinsNodeEntityRepository;
 	}
 

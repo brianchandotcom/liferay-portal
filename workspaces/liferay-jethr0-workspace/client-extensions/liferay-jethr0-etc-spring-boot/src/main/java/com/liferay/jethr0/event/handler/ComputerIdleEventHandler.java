@@ -11,7 +11,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jms.JMSEventHandler;
 
 import org.json.JSONObject;
@@ -37,15 +37,15 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 		super.process();
 
-		JenkinsNode jenkinsNode = getJenkinsNode();
+		JenkinsNodeEntity jenkinsNodeEntity = getJenkinsNodeEntity();
 
-		if (jenkinsNode == null) {
+		if (jenkinsNodeEntity == null) {
 			return null;
 		}
 
 		BuildQueue buildQueue = getBuildQueue();
 
-		Build build = buildQueue.nextBuild(jenkinsNode);
+		Build build = buildQueue.nextBuild(jenkinsNodeEntity);
 
 		if (build == null) {
 			return null;
@@ -62,8 +62,8 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		JMSEventHandler jmsEventHandler = getJMSEventHandler();
 
 		jmsEventHandler.send(
-			jenkinsNode.getJenkinsServer(),
-			String.valueOf(buildRun.getInvokeJSONObject(jenkinsNode)));
+			jenkinsNodeEntity.getJenkinsServer(),
+			String.valueOf(buildRun.getInvokeJSONObject(jenkinsNodeEntity)));
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
@@ -71,7 +71,7 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 		buildRunEntityRepository.update(buildRun);
 
-		return jenkinsNode.toString();
+		return jenkinsNodeEntity.toString();
 	}
 
 }

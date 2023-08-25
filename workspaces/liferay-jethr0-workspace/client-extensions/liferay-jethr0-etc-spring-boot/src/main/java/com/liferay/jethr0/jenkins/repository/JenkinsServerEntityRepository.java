@@ -138,7 +138,7 @@ public class JenkinsServerEntityRepository
 					continue;
 				}
 
-				jenkinsServer.addJenkinsNode(
+				jenkinsServer.addJenkinsNodeEntity(
 					_jenkinsNodeEntityRepository.getById(jenkinsNodeId));
 			}
 		}
@@ -150,7 +150,7 @@ public class JenkinsServerEntityRepository
 		_jenkinsCohortEntityRepository = jenkinsCohortEntityRepository;
 	}
 
-	public void setJenkinsNodeRepository(
+	public void setJenkinsNodeEntityRepository(
 		JenkinsNodeEntityRepository jenkinsNodeEntityRepository) {
 
 		_jenkinsNodeEntityRepository = jenkinsNodeEntityRepository;

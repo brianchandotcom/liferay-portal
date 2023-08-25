@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SlaveJenkinsNode extends BaseJenkinsNode {
+public class MasterJenkinsNodeEntity extends BaseJenkinsNodeEntity {
 
-	protected SlaveJenkinsNode(JSONObject jsonObject) {
+	protected MasterJenkinsNodeEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

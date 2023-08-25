@@ -20,7 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface JenkinsNode extends Entity {
+public interface JenkinsNodeEntity extends Entity {
 
 	public boolean getGoodBattery();
 

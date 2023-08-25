@@ -38,7 +38,7 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 			JenkinsServerEntityRepository jenkinsServerEntityRepository =
 				getJenkinsServerRepository();
 			JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
-				getJenkinsNodeRepository();
+				getJenkinsNodeEntityRepository();
 
 			for (int i = 0; i < jenkinsServersJSONArray.length(); i++) {
 				JSONObject jenkinsServerJSONObject =

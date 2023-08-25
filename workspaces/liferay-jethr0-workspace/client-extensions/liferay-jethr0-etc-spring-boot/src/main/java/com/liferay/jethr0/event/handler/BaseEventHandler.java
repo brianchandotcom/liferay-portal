@@ -50,8 +50,8 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getJenkinsCohortRepository();
 	}
 
-	protected JenkinsNodeEntityRepository getJenkinsNodeRepository() {
-		return _eventHandlerContext.getJenkinsNodeRepository();
+	protected JenkinsNodeEntityRepository getJenkinsNodeEntityRepository() {
+		return _eventHandlerContext.getJenkinsNodeEntityRepository();
 	}
 
 	protected JenkinsQueue getJenkinsQueue() {

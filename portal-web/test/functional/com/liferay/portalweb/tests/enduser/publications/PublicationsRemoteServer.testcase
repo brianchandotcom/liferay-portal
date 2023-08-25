@@ -31,6 +31,8 @@ definition {
 		PublicationsRemoteServer.gotoRemoteServers();
 
 		PublicationsRemoteServer.addRemoteServer(
+			remoteServerClientId = "clientidedit",
+			remoteServerClientSecret = "clientsecretedit",
 			remoteServerDescription = "Remote Server Description",
 			remoteServerName = "Remote Server Name",
 			remoteServerURL = "http://localhost:8080");
@@ -38,6 +40,8 @@ definition {
 		PublicationsRemoteServer.gotoRemoteServers();
 
 		PublicationsRemoteServer.editRemoteServer(
+			remoteServerClientId = "clientidedit",
+			remoteServerClientSecret = "clientsecretedit",
 			remoteServerDescriptionEdit = "Remote Server Description Edit",
 			remoteServerName = "Remote Server Name",
 			remoteServerNameEdit = "Remote Server Name Edit",

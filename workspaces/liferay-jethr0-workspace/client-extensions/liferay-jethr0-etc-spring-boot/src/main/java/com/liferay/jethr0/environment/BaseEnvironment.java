@@ -7,7 +7,7 @@ package com.liferay.jethr0.environment;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 
 import org.json.JSONObject;
 
@@ -91,8 +91,8 @@ public abstract class BaseEnvironment
 	}
 
 	@Override
-	public Task getTask() {
-		return _task;
+	public TaskEntity getTaskEntity() {
+		return _taskEntity;
 	}
 
 	@Override
@@ -143,8 +143,8 @@ public abstract class BaseEnvironment
 	}
 
 	@Override
-	public void setTask(Task task) {
-		_task = task;
+	public void setTaskEntity(TaskEntity taskEntity) {
+		_taskEntity = taskEntity;
 	}
 
 	protected BaseEnvironment(JSONObject jsonObject) {
@@ -171,6 +171,6 @@ public abstract class BaseEnvironment
 	private LiferayBundle _liferayBundle;
 	private LiferayPortalBranch _liferayPortalBranch;
 	private String _operatingSystem;
-	private Task _task;
+	private TaskEntity _taskEntity;
 
 }

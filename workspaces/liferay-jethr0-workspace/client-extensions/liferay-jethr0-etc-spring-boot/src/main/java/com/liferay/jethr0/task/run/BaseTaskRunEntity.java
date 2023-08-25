@@ -6,14 +6,14 @@
 package com.liferay.jethr0.task.run;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class BaseTaskRun extends BaseEntity implements TaskRun {
+public class BaseTaskRunEntity extends BaseEntity implements TaskRunEntity {
 
 	@Override
 	public long getDuration() {
@@ -25,12 +25,12 @@ public class BaseTaskRun extends BaseEntity implements TaskRun {
 		JSONObject jsonObject = super.getJSONObject();
 
 		Result result = getResult();
-		Task task = getTask();
+		TaskEntity taskEntity = getTaskEntity();
 
 		jsonObject.put(
 			"duration", getDuration()
 		).put(
-			"r_taskToTaskRuns_c_taskId", task.getId()
+			"r_taskToTaskRuns_c_taskId", taskEntity.getId()
 		).put(
 			"result", result.getJSONObject()
 		);
@@ -44,8 +44,8 @@ public class BaseTaskRun extends BaseEntity implements TaskRun {
 	}
 
 	@Override
-	public Task getTask() {
-		return _task;
+	public TaskEntity getTaskEntity() {
+		return _taskEntity;
 	}
 
 	@Override
@@ -59,11 +59,11 @@ public class BaseTaskRun extends BaseEntity implements TaskRun {
 	}
 
 	@Override
-	public void setTask(Task task) {
-		_task = task;
+	public void setTaskEntity(TaskEntity taskEntity) {
+		_taskEntity = taskEntity;
 	}
 
-	protected BaseTaskRun(JSONObject jsonObject) {
+	protected BaseTaskRunEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_duration = jsonObject.getLong("duration");
@@ -72,6 +72,6 @@ public class BaseTaskRun extends BaseEntity implements TaskRun {
 
 	private long _duration;
 	private Result _result;
-	private Task _task;
+	private TaskEntity _taskEntity;
 
 }

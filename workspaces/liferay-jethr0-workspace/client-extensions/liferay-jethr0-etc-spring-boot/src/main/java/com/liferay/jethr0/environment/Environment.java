@@ -7,7 +7,7 @@ package com.liferay.jethr0.environment;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public interface Environment extends Entity {
 
 	public String getOperatingSystem();
 
-	public Task getTask();
+	public TaskEntity getTaskEntity();
 
 	public void setAppServer(String appServer);
 
@@ -57,7 +57,7 @@ public interface Environment extends Entity {
 
 	public void setOperatingSystem(String operatingSystem);
 
-	public void setTask(Task task);
+	public void setTaskEntity(TaskEntity taskEntity);
 
 	public enum LiferayBundle {
 

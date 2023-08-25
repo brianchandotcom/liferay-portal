@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.dalo.BuildToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToTasksEntityRelationshipDALO;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.dalo.TaskEntityDALO;
 
 import java.util.HashSet;
@@ -23,48 +23,48 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskEntityRepository extends BaseEntityRepository<Task> {
+public class TaskEntityRepository extends BaseEntityRepository<TaskEntity> {
 
-	public Set<Task> getAll(Build build) {
-		Set<Task> buildTasks = new HashSet<>();
+	public Set<TaskEntity> getAll(Build build) {
+		Set<TaskEntity> buildTaskEntities = new HashSet<>();
 
 		Set<Long> taskIds =
 			_buildToTasksEntityRelationshipDALO.getChildEntityIds(build);
 
-		for (Task task : getAll()) {
-			if (!taskIds.contains(task.getId())) {
+		for (TaskEntity taskEntity : getAll()) {
+			if (!taskIds.contains(taskEntity.getId())) {
 				continue;
 			}
 
-			task.setBuild(build);
+			taskEntity.setBuild(build);
 
-			build.addTask(task);
+			build.addTaskEntity(taskEntity);
 
-			buildTasks.add(task);
+			buildTaskEntities.add(taskEntity);
 		}
 
-		return buildTasks;
+		return buildTaskEntities;
 	}
 
-	public Set<Task> getAll(Project project) {
-		Set<Task> projectTasks = new HashSet<>();
+	public Set<TaskEntity> getAll(Project project) {
+		Set<TaskEntity> projectTaskEntities = new HashSet<>();
 
 		Set<Long> taskIds =
 			_projectToTasksEntityRelationshipDALO.getChildEntityIds(project);
 
-		for (Task task : getAll()) {
-			if (!taskIds.contains(task.getId())) {
+		for (TaskEntity taskEntity : getAll()) {
+			if (!taskIds.contains(taskEntity.getId())) {
 				continue;
 			}
 
-			task.setProject(project);
+			taskEntity.setProject(project);
 
-			project.addTask(task);
+			project.addTaskEntity(taskEntity);
 
-			projectTasks.add(task);
+			projectTaskEntities.add(taskEntity);
 		}
 
-		return projectTasks;
+		return projectTaskEntities;
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.task.run.TaskRun;
+import com.liferay.jethr0.task.run.TaskRunEntity;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseTask extends BaseEntity implements Task {
+public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 
 	@Override
 	public void addEnvironment(Environment environment) {
@@ -33,19 +33,19 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public void addTaskRun(TaskRun taskRun) {
-		addTaskRuns(Collections.singleton(taskRun));
-	}
-
-	@Override
-	public void addTaskRuns(Set<TaskRun> taskRuns) {
-		for (TaskRun taskRun : taskRuns) {
-			if (_taskRuns.contains(taskRun)) {
+	public void addTaskRunEntities(Set<TaskRunEntity> taskRunEntities) {
+		for (TaskRunEntity taskRunEntity : taskRunEntities) {
+			if (_taskRunEntities.contains(taskRunEntity)) {
 				continue;
 			}
 
-			_taskRuns.add(taskRun);
+			_taskRunEntities.add(taskRunEntity);
 		}
+	}
+
+	@Override
+	public void addTaskRunEntity(TaskRunEntity taskRunEntity) {
+		addTaskRunEntities(Collections.singleton(taskRunEntity));
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public Set<TaskRun> getTaskRuns() {
+	public Set<TaskRunEntity> getTaskRunEntities() {
 		return null;
 	}
 
@@ -99,13 +99,13 @@ public class BaseTask extends BaseEntity implements Task {
 	}
 
 	@Override
-	public void removeTaskRun(TaskRun taskRun) {
-		_taskRuns.remove(taskRun);
+	public void removeTaskRunEntities(Set<TaskRunEntity> taskRunEntities) {
+		_taskRunEntities.removeAll(taskRunEntities);
 	}
 
 	@Override
-	public void removeTaskRuns(Set<TaskRun> taskRuns) {
-		_taskRuns.removeAll(taskRuns);
+	public void removeTaskRunEntity(TaskRunEntity taskRunEntity) {
+		_taskRunEntities.remove(taskRunEntity);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class BaseTask extends BaseEntity implements Task {
 		_project = project;
 	}
 
-	protected BaseTask(JSONObject jsonObject) {
+	protected BaseTaskEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_name = jsonObject.getString("name");
@@ -133,6 +133,6 @@ public class BaseTask extends BaseEntity implements Task {
 	private final Set<Environment> _environments = new HashSet<>();
 	private String _name;
 	private Project _project;
-	private final Set<TaskRun> _taskRuns = new HashSet<>();
+	private final Set<TaskRunEntity> _taskRunEntities = new HashSet<>();
 
 }

@@ -15,15 +15,20 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskEntityFactory extends BaseEntityFactory<Task> {
+public class TaskEntityFactory extends BaseEntityFactory<TaskEntity> {
 
 	@Override
-	public Task newEntity(JSONObject jsonObject) {
-		return new DefaultTask(jsonObject);
+	public String getEntityLabel() {
+		return "Task";
+	}
+
+	@Override
+	public TaskEntity newEntity(JSONObject jsonObject) {
+		return new DefaultTaskEntity(jsonObject);
 	}
 
 	protected TaskEntityFactory() {
-		super(Task.class);
+		super(TaskEntity.class);
 	}
 
 }

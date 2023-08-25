@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.ProjectEntityFactory;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.TaskEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectToTasksEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<Project, Task> {
+	extends BaseEntityRelationshipDALO<Project, TaskEntity> {
 
 	@Override
-	public EntityFactory<Task> getChildEntityFactory() {
+	public EntityFactory<TaskEntity> getChildEntityFactory() {
 		return _taskEntityFactory;
 	}
 

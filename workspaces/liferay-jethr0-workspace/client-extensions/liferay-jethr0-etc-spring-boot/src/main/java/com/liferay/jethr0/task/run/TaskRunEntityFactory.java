@@ -15,15 +15,20 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskRunEntityFactory extends BaseEntityFactory<TaskRun> {
+public class TaskRunEntityFactory extends BaseEntityFactory<TaskRunEntity> {
 
 	@Override
-	public TaskRun newEntity(JSONObject jsonObject) {
-		return new DefaultTaskRun(jsonObject);
+	public String getEntityLabel() {
+		return "Task Run";
+	}
+
+	@Override
+	public TaskRunEntity newEntity(JSONObject jsonObject) {
+		return new DefaultTaskRunEntity(jsonObject);
 	}
 
 	protected TaskRunEntityFactory() {
-		super(TaskRun.class);
+		super(TaskRunEntity.class);
 	}
 
 }

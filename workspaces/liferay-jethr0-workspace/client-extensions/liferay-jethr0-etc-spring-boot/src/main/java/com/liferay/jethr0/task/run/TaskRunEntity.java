@@ -6,7 +6,7 @@
 package com.liferay.jethr0.task.run;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,19 +16,19 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface TaskRun extends Entity {
+public interface TaskRunEntity extends Entity {
 
 	public long getDuration();
 
 	public Result getResult();
 
-	public Task getTask();
+	public TaskEntity getTaskEntity();
 
 	public void setDuration(long duration);
 
 	public void setResult(Result result);
 
-	public void setTask(Task task);
+	public void setTaskEntity(TaskEntity taskEntity);
 
 	public enum Result {
 

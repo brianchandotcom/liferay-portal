@@ -11,7 +11,7 @@ import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +36,9 @@ public interface Build extends Entity {
 
 	public void addEnvironments(Set<Environment> environments);
 
-	public void addTask(Task task);
+	public void addTaskEntities(Set<TaskEntity> taskEntities);
 
-	public void addTasks(Set<Task> tasks);
+	public void addTaskEntity(TaskEntity taskEntity);
 
 	public String getBuildName();
 
@@ -68,7 +68,7 @@ public interface Build extends Entity {
 
 	public State getState();
 
-	public Set<Task> getTasks();
+	public Set<TaskEntity> getTaskEntities();
 
 	public boolean isChildBuild(Build parentBuild);
 
@@ -86,9 +86,9 @@ public interface Build extends Entity {
 
 	public void removeEnvironments(Set<Environment> environments);
 
-	public void removeTask(Task task);
+	public void removeTaskEntities(Set<TaskEntity> taskEntities);
 
-	public void removeTasks(Set<Task> tasks);
+	public void removeTaskEntity(TaskEntity taskEntity);
 
 	public boolean requiresGoodBattery();
 

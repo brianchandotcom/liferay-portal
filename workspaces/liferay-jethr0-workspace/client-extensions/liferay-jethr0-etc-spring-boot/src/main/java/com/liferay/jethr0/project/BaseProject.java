@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -58,13 +58,13 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void addTask(Task task) {
-		addRelatedEntity(task);
+	public void addTaskEntities(Set<TaskEntity> taskEntities) {
+		addRelatedEntities(taskEntities);
 	}
 
 	@Override
-	public void addTasks(Set<Task> tasks) {
-		addRelatedEntities(tasks);
+	public void addTaskEntity(TaskEntity taskEntity) {
+		addRelatedEntity(taskEntity);
 	}
 
 	@Override
@@ -142,8 +142,8 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public Set<Task> getTasks() {
-		return getRelatedEntities(Task.class);
+	public Set<TaskEntity> getTaskEntities() {
+		return getRelatedEntities(TaskEntity.class);
 	}
 
 	@Override
@@ -190,13 +190,13 @@ public abstract class BaseProject extends BaseEntity implements Project {
 		removeRelatedEntity(jenkinsCohortEntity);
 	}
 
-	@Override
-	public void removeTask(Task task) {
-		removeRelatedEntity(task);
+	public void removeTaskEntities(Set<TaskEntity> taskEntities) {
+		removeRelatedEntities(taskEntities);
 	}
 
-	public void removeTasks(Set<Task> tasks) {
-		removeRelatedEntities(tasks);
+	@Override
+	public void removeTaskEntity(TaskEntity taskEntity) {
+		removeRelatedEntity(taskEntity);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
-import com.liferay.jethr0.task.Task;
+import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuite;
 
 import java.util.Date;
@@ -37,9 +37,9 @@ public interface Project extends Entity {
 
 	public void addJenkinsCohortEntity(JenkinsCohortEntity jenkinsCohortEntity);
 
-	public void addTask(Task task);
+	public void addTaskEntities(Set<TaskEntity> taskEntities);
 
-	public void addTasks(Set<Task> tasks);
+	public void addTaskEntity(TaskEntity taskEntity);
 
 	public void addTestSuite(TestSuite testSuite);
 
@@ -61,7 +61,7 @@ public interface Project extends Entity {
 
 	public State getState();
 
-	public Set<Task> getTasks();
+	public Set<TaskEntity> getTaskEntities();
 
 	public Set<TestSuite> getTestSuites();
 
@@ -81,9 +81,9 @@ public interface Project extends Entity {
 	public void removeJenkinsCohortEntity(
 		JenkinsCohortEntity jenkinsCohortEntity);
 
-	public void removeTask(Task task);
+	public void removeTaskEntities(Set<TaskEntity> taskEntities);
 
-	public void removeTasks(Set<Task> tasks);
+	public void removeTaskEntity(TaskEntity taskEntity);
 
 	public void removeTestSuite(TestSuite testSuite);
 

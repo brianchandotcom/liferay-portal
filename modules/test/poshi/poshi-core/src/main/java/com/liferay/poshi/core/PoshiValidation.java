@@ -73,6 +73,8 @@ public class PoshiValidation {
 
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
+		validateProperties();
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			poshiProperties.poshiFileReadThreadPool);
 
@@ -143,6 +145,7 @@ public class PoshiValidation {
 	}
 
 	public static void validate(String testName) throws Exception {
+		validateProperties();
 		validateTestName(testName);
 
 		if (!_exceptions.isEmpty()) {
@@ -1555,6 +1558,43 @@ public class PoshiValidation {
 							propertyPoshiElement, "Invalid property value '",
 							propertyValue.trim(), "' for property name '",
 							propertyName.trim()));
+				}
+			}
+		}
+	}
+
+	protected static void validateProperties() {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		List<String> testCaseAvailablePropertyNames =
+			ListUtil.newListFromString(
+				poshiProperties.testCaseAvailablePropertyNames);
+
+		for (String testCaseAvailablePropertyName :
+				testCaseAvailablePropertyNames) {
+
+			String testCaseAvailablePropertyValues = PropsUtil.get(
+				"test.case.available.property.values[" +
+					testCaseAvailablePropertyName + "]");
+
+			if (Validator.isNotNull(testCaseAvailablePropertyValues)) {
+				List<String> propertyValues = Arrays.asList(
+					StringUtil.split(testCaseAvailablePropertyValues));
+
+				List<String> uniquePropertyValues = new ArrayList<>();
+
+				for (String propertyValue : propertyValues) {
+					if (uniquePropertyValues.contains(propertyValue)) {
+						_exceptions.add(
+							new ValidationException(
+								"Duplicate property value " + propertyValue +
+									" in property name " +
+										testCaseAvailablePropertyName));
+
+						continue;
+					}
+
+					uniquePropertyValues.add(propertyValue);
 				}
 			}
 		}

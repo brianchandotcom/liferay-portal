@@ -239,7 +239,7 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 				}
 
 				@Override
-				public void onBeforeRemove(String indexName) {
+				public void onBeforeDelete(String indexName) {
 					_companyIndexFactoryFixture.deleteIndices();
 				}
 
@@ -265,7 +265,7 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 				}
 
 				@Override
-				public void onBeforeRemove(String indexName) {
+				public void onBeforeDelete(String indexName) {
 					throw new RuntimeException();
 				}
 

@@ -30,7 +30,7 @@ public interface UserFacetSearchContributor {
 
 		public UserFacetBuilder maxTerms(int maxTerms);
 
-		public UserFacetBuilder selectedUserNames(String... selectedUserNames);
+		public UserFacetBuilder selectedUserIds(long... selectedUserNames);
 
 	}
 

@@ -107,7 +107,7 @@ public class IndexHelperImpl implements IndexHelper {
 		OpenSearchIndicesClient openSearchIndicesClient,
 		boolean resetBothIndexNames) {
 
-		_executeCompanyIndexListenersBeforeRemove(indexName);
+		_executeCompanyIndexListenersBeforeDelete(indexName);
 
 		try {
 			JsonpUtil.logInfoResponse(
@@ -341,11 +341,11 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
-	private void _executeCompanyIndexListenerBeforeRemove(
+	private void _executeCompanyIndexListenerBeforeDelete(
 		CompanyIndexListener companyIndexListener, String indexName) {
 
 		try {
-			companyIndexListener.onBeforeRemove(indexName);
+			companyIndexListener.onBeforeDelete(indexName);
 		}
 		catch (Throwable throwable) {
 			_log.error(
@@ -365,11 +365,11 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
-	private void _executeCompanyIndexListenersBeforeRemove(String indexName) {
+	private void _executeCompanyIndexListenersBeforeDelete(String indexName) {
 		for (CompanyIndexListener companyIndexListener :
 				getCompanyIndexListeners()) {
 
-			_executeCompanyIndexListenerBeforeRemove(
+			_executeCompanyIndexListenerBeforeDelete(
 				companyIndexListener, indexName);
 		}
 	}

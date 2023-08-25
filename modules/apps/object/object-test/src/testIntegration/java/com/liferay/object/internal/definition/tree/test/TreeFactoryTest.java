@@ -6,24 +6,20 @@
 package com.liferay.object.internal.definition.tree.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import javax.portlet.PortletException;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,27 +37,24 @@ public class TreeFactoryTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCreate() throws PortalException {
-		Queue<String> queue = new LinkedList<>(
-			Arrays.asList("A", "AA", "AB", "AAA", "AAB"));
-
-		Tree tree = TreeTestUtil.createTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
-
-		Iterator<Node> iterator = tree.iterator();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					node.getObjectDefinitionId());
-
-			Assert.assertEquals(queue.poll(), objectDefinition.getShortName());
-		}
-
-		Assert.assertTrue(queue.isEmpty());
+	public void testCreate() throws PortalException, PortletException {
+		TreeTestUtil.assertTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build(),
+			TreeTestUtil.createTree(
+				_mvcResourceCommand, _objectDefinitionLocalService,
+				_objectRelationshipLocalService, _portletLocalService,
+				_treeFactory),
+			_objectDefinitionLocalService);
 	}
 
 	@Inject
@@ -70,6 +63,14 @@ public class TreeFactoryTest {
 	@Inject
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
+
+	@Inject(
+		filter = "mvc.command.name=/object_definitions/bind_object_definitions"
+	)
+	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private TreeFactory _treeFactory;

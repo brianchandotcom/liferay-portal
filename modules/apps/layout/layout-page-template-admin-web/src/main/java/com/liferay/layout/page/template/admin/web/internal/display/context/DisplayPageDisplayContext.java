@@ -144,6 +144,9 @@ public class DisplayPageDisplayContext {
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 							_themeDisplay.getScopeGroupId(),
+							ParamUtil.getLong(
+								_httpServletRequest,
+								"layoutPageTemplateCollectionId", -1),
 							LayoutPageTemplateEntryTypeConstants.
 								TYPE_DISPLAY_PAGE,
 							displayPagesSearchContainer.getStart(),
@@ -152,6 +155,9 @@ public class DisplayPageDisplayContext {
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
+						ParamUtil.getLong(
+							_httpServletRequest,
+							"layoutPageTemplateCollectionId", -1),
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_DISPLAY_PAGE));
 		}

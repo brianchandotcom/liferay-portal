@@ -241,7 +241,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		int end, OrderByComparator<Object> orderByComparator) {
 
 		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			groupId, null, type, start, end, orderByComparator);
+			groupId, layoutPageTemplateCollectionId, null, type, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -252,7 +253,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, name, type);
+				groupId, layoutPageTemplateCollectionId, name, type);
 
 		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			DSLQueryFactoryUtil.select(
@@ -289,7 +290,7 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, long layoutPageTemplateCollectionId, int type) {
 
 		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-			groupId, null, type);
+			groupId, layoutPageTemplateCollectionId, null, type);
 	}
 
 	@Override
@@ -299,7 +300,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, name, type);
+				groupId, layoutPageTemplateCollectionId, name, type);
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -898,7 +899,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-			long groupId, String name, int type) {
+			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -912,6 +914,16 @@ public class LayoutPageTemplateEntryServiceImpl
 		).where(
 			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
 				groupId
+			).and(
+				() -> {
+					if (layoutPageTemplateCollectionId != -1) {
+						return LayoutPageTemplateEntryTable.INSTANCE.
+							layoutPageTemplateCollectionId.eq(
+								layoutPageTemplateCollectionId);
+					}
+
+					return null;
+				}
 			).and(
 				() -> {
 					if (Validator.isNotNull(name)) {

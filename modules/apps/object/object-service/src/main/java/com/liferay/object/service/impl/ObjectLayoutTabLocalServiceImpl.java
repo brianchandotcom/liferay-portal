@@ -11,6 +11,7 @@ import com.liferay.object.internal.layout.tab.screen.navigation.category.ObjectL
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.service.base.ObjectLayoutTabLocalServiceBaseImpl;
+import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -135,7 +136,9 @@ public class ObjectLayoutTabLocalServiceImpl
 						ScreenNavigationEntry.class.getName()
 					},
 					new ObjectLayoutTabScreenNavigationCategory(
-						objectDefinition, objectLayoutTab),
+						objectDefinition, objectLayoutTab,
+						_objectRelationshipPersistence.fetchByPrimaryKey(
+							objectLayoutTab.getObjectRelationshipId())),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"screen.navigation.category.order:Integer",
 						objectLayoutTab.getObjectLayoutTabId()
@@ -174,6 +177,10 @@ public class ObjectLayoutTabLocalServiceImpl
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();
 

@@ -39,6 +39,7 @@ import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.display.context.ObjectEntryDisplayContext;
 import com.liferay.object.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
 import com.liferay.object.exception.NoSuchObjectLayoutException;
+import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
@@ -171,11 +172,11 @@ public class ObjectEntryDisplayContextImpl
 
 	@Override
 	public ObjectDefinition getObjectDefinition2() throws PortalException {
-		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+		ObjectRelationship objectRelationship = getObjectRelationship();
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				objectLayoutTab.getObjectRelationshipId());
+		if (objectRelationship == null) {
+			throw new NoSuchObjectRelationshipException();
+		}
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			objectRelationship.getObjectDefinitionId2());
@@ -266,8 +267,15 @@ public class ObjectEntryDisplayContextImpl
 	public ObjectRelationship getObjectRelationship() throws PortalException {
 		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 
-		return _objectRelationshipLocalService.getObjectRelationship(
-			objectLayoutTab.getObjectRelationshipId());
+		if (objectLayoutTab != null) {
+			return _objectRelationshipLocalService.fetchObjectRelationship(
+				objectLayoutTab.getObjectRelationshipId());
+		}
+
+		return _objectRelationshipLocalService.fetchObjectRelationship(
+			ParamUtil.getLong(
+				_objectRequestHelper.getRequest(),
+				"screenNavigationCategoryKey"));
 	}
 
 	@Override
@@ -393,6 +401,10 @@ public class ObjectEntryDisplayContextImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
+		if (objectRelationship == null) {
+			return StringPool.BLANK;
+		}
+
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				_objectRequestHelper.getRequest());
@@ -454,10 +466,14 @@ public class ObjectEntryDisplayContextImpl
 		).put(
 			"objectRelationshipId",
 			() -> {
-				ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
+				ObjectRelationship objectRelationship = getObjectRelationship();
+
+				if (objectRelationship == null) {
+					return null;
+				}
 
 				return String.valueOf(
-					objectLayoutTab.getObjectRelationshipId());
+					objectRelationship.getObjectRelationshipId());
 			}
 		).put(
 			"readOnly", String.valueOf(_readOnly || isGuestUser())

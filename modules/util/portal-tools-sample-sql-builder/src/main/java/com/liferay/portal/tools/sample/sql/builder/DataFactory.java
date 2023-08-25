@@ -7192,6 +7192,9 @@ public class DataFactory {
 				else if (name.equals("TotalDiscountPctLev4WithTax")) {
 					name = "TotalDiscountPercentageLevel4WithTaxAmount";
 				}
+				else if (name.equals("UOMIncrementalOrderQuantity")) {
+					name = "UnitOfMeasureIncrementalOrderQuantity";
+				}
 
 				int type = (int)tableColumn[1];
 

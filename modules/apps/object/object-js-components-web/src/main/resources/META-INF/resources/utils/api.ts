@@ -350,6 +350,17 @@ export async function putObjectDefinitionByExternalReferenceCode(
 	);
 }
 
+export async function putObjectFolderByERC(folder: Partial<ObjectFolder>) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folder.externalReferenceCode}`,
+		{
+			body: JSON.stringify(folder),
+			headers,
+			method: 'PUT',
+		}
+	);
+}
+
 export async function save({
 	item,
 	method = 'PUT',

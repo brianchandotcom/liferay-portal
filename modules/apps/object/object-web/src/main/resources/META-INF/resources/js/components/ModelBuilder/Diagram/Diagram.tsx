@@ -10,6 +10,7 @@ import ReactFlow, {
 	Controls,
 	Edge,
 	MiniMap,
+	Node,
 	addEdge,
 } from 'react-flow-renderer';
 
@@ -18,7 +19,8 @@ import {EmptyNode} from '../DefinitionNode/EmptyNode';
 
 import './Diagram.scss';
 
-import React, {useCallback} from 'react';
+import {API} from '@liferay/object-js-components-web';
+import React, {MouseEvent, useCallback} from 'react';
 
 import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import DefaultEdge from '../Edges/DefaultEdge';
@@ -41,7 +43,10 @@ function DiagramBuilder({
 }: {
 	setShowModal: (value: ViewObjectDefinitionsModals) => void;
 }) {
-	const [{elements}, dispatch] = useFolderContext();
+	const [
+		{elements, selectedFolder, showChangesSaved},
+		dispatch,
+	] = useFolderContext();
 
 	const emptyNode = [
 		{
@@ -69,6 +74,49 @@ function DiagramBuilder({
 		[dispatch, elements]
 	);
 
+	const onNodeDragStop = async (
+		event: MouseEvent,
+		node: Node<ObjectDefinitionNodeData>
+	) => {
+		const folder = await API.getFolderByERC(
+			selectedFolder.externalReferenceCode
+		);
+
+		const updatedObjectFolderItems = folder.objectFolderItems.map(
+			(folderItem) => {
+				if (
+					folderItem.objectDefinitionExternalReferenceCode ===
+					node.data?.externalReferenceCode
+				) {
+					return {
+						...folderItem,
+						positionX: node.position.x,
+						positionY: node.position.y,
+					};
+				}
+
+				return folderItem;
+			}
+		);
+
+		const updatedFolder = {
+			externalReferenceCode: selectedFolder.externalReferenceCode,
+			id: selectedFolder.id,
+			label: selectedFolder.label,
+			name: selectedFolder.name,
+			objectFolderItems: updatedObjectFolderItems,
+		};
+
+		API.putObjectFolderByERC(updatedFolder);
+
+		if (!showChangesSaved) {
+			dispatch({
+				payload: {updatedShowChangesSaved: true},
+				type: TYPES.SET_SHOW_CHANGES_SAVED,
+			});
+		}
+	};
+
 	return (
 		<div className="lfr-objects__model-builder-diagram-area">
 			<ReactFlow
@@ -78,6 +126,7 @@ function DiagramBuilder({
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
 				onConnect={onConnect}
+				onNodeDragStop={onNodeDragStop}
 			>
 				<Background size={1} />
 

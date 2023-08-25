@@ -1,6 +1,9 @@
 @component-name = "portal-calendar"
 definition {
 
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property testray.main.component.name = "Calendar";
 
 	var pageName = "Calendar Page";
@@ -49,7 +52,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-185844 Verifies that 'More Options' button is available after applying 200% zoom in to the page."
+	@description = "LPS-185844 Verifies that the last scrollable element is not hidden by modal footer at 200% page zoom."
 	@priority = 3
 	test AddCalendarContentMustBeVisibleAt200Zoom {
 		task ("When access add a new calendar modal") {
@@ -60,8 +63,10 @@ definition {
 			BrowserZoom.setZoomTo200();
 		}
 
-		task ("And scroll all the way down") {
-			ScrollBy(value1 = "0, 1000");
+		task ("And scroll more options button into view") {
+			ScrollWebElementIntoView(
+				key_text = "More Options",
+				locator1 = "Button#ANY_SECONDARY");
 		}
 
 		task ("Then More options role is visible") {

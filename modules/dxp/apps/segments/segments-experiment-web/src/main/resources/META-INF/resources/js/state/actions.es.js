@@ -17,13 +17,6 @@ export function addVariant(payload) {
 	};
 }
 
-export function archiveExperiment(payload) {
-	return {
-		payload,
-		type: 'ARCHIVE_EXPERIMENT',
-	};
-}
-
 export function closeCreationModal() {
 	return {
 		type: 'CREATE_EXPERIMENT_FINISH',
@@ -39,15 +32,6 @@ export function closeEditionModal() {
 export function closeReviewAndRunExperiment() {
 	return {
 		type: 'REVIEW_AND_RUN_EXPERIMENT_FINISH',
-	};
-}
-
-export function deleteArchivedExperiment(experimentId) {
-	return {
-		payload: {
-			experimentId,
-		},
-		type: 'DELETE_ARCHIVED_EXPERIMENT',
 	};
 }
 

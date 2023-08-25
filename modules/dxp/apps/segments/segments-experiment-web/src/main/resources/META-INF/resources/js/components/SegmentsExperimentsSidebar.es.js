@@ -16,7 +16,6 @@ import {
 	closeDeletionModal,
 	closeEditionModal,
 	closeTerminateModal,
-	deleteArchivedExperiment,
 	editSegmentsExperiment,
 	openCreationModal,
 	openDeletionModal,
@@ -55,7 +54,6 @@ import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 
 function SegmentsExperimentsSidebar({
-	initialExperimentHistory,
 	initialGoals,
 	initialSegmentsExperiment,
 	initialSegmentsVariants,
@@ -66,7 +64,6 @@ function SegmentsExperimentsSidebar({
 	const [state, dispatch] = useReducer(
 		reducer,
 		{
-			initialExperimentHistory,
 			initialSegmentsExperiment,
 			initialSegmentsVariants,
 			initialSelectedSegmentsExperienceId,
@@ -262,9 +259,6 @@ function SegmentsExperimentsSidebar({
 					experiment.segmentsExperimentId === experimentId
 				) {
 					navigateToExperience(experiment.segmentsExperienceId);
-				}
-				else {
-					dispatch(deleteArchivedExperiment(experimentId));
 				}
 			})
 			.catch((_error) => {
@@ -468,8 +462,6 @@ function SegmentsExperimentsSidebar({
 }
 
 SegmentsExperimentsSidebar.propTypes = {
-	initialExperimentHistory: PropTypes.arrayOf(SegmentsExperimentType)
-		.isRequired,
 	initialGoals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	initialSegmentsExperiment: SegmentsExperimentType,
 	initialSegmentsVariants: PropTypes.arrayOf(SegmentsVariantType).isRequired,

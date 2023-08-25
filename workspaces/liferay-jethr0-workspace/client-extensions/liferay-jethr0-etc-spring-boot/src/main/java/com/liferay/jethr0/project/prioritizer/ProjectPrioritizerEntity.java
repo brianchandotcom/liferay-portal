@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.project.prioritizer;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorEntity;
 
 import java.util.Set;
 
@@ -15,19 +15,21 @@ import java.util.Set;
  */
 public interface ProjectPrioritizerEntity extends Entity {
 
-	public void addProjectComparator(ProjectComparator projectComparator);
+	public void addProjectComparatorEntities(
+		Set<ProjectComparatorEntity> projectComparatorEntities);
 
-	public void addProjectComparators(
-		Set<ProjectComparator> projectComparators);
+	public void addProjectComparatorEntity(
+		ProjectComparatorEntity projectComparatorEntity);
 
 	public String getName();
 
-	public Set<ProjectComparator> getProjectComparators();
+	public Set<ProjectComparatorEntity> getProjectComparatorEntities();
 
-	public void removeProjectComparator(ProjectComparator projectComparator);
+	public void removeProjectComparatorEntities(
+		Set<ProjectComparatorEntity> projectComparatorEntities);
 
-	public void removeProjectComparators(
-		Set<ProjectComparator> projectComparators);
+	public void removeProjectComparatorEntity(
+		ProjectComparatorEntity projectComparatorEntity);
 
 	public void setName(String name);
 

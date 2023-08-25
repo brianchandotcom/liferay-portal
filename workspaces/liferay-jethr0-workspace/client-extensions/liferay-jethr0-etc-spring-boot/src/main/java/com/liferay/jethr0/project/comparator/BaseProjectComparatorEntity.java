@@ -16,14 +16,14 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProjectComparator
-	extends BaseEntity implements Comparator<Project>, ProjectComparator {
+public abstract class BaseProjectComparatorEntity
+	extends BaseEntity implements Comparator<Project>, ProjectComparatorEntity {
 
 	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		ProjectComparator.Type type = getType();
+		ProjectComparatorEntity.Type type = getType();
 
 		jsonObject.put(
 			"position", getPosition()
@@ -70,7 +70,9 @@ public abstract class BaseProjectComparator
 	}
 
 	@Override
-	public void setProjectPrioritizerEntity(ProjectPrioritizerEntity projectPrioritizerEntity) {
+	public void setProjectPrioritizerEntity(
+		ProjectPrioritizerEntity projectPrioritizerEntity) {
+
 		_projectPrioritizerEntity = projectPrioritizerEntity;
 
 		if (_projectPrioritizerEntity != null) {
@@ -86,7 +88,7 @@ public abstract class BaseProjectComparator
 		_value = value;
 	}
 
-	protected BaseProjectComparator(JSONObject jsonObject) {
+	protected BaseProjectComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_position = jsonObject.getInt("position");
@@ -96,8 +98,9 @@ public abstract class BaseProjectComparator
 		_value = jsonObject.optString("value");
 	}
 
-	protected BaseProjectComparator(
-			ProjectPrioritizerEntity projectPrioritizerEntity, JSONObject jsonObject) {
+	protected BaseProjectComparatorEntity(
+		ProjectPrioritizerEntity projectPrioritizerEntity,
+		JSONObject jsonObject) {
 
 		super(jsonObject);
 

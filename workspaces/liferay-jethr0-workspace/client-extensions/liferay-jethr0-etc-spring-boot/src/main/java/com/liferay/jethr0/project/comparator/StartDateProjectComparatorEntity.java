@@ -15,24 +15,38 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class FIFOProjectComparator extends BaseProjectComparator {
+public class StartDateProjectComparatorEntity
+	extends BaseProjectComparatorEntity {
 
-	public FIFOProjectComparator(JSONObject jsonObject) {
+	public StartDateProjectComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
-	public FIFOProjectComparator(
-			ProjectPrioritizerEntity projectPrioritizerEntity, JSONObject jsonObject) {
+	public StartDateProjectComparatorEntity(
+		ProjectPrioritizerEntity projectPrioritizerEntity,
+		JSONObject jsonObject) {
 
 		super(projectPrioritizerEntity, jsonObject);
 	}
 
 	@Override
 	public int compare(Project project1, Project project2) {
-		Date createdDate1 = project1.getCreatedDate();
-		Date createdDate2 = project2.getCreatedDate();
+		Date startDate1 = project1.getStartDate();
+		Date startDate2 = project2.getStartDate();
 
-		return createdDate1.compareTo(createdDate2);
+		if ((startDate1 == null) && (startDate2 == null)) {
+			return 0;
+		}
+
+		if (startDate1 == null) {
+			return 1;
+		}
+
+		if (startDate2 == null) {
+			return -1;
+		}
+
+		return startDate1.compareTo(startDate2);
 	}
 
 }

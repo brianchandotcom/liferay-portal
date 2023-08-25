@@ -12,8 +12,8 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.gitbranch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.comparator.BaseProjectComparator;
-import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.BaseProjectComparatorEntity;
+import com.liferay.jethr0.project.comparator.ProjectComparatorEntity;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 import com.liferay.jethr0.project.repository.ProjectComparatorEntityRepository;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
@@ -94,8 +94,9 @@ public class ProjectQueue {
 			setProjectPrioritizerEntityRepository(
 				_projectPrioritizerEntityRepository);
 
-		_projectPrioritizerEntityRepository.setProjectComparatorRepository(
-			_projectComparatorEntityRepository);
+		_projectPrioritizerEntityRepository.
+			setProjectComparatorEntityRepository(
+				_projectComparatorEntityRepository);
 
 		_projectComparatorEntityRepository.initializeRelationships();
 		_projectPrioritizerEntityRepository.initializeRelationships();
@@ -184,14 +185,14 @@ public class ProjectQueue {
 				}
 			}
 
-			_sortedProjectComparators.clear();
+			_sortedProjectComparatorEntities.clear();
 
-			_sortedProjectComparators.addAll(
-				_projectPrioritizerEntity.getProjectComparators());
+			_sortedProjectComparatorEntities.addAll(
+				_projectPrioritizerEntity.getProjectComparatorEntities());
 
 			Collections.sort(
-				_sortedProjectComparators,
-				Comparator.comparingInt(ProjectComparator::getPosition));
+				_sortedProjectComparatorEntities,
+				Comparator.comparingInt(ProjectComparatorEntity::getPosition));
 
 			_projects.sort(new PrioritizedProjectComparator());
 
@@ -264,12 +265,13 @@ public class ProjectQueue {
 
 		_projectComparatorEntityRepository.add(
 			projectPrioritizerEntity, 1,
-			ProjectComparator.Type.PROJECT_START_DATE, null);
+			ProjectComparatorEntity.Type.PROJECT_START_DATE, null);
 		_projectComparatorEntityRepository.add(
 			projectPrioritizerEntity, 2,
-			ProjectComparator.Type.PROJECT_PRIORITY, null);
+			ProjectComparatorEntity.Type.PROJECT_PRIORITY, null);
 		_projectComparatorEntityRepository.add(
-			projectPrioritizerEntity, 3, ProjectComparator.Type.FIFO, null);
+			projectPrioritizerEntity, 3, ProjectComparatorEntity.Type.FIFO,
+			null);
 
 		return projectPrioritizerEntity;
 	}
@@ -305,8 +307,8 @@ public class ProjectQueue {
 		_projectPrioritizerEntityRepository;
 
 	private final List<Project> _projects = new ArrayList<>();
-	private final List<ProjectComparator> _sortedProjectComparators =
-		new ArrayList<>();
+	private final List<ProjectComparatorEntity>
+		_sortedProjectComparatorEntities = new ArrayList<>();
 
 	@Autowired
 	private TaskEntityRepository _taskEntityRepository;
@@ -318,15 +320,17 @@ public class ProjectQueue {
 
 		@Override
 		public int compare(Project project1, Project project2) {
-			for (ProjectComparator projectComparator :
-					_sortedProjectComparators) {
+			for (ProjectComparatorEntity projectComparatorEntity :
+					_sortedProjectComparatorEntities) {
 
-				if (!(projectComparator instanceof BaseProjectComparator)) {
+				if (!(projectComparatorEntity instanceof
+						BaseProjectComparatorEntity)) {
+
 					continue;
 				}
 
-				BaseProjectComparator baseProjectComparator =
-					(BaseProjectComparator)projectComparator;
+				BaseProjectComparatorEntity baseProjectComparator =
+					(BaseProjectComparatorEntity)projectComparatorEntity;
 
 				int result = baseProjectComparator.compare(project1, project2);
 

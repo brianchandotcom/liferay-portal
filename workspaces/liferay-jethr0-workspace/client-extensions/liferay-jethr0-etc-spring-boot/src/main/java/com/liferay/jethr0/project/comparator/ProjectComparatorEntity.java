@@ -16,7 +16,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface ProjectComparator extends Entity {
+public interface ProjectComparatorEntity extends Entity {
 
 	public int getPosition();
 
@@ -30,7 +30,8 @@ public interface ProjectComparator extends Entity {
 
 	public void setPosition(int position);
 
-	public void setProjectPrioritizerEntity(ProjectPrioritizerEntity projectPrioritizerEntity);
+	public void setProjectPrioritizerEntity(
+		ProjectPrioritizerEntity projectPrioritizerEntity);
 
 	public void setValue(String value);
 

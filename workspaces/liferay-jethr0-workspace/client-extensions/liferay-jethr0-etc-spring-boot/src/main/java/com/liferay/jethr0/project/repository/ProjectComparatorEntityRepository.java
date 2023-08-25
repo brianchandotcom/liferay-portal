@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.project.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorEntity;
 import com.liferay.jethr0.project.dalo.ProjectComparatorEntityDALO;
 import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
@@ -24,11 +24,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectComparatorEntityRepository
-	extends BaseEntityRepository<ProjectComparator> {
+	extends BaseEntityRepository<ProjectComparatorEntity> {
 
-	public ProjectComparator add(
+	public ProjectComparatorEntity add(
 		ProjectPrioritizerEntity projectPrioritizerEntity, long position,
-		ProjectComparator.Type type, String value) {
+		ProjectComparatorEntity.Type type, String value) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -43,38 +43,44 @@ public class ProjectComparatorEntityRepository
 			"value", value
 		);
 
-		ProjectComparator projectComparator = add(jsonObject);
+		ProjectComparatorEntity projectComparatorEntity = add(jsonObject);
 
-		projectComparator.setProjectPrioritizerEntity(projectPrioritizerEntity);
+		projectComparatorEntity.setProjectPrioritizerEntity(
+			projectPrioritizerEntity);
 
-		projectPrioritizerEntity.addProjectComparator(projectComparator);
+		projectPrioritizerEntity.addProjectComparatorEntity(
+			projectComparatorEntity);
 
-		return projectComparator;
+		return projectComparatorEntity;
 	}
 
-	public Set<ProjectComparator> getAll(
+	public Set<ProjectComparatorEntity> getAll(
 		ProjectPrioritizerEntity projectPrioritizerEntity) {
 
-		Set<ProjectComparator> projectComparators = new HashSet<>();
+		Set<ProjectComparatorEntity> projectComparatorEntities =
+			new HashSet<>();
 
 		Set<Long> projectComparatorIds =
 			_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
 				getChildEntityIds(projectPrioritizerEntity);
 
-		for (ProjectComparator projectComparator : getAll()) {
-			if (!projectComparatorIds.contains(projectComparator.getId())) {
+		for (ProjectComparatorEntity projectComparatorEntity : getAll()) {
+			if (!projectComparatorIds.contains(
+					projectComparatorEntity.getId())) {
+
 				continue;
 			}
 
-			projectPrioritizerEntity.addProjectComparator(projectComparator);
+			projectPrioritizerEntity.addProjectComparatorEntity(
+				projectComparatorEntity);
 
-			projectComparator.setProjectPrioritizerEntity(
+			projectComparatorEntity.setProjectPrioritizerEntity(
 				projectPrioritizerEntity);
 
-			projectComparators.add(projectComparator);
+			projectComparatorEntities.add(projectComparatorEntity);
 		}
 
-		return projectComparators;
+		return projectComparatorEntities;
 	}
 
 	@Override
@@ -84,11 +90,11 @@ public class ProjectComparatorEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (ProjectComparator projectComparator : getAll()) {
+		for (ProjectComparatorEntity projectComparatorEntity : getAll()) {
 			ProjectPrioritizerEntity projectPrioritizerEntity = null;
 
 			long jenkinsServerId =
-				projectComparator.getProjectPrioritizerEntityId();
+				projectComparatorEntity.getProjectPrioritizerEntityId();
 
 			if (jenkinsServerId != 0) {
 				projectPrioritizerEntity =
@@ -96,7 +102,7 @@ public class ProjectComparatorEntityRepository
 						jenkinsServerId);
 			}
 
-			projectComparator.setProjectPrioritizerEntity(
+			projectComparatorEntity.setProjectPrioritizerEntity(
 				projectPrioritizerEntity);
 		}
 	}

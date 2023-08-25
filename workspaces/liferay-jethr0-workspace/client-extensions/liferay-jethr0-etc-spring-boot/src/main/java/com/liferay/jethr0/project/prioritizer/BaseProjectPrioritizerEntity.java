@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.project.prioritizer;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.project.comparator.ProjectComparator;
+import com.liferay.jethr0.project.comparator.ProjectComparatorEntity;
 
 import java.util.Set;
 
@@ -19,15 +19,17 @@ public abstract class BaseProjectPrioritizerEntity
 	extends BaseEntity implements ProjectPrioritizerEntity {
 
 	@Override
-	public void addProjectComparator(ProjectComparator projectComparator) {
-		addRelatedEntity(projectComparator);
+	public void addProjectComparatorEntities(
+		Set<ProjectComparatorEntity> projectComparatorEntities) {
+
+		addRelatedEntities(projectComparatorEntities);
 	}
 
 	@Override
-	public void addProjectComparators(
-		Set<ProjectComparator> projectComparators) {
+	public void addProjectComparatorEntity(
+		ProjectComparatorEntity projectComparatorEntity) {
 
-		addRelatedEntities(projectComparators);
+		addRelatedEntity(projectComparatorEntity);
 	}
 
 	@Override
@@ -45,20 +47,22 @@ public abstract class BaseProjectPrioritizerEntity
 	}
 
 	@Override
-	public Set<ProjectComparator> getProjectComparators() {
-		return getRelatedEntities(ProjectComparator.class);
+	public Set<ProjectComparatorEntity> getProjectComparatorEntities() {
+		return getRelatedEntities(ProjectComparatorEntity.class);
 	}
 
 	@Override
-	public void removeProjectComparator(ProjectComparator projectComparator) {
-		removeRelatedEntity(projectComparator);
+	public void removeProjectComparatorEntities(
+		Set<ProjectComparatorEntity> projectComparatorEntities) {
+
+		removeRelatedEntities(projectComparatorEntities);
 	}
 
 	@Override
-	public void removeProjectComparators(
-		Set<ProjectComparator> projectComparators) {
+	public void removeProjectComparatorEntity(
+		ProjectComparatorEntity projectComparatorEntity) {
 
-		removeRelatedEntities(projectComparators);
+		removeRelatedEntity(projectComparatorEntity);
 	}
 
 	@Override

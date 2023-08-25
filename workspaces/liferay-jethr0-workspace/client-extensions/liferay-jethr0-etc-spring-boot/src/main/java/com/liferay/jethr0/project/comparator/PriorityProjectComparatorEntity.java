@@ -13,14 +13,16 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class PriorityProjectComparator extends BaseProjectComparator {
+public class PriorityProjectComparatorEntity
+	extends BaseProjectComparatorEntity {
 
-	public PriorityProjectComparator(JSONObject jsonObject) {
+	public PriorityProjectComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
-	public PriorityProjectComparator(
-			ProjectPrioritizerEntity projectPrioritizerEntity, JSONObject jsonObject) {
+	public PriorityProjectComparatorEntity(
+		ProjectPrioritizerEntity projectPrioritizerEntity,
+		JSONObject jsonObject) {
 
 		super(projectPrioritizerEntity, jsonObject);
 	}

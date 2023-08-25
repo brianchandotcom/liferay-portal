@@ -60,20 +60,20 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 							>
 								<liferay-ui:search-container-column-text
 									href="<%= commerceAddressDisplayContext.getEditCommerceAddressURL(commerceAddress.getCommerceAddressId()) %>"
-									property="name"
+									value="<%= Validator.isNotNull(commerceAddress.getName()) ? HtmlUtil.escape(commerceAddress.getName()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand"
-									property="street1"
+									value="<%= Validator.isNotNull(commerceAddress.getStreet1()) ? HtmlUtil.escape(commerceAddress.getStreet1()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									property="city"
+									value="<%= Validator.isNotNull(commerceAddress.getCity()) ? HtmlUtil.escape(commerceAddress.getCity()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text
-									property="zip"
+									value="<%= Validator.isNotNull(commerceAddress.getZip())? HtmlUtil.escape(commerceAddress.getZip()) : StringPool.BLANK %>"
 								/>
 
 								<liferay-ui:search-container-column-text

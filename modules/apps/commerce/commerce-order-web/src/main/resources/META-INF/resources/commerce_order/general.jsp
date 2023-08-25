@@ -201,16 +201,16 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0">
-									<%= billingCommerceAddress.getStreet1() %>
+									<%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %>
 								</p>
 
 								<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
 									<p class="mb-0">
-										<%= billingCommerceAddress.getStreet2() %>
+										<%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %>
 									</p>
 
 									<p class="mb-0">
-										<%= billingCommerceAddress.getStreet3() %>
+										<%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %>
 									</p>
 								</c:if>
 
@@ -240,16 +240,16 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 							</c:when>
 							<c:otherwise>
 								<p class="mb-0">
-									<%= shippingCommerceAddress.getStreet1() %>
+									<%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %>
 								</p>
 
 								<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">
 									<p class="mb-0">
-										<%= shippingCommerceAddress.getStreet2() %>
+										<%= HtmlUtil.escape(shippingCommerceAddress.getStreet2()) %>
 									</p>
 
 									<p class="mb-0">
-										<%= shippingCommerceAddress.getStreet3() %>
+										<%= HtmlUtil.escape(shippingCommerceAddress.getStreet3()) %>
 									</p>
 								</c:if>
 

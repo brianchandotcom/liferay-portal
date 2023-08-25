@@ -4672,28 +4672,6 @@ public class JenkinsResultsParserUtil {
 						retryPeriodOverride = null;
 					}
 
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("retry-after: ");
-
-					if ((retryPeriodOverride != null) &&
-						(retryPeriodOverride > 0)) {
-
-						sb.append(String.valueOf(retryPeriodOverride));
-					}
-					else {
-						sb.append("NULL");
-					}
-
-					sb.append("\n");
-					sb.append("```");
-					sb.append(getHeadersString(urlConnection));
-					sb.append("```");
-
-					NotificationUtil.sendSlackNotification(
-						sb.toString(), "#ci-notifications", ":liferay-ci:",
-						"Secondary Rate Limit exceeded", "Liferay CI");
-
 					if ((retryPeriodOverride == null) ||
 						(retryPeriodOverride == 0)) {
 

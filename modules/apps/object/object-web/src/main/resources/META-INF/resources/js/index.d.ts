@@ -310,15 +310,23 @@ interface ObjectFieldView extends ObjectField {
 	type?: string;
 }
 
+interface ObjectFolderItem {
+	linkedObjectDefinition: boolean;
+	objectDefinitionExternalReferenceCode: string;
+	positionX: number;
+	positionY: number;
+}
+
 interface ObjectFolder {
-	actions: {};
+	actions: Actions;
 	dateCreated: string;
 	dateModified: string;
-	definitions?: ObjectDefinition[];
+	definitions?: ObjectDefinitionNodeData[];
 	externalReferenceCode: string;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
+	objectFolderItems: ObjectFolderItem[];
 }
 
 interface ObjectState {

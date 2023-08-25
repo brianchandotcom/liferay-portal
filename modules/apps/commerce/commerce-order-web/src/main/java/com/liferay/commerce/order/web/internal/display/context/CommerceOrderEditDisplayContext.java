@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
@@ -461,14 +462,14 @@ public class CommerceOrderEditDisplayContext {
 	public String getDescriptiveAddress(CommerceAddress commerceAddress) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(commerceAddress.getCity());
+		sb.append(HtmlUtil.escape(commerceAddress.getCity()));
 		sb.append(StringPool.COMMA_AND_SPACE);
 
 		try {
 			Region region = commerceAddress.getRegion();
 
 			if (region != null) {
-				sb.append(region.getName());
+				sb.append(HtmlUtil.escape(region.getName()));
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 		}
@@ -478,7 +479,7 @@ public class CommerceOrderEditDisplayContext {
 			}
 		}
 
-		sb.append(commerceAddress.getZip());
+		sb.append(HtmlUtil.escape(commerceAddress.getZip()));
 
 		return sb.toString();
 	}
@@ -486,7 +487,7 @@ public class CommerceOrderEditDisplayContext {
 	public String getDescriptiveStreetAddress(CommerceAddress commerceAddress) {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(commerceAddress.getStreet1());
+		sb.append(HtmlUtil.escape(commerceAddress.getStreet1()));
 		sb.append(StringPool.COMMA_AND_SPACE);
 
 		if (!Validator.isBlank(commerceAddress.getStreet2())) {

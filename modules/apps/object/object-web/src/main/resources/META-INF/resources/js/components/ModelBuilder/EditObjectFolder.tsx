@@ -69,7 +69,10 @@ export default function EditObjectFolder({
 
 					await Promise.all(
 						folder.objectFolderItems
-							.filter((folderItem) => folderItem.linkedDefinition)
+							.filter(
+								(folderItem) =>
+									folderItem.linkedObjectDefinition
+							)
 							.map(async (folderItem) => {
 								const response = await API.getObjectDefinitionByExternalReferenceCode(
 									folderItem.objectDefinitionExternalReferenceCode
@@ -79,98 +82,70 @@ export default function EditObjectFolder({
 							})
 					);
 
-					folderDefinitionsResponse.forEach((folderDefinition) => {
-						const folderItem = folder.objectFolderItems.find(
-							(folderItem) =>
-								folderItem.objectDefinitionExternalReferenceCode ===
-								folderDefinition.externalReferenceCode
-						);
+					const updateFoldersLinkedDefinitions = ({
+						isLinked,
+						objectDefinitions,
+					}: {
+						isLinked: boolean;
+						objectDefinitions: ObjectDefinition[];
+					}) => {
+						objectDefinitions.forEach((objectDefinition) => {
+							const folderItem = folder.objectFolderItems.find(
+								(folderItem) =>
+									folderItem.objectDefinitionExternalReferenceCode ===
+									objectDefinition.externalReferenceCode
+							);
 
-						if (folderItem) {
-							folderDefinitions.push({
-								...folderDefinition,
-								hasObjectDefinitionDeleteResourcePermission: !!folderDefinition
-									.actions.delete,
-								hasObjectDefinitionManagePermissionsResourcePermission: !!folderDefinition
-									.actions.permissions,
-								hasObjectDefinitionUpdateResourcePermission: !!folderDefinition
-									.actions.update,
-								hasObjectDefinitionViewResourcePermission: !!folderDefinition
-									.actions.get,
-								hasSelfRelationships: false,
-								label: getLocalizableLabel(
-									folderDefinition.defaultLanguageId,
-									folderDefinition.label,
-									folderDefinition.name
-								),
-								linkedDefinition: false,
-								nodeSelected: false,
-								objectFields: folderDefinition.objectFields.map(
-									(field) =>
-										({
-											businessType: field.businessType,
-											externalReferenceCode:
-												field.externalReferenceCode,
-											label: getLocalizableLabel(
-												folderDefinition.defaultLanguageId,
-												field.label,
-												field.name
-											),
-											name: field.name,
-											primaryKey: field.name === 'id',
-											required: field.required,
-											selected: false,
-										} as ObjectFieldNode)
-								),
-							});
-						}
+							if (folderItem) {
+								folderDefinitions.push({
+									...objectDefinition,
+									hasObjectDefinitionDeleteResourcePermission: !!objectDefinition
+										.actions.delete,
+									hasObjectDefinitionManagePermissionsResourcePermission: !!objectDefinition
+										.actions.permissions,
+									hasObjectDefinitionUpdateResourcePermission: !!objectDefinition
+										.actions.update,
+									hasObjectDefinitionViewResourcePermission: !!objectDefinition
+										.actions.get,
+									hasSelfRelationships: false,
+									label: getLocalizableLabel(
+										objectDefinition.defaultLanguageId,
+										objectDefinition.label,
+										objectDefinition.name
+									),
+									linkedDefinition: isLinked,
+									nodeSelected: false,
+									objectFields: objectDefinition.objectFields.map(
+										(field) =>
+											({
+												businessType:
+													field.businessType,
+												externalReferenceCode:
+													field.externalReferenceCode,
+												label: getLocalizableLabel(
+													objectDefinition.defaultLanguageId,
+													field.label,
+													field.name
+												),
+												name: field.name,
+												primaryKey: field.name === 'id',
+												required: field.required,
+												selected: false,
+											} as ObjectFieldNode)
+									),
+								});
+							}
+						});
+					};
+
+					updateFoldersLinkedDefinitions({
+						isLinked: false,
+						objectDefinitions: folderDefinitionsResponse,
 					});
 
-					linkedObjectDefinitions.forEach((folderDefinition) => {
-						const folderItem = folder.objectFolderItems.find(
-							(folderItem) =>
-								folderItem.objectDefinitionExternalReferenceCode ===
-								folderDefinition.externalReferenceCode
-						);
-
-						if (folderItem) {
-							folderDefinitions.push({
-								...folderDefinition,
-								hasObjectDefinitionDeleteResourcePermission: !!folderDefinition
-									.actions.delete,
-								hasObjectDefinitionManagePermissionsResourcePermission: !!folderDefinition
-									.actions.permissions,
-								hasObjectDefinitionUpdateResourcePermission: !!folderDefinition
-									.actions.update,
-								hasObjectDefinitionViewResourcePermission: !!folderDefinition
-									.actions.get,
-								hasSelfRelationships: false,
-								label: getLocalizableLabel(
-									folderDefinition.defaultLanguageId,
-									folderDefinition.label,
-									folderDefinition.name
-								),
-								linkedDefinition: true,
-								nodeSelected: false,
-								objectFields: folderDefinition.objectFields.map(
-									(field) =>
-										({
-											businessType: field.businessType,
-											externalReferenceCode:
-												field.externalReferenceCode,
-											label: getLocalizableLabel(
-												folderDefinition.defaultLanguageId,
-												field.label,
-												field.name
-											),
-											name: field.name,
-											primaryKey: field.name === 'id',
-											required: field.required,
-											selected: false,
-										} as ObjectFieldNode)
-								),
-							});
-						}
+					updateFoldersLinkedDefinitions({
+						isLinked: true,
+						objectDefinitions: linkedObjectDefinitions,
 					});
 
 					return {

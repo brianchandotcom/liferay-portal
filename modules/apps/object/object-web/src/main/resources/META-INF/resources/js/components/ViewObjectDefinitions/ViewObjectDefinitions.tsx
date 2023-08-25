@@ -92,6 +92,7 @@ export default function ViewObjectDefinitions({
 		id: 0,
 		label: {en_US: ''},
 		name: '',
+		objectFolderItems: [],
 	};
 	const [showModal, setShowModal] = useState<ViewObjectDefinitionsModals>({
 		addFolder: false,

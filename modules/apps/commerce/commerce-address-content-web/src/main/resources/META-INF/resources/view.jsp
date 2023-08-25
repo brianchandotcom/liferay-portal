@@ -76,9 +76,13 @@ CommerceAddressDisplayContext commerceAddressDisplayContext = (CommerceAddressDi
 									value="<%= Validator.isNotNull(commerceAddress.getZip())? HtmlUtil.escape(commerceAddress.getZip()) : StringPool.BLANK %>"
 								/>
 
+								<%
+								Country country = commerceAddress.getCountry();
+								%>
+
 								<liferay-ui:search-container-column-text
 									name="country"
-									property="country.name"
+									value="<%= (country != null) ? HtmlUtil.escape(country.getName()) : StringPool.BLANK %>"
 								/>
 
 								<%

@@ -7,7 +7,7 @@ import {FDSCellRenderer} from '@liferay/js-api/data-set';
 
 export interface IClientExtensionRenderer {
 	erc?: string;
-	htmlBuilder?: FDSCellRenderer;
+	htmlElementBuilder?: FDSCellRenderer;
 	name?: string;
 	type: 'clientExtension';
 	url?: string;

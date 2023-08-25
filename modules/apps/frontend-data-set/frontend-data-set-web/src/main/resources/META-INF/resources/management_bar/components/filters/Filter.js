@@ -108,7 +108,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 								...filter,
 							}),
 					}}
-					htmlBuilder={Component}
+					htmlElementBuilder={Component}
 				/>
 			) : (
 				<Component setFilter={setFilter} {...otherProps} />

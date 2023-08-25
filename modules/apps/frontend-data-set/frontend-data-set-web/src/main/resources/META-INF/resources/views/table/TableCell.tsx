@@ -165,12 +165,15 @@ function TableCell({
 		);
 	}
 
-	if (cellRenderer.type === 'clientExtension' && cellRenderer.htmlBuilder) {
+	if (
+		cellRenderer.type === 'clientExtension' &&
+		cellRenderer.htmlElementBuilder
+	) {
 		return (
 			<DndTableCell columnName={String(field.fieldName)}>
 				<ClientExtension<FDSCellRendererArgs>
 					args={{value}}
-					htmlBuilder={cellRenderer.htmlBuilder}
+					htmlElementBuilder={cellRenderer.htmlElementBuilder}
 				/>
 			</DndTableCell>
 		);

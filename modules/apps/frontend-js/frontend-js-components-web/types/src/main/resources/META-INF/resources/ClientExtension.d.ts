@@ -6,10 +6,10 @@
 import React from 'react';
 interface IClientExtensionProps<T> {
 	args: T;
-	htmlBuilder: (args: T) => HTMLElement;
+	htmlElementBuilder: (args: T) => HTMLElement;
 }
 export default function ClientExtension<T>({
 	args,
-	htmlBuilder,
+	htmlElementBuilder,
 }: IClientExtensionProps<T>): React.ReactElement;
 export {};

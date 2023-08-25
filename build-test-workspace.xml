@@ -137,6 +137,7 @@
 		<attribute name="spring.boot.application.name" />
 		<attribute default="default" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
+		<attribute default="false" name="wait.for.ready" />
 
 		<text default="" name="application.properties" />
 
@@ -211,6 +212,34 @@
 						<isset property="spring.boot.startup.timeout" />
 						<then>
 							<fail message="Failed to startup '@{spring.boot.application.name}'" />
+						</then>
+					</if>
+
+					<if>
+						<equals arg1="@{wait.for.ready}" arg2="true" />
+						<then>
+							<beanshell>
+								<![CDATA[
+									import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+									String readyURL = "http://localhost:" + project.getProperty("server.port") + "/ready";
+
+									for (int i = 0; i < 30; i++) {
+										try {
+											String content = JenkinsResultsParserUtil.toString(readyURL, false);
+
+											if (content.contains("READY")) {
+												break;
+											}
+										}
+										catch (Exception exception) {
+											System.out.println("Waiting for READY to be available at " + url);
+
+											Thread.sleep(1000);
+										}
+									}
+								]]>
+							</beanshell>
 						</then>
 					</if>
 				</sequential>

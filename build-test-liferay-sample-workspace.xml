@@ -25,6 +25,7 @@
 		<start-spring-boot-client-extension
 			spring.boot.application.name="SampleSpringBootApplication"
 			virtual.instance.id="${virtual.instance.id}"
+			wait.for.ready="true"
 			workspace.client.extension.name="liferay-sample-etc-spring-boot"
 		/>
 	</target>

@@ -9,6 +9,7 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -55,20 +56,40 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long fragmentCollectionId = ParamUtil.getLong(
+			resourceRequest, "fragmentCollectionId");
 
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(resourceRequest);
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			_importFragmentEntries(
-				uploadPortletRequest.getFile("file"),
-				ParamUtil.getLong(resourceRequest, "fragmentCollectionId"),
-				themeDisplay.getScopeGroupId(), themeDisplay.getLocale(),
+		File file = uploadPortletRequest.getFile("file");
+
+		boolean validFragmentEntries = true;
+
+		if (_featureFlagManager.isEnabled("LPS-174939")) {
+			validFragmentEntries = _fragmentsImporter.validateFragmentEntries(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				fragmentCollectionId, file);
+		}
+
+		if (validFragmentEntries) {
+			jsonObject = _importFragmentEntries(
+				file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLocale(),
 				ParamUtil.getBoolean(resourceRequest, "overwrite"),
-				themeDisplay.getUserId()));
+				themeDisplay.getUserId());
+		}
+		else {
+			jsonObject.put("valid", false);
+		}
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse, jsonObject);
 	}
 
 	private String _getKey(FragmentsImporterResultEntry.Status status) {
@@ -148,6 +169,9 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportMVCResourceCommand.class);
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;

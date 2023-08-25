@@ -1750,7 +1750,7 @@ public class DataFactory {
 
 		// Other fields
 
-		commerceOrderItemModel.setBookedQuantityId(0);
+		commerceOrderItemModel.setCommerceInventoryBookedQuantityId(0);
 		commerceOrderItemModel.setCommerceOrderId(
 			commerceOrderModel.getCommerceOrderId());
 		commerceOrderItemModel.setCommercePriceListId(commercePriceListId);
@@ -7098,6 +7098,9 @@ public class DataFactory {
 				}
 				else if (name.equals("CmExternalReferenceCode")) {
 					name = "ClassedModelExternalReferenceCode";
+				}
+				else if (name.equals("CIBookedQuantityId")) {
+					name = "CommerceInventoryBookedQuantityId";
 				}
 				else if (name.equals("CIWarehouseId")) {
 					name = "CommerceInventoryWarehouseId";

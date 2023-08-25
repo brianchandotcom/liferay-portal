@@ -116,14 +116,16 @@ export function NoPaginationOptions({
 						value={numberOfItems || ''}
 					/>
 
-					<p className="mt-1 small text-secondary">
-						{sub(
-							Liferay.Language.get(
-								'setting-a-value-above-x-can-affect-page-performance-severely'
-							),
-							config.searchContainerPageMaxDelta
-						)}
-					</p>
+					{warningMessage ? null : (
+						<p className="mt-1 small text-secondary">
+							{sub(
+								Liferay.Language.get(
+									'setting-a-value-above-x-can-affect-page-performance-severely'
+								),
+								config.searchContainerPageMaxDelta
+							)}
+						</p>
+					)}
 
 					{numberOfItemsError && (
 						<WarningMessage message={numberOfItemsError} />

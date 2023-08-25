@@ -1166,6 +1166,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		throws Exception {
 
 		try {
+			if ((layoutPageTemplateEntry != null) &&
+				Objects.equals(
+					LayoutsImportStrategy.DO_NOT_IMPORT,
+					layoutsImportStrategy)) {
+
+				return null;
+			}
+
 			boolean added = false;
 
 			if (layoutPageTemplateEntry == null) {

@@ -8,7 +8,7 @@ package com.liferay.jethr0.project.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.dalo.ProjectPrioritizerEntityDALO;
 import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntityFactory;
 
 import java.util.Objects;
@@ -23,9 +23,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectPrioritizerEntityRepository
-	extends BaseEntityRepository<ProjectPrioritizer> {
+	extends BaseEntityRepository<ProjectPrioritizerEntity> {
 
-	public ProjectPrioritizer add(String name) {
+	public ProjectPrioritizerEntity add(String name) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("name", name);
@@ -33,13 +33,13 @@ public class ProjectPrioritizerEntityRepository
 		return add(jsonObject);
 	}
 
-	public ProjectPrioritizer getByName(String name) {
-		for (ProjectPrioritizer projectPrioritizer : getAll()) {
-			if (!Objects.equals(projectPrioritizer.getName(), name)) {
+	public ProjectPrioritizerEntity getByName(String name) {
+		for (ProjectPrioritizerEntity projectPrioritizerEntity : getAll()) {
+			if (!Objects.equals(projectPrioritizerEntity.getName(), name)) {
 				continue;
 			}
 
-			return projectPrioritizer;
+			return projectPrioritizerEntity;
 		}
 
 		return null;
@@ -52,16 +52,16 @@ public class ProjectPrioritizerEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (ProjectPrioritizer projectPrioritizer : getAll()) {
+		for (ProjectPrioritizerEntity projectPrioritizerEntity : getAll()) {
 			for (long projectComparatorId :
 					_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
-						getChildEntityIds(projectPrioritizer)) {
+						getChildEntityIds(projectPrioritizerEntity)) {
 
 				if (projectComparatorId == 0) {
 					continue;
 				}
 
-				projectPrioritizer.addProjectComparator(
+				projectPrioritizerEntity.addProjectComparator(
 					_projectComparatorEntityRepository.getById(
 						projectComparatorId));
 			}

@@ -6,7 +6,7 @@
 package com.liferay.jethr0.project.comparator;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +20,9 @@ public interface ProjectComparator extends Entity {
 
 	public int getPosition();
 
-	public ProjectPrioritizer getProjectPrioritizer();
+	public ProjectPrioritizerEntity getProjectPrioritizerEntity();
 
-	public long getProjectPrioritizerId();
+	public long getProjectPrioritizerEntityId();
 
 	public Type getType();
 
@@ -30,7 +30,7 @@ public interface ProjectComparator extends Entity {
 
 	public void setPosition(int position);
 
-	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer);
+	public void setProjectPrioritizerEntity(ProjectPrioritizerEntity projectPrioritizerEntity);
 
 	public void setValue(String value);
 

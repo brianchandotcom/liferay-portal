@@ -6,7 +6,7 @@
 package com.liferay.jethr0.project.comparator;
 
 import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 
 import java.util.Date;
 
@@ -22,9 +22,9 @@ public class StartDateProjectComparator extends BaseProjectComparator {
 	}
 
 	public StartDateProjectComparator(
-		ProjectPrioritizer projectPrioritizer, JSONObject jsonObject) {
+			ProjectPrioritizerEntity projectPrioritizerEntity, JSONObject jsonObject) {
 
-		super(projectPrioritizer, jsonObject);
+		super(projectPrioritizerEntity, jsonObject);
 	}
 
 	@Override

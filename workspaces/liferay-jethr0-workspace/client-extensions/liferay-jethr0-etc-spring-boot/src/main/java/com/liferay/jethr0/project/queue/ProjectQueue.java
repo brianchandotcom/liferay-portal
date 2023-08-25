@@ -14,7 +14,7 @@ import com.liferay.jethr0.gitbranch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.BaseProjectComparator;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
-import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
+import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 import com.liferay.jethr0.project.repository.ProjectComparatorEntityRepository;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 import com.liferay.jethr0.project.repository.ProjectPrioritizerEntityRepository;
@@ -76,8 +76,8 @@ public class ProjectQueue {
 		}
 	}
 
-	public ProjectPrioritizer getProjectPrioritizer() {
-		return _projectPrioritizer;
+	public ProjectPrioritizerEntity getProjectPrioritizerEntity() {
+		return _projectPrioritizerEntity;
 	}
 
 	public List<Project> getProjects() {
@@ -90,8 +90,9 @@ public class ProjectQueue {
 		_projectComparatorEntityRepository.initialize();
 		_projectPrioritizerEntityRepository.initialize();
 
-		_projectComparatorEntityRepository.setProjectPrioritizerRepository(
-			_projectPrioritizerEntityRepository);
+		_projectComparatorEntityRepository.
+			setProjectPrioritizerEntityRepository(
+				_projectPrioritizerEntityRepository);
 
 		_projectPrioritizerEntityRepository.setProjectComparatorRepository(
 			_projectComparatorEntityRepository);
@@ -121,7 +122,7 @@ public class ProjectQueue {
 		_buildRunEntityRepository.initializeRelationships();
 		_projectEntityRepository.initializeRelationships();
 
-		setProjectPrioritizer(_getDefaultProjectPrioritizer());
+		setProjectPrioritizerEntity(_getDefaultProjectPrioritizerEntity());
 
 		addProjects(_projectEntityRepository.getAll());
 
@@ -151,14 +152,16 @@ public class ProjectQueue {
 		update();
 	}
 
-	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
-		_projectPrioritizer = projectPrioritizer;
+	public void setProjectPrioritizerEntity(
+		ProjectPrioritizerEntity projectPrioritizerEntity) {
+
+		_projectPrioritizerEntity = projectPrioritizerEntity;
 
 		sort();
 	}
 
 	public void sort() {
-		if (_projectPrioritizer == null) {
+		if (_projectPrioritizerEntity == null) {
 			return;
 		}
 
@@ -184,7 +187,7 @@ public class ProjectQueue {
 			_sortedProjectComparators.clear();
 
 			_sortedProjectComparators.addAll(
-				_projectPrioritizer.getProjectComparators());
+				_projectPrioritizerEntity.getProjectComparators());
 
 			Collections.sort(
 				_sortedProjectComparators,
@@ -247,28 +250,28 @@ public class ProjectQueue {
 		}
 	}
 
-	private ProjectPrioritizer _getDefaultProjectPrioritizer() {
-		ProjectPrioritizer projectPrioritizer =
+	private ProjectPrioritizerEntity _getDefaultProjectPrioritizerEntity() {
+		ProjectPrioritizerEntity projectPrioritizerEntity =
 			_projectPrioritizerEntityRepository.getByName(
 				_liferayProjectPrioritizer);
 
-		if (projectPrioritizer != null) {
-			return projectPrioritizer;
+		if (projectPrioritizerEntity != null) {
+			return projectPrioritizerEntity;
 		}
 
-		projectPrioritizer = _projectPrioritizerEntityRepository.add(
+		projectPrioritizerEntity = _projectPrioritizerEntityRepository.add(
 			_liferayProjectPrioritizer);
 
 		_projectComparatorEntityRepository.add(
-			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_START_DATE,
-			null);
+			projectPrioritizerEntity, 1,
+			ProjectComparator.Type.PROJECT_START_DATE, null);
 		_projectComparatorEntityRepository.add(
-			projectPrioritizer, 2, ProjectComparator.Type.PROJECT_PRIORITY,
-			null);
+			projectPrioritizerEntity, 2,
+			ProjectComparator.Type.PROJECT_PRIORITY, null);
 		_projectComparatorEntityRepository.add(
-			projectPrioritizer, 3, ProjectComparator.Type.FIFO, null);
+			projectPrioritizerEntity, 3, ProjectComparator.Type.FIFO, null);
 
-		return projectPrioritizer;
+		return projectPrioritizerEntity;
 	}
 
 	private static final Log _log = LogFactory.getLog(ProjectQueue.class);
@@ -295,7 +298,7 @@ public class ProjectQueue {
 	@Autowired
 	private ProjectEntityRepository _projectEntityRepository;
 
-	private ProjectPrioritizer _projectPrioritizer;
+	private ProjectPrioritizerEntity _projectPrioritizerEntity;
 
 	@Autowired
 	private ProjectPrioritizerEntityRepository

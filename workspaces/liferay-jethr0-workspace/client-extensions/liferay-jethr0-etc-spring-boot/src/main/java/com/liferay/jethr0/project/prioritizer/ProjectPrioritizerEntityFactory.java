@@ -16,14 +16,14 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectPrioritizerEntityFactory
-	extends BaseEntityFactory<ProjectPrioritizer> {
+	extends BaseEntityFactory<ProjectPrioritizerEntity> {
 
-	public ProjectPrioritizer newEntity(JSONObject jsonObject) {
-		return new DefaultProjectPrioritizer(jsonObject);
+	public ProjectPrioritizerEntity newEntity(JSONObject jsonObject) {
+		return new DefaultProjectPrioritizerEntity(jsonObject);
 	}
 
 	protected ProjectPrioritizerEntityFactory() {
-		super(ProjectPrioritizer.class);
+		super(ProjectPrioritizerEntity.class);
 	}
 
 }

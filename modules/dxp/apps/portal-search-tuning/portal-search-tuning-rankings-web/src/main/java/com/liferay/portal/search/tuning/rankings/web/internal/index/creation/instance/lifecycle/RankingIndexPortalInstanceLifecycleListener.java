@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.SingleIndexToMultipleIndexImporter;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
@@ -29,6 +30,12 @@ public class RankingIndexPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (!_searchCapabilities.isResultRankingsSupported()) {
+			return;
+		}
+
+		if (_singleIndexToMultipleIndexImporter.needImport()) {
+			_singleIndexToMultipleIndexImporter.importRankings();
+
 			return;
 		}
 
@@ -71,5 +78,9 @@ public class RankingIndexPortalInstanceLifecycleListener
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SingleIndexToMultipleIndexImporter
+		_singleIndexToMultipleIndexImporter;
 
 }

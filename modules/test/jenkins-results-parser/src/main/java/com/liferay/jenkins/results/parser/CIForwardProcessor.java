@@ -115,6 +115,12 @@ public class CIForwardProcessor {
 
 						return pullRequestURL;
 					}
+					catch (GitHubSecondaryRateLimitIOException
+								gitHubSecondaryRateLimitIOException) {
+
+						throw new GitHubSecondaryRateLimitRuntimeException(
+							gitHubSecondaryRateLimitIOException);
+					}
 					catch (Exception exception) {
 						throw new RuntimeException(exception);
 					}
@@ -133,6 +139,21 @@ public class CIForwardProcessor {
 
 			try {
 				forwardedPullRequestURL = retryable.executeWithRetries();
+			}
+			catch (GitHubSecondaryRateLimitRuntimeException
+						gitHubSecondaryRateLimitRuntimeException) {
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Unable to forward pull request.\n");
+				sb.append("pull request: ");
+				sb.append(_pullRequest.getURL());
+				sb.append("\n console log: ");
+				sb.append(_consoleLogURL);
+
+				NotificationUtil.sendSlackNotification(
+					sb.toString(), "#ci-notifications", ":liferay-ci:",
+					"Secondary Rate Limit exceeded", "Liferay CI");
 			}
 			catch (Exception exception) {
 				exception.printStackTrace();

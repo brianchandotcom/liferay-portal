@@ -4640,14 +4640,14 @@ public class JenkinsResultsParserUtil {
 
 				String exceptionMessage = ioException.getMessage();
 
-				Long retryPeriodOverride = null;
+				Integer retryPeriodOverride = null;
 
 				if (exceptionMessage.matches(
 						".*HTTP response code\\: 403 .*") &&
 					(urlConnection != null)) {
 
 					try {
-						retryPeriodOverride = Long.parseLong(
+						retryPeriodOverride = Integer.parseInt(
 							urlConnection.getHeaderField("retry-after"));
 					}
 					catch (NumberFormatException numberFormatException) {
@@ -4676,7 +4676,7 @@ public class JenkinsResultsParserUtil {
 					if ((retryPeriodOverride == null) ||
 						(retryPeriodOverride == 0)) {
 
-						retryPeriodOverride = (long)retryPeriod;
+						retryPeriodOverride = retryPeriod;
 
 						for (int i = 0; i < retryCount; i++) {
 							retryPeriodOverride *= retryPeriodOverride;

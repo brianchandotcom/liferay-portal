@@ -25,13 +25,57 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.Locale;
-import java.util.TimeZone;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class CompanyThreadLocal {
+
+	public static User fetchGuestUser() {
+		Long companyId = _companyId.get();
+
+		User guestUser = null;
+
+		try {
+			guestUser = UserLocalServiceUtil.fetchGuestUser(companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		if (guestUser != null) {
+			return guestUser;
+		}
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select userId, languageId, timeZoneId from User_ where " +
+					"companyId = ? and type_ = ?")) {
+
+			preparedStatement.setLong(1, companyId);
+			preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return null;
+				}
+
+				guestUser = UserLocalServiceUtil.createUser(
+					resultSet.getLong("userId"));
+
+				guestUser.setLanguageId(resultSet.getString("languageId"));
+				guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return guestUser;
+	}
 
 	public static Long getCompanyId() {
 		Long companyId = _companyId.get();
@@ -114,8 +158,6 @@ public class CompanyThreadLocal {
 		Long companyId, Long ctCollectionId) {
 
 		long currentCompanyId = _companyId.get();
-		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
-		TimeZone defaultTimeZone = TimeZoneThreadLocal.getDefaultTimeZone();
 
 		boolean changed = _setCompanyId(companyId);
 
@@ -129,51 +171,16 @@ public class CompanyThreadLocal {
 			}
 
 			_companyId.set(currentCompanyId);
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
-			TimeZoneThreadLocal.setDefaultTimeZone(defaultTimeZone);
+
+			_clearUserThreadLocals();
 
 			ctCollectionSafeCloseable.close();
 		};
 	}
 
-	private static User _fetchGuestUser(long companyId) throws Exception {
-		User guestUser = null;
-
-		try {
-			guestUser = UserLocalServiceUtil.fetchGuestUser(companyId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		if (guestUser != null) {
-			return guestUser;
-		}
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select userId, languageId, timeZoneId from User_ where " +
-					"companyId = ? and type_ = ?")) {
-
-			preparedStatement.setLong(1, companyId);
-			preparedStatement.setInt(2, UserConstants.TYPE_GUEST);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					return null;
-				}
-
-				guestUser = UserLocalServiceUtil.createUser(
-					resultSet.getLong("userId"));
-
-				guestUser.setLanguageId(resultSet.getString("languageId"));
-				guestUser.setTimeZoneId(resultSet.getString("timeZoneId"));
-			}
-		}
-
-		return guestUser;
+	private static void _clearUserThreadLocals() {
+		LocaleThreadLocal.removeDefaultLocale();
+		TimeZoneThreadLocal.removeDefaultTimeZone();
 	}
 
 	private static boolean _setCompanyId(Long companyId) {
@@ -185,7 +192,7 @@ public class CompanyThreadLocal {
 			if ((LocaleThreadLocal.getDefaultLocale() == null) ||
 				(TimeZoneThreadLocal.getDefaultTimeZone() == null)) {
 
-				_setUserThreadLocals(companyId);
+				_clearUserThreadLocals();
 			}
 
 			return false;
@@ -205,42 +212,15 @@ public class CompanyThreadLocal {
 		if (companyId > 0) {
 			_companyId.set(companyId);
 
-			_setUserThreadLocals(companyId);
+			_clearUserThreadLocals();
 		}
 		else {
 			_companyId.set(CompanyConstants.SYSTEM);
 
-			_setUserThreadLocals(null);
+			_clearUserThreadLocals();
 		}
 
 		return true;
-	}
-
-	private static void _setUserThreadLocals(Long companyId) {
-		if (companyId == null) {
-			LocaleThreadLocal.setDefaultLocale(null);
-			TimeZoneThreadLocal.setDefaultTimeZone(null);
-
-			return;
-		}
-
-		try {
-			User guestUser = _fetchGuestUser(companyId);
-
-			if (guestUser == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"No guest user was found for company " + companyId);
-				}
-			}
-			else {
-				LocaleThreadLocal.setDefaultLocale(guestUser.getLocale());
-				TimeZoneThreadLocal.setDefaultTimeZone(guestUser.getTimeZone());
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 	}
 
 	private static void _syncLastDBPartitionSessionState() {

@@ -759,11 +759,25 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Grab the timestamp value for the 'Test Test' user document from the index before a Sync reindex is executed") {
+		task ("Create a stale document in the default company index") {
 			var companyId = JSONCompany.getCompanyId();
 			var port = Elasticsearch.getServerPort();
 			var portalHostname = PropsUtil.get("portal.hostname");
 
+			var curl = '''
+				http://${portalHostname}:${port}/liferay-${companyId}/_doc \
+					-H 'Content-Type: application/json' \
+					-d '{
+						"companyId" : "${companyId}",
+						"userName" : "alpha bravo",
+						"entryClassName" : "com.liferay.portal.kernel.model.User"
+					}'
+			''';
+
+			com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+		}
+
+		task ("Grab the timestamp value for the 'Test Test' user document from the index before a Sync reindex is executed") {
 			var curl = '''
 				http://${portalHostname}:${port}/liferay-${companyId}/_search?pretty \
 					-H 'Content-Type: application/json' \
@@ -838,14 +852,36 @@ definition {
 			}
 		}
 
-		task ("Assert the stale document of the 'Test Test' user has been deleted from the index by confirming the index only has one copy") {
-			var userDocumentsCount = JSONCurlUtil.get(${curl}, "$.hits.total.value");
+		task ("Assert the stale document created earlier has been deleted from the index") {
+			var curl = '''
+				http://${portalHostname}:${port}/liferay-${companyId}/_search?pretty \
+					-H 'Content-Type: application/json' \
+					-d '{
+						"query":
+						{
+							"bool":
+							{
+								"must":
+								[
+									{
+										"match":
+										{
+											"userName": "alpha bravo"
+										}
+									}
+								]
+							}
+						}
+					}'
+			''';
 
-			if (${userDocumentsCount} == 1) {
-				echo("The stale document of the 'Test Test' user has been deleted from the index");
+			var staleDocumentHitCount = JSONCurlUtil.get(${curl}, "$.hits.total.value");
+
+			if (${staleDocumentHitCount} == 0) {
+				echo("The stale document has been deleted from the index");
 			}
 			else {
-				fail("The stale document of the 'Test Test' user was not deleted from the index");
+				fail("The stale document was not deleted from the index");
 			}
 		}
 	}

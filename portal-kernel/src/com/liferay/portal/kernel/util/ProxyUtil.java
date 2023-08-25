@@ -100,7 +100,13 @@ public class ProxyUtil {
 			}
 		}
 
-		_constructorReferences.putIfAbsent(clazz, new ConstructorReference());
+		ConstructorReference constructorReference = _constructorReferences.get(
+			clazz);
+
+		if (constructorReference == null) {
+			_constructorReferences.putIfAbsent(
+				clazz, new ConstructorReference());
+		}
 
 		return clazz;
 	}

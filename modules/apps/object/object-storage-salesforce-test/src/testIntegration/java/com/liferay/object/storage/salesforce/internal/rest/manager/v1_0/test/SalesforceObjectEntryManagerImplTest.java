@@ -8,7 +8,6 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -143,8 +142,10 @@ public class SalesforceObjectEntryManagerImplTest
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+		ObjectFieldUtil.addCustomObjectField(
 			new PicklistObjectFieldBuilder(
+			).externalReferenceCode(
+				"Status__c"
 			).userId(
 				adminUser.getUserId()
 			).labelMap(
@@ -157,16 +158,10 @@ public class SalesforceObjectEntryManagerImplTest
 				_objectDefinition.getObjectDefinitionId()
 			).build());
 
-		objectFieldLocalService.updateCustomObjectField(
-			"Status__c", objectField.getObjectFieldId(),
-			objectField.getListTypeDefinitionId(),
-			objectField.getBusinessType(), objectField.getDBType(), false,
-			false, null, objectField.getLabelMap(), false,
-			objectField.getName(), ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false, objectField.getObjectFieldSettings());
-
-		objectField = ObjectFieldUtil.addCustomObjectField(
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
+			).externalReferenceCode(
+				"Title__c"
 			).userId(
 				adminUser.getUserId()
 			).labelMap(
@@ -176,13 +171,6 @@ public class SalesforceObjectEntryManagerImplTest
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
-
-		objectFieldLocalService.updateCustomObjectField(
-			"Title__c", objectField.getObjectFieldId(), 0,
-			objectField.getBusinessType(), objectField.getDBType(), false,
-			false, null, objectField.getLabelMap(), false,
-			objectField.getName(), ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false, objectField.getObjectFieldSettings());
 
 		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 

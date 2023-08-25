@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesEntityRelationshipDALO;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -28,26 +28,26 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JenkinsServerEntityRepository
-	extends BaseEntityRepository<JenkinsServer> {
+	extends BaseEntityRepository<JenkinsServerEntity> {
 
-	public JenkinsServer add(
+	public JenkinsServerEntity add(
 		JenkinsCohort jenkinsCohort, JSONObject jsonObject) {
 
 		jsonObject.put(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId",
 			jenkinsCohort.getId());
 
-		JenkinsServer jenkinsServer = add(jsonObject);
+		JenkinsServerEntity jenkinsServerEntity = add(jsonObject);
 
-		jenkinsServer.setJenkinsCohort(jenkinsCohort);
+		jenkinsServerEntity.setJenkinsCohort(jenkinsCohort);
 
-		jenkinsCohort.addJenkinsServer(jenkinsServer);
+		jenkinsCohort.addJenkinsServerEntity(jenkinsServerEntity);
 
-		return jenkinsServer;
+		return jenkinsServerEntity;
 	}
 
 	@Override
-	public JenkinsServer add(JSONObject jsonObject) {
+	public JenkinsServerEntity add(JSONObject jsonObject) {
 		URL url = StringUtil.toURL(jsonObject.getString("url"));
 
 		Matcher jenkinsURLMatcher = _jenkinsURLPattern.matcher(
@@ -66,7 +66,7 @@ public class JenkinsServerEntityRepository
 		return super.add(jsonObject);
 	}
 
-	public JenkinsServer add(
+	public JenkinsServerEntity add(
 		String jenkinsUserName, String jenkinsUserPassword, String name,
 		URL url) {
 
@@ -85,7 +85,7 @@ public class JenkinsServerEntityRepository
 		return add(jsonObject);
 	}
 
-	public JenkinsServer add(URL url) {
+	public JenkinsServerEntity add(URL url) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
@@ -99,13 +99,13 @@ public class JenkinsServerEntityRepository
 		return add(jsonObject);
 	}
 
-	public JenkinsServer getByURL(URL url) {
-		for (JenkinsServer jenkinsServer : getAll()) {
-			if (!StringUtil.equals(jenkinsServer.getURL(), url)) {
+	public JenkinsServerEntity getByURL(URL url) {
+		for (JenkinsServerEntity jenkinsServerEntity : getAll()) {
+			if (!StringUtil.equals(jenkinsServerEntity.getURL(), url)) {
 				continue;
 			}
 
-			return jenkinsServer;
+			return jenkinsServerEntity;
 		}
 
 		return null;
@@ -118,27 +118,27 @@ public class JenkinsServerEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (JenkinsServer jenkinsServer : getAll()) {
+		for (JenkinsServerEntity jenkinsServerEntity : getAll()) {
 			JenkinsCohort jenkinsCohort = null;
 
-			long jenkinsCohortId = jenkinsServer.getJenkinsCohortId();
+			long jenkinsCohortId = jenkinsServerEntity.getJenkinsCohortId();
 
 			if (jenkinsCohortId != 0) {
 				jenkinsCohort = _jenkinsCohortEntityRepository.getById(
 					jenkinsCohortId);
 			}
 
-			jenkinsServer.setJenkinsCohort(jenkinsCohort);
+			jenkinsServerEntity.setJenkinsCohort(jenkinsCohort);
 
 			for (long jenkinsNodeId :
 					_jenkinsServerToJenkinsNodesEntityRelationshipDALO.
-						getChildEntityIds(jenkinsServer)) {
+						getChildEntityIds(jenkinsServerEntity)) {
 
 				if (jenkinsNodeId == 0) {
 					continue;
 				}
 
-				jenkinsServer.addJenkinsNodeEntity(
+				jenkinsServerEntity.addJenkinsNodeEntity(
 					_jenkinsNodeEntityRepository.getById(jenkinsNodeId));
 			}
 		}

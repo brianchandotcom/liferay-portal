@@ -27,8 +27,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseJenkinsServer
-	extends BaseEntity implements JenkinsServer {
+public abstract class BaseJenkinsServerEntity
+	extends BaseEntity implements JenkinsServerEntity {
 
 	@Override
 	public void addJenkinsNodeEnitities(
@@ -185,7 +185,7 @@ public abstract class BaseJenkinsServer
 		}
 	}
 
-	protected BaseJenkinsServer(JSONObject jsonObject) {
+	protected BaseJenkinsServerEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_jenkinsCohortId = jsonObject.optLong(

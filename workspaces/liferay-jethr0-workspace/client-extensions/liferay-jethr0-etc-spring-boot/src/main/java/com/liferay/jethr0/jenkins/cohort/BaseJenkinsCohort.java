@@ -6,7 +6,7 @@
 package com.liferay.jethr0.jenkins.cohort;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.project.Project;
 
 import java.util.Set;
@@ -20,13 +20,17 @@ public abstract class BaseJenkinsCohort
 	extends BaseEntity implements JenkinsCohort {
 
 	@Override
-	public void addJenkinsServer(JenkinsServer jenkinsServer) {
-		addRelatedEntity(jenkinsServer);
+	public void addJenkinsServerEntities(
+		Set<JenkinsServerEntity> jenkinsServerEntities) {
+
+		addRelatedEntities(jenkinsServerEntities);
 	}
 
 	@Override
-	public void addJenkinsServers(Set<JenkinsServer> jenkinsServers) {
-		addRelatedEntities(jenkinsServers);
+	public void addJenkinsServerEntity(
+		JenkinsServerEntity jenkinsServerEntity) {
+
+		addRelatedEntity(jenkinsServerEntity);
 	}
 
 	@Override
@@ -42,8 +46,8 @@ public abstract class BaseJenkinsCohort
 	}
 
 	@Override
-	public Set<JenkinsServer> getJenkinsServers() {
-		return getRelatedEntities(JenkinsServer.class);
+	public Set<JenkinsServerEntity> getJenkinsServerEntities() {
+		return getRelatedEntities(JenkinsServerEntity.class);
 	}
 
 	@Override
@@ -66,13 +70,17 @@ public abstract class BaseJenkinsCohort
 	}
 
 	@Override
-	public void removeJenkinsServer(JenkinsServer jenkinsServer) {
-		removeRelatedEntity(jenkinsServer);
+	public void removeJenkinsServerEntities(
+		Set<JenkinsServerEntity> jenkinsServerEntities) {
+
+		removeRelatedEntities(jenkinsServerEntities);
 	}
 
 	@Override
-	public void removeJenkinsServers(Set<JenkinsServer> jenkinsServers) {
-		removeRelatedEntities(jenkinsServers);
+	public void removeJenkinsServerEntity(
+		JenkinsServerEntity jenkinsServerEntity) {
+
+		removeRelatedEntity(jenkinsServerEntity);
 	}
 
 	@Override

@@ -65,13 +65,13 @@ public class JenkinsCohortEntityRepository
 					continue;
 				}
 
-				jenkinsCohort.addJenkinsServer(
+				jenkinsCohort.addJenkinsServerEntity(
 					_jenkinsServerEntityRepository.getById(jenkinsServerId));
 			}
 		}
 	}
 
-	public void setJenkinsServerRepository(
+	public void setJenkinsServerEntityRepository(
 		JenkinsServerEntityRepository jenkinsServerEntityRepository) {
 
 		_jenkinsServerEntityRepository = jenkinsServerEntityRepository;

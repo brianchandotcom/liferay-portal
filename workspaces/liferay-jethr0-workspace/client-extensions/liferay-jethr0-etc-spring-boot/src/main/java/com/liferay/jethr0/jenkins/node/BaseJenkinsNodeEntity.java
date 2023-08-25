@@ -8,7 +8,7 @@ package com.liferay.jethr0.jenkins.node;
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -36,22 +36,22 @@ public class BaseJenkinsNodeEntity
 
 	@Override
 	public JenkinsCohort getJenkinsCohort() {
-		JenkinsServer jenkinsServer = getJenkinsServer();
+		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
-		if (jenkinsServer == null) {
+		if (jenkinsServerEntity == null) {
 			return null;
 		}
 
-		return jenkinsServer.getJenkinsCohort();
+		return jenkinsServerEntity.getJenkinsCohort();
 	}
 
 	@Override
-	public JenkinsServer getJenkinsServer() {
-		return _jenkinsServer;
+	public JenkinsServerEntity getJenkinsServerEntity() {
+		return _jenkinsServerEntity;
 	}
 
 	@Override
-	public long getJenkinsServerId() {
+	public long getJenkinsServerEntityId() {
 		return _jenkinsServerId;
 	}
 
@@ -71,7 +71,7 @@ public class BaseJenkinsNodeEntity
 			"primaryLabel", getPrimaryLabel()
 		).put(
 			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
-			getJenkinsServerId()
+			getJenkinsServerEntityId()
 		);
 
 		Type type = getType();
@@ -152,11 +152,13 @@ public class BaseJenkinsNodeEntity
 	}
 
 	@Override
-	public void setJenkinsServer(JenkinsServer jenkinsServer) {
-		_jenkinsServer = jenkinsServer;
+	public void setJenkinsServerEntity(
+		JenkinsServerEntity jenkinsServerEntity) {
 
-		if (jenkinsServer != null) {
-			_jenkinsServerId = jenkinsServer.getId();
+		_jenkinsServerEntity = jenkinsServerEntity;
+
+		if (jenkinsServerEntity != null) {
+			_jenkinsServerId = jenkinsServerEntity.getId();
 		}
 		else {
 			_jenkinsServerId = 0;
@@ -214,11 +216,11 @@ public class BaseJenkinsNodeEntity
 	}
 
 	private JSONObject _getComputerJSONObject() {
-		JenkinsServer jenkinsServer = getJenkinsServer();
+		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
 		String basicAuthorization = StringUtil.combine(
-			jenkinsServer.getJenkinsUserName(), ":",
-			jenkinsServer.getJenkinsUserPassword());
+			jenkinsServerEntity.getJenkinsUserName(), ":",
+			jenkinsServerEntity.getJenkinsUserPassword());
 
 		String response = WebClient.create(
 			StringUtil.combine(getURL(), "/api/json")
@@ -286,7 +288,7 @@ public class BaseJenkinsNodeEntity
 
 	private boolean _goodBattery;
 	private boolean _idle;
-	private JenkinsServer _jenkinsServer;
+	private JenkinsServerEntity _jenkinsServerEntity;
 	private long _jenkinsServerId;
 	private String _name;
 	private int _nodeCount;

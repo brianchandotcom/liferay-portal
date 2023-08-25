@@ -7,7 +7,7 @@ package com.liferay.jethr0.jms;
 
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.apache.commons.logging.Log;
@@ -72,9 +72,9 @@ public class JMSEventHandler {
 		}
 	}
 
-	public void send(JenkinsServer jenkinsServer, String message) {
+	public void send(JenkinsServerEntity jenkinsServerEntity, String message) {
 		String queueName = StringUtil.combine(
-			"jenkins-builds[", jenkinsServer.getName(), "]");
+			"jenkins-builds[", jenkinsServerEntity.getName(), "]");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

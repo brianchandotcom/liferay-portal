@@ -9,7 +9,7 @@ import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +36,7 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 			!jenkinsServersJSONArray.isEmpty()) {
 
 			JenkinsServerEntityRepository jenkinsServerEntityRepository =
-				getJenkinsServerRepository();
+				getJenkinsServerEntityRepository();
 			JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
 				getJenkinsNodeEntityRepository();
 
@@ -44,10 +44,11 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 				JSONObject jenkinsServerJSONObject =
 					jenkinsServersJSONArray.getJSONObject(i);
 
-				JenkinsServer jenkinsServer = jenkinsServerEntityRepository.add(
-					jenkinsCohort, jenkinsServerJSONObject);
+				JenkinsServerEntity jenkinsServerEntity =
+					jenkinsServerEntityRepository.add(
+						jenkinsCohort, jenkinsServerJSONObject);
 
-				jenkinsNodeEntityRepository.addAll(jenkinsServer);
+				jenkinsNodeEntityRepository.addAll(jenkinsServerEntity);
 			}
 		}
 

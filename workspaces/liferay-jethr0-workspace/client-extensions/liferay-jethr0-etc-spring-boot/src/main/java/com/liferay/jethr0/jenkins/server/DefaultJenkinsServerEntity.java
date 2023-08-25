@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultJenkinsServer extends BaseJenkinsServer {
+public class DefaultJenkinsServerEntity extends BaseJenkinsServerEntity {
 
-	protected DefaultJenkinsServer(JSONObject jsonObject) {
+	protected DefaultJenkinsServerEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.run.BuildRun;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -137,7 +137,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	}
 
 	protected JenkinsNodeEntity getJenkinsNodeEntity() throws Exception {
-		JenkinsServer jenkinsServer = getJenkinsServer();
+		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
 		JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
 			getJenkinsNodeEntityRepository();
@@ -150,7 +150,8 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 				jenkinsNodeEntityRepository.getAll()) {
 
 			if (!Objects.equals(
-					jenkinsServer, jenkinsNodeEntity.getJenkinsServer())) {
+					jenkinsServerEntity,
+					jenkinsNodeEntity.getJenkinsServerEntity())) {
 
 				continue;
 			}
@@ -163,9 +164,9 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return null;
 	}
 
-	protected JenkinsServer getJenkinsServer() throws Exception {
+	protected JenkinsServerEntity getJenkinsServerEntity() throws Exception {
 		JenkinsServerEntityRepository jenkinsServerEntityRepository =
-			getJenkinsServerRepository();
+			getJenkinsServerEntityRepository();
 
 		return jenkinsServerEntityRepository.getByURL(getJenkinsURL());
 	}

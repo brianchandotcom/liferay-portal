@@ -16,15 +16,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JenkinsServerEntityFactory
-	extends BaseEntityFactory<JenkinsServer> {
+	extends BaseEntityFactory<JenkinsServerEntity> {
 
 	@Override
-	public JenkinsServer newEntity(JSONObject jsonObject) {
-		return new DefaultJenkinsServer(jsonObject);
+	public JenkinsServerEntity newEntity(JSONObject jsonObject) {
+		return new DefaultJenkinsServerEntity(jsonObject);
 	}
 
 	protected JenkinsServerEntityFactory() {
-		super(JenkinsServer.class);
+		super(JenkinsServerEntity.class);
 	}
 
 }

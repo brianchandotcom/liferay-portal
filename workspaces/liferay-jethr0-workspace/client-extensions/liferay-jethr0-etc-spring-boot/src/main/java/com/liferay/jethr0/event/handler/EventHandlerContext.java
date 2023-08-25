@@ -53,7 +53,7 @@ public class EventHandlerContext {
 		return _jenkinsQueue;
 	}
 
-	public JenkinsServerEntityRepository getJenkinsServerRepository() {
+	public JenkinsServerEntityRepository getJenkinsServerEntityRepository() {
 		return _jenkinsServerEntityRepository;
 	}
 

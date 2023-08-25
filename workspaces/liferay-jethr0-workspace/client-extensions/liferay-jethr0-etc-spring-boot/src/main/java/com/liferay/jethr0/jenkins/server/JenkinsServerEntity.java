@@ -18,7 +18,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface JenkinsServer extends Entity {
+public interface JenkinsServerEntity extends Entity {
 
 	public void addJenkinsNodeEnitities(
 		Set<JenkinsNodeEntity> jenkinsNodeEntities);

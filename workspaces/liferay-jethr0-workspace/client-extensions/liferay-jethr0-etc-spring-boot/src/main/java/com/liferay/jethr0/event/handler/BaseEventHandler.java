@@ -58,8 +58,8 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getJenkinsQueue();
 	}
 
-	protected JenkinsServerEntityRepository getJenkinsServerRepository() {
-		return _eventHandlerContext.getJenkinsServerRepository();
+	protected JenkinsServerEntityRepository getJenkinsServerEntityRepository() {
+		return _eventHandlerContext.getJenkinsServerEntityRepository();
 	}
 
 	protected JMSEventHandler getJMSEventHandler() {

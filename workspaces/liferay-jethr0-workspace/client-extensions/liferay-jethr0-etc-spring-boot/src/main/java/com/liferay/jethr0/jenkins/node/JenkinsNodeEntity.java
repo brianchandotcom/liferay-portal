@@ -8,7 +8,7 @@ package com.liferay.jethr0.jenkins.node;
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 
 import java.net.URL;
 
@@ -26,9 +26,9 @@ public interface JenkinsNodeEntity extends Entity {
 
 	public JenkinsCohort getJenkinsCohort();
 
-	public JenkinsServer getJenkinsServer();
+	public JenkinsServerEntity getJenkinsServerEntity();
 
-	public long getJenkinsServerId();
+	public long getJenkinsServerEntityId();
 
 	public String getName();
 
@@ -52,7 +52,7 @@ public interface JenkinsNodeEntity extends Entity {
 
 	public void setGoodBattery(boolean goodBattery);
 
-	public void setJenkinsServer(JenkinsServer jenkinsServer);
+	public void setJenkinsServerEntity(JenkinsServerEntity jenkinsServerEntity);
 
 	public void setName(String name);
 

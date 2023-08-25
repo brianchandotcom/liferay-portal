@@ -2085,6 +2085,24 @@ public class JenkinsResultsParserUtil {
 		return globs.toArray(new String[0]);
 	}
 
+	public static String getHeadersString(URLConnection urlConnection) {
+		Map<String, List<String>> headersMap = urlConnection.getHeaderFields();
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, List<String>> entry : headersMap.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(": ");
+
+			sb.append(join(", ", entry.getValue()));
+			sb.append("\n");
+		}
+
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
 	public static String getHostIPAddress() {
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();
@@ -4663,6 +4681,9 @@ public class JenkinsResultsParserUtil {
 					}
 
 					sb.append("\n");
+					sb.append("```");
+					sb.append(getHeadersString(urlConnection));
+					sb.append("```");
 
 					NotificationUtil.sendSlackNotification(
 						sb.toString(), "#ci-notifications", ":liferay-ci:",

@@ -1780,6 +1780,10 @@
 			<category name="Upgrade" />
 			<description name="Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler" />
 		</check>
+		<check name="UpgradeSCSSImportsCheck">
+			<category name="Upgrade" />
+			<description name="Replace compat/mixins by clay/cadmin-variables" />
+		</check>
 		<check name="UpgradeSetResultsSetTotalMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal" />

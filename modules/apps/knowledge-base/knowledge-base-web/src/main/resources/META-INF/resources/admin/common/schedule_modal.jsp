@@ -13,6 +13,8 @@
 		module="admin/js/components/ScheduleModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
 				"scheduledDate", ""
 			).build()
 		%>'

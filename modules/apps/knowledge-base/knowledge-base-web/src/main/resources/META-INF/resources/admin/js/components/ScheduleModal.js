@@ -10,15 +10,32 @@ import {isAfter} from 'date-fns';
 import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
-export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
+
+const SCHEDULE_EVENT_NAME = 'scheduleKBArticle';
+export default function ScheduleModal({
+	namespace,
+	scheduledDate: initialScheduleDate,
+}) {
 	const [scheduledDate, setScheduledDate] = useState(initialScheduleDate);
 	const [currentDate, setCurrentDate] = useState();
 	const [invalidDate, setInvalidDate] = useState(false);
 
-	const closeDialog = () => {
+	const closeModal = () => {
 		getOpener().Liferay.fire('closeModal', {
 			id: 'scheduleKBArticleDialog',
 		});
+	};
+
+	const handleScheduleButtonClick = () => {
+		const openerWindow = getOpener();
+
+		const scheduleDateInput = openerWindow.document.getElementById(
+			`${namespace}scheduleDate`
+		);
+		scheduleDateInput.value = scheduledDate;
+
+		getOpener().Liferay.fire(SCHEDULE_EVENT_NAME);
+		closeModal();
 	};
 
 	useEffect(() => {
@@ -82,7 +99,7 @@ export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={closeDialog}
+							onClick={closeModal}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
@@ -90,6 +107,7 @@ export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
 						<ClayButton
 							disabled={invalidDate || !scheduledDate}
 							displayType="primary"
+							onClick={handleScheduleButtonClick}
 						>
 							{Liferay.Language.get('schedule')}
 						</ClayButton>
@@ -101,5 +119,6 @@ export default function ScheduleModal({scheduledDate: initialScheduleDate}) {
 }
 
 ScheduleModal.propTypes = {
+	namespace: PropTypes.string.isRequired,
 	scheduledDate: PropTypes.string,
 };

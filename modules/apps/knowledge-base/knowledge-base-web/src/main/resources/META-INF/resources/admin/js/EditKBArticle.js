@@ -64,10 +64,30 @@ export default function EditKBArticle({
 		scheduleItem = document.getElementById(`${namespace}scheduleItem`);
 
 		scheduleItemOnClick = () => {
+			const modalEventHandlers = [];
+
 			openModal({
 				height: '60vh',
 				id: 'scheduleKBArticleDialog',
 				iframeBodyCssClass: '',
+				onClose: () => {
+					modalEventHandlers.forEach((eventHandler) => {
+						eventHandler.detach();
+					});
+
+					modalEventHandlers.splice(0, modalEventHandlers.length);
+				},
+				onOpen: () => {
+					const scheduleEventHandler = Liferay.on(
+						'scheduleKBArticle',
+						() => {
+							beforeSubmit();
+							submitForm(form);
+						}
+					);
+
+					modalEventHandlers.push(scheduleEventHandler);
+				},
 				size: 'md',
 				title: Liferay.Language.get('schedule-publication'),
 				url: scheduleModalURL,

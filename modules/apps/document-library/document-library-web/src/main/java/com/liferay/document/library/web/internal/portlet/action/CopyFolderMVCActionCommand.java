@@ -67,10 +67,34 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationGroup(Group group) throws PortalException {
+	private void _checkDestinationGroup(
+			Group group, long[] groupIds, long sourceGroupId)
+		throws PortalException {
+
 		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-folders-to-the-live-version-of-a-group");
+		}
+
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		if (group.isDepot() ^ sourceGroup.isDepot()) {
+			long[] connectedGroupIds = groupIds;
+
+			if (group.isDepot()) {
+				connectedGroupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							sourceGroup.getGroupId());
+			}
+
+			if (ArrayUtil.isEmpty(connectedGroupIds) ||
+				!ArrayUtil.contains(connectedGroupIds, sourceGroupId)) {
+
+				throw new PortalException(
+					"the-item-is-not-copied-because-the-site-and-asset-" +
+						"library-are-not-connected");
+			}
 		}
 	}
 
@@ -91,18 +115,20 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationParentFolderId");
 
 		try {
-			Group group = _groupLocalService.getGroup(
-				destinationRepositoryId);
+			Group group = _groupLocalService.getGroup(destinationRepositoryId);
 
-			_checkDestinationGroup(group);
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId());
+
+			_checkDestinationGroup(group, groupIds, sourceRepositoryId);
 
 			_dlAppService.copyFolder(
 				sourceRepositoryId, sourceFolderId, destinationRepositoryId,
 				destinationParentFolderId,
 				_getFileEntryTypeIds(group.getGroupId(), sourceFolderId),
-				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						group.getGroupId()),
+				groupIds,
 				ServiceContextFactory.getInstance(
 					DLFolder.class.getName(), actionRequest));
 

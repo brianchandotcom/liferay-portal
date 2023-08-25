@@ -330,7 +330,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 			const allEdges: Edge<ObjectRelationshipEdgeData>[] = [];
 
 			if (currentFolder) {
-				const positionColumn = {x: 1, y: 0};
+				const positionColumn = {positionX: 0, positionY: 0};
 
 				newObjectDefinitionNodes = currentFolder.definitions!.map(
 					(objectDefinition, index) => {
@@ -404,12 +404,28 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							);
 						}
 
-						if (index % 4 === 0) {
-							positionColumn.y++;
-							positionColumn.x = 1;
+						const objectFolderItem = currentFolder.objectFolderItems.find(
+							(folderItem) =>
+								folderItem.objectDefinitionExternalReferenceCode ===
+								objectDefinition.externalReferenceCode
+						);
+
+						let {
+							positionX,
+							positionY,
+						} = objectFolderItem as ObjectFolderItem;
+
+						if (positionX === 0 && positionY === 0) {
+							positionX = positionColumn.positionX * 300 + 200;
+							positionY = positionColumn.positionY * 400 + 100;
+
+							positionColumn.positionX++;
 						}
 
-						positionColumn.x++;
+						if (index % 4 === 0 && index !== 0) {
+							positionColumn.positionY++;
+							positionColumn.positionX = 0;
+						}
 
 						return {
 							data: {
@@ -422,8 +438,8 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							},
 							id: objectDefinition.id.toString(),
 							position: {
-								x: positionColumn.x * 300,
-								y: positionColumn.y * 400,
+								x: positionX,
+								y: positionY,
 							},
 							type: 'objectDefinition',
 						} as Node<ObjectDefinitionNodeData>;

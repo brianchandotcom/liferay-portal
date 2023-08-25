@@ -123,6 +123,12 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 					propertyFileName = propertyFileName.substring(0, pos);
 				}
 
+				pos = propertyFileName.indexOf("->");
+
+				if (pos != -1) {
+					propertyFileName = propertyFileName.substring(pos + 2);
+				}
+
 				File file = getFile(propertyFileName, getMaxDirLevel());
 
 				if (file == null) {

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.internal.index.constants.SidecarVersionConstants;
+import com.liferay.portal.search.elasticsearch7.internal.sidecar.constants.SidecarVersionConstants;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.util.PropsValues;
 

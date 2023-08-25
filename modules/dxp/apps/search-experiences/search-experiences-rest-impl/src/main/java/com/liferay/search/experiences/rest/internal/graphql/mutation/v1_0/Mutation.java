@@ -346,6 +346,34 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public SXPBlueprint updateSXPBlueprint(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId,
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.putSXPBlueprint(
+				sxpBlueprintId, sxpBlueprint));
+	}
+
+	@GraphQLField
+	public Response updateSXPBlueprintBatch(
+			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId,
+			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> sxpBlueprintResource.putSXPBlueprintBatch(
+				sxpBlueprintId, sxpBlueprint, callbackURL, object));
+	}
+
+	@GraphQLField
 	public SXPBlueprint createSXPBlueprintCopy(
 			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId)
 		throws Exception {
@@ -481,6 +509,34 @@ public class Mutation {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.patchSXPElement(
 				sxpElementId, sxpElement));
+	}
+
+	@GraphQLField
+	public SXPElement updateSXPElement(
+			@GraphQLName("sxpElementId") Long sxpElementId,
+			@GraphQLName("sxpElement") SXPElement sxpElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.putSXPElement(
+				sxpElementId, sxpElement));
+	}
+
+	@GraphQLField
+	public Response updateSXPElementBatch(
+			@GraphQLName("sxpElementId") Long sxpElementId,
+			@GraphQLName("sxpElement") SXPElement sxpElement,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource -> sxpElementResource.putSXPElementBatch(
+				sxpElementId, sxpElement, callbackURL, object));
 	}
 
 	@GraphQLField

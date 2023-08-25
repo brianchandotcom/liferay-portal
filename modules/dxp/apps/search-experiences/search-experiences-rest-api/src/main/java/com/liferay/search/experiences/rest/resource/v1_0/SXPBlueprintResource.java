@@ -87,6 +87,15 @@ public interface SXPBlueprintResource {
 			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
 		throws Exception;
 
+	public SXPBlueprint putSXPBlueprint(
+			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
+		throws Exception;
+
+	public Response putSXPBlueprintBatch(
+			Long sxpBlueprintId, SXPBlueprint sxpBlueprint, String callbackURL,
+			Object object)
+		throws Exception;
+
 	public SXPBlueprint postSXPBlueprintCopy(Long sxpBlueprintId)
 		throws Exception;
 

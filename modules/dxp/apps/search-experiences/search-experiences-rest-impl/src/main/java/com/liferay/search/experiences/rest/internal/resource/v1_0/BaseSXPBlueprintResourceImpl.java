@@ -486,7 +486,140 @@ public abstract class BaseSXPBlueprintResourceImpl
 			SXPBlueprint sxpBlueprint)
 		throws Exception {
 
+		SXPBlueprint existingSXPBlueprint = getSXPBlueprint(sxpBlueprintId);
+
+		if (sxpBlueprint.getCreateDate() != null) {
+			existingSXPBlueprint.setCreateDate(sxpBlueprint.getCreateDate());
+		}
+
+		if (sxpBlueprint.getDescription() != null) {
+			existingSXPBlueprint.setDescription(sxpBlueprint.getDescription());
+		}
+
+		if (sxpBlueprint.getDescription_i18n() != null) {
+			existingSXPBlueprint.setDescription_i18n(
+				sxpBlueprint.getDescription_i18n());
+		}
+
+		if (sxpBlueprint.getExternalReferenceCode() != null) {
+			existingSXPBlueprint.setExternalReferenceCode(
+				sxpBlueprint.getExternalReferenceCode());
+		}
+
+		if (sxpBlueprint.getModifiedDate() != null) {
+			existingSXPBlueprint.setModifiedDate(
+				sxpBlueprint.getModifiedDate());
+		}
+
+		if (sxpBlueprint.getSchemaVersion() != null) {
+			existingSXPBlueprint.setSchemaVersion(
+				sxpBlueprint.getSchemaVersion());
+		}
+
+		if (sxpBlueprint.getTitle() != null) {
+			existingSXPBlueprint.setTitle(sxpBlueprint.getTitle());
+		}
+
+		if (sxpBlueprint.getTitle_i18n() != null) {
+			existingSXPBlueprint.setTitle_i18n(sxpBlueprint.getTitle_i18n());
+		}
+
+		if (sxpBlueprint.getUserName() != null) {
+			existingSXPBlueprint.setUserName(sxpBlueprint.getUserName());
+		}
+
+		if (sxpBlueprint.getVersion() != null) {
+			existingSXPBlueprint.setVersion(sxpBlueprint.getVersion());
+		}
+
+		preparePatch(sxpBlueprint, existingSXPBlueprint);
+
+		return putSXPBlueprint(sxpBlueprintId, existingSXPBlueprint);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}' -d $'{"configuration": ___, "createDate": ___, "description": ___, "description_i18n": ___, "elementInstances": ___, "externalReferenceCode": ___, "id": ___, "modifiedDate": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "sxpBlueprintId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPBlueprint")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/sxp-blueprints/{sxpBlueprintId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public SXPBlueprint putSXPBlueprint(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("sxpBlueprintId")
+			Long sxpBlueprintId,
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
 		return new SXPBlueprint();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}/batch' -d $'{"configuration": ___, "createDate": ___, "description": ___, "description_i18n": ___, "elementInstances": ___, "externalReferenceCode": ___, "id": ___, "modifiedDate": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "sxpBlueprintId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPBlueprint")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/sxp-blueprints/{sxpBlueprintId}/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putSXPBlueprintBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("sxpBlueprintId")
+			Long sxpBlueprintId,
+			SXPBlueprint sxpBlueprint,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				SXPBlueprint.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -573,6 +706,12 @@ public abstract class BaseSXPBlueprintResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				sxpBlueprintUnsafeFunction =
+					sxpBlueprint -> putSXPBlueprintByExternalReferenceCode(
+						sxpBlueprint.getExternalReferenceCode(), sxpBlueprint);
+			}
+
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				sxpBlueprintUnsafeFunction = sxpBlueprint -> {
 					SXPBlueprint persistedSXPBlueprint = null;
@@ -636,7 +775,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -703,6 +842,13 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			sxpBlueprintUnsafeFunction = sxpBlueprint -> patchSXPBlueprint(
+				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
+					_parseLong((String)parameters.get("sxpBlueprintId")),
+				sxpBlueprint);
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			sxpBlueprintUnsafeFunction = sxpBlueprint -> putSXPBlueprint(
 				sxpBlueprint.getId() != null ? sxpBlueprint.getId() :
 					_parseLong((String)parameters.get("sxpBlueprintId")),
 				sxpBlueprint);
@@ -935,6 +1081,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		SXPBlueprint sxpBlueprint, SXPBlueprint existingSxpBlueprint) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

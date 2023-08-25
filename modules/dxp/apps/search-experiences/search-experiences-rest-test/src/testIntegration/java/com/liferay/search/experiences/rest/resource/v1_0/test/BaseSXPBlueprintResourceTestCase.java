@@ -840,6 +840,32 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testPutSXPBlueprint() throws Exception {
+		SXPBlueprint postSXPBlueprint = testPutSXPBlueprint_addSXPBlueprint();
+
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint putSXPBlueprint = sxpBlueprintResource.putSXPBlueprint(
+			postSXPBlueprint.getId(), randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, putSXPBlueprint);
+		assertValid(putSXPBlueprint);
+
+		SXPBlueprint getSXPBlueprint = sxpBlueprintResource.getSXPBlueprint(
+			putSXPBlueprint.getId());
+
+		assertEquals(randomSXPBlueprint, getSXPBlueprint);
+		assertValid(getSXPBlueprint);
+	}
+
+	protected SXPBlueprint testPutSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSXPBlueprintCopy() throws Exception {
 		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
 

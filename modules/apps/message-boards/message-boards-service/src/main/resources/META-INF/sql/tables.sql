@@ -29,7 +29,7 @@ create table MBCategory (
 	name VARCHAR(75) null,
 	description STRING null,
 	displayStyle VARCHAR(75) null,
-	friendlyURL VARCHAR(75) null,
+	friendlyURL VARCHAR(255) null,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

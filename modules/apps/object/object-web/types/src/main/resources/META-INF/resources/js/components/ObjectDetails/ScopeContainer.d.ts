@@ -12,6 +12,7 @@ interface ScopeContainerProps {
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isChildNode: boolean;
 	isLinkedNode?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	siteKeyValuePair: KeyValuePair[];
@@ -22,6 +23,7 @@ export declare function ScopeContainer({
 	errors,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isChildNode,
 	isLinkedNode,
 	setValues,
 	siteKeyValuePair,

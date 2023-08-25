@@ -598,49 +598,24 @@ public class ObjectEntryDisplayContextImpl
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
-	private void _addDDMFormFields(
-			DDMForm ddmForm, ObjectEntry objectEntry,
-			List<ObjectField> objectFields, ObjectLayoutTab objectLayoutTab,
-			boolean readOnly)
+	private void _addDDMFormField(
+			List<DDMFormField> ddmFormFields, ObjectEntry objectEntry,
+			ObjectField objectField, boolean readOnly)
 		throws PortalException {
 
-		for (ObjectLayoutBox objectLayoutBox :
-				objectLayoutTab.getObjectLayoutBoxes()) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-170122") ||
+			(!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
+			 !objectField.compareBusinessType(
+				 ObjectFieldConstants.BUSINESS_TYPE_FORMULA))) {
 
-			List<DDMFormField> nestedDDMFormFields = _getNestedDDMFormFields(
-				objectEntry, objectFields, objectLayoutBox, readOnly);
+			ddmFormFields.add(
+				_getDDMFormField(objectEntry, objectField, readOnly));
 
-			if (nestedDDMFormFields.isEmpty()) {
-				continue;
-			}
-
-			ddmForm.addDDMFormField(
-				new DDMFormField(
-					String.valueOf(objectLayoutBox.getPrimaryKey()),
-					"fieldset") {
-
-					{
-						setLabel(
-							new LocalizedValue() {
-								{
-									addString(
-										_objectRequestHelper.getLocale(),
-										objectLayoutBox.getName(
-											_objectRequestHelper.getLocale()));
-								}
-							});
-						setLocalizable(false);
-						setNestedDDMFormFields(nestedDDMFormFields);
-						setProperty(
-							"collapsible", objectLayoutBox.isCollapsable());
-						setProperty("rows", _getRows(objectLayoutBox));
-						setReadOnly(false);
-						setRepeatable(false);
-						setRequired(false);
-						setShowLabel(true);
-					}
-				});
+			return;
 		}
+
+		ddmFormFields.add(_getDDMFormField(objectEntry, objectField, true));
 	}
 
 	private void _addDDMFormLayoutRow(
@@ -652,6 +627,32 @@ public class ObjectEntryDisplayContextImpl
 			new DDMFormLayoutColumn(12, fieldName));
 
 		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+	}
+
+	private void _addFieldsetDDMFormField(
+		boolean collapsible, DDMForm ddmForm, String fieldName, String label,
+		List<DDMFormField> nestedDDMFormFields, String rows) {
+
+		if (nestedDDMFormFields.isEmpty()) {
+			return;
+		}
+
+		ddmForm.addDDMFormField(
+			new DDMFormField(fieldName, DDMFormFieldTypeConstants.FIELDSET) {
+				{
+					setLabel(
+						new LocalizedValue() {
+							{
+								addString(
+									_objectRequestHelper.getLocale(), label);
+							}
+						});
+					setNestedDDMFormFields(nestedDDMFormFields);
+					setProperty("collapsible", collapsible);
+					setProperty("rows", rows);
+					setShowLabel(true);
+				}
+			});
 	}
 
 	private ObjectFieldRenderingContext _createObjectFieldRenderingContext(
@@ -733,6 +734,7 @@ public class ObjectEntryDisplayContextImpl
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
+		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
@@ -746,43 +748,106 @@ public class ObjectEntryDisplayContextImpl
 						ActionKeys.UPDATE);
 		}
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getCustomObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
 		if (objectLayoutTab == null) {
-			for (ObjectField objectField : objectFields) {
+			List<DDMFormField> ddmFormFields = new ArrayList<>();
+			JSONArray rowsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (ObjectField objectField :
+					_objectFieldLocalService.getCustomObjectFields(
+						objectDefinition.getObjectDefinitionId())) {
+
 				if (!_isActive(objectField)) {
 					continue;
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-					ddmForm.addDDMFormField(
-						_getDDMFormField(objectEntry, objectField, readOnly));
+				_addDDMFormField(
+					ddmFormFields, objectEntry, objectField, readOnly);
 
+				if (objectDefinition.getRootObjectDefinitionId() == 0) {
 					continue;
 				}
 
-				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-					objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
-
-					ddmForm.addDDMFormField(
-						_getDDMFormField(objectEntry, objectField, true));
-				}
-				else {
-					ddmForm.addDDMFormField(
-						_getDDMFormField(objectEntry, objectField, readOnly));
-				}
+				rowsJSONArray.put(
+					JSONUtil.put(
+						"columns",
+						JSONUtil.put(
+							JSONUtil.put(
+								"fields", JSONUtil.put(objectField.getName())
+							).put(
+								"size", 12
+							))));
 			}
-		}
-		else {
-			_addDDMFormFields(
-				ddmForm, objectEntry, objectFields, objectLayoutTab, readOnly);
+
+			if (objectDefinition.getRootObjectDefinitionId() == 0) {
+				ddmForm.setDDMFormFields(ddmFormFields);
+			}
+			else {
+				_addFieldsetDDMFormField(
+					true, ddmForm,
+					String.valueOf(objectDefinition.getPrimaryKey()),
+					objectDefinition.getLabel(_objectRequestHelper.getLocale()),
+					ddmFormFields, rowsJSONArray.toString());
+			}
+
+			return ddmForm;
 		}
 
-		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());
+		Map<Long, ObjectField> objectFieldsMap = new HashMap<>();
+
+		ListUtil.isNotEmptyForEach(
+			_objectFieldLocalService.getCustomObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			objectField -> objectFieldsMap.put(
+				objectField.getObjectFieldId(), objectField));
+
+		for (ObjectLayoutBox objectLayoutBox :
+				objectLayoutTab.getObjectLayoutBoxes()) {
+
+			List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
+			JSONArray rowsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (ObjectLayoutRow objectLayoutRow :
+					objectLayoutBox.getObjectLayoutRows()) {
+
+				JSONArray columnsJSONArray = JSONFactoryUtil.createJSONArray();
+
+				for (ObjectLayoutColumn objectLayoutColumn :
+						objectLayoutRow.getObjectLayoutColumns()) {
+
+					if (!objectFieldsMap.containsKey(
+							objectLayoutColumn.getObjectFieldId())) {
+
+						continue;
+					}
+
+					ObjectField objectField = objectFieldsMap.get(
+						objectLayoutColumn.getObjectFieldId());
+
+					if (!_isActive(objectField)) {
+						continue;
+					}
+
+					_addDDMFormField(
+						nestedDDMFormFields, objectEntry, objectField,
+						readOnly);
+
+					columnsJSONArray.put(
+						JSONUtil.put(
+							"fields", JSONUtil.put(objectField.getName())
+						).put(
+							"size", objectLayoutColumn.getSize()
+						));
+				}
+
+				rowsJSONArray.put(JSONUtil.put("columns", columnsJSONArray));
+			}
+
+			_addFieldsetDDMFormField(
+				objectLayoutBox.isCollapsable(), ddmForm,
+				String.valueOf(objectLayoutBox.getPrimaryKey()),
+				objectLayoutBox.getName(_objectRequestHelper.getLocale()),
+				nestedDDMFormFields, rowsJSONArray.toString());
+		}
 
 		return ddmForm;
 	}
@@ -992,69 +1057,6 @@ public class ObjectEntryDisplayContextImpl
 		}
 	}
 
-	private List<DDMFormField> _getNestedDDMFormFields(
-			ObjectEntry objectEntry, List<ObjectField> objectFields,
-			ObjectLayoutBox objectLayoutBox, boolean readOnly)
-		throws PortalException {
-
-		List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
-
-		for (ObjectLayoutRow objectLayoutRow :
-				objectLayoutBox.getObjectLayoutRows()) {
-
-			for (ObjectLayoutColumn objectLayoutColumn :
-					objectLayoutRow.getObjectLayoutColumns()) {
-
-				ObjectField currentObjectField = null;
-
-				for (ObjectField objectField : objectFields) {
-					if (objectField.getObjectFieldId() ==
-							objectLayoutColumn.getObjectFieldId()) {
-
-						currentObjectField = objectField;
-
-						break;
-					}
-				}
-
-				if ((currentObjectField == null) ||
-					!_isActive(currentObjectField)) {
-
-					continue;
-				}
-
-				_objectFieldNames.put(
-					objectLayoutColumn.getObjectFieldId(),
-					currentObjectField.getName());
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-					nestedDDMFormFields.add(
-						_getDDMFormField(
-							objectEntry, currentObjectField, readOnly));
-
-					continue;
-				}
-
-				if (currentObjectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-					currentObjectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
-
-					nestedDDMFormFields.add(
-						_getDDMFormField(
-							objectEntry, currentObjectField, true));
-				}
-				else {
-					nestedDDMFormFields.add(
-						_getDDMFormField(
-							objectEntry, currentObjectField, readOnly));
-				}
-			}
-		}
-
-		return nestedDDMFormFields;
-	}
-
 	private List<DDMFormFieldValue> _getNestedDDMFormFieldValues(
 		List<DDMFormField> ddmFormFields, Map<String, Object> values) {
 
@@ -1109,34 +1111,6 @@ public class ObjectEntryDisplayContextImpl
 		return _objectEntry;
 	}
 
-	private String _getRows(ObjectLayoutBox objectLayoutBox) {
-		JSONArray rowsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (ObjectLayoutRow objectLayoutRow :
-				objectLayoutBox.getObjectLayoutRows()) {
-
-			JSONArray columnsJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (ObjectLayoutColumn objectLayoutColumn :
-					objectLayoutRow.getObjectLayoutColumns()) {
-
-				columnsJSONArray.put(
-					JSONUtil.put(
-						"fields",
-						JSONUtil.put(
-							_objectFieldNames.get(
-								objectLayoutColumn.getObjectFieldId()))
-					).put(
-						"size", objectLayoutColumn.getSize()
-					));
-			}
-
-			rowsJSONArray.put(JSONUtil.put("columns", columnsJSONArray));
-		}
-
-		return rowsJSONArray.toString();
-	}
-
 	private Object _getValue(
 		DDMFormField ddmFormField, Map<String, Object> values) {
 
@@ -1180,6 +1154,10 @@ public class ObjectEntryDisplayContextImpl
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
 					objectField.getObjectFieldId());
+
+		if (objectRelationship.isEdge()) {
+			return false;
+		}
 
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -1360,7 +1338,6 @@ public class ObjectEntryDisplayContextImpl
 	private final ObjectFieldBusinessTypeRegistry
 		_objectFieldBusinessTypeRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final Map<Long, String> _objectFieldNames = new HashMap<>();
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

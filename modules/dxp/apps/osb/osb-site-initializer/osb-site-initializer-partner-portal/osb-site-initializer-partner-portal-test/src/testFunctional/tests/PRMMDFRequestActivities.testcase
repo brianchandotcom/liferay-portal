@@ -423,4 +423,50 @@ definition {
 			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
 		}
 	}
+
+	@description = "This is a test for LPS-192090. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Print Advertising activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingPrintAdActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Print Advertising activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Print Advertising",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Print Advertising",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				Publication: Publication,
+				CTA: Activity CTA,
+				Expected Impressions: Expected Impressions
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
 }

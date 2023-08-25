@@ -7,16 +7,13 @@ package com.liferay.content.dashboard.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -25,6 +22,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -39,9 +37,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -75,78 +70,44 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
-			"Test Site");
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
 	public void testServeResource() throws Exception {
-		String originalUserName = System.getProperty("user.name");
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		System.setProperty("user.name", "test");
+		Date createDate = new Date();
 
-		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+		serviceContext.setCreateDate(createDate);
 
-			Calendar calendar = Calendar.getInstance();
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			"Site", TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
+			"application/pdf", new byte[0], createDate, createDate,
+			serviceContext);
 
-			Date modifiedDate = calendar.getTime();
+		List<String> expectedWorkbookHeaders = ListUtil.fromArray(
+			"ID", "Title", "Author", "Type", "Subtype", "Site or Asset Library",
+			"Status", "Categories", "Tags", "Modified Date", "Review Date",
+			"Description", "Extension", "File Name", "Size", "Display Date",
+			"Creation Date", "Languages Translated Into");
 
-			calendar.add(Calendar.MINUTE, -1);
+		List<String> expectedWorkbookValues = ListUtil.fromArray(
+			String.valueOf(fileEntry.getFileEntryId()), "fileName.pdf",
+			"Test Test", "Document", "Basic Document (Vectorial)",
+			_group.getName(serviceContext.getLocale()), "Approved", "", "",
+			_toString(fileEntry.getModifiedDate()), _toString(createDate), "",
+			"pdf", "fileName.pdf", "0 B", "", _toString(createDate), "");
 
-			Date createDate = calendar.getTime();
+		ByteArrayOutputStream byteArrayOutputStream = _serveResource(
+			FileEntry.class.getName(), _group.getGroupId());
 
-			serviceContext.setCreateDate(createDate);
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				"Site", TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
-				"application/pdf", new byte[0], createDate, createDate,
-				serviceContext);
-
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-			dlFileEntry.setModifiedDate(modifiedDate);
-
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
-
-			ByteArrayOutputStream byteArrayOutputStream = _serveResource(
-				FileEntry.class.getName(), _group.getGroupId());
-
-			List<String> expectedWorkbookHeaders = new ArrayList<>();
-
-			Collections.addAll(
-				expectedWorkbookHeaders, "ID", "Title", "Author", "Type",
-				"Subtype", "Site or Asset Library", "Status", "Categories",
-				"Tags", "Modified Date", "Review Date", "Description",
-				"Extension", "File Name", "Size", "Display Date",
-				"Creation Date", "Languages Translated Into");
-
-			List<String> expectedWorkbookValues = new ArrayList<>();
-
-			Collections.addAll(
-				expectedWorkbookValues,
-				String.valueOf(fileEntry.getFileEntryId()), "fileName.pdf",
-				"Test Test", "Document", "Basic Document (Vectorial)",
-				"Test Site", "Approved", "", "", _toString(modifiedDate),
-				_toString(createDate), "", "pdf", "fileName.pdf", "0 B", "",
-				_toString(createDate), "");
-
-			_assertWorkbook(
-				expectedWorkbookHeaders, expectedWorkbookValues,
-				new HSSFWorkbook(
-					new ByteArrayInputStream(
-						byteArrayOutputStream.toByteArray())));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-
-			System.setProperty("user.name", originalUserName);
-		}
+		_assertWorkbook(
+			expectedWorkbookHeaders, expectedWorkbookValues,
+			new HSSFWorkbook(
+				new ByteArrayInputStream(byteArrayOutputStream.toByteArray())));
 	}
 
 	private void _assertWorkbook(
@@ -203,24 +164,17 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 		serviceContext.setRequest(mockHttpServletRequest);
 
-		try {
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest(mockHttpServletRequest);
 
-			MockLiferayResourceRequest mockLiferayResourceRequest =
-				new MockLiferayResourceRequest(mockHttpServletRequest);
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+		mockLiferayResourceRequest.setParameter(
+			"groupId", String.valueOf(groupId));
+		mockLiferayResourceRequest.setParameter("className", className);
 
-			mockLiferayResourceRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
-			mockLiferayResourceRequest.setParameter(
-				"groupId", String.valueOf(groupId));
-			mockLiferayResourceRequest.setParameter("className", className);
-
-			_mvcResourceCommand.serveResource(
-				mockLiferayResourceRequest, mockLiferayResourceResponse);
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		_mvcResourceCommand.serveResource(
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
 		return (ByteArrayOutputStream)
 			mockLiferayResourceResponse.getPortletOutputStream();

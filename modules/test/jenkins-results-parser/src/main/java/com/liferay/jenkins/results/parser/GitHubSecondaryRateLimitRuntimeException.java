@@ -17,10 +17,18 @@ public class GitHubSecondaryRateLimitRuntimeException extends RuntimeException {
 			(GitHubSecondaryRateLimitIOException)exception;
 	}
 
+	public String getGitHubApiUrl() {
+		return _gitHubSecondaryRateLimitIOException.getGitHubApiUrl();
+	}
+
 	public GitHubSecondaryRateLimitIOException
 		getGitHubSecondaryRateLimitIOException() {
 
 		return _gitHubSecondaryRateLimitIOException;
+	}
+
+	public int getRetryAfterSeconds() {
+		return _gitHubSecondaryRateLimitIOException.getRetryAfterSeconds();
 	}
 
 	private final GitHubSecondaryRateLimitIOException

@@ -58,6 +58,7 @@
 		<field name="enableCategorization" type="boolean" />
 		<field name="enableComments" type="boolean" />
 		<field name="enableLocalization" type="boolean" />
+		<field name="enableObjectEntryDraft" type="boolean" />
 		<field name="enableObjectEntryHistory" type="boolean" />
 		<field name="modifiable" type="boolean" />
 		<field name="name" type="String" />

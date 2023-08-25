@@ -520,6 +520,27 @@ public interface ObjectDefinitionModel
 	public void setEnableLocalization(boolean enableLocalization);
 
 	/**
+	 * Returns the enable object entry draft of this object definition.
+	 *
+	 * @return the enable object entry draft of this object definition
+	 */
+	public boolean getEnableObjectEntryDraft();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable object entry draft.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry draft; <code>false</code> otherwise
+	 */
+	public boolean isEnableObjectEntryDraft();
+
+	/**
+	 * Sets whether this object definition is enable object entry draft.
+	 *
+	 * @param enableObjectEntryDraft the enable object entry draft of this object definition
+	 */
+	public void setEnableObjectEntryDraft(boolean enableObjectEntryDraft);
+
+	/**
 	 * Returns the enable object entry history of this object definition.
 	 *
 	 * @return the enable object entry history of this object definition

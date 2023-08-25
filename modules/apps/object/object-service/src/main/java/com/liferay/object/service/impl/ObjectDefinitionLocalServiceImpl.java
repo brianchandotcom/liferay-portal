@@ -2032,6 +2032,17 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionExternalReferenceCodeException.
 				MustNotStartWithPrefix();
 		}
+<<<<<<< Updated upstream
+=======
+
+		char[] externalReferenceCodeCharArrayCharArray =
+			externalReferenceCode.toCharArray();
+
+		if (externalReferenceCodeCharArrayCharArray.length > 75) {
+			throw new ObjectDefinitionExternalReferenceCodeException.
+				MustBeLessThan75Characters(75);
+		}
+>>>>>>> Stashed changes
 	}
 
 	private void _validateLabel(Map<Locale, String> labelMap)

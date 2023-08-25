@@ -2117,10 +2117,9 @@ public class PoshiValidation {
 					PoshiProperties poshiProperties =
 						PoshiProperties.getPoshiProperties();
 
-					List<String> validationResourceFileTypes =
-						poshiProperties.validationResourceFileTypes;
+					for (String validFileType :
+							poshiProperties.validationResourceFileTypes) {
 
-					for (String validFileType : validationResourceFileTypes) {
 						if (validFileType.equals(fileExtension)) {
 							_filteredExceptions.add(exception);
 

@@ -403,8 +403,8 @@ public class PoshiProperties extends Properties {
 		getProperty(TIMEOUT_EXPLICIT_WAIT));
 	public int timeoutImplicitWait = GetterUtil.getInteger(
 		getProperty(TIMEOUT_IMPLICIT_WAIT));
-	public List<String> validationResourceFileTypes =
-		ListUtil.newListFromString(getProperty(VALIDATION_RESOURCE_FILE_TYPES));
+	public String[] validationResourceFileTypes = StringUtil.split(
+		getProperty(VALIDATION_RESOURCE_FILE_TYPES));
 
 	private static final Properties _classProperties = new Properties();
 	private static final PoshiProperties _poshiProperties;

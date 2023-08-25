@@ -151,10 +151,9 @@ public class PoshiScriptParserException extends PoshiElementException {
 				PoshiProperties poshiProperties =
 					PoshiProperties.getPoshiProperties();
 
-				List<String> validationResourceFileTypes =
-					poshiProperties.validationResourceFileTypes;
+				for (String validFileType :
+						poshiProperties.validationResourceFileTypes) {
 
-				for (String validFileType : validationResourceFileTypes) {
 					if (validFileType.equals(fileExtension)) {
 						_filteredParserExceptions.add(
 							poshiScriptParserException);

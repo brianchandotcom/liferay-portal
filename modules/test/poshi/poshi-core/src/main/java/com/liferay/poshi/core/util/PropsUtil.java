@@ -79,11 +79,6 @@ public class PropsUtil {
 
 				objectValue = GetterUtil.getInteger(value);
 			}
-			else if (fieldTypeName.equals("list") ||
-					 fieldTypeName.equals("java.util.List")) {
-
-				objectValue = ListUtil.newListFromString(value);
-			}
 			else if (fieldType.isArray()) {
 				objectValue = StringUtil.split(value);
 			}

@@ -86,7 +86,7 @@ public class LiveUpgradeExecutorTest {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
 			LiveUpgradeProcessFactory.addColumns(
-				"content SBLOB", "version LONG not null default 1"));
+				"content SBLOB", "version LONG default 1 not null"));
 
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "content"));
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "version"));

@@ -5,6 +5,9 @@
 
 package com.liferay.osb.faro.internal.upgrade.registry;
 
+import com.liferay.osb.faro.internal.upgrade.v2_0_0.UpgradeContactsCriterionUpgradeProcess;
+import com.liferay.osb.faro.internal.upgrade.v2_1_0.UpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -19,9 +22,21 @@ public class FaroContactsServiceUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "2.0.0",
-			new com.liferay.osb.faro.internal.upgrade.v2_0_0.
-				UpgradeContactsCriterionUpgradeProcess());
+			"1.0.0", "2.0.0", new UpgradeContactsCriterionUpgradeProcess());
+
+		registry.register(
+			"2.0.0", "2.1.0", new UpgradeCompanyId(),
+			new MVCCVersionUpgradeProcess() {
+
+				@Override
+				protected String[] getTableNames() {
+					return new String[] {
+						"OSBFaro_ContactsCardTemplate",
+						"OSBFaro_ContactsLayoutTemplate"
+					};
+				}
+
+			});
 	}
 
 }

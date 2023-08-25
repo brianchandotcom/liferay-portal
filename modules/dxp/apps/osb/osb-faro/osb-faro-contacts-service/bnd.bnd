@@ -25,6 +25,6 @@ Import-Package:\
 	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -830,7 +830,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_objectViewLocalService, _organizationLocalService,
 				_persistedModelLocalServiceRegistry, _ploEntryLocalService,
-				_portal, _portletLocalService, _resourceActions,
+				_portal, _portletLocalService, _resourceActions, _treeFactory,
 				_userLocalService, _resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService);

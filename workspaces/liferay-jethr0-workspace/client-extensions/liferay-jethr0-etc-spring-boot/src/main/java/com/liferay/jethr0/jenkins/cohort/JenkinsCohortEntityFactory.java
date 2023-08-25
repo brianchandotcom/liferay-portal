@@ -19,6 +19,11 @@ public class JenkinsCohortEntityFactory
 	extends BaseEntityFactory<JenkinsCohortEntity> {
 
 	@Override
+	public String getEntityLabel() {
+		return "Jenkins Cohort";
+	}
+
+	@Override
 	public JenkinsCohortEntity newEntity(JSONObject jsonObject) {
 		return new DefaultJenkinsCohortEntity(jsonObject);
 	}

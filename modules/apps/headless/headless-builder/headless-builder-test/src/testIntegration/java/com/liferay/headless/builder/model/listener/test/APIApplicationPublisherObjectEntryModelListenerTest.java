@@ -7,24 +7,12 @@ package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.util.APIApplicationTestUtil;
-import com.liferay.headless.builder.util.ObjectDefinitionTestUtil;
-import com.liferay.object.field.util.ObjectFieldUtil;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import java.util.Collections;
-
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -34,147 +22,98 @@ import org.junit.Test;
 public class APIApplicationPublisherObjectEntryModelListenerTest
 	extends BaseTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
+	@Test
+	public void testPublishAPIApplicationOnPatch() throws Exception {
+		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		_objectField = ObjectFieldUtil.createObjectField(
-			"Text", "String", true, true, null,
-			StringUtil.toLowerCase(RandomTestUtil.randomString()),
-			"x" + RandomTestUtil.randomString(), false);
+		assertSuccessfulHttpCode(
+			_getAPIApplicationJSONString(
+				"unpublished", baseURL, externalReferenceCode),
+			"headless-builder/applications", Http.Method.POST);
 
-		_objectField.setExternalReferenceCode(RandomTestUtil.randomString());
+		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
-		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(_objectField));
+		assertSuccessfulHttpCode(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				externalReferenceCode,
+			Http.Method.PATCH);
+
+		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testPublishAPIApplicationOnPost() throws Exception {
 		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", baseURL
-			).put(
-				"externalReferenceCode", _ERC_1
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
+		assertSuccessfulHttpCode(
+			_getAPIApplicationJSONString(
+				"published", baseURL, RandomTestUtil.randomString()),
 			"headless-builder/applications", Http.Method.POST);
 
-		Assert.assertEquals(
-			0,
-			jsonObject.getJSONObject(
-				"status"
-			).get(
-				"code"
-			));
+		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
+	}
+
+	@Test
+	public void testUnpublishAPIApplicationOnDelete() throws Exception {
+		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		assertSuccessfulHttpCode(
+			_getAPIApplicationJSONString(
+				"published", baseURL, externalReferenceCode),
+			"headless-builder/applications", Http.Method.POST);
 
 		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
-		HTTPTestUtil.invokeToJSONObject(
+		assertSuccessfulHttpCode(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				externalReferenceCode,
+			Http.Method.DELETE);
+
+		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
+	}
+
+	@Test
+	public void testUnpublishAPIApplicationOnPatch() throws Exception {
+		String baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		assertSuccessfulHttpCode(
+			_getAPIApplicationJSONString(
+				"published", baseURL, externalReferenceCode),
+			"headless-builder/applications", Http.Method.POST);
+
+		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
+
+		assertSuccessfulHttpCode(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).toString(),
 			"headless-builder/applications/by-external-reference-code/" +
-				_ERC_1,
+				externalReferenceCode,
 			Http.Method.PATCH);
 
 		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
-
-		baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", baseURL
-			).put(
-				"externalReferenceCode", _ERC_2
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
-
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			"headless-builder/applications/by-external-reference-code/" +
-				_ERC_2,
-			Http.Method.DELETE);
-
-		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
-
-		baseURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"apiApplicationToAPIEndpoints",
-				JSONUtil.put(
-					JSONUtil.put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", RandomTestUtil.randomString()
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "name"
-					).put(
-						"path",
-						StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
-					).put(
-						"scope", "company"
-					))
-			).put(
-				"apiApplicationToAPISchemas",
-				JSONUtil.put(
-					JSONUtil.put(
-						"apiSchemaToAPIProperties",
-						JSONUtil.put(
-							JSONUtil.put(
-								"description", "description"
-							).put(
-								"name", "name"
-							).put(
-								"objectFieldERC",
-								_objectField.getExternalReferenceCode()
-							))
-					).put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", RandomTestUtil.randomString()
-					).put(
-						"mainObjectDefinitionERC",
-						_objectDefinition.getExternalReferenceCode()
-					).put(
-						"name", "name"
-					))
-			).put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", baseURL
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
-
-		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 	}
 
-	private static final String _ERC_1 = RandomTestUtil.randomString();
+	private String _getAPIApplicationJSONString(
+		String applicationStatus, String baseURL,
+		String externalReferenceCode) {
 
-	private static final String _ERC_2 = RandomTestUtil.randomString();
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
-
-	@DeleteAfterTestRun
-	private ObjectField _objectField;
+		return JSONUtil.put(
+			"applicationStatus", applicationStatus
+		).put(
+			"baseURL", baseURL
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		).put(
+			"title", RandomTestUtil.randomString()
+		).toString();
+	}
 
 }

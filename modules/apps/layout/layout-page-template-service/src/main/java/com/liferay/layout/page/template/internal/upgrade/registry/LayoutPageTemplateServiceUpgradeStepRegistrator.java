@@ -189,6 +189,15 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				"LayoutPageTemplateStructure", "classPK", "plid LONG"),
 			UpgradeProcessFactory.dropColumns(
 				"LayoutPageTemplateStructure", "classNameId"));
+
+		registry.register(
+			"5.2.0", "5.3.0",
+			UpgradeProcessFactory.addColumns(
+				"LayoutPageTemplateCollection",
+				"type_ INTEGER default 0 NOT NULL"),
+			UpgradeProcessFactory.addColumns(
+				"LayoutPageTemplateCollection",
+				"parentLPTCollectionId LONG default 0 NOT NULL"));
 	}
 
 	@Reference

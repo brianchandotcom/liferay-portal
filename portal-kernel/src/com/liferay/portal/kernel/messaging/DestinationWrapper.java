@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import java.util.Set;
-
 /**
  * @author Shuyang Zhou
  */
@@ -65,11 +63,6 @@ public class DestinationWrapper implements Destination {
 	}
 
 	@Override
-	public Set<MessageListener> getMessageListeners() {
-		return destination.getMessageListeners();
-	}
-
-	@Override
 	public String getName() {
 		return destination.getName();
 	}
@@ -87,13 +80,6 @@ public class DestinationWrapper implements Destination {
 	@Override
 	public boolean register(MessageListener messageListener) {
 		return destination.register(messageListener);
-	}
-
-	@Override
-	public boolean register(
-		MessageListener messageListener, ClassLoader classLoader) {
-
-		return destination.register(messageListener, classLoader);
 	}
 
 	@Override
@@ -117,11 +103,6 @@ public class DestinationWrapper implements Destination {
 	@Override
 	public boolean unregister(MessageListener messageListener) {
 		return destination.unregister(messageListener);
-	}
-
-	@Override
-	public void unregisterMessageListeners() {
-		destination.unregisterMessageListeners();
 	}
 
 	protected Destination destination;

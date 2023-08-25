@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import java.util.Set;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -35,8 +33,6 @@ public interface Destination {
 
 	public int getMessageListenerCount();
 
-	public Set<MessageListener> getMessageListeners();
-
 	public String getName();
 
 	public boolean isRegistered();
@@ -44,9 +40,6 @@ public interface Destination {
 	public void open();
 
 	public boolean register(MessageListener messageListener);
-
-	public boolean register(
-		MessageListener messageListener, ClassLoader classLoader);
 
 	public boolean removeDestinationEventListener(
 		DestinationEventListener destinationEventListener);
@@ -56,7 +49,5 @@ public interface Destination {
 	public void send(Message message);
 
 	public boolean unregister(MessageListener messageListener);
-
-	public void unregisterMessageListeners();
 
 }

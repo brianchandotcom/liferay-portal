@@ -86,11 +86,6 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public Set<MessageListener> getMessageListeners() {
-		return Collections.unmodifiableSet(messageListeners);
-	}
-
-	@Override
 	public String getName() {
 		return name;
 	}
@@ -112,16 +107,6 @@ public abstract class BaseDestination implements Destination {
 	public boolean register(MessageListener messageListener) {
 		InvokerMessageListener invokerMessageListener =
 			new InvokerMessageListener(messageListener);
-
-		return registerMessageListener(invokerMessageListener);
-	}
-
-	@Override
-	public boolean register(
-		MessageListener messageListener, ClassLoader classLoader) {
-
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener, classLoader);
 
 		return registerMessageListener(invokerMessageListener);
 	}
@@ -157,22 +142,6 @@ public abstract class BaseDestination implements Destination {
 			new InvokerMessageListener(messageListener);
 
 		return unregisterMessageListener(invokerMessageListener);
-	}
-
-	public boolean unregister(
-		MessageListener messageListener, ClassLoader classLoader) {
-
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener, classLoader);
-
-		return unregisterMessageListener(invokerMessageListener);
-	}
-
-	@Override
-	public void unregisterMessageListeners() {
-		for (MessageListener messageListener : messageListeners) {
-			unregisterMessageListener((InvokerMessageListener)messageListener);
-		}
 	}
 
 	protected void fireMessageListenerRegisteredEvent(

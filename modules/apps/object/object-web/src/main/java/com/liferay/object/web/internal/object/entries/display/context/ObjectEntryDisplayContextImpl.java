@@ -552,13 +552,50 @@ public class ObjectEntryDisplayContextImpl
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
 
-		if (objectLayoutTab == null) {
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		if ((objectLayoutTab == null) &&
+			(objectDefinition.getRootObjectDefinitionId() == 0)) {
+
 			return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 		}
 
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
+
+		if ((objectLayoutTab == null) &&
+			(objectDefinition.getRootObjectDefinitionId() > 0)) {
+
+			_addDDMFormLayoutRow(
+				ddmFormLayoutPage,
+				String.valueOf(objectDefinition.getPrimaryKey()));
+
+			return _ddmFormRenderer.render(
+				ddmForm, ddmFormLayout, ddmFormRenderingContext);
+		}
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(false);
+
+		for (ObjectLayoutBox objectLayoutBox :
+				objectLayoutTab.getObjectLayoutBoxes()) {
+
+			if (!ddmFormFieldsMap.containsKey(
+					String.valueOf(objectLayoutBox.getPrimaryKey()))) {
+
+				continue;
+			}
+
+			_addDDMFormLayoutRow(
+				ddmFormLayoutPage,
+				String.valueOf(objectLayoutBox.getPrimaryKey()));
+		}
+
 		return _ddmFormRenderer.render(
-			ddmForm, _getDDMFormLayout(ddmForm, objectLayoutTab),
-			ddmFormRenderingContext);
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	private void _addDDMFormFields(
@@ -604,6 +641,17 @@ public class ObjectEntryDisplayContextImpl
 					}
 				});
 		}
+	}
+
+	private void _addDDMFormLayoutRow(
+		DDMFormLayoutPage ddmFormLayoutPage, String fieldName) {
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(
+			new DDMFormLayoutColumn(12, fieldName));
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
 	}
 
 	private ObjectFieldRenderingContext _createObjectFieldRenderingContext(
@@ -872,44 +920,6 @@ public class ObjectEntryDisplayContextImpl
 		}
 
 		return null;
-	}
-
-	private DDMFormLayout _getDDMFormLayout(
-		DDMForm ddmForm, ObjectLayoutTab objectLayoutTab) {
-
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(false);
-
-		for (ObjectLayoutBox objectLayoutBox :
-				objectLayoutTab.getObjectLayoutBoxes()) {
-
-			if (!ddmFormFieldsMap.containsKey(
-					String.valueOf(objectLayoutBox.getPrimaryKey()))) {
-
-				continue;
-			}
-
-			DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-			DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn();
-
-			ddmFormLayoutColumn.setDDMFormFieldNames(
-				ListUtil.fromArray(
-					String.valueOf(objectLayoutBox.getPrimaryKey())));
-			ddmFormLayoutColumn.setSize(12);
-
-			ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
-
-			ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
-		}
-
-		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
-
-		return ddmFormLayout;
 	}
 
 	private DDMFormValues _getDDMFormValues(

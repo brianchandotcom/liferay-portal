@@ -69,8 +69,7 @@ public abstract class BaseUserFacetSearchContributorTestCase
 	}
 
 	protected void index(String user) throws Exception {
-		addDocument(
-			DocumentCreationHelpers.singleKeyword(Field.USER_NAME, user));
+		addDocument(DocumentCreationHelpers.singleKeyword(Field.USER_ID, user));
 	}
 
 	protected void setUpJSONFactoryUtil() {

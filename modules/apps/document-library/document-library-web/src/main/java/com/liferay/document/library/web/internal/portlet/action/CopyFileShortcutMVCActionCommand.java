@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -17,9 +18,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -60,7 +63,8 @@ public class CopyFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationRepository(long repositoryId)
+	private void _checkDestinationRepository(
+			long repositoryId, long fileShortcutId)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(repositoryId);
@@ -68,6 +72,38 @@ public class CopyFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-file-shortcuts-to-the-live-version-of-a-group");
+		}
+
+		FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+			fileShortcutId);
+
+		long sourceGroupId = fileShortcut.getGroupId();
+
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		if (group.isDepot() ^ sourceGroup.isDepot()) {
+			long[] groupIds;
+
+			if (group.isDepot()) {
+				groupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							sourceGroup.getGroupId());
+			}
+			else {
+				groupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							group.getGroupId());
+			}
+
+			if (ArrayUtil.isEmpty(groupIds) ||
+				!ArrayUtil.contains(groupIds, sourceGroupId)) {
+
+				throw new PortalException(
+					"the-item-is-not-copied-because-the-site-and-asset-" +
+						"library-are-not-connected");
+			}
 		}
 	}
 
@@ -86,7 +122,8 @@ public class CopyFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationRepositoryId");
 
 		try {
-			_checkDestinationRepository(destinationRepositoryId);
+			_checkDestinationRepository(
+				destinationRepositoryId, fileShortcutId);
 
 			_dlAppService.copyFileShortcut(
 				fileShortcutId, destinationFolderId, destinationRepositoryId,
@@ -119,5 +156,8 @@ public class CopyFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

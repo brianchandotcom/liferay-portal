@@ -27,6 +27,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -309,11 +311,19 @@ public class ObjectEntryDisplayContextImpl
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		ObjectDefinition objectDefinition1 = getObjectDefinition1();
-
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
+
+		if ((getObjectLayoutTab() == null) && objectRelationship.isEdge()) {
+			creationMenu.addDropdownItem(
+				_getCreateNewRelatedModelDropdownItem(
+					objectDefinition2, objectRelationship));
+
+			return creationMenu;
+		}
+
+		ObjectDefinition objectDefinition1 = getObjectDefinition1();
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -336,48 +346,13 @@ public class ObjectEntryDisplayContextImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
 			creationMenu.addDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						PortletURLBuilder.create(
-							PortalUtil.getControlPanelPortletURL(
-								_objectRequestHelper.getRequest(),
-								serviceContext.getScopeGroup(),
-								objectDefinition2.getPortletId(), 0, 0,
-								PortletRequest.RENDER_PHASE)
-						).setMVCRenderCommandName(
-							"/object_entries/edit_object_entry"
-						).setBackURL(
-							_objectRequestHelper.getCurrentURL()
-						).setParameter(
-							ObjectFieldSettingConstants.
-								NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.
-									NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
-								_objectFieldLocalService.getObjectField(
-									objectRelationship.getObjectFieldId2()))
-						).setParameter(
-							"objectDefinitionId",
-							objectDefinition2.getObjectDefinitionId()
-						).setParameter(
-							"parentObjectEntryERC",
-							() -> {
-								ObjectEntry objectEntry = _getObjectEntry();
+				_getCreateNewRelatedModelDropdownItem(
+					objectDefinition2, objectRelationship));
+		}
 
-								return String.valueOf(
-									objectEntry.getExternalReferenceCode());
-							}
-						).setWindowState(
-							WindowState.MAXIMIZED
-						).buildString());
-					dropdownItem.setLabel(
-						LanguageUtil.get(
-							_objectRequestHelper.getRequest(), "create-new"));
-				});
+		if (objectRelationship.isEdge()) {
+			return creationMenu;
 		}
 
 		LiferayPortletResponse liferayPortletResponse =
@@ -658,6 +633,51 @@ public class ObjectEntryDisplayContextImpl
 		objectFieldRenderingContext.setUserId(_objectRequestHelper.getUserId());
 
 		return objectFieldRenderingContext;
+	}
+
+	private DropdownItem _getCreateNewRelatedModelDropdownItem(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					_objectRequestHelper.getRequest(),
+					serviceContext.getScopeGroup(),
+					objectDefinition.getPortletId(), 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/object_entries/edit_object_entry"
+			).setBackURL(
+				_objectRequestHelper.getCurrentURL()
+			).setParameter(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+					_objectFieldLocalService.getObjectField(
+						objectRelationship.getObjectFieldId2()))
+			).setParameter(
+				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+			).setParameter(
+				"parentObjectEntryERC",
+				() -> {
+					ObjectEntry objectEntry = _getObjectEntry();
+
+					return String.valueOf(
+						objectEntry.getExternalReferenceCode());
+				}
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString()
+		).setLabel(
+			LanguageUtil.get(_objectRequestHelper.getRequest(), "create-new")
+		).build();
 	}
 
 	private DDMForm _getDDMForm(

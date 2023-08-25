@@ -596,6 +596,15 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 			};
 		}
 
+		case TYPES.SET_SHOW_CHANGES_SAVED: {
+			const {updatedShowChangesSaved} = action.payload;
+
+			return {
+				...state,
+				showChangesSaved: updatedShowChangesSaved,
+			};
+		}
+
 		case TYPES.UPDATE_FOLDER_NODE: {
 			const {currentFolderName, updatedNode} = action.payload;
 

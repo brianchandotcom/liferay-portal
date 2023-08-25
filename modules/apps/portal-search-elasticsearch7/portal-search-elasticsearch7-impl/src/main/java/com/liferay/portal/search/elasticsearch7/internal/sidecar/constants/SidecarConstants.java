@@ -10,6 +10,12 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar.constants;
  */
 public class SidecarConstants {
 
+	public static final String ELASTICSEARCH_OPTIONAL_DEFAULTS_FILE_NAME =
+		"/META-INF/elasticsearch-optional-defaults.yml";
+
+	public static final String SIDECAR_POLICY_FILE_NAME =
+		"/META-INF/sidecar.policy";
+
 	public static final String SIDECAR_VERSION_FILE_NAME =
 		"/META-INF/sidecar.version";
 

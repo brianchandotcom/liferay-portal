@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.sidecar.constants.SidecarConstants;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 
 import java.net.InetAddress;
@@ -249,7 +250,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 	private void _loadDefaultConfigurations() {
 		String defaultConfigurations = ResourceUtil.getResourceAsString(
-			getClass(), "/META-INF/elasticsearch-optional-defaults.yml");
+			getClass(),
+			SidecarConstants.ELASTICSEARCH_OPTIONAL_DEFAULTS_FILE_NAME);
 
 		_settingsBuilder.loadFromSource(defaultConfigurations);
 

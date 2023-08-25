@@ -94,6 +94,12 @@ export type TAction =
 	  }
 	| {
 			payload: {
+				updatedShowChangesSaved: boolean;
+			};
+			type: TYPES.SET_SHOW_CHANGES_SAVED;
+	  }
+	| {
+			payload: {
 				currentFolderName: string;
 				updatedNode: Partial<ObjectDefinition>;
 			};

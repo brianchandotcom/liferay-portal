@@ -44,6 +44,7 @@ create table ObjectDefinition (
 	enableCategorization BOOLEAN,
 	enableComments BOOLEAN,
 	enableLocalization BOOLEAN,
+	enableObjectEntryDraft BOOLEAN,
 	enableObjectEntryHistory BOOLEAN,
 	modifiable BOOLEAN,
 	name VARCHAR(75) null,

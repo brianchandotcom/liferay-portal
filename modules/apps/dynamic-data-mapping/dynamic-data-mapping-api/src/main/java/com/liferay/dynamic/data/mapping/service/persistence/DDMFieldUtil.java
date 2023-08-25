@@ -638,6 +638,190 @@ public class DDMFieldUtil {
 	}
 
 	/**
+	 * Returns all the ddm fields where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @return the matching ddm fields
+	 */
+	public static List<DDMField> findByS_F(long storageId, String fieldName) {
+		return getPersistence().findByS_F(storageId, fieldName);
+	}
+
+	/**
+	 * Returns a range of all the ddm fields where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @return the range of matching ddm fields
+	 */
+	public static List<DDMField> findByS_F(
+		long storageId, String fieldName, int start, int end) {
+
+		return getPersistence().findByS_F(storageId, fieldName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm fields where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm fields
+	 */
+	public static List<DDMField> findByS_F(
+		long storageId, String fieldName, int start, int end,
+		OrderByComparator<DDMField> orderByComparator) {
+
+		return getPersistence().findByS_F(
+			storageId, fieldName, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm fields where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param start the lower bound of the range of ddm fields
+	 * @param end the upper bound of the range of ddm fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm fields
+	 */
+	public static List<DDMField> findByS_F(
+		long storageId, String fieldName, int start, int end,
+		OrderByComparator<DDMField> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByS_F(
+			storageId, fieldName, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field
+	 * @throws NoSuchFieldException if a matching ddm field could not be found
+	 */
+	public static DDMField findByS_F_First(
+			long storageId, String fieldName,
+			OrderByComparator<DDMField> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
+
+		return getPersistence().findByS_F_First(
+			storageId, fieldName, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field, or <code>null</code> if a matching ddm field could not be found
+	 */
+	public static DDMField fetchByS_F_First(
+		long storageId, String fieldName,
+		OrderByComparator<DDMField> orderByComparator) {
+
+		return getPersistence().fetchByS_F_First(
+			storageId, fieldName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field
+	 * @throws NoSuchFieldException if a matching ddm field could not be found
+	 */
+	public static DDMField findByS_F_Last(
+			long storageId, String fieldName,
+			OrderByComparator<DDMField> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
+
+		return getPersistence().findByS_F_Last(
+			storageId, fieldName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field, or <code>null</code> if a matching ddm field could not be found
+	 */
+	public static DDMField fetchByS_F_Last(
+		long storageId, String fieldName,
+		OrderByComparator<DDMField> orderByComparator) {
+
+		return getPersistence().fetchByS_F_Last(
+			storageId, fieldName, orderByComparator);
+	}
+
+	/**
+	 * Returns the ddm fields before and after the current ddm field in the ordered set where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param fieldId the primary key of the current ddm field
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm field
+	 * @throws NoSuchFieldException if a ddm field with the primary key could not be found
+	 */
+	public static DDMField[] findByS_F_PrevAndNext(
+			long fieldId, long storageId, String fieldName,
+			OrderByComparator<DDMField> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchFieldException {
+
+		return getPersistence().findByS_F_PrevAndNext(
+			fieldId, storageId, fieldName, orderByComparator);
+	}
+
+	/**
+	 * Removes all the ddm fields where storageId = &#63; and fieldName = &#63; from the database.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 */
+	public static void removeByS_F(long storageId, String fieldName) {
+		getPersistence().removeByS_F(storageId, fieldName);
+	}
+
+	/**
+	 * Returns the number of ddm fields where storageId = &#63; and fieldName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param fieldName the field name
+	 * @return the number of matching ddm fields
+	 */
+	public static int countByS_F(long storageId, String fieldName) {
+		return getPersistence().countByS_F(storageId, fieldName);
+	}
+
+	/**
 	 * Returns the ddm field where storageId = &#63; and instanceId = &#63; or throws a <code>NoSuchFieldException</code> if it could not be found.
 	 *
 	 * @param storageId the storage ID

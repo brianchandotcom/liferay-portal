@@ -9,6 +9,7 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
+	isChildNode: boolean;
 	isLinkedNode?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
@@ -16,6 +17,7 @@ interface ConfigurationContainerProps {
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
+	isChildNode,
 	isLinkedNode,
 	setValues,
 	values,
@@ -25,7 +27,10 @@ export function ConfigurationContainer({
 		: values.system;
 
 	const disabled =
-		isReadOnly || !hasUpdateObjectDefinitionPermission || isLinkedNode;
+		isReadOnly ||
+		!hasUpdateObjectDefinitionPermission ||
+		isChildNode ||
+		isLinkedNode;
 
 	return (
 		<div className="lfr-objects__object-definition-details-configuration">

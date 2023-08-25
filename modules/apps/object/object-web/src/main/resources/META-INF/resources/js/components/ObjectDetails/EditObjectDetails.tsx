@@ -37,6 +37,7 @@ interface EditObjectDetailsProps {
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isChildNode: boolean;
 	label: LocalizedValue<string>;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
@@ -80,6 +81,7 @@ export default function EditObjectDetails({
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isChildNode,
 	label,
 	nonRelationshipObjectFieldsInfo,
 	objectDefinitionId,
@@ -309,6 +311,7 @@ export default function EditObjectDetails({
 									hasUpdateObjectDefinitionPermission
 								}
 								isApproved={isApproved}
+								isChildNode={isChildNode}
 								setValues={setValues}
 								siteKeyValuePair={siteKeyValuePair}
 								values={values}
@@ -331,6 +334,7 @@ export default function EditObjectDetails({
 								<AccountRestrictionContainer
 									errors={errors}
 									isApproved={isApproved}
+									isChildNode={isChildNode}
 									objectFields={objectFields}
 									setValues={setValues}
 									values={values}
@@ -350,6 +354,7 @@ export default function EditObjectDetails({
 								hasUpdateObjectDefinitionPermission={
 									hasUpdateObjectDefinitionPermission
 								}
+								isChildNode={isChildNode}
 								setValues={setValues}
 								values={values}
 							/>

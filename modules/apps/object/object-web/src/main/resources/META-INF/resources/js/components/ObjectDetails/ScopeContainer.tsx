@@ -29,6 +29,7 @@ interface ScopeContainerProps {
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isChildNode: boolean;
 	isLinkedNode?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	siteKeyValuePair: KeyValuePair[];
@@ -40,6 +41,7 @@ export function ScopeContainer({
 	errors,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isChildNode,
 	isLinkedNode,
 	setValues,
 	siteKeyValuePair,
@@ -97,6 +99,7 @@ export function ScopeContainer({
 					isApproved ||
 					!hasUpdateObjectDefinitionPermission ||
 					values.storageType === 'salesforce' ||
+					isChildNode ||
 					isLinkedNode
 				}
 				error={errors.titleObjectFieldId}
@@ -122,6 +125,7 @@ export function ScopeContainer({
 						? !values.modifiable && values.system
 						: values.system) ||
 					!hasUpdateObjectDefinitionPermission ||
+					isChildNode ||
 					isLinkedNode
 				}
 				emptyStateMessage={Liferay.Language.get(

@@ -258,6 +258,7 @@ export function RightSidebarObjectDefinitionDetails({
 					errors={errors}
 					hasUpdateObjectDefinitionPermission={true}
 					isApproved={values.status?.label === 'approved'}
+					isChildNode={false}
 					isLinkedNode={selectedNode.data!.isLinkedNode}
 					setValues={setValues}
 					siteKeyValuePair={siteKeyValuePair}
@@ -272,6 +273,7 @@ export function RightSidebarObjectDefinitionDetails({
 					<AccountRestrictionContainer
 						errors={errors}
 						isApproved={values?.status?.label === 'approved'}
+						isChildNode={false}
 						isLinkedNode={selectedNode.data!.isLinkedNode}
 						objectFields={
 							(values?.objectFields as ObjectField[]) ?? []
@@ -287,6 +289,7 @@ export function RightSidebarObjectDefinitionDetails({
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
+					isChildNode={false}
 					isLinkedNode={selectedNode.data!.isLinkedNode}
 					setValues={setValues}
 					values={values as ObjectDefinition}

@@ -16,6 +16,7 @@ import {defaultLanguageId} from '../../utils/constants';
 interface AccountRestrictionContainerProps {
 	errors: FormError<ObjectDefinition>;
 	isApproved: boolean;
+	isChildNode: boolean;
 	isLinkedNode?: boolean;
 	objectFields: ObjectField[];
 	setValues: (values: Partial<ObjectDefinition>) => void;
@@ -25,6 +26,7 @@ interface AccountRestrictionContainerProps {
 export function AccountRestrictionContainer({
 	errors,
 	isApproved,
+	isChildNode,
 	isLinkedNode,
 	objectFields,
 	setValues,
@@ -116,6 +118,7 @@ export function AccountRestrictionContainer({
 				disabled={
 					!accountRelationshipFields.length ||
 					disableAccountToggle ||
+					isChildNode ||
 					isLinkedNode
 				}
 				label={sub(
@@ -140,6 +143,7 @@ export function AccountRestrictionContainer({
 					!accountRelationshipFields.length ||
 					!values.accountEntryRestricted ||
 					disableAccountSelect ||
+					isChildNode ||
 					isLinkedNode
 				}
 				error={errors.accountEntryRestrictedObjectFieldName}

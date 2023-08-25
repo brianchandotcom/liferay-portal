@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultJenkinsCohort extends BaseJenkinsCohort {
+public class DefaultJenkinsCohortEntity extends BaseJenkinsCohortEntity {
 
-	protected DefaultJenkinsCohort(JSONObject jsonObject) {
+	protected DefaultJenkinsCohortEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

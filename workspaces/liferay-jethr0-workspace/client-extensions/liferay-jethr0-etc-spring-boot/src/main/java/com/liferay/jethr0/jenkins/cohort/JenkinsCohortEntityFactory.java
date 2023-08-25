@@ -16,15 +16,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JenkinsCohortEntityFactory
-	extends BaseEntityFactory<JenkinsCohort> {
+	extends BaseEntityFactory<JenkinsCohortEntity> {
 
 	@Override
-	public JenkinsCohort newEntity(JSONObject jsonObject) {
-		return new DefaultJenkinsCohort(jsonObject);
+	public JenkinsCohortEntity newEntity(JSONObject jsonObject) {
+		return new DefaultJenkinsCohortEntity(jsonObject);
 	}
 
 	protected JenkinsCohortEntityFactory() {
-		super(JenkinsCohort.class);
+		super(JenkinsCohortEntity.class);
 	}
 
 }

@@ -62,7 +62,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 			!jenkinsCohortsJSONArray.isEmpty()) {
 
 			JenkinsCohortEntityRepository jenkinsCohortEntityRepository =
-				getJenkinsCohortRepository();
+				getJenkinsCohortEntityRepository();
 
 			for (int i = 0; i < jenkinsCohortsJSONArray.length(); i++) {
 				JSONObject jenkinsCohortJSONObject =
@@ -71,7 +71,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 				long jenkinsCohortId = jenkinsCohortJSONObject.optLong("id");
 
 				if (jenkinsCohortId != 0) {
-					project.addJenkinsCohort(
+					project.addJenkinsCohortEntity(
 						jenkinsCohortEntityRepository.getById(jenkinsCohortId));
 
 					continue;
@@ -84,7 +84,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 					continue;
 				}
 
-				project.addJenkinsCohort(
+				project.addJenkinsCohortEntity(
 					jenkinsCohortEntityRepository.getByName(jenkinsCohortName));
 			}
 		}

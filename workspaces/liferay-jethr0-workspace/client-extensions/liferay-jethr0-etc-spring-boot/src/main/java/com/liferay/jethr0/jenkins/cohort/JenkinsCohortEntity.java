@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public interface JenkinsCohort extends Entity {
+public interface JenkinsCohortEntity extends Entity {
 
 	public void addJenkinsServerEntities(
 		Set<JenkinsServerEntity> jenkinsServerEntities);

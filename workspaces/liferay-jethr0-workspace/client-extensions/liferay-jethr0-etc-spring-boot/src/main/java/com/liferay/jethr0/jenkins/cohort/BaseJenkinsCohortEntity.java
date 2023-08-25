@@ -16,8 +16,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseJenkinsCohort
-	extends BaseEntity implements JenkinsCohort {
+public abstract class BaseJenkinsCohortEntity
+	extends BaseEntity implements JenkinsCohortEntity {
 
 	@Override
 	public void addJenkinsServerEntities(
@@ -98,7 +98,7 @@ public abstract class BaseJenkinsCohort
 		_name = name;
 	}
 
-	protected BaseJenkinsCohort(JSONObject jsonObject) {
+	protected BaseJenkinsCohortEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_name = jsonObject.optString("name");

@@ -6,7 +6,7 @@
 package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.dalo.JenkinsCohortEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsCohortToJenkinsServersEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
@@ -23,9 +23,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JenkinsCohortEntityRepository
-	extends BaseEntityRepository<JenkinsCohort> {
+	extends BaseEntityRepository<JenkinsCohortEntity> {
 
-	public JenkinsCohort add(String name) {
+	public JenkinsCohortEntity add(String name) {
 		if (StringUtil.isNullOrEmpty(name)) {
 			throw new RuntimeException("Invalid Jenkins cohort name: " + name);
 		}
@@ -37,13 +37,13 @@ public class JenkinsCohortEntityRepository
 		return add(jsonObject);
 	}
 
-	public JenkinsCohort getByName(String name) {
-		for (JenkinsCohort jenkinsCohort : getAll()) {
-			if (!Objects.equals(name, jenkinsCohort.getName())) {
+	public JenkinsCohortEntity getByName(String name) {
+		for (JenkinsCohortEntity jenkinsCohortEntity : getAll()) {
+			if (!Objects.equals(name, jenkinsCohortEntity.getName())) {
 				continue;
 			}
 
-			return jenkinsCohort;
+			return jenkinsCohortEntity;
 		}
 
 		return null;
@@ -56,16 +56,16 @@ public class JenkinsCohortEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (JenkinsCohort jenkinsCohort : getAll()) {
+		for (JenkinsCohortEntity jenkinsCohortEntity : getAll()) {
 			for (long jenkinsServerId :
 					_jenkinsCohortToJenkinsServersEntityRelationshipDALO.
-						getChildEntityIds(jenkinsCohort)) {
+						getChildEntityIds(jenkinsCohortEntity)) {
 
 				if (jenkinsServerId == 0) {
 					continue;
 				}
 
-				jenkinsCohort.addJenkinsServerEntity(
+				jenkinsCohortEntity.addJenkinsServerEntity(
 					_jenkinsServerEntityRepository.getById(jenkinsServerId));
 			}
 		}

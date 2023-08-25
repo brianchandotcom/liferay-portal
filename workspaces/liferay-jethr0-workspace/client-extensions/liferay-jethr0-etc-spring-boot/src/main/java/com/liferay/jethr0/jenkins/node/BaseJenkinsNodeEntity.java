@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.util.StringUtil;
@@ -35,14 +35,14 @@ public class BaseJenkinsNodeEntity
 	}
 
 	@Override
-	public JenkinsCohort getJenkinsCohort() {
+	public JenkinsCohortEntity getJenkinsCohortEntity() {
 		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
 		if (jenkinsServerEntity == null) {
 			return null;
 		}
 
-		return jenkinsServerEntity.getJenkinsCohort();
+		return jenkinsServerEntity.getJenkinsCohortEntity();
 	}
 
 	@Override
@@ -249,10 +249,11 @@ public class BaseJenkinsNodeEntity
 	private boolean _hasCompatibleCohort(Build build) {
 		Project project = build.getProject();
 
-		Set<JenkinsCohort> jenkinsCohorts = project.getJenkinsCohorts();
+		Set<JenkinsCohortEntity> jenkinsCohortEntities =
+			project.getJenkinsCohortEntities();
 
-		if (jenkinsCohorts.isEmpty() ||
-			jenkinsCohorts.contains(getJenkinsCohort())) {
+		if (jenkinsCohortEntities.isEmpty() ||
+			jenkinsCohortEntities.contains(getJenkinsCohortEntity())) {
 
 			return true;
 		}

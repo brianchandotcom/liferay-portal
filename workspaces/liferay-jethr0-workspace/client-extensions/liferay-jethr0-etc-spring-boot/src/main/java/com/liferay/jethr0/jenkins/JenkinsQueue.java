@@ -44,7 +44,7 @@ public class JenkinsQueue {
 		_jenkinsNodeEntityRepository.setJenkinsServerEntityRepository(
 			_jenkinsServerEntityRepository);
 
-		_jenkinsServerEntityRepository.setJenkinsCohortRepository(
+		_jenkinsServerEntityRepository.setJenkinsCohortEntityRepository(
 			_jenkinsCohortEntityRepository);
 		_jenkinsServerEntityRepository.setJenkinsNodeEntityRepository(
 			_jenkinsNodeEntityRepository);

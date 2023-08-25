@@ -8,7 +8,7 @@ package com.liferay.jethr0.project;
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranch;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.util.StringUtil;
@@ -44,13 +44,17 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void addJenkinsCohort(JenkinsCohort jenkinsCohort) {
-		addRelatedEntity(jenkinsCohort);
+	public void addJenkinsCohortEntities(
+		Set<JenkinsCohortEntity> jenkinsCohortEntities) {
+
+		addRelatedEntities(jenkinsCohortEntities);
 	}
 
 	@Override
-	public void addJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts) {
-		addRelatedEntities(jenkinsCohorts);
+	public void addJenkinsCohortEntity(
+		JenkinsCohortEntity jenkinsCohortEntity) {
+
+		addRelatedEntity(jenkinsCohortEntity);
 	}
 
 	@Override
@@ -84,8 +88,8 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public Set<JenkinsCohort> getJenkinsCohorts() {
-		return getRelatedEntities(JenkinsCohort.class);
+	public Set<JenkinsCohortEntity> getJenkinsCohortEntities() {
+		return getRelatedEntities(JenkinsCohortEntity.class);
 	}
 
 	@Override
@@ -173,13 +177,17 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void removeJenkinsCohort(JenkinsCohort jenkinsCohort) {
-		removeRelatedEntity(jenkinsCohort);
+	public void removeJenkinsCohortEntities(
+		Set<JenkinsCohortEntity> jenkinsCohortEntities) {
+
+		removeRelatedEntities(jenkinsCohortEntities);
 	}
 
 	@Override
-	public void removeJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts) {
-		removeRelatedEntities(jenkinsCohorts);
+	public void removeJenkinsCohortEntity(
+		JenkinsCohortEntity jenkinsCohortEntity) {
+
+		removeRelatedEntity(jenkinsCohortEntity);
 	}
 
 	@Override

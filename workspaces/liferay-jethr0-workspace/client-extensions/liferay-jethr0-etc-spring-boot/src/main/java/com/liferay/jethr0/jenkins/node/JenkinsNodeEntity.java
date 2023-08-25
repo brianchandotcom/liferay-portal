@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.bui1d.Build;
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 
 import java.net.URL;
@@ -24,7 +24,7 @@ public interface JenkinsNodeEntity extends Entity {
 
 	public boolean getGoodBattery();
 
-	public JenkinsCohort getJenkinsCohort();
+	public JenkinsCohortEntity getJenkinsCohortEntity();
 
 	public JenkinsServerEntity getJenkinsServerEntity();
 

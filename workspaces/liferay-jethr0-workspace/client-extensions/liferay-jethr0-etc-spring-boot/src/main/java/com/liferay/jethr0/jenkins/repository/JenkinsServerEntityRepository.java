@@ -6,7 +6,7 @@
 package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerEntityDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesEntityRelationshipDALO;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
@@ -31,17 +31,17 @@ public class JenkinsServerEntityRepository
 	extends BaseEntityRepository<JenkinsServerEntity> {
 
 	public JenkinsServerEntity add(
-		JenkinsCohort jenkinsCohort, JSONObject jsonObject) {
+		JenkinsCohortEntity jenkinsCohortEntity, JSONObject jsonObject) {
 
 		jsonObject.put(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId",
-			jenkinsCohort.getId());
+			jenkinsCohortEntity.getId());
 
 		JenkinsServerEntity jenkinsServerEntity = add(jsonObject);
 
-		jenkinsServerEntity.setJenkinsCohort(jenkinsCohort);
+		jenkinsServerEntity.setJenkinsCohortEntity(jenkinsCohortEntity);
 
-		jenkinsCohort.addJenkinsServerEntity(jenkinsServerEntity);
+		jenkinsCohortEntity.addJenkinsServerEntity(jenkinsServerEntity);
 
 		return jenkinsServerEntity;
 	}
@@ -119,16 +119,17 @@ public class JenkinsServerEntityRepository
 	@Override
 	public void initializeRelationships() {
 		for (JenkinsServerEntity jenkinsServerEntity : getAll()) {
-			JenkinsCohort jenkinsCohort = null;
+			JenkinsCohortEntity jenkinsCohortEntity = null;
 
-			long jenkinsCohortId = jenkinsServerEntity.getJenkinsCohortId();
+			long jenkinsCohortId =
+				jenkinsServerEntity.getJenkinsCohortEntityId();
 
 			if (jenkinsCohortId != 0) {
-				jenkinsCohort = _jenkinsCohortEntityRepository.getById(
+				jenkinsCohortEntity = _jenkinsCohortEntityRepository.getById(
 					jenkinsCohortId);
 			}
 
-			jenkinsServerEntity.setJenkinsCohort(jenkinsCohort);
+			jenkinsServerEntity.setJenkinsCohortEntity(jenkinsCohortEntity);
 
 			for (long jenkinsNodeId :
 					_jenkinsServerToJenkinsNodesEntityRelationshipDALO.
@@ -144,7 +145,7 @@ public class JenkinsServerEntityRepository
 		}
 	}
 
-	public void setJenkinsCohortRepository(
+	public void setJenkinsCohortEntityRepository(
 		JenkinsCohortEntityRepository jenkinsCohortEntityRepository) {
 
 		_jenkinsCohortEntityRepository = jenkinsCohortEntityRepository;

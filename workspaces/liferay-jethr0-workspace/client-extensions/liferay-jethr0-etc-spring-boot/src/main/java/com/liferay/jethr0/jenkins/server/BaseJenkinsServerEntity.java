@@ -6,7 +6,7 @@
 package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -64,12 +64,12 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
-	public JenkinsCohort getJenkinsCohort() {
-		return _jenkinsCohort;
+	public JenkinsCohortEntity getJenkinsCohortEntity() {
+		return _jenkinsCohortEntity;
 	}
 
-	public long getJenkinsCohortId() {
-		return _jenkinsCohortId;
+	public long getJenkinsCohortEntityId() {
+		return _jenkinsCohortEntityId;
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public abstract class BaseJenkinsServerEntity
 			"name", getName()
 		).put(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId",
-			getJenkinsCohortId()
+			getJenkinsCohortEntityId()
 		).put(
 			"url", getURL()
 		);
@@ -128,14 +128,16 @@ public abstract class BaseJenkinsServerEntity
 	}
 
 	@Override
-	public void setJenkinsCohort(JenkinsCohort jenkinsCohort) {
-		_jenkinsCohort = jenkinsCohort;
+	public void setJenkinsCohortEntity(
+		JenkinsCohortEntity jenkinsCohortEntity) {
 
-		if (jenkinsCohort != null) {
-			_jenkinsCohortId = jenkinsCohort.getId();
+		_jenkinsCohortEntity = jenkinsCohortEntity;
+
+		if (jenkinsCohortEntity != null) {
+			_jenkinsCohortEntityId = jenkinsCohortEntity.getId();
 		}
 		else {
-			_jenkinsCohortId = 0;
+			_jenkinsCohortEntityId = 0;
 		}
 	}
 
@@ -188,7 +190,7 @@ public abstract class BaseJenkinsServerEntity
 	protected BaseJenkinsServerEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_jenkinsCohortId = jsonObject.optLong(
+		_jenkinsCohortEntityId = jsonObject.optLong(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId");
 		_jenkinsUserName = jsonObject.getString("jenkinsUserName");
 		_jenkinsUserPassword = jsonObject.getString("jenkinsUserPassword");
@@ -196,8 +198,8 @@ public abstract class BaseJenkinsServerEntity
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
-	private JenkinsCohort _jenkinsCohort;
-	private long _jenkinsCohortId;
+	private JenkinsCohortEntity _jenkinsCohortEntity;
+	private long _jenkinsCohortEntityId;
 	private String _jenkinsUserName;
 	private String _jenkinsUserPassword;
 	private String _name;

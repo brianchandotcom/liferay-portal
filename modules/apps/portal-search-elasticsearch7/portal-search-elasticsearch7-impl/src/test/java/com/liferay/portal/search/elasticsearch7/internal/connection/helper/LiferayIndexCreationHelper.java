@@ -38,8 +38,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
 			_getLiferayDocumentTypeFactory(null);
 
-		liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(
-			settingsBuilder);
+		liferayDocumentTypeFactory.loadDefaultAnalyzers(settingsBuilder);
 	}
 
 	@Override

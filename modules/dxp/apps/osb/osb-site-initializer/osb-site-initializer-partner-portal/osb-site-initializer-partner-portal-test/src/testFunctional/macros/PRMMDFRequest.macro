@@ -79,6 +79,7 @@ definition {
 			followUpStrategy = ${followUpStrategy},
 			leadFollowUpList = ${leadFollowUpList},
 			leadList = ${leadList},
+			ofWeek = ${ofWeek},
 			tactic = ${tactic},
 			targetOfLeads = ${targetOfLeads},
 			typeOfActivity = ${typeOfActivity});
@@ -410,7 +411,7 @@ definition {
 			locator1 = "PRMMDFRequest#SELECT",
 			value1 = ${tactic});
 
-		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Other")) {
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && ((${tactic} == "Other") || (${tactic} == "List Purchase"))) {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
@@ -420,6 +421,113 @@ definition {
 				key_buttonText = ${leadList},
 				key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
 				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && ((${tactic} == "Print Advertising") || (${tactic} == "Campaign with Industry Publication"))) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.publication",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Publication");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity CTA");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.expectedImpressions",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Expected Impressions");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Broadcast Advertising")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.broadcastChannel",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Broadcast Channel");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity CTA");
+
+			if (isSet(ofWeek)) {
+				Type(
+					key_fieldName = "activities[${activityIndex}].activityDescription.weeksAiring",
+					locator1 = "PRMMDFRequest#TEXT_FIELD",
+					value1 = ${ofWeek});
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.guaranteedImpressions",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Guaranteed Impressions");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Co-branded Merchandise")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.typeMerchandise",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Type Merchandise");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.quantity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Quantity Merchandise");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Direct Mail")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfSends",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Target Of Sends");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity CTA");
+		}
+
+		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Outbound Telemarketing Sales")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.marketingActivity",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${activityDescription});
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.audienceTarget",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Audience Target");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.sourceAndSizeOfCallList",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Call List");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.resourcesNecessaryFromLiferay",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Resources Liferay");
 		}
 
 		if ((${typeOfActivity} == "Event") && ((${tactic} == "In-person networking event/seminar/meet-up") || (${tactic} == "In-person industry conference/trade show"))) {

@@ -11,7 +11,13 @@ package com.liferay.jenkins.results.parser;
 public class GitHubSecondaryRateLimitRuntimeException extends RuntimeException {
 
 	public GitHubSecondaryRateLimitRuntimeException(Exception exception) {
-		super(exception);
+		this(null, exception);
+	}
+
+	public GitHubSecondaryRateLimitRuntimeException(
+		String message, Exception exception) {
+
+		super(message, exception);
 
 		_gitHubSecondaryRateLimitIOException =
 			(GitHubSecondaryRateLimitIOException)exception;

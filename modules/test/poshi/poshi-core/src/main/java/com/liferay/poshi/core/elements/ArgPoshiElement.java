@@ -9,6 +9,8 @@ import com.liferay.poshi.core.script.PoshiScriptParserException;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -45,6 +47,10 @@ public class ArgPoshiElement extends PoshiElement {
 
 		if (isQuotedContent(poshiScript)) {
 			poshiScript = getDoubleQuotedContent(poshiScript);
+
+			poshiScript = poshiScript.replace("\\\"", "\"");
+
+			poshiScript = StringEscapeUtils.unescapeXml(poshiScript);
 		}
 
 		addAttribute("value", poshiScript);
@@ -53,6 +59,8 @@ public class ArgPoshiElement extends PoshiElement {
 	@Override
 	public String toPoshiScript() {
 		String attributeValue = attributeValue("value");
+
+		attributeValue = attributeValue.replace("\"", "\\\"");
 
 		if (isQuotedContent(attributeValue)) {
 			attributeValue = doubleQuoteContent(attributeValue);

@@ -183,6 +183,16 @@ public class ObjectDefinitionSerDes {
 			sb.append(objectDefinition.getEnableLocalization());
 		}
 
+		if (objectDefinition.getEnableObjectEntryDraft() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableObjectEntryDraft\": ");
+
+			sb.append(objectDefinition.getEnableObjectEntryDraft());
+		}
+
 		if (objectDefinition.getEnableObjectEntryHistory() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -675,6 +685,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getEnableLocalization()));
 		}
 
+		if (objectDefinition.getEnableObjectEntryDraft() == null) {
+			map.put("enableObjectEntryDraft", null);
+		}
+		else {
+			map.put(
+				"enableObjectEntryDraft",
+				String.valueOf(objectDefinition.getEnableObjectEntryDraft()));
+		}
+
 		if (objectDefinition.getEnableObjectEntryHistory() == null) {
 			map.put("enableObjectEntryHistory", null);
 		}
@@ -975,6 +994,14 @@ public class ObjectDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setEnableLocalization(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "enableObjectEntryDraft")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setEnableObjectEntryDraft(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

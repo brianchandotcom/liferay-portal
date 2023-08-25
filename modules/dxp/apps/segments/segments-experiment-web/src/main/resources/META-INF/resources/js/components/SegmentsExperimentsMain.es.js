@@ -114,7 +114,6 @@ const SegmentsExperimentsMain = ({
 			}}
 		>
 			<SegmentsExperimentsSidebar
-				initialExperimentHistory={props.historySegmentsExperiments}
 				initialGoals={props.segmentsExperimentGoals}
 				initialSegmentsExperiment={props.segmentsExperiment}
 				initialSegmentsVariants={props.initialSegmentsVariants}

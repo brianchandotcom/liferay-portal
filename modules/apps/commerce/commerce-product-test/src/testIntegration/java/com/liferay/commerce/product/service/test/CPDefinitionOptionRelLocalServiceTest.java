@@ -268,7 +268,7 @@ public class CPDefinitionOptionRelLocalServiceTest {
 
 		CPOption cpOption = CPTestUtil.addCPOption(
 			_commerceCatalog.getGroupId(),
-			CPTestUtil.getDefaultDDMFormFieldType(false), false);
+			CPTestUtil.getDefaultCommerceOptionTypeKey(false), false);
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			CPTestUtil.addCPDefinitionOptionRel(

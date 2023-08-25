@@ -7,12 +7,14 @@
 
 import {IFDSTableProps} from '../../utils/fds';
 interface RelationshipsProps extends IFDSTableProps {
+	baseResourceURL: string;
 	isApproved: boolean;
 	objectRelationshipTypes: string[];
 	parameterRequired: boolean;
 }
 export default function Relationships({
 	apiURL,
+	baseResourceURL,
 	creationMenu,
 	formName,
 	id,

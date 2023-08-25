@@ -21,8 +21,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {defaultLanguageId} from '../../utils/constants';
 
 interface ObjectRelationshipFormBaseProps {
+	baseResourceURL: string;
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipTypes?: string[];
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
@@ -112,9 +114,10 @@ export function useObjectRelationshipForm({
 }
 
 export function ObjectRelationshipFormBase({
+	baseResourceURL,
 	errors,
 	handleChange,
-	objectRelationshipTypes,
+	objectDefinitionExternalReferenceCode,
 	readonly,
 	setValues,
 	values,

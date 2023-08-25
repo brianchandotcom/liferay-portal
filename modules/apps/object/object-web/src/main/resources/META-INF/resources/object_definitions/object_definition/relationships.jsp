@@ -20,12 +20,16 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <div>
 	<react:component
 		module="js/components/ObjectRelationship/Relationships"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsRelationshipsDisplayContext.getAPIURL()
+			).put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
 				"creationMenu", objectDefinitionsRelationshipsDisplayContext.getCreationMenu()
 			).put(

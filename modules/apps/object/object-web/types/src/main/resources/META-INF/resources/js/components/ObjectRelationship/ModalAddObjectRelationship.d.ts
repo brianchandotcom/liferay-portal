@@ -5,13 +5,16 @@
 
 /// <reference types="react" />
 
+import './ModalAddObjectRelationship.scss';
 interface ModalAddObjectRelationshipProps {
+	baseResourceURL: string;
 	handleOnClose: () => void;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipTypes: string[];
 	parameterRequired: boolean;
 }
 export declare function ModalAddObjectRelationship({
+	baseResourceURL,
 	handleOnClose,
 	objectDefinitionExternalReferenceCode,
 	objectRelationshipTypes,

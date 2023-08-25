@@ -5,22 +5,26 @@
 
 /// <reference types="react" />
 
-export default function EditRelationship({
-	deletionTypes,
-	hasUpdateObjectDefinitionPermission,
-	objectRelationship: initialValues,
-	parameterEndpoint,
-	parameterRequired,
-}: IProps): JSX.Element;
-interface IProps {
-	deletionTypes: TDeletionType[];
-	hasUpdateObjectDefinitionPermission: boolean;
-	objectRelationship: ObjectRelationship;
-	parameterEndpoint: string;
-	parameterRequired: boolean;
-}
 export declare type TDeletionType = {
 	label: string;
 	value: string;
 };
+interface EditRelationshipProps {
+	baseResourceURL: string;
+	deletionTypes: TDeletionType[];
+	hasUpdateObjectDefinitionPermission: boolean;
+	objectDefinitionExternalReferenceCode: string;
+	objectRelationship: ObjectRelationship;
+	parameterEndpoint: string;
+	parameterRequired: boolean;
+}
+export default function EditRelationship({
+	baseResourceURL,
+	deletionTypes,
+	hasUpdateObjectDefinitionPermission,
+	objectDefinitionExternalReferenceCode,
+	objectRelationship: initialValues,
+	parameterEndpoint,
+	parameterRequired,
+}: EditRelationshipProps): JSX.Element;
 export {};

@@ -78,9 +78,7 @@ public final class CommandLogger {
 		}
 	}
 
-	public void failCommand(Element element, SyntaxLogger syntaxLogger)
-		throws PoshiRunnerLoggerException {
-
+	public void failCommand(Element element) throws PoshiRunnerLoggerException {
 		if (!_isCurrentCommand(element)) {
 			return;
 		}
@@ -108,9 +106,7 @@ public final class CommandLogger {
 		return _testNamespacedClassCommandName;
 	}
 
-	public void logMessage(Element element, SyntaxLogger syntaxLogger)
-		throws PoshiRunnerLoggerException {
-
+	public void logMessage(Element element) throws PoshiRunnerLoggerException {
 		try {
 			lineGroupLoggerElement = _getMessageGroupLoggerElement(element);
 
@@ -138,7 +134,7 @@ public final class CommandLogger {
 			_getRunLineLoggerElement(element, arguments));
 	}
 
-	public void ocularCommand(Element element, SyntaxLogger syntaxLogger)
+	public void ocularCommand(Element element)
 		throws PoshiRunnerLoggerException {
 
 		if (!_isCurrentCommand(element)) {
@@ -156,7 +152,7 @@ public final class CommandLogger {
 		}
 	}
 
-	public void passCommand(Element element, SyntaxLogger syntaxLogger) {
+	public void passCommand(Element element) {
 		if (!_isCurrentCommand(element)) {
 			return;
 		}
@@ -164,7 +160,7 @@ public final class CommandLogger {
 		_commandElement = null;
 	}
 
-	public void startCommand(Element element, SyntaxLogger syntaxLogger)
+	public void startCommand(Element element)
 		throws PoshiRunnerLoggerException {
 
 		if (!_isCommand(element)) {
@@ -188,8 +184,7 @@ public final class CommandLogger {
 	}
 
 	public void startExternalMethodCommand(
-			Element element, List<String> arguments, Object returnValue,
-			SyntaxLogger syntaxLogger)
+			Element element, List<String> arguments, Object returnValue)
 		throws Exception {
 
 		_takeScreenshot("before", _detailsLinkId);
@@ -207,8 +202,7 @@ public final class CommandLogger {
 		_commandLogLoggerElement.addChildLoggerElement(lineGroupLoggerElement);
 	}
 
-	public void takeScreenshotCommand(
-			Element element, SyntaxLogger syntaxLogger)
+	public void takeScreenshotCommand(Element element)
 		throws PoshiRunnerLoggerException {
 
 		try {
@@ -231,9 +225,7 @@ public final class CommandLogger {
 		}
 	}
 
-	public void warnCommand(Element element, SyntaxLogger syntaxLogger)
-		throws PoshiRunnerLoggerException {
-
+	public void warnCommand(Element element) throws PoshiRunnerLoggerException {
 		if (!_isCurrentCommand(element)) {
 			return;
 		}

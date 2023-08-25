@@ -141,7 +141,7 @@ public class PoshiLogger {
 	}
 
 	public void failCommand(Element element) throws PoshiRunnerLoggerException {
-		_commandLogger.failCommand(element, _syntaxLogger);
+		_commandLogger.failCommand(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -157,7 +157,7 @@ public class PoshiLogger {
 	}
 
 	public void logMessage(Element element) throws PoshiRunnerLoggerException {
-		_commandLogger.logMessage(element, _syntaxLogger);
+		_commandLogger.logMessage(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -183,7 +183,7 @@ public class PoshiLogger {
 	public void ocularCommand(Element element)
 		throws PoshiRunnerLoggerException {
 
-		_commandLogger.ocularCommand(element, _syntaxLogger);
+		_commandLogger.ocularCommand(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -191,7 +191,7 @@ public class PoshiLogger {
 	}
 
 	public void passCommand(Element element) throws PoshiRunnerLoggerException {
-		_commandLogger.passCommand(element, _syntaxLogger);
+		_commandLogger.passCommand(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -201,7 +201,7 @@ public class PoshiLogger {
 	public void startCommand(Element element)
 		throws PoshiRunnerLoggerException {
 
-		_commandLogger.startCommand(element, _syntaxLogger);
+		_commandLogger.startCommand(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -216,7 +216,7 @@ public class PoshiLogger {
 		throws Exception {
 
 		_commandLogger.startExternalMethodCommand(
-			element, arguments, returnValue, _syntaxLogger);
+			element, arguments, returnValue);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -229,7 +229,7 @@ public class PoshiLogger {
 	public void takeScreenshotCommand(Element element)
 		throws PoshiRunnerLoggerException {
 
-		_commandLogger.takeScreenshotCommand(element, _syntaxLogger);
+		_commandLogger.takeScreenshotCommand(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 
@@ -244,7 +244,7 @@ public class PoshiLogger {
 	}
 
 	public void warnCommand(Element element) throws PoshiRunnerLoggerException {
-		_commandLogger.warnCommand(element, _syntaxLogger);
+		_commandLogger.warnCommand(element);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 

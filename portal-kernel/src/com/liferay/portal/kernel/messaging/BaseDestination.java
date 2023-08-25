@@ -59,7 +59,15 @@ public abstract class BaseDestination implements Destination {
 
 		removeDestinationEventListeners();
 
-		unregisterMessageListeners();
+		for (MessageListener messageListener : messageListeners) {
+			InvokerMessageListener invokerMessageListener =
+				new InvokerMessageListener(messageListener);
+
+			fireMessageListenerUnregisteredEvent(
+				invokerMessageListener.getMessageListener());
+		}
+
+		messageListeners.clear();
 	}
 
 	@Override

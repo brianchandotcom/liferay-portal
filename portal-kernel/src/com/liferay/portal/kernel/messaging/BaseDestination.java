@@ -45,14 +45,12 @@ public abstract class BaseDestination implements Destination {
 
 	@Override
 	public void copyMessageListeners(Destination destination) {
-		for (MessageListener messageListener : messageListeners) {
-			InvokerMessageListener invokerMessageListener =
-				(InvokerMessageListener)messageListener;
+		BaseDestination baseDestination = (BaseDestination)destination;
 
-			destination.register(
-				invokerMessageListener.getMessageListener(),
-				invokerMessageListener.getClassLoader());
-		}
+		Set<MessageListener> targetMessageListeners =
+			baseDestination.messageListeners;
+
+		targetMessageListeners.addAll(messageListeners);
 	}
 
 	@Override

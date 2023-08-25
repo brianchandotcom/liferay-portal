@@ -153,6 +153,18 @@ public class PoshiElementException extends Exception {
 		return sb.toString();
 	}
 
+	public String getMessageNoSnippet() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.getMessage());
+		sb.append(" at:\n");
+		sb.append(getFilePath());
+		sb.append(":");
+		sb.append(getErrorLineNumber());
+
+		return sb.toString();
+	}
+
 	public PoshiNode<?, ?> getPoshiNode() {
 		return _poshiNode;
 	}

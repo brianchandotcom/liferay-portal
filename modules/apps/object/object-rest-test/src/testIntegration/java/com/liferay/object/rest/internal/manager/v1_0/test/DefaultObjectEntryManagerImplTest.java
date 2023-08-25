@@ -757,7 +757,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				_adminUser.getUserId(),
+				adminUser.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition1.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -795,7 +795,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			parentObjectEntry2.getId(), childObjectEntry3.getId(),
-			objectRelationship, _adminUser.getUserId());
+			objectRelationship, adminUser.getUserId());
 
 		ObjectEntry childObjectEntry4 =
 			_defaultObjectEntryManager.addObjectEntry(
@@ -811,49 +811,49 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			parentObjectEntry2.getId(), childObjectEntry4.getId(),
-			objectRelationship, _adminUser.getUserId());
+			objectRelationship, adminUser.getUserId());
 
-		_assertEquals(
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry2.getId()),
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"countAggregationObjectFieldName2", "2"
 					).build();
 				}
-			},
-			_defaultObjectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				parentObjectEntry2.getId()));
+			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			_objectDefinition1, childObjectEntry3.getId());
 
-		_assertEquals(
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry2.getId()),
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"countAggregationObjectFieldName2", "1"
 					).build();
 				}
-			},
-			_defaultObjectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				parentObjectEntry2.getId()));
+			});
 
 		_defaultObjectEntryManager.deleteObjectEntry(
 			_objectDefinition1, childObjectEntry4.getId());
 
-		_assertEquals(
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				parentObjectEntry2.getId()),
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
 						"countAggregationObjectFieldName2", "0"
 					).build();
 				}
-			},
-			_defaultObjectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				parentObjectEntry2.getId()));
+			});
 
 		// Date time
 
@@ -2084,7 +2084,7 @@ public class DefaultObjectEntryManagerImplTest
 			"yyyy-MM-dd");
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
-			_dtoConverterContext, _objectDefinition2,
+			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
@@ -2131,7 +2131,15 @@ public class DefaultObjectEntryManagerImplTest
 				"richTextObjectFieldName", "<i>richTextObjectFieldNameValue</i>"
 			).build();
 
-		_assertEquals(
+		assertEquals(
+			_defaultObjectEntryManager.partialUpdateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition2,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = objectEntryProperties;
+					}
+				}),
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>putAll(
@@ -2140,15 +2148,7 @@ public class DefaultObjectEntryManagerImplTest
 						"textObjectFieldName", "textObjectFieldValue"
 					).build();
 				}
-			},
-			_defaultObjectEntryManager.partialUpdateObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition2,
-				objectEntry.getId(),
-				new ObjectEntry() {
-					{
-						properties = objectEntryProperties;
-					}
-				}));
+			});
 	}
 
 	@Test

@@ -14,6 +14,7 @@ Import-Package:\
 Require-Capability:\
 	osgi.extender;\
 		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+-dsannotations-options: inherit
 -includeresource:\
 	OSGI-INF/configurator=configurator,\
 	@google-collections-[0-9.]*.jar,\

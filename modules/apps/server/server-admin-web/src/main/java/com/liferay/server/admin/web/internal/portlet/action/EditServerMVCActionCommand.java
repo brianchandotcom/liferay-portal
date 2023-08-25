@@ -6,6 +6,7 @@
 package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
@@ -208,6 +209,9 @@ public class EditServerMVCActionCommand
 		}
 		else if (cmd.equals("dlGenerateAudioPreviews")) {
 			_audioProcessor.generatePreviews();
+		}
+		else if (cmd.equals("dlGenerateOpenOfficePreviews")) {
+			_documentConversion.generatePreviews();
 		}
 		else if (cmd.equals("dlGeneratePDFPreviews")) {
 			_pdfProcessor.generatePreviews();
@@ -883,6 +887,9 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
+
+	@Reference
+	private DocumentConversion _documentConversion;
 
 	@Reference
 	private Ghostscript _ghostscript;

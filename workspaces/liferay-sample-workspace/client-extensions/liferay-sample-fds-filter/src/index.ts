@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type {FDSFilter} from '@liferay/js-api/data-set';
+import type {FDSFilterHTMLElementBuilder} from '@liferay/js-api/data-set';
 
-const mySampleFilter: FDSFilter = ({filter, setFilter}) => {
+const mySampleFilter: FDSFilterHTMLElementBuilder = ({filter, setFilter}) => {
 	const div = document.createElement('div');
 	const button = document.createElement('button');
 	const input = document.createElement('input');

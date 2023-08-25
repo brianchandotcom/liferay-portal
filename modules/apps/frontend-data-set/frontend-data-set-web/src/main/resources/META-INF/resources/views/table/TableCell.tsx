@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDSCellRendererArgs} from '@liferay/js-api/data-set';
+import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
 import {ClientExtension} from 'frontend-js-components-web';
 import {TRenderer, getRenderer} from 'frontend-js-web';
 import React, {ComponentType, useContext, useEffect, useState} from 'react';
@@ -171,7 +171,7 @@ function TableCell({
 	) {
 		return (
 			<DndTableCell columnName={String(field.fieldName)}>
-				<ClientExtension<FDSCellRendererArgs>
+				<ClientExtension<FDSTableCellHTMLElementBuilderArgs>
 					args={{value}}
 					htmlElementBuilder={cellRenderer.htmlElementBuilder}
 				/>

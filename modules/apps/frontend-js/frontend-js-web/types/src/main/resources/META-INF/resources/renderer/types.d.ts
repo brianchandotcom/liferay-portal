@@ -5,10 +5,10 @@
 
 /// <reference types="react" />
 
-import {FDSCellRenderer} from '@liferay/js-api/data-set';
+import {FDSTableCellHTMLElementBuilder} from '@liferay/js-api/data-set';
 export interface IClientExtensionRenderer {
 	erc?: string;
-	htmlElementBuilder?: FDSCellRenderer;
+	htmlElementBuilder?: FDSTableCellHTMLElementBuilder;
 	name?: string;
 	type: 'clientExtension';
 	url?: string;

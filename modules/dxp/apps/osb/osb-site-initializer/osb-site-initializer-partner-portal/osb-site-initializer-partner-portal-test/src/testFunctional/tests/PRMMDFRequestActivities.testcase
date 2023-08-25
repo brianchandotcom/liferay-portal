@@ -378,4 +378,49 @@ definition {
 			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
 		}
 	}
+
+	@description = "This is a test for LPS-192227. Verify that the partner can submit an MDF with an Miscellaneous Marketing > Outbound Telemarketing Sales activity"
+	@priority = 4
+	test CanSubmitMDFWithMiscellaneousMarketingOutboundTelemarketingSalesActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Miscellaneous Marketing' as Type of Activity and 'Outbound Telemarketing Sales activity' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Outbound Telemarketing Sales",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Outbound Telemarketing Sales",
+				typeOfActivity = "Miscellaneous Marketing");
+
+			var tacticFieldsList = '''
+				Marketing activity: Activity Description,
+				Audience Target: Audience Target,
+				Source and Size of call List: Call List,
+				Resources necessary from Liferay: Resources Liferay
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
 }

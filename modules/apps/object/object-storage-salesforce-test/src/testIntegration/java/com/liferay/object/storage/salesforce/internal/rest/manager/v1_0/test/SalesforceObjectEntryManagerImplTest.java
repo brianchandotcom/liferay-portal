@@ -418,29 +418,8 @@ public class SalesforceObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	@Override
-	protected Page<ObjectEntry> getObjectEntries(
-			Map<String, String> context, Sort[] sorts)
-		throws Exception {
-
-		if (sorts == null) {
-			sorts = new Sort[] {SortFactoryUtil.create("title", false)};
-		}
-
-		return _objectEntryManager.getObjectEntries(
-			companyId, _objectDefinition, null, null, dtoConverterContext,
-			context.get("filter"), Pagination.of(1, 3), context.get("search"),
-			sorts);
-	}
-
-	private String _buildNotEqualsExpressionFilterString(
-		String fieldName, Object value) {
-
-		return StringBundler.concat(fieldName, " ne ", getValue(value));
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
-		DTOConverterContext dtoConverterContext = _getDTOConverterContext();
-
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition,
 			new ObjectEntry() {
@@ -474,15 +453,30 @@ public class SalesforceObjectEntryManagerImplTest
 		Assert.assertEquals("Able", properties.get("title"));
 
 		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), _getDTOConverterContext(),
+			TestPropsValues.getCompanyId(), dtoConverterContext,
 			objectEntry.getExternalReferenceCode(), _objectDefinition,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	private DTOConverterContext _getDTOConverterContext() throws Exception {
-		return new DefaultDTOConverterContext(
-			false, Collections.emptyMap(), _dtoConverterRegistry, null,
-			LocaleUtil.getDefault(), null, _user);
+	@Override
+	protected Page<ObjectEntry> getObjectEntries(
+			Map<String, String> context, Sort[] sorts)
+		throws Exception {
+
+		if (sorts == null) {
+			sorts = new Sort[] {SortFactoryUtil.create("title", false)};
+		}
+
+		return _objectEntryManager.getObjectEntries(
+			companyId, _objectDefinition, null, null, dtoConverterContext,
+			context.get("filter"), Pagination.of(1, 3), context.get("search"),
+			sorts);
+	}
+
+	private String _buildNotEqualsExpressionFilterString(
+		String fieldName, Object value) {
+
+		return StringBundler.concat(fieldName, " ne ", getValue(value));
 	}
 
 	@Inject

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.synonyms.web.internal.index.creation.contributor;
+package com.liferay.portal.search.tuning.synonyms.web.internal.index.listener;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
+import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
@@ -28,10 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration",
-	service = IndexContributor.class
+	service = CompanyIndexListener.class
 )
-public class SynonymSetIndexCreationIndexContributor
-	implements IndexContributor {
+public class SynonymSetCompanyIndexListener implements CompanyIndexListener {
 
 	@Override
 	public void onAfterCreate(String companyIndexName) {

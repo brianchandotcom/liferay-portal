@@ -21,7 +21,7 @@ import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
 import com.liferay.portal.search.opensearch2.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.opensearch2.internal.query.QueryFactories;
 import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
-import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
+import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
 import com.liferay.portal.search.spi.settings.IndexSettingsContributor;
 import com.liferay.portal.search.spi.settings.IndexSettingsHelper;
 import com.liferay.portal.search.spi.settings.TypeMappingsHelper;
@@ -196,6 +196,86 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 	}
 
 	@Test
+	public void testCompanyIndexListeners() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryFixture, "_indexName", "other");
+
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryFixture.getIndexHelper(),
+			"_companyIndexListenerServiceTrackerList",
+			ServiceTrackerListFactory.open(
+				_bundleContext, CompanyIndexListener.class, null,
+				new ServiceTrackerCustomizer
+					<CompanyIndexListener, CompanyIndexListener>() {
+
+					@Override
+					public CompanyIndexListener addingService(
+						ServiceReference<CompanyIndexListener>
+							serviceReference) {
+
+						return null;
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<CompanyIndexListener> serviceReference,
+						CompanyIndexListener companyIndexListener) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<CompanyIndexListener> serviceReference,
+						CompanyIndexListener companyIndexListener) {
+					}
+
+				}));
+
+		addCompanyIndexListener(
+			new CompanyIndexListener() {
+
+				@Override
+				public void onAfterCreate(String indexName) {
+					_companyIndexFactoryFixture.createIndices();
+				}
+
+				@Override
+				public void onBeforeRemove(String indexName) {
+					_companyIndexFactoryFixture.deleteIndices();
+				}
+
+			});
+
+		createIndices();
+
+		_assertHasIndex(_companyIndexFactoryFixture.getIndexName());
+
+		deleteIndices();
+
+		_assertNoIndex(_companyIndexFactoryFixture.getIndexName());
+	}
+
+	@Test
+	public void testCompanyIndexListenersThrowsException() throws Exception {
+		addCompanyIndexListener(
+			new CompanyIndexListener() {
+
+				@Override
+				public void onAfterCreate(String indexName) {
+					throw new RuntimeException();
+				}
+
+				@Override
+				public void onBeforeRemove(String indexName) {
+					throw new RuntimeException();
+				}
+
+			});
+
+		createIndices();
+		deleteIndices();
+	}
+
+	@Test
 	public void testCreateIndicesWithBlankStrings() throws Exception {
 		Mockito.when(
 			_openSearchConfigurationWrapper.additionalIndexConfigurations()
@@ -267,85 +347,6 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 
 		_assertIndexSettings(0, 3);
 
-		deleteIndices();
-	}
-
-	@Test
-	public void testIndexContributors() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryFixture, "_indexName", "other");
-
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactoryFixture.getIndexHelper(),
-			"_indexContributorServiceTrackerList",
-			ServiceTrackerListFactory.open(
-				_bundleContext, IndexContributor.class, null,
-				new ServiceTrackerCustomizer
-					<IndexContributor, IndexContributor>() {
-
-					@Override
-					public IndexContributor addingService(
-						ServiceReference<IndexContributor> serviceReference) {
-
-						return null;
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<IndexContributor> serviceReference,
-						IndexContributor indexContributor) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<IndexContributor> serviceReference,
-						IndexContributor indexContributor) {
-					}
-
-				}));
-
-		addIndexContributor(
-			new IndexContributor() {
-
-				@Override
-				public void onAfterCreate(String indexName) {
-					_companyIndexFactoryFixture.createIndices();
-				}
-
-				@Override
-				public void onBeforeRemove(String indexName) {
-					_companyIndexFactoryFixture.deleteIndices();
-				}
-
-			});
-
-		createIndices();
-
-		_assertHasIndex(_companyIndexFactoryFixture.getIndexName());
-
-		deleteIndices();
-
-		_assertNoIndex(_companyIndexFactoryFixture.getIndexName());
-	}
-
-	@Test
-	public void testIndexContributorsThrowsException() throws Exception {
-		addIndexContributor(
-			new IndexContributor() {
-
-				@Override
-				public void onAfterCreate(String indexName) {
-					throw new RuntimeException();
-				}
-
-				@Override
-				public void onBeforeRemove(String indexName) {
-					throw new RuntimeException();
-				}
-
-			});
-
-		createIndices();
 		deleteIndices();
 	}
 
@@ -554,10 +555,12 @@ public class CompanyIndexFactoryTest extends BaseOpenSearchTestCase {
 	@Rule
 	public TestName testName = new TestName();
 
-	protected void addIndexContributor(IndexContributor indexContributor) {
+	protected void addCompanyIndexListener(
+		CompanyIndexListener companyIndexListener) {
+
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
-				IndexContributor.class, indexContributor, null));
+				CompanyIndexListener.class, companyIndexListener, null));
 	}
 
 	protected void assertAnalyzer(String analyzer, String field)

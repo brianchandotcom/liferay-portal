@@ -6,15 +6,12 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -43,7 +40,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -369,9 +365,7 @@ public class SharingEntryLocalServiceTest {
 	public void testDeleteExpiredEntries() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		try (DisableSchedulerDestination disableSchedulerDestination =
-				new DisableSchedulerDestination()) {
-
+		try {
 			long classNameId = _classNameLocalService.getClassNameId(
 				Group.class.getName());
 
@@ -1210,26 +1204,5 @@ public class SharingEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	private final class DisableSchedulerDestination implements AutoCloseable {
-
-		public DisableSchedulerDestination() {
-			_destinations = ReflectionTestUtil.getFieldValue(
-				_messageBus, "_destinations");
-
-			_destination = _destinations.remove(
-				DestinationNames.SCHEDULER_DISPATCH);
-		}
-
-		@Override
-		public void close() {
-			_destinations.put(
-				DestinationNames.SCHEDULER_DISPATCH, _destination);
-		}
-
-		private final Destination _destination;
-		private final Map<String, Destination> _destinations;
-
-	}
 
 }

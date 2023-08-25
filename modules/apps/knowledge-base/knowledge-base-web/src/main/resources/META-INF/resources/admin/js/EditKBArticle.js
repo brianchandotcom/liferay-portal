@@ -80,10 +80,7 @@ export default function EditKBArticle({
 				onOpen: () => {
 					const scheduleEventHandler = Liferay.on(
 						'scheduleKBArticle',
-						() => {
-							beforeSubmit();
-							submitForm(form);
-						}
+						publishButtonOnClick
 					);
 
 					modalEventHandlers.push(scheduleEventHandler);

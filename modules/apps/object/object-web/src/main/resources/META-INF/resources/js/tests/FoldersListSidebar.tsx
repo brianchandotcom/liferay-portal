@@ -25,6 +25,7 @@ const ticketFolder = {
 	id: 2020,
 	label: {en_US: 'Ticket System'},
 	name: 'TicketName',
+	objectFolderItems: [],
 };
 
 const uncategorizedFolder = {

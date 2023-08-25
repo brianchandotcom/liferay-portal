@@ -27,6 +27,7 @@ import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeC
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderItemTable;
+import com.liferay.commerce.model.CommerceOrderTable;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.price.CommerceProductPrice;
@@ -54,6 +55,7 @@ import com.liferay.commerce.tax.CommerceTaxCalculation;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -463,6 +465,42 @@ public class CommerceOrderItemLocalServiceImpl
 
 		return commerceOrderItemPersistence.findByCommerceOrderId(
 			commerceOrderId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long cpInstanceId, int[] orderStatuses, String unitOfMeasureKey,
+		int start, int end) {
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommerceOrderItemTable.INSTANCE
+			).from(
+				CommerceOrderItemTable.INSTANCE
+			).innerJoinON(
+				CommerceOrderTable.INSTANCE,
+				CommerceOrderTable.INSTANCE.commerceOrderId.eq(
+					CommerceOrderItemTable.INSTANCE.commerceOrderId)
+			).where(
+				CommerceOrderItemTable.INSTANCE.CPInstanceId.eq(
+					cpInstanceId
+				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceOrderItemTable.INSTANCE.unitOfMeasureKey.
+							eq(unitOfMeasureKey);
+					}
+				).and(
+					CommerceOrderTable.INSTANCE.orderStatus.in(
+						TransformUtil.transform(
+							orderStatuses, Integer::valueOf, Integer.class))
+				)
+			).limit(
+				start, end
+			));
 	}
 
 	@Override

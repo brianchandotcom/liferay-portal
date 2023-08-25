@@ -19,11 +19,6 @@ public class JenkinsNodeEntityFactory
 	extends BaseEntityFactory<JenkinsNodeEntity> {
 
 	@Override
-	public String getEntityLabel() {
-		return "Jenkins Node";
-	}
-
-	@Override
 	public JenkinsNodeEntity newEntity(JSONObject jsonObject) {
 		JenkinsNodeEntity.Type type = JenkinsNodeEntity.Type.get(
 			jsonObject.getJSONObject("type"));

@@ -19,11 +19,6 @@ public class ProjectPrioritizerEntityFactory
 	extends BaseEntityFactory<ProjectPrioritizerEntity> {
 
 	@Override
-	public String getEntityLabel() {
-		return "Project Prioritizer";
-	}
-
-	@Override
 	public ProjectPrioritizerEntity newEntity(JSONObject jsonObject) {
 		return new DefaultProjectPrioritizerEntity(jsonObject);
 	}

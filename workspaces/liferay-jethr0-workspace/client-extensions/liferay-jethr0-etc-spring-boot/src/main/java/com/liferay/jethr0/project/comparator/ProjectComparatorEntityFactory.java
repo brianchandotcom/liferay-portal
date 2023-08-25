@@ -19,11 +19,6 @@ public class ProjectComparatorEntityFactory
 	extends BaseEntityFactory<ProjectComparatorEntity> {
 
 	@Override
-	public String getEntityLabel() {
-		return "Project Comparator";
-	}
-
-	@Override
 	public ProjectComparatorEntity newEntity(JSONObject jsonObject) {
 		ProjectComparatorEntity.Type type = ProjectComparatorEntity.Type.get(
 			jsonObject.getJSONObject("type"));

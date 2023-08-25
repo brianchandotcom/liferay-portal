@@ -18,11 +18,6 @@ import org.springframework.context.annotation.Configuration;
 public class TaskRunEntityFactory extends BaseEntityFactory<TaskRunEntity> {
 
 	@Override
-	public String getEntityLabel() {
-		return "Task Run";
-	}
-
-	@Override
 	public TaskRunEntity newEntity(JSONObject jsonObject) {
 		return new DefaultTaskRunEntity(jsonObject);
 	}

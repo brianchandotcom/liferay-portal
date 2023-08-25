@@ -19,11 +19,6 @@ public class JenkinsServerEntityFactory
 	extends BaseEntityFactory<JenkinsServerEntity> {
 
 	@Override
-	public String getEntityLabel() {
-		return "Jenkins Server";
-	}
-
-	@Override
 	public JenkinsServerEntity newEntity(JSONObject jsonObject) {
 		return new DefaultJenkinsServerEntity(jsonObject);
 	}

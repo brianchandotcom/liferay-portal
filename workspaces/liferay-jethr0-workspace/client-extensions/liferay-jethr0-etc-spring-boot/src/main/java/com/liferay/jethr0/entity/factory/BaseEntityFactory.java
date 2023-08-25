@@ -21,7 +21,13 @@ public abstract class BaseEntityFactory<T extends Entity>
 
 	@Override
 	public String getEntityLabel() {
-		return _clazz.getSimpleName();
+		String entityLabel = _clazz.getSimpleName();
+
+		if (entityLabel.endsWith("Entity")) {
+			entityLabel = entityLabel.replaceAll("(.*)Entity", "$1");
+		}
+
+		return entityLabel;
 	}
 
 	@Override

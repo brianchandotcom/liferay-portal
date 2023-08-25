@@ -7,10 +7,12 @@
 
 import './NodeFooter.scss';
 interface NodeFooterProps {
+	isLinkedNode: boolean;
 	setShowAllFields: (value: boolean) => void;
 	showAllFields: boolean;
 }
 export default function NodeFooter({
+	isLinkedNode,
 	setShowAllFields,
 	showAllFields,
 }: NodeFooterProps): JSX.Element;

@@ -4,7 +4,7 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {ArrowHeadType, Edge, Node, useStore} from 'react-flow-renderer';
+import {ArrowHeadType, Edge, Node, isEdge, useStore} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarkerEnd';
@@ -34,6 +34,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				x: 2 * 300,
 				y: 2 * 400,
 			};
+
 			if (nodes.length) {
 				const yPositions = nodes.map((node) => node.position.y);
 				const maximumY = Math.max(...yPositions);
@@ -52,23 +53,47 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 					y: mostBottomRightNodePosition!.y,
 				};
 			}
+
+			const linkedDefinition = elements.filter((element) => {
+				if (isEdge(element)) {
+					return element.target === newObjectDefinition.id.toString();
+				}
+			});
+
+			const isLinkedDefinition = !!linkedDefinition.length;
+
 			const newLeftSidebarItems = leftSidebarItems.map((item) => {
 				let newDefinition;
 
 				if (item.folderName === selectedFolderName) {
-					newDefinition = {
-						definitionId: newObjectDefinition.id,
-						definitionName: newObjectDefinition.name,
-						name: getLocalizableLabel(
-							newObjectDefinition.defaultLanguageId,
-							newObjectDefinition.label,
-							newObjectDefinition.name
-						),
-						selected: true,
-						type: 'objectDefinition',
-					};
+					if (!isLinkedDefinition) {
+						newDefinition = {
+							definitionId: newObjectDefinition.id,
+							definitionName: newObjectDefinition.name,
+							name: getLocalizableLabel(
+								newObjectDefinition.defaultLanguageId,
+								newObjectDefinition.label,
+								newObjectDefinition.name
+							),
+							selected: true,
+							type: 'objectDefinition',
+						};
+					}
+
 					const updatedObjectDefinitions = item.objectDefinitions?.map(
 						(objectDefinition) => {
+							if (
+								isLinkedDefinition &&
+								objectDefinition.definitionId ===
+									newObjectDefinition.id
+							) {
+								return {
+									...objectDefinition,
+									selected: true,
+									type: 'objectDefinition',
+								};
+							}
+
 							return {
 								...objectDefinition,
 								selected: false,
@@ -78,10 +103,9 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 					return {
 						...item,
-						objectDefinitions: [
-							...updatedObjectDefinitions!,
-							newDefinition,
-						],
+						objectDefinitions: newDefinition
+							? [...updatedObjectDefinitions!, newDefinition]
+							: [...updatedObjectDefinitions!],
 					};
 				}
 				else {
@@ -116,34 +140,66 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 					},
 				};
 			});
-			const newNode = {
-				data: {
-					...newObjectDefinition,
-					hasObjectDefinitionDeleteResourcePermission: !!newObjectDefinition
-						.actions.delete,
-					hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
-						.actions.permissions,
-					hasObjectDefinitionUpdateResourcePermission: !!newObjectDefinition
-						.actions.update,
-					hasObjectDefinitionViewResourcePermission: false,
-					hasSelfRelationships: false,
-					label: getLocalizableLabel(
-						newObjectDefinition.defaultLanguageId,
-						newObjectDefinition.label,
-						newObjectDefinition.name
-					),
-					linkedDefinition: false,
-					nodeSelected: true,
-					objectFields: fieldsCustomSort(objectFields),
-				},
-				id: newObjectDefinition.id.toString(),
-				position: newPosition,
-				type: 'objectDefinition',
-			} as Node<ObjectDefinitionNodeData>;
-			const newObjectDefinitionNodes = [
-				...updatedObjectDefinitionsNodes,
-				newNode,
-			] as Node<ObjectDefinitionNodeData>[];
+
+			let newObjectDefinitionNodes = [];
+
+			let newNode = {} as Node<ObjectDefinitionNodeData>;
+
+			if (isLinkedDefinition) {
+				const definitionNodes = updatedObjectDefinitionsNodes.map(
+					(node) => {
+						if (node.id === newObjectDefinition.id.toString()) {
+							newNode = {
+								...node,
+								data: {
+									...node.data,
+									linkedDefinition: false,
+									nodeSelected: true,
+								},
+							} as Node<ObjectDefinitionNodeData>;
+
+							return newNode;
+						}
+
+						return node;
+					}
+				);
+
+				newObjectDefinitionNodes = [...definitionNodes] as Node<
+					ObjectDefinitionNodeData
+				>[];
+			}
+			else {
+				newNode = {
+					data: {
+						...newObjectDefinition,
+						hasObjectDefinitionDeleteResourcePermission: !!newObjectDefinition
+							.actions.delete,
+						hasObjectDefinitionManagePermissionsResourcePermission: !!newObjectDefinition
+							.actions.permissions,
+						hasObjectDefinitionUpdateResourcePermission: !!newObjectDefinition
+							.actions.update,
+						hasObjectDefinitionViewResourcePermission: false,
+						hasSelfRelationships: false,
+						label: getLocalizableLabel(
+							newObjectDefinition.defaultLanguageId,
+							newObjectDefinition.label,
+							newObjectDefinition.name
+						),
+						linkedDefinition: false,
+						nodeSelected: true,
+						objectFields: fieldsCustomSort(objectFields),
+					},
+					id: newObjectDefinition.id.toString(),
+					position: newPosition,
+					type: 'objectDefinition',
+				} as Node<ObjectDefinitionNodeData>;
+
+				newObjectDefinitionNodes = [
+					...updatedObjectDefinitionsNodes,
+					newNode,
+				] as Node<ObjectDefinitionNodeData>[];
+			}
 
 			return {
 				...state,
@@ -304,7 +360,9 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							hiddenNode: false,
 							name: definition.label,
 							selected: false,
-							type: 'objectDefinition',
+							type: definition.linkedDefinition
+								? 'objectLink'
+								: 'objectDefinition',
 						};
 					}
 				);

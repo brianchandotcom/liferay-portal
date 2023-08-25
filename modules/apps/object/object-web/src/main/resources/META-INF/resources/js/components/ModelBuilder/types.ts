@@ -135,9 +135,10 @@ export type LeftSidebarDefinitionItemType = {
 	definitionId: number;
 	definitionName: string;
 	hiddenNode: boolean;
+	linked?: boolean;
 	name: string;
 	selected: boolean;
-	type: 'objectDefinition';
+	type: 'objectDefinition' | 'objectLink';
 };
 
 export type ObjectDefinitionNodeTypes = 'objectDefinition';

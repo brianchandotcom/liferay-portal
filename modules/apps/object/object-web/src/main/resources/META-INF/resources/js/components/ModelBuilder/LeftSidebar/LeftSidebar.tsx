@@ -28,6 +28,7 @@ import {LeftSidebarDefinitionItemType, LeftSidebarItemType} from '../types';
 const TYPES_TO_SYMBOLS = {
 	objectDefinition: 'catalog',
 	objectFolder: 'folder',
+	objectLink: 'link',
 };
 
 interface LeftSidebarProps {
@@ -81,10 +82,10 @@ export default function LeftSidebar({
 	}, [query, leftSidebarItems]);
 
 	const handleMove = async ({
-		definitionName,
+		definitionId,
 		folderName,
 	}: {
-		definitionName: string;
+		definitionId: number;
 		folderName: string;
 	}) => {
 		const folderResponse = await API.getAllFolders();
@@ -98,48 +99,52 @@ export default function LeftSidebar({
 		);
 
 		const objectDefinition = folderDefinitions.find(
-			(definition) => definition.name === definitionName
+			(definition) => definition.id === definitionId
 		) as ObjectDefinitionNodeData;
 
-		const movedObjectDefinition: ObjectDefinitionNodeData = {
-			...objectDefinition,
-			objectFolderExternalReferenceCode:
-				selectedFolder.externalReferenceCode,
-		};
+		if (objectDefinition) {
+			const movedObjectDefinition: ObjectDefinitionNodeData = {
+				...objectDefinition,
+				objectFolderExternalReferenceCode:
+					selectedFolder.externalReferenceCode,
+			};
 
-		try {
-			const newObjectDefinition = (await API.save({
-				item: movedObjectDefinition,
-				method: 'PATCH',
-				returnValue: true,
-				url: `/o/object-admin/v1.0/object-definitions/${objectDefinition?.id}`,
-			})) as ObjectDefinition;
+			try {
+				const newObjectDefinition = (await API.save({
+					item: movedObjectDefinition,
+					method: 'PATCH',
+					returnValue: true,
+					url: `/o/object-admin/v1.0/object-definitions/${objectDefinition?.id}`,
+				})) as ObjectDefinition;
 
-			dispatch({
-				payload: {
-					newObjectDefinition,
-					selectedFolderName,
-				},
-				type: TYPES.ADD_NEW_NODE_TO_FOLDER,
-			});
+				dispatch({
+					payload: {
+						newObjectDefinition,
+						selectedFolderName,
+					},
+					type: TYPES.ADD_NEW_NODE_TO_FOLDER,
+				});
 
-			dispatch({
-				payload: {
-					currentFolderName: currentFolder!.name,
-					deletedNodeName: newObjectDefinition.name,
-				},
-				type: TYPES.DELETE_FOLDER_NODE,
-			});
+				if (!objectDefinition.linkedDefinition) {
+					dispatch({
+						payload: {
+							currentFolderName: currentFolder!.name,
+							deletedNodeName: newObjectDefinition.name,
+						},
+						type: TYPES.DELETE_FOLDER_NODE,
+					});
+				}
 
-			openToast({
-				message: sub(
-					Liferay.Language.get('x-was-moved-successfully'),
-					`<strong>${movedObjectDefinition.label}</strong>`
-				),
-				type: 'success',
-			});
+				openToast({
+					message: sub(
+						Liferay.Language.get('x-was-moved-successfully'),
+						`<strong>${movedObjectDefinition.label}</strong>`
+					),
+					type: 'success',
+				});
+			}
+			catch (error) {}
 		}
-		catch (error) {}
 	};
 
 	const TreeViewComponent = ({showActions}: {showActions?: boolean}) => {
@@ -151,9 +156,36 @@ export default function LeftSidebar({
 			(item) => item.folderName === selectedFolderName
 		) as LeftSidebarItemType;
 
+		const linkedDefinitions = selectedFolder.objectDefinitions?.filter(
+			(definition) => definition.type === 'objectLink'
+		);
+
+		const newOtherFolders = otherFolders.map((folder) => {
+			const definitions = folder.objectDefinitions?.map((definition) => {
+				const objectLinked = linkedDefinitions?.find(
+					(linkedDefinition) =>
+						linkedDefinition.definitionId ===
+						definition.definitionId
+				);
+				if (objectLinked) {
+					return {
+						...definition,
+						linked: true,
+					};
+				}
+
+				return definition;
+			});
+
+			return {
+				...folder,
+				objectDefinitions: definitions,
+			};
+		});
+
 		return (
 			<TreeView<LeftSidebarItemType | LeftSidebarDefinitionItemType>
-				items={showActions ? otherFolders : [selectedFolder]}
+				items={showActions ? newOtherFolders : [selectedFolder]}
 				nestedKey="objectDefinitions"
 				onSelect={(item) => {
 					if (
@@ -232,6 +264,7 @@ export default function LeftSidebar({
 								definitionId,
 								definitionName,
 								hiddenNode,
+								linked,
 								name,
 								selected,
 								type,
@@ -248,7 +281,7 @@ export default function LeftSidebar({
 															),
 															onClick: () =>
 																handleMove({
-																	definitionName,
+																	definitionId,
 																	folderName:
 																		item.folderName,
 																}),
@@ -286,6 +319,7 @@ export default function LeftSidebar({
 									active={selected}
 									className={classNames({
 										'lfr-objects__model-builder-left-sidebar-item': selected,
+										'lfr-objects__model-builder-left-sidebar-item-linked': linked,
 									})}
 								>
 									<Icon symbol={TYPES_TO_SYMBOLS[type]} />

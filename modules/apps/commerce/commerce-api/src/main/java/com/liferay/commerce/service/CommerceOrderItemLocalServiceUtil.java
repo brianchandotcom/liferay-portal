@@ -426,6 +426,14 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static List<CommerceOrderItem> getCommerceOrderItems(
+		long cpInstanceId, int[] orderStatuses, String unitOfMeasureKey,
+		int start, int end) {
+
+		return getService().getCommerceOrderItems(
+			cpInstanceId, orderStatuses, unitOfMeasureKey, start, end);
+	}
+
+	public static List<CommerceOrderItem> getCommerceOrderItems(
 		long commerceOrderId, long cpInstanceId, int start, int end) {
 
 		return getService().getCommerceOrderItems(

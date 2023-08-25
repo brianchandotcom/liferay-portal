@@ -490,6 +490,16 @@ public class CommerceOrderItemLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
 		getCommerceOrderItems(
+			long cpInstanceId, int[] orderStatuses, String unitOfMeasureKey,
+			int start, int end) {
+
+		return _commerceOrderItemLocalService.getCommerceOrderItems(
+			cpInstanceId, orderStatuses, unitOfMeasureKey, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+		getCommerceOrderItems(
 			long commerceOrderId, long cpInstanceId, int start, int end) {
 
 		return _commerceOrderItemLocalService.getCommerceOrderItems(

@@ -340,6 +340,11 @@ public interface CommerceOrderItemLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderItem> getCommerceOrderItems(
+		long cpInstanceId, int[] orderStatuses, String unitOfMeasureKey,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(
 		long commerceOrderId, long cpInstanceId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

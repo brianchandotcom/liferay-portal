@@ -267,12 +267,20 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				_addDemoSettings(company);
 			}
 
-			_addGuestUser(company);
+			User guestUser = _addGuestUser(company);
 
 			company = _checkCompany(
 				company, mx, defaultAdminPassword, defaultAdminScreenName,
 				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminMiddleName, defaultAdminLastName);
+				defaultAdminMiddleName, defaultAdminLastName, guestUser);
+
+			// Guest user must have the Guest role
+
+			Role guestRole = _roleLocalService.getRole(
+				company.getCompanyId(), RoleConstants.GUEST);
+
+			_roleLocalService.setUserRoles(
+				guestUser.getUserId(), new long[] {guestRole.getRoleId()});
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -326,7 +334,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = getCompanyByWebId(webId);
 
-		return _checkCompany(company, mx, null, null, null, null, null, null);
+		User guestUser = _userPersistence.fetchByC_T_First(
+			company.getCompanyId(), UserConstants.TYPE_GUEST, null);
+
+		return _checkCompany(
+			company, mx, null, null, null, null, null, null, guestUser);
 	}
 
 	/**
@@ -1947,7 +1959,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			Company company, String mx, String defaultAdminPassword,
 			String defaultAdminScreenName, String defaultAdminEmailAddress,
 			String defaultAdminFirstName, String defaultAdminMiddleName,
-			String defaultAdminLastName)
+			String defaultAdminLastName, User guestUser)
 		throws PortalException {
 
 		Locale localeThreadLocalDefaultLocale =
@@ -1969,22 +1981,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			checkCompanyKey(company.getCompanyId());
 
-			// Guest user
-
-			User guestUser = _userPersistence.fetchByC_T_First(
-				company.getCompanyId(), UserConstants.TYPE_GUEST, null);
-
-			if (guestUser != null) {
-				if (!guestUser.isAgreedToTermsOfUse()) {
-					guestUser.setAgreedToTermsOfUse(true);
-
-					guestUser = _userPersistence.update(guestUser);
-				}
-			}
-			else {
-				guestUser = _addGuestUser(company);
-			}
-
 			// System roles
 
 			_roleLocalService.checkSystemRoles(company.getCompanyId());
@@ -2001,14 +1997,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_passwordPolicyLocalService.checkDefaultPasswordPolicy(
 				company.getCompanyId());
-
-			// Guest user must have the Guest role
-
-			Role guestRole = _roleLocalService.getRole(
-				company.getCompanyId(), RoleConstants.GUEST);
-
-			_roleLocalService.setUserRoles(
-				guestUser.getUserId(), new long[] {guestRole.getRoleId()});
 
 			// Default admin
 

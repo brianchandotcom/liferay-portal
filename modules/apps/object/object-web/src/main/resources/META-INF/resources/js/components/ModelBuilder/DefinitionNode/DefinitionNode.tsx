@@ -108,6 +108,7 @@ export function DefinitionNode({
 				className={classNames(
 					'lfr-objects__model-builder-node-container',
 					{
+						'lfr-objects__model-builder-node-container--link': linkedDefinition,
 						'lfr-objects__model-builder-node-container--selected': nodeSelected,
 					}
 				)}
@@ -151,6 +152,7 @@ export function DefinitionNode({
 				/>
 
 				<NodeFooter
+					isLinkedNode={linkedDefinition}
 					setShowAllFields={setShowAllFields}
 					showAllFields={showAllFields}
 				/>

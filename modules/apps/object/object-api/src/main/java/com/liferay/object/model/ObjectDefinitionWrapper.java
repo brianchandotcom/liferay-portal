@@ -59,6 +59,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("enableCategorization", isEnableCategorization());
 		attributes.put("enableComments", isEnableComments());
 		attributes.put("enableLocalization", isEnableLocalization());
+		attributes.put("enableObjectEntryDraft", isEnableObjectEntryDraft());
 		attributes.put(
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
 		attributes.put("modifiable", isModifiable());
@@ -219,6 +220,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableLocalization != null) {
 			setEnableLocalization(enableLocalization);
+		}
+
+		Boolean enableObjectEntryDraft = (Boolean)attributes.get(
+			"enableObjectEntryDraft");
+
+		if (enableObjectEntryDraft != null) {
+			setEnableObjectEntryDraft(enableObjectEntryDraft);
 		}
 
 		Boolean enableObjectEntryHistory = (Boolean)attributes.get(
@@ -436,6 +444,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableLocalization() {
 		return model.getEnableLocalization();
+	}
+
+	/**
+	 * Returns the enable object entry draft of this object definition.
+	 *
+	 * @return the enable object entry draft of this object definition
+	 */
+	@Override
+	public boolean getEnableObjectEntryDraft() {
+		return model.getEnableObjectEntryDraft();
 	}
 
 	/**
@@ -946,6 +964,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable object entry draft.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableObjectEntryDraft() {
+		return model.isEnableObjectEntryDraft();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is enable object entry history.
 	 *
 	 * @return <code>true</code> if this object definition is enable object entry history; <code>false</code> otherwise
@@ -1136,6 +1164,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableLocalization(boolean enableLocalization) {
 		model.setEnableLocalization(enableLocalization);
+	}
+
+	/**
+	 * Sets whether this object definition is enable object entry draft.
+	 *
+	 * @param enableObjectEntryDraft the enable object entry draft of this object definition
+	 */
+	@Override
+	public void setEnableObjectEntryDraft(boolean enableObjectEntryDraft) {
+		model.setEnableObjectEntryDraft(enableObjectEntryDraft);
 	}
 
 	/**

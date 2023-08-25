@@ -18,7 +18,7 @@ import com.liferay.portal.search.opensearch2.internal.index.constants.MappingsCo
 import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.opensearch2.internal.util.ResourceUtil;
-import com.liferay.portal.search.spi.settings.TypeMappingsHelper;
+import com.liferay.portal.search.spi.index.configuration.contributor.helper.TypeMappingsHelper;
 
 import java.io.IOException;
 

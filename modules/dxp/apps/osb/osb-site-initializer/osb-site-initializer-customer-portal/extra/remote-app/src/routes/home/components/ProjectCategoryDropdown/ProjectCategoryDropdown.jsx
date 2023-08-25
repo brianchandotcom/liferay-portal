@@ -18,12 +18,12 @@ const ProjectCategoryDropdown = ({
 	const [active, setActive] = useState(false);
 
 	return (
-		<div className="align-items-center d-flex ml-4 mt-2">
+		<div className="align-items-center d-flex mb-4 ml-4 mt-2">
 			<div className="font-weight-bold pr-1 text-paragraph-sm">
 				{loading ? (
 					<Skeleton height={18} width={40} />
 				) : (
-					`${i18n.translate('projects')}:`
+					`${i18n.translate('filter-by-my-role')}:`
 				)}
 			</div>
 

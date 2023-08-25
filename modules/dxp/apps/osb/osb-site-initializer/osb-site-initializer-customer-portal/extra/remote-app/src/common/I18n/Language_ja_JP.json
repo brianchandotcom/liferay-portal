@@ -137,6 +137,7 @@
 	"export-all-key-details-csv": "すべてのキーの詳細をエクスポート (csv)",
 	"fill-out-the-information-required-to-generate-the-activation-key": "ライセンス認証キーの生成に必要な情報を入力してください",
 	"filter": "フィルター",
+	"filter-by-my-role": "役割で絞り込む",
 	"find-a-project": "プロジェクトの検索",
 	"finish-activation": "ライセンス認証の完了",
 	"first-name": "名",

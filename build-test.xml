@@ -11458,10 +11458,10 @@ ${update.properties}</echo>
 				<isset property="portal.version" />
 			</and>
 			<then>
-				<property name="database.maximum.pool.size" value="50" />
+				<property name="database.max.pool.size" value="50" />
 			</then>
 			<else>
-				<property name="database.maximum.pool.size" value="30" />
+				<property name="database.max.pool.size" value="30" />
 			</else>
 		</if>
 
@@ -11478,7 +11478,7 @@ jdbc.default.password=${database.password}
 // HikariCP
 
 jdbc.default.connectionTimeout=600000
-jdbc.default.maximumPoolSize=${database.maximum.pool.size}
+jdbc.default.maximumPoolSize=${database.max.pool.size}
 jdbc.default.minimumIdle=0
 
 enterprise.product.notification.enabled=false

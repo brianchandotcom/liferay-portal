@@ -1,0 +1,13 @@
+definition {
+
+	macro resetZoom {
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + 0");
+	}
+
+	macro setZoomTo200 {
+		BrowserZoom.resetZoom();
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + + + + + + + + + +");
+	}
+
+}

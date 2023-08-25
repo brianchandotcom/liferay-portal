@@ -273,8 +273,8 @@ public class FacetRequestContributor {
 				facetConfiguration.getFrequencyThreshold()
 			).maxTerms(
 				facetConfiguration.getMaxTerms()
-			).selectedUserNames(
-				_toStringArray(facetConfiguration.getValues())
+			).selectedUserIds(
+				_toLongArray(facetConfiguration.getValues())
 			));
 	}
 

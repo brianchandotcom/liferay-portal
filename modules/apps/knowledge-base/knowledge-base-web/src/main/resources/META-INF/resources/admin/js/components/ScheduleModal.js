@@ -17,7 +17,6 @@ export default function ScheduleModal({
 	scheduledDate: initialScheduleDate,
 }) {
 	const [scheduledDate, setScheduledDate] = useState(initialScheduleDate);
-	const [currentDate, setCurrentDate] = useState();
 	const [invalidDate, setInvalidDate] = useState(false);
 
 	const closeModal = () => {
@@ -39,10 +38,8 @@ export default function ScheduleModal({
 	};
 
 	useEffect(() => {
-		setCurrentDate(Date.now());
-
 		if (
-			isAfter(Date.parse(scheduledDate), currentDate) ||
+			isAfter(Date.parse(scheduledDate), Date.now()) ||
 			(Number.isNaN(Date.parse(scheduledDate)) && !scheduledDate)
 		) {
 			setInvalidDate(false);

@@ -43,8 +43,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
-				"objectRelationshipTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipTypes(objectDefinition)
-			).put(
 				"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)
 			).put(
 				"style", "fluid"

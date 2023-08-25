@@ -44,7 +44,6 @@ export default function Relationships({
 	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
-	objectRelationshipTypes,
 	parameterRequired,
 	style,
 	url,
@@ -211,7 +210,6 @@ export default function Relationships({
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
-					objectRelationshipTypes={objectRelationshipTypes}
 					parameterRequired={parameterRequired}
 				/>
 			)}

@@ -21,7 +21,6 @@ export default function Relationships({
 	isApproved,
 	items,
 	objectDefinitionExternalReferenceCode,
-	objectRelationshipTypes,
 	parameterRequired,
 	style,
 	url,

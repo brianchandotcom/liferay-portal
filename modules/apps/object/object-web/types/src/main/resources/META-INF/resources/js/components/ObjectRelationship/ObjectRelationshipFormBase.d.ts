@@ -10,7 +10,6 @@ interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	objectDefinitionExternalReferenceCode: string;
-	objectRelationshipTypes?: string[];
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;

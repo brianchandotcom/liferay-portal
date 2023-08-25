@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.runner.Description;
@@ -211,19 +214,13 @@ public class SynchronousDestinationTestRule
 				return;
 			}
 
-			for (MessageListener messageListener :
-					schedulerDestination.getMessageListeners()) {
+			_schedulerInvokerMessageListeners =
+				ReflectionTestUtil.getFieldValue(
+					schedulerDestination, "messageListeners");
 
-				InvokerMessageListener invokerMessageListener =
-					(InvokerMessageListener)messageListener;
-
-				MessageListener schedulerMessageListener =
-					invokerMessageListener.getMessageListener();
-
-				schedulerDestination.unregister(schedulerMessageListener);
-
-				_schedulerInvokerMessageListeners.add(invokerMessageListener);
-			}
+			ReflectionTestUtil.setFieldValue(
+				schedulerDestination, "messageListeners",
+				Collections.newSetFromMap(new ConcurrentHashMap<>()));
 
 			int workersMaxSize = ReflectionTestUtil.getFieldValue(
 				schedulerDestination, "_workersMaxSize");
@@ -333,13 +330,9 @@ public class SynchronousDestinationTestRule
 				return;
 			}
 
-			for (InvokerMessageListener invokerMessageListener :
-					_schedulerInvokerMessageListeners) {
-
-				destination.register(
-					invokerMessageListener.getMessageListener(),
-					invokerMessageListener.getClassLoader());
-			}
+			ReflectionTestUtil.setFieldValue(
+				destination, "messageListeners",
+				_schedulerInvokerMessageListeners);
 		}
 
 		/**
@@ -398,8 +391,7 @@ public class SynchronousDestinationTestRule
 			new ArrayList<>();
 		private SafeCloseable _bufferedIncrementForceSyncSafeCloseable;
 		private Map<String, Destination> _destinations;
-		private final List<InvokerMessageListener>
-			_schedulerInvokerMessageListeners = new ArrayList<>();
+		private Set<InvokerMessageListener> _schedulerInvokerMessageListeners;
 		private Sync _sync;
 
 	}

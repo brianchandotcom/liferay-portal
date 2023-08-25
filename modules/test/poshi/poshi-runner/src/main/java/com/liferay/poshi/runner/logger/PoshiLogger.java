@@ -156,21 +156,6 @@ public class PoshiLogger {
 		return _testNamespacedClassCommandName;
 	}
 
-	public void logExternalMethodCommand(
-			Element element, List<String> arguments, Object returnValue)
-		throws Exception {
-
-		_commandLogger.logExternalMethodCommand(
-			element, arguments, returnValue, _syntaxLogger);
-
-		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
-
-		syntaxLoggerElement.setAttribute("data-status01", "pending");
-
-		_linkLoggerElements(
-			syntaxLoggerElement, _commandLogger.lineGroupLoggerElement);
-	}
-
 	public void logMessage(Element element) throws PoshiRunnerLoggerException {
 		_commandLogger.logMessage(element, _syntaxLogger);
 
@@ -217,6 +202,21 @@ public class PoshiLogger {
 		throws PoshiRunnerLoggerException {
 
 		_commandLogger.startCommand(element, _syntaxLogger);
+
+		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
+
+		syntaxLoggerElement.setAttribute("data-status01", "pending");
+
+		_linkLoggerElements(
+			syntaxLoggerElement, _commandLogger.lineGroupLoggerElement);
+	}
+
+	public void startExternalMethodCommand(
+			Element element, List<String> arguments, Object returnValue)
+		throws Exception {
+
+		_commandLogger.startExternalMethodCommand(
+			element, arguments, returnValue, _syntaxLogger);
 
 		LoggerElement syntaxLoggerElement = _getSyntaxLoggerElement();
 

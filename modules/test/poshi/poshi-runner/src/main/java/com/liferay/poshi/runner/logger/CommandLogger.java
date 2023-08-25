@@ -108,26 +108,6 @@ public final class CommandLogger {
 		return _testNamespacedClassCommandName;
 	}
 
-	public void logExternalMethodCommand(
-			Element element, List<String> arguments, Object returnValue,
-			SyntaxLogger syntaxLogger)
-		throws Exception {
-
-		_takeScreenshot("before", _detailsLinkId);
-
-		_commandElement = element;
-
-		lineGroupLoggerElement = new LoggerElement();
-
-		lineGroupLoggerElement.setClassName("line-group linkable");
-		lineGroupLoggerElement.setName("li");
-		lineGroupLoggerElement.addChildLoggerElement(
-			_getExternalMethodLineLoggerElement(
-				element, arguments, returnValue));
-
-		_commandLogLoggerElement.addChildLoggerElement(lineGroupLoggerElement);
-	}
-
 	public void logMessage(Element element, SyntaxLogger syntaxLogger)
 		throws PoshiRunnerLoggerException {
 
@@ -205,6 +185,26 @@ public final class CommandLogger {
 			throw new PoshiRunnerLoggerException(
 				throwable.getMessage(), throwable);
 		}
+	}
+
+	public void startExternalMethodCommand(
+			Element element, List<String> arguments, Object returnValue,
+			SyntaxLogger syntaxLogger)
+		throws Exception {
+
+		_takeScreenshot("before", _detailsLinkId);
+
+		_commandElement = element;
+
+		lineGroupLoggerElement = new LoggerElement();
+
+		lineGroupLoggerElement.setClassName("line-group linkable");
+		lineGroupLoggerElement.setName("li");
+		lineGroupLoggerElement.addChildLoggerElement(
+			_getExternalMethodLineLoggerElement(
+				element, arguments, returnValue));
+
+		_commandLogLoggerElement.addChildLoggerElement(lineGroupLoggerElement);
 	}
 
 	public void takeScreenshotCommand(

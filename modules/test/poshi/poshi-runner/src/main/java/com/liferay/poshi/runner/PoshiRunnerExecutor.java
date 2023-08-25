@@ -867,11 +867,11 @@ public class PoshiRunnerExecutor {
 					returnElement.attributeValue("name"), returnValue);
 			}
 
-			_poshiLogger.logExternalMethodCommand(
+			_poshiLogger.startExternalMethodCommand(
 				executeElement, args, returnValue);
 		}
 		catch (Throwable throwable) {
-			_poshiLogger.logExternalMethodCommand(executeElement, args, null);
+			_poshiLogger.startExternalMethodCommand(executeElement, args, null);
 
 			_summaryLogger.startSummary(executeElement);
 

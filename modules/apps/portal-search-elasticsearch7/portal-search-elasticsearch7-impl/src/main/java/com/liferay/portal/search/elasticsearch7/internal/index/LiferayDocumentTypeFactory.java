@@ -83,16 +83,16 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 			mappingsJSONObject.toString(), XContentType.JSON);
 	}
 
-	public void createOptionalDefaultTypeMappings() {
+	public void putDefaultTypeMappingTemplate() {
 		String name = StringUtil.replace(
 			LiferayTypeMappingsConstants.
 				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME,
-			".json", "-optional-defaults.json");
+			".json", "-default-template.json");
 
-		String optionalDefaultTypeMappings = ResourceUtil.getResourceAsString(
+		String defaultTypeMappingTemplate = ResourceUtil.getResourceAsString(
 			getClass(), name);
 
-		putTypeMappings(optionalDefaultTypeMappings);
+		putTypeMappings(defaultTypeMappingTemplate);
 	}
 
 	public void createRequiredDefaultAnalyzers(

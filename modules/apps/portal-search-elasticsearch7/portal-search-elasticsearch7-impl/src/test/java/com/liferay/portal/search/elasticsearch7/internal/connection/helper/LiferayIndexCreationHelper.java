@@ -47,7 +47,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
 			_getLiferayDocumentTypeFactory();
 
-		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings();
+		liferayDocumentTypeFactory.putDefaultTypeMappingTemplate();
 	}
 
 	private LiferayDocumentTypeFactory _getLiferayDocumentTypeFactory() {

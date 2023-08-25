@@ -184,19 +184,6 @@ public class CompanyIndexFactoryHelper {
 		}
 	}
 
-	protected void loadAdditionalTypeMappings(
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
-
-		if (Validator.isNull(
-				_elasticsearchConfigurationWrapper.additionalTypeMappings())) {
-
-			return;
-		}
-
-		liferayDocumentTypeFactory.putTypeMappings(
-			_elasticsearchConfigurationWrapper.additionalTypeMappings());
-	}
-
 	private void _addLiferayDocumentTypeMappings(
 		CreateIndexRequest createIndexRequest,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
@@ -311,7 +298,7 @@ public class CompanyIndexFactoryHelper {
 		settingsBuilder.put("index.translog.sync_interval", "100ms");
 	}
 
-	private void _loadTypeMappingsContributors(
+	private void _putContributedTypeMappings(
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
 		for (IndexConfigurationContributor indexConfigurationContributor :
@@ -360,6 +347,19 @@ public class CompanyIndexFactoryHelper {
 		}
 	}
 
+	private void _putAdditionalTypeMappings(
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
+
+		if (Validator.isNull(
+				_elasticsearchConfigurationWrapper.additionalTypeMappings())) {
+
+			return;
+		}
+
+		liferayDocumentTypeFactory.putTypeMappings(
+			_elasticsearchConfigurationWrapper.additionalTypeMappings());
+	}
+
 	private void _setSettings(
 		CreateIndexRequest createIndexRequest,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
@@ -398,11 +398,11 @@ public class CompanyIndexFactoryHelper {
 			return;
 		}
 
-		loadAdditionalTypeMappings(liferayDocumentTypeFactory);
+		_putAdditionalTypeMappings(liferayDocumentTypeFactory);
 
-		_loadTypeMappingsContributors(liferayDocumentTypeFactory);
+		_putContributedTypeMappings(liferayDocumentTypeFactory);
 
-		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings();
+		liferayDocumentTypeFactory.putDefaultTypeMappingTemplate();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

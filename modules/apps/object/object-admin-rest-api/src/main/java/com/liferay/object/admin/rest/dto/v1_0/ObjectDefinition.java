@@ -342,6 +342,35 @@ public class ObjectDefinition implements Serializable {
 	protected Boolean enableLocalization;
 
 	@Schema
+	public Boolean getEnableObjectEntryDraft() {
+		return enableObjectEntryDraft;
+	}
+
+	public void setEnableObjectEntryDraft(Boolean enableObjectEntryDraft) {
+		this.enableObjectEntryDraft = enableObjectEntryDraft;
+	}
+
+	@JsonIgnore
+	public void setEnableObjectEntryDraft(
+		UnsafeSupplier<Boolean, Exception>
+			enableObjectEntryDraftUnsafeSupplier) {
+
+		try {
+			enableObjectEntryDraft = enableObjectEntryDraftUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableObjectEntryDraft;
+
+	@Schema
 	public Boolean getEnableObjectEntryHistory() {
 		return enableObjectEntryHistory;
 	}
@@ -1209,6 +1238,16 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableLocalization\": ");
 
 			sb.append(enableLocalization);
+		}
+
+		if (enableObjectEntryDraft != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableObjectEntryDraft\": ");
+
+			sb.append(enableObjectEntryDraft);
 		}
 
 		if (enableObjectEntryHistory != null) {

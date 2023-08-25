@@ -2172,7 +2172,7 @@ public class PoshiValidation {
 				PoshiElementException poshiElementException =
 					(PoshiElementException)exception;
 
-				_logger.warning(poshiElementException.getMessageNoSnippet());
+				_logger.warning(poshiElementException.getSimpleMessage());
 			}
 		}
 	}

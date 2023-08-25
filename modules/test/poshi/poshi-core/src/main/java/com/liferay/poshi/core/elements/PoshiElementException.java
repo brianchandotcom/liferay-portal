@@ -153,7 +153,11 @@ public class PoshiElementException extends Exception {
 		return sb.toString();
 	}
 
-	public String getMessageNoSnippet() {
+	public PoshiNode<?, ?> getPoshiNode() {
+		return _poshiNode;
+	}
+
+	public String getSimpleMessage() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(super.getMessage());
@@ -163,10 +167,6 @@ public class PoshiElementException extends Exception {
 		sb.append(getErrorLineNumber());
 
 		return sb.toString();
-	}
-
-	public PoshiNode<?, ?> getPoshiNode() {
-		return _poshiNode;
 	}
 
 	public void setErrorLineNumber(int errorLineNumber) {

@@ -7,7 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
-import com.liferay.layout.util.LayoutLockManager;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONObject;

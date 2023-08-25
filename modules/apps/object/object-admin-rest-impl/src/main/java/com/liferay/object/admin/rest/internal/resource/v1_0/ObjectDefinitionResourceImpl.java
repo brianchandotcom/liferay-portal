@@ -297,6 +297,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntryDraft()),
 					LocalizedMapUtil.getLocalizedMap(
 						objectDefinition.getLabel()),
 					objectDefinition.getName(),
@@ -519,6 +521,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryHistory()),
 					LocalizedMapUtil.getLocalizedMap(
@@ -1001,6 +1005,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableLocalization();
 				}
 
+				enableObjectEntryDraft =
+					objectDefinition.getEnableObjectEntryDraft();
 				enableObjectEntryHistory =
 					objectDefinition.getEnableObjectEntryHistory();
 				externalReferenceCode =

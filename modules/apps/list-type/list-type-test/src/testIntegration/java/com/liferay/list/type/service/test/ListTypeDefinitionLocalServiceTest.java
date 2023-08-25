@@ -95,7 +95,7 @@ public class ListTypeDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, false, false,
+				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
 				LocalizedMapUtil.getLocalizedMap("Tests"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,

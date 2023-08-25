@@ -1378,6 +1378,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.isEnableCategorization(),
 			_objectDefinition.isEnableComments(),
 			_objectDefinition.isEnableLocalization(),
+			_objectDefinition.isEnableObjectEntryDraft(),
 			_objectDefinition.isEnableObjectEntryHistory(),
 			_objectDefinition.getLabelMap(), _objectDefinition.getName(),
 			_objectDefinition.getPanelAppOrder(),

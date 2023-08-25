@@ -50,7 +50,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), 0, false, enableLocalization,
+			TestPropsValues.getUserId(), 0, false, enableLocalization, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -71,7 +71,7 @@ public class ObjectDefinitionTestUtil {
 		throws PortalException {
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), 0, false, false,
+			TestPropsValues.getUserId(), 0, false, false, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

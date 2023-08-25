@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-web';
 
 function attachListener(element, eventType, callback) {
 	element?.addEventListener(eventType, callback);
@@ -64,14 +64,10 @@ export default function EditKBArticle({
 		scheduleItem = document.getElementById(`${namespace}scheduleItem`);
 
 		scheduleItemOnClick = () => {
-			openSelectionModal({
-				buttonAddLabel: Liferay.Language.get('schedule'),
+			openModal({
 				height: '60vh',
-				multiple: true,
-				onSelect: ({scheduledDate}) => {
-					console.log(scheduledDate);
-				},
-				selectEventName: `selectKBArticleScheduleDate`,
+				id: 'scheduleKBArticleDialog',
+				iframeBodyCssClass: '',
 				size: 'md',
 				title: Liferay.Language.get('schedule-publication'),
 				url: scheduleModalURL,

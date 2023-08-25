@@ -267,4 +267,10 @@ $toolbarZIndex: 971;
 	.management-bar .navbar-nav {
 		column-gap: 0.25rem;
 	}
+
+	.schedule-modal .modal-footer {
+		bottom: 0;
+		position: absolute;
+		width: 100%;
+	}
 }

@@ -59,8 +59,9 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
 			getUserId(), objectFolderId, enableComments, enableLocalization,
-			labelMap, name, panelAppOrder, panelCategoryKey, pluralLabelMap,
-			portlet, scope, storageType, objectFields);
+			enableObjectEntryDraft, labelMap, name, panelAppOrder,
+			panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
+			objectFields);
 	}
 
 	@Override
@@ -240,8 +241,8 @@ public class ObjectDefinitionServiceImpl
 			accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
 			enableCategorization, enableComments, enableLocalization,
-			enableObjectEntryHistory, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope);
+			enableObjectEntryDraft, enableObjectEntryHistory, labelMap, name,
+			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope);
 	}
 
 	@Override

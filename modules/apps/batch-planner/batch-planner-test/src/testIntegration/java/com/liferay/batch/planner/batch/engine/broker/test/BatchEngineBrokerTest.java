@@ -359,6 +359,7 @@ public class BatchEngineBrokerTest {
 				_objectDefinitionLocalService.addCustomObjectDefinition(
 					user.getUserId(),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false, false,
+					false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					"TestObject", null, null,

@@ -71,6 +71,7 @@ export function RightSidebarObjectDefinitionDetails({
 					isApproved={
 						selectedDefinitionNode.status.label === 'approved'
 					}
+					isChildNode={false}
 					setValues={() => {}}
 					siteKeyValuePair={siteKeyValuePair}
 					values={selectedDefinitionNode}
@@ -86,6 +87,7 @@ export function RightSidebarObjectDefinitionDetails({
 						isApproved={
 							selectedDefinitionNode.status.label === 'approved'
 						}
+						isChildNode={false}
 						objectFields={selectedDefinitionNode.objectFields}
 						setValues={() => {}}
 						values={selectedDefinitionNode}
@@ -96,6 +98,7 @@ export function RightSidebarObjectDefinitionDetails({
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission={true}
+					isChildNode={false}
 					setValues={() => {}}
 					values={selectedDefinitionNode}
 				/>

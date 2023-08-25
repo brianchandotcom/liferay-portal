@@ -16,6 +16,7 @@ import {defaultLanguageId} from '../../utils/constants';
 interface AccountRestrictionContainerProps {
 	errors: FormError<ObjectDefinition>;
 	isApproved: boolean;
+	isChildNode: boolean;
 	objectFields: ObjectField[];
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
@@ -24,6 +25,7 @@ interface AccountRestrictionContainerProps {
 export function AccountRestrictionContainer({
 	errors,
 	isApproved,
+	isChildNode,
 	objectFields,
 	setValues,
 	values,
@@ -112,7 +114,9 @@ export function AccountRestrictionContainer({
 		<>
 			<Toggle
 				disabled={
-					!accountRelationshipFields.length || disableAccountToggle
+					!accountRelationshipFields.length ||
+					disableAccountToggle ||
+					isChildNode
 				}
 				label={sub(
 					Liferay.Language.get('enable-x'),
@@ -135,7 +139,8 @@ export function AccountRestrictionContainer({
 				disabled={
 					!accountRelationshipFields.length ||
 					!values.accountEntryRestricted ||
-					disableAccountSelect
+					disableAccountSelect ||
+					isChildNode
 				}
 				error={errors.accountEntryRestrictedObjectFieldName}
 				label={Liferay.Language.get(

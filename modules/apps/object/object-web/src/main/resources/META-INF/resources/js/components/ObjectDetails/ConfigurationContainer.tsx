@@ -9,12 +9,14 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
+	isChildNode: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
+	isChildNode,
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
@@ -25,7 +27,11 @@ export function ConfigurationContainer({
 	return (
 		<div className="lfr-objects__object-definition-details-configuration">
 			<Toggle
-				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
+				disabled={
+					isReadOnly ||
+					!hasUpdateObjectDefinitionPermission ||
+					isChildNode
+				}
 				label={sub(
 					Liferay.Language.get('show-widget-in-x'),
 					Liferay.Language.get('page-builder')

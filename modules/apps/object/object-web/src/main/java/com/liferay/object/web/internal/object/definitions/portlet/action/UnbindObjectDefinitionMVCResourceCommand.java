@@ -55,11 +55,11 @@ public class UnbindObjectDefinitionMVCResourceCommand
 			objectDefinition.getObjectDefinitionId());
 
 		while (iterator.hasNext()) {
-			_unbindNode(iterator.next());
+			_unbind(iterator.next());
 		}
 	}
 
-	private void _unbindNode(Node node) throws Exception {
+	private void _unbind(Node node) throws Exception {
 		_objectDefinitionLocalService.updateRootObjectDefinitionId(
 			node.getObjectDefinitionId(), 0);
 

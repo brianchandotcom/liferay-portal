@@ -7,6 +7,8 @@ package com.liferay.headless.builder.util;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.util.Http;
 
 import javax.ws.rs.core.Application;
 
@@ -22,7 +24,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class APIApplicationTestUtil {
 
 	public static void assertDeployedAPIApplication(String baseURL)
-		throws InterruptedException {
+		throws Exception {
 
 		ServiceTracker<Application, Application> serviceTracker =
 			_getServiceTracker(baseURL);
@@ -31,19 +33,29 @@ public class APIApplicationTestUtil {
 			Assert.assertNotNull(
 				"The API application is not deployed",
 				serviceTracker.waitForService(10000));
+			Assert.assertEquals(
+				200,
+				HTTPTestUtil.invokeToHttpCode(
+					null, "c/" + baseURL + "/openapi.json", Http.Method.GET));
 		}
 		finally {
 			serviceTracker.close();
 		}
 	}
 
-	public static void assertNotDeployedAPIApplication(String baseURL) {
+	public static void assertNotDeployedAPIApplication(String baseURL)
+		throws Exception {
+
 		ServiceTracker<Application, Application> serviceTracker =
 			_getServiceTracker(baseURL);
 
 		try {
 			Assert.assertEquals(
 				"The API application is deployed", 0, serviceTracker.size());
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, "c/" + baseURL + "/openapi.json", Http.Method.GET));
 		}
 		finally {
 			serviceTracker.close();

@@ -115,13 +115,11 @@ public class CIForwardProcessor {
 
 						return pullRequestURL;
 					}
-					catch (GitHubSecondaryRateLimitIOException
-								gitHubSecondaryRateLimitIOException) {
-
-						throw new GitHubSecondaryRateLimitRuntimeException(
-							gitHubSecondaryRateLimitIOException);
-					}
 					catch (Exception exception) {
+						if (exception instanceof RuntimeException) {
+							throw (RuntimeException)exception;
+						}
+
 						throw new RuntimeException(exception);
 					}
 				}
@@ -150,6 +148,7 @@ public class CIForwardProcessor {
 				sb.append(_pullRequest.getURL());
 				sb.append("\n console log: ");
 				sb.append(_consoleLogURL);
+				sb.append("\n");
 
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":liferay-ci:",

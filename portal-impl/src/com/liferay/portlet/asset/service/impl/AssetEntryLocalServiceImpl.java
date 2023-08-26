@@ -6,16 +6,12 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetLink;
-import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.search.AssetSearcherFactoryUtil;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
@@ -81,10 +77,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteEntry(AssetEntry entry) throws PortalException {
-
-		// Links
-
-		_assetLinkLocalService.deleteLinks(entry.getEntryId());
 
 		// Entry
 
@@ -169,41 +161,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry fetchEntry(String className, long classPK) {
 		return assetEntryLocalService.fetchEntry(
 			_classNameLocalService.getClassNameId(className), classPK);
-	}
-
-	@Override
-	public List<AssetEntry> getAncestorEntries(long entryId)
-		throws PortalException {
-
-		List<AssetEntry> entries = new ArrayList<>();
-
-		AssetEntry parentEntry = getParentEntry(entryId);
-
-		while (parentEntry != null) {
-			entries.add(parentEntry);
-
-			parentEntry = getParentEntry(parentEntry.getEntryId());
-		}
-
-		return entries;
-	}
-
-	@Override
-	public List<AssetEntry> getChildEntries(long entryId)
-		throws PortalException {
-
-		List<AssetEntry> entries = new ArrayList<>();
-
-		List<AssetLink> links = _assetLinkLocalService.getDirectLinks(
-			entryId, AssetLinkConstants.TYPE_CHILD);
-
-		for (AssetLink link : links) {
-			AssetEntry curAsset = getEntry(link.getEntryId2());
-
-			entries.add(curAsset);
-		}
-
-		return entries;
 	}
 
 	@Override
@@ -323,79 +280,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public List<AssetEntry> getGroupEntries(long groupId) {
 		return assetEntryPersistence.findByGroupId(groupId);
-	}
-
-	@Override
-	public AssetEntry getNextEntry(long entryId) throws PortalException {
-		try {
-			getParentEntry(entryId);
-		}
-		catch (NoSuchEntryException noSuchEntryException) {
-			List<AssetEntry> childEntries = getChildEntries(entryId);
-
-			if (childEntries.isEmpty()) {
-				throw noSuchEntryException;
-			}
-
-			return childEntries.get(0);
-		}
-
-		List<AssetLink> links = _assetLinkLocalService.getDirectLinks(
-			entryId, AssetLinkConstants.TYPE_CHILD);
-
-		for (int i = 0; i < links.size(); i++) {
-			AssetLink link = links.get(i);
-
-			if (link.getEntryId2() == entryId) {
-				if ((i + 1) >= links.size()) {
-					throw new NoSuchEntryException("{entryId=" + entryId + "}");
-				}
-
-				AssetLink nextLink = links.get(i + 1);
-
-				return getEntry(nextLink.getEntryId2());
-			}
-		}
-
-		throw new NoSuchEntryException("{entryId=" + entryId + "}");
-	}
-
-	@Override
-	public AssetEntry getParentEntry(long entryId) throws PortalException {
-		List<AssetLink> links = _assetLinkLocalService.getReverseLinks(
-			entryId, AssetLinkConstants.TYPE_CHILD);
-
-		if (links.isEmpty()) {
-			throw new NoSuchEntryException("{entryId=" + entryId + "}");
-		}
-
-		AssetLink link = links.get(0);
-
-		return getEntry(link.getEntryId1());
-	}
-
-	@Override
-	public AssetEntry getPreviousEntry(long entryId) throws PortalException {
-		getParentEntry(entryId);
-
-		List<AssetLink> links = _assetLinkLocalService.getDirectLinks(
-			entryId, AssetLinkConstants.TYPE_CHILD);
-
-		for (int i = 0; i < links.size(); i++) {
-			AssetLink link = links.get(i);
-
-			if (link.getEntryId2() == entryId) {
-				if (i == 0) {
-					throw new NoSuchEntryException("{entryId=" + entryId + "}");
-				}
-
-				AssetLink nextAssetLink = links.get(i - 1);
-
-				return getEntry(nextAssetLink.getEntryId2());
-			}
-		}
-
-		throw new NoSuchEntryException("{entryId=" + entryId + "}");
 	}
 
 	@Override
@@ -1424,9 +1308,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			ServiceTrackerMapFactory.openMultiValueMap(
 				SystemBundleUtil.getBundleContext(), AssetEntryValidator.class,
 				"model.class.name");
-
-	@BeanReference(type = AssetLinkLocalService.class)
-	private AssetLinkLocalService _assetLinkLocalService;
 
 	@BeanReference(type = AssetTagLocalService.class)
 	private AssetTagLocalService _assetTagLocalService;

@@ -41,7 +41,7 @@ public class ColorSchemeFactoryUtil {
 	}
 
 	public static String getDefaultRegularColorSchemeId() {
-		return PropsValues.DEFAULT_REGULAR_COLOR_SCHEME_ID;
+		return PropsUtil.get(PropsKeys.DEFAULT_REGULAR_COLOR_SCHEME_ID);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

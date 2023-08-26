@@ -158,6 +158,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				).and(
 					LayoutTable.INSTANCE.type.in(
 						new String[] {
+							LayoutConstants.TYPE_ASSET_DISPLAY,
 							LayoutConstants.TYPE_COLLECTION,
 							LayoutConstants.TYPE_CONTENT
 						})

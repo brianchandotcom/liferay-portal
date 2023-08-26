@@ -118,8 +118,6 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
 		String sku = ParamUtil.getString(actionRequest, "sku");
 		String unitOfMeasureKey = ParamUtil.getString(
 			actionRequest, "unitOfMeasureKey");
@@ -128,6 +126,9 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			_commerceInventoryWarehouseItemService.
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
+
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.

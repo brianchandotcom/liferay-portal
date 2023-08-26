@@ -164,7 +164,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				)
 			).orderBy(
 				orderByStep -> orderByStep.orderBy(
-					LayoutTable.INSTANCE.modifiedDate.descending())
+					LockTable.INSTANCE.createDate.descending())
 			));
 
 		List<LockedLayout> lockedLayouts = new ArrayList<>(results.size());

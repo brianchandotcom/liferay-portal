@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ColorSchemeFactory;
+import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -244,7 +244,7 @@ public class PortalInstancesLocalServiceImpl
 
 		themeDisplay.setLookAndFeel(
 			_themeLocalService.getTheme(company.getCompanyId(), themeId),
-			_colorSchemeFactory.getDefaultRegularColorScheme());
+			ColorSchemeFactoryUtil.getDefaultRegularColorScheme());
 
 		themeDisplay.setPermissionChecker(permissionChecker);
 		themeDisplay.setPlid(controlPanelPlid);
@@ -299,9 +299,6 @@ public class PortalInstancesLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancesLocalServiceImpl.class);
-
-	@Reference
-	private ColorSchemeFactory _colorSchemeFactory;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ColorSchemeFactory;
+import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -598,7 +598,7 @@ public class StagedLayoutSetStagedModelDataHandler
 				_themeFactory.getDefaultRegularThemeId(
 					stagedLayoutSet.getCompanyId()));
 			layoutSet.setColorSchemeId(
-				_colorSchemeFactory.getDefaultRegularColorSchemeId());
+				ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId());
 			layoutSet.setCss(StringPool.BLANK);
 
 			return;
@@ -1097,9 +1097,6 @@ public class StagedLayoutSetStagedModelDataHandler
 	@Reference
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
-
-	@Reference
-	private ColorSchemeFactory _colorSchemeFactory;
 
 	@Reference
 	private DLAppService _dlAppService;

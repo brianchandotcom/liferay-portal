@@ -6,7 +6,7 @@
 package com.liferay.jethr0.gitbranch.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.gitbranch.dalo.GitBranchEntityDALO;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.dalo.ProjectsToGitBranchesEntityRelationshipDALO;
@@ -21,28 +21,29 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitBranchEntityRepository extends BaseEntityRepository<GitBranch> {
+public class GitBranchEntityRepository
+	extends BaseEntityRepository<GitBranchEntity> {
 
-	public Set<GitBranch> getAll(ProjectEntity projectEntity) {
-		Set<GitBranch> projectGitBranches = new HashSet<>();
+	public Set<GitBranchEntity> getAll(ProjectEntity projectEntity) {
+		Set<GitBranchEntity> projectGitBranchEntities = new HashSet<>();
 
-		Set<Long> gitBranchIds =
+		Set<Long> gitBranchEntityIds =
 			_projectsToGitBranchesEntityRelationshipDALO.getChildEntityIds(
 				projectEntity);
 
-		for (GitBranch gitBranch : getAll()) {
-			if (!gitBranchIds.contains(gitBranch.getId())) {
+		for (GitBranchEntity gitBranchEntity : getAll()) {
+			if (!gitBranchEntityIds.contains(gitBranchEntity.getId())) {
 				continue;
 			}
 
-			gitBranch.addProjectEntity(projectEntity);
+			gitBranchEntity.addProjectEntity(projectEntity);
 
-			projectEntity.addGitBranch(gitBranch);
+			projectEntity.addGitBranchEntity(gitBranchEntity);
 
-			projectGitBranches.add(gitBranch);
+			projectGitBranchEntities.add(gitBranchEntity);
 		}
 
-		return projectGitBranches;
+		return projectGitBranchEntities;
 	}
 
 	@Override

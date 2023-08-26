@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class GitBranchEntityFactory extends BaseEntityFactory<GitBranch> {
+public class GitBranchEntityFactory extends BaseEntityFactory<GitBranchEntity> {
 
 	@Override
 	public String getEntityPluralLabel() {
@@ -23,12 +23,12 @@ public class GitBranchEntityFactory extends BaseEntityFactory<GitBranch> {
 	}
 
 	@Override
-	public GitBranch newEntity(JSONObject jsonObject) {
-		return new DefaultGitBranch(jsonObject);
+	public GitBranchEntity newEntity(JSONObject jsonObject) {
+		return new DefaultGitBranchEntity(jsonObject);
 	}
 
 	protected GitBranchEntityFactory() {
-		super(GitBranch.class);
+		super(GitBranchEntity.class);
 	}
 
 }

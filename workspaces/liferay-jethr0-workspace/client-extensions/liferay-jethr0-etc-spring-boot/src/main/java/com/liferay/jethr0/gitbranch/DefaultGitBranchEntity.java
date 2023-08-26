@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultGitBranch extends BaseGitBranch {
+public class DefaultGitBranchEntity extends BaseGitBranchEntity {
 
-	protected DefaultGitBranch(JSONObject jsonObject) {
+	protected DefaultGitBranchEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

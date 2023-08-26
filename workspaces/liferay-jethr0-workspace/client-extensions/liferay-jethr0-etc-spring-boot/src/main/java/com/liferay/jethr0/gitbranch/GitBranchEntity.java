@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public interface GitBranch extends Entity {
+public interface GitBranchEntity extends Entity {
 
 	public void addProjectEntities(Set<ProjectEntity> projectEntities);
 

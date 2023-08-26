@@ -7,7 +7,7 @@ package com.liferay.jethr0.project;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuite;
@@ -28,9 +28,9 @@ public interface ProjectEntity extends Entity {
 
 	public void addBuildEntity(BuildEntity buildEntity);
 
-	public void addGitBranch(GitBranch gitBranch);
+	public void addGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
 
-	public void addGitBranches(Set<GitBranch> gitBranches);
+	public void addGitBranchEntity(GitBranchEntity gitBranchEntity);
 
 	public void addJenkinsCohortEntities(
 		Set<JenkinsCohortEntity> jenkinsCohortEntities);
@@ -47,7 +47,7 @@ public interface ProjectEntity extends Entity {
 
 	public Set<BuildEntity> getBuildEntities();
 
-	public Set<GitBranch> getGitBranches();
+	public Set<GitBranchEntity> getGitBranchEntities();
 
 	public Set<JenkinsCohortEntity> getJenkinsCohortEntities();
 
@@ -71,9 +71,9 @@ public interface ProjectEntity extends Entity {
 
 	public void removeBuildEntity(BuildEntity buildEntity);
 
-	public void removeGitBranch(GitBranch gitBranch);
+	public void removeGitBranchEntities(Set<GitBranchEntity> gitBranchEntities);
 
-	public void removeGitBranches(Set<GitBranch> gitBranches);
+	public void removeGitBranchEntity(GitBranchEntity gitBranchEntity);
 
 	public void removeJenkinsCohortEntities(
 		Set<JenkinsCohortEntity> jenkinsCohortEntities);

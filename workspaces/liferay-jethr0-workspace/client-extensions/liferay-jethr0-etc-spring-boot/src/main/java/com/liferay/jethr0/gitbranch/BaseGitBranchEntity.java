@@ -20,7 +20,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseGitBranch extends BaseEntity implements GitBranch {
+public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	@Override
 	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
@@ -140,7 +140,7 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 		_url = url;
 	}
 
-	protected BaseGitBranch(JSONObject jsonObject) {
+	protected BaseGitBranchEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_branchName = jsonObject.getString("branchName");

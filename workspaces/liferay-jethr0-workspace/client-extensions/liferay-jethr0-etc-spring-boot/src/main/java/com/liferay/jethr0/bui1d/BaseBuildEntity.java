@@ -8,7 +8,7 @@ package com.liferay.jethr0.bui1d;
 import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.TaskEntity;
@@ -51,13 +51,15 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void addEnvironment(Environment environment) {
-		addRelatedEntity(environment);
+	public void addEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities) {
+
+		addRelatedEntities(environmentEntities);
 	}
 
 	@Override
-	public void addEnvironments(Set<Environment> environments) {
-		addRelatedEntities(environments);
+	public void addEnvironmentEntity(EnvironmentEntity environmentEntity) {
+		addRelatedEntity(environmentEntity);
 	}
 
 	@Override
@@ -104,8 +106,8 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public Set<Environment> getEnvironments() {
-		return getRelatedEntities(Environment.class);
+	public Set<EnvironmentEntity> getEnvironmentEntities() {
+		return getRelatedEntities(EnvironmentEntity.class);
 	}
 
 	@Override
@@ -250,13 +252,15 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void removeEnvironment(Environment environment) {
-		removeRelatedEntity(environment);
+	public void removeEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities) {
+
+		removeRelatedEntities(environmentEntities);
 	}
 
 	@Override
-	public void removeEnvironments(Set<Environment> environments) {
-		removeRelatedEntities(environments);
+	public void removeEnvironmentEntity(EnvironmentEntity environmentEntity) {
+		removeRelatedEntity(environmentEntity);
 	}
 
 	@Override

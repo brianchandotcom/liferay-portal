@@ -7,7 +7,7 @@ package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.run.TaskRunEntity;
 
@@ -18,9 +18,10 @@ import java.util.Set;
  */
 public interface TaskEntity extends Entity {
 
-	public void addEnvironment(Environment environment);
+	public void addEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities);
 
-	public void addEnvironments(Set<Environment> environments);
+	public void addEnvironmentEntity(EnvironmentEntity environmentEntity);
 
 	public void addTaskRunEntities(Set<TaskRunEntity> taskRunEntities);
 
@@ -28,7 +29,7 @@ public interface TaskEntity extends Entity {
 
 	public BuildEntity getBuildEntity();
 
-	public Set<Environment> getEnvironments();
+	public Set<EnvironmentEntity> getEnvironmentEntities();
 
 	public String getName();
 
@@ -36,9 +37,10 @@ public interface TaskEntity extends Entity {
 
 	public Set<TaskRunEntity> getTaskRunEntities();
 
-	public void removeEnvironment(Environment environment);
+	public void removeEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities);
 
-	public void removeEnvironments(Set<Environment> environments);
+	public void removeEnvironmentEntity(EnvironmentEntity environmentEntity);
 
 	public void removeTaskRunEntities(Set<TaskRunEntity> taskRunEntities);
 

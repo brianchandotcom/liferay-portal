@@ -7,7 +7,7 @@ package com.liferay.jethr0.task;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.run.TaskRunEntity;
 
@@ -23,13 +23,15 @@ import org.json.JSONObject;
 public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 
 	@Override
-	public void addEnvironment(Environment environment) {
-		addEnvironments(Collections.singleton(environment));
+	public void addEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities) {
+
+		_environmentEntities.addAll(environmentEntities);
 	}
 
 	@Override
-	public void addEnvironments(Set<Environment> environments) {
-		_environments.addAll(environments);
+	public void addEnvironmentEntity(EnvironmentEntity environmentEntity) {
+		addEnvironmentEntities(Collections.singleton(environmentEntity));
 	}
 
 	@Override
@@ -54,8 +56,8 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public Set<Environment> getEnvironments() {
-		return _environments;
+	public Set<EnvironmentEntity> getEnvironmentEntities() {
+		return _environmentEntities;
 	}
 
 	@Override
@@ -89,13 +91,15 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public void removeEnvironment(Environment environment) {
-		_environments.remove(environment);
+	public void removeEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities) {
+
+		_environmentEntities.removeAll(environmentEntities);
 	}
 
 	@Override
-	public void removeEnvironments(Set<Environment> environments) {
-		_environments.removeAll(environments);
+	public void removeEnvironmentEntity(EnvironmentEntity environmentEntity) {
+		_environmentEntities.remove(environmentEntity);
 	}
 
 	@Override
@@ -130,7 +134,7 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	private BuildEntity _buildEntity;
-	private final Set<Environment> _environments = new HashSet<>();
+	private final Set<EnvironmentEntity> _environmentEntities = new HashSet<>();
 	private String _name;
 	private ProjectEntity _projectEntity;
 	private final Set<TaskRunEntity> _taskRunEntities = new HashSet<>();

@@ -8,7 +8,7 @@ package com.liferay.jethr0.bui1d;
 import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.TaskEntity;
@@ -34,9 +34,10 @@ public interface BuildEntity extends Entity {
 
 	public void addBuildRunEntity(BuildRunEntity buildRunEntity);
 
-	public void addEnvironment(Environment environment);
+	public void addEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities);
 
-	public void addEnvironments(Set<Environment> environments);
+	public void addEnvironmentEntity(EnvironmentEntity environmentEntity);
 
 	public void addTaskEntities(Set<TaskEntity> taskEntities);
 
@@ -52,7 +53,7 @@ public interface BuildEntity extends Entity {
 
 	public Set<BuildEntity> getChildBuildEntities();
 
-	public Set<Environment> getEnvironments();
+	public Set<EnvironmentEntity> getEnvironmentEntities();
 
 	public JenkinsNodeEntity.Type getJenkinsNodeType();
 
@@ -86,9 +87,10 @@ public interface BuildEntity extends Entity {
 
 	public void removeBuildRunEntity(BuildRunEntity buildRunEntity);
 
-	public void removeEnvironment(Environment environment);
+	public void removeEnvironmentEntities(
+		Set<EnvironmentEntity> environmentEntities);
 
-	public void removeEnvironments(Set<Environment> environments);
+	public void removeEnvironmentEntity(EnvironmentEntity environmentEntity);
 
 	public void removeTaskEntities(Set<TaskEntity> taskEntities);
 

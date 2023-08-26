@@ -7,7 +7,7 @@ package com.liferay.jethr0.environment.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.environment.Environment;
+import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.environment.EnvironmentEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class EnvironmentEntityDALO extends BaseEntityDALO<Environment> {
+public class EnvironmentEntityDALO extends BaseEntityDALO<EnvironmentEntity> {
 
 	@Override
-	protected EntityFactory<Environment> getEntityFactory() {
+	protected EntityFactory<EnvironmentEntity> getEntityFactory() {
 		return _environmentEntityFactory;
 	}
 

@@ -15,15 +15,16 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class EnvironmentEntityFactory extends BaseEntityFactory<Environment> {
+public class EnvironmentEntityFactory
+	extends BaseEntityFactory<EnvironmentEntity> {
 
 	@Override
-	public Environment newEntity(JSONObject jsonObject) {
-		return new DefaultEnvironment(jsonObject);
+	public EnvironmentEntity newEntity(JSONObject jsonObject) {
+		return new DefaultEnvironmentEntity(jsonObject);
 	}
 
 	protected EnvironmentEntityFactory() {
-		super(Environment.class);
+		super(EnvironmentEntity.class);
 	}
 
 }

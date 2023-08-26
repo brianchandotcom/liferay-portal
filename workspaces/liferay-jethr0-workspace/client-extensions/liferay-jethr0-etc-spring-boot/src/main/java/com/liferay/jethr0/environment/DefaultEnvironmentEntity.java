@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultEnvironment extends BaseEnvironment {
+public class DefaultEnvironmentEntity extends BaseEnvironmentEntity {
 
-	protected DefaultEnvironment(JSONObject jsonObject) {
+	protected DefaultEnvironmentEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

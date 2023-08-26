@@ -17,7 +17,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Environment extends Entity {
+public interface EnvironmentEntity extends Entity {
 
 	public String getAppServer();
 

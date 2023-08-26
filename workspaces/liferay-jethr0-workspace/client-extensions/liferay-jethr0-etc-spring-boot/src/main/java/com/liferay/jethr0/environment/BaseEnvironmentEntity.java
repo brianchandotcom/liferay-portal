@@ -14,8 +14,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseEnvironment
-	extends BaseEntity implements Environment {
+public abstract class BaseEnvironmentEntity
+	extends BaseEntity implements EnvironmentEntity {
 
 	@Override
 	public String getAppServer() {
@@ -147,7 +147,7 @@ public abstract class BaseEnvironment
 		_taskEntity = taskEntity;
 	}
 
-	protected BaseEnvironment(JSONObject jsonObject) {
+	protected BaseEnvironmentEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_appServer = jsonObject.getString("appServer");

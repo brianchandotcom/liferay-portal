@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<source-check>
+		<suppress checks="GradleDependencyArtifactsCheck" files="saml-opensaml-integration/build\.gradle" />
+	</source-check>
 	<checkstyle>
 		<suppress checks="ReferenceAnnotationCheck" files="saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/internal/servlet/profile/SingleLogoutProfileImpl\.java" />
 	</checkstyle>

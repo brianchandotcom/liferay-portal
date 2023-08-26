@@ -284,12 +284,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static List<AssetEntry> getAncestorEntries(long entryId)
-		throws PortalException {
-
-		return getService().getAncestorEntries(entryId);
-	}
-
 	/**
 	 * Returns a range of all the asset entries.
 	 *
@@ -357,12 +351,6 @@ public class AssetEntryLocalServiceUtil {
 	 */
 	public static long[] getAssetTagPrimaryKeys(long entryId) {
 		return getService().getAssetTagPrimaryKeys(entryId);
-	}
-
-	public static List<AssetEntry> getChildEntries(long entryId)
-		throws PortalException {
-
-		return getService().getChildEntries(entryId);
 	}
 
 	public static List<AssetEntry> getCompanyEntries(
@@ -470,10 +458,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static AssetEntry getNextEntry(long entryId) throws PortalException {
-		return getService().getNextEntry(entryId);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -483,12 +467,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static AssetEntry getParentEntry(long entryId)
-		throws PortalException {
-
-		return getService().getParentEntry(entryId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -496,12 +474,6 @@ public class AssetEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static AssetEntry getPreviousEntry(long entryId)
-		throws PortalException {
-
-		return getService().getPreviousEntry(entryId);
 	}
 
 	public static List<AssetEntry> getTopViewedEntries(

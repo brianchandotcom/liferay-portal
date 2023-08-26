@@ -324,13 +324,6 @@ public class AssetEntryLocalServiceWrapper
 		return _assetEntryLocalService.getActionableDynamicQuery();
 	}
 
-	@Override
-	public java.util.List<AssetEntry> getAncestorEntries(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetEntryLocalService.getAncestorEntries(entryId);
-	}
-
 	/**
 	 * Returns a range of all the asset entries.
 	 *
@@ -408,13 +401,6 @@ public class AssetEntryLocalServiceWrapper
 	@Override
 	public long[] getAssetTagPrimaryKeys(long entryId) {
 		return _assetEntryLocalService.getAssetTagPrimaryKeys(entryId);
-	}
-
-	@Override
-	public java.util.List<AssetEntry> getChildEntries(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetEntryLocalService.getChildEntries(entryId);
 	}
 
 	@Override
@@ -538,13 +524,6 @@ public class AssetEntryLocalServiceWrapper
 		return _assetEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	@Override
-	public AssetEntry getNextEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetEntryLocalService.getNextEntry(entryId);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -553,13 +532,6 @@ public class AssetEntryLocalServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _assetEntryLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public AssetEntry getParentEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetEntryLocalService.getParentEntry(entryId);
 	}
 
 	/**
@@ -571,13 +543,6 @@ public class AssetEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public AssetEntry getPreviousEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _assetEntryLocalService.getPreviousEntry(entryId);
 	}
 
 	@Override

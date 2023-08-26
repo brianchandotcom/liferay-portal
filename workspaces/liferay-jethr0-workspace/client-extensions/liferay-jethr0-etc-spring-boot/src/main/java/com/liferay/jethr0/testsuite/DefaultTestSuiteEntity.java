@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultTestSuite extends BaseTestSuite {
+public class DefaultTestSuiteEntity extends BaseTestSuiteEntity {
 
-	protected DefaultTestSuite(JSONObject jsonObject) {
+	protected DefaultTestSuiteEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

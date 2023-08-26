@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.ProjectEntityFactory;
-import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectsToTestSuitesEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<ProjectEntity, TestSuite> {
+	extends BaseEntityRelationshipDALO<ProjectEntity, TestSuiteEntity> {
 
 	@Override
-	public EntityFactory<TestSuite> getChildEntityFactory() {
+	public EntityFactory<TestSuiteEntity> getChildEntityFactory() {
 		return _testSuiteEntityFactory;
 	}
 

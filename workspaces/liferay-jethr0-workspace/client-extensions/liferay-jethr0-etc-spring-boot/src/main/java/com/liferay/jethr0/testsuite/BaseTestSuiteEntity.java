@@ -17,7 +17,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class BaseTestSuite extends BaseEntity implements TestSuite {
+public class BaseTestSuiteEntity extends BaseEntity implements TestSuiteEntity {
 
 	@Override
 	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
@@ -63,7 +63,7 @@ public class BaseTestSuite extends BaseEntity implements TestSuite {
 		_name = name;
 	}
 
-	protected BaseTestSuite(JSONObject jsonObject) {
+	protected BaseTestSuiteEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_name = jsonObject.getString("name");

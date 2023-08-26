@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public interface TestSuite extends Entity {
+public interface TestSuiteEntity extends Entity {
 
 	public void addProjectEntities(Set<ProjectEntity> projectEntities);
 

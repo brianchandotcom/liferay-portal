@@ -10,7 +10,7 @@ import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
-import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
@@ -69,13 +69,13 @@ public abstract class BaseProjectEntity
 	}
 
 	@Override
-	public void addTestSuite(TestSuite testSuite) {
-		addRelatedEntity(testSuite);
+	public void addTestSuiteEntities(Set<TestSuiteEntity> testSuiteEntities) {
+		addRelatedEntities(testSuiteEntities);
 	}
 
 	@Override
-	public void addTestSuites(Set<TestSuite> testSuites) {
-		addRelatedEntities(testSuites);
+	public void addTestSuiteEntity(TestSuiteEntity testSuiteEntity) {
+		addRelatedEntity(testSuiteEntity);
 	}
 
 	@Override
@@ -148,8 +148,8 @@ public abstract class BaseProjectEntity
 	}
 
 	@Override
-	public Set<TestSuite> getTestSuites() {
-		return getRelatedEntities(TestSuite.class);
+	public Set<TestSuiteEntity> getTestSuiteEntities() {
+		return getRelatedEntities(TestSuiteEntity.class);
 	}
 
 	@Override
@@ -203,13 +203,15 @@ public abstract class BaseProjectEntity
 	}
 
 	@Override
-	public void removeTestSuite(TestSuite testSuite) {
-		removeRelatedEntity(testSuite);
+	public void removeTestSuiteEntities(
+		Set<TestSuiteEntity> testSuiteEntities) {
+
+		removeRelatedEntities(testSuiteEntities);
 	}
 
 	@Override
-	public void removeTestSuites(Set<TestSuite> testSuites) {
-		removeRelatedEntities(testSuites);
+	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity) {
+		removeRelatedEntity(testSuiteEntity);
 	}
 
 	@Override

@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TestSuiteEntityFactory extends BaseEntityFactory<TestSuite> {
+public class TestSuiteEntityFactory extends BaseEntityFactory<TestSuiteEntity> {
 
 	@Override
-	public TestSuite newEntity(JSONObject jsonObject) {
-		return new DefaultTestSuite(jsonObject);
+	public TestSuiteEntity newEntity(JSONObject jsonObject) {
+		return new DefaultTestSuiteEntity(jsonObject);
 	}
 
 	protected TestSuiteEntityFactory() {
-		super(TestSuite.class);
+		super(TestSuiteEntity.class);
 	}
 
 }

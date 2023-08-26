@@ -7,7 +7,7 @@ package com.liferay.jethr0.testsuite.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.ProjectEntity;
-import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.testsuite.dalo.ProjectsToTestSuitesEntityRelationshipDALO;
 import com.liferay.jethr0.testsuite.dalo.TestSuiteEntityDALO;
 
@@ -21,28 +21,29 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TestSuiteEntityRepository extends BaseEntityRepository<TestSuite> {
+public class TestSuiteEntityRepository
+	extends BaseEntityRepository<TestSuiteEntity> {
 
-	public Set<TestSuite> getAll(ProjectEntity projectEntity) {
-		Set<TestSuite> projectTestSuites = new HashSet<>();
+	public Set<TestSuiteEntity> getAll(ProjectEntity projectEntity) {
+		Set<TestSuiteEntity> testSuiteEntities = new HashSet<>();
 
-		Set<Long> testSuiteIds =
+		Set<Long> testSuiteEntityIds =
 			_projectsToTestSuitesEntityRelationshipDALO.getChildEntityIds(
 				projectEntity);
 
-		for (TestSuite testSuite : getAll()) {
-			if (!testSuiteIds.contains(testSuite.getId())) {
+		for (TestSuiteEntity testSuiteEntity : getAll()) {
+			if (!testSuiteEntityIds.contains(testSuiteEntity.getId())) {
 				continue;
 			}
 
-			projectEntity.addTestSuite(testSuite);
+			projectEntity.addTestSuiteEntity(testSuiteEntity);
 
-			testSuite.addProjectEntity(projectEntity);
+			testSuiteEntity.addProjectEntity(projectEntity);
 
-			projectTestSuites.add(testSuite);
+			testSuiteEntities.add(testSuiteEntity);
 		}
 
-		return projectTestSuites;
+		return testSuiteEntities;
 	}
 
 	@Override

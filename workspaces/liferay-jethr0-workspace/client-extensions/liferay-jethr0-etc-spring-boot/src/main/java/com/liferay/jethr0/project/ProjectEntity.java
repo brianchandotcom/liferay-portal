@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,7 +10,7 @@ import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
-import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.testsuite.TestSuiteEntity;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -41,9 +41,9 @@ public interface ProjectEntity extends Entity {
 
 	public void addTaskEntity(TaskEntity taskEntity);
 
-	public void addTestSuite(TestSuite testSuite);
+	public void addTestSuiteEntities(Set<TestSuiteEntity> testSuiteEntities);
 
-	public void addTestSuites(Set<TestSuite> testSuites);
+	public void addTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
 	public Set<BuildEntity> getBuildEntities();
 
@@ -63,7 +63,7 @@ public interface ProjectEntity extends Entity {
 
 	public Set<TaskEntity> getTaskEntities();
 
-	public Set<TestSuite> getTestSuites();
+	public Set<TestSuiteEntity> getTestSuiteEntities();
 
 	public Type getType();
 
@@ -85,9 +85,9 @@ public interface ProjectEntity extends Entity {
 
 	public void removeTaskEntity(TaskEntity taskEntity);
 
-	public void removeTestSuite(TestSuite testSuite);
+	public void removeTestSuiteEntities(Set<TestSuiteEntity> testSuiteEntities);
 
-	public void removeTestSuites(Set<TestSuite> testSuites);
+	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
 	public void setName(String name);
 

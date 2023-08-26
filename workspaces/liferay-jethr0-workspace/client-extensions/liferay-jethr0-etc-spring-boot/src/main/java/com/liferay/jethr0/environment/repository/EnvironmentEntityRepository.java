@@ -25,14 +25,14 @@ public class EnvironmentEntityRepository
 	extends BaseEntityRepository<EnvironmentEntity> {
 
 	public Set<EnvironmentEntity> getAll(BuildEntity buildEntity) {
-		Set<EnvironmentEntity> buildEnvironmentEntities = new HashSet<>();
+		Set<EnvironmentEntity> environmentEntities = new HashSet<>();
 
-		Set<Long> environmentIds =
+		Set<Long> environmentEntityIds =
 			_buildToEnvironmentsEntityRelationshipDALO.getChildEntityIds(
 				buildEntity);
 
 		for (EnvironmentEntity environmentEntity : getAll()) {
-			if (!environmentIds.contains(environmentEntity.getId())) {
+			if (!environmentEntityIds.contains(environmentEntity.getId())) {
 				continue;
 			}
 
@@ -40,10 +40,10 @@ public class EnvironmentEntityRepository
 
 			environmentEntity.setBuildEntity(buildEntity);
 
-			buildEnvironmentEntities.add(environmentEntity);
+			environmentEntities.add(environmentEntity);
 		}
 
-		return buildEnvironmentEntities;
+		return environmentEntities;
 	}
 
 	@Override

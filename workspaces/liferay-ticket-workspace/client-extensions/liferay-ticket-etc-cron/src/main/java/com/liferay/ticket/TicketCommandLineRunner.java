@@ -56,7 +56,8 @@ public class TicketCommandLineRunner implements CommandLineRunner {
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-			JSONObject resolutionJSONObject = itemJSONObject.optJSONObject("resolution");
+			JSONObject resolutionJSONObject = itemJSONObject.optJSONObject(
+				"resolution");
 
 			if (resolutionJSONObject == null) {
 				continue;

@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import java.util.Date;
@@ -33,16 +33,16 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 		buildEntity.setState(BuildEntity.State.RUNNING);
 
-		Project project = buildEntity.getProject();
+		ProjectEntity projectEntity = buildEntity.getProjectEntity();
 
-		if (project.getState() != Project.State.RUNNING) {
-			project.setStartDate(new Date());
-			project.setState(Project.State.RUNNING);
+		if (projectEntity.getState() != ProjectEntity.State.RUNNING) {
+			projectEntity.setStartDate(new Date());
+			projectEntity.setState(ProjectEntity.State.RUNNING);
 
 			ProjectEntityRepository projectEntityRepository =
-				getProjectRepository();
+				getProjectEntityRepository();
 
-			projectEntityRepository.update(project);
+			projectEntityRepository.update(projectEntity);
 
 			BuildQueue buildQueue = getBuildQueue();
 

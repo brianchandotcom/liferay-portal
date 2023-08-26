@@ -11,7 +11,7 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import org.json.JSONObject;
@@ -25,7 +25,7 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 	public String process() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
-		Project project = getProject(
+		ProjectEntity projectEntity = getProjectEntity(
 			messageJSONObject.optJSONObject("project"));
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
@@ -34,7 +34,7 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 			messageJSONObject.optJSONObject("build"));
 
 		BuildEntity buildEntity = buildEntityRepository.add(
-			project, buildJSONObject);
+			projectEntity, buildJSONObject);
 
 		JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
 			"parameters");
@@ -54,24 +54,24 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 			}
 		}
 
-		if (project.getState() == Project.State.COMPLETED) {
-			project.setState(Project.State.QUEUED);
+		if (projectEntity.getState() == ProjectEntity.State.COMPLETED) {
+			projectEntity.setState(ProjectEntity.State.QUEUED);
 
 			ProjectEntityRepository projectEntityRepository =
-				getProjectRepository();
+				getProjectEntityRepository();
 
-			projectEntityRepository.update(project);
+			projectEntityRepository.update(projectEntity);
 		}
 
 		BuildQueue buildQueue = getBuildQueue();
 
-		buildQueue.addProject(project);
+		buildQueue.addProjectEntity(projectEntity);
 
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 
-		return project.toString();
+		return projectEntity.toString();
 	}
 
 	protected CreateBuildEventHandler(

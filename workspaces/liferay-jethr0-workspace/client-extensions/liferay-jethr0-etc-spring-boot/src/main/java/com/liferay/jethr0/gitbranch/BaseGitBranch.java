@@ -6,7 +6,7 @@
 package com.liferay.jethr0.gitbranch;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -23,13 +23,13 @@ import org.json.JSONObject;
 public class BaseGitBranch extends BaseEntity implements GitBranch {
 
 	@Override
-	public void addProject(Project project) {
-		addProjects(Collections.singleton(project));
+	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
+		_projectEntities.addAll(projectEntities);
 	}
 
 	@Override
-	public void addProjects(Set<Project> projects) {
-		_projects.addAll(projects);
+	public void addProjectEntity(ProjectEntity projectEntity) {
+		addProjectEntities(Collections.singleton(projectEntity));
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 	}
 
 	@Override
-	public Set<Project> getProjects() {
-		return _projects;
+	public Set<ProjectEntity> getProjectEntities() {
+		return _projectEntities;
 	}
 
 	@Override
@@ -96,13 +96,13 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 	}
 
 	@Override
-	public void removeProject(Project project) {
-		_projects.remove(project);
+	public void removeProjectEntities(Set<ProjectEntity> projectEntities) {
+		_projectEntities.removeAll(projectEntities);
 	}
 
 	@Override
-	public void removeProjects(Set<Project> projects) {
-		_projects.removeAll(projects);
+	public void removeProjectEntity(ProjectEntity projectEntity) {
+		_projectEntities.remove(projectEntity);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class BaseGitBranch extends BaseEntity implements GitBranch {
 
 	private String _branchName;
 	private String _branchSHA;
-	private final Set<Project> _projects = new HashSet<>();
+	private final Set<ProjectEntity> _projectEntities = new HashSet<>();
 	private boolean _rebased;
 	private String _repositoryName;
 	private String _upstreamBranchName;

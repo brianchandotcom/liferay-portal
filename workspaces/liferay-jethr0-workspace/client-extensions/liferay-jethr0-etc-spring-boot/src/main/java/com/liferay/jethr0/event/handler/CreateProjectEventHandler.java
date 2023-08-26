@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -28,7 +28,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 		JSONObject projectJSONObject = validateProjectJSONObject(
 			messageJSONObject.optJSONObject("project"));
 
-		Project project = _createProject(projectJSONObject);
+		ProjectEntity projectEntity = _createProjectEntity(projectJSONObject);
 
 		JSONArray buildsJSONArray = projectJSONObject.optJSONArray("builds");
 
@@ -41,7 +41,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
 				BuildEntity buildEntity = buildEntityRepository.add(
-					project, buildJSONObject);
+					projectEntity, buildJSONObject);
 
 				JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
 					"parameters");
@@ -72,7 +72,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 				long jenkinsCohortId = jenkinsCohortJSONObject.optLong("id");
 
 				if (jenkinsCohortId != 0) {
-					project.addJenkinsCohortEntity(
+					projectEntity.addJenkinsCohortEntity(
 						jenkinsCohortEntityRepository.getById(jenkinsCohortId));
 
 					continue;
@@ -85,12 +85,12 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 					continue;
 				}
 
-				project.addJenkinsCohortEntity(
+				projectEntity.addJenkinsCohortEntity(
 					jenkinsCohortEntityRepository.getByName(jenkinsCohortName));
 			}
 		}
 
-		return project.toString();
+		return projectEntity.toString();
 	}
 
 	protected CreateProjectEventHandler(
@@ -99,9 +99,9 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 		super(eventHandlerContext, messageJSONObject);
 	}
 
-	private Project _createProject(JSONObject projectJSONObject) {
+	private ProjectEntity _createProjectEntity(JSONObject projectJSONObject) {
 		ProjectEntityRepository projectEntityRepository =
-			getProjectRepository();
+			getProjectEntityRepository();
 
 		return projectEntityRepository.add(projectJSONObject);
 	}

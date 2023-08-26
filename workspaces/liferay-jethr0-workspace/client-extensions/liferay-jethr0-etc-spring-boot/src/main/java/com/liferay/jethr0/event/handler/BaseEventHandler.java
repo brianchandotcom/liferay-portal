@@ -70,8 +70,8 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _messageJSONObject;
 	}
 
-	protected ProjectEntityRepository getProjectRepository() {
-		return _eventHandlerContext.getProjectRepository();
+	protected ProjectEntityRepository getProjectEntityRepository() {
+		return _eventHandlerContext.getProjectEntityRepository();
 	}
 
 	private final EventHandlerContext _eventHandlerContext;

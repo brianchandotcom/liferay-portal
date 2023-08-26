@@ -8,7 +8,7 @@ package com.liferay.jethr0.task;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.run.TaskRunEntity;
 
 import java.util.Collections;
@@ -79,8 +79,8 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public Project getProject() {
-		return _project;
+	public ProjectEntity getProjectEntity() {
+		return _projectEntity;
 	}
 
 	@Override
@@ -119,8 +119,8 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public void setProject(Project project) {
-		_project = project;
+	public void setProjectEntity(ProjectEntity projectEntity) {
+		_projectEntity = projectEntity;
 	}
 
 	protected BaseTaskEntity(JSONObject jsonObject) {
@@ -132,7 +132,7 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	private BuildEntity _buildEntity;
 	private final Set<Environment> _environments = new HashSet<>();
 	private String _name;
-	private Project _project;
+	private ProjectEntity _projectEntity;
 	private final Set<TaskRunEntity> _taskRunEntities = new HashSet<>();
 
 }

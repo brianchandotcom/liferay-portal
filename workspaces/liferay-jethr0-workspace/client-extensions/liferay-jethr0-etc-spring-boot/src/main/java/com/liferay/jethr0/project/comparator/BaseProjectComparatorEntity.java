@@ -6,7 +6,7 @@
 package com.liferay.jethr0.project.comparator;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 
 import java.util.Comparator;
@@ -17,7 +17,8 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseProjectComparatorEntity
-	extends BaseEntity implements Comparator<Project>, ProjectComparatorEntity {
+	extends BaseEntity
+	implements Comparator<ProjectEntity>, ProjectComparatorEntity {
 
 	@Override
 	public JSONObject getJSONObject() {

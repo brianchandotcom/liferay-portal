@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
@@ -27,20 +27,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
-	public BuildEntity add(Project project, JSONObject jsonObject) {
-		jsonObject.put("r_projectToBuilds_c_projectId", project.getId());
+	public BuildEntity add(ProjectEntity projectEntity, JSONObject jsonObject) {
+		jsonObject.put("r_projectToBuilds_c_projectId", projectEntity.getId());
 
 		BuildEntity buildEntity = add(jsonObject);
 
-		buildEntity.setProject(project);
+		buildEntity.setProjectEntity(projectEntity);
 
-		project.addBuildEntity(buildEntity);
+		projectEntity.addBuildEntity(buildEntity);
 
 		return buildEntity;
 	}
 
 	public BuildEntity add(
-		Project project, String buildName, String jobName,
+		ProjectEntity projectEntity, String buildName, String jobName,
 		BuildEntity.State state) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -53,15 +53,16 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			"state", state.getJSONObject()
 		);
 
-		return add(project, jsonObject);
+		return add(projectEntity, jsonObject);
 	}
 
-	public Set<BuildEntity> getAll(Project project) {
+	public Set<BuildEntity> getAll(ProjectEntity projectEntity) {
 		Set<BuildEntity> buildEntities = new HashSet<>(
-			_projectToBuildsEntityRelationshipDALO.getChildEntities(project));
+			_projectToBuildsEntityRelationshipDALO.getChildEntities(
+				projectEntity));
 
 		for (BuildEntity buildEntity : buildEntities) {
-			buildEntity.setProject(project);
+			buildEntity.setProjectEntity(projectEntity);
 		}
 
 		return addAll(buildEntities);
@@ -85,15 +86,15 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		_projectEntityRepository.initializeRelationships();
 
 		for (BuildEntity buildEntity : getAll()) {
-			Project project = null;
+			ProjectEntity projectEntity = null;
 
-			long projectId = buildEntity.getProjectId();
+			long projectId = buildEntity.getProjectEntityId();
 
 			if (projectId != 0) {
-				project = _projectEntityRepository.getById(projectId);
+				projectEntity = _projectEntityRepository.getById(projectId);
 			}
 
-			buildEntity.setProject(project);
+			buildEntity.setProjectEntity(projectEntity);
 
 			buildEntity.addBuildParameterEntities(
 				_buildParameterEntityRepository.getAll(buildEntity));
@@ -105,19 +106,19 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		_initializedRelationships = true;
 	}
 
-	public void setBuildParameterRepository(
+	public void setBuildParameterEntityRepository(
 		BuildParameterEntityRepository buildParameterEntityRepository) {
 
 		_buildParameterEntityRepository = buildParameterEntityRepository;
 	}
 
-	public void setBuildRunRepository(
+	public void setBuildRunEntityRepository(
 		BuildRunEntityRepository buildRunEntityRepository) {
 
 		_buildRunEntityRepository = buildRunEntityRepository;
 	}
 
-	public void setProjectRepository(
+	public void setProjectEntityRepository(
 		ProjectEntityRepository projectEntityRepository) {
 
 		_projectEntityRepository = projectEntityRepository;

@@ -7,7 +7,7 @@ package com.liferay.jethr0.project.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.ProjectEntityFactory;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.TaskEntityFactory;
@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectToTasksEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<Project, TaskEntity> {
+	extends BaseEntityRelationshipDALO<ProjectEntity, TaskEntity> {
 
 	@Override
 	public EntityFactory<TaskEntity> getChildEntityFactory() {
@@ -28,7 +28,7 @@ public class ProjectToTasksEntityRelationshipDALO
 	}
 
 	@Override
-	public EntityFactory<Project> getParentEntityFactory() {
+	public EntityFactory<ProjectEntity> getParentEntityFactory() {
 		return _projectEntityFactory;
 	}
 

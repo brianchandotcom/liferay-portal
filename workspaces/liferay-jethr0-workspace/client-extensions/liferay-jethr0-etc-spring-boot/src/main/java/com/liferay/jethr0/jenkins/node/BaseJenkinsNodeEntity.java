@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -249,10 +249,10 @@ public class BaseJenkinsNodeEntity
 	}
 
 	private boolean _hasCompatibleCohort(BuildEntity buildEntity) {
-		Project project = buildEntity.getProject();
+		ProjectEntity projectEntity = buildEntity.getProjectEntity();
 
 		Set<JenkinsCohortEntity> jenkinsCohortEntities =
-			project.getJenkinsCohortEntities();
+			projectEntity.getJenkinsCohortEntities();
 
 		if (jenkinsCohortEntities.isEmpty() ||
 			jenkinsCohortEntities.contains(getJenkinsCohortEntity())) {

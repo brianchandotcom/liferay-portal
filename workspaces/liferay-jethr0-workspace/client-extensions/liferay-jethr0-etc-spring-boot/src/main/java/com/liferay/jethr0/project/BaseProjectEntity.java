@@ -21,16 +21,17 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProject extends BaseEntity implements Project {
-
-	@Override
-	public void addBuildEntity(BuildEntity buildEntity) {
-		addRelatedEntity(buildEntity);
-	}
+public abstract class BaseProjectEntity
+	extends BaseEntity implements ProjectEntity {
 
 	@Override
 	public void addBuildEntities(Set<BuildEntity> buildEntities) {
 		addRelatedEntities(buildEntities);
+	}
+
+	@Override
+	public void addBuildEntity(BuildEntity buildEntity) {
+		addRelatedEntity(buildEntity);
 	}
 
 	@Override
@@ -96,8 +97,8 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		Project.State state = getState();
-		Project.Type type = getType();
+		ProjectEntity.State state = getState();
+		ProjectEntity.Type type = getType();
 
 		jsonObject.put(
 			"name", getName()
@@ -157,13 +158,13 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
-	public void removeBuildEntity(BuildEntity buildEntity) {
-		removeRelatedEntity(buildEntity);
+	public void removeBuildEntities(Set<BuildEntity> buildEntities) {
+		removeRelatedEntities(buildEntities);
 	}
 
 	@Override
-	public void removeBuildEntities(Set<BuildEntity> buildEntities) {
-		removeRelatedEntities(buildEntities);
+	public void removeBuildEntity(BuildEntity buildEntity) {
+		removeRelatedEntity(buildEntity);
 	}
 
 	@Override
@@ -238,7 +239,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 		_state = state;
 	}
 
-	protected BaseProject(JSONObject jsonObject) {
+	protected BaseProjectEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_name = jsonObject.getString("name");

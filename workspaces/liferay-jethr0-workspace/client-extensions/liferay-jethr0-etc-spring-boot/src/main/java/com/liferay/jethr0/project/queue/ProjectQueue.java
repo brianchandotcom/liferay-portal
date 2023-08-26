@@ -11,7 +11,7 @@ import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.gitbranch.repository.GitBranchEntityRepository;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.comparator.BaseProjectComparatorEntity;
 import com.liferay.jethr0.project.comparator.ProjectComparatorEntity;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
@@ -44,29 +44,25 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class ProjectQueue {
 
-	public void addProject(Project project) {
-		addProjects(Collections.singleton(project));
-	}
-
-	public void addProjects(Set<Project> projects) {
-		if (projects == null) {
+	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
+		if (projectEntities == null) {
 			return;
 		}
 
-		projects.removeAll(Collections.singleton(null));
+		projectEntities.removeAll(Collections.singleton(null));
 
-		if (projects.isEmpty()) {
+		if (projectEntities.isEmpty()) {
 			return;
 		}
 
 		boolean sort = false;
 
-		for (Project project : projects) {
-			if (_projects.contains(project)) {
+		for (ProjectEntity projectEntity : projectEntities) {
+			if (_projectEntities.contains(projectEntity)) {
 				continue;
 			}
 
-			_projects.add(project);
+			_projectEntities.add(projectEntity);
 
 			sort = true;
 		}
@@ -76,14 +72,18 @@ public class ProjectQueue {
 		}
 	}
 
-	public ProjectPrioritizerEntity getProjectPrioritizerEntity() {
-		return _projectPrioritizerEntity;
+	public void addProjectEntity(ProjectEntity projectEntity) {
+		addProjectEntities(Collections.singleton(projectEntity));
 	}
 
-	public List<Project> getProjects() {
-		synchronized (_projects) {
-			return _projects;
+	public List<ProjectEntity> getProjectEntities() {
+		synchronized (_projectEntities) {
+			return _projectEntities;
 		}
+	}
+
+	public ProjectPrioritizerEntity getProjectPrioritizerEntity() {
+		return _projectPrioritizerEntity;
 	}
 
 	public void initialize() {
@@ -106,17 +106,21 @@ public class ProjectQueue {
 		_buildRunEntityRepository.initialize();
 		_projectEntityRepository.initialize();
 
-		_buildEntityRepository.setBuildParameterRepository(
+		_buildEntityRepository.setBuildParameterEntityRepository(
 			_buildParameterEntityRepository);
-		_buildEntityRepository.setBuildRunRepository(_buildRunEntityRepository);
-		_buildEntityRepository.setProjectRepository(_projectEntityRepository);
+		_buildEntityRepository.setBuildRunEntityRepository(
+			_buildRunEntityRepository);
+		_buildEntityRepository.setProjectEntityRepository(
+			_projectEntityRepository);
 
-		_buildRunEntityRepository.setBuildRepository(_buildEntityRepository);
+		_buildRunEntityRepository.setBuildEntityRepository(
+			_buildEntityRepository);
 
 		_buildParameterEntityRepository.setBuildRepository(
 			_buildEntityRepository);
 
-		_projectEntityRepository.setBuildRepository(_buildEntityRepository);
+		_projectEntityRepository.setBuildEntityRepository(
+			_buildEntityRepository);
 
 		_buildParameterEntityRepository.initializeRelationships();
 		_buildEntityRepository.initializeRelationships();
@@ -125,23 +129,23 @@ public class ProjectQueue {
 
 		setProjectPrioritizerEntity(_getDefaultProjectPrioritizerEntity());
 
-		addProjects(_projectEntityRepository.getAll());
+		addProjectEntities(_projectEntityRepository.getAll());
 
 		update();
 	}
 
-	public void removeProjects(Set<Project> projects) {
-		if (projects == null) {
+	public void removeProjectEntities(Set<ProjectEntity> projectEntities) {
+		if (projectEntities == null) {
 			return;
 		}
 
-		projects.removeAll(Collections.singleton(null));
+		projectEntities.removeAll(Collections.singleton(null));
 
-		if (projects.isEmpty()) {
+		if (projectEntities.isEmpty()) {
 			return;
 		}
 
-		_projects.removeAll(projects);
+		_projectEntities.removeAll(projectEntities);
 	}
 
 	@Scheduled(cron = "${liferay.jethr0.project.queue.update.cron}")
@@ -166,13 +170,17 @@ public class ProjectQueue {
 			return;
 		}
 
-		synchronized (_projects) {
-			_projects.removeAll(Collections.singleton(null));
+		synchronized (_projectEntities) {
+			_projectEntities.removeAll(Collections.singleton(null));
 
-			for (Project project : new ArrayList<>(_projects)) {
+			for (ProjectEntity projectEntity :
+					new ArrayList<>(_projectEntities)) {
+
 				boolean keepProject = false;
 
-				for (BuildEntity buildEntity : project.getBuildEntities()) {
+				for (BuildEntity buildEntity :
+						projectEntity.getBuildEntities()) {
+
 					if (buildEntity.getState() != BuildEntity.State.COMPLETED) {
 						keepProject = true;
 
@@ -181,7 +189,7 @@ public class ProjectQueue {
 				}
 
 				if (!keepProject) {
-					_projects.remove(project);
+					_projectEntities.remove(projectEntity);
 				}
 			}
 
@@ -194,32 +202,34 @@ public class ProjectQueue {
 				_sortedProjectComparatorEntities,
 				Comparator.comparingInt(ProjectComparatorEntity::getPosition));
 
-			_projects.sort(new PrioritizedProjectComparator());
+			_projectEntities.sort(new PrioritizedProjectComparator());
 
-			for (int i = 0; i < _projects.size(); i++) {
-				Project project = _projects.get(i);
+			for (int i = 0; i < _projectEntities.size(); i++) {
+				ProjectEntity projectEntity = _projectEntities.get(i);
 
-				project.setPosition(i + 1);
+				projectEntity.setPosition(i + 1);
 
-				_projectEntityRepository.update(project);
+				_projectEntityRepository.update(projectEntity);
 			}
 		}
 	}
 
 	public void update() {
-		synchronized (_projects) {
-			Set<Project> completedProjects = new HashSet<>();
+		synchronized (_projectEntities) {
+			Set<ProjectEntity> completedProjectEntities = new HashSet<>();
 
-			for (Project project : getProjects()) {
-				if (project.getState() == Project.State.COMPLETED) {
-					completedProjects.add(project);
+			for (ProjectEntity projectEntity : getProjectEntities()) {
+				if (projectEntity.getState() == ProjectEntity.State.COMPLETED) {
+					completedProjectEntities.add(projectEntity);
 
 					continue;
 				}
 
-				System.out.println(project);
+				System.out.println(projectEntity);
 
-				for (BuildEntity buildEntity : project.getBuildEntities()) {
+				for (BuildEntity buildEntity :
+						projectEntity.getBuildEntities()) {
+
 					if (buildEntity.getState() == BuildEntity.State.COMPLETED) {
 						continue;
 					}
@@ -247,7 +257,7 @@ public class ProjectQueue {
 				}
 			}
 
-			removeProjects(completedProjects);
+			removeProjectEntities(completedProjectEntities);
 		}
 	}
 
@@ -297,6 +307,8 @@ public class ProjectQueue {
 	private ProjectComparatorEntityRepository
 		_projectComparatorEntityRepository;
 
+	private final List<ProjectEntity> _projectEntities = new ArrayList<>();
+
 	@Autowired
 	private ProjectEntityRepository _projectEntityRepository;
 
@@ -306,7 +318,6 @@ public class ProjectQueue {
 	private ProjectPrioritizerEntityRepository
 		_projectPrioritizerEntityRepository;
 
-	private final List<Project> _projects = new ArrayList<>();
 	private final List<ProjectComparatorEntity>
 		_sortedProjectComparatorEntities = new ArrayList<>();
 
@@ -316,10 +327,13 @@ public class ProjectQueue {
 	@Autowired
 	private TestSuiteEntityRepository _testSuiteEntityRepository;
 
-	private class PrioritizedProjectComparator implements Comparator<Project> {
+	private class PrioritizedProjectComparator
+		implements Comparator<ProjectEntity> {
 
 		@Override
-		public int compare(Project project1, Project project2) {
+		public int compare(
+			ProjectEntity projectEntity1, ProjectEntity projectEntity2) {
+
 			for (ProjectComparatorEntity projectComparatorEntity :
 					_sortedProjectComparatorEntities) {
 
@@ -332,7 +346,8 @@ public class ProjectQueue {
 				BaseProjectComparatorEntity baseProjectComparator =
 					(BaseProjectComparatorEntity)projectComparatorEntity;
 
-				int result = baseProjectComparator.compare(project1, project2);
+				int result = baseProjectComparator.compare(
+					projectEntity1, projectEntity2);
 
 				if (result != 0) {
 					return result;

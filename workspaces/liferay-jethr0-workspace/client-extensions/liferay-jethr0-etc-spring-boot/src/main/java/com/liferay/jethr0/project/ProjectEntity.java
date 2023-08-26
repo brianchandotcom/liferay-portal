@@ -22,11 +22,11 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface Project extends Entity {
-
-	public void addBuildEntity(BuildEntity buildEntity);
+public interface ProjectEntity extends Entity {
 
 	public void addBuildEntities(Set<BuildEntity> buildEntities);
+
+	public void addBuildEntity(BuildEntity buildEntity);
 
 	public void addGitBranch(GitBranch gitBranch);
 
@@ -67,9 +67,9 @@ public interface Project extends Entity {
 
 	public Type getType();
 
-	public void removeBuildEntity(BuildEntity buildEntity);
-
 	public void removeBuildEntities(Set<BuildEntity> buildEntities);
+
+	public void removeBuildEntity(BuildEntity buildEntity);
 
 	public void removeGitBranch(GitBranch gitBranch);
 

@@ -23,7 +23,7 @@ public abstract class BaseBuildParameterEntity
 
 	@Override
 	public long getBuildEntityId() {
-		return _buildId;
+		return _buildEntityId;
 	}
 
 	@Override
@@ -58,23 +58,24 @@ public abstract class BaseBuildParameterEntity
 		_buildEntity = buildEntity;
 
 		if (_buildEntity != null) {
-			_buildId = _buildEntity.getId();
+			_buildEntityId = _buildEntity.getId();
 		}
 		else {
-			_buildId = 0;
+			_buildEntityId = 0;
 		}
 	}
 
 	protected BaseBuildParameterEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_buildId = jsonObject.optLong("r_buildToBuildParameters_c_buildId");
+		_buildEntityId = jsonObject.optLong(
+			"r_buildToBuildParameters_c_buildId");
 		_name = jsonObject.getString("name");
 		_value = jsonObject.getString("value");
 	}
 
 	private BuildEntity _buildEntity;
-	private long _buildId;
+	private long _buildEntityId;
 	private final String _name;
 	private final String _value;
 

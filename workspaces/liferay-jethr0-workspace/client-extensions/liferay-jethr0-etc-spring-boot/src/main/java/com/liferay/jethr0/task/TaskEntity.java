@@ -8,7 +8,7 @@ package com.liferay.jethr0.task;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.run.TaskRunEntity;
 
 import java.util.Set;
@@ -32,7 +32,7 @@ public interface TaskEntity extends Entity {
 
 	public String getName();
 
-	public Project getProject();
+	public ProjectEntity getProjectEntity();
 
 	public Set<TaskRunEntity> getTaskRunEntities();
 
@@ -48,6 +48,6 @@ public interface TaskEntity extends Entity {
 
 	public void setName(String name);
 
-	public void setProject(Project project);
+	public void setProjectEntity(ProjectEntity projectEntity);
 
 }

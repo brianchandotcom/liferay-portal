@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.TaskEntity;
 
 import java.util.HashMap;
@@ -24,13 +24,15 @@ import org.json.JSONObject;
  */
 public interface BuildEntity extends Entity {
 
-	public void addBuildParameterEntity(BuildParameterEntity buildParameterEntity);
+	public void addBuildParameterEntities(
+		Set<BuildParameterEntity> buildParameterEntities);
 
-	public void addBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities);
-
-	public void addBuildRunEntity(BuildRunEntity buildRunEntity);
+	public void addBuildParameterEntity(
+		BuildParameterEntity buildParameterEntity);
 
 	public void addBuildRunEntities(Set<BuildRunEntity> buildRunEntities);
+
+	public void addBuildRunEntity(BuildRunEntity buildRunEntity);
 
 	public void addEnvironment(Environment environment);
 
@@ -42,9 +44,9 @@ public interface BuildEntity extends Entity {
 
 	public String getBuildName();
 
-	public BuildParameterEntity getBuildParameterEntity(String name);
-
 	public Set<BuildParameterEntity> getBuildParameterEntities();
+
+	public BuildParameterEntity getBuildParameterEntity(String name);
 
 	public Set<BuildRunEntity> getBuildRunEntities();
 
@@ -62,9 +64,9 @@ public interface BuildEntity extends Entity {
 
 	public Set<BuildEntity> getParentBuildEntities();
 
-	public Project getProject();
+	public ProjectEntity getProjectEntity();
 
-	public long getProjectId();
+	public long getProjectEntityId();
 
 	public State getState();
 
@@ -74,13 +76,15 @@ public interface BuildEntity extends Entity {
 
 	public boolean isParentBuildEntity(BuildEntity buildEntity);
 
-	public void removeBuildParameterEntity(BuildParameterEntity buildParameterEntity);
+	public void removeBuildParameterEntities(
+		Set<BuildParameterEntity> buildParameterEntities);
 
-	public void removeBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities);
-
-	public void removeBuildRunEntity(BuildRunEntity buildRunEntity);
+	public void removeBuildParameterEntity(
+		BuildParameterEntity buildParameterEntity);
 
 	public void removeBuildRunEntities(Set<BuildRunEntity> buildRunEntities);
+
+	public void removeBuildRunEntity(BuildRunEntity buildRunEntity);
 
 	public void removeEnvironment(Environment environment);
 
@@ -94,7 +98,7 @@ public interface BuildEntity extends Entity {
 
 	public void setJobName(String jobName);
 
-	public void setProject(Project project);
+	public void setProjectEntity(ProjectEntity projectEntity);
 
 	public void setState(State state);
 

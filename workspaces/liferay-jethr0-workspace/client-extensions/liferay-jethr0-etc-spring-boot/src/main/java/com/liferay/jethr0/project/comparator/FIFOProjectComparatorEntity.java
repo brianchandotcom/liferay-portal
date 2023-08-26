@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.project.comparator;
 
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerEntity;
 
 import java.util.Date;
@@ -29,9 +29,11 @@ public class FIFOProjectComparatorEntity extends BaseProjectComparatorEntity {
 	}
 
 	@Override
-	public int compare(Project project1, Project project2) {
-		Date createdDate1 = project1.getCreatedDate();
-		Date createdDate2 = project2.getCreatedDate();
+	public int compare(
+		ProjectEntity projectEntity1, ProjectEntity projectEntity2) {
+
+		Date createdDate1 = projectEntity1.getCreatedDate();
+		Date createdDate2 = projectEntity2.getCreatedDate();
 
 		return createdDate1.compareTo(createdDate2);
 	}

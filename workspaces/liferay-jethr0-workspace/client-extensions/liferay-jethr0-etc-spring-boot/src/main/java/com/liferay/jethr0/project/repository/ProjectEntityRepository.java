@@ -7,7 +7,7 @@ package com.liferay.jethr0.project.repository;
 
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.dalo.ProjectEntityDALO;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
@@ -23,11 +23,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectEntityRepository extends BaseEntityRepository<Project> {
+public class ProjectEntityRepository
+	extends BaseEntityRepository<ProjectEntity> {
 
-	public Project add(
+	public ProjectEntity add(
 		String name, int position, int priority, Date startDate,
-		Project.State state, Project.Type type) {
+		ProjectEntity.State state, ProjectEntity.Type type) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -57,7 +58,7 @@ public class ProjectEntityRepository extends BaseEntityRepository<Project> {
 	public void initialize() {
 		addAll(
 			_projectEntityDALO.getProjectsByState(
-				Project.State.QUEUED, Project.State.RUNNING));
+				ProjectEntity.State.QUEUED, ProjectEntity.State.RUNNING));
 	}
 
 	@Override
@@ -66,14 +67,15 @@ public class ProjectEntityRepository extends BaseEntityRepository<Project> {
 			return;
 		}
 
-		for (Project project : getAll()) {
-			project.addBuildEntities(_buildEntityRepository.getAll(project));
+		for (ProjectEntity projectEntity : getAll()) {
+			projectEntity.addBuildEntities(
+				_buildEntityRepository.getAll(projectEntity));
 		}
 
 		_initializedRelationships = true;
 	}
 
-	public void setBuildRepository(
+	public void setBuildEntityRepository(
 		BuildEntityRepository buildEntityRepository) {
 
 		_buildEntityRepository = buildEntityRepository;

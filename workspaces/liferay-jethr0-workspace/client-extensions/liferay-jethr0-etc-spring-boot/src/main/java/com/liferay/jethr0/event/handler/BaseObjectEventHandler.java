@@ -7,7 +7,7 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -27,29 +27,30 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		super(eventHandlerContext, messageJSONObject);
 	}
 
-	protected Project getProject(JSONObject projectJSONObject)
+	protected ProjectEntity getProjectEntity(JSONObject projectJSONObject)
 		throws Exception {
 
 		if (projectJSONObject == null) {
 			throw new Exception("Missing project");
 		}
 
-		long projectId = projectJSONObject.optLong("id");
+		long projectEntityId = projectJSONObject.optLong("id");
 
-		if (projectId <= 0) {
+		if (projectEntityId <= 0) {
 			throw new Exception("Missing ID from project");
 		}
 
 		ProjectEntityRepository projectEntityRepository =
-			getProjectRepository();
+			getProjectEntityRepository();
 
-		Project project = projectEntityRepository.getById(projectId);
+		ProjectEntity projectEntity = projectEntityRepository.getById(
+			projectEntityId);
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildEntityRepository.getAll(project);
+		buildEntityRepository.getAll(projectEntity);
 
-		return project;
+		return projectEntity;
 	}
 
 	protected JSONObject validateBuildJSONObject(JSONObject buildJSONObject)
@@ -245,20 +246,20 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing priority from project");
 		}
 
-		Project.State state = Project.State.getByKey(
+		ProjectEntity.State state = ProjectEntity.State.getByKey(
 			projectJSONObject.optString("state"));
 
 		if (state == null) {
-			state = Project.State.OPENED;
+			state = ProjectEntity.State.OPENED;
 		}
 
-		Project.Type type = Project.Type.getByKey(
+		ProjectEntity.Type type = ProjectEntity.Type.getByKey(
 			projectJSONObject.optString("type"));
 
 		if (type == null) {
 			throw new Exception(
 				"Project type is not one of the following: " +
-					Project.Type.getKeys());
+					ProjectEntity.Type.getKeys());
 		}
 
 		JSONObject jsonObject = new JSONObject();

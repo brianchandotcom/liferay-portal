@@ -8,7 +8,7 @@ package com.liferay.jethr0.task.repository;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.dalo.ProjectToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.dalo.TaskEntityDALO;
@@ -46,20 +46,21 @@ public class TaskEntityRepository extends BaseEntityRepository<TaskEntity> {
 		return buildTaskEntities;
 	}
 
-	public Set<TaskEntity> getAll(Project project) {
+	public Set<TaskEntity> getAll(ProjectEntity projectEntity) {
 		Set<TaskEntity> projectTaskEntities = new HashSet<>();
 
 		Set<Long> taskIds =
-			_projectToTasksEntityRelationshipDALO.getChildEntityIds(project);
+			_projectToTasksEntityRelationshipDALO.getChildEntityIds(
+				projectEntity);
 
 		for (TaskEntity taskEntity : getAll()) {
 			if (!taskIds.contains(taskEntity.getId())) {
 				continue;
 			}
 
-			taskEntity.setProject(project);
+			taskEntity.setProjectEntity(projectEntity);
 
-			project.addTaskEntity(taskEntity);
+			projectEntity.addTaskEntity(taskEntity);
 
 			projectTaskEntities.add(taskEntity);
 		}

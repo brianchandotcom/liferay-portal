@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.Environment;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -27,23 +27,27 @@ public abstract class BaseBuildEntity
 	extends BaseEntity implements BuildEntity {
 
 	@Override
-	public void addBuildParameterEntity(BuildParameterEntity buildParameterEntity) {
-		addRelatedEntity(buildParameterEntity);
-	}
+	public void addBuildParameterEntities(
+		Set<BuildParameterEntity> buildParameterEntities) {
 
-	@Override
-	public void addBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities) {
 		addRelatedEntities(buildParameterEntities);
 	}
 
 	@Override
-	public void addBuildRunEntity(BuildRunEntity buildRunEntity) {
-		addRelatedEntity(buildRunEntity);
+	public void addBuildParameterEntity(
+		BuildParameterEntity buildParameterEntity) {
+
+		addRelatedEntity(buildParameterEntity);
 	}
 
 	@Override
 	public void addBuildRunEntities(Set<BuildRunEntity> buildRunEntities) {
 		addRelatedEntities(buildRunEntities);
+	}
+
+	@Override
+	public void addBuildRunEntity(BuildRunEntity buildRunEntity) {
+		addRelatedEntity(buildRunEntity);
 	}
 
 	@Override
@@ -72,19 +76,21 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
+	public Set<BuildParameterEntity> getBuildParameterEntities() {
+		return getRelatedEntities(BuildParameterEntity.class);
+	}
+
+	@Override
 	public BuildParameterEntity getBuildParameterEntity(String name) {
-		for (BuildParameterEntity buildParameterEntity : getBuildParameterEntities()) {
+		for (BuildParameterEntity buildParameterEntity :
+				getBuildParameterEntities()) {
+
 			if (Objects.equals(name, buildParameterEntity.getName())) {
 				return buildParameterEntity;
 			}
 		}
 
 		return null;
-	}
-
-	@Override
-	public Set<BuildParameterEntity> getBuildParameterEntities() {
-		return getRelatedEntities(BuildParameterEntity.class);
 	}
 
 	@Override
@@ -104,7 +110,8 @@ public abstract class BaseBuildEntity
 
 	@Override
 	public JenkinsNodeEntity.Type getJenkinsNodeType() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity("NODE_TYPE");
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
+			"NODE_TYPE");
 
 		if (buildParameterEntity == null) {
 			return null;
@@ -136,7 +143,7 @@ public abstract class BaseBuildEntity
 		).put(
 			"jobName", getJobName()
 		).put(
-			"r_projectToBuilds_c_projectId", getProjectId()
+			"r_projectToBuilds_c_projectId", getProjectEntityId()
 		).put(
 			"state", state.getJSONObject()
 		);
@@ -146,7 +153,8 @@ public abstract class BaseBuildEntity
 
 	@Override
 	public int getMaxNodeCount() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity("MAX_NODE_COUNT");
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
+			"MAX_NODE_COUNT");
 
 		if (buildParameterEntity == null) {
 			return _DEFAULT_MAX_NODE_COUNT;
@@ -163,7 +171,8 @@ public abstract class BaseBuildEntity
 
 	@Override
 	public int getMinNodeRAM() {
-		BuildParameterEntity buildParameterEntity = getBuildParameterEntity("MIN_NODE_RAM");
+		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
+			"MIN_NODE_RAM");
 
 		if (buildParameterEntity == null) {
 			return _DEFAULT_MIN_NODE_RAM;
@@ -183,13 +192,13 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public Project getProject() {
-		return _project;
+	public ProjectEntity getProjectEntity() {
+		return _projectEntity;
 	}
 
 	@Override
-	public long getProjectId() {
-		return _projectId;
+	public long getProjectEntityId() {
+		return _projectEntityId;
 	}
 
 	@Override
@@ -217,23 +226,27 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void removeBuildParameterEntity(BuildParameterEntity buildParameterEntity) {
-		removeRelatedEntity(buildParameterEntity);
-	}
+	public void removeBuildParameterEntities(
+		Set<BuildParameterEntity> buildParameterEntities) {
 
-	@Override
-	public void removeBuildParameterEntities(Set<BuildParameterEntity> buildParameterEntities) {
 		removeRelatedEntities(buildParameterEntities);
 	}
 
 	@Override
-	public void removeBuildRunEntity(BuildRunEntity buildRunEntity) {
-		removeRelatedEntity(buildRunEntity);
+	public void removeBuildParameterEntity(
+		BuildParameterEntity buildParameterEntity) {
+
+		removeRelatedEntity(buildParameterEntity);
 	}
 
 	@Override
 	public void removeBuildRunEntities(Set<BuildRunEntity> buildRunEntities) {
 		removeRelatedEntities(buildRunEntities);
+	}
+
+	@Override
+	public void removeBuildRunEntity(BuildRunEntity buildRunEntity) {
+		removeRelatedEntity(buildRunEntity);
 	}
 
 	@Override
@@ -283,14 +296,14 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void setProject(Project project) {
-		_project = project;
+	public void setProjectEntity(ProjectEntity projectEntity) {
+		_projectEntity = projectEntity;
 
-		if (_project != null) {
-			_projectId = _project.getId();
+		if (_projectEntity != null) {
+			_projectEntityId = _projectEntity.getId();
 		}
 		else {
-			_projectId = 0;
+			_projectEntityId = 0;
 		}
 	}
 
@@ -304,7 +317,7 @@ public abstract class BaseBuildEntity
 
 		_buildName = jsonObject.getString("buildName");
 		_jobName = jsonObject.getString("jobName");
-		_projectId = jsonObject.optLong("r_projectToBuilds_c_projectId");
+		_projectEntityId = jsonObject.optLong("r_projectToBuilds_c_projectId");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
@@ -339,8 +352,8 @@ public abstract class BaseBuildEntity
 	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
 	private String _jobName;
 	private final Set<BuildEntity> _parentBuildEntities = new HashSet<>();
-	private Project _project;
-	private long _projectId;
+	private ProjectEntity _projectEntity;
+	private long _projectEntityId;
 	private State _state;
 
 }

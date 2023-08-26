@@ -6,7 +6,7 @@
 package com.liferay.jethr0;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 
 import org.json.JSONArray;
@@ -32,15 +32,15 @@ public class BuildQueueRestController {
 	public ResponseEntity<String> get(@AuthenticationPrincipal Jwt jwt) {
 		JSONArray projectsJSONArray = new JSONArray();
 
-		for (Project project : _projectQueue.getProjects()) {
-			JSONObject projectJSONObject = project.getJSONObject();
+		for (ProjectEntity projectEntity : _projectQueue.getProjectEntities()) {
+			JSONObject projectJSONObject = projectEntity.getJSONObject();
 
 			int completedBuilds = 0;
 			int queuedBuilds = 0;
 			int runningBuilds = 0;
 			int totalBuilds = 0;
 
-			for (BuildEntity buildEntity : project.getBuildEntities()) {
+			for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
 				if (buildEntity.getState() == BuildEntity.State.COMPLETED) {
 					completedBuilds++;
 				}

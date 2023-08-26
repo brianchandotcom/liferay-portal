@@ -61,7 +61,7 @@ public class EventHandlerContext {
 		return _jmsEventHandler;
 	}
 
-	public ProjectEntityRepository getProjectRepository() {
+	public ProjectEntityRepository getProjectEntityRepository() {
 		return _projectEntityRepository;
 	}
 

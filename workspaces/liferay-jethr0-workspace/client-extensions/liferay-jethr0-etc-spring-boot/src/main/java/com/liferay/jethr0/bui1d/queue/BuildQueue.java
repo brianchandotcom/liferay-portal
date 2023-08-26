@@ -11,7 +11,7 @@ import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.project.queue.ProjectQueue;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
@@ -58,16 +58,16 @@ public class BuildQueue {
 		sort();
 	}
 
-	public void addProject(Project project) {
-		addProjects(Collections.singleton(project));
-	}
-
-	public void addProjects(Set<Project> projects) {
-		for (Project project : projects) {
-			_projectQueue.addProject(project);
+	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
+		for (ProjectEntity projectEntity : projectEntities) {
+			_projectQueue.addProjectEntity(projectEntity);
 		}
 
 		sort();
+	}
+
+	public void addProjectEntity(ProjectEntity projectEntity) {
+		addProjectEntities(Collections.singleton(projectEntity));
 	}
 
 	public List<BuildEntity> getBuildEntities() {
@@ -81,8 +81,8 @@ public class BuildQueue {
 	}
 
 	public void initialize() {
-		for (Project project : _projectQueue.getProjects()) {
-			for (BuildEntity buildEntity : project.getBuildEntities()) {
+		for (ProjectEntity projectEntity : _projectQueue.getProjectEntities()) {
+			for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
 				_buildRunEntityRepository.getAll(buildEntity);
 				_buildParameterEntityRepository.getAll(buildEntity);
 				_environmentEntityRepository.getAll(buildEntity);
@@ -129,9 +129,11 @@ public class BuildQueue {
 
 			_projectQueue.sort();
 
-			for (Project project : _projectQueue.getProjects()) {
+			for (ProjectEntity projectEntity :
+					_projectQueue.getProjectEntities()) {
+
 				List<BuildEntity> buildEntities = new ArrayList<>(
-					project.getBuildEntities());
+					projectEntity.getBuildEntities());
 
 				buildEntities.removeAll(Collections.singleton(null));
 

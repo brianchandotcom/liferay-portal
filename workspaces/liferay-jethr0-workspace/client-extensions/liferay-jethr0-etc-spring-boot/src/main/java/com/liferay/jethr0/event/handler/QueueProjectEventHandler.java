@@ -7,7 +7,7 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.project.Project;
+import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import org.json.JSONObject;
@@ -21,25 +21,25 @@ public class QueueProjectEventHandler extends BaseObjectEventHandler {
 	public String process() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
-		Project project = getProject(
+		ProjectEntity projectEntity = getProjectEntity(
 			messageJSONObject.optJSONObject("project"));
 
-		project.setState(Project.State.QUEUED);
+		projectEntity.setState(ProjectEntity.State.QUEUED);
 
 		ProjectEntityRepository projectEntityRepository =
-			getProjectRepository();
+			getProjectEntityRepository();
 
-		projectEntityRepository.update(project);
+		projectEntityRepository.update(projectEntity);
 
 		BuildQueue buildQueue = getBuildQueue();
 
-		buildQueue.addProject(project);
+		buildQueue.addProjectEntity(projectEntity);
 
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 
-		return project.toString();
+		return projectEntity.toString();
 	}
 
 	protected QueueProjectEventHandler(

@@ -118,7 +118,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(jsonObject.getBoolean("cached"));
-		Assert.assertFalse(jsonObject.getBoolean("fragment"));
+		Assert.assertFalse(jsonObject.getBoolean("isPortlet"));
 		Assert.assertEquals(
 			StringPool.BLANK, jsonObject.getString("fragmentCollectionURL"));
 		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
@@ -170,7 +170,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(jsonObject.getBoolean("cached"));
-		Assert.assertFalse(jsonObject.getBoolean("fragment"));
+		Assert.assertFalse(jsonObject.getBoolean("isPortlet"));
 		Assert.assertEquals(
 			StringPool.BLANK, jsonObject.get("fragmentCollectionURL"));
 		Assert.assertTrue(jsonObject.getBoolean("fromMaster"));
@@ -209,7 +209,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertTrue(jsonObject.getBoolean("cached"));
-		Assert.assertTrue(jsonObject.getBoolean("fragment"));
+		Assert.assertFalse(jsonObject.getBoolean("isPortlet"));
 
 		String fragmentCollectionURL = jsonObject.getString(
 			"fragmentCollectionURL");
@@ -310,7 +310,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(jsonObject.getBoolean("cached"));
-		Assert.assertFalse(jsonObject.getBoolean("fragment"));
+		Assert.assertTrue(jsonObject.getBoolean("isPortlet"));
 		Assert.assertNotNull(jsonObject.get("fragmentCollectionURL"));
 		Assert.assertFalse(jsonObject.getBoolean("fromMaster"));
 		Assert.assertEquals(portletId, jsonObject.getString("hierarchy"));

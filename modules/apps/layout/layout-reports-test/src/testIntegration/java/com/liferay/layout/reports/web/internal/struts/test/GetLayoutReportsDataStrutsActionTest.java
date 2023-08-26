@@ -239,8 +239,8 @@ public class GetLayoutReportsDataStrutsActionTest {
 	private void _assertRenderTimesTabJSONObject(
 		Layout layout, JSONObject jsonObject) {
 
-		Assert.assertEquals("render-times", jsonObject.getString("id"));
-		Assert.assertEquals("Render Times", jsonObject.getString("name"));
+		Assert.assertEquals("performance", jsonObject.getString("id"));
+		Assert.assertEquals("Performance", jsonObject.getString("name"));
 		Assert.assertEquals(
 			"http://localhost:8080/layout_reports" +
 				"/get_render_times_data?p_l_id=" +

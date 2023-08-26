@@ -67,7 +67,7 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 		if (layout.isTypeContent() || layout.isTypeAssetDisplay()) {
 			jsonArray.put(
 				JSONUtil.put(
-					"id", "render-times"
+					"id", "performance"
 				).put(
 					"name",
 					_language.get(themeDisplay.getLocale(), "performance")

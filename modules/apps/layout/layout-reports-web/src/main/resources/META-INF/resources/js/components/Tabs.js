@@ -12,7 +12,7 @@ import RenderTimes from './render_times/RenderTimes';
 
 const TAB_COMPONENTS = {
 	'page-speed-insights': LayoutReports,
-	'render-times': RenderTimes,
+	'performance': RenderTimes,
 };
 
 export default function Tabs({segments, tabs}) {

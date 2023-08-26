@@ -50,7 +50,7 @@ const mockTabs = [
 		url: 'url',
 	},
 	{
-		id: 'render-times',
+		id: 'performance',
 		name: 'Performance',
 		url: 'url',
 	},

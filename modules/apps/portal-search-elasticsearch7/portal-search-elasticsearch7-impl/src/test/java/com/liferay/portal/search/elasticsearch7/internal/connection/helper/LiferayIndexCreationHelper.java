@@ -55,7 +55,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 			_elasticsearchClientResolver.getRestHighLevelClient();
 
 		return new LiferayDocumentTypeFactory(
-			restHighLevelClient.indices(), new JSONFactoryImpl());
+			null, restHighLevelClient.indices(), new JSONFactoryImpl());
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;

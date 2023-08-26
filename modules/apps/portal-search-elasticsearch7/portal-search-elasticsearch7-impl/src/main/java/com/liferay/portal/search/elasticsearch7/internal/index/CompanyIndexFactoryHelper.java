@@ -56,7 +56,8 @@ public class CompanyIndexFactoryHelper {
 			indexName);
 
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			new LiferayDocumentTypeFactory(indicesClient, _jsonFactory);
+			new LiferayDocumentTypeFactory(
+				indexName, indicesClient, _jsonFactory);
 
 		_setSettings(createIndexRequest, liferayDocumentTypeFactory);
 
@@ -349,12 +350,13 @@ public class CompanyIndexFactoryHelper {
 			return;
 		}
 
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			new LiferayDocumentTypeFactory(
-				restHighLevelClient.indices(), _jsonFactory);
-
 		for (Long companyId :
 				IndexFactoryCompanyIdRegistryUtil.getCompanyIds()) {
+
+			LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+				new LiferayDocumentTypeFactory(
+					getIndexName(companyId), restHighLevelClient.indices(),
+					_jsonFactory);
 
 			indexConfigurationContributor.contributeMappings(
 				getIndexName(companyId), liferayDocumentTypeFactory);

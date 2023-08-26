@@ -127,6 +127,10 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 		for (String fileName : fileNames) {
 			File file = new File(fileName);
 
+			if (!file.exists()) {
+				continue;
+			}
+
 			String content = FileUtil.read(file);
 
 			JavaClass javaClass = JavaClassParser.parseJavaClass(

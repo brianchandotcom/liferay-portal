@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_POSITION_EMPTY</td>
-	<td>//div[contains(@class, 'empty-drop-zone-dashed')] //*[contains(@class, 'drop-zone-target')]</td>
+	<td>//div[contains(@class, 'empty-drop-zone--dashed')]</td>
 	<td></td>
 </tr>
 <tr>

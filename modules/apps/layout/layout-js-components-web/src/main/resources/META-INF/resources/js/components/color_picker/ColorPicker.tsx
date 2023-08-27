@@ -196,6 +196,10 @@ export default function ColorPicker({
 	};
 
 	const onBlurInput = ({target}: {target: HTMLInputElement}) => {
+		if (!value) {
+			value = defaultTokenValue;
+		}
+
 		if (value.toLowerCase() === target.value.toLowerCase()) {
 			return;
 		}

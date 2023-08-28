@@ -1127,10 +1127,11 @@ definition {
 			}
 		}
 
-		task ("Go to Roles and Assert the Categories are Presente") {
+		task ("Go to Roles and Assert the Categories are present") {
 			Click(
-				categoryName = "Roles",
-				locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
+				key_menuBar = "Roles",
+				key_stackName = "Test Site Team Extranet Name",
+				locator1 = "MenuBar#NAV_LINK_IN_STACK");
 
 			for (var categoryName : list "Product Management,Marketing,Product Design") {
 				Category.viewCP(

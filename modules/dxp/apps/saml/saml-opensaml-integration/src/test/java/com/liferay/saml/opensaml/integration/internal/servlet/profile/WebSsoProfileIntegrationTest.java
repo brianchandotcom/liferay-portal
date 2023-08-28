@@ -573,7 +573,12 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlPeerMetadataContext.getRoleDescriptor() instanceof
 				SPSSODescriptor);
 
-		Assert.assertEquals(RELAY_STATE, samlSsoRequestContext.getRelayState());
+		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
+			SAMLBindingContext.class);
+
+		Assert.assertEquals(
+			RELAY_STATE,
+			_relayStateHelperImpl.getRelayState(samlBindingContext));
 
 		InOutOperationContext<?, ?> inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);

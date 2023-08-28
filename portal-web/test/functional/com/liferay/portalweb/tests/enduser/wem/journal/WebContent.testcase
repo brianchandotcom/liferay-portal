@@ -696,7 +696,7 @@ definition {
 				webContentDateFieldLabel = "Date and Time",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			PortletEntry.publish();
 		}
 
 		task ("When we have a display page with a date fragment") {

@@ -16,8 +16,8 @@ import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectRelationshipEdgeData} from '../types';
 import {getEdgeParams} from '../utils';
-import ManyMarkerEnd from './ManyMarkerEnd';
-import OneMarkerEnd from './OneMarkerEnd';
+import ManyMarker from './ManyMarker';
+import OneMarker from './OneMarker';
 
 export function getInitialEdgeStyle(edgeSelected: boolean) {
 	return {
@@ -139,9 +139,9 @@ export default function DefaultEdge({
 
 	return (
 		<g className="react-flow__connection">
-			<OneMarkerEnd />
+			<OneMarker />
 
-			<ManyMarkerEnd />
+			<ManyMarker />
 
 			<path
 				className="react-flow__edge-path"

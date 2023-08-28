@@ -323,10 +323,21 @@ function AddFDSFilterModalContent({
 								selected: true,
 								value: '',
 							},
-							...fields.map((item) => ({
-								label: item.label,
-								value: item.name,
-							})),
+							...fields
+								.filter(
+									(item) =>
+										(filterType === filterTypes.SELECTION &&
+											item.format ===
+												fieldFormats.STRING) ||
+										(filterType ===
+											filterTypes.DATE_RANGE &&
+											item.format ===
+												fieldFormats.DATE_TIME)
+								)
+								.map((item) => ({
+									label: item.label,
+									value: item.name,
+								})),
 						]}
 						title={Liferay.Language.get('filter-by')}
 						value={selectedField?.name}

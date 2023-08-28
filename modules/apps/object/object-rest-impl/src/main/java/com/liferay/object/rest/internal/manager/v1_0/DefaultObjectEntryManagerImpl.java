@@ -1051,11 +1051,7 @@ public class DefaultObjectEntryManagerImpl
 
 		serviceContext.setUserId(userId);
 
-		Status status = objectEntry.getStatus();
-
-		if ((status != null) &&
-			(status.getCode() == WorkflowConstants.STATUS_DRAFT)) {
-
+		if (_isObjectEntryDraft(objectEntry.getStatus())) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
@@ -1343,6 +1339,16 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
+	private boolean _isObjectEntryDraft(Status status) {
+		if ((status != null) &&
+			(status.getCode() == WorkflowConstants.STATUS_DRAFT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _processVulcanAggregation(
 		Aggregations aggregations, Queries queries,
 		SearchRequestBuilder searchRequestBuilder,
@@ -1581,7 +1587,10 @@ public class DefaultObjectEntryManagerImpl
 				continue;
 			}
 
-			if ((value == null) && !objectField.isRequired()) {
+			if ((value == null) &&
+				(!objectField.isRequired() ||
+				 _isObjectEntryDraft(objectEntry.getStatus()))) {
+
 				continue;
 			}
 

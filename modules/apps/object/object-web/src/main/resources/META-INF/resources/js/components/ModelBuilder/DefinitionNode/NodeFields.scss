@@ -19,10 +19,13 @@
 	}
 
 	&-label {
-		display: flex;
+		display: block;
 		font-size: 14px;
 		font-weight: 400;
-		gap: 0.5rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 8.8rem;
 	}
 
 	&--selected {

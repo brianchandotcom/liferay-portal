@@ -1017,6 +1017,32 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
 	}
 
+	@description = "LPS-172352 - Verify if it is possible to specify the recipient type in a workflow task"
+	@priority = 4
+	test CanSpecifyTheRecipientTypeInWorkflowTask {
+		task ("Given that a user accesses the workflow") {
+			Workflow.openWorkflowListView();
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+		}
+
+		task ("When changing the recipient to Task Assignees") {
+			KaleoDesigner.selectNode(nodeNodeLabel = "review");
+
+			KaleoDesigner.editNodeNotifications(nodeNotificationsRecipientType = "Task Assignees");
+		}
+
+		task ("and When exits editing and returns again") {
+			Navigator.gotoBack();
+
+			KaleoDesigner.selectNode(nodeNodeLabel = "review");
+		}
+
+		task ("Then the notification remains the one chosen by the user") {
+			KaleoDesigner.viewNodeNotifications(nodeNotificationsRecipientType = "Task Assignees");
+		}
+	}
+
 	@description = "Verify that, in the Assigned to Me table, users can hover over the Last Activity Date and the Due Date row to see the exact time of the action"
 	@priority = 3
 	test CanViewActivityTimeByHoveringAssignedToMeTable {

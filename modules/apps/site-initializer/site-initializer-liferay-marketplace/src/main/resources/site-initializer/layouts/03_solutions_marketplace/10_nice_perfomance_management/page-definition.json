@@ -271,15 +271,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "dialect-dialect-text",
-																								"siteKey": "[$COMPANY_ID$]"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1"
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -291,9 +293,6 @@
 																									}
 																								}
 																							],
-																							"fragmentStyle": {
-																								"fontWeight": "fontWeightBold"
-																							},
 																							"indexed": true
 																						},
 																						"type": "Fragment"
@@ -335,42 +334,39 @@
 																							"indexed": true
 																						},
 																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-base",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										}
+																									}
+																								}
+																							],
+																							"fragmentStyle": {
+																								"marginLeft": "1"
+																							},
+																							"indexed": true
+																						},
+																						"type": "Fragment"
 																					}
 																				],
 																				"type": "Section"
 																			}
 																		],
 																		"type": "Section"
-																	},
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "text",
-																				"siteKey": "[$GROUP_KEY$]"
-																			},
-																			"fragmentConfig": {
-																				"fontSize": "font-size-paragraph-base",
-																				"smallCaps": false,
-																				"tabletScreenCenter": false
-																			},
-																			"fragmentFields": [
-																				{
-																					"id": "text",
-																					"value": {
-																						"fragmentLink": {
-																						},
-																						"text": {
-																						}
-																					}
-																				}
-																			],
-																			"fragmentStyle": {
-																				"marginLeft": "8",
-																				"paddingLeft": "2"
-																			},
-																			"indexed": true
-																		},
-																		"type": "Fragment"
 																	}
 																],
 																"type": "Column"
@@ -660,29 +656,29 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "dialect-dialect-text",
-																						"siteKey": "[$COMPANY_ID$]"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"textType": "display-4"
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
 																					},
 																					"fragmentFields": [
 																						{
-																							"id": "element-text",
+																							"id": "text",
 																							"value": {
 																								"fragmentLink": {
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Improving agent performance is a top contact center goal"
+																										"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Improving agent performance is a top contact center goal</h1>\n"
 																									}
 																								}
 																							}
 																						}
 																					],
 																					"fragmentStyle": {
-																						"fontWeight": "fontWeightBold",
-																						"marginBottom": "6",
 																						"textColor": "whiteColor"
 																					},
 																					"indexed": true
@@ -793,6 +789,13 @@
 																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/nice-performance-management/10_npm_image_1.png#]"
 																								}
 																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel2",
+																					"value": {
+																						"fragmentLink": {
 																						}
 																					}
 																				}
@@ -907,29 +910,44 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "dialect-dialect-text",
-												"siteKey": "[$COMPANY_ID$]"
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"textType": "h1"
+												"fontSize": "font-size-paragraph-base",
+												"smallCaps": false,
+												"tabletScreenCenter": false
 											},
 											"fragmentFields": [
 												{
-													"id": "element-text",
+													"id": "text",
 													"value": {
 														"fragmentLink": {
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Description"
+																"en_US": "<strong>Description</strong>"
 															}
 														}
 													}
 												}
 											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "spacer",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"fragmentStyle": {
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "5"
+												"height": "10px"
 											},
 											"indexed": true
 										},

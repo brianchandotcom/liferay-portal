@@ -271,15 +271,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text",
-																								"siteKey": "[$COMPANY_ID$]"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1"
+																								"fontSize": "font-size-heading-f1",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -291,9 +293,6 @@
 																									}
 																								}
 																							],
-																							"fragmentStyle": {
-																								"fontWeight": "fontWeightBold"
-																							},
 																							"indexed": true
 																						},
 																						"type": "Fragment"
@@ -335,45 +334,36 @@
 																							"indexed": true
 																						},
 																						"type": "Fragment"
+																					},
+																					{
+																						"definition": {
+																							"fragment": {
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
+																							},
+																							"fragmentConfig": {
+																								"fontSize": "font-size-paragraph-base",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
+																							},
+																							"fragmentFields": [
+																								{
+																									"id": "text",
+																									"value": {
+																										"fragmentLink": {
+																										}
+																									}
+																								}
+																							],
+																							"indexed": true
+																						},
+																						"type": "Fragment"
 																					}
 																				],
 																				"type": "Section"
 																			}
 																		],
 																		"type": "Section"
-																	},
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "text",
-																				"siteKey": "[$GROUP_KEY$]"
-																			},
-																			"fragmentConfig": {
-																				"fontSize": "font-size-paragraph-base",
-																				"smallCaps": false,
-																				"tabletScreenCenter": false
-																			},
-																			"fragmentFields": [
-																				{
-																					"id": "text",
-																					"value": {
-																						"fragmentLink": {
-																						},
-																						"text": {
-																							"defaultFragmentInlineValue": {
-																								"value": "<style>\n\t.solution-category-container {\n\t  font-size: 1rem;\n    line-height: 1.5;\n\t\tdisplay: flex;\n\t}\n\t\n\t.solution-category-container .solution-category {\n\t\tborder-radius: 2px;\n\t\tbackground-color: #ebeef2;\n\t}\n</style>\n\n\n\n\n\t\t<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tExtensibility and Integration\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tIdentity Management and Governance\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tNavigation and Discovery\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tOrders and Fulfillment\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n\t\t\t\t\t\tPersonalization and Segmentation\n\t\t\t\t\t</div>\n\t\t</div>"
-																							}
-																						}
-																					}
-																				}
-																			],
-																			"fragmentStyle": {
-																				"marginLeft": "8",
-																				"paddingLeft": "2"
-																			},
-																			"indexed": true
-																		},
-																		"type": "Fragment"
 																	}
 																],
 																"type": "Column"
@@ -633,8 +623,60 @@
 																"pageElements": [
 																	{
 																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-base",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "<h1 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Your open digital platform for making and re-using local public services</h1>\n"
+																							}
+																						}
+																					}
+																				}
+																			],
 																			"fragmentStyle": {
-																				"borderWidth": "0"
+																				"paddingRight": "4",
+																				"textColor": "whiteColor"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-spacer"
+																			},
+																			"fragmentConfig": {
+																				"height": "py-3"
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "4",
+																				"paddingTop": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0",
+																				"paddingRight": "4"
 																			},
 																			"fragmentViewports": [
 																				{
@@ -654,7 +696,7 @@
 																				"opacity": 100,
 																				"paddingBottom": 0,
 																				"paddingLeft": 0,
-																				"paddingRight": 0,
+																				"paddingRight": 2,
 																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
@@ -663,47 +705,17 @@
 																			{
 																				"definition": {
 																					"fragment": {
-																						"key": "DIALECT-dialect-text",
-																						"siteKey": "[$COMPANY_ID$]"
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"textType": "display-4"
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
 																					},
 																					"fragmentFields": [
 																						{
-																							"id": "element-text",
-																							"value": {
-																								"fragmentLink": {
-																								},
-																								"text": {
-																									"value_i18n": {
-																										"en_US": "Your open digital platform for making and re-using local public services"
-																									}
-																								}
-																							}
-																						}
-																					],
-																					"fragmentStyle": {
-																						"fontWeight": "fontWeightBold",
-																						"marginBottom": "6",
-																						"textColor": "whiteColor"
-																					},
-																					"indexed": true
-																				},
-																				"type": "Fragment"
-																			},
-																			{
-																				"definition": {
-																					"fragment": {
-																						"key": "DIALECT-dialect-text",
-																						"siteKey": "[$COMPANY_ID$]"
-																					},
-																					"fragmentConfig": {
-																						"textType": "h1"
-																					},
-																					"fragmentFields": [
-																						{
-																							"id": "element-text",
+																							"id": "text",
 																							"value": {
 																								"fragmentLink": {
 																								},
@@ -716,7 +728,6 @@
 																						}
 																					],
 																					"fragmentStyle": {
-																						"fontWeight": "fontWeightNormal",
 																						"textColor": "whiteColor"
 																					},
 																					"indexed": true
@@ -795,6 +806,13 @@
 																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/digital-place-for-local-public-services/09_local_services.png#]"
 																								}
 																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "imageCarousel2",
+																					"value": {
+																						"fragmentLink": {
 																						}
 																					}
 																				}
@@ -878,6 +896,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"borderWidth": "0",
 										"paddingBottom": "5"
 									},
 									"fragmentViewports": [
@@ -908,40 +927,45 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "DIALECT-dialect-text",
-												"siteKey": "[$COMPANY_ID$]"
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"textType": "h1",
-												"truncateText": false
+												"fontSize": "font-size-paragraph-base",
+												"smallCaps": false,
+												"tabletScreenCenter": false
 											},
 											"fragmentFields": [
 												{
-													"id": "element-text",
+													"id": "text",
 													"value": {
 														"fragmentLink": {
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Description"
+																"en_US": "<strong>Description</strong>"
 															}
 														}
 													}
 												}
 											],
-											"fragmentStyle": {
-												"fontWeight": "fontWeightBold",
-												"marginBottom": "5"
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "spacer",
+												"siteKey": "[$GROUP_KEY$]"
 											},
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginLeft": "4",
-														"marginRight": "4"
-													},
-													"id": "portraitMobile"
-												}
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
 											],
+											"fragmentStyle": {
+												"height": "20px"
+											},
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -990,6 +1014,7 @@
 							{
 								"definition": {
 									"fragmentStyle": {
+										"borderWidth": "0",
 										"marginTop": "5",
 										"paddingLeft": "8"
 									},
@@ -1012,6 +1037,9 @@
 								"pageElements": [
 									{
 										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0"
+											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
@@ -1104,6 +1132,9 @@
 									},
 									{
 										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0"
+											},
 											"indexed": true,
 											"layout": {
 												"align": "Center",
@@ -1266,36 +1297,26 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "DIALECT-dialect-text",
-												"siteKey": "[$COMPANY_ID$]"
+												"key": "text",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"textType": "h1"
+												"fontSize": "font-size-heading-f1",
+												"smallCaps": false,
+												"tabletScreenCenter": false
 											},
 											"fragmentFields": [
 												{
-													"id": "element-text",
+													"id": "text",
 													"value": {
 														"fragmentLink": {
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Accelerate your public service transformation with Digital Place -- designed by public service for public service."
+																"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Accelerate your public service transformation with Digital Place -- designed by public service for public service.</h2>\n"
 															}
 														}
 													}
-												}
-											],
-											"fragmentStyle": {
-												"fontWeight": "fontWeightBold"
-											},
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginLeft": "4",
-														"marginRight": "4"
-													},
-													"id": "portraitMobile"
 												}
 											],
 											"indexed": true
@@ -1367,6 +1388,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"indexed": true,
 															"layout": {
 																"align": "Center",
@@ -1486,6 +1510,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"indexed": true,
 															"layout": {
 																"align": "Center",
@@ -1605,6 +1632,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"indexed": true,
 															"layout": {
 																"align": "Center",
@@ -1724,6 +1754,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"indexed": true,
 															"layout": {
 																"align": "Center",

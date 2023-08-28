@@ -1219,7 +1219,7 @@ definition {
 
 		Button.clickAdd();
 
-		Button.click(button = "Save");
+		PortletEntry.save();
 	}
 
 	macro selectSiteTemplateTab {

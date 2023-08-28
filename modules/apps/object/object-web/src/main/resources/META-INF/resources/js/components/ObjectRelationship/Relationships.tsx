@@ -145,7 +145,7 @@ export default function Relationships({
 			itemData: ObjectRelationship;
 		}) {
 			if (action.data.id === 'deleteObjectRelationship') {
-				if (itemData.treeEdge && Liferay.FeatureFlags['LPS-187142']) {
+				if (itemData.edge && Liferay.FeatureFlags['LPS-187142']) {
 					setSelectedObjectRelationship(itemData);
 					setShowDelitionNotAllowedModal(true);
 

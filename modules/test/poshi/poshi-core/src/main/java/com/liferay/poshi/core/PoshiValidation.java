@@ -1566,24 +1566,24 @@ public class PoshiValidation {
 	protected static void validateProperties() {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		List<String> testCaseAvailablePropertyNames =
-			ListUtil.newListFromString(
-				poshiProperties.testCaseAvailablePropertyNames);
+		if (Validator.isNull(poshiProperties.testCaseAvailablePropertyNames)) {
+			return;
+		}
 
 		for (String testCaseAvailablePropertyName :
-				testCaseAvailablePropertyNames) {
+				StringUtil.split(
+					poshiProperties.testCaseAvailablePropertyNames)) {
 
 			String testCaseAvailablePropertyValues = PropsUtil.get(
 				"test.case.available.property.values[" +
 					testCaseAvailablePropertyName + "]");
 
 			if (Validator.isNotNull(testCaseAvailablePropertyValues)) {
-				List<String> propertyValues = Arrays.asList(
-					StringUtil.split(testCaseAvailablePropertyValues));
-
 				List<String> uniquePropertyValues = new ArrayList<>();
 
-				for (String propertyValue : propertyValues) {
+				for (String propertyValue :
+						StringUtil.split(testCaseAvailablePropertyValues)) {
+
 					if (uniquePropertyValues.contains(propertyValue)) {
 						_exceptions.add(
 							new ValidationException(

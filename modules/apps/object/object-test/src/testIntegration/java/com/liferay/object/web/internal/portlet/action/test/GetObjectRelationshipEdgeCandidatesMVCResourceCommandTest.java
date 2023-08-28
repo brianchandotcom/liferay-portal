@@ -85,7 +85,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 			_jsonFactory.createJSONArray(
 			).toString(),
 			_getObjectRelationshipEdgeCandidatesJSONArray(
-				3, objectDefinitionAAAA.getObjectDefinitionId()
+				2, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
 		// Object definition, hierarchical structure, not root

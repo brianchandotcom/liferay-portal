@@ -15,6 +15,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
@@ -46,9 +47,11 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -123,9 +126,27 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			paths.put("/openapi.{type}", oldPaths.get("/openapi.{type}"));
 		}
 
+		Set<String> schemasSet = new HashSet<>();
+
 		for (APIApplication.Endpoint endpoint : apiApplication.getEndpoints()) {
 			paths.put(_formatPath(endpoint), _toOpenAPIPathItem(endpoint));
+
+			APIApplication.Schema responseSchema = endpoint.getResponseSchema();
+
+			if (responseSchema != null) {
+				if (Objects.equals(
+						endpoint.getRetrieveType(),
+						APIApplication.Endpoint.RetrieveType.COLLECTION)) {
+
+					schemasSet.add("Page" + responseSchema.getName());
+				}
+				else {
+					schemasSet.add(responseSchema.getName());
+				}
+			}
 		}
+
+		components.setSchemas(_removedUnusedPageSchema(schemas, schemasSet));
 
 		openAPI.setPaths(paths);
 	}
@@ -167,6 +188,24 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 		}
 
 		return PathUtil.getPathPrefix(endpoint.getScope()) + path;
+	}
+
+	private Map<String, Schema> _removedUnusedPageSchema(
+		Map<String, Schema> schemas, Set<String> schemasSet) {
+
+		Map<String, Schema> schemasMap = HashMapBuilder.putAll(
+			schemas
+		).build();
+
+		for (String pageSchemaName : schemas.keySet()) {
+			if (pageSchemaName.startsWith("Page") &&
+				!schemasSet.contains(pageSchemaName)) {
+
+				schemasMap.remove(pageSchemaName);
+			}
+		}
+
+		return schemasMap;
 	}
 
 	private PathItem _toOpenAPIPathItem(APIApplication.Endpoint endpoint) {

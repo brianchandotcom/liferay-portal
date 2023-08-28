@@ -5,7 +5,7 @@
 
 package com.liferay.layout.internal.service;
 
-import com.liferay.layout.util.LayoutCopyHelper;
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;

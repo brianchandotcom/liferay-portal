@@ -6,10 +6,10 @@
 package com.liferay.layout.internal.util;
 
 import com.liferay.layout.exception.LayoutConvertException;
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.BulkLayoutConverter;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConversionResult;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;

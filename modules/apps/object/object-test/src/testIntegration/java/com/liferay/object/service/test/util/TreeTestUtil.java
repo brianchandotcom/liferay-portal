@@ -73,6 +73,14 @@ public class TreeTestUtil {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
 
+		mockLiferayResourceRequest.addParameter(
+			"objectRelationshipIds",
+			TransformUtil.transformToArray(
+				objectRelationships,
+				objectRelationship -> String.valueOf(
+					objectRelationship.getObjectRelationshipId()),
+				String.class));
+
 		mockLiferayResourceRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG,
 			PortletConfigFactoryUtil.create(
@@ -87,14 +95,6 @@ public class TreeTestUtil {
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockLiferayResourceRequest.addParameter(
-			"objectRelationshipIds",
-			TransformUtil.transformToArray(
-				objectRelationships,
-				objectRelationship -> String.valueOf(
-					objectRelationship.getObjectRelationshipId()),
-				String.class));
 
 		mvcResourceCommand.serveResource(mockLiferayResourceRequest, null);
 	}

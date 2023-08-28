@@ -1,0 +1,11 @@
+.show-menu {
+	height: 200px;
+	opacity: 1;
+	transition: height 0.6s , opacity 0.8s;
+}
+
+.hidden-menu {
+	height: 0px;
+	opacity: 0;
+	transition: height 0.6s , opacity 0.3s;
+}

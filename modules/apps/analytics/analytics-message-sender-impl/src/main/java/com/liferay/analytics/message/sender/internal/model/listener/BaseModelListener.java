@@ -7,7 +7,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseModelListener<T extends BaseModel<T>>
 	extends com.liferay.portal.kernel.model.BaseModelListener<T>
-	implements EntityModelListener<T> {
+	implements AnalyticsEntityModel<T> {
 
 	@Override
 	public void addAnalyticsMessage(

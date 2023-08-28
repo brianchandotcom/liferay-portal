@@ -16,7 +16,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Rachael Koestartyo
  */
 @ProviderType
-public interface EntityModelListener<T extends BaseModel<T>> {
+public interface AnalyticsEntityModel<T extends BaseModel<T>> {
 
 	public void addAnalyticsMessage(
 		String eventType, List<String> includeAttributeNames, T model);

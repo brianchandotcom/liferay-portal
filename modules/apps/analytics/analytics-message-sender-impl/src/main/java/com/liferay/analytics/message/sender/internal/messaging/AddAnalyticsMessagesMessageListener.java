@@ -7,7 +7,7 @@ package com.liferay.analytics.message.sender.internal.messaging;
 
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,8 +47,9 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 		}
 
 		String action = (String)message.get("action");
-		EntityModelListener entityModelListener =
-			(EntityModelListener)message.get("entityModelListener");
+
+		AnalyticsEntityModel analyticsEntityModel =
+			(AnalyticsEntityModel)message.get("analyticsEntityModel");
 
 		List<? extends BaseModel> baseModels =
 			(List<? extends BaseModel>)message.getPayload();
@@ -56,9 +57,9 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 		for (BaseModel<?> baseModel : baseModels) {
 			ShardedModel shardedModel = (ShardedModel)baseModel;
 
-			entityModelListener.addAnalyticsMessage(
+			analyticsEntityModel.addAnalyticsMessage(
 				action,
-				entityModelListener.getAttributeNames(
+				analyticsEntityModel.getAttributeNames(
 					shardedModel.getCompanyId()),
 				baseModel);
 		}

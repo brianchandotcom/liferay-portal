@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {EntityModelListener.class, ModelListener.class})
+@Component(service = {AnalyticsEntityModel.class, ModelListener.class})
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override

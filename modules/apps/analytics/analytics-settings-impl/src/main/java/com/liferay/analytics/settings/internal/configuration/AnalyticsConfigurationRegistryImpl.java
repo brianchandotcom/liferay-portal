@@ -10,7 +10,7 @@ import com.liferay.analytics.batch.exportimport.constants.AnalyticsDXPEntityBatc
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
 import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
@@ -183,8 +183,9 @@ public class AnalyticsConfigurationRegistryImpl
 			).build());
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext,
-			(Class<EntityModelListener<?>>)(Class<?>)EntityModelListener.class,
-			null, new EntityModelListenerServiceReferenceMapper());
+			(Class<AnalyticsEntityModel<?>>)
+				(Class<?>)AnalyticsEntityModel.class,
+			null, new AnalyticsEntityModelServiceReferenceMapper());
 	}
 
 	@Deactivate
@@ -238,7 +239,7 @@ public class AnalyticsConfigurationRegistryImpl
 		BaseModel<?> baseModel = baseModels.get(0);
 
 		message.put(
-			"entityModelListener",
+			"analyticsEntityModel",
 			_serviceTrackerMap.getService(baseModel.getModelClassName()));
 
 		message.put("principalName", _getAnalyticsAdminUserId(companyId));
@@ -285,19 +286,20 @@ public class AnalyticsConfigurationRegistryImpl
 		for (User user : users) {
 			Map<String, long[]> memberships = new HashMap<>();
 
-			for (EntityModelListener<?> entityModelListener :
+			for (AnalyticsEntityModel<?> analyticsEntityModel :
 					_serviceTrackerMap.values()) {
 
 				try {
-					long[] membershipIds = entityModelListener.getMembershipIds(
-						user);
+					long[] membershipIds =
+						analyticsEntityModel.getMembershipIds(user);
 
 					if (membershipIds.length == 0) {
 						continue;
 					}
 
 					memberships.put(
-						entityModelListener.getModelClassName(), membershipIds);
+						analyticsEntityModel.getModelClassName(),
+						membershipIds);
 				}
 				catch (Exception exception) {
 					_log.error(exception);
@@ -432,13 +434,13 @@ public class AnalyticsConfigurationRegistryImpl
 			AnalyticsConfiguration analyticsConfiguration =
 				getAnalyticsConfiguration(companyId);
 
-			Collection<EntityModelListener<?>> entityModelListeners =
+			Collection<AnalyticsEntityModel<?>> analyticsEntityModels =
 				_serviceTrackerMap.values();
 
-			for (EntityModelListener<?> entityModelListener :
-					entityModelListeners) {
+			for (AnalyticsEntityModel<?> analyticsEntityModel :
+					analyticsEntityModels) {
 
-				entityModelListener.syncAll(companyId);
+				analyticsEntityModel.syncAll(companyId);
 			}
 
 			_syncDefaultFields(
@@ -534,13 +536,13 @@ public class AnalyticsConfigurationRegistryImpl
 			if (Validator.isNotNull(dictionary.get("token")) &&
 				Validator.isNull(dictionary.get("previousToken"))) {
 
-				Collection<EntityModelListener<?>> entityModelListeners =
+				Collection<AnalyticsEntityModel<?>> analyticsEntityModels =
 					_serviceTrackerMap.values();
 
-				for (EntityModelListener<?> entityModelListener :
-						entityModelListeners) {
+				for (AnalyticsEntityModel<?> analyticsEntityModel :
+						analyticsEntityModels) {
 
-					entityModelListener.syncAll(companyId);
+					analyticsEntityModel.syncAll(companyId);
 				}
 			}
 
@@ -1105,7 +1107,7 @@ public class AnalyticsConfigurationRegistryImpl
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
-	private ServiceTrackerMap<String, EntityModelListener<?>>
+	private ServiceTrackerMap<String, AnalyticsEntityModel<?>>
 		_serviceTrackerMap;
 	private volatile AnalyticsConfiguration _systemAnalyticsConfiguration;
 
@@ -1162,20 +1164,20 @@ public class AnalyticsConfigurationRegistryImpl
 
 	}
 
-	private class EntityModelListenerServiceReferenceMapper
+	private class AnalyticsEntityModelServiceReferenceMapper
 		<T extends BaseModel<T>>
-			implements ServiceReferenceMapper<String, EntityModelListener<T>> {
+			implements ServiceReferenceMapper<String, AnalyticsEntityModel<T>> {
 
 		@Override
 		public void map(
-			ServiceReference<EntityModelListener<T>> serviceReference,
+			ServiceReference<AnalyticsEntityModel<T>> serviceReference,
 			Emitter<String> emitter) {
 
-			EntityModelListener<?> entityModelListener =
+			AnalyticsEntityModel<?> analyticsEntityModel =
 				_bundleContext.getService(serviceReference);
 
 			Class<?> clazz = _getParameterizedClass(
-				entityModelListener.getClass());
+				analyticsEntityModel.getClass());
 
 			try {
 				emitter.emit(clazz.getName());

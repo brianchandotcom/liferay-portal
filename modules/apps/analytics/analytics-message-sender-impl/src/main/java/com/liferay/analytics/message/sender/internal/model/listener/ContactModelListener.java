@@ -6,7 +6,7 @@
 package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
-import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {EntityModelListener.class, ModelListener.class})
+@Component(service = {AnalyticsEntityModel.class, ModelListener.class})
 public class ContactModelListener extends BaseModelListener<Contact> {
 
 	@Override

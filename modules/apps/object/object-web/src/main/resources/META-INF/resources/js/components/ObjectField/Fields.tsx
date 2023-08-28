@@ -3,22 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	FrontendDataSet,
-
-	// @ts-ignore
-
-} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
+import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../../utils/constants';
 import {
 	IFDSTableProps,
 	defaultDataSetProps,
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import {ModalDeleteObjectField} from './ModalDeleteObjectField';
+import {deleteObjectField} from './deleteObjectFieldUtil';
 
 interface ItemData {
 	id: number;
@@ -26,8 +25,13 @@ interface ItemData {
 	system?: boolean;
 }
 
+interface FieldsProps extends IFDSTableProps {
+	baseResourceURL: string;
+}
+
 export default function Fields({
 	apiURL,
+	baseResourceURL,
 	creationMenu,
 	formName,
 	id,
@@ -35,10 +39,19 @@ export default function Fields({
 	objectDefinitionExternalReferenceCode,
 	style,
 	url,
-}: IFDSTableProps) {
+}: FieldsProps) {
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();
+	const [
+		deletedObjectField,
+		setDeletedObjectField,
+	] = useState<ObjectField | null>(null);
+	const [showDeletionModal, setShowDeletionModal] = useState<boolean>(false);
+	const [
+		showDeletionNotAllowedModal,
+		setShowDeletionNotAllowedModal,
+	] = useState<boolean>(false);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -119,10 +132,47 @@ export default function Fields({
 			itemData,
 		}: {
 			action: {data: {id: string}};
-			itemData: {id: string};
+			itemData: ObjectField;
 		}) {
 			if (action.data.id === 'deleteObjectField') {
-				Liferay.fire('deleteObjectField', {itemData});
+				const makeFetch = async () => {
+					const url = createResourceURL(baseResourceURL, {
+						objectFieldId: itemData.id,
+						p_p_resource_id:
+							'/object_definitions/get_object_field_delete_info',
+					}).href;
+
+					const showModalResponse = await API.fetchJSON<{
+						showDeletionModal: boolean;
+						showDeletionNotAllowedModal: boolean;
+					}>(url);
+
+					if (showModalResponse.showDeletionModal) {
+						setDeletedObjectField(itemData);
+
+						setShowDeletionModal(
+							showModalResponse.showDeletionModal
+						);
+
+						setShowDeletionNotAllowedModal(
+							showModalResponse.showDeletionNotAllowedModal
+						);
+
+						return;
+					}
+
+					await deleteObjectField(
+						defaultLanguageId,
+						itemData.id,
+						itemData
+					);
+
+					setTimeout(() => window.location.reload(), 1500);
+
+					return;
+				};
+
+				makeFetch();
 			}
 		},
 		portletId:
@@ -173,5 +223,18 @@ export default function Fields({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	return (
+		<>
+			<FrontendDataSet {...dataSetProps} />
+
+			{showDeletionModal && (
+				<ModalDeleteObjectField
+					objectField={deletedObjectField as ObjectField}
+					setModalVisibility={setShowDeletionModal}
+					setObjectField={setDeletedObjectField}
+					showDeletionNotAllowedModal={showDeletionNotAllowedModal}
+				/>
+			)}
+		</>
+	);
 }

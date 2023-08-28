@@ -20,12 +20,16 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <div>
 	<react:component
 		module="js/components/ObjectField/Fields"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
+			).put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
 				"creationMenu", objectDefinitionsFieldsDisplayContext.getCreationMenu(objectDefinition)
 			).put(
@@ -76,19 +80,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements(ObjectFieldConstants.BUSINESS_TYPE_FORMULA)
-			).build()
-		%>'
-	/>
-</div>
-
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
-
-<div id="<portlet:namespace />deleteObjectField">
-	<react:component
-		module="js/components/ModalDeleteObjectField"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"baseResourceURL", String.valueOf(baseResourceURL)
 			).build()
 		%>'
 	/>

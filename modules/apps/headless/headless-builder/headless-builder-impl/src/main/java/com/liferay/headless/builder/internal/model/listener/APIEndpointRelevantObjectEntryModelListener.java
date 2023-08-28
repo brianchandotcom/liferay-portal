@@ -171,14 +171,14 @@ public class APIEndpointRelevantObjectEntryModelListener
 								"characters";
 					}
 					else {
-						message = "%s must start with the \"/\" character";
+						message = "%s must start with the '/' character";
 						messageKey = "x-must-start-with-the-x-character";
 					}
 
 					String label = objectField.getLabel(user.getLocale());
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
-						Arrays.asList(label, "\"/\""),
+						Arrays.asList(label, "'/'"),
 						String.format(message, label), messageKey);
 				}
 			}

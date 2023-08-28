@@ -71,9 +71,9 @@ public class PoshiValidation {
 
 		long start = System.currentTimeMillis();
 
-		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
-
 		validateProperties();
+
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			poshiProperties.poshiFileReadThreadPool);
@@ -146,6 +146,7 @@ public class PoshiValidation {
 
 	public static void validate(String testName) throws Exception {
 		validateProperties();
+
 		validateTestName(testName);
 
 		if (!_exceptions.isEmpty()) {

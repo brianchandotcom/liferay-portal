@@ -133,10 +133,6 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 		public void modifiedService(
 			ServiceReference<HttpServletEndpoint> serviceReference,
 			ServiceRegistration<HttpServlet> serviceRegistration) {
-
-			removedService(serviceReference, serviceRegistration);
-
-			addingService(serviceReference);
 		}
 
 		@Override

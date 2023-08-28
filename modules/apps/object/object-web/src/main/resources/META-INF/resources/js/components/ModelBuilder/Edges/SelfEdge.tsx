@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayList from '@clayui/list';
-import ClayPopover from '@clayui/popover';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
 	EdgeProps,
 	EdgeText,
@@ -43,6 +43,7 @@ export default function SelfEdge({
 		edgeSelected,
 		label,
 		markerEndId,
+		markerStartId,
 		objectRelationshipId,
 		selfRelationships,
 	} = data!;
@@ -63,8 +64,11 @@ export default function SelfEdge({
 		[source, nodes]
 	);
 
+	const menuElementRef = useRef(null);
+	const triggerElementRef = useRef<HTMLElement | null>(null);
+
 	useEffect(() => {
-		if (edgeSelected) {
+		if (activePopover || edgeSelected) {
 			setEdgeStyle((style) => {
 				return {...style, stroke: '#0B5FFF'};
 			});
@@ -86,22 +90,27 @@ export default function SelfEdge({
 				};
 			});
 		}
-	}, [edgeSelected]);
+	}, [activePopover, edgeSelected]);
 
 	if (!sourceTargetNode) {
 		return null;
 	}
 
+	const hasManySelfRelationships =
+		selfRelationships && selfRelationships.length > 1;
+
 	const radiusX = (sourceX - targetX) * 0.6;
 	const radiusY = 150;
 
 	const edgePath = `M ${
-		sourceX - 5
-	} ${sourceY} A ${radiusX} ${radiusY} 0 1 0 ${targetX + 2} ${targetY}`;
+		sourceX - (hasManySelfRelationships ? 5 : 20)
+	} ${sourceY} A ${radiusX} ${radiusY} 0 1 0 ${
+		targetX + (hasManySelfRelationships ? 2 : 8)
+	} ${targetY}`;
 
 	const [edgeCenterX, edgeCenterY] = getEdgeCenter({
 		sourceX,
-		sourceY,
+		sourceY: sourceY - (hasManySelfRelationships ? 0 : 45),
 		targetX,
 		targetY,
 	});
@@ -112,61 +121,80 @@ export default function SelfEdge({
 				className="react-flow__edge-path"
 				d={edgePath}
 				id={id}
-				markerEnd={`url(#${markerEndId})`}
+				markerEnd={
+					!hasManySelfRelationships ? `url(#${markerEndId})` : ''
+				}
+				markerStart={
+					!hasManySelfRelationships ? `url(#${markerStartId})` : ''
+				}
 				style={edgeStyle}
 			/>
 
-			{selfRelationships && selfRelationships.length > 1 ? (
-				<ClayPopover
-					alignPosition="bottom"
-					header="Self Relationships"
-					show={activePopover}
-					size="lg"
-					trigger={
-						<EdgeText
-							label={label}
-							labelBgBorderRadius={4}
-							labelBgPadding={[8, 5]}
-							labelBgStyle={labelBgStyle}
-							labelShowBg
-							labelStyle={labelStyle}
-							onClick={() => setActivePopover(!activePopover)}
-							x={edgeCenterX}
-							y={edgeCenterY + 230}
-						/>
-					}
-				>
-					<ClayList>
-						{selfRelationships.map((selfRelationship, index) => (
-							<ClayList.Item
-								flex
-								key={index}
-								onClick={() => {
-									dispatch({
-										payload: {
-											edges,
-											nodes,
-											selectedObjectRelationshipId: selfRelationship.id.toString(),
-										},
-										type: TYPES.SET_SELECTED_EDGE,
-									});
-								}}
-							>
-								<ClayList.ItemField>
-									{getLocalizableLabel(
-										defaultLanguageId!,
-										selfRelationship.label,
-										selfRelationship.name
-									)}
-								</ClayList.ItemField>
+			{hasManySelfRelationships ? (
+				<>
+					<EdgeText
+						label={label}
+						labelBgBorderRadius={4}
+						labelBgPadding={[8, 5]}
+						labelBgStyle={labelBgStyle}
+						labelShowBg
+						labelStyle={labelStyle}
+						onClick={(event) => {
+							triggerElementRef.current = event.target as HTMLElement;
 
-								<ClayList.ItemField>
-									{selfRelationship.type}
-								</ClayList.ItemField>
-							</ClayList.Item>
-						))}
-					</ClayList>
-				</ClayPopover>
+							setActivePopover(!activePopover);
+						}}
+						x={edgeCenterX}
+						y={edgeCenterY + 230}
+					/>
+
+					<ClayDropDown.Menu
+						active={activePopover}
+						alignElementRef={triggerElementRef}
+						onActiveChange={() => {
+							setActivePopover(!activePopover);
+						}}
+						ref={menuElementRef}
+					>
+						<ClayDropDown.ItemList>
+							{selfRelationships.map(
+								(selfRelationship, index) => (
+									<ClayDropDown.Item
+										key={index}
+										onClick={() => {
+											dispatch({
+												payload: {
+													edges,
+													nodes,
+													selectedObjectRelationshipId: selfRelationship.id.toString(),
+												},
+												type: TYPES.SET_SELECTED_EDGE,
+											});
+										}}
+									>
+										<div className="lfr-objects__model-builder-self-edge-dropdown-item">
+											<div>
+												<div>
+													{getLocalizableLabel(
+														defaultLanguageId!,
+														selfRelationship.label,
+														selfRelationship.name
+													)}
+												</div>
+
+												<span className="text-small">
+													{selfRelationship.type}
+												</span>
+											</div>
+
+											<ClayIcon symbol="angle-right" />
+										</div>
+									</ClayDropDown.Item>
+								)
+							)}
+						</ClayDropDown.ItemList>
+					</ClayDropDown.Menu>
+				</>
 			) : (
 				<EdgeText
 					label={label}

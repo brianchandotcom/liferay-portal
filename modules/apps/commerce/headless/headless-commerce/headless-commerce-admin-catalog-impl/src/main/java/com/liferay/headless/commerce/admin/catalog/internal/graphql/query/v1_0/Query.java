@@ -1810,7 +1810,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuUnitOfMeasure(id: ___){active, basePrice, id, incrementalOrderQuantity, key, name, precision, primary, priority, promoPrice, rate, sku, skuId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuUnitOfMeasure(id: ___){actions, active, basePrice, id, incrementalOrderQuantity, key, name, precision, primary, priority, promoPrice, rate, sku, skuId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SkuUnitOfMeasure skuUnitOfMeasure(@GraphQLName("id") Long id)

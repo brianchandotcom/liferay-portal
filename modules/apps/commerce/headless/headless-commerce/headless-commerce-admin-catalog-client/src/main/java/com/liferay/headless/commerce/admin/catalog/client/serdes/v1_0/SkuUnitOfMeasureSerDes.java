@@ -48,6 +48,16 @@ public class SkuUnitOfMeasureSerDes {
 
 		sb.append("{");
 
+		if (skuUnitOfMeasure.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(skuUnitOfMeasure.getActions()));
+		}
+
 		if (skuUnitOfMeasure.getActive() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +215,13 @@ public class SkuUnitOfMeasureSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (skuUnitOfMeasure.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(skuUnitOfMeasure.getActions()));
+		}
+
 		if (skuUnitOfMeasure.getActive() == null) {
 			map.put("active", null);
 		}
@@ -322,7 +339,14 @@ public class SkuUnitOfMeasureSerDes {
 			SkuUnitOfMeasure skuUnitOfMeasure, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "active")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					skuUnitOfMeasure.setActions(
+						(Map)SkuUnitOfMeasureSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "active")) {
 				if (jsonParserFieldValue != null) {
 					skuUnitOfMeasure.setActive((Boolean)jsonParserFieldValue);
 				}

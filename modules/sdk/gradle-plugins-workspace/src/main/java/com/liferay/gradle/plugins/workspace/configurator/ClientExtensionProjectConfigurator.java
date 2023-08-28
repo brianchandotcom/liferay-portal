@@ -51,6 +51,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -144,6 +145,8 @@ public class ClientExtensionProjectConfigurator
 			_configureClientExtensionJsonNodes(
 				project, createClientExtensionConfigTaskProvider);
 
+		AtomicBoolean hasThemeCSSClientExtension = new AtomicBoolean(false);
+
 		for (Map.Entry<String, JsonNode> profileJsonNodeEntry :
 				profileJsonNodes.entrySet()) {
 
@@ -230,8 +233,7 @@ public class ClientExtensionProjectConfigurator
 								});
 						}
 						else if (clientExtension.type.equals("themeCSS")) {
-							_themeCSSTypeConfigurer.apply(
-								project, assembleClientExtensionTaskProvider);
+							hasThemeCSSClientExtension.set(true);
 						}
 					}
 					catch (JsonProcessingException jsonProcessingException) {
@@ -240,6 +242,11 @@ public class ClientExtensionProjectConfigurator
 							jsonProcessingException);
 					}
 				});
+		}
+
+		if (hasThemeCSSClientExtension.get()) {
+			_themeCSSTypeConfigurer.apply(
+				project, assembleClientExtensionTaskProvider);
 		}
 
 		_nodeBuildConfigurer.apply(

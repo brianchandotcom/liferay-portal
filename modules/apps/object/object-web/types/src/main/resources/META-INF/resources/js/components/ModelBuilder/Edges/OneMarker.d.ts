@@ -6,4 +6,4 @@
 /// <reference types="react" />
 
 export declare const oneMarkerId = 'oneMarker';
-export default function OneMarkerEnd(): JSX.Element;
+export default function OneMarker(): JSX.Element;

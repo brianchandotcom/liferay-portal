@@ -1751,6 +1751,13 @@ components:
             type: object
         SkuUnitOfMeasure:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 active:
                     example: true
                     type: boolean

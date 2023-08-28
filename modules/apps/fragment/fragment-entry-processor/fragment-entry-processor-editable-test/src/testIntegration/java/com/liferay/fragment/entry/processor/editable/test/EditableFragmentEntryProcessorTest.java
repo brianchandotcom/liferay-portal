@@ -1392,6 +1392,7 @@ public class EditableFragmentEntryProcessorTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 		themeDisplay.setLayout(_layout);
+		themeDisplay.setLocale(locale);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			_group.getGroupId(), false);
@@ -1407,6 +1408,7 @@ public class EditableFragmentEntryProcessorTest {
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(_getHttpServletRequest(locale));
 		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

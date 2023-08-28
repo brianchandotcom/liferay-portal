@@ -136,25 +136,6 @@ public class SelectLayoutTag extends IncludeTag {
 		}
 	}
 
-	private Map<String, Object> _getConfigData() {
-		return HashMapBuilder.<String, Object>put(
-			"loadMoreItemsURL",
-			() -> {
-				HttpServletRequest httpServletRequest = getRequest();
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return themeDisplay.getPathMain() + "/portal/get_layouts";
-			}
-		).put(
-			"maxPageSize",
-			GetterUtil.getInteger(
-				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
-		).build();
-	}
-
 	private Map<String, Object> _getData() throws Exception {
 		String[] selectedLayoutIds = ParamUtil.getStringValues(
 			getRequest(), "layoutUuid");
@@ -162,7 +143,23 @@ public class SelectLayoutTag extends IncludeTag {
 		return HashMapBuilder.<String, Object>put(
 			"checkDisplayPage", _checkDisplayPage
 		).put(
-			"config", this::_getConfigData
+			"config",
+			HashMapBuilder.<String, Object>put(
+				"loadMoreItemsURL",
+				() -> {
+					HttpServletRequest httpServletRequest = getRequest();
+
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					return themeDisplay.getPathMain() + "/portal/get_layouts";
+				}
+			).put(
+				"maxPageSize",
+				GetterUtil.getInteger(
+					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
+			).build()
 		).put(
 			"groupId",
 			() -> {

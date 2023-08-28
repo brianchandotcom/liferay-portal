@@ -1,0 +1,282 @@
+[
+	{
+		"name": "billing",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "billing-and-shipping",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "shipping",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "billing",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "billing",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "phone-number",
+		"type": "com.liferay.portal.kernel.model.Address.phone"
+	},
+	{
+		"name": "billing",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "billing",
+		"type": "com.liferay.portal.kernel.model.Company.address"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Company.address"
+	},
+	{
+		"name": "p-o-box",
+		"type": "com.liferay.portal.kernel.model.Company.address"
+	},
+	{
+		"name": "shipping",
+		"type": "com.liferay.portal.kernel.model.Company.address"
+	},
+	{
+		"name": "email-address",
+		"type": "com.liferay.portal.kernel.model.Company.emailAddress"
+	},
+	{
+		"name": "email-address-2",
+		"type": "com.liferay.portal.kernel.model.Company.emailAddress"
+	},
+	{
+		"name": "email-address-3",
+		"type": "com.liferay.portal.kernel.model.Company.emailAddress"
+	},
+	{
+		"name": "fax",
+		"type": "com.liferay.portal.kernel.model.Company.phone"
+	},
+	{
+		"name": "local",
+		"type": "com.liferay.portal.kernel.model.Company.phone"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Company.phone"
+	},
+	{
+		"name": "toll-free",
+		"type": "com.liferay.portal.kernel.model.Company.phone"
+	},
+	{
+		"name": "tty",
+		"type": "com.liferay.portal.kernel.model.Company.phone"
+	},
+	{
+		"name": "intranet",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "public",
+		"type": "com.liferay.account.model.AccountEntry.address"
+	},
+	{
+		"name": "business",
+		"type": "com.liferay.portal.kernel.model.Contact.address"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Contact.address"
+	},
+	{
+		"name": "personal",
+		"type": "com.liferay.portal.kernel.model.Contact.address"
+	},
+	{
+		"name": "email-address",
+		"type": "com.liferay.portal.kernel.model.Contact.emailAddress"
+	},
+	{
+		"name": "email-address-2",
+		"type": "com.liferay.portal.kernel.model.Contact.emailAddress"
+	},
+	{
+		"name": "email-address-3",
+		"type": "com.liferay.portal.kernel.model.Contact.emailAddress"
+	},
+	{
+		"name": "business",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "business-fax",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "mobile-phone",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "pager",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "personal",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "personal-fax",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "tty",
+		"type": "com.liferay.portal.kernel.model.Contact.phone"
+	},
+	{
+		"name": "dr",
+		"type": "com.liferay.portal.kernel.model.Contact.prefix"
+	},
+	{
+		"name": "mr",
+		"type": "com.liferay.portal.kernel.model.Contact.prefix"
+	},
+	{
+		"name": "mrs",
+		"type": "com.liferay.portal.kernel.model.Contact.prefix"
+	},
+	{
+		"name": "ms",
+		"type": "com.liferay.portal.kernel.model.Contact.prefix"
+	},
+	{
+		"name": "ii",
+		"type": "com.liferay.portal.kernel.model.Contact.suffix"
+	},
+	{
+		"name": "iii",
+		"type": "com.liferay.portal.kernel.model.Contact.suffix"
+	},
+	{
+		"name": "iv",
+		"type": "com.liferay.portal.kernel.model.Contact.suffix"
+	},
+	{
+		"name": "jr",
+		"type": "com.liferay.portal.kernel.model.Contact.suffix"
+	},
+	{
+		"name": "phd",
+		"type": "com.liferay.portal.kernel.model.Contact.suffix"
+	},
+	{
+		"name": "sr",
+		"type": "com.liferay.portal.kernel.model.Contact.suffix"
+	},
+	{
+		"name": "blog",
+		"type": "com.liferay.portal.kernel.model.Contact.website"
+	},
+	{
+		"name": "business",
+		"type": "com.liferay.portal.kernel.model.Contact.website"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Contact.website"
+	},
+	{
+		"name": "personal",
+		"type": "com.liferay.portal.kernel.model.Contact.website"
+	},
+	{
+		"name": "billing",
+		"type": "com.liferay.portal.kernel.model.Organization.address"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Organization.address"
+	},
+	{
+		"name": "p-o-box",
+		"type": "com.liferay.portal.kernel.model.Organization.address"
+	},
+	{
+		"name": "shipping",
+		"type": "com.liferay.portal.kernel.model.Organization.address"
+	},
+	{
+		"name": "email-address",
+		"type": "com.liferay.portal.kernel.model.Organization.emailAddress"
+	},
+	{
+		"name": "email-address-2",
+		"type": "com.liferay.portal.kernel.model.Organization.emailAddress"
+	},
+	{
+		"name": "email-address-3",
+		"type": "com.liferay.portal.kernel.model.Organization.emailAddress"
+	},
+	{
+		"name": "fax",
+		"type": "com.liferay.portal.kernel.model.Organization.phone"
+	},
+	{
+		"name": "local",
+		"type": "com.liferay.portal.kernel.model.Organization.phone"
+	},
+	{
+		"name": "other",
+		"type": "com.liferay.portal.kernel.model.Organization.phone"
+	},
+	{
+		"name": "toll-free",
+		"type": "com.liferay.portal.kernel.model.Organization.phone"
+	},
+	{
+		"name": "tty",
+		"type": "com.liferay.portal.kernel.model.Organization.phone"
+	},
+	{
+		"name": "administrative",
+		"type": "com.liferay.portal.kernel.model.Organization.service"
+	},
+	{
+		"name": "contracts",
+		"type": "com.liferay.portal.kernel.model.Organization.service"
+	},
+	{
+		"name": "donation",
+		"type": "com.liferay.portal.kernel.model.Organization.service"
+	},
+	{
+		"name": "retail",
+		"type": "com.liferay.portal.kernel.model.Organization.service"
+	},
+	{
+		"name": "training",
+		"type": "com.liferay.portal.kernel.model.Organization.service"
+	},
+	{
+		"name": "full-member",
+		"type": "com.liferay.portal.kernel.model.Organization.status"
+	},
+	{
+		"name": "provisional-member",
+		"type": "com.liferay.portal.kernel.model.Organization.status"
+	},
+	{
+		"name": "intranet",
+		"type": "com.liferay.portal.kernel.model.Organization.website"
+	},
+	{
+		"name": "public",
+		"type": "com.liferay.portal.kernel.model.Organization.website"
+	}
+]

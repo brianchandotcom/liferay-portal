@@ -801,7 +801,17 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		>
 			<fileset
 				dir="${project.dir}/sql"
-				includes="portal-data-common.sql,portal-data-counter.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
+				includes="portal-data-counter.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
+			/>
+		</copy>
+
+		<copy
+			preservelastmodified="true"
+			todir="${portal-impl.classes.dir}/com/liferay/portal/tools/json/dependencies"
+		>
+			<fileset
+				dir="${project.dir}/sql"
+				includes="portal-list-type.json"
 			/>
 		</copy>
 

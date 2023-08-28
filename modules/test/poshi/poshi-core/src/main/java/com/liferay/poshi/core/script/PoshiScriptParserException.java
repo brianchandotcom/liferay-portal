@@ -5,7 +5,6 @@
 
 package com.liferay.poshi.core.script;
 
-import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.elements.PoshiNode;
@@ -16,9 +15,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Kenji Heigel
@@ -59,16 +56,17 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 	public static void throwExceptions() throws Exception {
 		if (!_poshiScriptParserExceptions.isEmpty()) {
-			_filterParserExceptions();
+			List<Exception> filteredExceptions = getFilteredExceptions(
+				new ArrayList<>(_poshiScriptParserExceptions));
 
-			if (!_filteredParserExceptions.isEmpty()) {
+			if (!filteredExceptions.isEmpty()) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("\n\n");
-				sb.append(_filteredParserExceptions.size());
+				sb.append(filteredExceptions.size());
 				sb.append(" error");
 
-				if (_filteredParserExceptions.size() > 1) {
+				if (filteredExceptions.size() > 1) {
 					sb.append("s");
 				}
 
@@ -76,7 +74,7 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 				int i = 1;
 
-				for (Exception exception : _filteredParserExceptions) {
+				for (Exception exception : filteredExceptions) {
 					sb.append(i);
 					sb.append(". ");
 					sb.append(exception.getMessage());
@@ -138,38 +136,6 @@ public class PoshiScriptParserException extends PoshiElementException {
 		_poshiScriptParserExceptions.add(this);
 	}
 
-	private static void _filterParserExceptions() {
-		for (PoshiScriptParserException poshiScriptParserException :
-				_poshiScriptParserExceptions) {
-
-			String filePath = poshiScriptParserException.getFilePath();
-
-			if (filePath.contains("com.liferay.poshi.runner.resources")) {
-				String fileExtension = filePath.substring(
-					filePath.lastIndexOf(".") + 1);
-
-				PoshiProperties poshiProperties =
-					PoshiProperties.getPoshiProperties();
-
-				for (String validFileType :
-						poshiProperties.validationResourceFileTypes) {
-
-					if (validFileType.equals(fileExtension)) {
-						_filteredParserExceptions.add(
-							poshiScriptParserException);
-
-						continue;
-					}
-
-					_parserWarnings.add(poshiScriptParserException);
-				}
-			}
-			else {
-				_filteredParserExceptions.add(poshiScriptParserException);
-			}
-		}
-	}
-
 	private static int _getErrorLineNumber(
 		String poshiScript, PoshiNode<?, ?> parentPoshiNode) {
 
@@ -192,10 +158,6 @@ public class PoshiScriptParserException extends PoshiElementException {
 			StringUtil.count(parentPoshiScript, "\n", index);
 	}
 
-	private static final Set<PoshiScriptParserException>
-		_filteredParserExceptions = new HashSet<>();
-	private static final Set<PoshiScriptParserException> _parserWarnings =
-		new HashSet<>();
 	private static final List<PoshiScriptParserException>
 		_poshiScriptParserExceptions = Collections.synchronizedList(
 			new ArrayList<>());

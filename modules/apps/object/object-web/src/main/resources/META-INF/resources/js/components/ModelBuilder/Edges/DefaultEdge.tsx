@@ -19,16 +19,19 @@ import {getEdgeParams} from '../utils';
 import ManyMarker from './ManyMarker';
 import OneMarker from './OneMarker';
 
+const DEFAULT_COLOR = '#80ACFF';
+const HIGHLIGHT_COLOR = '#0B5FFF';
+
 export function getInitialEdgeStyle(edgeSelected: boolean) {
 	return {
-		stroke: edgeSelected ? '#0B5FFF' : '#80ACFF',
+		stroke: edgeSelected ? HIGHLIGHT_COLOR : DEFAULT_COLOR,
 		strokeWidth: '2px',
 	};
 }
 
 export function getInitialLabelBgStyle(edgeSelected: boolean) {
 	return {
-		fill: edgeSelected ? '#0B5FFF' : '#80ACFF',
+		fill: edgeSelected ? HIGHLIGHT_COLOR : DEFAULT_COLOR,
 		height: '24px',
 	};
 }
@@ -72,23 +75,23 @@ export default function DefaultEdge({
 	useEffect(() => {
 		if (edgeSelected) {
 			setEdgeStyle((style) => {
-				return {...style, stroke: '#0B5FFF'};
+				return {...style, stroke: HIGHLIGHT_COLOR};
 			});
 			setLabelBgStyle((style) => {
 				return {
 					...style,
-					fill: '#0B5FFF',
+					fill: HIGHLIGHT_COLOR,
 				};
 			});
 		}
 		else {
 			setEdgeStyle((style) => {
-				return {...style, stroke: '#80ACFF'};
+				return {...style, stroke: DEFAULT_COLOR};
 			});
 			setLabelBgStyle((style) => {
 				return {
 					...style,
-					fill: '#80ACFF',
+					fill: DEFAULT_COLOR,
 				};
 			});
 		}
@@ -115,26 +118,26 @@ export default function DefaultEdge({
 	const edgePath = getSmoothStepPath({
 		sourcePosition: sourcePos,
 		sourceX,
-		sourceY,
+		sourceY: sourceY + currentSourceY,
 		targetPosition: targetPos,
 		targetX,
-		targetY,
+		targetY: targetY + currentTargetY,
 	});
 
 	const reverseEdgePath = getSmoothStepPath({
 		sourcePosition: targetPos,
-		sourceX,
-		sourceY,
+		sourceX: targetX,
+		sourceY: targetY + currentTargetY,
 		targetPosition: sourcePos,
-		targetX,
-		targetY,
+		targetX: sourceX,
+		targetY: sourceY + currentSourceY,
 	});
 
 	const [edgeCenterX, edgeCenterY] = getEdgeCenter({
 		sourceX,
-		sourceY,
+		sourceY: sourceY + currentSourceY,
 		targetX,
-		targetY,
+		targetY: targetY + currentTargetY,
 	});
 
 	return (

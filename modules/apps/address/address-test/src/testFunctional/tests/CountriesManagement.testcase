@@ -1,4 +1,4 @@
-@component-name = "portal-user-management-and-portal-configuration"
+@component-name = "portal-security"
 definition {
 
 	property portal.release = "true";

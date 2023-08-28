@@ -170,7 +170,7 @@
 			<parallel>
 				<daemons>
 					<execute dir="${workspace.client.extension.dir}">
-						../../gradlew bootRun -Pliferay.workspace.home.dir=${liferay.home} -Pliferay.virtual.instance.id=@{virtual.instance.id} &amp;
+						(../../gradlew bootRun -Pliferay.workspace.home.dir=${liferay.home} -Pliferay.virtual.instance.id=@{virtual.instance.id})
 					</execute>
 				</daemons>
 

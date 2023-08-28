@@ -14,7 +14,9 @@ Liferay.on('copy-link', () => {
 
 Liferay.on('contact-publisher', () => {
 	// eslint-disable-next-line no-undef
-	const emailAddress = `${publisherEmail}`;
+	const emailAddress = fragmentElement.querySelector(
+		'.banner__contact-button'
+	).value;
 	const mailtoLink = `mailto: ${emailAddress}`;
 
 	window.location.href = mailtoLink;

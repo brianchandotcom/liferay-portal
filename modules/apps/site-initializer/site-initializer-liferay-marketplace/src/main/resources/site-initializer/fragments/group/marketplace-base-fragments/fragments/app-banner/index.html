@@ -1,49 +1,69 @@
 [#assign
-	publisherEmail = configuration.publisherEmail
+publisherEmail = configuration.publisherEmail
 ]
 
-<div class="align-items-center banner d-flex justify-content-between p-4">
-	<div class="banner__content d-flex">
-		<img alt="App Logo" data-lfr-editable-id="image-editable-product-logo" data-lfr-editable-type="image" src="[resources:app_image.svg]" />
-
-		<div class="banner__title-container d-flex flex-column">
-			<h1 class="banner__title font-weight-semi-bold mb-1 text-left" data-lfr-editable-id="text-product-name-2" data-lfr-editable-type="rich-text">
-				Example title
-			</h1>
-
-			<div class="align-items-center banner__info-container d-flex">
-				<div class="banner__liferay-container mr-3">
-					<img alt="Liferay Logo" src="[resources:liferay.svg]" />
-
-					<span class="banner__info-text">Liferay</span>
+<div class="banner">
+	<div class="banner__content d-flex justify-content-between">
+		<div class="d-flex flex-column justify-content-between w-100">
+			<div class="align-items-center d-flex w-100">
+				<div class="banner__content__app__image_container">
+					<img alt="App Logo" data-lfr-editable-id="image-editable-product-logo" data-lfr-editable-type="image" src="[resources:app_image.svg]" />
 				</div>
 
-				<div class="banner__product-tag d-flex justify-content-center align-items-center" data-lfr-editable-id="text-product-tag" data-lfr-editable-type="rich-text">
-					Example tag
-				</div>
+				<div class="banner__title__container">
+					<div class="banner__title__section">
+						<div class="banner__content-title">
+							Clarity Customer Portal
+							<span class="banner__content__brand-mobile">
+								Liferay
+							</span>
+						</div>
 
-				<div class="banner__product-tag d-flex justify-content-center align-items-center" data-lfr-editable-id="text-product-tag-2" data-lfr-editable-type="rich-text">
-					Example tag
+						<div class="share__icon ml-2" onclick="Liferay.fire('copy-link')">
+							<i>[@clay.icon symbol="share" /]</i>
+						</div>
+					</div>
+
+					<div class="align-items-center d-flex flex-nowrap ml-2">
+						<div class="d-flex banner__content__brand">
+							<div class="liferay__icon">
+								<img alt="Liferay Logo" src="[resources:liferay.svg]" />
+							</div>
+
+							<span class="banner__content__brand ml-2">
+								Liferay
+							</span>
+						</div>
+
+						<div class="d-flex ml-3">
+							<div class="banner__tag-container">
+								<span class="banner__product-tag">Experience Management</span>
+								<span class="banner__product-tag">Analytics</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex">
+				<div class="banner__tag-container-mobile justify-content-between">
+					<span class="banner__product-tag">Experience Management</span>
+					<span class="banner__product-tag">Analytics</span>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="banner__buttons-container d-flex justify-content-center align-items-center">
-		<button aria-label="Share" class="banner__share-button bg-transparent border-0" onclick="Liferay.fire('copy-link')">
-			<i>[@clay.icon symbol="share" /]</i>
-		</button>
+		<div class="banner__buttons-container">
+			<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary" onclick="Liferay.fire('contact-publisher');" value=`${publisherEmail}`>
+				Contact Publisher
+			</button>
 
-		<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary px-3 py-3" onclick="Liferay.fire('contact-publisher');">
-			Contact Publisher
-		</button>
-
-		<button aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary px-3 py-3" onclick="Liferay.fire('start-trial');">
-			Free 30 day trial
-		</button>
+			<button
+				aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary"
+				onclick="Liferay.fire('start-trial');"
+			>
+				Free 7 Day Trial
+			</button>
+		</div>
 	</div>
 </div>
-
-<script>
-	var publisherEmail = "${publisherEmail}";
-</script>

@@ -81,12 +81,6 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 		implements ServiceTrackerCustomizer
 			<HttpServletEndpoint, ServiceRegistration<HttpServlet>> {
 
-		public HttpServletServiceServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public ServiceRegistration<HttpServlet> addingService(
 			ServiceReference<HttpServletEndpoint> serviceReference) {
@@ -147,6 +141,12 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 			serviceRegistration.unregister();
 
 			_bundleContext.ungetService(serviceReference);
+		}
+
+		private HttpServletServiceServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
 		}
 
 		private final BundleContext _bundleContext;

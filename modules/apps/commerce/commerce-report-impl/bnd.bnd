@@ -22,8 +22,6 @@ Import-Package:\
 	\
 	!com.keypoint.*,\
 	\
-	!com.lowagie.toolbox.*,\
-	\
 	!com.thoughtworks.*,\
 	\
 	!groovyjarjarasm.asm.tree.analysis.*,\

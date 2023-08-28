@@ -5,15 +5,55 @@
 
 package com.liferay.poshi.core.elements;
 
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Calum Ragan
  */
 public class PoshiElementException extends Exception {
+
+	public static List<Exception> getFilteredExceptions(
+		List<Exception> exceptions) {
+
+		List<Exception> filteredExceptions = new ArrayList<>();
+
+		for (Exception exception : exceptions) {
+			PoshiElementException poshiElementException =
+				(PoshiElementException)exception;
+
+			String filePath = poshiElementException.getFilePath();
+
+			if (filePath.contains("com.liferay.poshi.runner.resources")) {
+				String fileExtension = filePath.substring(
+					filePath.lastIndexOf(".") + 1);
+
+				PoshiProperties poshiProperties =
+					PoshiProperties.getPoshiProperties();
+
+				for (String validFileType :
+						poshiProperties.validationResourceFileTypes) {
+
+					if (!validFileType.equals(fileExtension)) {
+						continue;
+					}
+
+					filteredExceptions.add(exception);
+				}
+			}
+			else {
+				filteredExceptions.add(exception);
+			}
+		}
+
+		return filteredExceptions;
+	}
 
 	public static PoshiElement getRootPoshiElement(PoshiNode<?, ?> poshiNode) {
 		if (Validator.isNotNull(poshiNode.getParent())) {
@@ -24,6 +64,35 @@ public class PoshiElementException extends Exception {
 		}
 
 		return (PoshiElement)poshiNode;
+	}
+
+	public static List<Exception> getWarnings(List<Exception> exceptions) {
+		List<Exception> warnings = new ArrayList<>();
+
+		for (Exception exception : exceptions) {
+			PoshiElementException poshiElementException =
+				(PoshiElementException)exception;
+
+			String filePath = poshiElementException.getFilePath();
+
+			if (filePath.contains("com.liferay.poshi.runner.resources")) {
+				String fileExtension = filePath.substring(
+					filePath.lastIndexOf(".") + 1);
+
+				PoshiProperties poshiProperties =
+					PoshiProperties.getPoshiProperties();
+
+				for (String validFileType :
+						poshiProperties.validationResourceFileTypes) {
+
+					if (!validFileType.equals(fileExtension)) {
+						warnings.add(exception);
+					}
+				}
+			}
+		}
+
+		return warnings;
 	}
 
 	public static String join(Object... objects) {

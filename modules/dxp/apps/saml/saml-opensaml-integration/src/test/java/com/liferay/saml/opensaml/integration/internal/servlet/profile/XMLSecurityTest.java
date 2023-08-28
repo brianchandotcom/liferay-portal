@@ -62,9 +62,6 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelper, "_portalUUID", new PortalUUIDImpl());
-
 		SamlSpAuthRequestLocalService samlSpAuthRequestLocalService =
 			getMockPortletService(
 				SamlSpAuthRequestLocalServiceUtil.class,
@@ -87,6 +84,9 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 		).thenReturn(
 			samlSpIdpConnection
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelper, "_portalUUID", new PortalUUIDImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "identifierGenerationStrategyFactory",

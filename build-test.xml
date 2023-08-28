@@ -11444,11 +11444,6 @@ ${update.properties}</echo>
 			</then>
 		</if>
 
-		<get-database-property property.name="database.driver" />
-		<get-database-property property.name="database.password" />
-		<get-database-property property.name="database.url" />
-		<get-database-property property.name="database.username" />
-		<get-database-property property.name="database.version" />
 		<get-testcase-property property.name="database.partition.enabled" />
 		<get-testcase-property property.name="portal.version" />
 
@@ -11464,6 +11459,12 @@ ${update.properties}</echo>
 				<property name="database.max.pool.size" value="30" />
 			</else>
 		</if>
+
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
+		<get-database-property property.name="database.version" />
 
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 

@@ -208,7 +208,9 @@ public class ObjectFolderServiceHttp {
 	public static com.liferay.object.model.ObjectFolder updateObjectFolder(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long objectFolderId,
-			java.util.Map<java.util.Locale, String> labelMap)
+			java.util.Map<java.util.Locale, String> labelMap,
+			java.util.List<com.liferay.object.model.ObjectFolderItem>
+				objectFolderItems)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -217,7 +219,8 @@ public class ObjectFolderServiceHttp {
 				_updateObjectFolderParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, objectFolderId, labelMap);
+				methodKey, externalReferenceCode, objectFolderId, labelMap,
+				objectFolderItems);
 
 			Object returnObj = null;
 
@@ -261,6 +264,8 @@ public class ObjectFolderServiceHttp {
 			String.class, long.class
 		};
 	private static final Class<?>[] _updateObjectFolderParameterTypes4 =
-		new Class[] {String.class, long.class, java.util.Map.class};
+		new Class[] {
+			String.class, long.class, java.util.Map.class, java.util.List.class
+		};
 
 }

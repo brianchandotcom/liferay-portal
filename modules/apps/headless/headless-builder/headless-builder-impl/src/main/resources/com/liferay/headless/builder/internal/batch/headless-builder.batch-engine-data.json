@@ -186,6 +186,11 @@
 							"value": {
 								"objectStates": [
 									{
+										"key": "externalReferenceCode",
+										"objectStateTransitions": [
+										]
+									},
+									{
 										"key": "ID",
 										"objectStateTransitions": [
 										]

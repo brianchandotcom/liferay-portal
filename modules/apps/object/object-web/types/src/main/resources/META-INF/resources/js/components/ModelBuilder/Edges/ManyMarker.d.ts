@@ -6,4 +6,4 @@
 /// <reference types="react" />
 
 export declare const manyMarkerId = 'manyMarker';
-export default function ManyMarkerEnd(): JSX.Element;
+export default function ManyMarker(): JSX.Element;

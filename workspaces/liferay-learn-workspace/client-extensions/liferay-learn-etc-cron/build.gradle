@@ -5,7 +5,7 @@ buildscript {
 
 	repositories {
 		maven {
-			url new File(rootProject.projectDir, "../../../../.m2-tmp")
+			url new File(rootProject.projectDir, "../../.m2-tmp")
 		}
 
 		maven {
@@ -37,7 +37,7 @@ mainClassName = "com.liferay.learn.Main"
 
 repositories {
 	maven {
-		url new File(rootProject.projectDir, "../../../../.m2-tmp")
+		url new File(rootProject.projectDir, "../../.m2-tmp")
 	}
 
 	maven {

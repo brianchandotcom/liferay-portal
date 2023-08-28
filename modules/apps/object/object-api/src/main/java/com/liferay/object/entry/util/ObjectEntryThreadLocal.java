@@ -20,6 +20,10 @@ public class ObjectEntryThreadLocal {
 		return _skipObjectEntryResourcePermissionThreadLocal.get();
 	}
 
+	public static boolean isSkipObjectValidationRules() {
+		return _skipObjectValidationRules.get();
+	}
+
 	public static boolean isSkipReadOnlyObjectFieldsValidation() {
 		return _skipReadOnlyObjectFieldsValidationThreadLocal.get();
 	}
@@ -35,6 +39,12 @@ public class ObjectEntryThreadLocal {
 
 		_skipObjectEntryResourcePermissionThreadLocal.set(
 			skipObjectEntryResourcePermission);
+	}
+
+	public static void setSkipObjectValidationRules(
+		boolean skipObjectValidationRules) {
+
+		_skipObjectValidationRules.set(skipObjectValidationRules);
 	}
 
 	public static void setSkipReadOnlyObjectFieldsValidation(
@@ -55,6 +65,10 @@ public class ObjectEntryThreadLocal {
 				ObjectEntryThreadLocal.class +
 					"._skipObjectEntryResourcePermissionThreadLocal",
 				() -> false);
+	private static final ThreadLocal<Boolean> _skipObjectValidationRules =
+		new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._skipObjectValidationRules",
+			() -> false);
 	private static final ThreadLocal<Boolean>
 		_skipReadOnlyObjectFieldsValidationThreadLocal =
 			new CentralizedThreadLocal<>(

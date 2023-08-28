@@ -12,6 +12,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -456,6 +457,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private void _validateObjectEntry(
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
+
+		if (ObjectEntryThreadLocal.isSkipObjectValidationRules()) {
+			return;
+		}
 
 		try {
 			long userId = PrincipalThreadLocal.getUserId();

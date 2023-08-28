@@ -3682,6 +3682,8 @@ definition {
 
 		Staging.publishToLive();
 
+		Refresh();
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");

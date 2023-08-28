@@ -37,6 +37,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-182184. Verify the option to export a client extension is displayed."
+	@priority = 4
+	test AssertExportOptionIsDisplayed {
+		task ("Given the admin page of client extensions") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("And Create a Custom Element") {
+			ClientExtensionGeneral.addCustomElement(
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		}
+
+		task ("When the user clicks the ellipsis button of the client extension created") {
+			Click(
+				key_entryName = "Vanilla Counter",
+				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
+		}
+
+		task ("Then the export option is displayed") {
+			AssertVisible(
+				key_menuItem = "Export as JSON",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		}
+	}
+
+
 	@description = "LPS-139377. Verify remote app can be displayed under a portlet category"
 	@priority = 3
 	test CanBeAssignedAPortletCategory {

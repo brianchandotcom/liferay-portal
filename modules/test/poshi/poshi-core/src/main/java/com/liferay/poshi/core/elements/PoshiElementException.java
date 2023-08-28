@@ -5,6 +5,7 @@
 
 package com.liferay.poshi.core.elements;
 
+import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -25,31 +26,18 @@ public class PoshiElementException extends Exception {
 		List<Exception> filteredExceptions = new ArrayList<>();
 
 		for (Exception exception : exceptions) {
-			PoshiElementException poshiElementException =
-				(PoshiElementException)exception;
+			if (exception instanceof PoshiElementException) {
+				PoshiElementException poshiElementException =
+					(PoshiElementException)exception;
 
-			String filePath = poshiElementException.getFilePath();
-
-			if (filePath.contains("com.liferay.poshi.runner.resources")) {
-				String fileExtension = filePath.substring(
-					filePath.lastIndexOf(".") + 1);
-
-				PoshiProperties poshiProperties =
-					PoshiProperties.getPoshiProperties();
-
-				for (String validFileType :
-						poshiProperties.validationResourceFileTypes) {
-
-					if (!validFileType.equals(fileExtension)) {
-						continue;
-					}
-
-					filteredExceptions.add(exception);
+				if (!poshiElementException.isWarning()) {
+					filteredExceptions.add(poshiElementException);
 				}
+
+				continue;
 			}
-			else {
-				filteredExceptions.add(exception);
-			}
+
+			filteredExceptions.add(exception);
 		}
 
 		return filteredExceptions;
@@ -70,24 +58,12 @@ public class PoshiElementException extends Exception {
 		List<Exception> warnings = new ArrayList<>();
 
 		for (Exception exception : exceptions) {
-			PoshiElementException poshiElementException =
-				(PoshiElementException)exception;
+			if (exception instanceof PoshiElementException) {
+				PoshiElementException poshiElementException =
+					(PoshiElementException)exception;
 
-			String filePath = poshiElementException.getFilePath();
-
-			if (filePath.contains("com.liferay.poshi.runner.resources")) {
-				String fileExtension = filePath.substring(
-					filePath.lastIndexOf(".") + 1);
-
-				PoshiProperties poshiProperties =
-					PoshiProperties.getPoshiProperties();
-
-				for (String validFileType :
-						poshiProperties.validationResourceFileTypes) {
-
-					if (!validFileType.equals(fileExtension)) {
-						warnings.add(exception);
-					}
+				if (poshiElementException.isWarning()) {
+					warnings.add(poshiElementException);
 				}
 			}
 		}
@@ -238,6 +214,14 @@ public class PoshiElementException extends Exception {
 		return sb.toString();
 	}
 
+	public boolean isWarning() {
+		if (_warning == null) {
+			_warning = _isWarning();
+		}
+
+		return _warning;
+	}
+
 	public void setErrorLineNumber(int errorLineNumber) {
 		_errorLineNumber = errorLineNumber;
 	}
@@ -264,6 +248,30 @@ public class PoshiElementException extends Exception {
 		super(msg);
 	}
 
+	private boolean _isWarning() {
+		String filePath = getFilePath();
+
+		if (filePath.contains("com.liferay.poshi.runner.resources")) {
+			String fileExtension = PoshiGetterUtil.getFileExtensionFromFilePath(
+				filePath);
+
+			PoshiProperties poshiProperties =
+				PoshiProperties.getPoshiProperties();
+
+			for (String validationResourceFileType :
+					poshiProperties.validationResourceFileTypes) {
+
+				if (validationResourceFileType.equals(fileExtension)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 7;
 
 	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 7;
@@ -272,5 +280,6 @@ public class PoshiElementException extends Exception {
 	private String _errorSnippet = "";
 	private String _filePath = "Unknown file";
 	private PoshiNode<?, ?> _poshiNode;
+	private Boolean _warning;
 
 }

@@ -256,6 +256,66 @@ definition {
 	test CanCancelUpdateExistingClientExtension {
 	}
 
+	@description = "LPS-182184. Verify when the user clicks on Clear button the JSON field becomes empty"
+	@priority = 4
+	test CanClearJSONFileField {
+		task ("Given the admin page of client extensions") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+			
+			ClientExtensionGeneral.addCustomElement(
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+
+			Click(
+				key_entryName = "Vanilla Counter",
+				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
+
+			Click(
+				key_menuItem = "Export as JSON",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Vanilla Counter");
+		}
+
+		task ("When the import option is selected") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Import");
+		}
+
+		task ("And the client-extension json file is selected") {
+			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
+
+			var tempFileDirectory = selenium.getOutputDirName();
+
+			var filePath = "${tempFileDirectory}/${sampleFileName}";
+
+			
+			UploadFile(
+				locator1 = "TextInput#FILE",
+				value1 = ${filePath});
+		}
+
+		task ("And it is clicked on the clear button") {
+			Click(
+				key_text = "Clear",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then the JSON File Field is shown empty") {
+			AssertElementNotPresent(
+				key_fieldValue = "${sampleFileName}",
+				locator1 = "FormFields#TEXT_FIELD_3");
+		}
+
+		task ("And the clear button is not present") {
+			AssertElementNotPresent(
+				key_text = "Clear",
+				locator1 = "Button#ANY");
+		}
+	}
+
 
 	@description = "LPS-141280. Verify that the client extension is not available on the workflow page"
 	@priority = 3

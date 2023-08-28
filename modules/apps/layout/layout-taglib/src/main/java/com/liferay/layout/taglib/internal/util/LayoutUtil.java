@@ -35,11 +35,11 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutUtil {
 
 	public static JSONArray getLayoutsJSONArray(
-			long groupId, boolean privateLayout, long parentLayoutId,
-			String[] selectedLayoutUuid)
+			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
+			HttpServletRequest httpServletRequest,
+			String itemSelectorReturnType, boolean privateLayout,
+			long parentLayoutId, String[] selectedLayoutUuid)
 		throws Exception {
-
-		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -56,9 +56,10 @@ public class LayoutUtil {
 				continue;
 			}
 
-			JSONArray childrenJSONArray = _getLayoutsJSONArray(
-				groupId, privateLayout, layout.getLayoutId(),
-				selectedLayoutUuid);
+			JSONArray childrenJSONArray = getLayoutsJSONArray(
+				checkDisplayPage, enableCurrentPage, groupId,
+				httpServletRequest, itemSelectorReturnType, privateLayout,
+				layout.getLayoutId(), selectedLayoutUuid);
 
 			jsonArray.put(
 				JSONUtil.put(
@@ -73,10 +74,11 @@ public class LayoutUtil {
 				).put(
 					"disabled",
 					() -> {
-						if ((_checkDisplayPage &&
+						if ((checkDisplayPage &&
 							 !layout.isContentDisplayPage()) ||
-							(_enableCurrentPage &&
-							 (layout.getPlid() == _getSelPlid()))) {
+							(enableCurrentPage &&
+							 (layout.getPlid() == _getSelPlid(
+								 httpServletRequest)))) {
 
 							return true;
 						}
@@ -112,11 +114,14 @@ public class LayoutUtil {
 						return false;
 					}
 				).put(
-					"payload", _getPayload(layout, themeDisplay)
+					"payload",
+					_getPayload(
+						httpServletRequest, itemSelectorReturnType, layout,
+						themeDisplay)
 				).put(
 					"privateLayout", layout.isPrivateLayout()
 				).put(
-					"returnType", getItemSelectorReturnType()
+					"returnType", itemSelectorReturnType
 				).put(
 					"selected",
 					() -> {
@@ -139,12 +144,15 @@ public class LayoutUtil {
 		return jsonArray;
 	}
 
-	private static String _getPayload(Layout layout, ThemeDisplay themeDisplay)
+	private static String _getPayload(
+			HttpServletRequest httpServletRequest,
+			String itemSelectorReturnType, Layout layout,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (Objects.equals(
 				LayoutItemSelectorReturnType.class.getName(),
-				getItemSelectorReturnType())) {
+				itemSelectorReturnType)) {
 
 			return JSONUtil.put(
 				"layoutId", layout.getLayoutId()
@@ -161,7 +169,7 @@ public class LayoutUtil {
 
 					return HttpComponentsUtil.addParameter(
 						layoutURL, "p_p_auth",
-						AuthTokenUtil.getToken(getRequest()));
+						AuthTokenUtil.getToken(httpServletRequest));
 				}
 			).put(
 				"private", layout.isPrivateLayout()
@@ -173,7 +181,7 @@ public class LayoutUtil {
 		}
 		else if (Objects.equals(
 					UUIDItemSelectorReturnType.class.getName(),
-					getItemSelectorReturnType())) {
+					itemSelectorReturnType)) {
 
 			return layout.getUuid();
 		}
@@ -181,9 +189,9 @@ public class LayoutUtil {
 		return PortalUtil.getLayoutRelativeURL(layout, themeDisplay, false);
 	}
 
-	private static long _getSelPlid() {
+	private static long _getSelPlid(HttpServletRequest httpServletRequest) {
 		return ParamUtil.getLong(
-			getRequest(), "selPlid", LayoutConstants.DEFAULT_PLID);
+			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 	}
 
 	private static boolean _isExcludedLayout(Layout layout) {

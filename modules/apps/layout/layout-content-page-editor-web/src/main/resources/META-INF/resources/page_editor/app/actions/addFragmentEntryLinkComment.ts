@@ -26,7 +26,7 @@ export default function addFragmentEntryLinkComment({
 }: {
 	fragmentEntryLinkComment: FragmentEntryLinkComment;
 	fragmentEntryLinkId: string;
-	parentCommentId: string;
+	parentCommentId?: string;
 }) {
 	return {
 		fragmentEntryLinkComment,

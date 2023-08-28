@@ -23,10 +23,10 @@ export default function addFragmentEntryLinkComment({
 }: {
 	fragmentEntryLinkComment: FragmentEntryLinkComment;
 	fragmentEntryLinkId: string;
-	parentCommentId: string;
+	parentCommentId?: string;
 }): {
 	readonly fragmentEntryLinkComment: FragmentEntryLinkComment;
 	readonly fragmentEntryLinkId: string;
-	readonly parentCommentId: string;
+	readonly parentCommentId: string | undefined;
 	readonly type: 'ADD_FRAGMENT_ENTRY_LINK_COMMENT';
 };

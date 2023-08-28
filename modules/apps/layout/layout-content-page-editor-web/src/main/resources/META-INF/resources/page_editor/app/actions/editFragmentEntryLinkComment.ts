@@ -9,11 +9,11 @@ import {EDIT_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 export default function editFragmentEntryLinkComment({
 	fragmentEntryLinkComment,
 	fragmentEntryLinkId,
-	parentCommentId = '0',
+	parentCommentId,
 }: {
 	fragmentEntryLinkComment: FragmentEntryLinkComment;
 	fragmentEntryLinkId: string;
-	parentCommentId: string;
+	parentCommentId?: string;
 }) {
 	return {
 		fragmentEntryLinkComment,

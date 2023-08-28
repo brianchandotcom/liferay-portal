@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -664,8 +665,10 @@ public class GetEntryRenderDataMVCResourceCommand
 			);
 		}
 
-		if (ctEntry.getModelClassNameId() ==
-				_classNameLocalService.getClassNameId(Layout.class)) {
+		if ((ctEntry.getModelClassNameId() ==
+				_classNameLocalService.getClassNameId(Layout.class)) &&
+			FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPS-187183")) {
 
 			List<SegmentsExperience> segmentsExperienceList =
 				_segmentsExperienceLocalService.dslQuery(

@@ -16,25 +16,18 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,17 +49,10 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long fromCTCollectionId = ParamUtil.getLong(
 			actionRequest, "fromCTCollectionId");
 		long toCTCollectionId = ParamUtil.getLong(
 			actionRequest, "toCTCollectionId");
-
-		CTProcess ctProcess = null;
-		String displayType = null;
-		String label = null;
 
 		if ((fromCTCollectionId != toCTCollectionId) &&
 			(fromCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) &&
@@ -89,72 +75,33 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 						toCTCollectionId, toCTCollection.getName());
 
 				if (conflictInfoMap.isEmpty()) {
-					ctProcess = _ctCollectionService.moveCTEntries(
+					CTProcess ctProcess = _ctCollectionService.moveCTEntries(
 						fromCTCollectionId, toCTCollectionId, ctEntryIds);
+
+					if (ctProcess != null) {
+						BackgroundTask backgroundTask =
+							_backgroundTaskLocalService.fetchBackgroundTask(
+								ctProcess.getBackgroundTaskId());
+
+						if (backgroundTask.getStatus() ==
+								BackgroundTaskConstants.STATUS_FAILED) {
+
+							SessionErrors.add(actionRequest, "failedMove");
+						}
+					}
 				}
 				else {
-					displayType = "danger";
-					label = _language.get(themeDisplay.getLocale(), "conflict");
+					SessionErrors.add(actionRequest, "failedMove");
 				}
 			}
 			catch (PortalException portalException) {
 				SessionErrors.add(actionRequest, portalException.getClass());
 			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			actionResponse.sendRedirect(redirect);
 		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		JSONObject jsonObject = JSONUtil.put(
-			"redirect", ctProcess == null
-		).put(
-			"redirectURL", redirect
-		);
-
-		if (ctProcess != null) {
-			LiferayPortletResponse liferayPortletResponse =
-				_portal.getLiferayPortletResponse(actionResponse);
-
-			ResourceURL statusURL = liferayPortletResponse.createResourceURL();
-
-			statusURL.setParameter(
-				"ctProcessId", String.valueOf(ctProcess.getCtProcessId()));
-			statusURL.setResourceID("/change_tracking/get_publication_status");
-
-			jsonObject.put("statusURL", statusURL.toString());
-
-			BackgroundTask backgroundTask =
-				_backgroundTaskLocalService.fetchBackgroundTask(
-					ctProcess.getBackgroundTaskId());
-
-			if ((backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_SUCCESSFUL) ||
-				(backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_NEW)) {
-
-				displayType = "success";
-				label = _language.get(themeDisplay.getLocale(), "published");
-			}
-
-			if (backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_FAILED) {
-
-				displayType = "danger";
-				label = _language.get(themeDisplay.getLocale(), "failed");
-			}
-		}
-
-		if ((displayType != null) && (label != null)) {
-			jsonObject.put(
-				"displayType", displayType
-			).put(
-				"label", label
-			);
-		}
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
 	}
 
 	@Reference

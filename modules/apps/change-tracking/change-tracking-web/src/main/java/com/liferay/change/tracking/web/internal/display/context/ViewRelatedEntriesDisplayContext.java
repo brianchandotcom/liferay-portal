@@ -5,14 +5,19 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -21,6 +26,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +110,8 @@ public class ViewRelatedEntriesDisplayContext {
 						).put(
 							"userId", ctEntry.getUserId()
 						));
+
+					_ctEntryIds.add(ctEntry.getCtEntryId());
 				}
 
 				return ctEntriesJSONArray;
@@ -143,6 +151,47 @@ public class ViewRelatedEntriesDisplayContext {
 		).buildString();
 	}
 
+	public List<SelectOption> getSelectOptions() {
+		List<SelectOption> selectOptions = new ArrayList<>();
+
+		List<CTCollection> ctCollections =
+			_ctCollectionLocalService.getCTCollections(
+				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		selectOptions.add(
+			new SelectOption(
+				LanguageUtil.get(_themeDisplay.getLocale(), "none"),
+				StringPool.BLANK));
+
+		for (CTCollection ctCollection : ctCollections) {
+			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
+				selectOptions.add(
+					new SelectOption(
+						ctCollection.getName(),
+						String.valueOf(ctCollection.getCtCollectionId())));
+			}
+		}
+
+		return selectOptions;
+	}
+
+	public String getSubmitMoveURL() {
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/change_tracking/move_changes"
+		).setRedirect(
+			getRedirectURL()
+		).setParameter(
+			"ctCollectionId", _ctCollectionId
+		).setParameter(
+			"modelClassNameId", _modelClassNameId
+		).setParameter(
+			"modelClassPK", _modelClassPK
+		).buildString();
+	}
+
 	public String getSubmitURL() {
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
@@ -162,6 +211,7 @@ public class ViewRelatedEntriesDisplayContext {
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+	private final List<Long> _ctEntryIds = new ArrayList<>();
 	private final HttpServletRequest _httpServletRequest;
 	private final long _modelClassNameId;
 	private final long _modelClassPK;

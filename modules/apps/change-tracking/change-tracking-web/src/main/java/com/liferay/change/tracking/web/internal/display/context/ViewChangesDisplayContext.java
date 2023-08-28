@@ -558,27 +558,25 @@ public class ViewChangesDisplayContext {
 		).put(
 			"moveChangesURL",
 			() -> {
-				if (FeatureFlagManagerUtil.isEnabled(
-						_themeDisplay.getCompanyId(), "LPS-171364")) {
-
-					return PortletURLBuilder.createActionURL(
-						_renderResponse
-					).setActionName(
-						"/change_tracking/move_changes"
-					).setRedirect(
-						PortletURLBuilder.createRenderURL(
-							_renderResponse
-						).setMVCRenderCommandName(
-							"/change_tracking/view_changes"
-						).setParameter(
-							"ctCollectionId", _ctCollection.getCtCollectionId()
-						).buildString()
-					).setParameter(
-						"ctCollectionId", _ctCollection.getCtCollectionId()
-					).buildString();
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-171364")) {
+					return null;
 				}
 
-				return null;
+				return PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_move_changes"
+				).setRedirect(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).buildString()
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
 			}
 		).put(
 			"name", _ctCollection.getName()

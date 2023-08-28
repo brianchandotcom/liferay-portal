@@ -37,7 +37,7 @@ export function SelectLayoutTree({
 	multiSelection,
 	selectedLayoutIds,
 }) {
-	const {loadMoreItemsURL, maxPageSize, namespace} = config;
+	const {loadMoreItemsURL, maxPageSize} = config;
 
 	const [items, setItems] = useState(initialItems);
 
@@ -176,15 +176,15 @@ export function SelectLayoutTree({
 
 			return fetch(loadMoreItemsURL, {
 				body: Liferay.Util.objectToURLSearchParams({
-					[`${namespace}checkDisplayPage`]: checkDisplayPage,
-					[`${namespace}groupId`]: groupId,
-					[`${namespace}itemSelectorReturnType`]: itemSelectorReturnType,
-					[`${namespace}layoutUuid`]: item.id,
-					[`${namespace}parentLayoutId`]: item.layoutId,
-					[`${namespace}privateLayout`]: privateLayout,
-					[`${namespace}redirect`]:
+					[`checkDisplayPage`]: checkDisplayPage,
+					[`groupId`]: groupId,
+					[`itemSelectorReturnType`]: itemSelectorReturnType,
+					[`layoutUuid`]: item.id,
+					[`parentLayoutId`]: item.layoutId,
+					[`privateLayout`]: privateLayout,
+					[`redirect`]:
 						window.location.pathname + window.location.search,
-					[`${namespace}start`]: cursor * maxPageSize,
+					[`start`]: cursor * maxPageSize,
 				}),
 				method: 'post',
 			})
@@ -210,7 +210,6 @@ export function SelectLayoutTree({
 			loadMoreItemsURL,
 			privateLayout,
 			maxPageSize,
-			namespace,
 		]
 	);
 

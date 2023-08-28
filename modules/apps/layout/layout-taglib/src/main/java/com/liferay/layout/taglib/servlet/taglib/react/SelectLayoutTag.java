@@ -197,7 +197,9 @@ public class SelectLayoutTag extends IncludeTag {
 			JSONUtil.put(
 				"children",
 				LayoutUtil.getLayoutsJSONArray(
-					themeDisplay.getScopeGroupId(), _privateLayout, 0,
+					_checkDisplayPage, _enableCurrentPage,
+					themeDisplay.getScopeGroupId(), getRequest(),
+					_itemSelectorReturnType, _privateLayout, 0,
 					selectedLayoutIds)
 			).put(
 				"disabled", true

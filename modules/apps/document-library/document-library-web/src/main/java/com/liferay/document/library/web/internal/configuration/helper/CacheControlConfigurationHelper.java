@@ -9,7 +9,7 @@ import com.liferay.document.library.web.internal.configuration.CacheControlConfi
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -37,11 +37,8 @@ public class CacheControlConfigurationHelper {
 	public CacheControlConfiguration getCompanyCacheControlConfiguration(
 		long companyId) {
 
-		if (_companyConfigurationBeans.containsKey(companyId)) {
-			return _companyConfigurationBeans.get(companyId);
-		}
-
-		return _systemCacheControlConfiguration;
+		return _companyConfigurationBeans.getOrDefault(
+			companyId, _systemCacheControlConfiguration);
 	}
 
 	@Activate
@@ -53,11 +50,10 @@ public class CacheControlConfigurationHelper {
 		_serviceRegistration = bundleContext.registerService(
 			ManagedServiceFactory.class,
 			new CacheControlConfigurationManagedServiceFactory(),
-			HashMapDictionaryBuilder.put(
+			MapUtil.singletonDictionary(
 				Constants.SERVICE_PID,
 				"com.liferay.document.library.web.internal.configuration." +
-					"CacheControlConfiguration.scoped"
-			).build());
+					"CacheControlConfiguration.scoped"));
 	}
 
 	@Deactivate
@@ -110,9 +106,9 @@ public class CacheControlConfigurationHelper {
 		}
 
 		private void _unmapPid(String pid) {
-			if (_companyIds.containsKey(pid)) {
-				long companyId = _companyIds.remove(pid);
+			Long companyId = _companyIds.remove(pid);
 
+			if (companyId != null) {
 				_companyConfigurationBeans.remove(companyId);
 			}
 		}

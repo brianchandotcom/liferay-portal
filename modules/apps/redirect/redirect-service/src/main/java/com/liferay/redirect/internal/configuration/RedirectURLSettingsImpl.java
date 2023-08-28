@@ -9,7 +9,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -66,11 +66,10 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 
 		_serviceRegistration = bundleContext.registerService(
 			ManagedServiceFactory.class, new RedirectURLManagedServiceFactory(),
-			HashMapDictionaryBuilder.put(
+			MapUtil.singletonDictionary(
 				Constants.SERVICE_PID,
 				"com.liferay.redirect.internal.configuration." +
-					"RedirectURLConfiguration.scoped"
-			).build());
+					"RedirectURLConfiguration.scoped"));
 	}
 
 	@Deactivate
@@ -87,11 +86,8 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 	private RedirectURLConfiguration _getCompanyRedirectURLConfiguration(
 		long companyId) {
 
-		if (_companyConfigurationBeans.containsKey(companyId)) {
-			return _companyConfigurationBeans.get(companyId);
-		}
-
-		return _systemRedirectURLConfiguration;
+		return _companyConfigurationBeans.getOrDefault(
+			companyId, _systemRedirectURLConfiguration);
 	}
 
 	private final Map<Long, RedirectURLConfiguration>
@@ -115,7 +111,7 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 		}
 
 		@Override
-		public void updated(String pid, Dictionary dictionary)
+		public void updated(String pid, Dictionary<String, ?> dictionary)
 			throws ConfigurationException {
 
 			_unmapPid(pid);
@@ -133,9 +129,9 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 		}
 
 		private void _unmapPid(String pid) {
-			if (_companyIds.containsKey(pid)) {
-				long companyId = _companyIds.remove(pid);
+			Long companyId = _companyIds.remove(pid);
 
+			if (companyId != null) {
 				_companyConfigurationBeans.remove(companyId);
 			}
 		}

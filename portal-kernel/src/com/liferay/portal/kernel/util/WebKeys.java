@@ -397,6 +397,8 @@ public interface WebKeys {
 	public static final String MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD =
 		"MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD";
 
+	public static final String MFA_ENABLED = "MFA_ENABLED";
+
 	public static final String NETVIBES = "NETVIBES";
 
 	public static final String NOTES_LIST = "NOTES_LIST";

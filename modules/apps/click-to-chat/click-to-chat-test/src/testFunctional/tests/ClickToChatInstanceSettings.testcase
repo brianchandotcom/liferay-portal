@@ -143,29 +143,27 @@ definition {
 	test ChatwootProviderKeepsEnabledAfterLogoutAndLogin {
 		property solutions.acceptance = "true";
 
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set chatwoot configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Chatwoot",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Chatwoot");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "chatwoot");
+		}
 
-		var clickToChatChatwootPassword = PropsUtil.get("click.to.chat.chatwoot.password");
+		task ("And can see the Chatwoot icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatChatwootPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
+		task ("Then he still can see the Chatwoot icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify Crisp provider can be enabled and disabled."
@@ -225,29 +223,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Crisp provider persistence after logout and login"
 	@priority = 5
 	test CrispProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set Crisp configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Crisp",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Crisp");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "crisp");
+		}
 
-		var clickToChatCrispPassword = PropsUtil.get("click.to.chat.crisp.password");
+		task ("And can see the Crisp icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatCrispPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
+		task ("Then he still can see the Crisp icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify if it is possible to hide the chat provider"
@@ -323,49 +319,45 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
 	@priority = 5
 	test HubspotProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set Hubspot configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Hubspot",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Hubspot");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "hubspot");
+		}
 
-		var clickToChatHubspotPassword = PropsUtil.get("click.to.chat.hubspot.password");
+		task ("And can see the Hubspot icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatHubspotPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+		task ("Then he still can see the Hubspot icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+		}
 	}
 
 	@description = "This is a test for LPS-137169. Verify if API key is invalid for hubspot"
 	@priority = 4
 	test IsApiKeyInvalidForHubspot {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set Hubspot configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Hubspot",
+				siteSettingsStrategy = "Always Inherit");
+		}
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Hubspot");
+		task ("When the user type a invalid API key") {
+			ClickToChatUtils.typePassword(key_password = "19907868/1-d096-45a1-b25d-7dab3f332167");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "19907868/1-d096-45a1-b25d-7dab3f332167");
-
-		SystemSettings.saveConfiguration();
-
-		Alert.viewErrorMessage(errorMessage = "The API key provided is invalid");
+		task ("Then the user can see the error message") {
+			Alert.viewErrorMessage(errorMessage = "The API key provided is invalid");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify JivoChat provider can be enabled and disabled."
@@ -427,29 +419,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify JivoChat provider persistence after logout and login"
 	@priority = 5
 	test JivoChatProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set JivoChat configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "JivoChat",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "JivoChat");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "jivochat");
+		}
 
-		var clickToChatJivochatPassword = PropsUtil.get("click.to.chat.jivochat.password");
+		task ("And can see the JivoChat icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatJivochatPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+		task ("Then he still can see the JivoChat icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify LiveChat provider can be enabled and disabled."
@@ -511,29 +501,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify LiveChat provider persistence after logout and login"
 	@priority = 5
 	test LiveChatProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set LiveChat configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "LiveChat",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "LiveChat");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "livechat");
+		}
 
-		var clickToChatLivechatPassword = PropsUtil.get("click.to.chat.livechat.password");
+		task ("And can see the LiveChat icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatLivechatPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
+		task ("Then he still can see the LiveChat icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify LivePerson provider can be enabled and disabled."
@@ -595,29 +583,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify LivePerson provider persistence after logout and login"
 	@priority = 5
 	test LivePersonProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set LivePerson configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "LivePerson",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "LivePerson");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "liveperson");
+		}
 
-		var clickToChatLivepersonPassword = PropsUtil.get("click.to.chat.liveperson.password");
+		task ("And can see the LivePerson icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatLivepersonPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+		task ("Then he still can see the LivePerson icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify Smartsupp provider can be enabled and disabled."
@@ -677,29 +663,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Smartsupp provider persistence after logout and login"
 	@priority = 5
 	test SmartsuppProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set Smartsupp configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Smartsupp",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Smartsupp");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "smartsupp");
+		}
 
-		var clickToChatSmartsuppPassword = PropsUtil.get("click.to.chat.smartsupp.password");
+		task ("And can see the Smartsupp icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatSmartsuppPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
+		task ("Then he still can see the Smartsupp icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify TawkTo provider can be enabled and disabled."
@@ -759,35 +743,33 @@ definition {
 	@description = "This is a test for LPS-133453. Verify TawkTo provider persistence after logout and login"
 	@priority = 5
 	test TawkToProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set TawkTo configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "TawkTo",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "TawkTo");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "tawkto");
+		}
 
-		var clickToChatTawktoPassword = PropsUtil.get("click.to.chat.tawkto.password");
+		task ("And can see the TawkTo icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatTawktoPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
+		task ("Then he still can see the TawkTo icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
+		}
 	}
 
 	@description = "This is a test for LPS-129042. Verify Tidio provider can be enabled and disabled."
 	@priority = 5
 	test TidioCanBeEnabledAndDisabled {
-		task ("Given the user set CrisTidiop configuration") {
+		task ("Given the user set Tidio configuration") {
 			ClickToChatUtils.fillGoalsChat(
 				chatProviderId = "Tidio",
 				siteSettingsStrategy = "Always Inherit");
@@ -841,29 +823,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Tidio provider persistence after logout and login"
 	@priority = 5
 	test TidioProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set Tidio configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Tidio",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Tidio");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "tidio");
+		}
 
-		var clickToChatTidioPassword = PropsUtil.get("click.to.chat.tidio.password");
+		task ("And can see the Tidio icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatTidioPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
+		task ("Then he still can see the Tidio icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
+		}
 	}
 
 	@description = "This is a test for LPS-129049. Verify Tolvnow provider can be enabled and disabled."
@@ -1010,29 +990,27 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
 	@priority = 5
 	test ZendeskProviderKeepsEnabledAfterLogoutAndLogin {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set Zendesk configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Zendesk Web Widget Classic",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Zendesk");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "zendesk");
+		}
 
-		var clickToChatZendeskPassword = PropsUtil.get("click.to.chat.zendesk.password");
+		task ("And can see the Zendesk icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatZendeskPassword});
+		task ("When the user logout and login") {
+			User.logoutPG();
 
-		SystemSettings.saveConfiguration();
+			User.firstLoginUI();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
-
-		User.logoutPG();
-
-		User.firstLoginUI();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+		task ("Then he still can see the Zendesk icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+		}
 	}
 
 }

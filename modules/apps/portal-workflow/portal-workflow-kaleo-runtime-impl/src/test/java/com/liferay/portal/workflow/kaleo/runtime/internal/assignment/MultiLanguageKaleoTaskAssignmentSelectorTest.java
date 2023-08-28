@@ -7,7 +7,9 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -21,6 +23,7 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
 import com.liferay.portal.workflow.kaleo.runtime.constants.AssigneeConstants;
+import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.WorkflowTaskScriptConfiguration;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.util.Collection;
@@ -33,6 +36,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
@@ -69,6 +73,22 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		MultiLanguageKaleoTaskAssignmentSelector
 			multiLanguageKaleoTaskAssignmentSelector =
 				_getMultiLanguageKaleoTaskAssignmentSelector();
+
+		_workflowTaskScriptConfiguration = Mockito.mock(
+			WorkflowTaskScriptConfiguration.class);
+
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getConfiguration(
+				Mockito.any(Class.class), Mockito.any(SettingsLocator.class))
+		).thenReturn(
+			_workflowTaskScriptConfiguration
+		);
+
+		Mockito.doReturn(
+			0
+		).when(
+			_workflowTaskScriptConfiguration
+		).scriptedAssignmentCacheExpirationTime();
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments =
 			multiLanguageKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
@@ -183,8 +203,12 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+	private static final MockedStatic<ConfigurationProviderUtil>
+		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
+			ConfigurationProviderUtil.class);
 
 	private ServiceRegistration<ScriptingAssigneeSelector> _serviceRegistration;
+	private WorkflowTaskScriptConfiguration _workflowTaskScriptConfiguration;
 
 	private static class TestJavaScriptingAssigneeSelector
 		implements ScriptingAssigneeSelector {

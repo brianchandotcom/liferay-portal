@@ -129,6 +129,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _configuration;
 	}
 
+	public Map<String, Object> getConfigurationOverrideProperties() {
+		return _configurationOverrideProperties;
+	}
+
 	public ConfigurationScopeDisplayContext
 		getConfigurationScopeDisplayContext() {
 

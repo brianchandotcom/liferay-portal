@@ -150,19 +150,6 @@ public class ObjectEntryRowInfoItemRenderer
 				values.put(objectField.getName(), fileEntry.getLink());
 			}
 			else if (objectField.compareBusinessType(
-						ObjectFieldConstants.
-							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				values.put(
-					objectField.getName(),
-					StringUtil.merge(
-						ListUtil.toList(
-							(List<ListTypeEntry>)value,
-							listTypeEntry -> listTypeEntry.getName(
-								themeDisplay.getLocale())),
-						StringPool.COMMA_AND_SPACE));
-			}
-			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
 
 				Format dateFormat = FastDateFormatFactoryUtil.getDate(
@@ -174,18 +161,29 @@ public class ObjectEntryRowInfoItemRenderer
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
 
-				LocalDateTime localDateTime = (LocalDateTime)value;
-
-				ZonedDateTime zonedDateTime = localDateTime.atZone(
-					ZoneId.systemDefault());
-
 				Format dateFormat = FastDateFormatFactoryUtil.getDateTime(
 					DateFormat.DEFAULT, DateFormat.DEFAULT,
 					themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-				Date date = Date.from(zonedDateTime.toInstant());
+				ZonedDateTime zonedDateTime = ZonedDateTime.of(
+					(LocalDateTime)value, ZoneId.systemDefault());
 
-				values.put(objectField.getName(), dateFormat.format(date));
+				values.put(
+					objectField.getName(),
+					dateFormat.format(Date.from(zonedDateTime.toInstant())));
+			}
+			else if (objectField.compareBusinessType(
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				values.put(
+					objectField.getName(),
+					StringUtil.merge(
+						ListUtil.toList(
+							(List<ListTypeEntry>)value,
+							listTypeEntry -> listTypeEntry.getName(
+								themeDisplay.getLocale())),
+						StringPool.COMMA_AND_SPACE));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {

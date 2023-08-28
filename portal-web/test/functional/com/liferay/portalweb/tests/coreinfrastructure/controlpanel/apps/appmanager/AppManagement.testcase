@@ -204,6 +204,8 @@ definition {
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
 	@priority = 5
 	test CanDeactivateAndActivateBlogs {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

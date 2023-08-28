@@ -25,7 +25,10 @@ definition {
 	@description = "This test asserts that a user can view all the Account Groups an account is assigned to via Account details page"
 	@priority = 4
 	test AccountGroupsAreDisplayedInAccountDetailsPage {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
 
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Accounts Name",

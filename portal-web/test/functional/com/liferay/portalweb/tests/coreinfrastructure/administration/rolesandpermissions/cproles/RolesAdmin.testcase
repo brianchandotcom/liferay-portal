@@ -782,7 +782,10 @@ definition {
 	@description = "This is a use case for LPS-109572."
 	@priority = 5
 	test UserCanBeAssignedToARegularRole {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",

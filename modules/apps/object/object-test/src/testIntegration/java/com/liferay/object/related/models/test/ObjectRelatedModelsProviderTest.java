@@ -876,15 +876,6 @@ public class ObjectRelatedModelsProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _updateObjectRelationship(String deletionType)
-		throws Exception {
-
-		_objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				_objectRelationship.getObjectRelationshipId(), 0, deletionType,
-				false, _objectRelationship.getLabelMap());
-	}
-
 	private static PermissionChecker _originalPermissionChecker;
 	private static Role _role;
 	private static User _user;

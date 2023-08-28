@@ -739,7 +739,7 @@ definition {
 			var emailAddress = "test@liferay.com";
 		}
 
-		while ((IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE"))) {
+		if ((IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE"))) {
 			Refresh();
 
 			WaitForPageLoad();

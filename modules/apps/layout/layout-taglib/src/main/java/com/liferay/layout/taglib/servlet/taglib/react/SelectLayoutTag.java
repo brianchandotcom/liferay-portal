@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -200,7 +202,9 @@ public class SelectLayoutTag extends IncludeTag {
 					_checkDisplayPage, _enableCurrentPage,
 					themeDisplay.getScopeGroupId(), getRequest(),
 					_itemSelectorReturnType, _privateLayout, 0,
-					selectedLayoutIds)
+					selectedLayoutIds, 0,
+					GetterUtil.getInteger(
+						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN))
 			).put(
 				"disabled", true
 			).put(
@@ -213,6 +217,21 @@ public class SelectLayoutTag extends IncludeTag {
 				"id", "0"
 			).put(
 				"name", themeDisplay.getScopeGroupName()
+			).put(
+				"paginated",
+				() -> {
+					int layoutsCount = LayoutServiceUtil.getLayoutsCount(
+						themeDisplay.getScopeGroupId(), _privateLayout,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					if (layoutsCount >
+							PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN) {
+
+						return true;
+					}
+
+					return false;
+				}
 			));
 	}
 

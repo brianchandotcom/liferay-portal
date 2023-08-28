@@ -55,29 +55,27 @@ public class UnbindObjectDefinitionMVCResourceCommand
 			objectDefinition.getObjectDefinitionId());
 
 		while (iterator.hasNext()) {
-			_unbind(iterator.next());
+			Node node = iterator.next();
+
+			_objectDefinitionLocalService.updateRootObjectDefinitionId(
+				node.getObjectDefinitionId(), 0);
+
+			if (node.isRoot()) {
+				continue;
+			}
+
+			Edge edge = node.getEdge();
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap());
 		}
-	}
-
-	private void _unbind(Node node) throws Exception {
-		_objectDefinitionLocalService.updateRootObjectDefinitionId(
-			node.getObjectDefinitionId(), 0);
-
-		if (node.isRoot()) {
-			return;
-		}
-
-		Edge edge = node.getEdge();
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				edge.getObjectRelationshipId());
-
-		_objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationship.getObjectRelationshipId(),
-			objectRelationship.getParameterObjectFieldId(),
-			objectRelationship.getDeletionType(), false,
-			objectRelationship.getLabelMap());
 	}
 
 	@Reference

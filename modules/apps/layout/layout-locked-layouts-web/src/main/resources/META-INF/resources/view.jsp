@@ -60,6 +60,13 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 							modelVar="lockedLayout"
 						>
 
+							<%
+							row.setData(
+								HashMapBuilder.<String, Object>put(
+									"actions", "unlockLockedLayouts"
+								).build());
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="modify-text"
 								name="name"
@@ -83,6 +90,13 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 								name="last-autosave"
 								value="<%= lockedLayoutsDisplayContext.getLastAutoSave(lockedLayout) %>"
 							/>
+
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									aria-label='<%= LanguageUtil.format(request, "actions-for-x", HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)), false) %>'
+									dropdownItems="<%= lockedLayoutsDisplayContext.getLockedLayoutDropdownItems(lockedLayout) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</liferay-ui:search-container-row>
 
 						<liferay-ui:search-iterator

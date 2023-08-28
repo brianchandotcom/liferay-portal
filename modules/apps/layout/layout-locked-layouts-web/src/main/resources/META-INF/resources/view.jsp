@@ -38,6 +38,11 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 			<clay:content-col
 				expand="<%= true %>"
 			>
+				<c:if test="<%= lockedLayoutsDisplayContext.existLockedLayouts() %>">
+					<clay:management-toolbar
+						managementToolbarDisplayContext="<%= new LockedLayoutsSearchContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, lockedLayoutsDisplayContext) %>"
+					/>
+				</c:if>
 				<liferay-ui:search-container
 					id="lockedLayoutsSearchContainer"
 					searchContainer="<%= lockedLayoutsDisplayContext.getSearchContainer() %>"

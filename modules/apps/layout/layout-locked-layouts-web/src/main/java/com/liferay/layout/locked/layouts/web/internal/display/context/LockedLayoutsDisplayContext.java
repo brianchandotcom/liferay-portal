@@ -43,6 +43,14 @@ public class LockedLayoutsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public boolean existLockedLayouts() {
+		if (ListUtil.isEmpty(_getLockedLayouts())) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public String getLastAutoSave(LockedLayout lockedLayout) {
 		Date lastAutoSaveDate = lockedLayout.getLastAutoSaveDate();
 

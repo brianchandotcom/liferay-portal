@@ -52,6 +52,7 @@ public class SkuUnitOfMeasureDTOConverter
 
 		return new SkuUnitOfMeasure() {
 			{
+				actions = dtoConverterContext.getActions();
 				active = cpInstanceUnitOfMeasure.isActive();
 				basePrice = _getInstanceBaseCommercePriceEntryPrice(
 					cpInstance.getCPInstanceUuid(),

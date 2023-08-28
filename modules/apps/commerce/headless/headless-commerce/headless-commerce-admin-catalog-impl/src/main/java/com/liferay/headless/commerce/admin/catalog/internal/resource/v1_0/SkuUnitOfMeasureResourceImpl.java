@@ -19,7 +19,9 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuUnitOfMeasureResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -28,7 +30,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.math.BigDecimal;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -239,6 +240,32 @@ public class SkuUnitOfMeasureResourceImpl
 		return cpInstanceUnitOfMeasure;
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"UPDATE",
+				cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
+				"deleteSkuUnitOfMeasure",
+				_cpInstanceUnitOfMeasureModelResourcePermission)
+		).put(
+			"get",
+			addAction(
+				"VIEW", cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
+				"getSkuUnitOfMeasure",
+				_cpInstanceUnitOfMeasureModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				"UPDATE",
+				cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
+				"patchSkuUnitOfMeasure",
+				_cpInstanceUnitOfMeasureModelResourcePermission)
+		).build();
+	}
+
 	private boolean _isDefaultPrimary(long cpInstanceId) throws Exception {
 		int count =
 			_cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
@@ -257,8 +284,9 @@ public class SkuUnitOfMeasureResourceImpl
 
 		return _skuUnitOfMeasureDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
-				null, cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(cpInstanceUnitOfMeasure), null,
+				cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
@@ -293,6 +321,12 @@ public class SkuUnitOfMeasureResourceImpl
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPInstanceUnitOfMeasure)"
+	)
+	private ModelResourcePermission<CPInstanceUnitOfMeasure>
+		_cpInstanceUnitOfMeasureModelResourcePermission;
 
 	@Reference
 	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;

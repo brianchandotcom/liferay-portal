@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,6 +104,11 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 		Arrays.setAll(
 			blockedEmailAddressDomains,
 			i -> StringUtil.lowerCase(
+				StringUtil.trim(blockedEmailAddressDomains[i])));
+
+		Arrays.setAll(
+			blockedEmailAddressDomains,
+			i -> HtmlUtil.escapeAttribute(
 				StringUtil.trim(blockedEmailAddressDomains[i])));
 
 		DomainValidator domainValidator = _domainValidatorFactory.create(

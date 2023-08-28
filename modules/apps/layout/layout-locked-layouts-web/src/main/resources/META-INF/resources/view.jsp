@@ -95,6 +95,7 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 								<clay:dropdown-actions
 									aria-label='<%= LanguageUtil.format(request, "actions-for-x", HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)), false) %>'
 									dropdownItems="<%= lockedLayoutsDisplayContext.getLockedLayoutDropdownItems(lockedLayout) %>"
+									propsTransformer="js/LockedLayoutDropdownDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
 						</liferay-ui:search-container-row>

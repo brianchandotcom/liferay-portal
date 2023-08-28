@@ -4,7 +4,7 @@ definition {
 	property custom.properties = "health.check.data.source.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Data Source";
+	property testray.main.component.name = "Database";
 
 	@priority = 3
 	test CanUseDataSourceForDatabaseLivenessChecking {

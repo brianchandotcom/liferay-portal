@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>INFO_PANEL_TAGS_TITLE</td>
-	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'Tags')]</td>
+	<td>//div[contains(@class,'panel-title')][normalize-space()='Tags']</td>
 	<td></td>
 </tr>
 <tr>

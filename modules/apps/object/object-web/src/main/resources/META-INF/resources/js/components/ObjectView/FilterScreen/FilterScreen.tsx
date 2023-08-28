@@ -4,7 +4,11 @@
  */
 
 import {useModal} from '@clayui/modal';
-import {BuilderScreen, REQUIRED_MSG} from '@liferay/object-js-components-web';
+import {
+	BuilderScreen,
+	Card,
+	REQUIRED_MSG,
+} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import {
@@ -118,42 +122,45 @@ export function FilterScreen() {
 
 	return (
 		<>
-			<BuilderScreen
-				creationLanguageId={creationLanguageId}
-				emptyState={{
-					buttonText: Liferay.Language.get('new-filter'),
-					description: Liferay.Language.get(
-						'start-creating-a-filter-to-display-specific-data'
-					),
-					title: Liferay.Language.get('no-filter-was-created-yet'),
-				}}
-				filter
-				firstColumnHeader={Liferay.Language.get('filter-by')}
-				objectColumns={
-					objectViewFilterColumns.map((filterColumn) => {
-						if (
-							filterColumn.objectFieldName === 'createDate' ||
-							filterColumn.objectFieldName === 'modifiedDate'
-						) {
-							return {
-								...filterColumn,
-								disableEdit: true,
-							};
-						}
-						else {
-							return filterColumn;
-						}
-					}) ?? []
-				}
-				onDeleteColumn={handleDeleteColumn}
-				onEditing={setEditingFilter}
-				onEditingObjectFieldName={setEditingObjectFieldName}
-				onVisibleEditModal={setVisibleModal}
-				openModal={() => setVisibleModal(true)}
-				secondColumnHeader={Liferay.Language.get('type')}
-				thirdColumnHeader={Liferay.Language.get('value')}
-				title={Liferay.Language.get('filters')}
-			/>
+			<Card title={Liferay.Language.get('filters')}>
+				<BuilderScreen
+					creationLanguageId={creationLanguageId}
+					emptyState={{
+						buttonText: Liferay.Language.get('new-filter'),
+						description: Liferay.Language.get(
+							'start-creating-a-filter-to-display-specific-data'
+						),
+						title: Liferay.Language.get(
+							'no-filter-was-created-yet'
+						),
+					}}
+					filter
+					firstColumnHeader={Liferay.Language.get('filter-by')}
+					objectColumns={
+						objectViewFilterColumns.map((filterColumn) => {
+							if (
+								filterColumn.objectFieldName === 'createDate' ||
+								filterColumn.objectFieldName === 'modifiedDate'
+							) {
+								return {
+									...filterColumn,
+									disableEdit: true,
+								};
+							}
+							else {
+								return filterColumn;
+							}
+						}) ?? []
+					}
+					onDeleteColumn={handleDeleteColumn}
+					onEditing={setEditingFilter}
+					onEditingObjectFieldName={setEditingObjectFieldName}
+					onVisibleEditModal={setVisibleModal}
+					openModal={() => setVisibleModal(true)}
+					secondColumnHeader={Liferay.Language.get('type')}
+					thirdColumnHeader={Liferay.Language.get('value')}
+				/>
+			</Card>
 
 			{visibleModal && (
 				<ModalAddFilter

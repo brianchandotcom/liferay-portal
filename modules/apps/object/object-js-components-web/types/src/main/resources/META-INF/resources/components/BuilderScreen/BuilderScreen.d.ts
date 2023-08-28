@@ -23,7 +23,6 @@ export declare function BuilderScreen({
 	openModal,
 	secondColumnHeader,
 	thirdColumnHeader,
-	title,
 }: IProps): JSX.Element;
 declare type TLabelValueObject = {
 	label: string;
@@ -64,6 +63,5 @@ interface IProps {
 	openModal: () => void;
 	secondColumnHeader: string;
 	thirdColumnHeader?: string;
-	title: string;
 }
 export {};

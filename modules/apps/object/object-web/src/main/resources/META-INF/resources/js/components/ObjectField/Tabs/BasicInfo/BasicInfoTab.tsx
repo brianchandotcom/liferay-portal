@@ -4,7 +4,6 @@
  */
 
 import {API, Card, Input} from '@liferay/object-js-components-web';
-import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';

@@ -675,6 +675,60 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetArticleDisplayWithComplexDataAndTranslations()
+		throws Exception {
+
+		DataDefinition dataDefinition =
+			DataDefinitionTestUtil.addDataDefinition(
+				"journal", _dataDefinitionResourceFactory, _group.getGroupId(),
+				_readFileToString("complex_data_definition.json"),
+				TestPropsValues.getUser());
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+				StringUtil.replace(
+					_readFileToString(
+						"complex_with_translations_journal_content.xml"),
+					"[$DOCUMENT_JSON$]", _toJSON(fileEntry)),
+				dataDefinition.getDataDefinitionKey(), null, LocaleUtil.SPAIN);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			_group.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			dataDefinition.getDataDefinitionKey());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL,
+			_readFileToString("complex_template.ftl"), LocaleUtil.US);
+
+		JournalArticleDisplay journalArticleDisplay = null;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			journalArticleDisplay =
+				_journalArticleLocalService.getArticleDisplay(
+					journalArticle.getGroupId(), journalArticle.getArticleId(),
+					ddmTemplate.getTemplateKey(), null, null, _themeDisplay);
+		}
+
+		String content = journalArticleDisplay.getContent();
+
+		Assert.assertEquals(100, StringUtil.count(content, "<img alt="));
+		Assert.assertTrue(content.contains("Web Content Render"));
+	}
+
+	@Test
 	public void testGetArticleDisplayWithSimpleData() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),

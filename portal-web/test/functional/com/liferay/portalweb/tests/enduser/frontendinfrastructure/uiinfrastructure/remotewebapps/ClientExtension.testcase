@@ -322,6 +322,52 @@ definition {
 	test CanCloseUpdateExistingClientExtension {
 	}
 
+	@description = "LPS-182184. Verify the option to export a client extension is displayed."
+	@priority = 4
+	test CanExportCustomElement {
+		task ("Given the admin page of client extensions") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("And Create a Custom Element") {
+			ClientExtensionGeneral.addCustomElement(
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		}
+
+		task ("When the user clicks the ellipsis button of the client extension created") {
+			Click(
+				key_entryName = "Vanilla Counter",
+				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
+		}
+
+		task ("And clicks Export option") {
+			Click(
+				key_menuItem = "Export as JSON",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
+
+			var fileContent = TestCase.getTempFileContent(fileName = ${sampleFileName});
+		}
+
+		task ("Then a Json file is downloaded") {
+			ImportExport.assertDownloadedFileName(downloadedFile = ${sampleFileName});
+		}
+
+		task ("And confirm that the name "Vanilla Counter" is present inside the file.") {
+			var expected = "Vanilla Counter";
+
+			if (contains(${fileContent}, ${expected})) {
+				echo("Vanilla Counter is present inside the Client Extension file.");
+			}
+			else {
+				echo("Vanilla Counter isn't present inside the Client Extension file.");
+			}
+		}
+	}
+
 
 	@description = "LPS-141280. Verify that the client extension is not available on the workflow page"
 	@priority = 3

@@ -96,10 +96,13 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		ConfigurationProvider configurationProvider = Mockito.mock(
 			ConfigurationProvider.class);
 
+		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
+			_getWorkflowTaskScriptConfiguration();
+
 		Mockito.when(
 			configurationProvider.getConfiguration(Mockito.any(), Mockito.any())
 		).thenReturn(
-			Mockito.mock(WorkflowTaskScriptConfiguration.class)
+			workflowTaskScriptConfiguration
 		);
 
 		return configurationProvider;
@@ -199,6 +202,21 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		);
 
 		return new TestJavaScriptingAssigneeSelector();
+	}
+
+	private WorkflowTaskScriptConfiguration
+		_getWorkflowTaskScriptConfiguration() {
+
+		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
+			Mockito.mock(WorkflowTaskScriptConfiguration.class);
+
+		Mockito.doReturn(
+			0
+		).when(
+			workflowTaskScriptConfiguration
+		).scriptedAssignmentCacheExpirationTime();
+
+		return workflowTaskScriptConfiguration;
 	}
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();

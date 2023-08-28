@@ -116,15 +116,15 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelper, "_portalUUID", new PortalUUIDImpl());
-
 		_samlSpAuthRequestLocalService = getMockPortletService(
 			SamlSpAuthRequestLocalServiceUtil.class,
 			SamlSpAuthRequestLocalService.class);
 		_samlSpSessionLocalService = getMockPortletService(
 			SamlSpSessionLocalServiceUtil.class,
 			SamlSpSessionLocalService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			_relayStateHelper, "_portalUUID", new PortalUUIDImpl());
 
 		ReflectionTestUtil.setFieldValue(
 			_webSsoProfileImpl, "identifierGenerationStrategyFactory",

@@ -1,3 +1,15 @@
-.react-flow__connection {
-	cursor: pointer;
+.react-flow__edge {
+	&.selected {
+		marker {
+			fill: #0b5fff !important;
+		}
+	}
+
+	.react-flow__connection {
+		cursor: pointer;
+	}
+
+	marker {
+		fill: #80acff;
+	}
 }

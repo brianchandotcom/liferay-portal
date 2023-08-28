@@ -20,21 +20,22 @@ public abstract class BaseDALO implements DALO {
 	@Override
 	public String getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			_liferayOAuthApplicationHeadlessServerExternalReferenceCode);
+			_liferayJethr0HeadlessServerOAuthApplicationExternalReferenceCode);
 	}
 
 	@Override
 	public void refresh() {
 		_liferayOAuth2AccessTokenManager.refresh(
-			_liferayOAuthApplicationHeadlessServerExternalReferenceCode);
+			_liferayJethr0HeadlessServerOAuthApplicationExternalReferenceCode);
 	}
+
+	@Value(
+		"${liferay.jethr0.headless.server.oauth.application.external.reference.code}"
+	)
+	private String
+		_liferayJethr0HeadlessServerOAuthApplicationExternalReferenceCode;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
-
-	@Value(
-		"${liferay.oauth.application.headless.server.external.reference.code}"
-	)
-	private String _liferayOAuthApplicationHeadlessServerExternalReferenceCode;
 
 }

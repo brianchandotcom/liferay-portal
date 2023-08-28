@@ -6111,7 +6111,7 @@ public class JournalArticleLocalServiceImpl
 				}
 
 				long userId = _portal.getValidUserId(
-					article.getCompanyId(), article.getUserId());
+					article.getCompanyId(), article.getStatusByUserId());
 
 				ServiceContext serviceContext = new ServiceContext();
 

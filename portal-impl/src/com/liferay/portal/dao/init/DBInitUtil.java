@@ -97,7 +97,6 @@ public class DBInitUtil {
 		ClassLoader classLoader = DBInitUtil.class.getClassLoader();
 
 		_runSQLTemplate(db, connection, classLoader, "portal-tables.sql");
-		_runSQLTemplate(db, connection, classLoader, "portal-data-common.sql");
 		_runSQLTemplate(db, connection, classLoader, "portal-data-counter.sql");
 		_runSQLTemplate(db, connection, classLoader, "indexes.sql");
 		_runSQLTemplate(db, connection, classLoader, "sequences.sql");

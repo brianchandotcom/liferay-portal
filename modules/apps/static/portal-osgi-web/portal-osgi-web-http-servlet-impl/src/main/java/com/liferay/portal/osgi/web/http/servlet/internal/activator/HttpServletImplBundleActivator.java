@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -122,8 +123,8 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 				return serviceRegistration;
 			}
-			catch (Exception exception) {
-				_log.error(exception);
+			catch (ServletException servletException) {
+				_log.error(servletException);
 
 				return null;
 			}

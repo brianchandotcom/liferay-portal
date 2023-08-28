@@ -6,6 +6,13 @@
 import editFragmentEntryLinkComment from '../actions/editFragmentEntryLinkComment';
 import FragmentService from '../services/FragmentService';
 
+/**
+ * @param {string} options.body
+ * @param {string} options.commentId
+ * @param {string} options.fragmentEntryLinkId
+ * @param {string} [options.parentCommentId]
+ * @param {boolean} [options.resolved]
+ */
 export default function editFragmentComment({
 	body,
 	commentId,

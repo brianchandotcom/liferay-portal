@@ -12,7 +12,7 @@ export default function deleteFragmentEntryLinkComment({
 }: {
 	commentId: string;
 	fragmentEntryLinkId: string;
-	parentCommentId: string;
+	parentCommentId?: string;
 }) {
 	return {
 		commentId,

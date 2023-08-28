@@ -6,10 +6,16 @@
 import addFragmentEntryLinkComment from '../actions/addFragmentEntryLinkComment';
 import FragmentService from '../services/FragmentService';
 
+/**
+ * @param {object} options
+ * @param {string} options.body
+ * @param {string} options.fragmentEntryLinkId
+ * @param {string} [options.parentCommentId]
+ */
 export default function addFragmentComment({
 	body,
 	fragmentEntryLinkId,
-	parentCommentId = undefined,
+	parentCommentId,
 }) {
 	return (dispatch) => {
 		return FragmentService.addComment({

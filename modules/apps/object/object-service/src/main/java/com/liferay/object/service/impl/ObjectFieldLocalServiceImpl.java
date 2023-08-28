@@ -30,6 +30,7 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
@@ -274,6 +275,16 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Validator.isNull(dbColumnName)) {
 			dbColumnName = name;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition.isModifiable() && objectDefinition.isSystem() &&
+			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
+
+			throw new ObjectFieldSystemException(
+				"Only allowed bundles can add system object fields");
 		}
 
 		return _addObjectField(
@@ -867,14 +878,6 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 		objectField.setState(state);
 		objectField.setSystem(system);
-
-		if (system && objectDefinition.isModifiable() &&
-			!objectField.isMetadata() &&
-			!SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
-
-			throw new ObjectFieldSystemException(
-				"Only allowed bundles can create system fields");
-		}
 
 		return objectFieldPersistence.update(objectField);
 	}

@@ -850,7 +850,7 @@ definition {
 
 	macro moveArticleCPViaMoveModal {
 		var key_rowEntry = ${kbArticleTitle};
-		var key_itemName = ${destinationItem};
+		var key_nodeName = ${destinationItem};
 
 		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
@@ -858,7 +858,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Click(locator1 = "KnowledgeBase#MOVE_MODAL_DESTINATION_ITEM");
+		Click(locator1 = "Treeview#NODE_ITEM");
 
 		SelectFrameTop();
 

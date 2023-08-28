@@ -21,6 +21,7 @@ const FRAGMENTS = [
 		itemType: 'fragment',
 		name: 'Container',
 		renderTime: 1,
+		warnings: ['Warning 1', 'Warning 2'],
 	},
 	{
 		cached: true,
@@ -32,6 +33,7 @@ const FRAGMENTS = [
 		itemType: 'fragment',
 		name: 'Heading',
 		renderTime: 6,
+		warnings: [],
 	},
 	{
 		cached: false,
@@ -43,6 +45,7 @@ const FRAGMENTS = [
 		itemType: 'fragment',
 		name: 'Image',
 		renderTime: 3,
+		warnings: [],
 	},
 ];
 
@@ -122,5 +125,21 @@ describe('FragmentList', () => {
 		expect(fragments[0].textContent).toContain('Container');
 		expect(fragments[1].textContent).toContain('Image');
 		expect(fragments[2].textContent).toContain('Heading');
+	});
+
+	it('shows a badge with the number of warnings', () => {
+		renderComponent();
+
+		const fragment = screen.getByText('Container');
+
+		expect(fragment.querySelector('.badge-item')).toHaveTextContent('2');
+	});
+
+	it('does not show the badge if the fragment does not have any warning', () => {
+		renderComponent();
+
+		const fragment = screen.getByText('Heading');
+
+		expect(fragment.querySelector('.badge-item')).toBeNull();
 	});
 });

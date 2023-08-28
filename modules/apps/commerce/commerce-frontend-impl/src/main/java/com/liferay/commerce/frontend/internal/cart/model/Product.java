@@ -18,8 +18,9 @@ public class Product {
 
 	public Product(
 		long id, long parentProductId, String name, String sku, int quantity,
-		String thumbnail, PriceModel prices, ProductSettingsModel settings,
-		String[] errorMessages, long cpInstanceId) {
+		String thumbnail, String unitOfMeasureKey, PriceModel prices,
+		ProductSettingsModel settings, String[] errorMessages,
+		long cpInstanceId) {
 
 		_id = id;
 		_parentProductId = parentProductId;
@@ -27,6 +28,7 @@ public class Product {
 		_sku = sku;
 		_quantity = quantity;
 		_thumbnail = thumbnail;
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_prices = prices;
 		_settings = settings;
 		_errorMessages = errorMessages;
@@ -81,6 +83,10 @@ public class Product {
 		return _thumbnail;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	public void setChildItems(List<Product> childItems) {
 		_childItems = childItems;
 	}
@@ -129,6 +135,10 @@ public class Product {
 		_thumbnail = thumbnail;
 	}
 
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
 	private List<Product> _childItems;
 	private long _cpInstanceId;
 	private String[] _errorMessages;
@@ -141,5 +151,6 @@ public class Product {
 	private ProductSettingsModel _settings;
 	private String _sku;
 	private String _thumbnail;
+	private String _unitOfMeasureKey;
 
 }

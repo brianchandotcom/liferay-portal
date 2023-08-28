@@ -230,7 +230,8 @@ public class CommerceCartResourceUtil {
 				_cpInstanceHelper.getCPInstanceThumbnailSrc(
 					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceOrderItem.getCPInstanceId()),
-				prices, settings, _getErrorMessages(locale, commerceOrderItem),
+				commerceOrderItem.getUnitOfMeasureKey(), prices, settings,
+				_getErrorMessages(locale, commerceOrderItem),
 				commerceOrderItem.getCPInstanceId());
 
 			long commerceOptionValueCPDefinitionId =

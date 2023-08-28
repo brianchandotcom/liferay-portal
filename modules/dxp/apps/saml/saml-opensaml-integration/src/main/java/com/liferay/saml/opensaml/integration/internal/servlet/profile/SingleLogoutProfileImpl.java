@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
-import com.liferay.saml.opensaml.integration.internal.helper.RelayStateHelper;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
+import com.liferay.saml.opensaml.integration.internal.util.RelayStateUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
@@ -607,7 +607,7 @@ public class SingleLogoutProfileImpl
 			outboundMessageContext.getSubcontext(
 				SAMLBindingContext.class, true);
 
-		_relayStateHelper.setRelayState(
+		RelayStateUtil.setRelayState(
 			samlBindingContext, portal.getPortalURL(httpServletRequest));
 
 		outboundMessageContext.setMessage(logoutRequest);
@@ -737,7 +737,7 @@ public class SingleLogoutProfileImpl
 						messageContext.getSubcontext(SAMLBindingContext.class);
 
 					samlSloContext.setRelayState(
-						_relayStateHelper.getRelayState(samlBindingContext));
+						RelayStateUtil.getRelayState(samlBindingContext));
 				}
 
 				samlSloContext.setUserId(portal.getUserId(httpServletRequest));
@@ -1225,7 +1225,7 @@ public class SingleLogoutProfileImpl
 		samlBindingContext = outboundMessageContext.getSubcontext(
 			SAMLBindingContext.class, true);
 
-		_relayStateHelper.setRelayState(
+		RelayStateUtil.setRelayState(
 			samlBindingContext, samlSloContext.getRelayState());
 
 		SecurityParametersContext securityParametersContext =
@@ -1443,9 +1443,6 @@ public class SingleLogoutProfileImpl
 
 	@Reference
 	private HttpClientFactory _httpClientFactory;
-
-	@Reference
-	private RelayStateHelper _relayStateHelper;
 
 	@Reference
 	private SamlHttpRequestHelper _samlHttpRequestHelper;

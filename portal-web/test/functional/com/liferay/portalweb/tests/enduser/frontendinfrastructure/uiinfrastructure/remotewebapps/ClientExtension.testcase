@@ -196,6 +196,61 @@ definition {
 		}
 	}
 
+	@description = "LPS-182184. Verify it's possible to cancel an import."
+	@priority = 4
+	test CanCancelImport {
+		task ("Given the admin page of client extensions") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+			ClientExtensionGeneral.addCustomElement(
+				entryHtmlName = "vanilla-counter",
+				entryName = "Vanilla Counter",
+				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+
+			Click(
+				key_entryName = "Vanilla Counter",
+				locator1 = "ClientExtension#ENTRY_ELLIPSIS_BUTTON");
+
+			Click(
+				key_menuItem = "Export as JSON",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Vanilla Counter");
+		}
+
+		task ("When the import option is selected") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Import");
+		}
+
+		task ("And the client-extension json file is selected") {
+			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
+
+			var tempFileDirectory = selenium.getOutputDirName();
+
+			var filePath = "${tempFileDirectory}/${sampleFileName}";
+
+			
+			UploadFile(
+				locator1 = "TextInput#FILE",
+				value1 = ${filePath});
+		}
+
+		task ("And click the cancel button") {
+			Click(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then confirm that there is no Client Extension entry") {
+			AssertElementNotPresent(
+				key_tableEntryName = "Vanilla Counter",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
+	}
+
+
 	@description = "LPS-141280. Verify that the client extension is not available on the workflow page"
 	@priority = 3
 	test CannotConfigureWorkflowSiteLevel {

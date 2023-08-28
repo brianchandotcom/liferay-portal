@@ -656,8 +656,8 @@ public class JournalArticleLocalServiceTest {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_FTL, "<p>Web Content Render</p>",
-			LocaleUtil.US);
+			TemplateConstants.LANG_TYPE_FTL,
+			_readFileToString("complex_template.ftl"), LocaleUtil.US);
 
 		JournalArticleDisplay journalArticleDisplay = null;
 
@@ -670,6 +670,7 @@ public class JournalArticleLocalServiceTest {
 
 		String content = journalArticleDisplay.getContent();
 
+		Assert.assertEquals(100, StringUtil.count(content, "<img alt="));
 		Assert.assertTrue(content.contains("Web Content Render"));
 	}
 

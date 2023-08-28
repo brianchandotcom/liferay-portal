@@ -41,48 +41,56 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 				<c:if test="<%= lockedLayoutsDisplayContext.existLockedLayouts() %>">
 					<clay:management-toolbar
 						managementToolbarDisplayContext="<%= new LockedLayoutsSearchContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, lockedLayoutsDisplayContext) %>"
+						propsTransformer="js/ManagementToolbarPropsTransformer"
 					/>
 				</c:if>
-				<liferay-ui:search-container
-					id="lockedLayoutsSearchContainer"
-					searchContainer="<%= lockedLayoutsDisplayContext.getSearchContainer() %>"
-				>
-					<liferay-ui:search-container-row
-						className="com.liferay.layout.model.LockedLayout"
-						keyProperty="plid"
-						modelVar="lockedLayout"
+
+				<portlet:actionURL name="/layout_locked_layouts/unlock_layouts" var="unlockLayoutsURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				<aui:form action="<%= unlockLayoutsURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
+					<liferay-ui:search-container
+						id="lockedLayoutsSearchContainer"
+						searchContainer="<%= lockedLayoutsDisplayContext.getSearchContainer() %>"
 					>
+						<liferay-ui:search-container-row
+							className="com.liferay.layout.model.LockedLayout"
+							keyProperty="plid"
+							modelVar="lockedLayout"
+						>
 
-						<liferay-ui:search-container-column-text
-							cssClass="modify-text"
-							name="name"
-							value="<%= HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)) %>"
+							<liferay-ui:search-container-column-text
+								cssClass="modify-text"
+								name="name"
+								value="<%= HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="modify-text"
+								name="type"
+								value="<%= lockedLayoutsDisplayContext.getLayoutType(lockedLayout) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="modify-text"
+								name="current-user"
+								value="<%= HtmlUtil.escape(lockedLayout.getUserName()) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="modify-text"
+								name="last-autosave"
+								value="<%= lockedLayoutsDisplayContext.getLastAutoSave(lockedLayout) %>"
+							/>
+						</liferay-ui:search-container-row>
+
+						<liferay-ui:search-iterator
+							markupView="lexicon"
+							paginate="<%= false %>"
 						/>
-
-						<liferay-ui:search-container-column-text
-							cssClass="modify-text"
-							name="type"
-							value="<%= lockedLayoutsDisplayContext.getLayoutType(lockedLayout) %>"
-						/>
-
-						<liferay-ui:search-container-column-text
-							cssClass="modify-text"
-							name="current-user"
-							value="<%= HtmlUtil.escape(lockedLayout.getUserName()) %>"
-						/>
-
-						<liferay-ui:search-container-column-text
-							cssClass="modify-text"
-							name="last-autosave"
-							value="<%= lockedLayoutsDisplayContext.getLastAutoSave(lockedLayout) %>"
-						/>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator
-						markupView="lexicon"
-						paginate="<%= false %>"
-					/>
-				</liferay-ui:search-container>
+					</liferay-ui:search-container>
+				</aui:form>
 			</clay:content-col>
 		</clay:content-row>
 	</clay:sheet-section>

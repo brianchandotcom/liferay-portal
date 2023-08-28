@@ -4,6 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {getHighPriorityContacts} from '~/common/services/liferay/api';
 import i18n from '../../../../common/I18n';
@@ -14,7 +15,10 @@ export const HIGH_PRIORITY_CONTACT_CATEGORIES = {
 	securityBreach: i18n.translate('security-breach'),
 };
 
-const IncidentContactCard = ({accountSubscriptionGroupsNames}) => {
+const IncidentContactCard = ({
+	accountSubscriptionGroupsNames,
+	hasActiveProduct,
+}) => {
 	const incidentContactStandard = 2;
 
 	const [
@@ -136,161 +140,167 @@ const IncidentContactCard = ({accountSubscriptionGroupsNames}) => {
 	);
 
 	return (
-		<div
-			className={`customer-portal-card-footer ${
-				isLXCEnvironment
-					? 'customer-portal-card-footer-style-lxc'
-					: 'customer-portal-card-footer-style-ac'
-			}`}
-		>
-			<div className="customer-portal-card-footer-title">
-				<h1>{i18n.translate('incident-contacts')}</h1>
-			</div>
-			<>
-				<div className="customer-portal-card-footer-description">
-					<p>
-						{i18n.translate(
-							'team-members-who-can-be-contacted-with-high-priority-messages'
-						)}
-					</p>
-				</div>
+		<>
+			{hasActiveProduct && (
+				<div
+					className={classNames('customer-portal-card-footer', {
+						'customer-portal-card-footer-style-ac': !isLXCEnvironment,
+						'customer-portal-card-footer-style-lxc': isLXCEnvironment,
+					})}
+				>
+					<div className="customer-portal-card-footer-title">
+						<h1>{i18n.translate('incident-contacts')}</h1>
+					</div>
 
-				<div className="w-100">
-					<div className="customer-portal-card-title pt-2 row">
-						<div
-							className={`customer-portal-card-description ${
-								isLXCEnvironment ? 'col-4' : 'col'
-							}`}
-						>
-							<h3>
-								{i18n.translate('critical-incident-contacts')}
+					<div className="customer-portal-card-footer-description">
+						<p>
+							{i18n.translate(
+								'team-members-who-can-be-contacted-with-high-priority-messages'
+							)}
+						</p>
+					</div>
 
-								<ClayIcon symbol="pencil" />
-							</h3>
-
+					<div className="w-100">
+						<div className="customer-portal-card-title pt-2 row">
 							<div
-								className={`${
-									criticalIncidentContacts?.length >
-									incidentContactStandard
-										? 'customer-portal-card-description-scroll scroller'
-										: ''
-								}`}
+								className={classNames(
+									'customer-portal-card-description',
+									{
+										'col': !isLXCEnvironment,
+										'col-4': isLXCEnvironment,
+									}
+								)}
 							>
-								{criticalIncidentContacts}
+								<h3>
+									{i18n.translate(
+										'critical-incident-contacts'
+									)}
+
+									<ClayIcon symbol="pencil" />
+								</h3>
+
+								<div
+									className={classNames({
+										'customer-portal-card-description-scroll scroller':
+											criticalIncidentContacts?.length >
+											incidentContactStandard,
+									})}
+								>
+									{criticalIncidentContacts}
+								</div>
 							</div>
+
+							{isLXCEnvironment && (
+								<>
+									<div className="col customer-portal-card-description pl-4">
+										<h3>
+											{i18n.translate('security-breach')}
+
+											<ClayIcon symbol="pencil" />
+										</h3>
+
+										<div
+											className={classNames({
+												'customer-portal-card-description-scroll scroller':
+													currentHighPriorityContacts
+														.securityBreach
+														?.length >
+													incidentContactStandard,
+											})}
+										>
+											{currentHighPriorityContacts?.securityBreach?.map(
+												({
+													contact,
+													email,
+													index,
+													label,
+												}) => (
+													<div
+														className="customer-portal-cards"
+														key={index}
+													>
+														<h4>{email}</h4>
+
+														<h5>{label}</h5>
+
+														{contact.length ? (
+															<h5>{contact}</h5>
+														) : (
+															<>
+																<p className="text-warning">
+																	<ClayIcon symbol="warning-full" />
+																	&nbsp;
+																	{i18n.translate(
+																		'phone-number-is-missing'
+																	)}
+																</p>
+															</>
+														)}
+
+														<br></br>
+													</div>
+												)
+											)}
+										</div>
+									</div>
+
+									<div className="col customer-portal-card-description pl-4">
+										<h3>
+											{i18n.translate('privacy-breach')}
+
+											<ClayIcon symbol="pencil" />
+										</h3>
+
+										<div
+											className={classNames({
+												'customer-portal-card-description-scroll scroller':
+													currentHighPriorityContacts
+														.privacyBreach?.length >
+													incidentContactStandard,
+											})}
+										>
+											{currentHighPriorityContacts?.privacyBreach?.map(
+												({
+													contact,
+													email,
+													index,
+													label,
+												}) => (
+													<div
+														className="customer-portal-cards"
+														key={index}
+													>
+														<h4>{email}</h4>
+
+														<h5>{label}</h5>
+
+														{contact.length ? (
+															<h5>{contact}</h5>
+														) : (
+															<>
+																<p className="text-warning">
+																	<ClayIcon symbol="warning-full" />
+																	&nbsp;
+																	{i18n.translate(
+																		'phone-number-is-missing'
+																	)}
+																</p>
+															</>
+														)}
+
+														<br></br>
+													</div>
+												)
+											)}
+										</div>
+									</div>
+								</>
+							)}
 						</div>
-
-						{isLXCEnvironment && (
-							<>
-								<div className="col customer-portal-card-description pl-4">
-									<h3>
-										{i18n.translate('security-breach')}
-
-										<ClayIcon symbol="pencil" />
-									</h3>
-
-									<div
-										className={`${
-											currentHighPriorityContacts
-												.securityBreach?.length >
-											incidentContactStandard
-												? 'customer-portal-card-description-scroll scroller'
-												: ''
-										}`}
-									>
-										{currentHighPriorityContacts?.securityBreach?.map(
-											({
-												contact,
-												email,
-												index,
-												label,
-											}) => (
-												<div
-													className="customer-portal-cards"
-													key={index}
-												>
-													<h4>{email}</h4>
-
-													<h5>{label}</h5>
-
-													{contact.length ? (
-														<h5>{contact}</h5>
-													) : (
-														<>
-															<p className="text-warning">
-																<ClayIcon symbol="warning-full" />
-																&nbsp;
-																{i18n.translate(
-																	'phone-number-is-missing'
-																)}
-															</p>
-														</>
-													)}
-
-													<br></br>
-												</div>
-											)
-										)}
-									</div>
-								</div>
-
-								<div className="col customer-portal-card-description pl-4">
-									<h3>
-										{i18n.translate('privacy-breach')}
-
-										<ClayIcon symbol="pencil" />
-									</h3>
-
-									<div
-										className={`${
-											currentHighPriorityContacts
-												.privacyBreach?.length >
-											incidentContactStandard
-												? 'customer-portal-card-description-scroll scroller'
-												: ''
-										}`}
-									>
-										{currentHighPriorityContacts?.privacyBreach?.map(
-											({
-												contact,
-												email,
-												index,
-												label,
-											}) => (
-												<div
-													className="customer-portal-cards"
-													key={index}
-												>
-													<h4>{email}</h4>
-
-													<h5>{label}</h5>
-
-													{contact.length ? (
-														<h5>{contact}</h5>
-													) : (
-														<>
-															<p className="text-warning">
-																<ClayIcon symbol="warning-full" />
-																&nbsp;
-																{i18n.translate(
-																	'phone-number-is-missing'
-																)}
-															</p>
-														</>
-													)}
-
-													<br></br>
-												</div>
-											)
-										)}
-									</div>
-								</div>
-							</>
-						)}
 					</div>
 				</div>
-			</>
-		</div>
+			)}
+		</>
 	);
 };
 

@@ -37,6 +37,15 @@ const TeamMembers = () => {
 		(group) => group.name
 	);
 
+	const targetProducts = ['Liferay Experience Cloud', 'Analytics Cloud'];
+
+	const hasActiveProduct = accountSubscriptionGroups?.some(
+		(item) =>
+			targetProducts.includes(item.name) &&
+			item.hasActivation &&
+			item.activationStatus === 'Active'
+	);
+
 	useEffect(() => {
 		setHasQuickLinksPanel(false);
 		setHasSideMenu(true);
@@ -77,6 +86,7 @@ const TeamMembers = () => {
 							accountSubscriptionGroupsNames={
 								accountSubscriptionGroupsNames
 							}
+							hasActiveProduct={hasActiveProduct}
 							koroneikiAccount={koroneikiAccount}
 							loading={loading}
 						/>

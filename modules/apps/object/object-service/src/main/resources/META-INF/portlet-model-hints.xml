@@ -168,6 +168,20 @@
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
 	</model>
+	<model name="com.liferay.object.model.ObjectFolderItem">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectFolderItemId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectDefinitionId" type="long" />
+		<field name="objectFolderId" type="long" />
+		<field name="positionX" type="int" />
+		<field name="positionY" type="int" />
+	</model>
 	<model name="com.liferay.object.model.ObjectLayout">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

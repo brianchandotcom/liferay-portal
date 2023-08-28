@@ -7,6 +7,7 @@ package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectFolderItem;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -323,7 +324,8 @@ public interface ObjectFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<Locale, String> labelMap)
+			Map<Locale, String> labelMap,
+			List<ObjectFolderItem> objectFolderItems)
 		throws PortalException;
 
 }

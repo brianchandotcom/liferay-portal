@@ -138,9 +138,15 @@ export default function FragmentList({
 
 									{warnings.length ? (
 										<ClayBadge
-											className="ml-2"
+											className="ml-2 warning-badge"
 											displayType="warning"
 											label={warnings.length}
+											title={sub(
+												Liferay.Language.get(
+													'x-issues'
+												),
+												warnings.length
+											)}
 										/>
 									) : null}
 								</span>

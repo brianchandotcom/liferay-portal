@@ -37,6 +37,7 @@ function FragmentDetail({fragment}) {
 	const badge = warnings.length
 		? {
 				label: warnings.length >= 100 ? '+100' : warnings.length,
+				title: sub(Liferay.Language.get('x-issues'), warnings.length),
 				type: 'warning',
 		  }
 		: null;
@@ -138,6 +139,7 @@ function DetailPanel({badge, children, title}) {
 								<ClayBadge
 									displayType={badge.type}
 									label={badge.label}
+									title={badge.title}
 								/>
 							</ClayLayout.ContentCol>
 						) : null}

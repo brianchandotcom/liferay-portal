@@ -108,6 +108,12 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 							return PathParameter.NONE;
 						}
 
+						if (Objects.equals(
+								listEntry.getKey(), "externalReferenceCode")) {
+
+							return PathParameter.EXTERNAL_REFERENCE_CODE;
+						}
+
 						return PathParameter.valueOf(
 							StringUtil.toUpperCase(listEntry.getKey()));
 					}

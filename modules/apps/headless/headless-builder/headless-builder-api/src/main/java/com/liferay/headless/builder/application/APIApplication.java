@@ -50,7 +50,7 @@ public interface APIApplication {
 
 		public enum PathParameter {
 
-			ID, NONE
+			EXTERNAL_REFERENCE_CODE, ID, NONE
 
 		}
 

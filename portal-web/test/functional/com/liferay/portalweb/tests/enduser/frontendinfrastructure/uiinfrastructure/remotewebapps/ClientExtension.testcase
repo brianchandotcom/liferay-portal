@@ -94,12 +94,10 @@ definition {
 
 		task ("And the client-extension json file is selected") {
 			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
-
 			var tempFileDirectory = selenium.getOutputDirName();
 
 			var filePath = "${tempFileDirectory}/${sampleFileName}";
 
-			
 			UploadFile(
 				locator1 = "TextInput#FILE",
 				value1 = ${filePath});
@@ -107,7 +105,7 @@ definition {
 
 		task ("Then the file name is shown in the JSON File field") {
 			AssertVisible(
-				key_fieldValue = "${sampleFileName}",
+				key_fieldValue = ${sampleFileName},
 				locator1 = "FormFields#TEXT_FIELD_3");
 		}
 	}
@@ -226,12 +224,10 @@ definition {
 
 		task ("And the client-extension json file is selected") {
 			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
-
 			var tempFileDirectory = selenium.getOutputDirName();
 
 			var filePath = "${tempFileDirectory}/${sampleFileName}";
 
-			
 			UploadFile(
 				locator1 = "TextInput#FILE",
 				value1 = ${filePath});
@@ -261,7 +257,7 @@ definition {
 	test CanClearJSONFileField {
 		task ("Given the admin page of client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
-			
+
 			ClientExtensionGeneral.addCustomElement(
 				entryHtmlName = "vanilla-counter",
 				entryName = "Vanilla Counter",
@@ -286,12 +282,10 @@ definition {
 
 		task ("And the client-extension json file is selected") {
 			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
-
 			var tempFileDirectory = selenium.getOutputDirName();
 
 			var filePath = "${tempFileDirectory}/${sampleFileName}";
 
-			
 			UploadFile(
 				locator1 = "TextInput#FILE",
 				value1 = ${filePath});
@@ -305,7 +299,7 @@ definition {
 
 		task ("Then the JSON File Field is shown empty") {
 			AssertElementNotPresent(
-				key_fieldValue = "${sampleFileName}",
+				key_fieldValue = ${sampleFileName},
 				locator1 = "FormFields#TEXT_FIELD_3");
 		}
 
@@ -398,12 +392,10 @@ definition {
 
 		task ("And the client-extension json file is selected") {
 			var sampleFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "client-extension-*.json");
-
 			var tempFileDirectory = selenium.getOutputDirName();
 
 			var filePath = "${tempFileDirectory}/${sampleFileName}";
 
-			
 			UploadFile(
 				locator1 = "TextInput#FILE",
 				value1 = ${filePath});
@@ -483,6 +475,40 @@ definition {
 	test CanUpdateExistingClientExtension {
 	}
 
+	@description = "LPS-182184. Verify the JSON field is present when the user clicks on Import button. Blocked by LPS-189881."
+	@ignore = "true"
+	@priority = 4
+	test CanViewImportField {
+		task ("Given the admin page of Client Extension") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When you click the ellipsis button in the upper right corner") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+		}
+
+		task ("And you click the import option") {
+			DropdownMenuItem.click(menuItem = "Import");
+		}
+
+		task ("Then “JSON file” field is present") {
+			AssertVisible(
+				key_fieldLabel = "JSON File",
+				locator1 = "FormFields#FIELD_DISABLED");
+		}
+
+		task ("And The text "The file containing the code with the client extension." is displayed under the field ") {
+			AssertVisible(
+				key_message = "The file containing the code with the client extension.",
+				locator1 = "DataSet#MODAL_MESSAGE");
+		}
+
+		task ("And the button Clear is not present") {
+			AssertElementNotPresent(
+				key_text = "Clear",
+				locator1 = "Button#ANY");
+		}
+	}
 
 	@description = "LPS-162031. The site administrator could add a CSS remote app."
 	@priority = 3

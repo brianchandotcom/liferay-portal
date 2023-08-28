@@ -71,6 +71,39 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro createTierPriceEntryDirectlyInsideProductSKU {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(tierPriceSetting)) {
+			Click(
+				key_radioOption = ${tierPriceSetting},
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tier Price Entries");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		CommerceSKUs.addPriceToSKU(price = ${price});
+
+		Type(
+			key_fieldLabel = "Minimum Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Button.clickSubmitButton();
+	}
+
 	macro deletePriceModifier {
 		Click(
 			key_value = ${priceModifierName},

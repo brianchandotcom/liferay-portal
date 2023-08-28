@@ -5,16 +5,12 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 import org.opensaml.saml.common.messaging.context.SAMLBindingContext;
 
@@ -39,15 +35,6 @@ public class RelayStateUtil {
 	public static void setRelayState(
 		SAMLBindingContext samlBindingContext, String relayState) {
 
-		if (relayState == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Relay state is null. Setting blank relay state instead.");
-
-				relayState = StringPool.BLANK;
-			}
-		}
-
 		String uuid = PortalUUIDUtil.generate();
 
 		_relayStates.put(uuid, relayState);
@@ -57,16 +44,7 @@ public class RelayStateUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(RelayStateUtil.class);
 
-	private static final ConcurrentMap<String, String> _relayStates;
-
-	static {
-		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
-
-		cacheBuilder.expireAfterWrite(10, TimeUnit.MINUTES);
-
-		Cache<String, String> cache = cacheBuilder.build();
-
-		_relayStates = cache.asMap();
-	}
+	private static final ConcurrentMap<String, String> _relayStates =
+		new ConcurrentHashMap<>();
 
 }

@@ -41,34 +41,11 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
+				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
+			).put(
 				"style", "fluid"
 			).put(
 				"url", objectDefinitionsFieldsDisplayContext.getEditObjectFieldURL()
-			).build()
-		%>'
-	/>
-</div>
-
-<div id="<portlet:namespace />AddObjectField">
-	<react:component
-		module="js/components/ObjectField/AddObjectField"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
-			).put(
-				"creationLanguageId", objectDefinition.getDefaultLanguageId()
-			).put(
-				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
-			).put(
-				"forbiddenLastChars", objectDefinitionsFieldsDisplayContext.getForbiddenLastCharacters()
-			).put(
-				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
-			).put(
-				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
-			).put(
-				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
-			).put(
-				"objectName", objectDefinition.getShortName()
 			).build()
 		%>'
 	/>

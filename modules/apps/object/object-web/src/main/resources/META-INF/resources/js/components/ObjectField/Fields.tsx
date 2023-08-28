@@ -16,6 +16,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import {ModalAddObjectField} from './ModalAddObjectField';
 import {ModalDeleteObjectField} from './ModalDeleteObjectField';
 import {deleteObjectField} from './deleteObjectFieldUtil';
 
@@ -27,6 +28,7 @@ interface ItemData {
 
 interface FieldsProps extends IFDSTableProps {
 	baseResourceURL: string;
+	objectFieldTypes: ObjectFieldType[];
 }
 
 export default function Fields({
@@ -37,21 +39,33 @@ export default function Fields({
 	id,
 	items,
 	objectDefinitionExternalReferenceCode,
+	objectFieldTypes,
 	style,
 	url,
 }: FieldsProps) {
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();
+
 	const [
 		deletedObjectField,
 		setDeletedObjectField,
 	] = useState<ObjectField | null>(null);
+
+	const [showAddFieldModal, setShowAddFieldModal] = useState(false);
+
 	const [showDeletionModal, setShowDeletionModal] = useState<boolean>(false);
+
 	const [
 		showDeletionNotAllowedModal,
 		setShowDeletionNotAllowedModal,
 	] = useState<boolean>(false);
+
+	useEffect(() => {
+		Liferay.on('addObjectField', () => setShowAddFieldModal(true));
+
+		return () => Liferay.detach('addObjectField');
+	}, []);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -226,6 +240,20 @@ export default function Fields({
 	return (
 		<>
 			<FrontendDataSet {...dataSetProps} />
+
+			{showAddFieldModal && (
+				<ModalAddObjectField
+					apiURL={apiURL as string}
+					creationLanguageId={
+						creationLanguageId as Liferay.Language.Locale
+					}
+					objectDefinitionExternalReferenceCode={
+						objectDefinitionExternalReferenceCode
+					}
+					objectFieldTypes={objectFieldTypes}
+					setVisibility={setShowAddFieldModal}
+				/>
+			)}
 
 			{showDeletionModal && (
 				<ModalDeleteObjectField

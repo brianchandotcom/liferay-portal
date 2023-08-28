@@ -200,7 +200,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Path must start with the \"/\" character."
+				"title", "Path must start with the '/' character."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

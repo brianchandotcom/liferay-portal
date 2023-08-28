@@ -249,6 +249,15 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 			List<Parameter> parameters = new ArrayList<>();
 
+			parameters.add(
+				new Parameter() {
+					{
+						setIn("query");
+						setName("filter");
+						setSchema(new StringSchema());
+					}
+				});
+
 			if (Objects.equals(
 					endpoint.getScope(), APIApplication.Endpoint.Scope.GROUP)) {
 
@@ -276,6 +285,14 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 					{
 						setIn("query");
 						setName("pageSize");
+						setSchema(new StringSchema());
+					}
+				});
+			parameters.add(
+				new Parameter() {
+					{
+						setIn("query");
+						setName("sort");
 						setSchema(new StringSchema());
 					}
 				});

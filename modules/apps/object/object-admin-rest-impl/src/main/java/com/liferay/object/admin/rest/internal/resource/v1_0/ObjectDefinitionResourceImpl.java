@@ -908,6 +908,23 @@ public class ObjectDefinitionResourceImpl
 				accountEntryRestricted =
 					objectDefinition.isAccountEntryRestricted();
 				actions = HashMapBuilder.put(
+					"bind",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+							(objectDefinition.getRootObjectDefinitionId() !=
+								0) ||
+							objectDefinition.isApproved() ||
+							objectDefinition.isSystem()) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
+				).put(
 					"delete",
 					() -> {
 						if (objectDefinition.isUnmodifiableSystemObject()) {
@@ -939,6 +956,18 @@ public class ObjectDefinitionResourceImpl
 
 						return addAction(
 							ActionKeys.UPDATE, "postObjectDefinitionPublish",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
+				).put(
+					"unbind",
+					() -> {
+						if (objectDefinition.getRootObjectDefinitionId() == 0) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
 							permissionName,
 							objectDefinition.getObjectDefinitionId());
 					}

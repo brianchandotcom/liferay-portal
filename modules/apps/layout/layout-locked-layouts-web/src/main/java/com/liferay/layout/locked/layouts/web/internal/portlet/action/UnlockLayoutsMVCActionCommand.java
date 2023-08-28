@@ -10,7 +10,11 @@ import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -35,6 +39,13 @@ public class UnlockLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_groupPermission.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			ActionKeys.UPDATE);
+
 		long[] plids;
 
 		long plid1 = ParamUtil.getLong(actionRequest, "plid");
@@ -50,6 +61,9 @@ public class UnlockLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			_lockManager.unlock(Layout.class.getName(), plid2);
 		}
 	}
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private LockManager _lockManager;

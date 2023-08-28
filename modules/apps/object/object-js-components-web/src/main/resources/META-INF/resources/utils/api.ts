@@ -79,6 +79,7 @@ type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
 
 interface ObjectRelationship {
 	deletionType: string;
+	edge: boolean;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
@@ -90,7 +91,6 @@ interface ObjectRelationship {
 	objectRelationshipId: number;
 	parameterObjectFieldId?: number;
 	reverse: boolean;
-	treeEdge: boolean;
 	type: ObjectRelationshipType;
 }
 

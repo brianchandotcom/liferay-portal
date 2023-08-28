@@ -7,7 +7,7 @@
 }
 
 .hero-container__image {
-	background-image: url('[resources:bg_hero.svg]');
+	background-image: url('[resources:bg_hero (1).svg]');
 	background-repeat: no-repeat;
 	background-size: 100% 95%;
 	border-radius: 0.75rem;
@@ -15,5 +15,74 @@
 
 .hero-container__image-hero {
 	border-radius: 0.75rem;
+	margin: 0px auto;
 	margin-top: 6rem;
+	width: 80%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	picture {
+		display: flex;
+		justify-content: center;
+	}
+
+	.hero-container__image-hero {
+		border-radius: 0.75rem;
+		margin-top: 6rem;
+		width: 80%;
+	}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	picture {
+		display: flex;
+		justify-content: center;
+	}
+	.hero-container__image-hero {
+		border-radius: 0.75rem;
+		margin-top: 6rem;
+		width: 80%;
+	}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	picture {
+		display: flex;
+		justify-content: center;
+	}
+	.hero-container__image-hero {
+		border-radius: 0.75rem;
+		margin-top: 6rem;
+		width: 80%;
+	}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	picture {
+		display: flex;
+		justify-content: center;
+	}
+	.hero-container__image-hero {
+		border-radius: 0.75rem;
+		margin-top: 6rem;
+		width: 80%;
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	picture {
+		display: flex;
+		justify-content: center;
+	}
+
+	.hero-container__image-hero {
+		border-radius: 0.75rem;
+		margin-top: 6rem;
+		width: 935px;
+	}
 }

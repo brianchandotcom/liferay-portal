@@ -61,6 +61,9 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments = null;
 
+		KaleoInstanceToken kaleoInstanceToken =
+			executionContext.getKaleoInstanceToken();
+
 		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
 			_configurationProvider.getConfiguration(
 				WorkflowTaskScriptConfiguration.class,
@@ -75,7 +78,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			kaleoTaskAssignments =
 				_kaleoTaskScriptedAssignmentCache.getKaleoTaskAssignments(
 					_kaleoTaskScriptedAssignmentCache.getKey(
-						executionContext.getKaleoInstanceToken()));
+						kaleoInstanceToken));
 		}
 
 		if (kaleoTaskAssignments == null) {
@@ -86,14 +89,11 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			if (scriptedAssignmentCacheExpirationTime > 0) {
 				_kaleoTaskScriptedAssignmentCache.putKaleoTaskAssignments(
 					_kaleoTaskScriptedAssignmentCache.getKey(
-						executionContext.getKaleoInstanceToken()),
+						kaleoInstanceToken),
 					kaleoTaskAssignments,
 					scriptedAssignmentCacheExpirationTime * 60);
 			}
 		}
-
-		KaleoInstanceToken kaleoInstanceToken =
-			executionContext.getKaleoInstanceToken();
 
 		_kaleoInstanceLocalService.updateKaleoInstance(
 			kaleoInstanceToken.getKaleoInstanceId(),

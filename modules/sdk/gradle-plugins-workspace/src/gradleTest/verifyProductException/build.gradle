@@ -20,6 +20,6 @@ runGradleTest {
 	dependsOn verifyProduct
 
 	doLast {
-		assert error == "Can not get produtInfo for product 'portal'"
+		assert error == "Unable to get product info for product 'portal'"
 	}
 }

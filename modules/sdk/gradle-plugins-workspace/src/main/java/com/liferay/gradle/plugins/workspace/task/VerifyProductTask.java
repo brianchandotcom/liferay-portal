@@ -48,7 +48,7 @@ public class VerifyProductTask extends DefaultTask {
 
 		if (Objects.isNull(productInfo)) {
 			throw new GradleException(
-				"Unable to get produt info for product '" + _product + "'");
+				"Unable to get product info for product '" + _product + "'");
 		}
 
 		if (Validator.isNull(_extension.getAppServerTomcatVersion()) &&

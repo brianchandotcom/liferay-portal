@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -1369,7 +1370,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			main = true;
 
-			if (date.before(kbArticle.getDisplayDate())) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-188060") &&
+				date.before(kbArticle.getDisplayDate())) {
+
 				status = WorkflowConstants.STATUS_SCHEDULED;
 			}
 		}

@@ -499,11 +499,17 @@ definition {
 	}
 
 	macro deleteSLA {
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Delete",
-			rowEntry = ${slaName});
+		Click(
+			key_tableEntry = ${slaName},
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-		AssertConfirm(value1 = "Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?");
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Deleting SLAs will reflect on report data. This action cannot be undone. Are you sure you want to permanently delete it?");
+
+		Click(locator1 = "Modal#OK_BUTTON");
 	}
 
 	macro executeIndexActions {
@@ -627,26 +633,6 @@ definition {
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 	}
 
-	macro goToBulkReassignSelectTasks {
-		PortletEntry.selectAll();
-
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = 1);
-
-		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
-	}
-
-	macro goToBulkTransitionSelectTasks {
-		PortletEntry.selectAll();
-
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = 1);
-
-		Click(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN");
-	}
-
 	macro goToCreatedSLAForm {
 		var key_workflowSlaName = ${workflowSlaName};
 
@@ -691,30 +677,31 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro goToReassignSelectTask {
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = 1);
+	macro goToReassignTask {
+		if (isSet(itemSubject)) {
+			Click(
+				key_tableEntry = ${itemSubject},
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+		else {
+			PortletEntry.selectAll();
 
-		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+		}
+
+		MenuItem.click(menuItem = "Reassign Task");
 	}
 
-	macro goToTransitionTasks {
+	macro goToTransitionSteps {
 		PortletEntry.selectAll();
 
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = 1);
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Transition");
 	}
 
-	macro goToUpdateDueDateTasks {
-		PortletEntry.selectAll();
-
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = 1);
+	macro goToUpdateTasksDueDates {
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Update Tasks Due Dates");
 	}
@@ -991,14 +978,6 @@ definition {
 		Select(
 			locator1 = "WorkflowTransitionModal#TRANSITION_TO_BUTTON",
 			value1 = ${transitionOption});
-	}
-
-	macro selectTransitionTask {
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = ${task});
-
-		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
 	}
 
 	macro selectVelocityUnit {
@@ -1463,30 +1442,6 @@ definition {
 			WorkflowMetrics.allItemPageFilterCheck(
 				allItemsFilterName = ${key_allItemsFilterName},
 				assigneeName = ${key_assigneeName});
-		}
-	}
-
-	macro viewKebabMenuOptionsIsAvailable {
-		Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-		var dropdownItem = ${dropdownItem};
-
-		if (${dropdownItem} == "Reassign Task") {
-			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if (${dropdownItem} == "Transition") {
-			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if (${dropdownItem} == "Update Due Date") {
-			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if (${dropdownItem} == "Track Workflow") {
-			AssertElementPresent(
-				key_menuOption = ${dropdownItem},
-				locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
 		}
 	}
 

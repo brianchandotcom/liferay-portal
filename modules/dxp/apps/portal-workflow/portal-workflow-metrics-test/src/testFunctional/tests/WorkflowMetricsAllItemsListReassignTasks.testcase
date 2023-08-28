@@ -73,7 +73,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -92,7 +92,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -143,11 +143,11 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = 1);
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		Click(locator1 = "WorkflowReassignModal#ASSIGNEE_DROPDOWN");
 
@@ -190,7 +190,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
@@ -248,7 +248,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -301,7 +301,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
@@ -377,7 +377,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		AssertElementNotPresent(
 			key_workflowFilter = "Review",
@@ -443,7 +443,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
 
@@ -476,7 +476,7 @@ definition {
 
 		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title");
 
@@ -524,7 +524,7 @@ definition {
 			AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_ALL_ITEMS_LIST_ORDER");
 		}
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		for (var orderNumber : list "1,2") {
 			var key_order = ${orderNumber};
@@ -573,7 +573,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueProcessStep(workflowStep = "Review");
 
@@ -638,7 +638,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.viewTaskFilterOnReassignTasks(processStep = "task1");
 
@@ -673,7 +673,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blogs Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
@@ -755,7 +755,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title");
 
@@ -773,7 +773,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectNewAssignee(
 			nameOfAssignee = "user1 user1",

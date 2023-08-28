@@ -56,7 +56,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -108,7 +108,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -174,13 +174,13 @@ definition {
 			key_orderBy = "Creation Date",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ORDER_BY");
 
-		WorkflowMetrics.selectTransitionTask(task = 1);
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blog Entry 1");
 
 		WorkflowMetrics.selectNewAssignee(
 			nameOfAssignee = "User Test",
 			taskList = "Blogs Entry: Blog Entry 1");
 
-		WorkflowMetrics.selectTransitionTask(task = 2);
+		WorkflowMetrics.goToReassignTask(itemSubject = "Blogs Entry: Blog Entry 2");
 
 		WorkflowMetrics.selectNewAssignee(
 			nameOfAssignee = "Test Test",
@@ -331,7 +331,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -378,7 +378,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -454,7 +454,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		Click(locator1 = "WorkflowReassignModal#PROCESS_STEP_DROPDOWN");
 
@@ -530,7 +530,7 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.goToTransitionTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		Click(
 			key_task = 1,
@@ -588,7 +588,7 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		Click(locator1 = "WorkflowMetricsAllItemsListTransitionTasks#SELECT_ALL_TRANSITION_TASKS");
 
@@ -690,11 +690,7 @@ definition {
 			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 		}
 
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = 1);
-
-		Click(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN");
+		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 

@@ -18,12 +18,12 @@ hr {
 	}
 
 	&-label-title {
-		align-items: baseline;
-		display: flex;
 		font-size: 14px;
 		font-weight: 600;
-		gap: 4px;
-		justify-content: space-between;
 		line-height: 1.3rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 10rem;
 	}
 }

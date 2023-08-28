@@ -40,7 +40,6 @@ import com.liferay.saml.opensaml.integration.internal.resolver.SubjectAssertionC
 import com.liferay.saml.opensaml.integration.internal.resolver.UserResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
-import com.liferay.saml.opensaml.integration.internal.util.RelayStateUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
@@ -401,7 +400,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			String relayState = ParamUtil.getString(
 				httpServletRequest, "RelayState");
 
-			RelayStateUtil.setRelayState(samlBindingContext, relayState);
+			samlBindingContext.setRelayState(relayState);
 
 			SAMLPeerEntityContext samlPeerEntityContext =
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -442,8 +441,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			samlSsoRequestContext = new SamlSsoRequestContext(
 				authnRequestXml, samlPeerEntityContext.getEntityId(),
-				RelayStateUtil.getRelayState(samlBindingContext),
-				messageContext, _userLocalService);
+				samlBindingContext.getRelayState(), messageContext,
+				_userLocalService);
 		}
 
 		String samlSsoSessionId = getSamlSsoSessionId(httpServletRequest);
@@ -493,7 +492,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			outboundMessageContext.getSubcontext(
 				SAMLBindingContext.class, true);
 
-		RelayStateUtil.setRelayState(samlBindingContext, relayState);
+		samlBindingContext.setRelayState(relayState);
 
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
@@ -1113,7 +1112,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SAMLBindingContext samlBindingContext =
 				messageContext.getSubcontext(SAMLBindingContext.class, true);
 
-			RelayStateUtil.setRelayState(samlBindingContext, relayState);
+			samlBindingContext.setRelayState(relayState);
 
 			String samlSsoSessionId = getSamlSsoSessionId(httpServletRequest);
 
@@ -1260,7 +1259,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SAMLBindingContext.class);
 
 		String relayState = portal.escapeRedirect(
-			RelayStateUtil.getRelayState(samlBindingContext));
+			samlBindingContext.getRelayState());
 
 		if (Validator.isNull(relayState)) {
 			relayState = portal.getHomeURL(httpServletRequest);

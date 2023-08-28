@@ -15,7 +15,6 @@ import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigur
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.provider.CachingChainingMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
-import com.liferay.saml.opensaml.integration.internal.util.RelayStateUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -302,8 +301,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(
-			RELAY_STATE, RelayStateUtil.getRelayState(samlBindingContext));
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
 
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}
@@ -363,8 +361,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(
-			RELAY_STATE, RelayStateUtil.getRelayState(samlBindingContext));
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
 
 		Assert.assertTrue(samlSsoRequestContext.isNewSession());
 	}
@@ -473,8 +470,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(
-			RELAY_STATE, RelayStateUtil.getRelayState(samlBindingContext));
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
 
 		Assert.assertNull(
 			mockHttpSession.getAttribute(SamlWebKeys.SAML_SSO_REQUEST_CONTEXT));
@@ -564,8 +560,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		SAMLBindingContext samlBindingContext = messageContext.getSubcontext(
 			SAMLBindingContext.class);
 
-		Assert.assertEquals(
-			RELAY_STATE, RelayStateUtil.getRelayState(samlBindingContext));
+		Assert.assertEquals(RELAY_STATE, samlBindingContext.getRelayState());
 
 		InOutOperationContext<?, ?> inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class);
@@ -1214,7 +1209,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
 			samlPeerEntityContext.getEntityId(),
-			RelayStateUtil.getRelayState(samlBindingContext), messageContext,
+			samlBindingContext.getRelayState(), messageContext,
 			userLocalService);
 
 		SAMLSelfEntityContext samlSelfEntityContext =

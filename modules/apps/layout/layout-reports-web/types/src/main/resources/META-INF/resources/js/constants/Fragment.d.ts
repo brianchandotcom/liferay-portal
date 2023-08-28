@@ -27,7 +27,7 @@ export declare const FILTER_TYPE_NAMES: Record<
 	string
 >;
 export declare const FRAGMENT_FILTERS: {
-	readonly origin: readonly ['all', 'fromMaster'];
+	readonly origin: readonly ['fromMaster'];
 	readonly status: readonly ['cached', 'notCached'];
 	readonly type: readonly ['fragment', 'widget'];
 };

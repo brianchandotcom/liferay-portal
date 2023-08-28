@@ -24,7 +24,6 @@ export const FILTER_NAMES: Record<
 	typeof FRAGMENT_FILTERS[keyof typeof FRAGMENT_FILTERS][number],
 	string
 > = {
-	all: Liferay.Language.get('all'),
 	cached: Liferay.Language.get('cached'),
 	fragment: Liferay.Language.get('fragment'),
 	fromMaster: Liferay.Language.get('from-master'),
@@ -42,7 +41,7 @@ export const FILTER_TYPE_NAMES: Record<
 };
 
 export const FRAGMENT_FILTERS = {
-	origin: ['all', 'fromMaster'],
+	origin: ['fromMaster'],
 	status: ['cached', 'notCached'],
 	type: ['fragment', 'widget'],
 } as const;

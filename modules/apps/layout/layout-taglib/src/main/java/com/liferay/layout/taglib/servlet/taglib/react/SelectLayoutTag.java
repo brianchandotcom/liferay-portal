@@ -127,8 +127,14 @@ public class SelectLayoutTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData() throws Exception {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		String[] selectedLayoutIds = ParamUtil.getStringValues(
-			getRequest(), "layoutUuid");
+			httpServletRequest, "layoutUuid");
 
 		return HashMapBuilder.<String, Object>put(
 			"checkDisplayPage", _checkDisplayPage
@@ -136,31 +142,14 @@ public class SelectLayoutTag extends IncludeTag {
 			"config",
 			HashMapBuilder.<String, Object>put(
 				"loadMoreItemsURL",
-				() -> {
-					HttpServletRequest httpServletRequest = getRequest();
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					return themeDisplay.getPathMain() + "/portal/get_layouts";
-				}
+				themeDisplay.getPathMain() + "/portal/get_layouts"
 			).put(
 				"maxPageSize",
 				GetterUtil.getInteger(
 					PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)
 			).build()
 		).put(
-			"groupId",
-			() -> {
-				HttpServletRequest httpServletRequest = getRequest();
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return themeDisplay.getScopeGroupId();
-			}
+			"groupId", themeDisplay.getScopeGroupId()
 		).put(
 			"itemSelectorReturnType", _itemSelectorReturnType
 		).put(
@@ -170,7 +159,7 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"namespace", _namespace
 		).put(
-			"nodes", _getLayoutsJSONArray(selectedLayoutIds)
+			"nodes", _getLayoutsJSONArray(selectedLayoutIds, themeDisplay)
 		).put(
 			"privateLayout", _privateLayout
 		).put(
@@ -178,14 +167,9 @@ public class SelectLayoutTag extends IncludeTag {
 		).build();
 	}
 
-	private JSONArray _getLayoutsJSONArray(String[] selectedLayoutIds)
+	private JSONArray _getLayoutsJSONArray(
+			String[] selectedLayoutIds, ThemeDisplay themeDisplay)
 		throws Exception {
-
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 

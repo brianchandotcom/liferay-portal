@@ -284,6 +284,7 @@ interface ObjectValidation {
 
 interface ObjectRelationship {
 	deletionType: string;
+	edge: boolean;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
@@ -295,7 +296,6 @@ interface ObjectRelationship {
 	objectRelationshipId: number;
 	parameterObjectFieldName?: string;
 	reverse: boolean;
-	treeEdge: boolean;
 	type: ObjectRelationshipType;
 }
 

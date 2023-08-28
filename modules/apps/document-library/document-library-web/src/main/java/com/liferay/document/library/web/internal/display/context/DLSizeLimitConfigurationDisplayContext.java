@@ -5,11 +5,17 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -72,6 +78,14 @@ public class DLSizeLimitConfigurationDisplayContext {
 		throw new IllegalArgumentException("Unsupported scope: " + _scope);
 	}
 
+	public String[] getFileMaxSizeHelpArguments() {
+		return new String[] {
+			LanguageUtil.get(
+				_httpServletRequest, "overall-maximum-upload-request-size"),
+			_getConfigurationLink()
+		};
+	}
+
 	public Map<String, Object> getFileSizePerMimeTypeData() {
 		List<Map<String, Object>> sizeList = new ArrayList<>();
 
@@ -114,6 +128,25 @@ public class DLSizeLimitConfigurationDisplayContext {
 		throw new IllegalArgumentException("Unsupported scope: " + _scope);
 	}
 
+	private String _getConfigurationLink() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<a href=\"");
+		sb.append(
+			HtmlUtil.escape(
+				_getSystemSettingsUrl(
+					"com.liferay.portal.upload.internal.configuration." +
+						"UploadServletRequestConfiguration")));
+		sb.append("\">");
+		sb.append(
+			LanguageUtil.get(
+				_httpServletRequest,
+				"upload-servlet-request-configuration-name"));
+		sb.append("</a>");
+
+		return sb.toString();
+	}
+
 	private Map<String, Long> _getMimeTypeSizeLimit() {
 		if (_scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
@@ -135,6 +168,20 @@ public class DLSizeLimitConfigurationDisplayContext {
 		}
 
 		throw new IllegalArgumentException("Unsupported scope: " + _scope);
+	}
+
+	private String _getSystemSettingsUrl(String factoryPid) {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createActionURL(
+				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)
+		).setMVCRenderCommandName(
+			"/configuration_admin/edit_configuration"
+		).setParameter(
+			"factoryPid", factoryPid
+		).buildString();
 	}
 
 	private final DLSizeLimitConfigurationProvider

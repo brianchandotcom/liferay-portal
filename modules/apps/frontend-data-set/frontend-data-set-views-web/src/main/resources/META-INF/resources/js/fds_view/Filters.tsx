@@ -77,6 +77,20 @@ interface IPropsAddFDSFilterModalContent {
 	onSave: (newFilter: IFilter) => void;
 }
 
+function getModalHeader(
+	filter: IFilter | undefined,
+	filterType: filterTypes | undefined
+): string {
+	if (filter)
+		return sub(Liferay.Language.get('edit-x-filter'), [filter.name]);
+
+	if (filterType && filterType == filterTypes.SELECTION) {
+		return Liferay.Language.get('new-selection-filter');
+	} else {
+		return Liferay.Language.get('new-filter');
+	}
+}
+
 function AddFDSFilterModalContent({
 	closeModal,
 	fdsView,
@@ -256,9 +270,7 @@ function AddFDSFilterModalContent({
 	return (
 		<>
 			<ClayModal.Header>
-				{filter
-					? sub(Liferay.Language.get('edit-x-filter'), [filter.name])
-					: Liferay.Language.get('new-filter')}
+				{getModalHeader(filter, filterType)}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

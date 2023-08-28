@@ -152,6 +152,21 @@ create table ObjectFolder (
 	name VARCHAR(75) null
 );
 
+create table ObjectFolderItem (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectFolderItemId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectDefinitionId LONG,
+	objectFolderId LONG,
+	positionX INTEGER,
+	positionY INTEGER
+);
+
 create table ObjectLayout (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

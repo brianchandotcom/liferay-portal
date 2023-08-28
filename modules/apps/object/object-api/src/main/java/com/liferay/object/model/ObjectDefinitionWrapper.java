@@ -955,6 +955,11 @@ public class ObjectDefinitionWrapper
 		return model.isEnableObjectEntryHistory();
 	}
 
+	@Override
+	public boolean isLinkedToObjectFolder(long objectFolderId) {
+		return model.isLinkedToObjectFolder(objectFolderId);
+	}
+
 	/**
 	 * Returns <code>true</code> if this object definition is modifiable.
 	 *

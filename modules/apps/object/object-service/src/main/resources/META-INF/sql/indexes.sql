@@ -44,6 +44,10 @@ create unique index IX_4F90333E on ObjectFolder (externalReferenceCode[$COLUMN_L
 create index IX_5EF93EB2 on ObjectFolder (name[$COLUMN_LENGTH:75$]);
 create index IX_94439C67 on ObjectFolder (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create unique index IX_61EBCE03 on ObjectFolderItem (objectDefinitionId, objectFolderId);
+create index IX_F9E61F22 on ObjectFolderItem (objectFolderId);
+create index IX_10E159A on ObjectFolderItem (uuid_[$COLUMN_LENGTH:75$], companyId);
+
 create index IX_FD0CCE8A on ObjectLayout (objectDefinitionId, defaultObjectLayout);
 create index IX_E27AC523 on ObjectLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
 

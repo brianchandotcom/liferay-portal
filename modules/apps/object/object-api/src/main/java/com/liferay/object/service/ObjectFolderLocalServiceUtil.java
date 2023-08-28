@@ -365,11 +365,12 @@ public class ObjectFolderLocalServiceUtil {
 
 	public static ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<java.util.Locale, String> labelMap)
+			Map<java.util.Locale, String> labelMap,
+			List<com.liferay.object.model.ObjectFolderItem> objectFolderItems)
 		throws PortalException {
 
 		return getService().updateObjectFolder(
-			externalReferenceCode, objectFolderId, labelMap);
+			externalReferenceCode, objectFolderId, labelMap, objectFolderItems);
 	}
 
 	public static ObjectFolderLocalService getService() {

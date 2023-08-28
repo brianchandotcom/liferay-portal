@@ -7,8 +7,8 @@ import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import {ArrowHeadType, Edge, Node, isEdge, useStore} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
-import {manyMarkerId} from '../Edges/ManyMarkerEnd';
-import {oneMarkerId} from '../Edges/OneMarkerEnd';
+import {manyMarkerId} from '../Edges/ManyMarker';
+import {oneMarkerId} from '../Edges/OneMarker';
 import {
 	LeftSidebarItemType,
 	ObjectRelationshipEdgeData,

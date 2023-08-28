@@ -319,6 +319,11 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	protected String limitColumnLength(String column, int length) {
+		return StringBundler.concat("left(", column, ", ", length, ")");
+	}
+
+	@Override
 	protected String reword(String data) throws IOException {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(data))) {

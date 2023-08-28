@@ -5,13 +5,10 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.activator;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -70,9 +67,6 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 		};
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		HttpServletImplBundleActivator.class.getName());
-
 	private Activator _activator;
 	private ServiceTracker
 		<HttpServletEndpoint, ServiceRegistration<HttpServlet>> _serviceTracker;
@@ -92,36 +86,20 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 				@Override
 				public ServletConfig getServletConfig() {
-					return _servletConfig;
+					return httpServletEndpoint.getServletConfig();
 				}
-
-				@Override
-				public void init(ServletConfig servletConfig) {
-					_servletConfig = servletConfig;
-				}
-
-				private ServletConfig _servletConfig;
 
 			};
 
-			try {
-				proxyServlet.init(httpServletEndpoint.getServletConfig());
+			ServiceRegistration<HttpServlet> serviceRegistration =
+				_bundleContext.registerService(
+					HttpServlet.class, proxyServlet,
+					httpServletEndpoint.getProperties());
 
-				ServiceRegistration<HttpServlet> serviceRegistration =
-					_bundleContext.registerService(
-						HttpServlet.class, proxyServlet,
-						httpServletEndpoint.getProperties());
+			PortletSessionListenerManager.addHttpSessionListener(
+				_INVALIDATEHTTPSESSION_LISTENER);
 
-				PortletSessionListenerManager.addHttpSessionListener(
-					_INVALIDATEHTTPSESSION_LISTENER);
-
-				return serviceRegistration;
-			}
-			catch (ServletException servletException) {
-				_log.error(servletException);
-
-				return null;
-			}
+			return serviceRegistration;
 		}
 
 		@Override

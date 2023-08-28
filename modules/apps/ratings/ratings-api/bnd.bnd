@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Ratings API
 Bundle-SymbolicName: com.liferay.ratings.api
-Bundle-Version: 6.0.6
-Export-Package: com.liferay.ratings.page.ratings.constants
+Bundle-Version: 6.1.0
+Export-Package:\
+	com.liferay.ratings.page.ratings.classname.provider,\
+	com.liferay.ratings.page.ratings.constants

@@ -9,6 +9,7 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -36,7 +37,9 @@ public class TreeFactoryImpl implements TreeFactory {
 				objectDefinitionId);
 
 		if (objectDefinition.getRootObjectDefinitionId() == 0) {
-			return null;
+			throw new ObjectDefinitionRootObjectDefinitionIdException(
+				"The object definition id " + objectDefinitionId +
+					" is not inside a hierarchical structure.");
 		}
 
 		Node rootNode = new Node(null, objectDefinitionId, null);

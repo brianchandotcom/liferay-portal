@@ -8,6 +8,7 @@ package com.liferay.object.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -15,6 +16,7 @@ import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -26,7 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -96,8 +97,13 @@ public class UnbindObjectDefinitionMVCResourceCommandTest {
 
 		_unbind("C_A");
 
-		Assert.assertNull(
-			_treeFactory.create(objectDefinition.getObjectDefinitionId()));
+		AssertUtils.assertFailure(
+			ObjectDefinitionRootObjectDefinitionIdException.class,
+			"The object definition id " +
+				objectDefinition.getObjectDefinitionId() +
+					" is not inside a hierarchical structure.",
+			() -> _treeFactory.create(
+				objectDefinition.getObjectDefinitionId()));
 	}
 
 	private void _unbind(String objectDefinitionName) throws Exception {

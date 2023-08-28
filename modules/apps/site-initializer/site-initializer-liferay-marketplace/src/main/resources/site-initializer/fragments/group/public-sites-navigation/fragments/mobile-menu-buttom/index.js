@@ -8,7 +8,8 @@
 const menuButton = fragmentElement.querySelector('.nav-menu-buttom');
 const menuDisplay = ['show-menu', 'hidden-menu'];
 const menuIcon = fragmentElement.querySelector('#button-menu-icon');
-window.onload = () => {
+
+const buttomEvent = () => {
 	const menuDisplayPages = document.querySelector('.nav-menu-pages');
 
 	menuButton.addEventListener('click', () => {
@@ -29,3 +30,5 @@ window.onload = () => {
 		}
 	});
 };
+
+window.addEventListener('load', buttomEvent);

@@ -11,6 +11,8 @@
 LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayContext)request.getAttribute(LockedLayoutsDisplayContext.class.getName());
 %>
 
+<liferay-ui:success key="unlockLayoutsRequestProcessed" message='<%= GetterUtil.getString(SessionMessages.get(liferayPortletRequest, "unlockLayoutsRequestProcessed")) %>' />
+
 <clay:sheet>
 	<clay:sheet-header>
 		<clay:content-row

@@ -6,12 +6,14 @@
 package com.liferay.layout.locked.layouts.web.internal.portlet.action;
 
 import com.liferay.layout.locked.layouts.web.internal.constants.LockedLayoutsPortletKeys;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,10 +62,21 @@ public class UnlockLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		for (long plid2 : plids) {
 			_lockManager.unlock(Layout.class.getName(), plid2);
 		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		SessionMessages.add(
+			actionRequest, "unlockLayoutsRequestProcessed",
+			_language.format(
+				themeDisplay.getLocale(), "x-pages-were-successfully-unlocked",
+				new String[] {String.valueOf(plids.length)}));
 	}
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LockManager _lockManager;

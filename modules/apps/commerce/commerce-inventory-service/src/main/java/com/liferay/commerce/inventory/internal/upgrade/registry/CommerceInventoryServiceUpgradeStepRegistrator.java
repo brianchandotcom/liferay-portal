@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -183,6 +184,8 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				CommerceInventoryBookedQuantityModelImpl.TABLE_NAME, "quantity",
 				"BIGDECIMAL null"));
+
+		registry.register("2.11.0", "2.11.1", new DummyUpgradeStep());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");

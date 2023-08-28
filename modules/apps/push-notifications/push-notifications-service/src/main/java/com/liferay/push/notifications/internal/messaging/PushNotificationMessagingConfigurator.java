@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
@@ -66,10 +66,8 @@ public class PushNotificationMessagingConfigurator {
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 				destinationName));
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destination.getName()
-			).build();
+		Dictionary<String, Object> dictionary = MapUtil.singletonDictionary(
+			"destination.name", destination.getName());
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(

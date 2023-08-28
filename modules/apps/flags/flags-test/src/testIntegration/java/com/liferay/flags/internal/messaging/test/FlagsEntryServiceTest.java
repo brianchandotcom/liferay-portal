@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlEscapableObject;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -127,10 +127,8 @@ public class FlagsEntryServiceTest {
 				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
 				DestinationNames.SUBSCRIPTION_SENDER));
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destination.getName()
-			).build();
+		Dictionary<String, Object> dictionary = MapUtil.singletonDictionary(
+			"destination.name", destination.getName());
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -79,10 +79,8 @@ public class SchedulerResponseManagerTest {
 			DestinationConfiguration.createSynchronousDestinationConfiguration(
 				_TEST_DESTINATION_NAME));
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", _TEST_DESTINATION_NAME
-			).build();
+		Dictionary<String, Object> dictionary = MapUtil.singletonDictionary(
+			"destination.name", _TEST_DESTINATION_NAME);
 
 		ServiceRegistration<?> serviceRegistration1 =
 			bundleContext.registerService(

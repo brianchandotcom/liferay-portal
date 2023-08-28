@@ -13,17 +13,17 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.spring.extender.internal.jdbc.DataSourceUtil;
 import com.liferay.portal.spring.extender.internal.loader.ModuleAggregareClassLoader;
-import com.liferay.portal.spring.extender.internal.upgrade.InitialUpgradeStep;
+import com.liferay.portal.spring.extender.internal.release.SchemaCreatorImpl;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
+import com.liferay.portal.upgrade.release.SchemaCreator;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -133,13 +133,10 @@ public class LiferayServiceExtender
 			BundleContext extendeeBundleContext =
 				_extendeeBundle.getBundleContext();
 
-			InitialUpgradeStep initialUpgradeStep = new InitialUpgradeStep(
-				_extendeeBundle, _dataSource);
-
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
-					UpgradeStep.class, initialUpgradeStep,
-					initialUpgradeStep.buildServiceProperties()));
+					SchemaCreator.class,
+					new SchemaCreatorImpl(_extendeeBundle, _dataSource), null));
 
 			ClassLoader classLoader = new ModuleAggregareClassLoader(
 				extendeeClassLoader, _extendeeBundle.getSymbolicName());

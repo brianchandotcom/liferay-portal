@@ -3,23 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.spring.extender.internal.upgrade;
+package com.liferay.portal.spring.extender.internal.release;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.hibernate.DialectDetector;
+import com.liferay.portal.upgrade.release.SchemaCreator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,58 +26,19 @@ import java.util.Dictionary;
 import javax.sql.DataSource;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Shuyang Zhou
  */
-public class InitialUpgradeStep implements UpgradeStep {
+public class SchemaCreatorImpl implements SchemaCreator {
 
-	public InitialUpgradeStep(Bundle bundle, DataSource dataSource) {
+	public SchemaCreatorImpl(Bundle bundle, DataSource dataSource) {
 		_bundle = bundle;
 		_dataSource = dataSource;
 	}
 
-	public Dictionary<String, Object> buildServiceProperties() {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			bundleWiring.getClassLoader(), "service");
-
-		if (configuration != null) {
-			String buildNumber = configuration.get("build.number");
-
-			if (buildNumber != null) {
-				properties.put("build.number", buildNumber);
-			}
-		}
-
-		properties.put(
-			"upgrade.bundle.symbolic.name", _bundle.getSymbolicName());
-		properties.put("upgrade.from.schema.version", "0.0.0");
-		properties.put("upgrade.initial.database.creation", "true");
-
-		Dictionary<String, String> headers = _bundle.getHeaders(
-			StringPool.BLANK);
-
-		String upgradeToSchemaVersion = GetterUtil.getString(
-			headers.get("Liferay-Require-SchemaVersion"),
-			headers.get("Bundle-Version"));
-
-		properties.put("upgrade.to.schema.version", upgradeToSchemaVersion);
-
-		return properties;
-	}
-
 	@Override
-	public String toString() {
-		return "Initial Database Creation";
-	}
-
-	@Override
-	public void upgrade() throws UpgradeException {
+	public void create() throws UpgradeException {
 		_db = DBManagerUtil.getDB(
 			DialectDetector.getDialect(_dataSource), _dataSource);
 
@@ -96,7 +54,7 @@ public class InitialUpgradeStep implements UpgradeStep {
 								_bundle.getSymbolicName(), "#", companyId));
 					}
 
-					_upgrade();
+					_create();
 				});
 		}
 		catch (Exception exception) {
@@ -104,7 +62,22 @@ public class InitialUpgradeStep implements UpgradeStep {
 		}
 	}
 
-	private void _upgrade() throws UpgradeException {
+	@Override
+	public String getBundleSymbolicName() {
+		return _bundle.getSymbolicName();
+	}
+
+	@Override
+	public String getSchemaVersion() {
+		Dictionary<String, String> headers = _bundle.getHeaders(
+			StringPool.BLANK);
+
+		return GetterUtil.getString(
+			headers.get("Liferay-Require-SchemaVersion"),
+			headers.get("Bundle-Version"));
+	}
+
+	private void _create() throws UpgradeException {
 		String indexesSQL = DBResourceUtil.getModuleIndexesSQL(_bundle);
 		String sequencesSQL = DBResourceUtil.getModuleSequencesSQL(_bundle);
 		String tablesSQL = DBResourceUtil.getModuleTablesSQL(_bundle);
@@ -157,7 +130,7 @@ public class InitialUpgradeStep implements UpgradeStep {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InitialUpgradeStep.class);
+		SchemaCreatorImpl.class);
 
 	private final Bundle _bundle;
 	private final DataSource _dataSource;

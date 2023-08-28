@@ -85,9 +85,9 @@ definition {
 		task ("Then the test API is created successfully") {
 			Alert.viewSuccessMessageText(successMessage = "New API Application was created.");
 
-			AssertElementPresent(
-				key_name = "test",
-				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
+			AssertTextEquals(
+				locator1 = "APIBuilder#ENTER_TITLE",
+				value1 = "test");
 		}
 	}
 

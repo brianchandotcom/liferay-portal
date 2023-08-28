@@ -2088,21 +2088,6 @@ public class PoshiValidation {
 		_exceptions.add(new ValidationException(element, message, filePath));
 	}
 
-	private static String _buildExceptionString(List<Exception> exceptions) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\n\n");
-		sb.append(exceptions.size());
-		sb.append(" errors in POSHI\n\n");
-
-		for (Exception exception : exceptions) {
-			sb.append(exception.getMessage());
-			sb.append("\n\n");
-		}
-
-		return sb.toString();
-	}
-
 	private static String _getFilePath(PoshiElement poshiElement) {
 		URL filePathURL = poshiElement.getFilePathURL();
 
@@ -2132,7 +2117,14 @@ public class PoshiValidation {
 				new ArrayList<>(_exceptions));
 
 		if (!filteredExceptions.isEmpty()) {
-			System.out.println(_buildExceptionString(filteredExceptions));
+			System.out.println("\n\n");
+			System.out.println(filteredExceptions.size());
+			System.out.println(" errors in POSHI\n\n");
+
+			for (Exception exception : filteredExceptions) {
+				System.out.println(exception.getMessage());
+				System.out.println("\n\n");
+			}
 
 			throw new Exception();
 		}

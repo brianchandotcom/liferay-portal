@@ -21,11 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -87,14 +83,6 @@ public class TreeTestUtil {
 				portletLocalService.getPortletById(
 					ObjectPortletKeys.OBJECT_DEFINITIONS),
 				null));
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
-
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mvcResourceCommand.serveResource(mockLiferayResourceRequest, null);
 	}

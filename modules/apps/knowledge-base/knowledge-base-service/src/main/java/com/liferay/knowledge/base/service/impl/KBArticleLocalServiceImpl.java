@@ -352,6 +352,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public void checkKBArticles(long companyId) throws PortalException {
 		Date date = new Date();
 
+		if (FeatureFlagManagerUtil.isEnabled("LPS-188060")) {
+			_checkKBArticlesByDisplayDate(companyId, date);
+		}
+
 		_checkKBArticlesByExpirationDate(companyId, date);
 
 		_dates.computeIfAbsent(
@@ -1618,6 +1622,20 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
+	private void _checkKBArticlesByDisplayDate(long companyId, Date displayDate)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Publishing file entries with display date previous to ",
+					displayDate, " for company ", companyId));
+		}
+
+		_publishKBArticlesByCompany(
+			_companyLocalService.getCompany(companyId), displayDate);
+	}
+
 	private void _checkKBArticlesByExpirationDate(
 			long companyId, Date expirationDate)
 		throws PortalException {
@@ -1814,6 +1832,34 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	private long _getKBArticleCheckInterval() {
 		return _kbServiceConfiguration.checkInterval();
+	}
+
+	private List<KBArticle> _getKBArticlesByCompanyIdAndDisplayDate(
+		long companyId, Date displayDate) {
+
+		return kbArticlePersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				KBArticleTable.INSTANCE
+			).from(
+				KBArticleTable.INSTANCE
+			).where(
+				KBArticleTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					KBArticleTable.INSTANCE.displayDate.lte(displayDate)
+				).and(
+					KBArticleTable.INSTANCE.latest.eq(Boolean.TRUE)
+				).and(
+					KBArticleTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_SCHEDULED)
+				).and(
+					KBArticleTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_DRAFT)
+				).and(
+					KBArticleTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_PENDING)
+				)
+			));
 	}
 
 	private List<KBArticle> _getKBArticlesByCompanyIdAndExpirationDate(
@@ -2232,6 +2278,29 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					_NOTIFICATION_RECEIVER_OWNER,
 					_NOTIFICATION_RECEIVER_SUBSCRIBER),
 				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW,
+				_getServiceContext(company, kbArticle));
+		}
+	}
+
+	private void _publishKBArticlesByCompany(Company company, Date displayDate)
+		throws PortalException {
+
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
+
+		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndDisplayDate(
+			company.getCompanyId(), displayDate);
+
+		for (KBArticle kbArticle : kbArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Publish KB Article ", kbArticle.getKbArticleId(),
+						" with display date ", kbArticle.getDisplayDate()));
+			}
+
+			updateStatus(
+				userId, kbArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED,
 				_getServiceContext(company, kbArticle));
 		}
 	}

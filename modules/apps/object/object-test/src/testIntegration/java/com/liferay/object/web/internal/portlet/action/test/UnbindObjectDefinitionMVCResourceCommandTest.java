@@ -101,12 +101,16 @@ public class UnbindObjectDefinitionMVCResourceCommandTest {
 	}
 
 	private void _unbind(String objectDefinitionName) throws Exception {
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), objectDefinitionName);
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
+		mockLiferayResourceRequest.addParameter(
+			"objectDefinitionId",
+			String.valueOf(objectDefinition.getObjectDefinitionId()));
 
 		mockLiferayResourceRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG,
@@ -122,10 +126,6 @@ public class UnbindObjectDefinitionMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockLiferayResourceRequest.addParameter(
-			"objectDefinitionId",
-			String.valueOf(objectDefinition.getObjectDefinitionId()));
 
 		_unbindObjectDefinitionMVCResourceCommand.serveResource(
 			mockLiferayResourceRequest, null);

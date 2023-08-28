@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +36,8 @@ public class EndpointHelper {
 
 	public Map<String, Object> getResponseEntityMap(
 			long companyId, APIApplication.Schema schema,
-			String pathParameterValue)
+			APIApplication.Endpoint.PathParameter pathParameter,
+			String pathParameterValue, String scopeKey)
 		throws Exception {
 
 		Set<String> relationshipsNames = new HashSet<>();
@@ -44,11 +46,22 @@ public class EndpointHelper {
 			relationshipsNames.addAll(property.getObjectRelationshipNames());
 		}
 
+		if (Objects.equals(
+				APIApplication.Endpoint.PathParameter.ID, pathParameter)) {
+
+			return _getResponseEntityMap(
+				_objectEntryHelper.getObjectEntry(
+					companyId, ListUtil.fromCollection(relationshipsNames),
+					GetterUtil.getLong(pathParameterValue),
+					schema.getMainObjectDefinitionExternalReferenceCode()),
+				schema);
+		}
+
 		return _getResponseEntityMap(
-			_objectEntryHelper.getObjectEntry(
+			_objectEntryHelper.getObjectEntryByExternalReferenceCode(
 				companyId, ListUtil.fromCollection(relationshipsNames),
-				GetterUtil.getLong(pathParameterValue),
-				schema.getMainObjectDefinitionExternalReferenceCode()),
+				schema.getMainObjectDefinitionExternalReferenceCode(),
+				pathParameterValue, scopeKey),
 			schema);
 	}
 

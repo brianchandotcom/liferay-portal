@@ -29,7 +29,10 @@ import javax.ws.rs.core.Response;
  */
 public class HeadlessBuilderResourceImpl {
 
-	public HeadlessBuilderResourceImpl(EndpointHelper endpointHelper) {
+	public HeadlessBuilderResourceImpl(
+		APIApplication apiApplication, EndpointHelper endpointHelper) {
+
+		_apiApplication = apiApplication;
 		_endpointHelper = endpointHelper;
 	}
 
@@ -60,6 +63,10 @@ public class HeadlessBuilderResourceImpl {
 		return _get(
 			filterString, pagination, path, APIApplication.Endpoint.Scope.GROUP,
 			scopeKey, sortString);
+	}
+
+	public void setApiApplication(APIApplication apiApplication) {
+		_apiApplication = apiApplication;
 	}
 
 	private Response _get(
@@ -108,7 +115,6 @@ public class HeadlessBuilderResourceImpl {
 	@Context
 	private AcceptLanguage _acceptLanguage;
 
-	@Context
 	private APIApplication _apiApplication;
 
 	@Context

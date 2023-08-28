@@ -7,12 +7,17 @@
 
 <%@ include file="/locked_layout/init.jsp" %>
 
-<clay:sheet>
-	<clay:sheet-header>
+<div class="align-items-center bg-white d-flex min-vh-100">
+	<clay:container-fluid
+		cssClass="c-mb-7"
+		size="md"
+	>
 		<clay:content-row
-			cssClass="c-mt-5 text-info"
+			cssClass="text-info"
 		>
-			<clay:content-col>
+			<clay:content-col
+				cssClass="c-mb-3"
+			>
 				<img src="<%= lockedLayoutDisplayContext.getImagesPath() %>/blocked_page.png" />
 			</clay:content-col>
 		</clay:content-row>
@@ -23,14 +28,12 @@
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<h1><liferay-ui:message key="page-in-use" /></h1>
+				<h1 class="text-11"><liferay-ui:message key="page-in-use" /></h1>
 			</clay:content-col>
 		</clay:content-row>
-	</clay:sheet-header>
 
-	<clay:sheet-section>
 		<clay:content-row
-			cssClass="c-mt-3"
+			cssClass="c-my-3"
 		>
 			<clay:content-col
 				expand="<%= true %>"
@@ -38,12 +41,10 @@
 				<liferay-ui:message key="this-page-is-currently-being-edited-by-another-user.-if-you-need-to-take-control-over-this-page,-you-can-contact-your-administrator-to-unlock-it" />
 			</clay:content-col>
 		</clay:content-row>
-	</clay:sheet-section>
 
-	<c:if test="<%= lockedLayoutDisplayContext.isShowGoBackButton() %>">
-		<clay:sheet-footer>
+		<c:if test="<%= lockedLayoutDisplayContext.isShowGoBackButton() %>">
 			<clay:content-row
-				cssClass="c-mt-3"
+				cssClass="c-pt-3"
 			>
 				<clay:content-col>
 					<clay:button
@@ -53,6 +54,6 @@
 					/>
 				</clay:content-col>
 			</clay:content-row>
-		</clay:sheet-footer>
-	</c:if>
-</clay:sheet>
+		</c:if>
+	</clay:container-fluid>
+</div>

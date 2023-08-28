@@ -1750,6 +1750,8 @@ definition {
 	@description = "LPS-172234 - Verify it's possible to create a groovy script action with the trigger On Order Status Update"
 	@priority = 3
 	test CanCreateActionUsingGroovyScripWithOnOrderStatusUpdate {
+		property test.liferay.virtual.instance = "false";
+
 		task ("Given an action in the Commerce Order object") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -3918,6 +3920,7 @@ definition {
 	@priority = 5
 	test CanUseExpressionWithGroovyScript {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(

@@ -1811,6 +1811,131 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12182 This is a test to verify that Tier Price Settings remain unchanged after an entry is created"
+	@priority = 5
+	test CanTierPriceSettingsDoesNotChangeAfterCreatingATierPriceEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the Price Lists tab for the product ABS Sensor is open") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+		}
+
+		task ("And the admin goes into Minium Base Price List") {
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+		}
+
+		task ("When the admin creates a new Tier Price Entry with the Bulk Pricing") {
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 10,
+				quantity = 1,
+				tierPriceSetting = "Bulk Pricing");
+
+			SelectFrameTop();
+		}
+
+		task ("And goes back into the Details tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("Then the Tier Price Settings remain Bulk Pricing") {
+			AssertChecked.assertCheckedNotVisible(
+				key_radioOption = "Bulk Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Tiered Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("When the admin goes into the Price Lists section") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+		}
+
+		task ("And the admin opened MIN93015") {
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("And change the Tier Price Settings in Tiered Pricing") {
+			Click(
+				key_radioOption = "Tiered Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("Then a new entry is created again inside the product the Tier Price Settings remain Tiered Pricing") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 20,
+				quantity = 2);
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_radioOption = "Tiered Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_radioOption = "Bulk Pricing",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-9546. Verify a product image converted in base64 can be uploaded via headless API with the extension setted"
 	@priority = 4
 	test CanUploadProductBase64ImageViaAPI {

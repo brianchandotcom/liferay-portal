@@ -63,7 +63,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 	}
 
 	@Test
-	public void testDoNotExpireFileEntryIfKBArticleIsScheduled()
+	public void testDoNotExpireKBArticleIfKBArticleIsScheduled()
 		throws Exception {
 
 		Date displayDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
@@ -94,7 +94,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 	}
 
 	@Test
-	public void testExpireFileEntry() throws Exception {
+	public void testExpireKBArticle() throws Exception {
 		Date expirationDate = new Date(
 			System.currentTimeMillis() + (Time.MINUTE * 5));
 

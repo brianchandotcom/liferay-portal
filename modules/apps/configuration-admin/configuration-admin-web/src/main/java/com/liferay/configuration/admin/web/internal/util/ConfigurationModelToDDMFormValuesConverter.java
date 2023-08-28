@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.LocationVariableProtocol;
 import com.liferay.portal.kernel.settings.LocationVariableResolver;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -60,6 +61,9 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		_addDDMFormFieldValues(
 			_configurationModel.getAttributeDefinitions(ConfigurationModel.ALL),
+			ddmFormValues);
+
+		_validateDDMFormValuesWithConfigurationOverrideProperties(
 			ddmFormValues);
 
 		return ddmFormValues;
@@ -199,6 +203,31 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		localizedValue.addString(_locale, value);
 
 		ddmFormFieldValue.setValue(localizedValue);
+	}
+
+	private void _validateDDMFormValuesWithConfigurationOverrideProperties(
+		DDMFormValues ddmFormValues) {
+
+		Map<String, Object> configurationOverrideProperties =
+			_configurationModel.getConfigurationOverrideProperties();
+
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			if (configurationOverrideProperties.containsKey(
+					ddmFormFieldValue.getName())) {
+
+				LocalizedValue localizedValue = new LocalizedValue();
+
+				localizedValue.addString(
+					ddmFormValues.getDefaultLocale(),
+					MapUtil.getString(
+						configurationOverrideProperties,
+						ddmFormFieldValue.getName()));
+
+				ddmFormFieldValue.setValue(localizedValue);
+			}
+		}
 	}
 
 	private static final String[] _PASSWORD_TYPE_VALUES = {

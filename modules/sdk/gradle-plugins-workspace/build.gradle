@@ -231,6 +231,10 @@ gradleTest {
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
 
 	versions gradleVersion
+
+	beforeTest {
+		println "  ${it.name}"
+	}
 }
 
 gradleTestGenerator {

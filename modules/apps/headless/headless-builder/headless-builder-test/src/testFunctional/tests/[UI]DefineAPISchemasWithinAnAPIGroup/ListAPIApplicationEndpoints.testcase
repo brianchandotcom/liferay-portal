@@ -93,8 +93,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-192832"
-	@ignore = "true"
 	@priority = 4
 	test CanFilterEndpointAPIByCreationDateAsLastUpdated {
 		property portal.acceptance = "true";
@@ -113,7 +111,7 @@ definition {
 				entity = "Endpoints",
 				title = "My-app");
 
-			var currentDate = DateUtil.getFormattedCurrentDate("mm/dd/yyyy");
+			var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
 			APIBuilderUI.filterByLastUpdated(
 				fromDate = ${currentDate},
@@ -145,7 +143,8 @@ definition {
 				entity = "Endpoints",
 				title = "My-app");
 
-			var date = DateUtil.getDateOffsetByDays("-1", "mm/dd/yyyy");
+			var date = DateUtil.getDateOffsetByDays("-1", "MM/dd/yyyy");
+			var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
 			APIBuilderUI.filterByLastUpdated(
 				fromDate = ${date},

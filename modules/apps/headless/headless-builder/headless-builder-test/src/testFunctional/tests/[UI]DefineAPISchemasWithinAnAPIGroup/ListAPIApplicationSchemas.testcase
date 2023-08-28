@@ -53,8 +53,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-192832"
-	@ignore = "true"
 	@priority = 4
 	test CanFilterSchemaByCreationDateAsLastUpdated {
 		property portal.acceptance = "true";

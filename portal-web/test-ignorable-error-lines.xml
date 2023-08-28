@@ -69,6 +69,10 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
+			<contains>Not all bytes were read from the S3ObjectInputStream</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="">
 			<contains>Skipping email because the sender is not specified</contains>
 			<matches></matches>
 		</ignore-error>

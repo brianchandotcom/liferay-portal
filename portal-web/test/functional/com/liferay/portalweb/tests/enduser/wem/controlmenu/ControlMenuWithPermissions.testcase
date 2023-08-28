@@ -45,7 +45,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-189839. Verify when a new role is created, new users will be able to see the Control Menu through it."
+	@description = "This is for LPS-176136. Verify when a new role is created, new users will be able to see the Control Menu through it."
 	@priority = 4
 	test ShowControlMenuByNewRole {
 		var randomRoleKey = StringUtil.randomString(8);
@@ -125,7 +125,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-189839. Verify is possible to hide or show Control Menu of a Role and that Administrator and Site Administrator cannot be deleted."
+	@description = "This is for LPS-176136. Verify is possible to hide or show Control Menu of a Role and that Administrator and Site Administrator cannot be deleted."
 	@priority = 4
 	test ShowControlMenuByOOTBRoles {
 		task ("Given the site administrator accesses to the Site Configuration") {
@@ -217,7 +217,7 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-189839. Verify that users accessing the admin Page directly will see the Control Menu."
+	@description = "This is for LPS-176136. Verify that users accessing the admin Page directly will see the Control Menu."
 	@priority = 4
 	test ViewControlMenuInWebContentAdminAsUserWithRoleOutsideRolesThatCanSeeTheControlMenu {
 		var randomRoleKey = StringUtil.randomString(8);

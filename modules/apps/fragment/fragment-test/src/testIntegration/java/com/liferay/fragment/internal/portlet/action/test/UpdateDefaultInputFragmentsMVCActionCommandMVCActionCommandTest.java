@@ -12,6 +12,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -26,7 +28,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -36,9 +37,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Dictionary;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -46,11 +50,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 /**
  * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
-@Sync
 public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 
 	@ClassRule
@@ -62,6 +68,13 @@ public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
@@ -91,9 +104,15 @@ public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(valuesJSONObject.toString()),
 			new MockLiferayPortletActionResponse());
 
+		Configuration[] configurations = _getConfigurations();
+
+		Configuration configuration = configurations[0];
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
 		JSONObject defaultInputFragmentEntryKeysJSONObject =
-			_defaultInputFragmentEntryConfigurationProvider.
-				getDefaultInputFragmentEntryKeysJSONObject(_group.getGroupId());
+			_jsonFactory.createJSONObject(
+				(String)properties.get("defaultInputFragmentEntryKeys"));
 
 		_assertEqualJSONObject(
 			valuesJSONObject.getJSONObject(
@@ -106,6 +125,8 @@ public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 				TextInfoFieldType.INSTANCE.getName()),
 			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
 				TextInfoFieldType.INSTANCE.getName()));
+
+		configuration.delete();
 	}
 
 	private void _assertEqualJSONObject(
@@ -115,6 +136,13 @@ public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 		Assert.assertEquals(
 			_objectMapper.readTree(expectedJSONObject.toString()),
 			_objectMapper.readTree(actualJSONObject.toString()));
+	}
+
+	private Configuration[] _getConfigurations() throws Exception {
+		String pidFilter = StringBundler.concat(
+			"(service.factoryPid=", _PID, StringPool.CLOSE_PARENTHESIS);
+
+		return _configurationAdmin.listConfigurations(pidFilter);
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
@@ -151,10 +179,17 @@ public class UpdateDefaultInputFragmentsMVCActionCommandMVCActionCommandTest {
 		return themeDisplay;
 	}
 
+	private static final String _PID =
+		"com.liferay.fragment.configuration." +
+			"DefaultInputFragmentEntryConfiguration.scoped";
+
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private DefaultInputFragmentEntryConfigurationProvider

@@ -48,6 +48,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long userId, long groupId, String name, String description,
+			long parentLayoutPageTemplateCollection,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -76,6 +77,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			_generateLayoutPageTemplateCollectionKey(groupId, name));
 		layoutPageTemplateCollection.setName(name);
 		layoutPageTemplateCollection.setDescription(description);
+		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			parentLayoutPageTemplateCollection);
 
 		layoutPageTemplateCollection =
 			layoutPageTemplateCollectionPersistence.update(
@@ -87,6 +90,16 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			layoutPageTemplateCollection, serviceContext);
 
 		return layoutPageTemplateCollection;
+	}
+
+	@Override
+	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long userId, long groupId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateCollection(
+			userId, groupId, name, description, 0, serviceContext);
 	}
 
 	@Override

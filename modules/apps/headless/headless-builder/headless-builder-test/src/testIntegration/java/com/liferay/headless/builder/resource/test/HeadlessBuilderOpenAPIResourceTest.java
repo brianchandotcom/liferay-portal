@@ -93,6 +93,19 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				).name(
 					"textField"
 				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_individualSiteScopedObjectDefinition = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_INDIVIDUAL_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build()),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
 		_listTypeDefinition =
@@ -409,6 +422,26 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					JSONUtil.put(
 						"description", "description"
 					).put(
+						"externalReferenceCode",
+						_API_INDIVIDUAL_SITE_SCOPED_ENDPOINT_ERC
+					).put(
+						"httpMethod", "get"
+					).put(
+						"name", " individual site scoped name"
+					).put(
+						"path",
+						"/individual-path/by-external-reference-code" +
+							"/{individualPathERC}"
+					).put(
+						"pathParameter", "externalReferenceCode"
+					).put(
+						"retrieveType", "singleElement"
+					).put(
+						"scope", "group"
+					),
+					JSONUtil.put(
+						"description", "description"
+					).put(
 						"externalReferenceCode", _API_ENDPOINT_ERC
 					).put(
 						"httpMethod", "get"
@@ -601,6 +634,30 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						JSONUtil.putAll(
 							JSONUtil.put(
 								"description",
+								"individualSiteScopedTextProperty description"
+							).put(
+								"name", "individualSiteScopedTextProperty"
+							).put(
+								"objectFieldERC",
+								_API_INDIVIDUAL_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
+							))
+					).put(
+						"description", "individual site scoped description"
+					).put(
+						"externalReferenceCode",
+						_API_INDIVIDUAL_SITE_SCOPED_SCHEMA_ERC
+					).put(
+						"mainObjectDefinitionERC",
+						_individualSiteScopedObjectDefinition.
+							getExternalReferenceCode()
+					).put(
+						"name", "IndividualSiteScopedSchemaName"
+					),
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"description",
 								"siteScopedTextProperty description"
 							).put(
 								"name", "siteScopedTextProperty"
@@ -655,6 +712,22 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_INDIVIDUAL_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
 				_API_INDIVIDUAL_ENDPOINT_ERC),
+			Http.Method.PUT);
+		assertSuccessfulHttpCode(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				_API_INDIVIDUAL_SITE_SCOPED_SCHEMA_ERC,
+				"/requestAPISchemaToAPIEndpoints/",
+				_API_INDIVIDUAL_SITE_SCOPED_ENDPOINT_ERC),
+			Http.Method.PUT);
+		assertSuccessfulHttpCode(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				_API_INDIVIDUAL_SITE_SCOPED_SCHEMA_ERC,
+				"/responseAPISchemaToAPIEndpoints/",
+				_API_INDIVIDUAL_SITE_SCOPED_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulHttpCode(
 			null,
@@ -721,6 +794,16 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_INDIVIDUAL_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String _API_INDIVIDUAL_SITE_SCOPED_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_INDIVIDUAL_SITE_SCOPED_SCHEMA_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String
+		_API_INDIVIDUAL_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC =
+			RandomTestUtil.randomString();
+
 	private static final String _API_SCHEMA_AGGREGATION_FIELD_ERC =
 		RandomTestUtil.randomString();
 
@@ -779,6 +862,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _individualObjectDefinition;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _individualSiteScopedObjectDefinition;
 
 	private ListTypeDefinition _listTypeDefinition;
 

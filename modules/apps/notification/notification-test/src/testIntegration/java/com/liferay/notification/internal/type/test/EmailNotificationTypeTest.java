@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -127,6 +128,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			boolean singleRecipient)
 		throws Exception {
 
+		return _addNotificationTemplate(
+			singleRecipient,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				StringBundler.concat(
+					user1.getEmailAddress(), StringPool.COMMA,
+					user2.getEmailAddress())));
+	}
+
+	private NotificationTemplate _addNotificationTemplate(
+			boolean singleRecipient, Map<Locale, String> to)
+		throws Exception {
+
 		return notificationTemplateLocalService.addNotificationTemplate(
 			NotificationTemplateUtil.createNotificationContext(
 				TestPropsValues.getUser(),
@@ -146,13 +160,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
 					createNotificationRecipientSetting(
 						"singleRecipient", String.valueOf(singleRecipient)),
-					createNotificationRecipientSetting(
-						"to",
-						Collections.singletonMap(
-							LocaleUtil.US,
-							StringBundler.concat(
-								user1.getEmailAddress(), StringPool.COMMA,
-								user2.getEmailAddress())))),
+					createNotificationRecipientSetting("to", to)),
 				ListUtil.toString(getTermNames(), StringPool.BLANK),
 				NotificationConstants.TYPE_EMAIL));
 	}

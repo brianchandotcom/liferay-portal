@@ -58,6 +58,8 @@ public class AddDisplayPageCollectionMVCActionCommand
 					themeDisplay.getScopeGroupId(),
 					ParamUtil.getString(actionRequest, "name"),
 					ParamUtil.getString(actionRequest, "description"),
+					ParamUtil.getLong(
+						actionRequest, "parentLayoutPageTemplateCollectionId"),
 					ServiceContextFactory.getInstance(actionRequest));
 
 			jsonObject.put(

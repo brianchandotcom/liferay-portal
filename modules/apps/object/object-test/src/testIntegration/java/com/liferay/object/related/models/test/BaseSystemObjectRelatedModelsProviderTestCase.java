@@ -56,9 +56,9 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_systemObjectDefinition = getSystemObjectDefinition();
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService, _objectFieldLocalService);
+		_systemObjectDefinition = getSystemObjectDefinition();
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));

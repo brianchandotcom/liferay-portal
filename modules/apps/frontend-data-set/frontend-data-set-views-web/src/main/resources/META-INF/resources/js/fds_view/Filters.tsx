@@ -81,8 +81,9 @@ function getModalHeader(
 	filter: IFilter | undefined,
 	filterType: filterTypes | undefined
 ): string {
-	if (filter)
+	if (filter) {
 		return sub(Liferay.Language.get('edit-x-filter'), [filter.name]);
+	}
 
 	if (filterType && filterType == filterTypes.SELECTION) {
 		return Liferay.Language.get('new-selection-filter');
@@ -323,21 +324,10 @@ function AddFDSFilterModalContent({
 								selected: true,
 								value: '',
 							},
-							...fields
-								.filter(
-									(item) =>
-										(filterType === filterTypes.SELECTION &&
-											item.format ===
-												fieldFormats.STRING) ||
-										(filterType ===
-											filterTypes.DATE_RANGE &&
-											item.format ===
-												fieldFormats.DATE_TIME)
-								)
-								.map((item) => ({
-									label: item.label,
-									value: item.name,
-								})),
+							...fields.map((item) => ({
+								label: item.label,
+								value: item.name,
+							})),
 						]}
 						title={Liferay.Language.get('filter-by')}
 						value={selectedField?.name}
@@ -739,20 +729,53 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		}
 	};
 
-	const onCreationButtonClick = () =>
-		openModal({
-			className: 'overflow-auto',
-			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFDSFilterModalContent
-					closeModal={closeModal}
-					fdsView={fdsView}
-					fields={fields}
-					namespace={namespace}
-					onSave={(newfilter) => setFilters([...filters, newfilter])}
-				/>
-			),
-			disableAutoClose: true,
-		});
+	const onCreationButtonClick = (
+		filterType: filterTypes = filterTypes.SELECTION
+	) => {
+		const availableFields = fields.filter(
+			(item) =>
+				(filterType === filterTypes.SELECTION &&
+					item.format === fieldFormats.STRING) ||
+				(filterType === filterTypes.DATE_RANGE &&
+					item.format === fieldFormats.DATE_TIME)
+		);
+
+		if (availableFields.length == 0) {
+			openModal({
+				bodyHTML: Liferay.Language.get(
+					'there-are-no-fields-compatible-with-this-type-of-filter'
+				),
+				buttons: [
+					{
+						displayType: 'primary',
+						label: Liferay.Language.get('close'),
+						onClick: ({processClose}: {processClose: Function}) => {
+							processClose();
+						},
+					},
+				],
+				status: 'info',
+				title: Liferay.Language.get('no-fields-available'),
+			});
+		} else {
+			openModal({
+				className: 'overflow-auto',
+				contentComponent: ({closeModal}: {closeModal: Function}) => (
+					<AddFDSFilterModalContent
+						closeModal={closeModal}
+						fdsView={fdsView}
+						fields={availableFields}
+						filterType={filterType}
+						namespace={namespace}
+						onSave={(newfilter) =>
+							setFilters([...filters, newfilter])
+						}
+					/>
+				),
+				disableAutoClose: true,
+			});
+		}
+	};
 
 	const handleEdit = ({item}: {item: IDateFilter | ISelectionFilter}) =>
 		openModal({

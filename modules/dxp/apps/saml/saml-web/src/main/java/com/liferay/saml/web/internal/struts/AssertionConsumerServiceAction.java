@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.helper.RelayStateHelper;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.AuthnAgeException;
 import com.liferay.saml.runtime.exception.EntityInteractionException;
@@ -102,8 +103,8 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 			httpSession.setAttribute(SamlWebKeys.SAML_SSO_ERROR, error);
 
-			String redirect = ParamUtil.getString(
-				httpServletRequest, "RelayState");
+			String redirect = _relayStateHelper.getRedirectFromRelayStateToken(
+				ParamUtil.getString(httpServletRequest, "RelayState"));
 
 			redirect = _portal.escapeRedirect(redirect);
 
@@ -126,6 +127,9 @@ public class AssertionConsumerServiceAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RelayStateHelper _relayStateHelper;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

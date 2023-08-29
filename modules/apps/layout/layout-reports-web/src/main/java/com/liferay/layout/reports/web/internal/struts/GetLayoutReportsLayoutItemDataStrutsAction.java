@@ -13,6 +13,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.helper.LayoutWarningMessageHelper;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.renderer.LayoutStructureRenderer;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -177,6 +178,14 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 					).put(
 						"renderTime",
 						layoutStructureItemRenderTime.getRenderTime()
+					).put(
+						"warnings",
+						JSONUtil.put(
+							_layoutWarningMessageHelper.
+								getCollectionWarningMessage(
+									(CollectionStyledLayoutStructureItem)
+										layoutStructureItem,
+									httpServletRequest))
 					));
 
 				continue;
@@ -504,6 +513,9 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 
 	@Reference
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Reference
+	private LayoutWarningMessageHelper _layoutWarningMessageHelper;
 
 	@Reference
 	private Portal _portal;

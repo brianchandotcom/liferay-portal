@@ -140,7 +140,8 @@ public class WorkflowDefinitionContentUtil {
 			jsonObject.put("#cdata-value", jsonArray);
 		}
 		else {
-			jsonObject.put("#value", content.replaceAll("[\n\t]", ""));
+			jsonObject.put(
+				"#value", content.replaceAll("[\n\t]", StringPool.BLANK));
 		}
 	}
 

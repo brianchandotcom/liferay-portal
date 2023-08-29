@@ -13,10 +13,13 @@ import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import NotificationQueueService from '~/common/services/actions/notificationAction';
 import {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
+	addHighPriorityContactsList,
+	removeHighPriorityContactsList,
+} from '~/routes/customer-portal/utils/getHighPriorityContacts';
+import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
-	addHighPriorityContact,
-	deleteHighPriorityContacts,
 	getDXPCloudEnvironment,
 	getDXPCloudPageInfo,
 	getListTypeDefinitions,
@@ -26,12 +29,9 @@ import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
-import SetupHighPriorityContactForm, {
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
-} from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
+import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import getKebabCase from '../../../utils/getKebabCase';
-
 import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
 
@@ -238,39 +238,14 @@ const SetupDXPCloudPage = ({
 				});
 
 				await Promise.all(
-					removeHighPriorityContactList?.map((objectId) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: deleteHighPriorityContacts,
-							variables: {
-								highPriorityContactsId: objectId,
-							},
-						});
+					removeHighPriorityContactList?.map((item) => {
+						return removeHighPriorityContactsList(client, item);
 					})
 				);
 
 				await Promise.all(
 					addHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: addHighPriorityContact,
-							variables: {
-								HighPriorityContacts: {
-									contactsCategory: {
-										key: item.category.key,
-										name: item.category.name,
-									},
-									r_userToHighPriorityContacts_userId:
-										item.id,
-								},
-							},
-						});
+						return addHighPriorityContactsList(client, item);
 					})
 				);
 
@@ -317,7 +292,7 @@ const SetupDXPCloudPage = ({
 		}
 	};
 
-	const addContactList = (contactList) => {
+	const addHighPriorityContacts = (contactList) => {
 		const contactsList = contactList.map((item) => item);
 		setAddHighPriorityContactList(contactsList);
 	};
@@ -528,10 +503,10 @@ const SetupDXPCloudPage = ({
 			{step === 2 && (
 				<div>
 					<SetupHighPriorityContactForm
-						addContactList={addContactList}
+						addContactList={addHighPriorityContacts}
 						disableSubmit={updateMultiSelectEmpty}
 						filter={
-							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
+							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 						}
 						removedContactList={removeHighPriorityContacts}
 					/>

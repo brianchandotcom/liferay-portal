@@ -8,14 +8,17 @@ import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
+	addHighPriorityContactsList,
+	removeHighPriorityContactsList,
+} from '~/routes/customer-portal/utils/getHighPriorityContacts';
+
+import {
 	addAnalyticsCloudWorkspace,
-	addHighPriorityContact,
-	deleteHighPriorityContacts,
 	getAnalyticsCloudPageInfo,
 	getAnalyticsCloudWorkspace,
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
-
 import {
 	isLowercaseAndNumbers,
 	isValidEmail,
@@ -26,9 +29,7 @@ import {
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
-import SetupHighPriorityContactForm, {
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
-} from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
+import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import NotificationQueueService from '../../../services/actions/notificationAction';
 import getKebabCase from '../../../utils/getKebabCase';
@@ -195,38 +196,13 @@ const SetupAnalyticsCloudPage = ({
 
 				await Promise.all(
 					removeHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: deleteHighPriorityContacts,
-							variables: {
-								highPriorityContactsId: item.objectId,
-							},
-						});
+						return removeHighPriorityContactsList(client, item);
 					})
 				);
 
 				await Promise.all(
 					addHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: addHighPriorityContact,
-							variables: {
-								HighPriorityContacts: {
-									contactsCategory: {
-										key: item.category.key,
-										name: item.category.name,
-									},
-									r_userToHighPriorityContacts_userId:
-										item.id,
-								},
-							},
-						});
+						return addHighPriorityContactsList(client, item);
 					})
 				);
 
@@ -468,7 +444,7 @@ const SetupAnalyticsCloudPage = ({
 							addContactList={addHighPriorityContacts}
 							disableSubmit={updateMultiSelectEmpty}
 							filter={
-								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
+								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 							}
 							removedContactList={removeHighPriorityContacts}
 						/>

@@ -5,6 +5,10 @@
 
 import {useMutation} from '@apollo/client';
 import SearchBuilder from '~/common/core/SearchBuilder';
+import {
+	addHighPriorityContactsList,
+	removeHighPriorityContactsList,
+} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import NotificationQueueService from '../../../../../../../../../../../../../src/common/services/actions/notificationAction';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
@@ -12,8 +16,6 @@ import {
 	useCreateLiferayExperienceCloudEnvironments,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/liferay-experience-cloud-environments';
 import {
-	addHighPriorityContact,
-	deleteHighPriorityContacts,
 	getLiferayExperienceCloudEnvironments,
 	updateAccountSubscriptionGroups,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
@@ -121,38 +123,16 @@ export default function useSubmitLXCEnvironment(
 
 				await Promise.allSettled(
 					removeHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: deleteHighPriorityContacts,
-							variables: {
-								highPriorityContactsId: item.objectId,
-							},
-						});
+						return removeHighPriorityContactsList(
+							client,
+							item.objectId
+						);
 					})
 				);
 
 				await Promise.allSettled(
 					addHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: addHighPriorityContact,
-							variables: {
-								HighPriorityContacts: {
-									contactsCategory: {
-										key: item.category.key,
-										name: item.category.name,
-									},
-									r_userToHighPriorityContacts_userId:
-										item.id,
-								},
-							},
-						});
+						return addHighPriorityContactsList(client, item);
 					})
 				);
 

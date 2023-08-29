@@ -39,6 +39,7 @@ import com.liferay.object.exception.ObjectDefinitionPortletException;
 import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
+import com.liferay.object.exception.ObjectDefinitionSystemException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
@@ -465,6 +466,13 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionRootObjectDefinitionIdException(
 				"Object definitions that belong to a hierarchical structure " +
 					"cannot be deleted");
+		}
+
+		if (objectDefinition.isSystem() &&
+			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+
+			throw new ObjectDefinitionSystemException(
+				"Only allowed bundles can delete system object definitions");
 		}
 
 		_objectActionLocalService.deleteObjectActions(

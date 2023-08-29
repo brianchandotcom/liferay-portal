@@ -965,7 +965,7 @@ public class ObjectDefinitionResourceImpl
 				).put(
 					"delete",
 					() -> {
-						if (objectDefinition.isUnmodifiableSystemObject()) {
+						if (objectDefinition.isSystem()) {
 							return null;
 						}
 

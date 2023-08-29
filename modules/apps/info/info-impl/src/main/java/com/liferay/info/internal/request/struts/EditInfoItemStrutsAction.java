@@ -296,6 +296,27 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					infoFormValidationException);
 			}
 
+			if (infoFormValidationException instanceof
+					InfoFormValidationException.RuleValidation) {
+
+				InfoFormValidationException.RuleValidation
+					infoFormValidationExceptionRuleValidation =
+						(InfoFormValidationException.RuleValidation)
+							infoFormValidationException;
+
+				for (InfoFormValidationException.CustomValidation
+						infoFormValidationExceptionCustomValidation :
+							infoFormValidationExceptionRuleValidation.
+								getCustomValidations()) {
+
+					SessionErrors.add(
+						httpServletRequest,
+						infoFormValidationExceptionCustomValidation.
+							getInfoFieldUniqueId(),
+						infoFormValidationExceptionCustomValidation);
+				}
+			}
+
 			if (Validator.isNotNull(
 					infoFormValidationException.getInfoFieldUniqueId())) {
 

@@ -7,15 +7,14 @@ package com.liferay.dynamic.data.mapping.web.internal.change.tracking.spi.displa
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -61,18 +60,16 @@ public class DDMStructureCTDisplayRenderer
 
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				httpServletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
-				PortletRequest.RENDER_PHASE)
+				httpServletRequest, group, DDMPortletKeys.DYNAMIC_DATA_MAPPING,
+				0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/edit_data_definition.jsp"
+			"/admin/edit_ddm_structure.jsp"
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
 		).setParameter(
-			"classNameId", _portalUtil.getClassNameId(DDMStructure.class)
-		).setParameter(
-			"classPK", ddmStructure.getStructureId()
-		).setParameter(
 			"ddmStructureId", ddmStructure.getStructureId()
+		).setParameter(
+			"groupId", ddmStructure.getGroupId()
 		).buildString();
 	}
 
@@ -118,8 +115,5 @@ public class DDMStructureCTDisplayRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUtil _portalUtil;
 
 }

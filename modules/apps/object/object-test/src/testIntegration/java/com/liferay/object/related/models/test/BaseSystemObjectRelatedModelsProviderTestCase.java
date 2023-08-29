@@ -72,7 +72,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 	public void testSystemObjectEntry1toMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		long[] primaryKeys = addSystemObjectEntry(3);
+		long[] primaryKeys = addBaseModels(3);
 
 		_addObjectRelationship(
 			_objectDefinition, _systemObjectDefinition,
@@ -116,8 +116,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
 			1, _objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(),
-			getSystemObjectEntryName(primaryKeys[1]));
+			objectEntry1.getObjectEntryId(), getName(primaryKeys[1]));
 
 		// Disassociate related models
 
@@ -140,8 +139,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 
-		assertFailureNoSuchException(primaryKeys[1]);
-		assertFailureNoSuchException(primaryKeys[2]);
+		assertFailure(primaryKeys[1]);
+		assertFailure(primaryKeys[2]);
 
 		// Object relationship deletion type disassociate
 
@@ -170,7 +169,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry2.getObjectEntryId());
 
-		Assert.assertNotNull(fetchSystemObjectEntry(primaryKeys[0]));
+		Assert.assertNotNull(fetchBaseModel(primaryKeys[0]));
 
 		// Object relationship deletion type prevent
 
@@ -208,7 +207,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 	public void testSystemObjectEntryMtoMObjectRelatedModels()
 		throws Exception {
 
-		long[] primaryKeys = addSystemObjectEntry(3);
+		long[] primaryKeys = addBaseModels(3);
 
 		_addObjectRelationship(
 			_objectDefinition, _systemObjectDefinition,
@@ -251,8 +250,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		ObjectRelationshipTestUtil.assertSearchRelatedModels(
 			1, _objectRelatedModelsProvider,
 			_objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(),
-			getSystemObjectEntryName(primaryKeys[1]));
+			objectEntry1.getObjectEntryId(), getName(primaryKeys[1]));
 
 		// Object relationship deletion type cascade
 
@@ -261,13 +259,13 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			_objectRelationship.getObjectRelationshipId(),
 			_objectRelationship.getLabelMap(), _objectRelationshipLocalService);
 
-		deleteSystemObjectEntry(primaryKeys[1]);
+		deleteBaseModel(primaryKeys[1]);
 
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry1.getObjectEntryId()));
 
-		assertFailureNoSuchException(primaryKeys[1]);
+		assertFailure(primaryKeys[1]);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 
@@ -275,7 +273,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry1.getObjectEntryId()));
 
-		assertFailureNoSuchException(primaryKeys[0]);
+		assertFailure(primaryKeys[0]);
 
 		// Object relationship deletion type disassociate
 
@@ -305,7 +303,7 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 			_objectRelationship.getObjectRelationshipId(),
 			objectEntry2.getObjectEntryId());
 
-		Assert.assertNotNull(fetchSystemObjectEntry(primaryKeys[2]));
+		Assert.assertNotNull(fetchBaseModel(primaryKeys[2]));
 
 		// Object relationship deletion type prevent
 
@@ -391,36 +389,32 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 				_objectRelationship.getObjectRelationshipId()));
 	}
 
-	protected long[] addSystemObjectEntry(int count) throws Exception {
+	protected long[] addBaseModels(int count) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void assertFailureNoSuchException(long primaryKey)
-		throws Exception {
-
+	protected void assertFailure(long primaryKey) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected void deleteSystemObjectEntry(long primaryKey) throws Exception {
+	protected void deleteBaseModel(long primaryKey) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Object fetchSystemObjectEntry(long primaryKey) {
+	protected Object fetchBaseModel(long primaryKey) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String getName(long primaryKey) throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	protected ObjectDefinition getSystemObjectDefinition() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String getSystemObjectEntryName(long primaryKey)
-		throws Exception {
-
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

@@ -28,7 +28,7 @@ public class OrganizationSystemObjectRelatedModelsProviderTest
 	extends BaseSystemObjectRelatedModelsProviderTestCase {
 
 	@Override
-	protected long[] addSystemObjectEntry(int count) throws Exception {
+	protected long[] addBaseModels(int count) throws Exception {
 		long[] organizationIds = new long[count];
 
 		for (int i = 0; i < count; i++) {
@@ -43,7 +43,7 @@ public class OrganizationSystemObjectRelatedModelsProviderTest
 	}
 
 	@Override
-	protected void assertFailureNoSuchException(long primaryKey) {
+	protected void assertFailure(long primaryKey) {
 		AssertUtils.assertFailure(
 			NoSuchOrganizationException.class,
 			"No Organization exists with the primary key " + primaryKey,
@@ -51,29 +51,27 @@ public class OrganizationSystemObjectRelatedModelsProviderTest
 	}
 
 	@Override
-	protected void deleteSystemObjectEntry(long primaryKey) throws Exception {
+	protected void deleteBaseModel(long primaryKey) throws Exception {
 		_organizationLocalService.deleteOrganization(primaryKey);
 	}
 
 	@Override
-	protected Object fetchSystemObjectEntry(long primaryKey) {
+	protected Object fetchBaseModel(long primaryKey) {
 		return _organizationLocalService.fetchOrganization(primaryKey);
+	}
+
+	@Override
+	protected String getName(long primaryKey) throws Exception {
+		Organization organization = _organizationLocalService.getOrganization(
+			primaryKey);
+
+		return organization.getName();
 	}
 
 	@Override
 	protected ObjectDefinition getSystemObjectDefinition() throws Exception {
 		return _objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 			TestPropsValues.getCompanyId(), Organization.class.getName());
-	}
-
-	@Override
-	protected String getSystemObjectEntryName(long primaryKey)
-		throws Exception {
-
-		Organization organization = _organizationLocalService.getOrganization(
-			primaryKey);
-
-		return organization.getName();
 	}
 
 	@Inject

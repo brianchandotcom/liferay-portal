@@ -26,7 +26,7 @@ public class UserSystemObjectRelatedModelsProviderTest
 	extends BaseSystemObjectRelatedModelsProviderTestCase {
 
 	@Override
-	protected long[] addSystemObjectEntry(int count) throws Exception {
+	protected long[] addBaseModels(int count) throws Exception {
 		long[] userIds = new long[count];
 
 		for (int i = 0; i < count; i++) {
@@ -39,7 +39,7 @@ public class UserSystemObjectRelatedModelsProviderTest
 	}
 
 	@Override
-	protected void assertFailureNoSuchException(long primaryKey) {
+	protected void assertFailure(long primaryKey) {
 		AssertUtils.assertFailure(
 			NoSuchUserException.class,
 			"No User exists with the primary key " + primaryKey,
@@ -47,28 +47,26 @@ public class UserSystemObjectRelatedModelsProviderTest
 	}
 
 	@Override
-	protected void deleteSystemObjectEntry(long primaryKey) throws Exception {
+	protected void deleteBaseModel(long primaryKey) throws Exception {
 		_userLocalService.deleteUser(primaryKey);
 	}
 
 	@Override
-	protected Object fetchSystemObjectEntry(long primaryKey) {
+	protected Object fetchBaseModel(long primaryKey) {
 		return _userLocalService.fetchUser(primaryKey);
+	}
+
+	@Override
+	protected String getName(long primaryKey) throws Exception {
+		User user = _userLocalService.getUser(primaryKey);
+
+		return user.getFirstName();
 	}
 
 	@Override
 	protected ObjectDefinition getSystemObjectDefinition() throws Exception {
 		return _objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 			TestPropsValues.getCompanyId(), User.class.getName());
-	}
-
-	@Override
-	protected String getSystemObjectEntryName(long primaryKey)
-		throws Exception {
-
-		User user = _userLocalService.getUser(primaryKey);
-
-		return user.getFirstName();
 	}
 
 	@Inject

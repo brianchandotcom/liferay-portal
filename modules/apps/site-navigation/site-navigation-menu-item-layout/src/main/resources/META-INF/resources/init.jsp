@@ -19,7 +19,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.item.selector.criteria.UUIDItemSelectorReturnType" %><%@
 page import="com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@

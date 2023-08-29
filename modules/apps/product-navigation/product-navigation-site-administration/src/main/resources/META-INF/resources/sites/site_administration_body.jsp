@@ -92,7 +92,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 					displayType="unstyled"
 					icon="pages-tree"
 					id='<%= liferayPortletResponse.getNamespace() + "pagesTreeSidenavToggleId" %>'
-					label='<%= LanguageUtil.get(resourceBundle, "page-tree") %>'
+					label="page-tree"
 				/>
 			</c:if>
 		</clay:col>

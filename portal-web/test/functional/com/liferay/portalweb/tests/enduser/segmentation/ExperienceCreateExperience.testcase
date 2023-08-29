@@ -40,23 +40,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-
-		JSONUser.tearDownNonAdminUsers();
-
-		JSONRole.deleteTestRoles();
-
-		JSONOrganization.tearDownOrganizations();
-	}
-
 	@description = "LPS-103102 Bug: Segmentation is not working after remove the user section"
 	@priority = 4
 	test AddExperienceAfterRemovingCriteria {

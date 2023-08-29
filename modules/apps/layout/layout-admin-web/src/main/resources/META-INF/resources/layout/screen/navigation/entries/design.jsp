@@ -59,7 +59,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 				<clay:link
 					href="<%= layoutsAdminDisplayContext.getPreviewCurrentDesignURL() %>"
-					label='<%= LanguageUtil.get(request, "see-current-published-configuration-here") %>'
+					label="see-current-published-configuration-here"
 				/>
 			</clay:alert>
 		</c:if>

@@ -5,10 +5,11 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,9 +18,17 @@ import java.util.List;
 public class ObjectDefinitionExternalReferenceCodeException
 	extends PortalException {
 
+	public List<Object> getArguments() {
+		return _arguments;
+	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
+
 	public static class
-	ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode
-		extends ObjectDefinitionExternalReferenceCodeException {
+		ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode
+			extends ObjectDefinitionExternalReferenceCodeException {
 
 		public ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode(
 			String externalReferenceCode) {
@@ -28,9 +37,8 @@ public class ObjectDefinitionExternalReferenceCodeException
 				StringBundler.concat(
 					"Forbidden unmodifiable system object definition external ",
 					"reference code ", externalReferenceCode),
-				StringBundler.concat(
-					"forbidden-unmodifiable-system-object-definition-external-reference-code ",
-					externalReferenceCode));
+				"forbidden-unmodifiable-system-object-definition-external-" +
+					"reference-code");
 		}
 
 	}
@@ -38,33 +46,47 @@ public class ObjectDefinitionExternalReferenceCodeException
 	public static class MustBeLessThan75Characters
 		extends ObjectDefinitionExternalReferenceCodeException {
 
-		public MustBeLessThan75Characters(int characterLimit) {
+		public MustBeLessThan75Characters() {
 			super(
-				String.format(
-					"ERC must be less than %d characters", characterLimit),
+				Collections.singletonList(75),
+				"External reference code must be less than 75 characters",
 				"only-x-characters-are-allowed");
 		}
+
 	}
 
 	public static class MustNotStartWithPrefix
 		extends ObjectDefinitionExternalReferenceCodeException {
 
-		public MustNotStartWithPrefix(String prefix) {
+		public MustNotStartWithPrefix() {
 			super(
-				String.format("The prefix %s is reserved for Liferay", prefix),
+				Collections.singletonList(
+					ObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_SYSTEM_OBJECT_DEFINITION_PREFIX),
+				"The prefix L_ is reserved for Liferay",
 				"the-prefix-x-is-reserved-for-liferay");
 		}
 
 	}
 
 	private ObjectDefinitionExternalReferenceCodeException(
-		String msg, String messageKey) {
+		List<Object> arguments, String message, String messageKey) {
 
-		super(msg);
+		super(message);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
+	}
+
+	private ObjectDefinitionExternalReferenceCodeException(
+		String message, String messageKey) {
+
+		super(message);
 
 		_messageKey = messageKey;
 	}
 
+	private List<Object> _arguments;
 	private final String _messageKey;
 
 }

@@ -150,6 +150,9 @@ public interface LiferaySelenium {
 
 	public void assertValue(String locator, String pattern) throws Exception;
 
+	public void assertValueMatches(String locator, String regex)
+		throws Exception;
+
 	public void assertVisible(String locator) throws Exception;
 
 	public void assertVisibleInPage(String locator) throws Exception;

@@ -31,7 +31,7 @@ SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (Selec
 					cssClass="asset-category-tree-node-selector"
 					disabled="<%= true %>"
 					displayType="primary"
-					label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'
+					label="select-this-level"
 					small="<%= true %>"
 				/>
 			</div>

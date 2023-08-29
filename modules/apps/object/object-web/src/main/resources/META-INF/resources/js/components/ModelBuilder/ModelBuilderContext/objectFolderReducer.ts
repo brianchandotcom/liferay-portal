@@ -457,6 +457,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				leftSidebarItems: newLeftSidebar,
 			};
 		}
+
 		case TYPES.DELETE_FOLDER_NODE: {
 			const {currentFolderName, deletedNodeName} = action.payload;
 
@@ -488,6 +489,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				leftSidebarItems: newLeftSidebarItems,
 			};
 		}
+
 		case TYPES.SET_ELEMENTS: {
 			const {newElements} = action.payload;
 
@@ -496,6 +498,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				elements: newElements,
 			};
 		}
+
 		case TYPES.SET_SELECTED_NODE: {
 			const {edges, nodes, selectedObjectDefinitionId} = action.payload;
 
@@ -534,6 +537,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
 			};
 		}
+
 		case TYPES.UPDATE_FOLDER_NODE: {
 			const {currentFolderName, updatedNode} = action.payload;
 
@@ -578,6 +582,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				leftSidebarItems: newLeftSidebarItems,
 			};
 		}
+
 		default:
 			return state;
 	}

@@ -10,19 +10,19 @@ import React from 'react';
 
 interface RedirectModalProps {
 	handleOnClose: () => void;
-	viewDetailsUrl: string;
+	viewDetailsURL: string;
 }
 
 export function RedirectModal({
 	handleOnClose,
-	viewDetailsUrl,
+	viewDetailsURL,
 }: RedirectModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => handleOnClose(),
 	});
 
 	const handleSubmit = () => {
-		window.open(viewDetailsUrl, '_blank');
+		window.open(viewDetailsURL, '_blank');
 	};
 
 	return (

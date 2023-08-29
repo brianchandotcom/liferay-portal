@@ -75,15 +75,9 @@ export function DefinitionNode({
 
 	const [{baseResourceURL}] = useFolderContext();
 
-	const handleShowDeleteDefinitionModal = () => {
+	const handleShowDeleteModal = () => {
 		setShowModal({
 			deleteObjectDefinition: true,
-		});
-	};
-
-	const handleShowRedirectModal = () => {
-		setShowModal({
-			redirectEditObjectDefinition: true,
 		});
 	};
 
@@ -93,7 +87,13 @@ export function DefinitionNode({
 		});
 	};
 
-	const viewDetailsUrl = formatActionURL(editObjectDefinitionURL, id);
+	const handleShowRedirectModal = () => {
+		setShowModal({
+			redirectEditObjectDefinition: true,
+		});
+	};
+
+	const viewDetailsURL = formatActionURL(editObjectDefinitionURL, id);
 
 	return (
 		<>
@@ -118,19 +118,19 @@ export function DefinitionNode({
 				}}
 			>
 				<NodeHeader
-					dropDownItems={getDefinitionNodeActions(
+					dropDownItems={getDefinitionNodeActions({
 						baseResourceURL,
-						id!,
-						name,
+						handleShowDeleteModal,
+						handleShowEditERCModal,
+						handleShowRedirectModal,
 						hasObjectDefinitionDeleteResourcePermission,
 						hasObjectDefinitionManagePermissionsResourcePermission,
+						objectDefinitionId: id,
+						objectDefinitionName: name,
 						objectDefinitionPermissionsURL,
-						status,
 						setDeletedObjectDefinition,
-						handleShowDeleteDefinitionModal,
-						handleShowRedirectModal,
-						handleShowEditERCModal
-					)}
+						status,
+					})}
 					isLinkedNode={isLinkedNode}
 					objectDefinitionLabel={label}
 					status={status!}
@@ -174,17 +174,6 @@ export function DefinitionNode({
 						deletedObjectDefinition as DeletedObjectDefinition
 					}
 					setDeletedObjectDefinition={setDeletedObjectDefinition}
-				/>
-			)}
-
-			{showModal.redirectEditObjectDefinition && (
-				<RedirectModal
-					handleOnClose={() => {
-						setShowModal({
-							redirectEditObjectDefinition: false,
-						});
-					}}
-					viewDetailsUrl={viewDetailsUrl}
 				/>
 			)}
 
@@ -237,6 +226,17 @@ export function DefinitionNode({
 					onGetEntity={() => API.getObjectDefinitionById(id)}
 					saveURL={`/o/object-admin/v1.0/object-definitions/${id}`}
 					setExternalReferenceCode={setNewExternalReferenceCode}
+				/>
+			)}
+
+			{showModal.redirectEditObjectDefinition && (
+				<RedirectModal
+					handleOnClose={() => {
+						setShowModal({
+							redirectEditObjectDefinition: false,
+						});
+					}}
+					viewDetailsURL={viewDetailsURL}
 				/>
 			)}
 		</>

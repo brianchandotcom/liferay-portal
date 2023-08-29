@@ -9,15 +9,40 @@ import {
 	DeletedObjectDefinition,
 	ViewObjectDefinitionsModals,
 } from './ViewObjectDefinitions';
-declare type folderAction = {
+declare type DefinitionNodeActionsProps = {
+	baseResourceURL: string;
+	handleShowDeleteModal: () => void;
+	handleShowEditERCModal: () => void;
+	handleShowRedirectModal: () => void;
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	objectDefinitionId: number;
+	objectDefinitionName: string;
+	objectDefinitionPermissionsURL: string;
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+};
+declare type DeleteObjectDefinitionProps = {
+	baseResourceURL: string;
+	handleShowDeleteModal: () => void;
+	objectDefinitionId: number;
+	objectDefinitionName: string;
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
+	status: string;
+};
+declare type FolderAction = {
 	href: string;
 	method: string;
 };
-declare type folderActions = {
-	delete?: folderAction;
-	get?: folderAction;
-	permissions?: folderAction;
-	update?: folderAction;
+declare type FolderActions = {
+	delete?: FolderAction;
+	get?: FolderAction;
+	permissions?: FolderAction;
+	update?: FolderAction;
 };
 export declare function deleteFolder(
 	id: number,
@@ -27,37 +52,33 @@ export declare function deleteObjectDefinitionToast(
 	id: number,
 	objectDefinitionName: string
 ): Promise<void>;
-export declare function deleteObjectDefinition(
-	baseResourceURL: string,
-	objectDefinitionId: number,
-	objectDefinitionName: string,
-	status: string,
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
-	handleShowDeleteModal: () => void
-): Promise<void>;
+export declare function deleteObjectDefinition({
+	baseResourceURL,
+	handleShowDeleteModal,
+	objectDefinitionId,
+	objectDefinitionName,
+	setDeletedObjectDefinition,
+	status,
+}: DeleteObjectDefinitionProps): Promise<void>;
 export declare function deleteRelationship(id: number): Promise<void>;
-export declare function getDefinitionNodeActions(
-	baseResourceURL: string,
-	objectDefinitionId: number,
-	objectDefinitionName: string,
-	hasObjectDefinitionDeleteResourcePermission: boolean,
-	hasObjectDefinitionManagePermissionsResourcePermission: boolean,
-	objectDefinitionPermissionsURL: string,
-	status: {
-		code: number;
-		label: string;
-		label_i18n: string;
-	},
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
-	handleShowDeleteModal: () => void,
-	handleShowRedirectModal: () => void,
-	handleShowEditERCModal: () => void
-): DropDownItems[];
+export declare function getDefinitionNodeActions({
+	baseResourceURL,
+	handleShowDeleteModal,
+	handleShowEditERCModal,
+	handleShowRedirectModal,
+	hasObjectDefinitionDeleteResourcePermission,
+	hasObjectDefinitionManagePermissionsResourcePermission,
+	objectDefinitionId,
+	objectDefinitionName,
+	objectDefinitionPermissionsURL,
+	setDeletedObjectDefinition,
+	status,
+}: DefinitionNodeActionsProps): DropDownItems[];
 export declare function getFolderActions(
 	id: number,
 	objectFolderPermissionsURL: string,
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void,
-	actions?: folderActions
+	actions?: FolderActions
 ): (
 	| {
 			label: string;

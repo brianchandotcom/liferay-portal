@@ -7,10 +7,10 @@
 
 interface RedirectModalProps {
 	handleOnClose: () => void;
-	viewDetailsUrl: string;
+	viewDetailsURL: string;
 }
 export declare function RedirectModal({
 	handleOnClose,
-	viewDetailsUrl,
+	viewDetailsURL,
 }: RedirectModalProps): JSX.Element;
 export {};

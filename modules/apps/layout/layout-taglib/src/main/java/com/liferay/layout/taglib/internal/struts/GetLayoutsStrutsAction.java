@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(property = "path=/portal/get_layouts", service = StrutsAction.class)
-public class GetLayoutsTreeStrutsAction implements StrutsAction {
+public class GetLayoutsStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

@@ -27,7 +27,7 @@ import {reducer} from '../reducers/index';
 import {DragAndDropContextProvider} from '../utils/drag_and_drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
-import DragPreview from './DragPreview';
+import DragPreviewWrapper from './DragPreviewWrapper';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import KeyboardMovementManager from './KeyboardMovementManager';
 import KeyboardMovementPreview from './KeyboardMovementPreview';
@@ -56,7 +56,7 @@ export default function App({state}) {
 
 									<DisplayPagePreviewItemSelector dark />
 
-									<DragPreview />
+									<DragPreviewWrapper />
 
 									<WidgetsManager />
 

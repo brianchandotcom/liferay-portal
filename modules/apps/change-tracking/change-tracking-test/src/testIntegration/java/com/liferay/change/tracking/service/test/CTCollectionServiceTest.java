@@ -101,7 +101,7 @@ public class CTCollectionServiceTest {
 			_group.getGroupId(), folder.getFolderId());
 
 		_ctCollection = _ctCollectionService.addCTCollection(
-			_user.getCompanyId(), _user.getUserId(),
+			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		try (SafeCloseable safeCloseable =
@@ -173,7 +173,7 @@ public class CTCollectionServiceTest {
 				_user.getCompanyId(), null, ""));
 
 		_ctCollection = _ctCollectionService.addCTCollection(
-			_user.getCompanyId(), _user.getUserId(),
+			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -217,7 +217,7 @@ public class CTCollectionServiceTest {
 		UserTestUtil.setUser(_user);
 
 		_ctCollection = _ctCollectionService.addCTCollection(
-			_user.getCompanyId(), _user.getUserId(),
+			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		try (SafeCloseable safeCloseable =
@@ -237,7 +237,7 @@ public class CTCollectionServiceTest {
 			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
 
 		_ctCollection = _ctCollectionService.addCTCollection(
-			_user.getCompanyId(), _user.getUserId(),
+			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		try (SafeCloseable safeCloseable =
@@ -264,7 +264,7 @@ public class CTCollectionServiceTest {
 			WorkflowConstants.STATUS_APPROVED, ctCollection.getStatus());
 
 		_ctCollection = _ctCollectionService.addCTCollection(
-			_user.getCompanyId(), _user.getUserId(),
+			null, _user.getCompanyId(), _user.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		try (SafeCloseable safeCloseable =

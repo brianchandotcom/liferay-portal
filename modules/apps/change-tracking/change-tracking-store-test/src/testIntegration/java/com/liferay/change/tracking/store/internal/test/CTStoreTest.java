@@ -1007,8 +1007,8 @@ public class CTStoreTest {
 
 	private CTCollection _createCTCollection() throws PortalException {
 		return _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			CTStoreTest.class.getName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTStoreTest.class.getName(), null);
 	}
 
 	private void _deleteCTDirectory(String dirName) {

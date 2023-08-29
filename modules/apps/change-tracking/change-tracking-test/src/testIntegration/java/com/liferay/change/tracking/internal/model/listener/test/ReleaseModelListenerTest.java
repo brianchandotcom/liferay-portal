@@ -51,8 +51,8 @@ public class ReleaseModelListenerTest {
 			ReleaseModelListenerTest.class.getSimpleName(), "1.0.0");
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			ReleaseModelListenerTest.class.getSimpleName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, ReleaseModelListenerTest.class.getSimpleName(), null);
 
 		_ctPreferences = _ctPreferencesLocalService.getCTPreferences(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());

@@ -180,8 +180,8 @@ public class CTProcessSearcherTest {
 
 	private CTCollection _addCTCollection() throws Exception {
 		return _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	private CTProcess _addCTProcess(

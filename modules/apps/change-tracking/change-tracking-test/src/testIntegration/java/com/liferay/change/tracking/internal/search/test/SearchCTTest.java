@@ -68,8 +68,8 @@ public class SearchCTTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			SearchCTTest.class.getName(), SearchCTTest.class.getName());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, SearchCTTest.class.getName(), SearchCTTest.class.getName());
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -123,8 +123,8 @@ public class SearchCTTest {
 		}
 
 		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			SearchCTTest.class.getSimpleName(),
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, SearchCTTest.class.getSimpleName(),
 			SearchCTTest.class.getSimpleName());
 
 		UserGroup modifiedUserGroup2 = null;

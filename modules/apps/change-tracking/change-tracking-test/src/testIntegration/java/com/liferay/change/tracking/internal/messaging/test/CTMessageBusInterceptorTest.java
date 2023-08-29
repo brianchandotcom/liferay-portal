@@ -67,8 +67,8 @@ public class CTMessageBusInterceptorTest {
 			DestinationNames.SUBSCRIPTION_SENDER, _testDestination);
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			CTMessageBusInterceptorTest.class.getSimpleName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTMessageBusInterceptorTest.class.getSimpleName(), null);
 	}
 
 	@After

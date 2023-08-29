@@ -304,7 +304,7 @@ public class PaginationContextProviderTest {
 		new CompanyConfigurationTemporarySwapper(
 			TestPropsValues.getCompanyId(), _CONFIGURATION_SERVICE_PID,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"paginationSizeLimit", pageSize
+				"pageSizeLimit", pageSize
 			).build());
 	}
 

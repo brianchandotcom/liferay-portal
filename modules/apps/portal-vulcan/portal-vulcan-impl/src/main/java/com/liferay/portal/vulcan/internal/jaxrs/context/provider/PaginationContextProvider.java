@@ -59,7 +59,7 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 					_portal.getCompanyId(httpServletRequest));
 
 			int maxPageSize =
-				headlessAPICompanyConfiguration.paginationSizeLimit();
+				headlessAPICompanyConfiguration.pageSizeLimit();
 
 			if (maxPageSize <= 0) {
 				return Pagination.of(

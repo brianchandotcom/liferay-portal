@@ -26,6 +26,6 @@ public interface HeadlessAPICompanyConfiguration {
 		deflt = "500", description = "page-size-values-description",
 		name = "page-size-limit", required = false
 	)
-	public int paginationSizeLimit();
+	public int pageSizeLimit();
 
 }

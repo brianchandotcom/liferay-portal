@@ -1654,7 +1654,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "name"
 				).put(
-					"path", path + "/{pathElement}"
+					"path", path + "/{pathId}"
 				).put(
 					"pathParameter", pathParameter
 				).put(

@@ -20,7 +20,9 @@
 		<field localized="true" name="errorMessage" type="String" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
-		<field name="objectActionExecutorKey" type="String" />
+		<field name="objectActionExecutorKey" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="objectActionTriggerKey" type="String" />
 		<field name="parameters" type="String">
 			<hint-collection name="CLOB" />
@@ -68,7 +70,9 @@
 		</field>
 		<field name="portlet" type="boolean" />
 		<field name="scope" type="String" />
-		<field name="storageType" type="String" />
+		<field name="storageType" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="system" type="boolean" />
 		<field name="version" type="int" />
 		<field name="status" type="int" />
@@ -300,7 +304,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="active" type="boolean" />
-		<field name="engine" type="String" />
+		<field name="engine" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field localized="true" name="errorLabel" type="String" />
 		<field localized="true" name="name" type="String" />
 		<field name="outputType" type="String" />

@@ -53,4 +53,8 @@
 		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/Validator.java"
 	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/language/UnicodeLanguageUtil.java"
+	/>
 </instance-wrappers>

@@ -82,18 +82,15 @@ public class PaginationContextProviderTest {
 	public void testCreateContextOverPageSizeLimit() throws Exception {
 		_modifyPageSizeLimitConfiguration(20);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("pageSize", "21");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest() {
+					{
+						addParameter("pageSize", "21");
+					}
+				},
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
@@ -103,19 +100,16 @@ public class PaginationContextProviderTest {
 
 	@Test
 	public void testCreateContextUnderPageSizeLimit() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("page", "1");
-					addParameter("pageSize", "19");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest() {
+					{
+						addParameter("page", "1");
+						addParameter("pageSize", "19");
+					}
+				},
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
@@ -125,20 +119,17 @@ public class PaginationContextProviderTest {
 
 	@Test
 	public void testCreateContextWithNegativePageParameter() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("page", "-1");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		_assertException(
 			"Page -1 is not a number greater than or equal to 1",
 			() -> _contextProvider.createContext(
 				new MockMessage(
-					mockHttpServletRequest,
+					new MockHttpServletRequest() {
+						{
+							addParameter("page", "-1");
+						}
+					},
 					clazz.getMethod(MockResource.METHOD_NAME, String.class),
 					_mockResource)));
 	}
@@ -149,18 +140,15 @@ public class PaginationContextProviderTest {
 
 		_modifyPageSizeLimitConfiguration(30);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("pageSize", "-1");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest() {
+					{
+						addParameter("pageSize", "-1");
+					}
+				},
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
@@ -174,14 +162,11 @@ public class PaginationContextProviderTest {
 
 		_modifyPageSizeLimitConfiguration(10);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest(),
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
@@ -195,14 +180,11 @@ public class PaginationContextProviderTest {
 
 		_modifyPageSizeLimitConfiguration(0);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest(),
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
@@ -212,20 +194,17 @@ public class PaginationContextProviderTest {
 
 	@Test
 	public void testCreateContextWithPageParameterZero() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("page", "0");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		_assertException(
 			"Page 0 is not a number greater than or equal to 1",
 			() -> _contextProvider.createContext(
 				new MockMessage(
-					mockHttpServletRequest,
+					new MockHttpServletRequest() {
+						{
+							addParameter("page", "0");
+						}
+					},
 					clazz.getMethod(MockResource.METHOD_NAME, String.class),
 					_mockResource)));
 	}
@@ -236,19 +215,16 @@ public class PaginationContextProviderTest {
 
 		_modifyPageSizeLimitConfiguration(20);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("page", "1");
-					addParameter("pageSize", "20");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest() {
+					{
+						addParameter("page", "1");
+						addParameter("pageSize", "20");
+					}
+				},
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 
@@ -262,18 +238,15 @@ public class PaginationContextProviderTest {
 
 		_modifyPageSizeLimitConfiguration(30);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest() {
-				{
-					addParameter("pageSize", "0");
-				}
-			};
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		Pagination pagination = _contextProvider.createContext(
 			new MockMessage(
-				mockHttpServletRequest,
+				new MockHttpServletRequest() {
+					{
+						addParameter("pageSize", "0");
+					}
+				},
 				clazz.getMethod(MockResource.METHOD_NAME, String.class),
 				_mockResource));
 

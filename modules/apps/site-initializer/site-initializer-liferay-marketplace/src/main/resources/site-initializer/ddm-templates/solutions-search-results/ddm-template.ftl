@@ -144,60 +144,73 @@
 					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
 					desiredProductURL = productURL?replace("/solutions-marketplace", "")
 					productSpecifications = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + product.productId + "/productSpecifications").items
+
 				/>
 
-				<a class="bg-white d-flex flex-column mb-0 p-4 rounded solutions-search-results-card text-dark text-decoration-none" href="${desiredProductURL}">
+				<a class="bg-white d-flex flex-column mb-0 rounded solutions-search-results-card text-dark text-decoration-none" href="${desiredProductURL}">
 					<div class="align-items-center d-flex image-container justify-content-center rounded">
 						<img
 							alt="${product.name.en_US}"
-							class="h-100 mw-100"
+							class="h-100 mw-100 rounded"
 							src="${product.thumbnail}"
 						/>
 					</div>
 
-					<#if productSpecifications?has_content>
-						<#assign productDeveloperName = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
+					<div class="d-flex flex-column h-100 justify-content-between p-4">
+						<div>
+							<#if productSpecifications?has_content>
+								<#assign productDeveloperName = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
 
-						<#list productDeveloperName as productSpec>
-							<div class="productSpec color-neutral-3 font-size-paragraph-small mt-1">
-								${productSpec.value.en_US}
+								<#list productDeveloperName as productSpec>
+									<div class="productSpec color-neutral-3 font-size-paragraph-small mt-1">
+										${productSpec.value.en_US}
+									</div>
+								</#list>
+							</#if>
+
+							<div class="align-items-center card-image-title-container d-flex pb-1">
+								<div class="">
+									<div class="font-weight-semi-bold h2 mt-1">
+										${product.name.en_US}
+									</div>
+								</div>
 							</div>
-						</#list>
-					</#if>
 
-					<div class="align-items-center card-image-title-container d-flex pb-1">
-						<div class="">
-							<div class="font-weight-semi-bold h2 mt-1">
-								${product.name.en_US}
+							<div class="d-flex flex-column font-size-paragraph-small justify-content-between">
+								<div class="font-weight-normal mb-2">
+									${productDescription}
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
-							<div class="font-weight-normal mb-2">
-								${productDescription}
-							</div>
-					</div>
-					<#if productCategories?has_content>
-						<div class="align-center d-flex labels">
-							<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1">
-								${productCategories[0].name}
-							</div>
+						<div>
+							<#if productCategories?has_content>
+								<div class="align-center d-flex labels">
+									<#list productCategories as firstCategory>
+										<#if firstCategory.vocabulary == 'marketplace solution category'>
+											<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1">
+												${firstCategory.name}
+											</div>
+											<#break>
+										</#if>
+									</#list>
 
-							<#if (productCategories?size > 1)>
-								<div class="category-label-remainder pl-2 position-relative text-primary">
-									+${productCategories?size - 1}
-									<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
-										<#list productCategories as category>
-											<#if !category?is_first>
-												${category.name}<#sep>, </#sep>
-											</#if>
-										</#list>
-									</div>
+									<#if (productCategories?size > 1)>
+										<div class="category-label-remainder pl-2 position-relative text-primary">
+											+${productCategories?size - 1}
+											<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
+												<#list productCategories as category>
+													<#if !category?is_first && category.vocabulary == 'marketplace solution category'>
+														${category.name}<#sep>, </#sep>
+													</#if>
+												</#list>
+											</div>
+										</div>
+									</#if>
 								</div>
 							</#if>
 						</div>
-					</#if>
+					</div>
 				</a>
 			</#list>
 		</div>

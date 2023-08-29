@@ -14,7 +14,7 @@ EditRolesUsersDisplayContext editRolesUsersDisplayContext = new EditRolesUsersDi
 <aui:input name="addUserIds" type="hidden" />
 <aui:input name="removeUserIds" type="hidden" />
 
-<liferay-ui:membership-policy-error />
+<liferay-site:membership-policy-error />
 
 <liferay-ui:search-container
 	searchContainer="<%= editRolesUsersDisplayContext.getSearchContainer() %>"

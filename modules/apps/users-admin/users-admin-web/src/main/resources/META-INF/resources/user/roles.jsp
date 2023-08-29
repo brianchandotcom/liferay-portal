@@ -35,7 +35,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 	value="roles"
 />
 
-<liferay-ui:membership-policy-error />
+<liferay-site:membership-policy-error />
 
 <liferay-util:buffer
 	var="removeRoleIcon"

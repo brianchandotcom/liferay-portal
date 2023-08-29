@@ -55,7 +55,7 @@ Role role = usersDisplayContext.getRole();
 					breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
 				/>
 
-				<liferay-ui:membership-policy-error />
+				<liferay-site:membership-policy-error />
 
 				<liferay-ui:search-container
 					id="users"

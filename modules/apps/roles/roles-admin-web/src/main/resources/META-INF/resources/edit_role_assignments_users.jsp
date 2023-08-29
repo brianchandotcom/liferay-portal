@@ -11,7 +11,7 @@
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 %>
 
-<liferay-ui:membership-policy-error />
+<liferay-site:membership-policy-error />
 
 <liferay-ui:search-container
 	id="assigneesSearch"

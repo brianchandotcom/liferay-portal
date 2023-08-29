@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.ReplenishmentItem;
 import com.liferay.headless.commerce.admin.inventory.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -267,7 +269,7 @@ public class ReplenishmentItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					replenishmentItem.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sku")) {

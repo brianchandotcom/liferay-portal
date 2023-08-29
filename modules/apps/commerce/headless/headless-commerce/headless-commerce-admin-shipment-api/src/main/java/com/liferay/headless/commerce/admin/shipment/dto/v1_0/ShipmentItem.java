@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -228,18 +230,19 @@ public class ShipmentItem implements Serializable {
 	protected Long orderItemId;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
-	public Integer getQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	@JsonIgnore
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -255,7 +258,7 @@ public class ShipmentItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
 	@Schema
 	public String getShipmentExternalReferenceCode() {
@@ -317,6 +320,34 @@ public class ShipmentItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long shipmentId;
+
+	@Schema(example = "s")
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String unitOfMeasureKey;
 
 	@Schema(example = "John")
 	public String getUserName() {
@@ -538,6 +569,20 @@ public class ShipmentItem implements Serializable {
 			sb.append("\"shipmentId\": ");
 
 			sb.append(shipmentId);
+		}
+
+		if (unitOfMeasureKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureKey));
+
+			sb.append("\"");
 		}
 
 		if (userName != null) {

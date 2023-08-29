@@ -9,6 +9,8 @@ import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderI
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItemShipment;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -307,6 +309,20 @@ public class PlacedOrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderItem.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderItem.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderItem.getValid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -515,6 +531,15 @@ public class PlacedOrderItemSerDes {
 				"thumbnail", String.valueOf(placedOrderItem.getThumbnail()));
 		}
 
+		if (placedOrderItem.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(placedOrderItem.getUnitOfMeasureKey()));
+		}
+
 		if (placedOrderItem.getValid() == null) {
 			map.put("valid", null);
 		}
@@ -656,7 +681,7 @@ public class PlacedOrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "replacedSku")) {
@@ -691,6 +716,12 @@ public class PlacedOrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItem.setThumbnail((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItem.setUnitOfMeasureKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "valid")) {

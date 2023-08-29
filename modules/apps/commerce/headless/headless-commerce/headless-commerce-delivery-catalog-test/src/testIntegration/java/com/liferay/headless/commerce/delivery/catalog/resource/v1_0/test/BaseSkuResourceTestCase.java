@@ -1460,15 +1460,13 @@ public abstract class BaseSkuResourceTestCase {
 		}
 
 		if (entityFieldName.equals("maxOrderQuantity")) {
-			sb.append(String.valueOf(sku.getMaxOrderQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("minOrderQuantity")) {
-			sb.append(String.valueOf(sku.getMinOrderQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("neverExpire")) {
@@ -1673,8 +1671,6 @@ public abstract class BaseSkuResourceTestCase {
 					RandomTestUtil.randomString());
 				manufacturerPartNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				maxOrderQuantity = RandomTestUtil.randomInt();
-				minOrderQuantity = RandomTestUtil.randomInt();
 				neverExpire = RandomTestUtil.randomBoolean();
 				published = RandomTestUtil.randomBoolean();
 				purchasable = RandomTestUtil.randomBoolean();

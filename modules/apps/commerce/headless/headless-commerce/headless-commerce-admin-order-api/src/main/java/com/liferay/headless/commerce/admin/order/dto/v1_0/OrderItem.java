@@ -924,18 +924,19 @@ public class OrderItem implements Serializable {
 	protected BigDecimal promoPriceWithTaxAmount;
 
 	@DecimalMin("0")
-	@Schema(example = "2")
-	public Integer getQuantity() {
+	@Schema(example = "2.1")
+	@Valid
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	@JsonIgnore
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -950,7 +951,7 @@ public class OrderItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
 	@Schema(example = "1234123124")
 	public String getReplacedSku() {
@@ -1037,18 +1038,19 @@ public class OrderItem implements Serializable {
 	protected Date requestedDeliveryDate;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
-	public Integer getShippedQuantity() {
+	@Schema(example = "1.1")
+	@Valid
+	public BigDecimal getShippedQuantity() {
 		return shippedQuantity;
 	}
 
-	public void setShippedQuantity(Integer shippedQuantity) {
+	public void setShippedQuantity(BigDecimal shippedQuantity) {
 		this.shippedQuantity = shippedQuantity;
 	}
 
 	@JsonIgnore
 	public void setShippedQuantity(
-		UnsafeSupplier<Integer, Exception> shippedQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> shippedQuantityUnsafeSupplier) {
 
 		try {
 			shippedQuantity = shippedQuantityUnsafeSupplier.get();
@@ -1063,7 +1065,7 @@ public class OrderItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer shippedQuantity;
+	protected BigDecimal shippedQuantity;
 
 	@Schema
 	@Valid
@@ -1262,6 +1264,34 @@ public class OrderItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasure;
+
+	@Schema(example = "s")
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String unitOfMeasureKey;
 
 	@DecimalMin("0")
 	@Schema(example = "101")
@@ -1832,6 +1862,20 @@ public class OrderItem implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(unitOfMeasure));
+
+			sb.append("\"");
+		}
+
+		if (unitOfMeasureKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureKey));
 
 			sb.append("\"");
 		}

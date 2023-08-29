@@ -1414,9 +1414,8 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			sb.append(String.valueOf(replenishmentItem.getQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("sku")) {
@@ -1564,7 +1563,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				quantity = RandomTestUtil.randomInt();
 				sku = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

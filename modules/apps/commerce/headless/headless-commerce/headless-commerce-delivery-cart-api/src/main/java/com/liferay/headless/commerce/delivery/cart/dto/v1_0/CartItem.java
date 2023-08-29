@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -362,18 +364,19 @@ public class CartItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productURLs;
 
-	@Schema
-	public Integer getQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	@JsonIgnore
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -388,7 +391,7 @@ public class CartItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
 	@Schema(example = "12341234")
 	public String getReplacedSku() {
@@ -583,6 +586,34 @@ public class CartItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String thumbnail;
+
+	@Schema(example = "m")
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String unitOfMeasureKey;
 
 	@Schema
 	public Boolean getValid() {
@@ -873,6 +904,20 @@ public class CartItem implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(thumbnail));
+
+			sb.append("\"");
+		}
+
+		if (unitOfMeasureKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureKey));
 
 			sb.append("\"");
 		}

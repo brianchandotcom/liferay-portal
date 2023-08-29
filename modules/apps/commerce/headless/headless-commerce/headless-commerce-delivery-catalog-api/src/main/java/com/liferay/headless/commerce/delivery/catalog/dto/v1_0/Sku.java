@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -478,18 +480,19 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String manufacturerPartNumber;
 
-	@Schema
-	public Integer getMaxOrderQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getMaxOrderQuantity() {
 		return maxOrderQuantity;
 	}
 
-	public void setMaxOrderQuantity(Integer maxOrderQuantity) {
+	public void setMaxOrderQuantity(BigDecimal maxOrderQuantity) {
 		this.maxOrderQuantity = maxOrderQuantity;
 	}
 
 	@JsonIgnore
 	public void setMaxOrderQuantity(
-		UnsafeSupplier<Integer, Exception> maxOrderQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> maxOrderQuantityUnsafeSupplier) {
 
 		try {
 			maxOrderQuantity = maxOrderQuantityUnsafeSupplier.get();
@@ -504,20 +507,21 @@ public class Sku implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer maxOrderQuantity;
+	protected BigDecimal maxOrderQuantity;
 
-	@Schema
-	public Integer getMinOrderQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getMinOrderQuantity() {
 		return minOrderQuantity;
 	}
 
-	public void setMinOrderQuantity(Integer minOrderQuantity) {
+	public void setMinOrderQuantity(BigDecimal minOrderQuantity) {
 		this.minOrderQuantity = minOrderQuantity;
 	}
 
 	@JsonIgnore
 	public void setMinOrderQuantity(
-		UnsafeSupplier<Integer, Exception> minOrderQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minOrderQuantityUnsafeSupplier) {
 
 		try {
 			minOrderQuantity = minOrderQuantityUnsafeSupplier.get();
@@ -532,7 +536,7 @@ public class Sku implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer minOrderQuantity;
+	protected BigDecimal minOrderQuantity;
 
 	@Schema(example = "true")
 	public Boolean getNeverExpire() {

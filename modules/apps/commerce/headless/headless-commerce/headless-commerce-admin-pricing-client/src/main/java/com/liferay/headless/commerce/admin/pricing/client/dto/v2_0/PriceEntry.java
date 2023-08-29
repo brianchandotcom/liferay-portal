@@ -580,26 +580,26 @@ public class PriceEntry implements Cloneable, Serializable {
 
 	protected TierPrice[] tierPrices;
 
-	public String getUnitOfMeasure() {
-		return unitOfMeasure;
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
 	}
 
-	public void setUnitOfMeasure(String unitOfMeasure) {
-		this.unitOfMeasure = unitOfMeasure;
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
 	}
 
-	public void setUnitOfMeasure(
-		UnsafeSupplier<String, Exception> unitOfMeasureUnsafeSupplier) {
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
 
 		try {
-			unitOfMeasure = unitOfMeasureUnsafeSupplier.get();
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String unitOfMeasure;
+	protected String unitOfMeasureKey;
 
 	@Override
 	public PriceEntry clone() throws CloneNotSupportedException {

@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.Summary;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -564,7 +566,7 @@ public class SummarySerDes {
 			else if (Objects.equals(jsonParserFieldName, "itemsQuantity")) {
 				if (jsonParserFieldValue != null) {
 					summary.setItemsQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

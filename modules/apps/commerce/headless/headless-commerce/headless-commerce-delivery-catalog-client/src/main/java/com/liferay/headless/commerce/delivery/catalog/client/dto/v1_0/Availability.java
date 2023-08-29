@@ -10,6 +10,8 @@ import com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0.Availab
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -67,16 +69,16 @@ public class Availability implements Cloneable, Serializable {
 
 	protected String label_i18n;
 
-	public Integer getStockQuantity() {
+	public BigDecimal getStockQuantity() {
 		return stockQuantity;
 	}
 
-	public void setStockQuantity(Integer stockQuantity) {
+	public void setStockQuantity(BigDecimal stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
 
 	public void setStockQuantity(
-		UnsafeSupplier<Integer, Exception> stockQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> stockQuantityUnsafeSupplier) {
 
 		try {
 			stockQuantity = stockQuantityUnsafeSupplier.get();
@@ -86,7 +88,7 @@ public class Availability implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer stockQuantity;
+	protected BigDecimal stockQuantity;
 
 	@Override
 	public Availability clone() throws CloneNotSupportedException {

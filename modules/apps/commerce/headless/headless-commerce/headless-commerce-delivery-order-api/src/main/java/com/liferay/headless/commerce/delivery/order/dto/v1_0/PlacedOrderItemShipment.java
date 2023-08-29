@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -308,18 +310,19 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long orderId;
 
-	@Schema
-	public Integer getQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	@JsonIgnore
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -334,7 +337,7 @@ public class PlacedOrderItemShipment implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
 	@DecimalMin("0")
 	@Schema(example = "31130")
@@ -534,6 +537,34 @@ public class PlacedOrderItemShipment implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String trackingURL;
+
+	@Schema(example = "m")
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String unitOfMeasureKey;
 
 	@Override
 	public boolean equals(Object object) {
@@ -768,6 +799,20 @@ public class PlacedOrderItemShipment implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(trackingURL));
+
+			sb.append("\"");
+		}
+
+		if (unitOfMeasureKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureKey));
 
 			sb.append("\"");
 		}

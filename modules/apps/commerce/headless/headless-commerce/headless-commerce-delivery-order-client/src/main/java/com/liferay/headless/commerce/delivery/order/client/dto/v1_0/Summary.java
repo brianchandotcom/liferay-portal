@@ -10,6 +10,8 @@ import com.liferay.headless.commerce.delivery.order.client.serdes.v1_0.SummarySe
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -46,16 +48,16 @@ public class Summary implements Cloneable, Serializable {
 
 	protected String currency;
 
-	public Integer getItemsQuantity() {
+	public BigDecimal getItemsQuantity() {
 		return itemsQuantity;
 	}
 
-	public void setItemsQuantity(Integer itemsQuantity) {
+	public void setItemsQuantity(BigDecimal itemsQuantity) {
 		this.itemsQuantity = itemsQuantity;
 	}
 
 	public void setItemsQuantity(
-		UnsafeSupplier<Integer, Exception> itemsQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> itemsQuantityUnsafeSupplier) {
 
 		try {
 			itemsQuantity = itemsQuantityUnsafeSupplier.get();
@@ -65,7 +67,7 @@ public class Summary implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer itemsQuantity;
+	protected BigDecimal itemsQuantity;
 
 	public String[] getShippingDiscountPercentages() {
 		return shippingDiscountPercentages;

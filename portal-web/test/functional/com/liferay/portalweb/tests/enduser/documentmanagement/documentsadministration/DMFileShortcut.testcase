@@ -95,6 +95,94 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test ensures that a file shortcut's tags can be copied from a parent to child site."
+	@priority = 4
+	test CanCopyTagFromDepotToConnectedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name 2");
+
+		JSONDepot.addDepot(
+			depotDescription = "depot description",
+			depotName = "Test Depot Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "Tag Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name 2",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			siteName = "Site Name 2");
+
+		Refresh();
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(siteURLKey = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		Refresh();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTagInfo(tagName = "tag name");
+	}
+
+	@description = "This test ensures that a file shortcut's tags can be copied from a parent to child site."
+	@priority = 4
+	test CanCopyTagFromParentToChildSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(
+			parentSiteName = "Site Name",
+			siteName = "Child Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "Tag Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addShortcut(
+			dmDocumentTitle = "DM Document Title",
+			sourceGroupName = "Guest",
+			targetGroupName = "Site Name");
+
+		Refresh();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Child Site Name");
+
+		Refresh();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "child-site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewTagInfo(tagName = "tag name");
+	}
+
 	@description = "This test covers LPS-155147. It ensures that a user downloading a shortcut will download the related document."
 	@priority = 4
 	test CanDownloadFileThroughShortcut {

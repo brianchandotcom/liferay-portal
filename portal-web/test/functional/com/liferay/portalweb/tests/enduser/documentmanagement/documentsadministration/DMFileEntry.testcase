@@ -747,7 +747,8 @@ definition {
 		DMDocument.copy(
 			dmDocumentTitle = "DM Document Title",
 			homeFolder = "true",
-			siteName = "Global");
+			siteName = "Global",
+			viewInfo = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -831,6 +832,109 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test ensures that a document's ratings can be copied from an asset library to a connected site."
+	@priority = 4
+	test CanCopyRatingFromDepotToConnectedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "depot description",
+			depotName = "Test Depot Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "This is a document",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Refresh();
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "This is a document");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateStar(ratingStarCount = 2);
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "This is a document",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		Refresh();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "This is a document",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.expandInfo();
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "2.0",
+			ratingStarCount = 2);
+	}
+
+	@description = "This test ensures that a document's ratings can be copied from a parent to child site."
+	@priority = 4
+	test CanCopyRatingFromParentToChildSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		HeadlessSite.addSite(
+			parentSiteName = "Site Name",
+			siteName = "Child Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		Refresh();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.expandInfo();
+
+		Ratings.rateStar(ratingStarCount = 2);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Child Site Name");
+
+		Refresh();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "child-site-name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.expandInfo();
+
+		Ratings.viewRateStar(
+			averageRatingStarCount = "2.0",
+			ratingStarCount = 2);
 	}
 
 	@description = "This test covers LPS-90736. It makes sure that all files are deleted when user selects all."

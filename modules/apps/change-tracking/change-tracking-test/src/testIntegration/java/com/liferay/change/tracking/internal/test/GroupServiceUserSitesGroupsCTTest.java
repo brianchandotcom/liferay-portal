@@ -46,8 +46,8 @@ public class GroupServiceUserSitesGroupsCTTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			GroupServiceUserSitesGroupsCTTest.class.getName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, GroupServiceUserSitesGroupsCTTest.class.getName(), null);
 		_group = GroupTestUtil.addGroup();
 	}
 

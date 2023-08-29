@@ -54,13 +54,11 @@ public class MFAFilter extends BaseFilter implements TryFilter {
 		String path = (String)httpServletRequest.getAttribute(
 			WebKeys.INVOKER_FILTER_URI);
 
-
 		if (path.contains("/c/portal/update_password")) {
-
 			boolean mfaEnabled = _mfaPolicy.isMFAEnabled(
-			GetterUtil.getLong(
-				httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
-				
+				GetterUtil.getLong(
+					httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
+
 			HttpSession httpSession = httpServletRequest.getSession();
 
 			httpSession.setAttribute(WebKeys.MFA_ENABLED, mfaEnabled);

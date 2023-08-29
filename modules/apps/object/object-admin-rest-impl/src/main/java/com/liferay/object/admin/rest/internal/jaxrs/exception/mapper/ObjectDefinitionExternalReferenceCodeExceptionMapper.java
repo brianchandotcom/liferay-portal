@@ -5,13 +5,19 @@
 
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
+import com.liferay.object.admin.rest.internal.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
 import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Selton Guedes
@@ -33,7 +39,21 @@ public class ObjectDefinitionExternalReferenceCodeExceptionMapper
 		ObjectDefinitionExternalReferenceCodeException
 			objectDefinitionExternalReferenceCodeException) {
 
-		return new Problem(objectDefinitionExternalReferenceCodeException);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage,
+				objectDefinitionExternalReferenceCodeException.getArguments(),
+				_language,
+				objectDefinitionExternalReferenceCodeException.getMessage(),
+				objectDefinitionExternalReferenceCodeException.
+					getMessageKey()));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

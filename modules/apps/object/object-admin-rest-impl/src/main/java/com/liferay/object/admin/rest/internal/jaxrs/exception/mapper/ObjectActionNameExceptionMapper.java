@@ -5,6 +5,7 @@
 
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
+import com.liferay.object.admin.rest.internal.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -43,8 +44,10 @@ public class ObjectActionNameExceptionMapper
 					"fieldName", "name"
 				).put(
 					"message",
-					_language.get(
-						_acceptLanguage.getPreferredLocale(),
+					ObjectExceptionMapperUtil.getTitle(
+						_acceptLanguage,
+						objectActionNameException.getArguments(), _language,
+						objectActionNameException.getMessage(),
 						objectActionNameException.getMessageKey())
 				)
 			).toString(),

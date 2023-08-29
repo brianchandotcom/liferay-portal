@@ -5,6 +5,7 @@
 
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
+import com.liferay.object.admin.rest.internal.jaxrs.exception.mapper.util.ObjectExceptionMapperUtil;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -38,8 +39,9 @@ public class ObjectFolderNameExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			_language.get(
-				_acceptLanguage.getPreferredLocale(),
+			ObjectExceptionMapperUtil.getTitle(
+				_acceptLanguage, objectFolderNameException.getArguments(),
+				_language, objectFolderNameException.getMessage(),
 				objectFolderNameException.getMessageKey()));
 	}
 

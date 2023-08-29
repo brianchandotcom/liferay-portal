@@ -243,7 +243,7 @@ public class GetLayoutReportsDataStrutsActionTest {
 		Assert.assertEquals("Performance", jsonObject.getString("name"));
 		Assert.assertEquals(
 			"http://localhost:8080/layout_reports" +
-				"/get_render_times_data?p_l_id=" +
+				"/get_layout_item_data?p_l_id=" +
 					String.valueOf(layout.getPlid()),
 			jsonObject.getString("url"));
 	}

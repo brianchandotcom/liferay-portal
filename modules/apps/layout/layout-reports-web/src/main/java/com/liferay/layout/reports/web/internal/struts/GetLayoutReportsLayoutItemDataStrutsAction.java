@@ -67,10 +67,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mikel Lorza
  */
 @Component(
-	property = "path=/layout_reports/get_render_times_data",
+	property = "path=/layout_reports/get_layout_item_data",
 	service = StrutsAction.class
 )
-public class GetLayoutReportsRenderTimesDataStrutsAction
+public class GetLayoutReportsLayoutItemDataStrutsAction
 	implements StrutsAction {
 
 	@Override
@@ -478,7 +478,7 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetLayoutReportsRenderTimesDataStrutsAction.class);
+		GetLayoutReportsLayoutItemDataStrutsAction.class);
 
 	@Reference
 	private FragmentCollectionContributorRegistry

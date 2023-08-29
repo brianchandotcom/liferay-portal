@@ -77,7 +77,7 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 						String url = HttpComponentsUtil.addParameter(
 							themeDisplay.getPortalURL() +
 								themeDisplay.getPathMain() +
-									"/layout_reports/get_render_times_data",
+									"/layout_reports/get_layout_item_data",
 							"p_l_id", themeDisplay.getPlid());
 
 						long segmentsExperienceId = ParamUtil.getLong(

@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.PropsValues;
@@ -40,11 +40,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alexander Chow
  * @author Mika Koivisto
  * @author Miguel Pastor
  */
+@Component(
+	property = "type=" + DLProcessorConstants.RAW_METADATA_PROCESSOR,
+	service = DLProcessor.class
+)
 public class RawMetadataProcessorImpl
 	implements DLProcessor, RawMetadataProcessor {
 
@@ -74,7 +81,7 @@ public class RawMetadataProcessorImpl
 	@Override
 	public void generateMetadata(FileVersion fileVersion) {
 		long fileEntryMetadataCount =
-			DLFileEntryMetadataLocalServiceUtil.
+			_dlFileEntryMetadataLocalService.
 				getFileVersionFileEntryMetadatasCount(
 					fileVersion.getFileVersionId());
 
@@ -130,16 +137,16 @@ public class RawMetadataProcessorImpl
 		}
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureManagerUtil.getClassStructures(
+			_ddmStructureManager.getClassStructures(
 				fileVersion.getCompanyId(),
-				PortalUtil.getClassNameId(RawMetadataProcessor.class));
+				_portal.getClassNameId(RawMetadataProcessor.class));
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(fileVersion.getGroupId());
 		serviceContext.setUserId(fileVersion.getUserId());
 
-		DLFileEntryMetadataLocalServiceUtil.updateFileEntryMetadata(
+		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 			fileVersion.getCompanyId(), ddmStructures,
 			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 			rawMetadataMap, serviceContext);
@@ -180,5 +187,14 @@ public class RawMetadataProcessorImpl
 			Arrays.asList(
 				PropsValues.
 					DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES));
+
+	@Reference
+	private DDMStructureManager _ddmStructureManager;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -6,9 +6,11 @@ definition {
 	function assertPartialText(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
-		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.assertPartialTextCaseInsensitive(${locator1}, ${value1});
+		selenium.waitForTextMatches(${locator1}, "(?i).*${regex}.*");
+
+		selenium.assertTextMatches(${locator1}, "(?i).*${regex}.*");
 	}
 
 	function assertPartialTextAceEditor(locator1, value1) {
@@ -24,9 +26,9 @@ definition {
 
 		var regex = RegexUtil.escapeRegexChars("${value1}");
 
-		selenium.waitForTextMatches(argument1 = "${locator1}", argument2 = "(?i)${regex}");
+		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
-		selenium.assertTextMatches(argument1 = "${locator1}", argument2 = "(?i)${regex}");
+		selenium.assertTextMatches(${locator1}, "(?i)${regex}");
 	}
 
 	function assertTextCaseSensitive(locator1, value1) {

@@ -170,7 +170,9 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars(${value1});
+
+		selenium.waitForTextMatches(${locator1}, "(?i).*${regex}.*");
 
 		selenium.waitForVisible(${locator1}, "false");
 

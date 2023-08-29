@@ -10,6 +10,8 @@ package com.liferay.exportimport.constants;
  */
 public class ExportImportBackgroundTaskContextMapConstants {
 
+	public static final String ASSET_TITLES = "assetTitles";
+
 	public static final String MANIFEST_SUMMARY = "manifestSummary";
 
 	public static final String MANIFEST_SUMMARY_KEYS = "manifestSummaryKeys";

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.web.filter;
+package com.liferay.multi.factor.authentication.web.internal.filter;
 
 import com.liferay.multi.factor.authentication.web.internal.policy.MFAPolicy;
 import com.liferay.portal.kernel.log.Log;

@@ -7,8 +7,8 @@ package com.liferay.headless.builder.internal.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.application.endpoint.EndpointMatcher;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
-import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -32,8 +32,9 @@ public class HeadlessBuilderResourceImpl {
 	public HeadlessBuilderResourceImpl(
 		APIApplication apiApplication, EndpointHelper endpointHelper) {
 
-		_apiApplication = apiApplication;
 		_endpointHelper = endpointHelper;
+
+		setApiApplication(apiApplication);
 	}
 
 	@GET
@@ -67,6 +68,7 @@ public class HeadlessBuilderResourceImpl {
 
 	public void setApiApplication(APIApplication apiApplication) {
 		_apiApplication = apiApplication;
+		_endpointMatcher = new EndpointMatcher(apiApplication.getEndpoints());
 	}
 
 	private Response _get(
@@ -75,41 +77,36 @@ public class HeadlessBuilderResourceImpl {
 			String sortString)
 		throws Exception {
 
-		for (APIApplication.Endpoint endpoint :
-				_apiApplication.getEndpoints()) {
+		APIApplication.Endpoint endpoint = _endpointMatcher.getEndpoint(
+			"/" + path);
 
-			if ((endpoint.getScope() != scope) ||
-				!PathUtil.matchEndpoint(endpoint, "/" + path)) {
+		if ((endpoint == null) || (endpoint.getScope() != scope)) {
+			throw new NoSuchModelException(
+				String.format(
+					"Endpoint /%s does not exist for %s", path,
+					_apiApplication.getTitle()));
+		}
 
-				continue;
-			}
-
-			if (endpoint.getResponseSchema() == null) {
-				return Response.noContent(
-				).build();
-			}
-
-			if (Objects.equals(
-					endpoint.getRetrieveType(),
-					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
-
-				return Response.ok(
-					_endpointHelper.getResponseEntityMap(
-						_company.getCompanyId(), endpoint, path)
-				).build();
-			}
-
-			return Response.ok(
-				_endpointHelper.getResponseEntityMapsPage(
-					_acceptLanguage, _company.getCompanyId(), endpoint,
-					filterString, pagination, scopeKey, sortString)
+		if (endpoint.getResponseSchema() == null) {
+			return Response.noContent(
 			).build();
 		}
 
-		throw new NoSuchModelException(
-			String.format(
-				"Endpoint /%s does not exist for %s", path,
-				_apiApplication.getTitle()));
+		if (Objects.equals(
+				endpoint.getRetrieveType(),
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
+
+			return Response.ok(
+				_endpointHelper.getResponseEntityMap(
+					_company.getCompanyId(), endpoint, path)
+			).build();
+		}
+
+		return Response.ok(
+			_endpointHelper.getResponseEntityMapsPage(
+				_acceptLanguage, _company.getCompanyId(), endpoint,
+				filterString, pagination, scopeKey, sortString)
+		).build();
 	}
 
 	@Context
@@ -121,5 +118,6 @@ public class HeadlessBuilderResourceImpl {
 	private Company _company;
 
 	private final EndpointHelper _endpointHelper;
+	private EndpointMatcher _endpointMatcher;
 
 }

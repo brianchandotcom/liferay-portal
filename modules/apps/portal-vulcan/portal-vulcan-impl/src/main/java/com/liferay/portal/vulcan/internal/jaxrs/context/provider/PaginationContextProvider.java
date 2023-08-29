@@ -58,16 +58,16 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 					HeadlessAPICompanyConfiguration.class,
 					_portal.getCompanyId(httpServletRequest));
 
-			int maxPageSize =
+			int pageSizeLimit =
 				headlessAPICompanyConfiguration.pageSizeLimit();
 
-			if (maxPageSize <= 0) {
+			if (pageSizeLimit <= 0) {
 				return Pagination.of(
 					page, (pageSize <= 0) ? QueryUtil.ALL_POS : pageSize);
 			}
 
-			if ((pageSize > maxPageSize) || (pageSize <= 0)) {
-				return Pagination.of(page, maxPageSize);
+			if ((pageSize > pageSizeLimit) || (pageSize <= 0)) {
+				return Pagination.of(page, pageSizeLimit);
 			}
 
 			return Pagination.of(page, pageSize);

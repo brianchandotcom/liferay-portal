@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -224,39 +223,8 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 				endpoint.getMethod(), _formatPath(endpoint),
 				endpoint.getRetrieveType(), schemaName));
 
-		if (Objects.equals(
-				endpoint.getRetrieveType(),
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
-
-			operation.setParameters(
-				ListUtil.fromArray(
-					new Parameter() {
-						{
-							setIn("path");
-							setName(
-								OpenAPIUtil.getPathParameter(
-									endpoint.getPath()));
-							setRequired(true);
-							setSchema(new StringSchema());
-						}
-					}));
-		}
-
-		if (Objects.equals(endpoint.getMethod(), Http.Method.GET) &&
-			Objects.equals(
-				endpoint.getRetrieveType(),
-				APIApplication.Endpoint.RetrieveType.COLLECTION)) {
-
+		if (Objects.equals(endpoint.getMethod(), Http.Method.GET)) {
 			List<Parameter> parameters = new ArrayList<>();
-
-			parameters.add(
-				new Parameter() {
-					{
-						setIn("query");
-						setName("filter");
-						setSchema(new StringSchema());
-					}
-				});
 
 			if (Objects.equals(
 					endpoint.getScope(), APIApplication.Endpoint.Scope.GROUP)) {
@@ -272,30 +240,62 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 					});
 			}
 
-			parameters.add(
-				new Parameter() {
-					{
-						setIn("query");
-						setName("page");
-						setSchema(new StringSchema());
-					}
-				});
-			parameters.add(
-				new Parameter() {
-					{
-						setIn("query");
-						setName("pageSize");
-						setSchema(new StringSchema());
-					}
-				});
-			parameters.add(
-				new Parameter() {
-					{
-						setIn("query");
-						setName("sort");
-						setSchema(new StringSchema());
-					}
-				});
+			if (Objects.equals(
+					endpoint.getRetrieveType(),
+					APIApplication.Endpoint.RetrieveType.COLLECTION)) {
+
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("query");
+							setName("filter");
+							setSchema(new StringSchema());
+						}
+					});
+
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("query");
+							setName("page");
+							setSchema(new StringSchema());
+						}
+					});
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("query");
+							setName("pageSize");
+							setSchema(new StringSchema());
+						}
+					});
+
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("query");
+							setName("sort");
+							setSchema(new StringSchema());
+						}
+					});
+			}
+
+			if (Objects.equals(
+					endpoint.getRetrieveType(),
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
+
+				parameters.add(
+					new Parameter() {
+						{
+							setIn("path");
+							setName(
+								OpenAPIUtil.getPathParameter(
+									endpoint.getPath()));
+							setRequired(true);
+							setSchema(new StringSchema());
+						}
+					});
+			}
 
 			operation.setParameters(parameters);
 		}

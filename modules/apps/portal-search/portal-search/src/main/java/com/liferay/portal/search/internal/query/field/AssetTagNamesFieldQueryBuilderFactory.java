@@ -22,13 +22,13 @@ public class AssetTagNamesFieldQueryBuilderFactory
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String fieldName) {
 		if (fieldName.startsWith(Field.ASSET_TAG_NAMES)) {
-			return titleQueryBuilder;
+			return titleFieldQueryBuilder;
 		}
 
 		return null;
 	}
 
 	@Reference(target = "(query.builder.type=title)")
-	protected FieldQueryBuilder titleQueryBuilder;
+	protected FieldQueryBuilder titleFieldQueryBuilder;
 
 }

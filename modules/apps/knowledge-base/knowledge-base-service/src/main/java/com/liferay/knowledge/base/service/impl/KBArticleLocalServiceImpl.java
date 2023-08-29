@@ -1632,8 +1632,26 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					displayDate, " for company ", companyId));
 		}
 
-		_publishKBArticlesByCompany(
-			_companyLocalService.getCompany(companyId), displayDate);
+		Company company = _companyLocalService.getCompany(companyId);
+
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
+
+		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndDisplayDate(
+			company.getCompanyId(), displayDate);
+
+		for (KBArticle kbArticle : kbArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Publish KB Article ", kbArticle.getKbArticleId(),
+						" with display date ", kbArticle.getDisplayDate()));
+			}
+
+			updateStatus(
+				userId, kbArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED,
+				_getServiceContext(company, kbArticle));
+		}
 	}
 
 	private void _checkKBArticlesByExpirationDate(
@@ -1647,8 +1665,27 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					expirationDate, " for company ", companyId));
 		}
 
-		_expireKBArticlesByCompany(
-			_companyLocalService.getCompany(companyId), expirationDate);
+		Company company = _companyLocalService.getCompany(companyId);
+
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
+
+		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
+			company.getCompanyId(), expirationDate);
+
+		for (KBArticle kbArticle : kbArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Expiring KB Article ", kbArticle.getKbArticleId(),
+						" with expiration date ",
+						kbArticle.getExpirationDate()));
+			}
+
+			updateStatus(
+				userId, kbArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_EXPIRED,
+				_getServiceContext(company, kbArticle));
+		}
 	}
 
 	private void _checkKBArticlesByReviewDate(long companyId, Date reviewDate)
@@ -1662,8 +1699,30 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 					" for company ", companyId));
 		}
 
-		_notifyReviewKBArticlesByCompany(
-			_companyLocalService.getCompany(companyId), reviewDate);
+		Company company = _companyLocalService.getCompany(companyId);
+
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
+
+		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
+			company.getCompanyId(), _dates.get(company.getCompanyId()),
+			reviewDate);
+
+		for (KBArticle kbArticle : kbArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Sending review notification for article ",
+						kbArticle.getKbArticleId(), " with reviewDate ",
+						kbArticle.getReviewDate()));
+			}
+
+			_notify(
+				SetUtil.fromArray(
+					_NOTIFICATION_RECEIVER_OWNER,
+					_NOTIFICATION_RECEIVER_SUBSCRIBER),
+				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW,
+				_getServiceContext(company, kbArticle));
+		}
 	}
 
 	private void _deleteAssets(KBArticle kbArticle) throws PortalException {
@@ -1694,31 +1753,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		for (Subscription subscription : subscriptions) {
 			unsubscribeKBArticle(
 				subscription.getUserId(), subscription.getClassPK());
-		}
-	}
-
-	private void _expireKBArticlesByCompany(
-			Company company, Date expirationDate)
-		throws PortalException {
-
-		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
-
-		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
-			company.getCompanyId(), expirationDate);
-
-		for (KBArticle kbArticle : kbArticles) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Expiring KB Article ", kbArticle.getKbArticleId(),
-						" with expiration date ",
-						kbArticle.getExpirationDate()));
-			}
-
-			updateStatus(
-				userId, kbArticle.getResourcePrimKey(),
-				WorkflowConstants.STATUS_EXPIRED,
-				_getServiceContext(company, kbArticle));
 		}
 	}
 
@@ -2252,57 +2286,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	private void _notifyReviewKBArticlesByCompany(
-			Company company, Date reviewDate)
-		throws PortalException {
-
-		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
-
-		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
-			company.getCompanyId(), _dates.get(company.getCompanyId()),
-			reviewDate);
-
-		for (KBArticle kbArticle : kbArticles) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Sending review notification for article ",
-						kbArticle.getKbArticleId(), " with reviewDate ",
-						kbArticle.getReviewDate()));
-			}
-
-			_notify(
-				SetUtil.fromArray(
-					_NOTIFICATION_RECEIVER_OWNER,
-					_NOTIFICATION_RECEIVER_SUBSCRIBER),
-				userId, kbArticle, _NOTIFICATION_ACTION_REVIEW,
-				_getServiceContext(company, kbArticle));
-		}
-	}
-
-	private void _publishKBArticlesByCompany(Company company, Date displayDate)
-		throws PortalException {
-
-		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
-
-		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndDisplayDate(
-			company.getCompanyId(), displayDate);
-
-		for (KBArticle kbArticle : kbArticles) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Publish KB Article ", kbArticle.getKbArticleId(),
-						" with display date ", kbArticle.getDisplayDate()));
-			}
-
-			updateStatus(
-				userId, kbArticle.getResourcePrimKey(),
-				WorkflowConstants.STATUS_APPROVED,
-				_getServiceContext(company, kbArticle));
-		}
 	}
 
 	private void _removeKBArticleAttachments(long[] removeFileEntryIds)

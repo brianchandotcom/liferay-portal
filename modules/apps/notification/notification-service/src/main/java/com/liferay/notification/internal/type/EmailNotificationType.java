@@ -247,8 +247,7 @@ public class EmailNotificationType extends BaseNotificationType {
 					}
 
 					return _formatTo(
-						formatLocalizedContent(to, notificationContext),
-						notificationContext);
+						formatLocalizedContent(to, notificationContext));
 				}
 			).build();
 
@@ -496,9 +495,7 @@ public class EmailNotificationType extends BaseNotificationType {
 		return stringWriter.toString();
 	}
 
-	private String _formatTo(String to, NotificationContext notificationContext)
-		throws PortalException {
-
+	private String _formatTo(String to) {
 		if (Validator.isNull(to)) {
 			return StringPool.BLANK;
 		}
@@ -511,8 +508,7 @@ public class EmailNotificationType extends BaseNotificationType {
 			emailAddresses.add(matcher.group());
 		}
 
-		return formatLocalizedContent(
-			StringUtil.merge(emailAddresses), notificationContext);
+		return StringUtil.merge(emailAddresses);
 	}
 
 	private List<Long> _getFileEntryIds(

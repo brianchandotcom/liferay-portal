@@ -596,14 +596,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		boolean displayStockQuantity = ParamUtil.getBoolean(
 			actionRequest, "displayStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
-		int minStockQuantity = ParamUtil.getInteger(
-			actionRequest, "minStockQuantity");
-		int minOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "minOrderQuantity");
-		int maxOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "maxOrderQuantity");
-		int multipleOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "multipleOrderQuantity");
+		BigDecimal minStockQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minStockQuantity", BigDecimal.ZERO);
+		BigDecimal minOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minOrderQuantity", BigDecimal.ZERO);
+		BigDecimal maxOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "maxOrderQuantity", BigDecimal.ZERO);
+		BigDecimal multipleOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "multipleOrderQuantity", BigDecimal.ZERO);
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 
@@ -617,21 +617,17 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryService.addCPDefinitionInventory(
 				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity,
-				BigDecimal.valueOf(minStockQuantity), backOrders,
-				BigDecimal.valueOf(minOrderQuantity),
-				BigDecimal.valueOf(maxOrderQuantity), allowedOrderQuantities,
-				BigDecimal.valueOf(multipleOrderQuantity));
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
 		}
 		else {
 			_cpDefinitionInventoryService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(),
 				cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity,
-				BigDecimal.valueOf(minStockQuantity), backOrders,
-				BigDecimal.valueOf(minOrderQuantity),
-				BigDecimal.valueOf(maxOrderQuantity), allowedOrderQuantities,
-				BigDecimal.valueOf(multipleOrderQuantity));
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
 		}
 
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(

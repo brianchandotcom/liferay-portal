@@ -76,8 +76,8 @@ public class CTEntrySearcherTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		_group = GroupTestUtil.addGroup();
 		_journalFolderClassNameId = _classNameLocalService.getClassNameId(
 			JournalFolder.class);

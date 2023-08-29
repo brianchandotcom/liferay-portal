@@ -52,8 +52,8 @@ public class UpgradeCTSchemaVersionTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			UpgradeCTSchemaVersionTest.class.getSimpleName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, UpgradeCTSchemaVersionTest.class.getSimpleName(), null);
 
 		_ctPreferences = _ctPreferencesLocalService.getCTPreferences(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());

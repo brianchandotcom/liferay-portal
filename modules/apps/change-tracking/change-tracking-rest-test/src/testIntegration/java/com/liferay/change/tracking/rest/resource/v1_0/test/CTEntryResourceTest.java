@@ -66,7 +66,7 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		throws Exception {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			testCompany.getCompanyId(), testCompany.getUserId(),
+			null, testCompany.getCompanyId(), testCompany.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		return ctCollection.getCtCollectionId();
@@ -116,7 +116,7 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 	private long _getCTCollectionId() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			testCompany.getCompanyId(), testCompany.getUserId(),
+			null, testCompany.getCompanyId(), testCompany.getUserId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		return ctCollection.getCtCollectionId();

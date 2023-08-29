@@ -41,8 +41,8 @@ public abstract class BaseTableReferenceDefinitionTestCase {
 	@Test
 	public void testDiscardCTEntry() throws Exception {
 		_ctCollection = _ctCollectionService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

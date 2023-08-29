@@ -65,7 +65,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					<c:when test="<%= segmentsConfigurationURL != null %>">
 						<clay:link
 							href="<%= segmentsConfigurationURL %>"
-							label='<%= LanguageUtil.get(request, "to-enable,-go-to-system-settings") %>'
+							label="to-enable,-go-to-system-settings"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -91,7 +91,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					<c:when test="<%= segmentsConfigurationURL != null %>">
 						<clay:link
 							href="<%= segmentsConfigurationURL %>"
-							label='<%= LanguageUtil.get(request, "to-enable,-go-to-system-settings") %>'
+							label="to-enable,-go-to-system-settings"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -197,7 +197,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					displayType="secondary"
 					href="<%= redirect %>"
 					id='<%= liferayPortletResponse.getNamespace() + "cancel" %>'
-					label='<%= LanguageUtil.get(request, "cancel") %>'
+					label="cancel"
 					type="button"
 				/>
 			</div>

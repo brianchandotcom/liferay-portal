@@ -36,9 +36,10 @@ public class RankingGetVisibleResultsBuilderTest
 
 		_rankingGetVisibleResultsBuilder = new RankingGetVisibleResultsBuilder(
 			complexQueryPartBuilderFactory, dlAppLocalService,
-			fastDateFormatFactory, rankingIndexName, rankingIndexReader,
-			_rankingSearchRequestHelper, resourceActions, resourceRequest,
-			resourceResponse, queries, searcher, searchRequestBuilderFactory);
+			fastDateFormatFactory, groupLocalService, rankingIndexName,
+			rankingIndexReader, _rankingSearchRequestHelper, resourceActions,
+			resourceRequest, resourceResponse, queries, searcher,
+			searchRequestBuilderFactory);
 	}
 
 	@Test

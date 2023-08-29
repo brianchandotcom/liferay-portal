@@ -3,24 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.portlet;
+package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
+import javax.portlet.RenderURL;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -31,7 +29,8 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
+public class ViewResultRankingsMVCRenderCommandTest
+	extends BaseRankingsPortletActionTestCase {
 
 	@ClassRule
 	@Rule
@@ -40,41 +39,42 @@ public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_resultRankingsPortlet = new ResultRankingsPortlet();
-
-		_setUpMVCCommanCache();
+		_viewResultRankingsMVCRenderCommand =
+			new ViewResultRankingsMVCRenderCommand();
 
 		setUpPortletPreferencesFactoryUtil();
 
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "documentToRankingTranslator",
+			_viewResultRankingsMVCRenderCommand, "documentToRankingTranslator",
 			_documentToRankingTranslator);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "indexNameBuilder", _indexNameBuilder);
+			_viewResultRankingsMVCRenderCommand, "indexNameBuilder",
+			_indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "language", language);
+			_viewResultRankingsMVCRenderCommand, "language", language);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "portal", portal);
+			_viewResultRankingsMVCRenderCommand, "portal", portal);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "queries", queries);
+			_viewResultRankingsMVCRenderCommand, "queries", queries);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "rankingIndexNameBuilder",
+			_viewResultRankingsMVCRenderCommand, "rankingIndexNameBuilder",
 			rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "searchEngineAdapter", searchEngineAdapter);
+			_viewResultRankingsMVCRenderCommand, "searchEngineAdapter",
+			searchEngineAdapter);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "searchEngineInformation",
+			_viewResultRankingsMVCRenderCommand, "searchEngineInformation",
 			_searchEngineInformation);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "searchRequestBuilderFactory",
+			_viewResultRankingsMVCRenderCommand, "searchRequestBuilderFactory",
 			_searchRequestBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "sorts", _sorts);
+			_viewResultRankingsMVCRenderCommand, "sorts", _sorts);
 	}
 
 	@Test
 	public void testRender() throws Exception {
-		_setUpRenderRequest();
+		_setUpRenderResponse();
 
 		setUpLanguageUtil("");
 		setUpPortal();
@@ -84,35 +84,21 @@ public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
 		setUpRenderResponse(_renderResponse);
 		setUpSearchEngineAdapter(Mockito.mock(SearchHits.class));
 
-		_resultRankingsPortlet.render(_renderRequest, _renderResponse);
+		_viewResultRankingsMVCRenderCommand.render(
+			_renderRequest, _renderResponse);
 
-		Mockito.verify(
-			_renderRequest, Mockito.times(1)
-		).getWindowState();
+		Assert.assertEquals(
+			"/view.jsp",
+			_viewResultRankingsMVCRenderCommand.render(
+				_renderRequest, _renderResponse));
 	}
 
-	private void _setUpMVCCommanCache() {
-		MVCCommandCache<?> mvcCommandCache = Mockito.mock(
-			MVCCommandCache.class);
-
+	private void _setUpRenderResponse() {
 		Mockito.doReturn(
-			MVCRenderCommand.EMPTY
+			Mockito.mock(RenderURL.class)
 		).when(
-			mvcCommandCache
-		).getMVCCommand(
-			Mockito.anyString()
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			_resultRankingsPortlet, "_renderMVCCommandCache", mvcCommandCache);
-	}
-
-	private void _setUpRenderRequest() {
-		Mockito.doReturn(
-			WindowState.MINIMIZED
-		).when(
-			_renderRequest
-		).getWindowState();
+			_renderResponse
+		).createRenderURL();
 	}
 
 	private final DocumentToRankingTranslator _documentToRankingTranslator =
@@ -123,11 +109,12 @@ public class ResultRankingsPortletTest extends BaseRankingsWebTestCase {
 		RenderRequest.class);
 	private final RenderResponse _renderResponse = Mockito.mock(
 		RenderResponse.class);
-	private ResultRankingsPortlet _resultRankingsPortlet;
 	private final SearchEngineInformation _searchEngineInformation =
 		Mockito.mock(SearchEngineInformation.class);
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory =
 		Mockito.mock(SearchRequestBuilderFactory.class);
 	private final Sorts _sorts = Mockito.mock(Sorts.class);
+	private ViewResultRankingsMVCRenderCommand
+		_viewResultRankingsMVCRenderCommand;
 
 }

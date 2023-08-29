@@ -27,25 +27,35 @@ public class RankingEntryDisplayContextTest {
 		_rankingEntryDisplayContext = new RankingEntryDisplayContext();
 
 		_rankingEntryDisplayContext.setAliases("aliases");
+		_rankingEntryDisplayContext.setGroupExternalReferenceCode(
+			"groupExternalReferenceCode");
 		_rankingEntryDisplayContext.setHiddenResultsCount("hiddenResultsCount");
 		_rankingEntryDisplayContext.setInactive(false);
 		_rankingEntryDisplayContext.setIndex("index");
 		_rankingEntryDisplayContext.setKeywords("keywords");
 		_rankingEntryDisplayContext.setPinnedResultsCount("pinnedResultsCount");
+		_rankingEntryDisplayContext.setSXPBlueprintExternalReferenceCode(
+			"sxpBlueprintExternalReferenceCode");
 		_rankingEntryDisplayContext.setUid("uid");
 
 		Assert.assertEquals(
 			"aliases", _rankingEntryDisplayContext.getAliases());
-		Assert.assertFalse(_rankingEntryDisplayContext.getInactive());
+		Assert.assertEquals(
+			"groupExternalReferenceCode",
+			_rankingEntryDisplayContext.getGroupExternalReferenceCode());
 		Assert.assertEquals(
 			"hiddenResultsCount",
 			_rankingEntryDisplayContext.getHiddenResultsCount());
+		Assert.assertFalse(_rankingEntryDisplayContext.getInactive());
 		Assert.assertEquals("index", _rankingEntryDisplayContext.getIndex());
 		Assert.assertEquals(
 			"keywords", _rankingEntryDisplayContext.getKeywords());
 		Assert.assertEquals(
 			"pinnedResultsCount",
 			_rankingEntryDisplayContext.getPinnedResultsCount());
+		Assert.assertEquals(
+			"sxpBlueprintExternalReferenceCode",
+			_rankingEntryDisplayContext.getSXPBlueprintExternalReferenceCode());
 		Assert.assertEquals("uid", _rankingEntryDisplayContext.getUid());
 	}
 

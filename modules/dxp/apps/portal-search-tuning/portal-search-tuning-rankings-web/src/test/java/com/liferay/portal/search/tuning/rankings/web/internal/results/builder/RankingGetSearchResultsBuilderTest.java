@@ -29,14 +29,16 @@ public class RankingGetSearchResultsBuilderTest
 	public void setUp() throws Exception {
 		_rankingGetSearchResultsBuilder = new RankingGetSearchResultsBuilder(
 			complexQueryPartBuilderFactory, dlAppLocalService,
-			fastDateFormatFactory, queries, resourceActions, resourceRequest,
-			resourceResponse, searcher, searchRequestBuilderFactory);
+			fastDateFormatFactory, groupLocalService, queries, resourceActions,
+			resourceRequest, resourceResponse, searcher,
+			searchRequestBuilderFactory);
 	}
 
 	@Test
 	public void testBuild() throws Exception {
 		setUpComplexQueryPartBuilderFactory(setUpComplexQueryPartBuilder());
 		setUpDLAppLocalService();
+		setUpGroupLocalServiceFetchGroup();
 		setUpFastDateFormatFactory();
 		setUpPortalUtil();
 		setUpQuery();

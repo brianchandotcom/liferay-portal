@@ -27,7 +27,7 @@ public abstract class BaseRankingResultsBuilderTestCase
 		).when(
 			rankingIndexReader
 		).fetch(
-			Mockito.any(), Mockito.nullable(String.class)
+			Mockito.nullable(String.class), Mockito.any()
 		);
 	}
 

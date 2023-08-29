@@ -5,18 +5,20 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.searcher;
 
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper.RankingSearchRequestHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,11 +98,12 @@ public class RankingSearchRequestContributorTest
 			true);
 
 		Mockito.doReturn(
-			Mockito.mock(Ranking.class)
+			Mockito.mock(List.class)
 		).when(
 			_rankingIndexReader
-		).fetchByQueryString(
-			Mockito.any(), Mockito.anyString()
+		).fetch(
+			Mockito.anyString(), Mockito.anyString(), Mockito.any(),
+			Mockito.anyString()
 		);
 
 		Mockito.doNothing(
@@ -117,6 +120,14 @@ public class RankingSearchRequestContributorTest
 		).when(
 			searchRequestBuilder
 		).build();
+
+		Mockito.doReturn(
+			Mockito.mock(SearchContext.class)
+		).when(
+			searchRequestBuilder
+		).withSearchContextGet(
+			Function.identity()
+		);
 
 		Assert.assertEquals(
 			searchRequest,

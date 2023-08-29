@@ -38,6 +38,14 @@ public abstract class BaseRankingsPortletActionTestCase
 			builder
 		).when(
 			builder
+		).groupExternalReferenceCode(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			builder
+		).when(
+			builder
 		).index(
 			Mockito.anyString()
 		);
@@ -56,6 +64,14 @@ public abstract class BaseRankingsPortletActionTestCase
 			builder
 		).rankingIndexName(
 			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			builder
+		).when(
+			builder
+		).sxpBlueprintExternalReferenceCode(
+			Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -116,31 +132,25 @@ public abstract class BaseRankingsPortletActionTestCase
 		ReflectionTestUtil.setFieldValue(
 			ranking, "_aliases", Arrays.asList("aliases"));
 		ReflectionTestUtil.setFieldValue(
+			ranking, "_groupExternalReferenceCode",
+			"groupExternalReferenceCode");
+		ReflectionTestUtil.setFieldValue(
 			ranking, "_hiddenDocumentIds",
 			new LinkedHashSet<String>(Arrays.asList("hiddenDocumentIds")));
 		ReflectionTestUtil.setFieldValue(
 			ranking, "_pins",
 			new ArrayList<Ranking.Pin>(
 				Arrays.asList(new Ranking.Pin(0, "id"))));
-
-		Mockito.doReturn(
-			Arrays.asList("hiddenDocumentIds")
-		).when(
-			ranking
-		).getHiddenDocumentIds();
-
-		Mockito.doReturn(
-			Arrays.asList("aliases")
-		).when(
-			ranking
-		).getAliases();
+		ReflectionTestUtil.setFieldValue(
+			ranking, "_sxpBlueprintExternalReferenceCode",
+			"sxpBlueprintExternalReferenceCode");
 
 		Mockito.doReturn(
 			ranking
 		).when(
 			rankingIndexReader
 		).fetch(
-			Mockito.any(), Mockito.anyString()
+			Mockito.anyString(), Mockito.any()
 		);
 	}
 

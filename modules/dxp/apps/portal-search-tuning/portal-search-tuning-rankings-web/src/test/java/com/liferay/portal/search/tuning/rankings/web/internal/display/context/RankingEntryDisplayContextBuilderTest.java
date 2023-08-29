@@ -43,6 +43,12 @@ public class RankingEntryDisplayContextBuilderTest {
 		).getAliases();
 
 		Mockito.doReturn(
+			"groupExternalReferenceCode"
+		).when(
+			_ranking
+		).getGroupExternalReferenceCode();
+
+		Mockito.doReturn(
 			Arrays.asList("blockIds")
 		).when(
 			_ranking
@@ -61,10 +67,10 @@ public class RankingEntryDisplayContextBuilderTest {
 		).getIndexName();
 
 		Mockito.doReturn(
-			"rankingDocumentId"
+			"name"
 		).when(
 			_ranking
-		).getRankingDocumentId();
+		).getName();
 
 		Mockito.doReturn(
 			"nameForDisplay"
@@ -79,10 +85,16 @@ public class RankingEntryDisplayContextBuilderTest {
 		).getPins();
 
 		Mockito.doReturn(
-			"name"
+			"rankingDocumentId"
 		).when(
 			_ranking
-		).getName();
+		).getRankingDocumentId();
+
+		Mockito.doReturn(
+			"sxpBlueprintExternalReferenceCode"
+		).when(
+			_ranking
+		).getSXPBlueprintExternalReferenceCode();
 
 		RankingEntryDisplayContext rankingEntryDisplayContext =
 			_rankingEntryDisplayContextBuilder.build();

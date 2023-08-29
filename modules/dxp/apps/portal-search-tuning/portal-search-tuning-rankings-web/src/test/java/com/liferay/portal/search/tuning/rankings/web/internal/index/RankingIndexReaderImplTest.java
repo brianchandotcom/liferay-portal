@@ -5,12 +5,14 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,13 +56,19 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 		Assert.assertEquals(
 			_setUpDocumentToRankingTranslator(),
 			_rankingIndexReaderImpl.fetch(
-				Mockito.mock(RankingIndexName.class), "id"));
+				"id", Mockito.mock(RankingIndexName.class)));
 	}
 
 	@Test
-	public void testFetchByQueryString() {
-		_setUpDocumentToRankingTranslator();
+	public void testFetchBlankQueryString() {
+		Assert.assertNull(
+			_rankingIndexReaderImpl.fetch(
+				null, StringPool.BLANK, Mockito.mock(RankingIndexName.class),
+				null));
+	}
 
+	@Test
+	public void testFetchQueryString() {
 		setUpQueries();
 		setUpSearchEngineAdapter(
 			setUpGetDocumentResponseGetDocument(
@@ -69,17 +77,12 @@ public class RankingIndexReaderImplTest extends BaseRankingsIndexTestCase {
 		setUpSearchEngineAdapter(
 			setUpSearchHits(Arrays.asList("queryStrings")));
 
-		Assert.assertEquals(
-			_setUpDocumentToRankingTranslator(),
-			_rankingIndexReaderImpl.fetchByQueryString(
-				Mockito.mock(RankingIndexName.class), "queryString"));
-	}
+		Ranking ranking = _setUpDocumentToRankingTranslator();
 
-	@Test
-	public void testFetchByQueryStringBlankQueryString() {
-		Assert.assertNull(
-			_rankingIndexReaderImpl.fetchByQueryString(
-				Mockito.mock(RankingIndexName.class), ""));
+		List<Ranking> rankings = _rankingIndexReaderImpl.fetch(
+			null, "queryString", Mockito.mock(RankingIndexName.class), null);
+
+		Assert.assertEquals(ranking, rankings.get(0));
 	}
 
 	@Test

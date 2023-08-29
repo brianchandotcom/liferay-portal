@@ -111,11 +111,11 @@ definition {
 				entity = "Endpoints",
 				title = "My-app");
 
-			var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+			var creationDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy", "UTC");
 
 			APIBuilderUI.filterByLastUpdated(
-				fromDate = ${currentDate},
-				toDate = ${currentDate});
+				fromDate = ${creationDate},
+				toDate = ${creationDate});
 		}
 
 		task ("Then I can see the endpoint is listed") {

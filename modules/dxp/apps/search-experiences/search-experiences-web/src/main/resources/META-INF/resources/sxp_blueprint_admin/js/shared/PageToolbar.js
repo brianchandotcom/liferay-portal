@@ -16,6 +16,8 @@ import React, {useContext, useState} from 'react';
 
 import formatLocaleWithDashes from '../utils/language/format_locale_with_dashes';
 import formatLocaleWithUnderscores from '../utils/language/format_locale_with_underscores';
+import sub from '../utils/language/sub';
+import EditERCModal from './EditERCModal';
 import EditTitleModal from './EditTitleModal';
 import ThemeContext from './ThemeContext';
 
@@ -62,9 +64,12 @@ export default function PageToolbar({
 	description,
 	descriptionI18n,
 	disableTitleAndDescriptionModal = false,
+	entityId,
+	externalReferenceCode,
 	isSubmitting,
 	onCancel,
 	onChangeTab,
+	onExternalReferenceCodeChange,
 	onSubmit,
 	onTitleAndDescriptionChange,
 	readOnly = false,
@@ -74,7 +79,7 @@ export default function PageToolbar({
 	titleAndDescriptionEdited,
 	titleI18n,
 }) {
-	const {availableLanguages, defaultLocale, locale} = useContext(
+	const {availableLanguages, defaultLocale, locale, sxpType} = useContext(
 		ThemeContext
 	);
 
@@ -106,7 +111,7 @@ export default function PageToolbar({
 			>
 				<ClayLayout.ContainerFluid>
 					<ClayToolbar.Nav>
-						<ClayToolbar.Item className="text-left" expand>
+						<ClayToolbar.Item className="border-right c-mr-3 c-pr-3 text-left">
 							{modalVisible && (
 								<EditTitleModal
 									disabled={disableTitleAndDescriptionModal}
@@ -223,6 +228,65 @@ export default function PageToolbar({
 							)}
 						</ClayToolbar.Item>
 
+						<ClayToolbar.Item className="text-3 text-left" expand>
+							<div>
+								<span className="c-mr-1">
+									{Liferay.Language.get('id')}:
+								</span>
+
+								<strong className="text-dark">
+									{entityId}
+								</strong>
+							</div>
+
+							<div className="entry-heading-edit-button">
+								<span className="c-mr-1">
+									{Liferay.Language.get('erc')}:
+								</span>
+
+								<strong className="text-dark">
+									{externalReferenceCode}
+								</strong>
+
+								<ClayTooltipProvider>
+									<span
+										className="c-ml-2 text-secondary"
+										data-tooltip-align="bottom-left"
+										title={sub(
+											Liferay.Language.get(
+												'unique-key-for-referencing-the-x'
+											),
+											[
+												sxpType === 'sxpBlueprint'
+													? Liferay.Language.get(
+															'blueprint'
+													  )
+													: Liferay.Language.get(
+															'element'
+													  ),
+											]
+										)}
+									>
+										<ClayIcon symbol="question-circle" />
+									</span>
+								</ClayTooltipProvider>
+
+								{!readOnly && (
+									<EditERCModal
+										externalReferenceCode={
+											externalReferenceCode
+										}
+										onSubmit={onExternalReferenceCodeChange}
+									>
+										<ClayIcon
+											className="c-ml-2 entry-heading-edit-icon text-secondary"
+											symbol="pencil"
+										/>
+									</EditERCModal>
+								)}
+							</div>
+						</ClayToolbar.Item>
+
 						{children}
 
 						{!!children && (
@@ -294,9 +358,12 @@ PageToolbar.propTypes = {
 	description: PropTypes.string,
 	descriptionI18n: PropTypes.object,
 	disableTitleAndDescriptionModal: PropTypes.bool,
+	entityId: PropTypes.string,
+	externalReferenceCode: PropTypes.string,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,
+	onExternalReferenceCodeChange: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
 	onTitleAndDescriptionChange: PropTypes.func,
 	readOnly: PropTypes.bool,

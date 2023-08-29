@@ -57,6 +57,7 @@ export default function ({
 				locale,
 				namespace,
 				redirectURL,
+				sxpType: 'sxpBlueprint',
 			}}
 		>
 			<div className="edit-sxp-blueprint-root">
@@ -69,6 +70,9 @@ export default function ({
 							resource.description_i18n,
 							transformLocale
 						)}
+						initialExternalReferenceCode={
+							resource.externalReferenceCode
+						}
 						initialSXPElementInstances={resource.elementInstances}
 						initialTitle={resource.title}
 						initialTitleI18n={renameKeys(

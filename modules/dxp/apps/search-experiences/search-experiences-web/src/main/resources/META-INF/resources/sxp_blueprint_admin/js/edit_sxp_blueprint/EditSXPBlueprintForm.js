@@ -76,6 +76,7 @@ function EditSXPBlueprintForm({
 	initialConfiguration = {},
 	initialDescription = '',
 	initialDescriptionI18n = {},
+	initialExternalReferenceCode,
 	initialSXPElementInstances = [],
 	initialTitle = '',
 	initialTitleI18n = {},
@@ -220,6 +221,8 @@ function EditSXPBlueprintForm({
 							formatLocaleWithUnderscores
 						),
 						elementInstances,
+						externalReferenceCode:
+							formik.values.externalReferenceCode,
 						title_i18n: renameKeys(
 							formik.values.title_i18n,
 							formatLocaleWithUnderscores
@@ -390,6 +393,7 @@ function EditSXPBlueprintForm({
 					id: index,
 				})
 			),
+			externalReferenceCode: initialExternalReferenceCode,
 			frameworkConfig: initialConfiguration.generalConfiguration || {
 				clauseContributorsExcludes: [],
 				clauseContributorsIncludes: [],
@@ -603,6 +607,10 @@ function EditSXPBlueprintForm({
 		formik.setFieldValue('title_i18n', title_i18n);
 
 		setIsTitleAndDescriptionEdited(true);
+	};
+
+	const _handleChangeExternalReferenceCode = (externalReferenceCode) => {
+		formik.setFieldValue('externalReferenceCode', externalReferenceCode);
 	};
 
 	const _handleCloseSidebar = () => {
@@ -1027,9 +1035,14 @@ function EditSXPBlueprintForm({
 			<PageToolbar
 				description={initialDescription}
 				descriptionI18n={formik.values.description_i18n}
+				entityId={sxpBlueprintId}
+				externalReferenceCode={formik.values.externalReferenceCode}
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
 				onChangeTab={_handleChangeTab}
+				onExternalReferenceCodeChange={
+					_handleChangeExternalReferenceCode
+				}
 				onSubmit={_handleSubmit}
 				onTitleAndDescriptionChange={_handleChangeTitleAndDescription}
 				tab={tab}
@@ -1087,6 +1100,7 @@ EditSXPBlueprintForm.propTypes = {
 	initialSXPElementInstances: PropTypes.arrayOf(PropTypes.object),
 	initialTitle: PropTypes.string,
 	initialTitleI18n: PropTypes.object,
+	sxpBlueprintExternalReferenceCode: PropTypes.string,
 	sxpBlueprintId: PropTypes.string,
 };
 

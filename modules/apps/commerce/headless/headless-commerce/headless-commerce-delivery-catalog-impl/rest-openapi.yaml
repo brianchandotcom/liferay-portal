@@ -97,8 +97,9 @@ components:
                     example: Available
                     type: string
                 stockQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
             type: object
         Category:
             properties:
@@ -460,8 +461,9 @@ components:
                         - 30
                         - 40
                     items:
-                        format: int32
-                        type: integer
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
                     type: array
                 displayAvailability:
                     example: true
@@ -478,17 +480,21 @@ components:
                         The low stock action that will be performed when a product is out of stock
                     type: string
                 maxOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minStockQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 multipleOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
             type: object
         ProductOption:
             properties:
@@ -742,11 +748,13 @@ components:
                     example: "12341234"
                     type: string
                 maxOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minOrderQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 neverExpire:
                     example: true
                     type: boolean

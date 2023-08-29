@@ -762,7 +762,7 @@ components:
                     items:
                         $ref: "#/components/schemas/TierPrice"
                     type: array
-                unitOfMeasure:
+                unitOfMeasureKey:
                     example: m
                     type: string
             required:
@@ -1449,6 +1449,9 @@ components:
                     minimum: 0
                     type: integer
                 priceFormatted:
+                    type: string
+                unitOfMeasureKey:
+                    example: m
                     type: string
             required:
                 - minimumQuantity

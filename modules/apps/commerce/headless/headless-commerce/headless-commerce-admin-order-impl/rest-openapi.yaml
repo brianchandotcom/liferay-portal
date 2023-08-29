@@ -746,10 +746,10 @@ components:
                     minimum: 0
                     type: number
                 quantity:
-                    example: 2
-                    format: int32
+                    example: 2.1
+                    format: bigdecimal
                     minimum: 0
-                    type: integer
+                    type: number
                 replacedSku:
                     example: "1234123124"
                     readOnly: true
@@ -762,10 +762,10 @@ components:
                     format: date
                     type: string
                 shippedQuantity:
-                    example: 1
-                    format: int32
+                    example: 1.1
+                    format: bigdecimal
                     minimum: 0
-                    type: integer
+                    type: number
                 shippingAddress:
                     $ref: "#/components/schemas/ShippingAddress"
                 shippingAddressId:
@@ -789,6 +789,9 @@ components:
                     type: boolean
                 unitOfMeasure:
                     example: pc
+                    type: string
+                unitOfMeasureKey:
+                    example: s
                     type: string
                 unitPrice:
                     example: 101

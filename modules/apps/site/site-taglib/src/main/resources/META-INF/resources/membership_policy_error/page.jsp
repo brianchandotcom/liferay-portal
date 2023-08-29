@@ -5,7 +5,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/membership_policy_error/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:error exception="<%= MembershipPolicyException.class %>">
 

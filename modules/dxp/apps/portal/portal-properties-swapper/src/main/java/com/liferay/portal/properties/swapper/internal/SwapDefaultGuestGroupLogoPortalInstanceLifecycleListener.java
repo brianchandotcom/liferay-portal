@@ -44,7 +44,7 @@ public class SwapDefaultGuestGroupLogoPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (company.getCompanyId() != _portal.getDefaultCompanyId()) {
+		if (company.getCompanyId() != _defaultCompanyId) {
 			return;
 		}
 
@@ -78,7 +78,11 @@ public class SwapDefaultGuestGroupLogoPortalInstanceLifecycleListener
 			Collections.singletonMap(
 				PropsKeys.COMPANY_DEFAULT_WEB_ID,
 				PropsValues.COMPANY_DEFAULT_WEB_ID));
+
+		_defaultCompanyId = _portal.getDefaultCompanyId();
 	}
+
+	private long _defaultCompanyId;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

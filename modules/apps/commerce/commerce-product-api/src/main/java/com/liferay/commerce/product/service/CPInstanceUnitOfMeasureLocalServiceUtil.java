@@ -246,6 +246,12 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 		return getService().fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
 	}
 
+	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+		long companyId, String key, String sku) {
+
+		return getService().fetchCPInstanceUnitOfMeasure(companyId, key, sku);
+	}
+
 	/**
 	 * Returns the cp instance unit of measure with the matching UUID and company.
 	 *

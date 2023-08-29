@@ -226,6 +226,10 @@ public interface CPInstanceUnitOfMeasureLocalService
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 		long cpInstanceId, String key);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+		long companyId, String key, String sku);
+
 	/**
 	 * Returns the cp instance unit of measure with the matching UUID and company.
 	 *

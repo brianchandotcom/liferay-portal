@@ -69,9 +69,9 @@ String textCssClass = menuAccessDisplayContext.isShowControlMenuByRole() ? "modi
 				disabled="<%= !menuAccessDisplayContext.isShowControlMenuByRole() %>"
 				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "selectRoleLink" %>'
-				label='<%= LanguageUtil.get(request, "select") %>'
+				label="select"
 				small="<%= true %>"
-				title='<%= LanguageUtil.get(request, "select") %>'
+				title="select"
 			/>
 		</clay:content-col>
 	</clay:content-row>
@@ -110,7 +110,7 @@ String textCssClass = menuAccessDisplayContext.isShowControlMenuByRole() ? "modi
 								displayType="secondary"
 								icon="times-circle"
 								monospaced="<%= true %>"
-								title='<%= LanguageUtil.get(request, "remove") %>'
+								title="remove"
 								type="button"
 							/>
 						</c:if>

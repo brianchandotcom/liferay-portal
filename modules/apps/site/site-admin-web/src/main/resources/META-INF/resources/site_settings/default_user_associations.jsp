@@ -39,9 +39,9 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 			cssClass="modify-link"
 			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "selectSiteRoleLink" %>'
-			label='<%= LanguageUtil.get(request, "select") %>'
+			label="select"
 			small="<%= true %>"
-			title='<%= LanguageUtil.get(request, "select") %>'
+			title="select"
 		/>
 	</clay:content-col>
 </clay:content-row>
@@ -73,7 +73,7 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 				displayType="secondary"
 				icon="times-circle"
 				monospaced="<%= true %>"
-				title='<%= LanguageUtil.get(request, "remove") %>'
+				title="remove"
 				type="button"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -101,9 +101,9 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 			cssClass="modify-link"
 			displayType="secondary"
 			id='<%= liferayPortletResponse.getNamespace() + "selectTeamLink" %>'
-			label='<%= LanguageUtil.get(request, "select") %>'
+			label="select"
 			small="<%= true %>"
-			title='<%= LanguageUtil.get(request, "select") %>'
+			title="select"
 		/>
 	</clay:content-col>
 </clay:content-row>
@@ -135,7 +135,7 @@ DefaultUserAssociationsDisplayContext defaultUserAssociationsDisplayContext = (D
 				displayType="secondary"
 				icon="times-circle"
 				monospaced="<%= true %>"
-				title='<%= LanguageUtil.get(request, "remove") %>'
+				title="remove"
 				type="button"
 			/>
 		</liferay-ui:search-container-column-text>

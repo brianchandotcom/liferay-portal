@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -359,7 +360,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_STANDALONE, unicodeProperties);
 
-		_publishCustomObjectDefinition();
+		_objectDefinition = _publishCustomObjectDefinition();
 
 		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =
@@ -482,6 +483,45 @@ public class ObjectActionLocalServiceTest {
 			_assertWebhookObjectAction(
 				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 				"Peter", WorkflowConstants.STATUS_APPROVED);
+
+			// Add object entry as draft and update
+
+			_objectDefinition.setEnableObjectEntryDraft(true);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			objectEntry = _objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "John"
+				).build(),
+				serviceContext);
+
+			_assertWebhookObjectAction(
+				"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
+				WorkflowConstants.STATUS_DRAFT);
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			_objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Peter"
+				).build(),
+				serviceContext);
+
+			_assertWebhookObjectAction(
+				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				"John", WorkflowConstants.STATUS_DRAFT);
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
@@ -1528,8 +1568,8 @@ public class ObjectActionLocalServiceTest {
 		}
 	}
 
-	private void _publishCustomObjectDefinition() throws Exception {
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
+	private ObjectDefinition _publishCustomObjectDefinition() throws Exception {
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId());
 	}

@@ -25,7 +25,7 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {
-									"properties": "submit-support-ticket-url=https://help.liferay.com/hc/requests/new\nroute=portal\narticle-account-support-url=https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support\narticle-deploying-activation-keys-url=https://help.liferay.com/hc/en-us/articles/360018163571-Deploying-Activation-Keys\narticle-getting-started-with-liferay-enterprise-search-url=https://help.liferay.com/hc/en-us/articles/13528042483597\narticle-what-is-my-instance-sizing-value-url=https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1\ngravatar-api=https://www.gravatar.com/avatar"
+									"properties": "about-the-overview-page-url=https://help.liferay.com/hc/en-us/articles/8714747922445-About-the-Overview-Page-Video-Tutorial-\nsubmit-support-ticket-url=https://help.liferay.com/hc/requests/new\nroute=portal\narticle-account-support-url=https://help.liferay.com/hc/en-us/articles/360018414031-Account-Support\narticle-deploying-activation-keys-url=https://help.liferay.com/hc/en-us/articles/360018163571-Deploying-Activation-Keys\narticle-getting-started-with-liferay-enterprise-search-url=https://help.liferay.com/hc/en-us/articles/13528042483597\narticle-what-is-my-instance-sizing-value-url=https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1\ngravatar-api=https://www.gravatar.com/avatar"
 								},
 								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
 							}

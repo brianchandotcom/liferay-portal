@@ -10,12 +10,14 @@ type Writeable<T> = {-readonly [P in keyof T]: T[P]};
 
 type PopoverIconButtonProps = {
 	alignPosition?: Writeable<typeof ALIGN_POSITIONS[number]>;
+	isSubscriptionCard?: boolean;
 	popoverLink?: {textLink: string; url: string};
 	popoverText?: string;
 };
 
 const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 	alignPosition = 'bottom',
+	isSubscriptionCard,
 	popoverLink,
 	popoverText,
 }) => {
@@ -32,7 +34,9 @@ const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 					displayType={null}
 					onClick={(event) => event.stopPropagation()}
 					size="sm"
-					symbol="info-circle"
+					symbol={
+						isSubscriptionCard ? 'question-circle' : 'info-circle'
+					}
 				/>
 			}
 		>

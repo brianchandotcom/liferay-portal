@@ -1,12 +1,79 @@
 .cp-account-subscription-card {
-	min-height: 260px;
-	width: 209px;
+	background: var(--brand-primary-lighten-lighten-6, #fbfcfe);
+	border: 0.063rem solid var(--brand-primary-lighten-lighten-5, #e7efff);
+	border-radius: 0.625rem;
+	height: 9.875rem;
+	max-width: 46.188rem;
+
+	.cp-account-subscription-card-icon {
+		background: var(--status-info-lighten-2, #e6ebf5);
+		border-radius: 0.25rem;
+		height: 1.375rem;
+		margin-top: 0.188rem;
+		width: 1.375rem;
+	}
+	.cp-account-subscription-card-iconSvg {
+		background: var(--brand-primary-lighten-lighten-5, #e7efff);
+		border-radius: 0.5rem;
+		height: 2.5rem;
+		padding: 0.625rem;
+		width: 2.5rem;
+	}
+
+	.cp-account-subscription-card-info {
+		display: grid;
+		gap: 2.1rem;
+	}
+
+	.cp-account-subscription-card-info-bottom {
+		width: 20%;
+	}
+
+	.cp-account-subscription-card-name p {
+		font-size: 1.438rem;
+	}
+
+	.description-info-bottom {
+		font-weight: 600;
+	}
+
+	.expiration-date-container {
+		margin-right: 3.438rem;
+	}
+
+	.instance-size-container {
+		margin-left: 3.438rem;
+	}
+
+	.label {
+		margin-right: 0.5rem !important;
+	}
+
+	.label-item {
+		font-size: 0.813rem;
+		font-weight: 400;
+	}
+
+	.lexicon-icon {
+		width: 0.625rem;
+	}
+
+	.title-info-bottom {
+		font-size: 0.813rem;
+		font-weight: 600;
+		line-height: 1rem;
+	}
 
 	#{&}-logo {
-		height: 45px;
+		height: 2.813rem;
 	}
 
 	#{&}-name {
-		height: 43px;
+		height: 2.688rem;
 	}
+}
+
+.cp-account-subscription-card-loading {
+	border-radius: 0.625rem;
+	max-width: 46.188rem;
 }

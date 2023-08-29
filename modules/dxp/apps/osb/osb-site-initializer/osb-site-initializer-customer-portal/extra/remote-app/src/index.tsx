@@ -38,6 +38,7 @@ type Properties = {
 	featureFlags?: string[];
 	importDate?: Date | null;
 	submitSupportTicketURL: string | null;
+	theOverviewPageURL: string | null;
 };
 
 type APIs = {
@@ -113,6 +114,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 				: undefined,
 			submitSupportTicketURL: super.getAttribute(
 				'submit-support-ticket-url'
+			),
+			theOverviewPageURL: super.getAttribute(
+				'about-the-overview-page-url'
 			),
 		};
 

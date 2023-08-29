@@ -9,12 +9,11 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.application.endpoint.EndpointMatcher;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.Objects;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -66,6 +65,36 @@ public class HeadlessBuilderResourceImpl {
 			scopeKey, sortString);
 	}
 
+	@GET
+	@Path("/{path: .*}/{parameter}")
+	@Produces({"application/json", "application/xml"})
+	public Response get(
+			@PathParam("path") String path,
+			@PathParam("parameter") String pathParameterValue)
+		throws Exception {
+
+		APIApplication.Endpoint endpoint = _endpointMatcher.getEndpoint(
+			StringBundler.concat("/", path, "/", pathParameterValue));
+
+		if (endpoint == null) {
+			throw new NoSuchModelException(
+				String.format(
+					"Endpoint /%s does not exist for %s", path,
+					_apiApplication.getTitle()));
+		}
+
+		if (endpoint.getResponseSchema() == null) {
+			return Response.noContent(
+			).build();
+		}
+
+		return Response.ok(
+			_endpointHelper.getResponseEntityMap(
+				_company.getCompanyId(), endpoint.getResponseSchema(),
+				pathParameterValue)
+		).build();
+	}
+
 	public void setApiApplication(APIApplication apiApplication) {
 		_apiApplication = apiApplication;
 		_endpointMatcher = new EndpointMatcher(apiApplication.getEndpoints());
@@ -89,16 +118,6 @@ public class HeadlessBuilderResourceImpl {
 
 		if (endpoint.getResponseSchema() == null) {
 			return Response.noContent(
-			).build();
-		}
-
-		if (Objects.equals(
-				endpoint.getRetrieveType(),
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
-
-			return Response.ok(
-				_endpointHelper.getResponseEntityMap(
-					_company.getCompanyId(), endpoint, path)
 			).build();
 		}
 

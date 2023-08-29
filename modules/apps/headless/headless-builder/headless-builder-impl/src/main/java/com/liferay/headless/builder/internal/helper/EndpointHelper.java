@@ -6,7 +6,6 @@
 package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -35,27 +34,22 @@ import org.osgi.service.component.annotations.Reference;
 public class EndpointHelper {
 
 	public Map<String, Object> getResponseEntityMap(
-			long companyId, APIApplication.Endpoint endpoint,
-			String endpointPath)
+			long companyId, APIApplication.Schema schema,
+			String pathParameterValue)
 		throws Exception {
 
 		Set<String> relationshipsNames = new HashSet<>();
 
-		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
-
-		for (APIApplication.Property property :
-				responseSchema.getProperties()) {
-
+		for (APIApplication.Property property : schema.getProperties()) {
 			relationshipsNames.addAll(property.getObjectRelationshipNames());
 		}
 
 		return _getResponseEntityMap(
 			_objectEntryHelper.getObjectEntry(
 				companyId, ListUtil.fromCollection(relationshipsNames),
-				GetterUtil.getLong(
-					PathUtil.getPathParameterValue(endpointPath)),
-				responseSchema.getMainObjectDefinitionExternalReferenceCode()),
-			responseSchema);
+				GetterUtil.getLong(pathParameterValue),
+				schema.getMainObjectDefinitionExternalReferenceCode()),
+			schema);
 	}
 
 	public Page<Map<String, Object>> getResponseEntityMapsPage(

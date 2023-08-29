@@ -14,10 +14,6 @@ import com.liferay.petra.string.StringPool;
  */
 public class PathUtil {
 
-	public static String getPathParameterValue(String path) {
-		return path.substring(path.lastIndexOf('/') + 1);
-	}
-
 	public static String getPathPrefix(APIApplication.Endpoint.Scope scope) {
 		if (scope == APIApplication.Endpoint.Scope.GROUP) {
 			return HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX;

@@ -41,7 +41,7 @@ String textCssClass = menuAccessDisplayContext.isShowControlMenuByRole() ? "modi
 				aria-describedby='<%= liferayPortletResponse.getNamespace() + "showControlMenuByRoleDescription" %>'
 				checked="<%= menuAccessDisplayContext.isShowControlMenuByRole() %>"
 				id='<%= liferayPortletResponse.getNamespace() + "showControlMenuByRole" %>'
-				label='<%= LanguageUtil.get(request, "show-control-menu-by-role-name") %>'
+				label="show-control-menu-by-role-name"
 				name='<%= liferayPortletResponse.getNamespace() + "showControlMenuByRole" %>'
 			/>
 

@@ -91,7 +91,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 									<c:otherwise>
 										<clay:label
 											cssClass="mr-auto"
-											label='<%= LanguageUtil.get(request, "no-variations") %>'
+											label="no-variations"
 										/>
 									</c:otherwise>
 								</c:choose>

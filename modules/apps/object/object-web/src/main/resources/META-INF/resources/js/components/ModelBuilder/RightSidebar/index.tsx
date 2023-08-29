@@ -5,12 +5,14 @@
 
 import {RightSidebarEmpty} from './RightSidebarEmpty';
 import {RightSidebarObjectDefinitionDetails} from './RightSidebarObjectDefinitionDetails';
+import {RightSidebarObjectFieldDetails} from './RightSidebarObjectFieldDetails';
 import {RightSidebarObjectRelationshipDetails} from './RightSidebarObjectRelationshipDetails';
 import {RightSideBarRoot} from './RightSidebarRoot';
 
 export const RightSideBar = {
 	Empty: RightSidebarEmpty,
 	ObjectDefinitionDetails: RightSidebarObjectDefinitionDetails,
+	ObjectFieldDetails: RightSidebarObjectFieldDetails,
 	ObjectRelationshipDetails: RightSidebarObjectRelationshipDetails,
 	Root: RightSideBarRoot,
 };

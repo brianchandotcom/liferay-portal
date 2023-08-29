@@ -609,6 +609,74 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.SET_SELECTED_FIELD: {
+			const {
+				edges,
+				nodes,
+				selectedFieldDefinitionName,
+				selectedObjectDefinitionId,
+			} = action.payload;
+
+			const newNodes = nodes.map((node) => ({
+				...node,
+				data: {
+					...node.data,
+					nodeSelected: node.data?.id === selectedObjectDefinitionId,
+					objectFields: node.data?.objectFields.map((field) => ({
+						...field,
+						selected:
+							node.data?.id === selectedObjectDefinitionId &&
+							field.name === selectedFieldDefinitionName,
+					})),
+				},
+			})) as Node<ObjectDefinitionNodeData>[];
+
+			const newEdges = edges.map((relationshipEdge) => ({
+				...relationshipEdge,
+				data: {...relationshipEdge.data, edgeSelected: false},
+			})) as Edge<ObjectRelationshipEdgeData>[];
+
+			return {
+				...state,
+				elements: [...newEdges, ...newNodes],
+				rightSidebarType: 'objectFieldDetails' as RightSidebarType,
+			};
+		}
+
+		case TYPES.SET_SELECTED_FIELD: {
+			const {
+				edges,
+				nodes,
+				selectedFieldDefinitionName,
+				selectedObjectDefinitionId,
+			} = action.payload;
+
+			const newNodes = nodes.map((node) => ({
+				...node,
+				data: {
+					...node.data,
+					nodeSelected: node.data?.id === selectedObjectDefinitionId,
+					objectFields: node.data?.objectFields.map((field) => ({
+						...field,
+						selected:
+							node.data?.id === selectedObjectDefinitionId &&
+							field.name === selectedFieldDefinitionName,
+					})),
+				},
+			})) as Node<ObjectDefinitionNodeData>[];
+
+			const newEdges = edges.map((relationshipEdge) => ({
+				...relationshipEdge,
+				data: {...relationshipEdge.data, edgeSelected: false},
+			})) as Edge<ObjectRelationshipEdgeData>[];
+
+			return {
+				...state,
+				elements: [...newEdges, ...newNodes],
+				rightSidebarType: 'objectFieldDetails' as RightSidebarType,
+			};
+		}
+
 		case TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE: {
 			const {edges, nodes, selectedObjectDefinitionId} = action.payload;
 

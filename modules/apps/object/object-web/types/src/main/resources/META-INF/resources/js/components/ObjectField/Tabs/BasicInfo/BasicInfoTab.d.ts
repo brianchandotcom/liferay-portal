@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import React, {ElementType} from 'react';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 export interface AggregationFilters {
 	defaultSort?: boolean;
@@ -33,6 +33,7 @@ interface BasicInfoTabProps {
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
+	wrapper: ElementType;
 }
 export declare function BasicInfoTab({
 	errors,
@@ -48,5 +49,6 @@ export declare function BasicInfoTab({
 	setValues,
 	values,
 	workflowStatusJSONArray,
+	wrapper: Wrapper,
 }: BasicInfoTabProps): JSX.Element;
 export {};

@@ -14,20 +14,24 @@ interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
 	companyKeyValuePairs: KeyValuePair[];
 	editObjectDefinitionURL: string;
+	filterOperators: TFilterOperators;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	siteKeyValuePairs: KeyValuePair[];
+	workflowStatusJSONArray: LabelValueObject[];
 }
 
 export default function CustomObjectFolderWrapper({
 	baseResourceURL,
 	companyKeyValuePairs,
 	editObjectDefinitionURL,
+	filterOperators,
 	objectDefinitionPermissionsURL,
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,
 	siteKeyValuePairs,
+	workflowStatusJSONArray
 }: CustomObjectFolderWrapperProps) {
 	return (
 		<ReactFlowProvider>
@@ -35,8 +39,10 @@ export default function CustomObjectFolderWrapper({
 				value={{
 					baseResourceURL,
 					editObjectDefinitionURL,
+					filterOperators,
 					objectDefinitionPermissionsURL,
 					objectDefinitionsStorageTypes,
+					workflowStatusJSONArray,
 				}}
 			>
 				<EditObjectFolder

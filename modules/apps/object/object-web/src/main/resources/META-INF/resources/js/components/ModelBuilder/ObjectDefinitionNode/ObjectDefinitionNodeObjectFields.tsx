@@ -6,22 +6,44 @@
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React from 'react';
+import {useStore} from 'react-flow-renderer';
 
 import {getBusinessTypeLabel} from '../../../utils/businessTypeLabel';
+import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {TYPES} from '../ModelBuilderContext/typesEnum';
 
 import './ObjectDefinitionNodeObjectFields.scss';
 
 interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
 	objectFields: ObjectFieldNode[];
+	selectedObjectDefinitionId: number;
 	showAllObjectFields: boolean;
 }
 
 export default function ObjectDefinitionNodeFields({
 	defaultLanguageId,
 	objectFields,
+	selectedObjectDefinitionId,
 	showAllObjectFields,
 }: ObjectDefinitionNodeFieldsProps) {
+	const store = useStore();
+	const [_, dispatch] = useFolderContext();
+
+	const handleClickDetails = (selectedFieldName: string) => {
+		const {edges, nodes} = store.getState();
+
+		dispatch({
+			payload: {
+				edges,
+				nodes,
+				selectedFieldDefinitionName: selectedFieldName,
+				selectedObjectDefinitionId,
+			},
+			type: TYPES.SET_SELECTED_FIELD,
+		});
+	};
+
 	return (
 		<>
 			{objectFields.map((objectField, index) => {
@@ -36,6 +58,9 @@ export default function ObjectDefinitionNodeFields({
 								}
 							)}
 							key={objectField.name}
+							onClick={() =>
+								handleClickDetails(objectField.name as string)
+							}
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
 								<span>

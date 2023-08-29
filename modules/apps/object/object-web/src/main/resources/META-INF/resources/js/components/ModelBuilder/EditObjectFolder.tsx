@@ -176,6 +176,10 @@ export default function EditObjectFolder({
 						/>
 					)}
 
+					{rightSidebarType === 'objectFieldDetails' && (
+						<RightSideBar.ObjectFieldDetails />
+					)}
+
 					{rightSidebarType === 'objectRelationshipDetails' && (
 						<RightSideBar.ObjectRelationshipDetails
 							objectRelationshipDeletionTypes={

@@ -10,10 +10,12 @@ interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
 	companyKeyValuePairs: KeyValuePair[];
 	editObjectDefinitionURL: string;
+	filterOperators: TFilterOperators;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	siteKeyValuePairs: KeyValuePair[];
+	workflowStatusJSONArray: LabelValueObject[];
 }
 export default function CustomObjectFolderWrapper({
 	baseResourceURL,

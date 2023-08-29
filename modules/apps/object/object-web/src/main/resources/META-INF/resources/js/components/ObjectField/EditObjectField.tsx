@@ -6,6 +6,7 @@
 import ClayTabs from '@clayui/tabs';
 import {
 	API,
+	Card,
 	SidePanelForm,
 	SidebarCategory,
 	openToast,
@@ -41,7 +42,7 @@ interface EditObjectFieldProps {
 
 const TABS = [Liferay.Language.get('basic-info')];
 
-const initialValues: Partial<ObjectField> = {
+export const objectFieldInitialValues: Partial<ObjectField> = {
 	DBType: '',
 	businessType: 'Text',
 	externalReferenceCode: '',
@@ -114,7 +115,7 @@ export default function EditObjectField({
 		forbiddenChars,
 		forbiddenLastChars,
 		forbiddenNames,
-		initialValues,
+		initialValues: objectFieldInitialValues,
 		onSubmit,
 	});
 
@@ -179,6 +180,7 @@ export default function EditObjectField({
 								workflowStatusJSONArray={
 									workflowStatusJSONArray
 								}
+								wrapper={Card}
 							/>
 						</ClayTabs.TabPane>
 
@@ -215,6 +217,7 @@ export default function EditObjectField({
 					setValues={setValues}
 					values={values}
 					workflowStatusJSONArray={workflowStatusJSONArray}
+					wrapper={Card}
 				/>
 			)}
 		</SidePanelForm>

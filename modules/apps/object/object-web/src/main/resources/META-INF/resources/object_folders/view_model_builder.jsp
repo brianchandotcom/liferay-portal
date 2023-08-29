@@ -30,6 +30,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 		).put(
 			"editObjectDefinitionURL", objectDefinitionsDetailsDisplayContext.getEditObjectDefinitionURL()
 		).put(
+			"filterOperators", LocalizedJSONArrayUtil.getFilterOperatorsJSONObject(locale)
+		).put(
 			"objectDefinitionPermissionsURL", objectDefinitionsDetailsDisplayContext.getPermissionsURL(ObjectDefinition.class.getName())
 		).put(
 			"objectDefinitionsStorageTypes", objectDefinitionsDetailsDisplayContext.getStorageTypesJSONArray()
@@ -37,6 +39,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			"objectRelationshipDeletionTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipDeletionTypesJSONArray()
 		).put(
 			"siteKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs(ObjectDefinitionConstants.SCOPE_SITE)
+		).put(
+			"workflowStatusJSONArray", LocalizedJSONArrayUtil.getWorkflowStatusJSONArray(locale)
 		).build()
 	%>'
 />

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, Card, Input} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import {API, Input} from '@liferay/object-js-components-web';
+import React, {ElementType, useEffect, useState} from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilterContainer} from './AggregationFilterContainer';
@@ -42,6 +42,7 @@ interface BasicInfoTabProps {
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
+	wrapper: ElementType;
 }
 
 export function BasicInfoTab({
@@ -58,6 +59,7 @@ export function BasicInfoTab({
 	setValues,
 	values,
 	workflowStatusJSONArray,
+	wrapper: Wrapper,
 }: BasicInfoTabProps) {
 	const [objectDefinition, setObjectDefinition] = useState<
 		Partial<ObjectDefinition>
@@ -88,7 +90,7 @@ export function BasicInfoTab({
 
 	return (
 		<>
-			<Card title={Liferay.Language.get('basic-info')}>
+			<Wrapper title={Liferay.Language.get('basic-info')}>
 				<BasicInfoContainer
 					creationLanguageId2={creationLanguageId2}
 					errors={errors}
@@ -108,7 +110,7 @@ export function BasicInfoTab({
 					setValues={setValues}
 					values={values}
 				/>
-			</Card>
+			</Wrapper>
 
 			{values.businessType === 'Aggregation' &&
 				objectDefinitionExternalReferenceCode !==
@@ -129,7 +131,7 @@ export function BasicInfoTab({
 				)}
 
 			{values.businessType === 'Formula' && (
-				<Card title={Liferay.Language.get('formula')}>
+				<Wrapper title={Liferay.Language.get('formula')}>
 					<FormulaContainer
 						errors={errors}
 						objectFieldSettings={
@@ -137,11 +139,11 @@ export function BasicInfoTab({
 						}
 						setValues={setValues}
 					/>
-				</Card>
+				</Wrapper>
 			)}
 
 			{values.DBType !== 'Blob' && values.businessType !== 'Formula' && (
-				<Card title={Liferay.Language.get('searchable')}>
+				<Wrapper title={Liferay.Language.get('searchable')}>
 					<SearchableContainer
 						errors={errors}
 						isApproved={isApproved}
@@ -149,29 +151,29 @@ export function BasicInfoTab({
 						readOnly={readOnly}
 						setValues={setValues}
 					/>
-				</Card>
+				</Wrapper>
 			)}
 
 			{Liferay.FeatureFlags['LPS-172017'] && (
-				<Card title={Liferay.Language.get('translation-options')}>
+				<Wrapper title={Liferay.Language.get('translation-options')}>
 					<TranslationOptionsContainer
 						objectDefinition={objectDefinition}
 						published={isApproved}
 						setValues={setValues}
 						values={values}
 					/>
-				</Card>
+				</Wrapper>
 			)}
 
 			{Liferay.FeatureFlags['LPS-135430'] && !isDefaultStorageType && (
-				<Card title={Liferay.Language.get('external-data-source')}>
+				<Wrapper title={Liferay.Language.get('external-data-source')}>
 					<Input
 						label={Liferay.Language.get('external-reference-code')}
 						name="externalReferenceCode"
 						onChange={handleChange}
 						value={values.externalReferenceCode}
 					/>
-				</Card>
+				</Wrapper>
 			)}
 		</>
 	);

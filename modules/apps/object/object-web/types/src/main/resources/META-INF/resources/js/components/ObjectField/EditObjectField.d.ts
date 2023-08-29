@@ -27,6 +27,7 @@ interface EditObjectFieldProps {
 	sidebarElements: SidebarCategory[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
+export declare const objectFieldInitialValues: Partial<ObjectField>;
 export default function EditObjectField({
 	creationLanguageId,
 	filterOperators,

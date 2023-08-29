@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.PrintWriter;
@@ -375,7 +374,7 @@ public class CDIBeanPortletExtension implements Extension {
 			};
 
 		_serviceRegistrations.addAll(
-			_beanPortletRegistrar.register(
+			BeanPortletRegistrar.register(
 				new CDIBeanFilterMethodFactory(beanManager),
 				beanFilterMethodInvoker,
 				new CDIBeanPortletMethodFactory(beanManager),
@@ -444,7 +443,7 @@ public class CDIBeanPortletExtension implements Extension {
 	public void step6ApplicationScopedBeforeDestroyed(
 		@Destroyed(ApplicationScoped.class) @Observes Object contextObject) {
 
-		_beanPortletRegistrar.unregister(
+		BeanPortletRegistrar.unregister(
 			_serviceRegistrations, (ServletContext)contextObject);
 
 		_serviceRegistrations.clear();
@@ -646,11 +645,6 @@ public class CDIBeanPortletExtension implements Extension {
 			}
 
 		};
-
-	private static volatile BeanPortletRegistrar _beanPortletRegistrar =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			BeanPortletRegistrar.class, CDIBeanPortletExtension.class,
-			"_beanPortletRegistrar", true);
 
 	private static final Annotation _portletRequestScoped =
 		new PortletRequestScoped() {

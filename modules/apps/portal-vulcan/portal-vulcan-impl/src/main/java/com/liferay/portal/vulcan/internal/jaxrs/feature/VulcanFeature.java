@@ -163,7 +163,6 @@ public class VulcanFeature implements Feature {
 
 		featureContext.register(
 			new PaginationContextProvider(_configurationProvider, _portal));
-
 		featureContext.register(
 			new SiteParamConverterProvider(
 				_depotEntryLocalService, _groupLocalService));

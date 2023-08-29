@@ -116,17 +116,26 @@ export function CollectionGeneralPanel({item}) {
 				return '';
 			}
 
-			const {
-				warningMessage,
-			} = await CollectionService.getCollectionWarningMessage({
-				classNameId: collection.classNameId,
-				classPK: collection.classPK,
-				layoutDataItemId: item.itemId,
-				layoutObjectReference: JSON.stringify(collection),
-				segmentsExperienceId,
-			});
+			try {
+				const response = await CollectionService.getCollectionWarningMessage(
+					{
+						classNameId: collection.classNameId,
+						classPK: collection.classPK,
+						layoutDataItemId: item.itemId,
+						layoutObjectReference: JSON.stringify(collection),
+						segmentsExperienceId,
+					}
+				);
 
-			return warningMessage;
+				return response.warningMessage;
+			}
+			catch (error) {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+
+				return '';
+			}
 		},
 		key: [
 			CACHE_KEYS.collectionWarningMessage,

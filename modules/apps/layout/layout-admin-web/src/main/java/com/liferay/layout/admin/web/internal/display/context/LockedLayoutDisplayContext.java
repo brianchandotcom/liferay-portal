@@ -41,7 +41,9 @@ public class LockedLayoutDisplayContext {
 			return _backURL;
 		}
 
-		_backURL = ParamUtil.getString(_renderRequest, "backURL");
+		_backURL = ParamUtil.getString(
+			_renderRequest, "backURL",
+			ParamUtil.getString(_originalHttpServletRequest, "p_l_back_url"));
 
 		return _backURL;
 	}

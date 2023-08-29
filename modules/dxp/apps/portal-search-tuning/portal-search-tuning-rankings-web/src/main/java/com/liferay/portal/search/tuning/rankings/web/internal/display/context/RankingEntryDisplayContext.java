@@ -20,6 +20,10 @@ public class RankingEntryDisplayContext {
 		return null;
 	}
 
+	public String getGroupExternalReferenceCode() {
+		return _groupExternalReferenceCode;
+	}
+
 	public String getHiddenResultsCount() {
 		return _hiddenResultsCount;
 	}
@@ -44,12 +48,22 @@ public class RankingEntryDisplayContext {
 		return _pinnedResultsCount;
 	}
 
+	public String getSXPBlueprintExternalReferenceCode() {
+		return _sxpBlueprintExternalReferenceCode;
+	}
+
 	public String getUid() {
 		return _uid;
 	}
 
 	public void setAliases(String aliases) {
 		_aliases = aliases;
+	}
+
+	public void setGroupExternalReferenceCode(
+		String groupExternalReferenceCode) {
+
+		_groupExternalReferenceCode = groupExternalReferenceCode;
 	}
 
 	public void setHiddenResultsCount(String hiddenResultsCount) {
@@ -72,16 +86,24 @@ public class RankingEntryDisplayContext {
 		_pinnedResultsCount = pinnedResultsCount;
 	}
 
+	public void setSXPBlueprintExternalReferenceCode(
+		String sxpBlueprintExternalReferenceCode) {
+
+		_sxpBlueprintExternalReferenceCode = sxpBlueprintExternalReferenceCode;
+	}
+
 	public void setUid(String uid) {
 		_uid = uid;
 	}
 
 	private String _aliases;
+	private String _groupExternalReferenceCode;
 	private String _hiddenResultsCount;
 	private boolean _inactive;
 	private String _index;
 	private String _keywords;
 	private String _pinnedResultsCount;
+	private String _sxpBlueprintExternalReferenceCode;
 	private String _uid;
 
 }

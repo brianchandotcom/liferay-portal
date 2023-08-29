@@ -81,7 +81,11 @@ function TableInlineAddingRow({fields, selectable}) {
 				);
 			})}
 
-			<DndTable.Cell className="item-actions" columnName="item-actions">
+			<DndTable.Cell
+				className="item-actions"
+				columnName="item-actions"
+				defaultWidth="44px"
+			>
 				<div className="d-flex ml-auto">
 					<ClayButtonWithIcon
 						className="mr-1"

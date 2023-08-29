@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -12,7 +13,14 @@ import ViewsContext from '../../ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../viewsReducer';
 import Context from './TableContext';
 
-function Cell({children, className, columnName, heading, resizable}) {
+function Cell({
+	children,
+	className,
+	columnName,
+	defaultWidth = 'auto',
+	heading,
+	resizable,
+}) {
 	const {
 		draggingAllowed,
 		draggingColumnName,
@@ -78,11 +86,12 @@ function Cell({children, className, columnName, heading, resizable}) {
 	}, [isFixed, modifiedFields, columnName]);
 
 	return (
-		<div
-			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
+		<ClayTable.Cell
+			className={classNames(className)}
+			headingCell={heading}
 			ref={cellRef}
 			style={{
-				width,
+				width: width ?? defaultWidth,
 			}}
 		>
 			{children}
@@ -96,7 +105,7 @@ function Cell({children, className, columnName, heading, resizable}) {
 					onMouseDown={initializeDrag}
 				/>
 			)}
-		</div>
+		</ClayTable.Cell>
 	);
 }
 

@@ -52,6 +52,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 							: Liferay.Language.get('open-fields-menu')
 					}
 					borderless
+					className="component-action"
 					displayType="secondary"
 					symbol={active ? 'caret-top' : 'caret-bottom'}
 				/>

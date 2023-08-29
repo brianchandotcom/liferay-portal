@@ -184,7 +184,7 @@ function ActionsDropdown({
 		});
 
 	return (
-		<div className="d-flex justify-content-end">
+		<div className="d-flex">
 			{inlineEditingAlwaysOn && inlineEditingActions}
 
 			<ClayDropDown
@@ -192,7 +192,7 @@ function ActionsDropdown({
 				onActiveChange={onMenuActiveChange}
 				trigger={
 					<ClayButton
-						className="component-action dropdown-toggle ml-1"
+						className="component-action dropdown-toggle"
 						disabled={loading}
 						displayType="unstyled"
 					>

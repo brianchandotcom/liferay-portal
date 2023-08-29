@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -12,11 +13,19 @@ import Row from './Row';
 import Table from './Table';
 
 function Body({children, className}) {
-	return <div className={classNames('dnd-tbody', className)}>{children}</div>;
+	return (
+		<ClayTable.Body className={classNames(className)}>
+			{children}
+		</ClayTable.Body>
+	);
 }
 
 function Head({children, className}) {
-	return <div className={classNames('dnd-thead', className)}>{children}</div>;
+	return (
+		<ClayTable.Head className={classNames(className)}>
+			{children}
+		</ClayTable.Head>
+	);
 }
 
 export default Object.assign(Table, {

@@ -269,7 +269,11 @@ const RowWithActions = ({
 				itemsChanges[itemId]
 			)}
 
-			<DndTable.Cell className="item-actions" columnName="item-actions">
+			<DndTable.Cell
+				className="item-actions"
+				columnName="item-actions"
+				defaultWidth="44px"
+			>
 				{(itemsActions?.length > 0 ||
 					item.actionDropdownItems?.length > 0) && (
 					<Actions

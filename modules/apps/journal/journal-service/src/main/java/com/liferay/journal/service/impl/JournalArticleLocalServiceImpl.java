@@ -1221,6 +1221,8 @@ public class JournalArticleLocalServiceImpl
 			_journalArticleResourceLocalService.fetchArticleResource(
 				article.getGroupId(), article.getArticleId());
 
+		String assetTitle = article.getTitle(article.getDefaultLanguageId());
+
 		if (article.isApproved() &&
 			isLatestVersion(
 				article.getGroupId(), article.getArticleId(),
@@ -1378,6 +1380,8 @@ public class JournalArticleLocalServiceImpl
 				article.getPrimaryKey(), articleResource.getUuid(), null,
 				SystemEventConstants.TYPE_DELETE,
 				JSONUtil.put(
+					JournalArticleConstants.ASSET_TITLE, assetTitle
+				).put(
 					"uuid", article.getUuid()
 				).put(
 					"version", article.getVersion()

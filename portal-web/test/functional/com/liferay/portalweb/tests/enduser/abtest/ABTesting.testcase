@@ -44,7 +44,7 @@ definition {
 	@description = "LPS-101341: Validate if the user has one experience with the AB test in a Running status, the experiences dropdown menu shows the AB test icon and one help hint"
 	@priority = 5
 	test ABTestIconInExperience {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -469,7 +469,7 @@ definition {
 	@description = "LPS-108147: When user opens AB testing panel and AC is connected and synced, the AB testing panel display all its functionalities"
 	@priority = 5
 	test CheckABTestPanelInfo {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Open AB Test Panel") {
 			ABTest.openABTestPanel();
@@ -621,7 +621,7 @@ definition {
 	@description = "LPS-109991 Bug: When a variant is edited, other variants lose modifications"
 	@priority = 4
 	test CheckContentPersistAfterEditVariant {
-		property portal.acceptance = "false";
+		property portal.acceptance = "quarantine";
 
 		task ("Create AB test and create first variant") {
 			ABTest.openABTestPanel();
@@ -1117,7 +1117,7 @@ definition {
 	@description = "LPS-99421: The test deletion in AC is reflected on DXP"
 	@priority = 4
 	test DeleteABTestInACViewInDXP {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create AB test and create variant.") {
 			ABTest.createABTest(
@@ -1157,7 +1157,7 @@ definition {
 	@description = "LPS-99421: The test deletion in DXP is reflected on AC"
 	@priority = 4
 	test DeleteABTestInDXPViewInAC {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create AB test and create variant.") {
 			ABTest.createABTest(
@@ -1662,7 +1662,7 @@ definition {
 	@description = "LPS-101341: Validate if when the user will edit some Experience with an AB Test in a Terminated status, the system not will show any information about AB Test"
 	@priority = 4
 	test EditExperienceAfterTerminatedABTest {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -1722,7 +1722,7 @@ definition {
 	@description = "LPS-103334: Validate if the AB Test is in the status draft, the experience about the AB Test is active is in Edition Mode"
 	@priority = 5
 	test EditExperienceWithDraftABTest {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -2325,7 +2325,7 @@ definition {
 	@description = "LPS-103334: Validate if the AB Test is in the status running, the experience about the AB Test is active is in Non-Edition Mode"
 	@priority = 5
 	test NotPossibleToEditExperienceWithRunningABTest {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -2431,7 +2431,7 @@ definition {
 	@description = "LPS-99225: Validate if the admin cannot reassign a segment in an experience with an A/B test in running status"
 	@priority = 4
 	test ReassignSegmentABTestRunning {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
@@ -2833,7 +2833,7 @@ definition {
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the experience, the context about the A/B Test changes too"
 	@priority = 4
 	test SwitchExperienceSelected {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
@@ -2871,7 +2871,7 @@ definition {
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the site pages, the context about the A/B Test changes too"
 	@priority = 3
 	test SwitchSitePage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create content page") {
 			JSONLayout.addPublicLayout(

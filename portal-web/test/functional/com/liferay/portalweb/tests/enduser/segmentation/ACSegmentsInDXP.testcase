@@ -116,7 +116,7 @@ definition {
 	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
 	@priority = 5
 	test DefaultInstanceNotSynchronizedWithAC {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -178,7 +178,7 @@ definition {
 	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments And I have connected my DXP instance with AC When I create an Individual Segment in AC and it shows in the DXP Segments administration And I delete the segment Then in the next sync time, the segment will appear again"
 	@priority = 4
 	test PersistSegmentFromACAtDXP {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -241,7 +241,7 @@ definition {
 	@description = "LPS-94938 Validate if the user is redirected to the segment page details when he tries to see the detail of the imported segment from Analytics Cloud into DXP	"
 	@priority = 5
 	test RedirectToSegmentPageAC {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -281,7 +281,7 @@ definition {
 	@description = "LPS-94938 Validate if the user is redirected to the not found Analytics Cloud page, when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the segment does not exist in Analytics Cloud anymore"
 	@priority = 4
 	test RedirectToSegmentPageErrorAC {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -368,7 +368,7 @@ definition {
 	@description = "LPS-94938 Validate if the user have the text unlinked when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the connection with Analytics Cloud does not exist anymore"
 	@priority = 4
 	test ShoudNotRedirectToSegmentPageAC {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

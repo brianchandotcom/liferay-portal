@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,10 +43,87 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		if (absolutePath.endsWith("/source-formatter.properties")) {
 			content = _fixCheckProperties(content);
 
+			_checkCheckstyleGroupAndOrder(fileName, content, "checkstyle.");
+			_checkSourceCheckGroupAndOrder(fileName, content, "source.check.");
+
 			return _formatSourceFormatterProperties(fileName, content);
 		}
 
 		return content;
+	}
+
+	private void _checkCheckstyleGroupAndOrder(
+			String fileName, String content, String prefix)
+		throws Exception {
+
+		String properties = _getProperites(content, prefix);
+
+		if (properties == null) {
+			return;
+		}
+
+		_checkPropertiesGroupAndOrder(fileName, prefix, properties);
+	}
+
+	private void _checkPropertiesGroupAndOrder(
+		String fileName, String prefix, String content) {
+
+		String previousPropertyKey = StringPool.BLANK;
+
+		for (String line : content.split("\n")) {
+			String trimmedLine = line.trim();
+
+			if (Validator.isNull(trimmedLine) ||
+				trimmedLine.startsWith(StringPool.POUND)) {
+
+				continue;
+			}
+
+			int pos = trimmedLine.indexOf(CharPool.EQUAL);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			String propertyKey = StringUtil.trim(trimmedLine.substring(0, pos));
+
+			if (!StringUtil.startsWith(propertyKey, prefix)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Property '", propertyKey,
+						"' should not be in the group for '", prefix, "*'"));
+
+				return;
+			}
+
+			if (Validator.isNotNull(previousPropertyKey) &&
+				(previousPropertyKey.compareToIgnoreCase(propertyKey) > 0)) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Incorrect order of properties: '", propertyKey,
+						"' should come before '", previousPropertyKey, "'"));
+
+				return;
+			}
+
+			previousPropertyKey = propertyKey;
+		}
+	}
+
+	private void _checkSourceCheckGroupAndOrder(
+			String fileName, String content, String prefix)
+		throws Exception {
+
+		String properties = _getProperites(content, prefix);
+
+		if (properties == null) {
+			return;
+		}
+
+		_checkPropertiesGroupAndOrder(fileName, prefix, properties);
 	}
 
 	private String _fixCheckProperties(String content) throws Exception {
@@ -169,6 +247,20 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 
 		return checkstyleCheckNames;
+	}
+
+	private String _getProperites(String content, String prefix) {
+		int x = content.indexOf(StringPool.FOUR_SPACES + prefix);
+
+		if (x == -1) {
+			return null;
+		}
+
+		int y = content.lastIndexOf(StringPool.FOUR_SPACES + prefix);
+
+		y = content.indexOf("=", y + 1);
+
+		return content.substring(x, y + 1);
 	}
 
 	private Element _getRootElement(String fileName) throws Exception {

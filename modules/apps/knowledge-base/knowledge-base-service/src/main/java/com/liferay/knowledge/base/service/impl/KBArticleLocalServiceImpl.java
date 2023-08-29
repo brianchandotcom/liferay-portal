@@ -350,7 +350,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void checkKBArticles(long companyId) throws PortalException {
-
 		Company company = _companyLocalService.getCompany(companyId);
 
 		Date date = new Date();
@@ -1694,8 +1693,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			_log.debug(
 				StringBundler.concat(
 					"Sending review notification for articles with review ",
-					"date between ", _dates.get(company.getCompanyId()), " and ", reviewDate,
-					" for company ", company.getCompanyId()));
+					"date between ", _dates.get(company.getCompanyId()),
+					" and ", reviewDate, " for company ",
+					company.getCompanyId()));
 		}
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(

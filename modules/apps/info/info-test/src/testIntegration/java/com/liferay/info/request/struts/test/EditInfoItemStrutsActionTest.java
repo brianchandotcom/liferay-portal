@@ -1096,7 +1096,7 @@ public class EditInfoItemStrutsActionTest {
 			String locationHeader = pipingServletResponse.getHeader("Location");
 
 			Assert.assertNotNull(locationHeader);
-			Assert.assertTrue(locationHeader.contains("/display-page/custom"));
+			Assert.assertTrue(locationHeader.contains("/e/"));
 		}
 
 		if (doubleValueInput != null) {

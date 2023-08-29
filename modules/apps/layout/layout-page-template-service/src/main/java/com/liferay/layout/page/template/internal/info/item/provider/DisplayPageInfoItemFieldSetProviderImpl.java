@@ -96,7 +96,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
 
-		String url = groupFriendlyURL + "/display-page/custom/";
+		String url = groupFriendlyURL + "/e";
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(

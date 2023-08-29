@@ -30,7 +30,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/display-page/";
+		return "/e/";
 	}
 
 	@Override

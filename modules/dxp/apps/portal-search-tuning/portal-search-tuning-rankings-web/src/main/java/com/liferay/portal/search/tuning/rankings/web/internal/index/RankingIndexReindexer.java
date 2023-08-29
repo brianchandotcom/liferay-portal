@@ -143,6 +143,8 @@ public class RankingIndexReindexer implements IndexReindexer {
 
 		rankingBuilder.aliases(
 			JSONUtil.toStringList(jsonObject.getJSONArray("aliases"))
+		).groupExternalReferenceCode(
+			jsonObject.getString("groupExternalReferenceCode")
 		).hiddenDocumentIds(
 			JSONUtil.toStringList(jsonObject.getJSONArray("hiddenDocumentIds"))
 		).rankingDocumentId(
@@ -157,6 +159,8 @@ public class RankingIndexReindexer implements IndexReindexer {
 			_getPins(jsonObject.getJSONArray("pins"))
 		).queryString(
 			jsonObject.getString("queryString")
+		).sxpBlueprintExternalReferenceCode(
+			jsonObject.getString("sxpBlueprintExternalReferenceCode")
 		);
 
 		return rankingBuilder.build();

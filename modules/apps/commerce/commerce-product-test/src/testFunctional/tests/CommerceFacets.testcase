@@ -677,6 +677,105 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12191 | Specification Facet works when searching products with specifications."
+	@priority = 5
+	test CanSpecificationFacetWorkWhenSearchingProducts {
+		property portal.acceptance = "true";
+
+		task ("Given the admin sets as 'facetable' all the specifications created with minium") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Specifications");
+
+			for (var specificationTitle : list "Quantity,Dimensions,Weight,Height,Length,Width") {
+				Click(
+					key_entry = ${specificationTitle},
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+				Check.checkNotVisible(
+					key_toggleSwitchLabel = "Use in Faceted Navigation",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				Button.clickSave();
+
+				CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+			}
+		}
+
+		task ("And the admin adds 11 more facetable specifications") {
+			for (var index : list "10,11,12,13,14,15,16,17,18,19,20") {
+				CommerceJSONSpecificationsAPI._addCommerceSpecification(
+					specificationLabelFacetable = "true",
+					specificationLabelKey = "spec${index}",
+					specificationLabelTitle = "Spec${index}");
+			}
+		}
+
+		task ("And adds all specifications to ABS Sensor with respective priorities and values") {
+			for (var specificationKeyAndPriority : list "width:5,fit:6,height:7,length:8,spec10:9,spec11:10,spec12:11,spec13:12,spec14:13,spec15:14,spec16:15,spec17:16,spec18:17,spec19:18,spec20:19") {
+				var specificationKey = StringUtil.extractFirst(${specificationKeyAndPriority}, ":");
+				var priority = StringUtil.extractLast(${specificationKeyAndPriority}, ":");
+
+				CommerceJSONProductsAPI._addCommerceProductSpecifications(
+					priority = ${priority},
+					productName = "ABS Sensor",
+					specificationKey = ${specificationKey},
+					value = 0);
+			}
+		}
+
+		task ("And a new specification is created and added to Shock Absorber with respective priority and value") {
+			CommerceJSONSpecificationsAPI._addCommerceSpecification(
+				specificationLabelFacetable = "true",
+				specificationLabelKey = "spec21",
+				specificationLabelTitle = "Spec21");
+
+			CommerceJSONProductsAPI._addCommerceProductSpecifications(
+				priority = 4,
+				productName = "Shock Absorber",
+				specificationKey = "spec21",
+				value = 0);
+		}
+
+		task ("When the admin configures minium site's specification facet widget with 20 as max terms") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceWidget.updateFacetConfiguration(
+				maxTerms = 20,
+				portletName = "Specification Facet");
+
+			Refresh();
+		}
+
+		task ("And searches for 'abs' in the minium search bar") {
+			CommerceNavigator.searchEntry(entryName = "abs");
+		}
+
+		task ("Then the specification facet widget can be used and no errors are shown") {
+			AssertElementPresent(
+				locator1 = "FormViewBuilder#RULE_LABEL",
+				ruleLabel = "Dimensions");
+
+			AssertElementNotPresent(
+				key_alertMessage = "Specification Facet is temporarily unavailable.",
+				locator1 = "Message#ERROR_ENTER_ANY");
+		}
+
+		task ("When the admin searches for 'shock' in the minium search bar") {
+			CommerceNavigator.searchEntry(entryName = "shock");
+		}
+
+		task ("Then the specification facet widget can be used and no errors are shown") {
+			AssertElementPresent(
+				locator1 = "FormViewBuilder#RULE_LABEL",
+				ruleLabel = "Dimensions");
+
+			AssertElementNotPresent(
+				key_alertMessage = "Specification Facet is temporarily unavailable.",
+				locator1 = "Message#ERROR_ENTER_ANY");
+		}
+	}
+
 	@description = "COMMERCE-10879 | As a Buyer user, I want to be able to filter products on a page using only the Option Facet widget"
 	@priority = 3
 	test CanUseOptionFacetWidgetOnNewPage {

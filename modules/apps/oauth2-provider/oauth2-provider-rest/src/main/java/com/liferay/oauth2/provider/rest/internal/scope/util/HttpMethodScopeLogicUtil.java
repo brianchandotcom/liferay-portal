@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -89,11 +90,6 @@ public class HttpMethodScopeLogicUtil {
 		HttpMethodScopeLogicUtil.class);
 
 	private static final Set<String> _defaultIgnoreMissingScopes =
-		new HashSet<String>() {
-			{
-				add("HEAD");
-				add("OPTIONS");
-			}
-		};
+		new HashSet<>(Arrays.asList("HEAD", "OPTIONS"));
 
 }

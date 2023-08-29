@@ -20,6 +20,7 @@
 		bottom: 26px;
 		display: none;
 		width: 14.5rem;
+		right: 0;
 	}
 
 	.adt-solutions-search-results .labels .category-names::after {
@@ -186,10 +187,10 @@
 						<div>
 							<#if productCategories?has_content>
 								<div class="align-center d-flex labels">
-									<#list productCategories as firstCategory>
-										<#if firstCategory.vocabulary == 'marketplace solution category'>
+									<#list productCategories as category>
+										<#if category.vocabulary == 'marketplace solution category'>
 											<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1">
-												${firstCategory.name}
+												${category.name}
 											</div>
 											<#break>
 										</#if>

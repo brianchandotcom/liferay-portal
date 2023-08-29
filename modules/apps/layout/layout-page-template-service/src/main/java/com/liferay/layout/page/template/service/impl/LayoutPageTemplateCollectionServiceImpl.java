@@ -40,6 +40,23 @@ public class LayoutPageTemplateCollectionServiceImpl
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long groupId, String name, String description,
+			long parentLayoutPageTemplateCollection,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION);
+
+		return layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				getUserId(), groupId, name, description,
+				parentLayoutPageTemplateCollection, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long groupId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 

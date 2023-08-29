@@ -163,6 +163,11 @@ public class KaleoServiceUpgradeStepRegistrator
 			"3.5.0", "3.5.1",
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v3_5_1.
 				KaleoActionUpgradeProcess());
+
+		registry.register(
+			"3.5.1", "3.5.2",
+			UpgradeProcessFactory.alterColumnType(
+				"KaleoAction", "scriptLanguage", "VARCHAR(255) null"));
 	}
 
 }

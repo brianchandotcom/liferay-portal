@@ -316,6 +316,15 @@ public class ObjectServiceUpgradeStepRegistrator
 			"7.0.0", "7.1.0",
 			new com.liferay.object.internal.upgrade.v7_1_0.
 				SchemaUpgradeProcess());
+
+		registry.register(
+			"7.1.0", "7.1.1",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectAction", "objectActionExecutorKey", "VARCHAR(255) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectDefinition", "storageType", "VARCHAR(255) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectValidationRule", "engine", "VARCHAR(255) null"));
 	}
 
 	@Reference

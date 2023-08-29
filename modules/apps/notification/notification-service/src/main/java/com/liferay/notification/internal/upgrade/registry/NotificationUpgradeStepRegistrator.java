@@ -118,6 +118,11 @@ public class NotificationUpgradeStepRegistrator
 			"3.8.0", "3.9.0",
 			new com.liferay.notification.internal.upgrade.v3_9_0.
 				NotificationRecipientSettingUpgradeProcess(_portalUUID));
+
+		registry.register(
+			"3.9.0", "3.9.1",
+			UpgradeProcessFactory.alterColumnType(
+				"NotificationTemplate", "type_", "VARCHAR(255) null"));
 	}
 
 	@Reference

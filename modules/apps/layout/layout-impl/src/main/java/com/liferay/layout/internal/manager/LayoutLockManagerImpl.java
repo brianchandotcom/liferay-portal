@@ -194,18 +194,21 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public String getLockedLayoutURL(ActionRequest actionRequest) {
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
+		return getLockedLayoutURL(_portal.getHttpServletRequest(actionRequest));
+	}
 
+	@Override
+	public String getLockedLayoutURL(HttpServletRequest httpServletRequest) {
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/locked_layout"
 		).setBackURL(
 			() -> {
-				String backURL = ParamUtil.getString(actionRequest, "backURL");
+				String backURL = ParamUtil.getString(
+					httpServletRequest, "backURL");
 
 				if (Validator.isNotNull(backURL)) {
 					return backURL;

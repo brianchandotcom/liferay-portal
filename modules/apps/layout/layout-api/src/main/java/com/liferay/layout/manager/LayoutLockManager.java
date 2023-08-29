@@ -16,6 +16,8 @@ import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Lourdes Fernández Besada
  */
@@ -28,6 +30,8 @@ public interface LayoutLockManager {
 	public List<LockedLayout> getLockedLayouts(long companyId, long groupId);
 
 	public String getLockedLayoutURL(ActionRequest actionRequest);
+
+	public String getLockedLayoutURL(HttpServletRequest httpServletRequest);
 
 	public String getUnlockDraftLayoutURL(
 			LiferayPortletResponse liferayPortletResponse,

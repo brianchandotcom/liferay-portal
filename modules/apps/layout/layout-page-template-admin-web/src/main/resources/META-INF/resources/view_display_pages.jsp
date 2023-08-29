@@ -60,7 +60,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 			%>
 
 			<c:choose>
-				<c:when test='<%= (curLayoutPageTemplateCollection != null) && FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
+				<c:when test="<%= curLayoutPageTemplateCollection != null %>">
 
 					<%
 					row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());

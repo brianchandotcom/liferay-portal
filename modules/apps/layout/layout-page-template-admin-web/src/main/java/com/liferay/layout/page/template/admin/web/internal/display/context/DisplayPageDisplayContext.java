@@ -6,12 +6,15 @@
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -45,13 +48,71 @@ public class DisplayPageDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SearchContainer<Object> getDisplayPagesSearchContainer() {
+	public SearchContainer<?> getDisplayPagesSearchContainer() {
 		if (_displayPagesSearchContainer != null) {
 			return _displayPagesSearchContainer;
 		}
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
+			SearchContainer<LayoutPageTemplateEntry>
+				displayPagesSearchContainer = new SearchContainer<>(
+					_renderRequest, getPortletURL(), null,
+					"there-are-no-display-page-templates");
+
+			displayPagesSearchContainer.setOrderByCol(getOrderByCol());
+			displayPagesSearchContainer.setOrderByComparator(
+				LayoutPageTemplatePortletUtil.
+					getLayoutPageTemplateEntryOrderByComparator(
+						getOrderByCol(), getOrderByType()));
+			displayPagesSearchContainer.setOrderByType(getOrderByType());
+
+			if (isSearch()) {
+				displayPagesSearchContainer.setResultsAndTotal(
+					() ->
+						LayoutPageTemplateEntryServiceUtil.
+							getLayoutPageTemplateEntries(
+								_themeDisplay.getScopeGroupId(), getKeywords(),
+								LayoutPageTemplateEntryTypeConstants.
+									TYPE_DISPLAY_PAGE,
+								displayPagesSearchContainer.getStart(),
+								displayPagesSearchContainer.getEnd(),
+								displayPagesSearchContainer.
+									getOrderByComparator()),
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntriesCount(
+							_themeDisplay.getScopeGroupId(), getKeywords(),
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_DISPLAY_PAGE));
+			}
+			else {
+				displayPagesSearchContainer.setResultsAndTotal(
+					() ->
+						LayoutPageTemplateEntryServiceUtil.
+							getLayoutPageTemplateEntries(
+								_themeDisplay.getScopeGroupId(),
+								LayoutPageTemplateEntryTypeConstants.
+									TYPE_DISPLAY_PAGE,
+								displayPagesSearchContainer.getStart(),
+								displayPagesSearchContainer.getEnd(),
+								displayPagesSearchContainer.
+									getOrderByComparator()),
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntriesCount(
+							_themeDisplay.getScopeGroupId(),
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_DISPLAY_PAGE));
+			}
+
+			displayPagesSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+
+			_displayPagesSearchContainer = displayPagesSearchContainer;
+
+			return _displayPagesSearchContainer;
+		}
+
 		SearchContainer<Object> displayPagesSearchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-display-page-templates");
 
@@ -221,7 +282,7 @@ public class DisplayPageDisplayContext {
 		return null;
 	}
 
-	private SearchContainer<Object> _displayPagesSearchContainer;
+	private SearchContainer<?> _displayPagesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private Long _layoutPageTemplateEntryId;

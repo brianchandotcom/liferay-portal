@@ -130,6 +130,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro disableManageRemotely {
+		PublicationsNavigator.openPublicationsSettings();
+
+		Uncheck.uncheckToggleSwitch(locator1 = "Publications#ENABLE_MANAGE_REMOTELY");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro disablePublications {
 		if (${gotoInstancesettings} == "true") {
 			ApplicationsMenu.gotoPortlet(
@@ -170,6 +178,14 @@ definition {
 		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_ALLOW_UNAPPROVED_CHANGES");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
+	macro enableManageRemotely {
+		PublicationsNavigator.openPublicationsSettings();
+
+		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_MANAGE_REMOTELY");
 
 		Click(locator1 = "Button#SAVE");
 	}

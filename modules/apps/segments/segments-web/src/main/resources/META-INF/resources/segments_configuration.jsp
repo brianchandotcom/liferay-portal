@@ -128,7 +128,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 						checked="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() %>"
 						disabled="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>"
 						id='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
-						label='<%= LanguageUtil.get(request, "segmentation-enabled-name") %>'
+						label="segmentation-enabled-name"
 						name='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
 					/>
 
@@ -155,7 +155,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 						checked="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() %>"
 						disabled="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>"
 						id='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
-						label='<%= LanguageUtil.get(request, "role-segmentation-enabled-name") %>'
+						label="role-segmentation-enabled-name"
 						name='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
 					/>
 

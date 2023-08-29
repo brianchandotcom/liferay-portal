@@ -1,5 +1,18 @@
 definition {	
 
+	macro addNewNotificationTemplate {
+        Notifications.goToNotificationTemplateAdmin();
+        
+        LexiconEntry.gotoAdd();
+
+        if (${notificationType} == "Email") {
+            MenuItem.click(menuItem = ${notificationType});
+    	}
+        else if(${notificationType} == "User Notification"){
+            MenuItem.click(menuItem = "${notificationType}");
+    	}
+	}
+	
 	macro configureEmailNotificationTemplate {
 			Type(
 				key_text = "Name",

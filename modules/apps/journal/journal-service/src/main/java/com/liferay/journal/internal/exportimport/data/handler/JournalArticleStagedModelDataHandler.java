@@ -521,6 +521,12 @@ public class JournalArticleStagedModelDataHandler
 			articleElement.addAttribute("preloaded", "true");
 		}
 
+		portletDataContext.getManifestSummary(
+		).addAssetTitle(
+			JournalArticle.class.getName(),
+			article.getTitle(article.getDefaultLanguageId())
+		);
+
 		_exportAssetDisplayPage(portletDataContext, article);
 
 		_exportFriendlyURLEntries(portletDataContext, article);

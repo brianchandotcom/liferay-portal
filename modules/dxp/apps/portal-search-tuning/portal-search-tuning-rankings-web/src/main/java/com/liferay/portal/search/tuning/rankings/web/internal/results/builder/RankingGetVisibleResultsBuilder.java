@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
@@ -42,7 +43,7 @@ public class RankingGetVisibleResultsBuilder {
 		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory,
 		DLAppLocalService dlAppLocalService,
 		FastDateFormatFactory fastDateFormatFactory,
-		RankingIndexName rankingIndexName,
+		GroupLocalService groupLocalService, RankingIndexName rankingIndexName,
 		RankingIndexReader rankingIndexReader,
 		RankingSearchRequestHelper rankingSearchRequestHelper,
 		ResourceActions resourceActions, ResourceRequest resourceRequest,
@@ -52,6 +53,7 @@ public class RankingGetVisibleResultsBuilder {
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
 		_dlAppLocalService = dlAppLocalService;
 		_fastDateFormatFactory = fastDateFormatFactory;
+		_groupLocalService = groupLocalService;
 		_rankingIndexName = rankingIndexName;
 		_rankingIndexReader = rankingIndexReader;
 		_rankingSearchRequestHelper = rankingSearchRequestHelper;
@@ -65,7 +67,7 @@ public class RankingGetVisibleResultsBuilder {
 
 	public JSONObject build() {
 		Ranking ranking = _rankingIndexReader.fetch(
-			_rankingIndexName, _rankingId);
+			_rankingId, _rankingIndexName);
 
 		if (ranking == null) {
 			return JSONUtil.put(
@@ -99,6 +101,14 @@ public class RankingGetVisibleResultsBuilder {
 		return this;
 	}
 
+	public RankingGetVisibleResultsBuilder groupExternalReferenceCode(
+		String groupExternalReferenceCode) {
+
+		_groupExternalReferenceCode = groupExternalReferenceCode;
+
+		return this;
+	}
+
 	public RankingGetVisibleResultsBuilder queryString(String queryString) {
 		_queryString = queryString;
 
@@ -117,6 +127,14 @@ public class RankingGetVisibleResultsBuilder {
 		return this;
 	}
 
+	public RankingGetVisibleResultsBuilder sxpBlueprintExternalReferenceCode(
+		String sxpBlueprintExternalReferenceCode) {
+
+		_sxpBlueprintExternalReferenceCode = sxpBlueprintExternalReferenceCode;
+
+		return this;
+	}
+
 	protected SearchRequest buildSearchRequest(Ranking ranking) {
 		String queryStringOfUrl = _queryString;
 
@@ -128,7 +146,7 @@ public class RankingGetVisibleResultsBuilder {
 
 		RankingSearchRequestBuilder rankingSearchRequestBuilder =
 			new RankingSearchRequestBuilder(
-				_complexQueryPartBuilderFactory, _queries,
+				_complexQueryPartBuilderFactory, _groupLocalService, _queries,
 				_searchRequestBuilderFactory);
 
 		SearchRequestBuilder searchRequestBuilder =
@@ -136,10 +154,14 @@ public class RankingGetVisibleResultsBuilder {
 				_companyId
 			).from(
 				_from
+			).groupExternalReferenceCode(
+				_groupExternalReferenceCode
 			).queryString(
 				queryString
 			).size(
 				_size
+			).sxpBlueprintExternalReferenceCode(
+				_sxpBlueprintExternalReferenceCode
 			).build();
 
 		_rankingSearchRequestHelper.contribute(searchRequestBuilder, ranking);
@@ -187,6 +209,8 @@ public class RankingGetVisibleResultsBuilder {
 	private final DLAppLocalService _dlAppLocalService;
 	private final FastDateFormatFactory _fastDateFormatFactory;
 	private int _from;
+	private String _groupExternalReferenceCode;
+	private final GroupLocalService _groupLocalService;
 	private final Queries _queries;
 	private String _queryString;
 	private String _rankingId;
@@ -199,5 +223,6 @@ public class RankingGetVisibleResultsBuilder {
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private int _size;
+	private String _sxpBlueprintExternalReferenceCode;
 
 }

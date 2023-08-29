@@ -5,6 +5,11 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.results.builder;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.query.Queries;
@@ -20,10 +25,11 @@ public class RankingSearchRequestBuilder {
 
 	public RankingSearchRequestBuilder(
 		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory,
-		Queries queries,
+		GroupLocalService groupLocalService, Queries queries,
 		SearchRequestBuilderFactory searchRequestBuilderFactory) {
 
 		_complexQueryPartBuilderFactory = complexQueryPartBuilderFactory;
+		_groupLocalService = groupLocalService;
 		_queries = queries;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 	}
@@ -46,7 +52,18 @@ public class RankingSearchRequestBuilder {
 		).size(
 			_size
 		).withSearchContext(
-			searchContext -> searchContext.setCompanyId(_companyId)
+			searchContext -> {
+				searchContext.setCompanyId(_companyId);
+
+				if (!Validator.isBlank(_sxpBlueprintExternalReferenceCode)) {
+					searchContext.setAttribute(
+						"search.experiences.blueprint.external.reference.code",
+						_sxpBlueprintExternalReferenceCode);
+				}
+				else if (!Validator.isBlank(_groupExternalReferenceCode)) {
+					searchContext.setGroupIds(_getGroupIds());
+				}
+			}
 		);
 	}
 
@@ -58,6 +75,14 @@ public class RankingSearchRequestBuilder {
 
 	public RankingSearchRequestBuilder from(int from) {
 		_from = from;
+
+		return this;
+	}
+
+	public RankingSearchRequestBuilder groupExternalReferenceCode(
+		String groupExternalReferenceCode) {
+
+		_groupExternalReferenceCode = groupExternalReferenceCode;
 
 		return this;
 	}
@@ -74,6 +99,14 @@ public class RankingSearchRequestBuilder {
 		return this;
 	}
 
+	public RankingSearchRequestBuilder sxpBlueprintExternalReferenceCode(
+		String sxpBlueprintExternalReferenceCode) {
+
+		_sxpBlueprintExternalReferenceCode = sxpBlueprintExternalReferenceCode;
+
+		return this;
+	}
+
 	protected Query getIdsQuery(String id) {
 		IdsQuery idsQuery = _queries.ids();
 
@@ -82,13 +115,34 @@ public class RankingSearchRequestBuilder {
 		return idsQuery;
 	}
 
+	private long[] _getGroupIds() {
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			_groupExternalReferenceCode, _companyId);
+
+		if (group != null) {
+			return new long[] {group.getGroupId()};
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Unable to find group " + _groupExternalReferenceCode);
+		}
+
+		return new long[0];
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RankingSearchRequestBuilder.class);
+
 	private long _companyId;
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory;
 	private int _from;
+	private String _groupExternalReferenceCode;
+	private final GroupLocalService _groupLocalService;
 	private final Queries _queries;
 	private String _queryString;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private int _size;
+	private String _sxpBlueprintExternalReferenceCode;
 
 }

@@ -128,10 +128,6 @@
 	<bean class="com.liferay.portal.kernel.service.permission.RolePermissionUtil" id="com.liferay.portal.kernel.service.permission.RolePermissionUtil">
 		<property name="rolePermission" ref="com.liferay.portal.kernel.service.permission.RolePermission" />
 	</bean>
-	<bean class="com.liferay.portal.service.permission.TeamPermissionImpl" id="com.liferay.portal.kernel.service.permission.TeamPermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.TeamPermissionUtil" id="com.liferay.portal.kernel.service.permission.TeamPermissionUtil">
-		<property name="teamPermission" ref="com.liferay.portal.kernel.service.permission.TeamPermission" />
-	</bean>
 	<bean class="com.liferay.portal.service.permission.UserGroupPermissionImpl" id="com.liferay.portal.kernel.service.permission.UserGroupPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil">
 		<property name="userGroupPermission" ref="com.liferay.portal.kernel.service.permission.UserGroupPermission" />

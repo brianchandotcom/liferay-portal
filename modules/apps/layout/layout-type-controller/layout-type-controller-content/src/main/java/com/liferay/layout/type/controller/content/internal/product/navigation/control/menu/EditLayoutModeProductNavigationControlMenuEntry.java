@@ -218,6 +218,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			_portal.getLayoutFullURL(layout, themeDisplay));
 
 		redirect = HttpComponentsUtil.setParameter(
+			redirect, "p_l_back_url_title",
+			layout.getName(themeDisplay.getLocale()));
+
+		redirect = HttpComponentsUtil.setParameter(
 			redirect, "p_l_mode", Constants.EDIT);
 
 		long segmentsExperienceId = ParamUtil.getLong(

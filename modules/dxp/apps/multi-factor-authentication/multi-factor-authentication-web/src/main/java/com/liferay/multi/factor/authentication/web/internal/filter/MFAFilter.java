@@ -35,6 +35,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author Mirna Gama
+ */
 @Component(
 	property = {
 		"after-filter=MFA Servlet Filter", "dispatcher=FORWARD",

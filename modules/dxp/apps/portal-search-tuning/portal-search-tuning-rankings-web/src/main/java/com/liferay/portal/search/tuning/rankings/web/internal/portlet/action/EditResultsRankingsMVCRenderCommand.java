@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.display.context.EditRankingDisplayBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -36,8 +38,8 @@ public class EditResultsRankingsMVCRenderCommand implements MVCRenderCommand {
 
 		EditRankingDisplayBuilder editRankingDisplayBuilder =
 			new EditRankingDisplayBuilder(
-				_portal.getHttpServletRequest(renderRequest), renderRequest,
-				renderResponse);
+				_portal.getHttpServletRequest(renderRequest),
+				_rankingIndexNameBuilder, _rankingIndexReader, renderResponse);
 
 		renderRequest.setAttribute(
 			ResultRankingsPortletKeys.EDIT_RANKING_DISPLAY_CONTEXT,
@@ -48,5 +50,11 @@ public class EditResultsRankingsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RankingIndexNameBuilder _rankingIndexNameBuilder;
+
+	@Reference
+	private RankingIndexReader _rankingIndexReader;
 
 }

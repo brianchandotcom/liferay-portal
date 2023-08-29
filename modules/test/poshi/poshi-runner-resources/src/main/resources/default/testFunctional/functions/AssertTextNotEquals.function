@@ -6,9 +6,11 @@ definition {
 	function assertNotPartialText(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
-		selenium.waitForNotPartialText(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.assertNotPartialText(${locator1}, ${value1});
+		selenium.waitForTextMatches(${locator1}, "^((?!${regex}).)*$"); 
+
+		selenium.assertTextMatches(${locator1}, "^((?!${regex}).)*$"); 
 	}
 
 	function assertNotText(locator1, value1) {

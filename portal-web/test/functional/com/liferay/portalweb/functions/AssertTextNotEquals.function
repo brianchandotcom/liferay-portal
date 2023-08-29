@@ -7,9 +7,11 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForNotPartialText(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.assertNotPartialText(${locator1}, ${value1});
+		selenium.waitForTextMatches(${locator1}, "^((?!${regex}).)*$");
+
+		selenium.assertTextMatches(${locator1}, "^((?!${regex}).)*$");
 
 		selenium.assertJavaScriptErrors("true");
 

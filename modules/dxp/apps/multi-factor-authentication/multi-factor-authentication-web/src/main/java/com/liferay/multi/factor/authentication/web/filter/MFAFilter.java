@@ -15,13 +15,10 @@
 package com.liferay.multi.factor.authentication.web.filter;
 
 import com.liferay.multi.factor.authentication.web.internal.policy.MFAPolicy;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.TryFilter;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -38,7 +35,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-
 @Component(
 	property = {
 		"after-filter=MFA Servlet Filter", "dispatcher=FORWARD",
@@ -47,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Filter.class
 )
-public class MFAFilter
-	extends BaseFilter implements TryFilter {
-
-
+public class MFAFilter extends BaseFilter implements TryFilter {
 
 	@Override
 	public Object doFilterTry(
@@ -58,14 +51,20 @@ public class MFAFilter
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		 String path = (String) httpServletRequest.getAttribute(WebKeys.INVOKER_FILTER_URI);
+		String path = (String)httpServletRequest.getAttribute(
+			WebKeys.INVOKER_FILTER_URI);
 
-		 boolean mfaEnabled = _mfaPolicy.isMFAEnabled(GetterUtil.getLong(httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
-		 
-		 if (path.contains("/c/portal/update_password")) {
-			 HttpSession httpSession = httpServletRequest.getSession();
-			 httpSession.setAttribute(WebKeys.MFA_ENABLED, mfaEnabled);
-		 }
+
+		if (path.contains("/c/portal/update_password")) {
+
+			boolean mfaEnabled = _mfaPolicy.isMFAEnabled(
+			GetterUtil.getLong(
+				httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
+				
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			httpSession.setAttribute(WebKeys.MFA_ENABLED, mfaEnabled);
+		}
 
 		return true;
 	}
@@ -85,9 +84,7 @@ public class MFAFilter
 		return _log;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		MFAFilter.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(MFAFilter.class);
 
 	@Reference
 	private MFAPolicy _mfaPolicy;

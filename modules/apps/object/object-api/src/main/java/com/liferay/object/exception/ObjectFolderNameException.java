@@ -7,10 +7,17 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Murilo Stodolni
  */
 public class ObjectFolderNameException extends PortalException {
+
+	public List<Object> getArguments() {
+		return _arguments;
+	}
 
 	public String getMessageKey() {
 		return _messageKey;
@@ -21,8 +28,9 @@ public class ObjectFolderNameException extends PortalException {
 
 		public MustBeLessThan41Characters() {
 			super(
+				Collections.singletonList(41),
 				"Name must be less than 41 characters",
-				"only-41-characters-are-allowed");
+				"only-x-characters-are-allowed");
 		}
 
 	}
@@ -56,12 +64,22 @@ public class ObjectFolderNameException extends PortalException {
 
 	}
 
+	private ObjectFolderNameException(
+		List<Object> arguments, String message, String messageKey) {
+
+		super(message);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
+	}
+
 	private ObjectFolderNameException(String message, String messageKey) {
 		super(message);
 
 		_messageKey = messageKey;
 	}
 
+	private List<Object> _arguments;
 	private final String _messageKey;
 
 }

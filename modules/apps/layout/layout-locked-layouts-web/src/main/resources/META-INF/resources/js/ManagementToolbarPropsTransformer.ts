@@ -5,7 +5,12 @@
 
 import openUnlockLayoutsModal from './openUnlockLayoutsModal';
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
+export default function propsTransformer({
+	portletNamespace,
+	...otherProps
+}: {
+	portletNamespace: string;
+}) {
 	return {
 		...otherProps,
 		onActionButtonClick() {
@@ -16,6 +21,9 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					);
 
 					if (form) {
+
+						// @ts-ignore
+
 						submitForm(form);
 					}
 				},

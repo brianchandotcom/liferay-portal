@@ -5,7 +5,11 @@
 
 import {openModal} from 'frontend-js-web';
 
-export default function openUnlockLayoutsModal({onUnlock}) {
+export default function openUnlockLayoutsModal({
+	onUnlock,
+}: {
+	onUnlock: () => void;
+}) {
 	openModal({
 		bodyHTML: `
 			<p class="c-mb-0 font-weight-bold">
@@ -26,7 +30,7 @@ export default function openUnlockLayoutsModal({onUnlock}) {
 			{
 				displayType: 'primary',
 				label: Liferay.Language.get('unlock'),
-				onClick: ({processClose}) => {
+				onClick: ({processClose}: {processClose: () => void}) => {
 					processClose();
 
 					onUnlock();

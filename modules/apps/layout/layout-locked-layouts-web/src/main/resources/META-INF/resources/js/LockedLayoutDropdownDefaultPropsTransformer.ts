@@ -5,12 +5,32 @@
 
 import openUnlockLayoutsModal from './openUnlockLayoutsModal';
 
+type Item = {
+	items: ItemChild[];
+	type: 'group';
+};
+
+type ItemChild = {
+	data: ItemData;
+	icon: string;
+	label: string;
+	type: 'item';
+};
+
+type ItemData = {
+	action: 'unlockLockedLayout';
+	unlockLockedLayoutURL: string;
+};
+
 const ACTIONS = {
-	send(url) {
+	send(url: string) {
+
+		// @ts-ignore
+
 		submitForm(document.hrefFm, url);
 	},
 
-	unlockLockedLayout(itemData) {
+	unlockLockedLayout(itemData: ItemData) {
 		openUnlockLayoutsModal({
 			onUnlock: () => {
 				this.send(itemData.unlockLockedLayoutURL);
@@ -19,24 +39,20 @@ const ACTIONS = {
 	},
 };
 
-export default function propsTransformer({
-	actions,
-	items,
-	portletNamespace,
-	...props
-}) {
-	const updateItem = (item) => {
+export default function propsTransformer({items, ...props}: {items: Item[]}) {
+	const updateItem = (item: Item) => {
 		return {
 			...item,
-			items: item.items.map((child) => ({
+			items: item.items.map((child: ItemChild) => ({
 				...child,
-				onClick(event) {
+
+				onClick(event: React.MouseEvent<HTMLButtonElement>) {
 					const action = child.data?.action;
 
 					if (action) {
 						event.preventDefault();
 
-						ACTIONS[action](child.data, portletNamespace);
+						ACTIONS[action](child.data);
 					}
 				},
 			})),
@@ -45,7 +61,6 @@ export default function propsTransformer({
 
 	return {
 		...props,
-		actions: actions?.map(updateItem),
 		items: items?.map(updateItem),
 	};
 }

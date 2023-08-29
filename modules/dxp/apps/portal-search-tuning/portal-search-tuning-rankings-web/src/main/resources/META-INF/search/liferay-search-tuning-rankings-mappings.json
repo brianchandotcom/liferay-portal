@@ -8,6 +8,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"groupExternalReferenceCode": {
+			"store": true,
+			"type": "keyword"
+		},
 		"inactive": {
 			"store": true,
 			"type": "boolean"
@@ -55,6 +59,10 @@
 			},
 			"store": true,
 			"type": "text"
+		},
+		"sxpBlueprintExternalReferenceCode": {
+			"store": true,
+			"type": "keyword"
 		},
 		"timestamp": {
 			"store": true,

@@ -111,37 +111,29 @@ public class WorkflowDefinitionContentUtil {
 			return;
 		}
 
-		String content = null;
-		boolean cdata = false;
-
+		Node valueNode = null;
 		NodeList nodeList = element.getChildNodes();
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
 
-			if (!(node instanceof Text) || !_hasContent(node.getNodeValue())) {
-				continue;
+			if ((node instanceof Text) && _hasContent(node.getNodeValue())) {
+				valueNode = node;
+
+				break;
 			}
-
-			if (node instanceof CDATASection) {
-				cdata = true;
-			}
-
-			content = node.getNodeValue();
-
-			break;
 		}
 
-		if (content == null) {
+		if (valueNode == null) {
 			return;
 		}
 
-		if (cdata) {
+		String content = valueNode.getNodeValue();
+
+		if (valueNode instanceof CDATASection) {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-			String[] lines = content.split(StringPool.NEW_LINE);
-
-			for (String line : lines) {
+			for (String line : content.split(StringPool.NEW_LINE)) {
 				jsonArray.put(
 					line.replaceAll(StringPool.TAB, StringPool.FOUR_SPACES));
 			}

@@ -95,7 +95,6 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 		formData.append(`${portletNamespace}file`, file);
 
 		if (overwriteStrategy) {
-			setImportOptionsModalVisible(false);
 			formData.append(`${portletNamespace}importType`, overwriteStrategy);
 		}
 

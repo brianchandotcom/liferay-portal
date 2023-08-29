@@ -6,18 +6,19 @@
 package com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.constants.CommerceShipmentConstants;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.Status;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.math.BigDecimal;
 
 import java.util.Locale;
 
@@ -92,17 +93,28 @@ public class PlacedOrderItemShipmentDTOConverter
 						isSupplierShipment();
 				trackingNumber = commerceShipment.getTrackingNumber();
 				trackingURL = commerceShipment.getTrackingURL();
+				unitOfMeasureKey = commerceShipmentItem.getUnitOfMeasureKey();
 
 				setQuantity(
 					() -> {
-						BigDecimal shipmentItemQuantity =
-							commerceShipmentItem.getQuantity();
+						CommerceOrderItem commerceOrderItem =
+							_commerceOrderItemLocalService.getCommerceOrderItem(
+								commerceShipmentItem.getCommerceOrderItemId());
 
-						return shipmentItemQuantity.intValue();
+						return _commerceQuantityFormatter.format(
+							commerceOrderItem.getCPInstanceId(),
+							commerceShipmentItem.getQuantity(),
+							commerceShipmentItem.getUnitOfMeasureKey());
 					});
 			}
 		};
 	}
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

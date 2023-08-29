@@ -9,13 +9,16 @@ import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -27,8 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +58,12 @@ public class OrderItemDTOConverter
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
+				commerceOrderItem.getCompanyId(),
+				commerceOrderItem.getUnitOfMeasureKey(),
+				commerceOrderItem.getSku());
 
 		return new OrderItem() {
 			{
@@ -101,7 +108,8 @@ public class OrderItemDTOConverter
 				finalPriceWithTaxAmount =
 					commerceOrderItem.getFinalPriceWithTaxAmount();
 				formattedQuantity = _commerceOrderItemQuantityFormatter.format(
-					commerceOrderItem, dtoConverterContext.getLocale());
+					commerceOrderItem, cpInstanceUnitOfMeasure,
+					dtoConverterContext.getLocale());
 				id = commerceOrderItem.getCommerceOrderItemId();
 				name = LanguageUtils.getLanguageIdMap(
 					commerceOrderItem.getNameMap());
@@ -115,33 +123,26 @@ public class OrderItemDTOConverter
 				promoPrice = commerceOrderItem.getPromoPrice();
 				promoPriceWithTaxAmount =
 					commerceOrderItem.getPromoPriceWithTaxAmount();
+				quantity = _commerceQuantityFormatter.format(
+					cpInstanceUnitOfMeasure, commerceOrderItem.getQuantity());
 				replacedSku = commerceOrderItem.getReplacedSku();
 				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
+				shippedQuantity = _commerceQuantityFormatter.format(
+					cpInstanceUnitOfMeasure,
+					commerceOrderItem.getShippedQuantity());
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 				sku = commerceOrderItem.getSku();
 				skuExternalReferenceCode = _getSkuExternalReferenceCode(
 					cpInstance);
 				skuId = _getSkuId(cpInstance);
 				subscription = commerceOrderItem.isSubscription();
+				unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
 				unitPrice = commerceOrderItem.getUnitPrice();
 				unitPriceWithTaxAmount =
 					commerceOrderItem.getUnitPriceWithTaxAmount();
 
-				setQuantity(
-					() -> {
-						BigDecimal quantity = commerceOrderItem.getQuantity();
-
-						return quantity.intValue();
-					});
-				setShippedQuantity(
-					() -> {
-						BigDecimal shippedQuantity =
-							commerceOrderItem.getShippedQuantity();
-
-						return shippedQuantity.intValue();
-					});
 				setUnitOfMeasure(
 					() -> {
 						if (commerceOrderItem.getCPMeasurementUnitId() <= 0) {
@@ -246,7 +247,14 @@ public class OrderItemDTOConverter
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
 	private CommerceVirtualOrderItemService _commerceVirtualOrderItemService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;

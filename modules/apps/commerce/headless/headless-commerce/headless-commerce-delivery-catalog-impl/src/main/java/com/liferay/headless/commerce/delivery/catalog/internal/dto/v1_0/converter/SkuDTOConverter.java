@@ -322,12 +322,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		}
 
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
-			BigDecimal stockQuantity =
+			availability.setStockQuantity(
 				_commerceInventoryEngine.getStockQuantity(
 					companyId, commerceCatalogGroupId, commerceChannelGroupId,
-					sku, unitOfMeasureKey);
-
-			availability.setStockQuantity(stockQuantity.intValue());
+					sku, unitOfMeasureKey));
 		}
 
 		return availability;

@@ -24,6 +24,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -263,6 +264,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		Summary summary = new Summary() {
 			{
 				currency = commerceCurrency.getName(locale);
+				itemsQuantity = BigDecimalUtil.stripTrailingZeros(
+					_commerceOrderItemService.getCommerceOrderItemsQuantity(
+						commerceOrder.getCommerceOrderId()));
 				shippingValue =
 					commerceOrderPriceShippingValuePrice.doubleValue();
 				shippingValueFormatted =
@@ -276,20 +280,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				subtotal = finalOrderPriceSubtotalPrice.doubleValue();
 				subtotalFormatted =
 					commerceOrderPriceSubtotalCommerceMoney.format(locale);
-
 				total = finalOrderPriceTotalPrice.doubleValue();
 				totalFormatted = commerceOrderPriceTotalCommerceMoney.format(
 					locale);
-
-				setItemsQuantity(
-					() -> {
-						BigDecimal quantity =
-							_commerceOrderItemService.
-								getCommerceOrderItemsQuantity(
-									commerceOrder.getCommerceOrderId());
-
-						return quantity.intValue();
-					});
 			}
 		};
 

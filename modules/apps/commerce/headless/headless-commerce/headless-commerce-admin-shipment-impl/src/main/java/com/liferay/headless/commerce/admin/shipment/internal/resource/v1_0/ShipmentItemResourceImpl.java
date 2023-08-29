@@ -28,8 +28,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.math.BigDecimal;
-
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -206,7 +204,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			_commerceShipmentItemService.addCommerceShipmentItem(
 				shipmentItem.getExternalReferenceCode(), shipmentId,
 				shipmentItem.getOrderItemId(), shipmentItem.getWarehouseId(),
-				BigDecimal.valueOf(shipmentItem.getQuantity()), null,
+				shipmentItem.getQuantity(), null,
 				GetterUtil.getBoolean(
 					shipmentItem.getValidateInventory(), true),
 				_serviceContextHelper.getServiceContext(contextUser));

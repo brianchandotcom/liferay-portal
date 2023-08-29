@@ -20,14 +20,14 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -91,6 +91,10 @@ public class CartItemDTOConverter
 				productURLs = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionLocalService.getUrlTitleMap(
 						commerceOrderItem.getCPDefinitionId()));
+				quantity = _commerceQuantityFormatter.format(
+					commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getQuantity(),
+					commerceOrderItem.getUnitOfMeasureKey());
 				replacedSku = commerceOrderItem.getReplacedSku();
 				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 				settings = _getSettings(commerceOrderItem.getCPInstanceId());
@@ -100,13 +104,7 @@ public class CartItemDTOConverter
 				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
 					cartItemDTOConverterContext.getAccountId(),
 					commerceOrderItem.getCPInstanceId());
-
-				setQuantity(
-					() -> {
-						BigDecimal quantity = commerceOrderItem.getQuantity();
-
-						return quantity.intValue();
-					});
+				unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();
 			}
 		};
 	}
@@ -250,16 +248,24 @@ public class CartItemDTOConverter
 			if ((allowedOrderQuantitiesArray != null) &&
 				(allowedOrderQuantitiesArray.length > 0)) {
 
-				settings.setAllowedQuantities(
-					TransformUtil.transformToArray(
-						ListUtil.fromArray(allowedOrderQuantitiesArray),
-						BigDecimal::intValue, Integer.class));
+				settings.setAllowedQuantities(allowedOrderQuantitiesArray);
 			}
 		}
 
-		settings.setMinQuantity(minOrderQuantity.intValue());
-		settings.setMaxQuantity(maxOrderQuantity.intValue());
-		settings.setMultipleQuantity(multipleQuantity.intValue());
+		if (minOrderQuantity != null) {
+			settings.setMinQuantity(
+				BigDecimalUtil.stripTrailingZeros(minOrderQuantity));
+		}
+
+		if (maxOrderQuantity != null) {
+			settings.setMaxQuantity(
+				BigDecimalUtil.stripTrailingZeros(maxOrderQuantity));
+		}
+
+		if (multipleQuantity != null) {
+			settings.setMultipleQuantity(
+				BigDecimalUtil.stripTrailingZeros(multipleQuantity));
+		}
 
 		return settings;
 	}
@@ -272,6 +278,9 @@ public class CartItemDTOConverter
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

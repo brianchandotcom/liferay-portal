@@ -42,6 +42,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -414,12 +415,11 @@ public class MappedProductDTOConverter
 		}
 
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
-			BigDecimal stockQuantity =
-				_commerceInventoryEngine.getStockQuantity(
-					companyId, cpInstance.getGroupId(), commerceChannelGroupId,
-					sku, unitOfMeasureKey);
-
-			availability.setStockQuantity(stockQuantity.intValue());
+			availability.setStockQuantity(
+				BigDecimalUtil.stripTrailingZeros(
+					_commerceInventoryEngine.getStockQuantity(
+						companyId, cpInstance.getGroupId(),
+						commerceChannelGroupId, sku, unitOfMeasureKey)));
 		}
 
 		return availability;

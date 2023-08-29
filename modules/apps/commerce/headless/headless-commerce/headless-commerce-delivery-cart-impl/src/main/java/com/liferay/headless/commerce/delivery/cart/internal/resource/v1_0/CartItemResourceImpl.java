@@ -159,7 +159,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			commerceOrder.getCommerceAccountId(),
 			_commerceOrderItemService.updateCommerceOrderItem(
 				commerceOrderItem.getCommerceOrderItemId(),
-				BigDecimal.valueOf(cartItem.getQuantity()),
+				cartItem.getQuantity(),
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),

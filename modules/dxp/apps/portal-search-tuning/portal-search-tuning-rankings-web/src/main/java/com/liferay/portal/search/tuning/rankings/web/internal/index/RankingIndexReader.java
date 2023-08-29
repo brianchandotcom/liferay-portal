@@ -7,15 +7,19 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 
+import java.util.List;
+
 /**
  * @author André de Oliveira
  */
 public interface RankingIndexReader {
 
-	public Ranking fetch(RankingIndexName rankingIndexName, String id);
+	public Ranking fetch(String id, RankingIndexName rankingIndexName);
 
-	public Ranking fetchByQueryString(
-		RankingIndexName rankingIndexName, String queryString);
+	public List<Ranking> fetch(
+		String groupExternalReferenceCode, String queryString,
+		RankingIndexName rankingIndexName,
+		String sxpBlueprintExternalReferenceCode);
 
 	public boolean isExists(RankingIndexName rankingIndexName);
 

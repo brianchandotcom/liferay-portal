@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -141,6 +142,11 @@ public class DisplayPageManagementToolbarDisplayContext
 							"/add_display_page_collection"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"parentLayoutPageTemplateCollectionId",
+						ParamUtil.getLong(
+							httpServletRequest,
+							"layoutPageTemplateCollectionId")
 					).buildString());
 				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(

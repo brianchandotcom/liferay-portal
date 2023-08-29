@@ -8,7 +8,7 @@ package com.liferay.object.related.models.test.util;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -25,14 +25,13 @@ import org.junit.Assert;
 public class ObjectRelationshipTestUtil {
 
 	public static void addObjectRelationshipMappingTableValues(
-			long objectRelationshipId,
-			ObjectRelationshipLocalService objectRelationshipLocalService,
-			long primaryKey1, long primaryKey2)
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
 		throws Exception {
 
-		objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(), objectRelationshipId, primaryKey1,
-			primaryKey2, ServiceContextTestUtil.getServiceContext());
+		ObjectRelationshipLocalServiceUtil.
+			addObjectRelationshipMappingTableValues(
+				TestPropsValues.getUserId(), objectRelationshipId, primaryKey1,
+				primaryKey2, ServiceContextTestUtil.getServiceContext());
 	}
 
 	public static void assertGetRelatedModels(
@@ -67,11 +66,10 @@ public class ObjectRelationshipTestUtil {
 
 	public static ObjectRelationship updateObjectRelationship(
 			String deletionType, long objectRelationshipId,
-			Map<Locale, String> objectRelationshipLabelMap,
-			ObjectRelationshipLocalService objectRelationshipLocalService)
+			Map<Locale, String> objectRelationshipLabelMap)
 		throws Exception {
 
-		return objectRelationshipLocalService.updateObjectRelationship(
+		return ObjectRelationshipLocalServiceUtil.updateObjectRelationship(
 			objectRelationshipId, 0, deletionType, false,
 			objectRelationshipLabelMap);
 	}

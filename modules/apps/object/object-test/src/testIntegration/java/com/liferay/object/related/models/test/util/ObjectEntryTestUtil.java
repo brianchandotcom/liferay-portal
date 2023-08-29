@@ -6,7 +6,7 @@
 package com.liferay.object.related.models.test.util;
 
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
@@ -21,11 +21,10 @@ public class ObjectEntryTestUtil {
 
 	public static ObjectEntry addObjectEntry(
 			long groupId, long objectDefinitionId,
-			ObjectEntryLocalService objectEntryLocalService,
 			Map<String, Serializable> values)
 		throws Exception {
 
-		return objectEntryLocalService.addObjectEntry(
+		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
 			ServiceContextTestUtil.getServiceContext());
 	}

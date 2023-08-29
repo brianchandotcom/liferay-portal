@@ -9,8 +9,8 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -22,13 +22,9 @@ import java.util.Collections;
  */
 public class ObjectDefinitionTestUtil {
 
-	public static ObjectDefinition addObjectDefinition(
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			ObjectFieldLocalService objectFieldLocalService)
-		throws Exception {
-
+	public static ObjectDefinition addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.addCustomObjectDefinition(
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
@@ -37,20 +33,22 @@ public class ObjectDefinitionTestUtil {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 
-		ObjectField objectField = objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null, null,
-			false, false, Collections.emptyList());
+		ObjectField objectField =
+			ObjectFieldLocalServiceUtil.addCustomObjectField(
+				null, TestPropsValues.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+				LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null,
+				null, false, false, Collections.emptyList());
 
 		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 
-		objectDefinition = objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.updateObjectDefinition(
+				objectDefinition);
 
-		return objectDefinitionLocalService.publishCustomObjectDefinition(
+		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 	}

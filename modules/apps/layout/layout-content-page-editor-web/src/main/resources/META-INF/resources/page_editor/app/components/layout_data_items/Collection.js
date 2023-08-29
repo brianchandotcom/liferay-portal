@@ -283,7 +283,7 @@ const Collection = React.memo(
 
 		const [activePage, setActivePage] = useState(1);
 		const [collection, setCollection] = useState(emptyCollection);
-		const [loading, setLoading] = useState(false);
+		const [loading, setLoading] = useState(!!collectionConfig.collection);
 
 		const numberOfItems = getNumberOfItems(collection, collectionConfig);
 

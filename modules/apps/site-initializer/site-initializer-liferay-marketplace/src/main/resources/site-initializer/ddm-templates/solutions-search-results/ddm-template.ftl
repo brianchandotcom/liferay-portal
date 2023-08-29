@@ -19,6 +19,7 @@
 		background-color: #2c3a4b;
 		bottom: 26px;
 		display: none;
+		right: 0;
 		width: 14.5rem;
 	}
 
@@ -104,15 +105,15 @@
 </#if>
 
 <#assign
-	pageSize = pageSize?has_content?then(pageSize, 15)
+	categoryName = "Solution"
+	filterCategoriesByUrlParams = getFilterByUrlParams(siteURL)
+	numberFilteredProducts = 0
 	page = page?has_content?then(page, 1)
 	taxonomyVocabularyName = "Marketplace Product Type"
-	categoryName = "Solution"
 	taxonomyVocabulary = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies?fields=id&filter=name eq '${taxonomyVocabularyName}'").items
 	vocabularyCategory = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabulary[0].id}/taxonomy-categories?fields=id&filter=name eq '${categoryName}'").items
+	pageSize = pageSize?has_content?then(pageSize, 15)
 	productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?filter=categoryIds/any(params:params eq '${vocabularyCategory[0].id}')&pageSize=" + pageSize + "&page=" + page)
-	numberFilteredProducts = 0
-	filterCategoriesByUrlParams = getFilterByUrlParams(siteURL)
 />
 
 <#if filterCategoriesByUrlParams?has_content>
@@ -137,23 +138,11 @@
 
 		<div class="cards-container pb-6">
 			<#list productsList.items as product>
-				<#assign
-					productCategories = product.categories
-					productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US), 150, "...")
-					portalURL = portalUtil.getLayoutURL(themeDisplay)
-					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
-					desiredProductURL = productURL?replace("/solutions-marketplace", "")
-					productSpecifications = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + product.productId + "/productSpecifications").items
-
-				/>
+				<#assign productCategories = product.categories productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US), 150, "...")portalURL = portalUtil.getLayoutURL(themeDisplay)productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US desiredProductURL = productURL?replace("/solutions-marketplace", "") productSpecifications = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + product.productId + "/productSpecifications").items />
 
 				<a class="bg-white d-flex flex-column mb-0 rounded solutions-search-results-card text-dark text-decoration-none" href="${desiredProductURL}">
 					<div class="align-items-center d-flex image-container justify-content-center rounded">
-						<img
-							alt="${product.name.en_US}"
-							class="h-100 mw-100 rounded"
-							src="${product.thumbnail}"
-						/>
+						<img alt="${product.name.en_US}" class="h-100 mw-100 rounded" src="${product.thumbnail}" />
 					</div>
 
 					<div class="d-flex flex-column h-100 justify-content-between p-4">
@@ -169,10 +158,8 @@
 							</#if>
 
 							<div class="align-items-center card-image-title-container d-flex pb-1">
-								<div class="">
-									<div class="font-weight-semi-bold h2 mt-1">
-										${product.name.en_US}
-									</div>
+								<div class="font-weight-semi-bold h2 mt-1">
+									${product.name.en_US}
 								</div>
 							</div>
 
@@ -186,10 +173,10 @@
 						<div>
 							<#if productCategories?has_content>
 								<div class="align-center d-flex labels">
-									<#list productCategories as firstCategory>
-										<#if firstCategory.vocabulary == 'marketplace solution category'>
+									<#list productCategories as category>
+										<#if category.vocabulary == 'marketplace solution category'>
 											<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1">
-												${firstCategory.name}
+												${category.name}
 											</div>
 											<#break>
 										</#if>

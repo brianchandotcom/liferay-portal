@@ -798,11 +798,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"integerProperty", 2,
 			"integerProperty gt 1 or integerProperty lt 1");
 
-		// TODO Uncomment the following test when LPS-191929 is fixed
-
-		//_assertFilterString(
-
-		// "integerProperty", 1, "not (integerProperty ge 2)");
+		_assertFilterString("integerProperty", 1, "not (integerProperty ge 2)");
 
 		// String functions
 

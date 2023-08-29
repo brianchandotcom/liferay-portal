@@ -29,22 +29,19 @@ function getRandomElement(array) {
 export async function fetchTickets({queryKey}) {
 	const [, {filter, page, pageSize, search}] = queryKey;
 
-	const urlSearchParams = new URLSearchParams();
-
-	urlSearchParams.set('page', page);
-	urlSearchParams.set('pageSize', pageSize);
-	urlSearchParams.set('sort', 'dateModified:desc');
+	var filterString = '';
+	var searchString = '';
 
 	if (filter?.field && filter?.value) {
-		urlSearchParams.set('filter', `${filter.field} eq '${filter.value}'`);
+		filterString = '&filter=' + encodeURIComponent(`${filter.field} eq '${filter.value}'`);
 	}
 
 	if (search) {
-		urlSearchParams.set('search', search);
+		searchString = '&search=' + encodeURIComponent(search);
 	}
 
 	const response = await fetch(
-		`/o/c/j3y7tickets?${encodeURI(urlSearchParams.toString())}`,
+		`/o/c/j3y7tickets?pageSize=${pageSize}&page=${page}&sort=dateModified:desc${filterString}${searchString}`,
 		{
 			headers: {
 				'accept': 'application/json',

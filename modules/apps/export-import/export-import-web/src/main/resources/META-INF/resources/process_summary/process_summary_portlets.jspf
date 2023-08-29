@@ -22,6 +22,8 @@
 	<c:otherwise>
 
 		<%
+		ProcessSummaryDisplayContext processSummaryDisplayContext = new ProcessSummaryDisplayContext();
+
 		List<String> portletIds = new ArrayList<>();
 
 		for (String key : parameterMap.keySet()) {
@@ -144,6 +146,8 @@
 					if ((currentAdditions == null) || (currentDeletions == null)) {
 						continue;
 					}
+
+					String assetTitle = processSummaryDisplayContext.getAssetTitle(taskContextMap);
 				%>
 
 					<div class="process-summary-subsection">
@@ -154,6 +158,10 @@
 
 							<c:if test='<%= currentDeletions.get("total") > 0 %>'>
 								<i>(<%= LanguageUtil.format(resourceBundle, "x-items-deleted", currentDeletions.get("total")) %>)</i>
+							</c:if>
+
+							<c:if test="<%= !Validator.isNull(assetTitle) %>">
+								<label>Title: <%= assetTitle %></label>
 							</c:if>
 						</div>
 

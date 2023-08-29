@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.web.internal.display.context;
 
+import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.petra.string.StringPool;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -42,6 +45,46 @@ import java.util.Set;
  * @author Zoltan Csaszi
  */
 public class ProcessSummaryDisplayContext {
+
+	public String getAssetTitle(Map<String, ?> taskContextMap) {
+		Map<String, String> assetTitles =
+			(Map<String, String>)taskContextMap.get(
+				ExportImportBackgroundTaskContextMapConstants.ASSET_TITLES);
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			(Map<String, LongWrapper>)taskContextMap.get(
+				ExportImportBackgroundTaskContextMapConstants.
+					MODEL_ADDITION_COUNTERS);
+
+		Map<String, LongWrapper> modelDeletionCounters =
+			(Map<String, LongWrapper>)taskContextMap.get(
+				ExportImportBackgroundTaskContextMapConstants.
+					MODEL_DELETION_COUNTERS);
+
+		LongWrapper modelAdditionCounter = modelAdditionCounters.get(
+			_CLASS_NAME_JOURNAL_ARTICLE);
+
+		LongWrapper modelDeletionCounter = modelDeletionCounters.get(
+			_CLASS_NAME_JOURNAL_ARTICLE);
+
+		if ((modelAdditionCounter != null) && (modelDeletionCounter != null)) {
+			long sumCounters =
+				modelAdditionCounter.getValue() +
+					modelDeletionCounter.getValue();
+
+			if (sumCounters > 1) {
+				return null;
+			}
+		}
+
+		if ((assetTitles != null) &&
+			Validator.isNotNull(assetTitles.get(_CLASS_NAME_JOURNAL_ARTICLE))) {
+
+			return assetTitles.get(_CLASS_NAME_JOURNAL_ARTICLE);
+		}
+
+		return null;
+	}
 
 	public List<String> getPageNames(
 		long groupId, boolean privateLayout, long[] selectedLayoutIds,
@@ -186,6 +229,9 @@ public class ProcessSummaryDisplayContext {
 
 		return !approvedLayoutRevisions.isEmpty();
 	}
+
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProcessSummaryDisplayContext.class);

@@ -368,8 +368,8 @@ public class ObjectRelatedModelsProviderTest {
 		// Object relationship deletion type disassociate
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry6 = _addObjectEntry(
@@ -402,8 +402,8 @@ public class ObjectRelatedModelsProviderTest {
 		// Object relationship deletion type prevent
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry8 = _addObjectEntry(
@@ -736,8 +736,8 @@ public class ObjectRelatedModelsProviderTest {
 		// Object relationship deletion type cascade
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectRelationship.getLabelMap());
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
@@ -766,8 +766,8 @@ public class ObjectRelatedModelsProviderTest {
 		// Object relationship deletion type disassociate
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
@@ -799,8 +799,8 @@ public class ObjectRelatedModelsProviderTest {
 		// Object relationship deletion type prevent
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry7 = _addObjectEntry(

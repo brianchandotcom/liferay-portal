@@ -132,8 +132,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		// Object relationship deletion type cascade
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectRelationship.getLabelMap());
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
@@ -144,8 +144,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		// Object relationship deletion type disassociate
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
@@ -173,8 +173,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		// Object relationship deletion type prevent
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
@@ -252,8 +252,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		// Object relationship deletion type cascade
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectRelationship.getLabelMap());
 
 		deleteBaseModel(primaryKeys[1]);
@@ -275,8 +275,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		// Object relationship deletion type disassociate
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
@@ -304,8 +304,8 @@ public abstract class BaseSystemObjectRelatedModelsProviderTestCase {
 		// Object relationship deletion type prevent
 
 		ObjectRelationshipTestUtil.updateObjectRelationship(
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getObjectRelationshipId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectRelationship.getLabelMap());
 
 		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(

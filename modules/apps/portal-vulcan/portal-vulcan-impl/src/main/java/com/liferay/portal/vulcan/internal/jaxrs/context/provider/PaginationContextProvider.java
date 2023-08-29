@@ -46,10 +46,7 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 
 		if (page <= 0) {
 			throw new InvalidPaginationException(
-				String.format(
-					"The Page parameter introduced [%s] is not valid. Only " +
-						"numbers higher or equal to 1 are accepted.",
-					page));
+				"Page " + page + " is not a number greater than or equal to 1");
 		}
 
 		int pageSize = GetterUtil.getInteger(

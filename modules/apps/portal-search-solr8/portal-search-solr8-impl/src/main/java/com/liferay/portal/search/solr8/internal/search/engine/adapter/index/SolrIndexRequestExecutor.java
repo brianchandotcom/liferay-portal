@@ -30,6 +30,8 @@ import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
+import com.liferay.portal.search.engine.adapter.index.StatsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.StatsIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
 
@@ -131,6 +133,13 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 	}
 
 	@Override
+	public StatsIndexResponse executeIndexRequest(
+		StatsIndexRequest statsIndexRequest) {
+
+		return _statsIndexRequestExecutor.execute(statsIndexRequest);
+	}
+
+	@Override
 	public UpdateIndexSettingsIndexResponse executeIndexRequest(
 		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest) {
 
@@ -175,6 +184,9 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 
 	@Reference
 	private RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
+
+	@Reference
+	private StatsIndexRequestExecutor _statsIndexRequestExecutor;
 
 	@Reference
 	private UpdateIndexSettingsIndexRequestExecutor

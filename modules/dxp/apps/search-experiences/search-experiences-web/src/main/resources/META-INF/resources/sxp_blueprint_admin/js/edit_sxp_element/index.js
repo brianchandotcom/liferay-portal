@@ -121,6 +121,7 @@ export default function ({
 				locale,
 				namespace,
 				redirectURL,
+				sxpType: 'sxpElement',
 			}}
 		>
 			<div className="edit-sxp-element-root">
@@ -131,6 +132,9 @@ export default function ({
 							sxpElementResponse,
 							defaultLocale
 						)}
+						initialExternalReferenceCode={
+							sxpElementResponse.externalReferenceCode
+						}
 						initialTitle={sxpElementResponse.title}
 						predefinedVariables={predefinedVariables}
 						readOnly={sxpElementResponse.readOnly}

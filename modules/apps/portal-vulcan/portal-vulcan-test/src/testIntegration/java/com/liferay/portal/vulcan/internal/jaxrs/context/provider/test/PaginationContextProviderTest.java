@@ -135,8 +135,7 @@ public class PaginationContextProviderTest {
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		_assertException(
-			"The Page parameter introduced [-1] is not valid. Only numbers " +
-				"higher or equal to 1 are accepted.",
+			"Page -1 is not a number greater than or equal to 1",
 			() -> _contextProvider.createContext(
 				new MockMessage(
 					mockHttpServletRequest,
@@ -223,8 +222,7 @@ public class PaginationContextProviderTest {
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
 		_assertException(
-			"The Page parameter introduced [0] is not valid. Only numbers " +
-				"higher or equal to 1 are accepted.",
+			"Page 0 is not a number greater than or equal to 1",
 			() -> _contextProvider.createContext(
 				new MockMessage(
 					mockHttpServletRequest,

@@ -4784,7 +4784,7 @@ public class JournalArticleLocalServiceImpl
 				validateReferences(
 					groupId, latestArticle.getDDMStructureId(), ddmTemplateKey,
 					layoutUuid, smallImage, smallImageURL, smallImageBytes,
-					latestArticle.getSmallImageId(), smallImageSource, content);
+					smallImageId, smallImageSource, content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {

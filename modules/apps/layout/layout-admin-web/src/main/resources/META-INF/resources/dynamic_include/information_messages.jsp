@@ -19,7 +19,7 @@ LayoutInformationMessagesDisplayContext layoutInformationMessagesDisplayContext 
 		monospaced="<%= true %>"
 		small="<%= true %>"
 		symbol="information-live"
-		title='<%= LanguageUtil.get(request, "additional-information") %>'
+		title="additional-information"
 	/>
 
 	<react:component

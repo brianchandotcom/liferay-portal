@@ -72,7 +72,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 		<clay:button
 			disabled="true"
 			displayType="secondary"
-			label='<%= LanguageUtil.get(request, "change-current-theme") %>'
+			label="change-current-theme"
 		/>
 	</clay:col>
 </clay:row>

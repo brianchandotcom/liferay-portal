@@ -42,7 +42,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 						icon="undo"
 						monospaced="<%= true %>"
 						small="<%= true %>"
-						title='<%= LanguageUtil.get(request, "undo") %>'
+						title="undo"
 					/>
 
 					<clay:button
@@ -51,7 +51,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 						icon="redo"
 						monospaced="<%= true %>"
 						small="<%= true %>"
-						title='<%= LanguageUtil.get(request, "redo") %>'
+						title="redo"
 					/>
 				</div>
 
@@ -64,7 +64,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							icon="time"
 							monospaced="<%= true %>"
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "history") %>'
+							title="history"
 						/>
 					</div>
 				</span>
@@ -90,7 +90,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							icon="view"
 							monospaced="<%= true %>"
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "view") %>'
+							title="view"
 						/>
 					</li>
 				</ul>

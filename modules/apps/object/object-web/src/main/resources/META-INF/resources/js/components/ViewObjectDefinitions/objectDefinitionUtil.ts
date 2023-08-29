@@ -18,16 +18,43 @@ import {
 	ViewObjectDefinitionsModals,
 } from './ViewObjectDefinitions';
 
-type folderAction = {
+type DefinitionNodeActionsProps = {
+	baseResourceURL: string;
+	handleShowDeleteModal: () => void;
+	handleShowEditERCModal: () => void;
+	handleShowRedirectModal: () => void;
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	objectDefinitionId: number;
+	objectDefinitionName: string;
+	objectDefinitionPermissionsURL: string;
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+};
+
+type DeleteObjectDefinitionProps = {
+	baseResourceURL: string;
+	handleShowDeleteModal: () => void;
+	objectDefinitionId: number;
+	objectDefinitionName: string;
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
+	status: string;
+};
+
+type FolderAction = {
 	href: string;
 	method: string;
 };
 
-type folderActions = {
-	delete?: folderAction;
-	get?: folderAction;
-	permissions?: folderAction;
-	update?: folderAction;
+type FolderActions = {
+	delete?: FolderAction;
+	get?: FolderAction;
+	permissions?: FolderAction;
+	update?: FolderAction;
 };
 
 export async function deleteFolder(id: number, folderName: string) {
@@ -55,14 +82,14 @@ export async function deleteObjectDefinitionToast(
 	});
 }
 
-export async function deleteObjectDefinition(
-	baseResourceURL: string,
-	objectDefinitionId: number,
-	objectDefinitionName: string,
-	status: string,
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
-	handleShowDeleteModal: () => void
-) {
+export async function deleteObjectDefinition({
+	baseResourceURL,
+	handleShowDeleteModal,
+	objectDefinitionId,
+	objectDefinitionName,
+	setDeletedObjectDefinition,
+	status,
+}: DeleteObjectDefinitionProps) {
 	const url = createResourceURL(baseResourceURL, {
 		objectDefinitionId,
 		p_p_resource_id:
@@ -111,23 +138,19 @@ export async function deleteRelationship(id: number) {
 	}
 }
 
-export function getDefinitionNodeActions(
-	baseResourceURL: string,
-	objectDefinitionId: number,
-	objectDefinitionName: string,
-	hasObjectDefinitionDeleteResourcePermission: boolean,
-	hasObjectDefinitionManagePermissionsResourcePermission: boolean,
-	objectDefinitionPermissionsURL: string,
-	status: {
-		code: number;
-		label: string;
-		label_i18n: string;
-	},
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void,
-	handleShowDeleteModal: () => void,
-	handleShowRedirectModal: () => void,
-	handleShowEditERCModal: () => void
-) {
+export function getDefinitionNodeActions({
+	baseResourceURL,
+	handleShowDeleteModal,
+	handleShowEditERCModal,
+	handleShowRedirectModal,
+	hasObjectDefinitionDeleteResourcePermission,
+	hasObjectDefinitionManagePermissionsResourcePermission,
+	objectDefinitionId,
+	objectDefinitionName,
+	objectDefinitionPermissionsURL,
+	setDeletedObjectDefinition,
+	status,
+}: DefinitionNodeActionsProps) {
 	const PermissionUrl = formatActionURL(
 		objectDefinitionPermissionsURL,
 		objectDefinitionId
@@ -135,14 +158,14 @@ export function getDefinitionNodeActions(
 
 	const handleClickDeleteObjectDefinition = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		deleteObjectDefinition(
+		deleteObjectDefinition({
 			baseResourceURL,
+			handleShowDeleteModal,
 			objectDefinitionId,
 			objectDefinitionName,
-			status.label,
 			setDeletedObjectDefinition,
-			handleShowDeleteModal
-		);
+			status: status.label,
+		});
 	};
 
 	const handleClickManagePermissions = (event: React.MouseEvent) => {
@@ -209,7 +232,7 @@ export function getFolderActions(
 	id: number,
 	objectFolderPermissionsURL: string,
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void,
-	actions?: folderActions
+	actions?: FolderActions
 ) {
 	const url = formatActionURL(objectFolderPermissionsURL, id);
 	const kebabOptions = [

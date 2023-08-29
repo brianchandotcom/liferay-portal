@@ -20,16 +20,6 @@ interface Actions {
 	update: HTTPMethod;
 }
 
-interface ObjectFolder {
-	actions: [];
-	dateCreated: string;
-	dateModified: string;
-	externalReferenceCode: string;
-	id: number;
-	label: LocalizedValue<string>;
-	name: string;
-}
-
 interface ErrorDetails extends Error {
 	detail?: string;
 }
@@ -44,25 +34,17 @@ interface Folder {
 	name: string;
 }
 
-interface PickListItem {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-
-interface PickList {
-	actions: Actions;
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	listTypeEntries: PickListItem[];
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-
 type NotificationTemplateType = 'email' | 'userNotification';
+
+type RecipientType = 'role' | 'term' | 'user';
+
+type Recipient = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
 
 export interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
@@ -79,10 +61,28 @@ export interface NotificationTemplate {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number | null;
 	recipientType: RecipientType;
-	recipients: Recipients[];
+	recipients: Recipient[];
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
 	type: NotificationTemplateType;
+}
+
+interface ObjectFolderItem {
+	linkedObjectDefinition: boolean;
+	objectDefinitionExternalReferenceCode: string;
+	positionX: number;
+	positionY: number;
+}
+
+interface ObjectFolder {
+	actions: Actions;
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+	objectFolderItems: ObjectFolderItem[];
 }
 
 type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
@@ -104,15 +104,23 @@ interface ObjectRelationship {
 	type: ObjectRelationshipType;
 }
 
-type RecipientType = 'role' | 'term' | 'user';
+interface PickListItem {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
 
-type Recipients = {
-	bcc: string;
-	cc: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-};
+interface PickList {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: PickListItem[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
 
 const headers = new Headers({
 	'Accept': 'application/json',
@@ -139,12 +147,12 @@ async function deleteItem(url: string) {
 	}
 }
 
-export function deleteObjectDefinitions(id: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
-}
-
 export function deleteFolder(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-folders/${id}`);
+}
+
+export function deleteObjectDefinitions(id: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
 }
 
 export function deleteObjectField(id: number) {
@@ -290,6 +298,14 @@ export async function getObjectRelationshipsById(objectDefinitionId: number) {
 	);
 }
 
+export async function getObjectValidationRuleById<T>(
+	objectValidationRuleId: number
+) {
+	return await fetchJSON<T>(
+		`/o/object-admin/v1.0/object-validation-rules/${objectValidationRuleId}`
+	);
+}
+
 export async function getPickList(pickListId: number): Promise<PickList> {
 	return await fetchJSON<PickList>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}`
@@ -311,14 +327,6 @@ export async function getPickLists() {
 export async function getRelationship<T>(objectRelationshipId: number) {
 	return fetchJSON<T>(
 		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
-	);
-}
-
-export async function getObjectValidationRuleById<T>(
-	objectValidationRuleId: number
-) {
-	return await fetchJSON<T>(
-		`/o/object-admin/v1.0/object-validation-rules/${objectValidationRuleId}`
 	);
 }
 

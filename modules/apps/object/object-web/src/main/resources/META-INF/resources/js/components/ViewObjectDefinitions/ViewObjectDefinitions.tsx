@@ -200,14 +200,14 @@ export default function ViewObjectDefinitions({
 			}
 
 			if (action.data.id === 'deleteObjectDefinition') {
-				deleteObjectDefinition(
+				deleteObjectDefinition({
 					baseResourceURL,
-					itemData.id,
-					itemData.name,
-					itemData.status.label,
+					handleShowDeleteModal,
+					objectDefinitionId: itemData.id,
+					objectDefinitionName: itemData.name,
 					setDeletedObjectDefinition,
-					handleShowDeleteModal
-				);
+					status: itemData.status.label,
+				});
 			}
 
 			if (action.data.id === 'moveObjectDefinition') {

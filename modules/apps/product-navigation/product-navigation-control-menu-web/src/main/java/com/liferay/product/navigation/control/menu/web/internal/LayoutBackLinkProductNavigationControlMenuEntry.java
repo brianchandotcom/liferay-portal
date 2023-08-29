@@ -72,7 +72,8 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 			serviceContext.getRequest(), "p_l_back_url_title");
 
 		if (Validator.isNotNull(backURLTitle)) {
-			return backURLTitle;
+			return _language.format(
+				locale, "go-to-x", new String[] {backURLTitle});
 		}
 
 		return _language.get(locale, "back");

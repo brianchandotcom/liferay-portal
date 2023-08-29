@@ -3,26 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.bean.portlet.registration.internal.xml;
+package com.liferay.bean.portlet.registration.portlet.xml;
 
 import com.liferay.bean.portlet.extension.BeanPortletMethod;
 import com.liferay.bean.portlet.extension.BeanPortletMethodFactory;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
-import com.liferay.bean.portlet.registration.internal.BeanApp;
-import com.liferay.bean.portlet.registration.internal.BeanAppImpl;
-import com.liferay.bean.portlet.registration.internal.BeanFilter;
-import com.liferay.bean.portlet.registration.internal.BeanFilterImpl;
-import com.liferay.bean.portlet.registration.internal.BeanPortlet;
-import com.liferay.bean.portlet.registration.internal.BeanPortletImpl;
-import com.liferay.bean.portlet.registration.internal.Event;
-import com.liferay.bean.portlet.registration.internal.EventImpl;
-import com.liferay.bean.portlet.registration.internal.MultipartConfig;
-import com.liferay.bean.portlet.registration.internal.PortletDependency;
-import com.liferay.bean.portlet.registration.internal.Preference;
-import com.liferay.bean.portlet.registration.internal.PublicRenderParameter;
-import com.liferay.bean.portlet.registration.internal.PublicRenderParameterImpl;
-import com.liferay.bean.portlet.registration.internal.util.BeanMethodIndexUtil;
-import com.liferay.bean.portlet.registration.internal.util.PortletScannerUtil;
+import com.liferay.bean.portlet.registration.portlet.BeanPortlet;
+import com.liferay.bean.portlet.registration.portlet.BeanPortletImpl;
+import com.liferay.bean.portlet.registration.portlet.Event;
+import com.liferay.bean.portlet.registration.portlet.EventImpl;
+import com.liferay.bean.portlet.registration.portlet.MultipartConfig;
+import com.liferay.bean.portlet.registration.portlet.PortletDependency;
+import com.liferay.bean.portlet.registration.portlet.Preference;
+import com.liferay.bean.portlet.registration.portlet.PublicRenderParameter;
+import com.liferay.bean.portlet.registration.portlet.PublicRenderParameterImpl;
+import com.liferay.bean.portlet.registration.portlet.app.BeanApp;
+import com.liferay.bean.portlet.registration.portlet.app.BeanAppImpl;
+import com.liferay.bean.portlet.registration.portlet.filter.BeanFilter;
+import com.liferay.bean.portlet.registration.portlet.filter.BeanFilterImpl;
+import com.liferay.bean.portlet.registration.portlet.util.BeanMethodIndexUtil;
+import com.liferay.bean.portlet.registration.portlet.util.PortletQNameUtil;
+import com.liferay.bean.portlet.registration.portlet.util.PortletScannerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

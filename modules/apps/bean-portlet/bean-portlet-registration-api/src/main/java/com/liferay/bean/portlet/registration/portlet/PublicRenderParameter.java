@@ -3,21 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.bean.portlet.registration.internal;
-
-import java.util.List;
+package com.liferay.bean.portlet.registration.portlet;
 
 import javax.xml.namespace.QName;
 
 /**
  * @author Neil Griffin
  */
-public interface Event {
+public interface PublicRenderParameter {
 
-	public List<QName> getAliasQNames();
+	public String getIdentifier();
 
 	public QName getQName();
-
-	public String getValueType();
 
 }

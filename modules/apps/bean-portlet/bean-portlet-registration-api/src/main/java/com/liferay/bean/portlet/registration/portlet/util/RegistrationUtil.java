@@ -3,11 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.bean.portlet.registration.internal;
+package com.liferay.bean.portlet.registration.portlet.util;
 
 import com.liferay.bean.portlet.extension.BeanFilterMethodFactory;
 import com.liferay.bean.portlet.extension.BeanFilterMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
+import com.liferay.bean.portlet.registration.portlet.BeanPortlet;
+import com.liferay.bean.portlet.registration.portlet.BeanPortletInvokerPortlet;
+import com.liferay.bean.portlet.registration.portlet.app.BeanApp;
+import com.liferay.bean.portlet.registration.portlet.filter.BeanFilter;
+import com.liferay.bean.portlet.registration.portlet.filter.BeanFilterInvokerPortletFilter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

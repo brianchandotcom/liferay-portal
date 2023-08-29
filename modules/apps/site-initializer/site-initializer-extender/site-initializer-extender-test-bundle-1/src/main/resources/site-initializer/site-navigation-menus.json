@@ -2,19 +2,23 @@
 	{
 		"menuItems": [
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM1",
 				"friendlyURL": "/test-public-layout",
 				"privateLayout": false,
 				"type": "layout"
 			},
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM2",
 				"name": "Test URL",
 				"type": "url",
 				"url": "https://test.com",
 				"useNewTab": false
 			},
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM3",
 				"menuItems": [
 					{
+						"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM4",
 						"name": "Other Test URL",
 						"type": "url",
 						"url": "https://other.test.com",
@@ -25,18 +29,22 @@
 				"type": "node"
 			},
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM5",
 				"key": "/site-initializer/taxonomy-vocabularies/group/test-asset-vocabulary-2/test-asset-category-3/test-asset-category-4.json",
 				"type": "display-page"
 			},
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM6",
 				"key": "/site-initializer/journal-articles/test-journal-folder-1/journal_article.json",
 				"type": "display-page"
 			},
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM7",
 				"key": "/site-initializer/documents/group/Old Testament/Genesis.txt",
 				"type": "display-page"
 			},
 			{
+				"externalReferenceCode": "TESTSITENAVIGATIONMENUITEM8",
 				"key": "objectEntrySiteInitializerKey-2",
 				"type": "display-page"
 			}

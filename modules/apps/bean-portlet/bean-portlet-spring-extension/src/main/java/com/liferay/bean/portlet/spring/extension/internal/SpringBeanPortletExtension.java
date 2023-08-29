@@ -13,7 +13,7 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.extension.ScopedBean;
 import com.liferay.bean.portlet.extension.ViewRenderer;
-import com.liferay.bean.portlet.registration.BeanPortletRegistrar;
+import com.liferay.bean.portlet.registration.BeanPortletRegistrarUtil;
 import com.liferay.bean.portlet.spring.extension.internal.scope.SpringPortletRequestScope;
 import com.liferay.bean.portlet.spring.extension.internal.scope.SpringPortletSessionScope;
 import com.liferay.bean.portlet.spring.extension.internal.scope.SpringRedirectScope;
@@ -268,7 +268,7 @@ public class SpringBeanPortletExtension {
 			};
 
 		_serviceRegistrations.addAll(
-			BeanPortletRegistrar.register(
+			BeanPortletRegistrarUtil.register(
 				new SpringBeanFilterMethodFactory(_configurableBeanFactory),
 				beanFilterMethodInvoker,
 				new SpringBeanPortletMethodFactory(_configurableBeanFactory),
@@ -294,7 +294,8 @@ public class SpringBeanPortletExtension {
 	public void step5ApplicationScopeBeforeDestroyed(
 		ServletContext servletContext) {
 
-		BeanPortletRegistrar.unregister(_serviceRegistrations, servletContext);
+		BeanPortletRegistrarUtil.unregister(
+			_serviceRegistrations, servletContext);
 
 		_serviceRegistrations.clear();
 	}

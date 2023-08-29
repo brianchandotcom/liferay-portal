@@ -107,7 +107,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Neil Griffin
  */
-public class BeanPortletRegistrar {
+public class BeanPortletRegistrarUtil {
 
 	public static List<ServiceRegistration<?>> register(
 		BeanFilterMethodFactory beanFilterMethodFactory,
@@ -1213,7 +1213,7 @@ public class BeanPortletRegistrar {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BeanPortletRegistrar.class);
+		BeanPortletRegistrarUtil.class);
 
 	private static final PortletApplication _portletApplication =
 		new PortletApplication() {

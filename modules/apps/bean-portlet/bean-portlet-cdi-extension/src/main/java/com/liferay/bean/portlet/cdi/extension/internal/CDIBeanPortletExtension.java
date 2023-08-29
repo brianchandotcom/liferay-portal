@@ -23,7 +23,7 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.extension.ScopedBean;
 import com.liferay.bean.portlet.extension.ViewRenderer;
-import com.liferay.bean.portlet.registration.BeanPortletRegistrar;
+import com.liferay.bean.portlet.registration.BeanPortletRegistrarUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
@@ -374,7 +374,7 @@ public class CDIBeanPortletExtension implements Extension {
 			};
 
 		_serviceRegistrations.addAll(
-			BeanPortletRegistrar.register(
+			BeanPortletRegistrarUtil.register(
 				new CDIBeanFilterMethodFactory(beanManager),
 				beanFilterMethodInvoker,
 				new CDIBeanPortletMethodFactory(beanManager),
@@ -443,7 +443,7 @@ public class CDIBeanPortletExtension implements Extension {
 	public void step6ApplicationScopedBeforeDestroyed(
 		@Destroyed(ApplicationScoped.class) @Observes Object contextObject) {
 
-		BeanPortletRegistrar.unregister(
+		BeanPortletRegistrarUtil.unregister(
 			_serviceRegistrations, (ServletContext)contextObject);
 
 		_serviceRegistrations.clear();

@@ -110,6 +110,12 @@ public class ManifestSummary implements Serializable {
 		_manifestSummaryKeys.add(manifestSummaryKey);
 	}
 
+	public void addAssetTitle(String className,String assetTitle){
+		if(!Validator.isNull(assetTitle)){
+			_stagedModelAssetTitles.put(className, assetTitle);
+		}
+	}
+
 	@Override
 	public Object clone() {
 		ManifestSummary manifestSummary = new ManifestSummary();
@@ -129,6 +135,8 @@ public class ManifestSummary implements Serializable {
 			_modelAdditionCounters);
 		manifestSummary._modelDeletionCounters = new HashMap<>(
 			_modelDeletionCounters);
+
+		manifestSummary._stagedModelAssetTitles = new HashMap<>(_stagedModelAssetTitles);
 
 		return manifestSummary;
 	}
@@ -285,6 +293,18 @@ public class ManifestSummary implements Serializable {
 		modelDeletionCounter.increment();
 	}
 
+	public Map<String, String> getStagedModelAssetTitles(){
+		return _stagedModelAssetTitles;
+	}
+
+	public String getStagedModelAssetTitle(String manifestSummaryKey){
+		if (!_stagedModelAssetTitles.containsKey(manifestSummaryKey)) {
+			return "";
+		}
+
+		return _stagedModelAssetTitles.get(manifestSummaryKey);
+	}
+
 	public void resetCounters() {
 		_modelAdditionCounters.clear();
 		_modelDeletionCounters.clear();
@@ -401,5 +421,7 @@ public class ManifestSummary implements Serializable {
 	private Set<String> _manifestSummaryKeys = new HashSet<>();
 	private Map<String, LongWrapper> _modelAdditionCounters = new HashMap<>();
 	private Map<String, LongWrapper> _modelDeletionCounters = new HashMap<>();
+
+	private Map<String, String> _stagedModelAssetTitles = new HashMap<>();
 
 }

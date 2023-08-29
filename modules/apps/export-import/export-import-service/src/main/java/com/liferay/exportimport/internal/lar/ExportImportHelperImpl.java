@@ -851,6 +851,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					MODEL_DELETION_COUNTERS,
 				modelDeletionCounters);
 
+			HashMap<String, String> stagedModelAssetTitles = new HashMap<>(
+				manifestSummary.getStagedModelAssetTitles());
+
+			taskContextMap.put(
+				ExportImportBackgroundTaskContextMapConstants.ASSET_TITLES,
+				stagedModelAssetTitles);
+
 			HashSet<String> manifestSummaryKeys = new HashSet<>(
 				manifestSummary.getManifestSummaryKeys());
 
@@ -1068,6 +1075,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			if (modelDeletionCount > 0) {
 				element.addAttribute(
 					"deletion-count", String.valueOf(modelDeletionCount));
+			}
+
+			String stagedModelAssetTitle =
+				manifestSummary.getStagedModelAssetTitle(manifestSummaryKey);
+
+			if (Validator.isNotNull(stagedModelAssetTitle)) {
+				element.addAttribute("asset-title", stagedModelAssetTitle);
 			}
 		}
 	}

@@ -15,29 +15,6 @@ import React, {useState} from 'react';
 
 import OrderableTable from '../components/OrderableTable';
 
-const TYPES = [
-	{
-		label: Liferay.Language.get('asynchronous'),
-		value: 'async',
-	},
-	{
-		label: Liferay.Language.get('headless'),
-		value: 'headless',
-	},
-	{
-		label: Liferay.Language.get('link'),
-		value: 'link',
-	},
-	{
-		label: Liferay.Language.get('modal'),
-		value: 'modal',
-	},
-	{
-		label: Liferay.Language.get('side-panel'),
-		value: 'side-panel',
-	},
-];
-
 const MESSAGE_TYPES = [
 	{
 		label: Liferay.Language.get('info'),
@@ -66,17 +43,40 @@ const SECTIONS = {
 	NEW_ITEM_ACTION: 'new-item-action',
 };
 
+const TYPES = [
+	{
+		label: Liferay.Language.get('asynchronous'),
+		value: 'async',
+	},
+	{
+		label: Liferay.Language.get('headless'),
+		value: 'headless',
+	},
+	{
+		label: Liferay.Language.get('link'),
+		value: 'link',
+	},
+	{
+		label: Liferay.Language.get('modal'),
+		value: 'modal',
+	},
+	{
+		label: Liferay.Language.get('side-panel'),
+		value: 'side-panel',
+	},
+];
+
 const noop = () => {};
 
 const Actions = () => {
 	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
-	const [labelTranslations, setLabelTranslations] = useState({});
 	const [
 		confirmationMessageTranslations,
 		setConfirmationMessageTranslations,
 	] = useState({});
 	const [iconSymbol, setIconSymbol] = useState('bolt');
+	const [labelTranslations, setLabelTranslations] = useState({});
 
 	return (
 		<ClayLayout.ContainerFluid>

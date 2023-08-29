@@ -110,6 +110,10 @@ public class BaseNotificationTypeTest {
 				return simpleDateFormat.format(RandomTestUtil.nextDate());
 			}
 		).put(
+			"emailTextObjectField",
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				"@liferay.com"
+		).put(
 			"integerObjectField", RandomTestUtil.nextInt()
 		).put(
 			"picklistObjectField",
@@ -191,6 +195,13 @@ public class BaseNotificationTypeTest {
 						"picklistObjectField"
 					).listTypeDefinitionId(
 						_listTypeDefinition.getListTypeDefinitionId()
+					).build(),
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"emailTextObjectField"
 					).build(),
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -377,6 +388,7 @@ public class BaseNotificationTypeTest {
 			Arrays.asList(
 				getTermName("booleanObjectField"),
 				getTermName("dateObjectField"),
+				getTermName("emailTextObjectField"),
 				getTermName("integerObjectField"),
 				getTermName("picklistObjectField"),
 				getTermName("textObjectField"),

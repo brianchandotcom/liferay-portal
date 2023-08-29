@@ -79,7 +79,7 @@ public class PaginationContextProviderTest {
 	}
 
 	@Test
-	public void testCreateContextOverPaginationSizeLimit() throws Exception {
+	public void testCreateContextOverPageSizeLimit() throws Exception {
 		_modifyPageSizeLimitConfiguration(20);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -102,7 +102,7 @@ public class PaginationContextProviderTest {
 	}
 
 	@Test
-	public void testCreateContextUnderPaginationSizeLimit() throws Exception {
+	public void testCreateContextUnderPageSizeLimit() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{
@@ -144,7 +144,7 @@ public class PaginationContextProviderTest {
 	}
 
 	@Test
-	public void testCreateContextWithNegativePageSizeAndPaginationSizeLimit()
+	public void testCreateContextWithNegativePageSizeAndPageSizeLimit()
 		throws Exception {
 
 		_modifyPageSizeLimitConfiguration(30);
@@ -169,7 +169,7 @@ public class PaginationContextProviderTest {
 	}
 
 	@Test
-	public void testCreateContextWithNullPaginationAndPaginationSizeLimit()
+	public void testCreateContextWithNullPaginationAndPageSizeLimit()
 		throws Exception {
 
 		_modifyPageSizeLimitConfiguration(10);
@@ -231,7 +231,7 @@ public class PaginationContextProviderTest {
 	}
 
 	@Test
-	public void testCreateContextWithPageSizeEqualsPaginationSizeLimit()
+	public void testCreateContextWithPageSizeEqualsPageSizeLimit()
 		throws Exception {
 
 		_modifyPageSizeLimitConfiguration(20);
@@ -257,7 +257,7 @@ public class PaginationContextProviderTest {
 	}
 
 	@Test
-	public void testCreateContextWithPageSizeZeroAndPaginationSizeLimit()
+	public void testCreateContextWithPageSizeZeroAndPageSizeLimit()
 		throws Exception {
 
 		_modifyPageSizeLimitConfiguration(30);

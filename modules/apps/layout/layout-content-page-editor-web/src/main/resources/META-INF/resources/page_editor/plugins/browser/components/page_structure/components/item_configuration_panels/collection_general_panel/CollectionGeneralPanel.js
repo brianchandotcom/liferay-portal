@@ -119,10 +119,7 @@ export function CollectionGeneralPanel({item}) {
 			try {
 				const response = await CollectionService.getCollectionWarningMessage(
 					{
-						classNameId: collection.classNameId,
-						classPK: collection.classPK,
 						layoutDataItemId: item.itemId,
-						layoutObjectReference: JSON.stringify(collection),
 						segmentsExperienceId,
 					}
 				);

@@ -7,7 +7,6 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import {useModal} from '@clayui/modal';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
@@ -50,8 +49,6 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 
 	const fileInputId = useId();
 	const fileButtonDescriptionId = useId();
-
-	const {observer, onOpenChange} = useModal();
 
 	const validateFile = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!event.target.files || event.target.files?.length === 0) {
@@ -288,9 +285,8 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 
 			{importOptionsModalVisible && (
 				<ImportOptionsModal
-					observer={observer}
+					onCloseModal={() => setImportOptionsModalVisible(false)}
 					onImport={importFile}
-					onOpenChange={onOpenChange}
 				/>
 			)}
 		</>

@@ -5,13 +5,12 @@
 
 import ClayButton from '@clayui/button';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import React, {ReactText, useState} from 'react';
 
 interface Props {
-	observer: any;
+	onCloseModal: () => void;
 	onImport: (overwriteStrategy?: OverwriteStrategy) => void;
-	onOpenChange: (value: boolean) => void;
 }
 
 const OPTIONS = [
@@ -33,10 +32,14 @@ export type OverwriteStrategy = typeof OPTIONS[number]['value'];
 
 const DEFAULT_OPTION = OPTIONS[0];
 
-function ImportOptionsModal({observer, onImport, onOpenChange}: Props) {
+function ImportOptionsModal({onCloseModal, onImport}: Props) {
 	const [selectedOption, setSelectedOption] = useState<OverwriteStrategy>(
 		DEFAULT_OPTION.value
 	);
+
+	const {observer, onClose} = useModal({
+		onClose: onCloseModal,
+	});
 
 	return (
 		<ClayModal observer={observer}>
@@ -70,17 +73,15 @@ function ImportOptionsModal({observer, onImport, onOpenChange}: Props) {
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onOpenChange(false)}
-						>
+						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton
 							onClick={() => {
 								onImport(selectedOption);
-								onOpenChange(false);
+
+								onClose();
 							}}
 						>
 							{Liferay.Language.get('import')}

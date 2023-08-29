@@ -836,15 +836,20 @@ public class JournalEditArticleDisplayContext {
 			"smallImageName",
 			() -> {
 				if ((_article != null) && _article.isSmallImage() &&
+					(_article.getSmallImageId() > 0) &&
 					(_article.getSmallImageSource() ==
 						JournalArticleConstants.
 							SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA)) {
 
-					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-						_article.getSmallImageId());
+					try {
+						FileEntry fileEntry =
+							DLAppLocalServiceUtil.getFileEntry(
+								_article.getSmallImageId());
 
-					if (fileEntry != null) {
 						return fileEntry.getTitle();
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException);
 					}
 				}
 

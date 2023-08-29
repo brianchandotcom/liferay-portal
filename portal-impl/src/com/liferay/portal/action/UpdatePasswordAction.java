@@ -245,6 +245,8 @@ public class UpdatePasswordAction implements Action {
 			httpServletRequest, UpdatePasswordAction.class.getName());
 
 		long userId = 0;
+		
+		HttpSession httpSession = httpServletRequest.getSession();
 
 		if (ticket != null) {
 			userId = ticket.getClassPK();
@@ -277,8 +279,6 @@ public class UpdatePasswordAction implements Action {
 
 				user = UserLocalServiceUtil.updateUser(user);
 			}
-
-			HttpSession httpSession = httpServletRequest.getSession();
 
 			Date passwordModifiedDate = user.getPasswordModifiedDate();
 
@@ -321,9 +321,13 @@ public class UpdatePasswordAction implements Action {
 			login = String.valueOf(userId);
 		}
 
+		boolean mfaEnabled = (boolean) httpSession.getAttribute(WebKeys.MFA_ENABLED);
+
+        if (!mfaEnabled) {
 		AuthenticatedSessionManagerUtil.login(
 			httpServletRequest, httpServletResponse, login, password1, false,
 			null);
+		}
 	}
 
 	private boolean _isUserDefaultAdmin(User user) {

@@ -194,6 +194,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public String getLockedLayoutURL(ActionRequest actionRequest) {
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -208,9 +211,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 					return backURL;
 				}
 
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(actionRequest);
-
 				backURL = ParamUtil.getString(
 					httpServletRequest, "p_l_back_url");
 
@@ -219,6 +219,18 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				}
 
 				return ParamUtil.getString(httpServletRequest, "redirect");
+			}
+		).setParameter(
+			"p_l_back_url_title",
+			() -> {
+				String backURLTitle = ParamUtil.getString(
+					httpServletRequest, "p_l_back_url_title");
+
+				if (Validator.isNotNull(backURLTitle)) {
+					return backURLTitle;
+				}
+
+				return null;
 			}
 		).buildString();
 	}

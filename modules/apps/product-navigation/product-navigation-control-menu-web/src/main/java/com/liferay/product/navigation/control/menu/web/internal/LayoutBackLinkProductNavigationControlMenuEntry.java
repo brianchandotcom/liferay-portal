@@ -71,7 +71,7 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 		String backURLTitle = ParamUtil.getString(
 			serviceContext.getRequest(), "p_l_back_url_title");
 
-		if (Validator.isNull(backURLTitle)) {
+		if (Validator.isNotNull(backURLTitle)) {
 			return backURLTitle;
 		}
 

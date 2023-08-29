@@ -13,6 +13,7 @@ import {useId} from 'frontend-js-components-web';
 import {fetch, navigate, openToast, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
+import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import ImportOptionsModal, {OverwriteStrategy} from './ImportOptionsModal';
 import ImportResults, {Results, getResultsText} from './ImportResults';
 
@@ -104,7 +105,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 		})
 			.then((response) => response.json())
 			.then(({importResults, valid}) => {
-				if (typeof valid !== 'undefined' && !valid) {
+				if (!isNullOrUndefined(valid) && !valid) {
 					setImportOptionsModalVisible(true);
 
 					return;

@@ -10,6 +10,9 @@ package com.liferay.object.constants;
  */
 public class ObjectDefinitionConstants {
 
+	public static final String
+		EXTERNAL_REFERENCE_CODE_SYSTEM_OBJECT_DEFINITION_PREFIX = "L_";
+
 	public static final String SCOPE_COMPANY = "company";
 
 	public static final String SCOPE_DEPOT = "depot";

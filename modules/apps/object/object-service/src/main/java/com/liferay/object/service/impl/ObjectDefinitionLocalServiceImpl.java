@@ -1521,7 +1521,9 @@ public class ObjectDefinitionLocalServiceImpl
 		String prefix = "O_";
 
 		if (modifiable && system) {
-			prefix = "L_";
+			prefix =
+				ObjectDefinitionConstants.
+					EXTERNAL_REFERENCE_CODE_SYSTEM_OBJECT_DEFINITION_PREFIX;
 		}
 
 		return StringBundler.concat(
@@ -2026,19 +2028,25 @@ public class ObjectDefinitionLocalServiceImpl
 					externalReferenceCode);
 		}
 
-		if (!system && (externalReferenceCode != null) &&
-			externalReferenceCode.startsWith("L_")) {
-
-			throw new ObjectDefinitionExternalReferenceCodeException.
-				MustNotStartWithPrefix("L_");
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
 		}
 
-		char[] externalReferenceCodeCharArrayCharArray =
+		char[] externalReferenceCodeCharArray =
 			externalReferenceCode.toCharArray();
 
-		if (externalReferenceCodeCharArrayCharArray.length > 75) {
+		if (externalReferenceCodeCharArray.length > 75) {
 			throw new ObjectDefinitionExternalReferenceCodeException.
-				MustBeLessThan75Characters(75);
+				MustBeLessThan75Characters();
+		}
+
+		if (!system &&
+			externalReferenceCode.startsWith(
+				ObjectDefinitionConstants.
+					EXTERNAL_REFERENCE_CODE_SYSTEM_OBJECT_DEFINITION_PREFIX)) {
+
+			throw new ObjectDefinitionExternalReferenceCodeException.
+				MustNotStartWithPrefix();
 		}
 	}
 

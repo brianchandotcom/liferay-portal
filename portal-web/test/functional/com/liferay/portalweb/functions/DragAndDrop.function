@@ -46,7 +46,9 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		var regex = RegexUtil.escapeRegexChars(${value1});
+		var value = GetterUtil.getString(${value1});
+
+		var regex = RegexUtil.escapeRegexChars(${value});
 
 		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
@@ -84,7 +86,9 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		var regex = RegexUtil.escapeRegexChars(${value1});
+		var value = GetterUtil.getString(${value1});
+
+		var regex = RegexUtil.escapeRegexChars(${value});
 
 		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
@@ -116,7 +120,9 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		var regex = RegexUtil.escapeRegexChars(${value1});
+		var value = GetterUtil.getString(${value1});
+
+		var regex = RegexUtil.escapeRegexChars(${value});
 
 		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
@@ -170,7 +176,9 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		var regex = RegexUtil.escapeRegexChars(${value1});
+		var value = GetterUtil.getString(${value1});
+
+		var regex = RegexUtil.escapeRegexChars(${value});
 
 		selenium.waitForTextMatches(${locator1}, "(?i).*${regex}.*");
 

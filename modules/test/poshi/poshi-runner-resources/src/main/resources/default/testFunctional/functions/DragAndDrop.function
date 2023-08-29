@@ -32,11 +32,12 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "true");
 		
-		var regex = RegexUtil.escapeRegexChars(${value1});
+		var value = GetterUtil.getString(${value1});
+        var regex = RegexUtil.escapeRegexChars(${value});
 
 		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
-		selenium.waitForVisible("${locator2}");
+		selenium.waitForVisible(${locator1}, "true");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
@@ -64,11 +65,12 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "true");
 
-		var regex = RegexUtil.escapeRegexChars("${value1}");
+		var value = GetterUtil.getString(${value1});
+        var regex = RegexUtil.escapeRegexChars(${value});
 
 		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
-		selenium.waitForVisible("${locator2}");
+		selenium.waitForVisible(${locator1}, "true");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 

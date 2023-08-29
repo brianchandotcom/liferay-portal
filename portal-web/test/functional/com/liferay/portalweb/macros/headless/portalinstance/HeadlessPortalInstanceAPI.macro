@@ -106,7 +106,6 @@ definition {
 		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = ${authenticationMethod});
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath(${portalInstanceJson}, "$.items..portalInstanceId");
-
 		var lxcEnvironment = JSONUtil2.getLXCEnvironment();
 
 		if (${lxcEnvironment} != "true") {

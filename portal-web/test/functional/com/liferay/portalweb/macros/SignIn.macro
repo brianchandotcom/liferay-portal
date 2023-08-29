@@ -73,7 +73,7 @@ definition {
 
 		if (${isLXC} == "true") {
 
-			// Workaround for LXC server performance issues
+			// Workaround for LXC server performance issues LRQA-81713
 
 			Pause(locator1 = 60000);
 		}

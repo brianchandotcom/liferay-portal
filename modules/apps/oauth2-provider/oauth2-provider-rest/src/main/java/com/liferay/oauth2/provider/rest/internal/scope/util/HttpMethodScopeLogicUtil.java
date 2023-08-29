@@ -47,9 +47,14 @@ public class HttpMethodScopeLogicUtil {
 					StringPlus.asList(ignoreMissingScopesObject));
 			}
 
-			ScopeFinder scopeFinder = bundleContext.getService(
+			ServiceReference<? extends ScopeFinder> serviceReference =
 				_getServiceReference(
-					bundleContext, ScopeFinder.class, applicationName));
+					bundleContext, ScopeFinder.class, applicationName);
+
+			ScopeFinder scopeFinder = bundleContext.getService(
+				serviceReference);
+
+			bundleContext.ungetService(serviceReference);
 
 			Collection<String> scopes = scopeFinder.findScopes();
 

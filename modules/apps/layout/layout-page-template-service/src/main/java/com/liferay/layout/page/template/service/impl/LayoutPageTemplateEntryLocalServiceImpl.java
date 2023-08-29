@@ -114,8 +114,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
 			long previewFileEntryId, boolean defaultTemplate,
-			long layoutPrototypeId, long plid, long masterLayoutPlid,
-			int status, ServiceContext serviceContext)
+			long layoutPrototypeId, long parentLayoutPageTemplateCollectionId,
+			long plid, long masterLayoutPlid, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -141,6 +142,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			parentLayoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setLayoutPageTemplateEntryKey(
 			_generateLayoutPageTemplateEntryKey(groupId, name));
 		layoutPageTemplateEntry.setClassNameId(classNameId);
@@ -212,7 +215,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
+			long masterLayoutPlid, long parentLayoutPageTemplateCollectionId,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry

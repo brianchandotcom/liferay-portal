@@ -57,7 +57,8 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, long classNameId,
-			long classTypeId, String name, long masterLayoutPlid, int status,
+			long classTypeId, String name, long masterLayoutPlid,
+			long parentLayoutPageTemplateCollectionId, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -927,7 +928,7 @@ public class LayoutPageTemplateEntryServiceImpl
 					if (parentLayoutPageTemplateCollectionId != -1) {
 						return LayoutPageTemplateEntryTable.INSTANCE.
 							layoutPageTemplateCollectionId.eq(
-							parentLayoutPageTemplateCollectionId);
+								parentLayoutPageTemplateCollectionId);
 					}
 
 					return null;
@@ -937,7 +938,7 @@ public class LayoutPageTemplateEntryServiceImpl
 					if (layoutPageTemplateCollectionId != -1) {
 						return LayoutPageTemplateEntryTable.INSTANCE.
 							layoutPageTemplateCollectionId.eq(
-							layoutPageTemplateCollectionId);
+								layoutPageTemplateCollectionId);
 					}
 
 					return null;

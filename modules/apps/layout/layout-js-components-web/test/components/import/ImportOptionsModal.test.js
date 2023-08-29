@@ -5,24 +5,34 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {ImportOptionsModal} from '@liferay/layout-js-components-web';
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-const renderComponent = (onImport = () => null, onOpenChange = () => null) => {
-	render(
-		<ImportOptionsModal
-			observer={{
-				dispatch: () => {},
-				mutation: [true, true],
-			}}
-			onImport={onImport}
-			onOpenChange={onOpenChange}
-		/>
-	);
+const renderComponent = async ({
+	onCloseModal = () => null,
+	onImport = () => null,
+} = {}) => {
+	await act(async () => {
+		render(
+			<ImportOptionsModal
+				onCloseModal={onCloseModal}
+				onImport={onImport}
+			/>
+		);
+
+		jest.advanceTimersByTime(1000);
+	});
 };
 
 describe('ImportOptionsModal', () => {
+	afterAll(() => {
+		jest.useRealTimers();
+	});
+
+	beforeAll(() => {
+		jest.useFakeTimers();
+	});
+
 	it('renders text informing the user that some items already exist', () => {
 		renderComponent();
 
@@ -50,9 +60,9 @@ describe('ImportOptionsModal', () => {
 
 	it('renders cancel and import buttons', () => {
 		const onImport = jest.fn();
-		const onOpenChange = jest.fn();
+		const onCloseModal = jest.fn();
 
-		renderComponent(onImport, onOpenChange);
+		renderComponent({onCloseModal, onImport});
 
 		const cancelButton = screen.getByRole('button', {name: /cancel/i});
 		const importButton = screen.getByRole('button', {name: /import/i});
@@ -60,12 +70,12 @@ describe('ImportOptionsModal', () => {
 		expect(cancelButton).toBeInTheDocument();
 		expect(importButton).toBeInTheDocument();
 
-		userEvent.click(cancelButton);
+		fireEvent.click(cancelButton);
+		fireEvent.click(importButton);
 
-		expect(onOpenChange).toHaveBeenCalled();
+		jest.advanceTimersByTime(1000);
 
-		userEvent.click(importButton);
-
+		expect(onCloseModal).toHaveBeenCalled();
 		expect(onImport).toHaveBeenCalled();
 	});
 });

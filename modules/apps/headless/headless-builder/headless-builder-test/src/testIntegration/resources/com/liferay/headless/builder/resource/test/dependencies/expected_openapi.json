@@ -60,6 +60,16 @@
 				},
 				"type": "object"
 			},
+			"IndividualSiteScopedSchemaName": {
+				"description": "individual site scoped description",
+				"properties": {
+					"individualSiteScopedTextProperty": {
+						"description": "individualSiteScopedTextProperty description",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"Link": {
 				"properties": {
 					"href": {
@@ -400,21 +410,64 @@
 				]
 			}
 		},
-		"/scopes/{scopeKey}/no-schema": {
+		"/scopes/{scopeKey}/individual-path/by-external-reference-code/{individualPathERC}": {
 			"get": {
-				"operationId": "getScopeScopeKeyNoSchemaPage",
+				"operationId": "getScopeScopeKeyIndividualPathByExternalReferenceCodeIndividualPathERC",
 				"parameters": [
 					{
-						"in": "query",
-						"name": "filter",
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
 						"schema": {
 							"type": "string"
 						}
 					},
 					{
 						"in": "path",
+						"name": "individualPathERC",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IndividualSiteScopedSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/IndividualSiteScopedSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"IndividualSiteScopedSchemaName"
+				]
+			}
+		},
+		"/scopes/{scopeKey}/no-schema": {
+			"get": {
+				"operationId": "getScopeScopeKeyNoSchemaPage",
+				"parameters": [
+					{
+						"in": "path",
 						"name": "scopeKey",
 						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
 						"schema": {
 							"type": "string"
 						}
@@ -453,16 +506,16 @@
 				"operationId": "getScopeScopeKeySiteScopedPathPage",
 				"parameters": [
 					{
-						"in": "query",
-						"name": "filter",
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
 						"schema": {
 							"type": "string"
 						}
 					},
 					{
-						"in": "path",
-						"name": "scopeKey",
-						"required": true,
+						"in": "query",
+						"name": "filter",
 						"schema": {
 							"type": "string"
 						}

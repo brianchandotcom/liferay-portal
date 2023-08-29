@@ -225,7 +225,7 @@ const Actions = () => {
 													)
 												}
 												placeholder={Liferay.Language.get(
-													'select-an-option'
+													'please-select-an-option'
 												)}
 												value={iconSymbol}
 											/>
@@ -239,7 +239,7 @@ const Actions = () => {
 							collapsable
 							defaultExpanded
 							displayTitle={Liferay.Language.get(
-								'action-behaviour'
+								'action-behavior'
 							)}
 						>
 							<ClayPanel.Body>

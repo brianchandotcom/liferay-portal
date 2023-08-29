@@ -213,16 +213,11 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String redirect = HttpComponentsUtil.setParameter(
+		String redirect = HttpComponentsUtil.addParameters(
 			fullLayoutURL, "p_l_back_url",
-			_portal.getLayoutFullURL(layout, themeDisplay));
-
-		redirect = HttpComponentsUtil.setParameter(
-			redirect, "p_l_back_url_title",
-			layout.getName(themeDisplay.getLocale()));
-
-		redirect = HttpComponentsUtil.setParameter(
-			redirect, "p_l_mode", Constants.EDIT);
+			_portal.getLayoutFullURL(layout, themeDisplay),
+			"p_l_back_url_title", layout.getName(themeDisplay.getLocale()),
+			"p_l_mode", Constants.EDIT);
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			httpServletRequest, "segmentsExperienceId", -1);

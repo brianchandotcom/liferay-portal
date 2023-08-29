@@ -24,6 +24,7 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
+import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
@@ -78,6 +79,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -142,6 +144,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -164,6 +167,14 @@ public class ObjectEntryLocalServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		_originalWorkflowAction = serviceContext.getWorkflowAction();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -361,6 +372,10 @@ public class ObjectEntryLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(_originalWorkflowAction);
 
 		// Do not rely on @DeleteAfterTestRun because object entries that
 		// reference a required list type entry cannot be deleted before it is
@@ -618,6 +633,103 @@ public class ObjectEntryLocalServiceTest {
 				).put(
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
+	}
+
+	@Test
+	public void testAddObjectEntryAsDraft() throws Exception {
+		_objectDefinition.setEnableObjectEntryDraft(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		Map<String, Serializable> values1 =
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", RandomTestUtil.randomString()
+			).put(
+				"firstName", RandomTestUtil.randomString()
+			).build();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), values1, serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
+
+		long objectEntryId1 = objectEntry.getObjectEntryId();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.Required.class,
+			"No value was provided for required object field " +
+				"\"listTypeEntryKeyRequired\"",
+			() -> _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId1, values1,
+				serviceContext));
+
+		Map<String, Serializable> values2 =
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", RandomTestUtil.randomString()
+			).put(
+				"firstName", RandomTestUtil.randomString()
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build();
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntryId1, values2,
+			serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		AssertUtils.assertFailure(
+			ObjectEntryStatusException.class, null,
+			() -> _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId1, values2,
+				serviceContext));
+
+		objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), values2, serviceContext);
+
+		_objectDefinition.setEnableObjectEntryDraft(false);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
+
+		long objectEntryId2 = objectEntry.getObjectEntryId();
+
+		AssertUtils.assertFailure(
+			ObjectEntryStatusException.class, null,
+			() -> _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntryId2, values2,
+				serviceContext));
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntryId2, values2,
+			serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 	}
 
 	@Test
@@ -934,23 +1046,25 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(4);
 
+		HashMap<String, Serializable> values =
+			HashMapBuilder.<String, Serializable>put(
+				"birthday", "2010-12-25"
+			).put(
+				"emailAddress", RandomTestUtil.randomString()
+			).put(
+				"emailAddressRequired", RandomTestUtil.randomString()
+			).put(
+				"lastName", RandomTestUtil.randomString()
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"middleName", RandomTestUtil.randomString()
+			).put(
+				"time", "2000-12-25 08:50"
+			).build();
+
 		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"birthday", "2010-12-25"
-				).put(
-					"emailAddress", RandomTestUtil.randomString()
-				).put(
-					"emailAddressRequired", RandomTestUtil.randomString()
-				).put(
-					"lastName", RandomTestUtil.randomString()
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).put(
-					"middleName", RandomTestUtil.randomString()
-				).put(
-					"time", "2000-12-25 08:50"
-				).build());
+			_addObjectEntry(values);
 
 			Assert.fail();
 		}
@@ -982,6 +1096,23 @@ public class ObjectEntryLocalServiceTest {
 				null, objectValidationRuleResults.get(3));
 		}
 
+		// Validation rules should not run when adding object entry as draft
+
+		_objectDefinition.setEnableObjectEntryDraft(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), values, serviceContext);
+
+		_assertCount(5);
+
 		// Deactivate object validation rule
 
 		objectValidationRule4.setActive(false);
@@ -1004,7 +1135,7 @@ public class ObjectEntryLocalServiceTest {
 				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
-		_assertCount(5);
+		_assertCount(6);
 	}
 
 	@Test
@@ -2821,6 +2952,8 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
 	}
+
+	private static int _originalWorkflowAction;
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

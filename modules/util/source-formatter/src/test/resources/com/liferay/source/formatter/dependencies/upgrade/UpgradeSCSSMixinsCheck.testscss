@@ -1,0 +1,23 @@
+@include respond-to(phone) {}
+
+@include respond-to(tablet) {}
+
+@include respond-to(phone, tablet) {}
+
+@include respond-to(desktop, tablet) {}
+
+@include respond-to(desktop) {}
+
+@include media-query(null, $screen-xs-max) {}
+
+@include media-query(sm) {}
+
+@include media-query(md) {}
+
+@include sm() {}
+
+@include md() {}
+
+@include xs() {}
+
+@include lg() {}

@@ -347,7 +347,8 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization = _organizationService.addOrganization(
 				_getDefaultParentOrganizationId(organization),
-				organization.getName(), OrganizationConstants.TYPE_ORGANIZATION,
+				organization.getExternalReferenceCode(), organization.getName(),
+				OrganizationConstants.TYPE_ORGANIZATION,
 				_getRegionId(organization, countryId), countryId,
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				organization.getComment(), false, _getAddresses(organization),
@@ -442,7 +443,8 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			_organizationService.updateOrganization(
 				serviceBuilderOrganization.getOrganizationId(),
 				_getDefaultParentOrganizationId(organization),
-				organization.getName(), serviceBuilderOrganization.getType(),
+				organization.getExternalReferenceCode(), organization.getName(),
+				serviceBuilderOrganization.getType(),
 				_getRegionId(organization, countryId), countryId,
 				serviceBuilderOrganization.getStatusListTypeId(),
 				organization.getComment(), false, null, group.isSite(),

@@ -129,6 +129,13 @@ public interface OrganizationLocalService
 			String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Organization addOrganization(
+			long userId, long parentOrganizationId,
+			String externalReferenceCode, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean site, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds the organization to the database. Also notifies the appropriate model listeners.
 	 *
@@ -1313,6 +1320,14 @@ public interface OrganizationLocalService
 			String name, String type, long regionId, long countryId,
 			long statusListTypeId, String comments, boolean hasLogo,
 			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Organization updateOrganization(
+			long companyId, long organizationId, long parentOrganizationId,
+			String externalReferenceCode, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

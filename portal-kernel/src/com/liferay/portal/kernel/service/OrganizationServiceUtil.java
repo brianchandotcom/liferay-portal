@@ -124,6 +124,36 @@ public class OrganizationServiceUtil {
 			statusListTypeId, comments, site, serviceContext);
 	}
 
+	public static Organization addOrganization(
+			long parentOrganizationId, String externalReferenceCode,
+			String name, String type, long regionId, long countryId,
+			long statusListTypeId, String comments, boolean site,
+			List<com.liferay.portal.kernel.model.Address> addresses,
+			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+			List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
+			List<com.liferay.portal.kernel.model.Phone> phones,
+			List<com.liferay.portal.kernel.model.Website> websites,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrganization(
+			parentOrganizationId, externalReferenceCode, name, type, regionId,
+			countryId, statusListTypeId, comments, site, addresses,
+			emailAddresses, orgLabors, phones, websites, serviceContext);
+	}
+
+	public static Organization addOrganization(
+			long parentOrganizationId, String externalReferenceCode,
+			String name, String type, long regionId, long countryId,
+			long statusListTypeId, String comments, boolean site,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrganization(
+			parentOrganizationId, externalReferenceCode, name, type, regionId,
+			countryId, statusListTypeId, comments, site, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.model.User
 			addOrganizationUserByEmailAddress(
 				String emailAddress, long organizationId,
@@ -503,6 +533,26 @@ public class OrganizationServiceUtil {
 		return getService().updateOrganization(
 			organizationId, parentOrganizationId, name, type, regionId,
 			countryId, statusListTypeId, comments, site, serviceContext);
+	}
+
+	public static Organization updateOrganization(
+			long organizationId, long parentOrganizationId,
+			String externalReferenceCode, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean hasLogo, byte[] logoBytes, boolean site,
+			List<com.liferay.portal.kernel.model.Address> addresses,
+			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+			List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
+			List<com.liferay.portal.kernel.model.Phone> phones,
+			List<com.liferay.portal.kernel.model.Website> websites,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateOrganization(
+			organizationId, parentOrganizationId, externalReferenceCode, name,
+			type, regionId, countryId, statusListTypeId, comments, hasLogo,
+			logoBytes, site, addresses, emailAddresses, orgLabors, phones,
+			websites, serviceContext);
 	}
 
 	public static OrganizationService getService() {

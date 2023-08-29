@@ -124,6 +124,20 @@ public class OrganizationLocalServiceWrapper
 			statusListTypeId, comments, site, serviceContext);
 	}
 
+	@Override
+	public Organization addOrganization(
+			long userId, long parentOrganizationId,
+			String externalReferenceCode, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean site, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationLocalService.addOrganization(
+			userId, parentOrganizationId, externalReferenceCode, name, type,
+			regionId, countryId, statusListTypeId, comments, site,
+			serviceContext);
+	}
+
 	/**
 	 * Adds the organization to the database. Also notifies the appropriate model listeners.
 	 *
@@ -1753,6 +1767,22 @@ public class OrganizationLocalServiceWrapper
 			companyId, organizationId, parentOrganizationId, name, type,
 			regionId, countryId, statusListTypeId, comments, hasLogo, logoBytes,
 			site, serviceContext);
+	}
+
+	@Override
+	public Organization updateOrganization(
+			long companyId, long organizationId, long parentOrganizationId,
+			String externalReferenceCode, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationLocalService.updateOrganization(
+			companyId, organizationId, parentOrganizationId,
+			externalReferenceCode, name, type, regionId, countryId,
+			statusListTypeId, comments, hasLogo, logoBytes, site,
+			serviceContext);
 	}
 
 	/**

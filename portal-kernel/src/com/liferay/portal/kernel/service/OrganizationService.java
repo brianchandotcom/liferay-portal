@@ -126,6 +126,22 @@ public interface OrganizationService extends BaseService {
 			boolean site, ServiceContext serviceContext)
 		throws PortalException;
 
+	public Organization addOrganization(
+			long parentOrganizationId, String externalReferenceCode,
+			String name, String type, long regionId, long countryId,
+			long statusListTypeId, String comments, boolean site,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<OrgLabor> orgLabors, List<Phone> phones,
+			List<Website> websites, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Organization addOrganization(
+			long parentOrganizationId, String externalReferenceCode,
+			String name, String type, long regionId, long countryId,
+			long statusListTypeId, String comments, boolean site,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public User addOrganizationUserByEmailAddress(
 			String emailAddress, long organizationId,
 			ServiceContext serviceContext)
@@ -404,6 +420,16 @@ public interface OrganizationService extends BaseService {
 			long organizationId, long parentOrganizationId, String name,
 			String type, long regionId, long countryId, long statusListTypeId,
 			String comments, boolean site, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Organization updateOrganization(
+			long organizationId, long parentOrganizationId,
+			String externalReferenceCode, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean hasLogo, byte[] logoBytes, boolean site,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<OrgLabor> orgLabors, List<Phone> phones,
+			List<Website> websites, ServiceContext serviceContext)
 		throws PortalException;
 
 }

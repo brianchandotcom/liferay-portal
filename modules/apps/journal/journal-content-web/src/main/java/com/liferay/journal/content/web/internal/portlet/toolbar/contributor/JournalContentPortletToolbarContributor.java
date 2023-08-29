@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.UnicodeLanguage;
+import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -220,7 +220,7 @@ public class JournalContentPortletToolbarContributor
 					"'));}}, selectEventName: '",
 					portletResponse.getNamespace(),
 					"selectDDMStructure', title: '",
-					_unicodeLanguage.get(
+					UnicodeLanguageUtil.get(
 						_portal.getHttpServletRequest(portletRequest),
 						"select-structure"),
 					"', url: '",
@@ -329,8 +329,5 @@ public class JournalContentPortletToolbarContributor
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private UnicodeLanguage _unicodeLanguage;
 
 }

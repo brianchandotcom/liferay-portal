@@ -22,9 +22,11 @@ definition {
 	function assertText(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
-		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars("${value1}");
 
-		selenium.assertTextCaseInsensitive(${locator1}, ${value1});
+		selenium.waitForTextMatches(argument1 = "${locator1}", argument2 = "(?i)${regex}");
+
+		selenium.assertTextMatches(argument1 = "${locator1}", argument2 = "(?i)${regex}");
 	}
 
 	function assertTextCaseSensitive(locator1, value1) {

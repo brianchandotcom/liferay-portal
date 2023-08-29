@@ -22,9 +22,11 @@ definition {
 	function assertTextClick(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "true");
 
-		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.assertTextCaseInsensitive(${locator1}, ${value1});
+		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
+
+		selenium.assertTextMatches(${locator1}, "(?i)${regex}");
 
 		selenium.mouseOver(${locator1});
 

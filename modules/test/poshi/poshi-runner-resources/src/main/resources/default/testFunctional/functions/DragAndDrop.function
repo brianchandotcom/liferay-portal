@@ -31,10 +31,12 @@ definition {
 		selenium.mouseOver(${locator1});
 
 		selenium.waitForVisible(${locator1}, "true");
+		
+		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
+		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
 
-		selenium.waitForVisible(${locator1}, "true");
+		selenium.waitForVisible("${locator2}");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
@@ -62,9 +64,11 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "true");
 
-		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars("${value1}");
 
-		selenium.waitForVisible(${locator1}, "true");
+		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
+
+		selenium.waitForVisible("${locator2}");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 

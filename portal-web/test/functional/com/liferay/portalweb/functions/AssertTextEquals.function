@@ -45,9 +45,11 @@ definition {
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
+		var regex = RegexUtil.escapeRegexChars(${value1});
 
-		selenium.assertTextCaseInsensitive(${locator1}, ${value1});
+		selenium.waitForTextMatches(${locator1}, "(?i)${regex}");
+
+		selenium.assertTextMatches(${locator1}, "(?i)${regex}");
 
 		selenium.assertJavaScriptErrors("true");
 

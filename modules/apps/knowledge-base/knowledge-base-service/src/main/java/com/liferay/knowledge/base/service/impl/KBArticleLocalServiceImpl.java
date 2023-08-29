@@ -350,20 +350,25 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
 	public void checkKBArticles(long companyId) throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
 		Date date = new Date();
 
+		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
+
 		if (FeatureFlagManagerUtil.isEnabled("LPS-188060")) {
-			_checkKBArticlesByDisplayDate(companyId, date);
+			_checkKBArticlesByDisplayDate(company, date, userId);
 		}
 
-		_checkKBArticlesByExpirationDate(companyId, date);
+		_checkKBArticlesByExpirationDate(company, date, userId);
 
 		_dates.computeIfAbsent(
 			companyId,
 			key -> new Date(
 				date.getTime() - (_getKBArticleCheckInterval() * Time.MINUTE)));
 
-		_checkKBArticlesByReviewDate(companyId, date);
+		_checkKBArticlesByReviewDate(company, date, userId);
 
 		_dates.put(companyId, date);
 	}
@@ -1622,19 +1627,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return dynamicQuery.add(junction);
 	}
 
-	private void _checkKBArticlesByDisplayDate(long companyId, Date displayDate)
+	private void _checkKBArticlesByDisplayDate(
+			Company company, Date displayDate, long userId)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
 					"Publishing file entries with display date previous to ",
-					displayDate, " for company ", companyId));
+					displayDate, " for company ", company.getCompanyId()));
 		}
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndDisplayDate(
 			company.getCompanyId(), displayDate);
@@ -1655,19 +1657,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	private void _checkKBArticlesByExpirationDate(
-			long companyId, Date expirationDate)
+			Company company, Date expirationDate, long userId)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
 					"Expiring file entries with expiration date previous to ",
-					expirationDate, " for company ", companyId));
+					expirationDate, " for company ", company.getCompanyId()));
 		}
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndExpirationDate(
 			company.getCompanyId(), expirationDate);
@@ -1688,20 +1686,17 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	private void _checkKBArticlesByReviewDate(long companyId, Date reviewDate)
+	private void _checkKBArticlesByReviewDate(
+			Company company, Date reviewDate, long userId)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
 					"Sending review notification for articles with review ",
-					"date between ", _dates.get(companyId), " and ", reviewDate,
-					" for company ", companyId));
+					"date between ", _dates.get(company.getCompanyId()), " and ", reviewDate,
+					" for company ", company.getCompanyId()));
 		}
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		long userId = _userLocalService.getGuestUserId(company.getCompanyId());
 
 		List<KBArticle> kbArticles = _getKBArticlesByCompanyIdAndReviewDate(
 			company.getCompanyId(), _dates.get(company.getCompanyId()),

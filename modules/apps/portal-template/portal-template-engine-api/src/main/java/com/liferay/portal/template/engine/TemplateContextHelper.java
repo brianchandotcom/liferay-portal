@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -547,8 +546,7 @@ public class TemplateContextHelper {
 
 		try {
 			variables.put(
-				"unicodeLanguageUtil",
-				UnicodeLanguageUtil.getUnicodeLanguage());
+				"unicodeLanguageUtil", UnicodeFormatter_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

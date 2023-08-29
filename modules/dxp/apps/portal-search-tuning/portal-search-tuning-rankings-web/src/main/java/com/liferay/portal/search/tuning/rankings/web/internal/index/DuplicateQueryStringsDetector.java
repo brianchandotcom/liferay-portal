@@ -21,11 +21,15 @@ public interface DuplicateQueryStringsDetector {
 
 	public interface Criteria {
 
+		public String getGroupExternalReferenceCode();
+
 		public String getIndex();
 
 		public Collection<String> getQueryStrings();
 
 		public RankingIndexName getRankingIndexName();
+
+		public String getSXPBlueprintExternalReferenceCode();
 
 		public String getUnlessRankingDocumentId();
 
@@ -33,11 +37,17 @@ public interface DuplicateQueryStringsDetector {
 
 			public Criteria build();
 
+			public Builder groupExternalReferenceCode(
+				String groupExternalReferenceCode);
+
 			public Builder index(String index);
 
 			public Builder queryStrings(Collection<String> queryStrings);
 
 			public Builder rankingIndexName(RankingIndexName rankingIndexName);
+
+			public Builder sxpBlueprintExternalReferenceCode(
+				String sxpBlueprintExternalReferenceCode);
 
 			public Builder unlessRankingDocumentId(
 				String unlessRankingDocumentId);

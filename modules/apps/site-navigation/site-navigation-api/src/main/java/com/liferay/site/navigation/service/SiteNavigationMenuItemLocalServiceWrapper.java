@@ -34,6 +34,21 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
+	public SiteNavigationMenuItem addOrUpdateSiteNavigationMenuItem(
+			String externalReferenceCode, long userId, long groupId,
+			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			String type, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws Exception {
+
+		return _siteNavigationMenuItemLocalService.
+			addOrUpdateSiteNavigationMenuItem(
+				externalReferenceCode, userId, groupId, siteNavigationMenuId,
+				parentSiteNavigationMenuItemId, type, typeSettings,
+				serviceContext);
+	}
+
+	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
 			long userId, long groupId, long siteNavigationMenuId,
 			long parentSiteNavigationMenuItemId, String type, int order,
@@ -287,6 +302,16 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 			siteNavigationMenuItemId);
 	}
 
+	@Override
+	public SiteNavigationMenuItem
+		fetchSiteNavigationMenuItemByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return _siteNavigationMenuItemLocalService.
+			fetchSiteNavigationMenuItemByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the site navigation menu item matching the UUID and group.
 	 *
@@ -372,6 +397,17 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
 			siteNavigationMenuItemId);
+	}
+
+	@Override
+	public SiteNavigationMenuItem
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemLocalService.
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

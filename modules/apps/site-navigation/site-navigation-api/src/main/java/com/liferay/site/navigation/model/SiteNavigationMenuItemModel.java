@@ -104,6 +104,21 @@ public interface SiteNavigationMenuItemModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this site navigation menu item.
+	 *
+	 * @return the external reference code of this site navigation menu item
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this site navigation menu item.
+	 *
+	 * @param externalReferenceCode the external reference code of this site navigation menu item
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the site navigation menu item ID of this site navigation menu item.
 	 *
 	 * @return the site navigation menu item ID of this site navigation menu item

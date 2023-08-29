@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuItemExternalReferenceCodeException;
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
@@ -125,6 +126,9 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		newSiteNavigationMenuItem.setUuid(RandomTestUtil.randomString());
 
+		newSiteNavigationMenuItem.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newSiteNavigationMenuItem.setGroupId(RandomTestUtil.nextLong());
 
 		newSiteNavigationMenuItem.setCompanyId(RandomTestUtil.nextLong());
@@ -170,6 +174,9 @@ public class SiteNavigationMenuItemPersistenceTest {
 		Assert.assertEquals(
 			existingSiteNavigationMenuItem.getUuid(),
 			newSiteNavigationMenuItem.getUuid());
+		Assert.assertEquals(
+			existingSiteNavigationMenuItem.getExternalReferenceCode(),
+			newSiteNavigationMenuItem.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
 			newSiteNavigationMenuItem.getSiteNavigationMenuItemId());
@@ -217,6 +224,32 @@ public class SiteNavigationMenuItemPersistenceTest {
 				existingSiteNavigationMenuItem.getLastPublishDate()),
 			Time.getShortTimestamp(
 				newSiteNavigationMenuItem.getLastPublishDate()));
+	}
+
+	@Test(
+		expected = DuplicateSiteNavigationMenuItemExternalReferenceCodeException.class
+	)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			addSiteNavigationMenuItem();
+
+		SiteNavigationMenuItem newSiteNavigationMenuItem =
+			addSiteNavigationMenuItem();
+
+		newSiteNavigationMenuItem.setGroupId(
+			siteNavigationMenuItem.getGroupId());
+
+		newSiteNavigationMenuItem = _persistence.update(
+			newSiteNavigationMenuItem);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newSiteNavigationMenuItem);
+
+		newSiteNavigationMenuItem.setExternalReferenceCode(
+			siteNavigationMenuItem.getExternalReferenceCode());
+
+		_persistence.update(newSiteNavigationMenuItem);
 	}
 
 	@Test
@@ -286,6 +319,15 @@ public class SiteNavigationMenuItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SiteNavigationMenuItem newSiteNavigationMenuItem =
 			addSiteNavigationMenuItem();
@@ -314,11 +356,12 @@ public class SiteNavigationMenuItemPersistenceTest {
 	protected OrderByComparator<SiteNavigationMenuItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SiteNavigationMenuItem", "mvccVersion", true, "ctCollectionId",
-			true, "uuid", true, "siteNavigationMenuItemId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "siteNavigationMenuId",
-			true, "parentSiteNavigationMenuItemId", true, "name", true, "type",
-			true, "order", true, "lastPublishDate", true);
+			true, "uuid", true, "externalReferenceCode", true,
+			"siteNavigationMenuItemId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "siteNavigationMenuId", true,
+			"parentSiteNavigationMenuItemId", true, "name", true, "type", true,
+			"order", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -624,6 +667,17 @@ public class SiteNavigationMenuItemPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				siteNavigationMenuItem, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
+			siteNavigationMenuItem.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				siteNavigationMenuItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(siteNavigationMenuItem.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				siteNavigationMenuItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected SiteNavigationMenuItem addSiteNavigationMenuItem()
@@ -638,6 +692,9 @@ public class SiteNavigationMenuItemPersistenceTest {
 		siteNavigationMenuItem.setCtCollectionId(RandomTestUtil.nextLong());
 
 		siteNavigationMenuItem.setUuid(RandomTestUtil.randomString());
+
+		siteNavigationMenuItem.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		siteNavigationMenuItem.setGroupId(RandomTestUtil.nextLong());
 

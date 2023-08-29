@@ -1480,6 +1480,74 @@ public class SiteNavigationMenuItemUtil {
 	}
 
 	/**
+	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching site navigation menu item
+	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
+	 */
+	public static SiteNavigationMenuItem findByERC_G(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
+
+		return getPersistence().findByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	 */
+	public static SiteNavigationMenuItem fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	 */
+	public static SiteNavigationMenuItem fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByERC_G(
+			externalReferenceCode, groupId, useFinderCache);
+	}
+
+	/**
+	 * Removes the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the site navigation menu item that was removed
+	 */
+	public static SiteNavigationMenuItem removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws com.liferay.site.navigation.exception.NoSuchMenuItemException {
+
+		return getPersistence().removeByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns the number of site navigation menu items where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching site navigation menu items
+	 */
+	public static int countByERC_G(String externalReferenceCode, long groupId) {
+		return getPersistence().countByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
 	 * Caches the site navigation menu item in the entity cache if it is enabled.
 	 *
 	 * @param siteNavigationMenuItem the site navigation menu item

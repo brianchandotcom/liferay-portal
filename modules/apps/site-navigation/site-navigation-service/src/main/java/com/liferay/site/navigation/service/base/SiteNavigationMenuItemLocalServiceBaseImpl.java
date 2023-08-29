@@ -273,6 +273,25 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 		return siteNavigationMenuItemPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public SiteNavigationMenuItem
+		fetchSiteNavigationMenuItemByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return siteNavigationMenuItemPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public SiteNavigationMenuItem
+			getSiteNavigationMenuItemByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return siteNavigationMenuItemPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the site navigation menu item with the primary key.
 	 *

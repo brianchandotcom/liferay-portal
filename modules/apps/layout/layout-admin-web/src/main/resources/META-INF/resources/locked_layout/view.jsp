@@ -48,7 +48,7 @@
 				<clay:content-col>
 					<clay:button
 						displayType="info"
-						label="go-back"
+						label="<%= lockedLayoutDisplayContext.getBackURLLabel() %>"
 						onClick='<%= "location.href='" + HtmlUtil.escapeJS(lockedLayoutDisplayContext.getBackURL()) + "';" %>'
 					/>
 				</clay:content-col>

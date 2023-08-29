@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LockedLayoutDisplayContext;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
@@ -39,10 +40,17 @@ public class LockedLayoutMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			LockedLayoutDisplayContext.class.getName(),
-			new LockedLayoutDisplayContext(_portal, renderRequest));
+			new LockedLayoutDisplayContext(
+				_language,
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest)),
+				_portal, renderRequest));
 
 		return "/locked_layout/view.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -173,7 +173,7 @@ definition {
 	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: End"
 	@priority = 5
 	test CanAddAndEditEndNode {
-		property test.liferay.virtual.instance = "false";
+		property test.liferay.virtual.instance = "true";
 		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
@@ -4962,6 +4962,55 @@ definition {
 		PortletEntry.publish();
 
 		ProcessBuilderKaleoDesignerReact.viewPublishButtonNotPresent();
+	}
+
+	@description = "Verify that a role name containing multi-byte characters can be used in the workflow "
+	@priority = 4
+	test RoleNameContainingMultibyteCharactersCanBeUsedInWorkflow {
+		property test.liferay.virtual.instance = "true";
+
+		task ("Given a regular role with multi-byte characters in the title") {
+			JSONRole.addRegularRole(
+				roleKey = "テスト",
+				roleTitle = "test");
+		}
+
+		task ("and Given a workflow definition with node task") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+				nodeLabel = "Task",
+				nodePosition = "-20,-40");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "task",
+				connectorLabel = "Start-Task Connector",
+				connectorOut = "start",
+				key_direction = "right");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Complete Task",
+				connectorOut = "task",
+				key_direction = "right");
+		}
+
+		task ("When publishing workflow definition with node task assigned to regular role with multibyte characters in title") {
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+			ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+				assignmentType = "Role Type",
+				roleTypeName = "Regular",
+				roleTypeRoleName = "テスト");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the workflow can be published successfully") {
+			Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+		}
 	}
 
 	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"

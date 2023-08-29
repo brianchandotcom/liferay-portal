@@ -415,6 +415,10 @@ public class DefaultSearchResultPermissionFilter
 		protected void collectHits(
 			Hits hits, int accumulatedCount, int start, int end) {
 
+			if (accumulatedCount <= start) {
+				return;
+			}
+
 			int delta = end - start;
 
 			Document[] docs = hits.getDocs();

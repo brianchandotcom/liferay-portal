@@ -82,9 +82,6 @@
 	<bean class="com.liferay.portal.kernel.language.LanguageUtil" id="com.liferay.portal.kernel.language.LanguageUtil">
 		<property name="language" ref="com.liferay.portal.kernel.language.Language" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.language.UnicodeLanguageUtil" id="com.liferay.portal.kernel.language.UnicodeLanguageUtil">
-		<property name="unicodeLanguage" ref="com.liferay.portal.language.UnicodeLanguageImpl" />
-	</bean>
 	<bean class="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" id="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage" />
 	<bean class="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" id="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil">
 		<property name="runtimePage" ref="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage" />
@@ -242,7 +239,6 @@
 	<bean class="com.liferay.portal.zip.ZipReaderFactoryImpl" id="com.liferay.portal.kernel.zip.ZipReaderFactory" />
 	<bean class="com.liferay.portal.zip.ZipWriterFactoryImpl" id="com.liferay.portal.kernel.zip.ZipWriterFactory" />
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />
-	<bean class="com.liferay.portal.language.UnicodeLanguageImpl" id="com.liferay.portal.language.UnicodeLanguageImpl" />
 	<bean class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean class="com.liferay.portal.servlet.filters.util.BrowserIdCacheFileNameContributor" id="com.liferay.portal.servlet.filters.util.BrowserIdCacheFileNameContributor" />
 	<bean class="com.liferay.portal.servlet.filters.util.LanguageIdCacheFileNameContributor" id="com.liferay.portal.servlet.filters.util.LanguageIdCacheFileNameContributor" />

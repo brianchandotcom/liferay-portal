@@ -334,7 +334,7 @@ function AddFDSFilterModalContent({
 					/>
 				</ClayForm.Group>
 
-				{selectedField?.format === fieldFormats.DATE_TIME && (
+				{selectedField && filterType === filterTypes.DATE_RANGE && (
 					<ClayForm.Group className="form-group-autofit">
 						<div
 							className={classNames('form-group-item', {
@@ -394,7 +394,7 @@ function AddFDSFilterModalContent({
 					</ClayForm.Group>
 				)}
 
-				{selectedField?.format === fieldFormats.STRING && (
+				{selectedField && filterType === filterTypes.SELECTION && (
 					<>
 						<ClayForm.Group>
 							<label htmlFor={sourceOptionFormElementId}>

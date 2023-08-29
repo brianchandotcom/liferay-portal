@@ -29,6 +29,8 @@ public class DocumentToRankingTranslatorImpl
 		return builder(
 		).aliases(
 			_getAliases(document)
+		).groupExternalReferenceCode(
+			document.getString(RankingFields.GROUP_EXTERNAL_REFERENCE_CODE)
 		).hiddenDocumentIds(
 			document.getStrings(RankingFields.BLOCKS)
 		).inactive(
@@ -43,6 +45,9 @@ public class DocumentToRankingTranslatorImpl
 			_getQueryString(document)
 		).rankingDocumentId(
 			rankingDocumentId
+		).sxpBlueprintExternalReferenceCode(
+			document.getString(
+				RankingFields.SXP_BLUEPRINT_EXTERNAL_REFERENCE_CODE)
 		).build();
 	}
 

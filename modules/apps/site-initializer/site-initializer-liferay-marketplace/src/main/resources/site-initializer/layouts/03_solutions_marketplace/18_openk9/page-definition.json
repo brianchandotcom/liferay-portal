@@ -1713,7 +1713,7 @@
 																										"definition": {
 																											"fragment": {
 																												"key": "text",
-																												"siteKey": "mkt"
+																												"siteKey": "[$GROUP_KEY$]"
 																											},
 																											"fragmentConfig": {
 																												"fontSize": "font-size-paragraph-base",

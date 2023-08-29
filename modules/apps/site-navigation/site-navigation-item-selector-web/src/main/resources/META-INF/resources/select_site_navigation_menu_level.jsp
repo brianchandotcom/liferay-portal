@@ -29,7 +29,7 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 			data-site-navigation-menu-id="<%= selectSiteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
 			data-title="<%= selectSiteNavigationMenuDisplayContext.getCurrentLevelTitle() %>"
 			displayType="primary"
-			label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'
+			label="select-this-level"
 			small="<%= true %>"
 		/>
 	</div>

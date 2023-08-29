@@ -77,7 +77,7 @@ if (selLayout != null) {
 	cssClass="mb-4"
 	displayType="secondary"
 	id='<%= liferayPortletResponse.getNamespace() + "chooseLayout" %>'
-	label='<%= LanguageUtil.get(resourceBundle, "choose") %>'
+	label="choose"
 	propsTransformer="js/ChooseLayoutButtonPropsTransformer"
 	small="<%= true %>"
 />

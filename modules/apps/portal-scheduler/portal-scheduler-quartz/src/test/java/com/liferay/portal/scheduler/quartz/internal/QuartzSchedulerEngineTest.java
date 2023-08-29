@@ -528,7 +528,7 @@ public class QuartzSchedulerEngineTest {
 			if (tuple == null) {
 				_jobs.put(
 					jobDetail.getKey(),
-					new Tuple(jobDetail, null, TriggerState.UNSCHEDULED));
+					new Tuple(jobDetail, null, TriggerState.NORMAL));
 			}
 			else {
 				_jobs.put(

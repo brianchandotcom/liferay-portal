@@ -156,8 +156,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 				height = cpInstance.getHeight();
 				id = cpInstance.getCPInstanceId();
 				manufacturerPartNumber = cpInstance.getManufacturerPartNumber();
-				maxOrderQuantity = 0;
-				minOrderQuantity = 0;
+				maxOrderQuantity = BigDecimal.ZERO;
+				minOrderQuantity = BigDecimal.ZERO;
 				neverExpire = true;
 				published = cpInstance.isPublished();
 				purchasable = cpInstance.isPurchasable();

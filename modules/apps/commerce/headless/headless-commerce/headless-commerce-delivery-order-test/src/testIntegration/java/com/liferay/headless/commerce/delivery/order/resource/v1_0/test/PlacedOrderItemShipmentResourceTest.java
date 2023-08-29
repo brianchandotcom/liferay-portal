@@ -164,7 +164,7 @@ public class PlacedOrderItemShipmentResourceTest
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				orderId = _commerceOrder.getCommerceOrderId();
-				quantity = RandomTestUtil.randomInt(1, 10);
+				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10));
 				shippingAddressId = localShippingAddress.getAddressId();
 				shippingMethodId = RandomTestUtil.randomLong();
 				shippingOptionName = StringUtil.toLowerCase(
@@ -221,8 +221,8 @@ public class PlacedOrderItemShipmentResourceTest
 				RandomTestUtil.randomString(),
 				commerceShipment.getCommerceShipmentId(),
 				_commerceOrderItem.getCommerceOrderItemId(), 0,
-				BigDecimal.valueOf(placedOrderItemShipment.getQuantity()), null,
-				false, _serviceContext);
+				placedOrderItemShipment.getQuantity(), null, false,
+				_serviceContext);
 
 		_commerceShipmentItems.add(commerceShipmentItem);
 
@@ -238,17 +238,10 @@ public class PlacedOrderItemShipmentResourceTest
 				id = commerceShipmentItem.getCommerceShipmentItemId();
 				modifiedDate = commerceShipmentItem.getModifiedDate();
 				orderId = _commerceOrder.getCommerceOrderId();
+				quantity = commerceShipmentItem.getQuantity();
 				shippingAddressId = commerceShipment.getCommerceAddressId();
 				shippingOptionName = commerceShipment.getShippingOptionName();
 				trackingNumber = commerceShipment.getTrackingNumber();
-
-				setQuantity(
-					() -> {
-						BigDecimal quantity =
-							commerceShipmentItem.getQuantity();
-
-						return quantity.intValue();
-					});
 			}
 		};
 	}

@@ -201,7 +201,7 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 
 		return new CartItem() {
 			{
-				quantity = RandomTestUtil.randomInt(1, 10);
+				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 10));
 				sku = cpInstance.getSku();
 				skuId = cpInstance.getCPInstanceId();
 			}

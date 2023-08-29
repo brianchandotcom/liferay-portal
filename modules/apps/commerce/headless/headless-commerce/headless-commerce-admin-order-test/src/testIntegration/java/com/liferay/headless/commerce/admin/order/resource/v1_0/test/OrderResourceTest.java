@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
+import java.math.BigDecimal;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -357,8 +359,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				orderId = RandomTestUtil.randomLong();
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				quantity = RandomTestUtil.randomInt();
-				shippedQuantity = RandomTestUtil.randomInt();
+				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt());
+				shippedQuantity = BigDecimal.valueOf(
+					RandomTestUtil.randomInt());
 				shippingAddressId = _orderAddress.getAddressId();
 				skuId = cpInstance.getCPInstanceId();
 				subscription = RandomTestUtil.randomBoolean();

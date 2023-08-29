@@ -15,7 +15,7 @@ create table ObjectAction (
 	errorMessage STRING null,
 	label STRING null,
 	name VARCHAR(75) null,
-	objectActionExecutorKey VARCHAR(75) null,
+	objectActionExecutorKey VARCHAR(255) null,
 	objectActionTriggerKey VARCHAR(75) null,
 	parameters TEXT null,
 	status INTEGER
@@ -54,7 +54,7 @@ create table ObjectDefinition (
 	pluralLabel STRING null,
 	portlet BOOLEAN,
 	scope VARCHAR(75) null,
-	storageType VARCHAR(75) null,
+	storageType VARCHAR(255) null,
 	system_ BOOLEAN,
 	version INTEGER,
 	status INTEGER
@@ -297,7 +297,7 @@ create table ObjectValidationRule (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	active_ BOOLEAN,
-	engine VARCHAR(75) null,
+	engine VARCHAR(255) null,
 	errorLabel STRING null,
 	name STRING null,
 	outputType VARCHAR(75) null,

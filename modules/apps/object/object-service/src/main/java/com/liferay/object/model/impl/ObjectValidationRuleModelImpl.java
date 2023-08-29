@@ -104,7 +104,7 @@ public class ObjectValidationRuleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectValidationRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectValidationRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,engine VARCHAR(75) null,errorLabel STRING null,name STRING null,outputType VARCHAR(75) null,script TEXT null)";
+		"create table ObjectValidationRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectValidationRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,engine VARCHAR(255) null,errorLabel STRING null,name STRING null,outputType VARCHAR(75) null,script TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectValidationRule";

@@ -19,6 +19,7 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsValues;
 
@@ -56,21 +59,36 @@ public class LayoutWarningMessageHelperImpl
 
 		int totalCount = _getTotalCount(collectionStyledLayoutStructureItem);
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				collectionStyledLayoutStructureItem.getPaginationType(),
-				CollectionPaginationUtil.PAGINATION_TYPE_NONE) &&
-			(collectionStyledLayoutStructureItem.isDisplayAllItems() ||
-			 (totalCount > PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA))) {
+				CollectionPaginationUtil.PAGINATION_TYPE_NONE) ||
+			(!collectionStyledLayoutStructureItem.isDisplayAllItems() &&
+			 (totalCount <= PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA))) {
 
+			return StringPool.BLANK;
+		}
+
+		String mode = ParamUtil.getString(
+			_portal.getOriginalServletRequest(httpServletRequest), "p_l_mode",
+			Constants.VIEW);
+
+		if (Objects.equals(mode, Constants.VIEW)) {
 			return _language.format(
 				httpServletRequest,
-				"this-setting-can-affect-page-performance-severely-if-the-" +
-					"number-of-collection-items-is-above-x.-we-strongly-" +
-						"recommend-using-pagination-instead",
+				StringBundler.concat(
+					"pagination-is-set-to-none.-this-setting-can-affect-page-",
+					"performance-severely-if-the-number-of-collection-items-",
+					"is-above-x.-we-strongly-recommend-using-pagination-",
+					"instead"),
 				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 		}
 
-		return StringPool.BLANK;
+		return _language.format(
+			httpServletRequest,
+			"this-setting-can-affect-page-performance-severely-if-the-number-" +
+				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
+					"pagination-instead",
+			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 	}
 
 	private Map<String, String[]> _getConfiguration(

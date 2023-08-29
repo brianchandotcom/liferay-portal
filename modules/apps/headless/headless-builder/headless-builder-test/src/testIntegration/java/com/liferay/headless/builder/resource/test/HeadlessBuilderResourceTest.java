@@ -262,7 +262,38 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testGetIndividualEndpoint() throws Exception {
+	public void testGetIndividualObjectEntryByExternalReferenceCode()
+		throws Exception {
+
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, "externalReferenceCode", "singleElement",
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		ObjectEntry objectEntry = _addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1");
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textProperty", "value1"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1,
+					StringPool.FORWARD_SLASH,
+					objectEntry.getExternalReferenceCode()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetIndividualObjectEntryById() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
@@ -1625,7 +1656,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).put(
 					"name", "name"
 				).put(
-					"path", path + "/{pathId}"
+					"path", path + "/{pathElement}"
 				).put(
 					"pathParameter", pathParameter
 				).put(

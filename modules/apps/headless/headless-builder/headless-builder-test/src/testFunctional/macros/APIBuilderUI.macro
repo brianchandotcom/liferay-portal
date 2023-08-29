@@ -95,6 +95,22 @@ definition {
 		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
 	}
 
+	macro deleteAPISchema {
+		APIBuilderUI.switchToRelatedEntryInEditApplication(
+			entity = "Schemas",
+			title = ${applicationTitle});
+
+		Click(
+			key_title = ${schemaName},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
+
+		if (isSet(confirmDeletion)) {
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+	}
+
 	macro filterByLastUpdated {
 		Variables.assertDefined(parameterList = "${fromDate},${toDate}");
 

@@ -47,11 +47,10 @@ public class WorkflowDefinitionContentUtil {
 			Document document = documentBuilder.parse(
 				new InputSource(new StringReader(xml)));
 
-			Element rootElement = document.getDocumentElement();
+			JSONObject jsonObject = _toJSONObject(
+				document.getDocumentElement());
 
-			JSONObject rootJSONObject = _toJSONObject(rootElement);
-
-			return rootJSONObject.toString();
+			return jsonObject.toString();
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(
@@ -157,9 +156,7 @@ public class WorkflowDefinitionContentUtil {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				String line = jsonArray.getString(i);
 
-				line = line.replaceAll("\\s\\s\\s\\s", StringPool.TAB);
-
-				cdataSB.append(line);
+				cdataSB.append(line.replaceAll("\\s\\s\\s\\s", StringPool.TAB));
 
 				cdataSB.append(StringPool.NEW_LINE);
 			}
@@ -178,9 +175,8 @@ public class WorkflowDefinitionContentUtil {
 			return false;
 		}
 
-		value = value.replaceAll("[\n\t]", "");
-
-		return !value.isEmpty();
+		return Validator.isNotNull(
+			value.replaceAll("[\n\t]", StringPool.BLANK));
 	}
 
 	private static JSONObject _toJSONObject(Element element) {

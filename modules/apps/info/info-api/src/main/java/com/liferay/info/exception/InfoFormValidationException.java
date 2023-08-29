@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -262,6 +264,38 @@ public class InfoFormValidationException extends InfoFormException {
 			return LanguageUtil.format(
 				locale, "the-x-is-required", fieldLabel, false);
 		}
+
+	}
+
+	public static class RuleValidation extends InfoFormValidationException {
+
+		public RuleValidation(String message) {
+			_message = message;
+		}
+
+		public void addCustomValidation(
+			String infoFieldUniqueId, String message) {
+
+			_customValidations.add(
+				new CustomValidation(infoFieldUniqueId, message));
+		}
+
+		public List<CustomValidation> getCustomValidations() {
+			return _customValidations;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			if (_message != null) {
+				return _message;
+			}
+
+			return super.getLocalizedMessage(locale);
+		}
+
+		private final List<CustomValidation> _customValidations =
+			new ArrayList<>();
+		private final String _message;
 
 	}
 

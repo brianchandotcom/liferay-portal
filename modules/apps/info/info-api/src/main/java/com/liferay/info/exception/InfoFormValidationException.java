@@ -35,7 +35,9 @@ public class InfoFormValidationException extends InfoFormException {
 
 	public static class CustomValidation extends InfoFormValidationException {
 
-		public CustomValidation(String message) {
+		public CustomValidation(String infoFieldUniqueId, String message) {
+			super(infoFieldUniqueId);
+
 			_message = message;
 		}
 

@@ -5,16 +5,13 @@
  */
 
 import { ClayPaginationBarWithBasicItems } from '@clayui/pagination-bar';
+import { generateNewTicket } from '../services/tickets';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
+import { useRecentTickets } from '../hooks/useRecentTickets';
+import { useTickets } from '../hooks/useTickets';
 
-import {
-  generateNewTicket,
-  useRecentTickets,
-  useTickets,
-} from '../services/tickets';
-
-import './styles/TicketApp.css';
+import '../styles/TicketApp.css';
 import { RecentActivity } from '../components/RecentActivity';
 import { TicketGrid } from '../components/TicketGrid';
 import { Liferay } from '../services/liferay';

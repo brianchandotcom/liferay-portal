@@ -194,7 +194,7 @@ public class WorkflowDefinitionContentUtilTest {
 
 		String content = rootElement.getTextContent();
 
-		Assert.assertTrue(content.contains("simple tag"));
+		Assert.assertTrue(content.contains("Simple Tag"));
 	}
 
 	@Test

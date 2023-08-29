@@ -234,17 +234,16 @@ public class EmailNotificationType extends BaseNotificationType {
 									getNotificationRecipientId(),
 								"to");
 
-					String to = _formatTo(
-						notificationRecipientSetting.getValue(user.getLocale()),
-						notificationContext);
+					String to = notificationRecipientSetting.getValue(
+						user.getLocale());
 
-					if (Validator.isNotNull(to)) {
-						return to;
+					if (Validator.isNull(to)) {
+						to = notificationRecipientSetting.getValue(
+							siteDefaultLocale);
 					}
 
-					return formatLocalizedContent(
-						notificationRecipientSetting.getValue(
-							siteDefaultLocale),
+					return _formatTo(
+						formatLocalizedContent(to, notificationContext),
 						notificationContext);
 				}
 			).build();

@@ -167,14 +167,7 @@ definition {
 	}
 
 	macro enableAllowUnapprovedChanges {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Settings");
+		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_ALLOW_UNAPPROVED_CHANGES");
 
@@ -222,14 +215,7 @@ definition {
 	}
 
 	macro enableSandboxOnly {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Settings");
+		PublicationsNavigator.openPublicationsSettings();
 
 		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
 

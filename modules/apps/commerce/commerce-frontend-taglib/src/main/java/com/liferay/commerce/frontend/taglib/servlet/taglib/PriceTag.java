@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -80,14 +81,12 @@ public class PriceTag extends IncludeTag {
 				}
 			}
 
-			if (_quantity <= 0) {
+			if (BigDecimalUtil.lte(_quantity, BigDecimal.ZERO)) {
 				ProductSettingsModel productSettingsModel =
 					_productHelper.getProductSettingsModel(
 						_cpCatalogEntry.getCPDefinitionId());
 
-				BigDecimal minQuantity = productSettingsModel.getMinQuantity();
-
-				_quantity = minQuantity.intValue();
+				_quantity = productSettingsModel.getMinQuantity();
 			}
 
 			_displayDiscountLevels = _isDisplayDiscountLevels();
@@ -111,8 +110,12 @@ public class PriceTag extends IncludeTag {
 		return _namespace;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	public boolean isCompact() {
@@ -152,12 +155,16 @@ public class PriceTag extends IncludeTag {
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		_quantity = quantity;
 	}
 
 	public void setShowDefaultSkuPrice(boolean showDefaultSkuPrice) {
 		_showDefaultSkuPrice = showDefaultSkuPrice;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	@Override
@@ -174,8 +181,9 @@ public class PriceTag extends IncludeTag {
 		_netPrice = true;
 		_priceModel = null;
 		_productHelper = null;
-		_quantity = 0;
+		_quantity = BigDecimal.ZERO;
 		_showDefaultSkuPrice = false;
+		_unitOfMeasureKey = StringPool.BLANK;
 	}
 
 	@Override
@@ -220,13 +228,11 @@ public class PriceTag extends IncludeTag {
 					themeDisplay.getLocale());
 			}
 
-			String unitOfMeasureKey = StringPool.BLANK;
-
 			if (cpInstanceUnitOfMeasures.size() == 1) {
 				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 					cpInstanceUnitOfMeasures.get(0);
 
-				unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
+				_unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
 			}
 
 			JSONArray jsonArray = CPJSONUtil.toJSONArray(
@@ -235,9 +241,8 @@ public class PriceTag extends IncludeTag {
 						cpInstanceId));
 
 			return _productHelper.getPriceModel(
-				cpInstanceId, jsonArray.toString(),
-				BigDecimal.valueOf(_quantity), unitOfMeasureKey,
-				commerceContext, themeDisplay.getLocale());
+				cpInstanceId, jsonArray.toString(), _quantity,
+				_unitOfMeasureKey, commerceContext, themeDisplay.getLocale());
 		}
 
 		return _productHelper.getMinPriceModel(
@@ -286,7 +291,8 @@ public class PriceTag extends IncludeTag {
 	private boolean _netPrice = true;
 	private PriceModel _priceModel;
 	private ProductHelper _productHelper;
-	private int _quantity;
+	private BigDecimal _quantity = BigDecimal.ZERO;
 	private boolean _showDefaultSkuPrice;
+	private String _unitOfMeasureKey = StringPool.BLANK;
 
 }

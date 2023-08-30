@@ -34,7 +34,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -192,10 +191,8 @@ public class AssetListEntryUsagesManager {
 	private String _generateUniqueLayoutClassedModelUsageKey(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		return StringBundler.concat(
-			assetListEntryUsage.getClassNameId(), StringPool.DASH,
-			assetListEntryUsage.getContainerKey(), StringPool.DASH,
-			assetListEntryUsage.getKey());
+		return assetListEntryUsage.getClassNameId() + StringPool.DASH +
+			assetListEntryUsage.getKey();
 	}
 
 	private String _getAssetEntryListSubtypeLabel(

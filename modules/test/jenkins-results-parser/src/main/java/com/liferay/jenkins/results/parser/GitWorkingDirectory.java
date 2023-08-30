@@ -448,13 +448,6 @@ public class GitWorkingDirectory {
 					responseJSONObject = JenkinsResultsParserUtil.toJSONObject(
 						url, requestJSONObject.toString());
 				}
-				catch (GitHubSecondaryRateLimitIOException
-							gitHubSecondaryRateLimitIOException) {
-
-					throw new GitHubSecondaryRateLimitRuntimeException(
-						"Unable to create pull request",
-						gitHubSecondaryRateLimitIOException);
-				}
 				catch (IOException ioException) {
 					throw new RuntimeException(
 						"Unable to create pull request", ioException);

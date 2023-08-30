@@ -33,6 +33,10 @@ public class CompanyThreadLocal {
 	public static User fetchGuestUser() {
 		Long companyId = _companyId.get();
 
+		if (companyId == CompanyConstants.SYSTEM) {
+			return null;
+		}
+
 		User guestUser = null;
 
 		try {

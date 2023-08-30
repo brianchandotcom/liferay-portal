@@ -65,18 +65,6 @@ public class MonitoringMessageListener extends BaseMessageListener {
 		}
 	}
 
-	public void setLevels(Map<String, String> levels) {
-		for (Map.Entry<String, String> entry : levels.entrySet()) {
-			String namespace = entry.getKey();
-
-			String levelName = entry.getValue();
-
-			Level level = Level.valueOf(levelName);
-
-			_levels.put(namespace, level);
-		}
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(

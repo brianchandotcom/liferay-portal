@@ -1,0 +1,13 @@
+{ 
+	"$schema": "https://raw.githubusercontent.com/liferay/liferay-js-toolkit/master/resources/schemas/configuration.schema.json",
+	"system": {
+		"category": "my-react-app", 
+		"name": "my-react-app",
+		"fields": { 
+		} 
+	},
+	"portletInstance": {
+		"fields": { 
+		} 
+	}
+}

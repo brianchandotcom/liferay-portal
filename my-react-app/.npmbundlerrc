@@ -1,0 +1,12 @@
+{
+	"create-jar": {
+		"output-dir": "dist",
+		"features": {
+			"js-extender": true,
+			"web-context": "/my-react-app",
+			"localization": "features/localization/Language",
+			"configuration": "features/configuration.json"
+		}
+	},
+	"dump-report": true
+}

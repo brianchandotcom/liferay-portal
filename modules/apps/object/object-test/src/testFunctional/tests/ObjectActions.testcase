@@ -912,6 +912,7 @@ definition {
 				actionLabel = "Custom Action",
 				active = "true",
 				fieldName = "Order Status",
+				inputExpression = "orderStatus == 1",
 				inputMethod = "true",
 				inputValue = 20,
 				thenAction = "Update an Object Entry",
@@ -949,14 +950,6 @@ definition {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Orders");
-
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
-
-			Click(
-				key_text = "Accept Order",
-				locator1 = "Link#ANY");
-
-			CommerceOrders.openOrdersAdmin();
 
 			AssertElementPresent(
 				key_value = "On Hold",

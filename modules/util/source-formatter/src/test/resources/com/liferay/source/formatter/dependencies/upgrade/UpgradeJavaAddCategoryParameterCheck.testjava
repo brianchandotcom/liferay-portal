@@ -1,0 +1,26 @@
+package com.liferay.source.formatter.dependencies.upgrade;
+
+public class UpgradeJavaAddCategoryParameterCheck {
+
+	public void method(
+		long userId, long groupId, long parentCategoryId,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		long vocabularyId, String[] categoryProperties,
+		ServiceContext serviceContext) {
+
+		_assetCategoryLocalService.addCategory(
+			userId, groupId, parentCategoryId, titleMap, descriptionMap,
+			vocabularyId, categoryProperties, serviceContext);
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			userId, groupId, parentCategoryId, titleMap, descriptionMap,
+			vocabularyId, categoryProperties, serviceContext);
+
+		AssetCategoryLocalServiceUtil.addCategory(
+			1234, 1234, parentCategoryId, titleMap, descriptionMap,
+			vocabularyId, categoryProperties, serviceContext);
+	}
+
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+}

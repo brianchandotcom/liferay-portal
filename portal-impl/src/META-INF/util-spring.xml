@@ -129,10 +129,6 @@
 	<bean class="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil">
 		<property name="userGroupPermission" ref="com.liferay.portal.kernel.service.permission.UserGroupPermission" />
 	</bean>
-	<bean class="com.liferay.portal.service.permission.UserGroupRolePermissionImpl" id="com.liferay.portal.kernel.service.permission.UserGroupRolePermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil" id="com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil">
-		<property name="userGroupRolePermission" ref="com.liferay.portal.kernel.service.permission.UserGroupRolePermission" />
-	</bean>
 	<bean class="com.liferay.portal.service.permission.UserPermissionImpl" id="com.liferay.portal.kernel.service.permission.UserPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.UserPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserPermissionUtil">
 		<property name="userPermission" ref="com.liferay.portal.kernel.service.permission.UserPermission" />

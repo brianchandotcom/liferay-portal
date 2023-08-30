@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -85,8 +86,7 @@ public class OnDemandAdminTicketGeneratorImpl
 
 			return _ticketLocalService.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),
-				OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
-				justification,
+				TicketConstants.TYPE_ON_DEMAND_ADMIN_LOGIN, justification,
 				new Date(
 					System.currentTimeMillis() +
 						TimeUnit.MINUTES.toMillis(expirationTime)),

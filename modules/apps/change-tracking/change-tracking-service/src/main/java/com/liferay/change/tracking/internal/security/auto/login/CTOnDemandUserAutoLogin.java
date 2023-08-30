@@ -5,10 +5,10 @@
 
 package com.liferay.change.tracking.internal.security.auto.login;
 
-import com.liferay.change.tracking.constants.CTOnDemandUserConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
@@ -69,7 +69,7 @@ public class CTOnDemandUserAutoLogin extends BaseAutoLogin {
 
 			if ((ticket == null) ||
 				(ticket.getType() !=
-					CTOnDemandUserConstants.TICKET_TYPE_ON_DEMAND_USER_LOGIN)) {
+					TicketConstants.TYPE_ON_DEMAND_USER_LOGIN)) {
 
 				return null;
 			}

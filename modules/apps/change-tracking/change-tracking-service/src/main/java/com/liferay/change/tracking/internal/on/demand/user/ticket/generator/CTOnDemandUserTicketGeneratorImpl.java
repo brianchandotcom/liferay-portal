@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -62,8 +63,7 @@ public class CTOnDemandUserTicketGeneratorImpl
 
 		List<Ticket> tickets = _ticketLocalService.getTickets(
 			ctCollection.getCompanyId(), CTCollection.class.getName(),
-			ctCollectionId,
-			CTOnDemandUserConstants.TICKET_TYPE_ON_DEMAND_USER_LOGIN);
+			ctCollectionId, TicketConstants.TYPE_ON_DEMAND_USER_LOGIN);
 
 		if (!tickets.isEmpty()) {
 			return tickets.get(0);
@@ -87,7 +87,7 @@ public class CTOnDemandUserTicketGeneratorImpl
 
 		return _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), CTCollection.class.getName(), ctCollectionId,
-			CTOnDemandUserConstants.TICKET_TYPE_ON_DEMAND_USER_LOGIN,
+			TicketConstants.TYPE_ON_DEMAND_USER_LOGIN,
 			String.valueOf(user.getUserId()), null, null);
 	}
 

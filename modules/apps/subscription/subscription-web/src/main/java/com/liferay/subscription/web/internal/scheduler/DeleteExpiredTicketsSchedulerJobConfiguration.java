@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration;
-import com.liferay.subscription.web.internal.constants.SubscriptionConstants;
 
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class DeleteExpiredTicketsSchedulerJobConfiguration
 				dynamicQuery -> dynamicQuery.add(
 					RestrictionsFactoryUtil.and(
 						RestrictionsFactoryUtil.eq(
-							"type", SubscriptionConstants.TICKET_TYPE),
+							"type", TicketConstants.TYPE_SUBSCRIPTION),
 						RestrictionsFactoryUtil.eq(
 							"classNameId", subscriptionClassNameId))));
 			actionableDynamicQuery.setPerformActionMethod(

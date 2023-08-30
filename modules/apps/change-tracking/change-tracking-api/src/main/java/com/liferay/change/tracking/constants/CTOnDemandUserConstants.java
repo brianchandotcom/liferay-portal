@@ -17,6 +17,4 @@ public class CTOnDemandUserConstants {
 	public static final String SCREEN_NAME_PREFIX_CT_ON_DEMAND_USER =
 		"ct_on_demand_user";
 
-	public static final int TICKET_TYPE_ON_DEMAND_USER_LOGIN = 5;
-
 }

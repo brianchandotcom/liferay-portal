@@ -54,11 +54,7 @@ import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.io.Serializable;
-
 import java.time.LocalDateTime;
-
-import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -344,7 +340,10 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		).assetTagNames(
 			blogPosting.getKeywords()
 		).expandoBridgeAttributes(
-			_getExpandoBridgeAttributes(blogPosting)
+			CustomFieldsUtil.toMap(
+				BlogsEntry.class.getName(), contextCompany.getCompanyId(),
+				blogPosting.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
 		).build();
 	}
 
@@ -354,15 +353,6 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		}
 
 		return image.getCaption();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		BlogPosting blogPosting) {
-
-		return CustomFieldsUtil.toMap(
-			BlogsEntry.class.getName(), contextCompany.getCompanyId(),
-			blogPosting.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private ImageSelector _getImageSelector(Image image) {

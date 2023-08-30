@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,8 +49,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.io.Serializable;
 
 import java.util.Map;
 
@@ -374,12 +373,8 @@ public class StructuredContentFolderResourceImpl
 				journalFolder.getParentFolderId(),
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
-				ServiceContextBuilder.create(
-					journalFolder.getGroupId(), contextHttpServletRequest,
-					structuredContentFolder.getViewableByAsString()
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(structuredContentFolder)
-				).build()));
+				_createServiceContext(
+					journalFolder.getGroupId(), structuredContentFolder)));
 	}
 
 	@Override
@@ -437,21 +432,21 @@ public class StructuredContentFolderResourceImpl
 				externalReferenceCode, siteId, parentFolderId,
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(),
-				ServiceContextBuilder.create(
-					siteId, contextHttpServletRequest,
-					structuredContentFolder.getViewableByAsString()
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(structuredContentFolder)
-				).build()));
+				_createServiceContext(siteId, structuredContentFolder)));
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		StructuredContentFolder structuredContentFolder) {
+	private ServiceContext _createServiceContext(
+		long groupId, StructuredContentFolder structuredContentFolder) {
 
-		return CustomFieldsUtil.toMap(
-			JournalFolder.class.getName(), contextCompany.getCompanyId(),
-			structuredContentFolder.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			structuredContentFolder.getViewableByAsString()
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				JournalFolder.class.getName(), contextCompany.getCompanyId(),
+				structuredContentFolder.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Page<StructuredContentFolder> _getStructuredContentFoldersPage(
@@ -554,12 +549,7 @@ public class StructuredContentFolderResourceImpl
 				siteId, folderId, parentFolderId,
 				structuredContentFolder.getName(),
 				structuredContentFolder.getDescription(), false,
-				ServiceContextBuilder.create(
-					siteId, contextHttpServletRequest,
-					structuredContentFolder.getViewableByAsString()
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(structuredContentFolder)
-				).build()));
+				_createServiceContext(siteId, structuredContentFolder)));
 	}
 
 	@Reference

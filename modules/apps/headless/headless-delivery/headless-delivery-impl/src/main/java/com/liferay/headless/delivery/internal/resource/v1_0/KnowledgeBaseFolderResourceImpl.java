@@ -19,15 +19,12 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.io.Serializable;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -243,25 +240,27 @@ public class KnowledgeBaseFolderResourceImpl
 				externalReferenceCode, groupId, _getClassNameId(),
 				parentResourcePrimKey, knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
-				ServiceContextBuilder.create(
-					groupId, contextHttpServletRequest,
-					knowledgeBaseFolder.getViewableByAsString()
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder)
-				).build()));
+				_createServiceContext(
+					groupId, knowledgeBaseFolder,
+					knowledgeBaseFolder.getViewableByAsString())));
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, KnowledgeBaseFolder knowledgeBaseFolder,
+		String viewableBy) {
+
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				KBFolder.class.getName(), contextCompany.getCompanyId(),
+				knowledgeBaseFolder.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private long _getClassNameId() {
 		return _portal.getClassNameId(KBFolder.class.getName());
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		KnowledgeBaseFolder knowledgeBaseFolder) {
-
-		return CustomFieldsUtil.toMap(
-			KBFolder.class.getName(), contextCompany.getCompanyId(),
-			knowledgeBaseFolder.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
@@ -324,11 +323,7 @@ public class KnowledgeBaseFolderResourceImpl
 				_getClassNameId(), kbFolder.getParentKBFolderId(),
 				kbFolder.getKbFolderId(), knowledgeBaseFolder.getName(),
 				knowledgeBaseFolder.getDescription(),
-				ServiceContextBuilder.create(
-					0, contextHttpServletRequest, null
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder)
-				).build()));
+				_createServiceContext(0, knowledgeBaseFolder, null)));
 	}
 
 	@Reference

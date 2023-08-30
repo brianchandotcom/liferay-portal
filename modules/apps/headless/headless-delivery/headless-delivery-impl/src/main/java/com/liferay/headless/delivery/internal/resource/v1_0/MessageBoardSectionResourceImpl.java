@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -48,8 +49,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -228,11 +227,8 @@ public class MessageBoardSectionResourceImpl
 				messageBoardSection.getDescription(),
 				mbCategory.getDisplayStyle(), "", "", "", 0, false, "", "", 0,
 				"", false, "", 0, false, "", "", false, false, false,
-				ServiceContextBuilder.create(
-					mbCategory.getGroupId(), contextHttpServletRequest, null
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(messageBoardSection)
-				).build()));
+				_createServiceContext(
+					mbCategory.getGroupId(), messageBoardSection, null)));
 	}
 
 	@Override
@@ -284,21 +280,23 @@ public class MessageBoardSectionResourceImpl
 				contextUser.getUserId(), parentMessageBoardSectionId,
 				messageBoardSection.getTitle(),
 				messageBoardSection.getDescription(),
-				ServiceContextBuilder.create(
-					siteId, contextHttpServletRequest,
-					messageBoardSection.getViewableByAsString()
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(messageBoardSection)
-				).build()));
+				_createServiceContext(
+					siteId, messageBoardSection,
+					messageBoardSection.getViewableByAsString())));
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		MessageBoardSection messageBoardSection) {
+	private ServiceContext _createServiceContext(
+		long groupId, MessageBoardSection messageBoardSection,
+		String viewableBy) {
 
-		return CustomFieldsUtil.toMap(
-			MBCategory.class.getName(), contextCompany.getCompanyId(),
-			messageBoardSection.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				MBCategory.class.getName(), contextCompany.getCompanyId(),
+				messageBoardSection.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Page<MessageBoardSection> _getMessageBoardSectionsPage(

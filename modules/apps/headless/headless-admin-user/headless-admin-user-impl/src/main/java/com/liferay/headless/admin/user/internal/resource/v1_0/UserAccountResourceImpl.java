@@ -38,6 +38,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Address;
@@ -501,14 +502,20 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				twitter, user.getJobTitle(), user.getGroupIds(),
 				user.getOrganizationIds(), user.getRoleIds(), null,
 				user.getUserGroupIds(),
-				ServiceContextBuilder.create(
-					contextCompany.getGroupId(), contextHttpServletRequest, null
-				).expandoBridgeAttributes(
-					CustomFieldsUtil.toMap(
-						User.class.getName(), contextCompany.getCompanyId(),
-						userAccount.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale())
-				).build()));
+				_createServiceContext(userAccount)));
+	}
+
+	private ServiceContext _createServiceContext(UserAccount userAccount)
+		throws PortalException {
+
+		return ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				User.class.getName(), contextCompany.getCompanyId(),
+				userAccount.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	@Override
@@ -778,14 +785,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				_getWebsites(userAccount),
 				_announcementsDeliveryLocalService.getUserDeliveries(
 					userAccountId),
-				ServiceContextBuilder.create(
-					contextCompany.getGroupId(), contextHttpServletRequest, null
-				).expandoBridgeAttributes(
-					CustomFieldsUtil.toMap(
-						User.class.getName(), contextCompany.getCompanyId(),
-						userAccount.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale())
-				).build()));
+				_createServiceContext(userAccount)));
 	}
 
 	@Override
@@ -819,14 +819,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			_getServiceBuilderEmailAddresses(userAccount),
 			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
 			false,
-			ServiceContextBuilder.create(
-				contextCompany.getGroupId(), contextHttpServletRequest, null
-			).expandoBridgeAttributes(
-				CustomFieldsUtil.toMap(
-					User.class.getName(), contextCompany.getCompanyId(),
-					userAccount.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale())
-			).build());
+			_createServiceContext(userAccount));
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();

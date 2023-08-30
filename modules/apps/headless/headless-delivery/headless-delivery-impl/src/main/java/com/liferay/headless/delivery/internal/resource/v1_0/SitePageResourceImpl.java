@@ -113,8 +113,6 @@ import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 
-import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -484,7 +482,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		).assetTagNames(
 			assetTagNames
 		).expandoBridgeAttributes(
-			_getExpandoBridgeAttributes(sitePage)
+			CustomFieldsUtil.toMap(
+				Layout.class.getName(), contextCompany.getCompanyId(),
+				sitePage.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
 		).build();
 	}
 
@@ -593,15 +594,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"custom-meta-tags");
 
 		return ddmStructure.getPrimaryKey();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		SitePage sitePage) {
-
-		return CustomFieldsUtil.toMap(
-			Layout.class.getName(), contextCompany.getCompanyId(),
-			sitePage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Map<String, Map<String, String>> _getExperienceActions(

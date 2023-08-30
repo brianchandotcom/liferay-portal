@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -395,15 +396,22 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			_dlAppService.addFolder(
 				externalReferenceCode, groupId, parentFolderId,
 				documentFolder.getName(), documentFolder.getDescription(),
-				ServiceContextBuilder.create(
-					groupId, contextHttpServletRequest,
-					documentFolder.getViewableByAsString()
-				).expandoBridgeAttributes(
-					CustomFieldsUtil.toMap(
-						DLFolder.class.getName(), contextCompany.getCompanyId(),
-						documentFolder.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale())
-				).build()));
+				_createServiceContext(
+					groupId, documentFolder,
+					documentFolder.getViewableByAsString())));
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, DocumentFolder documentFolder, String viewableBy) {
+
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				DLFolder.class.getName(), contextCompany.getCompanyId(),
+				documentFolder.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
@@ -578,14 +586,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 			_dlAppService.updateFolder(
 				folder.getFolderId(), documentFolder.getName(),
 				documentFolder.getDescription(),
-				ServiceContextBuilder.create(
-					0, contextHttpServletRequest, null
-				).expandoBridgeAttributes(
-					CustomFieldsUtil.toMap(
-						DLFolder.class.getName(), contextCompany.getCompanyId(),
-						documentFolder.getCustomFields(),
-						contextAcceptLanguage.getPreferredLocale())
-				).build()));
+				_createServiceContext(0, documentFolder, null)));
 	}
 
 	@Reference

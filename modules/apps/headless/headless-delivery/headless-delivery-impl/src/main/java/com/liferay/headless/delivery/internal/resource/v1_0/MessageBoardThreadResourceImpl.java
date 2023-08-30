@@ -77,8 +77,6 @@ import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -554,7 +552,10 @@ public class MessageBoardThreadResourceImpl
 		).assetTagNames(
 			GetterUtil.getStringValues(messageBoardThread.getKeywords())
 		).expandoBridgeAttributes(
-			_getExpandoBridgeAttributes(messageBoardThread)
+			CustomFieldsUtil.toMap(
+				MBMessage.class.getName(), contextCompany.getCompanyId(),
+				messageBoardThread.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
 		).build();
 
 		String link = contextHttpServletRequest.getHeader("Link");
@@ -619,15 +620,6 @@ public class MessageBoardThreadResourceImpl
 		dynamicQuery.add(RestrictionsFactoryUtil.sqlRestriction(sql));
 
 		return dynamicQuery;
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		MessageBoardThread messageBoardThread) {
-
-		return CustomFieldsUtil.toMap(
-			MBMessage.class.getName(), contextCompany.getCompanyId(),
-			messageBoardThread.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(

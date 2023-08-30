@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -59,8 +60,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
@@ -504,25 +503,29 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null, new Date(),
 				null, null, null,
-				ServiceContextBuilder.create(
-					groupId, contextHttpServletRequest,
-					knowledgeBaseArticle.getViewableByAsString()
-				).assetCategoryIds(
-					knowledgeBaseArticle.getTaxonomyCategoryIds()
-				).assetTagNames(
-					knowledgeBaseArticle.getKeywords()
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(knowledgeBaseArticle)
-				).build()));
+				_createServiceContext(
+					knowledgeBaseArticle.getTaxonomyCategoryIds(),
+					knowledgeBaseArticle.getKeywords(), groupId,
+					knowledgeBaseArticle)));
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
+	private ServiceContext _createServiceContext(
+		Long[] assetCategoryIds, String[] assetTagNames, long groupId,
 		KnowledgeBaseArticle knowledgeBaseArticle) {
 
-		return CustomFieldsUtil.toMap(
-			KBArticle.class.getName(), contextCompany.getCompanyId(),
-			knowledgeBaseArticle.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			knowledgeBaseArticle.getViewableByAsString()
+		).assetCategoryIds(
+			assetCategoryIds
+		).assetTagNames(
+			assetTagNames
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				KBArticle.class.getName(), contextCompany.getCompanyId(),
+				knowledgeBaseArticle.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
@@ -675,17 +678,11 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null,
 				kbArticle.getDisplayDate(), null, null, null, null,
-				ServiceContextBuilder.create(
-					kbArticle.getGroupId(), contextHttpServletRequest,
-					knowledgeBaseArticle.getViewableByAsString()
-				).assetCategoryIds(
-					taxonomyCategoryIds
-				).assetTagNames(
+				_createServiceContext(
+					taxonomyCategoryIds,
 					GetterUtil.getStringValues(
-						knowledgeBaseArticle.getKeywords())
-				).expandoBridgeAttributes(
-					_getExpandoBridgeAttributes(knowledgeBaseArticle)
-				).build()));
+						knowledgeBaseArticle.getKeywords()),
+					kbArticle.getGroupId(), knowledgeBaseArticle)));
 	}
 
 	@Reference

@@ -71,8 +71,6 @@ import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.io.Serializable;
-
 import java.time.LocalDateTime;
 
 import java.util.Collections;
@@ -290,7 +288,10 @@ public class StructuredContentResourceImpl
 		).assetTagNames(
 			structuredContent.getKeywords()
 		).expandoBridgeAttributes(
-			_getExpandoBridgeAttributes(structuredContent)
+			CustomFieldsUtil.toMap(
+				JournalArticle.class.getName(), contextCompany.getCompanyId(),
+				structuredContent.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
 		).build();
 
 		Double priority = structuredContent.getPriority();
@@ -333,15 +334,6 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		StructuredContent structuredContent) {
-
-		return CustomFieldsUtil.toMap(
-			JournalArticle.class.getName(), contextCompany.getCompanyId(),
-			structuredContent.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private List<DDMFormField> _getRootDDMFormFields(

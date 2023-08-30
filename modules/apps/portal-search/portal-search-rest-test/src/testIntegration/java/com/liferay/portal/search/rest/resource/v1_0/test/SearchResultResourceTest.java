@@ -49,7 +49,6 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import java.time.LocalDate;
@@ -59,6 +58,7 @@ import java.time.ZoneOffset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,7 +71,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -96,10 +95,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			testGroup, _user.getUserId());
 	}
 
-	// LPS-186696
-
 	@FeatureFlags("LPS-179669")
-	@Ignore
 	@Override
 	@Test
 	public void testPostSearchPage() throws Exception {
@@ -190,8 +186,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private void _assertFacetConfiguration(
-			Map<String, Object> facetAttributes, String facetName,
-			Object facetValues, Object... expectedValues)
+			boolean anyMatch, Map<String, Object> facetAttributes,
+			String facetName, Object facetValues, Object... expectedValues)
 		throws Exception {
 
 		Arrays.sort(expectedValues);
@@ -206,14 +202,14 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				}
 			});
 
-		Map<String, Object> facetsMap = (Map<String, Object>)page.getFacets();
+		Map<String, Object> facetsMap =
+			(Map<String, Object>)page.getSearchFacets();
 
 		Assert.assertTrue(facetsMap.containsKey(facetName));
 
 		List<String> termValuesList = new ArrayList<>();
 
-		JSONArray termJSONArray = _jsonFactory.createJSONArray(
-			(Object[])facetsMap.get(facetName));
+		JSONArray termJSONArray = (JSONArray)facetsMap.get(facetName);
 
 		for (int i = 0; i < termJSONArray.length(); i++) {
 			JSONObject termJSONObject = _jsonFactory.createJSONObject(
@@ -230,39 +226,50 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		Arrays.sort(termValues);
 
-		Assert.assertTrue(Objects.deepEquals(expectedValues, termValues));
+		if (anyMatch) {
+			Assert.assertFalse(
+				Collections.disjoint(
+					Arrays.asList((String[])expectedValues),
+					Arrays.asList(termValues)));
+		}
+		else {
+			Assert.assertTrue(Objects.deepEquals(expectedValues, termValues));
+		}
 	}
 
 	private void _assertFacetConfiguration(
-			String facetName, Object facetValues, String... expectedValues)
+			boolean anyMatch, String facetName, Object facetValues,
+			String... expectedValues)
 		throws Exception {
 
-		_assertFacetConfiguration(null, facetName, facetValues, expectedValues);
+		_assertFacetConfiguration(
+			anyMatch, null, facetName, facetValues, expectedValues);
 	}
 
-	private String _getEndpointWithParameters(
-		String entryClassNames, String filter, String nestedFields,
-		String keywords) throws UnsupportedEncodingException {
+	private String _getEndpointURL(
+			String entryClassNames, String filter, String keywords,
+			String nestedFields)
+		throws Exception {
 
 		List<String> parameters = new ArrayList<>();
 
-		if (Validator.isNotNull(entryClassNames)) {
+		if (!Validator.isBlank(entryClassNames)) {
 			parameters.add(
 				"entryClassNames=" +
 					URLEncoder.encode(entryClassNames, StringPool.UTF8));
 		}
 
-		if (Validator.isNotNull(filter)) {
+		if (!Validator.isBlank(filter)) {
 			parameters.add(
 				"filter=" + URLEncoder.encode(filter, StringPool.UTF8));
 		}
 
-		if (Validator.isNotNull(keywords)) {
+		if (!Validator.isBlank(keywords)) {
 			parameters.add(
 				"search=" + URLEncoder.encode(keywords, StringPool.UTF8));
 		}
 
-		if (Validator.isNotNull(nestedFields)) {
+		if (!Validator.isBlank(nestedFields)) {
 			parameters.add(
 				"nestedFields=" +
 					URLEncoder.encode(nestedFields, StringPool.UTF8));
@@ -316,8 +323,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			searchRequestBody.toString(),
-			_getEndpointWithParameters(
-				entryClassNames, filter, nestedFields, keywords),
+			_getEndpointURL(entryClassNames, filter, keywords, nestedFields),
 			Http.Method.POST);
 
 		return _toSearchPage(jsonObject);
@@ -353,7 +359,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			"category", assetCategory.getCategoryId(),
+			false, "category", assetCategory.getCategoryId(),
 			String.valueOf(assetCategory.getCategoryId()));
 	}
 
@@ -362,6 +368,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
+			false,
 			HashMapBuilder.<String, Object>put(
 				"mode", "tree"
 			).put(
@@ -376,6 +383,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
+			false,
 			HashMapBuilder.<String, Object>put(
 				"field", Field.COMPANY_ID
 			).build(),
@@ -405,6 +413,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			));
 
 		_assertFacetConfiguration(
+			false,
 			HashMapBuilder.<String, Object>put(
 				"field", "modified"
 			).put(
@@ -420,7 +429,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			"folder", journalArticle.getFolderId(),
+			false, "folder", journalArticle.getFolderId(),
 			String.valueOf(journalArticle.getFolderId()));
 	}
 
@@ -443,6 +452,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		_assertFacetConfiguration(
+			false,
 			HashMapBuilder.<String, Object>put(
 				"field",
 				"ddmFieldArray.ddmFieldValueKeyword_" +
@@ -464,7 +474,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			"site", testGroup.getGroupId(),
+			true, "site", testGroup.getGroupId(),
 			String.valueOf(testGroup.getGroupId()));
 	}
 
@@ -472,7 +482,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			"tag", assetTag.getName(), assetTag.getName());
+			true, "tag", assetTag.getName(), assetTag.getName());
 	}
 
 	private void _testPostSearchPageWithTypeFacetConfiguration()
@@ -483,7 +493,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		Class<User> userClass = User.class;
 
 		_assertFacetConfiguration(
-			"type", StringPool.BLANK, journalArticleClass.getName(),
+			false, "type", StringPool.BLANK, journalArticleClass.getName(),
 			journalFolderClass.getName(), userClass.getName());
 	}
 
@@ -492,7 +502,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		String userFullName = StringUtil.toLowerCase(_user.getFullName());
 
-		_assertFacetConfiguration("user", userFullName, userFullName);
+		_assertFacetConfiguration(
+			true, "user", userFullName, String.valueOf(_user.getUserId()));
 	}
 
 	private void _testPostSearchPageZeroResults() throws Exception {
@@ -508,16 +519,14 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
-		int length = itemsJSONArray.length();
-
 		List<SearchResult> searchResults = new ArrayList<>();
 
-		for (int index = 0; index < length; index++) {
-			searchResults.add(
-				SearchResult.toDTO(
-					itemsJSONArray.get(
-						index
-					).toString()));
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			Object item = itemsJSONArray.get(i);
+
+			SearchResult searchResult = SearchResult.toDTO(item.toString());
+
+			searchResults.add(searchResult);
 		}
 
 		long totalCount = jsonObject.getLong("totalCount");

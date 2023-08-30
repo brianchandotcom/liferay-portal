@@ -10,9 +10,8 @@ package com.liferay.portal.search.spi.reindexer;
  */
 public interface IndexReindexer {
 
-	public void reindex(long[] companyIds) throws Exception;
+	public void reindex(long companyId) throws Exception;
 
-	public void reindex(long[] companyIds, String executionMode)
-		throws Exception;
+	public void reindex(long companyId, String executionMode) throws Exception;
 
 }

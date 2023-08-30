@@ -6,7 +6,7 @@
 package com.liferay.data.engine.rest.internal.security.permission.resource;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,7 +61,7 @@ public class DataDefinitionModelResourcePermission
 
 		checkPortletPermission(
 			permissionChecker,
-			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				ddmStructure.getClassNameId()),
 			ddmStructure.getGroupId(), actionId);
 	}
@@ -73,7 +73,7 @@ public class DataDefinitionModelResourcePermission
 
 		checkPortletPermission(
 			permissionChecker,
-			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				contentType),
 			groupId, actionId);
 	}
@@ -85,7 +85,7 @@ public class DataDefinitionModelResourcePermission
 		throws PortalException {
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				ddmStructure.getClassNameId());
 
 		if (dataDefinitionContentType == null) {
@@ -144,10 +144,6 @@ public class DataDefinitionModelResourcePermission
 			_portal.getClassName(ddmStructure.getClassNameId()),
 			getModelName());
 	}
-
-	@Reference
-	private DataDefinitionContentTypeRegistry
-		_dataDefinitionContentTypeRegistry;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

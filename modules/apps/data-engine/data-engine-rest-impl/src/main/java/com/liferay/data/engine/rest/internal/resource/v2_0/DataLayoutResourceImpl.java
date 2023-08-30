@@ -14,7 +14,7 @@ import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.MapToDDMFormValuesConverterUtil;
@@ -174,7 +174,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.getStructureLayout(
 				siteId,
-				_dataDefinitionContentTypeRegistry.getClassNameId(contentType),
+				DataDefinitionContentTypeRegistryUtil.getClassNameId(
+					contentType),
 				dataLayoutKey);
 
 		_dataDefinitionModelResourcePermission.check(
@@ -182,7 +183,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			ddmStructureLayout.getDDMStructureId(), ActionKeys.VIEW);
 
 		return _getDataLayout(
-			_dataDefinitionContentTypeRegistry.getClassNameId(contentType),
+			DataDefinitionContentTypeRegistryUtil.getClassNameId(contentType),
 			dataLayoutKey, siteId);
 	}
 
@@ -206,7 +207,6 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 				dataLayout,
 				DataDefinitionDDMFormUtil.toDDMForm(
 					DataDefinitionUtil.toDataDefinition(
-						_dataDefinitionContentTypeRegistry,
 						_ddmFormFieldTypeServicesRegistry, ddmStructure,
 						_ddmStructureLayoutLocalService,
 						_spiDDMFormRuleConverter),
@@ -304,7 +304,6 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 				dataLayout,
 				DataDefinitionDDMFormUtil.toDDMForm(
 					DataDefinitionUtil.toDataDefinition(
-						_dataDefinitionContentTypeRegistry,
 						_ddmFormFieldTypeServicesRegistry,
 						_ddmStructureLocalService.getStructure(
 							ddmStructureLayout.getDDMStructureId()),
@@ -435,7 +434,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 			dataDefinitionId);
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				ddmStructure.getClassNameId());
 
 		if (Validator.isNull(keywords)) {
@@ -706,10 +705,6 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	}
 
 	private static final EntityModel _entityModel = new DataLayoutEntityModel();
-
-	@Reference
-	private DataDefinitionContentTypeRegistry
-		_dataDefinitionContentTypeRegistry;
 
 	@Reference
 	private DataDefinitionModelResourcePermission

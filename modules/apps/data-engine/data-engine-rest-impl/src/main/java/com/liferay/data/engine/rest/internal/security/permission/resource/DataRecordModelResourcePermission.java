@@ -6,7 +6,7 @@
 package com.liferay.data.engine.rest.internal.security.permission.resource;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -75,7 +75,7 @@ public class DataRecordModelResourcePermission
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		DataDefinitionContentType dataDefinitionContentType =
-			_dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				ddmStructure.getClassNameId());
 
 		if (dataDefinitionContentType == null) {
@@ -120,10 +120,6 @@ public class DataRecordModelResourcePermission
 			_portal.getClassName(ddmStructure.getClassNameId()),
 			DDLRecord.class.getName());
 	}
-
-	@Reference
-	private DataDefinitionContentTypeRegistry
-		_dataDefinitionContentTypeRegistry;
 
 	@Reference
 	private DataRecordCollectionModelResourcePermission

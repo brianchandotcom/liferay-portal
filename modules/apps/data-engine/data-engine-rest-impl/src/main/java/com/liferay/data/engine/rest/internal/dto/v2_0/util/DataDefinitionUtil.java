@@ -9,7 +9,7 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
-import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistry;
+import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -54,7 +54,6 @@ import java.util.Set;
 public class DataDefinitionUtil {
 
 	public static DataDefinition toDataDefinition(
-			DataDefinitionContentTypeRegistry dataDefinitionContentTypeRegistry,
 			DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry,
 			DDMStructure ddmStructure,
 			DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
@@ -64,7 +63,7 @@ public class DataDefinitionUtil {
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		DataDefinitionContentType dataDefinitionContentType =
-			dataDefinitionContentTypeRegistry.getDataDefinitionContentType(
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				ddmStructure.getClassNameId());
 
 		return new DataDefinition() {

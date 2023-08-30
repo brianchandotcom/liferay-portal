@@ -213,9 +213,15 @@ public class PersistenceCallCheck extends BaseCheck {
 				StringUtil.replace(extendedClassName, '.', '/') + ".java";
 
 		try {
+			String extendedClassContent = FileUtil.read(
+				new File(extendedClassFileName));
+
+			if (extendedClassContent == null) {
+				return null;
+			}
+
 			return JavaClassParser.parseJavaClass(
-				extendedClassFileName,
-				FileUtil.read(new File(extendedClassFileName)));
+				extendedClassFileName, extendedClassContent);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

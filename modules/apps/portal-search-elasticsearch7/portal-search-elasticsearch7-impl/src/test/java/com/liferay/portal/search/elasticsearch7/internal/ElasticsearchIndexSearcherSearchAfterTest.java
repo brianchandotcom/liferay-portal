@@ -68,7 +68,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 
 		_setUpIndexSearcherAndWriter();
 
-		_setUpDeepPagination();
+		_setUpDeepPagination(60);
 		_setUpIndexSearchLimit();
 		_setUpSorts();
 
@@ -143,6 +143,17 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	}
 
 	@Test
+	public void testElasticsearchIndexSearcherKeepAliveTime() throws Exception {
+		_setUpDeepPagination(61);
+
+		_assertHits(_INDEX_MAX_RESULT_WINDOW, 0, _INDEX_MAX_RESULT_WINDOW);
+
+		_setUpDeepPagination(0);
+
+		_assertHits(_INDEX_MAX_RESULT_WINDOW, 0, _INDEX_MAX_RESULT_WINDOW);
+	}
+
+	@Test
 	public void testElasticsearchIndexSearcherLargerThanIndexMaxResultWindow()
 		throws Exception {
 
@@ -206,7 +217,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		};
 	}
 
-	private static void _setUpDeepPagination() {
+	private static void _setUpDeepPagination(int pointInTimeKeepAliveSeconds) {
 		DeepPaginationConfigurationWrapper deepPaginationConfigurationWrapper =
 			Mockito.mock(DeepPaginationConfigurationWrapper.class);
 
@@ -219,7 +230,7 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		);
 
 		Mockito.doReturn(
-			60
+			pointInTimeKeepAliveSeconds
 		).when(
 			deepPaginationConfigurationWrapper
 		).getPointInTimeKeepAliveSeconds();

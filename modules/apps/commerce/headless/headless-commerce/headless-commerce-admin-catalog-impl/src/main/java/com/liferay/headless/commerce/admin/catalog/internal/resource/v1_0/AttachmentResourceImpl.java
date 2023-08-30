@@ -366,7 +366,10 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			cpDefinition.getGroupId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(attachment);
+			CustomFieldsUtil.toMap(
+				CPAttachmentFileEntry.class.getName(),
+				contextCompany.getCompanyId(), attachment.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
@@ -396,7 +399,11 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			cpDefinition.getGroupId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(attachmentBase64);
+			CustomFieldsUtil.toMap(
+				CPAttachmentFileEntry.class.getName(),
+				contextCompany.getCompanyId(),
+				attachmentBase64.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
@@ -423,7 +430,10 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			cpDefinition.getGroupId());
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(attachmentUrl);
+			CustomFieldsUtil.toMap(
+				CPAttachmentFileEntry.class.getName(),
+				contextCompany.getCompanyId(), attachmentUrl.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
@@ -517,33 +527,6 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 		return Page.of(
 			_toAttachments(cpAttachmentFileEntries), pagination, totalItems);
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		Attachment attachment) {
-
-		return CustomFieldsUtil.toMap(
-			CPAttachmentFileEntry.class.getName(),
-			contextCompany.getCompanyId(), attachment.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		AttachmentBase64 attachmentBase64) {
-
-		return CustomFieldsUtil.toMap(
-			CPAttachmentFileEntry.class.getName(),
-			contextCompany.getCompanyId(), attachmentBase64.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		AttachmentUrl attachmentUrl) {
-
-		return CustomFieldsUtil.toMap(
-			CPAttachmentFileEntry.class.getName(),
-			contextCompany.getCompanyId(), attachmentUrl.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Attachment _toAttachment(Long cpAttachmentFileEntryId)

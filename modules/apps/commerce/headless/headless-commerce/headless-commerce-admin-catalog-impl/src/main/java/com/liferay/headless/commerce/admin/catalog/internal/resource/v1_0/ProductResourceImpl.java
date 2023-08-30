@@ -794,12 +794,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(Sku sku) {
-		return CustomFieldsUtil.toMap(
-			CPInstance.class.getName(), contextCompany.getCompanyId(),
-			sku.getCustomFields(), contextAcceptLanguage.getPreferredLocale());
-	}
-
 	private ProductShippingConfiguration _getProductShippingConfiguration(
 		Product product) {
 
@@ -967,7 +961,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		if (skus != null) {
 			for (Sku sku : skus) {
 				serviceContext.setExpandoBridgeAttributes(
-					_getExpandoBridgeAttributes(sku));
+					CustomFieldsUtil.toMap(
+						CPInstance.class.getName(),
+						contextCompany.getCompanyId(), sku.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()));
 
 				CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
 					_cpInstanceService, sku, cpDefinition,

@@ -344,15 +344,6 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 		).build();
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		Shipment shipment) {
-
-		return CustomFieldsUtil.toMap(
-			CommerceShipment.class.getName(), contextCompany.getCompanyId(),
-			shipment.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
-	}
-
 	private Shipment _toShipment(CommerceShipment commerceShipment)
 		throws Exception {
 
@@ -417,7 +408,10 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			contextUser);
 
 		Map<String, Serializable> expandoBridgeAttributes =
-			_getExpandoBridgeAttributes(shipment);
+			CustomFieldsUtil.toMap(
+				CommerceShipment.class.getName(), contextCompany.getCompanyId(),
+				shipment.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
 
 		if (expandoBridgeAttributes != null) {
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);

@@ -16,6 +16,10 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.tree.Edge;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.deployer.InactiveObjectDefinitionDeployer;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
@@ -134,6 +138,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -356,6 +361,61 @@ public class ObjectDefinitionLocalServiceImpl
 			pkObjectFieldName, pluralLabelMap, false, scope,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
 			titleObjectFieldName, version, status, objectFields);
+	}
+
+	@Override
+	public void bindObjectDefinitions(long[] objectRelationshipIds)
+		throws PortalException {
+
+		ObjectRelationship rootObjectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipIds[objectRelationshipIds.length - 1]);
+
+		long rootObjectDefinitionId =
+			rootObjectRelationship.getObjectDefinitionId1();
+
+		ObjectDefinition rootObjectDefinition =
+			objectDefinitionLocalService.getObjectDefinition(
+				rootObjectDefinitionId);
+
+		if (rootObjectDefinition.getRootObjectDefinitionId() == 0) {
+			objectDefinitionLocalService.updateRootObjectDefinitionId(
+				rootObjectDefinitionId, rootObjectDefinitionId);
+		}
+
+		for (long objectRelationshipId : objectRelationshipIds) {
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationshipId);
+
+			if (objectRelationship.isEdge()) {
+				continue;
+			}
+
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), true,
+				objectRelationship.getLabelMap());
+
+			ObjectDefinition objectDefinition1 =
+				objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (objectDefinition1.getRootObjectDefinitionId() == 0) {
+				objectDefinitionLocalService.updateRootObjectDefinitionId(
+					objectDefinition1.getObjectDefinitionId(),
+					rootObjectDefinitionId);
+			}
+
+			ObjectDefinition objectDefinition2 =
+				objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			objectDefinitionLocalService.updateRootObjectDefinitionId(
+				objectDefinition2.getObjectDefinitionId(),
+				rootObjectDefinitionId);
+		}
 	}
 
 	@Override
@@ -862,6 +922,44 @@ public class ObjectDefinitionLocalServiceImpl
 
 				return null;
 			});
+	}
+
+	@Override
+	public void unbindObjectDefinition(long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		Tree tree = _treeFactory.create(
+			objectDefinition.getRootObjectDefinitionId());
+
+		Iterator<Node> iterator = tree.iterator(
+			objectDefinition.getObjectDefinitionId());
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			objectDefinitionLocalService.updateRootObjectDefinitionId(
+				node.getObjectDefinitionId(), 0);
+
+			if (node.isRoot()) {
+				continue;
+			}
+
+			Edge edge = node.getEdge();
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap());
+		}
 	}
 
 	@Override
@@ -2209,6 +2307,9 @@ public class ObjectDefinitionLocalServiceImpl
 		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>
 			_serviceRegistrationsMaps = Collections.synchronizedMap(
 				new LinkedHashMap<>());
+
+	@Reference
+	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

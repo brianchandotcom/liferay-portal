@@ -99,6 +99,10 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 					PortletRequest.RENDER_PHASE)
 			).setTabs1(
 				"display-page-templates"
+			).setParameter(
+				"parentLayoutPageTemplateCollectionId",
+				ParamUtil.getLong(
+					actionRequest, "layoutPageTemplateCollectionId", -1)
 			).buildString());
 
 		return HttpComponentsUtil.setParameter(
@@ -112,23 +116,23 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
+		long parentLayoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "parentLayoutPageTemplateCollectionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
-		long parentLayoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateCollectionId", -1);
 
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, classNameId, classTypeId,
-					name, parentLayoutPageTemplateCollectionId,
-					masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					name, masterLayoutPlid,
+					parentLayoutPageTemplateCollectionId,
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			return JSONUtil.put(
 				"redirectURL",

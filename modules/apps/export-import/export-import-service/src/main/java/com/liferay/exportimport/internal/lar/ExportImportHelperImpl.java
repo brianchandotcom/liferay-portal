@@ -1642,6 +1642,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				_manifestSummary.addModelDeletionCount(
 					manifestSummaryKey, modelDeletionCount);
+
+				String assetTitle = GetterUtil.getString(
+					element.attributeValue("asset-title"));
+
+				_manifestSummary.addAssetTitle(manifestSummaryKey, assetTitle);
 			}
 		}
 

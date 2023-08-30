@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
@@ -46,41 +47,52 @@ import java.util.Set;
  */
 public class ProcessSummaryDisplayContext {
 
-	public String getAssetTitle(Map<String, ?> taskContextMap) {
-		Map<String, String> assetTitles =
-			(Map<String, String>)taskContextMap.get(
-				ExportImportBackgroundTaskContextMapConstants.ASSET_TITLES);
+	public String getAssetTitle(
+		Map<String, ?> taskContextMap, Portlet portlet) {
 
-		Map<String, LongWrapper> modelAdditionCounters =
-			(Map<String, LongWrapper>)taskContextMap.get(
-				ExportImportBackgroundTaskContextMapConstants.
-					MODEL_ADDITION_COUNTERS);
+		if (portlet.getPortletId(
+			).equals(
+				_PORTLET_ID_JOURNAL_PORTLET
+			)) {
 
-		Map<String, LongWrapper> modelDeletionCounters =
-			(Map<String, LongWrapper>)taskContextMap.get(
-				ExportImportBackgroundTaskContextMapConstants.
-					MODEL_DELETION_COUNTERS);
+			Map<String, String> assetTitles =
+				(Map<String, String>)taskContextMap.get(
+					ExportImportBackgroundTaskContextMapConstants.ASSET_TITLES);
 
-		LongWrapper modelAdditionCounter = modelAdditionCounters.get(
-			_CLASS_NAME_JOURNAL_ARTICLE);
+			Map<String, LongWrapper> modelAdditionCounters =
+				(Map<String, LongWrapper>)taskContextMap.get(
+					ExportImportBackgroundTaskContextMapConstants.
+						MODEL_ADDITION_COUNTERS);
 
-		LongWrapper modelDeletionCounter = modelDeletionCounters.get(
-			_CLASS_NAME_JOURNAL_ARTICLE);
+			Map<String, LongWrapper> modelDeletionCounters =
+				(Map<String, LongWrapper>)taskContextMap.get(
+					ExportImportBackgroundTaskContextMapConstants.
+						MODEL_DELETION_COUNTERS);
 
-		if ((modelAdditionCounter != null) && (modelDeletionCounter != null)) {
-			long sumCounters =
-				modelAdditionCounter.getValue() +
-					modelDeletionCounter.getValue();
+			LongWrapper modelAdditionCounter = modelAdditionCounters.get(
+				_CLASS_NAME_JOURNAL_ARTICLE);
 
-			if (sumCounters > 1) {
-				return null;
+			LongWrapper modelDeletionCounter = modelDeletionCounters.get(
+				_CLASS_NAME_JOURNAL_ARTICLE);
+
+			if ((modelAdditionCounter != null) &&
+				(modelDeletionCounter != null)) {
+
+				long sumCounters =
+					modelAdditionCounter.getValue() +
+						modelDeletionCounter.getValue();
+
+				if (sumCounters > 1) {
+					return null;
+				}
 			}
-		}
 
-		if ((assetTitles != null) &&
-			Validator.isNotNull(assetTitles.get(_CLASS_NAME_JOURNAL_ARTICLE))) {
+			if ((assetTitles != null) &&
+				Validator.isNotNull(
+					assetTitles.get(_CLASS_NAME_JOURNAL_ARTICLE))) {
 
-			return assetTitles.get(_CLASS_NAME_JOURNAL_ARTICLE);
+				return assetTitles.get(_CLASS_NAME_JOURNAL_ARTICLE);
+			}
 		}
 
 		return null;
@@ -232,6 +244,9 @@ public class ProcessSummaryDisplayContext {
 
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
 		"com.liferay.journal.model.JournalArticle";
+
+	private static final String _PORTLET_ID_JOURNAL_PORTLET =
+		"com_liferay_journal_web_portlet_JournalPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProcessSummaryDisplayContext.class);

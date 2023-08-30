@@ -147,7 +147,7 @@
 						continue;
 					}
 
-					String assetTitle = processSummaryDisplayContext.getAssetTitle(taskContextMap);
+					String assetTitle = processSummaryDisplayContext.getAssetTitle(taskContextMap, portlet);
 				%>
 
 					<div class="process-summary-subsection">

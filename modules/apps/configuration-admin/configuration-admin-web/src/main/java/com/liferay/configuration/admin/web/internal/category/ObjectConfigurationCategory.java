@@ -17,7 +17,7 @@ public class ObjectConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return "objects";
+		return "object";
 	}
 
 	@Override

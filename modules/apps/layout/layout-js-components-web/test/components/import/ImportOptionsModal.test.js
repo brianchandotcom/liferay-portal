@@ -38,7 +38,7 @@ describe('ImportOptionsModal', () => {
 
 		expect(
 			screen.getByText(
-				'one-or-more-items-from-the-zip-already-exist-in-this-location.-what-action-do-you-want-to-take?'
+				'one-or-more-items-from-the-zip-already-exist-in-this-location'
 			)
 		).toBeInTheDocument();
 	});

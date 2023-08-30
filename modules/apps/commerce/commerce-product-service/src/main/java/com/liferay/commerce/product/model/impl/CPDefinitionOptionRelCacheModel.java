@@ -69,7 +69,7 @@ public class CPDefinitionOptionRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,8 +101,12 @@ public class CPDefinitionOptionRelCacheModel
 		sb.append(description);
 		sb.append(", DDMFormFieldTypeName=");
 		sb.append(DDMFormFieldTypeName);
+		sb.append(", infoItemServiceKey=");
+		sb.append(infoItemServiceKey);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", definedExternally=");
+		sb.append(definedExternally);
 		sb.append(", facetable=");
 		sb.append(facetable);
 		sb.append(", required=");
@@ -113,6 +117,8 @@ public class CPDefinitionOptionRelCacheModel
 		sb.append(key);
 		sb.append(", priceType=");
 		sb.append(priceType);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -185,7 +191,15 @@ public class CPDefinitionOptionRelCacheModel
 				DDMFormFieldTypeName);
 		}
 
+		if (infoItemServiceKey == null) {
+			cpDefinitionOptionRelImpl.setInfoItemServiceKey("");
+		}
+		else {
+			cpDefinitionOptionRelImpl.setInfoItemServiceKey(infoItemServiceKey);
+		}
+
 		cpDefinitionOptionRelImpl.setPriority(priority);
+		cpDefinitionOptionRelImpl.setDefinedExternally(definedExternally);
 		cpDefinitionOptionRelImpl.setFacetable(facetable);
 		cpDefinitionOptionRelImpl.setRequired(required);
 		cpDefinitionOptionRelImpl.setSkuContributor(skuContributor);
@@ -202,6 +216,13 @@ public class CPDefinitionOptionRelCacheModel
 		}
 		else {
 			cpDefinitionOptionRelImpl.setPriceType(priceType);
+		}
+
+		if (typeSettings == null) {
+			cpDefinitionOptionRelImpl.setTypeSettings("");
+		}
+		else {
+			cpDefinitionOptionRelImpl.setTypeSettings(typeSettings);
 		}
 
 		cpDefinitionOptionRelImpl.resetOriginalValues();
@@ -233,8 +254,11 @@ public class CPDefinitionOptionRelCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
+		infoItemServiceKey = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
+
+		definedExternally = objectInput.readBoolean();
 
 		facetable = objectInput.readBoolean();
 
@@ -243,6 +267,7 @@ public class CPDefinitionOptionRelCacheModel
 		skuContributor = objectInput.readBoolean();
 		key = objectInput.readUTF();
 		priceType = objectInput.readUTF();
+		typeSettings = objectInput.readUTF();
 	}
 
 	@Override
@@ -301,7 +326,16 @@ public class CPDefinitionOptionRelCacheModel
 			objectOutput.writeUTF(DDMFormFieldTypeName);
 		}
 
+		if (infoItemServiceKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(infoItemServiceKey);
+		}
+
 		objectOutput.writeDouble(priority);
+
+		objectOutput.writeBoolean(definedExternally);
 
 		objectOutput.writeBoolean(facetable);
 
@@ -322,6 +356,13 @@ public class CPDefinitionOptionRelCacheModel
 		else {
 			objectOutput.writeUTF(priceType);
 		}
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -339,11 +380,14 @@ public class CPDefinitionOptionRelCacheModel
 	public String name;
 	public String description;
 	public String DDMFormFieldTypeName;
+	public String infoItemServiceKey;
 	public double priority;
+	public boolean definedExternally;
 	public boolean facetable;
 	public boolean required;
 	public boolean skuContributor;
 	public String key;
 	public String priceType;
+	public String typeSettings;
 
 }

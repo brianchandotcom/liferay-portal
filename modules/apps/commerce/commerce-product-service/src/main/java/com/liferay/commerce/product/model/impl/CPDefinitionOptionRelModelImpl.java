@@ -79,10 +79,12 @@ public class CPDefinitionOptionRelModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"CPDefinitionId", Types.BIGINT}, {"CPOptionId", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"DDMFormFieldTypeName", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"facetable", Types.BOOLEAN}, {"required", Types.BOOLEAN},
-		{"skuContributor", Types.BOOLEAN}, {"key_", Types.VARCHAR},
-		{"priceType", Types.VARCHAR}
+		{"DDMFormFieldTypeName", Types.VARCHAR},
+		{"infoItemServiceKey", Types.VARCHAR}, {"priority", Types.DOUBLE},
+		{"definedExternally", Types.BOOLEAN}, {"facetable", Types.BOOLEAN},
+		{"required", Types.BOOLEAN}, {"skuContributor", Types.BOOLEAN},
+		{"key_", Types.VARCHAR}, {"priceType", Types.VARCHAR},
+		{"typeSettings", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -104,16 +106,19 @@ public class CPDefinitionOptionRelModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMFormFieldTypeName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("infoItemServiceKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("definedExternally", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("facetable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priceType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,priority DOUBLE,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,priceType VARCHAR(75) null,primary key (CPDefinitionOptionRelId, ctCollectionId))";
+		"create table CPDefinitionOptionRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,infoItemServiceKey VARCHAR(255) null,priority DOUBLE,definedExternally BOOLEAN,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,priceType VARCHAR(75) null,typeSettings VARCHAR(75) null,primary key (CPDefinitionOptionRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionRel";
@@ -330,7 +335,13 @@ public class CPDefinitionOptionRelModelImpl
 				"DDMFormFieldTypeName",
 				CPDefinitionOptionRel::getDDMFormFieldTypeName);
 			attributeGetterFunctions.put(
+				"infoItemServiceKey",
+				CPDefinitionOptionRel::getInfoItemServiceKey);
+			attributeGetterFunctions.put(
 				"priority", CPDefinitionOptionRel::getPriority);
+			attributeGetterFunctions.put(
+				"definedExternally",
+				CPDefinitionOptionRel::getDefinedExternally);
 			attributeGetterFunctions.put(
 				"facetable", CPDefinitionOptionRel::getFacetable);
 			attributeGetterFunctions.put(
@@ -340,6 +351,8 @@ public class CPDefinitionOptionRelModelImpl
 			attributeGetterFunctions.put("key", CPDefinitionOptionRel::getKey);
 			attributeGetterFunctions.put(
 				"priceType", CPDefinitionOptionRel::getPriceType);
+			attributeGetterFunctions.put(
+				"typeSettings", CPDefinitionOptionRel::getTypeSettings);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -420,9 +433,17 @@ public class CPDefinitionOptionRelModelImpl
 				(BiConsumer<CPDefinitionOptionRel, String>)
 					CPDefinitionOptionRel::setDDMFormFieldTypeName);
 			attributeSetterBiConsumers.put(
+				"infoItemServiceKey",
+				(BiConsumer<CPDefinitionOptionRel, String>)
+					CPDefinitionOptionRel::setInfoItemServiceKey);
+			attributeSetterBiConsumers.put(
 				"priority",
 				(BiConsumer<CPDefinitionOptionRel, Double>)
 					CPDefinitionOptionRel::setPriority);
+			attributeSetterBiConsumers.put(
+				"definedExternally",
+				(BiConsumer<CPDefinitionOptionRel, Boolean>)
+					CPDefinitionOptionRel::setDefinedExternally);
 			attributeSetterBiConsumers.put(
 				"facetable",
 				(BiConsumer<CPDefinitionOptionRel, Boolean>)
@@ -443,6 +464,10 @@ public class CPDefinitionOptionRelModelImpl
 				"priceType",
 				(BiConsumer<CPDefinitionOptionRel, String>)
 					CPDefinitionOptionRel::setPriceType);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<CPDefinitionOptionRel, String>)
+					CPDefinitionOptionRel::setTypeSettings);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -951,6 +976,26 @@ public class CPDefinitionOptionRelModelImpl
 
 	@JSON
 	@Override
+	public String getInfoItemServiceKey() {
+		if (_infoItemServiceKey == null) {
+			return "";
+		}
+		else {
+			return _infoItemServiceKey;
+		}
+	}
+
+	@Override
+	public void setInfoItemServiceKey(String infoItemServiceKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_infoItemServiceKey = infoItemServiceKey;
+	}
+
+	@JSON
+	@Override
 	public double getPriority() {
 		return _priority;
 	}
@@ -962,6 +1007,27 @@ public class CPDefinitionOptionRelModelImpl
 		}
 
 		_priority = priority;
+	}
+
+	@JSON
+	@Override
+	public boolean getDefinedExternally() {
+		return _definedExternally;
+	}
+
+	@JSON
+	@Override
+	public boolean isDefinedExternally() {
+		return _definedExternally;
+	}
+
+	@Override
+	public void setDefinedExternally(boolean definedExternally) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_definedExternally = definedExternally;
 	}
 
 	@JSON
@@ -1094,6 +1160,26 @@ public class CPDefinitionOptionRelModelImpl
 		}
 
 		_priceType = priceType;
+	}
+
+	@JSON
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return "";
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_typeSettings = typeSettings;
 	}
 
 	@Override
@@ -1265,12 +1351,16 @@ public class CPDefinitionOptionRelModelImpl
 		cpDefinitionOptionRelImpl.setDescription(getDescription());
 		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(
 			getDDMFormFieldTypeName());
+		cpDefinitionOptionRelImpl.setInfoItemServiceKey(
+			getInfoItemServiceKey());
 		cpDefinitionOptionRelImpl.setPriority(getPriority());
+		cpDefinitionOptionRelImpl.setDefinedExternally(isDefinedExternally());
 		cpDefinitionOptionRelImpl.setFacetable(isFacetable());
 		cpDefinitionOptionRelImpl.setRequired(isRequired());
 		cpDefinitionOptionRelImpl.setSkuContributor(isSkuContributor());
 		cpDefinitionOptionRelImpl.setKey(getKey());
 		cpDefinitionOptionRelImpl.setPriceType(getPriceType());
+		cpDefinitionOptionRelImpl.setTypeSettings(getTypeSettings());
 
 		cpDefinitionOptionRelImpl.resetOriginalValues();
 
@@ -1312,8 +1402,12 @@ public class CPDefinitionOptionRelModelImpl
 			this.<String>getColumnOriginalValue("description"));
 		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(
 			this.<String>getColumnOriginalValue("DDMFormFieldTypeName"));
+		cpDefinitionOptionRelImpl.setInfoItemServiceKey(
+			this.<String>getColumnOriginalValue("infoItemServiceKey"));
 		cpDefinitionOptionRelImpl.setPriority(
 			this.<Double>getColumnOriginalValue("priority"));
+		cpDefinitionOptionRelImpl.setDefinedExternally(
+			this.<Boolean>getColumnOriginalValue("definedExternally"));
 		cpDefinitionOptionRelImpl.setFacetable(
 			this.<Boolean>getColumnOriginalValue("facetable"));
 		cpDefinitionOptionRelImpl.setRequired(
@@ -1324,6 +1418,8 @@ public class CPDefinitionOptionRelModelImpl
 			this.<String>getColumnOriginalValue("key_"));
 		cpDefinitionOptionRelImpl.setPriceType(
 			this.<String>getColumnOriginalValue("priceType"));
+		cpDefinitionOptionRelImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
 
 		return cpDefinitionOptionRelImpl;
 	}
@@ -1489,7 +1585,22 @@ public class CPDefinitionOptionRelModelImpl
 			cpDefinitionOptionRelCacheModel.DDMFormFieldTypeName = null;
 		}
 
+		cpDefinitionOptionRelCacheModel.infoItemServiceKey =
+			getInfoItemServiceKey();
+
+		String infoItemServiceKey =
+			cpDefinitionOptionRelCacheModel.infoItemServiceKey;
+
+		if ((infoItemServiceKey != null) &&
+			(infoItemServiceKey.length() == 0)) {
+
+			cpDefinitionOptionRelCacheModel.infoItemServiceKey = null;
+		}
+
 		cpDefinitionOptionRelCacheModel.priority = getPriority();
+
+		cpDefinitionOptionRelCacheModel.definedExternally =
+			isDefinedExternally();
 
 		cpDefinitionOptionRelCacheModel.facetable = isFacetable();
 
@@ -1511,6 +1622,14 @@ public class CPDefinitionOptionRelModelImpl
 
 		if ((priceType != null) && (priceType.length() == 0)) {
 			cpDefinitionOptionRelCacheModel.priceType = null;
+		}
+
+		cpDefinitionOptionRelCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = cpDefinitionOptionRelCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			cpDefinitionOptionRelCacheModel.typeSettings = null;
 		}
 
 		return cpDefinitionOptionRelCacheModel;
@@ -1593,12 +1712,15 @@ public class CPDefinitionOptionRelModelImpl
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private String _DDMFormFieldTypeName;
+	private String _infoItemServiceKey;
 	private double _priority;
+	private boolean _definedExternally;
 	private boolean _facetable;
 	private boolean _required;
 	private boolean _skuContributor;
 	private String _key;
 	private String _priceType;
+	private String _typeSettings;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1647,12 +1769,15 @@ public class CPDefinitionOptionRelModelImpl
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put(
 			"DDMFormFieldTypeName", _DDMFormFieldTypeName);
+		_columnOriginalValues.put("infoItemServiceKey", _infoItemServiceKey);
 		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("definedExternally", _definedExternally);
 		_columnOriginalValues.put("facetable", _facetable);
 		_columnOriginalValues.put("required", _required);
 		_columnOriginalValues.put("skuContributor", _skuContributor);
 		_columnOriginalValues.put("key_", _key);
 		_columnOriginalValues.put("priceType", _priceType);
+		_columnOriginalValues.put("typeSettings", _typeSettings);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1707,17 +1832,23 @@ public class CPDefinitionOptionRelModelImpl
 
 		columnBitmasks.put("DDMFormFieldTypeName", 16384L);
 
-		columnBitmasks.put("priority", 32768L);
+		columnBitmasks.put("infoItemServiceKey", 32768L);
 
-		columnBitmasks.put("facetable", 65536L);
+		columnBitmasks.put("priority", 65536L);
 
-		columnBitmasks.put("required", 131072L);
+		columnBitmasks.put("definedExternally", 131072L);
 
-		columnBitmasks.put("skuContributor", 262144L);
+		columnBitmasks.put("facetable", 262144L);
 
-		columnBitmasks.put("key_", 524288L);
+		columnBitmasks.put("required", 524288L);
 
-		columnBitmasks.put("priceType", 1048576L);
+		columnBitmasks.put("skuContributor", 1048576L);
+
+		columnBitmasks.put("key_", 2097152L);
+
+		columnBitmasks.put("priceType", 4194304L);
+
+		columnBitmasks.put("typeSettings", 8388608L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

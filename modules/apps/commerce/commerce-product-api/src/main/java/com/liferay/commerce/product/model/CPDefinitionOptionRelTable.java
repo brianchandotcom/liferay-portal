@@ -68,9 +68,17 @@ public class CPDefinitionOptionRelTable
 		DDMFormFieldTypeName = createColumn(
 			"DDMFormFieldTypeName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionRelTable, String> infoItemServiceKey =
+		createColumn(
+			"infoItemServiceKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, Double> priority =
 		createColumn(
 			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionRelTable, Boolean> definedExternally =
+		createColumn(
+			"definedExternally", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, Boolean> facetable =
 		createColumn(
 			"facetable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
@@ -86,6 +94,9 @@ public class CPDefinitionOptionRelTable
 	public final Column<CPDefinitionOptionRelTable, String> priceType =
 		createColumn(
 			"priceType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionRelTable, String> typeSettings =
+		createColumn(
+			"typeSettings", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CPDefinitionOptionRelTable() {
 		super("CPDefinitionOptionRel", CPDefinitionOptionRelTable::new);

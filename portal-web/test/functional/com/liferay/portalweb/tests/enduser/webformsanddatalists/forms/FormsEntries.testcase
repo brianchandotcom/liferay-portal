@@ -209,7 +209,7 @@ definition {
 
 	@description = "Verify that a user can navigate to the correct metric by using the list on the right"
 	@priority = 5
-	test CanBeNavigatedUsingNavigationList {
+	test CanNavigateThroughFormReportLinks {
 		property portal.acceptance = "true";
 
 		task ("Given a published form with multiple fields") {
@@ -285,7 +285,7 @@ definition {
 
 	@description = "LPS-74997 - Verify that editing a Form does not affect previously submitted Form Entries"
 	@priority = 4
-	test CanBeViewedAfterEditingTheForm {
+	test EditingTheFormDoesNotAffectSubmittedEntries {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
@@ -366,7 +366,7 @@ definition {
 
 	@description = "Verify that with Single Approver Workflow enabled, when a user submits a form entry, the status of the entry will be Pending. When the entry is approved, the status will change to Approved."
 	@priority = 5
-	test CanSubmitFormEntryForWorkflow {
+	test CanApprovePendingFormEntries {
 		property portal.acceptance = "true";
 
 		task ("Given a published form that is assigned the Single Approver workflow") {
@@ -463,7 +463,7 @@ definition {
 
 	@description = "Verify that Entries Previews display the correct information"
 	@priority = 5
-	test DisplayCorrectInfoInPreviews {
+	test CanViewEntriesInFormEntriesPage {
 		property portal.acceptance = "true";
 
 		task ("Given a published form") {
@@ -506,11 +506,11 @@ definition {
 			FormsAdminNavigator.closePublishedFormWindow();
 		}
 
-		task ("When admin views the form details") {
+		task ("When admin navigates to Form Entries") {
 			FormsAdminNavigator.gotoViewEntries();
 		}
 
-		task ("Then the correct information displays in Previews") {
+		task ("Then the correct information displays in Table View") {
 			for (var fieldHeader : list "Text Label,Numeric") {
 				FormsAdmin.viewFormTableHeader(fieldHeader = ${fieldHeader});
 			}
@@ -575,7 +575,7 @@ definition {
 
 	@description = "Verify that Entries for the Color, Date and Text Fields display a Field List in the Summary Tab"
 	@priority = 5
-	test DisplayFieldListInSummaryTab {
+	test DataIsDisplayedInFieldListFormat {
 		task ("Given a published form with Text, Color, and Date fields") {
 			FormsAdmin.addForm();
 
@@ -656,7 +656,7 @@ definition {
 
 	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"
 	@priority = 5
-	test DisplayNoMetricsInSummaryTab {
+	test NoMetricsIsDisplayed {
 		property portal.acceptance = "true";
 
 		task ("Given a published form with Paragraph, Rich Text, Separator, Image, and Upload Fields") {
@@ -744,7 +744,7 @@ definition {
 
 	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"
 	@priority = 5
-	test DisplayStatisticsInSummaryTab {
+	test SummaryStatisticsDisplayForNumericField {
 		property portal.acceptance = "true";
 
 		task ("Given a published form with Numeric Field") {
@@ -811,7 +811,7 @@ definition {
 
 	@description = "LPS-61197 - Verify that with Single Approver Workflow enabled, the Date Field is properly displayed on an Entry submitted from the Forms Widget"
 	@priority = 5
-	test FromWidgetWithWorkflowEnabledDisplaysDateField {
+	test FormEntriesAreRenderedProperlyInMyWorkflowTasks {
 		property portal.acceptance = "true";
 
 		task ("Given a published form with Single Approver workflow assigned to it") {

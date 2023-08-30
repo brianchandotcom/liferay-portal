@@ -258,32 +258,50 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-must-start-with-the-x-character");
 		}
 
+		String pathParameterString = StringUtil.extractLast(
+			pathString, StringPool.FORWARD_SLASH);
+
 		Matcher individualMatcher = _individualPathPattern.matcher(pathString);
 
-		Matcher leftForwardMatcher = _leftSlashForwardPattern.matcher(
-			pathString);
-
-		Matcher rightForwardMatcher = _rightSlashForwardPattern.matcher(
-			pathString);
-
-		if ((leftForwardMatcher.matches() || rightForwardMatcher.matches()) &&
-			!individualMatcher.matches()) {
-
+		if (!individualMatcher.matches()) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale())),
 				"%s can have a maximum of 255 alphanumeric characters",
 				"x-can-have-a-maximum-of-255-alphanumeric-characters");
 		}
+
+		if (!_validPathParameterStructure(pathParameterString)) {
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(objectField.getLabel(user.getLocale())),
+				"%s must contain a path parameter between curly brace",
+				"x-must-contain-a-path-parameter-between-curly-brace");
+		}
+	}
+
+	private boolean _validPathParameterStructure(String pathParameterString) {
+		int openCurlyBraceOcurrence = StringUtil.count(
+			pathParameterString, StringPool.OPEN_CURLY_BRACE);
+
+		int closeCurlyBraceOcurrence = StringUtil.count(
+			pathParameterString, StringPool.CLOSE_CURLY_BRACE);
+
+		if ((openCurlyBraceOcurrence != 1) || (closeCurlyBraceOcurrence != 1) ||
+			(pathParameterString.length() <= 2) ||
+			!StringUtil.startsWith(
+				pathParameterString, StringPool.OPEN_CURLY_BRACE) ||
+			!StringUtil.endsWith(
+				pathParameterString, StringPool.CLOSE_CURLY_BRACE)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Pattern _individualPathPattern = Pattern.compile(
-		"/[a-zA-Z0-9][a-zA-Z0-9-/-{-}]{1,253}");
-	private static final Pattern _leftSlashForwardPattern = Pattern.compile(
-		".*[{].");
+		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
 	private static final Pattern _pathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/]{1,253}");
-	private static final Pattern _rightSlashForwardPattern = Pattern.compile(
-		".*[}].");
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -281,8 +280,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 			"/layout_admin/export_layout_utility_page_entries");
 
 		return dropdownItem -> {
-			dropdownItem.setDisabled(
-				_draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT);
+			dropdownItem.setDisabled(!_layout.isPublished());
 			dropdownItem.setHref(exportLayoutUtilityPageEntryURL);
 			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(

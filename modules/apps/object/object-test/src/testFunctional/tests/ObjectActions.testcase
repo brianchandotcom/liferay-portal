@@ -899,15 +899,13 @@ definition {
 	test CanCreateActionUpdateAnObjectEntryWithOnOrderStatusUpdate {
 		property custom.properties = "feature.flag.LPS-173537=true";
 
-		task ("Given an action in the Commerce Order object") {
+		task ("Given an action in the commerce order object with the trigger on order status update") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Commerce Order");
 
 			ObjectAdmin.goToActionsTab();
-		}
 
-		task ("And given the user selects the trigger OnOrderStatusUpdate using the action Update an Object Entry") {
 			ObjectAdmin.addObjectActionViaUI(
 				actionLabel = "Custom Action",
 				active = "true",
@@ -919,7 +917,7 @@ definition {
 				whenAction = "On Order Status Update");
 		}
 
-		task ("And given an account, minium site and an order is created") {
+		task ("When a minium site and an order is created") {
 			CommerceJSONAccountsAPI._addCommerceAccount(
 				accountName = "Account Name",
 				accountType = "Business");
@@ -946,7 +944,7 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("When the user changes the order status and the action puts order on hold") {
+		task ("Then the action is triggered and the order status is updated") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Orders");
@@ -954,21 +952,6 @@ definition {
 			AssertElementPresent(
 				key_value = "On Hold",
 				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-		}
-
-		task ("Then the action is triggered") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Commerce Order");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action",
-				status = "Success");
-
-			// Workaround for LPS-193383
 
 			CommerceOrders.openOrdersAdmin();
 

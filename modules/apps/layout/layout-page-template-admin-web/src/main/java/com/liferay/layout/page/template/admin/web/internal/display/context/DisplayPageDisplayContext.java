@@ -126,7 +126,8 @@ public class DisplayPageDisplayContext {
 				() ->
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-							_themeDisplay.getScopeGroupId(), getKeywords(), -1,
+							_themeDisplay.getScopeGroupId(),
+							_getLayoutPageTemplateCollectionId(), getKeywords(),
 							LayoutPageTemplateEntryTypeConstants.
 								TYPE_DISPLAY_PAGE,
 							displayPagesSearchContainer.getStart(),
@@ -134,7 +135,8 @@ public class DisplayPageDisplayContext {
 							displayPagesSearchContainer.getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-						_themeDisplay.getScopeGroupId(), getKeywords(),
+						_themeDisplay.getScopeGroupId(),
+						_getLayoutPageTemplateCollectionId(), getKeywords(),
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_DISPLAY_PAGE));
 		}
@@ -144,20 +146,16 @@ public class DisplayPageDisplayContext {
 					LayoutPageTemplateEntryServiceUtil.
 						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 							_themeDisplay.getScopeGroupId(),
+							_getLayoutPageTemplateCollectionId(),
 							LayoutPageTemplateEntryTypeConstants.
 								TYPE_DISPLAY_PAGE,
 							displayPagesSearchContainer.getStart(),
 							displayPagesSearchContainer.getEnd(),
-							ParamUtil.getLong(
-								_httpServletRequest,
-								"layoutPageTemplateCollectionId", -1),
 							displayPagesSearchContainer.getOrderByComparator()),
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
-						ParamUtil.getLong(
-							_httpServletRequest,
-							"layoutPageTemplateCollectionId", -1),
+						_getLayoutPageTemplateCollectionId(),
 						LayoutPageTemplateEntryTypeConstants.
 							TYPE_DISPLAY_PAGE));
 		}
@@ -269,6 +267,17 @@ public class DisplayPageDisplayContext {
 		return false;
 	}
 
+	private long _getLayoutPageTemplateCollectionId() {
+		if (_layoutPageTemplateCollectionId != null) {
+			return _layoutPageTemplateCollectionId;
+		}
+
+		_layoutPageTemplateCollectionId = ParamUtil.getLong(
+			_httpServletRequest, "layoutPageTemplateCollectionId", -1);
+
+		return _layoutPageTemplateCollectionId;
+	}
+
 	private OrderByComparator<Object> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
@@ -291,6 +300,7 @@ public class DisplayPageDisplayContext {
 	private SearchContainer<?> _displayPagesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private Long _layoutPageTemplateCollectionId;
 	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;

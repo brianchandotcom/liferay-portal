@@ -129,6 +129,7 @@ interface ObjectDefinition {
 	enableCategorization: boolean;
 	enableComments: boolean;
 	enableLocalization: boolean;
+	enableObjectEntryDraft: boolean;
 	enableObjectEntryHistory: boolean;
 	externalReferenceCode: string;
 	id: number;

@@ -660,10 +660,33 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private String _getTypeSettings(Layout sourceLayout, Layout targetLayout) {
-		if ((!sourceLayout.isDraftLayout() && !targetLayout.isDraftLayout()) ||
-			targetLayout.isDraftLayout()) {
-
+		if (!sourceLayout.isDraftLayout() && !targetLayout.isDraftLayout()) {
 			return sourceLayout.getTypeSettings();
+		}
+
+		if (targetLayout.isDraftLayout()) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					sourceLayout.getTypeSettings()
+				).build();
+
+			return UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				sourceLayout.getTypeSettings()
+			).setProperty(
+				"query-string",
+				typeSettingsUnicodeProperties.getProperty("query-string")
+			).setProperty(
+				"target", typeSettingsUnicodeProperties.getProperty("target")
+			).setProperty(
+				"targetType",
+				typeSettingsUnicodeProperties.getProperty("targetType")
+			).setProperty(
+				"published", Boolean.FALSE.toString()
+			).buildString();
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =

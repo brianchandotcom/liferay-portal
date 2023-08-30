@@ -412,6 +412,19 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws PortalException {
+
+		MBCategory mbCategory = mbCategoryLocalService.getMBCategory(
+			groupId, friendlyURL);
+
+		_categoryModelResourcePermission.check(
+			getPermissionChecker(), mbCategory, ActionKeys.VIEW);
+
+		return mbCategory;
+	}
+
+	@Override
 	public List<Long> getSubcategoryIds(
 		List<Long> categoryIds, long groupId, long categoryId) {
 

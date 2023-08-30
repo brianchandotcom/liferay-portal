@@ -8,6 +8,7 @@ package com.liferay.message.boards.service.impl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.exception.CategoryNameException;
+import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.model.MBMessage;
@@ -540,6 +541,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	@Override
 	public int getCompanyCategoriesCount(long companyId) {
 		return mbCategoryPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws NoSuchCategoryException {
+
+		return mbCategoryPersistence.findByG_F(groupId, friendlyURL);
 	}
 
 	@Override

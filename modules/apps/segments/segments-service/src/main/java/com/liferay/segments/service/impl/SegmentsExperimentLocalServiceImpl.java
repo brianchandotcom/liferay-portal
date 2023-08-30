@@ -491,7 +491,8 @@ public class SegmentsExperimentLocalServiceImpl
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						segmentsExperiment.getPlid())) &&
-			(statusObject == SegmentsExperimentConstants.Status.COMPLETED) &&
+			((statusObject == SegmentsExperimentConstants.Status.COMPLETED) ||
+			 (statusObject == SegmentsExperimentConstants.Status.TERMINATED)) &&
 			(winnerSegmentsExperienceId !=
 				segmentsExperiment.getSegmentsExperienceId())) {
 

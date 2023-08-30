@@ -57,8 +57,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, long classNameId,
-			long classTypeId, String name, long masterLayoutPlid,
-			long parentLayoutPageTemplateCollectionId, int status,
+			long classTypeId, String name, long masterLayoutPlid, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -70,8 +69,7 @@ public class LayoutPageTemplateEntryServiceImpl
 			getUserId(), groupId, layoutPageTemplateCollectionId, classNameId,
 			classTypeId, name,
 			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-			masterLayoutPlid, parentLayoutPageTemplateCollectionId, status,
-			serviceContext);
+			masterLayoutPlid, status, serviceContext);
 	}
 
 	@Override
@@ -131,7 +129,7 @@ public class LayoutPageTemplateEntryServiceImpl
 				targetLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				0, 0, name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				false, 0, 0, -1, sourceLayout.getMasterLayoutPlid(),
+				false, 0, 0, sourceLayout.getMasterLayoutPlid(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -230,37 +228,23 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, int type, int start, int end,
-		long parentLayoutPageTemplateCollectionId,
-		OrderByComparator<Object> orderByComparator) {
+		long groupId, long layoutPageTemplateCollectionId, int type, int start,
+		int end, OrderByComparator<Object> orderByComparator) {
 
 		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			groupId, null, parentLayoutPageTemplateCollectionId, type, start,
-			end, orderByComparator);
-	}
-
-	@Override
-	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateCollectionId,
-		long parentLayoutPageTemplateCollectionId, int type, int start, int end,
-		OrderByComparator<Object> orderByComparator) {
-
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			groupId, layoutPageTemplateCollectionId, null,
-			parentLayoutPageTemplateCollectionId, type, start, end,
+			groupId, layoutPageTemplateCollectionId, null, type, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		long parentLayoutPageTemplateCollectionId, int type, int start, int end,
+		int type, int start, int end,
 		OrderByComparator<Object> orderByComparator) {
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, name,
-				parentLayoutPageTemplateCollectionId, type);
+				groupId, layoutPageTemplateCollectionId, name, type);
 
 		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			DSLQueryFactoryUtil.select(
@@ -276,41 +260,21 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
-	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, String name, long parentLayoutPageTemplateCollectionId,
-		int type, int start, int end,
-		OrderByComparator<Object> orderByComparator) {
-
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			groupId, -1, name, parentLayoutPageTemplateCollectionId, type,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, int type) {
-
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-			groupId, null, type);
-	}
-
-	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 		long groupId, long layoutPageTemplateCollectionId, int type) {
 
 		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateCollectionId, null, -1, type);
+			groupId, layoutPageTemplateCollectionId, null, type);
 	}
 
 	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		long parentLayoutPageTemplateCollectionId, int type) {
+		int type) {
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, name,
-				parentLayoutPageTemplateCollectionId, type);
+				groupId, layoutPageTemplateCollectionId, name, type);
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -319,14 +283,6 @@ public class LayoutPageTemplateEntryServiceImpl
 			).from(
 				tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry
 			));
-	}
-
-	@Override
-	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, String name, int type) {
-
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-			groupId, -1, name, -1, type);
 	}
 
 	@Override
@@ -910,7 +866,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	private Table<?>
 		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
 			long groupId, long layoutPageTemplateCollectionId, String name,
-			long parentLayoutPageTemplateCollectionId, int type) {
+			int type) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -924,16 +880,6 @@ public class LayoutPageTemplateEntryServiceImpl
 		).where(
 			LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
 				groupId
-			).and(
-				() -> {
-					if (parentLayoutPageTemplateCollectionId != -1) {
-						return LayoutPageTemplateEntryTable.INSTANCE.
-							layoutPageTemplateCollectionId.eq(
-								parentLayoutPageTemplateCollectionId);
-					}
-
-					return null;
-				}
 			).and(
 				() -> {
 					if (layoutPageTemplateCollectionId != -1) {
@@ -972,10 +918,10 @@ public class LayoutPageTemplateEntryServiceImpl
 					groupId
 				).and(
 					() -> {
-						if (parentLayoutPageTemplateCollectionId != -1) {
+						if (layoutPageTemplateCollectionId != -1) {
 							return LayoutPageTemplateCollectionTable.INSTANCE.
 								parentLayoutPageTemplateCollectionId.eq(
-									parentLayoutPageTemplateCollectionId);
+									layoutPageTemplateCollectionId);
 						}
 
 						return null;

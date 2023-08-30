@@ -26,12 +26,15 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
@@ -129,6 +132,16 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getEditEntryURL() {
+		if (Validator.isNull(_portletResource)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			_portletResource = portletDisplay.getPortletResource();
+		}
+
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
@@ -136,7 +149,7 @@ public class BlogsEditEntryDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setPortletResource(
-			ParamUtil.getString(_httpServletRequest, "portletResource")
+			_portletResource
 		).buildString();
 	}
 
@@ -449,6 +462,7 @@ public class BlogsEditEntryDisplayContext {
 	private Long _entryId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _portletResource;
 	private String _redirect;
 	private Long _smallImageFileEntryId;
 	private String _title;

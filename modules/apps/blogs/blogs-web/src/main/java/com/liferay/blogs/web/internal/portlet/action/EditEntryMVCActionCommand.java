@@ -187,12 +187,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			if (Validator.isNotNull(portletResource) &&
-				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) &&
+				!cmd.equals(Constants.ADD)) {
 
 				hideDefaultSuccessMessage(actionRequest);
 
 				MultiSessionMessages.add(
-					actionRequest, portletResource + "requestProcessed");
+					actionRequest, portletResource + "_requestProcessed");
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -202,13 +203,34 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				_sendDraftRedirect(actionRequest, actionResponse, entry);
 			}
-			else if (Validator.isNotNull(redirect) &&
-					 cmd.equals(Constants.UPDATE)) {
+			else if ((Validator.isNotNull(redirect) &&
+					  cmd.equals(Constants.UPDATE)) ||
+					 ((entry == null) &&
+					  (workflowAction ==
+						  WorkflowConstants.ACTION_SAVE_DRAFT))) {
+
+				if (Validator.isNotNull(portletResource) &&
+					!portletResource.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
+
+					hideDefaultSuccessMessage(actionRequest);
+				}
+
+				MultiSessionMessages.add(
+					actionRequest, portletResource + "_requestProcessed");
 
 				_sendUpdateRedirect(actionRequest, actionResponse);
 			}
 			else if (Validator.isNotNull(redirect) &&
 					 cmd.equals(Constants.ADD) && (entry != null)) {
+
+				if (Validator.isNotNull(portletResource) &&
+					!portletResource.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
+
+					hideDefaultSuccessMessage(actionRequest);
+				}
+
+				MultiSessionMessages.add(
+					actionRequest, portletResource + "_requestProcessed");
 
 				_sendAddRedirect(
 					actionRequest, actionResponse, entry.getEntryId());
@@ -312,7 +334,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSaveAndContinueRedirect(
-			ActionRequest actionRequest, BlogsEntry entry, String redirect)
+			ActionRequest actionRequest, BlogsEntry entry, String redirect,
+			String portletResource)
 		throws Exception {
 
 		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
@@ -329,6 +352,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			"groupId", String.valueOf(entry.getGroupId()), false);
 		portletURL.setParameter(
 			"entryId", String.valueOf(entry.getEntryId()), false);
+		portletURL.setParameter("portletResource", portletResource, false);
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
@@ -374,10 +398,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
 
 		sendRedirect(
 			actionRequest, actionResponse,
-			_getSaveAndContinueRedirect(actionRequest, entry, redirect));
+			_getSaveAndContinueRedirect(
+				actionRequest, entry, redirect, portletResource));
 	}
 
 	private void _sendUpdateRedirect(
@@ -602,7 +629,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (Validator.isNotNull(portletResource)) {
 			MultiSessionMessages.add(
-				actionRequest, portletResource + "requestProcessed");
+				actionRequest, portletResource + "_requestProcessed");
 		}
 
 		return entry;

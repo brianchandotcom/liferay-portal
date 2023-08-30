@@ -46,14 +46,6 @@ public class LockedLayoutsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public boolean hasLockedLayouts() {
-		if (ListUtil.isEmpty(_getLockedLayouts())) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public String getLastAutoSave(LockedLayout lockedLayout) {
 		Date lastAutoSaveDate = lockedLayout.getLastAutoSaveDate();
 
@@ -119,6 +111,14 @@ public class LockedLayoutsDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public boolean hasLockedLayouts() {
+		if (ListUtil.isEmpty(_getLockedLayouts())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private List<LockedLayout> _getFilteredLockedLayouts() {

@@ -8,6 +8,7 @@ package com.liferay.headless.builder.internal.application.publisher;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.application.endpoint.EndpointMatcher;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.headless.builder.internal.resource.HeadlessBuilderResourceImpl;
 import com.liferay.headless.builder.internal.resource.OpenAPIResourceImpl;
@@ -47,34 +48,21 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 		String osgiJaxRsName = _getOSGiJaxRsName(apiApplication);
 
-		HeadlessBuilderResourceImpl headlessBuilderResourceImpl =
-			_headlessBuilderResourceImpls.get(osgiJaxRsName);
-
-		if (headlessBuilderResourceImpl != null) {
-			headlessBuilderResourceImpl.setAPIApplication(apiApplication);
-
-			return;
-		}
-
 		_serviceRegistrationsMap.computeIfAbsent(
 			osgiJaxRsName,
 			key -> new ArrayList<ServiceRegistration<?>>() {
 				{
 					add(_registerApplication(apiApplication, osgiJaxRsName));
+
+					EndpointMatcher endpointMatcher = new EndpointMatcher(
+						apiApplication.getEndpoints());
+
 					add(
 						_registerResource(
 							osgiJaxRsName, HeadlessBuilderResourceImpl.class,
-							() -> {
-								HeadlessBuilderResourceImpl
-									headlessBuilderResourceImpl =
-										new HeadlessBuilderResourceImpl(
-											apiApplication, _endpointHelper);
+							() -> new HeadlessBuilderResourceImpl(
+								_endpointHelper, endpointMatcher)));
 
-								_headlessBuilderResourceImpls.put(
-									osgiJaxRsName, headlessBuilderResourceImpl);
-
-								return headlessBuilderResourceImpl;
-							}));
 					add(
 						_registerResource(
 							osgiJaxRsName, OpenAPIResourceImpl.class,
@@ -89,9 +77,6 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			throw new UnsupportedOperationException(
 				"APIApplicationPublisher not available");
 		}
-
-		_headlessBuilderResourceImpls.remove(
-			_getOSGiJaxRsName(baseURL, companyId));
 
 		List<ServiceRegistration<?>> serviceRegistrations =
 			_serviceRegistrationsMap.remove(
@@ -116,7 +101,6 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		}
 
 		_serviceRegistrationsMap.clear();
-		_headlessBuilderResourceImpls.clear();
 	}
 
 	private String _getOSGiJaxRsName(APIApplication apiApplication) {
@@ -201,9 +185,6 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Reference
 	private EndpointHelper _endpointHelper;
-
-	private final Map<String, HeadlessBuilderResourceImpl>
-		_headlessBuilderResourceImpls = new HashMap<>();
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

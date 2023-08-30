@@ -29,11 +29,10 @@ import javax.ws.rs.core.Response;
 public class HeadlessBuilderResourceImpl {
 
 	public HeadlessBuilderResourceImpl(
-		APIApplication apiApplication, EndpointHelper endpointHelper) {
+		EndpointHelper endpointHelper, EndpointMatcher endpointMatcher) {
 
 		_endpointHelper = endpointHelper;
-
-		setAPIApplication(apiApplication);
+		_endpointMatcher = endpointMatcher;
 	}
 
 	@GET
@@ -85,11 +84,6 @@ public class HeadlessBuilderResourceImpl {
 				pathParameterValue));
 	}
 
-	public void setAPIApplication(APIApplication apiApplication) {
-		_apiApplication = apiApplication;
-		_endpointMatcher = new EndpointMatcher(apiApplication.getEndpoints());
-	}
-
 	private <T> Response _executeEndpoint(
 			String path, APIApplication.Endpoint.Scope scope,
 			UnsafeFunction<APIApplication.Endpoint, T, Exception>
@@ -117,12 +111,10 @@ public class HeadlessBuilderResourceImpl {
 	@Context
 	private AcceptLanguage _acceptLanguage;
 
-	private APIApplication _apiApplication;
-
 	@Context
 	private Company _company;
 
 	private final EndpointHelper _endpointHelper;
-	private EndpointMatcher _endpointMatcher;
+	private final EndpointMatcher _endpointMatcher;
 
 }

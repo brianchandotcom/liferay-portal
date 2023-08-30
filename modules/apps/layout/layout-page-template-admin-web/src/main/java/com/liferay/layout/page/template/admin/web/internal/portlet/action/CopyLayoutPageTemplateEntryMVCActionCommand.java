@@ -91,29 +91,23 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
 				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
 				layoutPageTemplateEntryId, serviceContext);
 
+		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
 		Layout sourceLayout = _layoutLocalService.getLayout(
 			sourceLayoutPageTemplateEntry.getPlid());
-
-		Layout draftSourceLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), sourceLayout.getPlid());
 
 		Layout targetLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftTargetLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), targetLayout.getPlid());
-
 		_layoutCopyHelper.copyLayoutContent(
-			draftSourceLayout, draftTargetLayout);
+			sourceLayout, targetLayout.fetchDraftLayout());
 
 		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 

@@ -616,7 +616,6 @@ definition {
 	@description = "This is a use case for LPS-189070. TC3: Verify that the user can manage and invite Users when the “Manage Users” and the new “Invite User” permission were added."
 	@priority = 5
 	test AccountAdminCanManageAndInviteUserToAccount {
-		property custom.properties = "feature.flag.LPS-188798=true";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given: There is an Account Administrator assigned to a Business Account") {

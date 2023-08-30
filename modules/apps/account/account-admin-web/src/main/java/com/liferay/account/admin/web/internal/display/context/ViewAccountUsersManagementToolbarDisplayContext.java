@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,9 +98,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-188798") ||
-					_hasManageUsersPermission()) {
-
+				if (_hasManageUsersPermission()) {
 					return true;
 				}
 
@@ -136,9 +133,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 			}
 		).addDropdownItem(
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-188798") ||
-					_hasInviteUserPermission() || _hasManageUsersPermission()) {
-
+				if (_hasInviteUserPermission() || _hasManageUsersPermission()) {
 					return true;
 				}
 
@@ -227,10 +222,6 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-188798")) {
-			return _hasManageUsersPermission();
-		}
-
 		if (_hasInviteUserPermission() || _hasManageUsersPermission()) {
 			return true;
 		}

@@ -6,6 +6,7 @@
 package com.liferay.commerce.util;
 
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
@@ -15,7 +16,9 @@ import java.util.Locale;
  */
 public interface CommerceOrderItemQuantityFormatter {
 
-	public String format(CommerceOrderItem commerceOrderItem, Locale locale)
+	public String format(
+			CommerceOrderItem commerceOrderItem,
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, Locale locale)
 		throws PortalException;
 
 }

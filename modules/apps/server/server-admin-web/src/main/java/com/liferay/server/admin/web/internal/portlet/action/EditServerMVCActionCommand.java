@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.image.Ghostscript;
+import com.liferay.image.ImageMagick;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.string.CharPool;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -668,7 +668,7 @@ public class EditServerMVCActionCommand
 		portletPreferences.store();
 
 		_ghostscript.reset();
-		ImageMagickUtil.reset();
+		_imageMagick.reset();
 	}
 
 	private void _updateLogLevels(ActionRequest actionRequest) {
@@ -896,6 +896,9 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ImageMagick _imageMagick;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

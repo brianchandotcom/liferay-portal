@@ -5,9 +5,9 @@
 
 package com.liferay.blogs.internal.image;
 
+import com.liferay.image.ImageMagick;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
-import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,8 +24,9 @@ import java.io.IOException;
  */
 public class ImageSelectorProcessor {
 
-	public ImageSelectorProcessor(byte[] bytes) {
+	public ImageSelectorProcessor(byte[] bytes, ImageMagick imageMagick) {
 		_bytes = bytes;
+		_imageMagick = imageMagick;
 	}
 
 	public byte[] cropImage(String cropRegion)
@@ -70,8 +71,8 @@ public class ImageSelectorProcessor {
 			}
 		}
 
-		if ((bytes == null) && ImageMagickUtil.isEnabled()) {
-			bytes = ImageMagickUtil.scale(_bytes, ImageTool.TYPE_PNG, width, 0);
+		if ((bytes == null) && _imageMagick.isEnabled()) {
+			bytes = _imageMagick.scale(_bytes, ImageTool.TYPE_PNG, width, 0);
 		}
 
 		return bytes;
@@ -81,5 +82,6 @@ public class ImageSelectorProcessor {
 		ImageSelectorProcessor.class);
 
 	private final byte[] _bytes;
+	private final ImageMagick _imageMagick;
 
 }

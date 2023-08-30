@@ -32,6 +32,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.image.ImageMagick;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1586,7 +1587,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		try {
 			ImageSelectorProcessor imageSelectorProcessor =
-				new ImageSelectorProcessor(imageSelector.getImageBytes());
+				new ImageSelectorProcessor(
+					imageSelector.getImageBytes(), _imageMagick);
 
 			imageBytes = imageSelectorProcessor.cropImage(
 				imageSelector.getImageCropRegion());
@@ -1664,7 +1666,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				BlogsGroupServiceSettings.getInstance(groupId);
 
 			ImageSelectorProcessor imageSelectorProcessor =
-				new ImageSelectorProcessor(imageSelector.getImageBytes());
+				new ImageSelectorProcessor(
+					imageSelector.getImageBytes(), _imageMagick);
 
 			imageBytes = imageSelectorProcessor.scaleImage(
 				blogsGroupServiceSettings.getSmallImageWidth());
@@ -2416,6 +2419,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference
+	private ImageMagick _imageMagick;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

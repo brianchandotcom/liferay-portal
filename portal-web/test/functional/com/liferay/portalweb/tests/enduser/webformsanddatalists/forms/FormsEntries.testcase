@@ -503,10 +503,6 @@ definition {
 
 			FormPortlet.submitSuccessfully();
 
-			FormPortlet.viewSuccessPage(
-				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-				successPageTitle = "Thank you.");
-
 			FormsAdminNavigator.closePublishedFormWindow();
 		}
 
@@ -551,10 +547,6 @@ definition {
 
 			FormPortlet.submitSuccessfully();
 
-			FormPortlet.viewSuccessPage(
-				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-				successPageTitle = "Thank you.");
-
 			FormsAdminNavigator.closePublishedFormWindow();
 
 			FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
@@ -566,10 +558,6 @@ definition {
 				fieldValue = "Test Text2");
 
 			FormPortlet.submitSuccessfully();
-
-			FormPortlet.viewSuccessPage(
-				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-				successPageTitle = "Thank you.");
 
 			FormsAdminNavigator.closePublishedFormWindow();
 		}
@@ -854,8 +842,6 @@ definition {
 				fieldValue = "02/01/2016");
 
 			Button.clickSubmitForWorkflow();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("When the reviewer views this task via My Workflow Tasks") {

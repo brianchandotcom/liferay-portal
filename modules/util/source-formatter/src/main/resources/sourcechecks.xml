@@ -1787,6 +1787,10 @@
 			<category name="Upgrade" />
 			<description name="Replace compat/mixins by clay/cadmin-variables" />
 		</check>
+		<check name="UpgradeSCSSNodeSassPatternsCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration of Dart Sass deprecated patterns (e.g., the division operation using the '/' character, the interpolation syntax, etc.)" />
+		</check>
 		<check name="UpgradeSetResultsSetTotalMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal" />

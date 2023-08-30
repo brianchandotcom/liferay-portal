@@ -32,6 +32,62 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-103694. Verify Admin is notified of a form submission after two minutes."
+	@priority = 5
+	test AdminIsNotifiedOfAFormSubmissionIfWorkflowIsEnabled {
+		task ("Given a published form with Single Approver workflow assigned to it") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Text");
+
+			FormsAdminNavigator.gotoSettings();
+
+			Form.configureWorkflow(workflowDefinition = "Single Approver");
+
+			Form.save();
+
+			Form.publishForm();
+		}
+
+		task ("and Given that a user submitted an entry using the form") {
+			FormsAdminNavigator.gotoPublishCopyURLLink();
+
+			var publishFormURL = Form.getPublishedFormPublicURL();
+
+			Navigator.openSpecificURL(url = ${publishFormURL});
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Text");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
+		}
+
+		task ("and Given that a user submits another entry after two minutes") {
+			Pause(locator1 = 120000);
+
+			Navigator.openSpecificURL(url = ${publishFormURL});
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Text1");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
+		}
+
+		task ("Then the admin is notified of a form submission") {
+			Navigator.openURL();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+			AssertTextPresent(value1 = "Test Test sent you a Form Record for review in the workflow.");
+		}
+	}
+
 	@description = "Verify that Entries can be deleted"
 	@priority = 5
 	test CanBeDeleted {
@@ -886,11 +942,7 @@ definition {
 
 		Form.publishForm();
 
-		FormsAdminNavigator.gotoPublishCopyURLLink();
-
-		var publishFormURL = Form.getPublishedFormPublicURL();
-
-		Navigator.openSpecificURL(url = ${publishFormURL});
+		FormsAdminNavigator.openPublishURL(publishFormURL = ${publishedFormPublicURL});
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -907,28 +959,6 @@ definition {
 		FormsAdminNavigator.gotoViewEntries();
 
 		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
-
-		// Pausing 120 seconds due to LPS-159468
-
-		Pause(locator1 = 120000);
-
-		Navigator.openSpecificURL(url = ${publishFormURL});
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test Text1");
-
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
-
-		FormPortlet.viewSuccessPage(
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-			successPageTitle = "Thank you.");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
-
-		AssertTextPresent(value1 = "Test Test sent you a Form Record for review in the workflow.");
 	}
 
 }

@@ -36,10 +36,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lock.model.LockTable;
+import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 
 import java.sql.Types;
@@ -280,6 +282,54 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			String.valueOf(userId));
 	}
 
+	@Override
+	public void unlockLayouts(long companyId, long timeWithoutAutosave) {
+		Date lastAutosaveDate = new Date(
+			System.currentTimeMillis() - (timeWithoutAutosave * Time.MINUTE));
+
+		List<Long> plids = _layoutLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				LayoutTable.INSTANCE.plid
+			).from(
+				LayoutTable.INSTANCE
+			).innerJoinON(
+				LockTable.INSTANCE,
+				LockTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					LockTable.INSTANCE.className.eq(Layout.class.getName())
+				).and(
+					LockTable.INSTANCE.key.eq(
+						DSLFunctionFactoryUtil.castText(
+							LayoutTable.INSTANCE.plid))
+				).and(
+					LockTable.INSTANCE.createDate.lt(lastAutosaveDate)
+				)
+			).where(
+				LayoutTable.INSTANCE.classPK.gt(
+					0L
+				).and(
+					LayoutTable.INSTANCE.hidden.eq(true)
+				).and(
+					LayoutTable.INSTANCE.system.eq(true)
+				).and(
+					LayoutTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_DRAFT)
+				).and(
+					LayoutTable.INSTANCE.type.in(
+						new String[] {
+							LayoutConstants.TYPE_ASSET_DISPLAY,
+							LayoutConstants.TYPE_COLLECTION,
+							LayoutConstants.TYPE_CONTENT
+						})
+				)
+			));
+
+		for (Long plid : plids) {
+			_lockManager.unlock(Layout.class.getName(), String.valueOf(plid));
+		}
+	}
+
 	private String _getLayoutPageTemplateEntryTypeLabel(
 		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
 
@@ -335,6 +385,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	@Reference
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	@Reference
+	private LockLocalService _lockLocalService;
 
 	@Reference
 	private LockManager _lockManager;

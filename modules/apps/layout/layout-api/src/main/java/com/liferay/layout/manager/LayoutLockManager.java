@@ -41,4 +41,6 @@ public interface LayoutLockManager {
 
 	public void unlock(Layout layout, long userId);
 
+	public void unlockLayouts(long companyId, long timeWithoutAutosave);
+
 }

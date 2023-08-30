@@ -303,29 +303,6 @@ public class ReleaseLocalServiceUtil {
 		return getService().updateRelease(release);
 	}
 
-	public static void updateRelease(
-			String servletContextName,
-			List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
-				upgradeProcesses,
-			int buildNumber, int previousBuildNumber)
-		throws PortalException {
-
-		getService().updateRelease(
-			servletContextName, upgradeProcesses, buildNumber,
-			previousBuildNumber);
-	}
-
-	public static void updateRelease(
-			String servletContextName,
-			List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
-				upgradeProcesses,
-			java.util.Properties unfilteredPortalProperties)
-		throws Exception {
-
-		getService().updateRelease(
-			servletContextName, upgradeProcesses, unfilteredPortalProperties);
-	}
-
 	public static Release updateRelease(
 		String servletContextName, String schemaVersion,
 		String previousSchemaVersion) {

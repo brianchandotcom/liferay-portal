@@ -347,31 +347,6 @@ public class ReleaseLocalServiceWrapper
 	}
 
 	@Override
-	public void updateRelease(
-			String servletContextName,
-			java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
-				upgradeProcesses,
-			int buildNumber, int previousBuildNumber)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_releaseLocalService.updateRelease(
-			servletContextName, upgradeProcesses, buildNumber,
-			previousBuildNumber);
-	}
-
-	@Override
-	public void updateRelease(
-			String servletContextName,
-			java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
-				upgradeProcesses,
-			java.util.Properties unfilteredPortalProperties)
-		throws Exception {
-
-		_releaseLocalService.updateRelease(
-			servletContextName, upgradeProcesses, unfilteredPortalProperties);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.Release updateRelease(
 		String servletContextName, String schemaVersion,
 		String previousSchemaVersion) {

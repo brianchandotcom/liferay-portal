@@ -232,6 +232,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company = companyPersistence.update(company);
 
+			User guestUser = _addGuestUser(company);
+
 			// Virtual host
 
 			updateVirtualHostname(company.getCompanyId(), virtualHostname);
@@ -266,8 +268,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			if (webId.equals("liferay.net")) {
 				_addDemoSettings(company);
 			}
-
-			User guestUser = _addGuestUser(company);
 
 			company = _checkCompany(
 				company, mx, defaultAdminPassword, defaultAdminScreenName,

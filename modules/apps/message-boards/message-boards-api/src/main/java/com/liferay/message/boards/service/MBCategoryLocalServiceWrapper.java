@@ -616,6 +616,13 @@ public class MBCategoryLocalServiceWrapper
 		return _mbCategoryLocalService.getMBCategory(categoryId);
 	}
 
+	@Override
+	public MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws com.liferay.message.boards.exception.NoSuchCategoryException {
+
+		return _mbCategoryLocalService.getMBCategory(groupId, friendlyURL);
+	}
+
 	/**
 	 * Returns the message boards category matching the UUID and group.
 	 *

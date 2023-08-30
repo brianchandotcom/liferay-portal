@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author     Brian Wing Shun Chan
- * @author     Zsolt Berentey
+ * @author Brian Wing Shun Chan
+ * @author Zsolt Berentey
  */
 @Component(service = VerifyProcess.class)
 public class MessageBoardsServiceVerifyProcess extends VerifyProcess {

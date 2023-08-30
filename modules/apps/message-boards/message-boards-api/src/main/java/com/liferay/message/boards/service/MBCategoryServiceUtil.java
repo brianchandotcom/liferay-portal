@@ -263,6 +263,12 @@ public class MBCategoryServiceUtil {
 		return getService().getCategoryIds(groupId, categoryId);
 	}
 
+	public static MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws PortalException {
+
+		return getService().getMBCategory(groupId, friendlyURL);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

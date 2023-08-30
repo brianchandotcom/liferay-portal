@@ -287,7 +287,7 @@ const Actions = () => {
 												<span
 													className="label-icon lfr-portal-tooltip ml-2"
 													title={Liferay.Language.get(
-														'this-key-allows-the-action-to-be-performed-when-the-permission-is-associated-with-it'
+														'headless-action-key-help'
 													)}
 												>
 													<ClayIcon symbol="question-circle-full" />
@@ -297,7 +297,7 @@ const Actions = () => {
 											<ClayInput
 												id="headlessActionKeyInput"
 												placeholder={Liferay.Language.get(
-													'add-value-here'
+													'add-a-value-here'
 												)}
 											/>
 										</ClayForm.Group>

@@ -509,6 +509,41 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-177665."
+	@priority = 4
+	test ReindexSearchTuningWithConcurrentExecutionMode {
+		property custom.properties = "feature.flag.LPS-183661=true";
+		property search.environment.suite.exclude = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Create a new result ranking") {
+			SearchTuning.openResultRankingsAdmin();
+
+			SearchTuning.addResultRanking(searchQuery = "Test Ranking");
+		}
+
+		task ("Create a new synonym set") {
+			SearchTuning.openSynonymsAdmin();
+
+			SearchTuning.addSynonymSet(synonyms = "Test Synonym Set");
+		}
+
+		task ("Perform a concurrent reindex") {
+			SearchAdministration.executeReindex(reindexMode = "Concurrent");
+		}
+
+		task ("Assert that the result ranking and synonym set is still available after concurrent reindex") {
+			SearchTuning.openResultRankingsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Ranking");
+
+			SearchTuning.openSynonymsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Synonym Set");
+		}
+	}
+
 	@description = "This is a use case for LPS-184999."
 	@priority = 4
 	test ReindexSearchTuningWithSyncExecutionMode {

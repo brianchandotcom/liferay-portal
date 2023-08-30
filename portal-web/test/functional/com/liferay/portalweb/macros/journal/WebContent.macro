@@ -1528,12 +1528,14 @@ definition {
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
 
 		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncrease};
-
+		var currentTime = "${displayDateHour}:${displayDateMinute} ${displayDateAmpm}";
 		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
 
 		WebContent.editDisplayDate(
 			displayDate = ${displayDate},
 			displayTime = ${displayTime});
+
+		echo("Web Content display time increased ${minuteIncrease} minutes from: ${currentTime} to: ${displayTime}");
 	}
 
 	macro moveArticlesToFolderCP {

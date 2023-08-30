@@ -21,21 +21,23 @@
 	</div>
 </clay:sheet-section>
 
-<div id="<portlet:namespace />manageRemotely">
-	<clay:sheet-section>
-		<h3 class="sheet-subtitle"><liferay-ui:message key="manage-remotely" /></h3>
+<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-186360") %>'>
+	<div id="<portlet:namespace />manageRemotely">
+		<clay:sheet-section>
+			<h3 class="sheet-subtitle"><liferay-ui:message key="manage-remotely" /></h3>
 
-		<div class="sheet-text"><liferay-ui:message key="manage-remotely-help" /></div>
+			<div class="sheet-text"><liferay-ui:message key="manage-remotely-help" /></div>
 
-		<div class="form-group">
-			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableManageRemotely" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" />
+			<div class="form-group">
+				<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableManageRemotely" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" />
 
-			<aui:input label="client-id" name="clientId" placeholder="remote-client-id-placeholder" readonly="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" type="input" value="<%= publicationsConfigurationDisplayContext.getRemoteClientId() %>" />
+				<aui:input label="client-id" name="clientId" placeholder="remote-client-id-placeholder" readonly="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" type="input" value="<%= publicationsConfigurationDisplayContext.getRemoteClientId() %>" />
 
-			<aui:input label="client-secret" name="clientSecret" placeholder="remote-client-secret-placeholder" readonly="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" type="input" value="<%= publicationsConfigurationDisplayContext.getRemoteClientSecret() %>" />
-		</div>
-	</clay:sheet-section>
-</div>
+				<aui:input label="client-secret" name="clientSecret" placeholder="remote-client-secret-placeholder" readonly="<%= publicationsConfigurationDisplayContext.isRemoteEnabled() %>" type="input" value="<%= publicationsConfigurationDisplayContext.getRemoteClientSecret() %>" />
+			</div>
+		</clay:sheet-section>
+	</div>
+</c:if>
 
 <div id="<portlet:namespace />sandboxOnly">
 	<clay:sheet-section>

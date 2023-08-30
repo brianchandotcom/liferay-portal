@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -44,11 +45,13 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
-		).setParameter(
 			"layoutPageTemplateCollectionId",
 			ParamUtil.getLong(
-				_httpServletRequest, "layoutPageTemplateCollectionId", -1)
+				_httpServletRequest, "layoutPageTemplateCollectionId",
+				LayoutPageTemplateConstants.
+					DEFAULT_PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID)
+		).setParameter(
+			"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
 		).setParameter(
 			"type", LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE
 		).buildString();

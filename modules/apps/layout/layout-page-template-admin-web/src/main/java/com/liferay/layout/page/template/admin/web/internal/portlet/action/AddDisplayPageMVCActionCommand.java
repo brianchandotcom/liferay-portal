@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
@@ -102,7 +103,9 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 			).setParameter(
 				"layoutPageTemplateCollectionId",
 				ParamUtil.getLong(
-					actionRequest, "layoutPageTemplateCollectionId", -1)
+					actionRequest, "layoutPageTemplateCollectionId",
+					LayoutPageTemplateConstants.
+						DEFAULT_PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID)
 			).buildString());
 
 		return HttpComponentsUtil.setParameter(

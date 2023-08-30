@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -99,7 +100,10 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		throws PortalException {
 
 		return addLayoutPageTemplateCollection(
-			userId, groupId, name, description, 0, serviceContext);
+			userId, groupId, name, description,
+			LayoutPageTemplateConstants.
+				DEFAULT_PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID,
+			serviceContext);
 	}
 
 	@Override

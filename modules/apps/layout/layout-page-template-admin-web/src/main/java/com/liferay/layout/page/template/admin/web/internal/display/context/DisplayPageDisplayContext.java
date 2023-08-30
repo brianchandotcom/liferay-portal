@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -273,7 +274,9 @@ public class DisplayPageDisplayContext {
 		}
 
 		_layoutPageTemplateCollectionId = ParamUtil.getLong(
-			_httpServletRequest, "layoutPageTemplateCollectionId", -1);
+			_httpServletRequest, "layoutPageTemplateCollectionId",
+			LayoutPageTemplateConstants.
+				DEFAULT_PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID);
 
 		return _layoutPageTemplateCollectionId;
 	}

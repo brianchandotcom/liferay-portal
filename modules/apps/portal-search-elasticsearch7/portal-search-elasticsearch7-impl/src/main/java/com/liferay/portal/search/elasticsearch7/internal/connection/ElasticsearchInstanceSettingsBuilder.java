@@ -33,9 +33,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 	public Settings build() {
 		load();
 
-		Settings.Builder builder = _settingsBuilder.getBuilder();
-
-		return builder.build();
+		return _settingsBuilder.build();
 	}
 
 	public ElasticsearchInstanceSettingsBuilder clusterInitialMasterNodes(

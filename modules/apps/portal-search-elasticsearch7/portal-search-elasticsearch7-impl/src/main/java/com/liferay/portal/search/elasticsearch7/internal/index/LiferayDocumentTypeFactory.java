@@ -33,7 +33,6 @@ import org.elasticsearch.client.indices.GetMappingsResponse;
 import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.cluster.metadata.MappingMetadata;
 import org.elasticsearch.common.compress.CompressedXContent;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.xcontent.XContentType;
 
 /**
@@ -94,8 +93,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		addTypeMappings(indexName, optionalDefaultTypeMappings);
 	}
 
-	public void createRequiredDefaultAnalyzers(Settings.Builder builder) {
-		SettingsBuilder settingsBuilder = new SettingsBuilder(builder);
+	public void createRequiredDefaultAnalyzers(
+		SettingsBuilder settingsBuilder) {
 
 		String requiredDefaultAnalyzers = ResourceUtil.getResourceAsString(
 			getClass(), IndexSettingsConstants.INDEX_SETTINGS_FILE_NAME);

@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.search.elasticsearch7.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.helper.LiferayIndexCreationHelper;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 
 import java.io.IOException;
 
@@ -38,14 +39,15 @@ public class IndexCreator {
 
 		indexCreationHelper.contribute(createIndexRequest);
 
-		Settings.Builder builder = Settings.builder();
+		SettingsBuilder settingsBuilder = new SettingsBuilder(
+			Settings.builder());
 
-		builder.put("index.number_of_replicas", 0);
-		builder.put("index.number_of_shards", 1);
+		settingsBuilder.put("index.number_of_replicas", "0");
+		settingsBuilder.put("index.number_of_shards", "1");
 
-		indexCreationHelper.contributeIndexSettings(builder);
+		indexCreationHelper.contributeIndexSettings(settingsBuilder);
 
-		createIndexRequest.settings(builder);
+		createIndexRequest.settings(settingsBuilder.getBuilder());
 
 		try {
 			indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
@@ -120,10 +122,13 @@ public class IndexCreator {
 			}
 
 			@Override
-			public void contributeIndexSettings(Settings.Builder builder) {
-				_indexCreationHelper.contributeIndexSettings(builder);
+			public void contributeIndexSettings(
+				SettingsBuilder settingsBuilder) {
 
-				liferayIndexCreationHelper.contributeIndexSettings(builder);
+				_indexCreationHelper.contributeIndexSettings(settingsBuilder);
+
+				liferayIndexCreationHelper.contributeIndexSettings(
+					settingsBuilder);
 			}
 
 			@Override

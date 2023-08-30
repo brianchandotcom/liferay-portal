@@ -569,11 +569,15 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private long _getMaximumFileSize(ObjectField objectField) {
-		try {
-			ObjectFieldSetting objectFieldSetting =
-				_objectFieldSettingLocalService.fetchObjectFieldSetting(
-					objectField.getObjectFieldId(), "maximumFileSize");
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "maximumFileSize");
 
+		if ((objectFieldSetting != null) && !_isGuestUser()) {
+			return GetterUtil.getLong(objectFieldSetting.getValue());
+		}
+
+		try {
 			long maximumFileSizeForGuestUsers =
 				ObjectConfigurationUtil.maximumFileSizeForGuestUsers();
 

@@ -5,13 +5,10 @@
 
 import React from 'react';
 import './Header.scss';
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 interface Header {
 	folder: ObjectFolder;
 	hasDraftObjectDefinitions: boolean;
-	setShowModal: (
-		value: React.SetStateAction<ViewObjectDefinitionsModals>
-	) => void;
+	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 export default function ({
 	folder,

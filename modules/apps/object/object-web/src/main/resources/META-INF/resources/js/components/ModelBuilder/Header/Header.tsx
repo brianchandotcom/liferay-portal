@@ -13,15 +13,12 @@ import './Header.scss';
 
 import {sub} from 'frontend-js-web';
 
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 interface Header {
 	folder: ObjectFolder;
 	hasDraftObjectDefinitions: boolean;
-	setShowModal: (
-		value: React.SetStateAction<ViewObjectDefinitionsModals>
-	) => void;
+	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 
 export default function ({
@@ -96,7 +93,7 @@ export default function ({
 								onClick={() =>
 									setShowModal(
 										(
-											previousState: ViewObjectDefinitionsModals
+											previousState: ModelBuilderModals
 										) => ({
 											...previousState,
 											editFolder: true,

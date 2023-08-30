@@ -50,7 +50,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		_validateScriptConfiguration(
+		_validateConfigurationExecuteCode(
 			objectActionExecutorKey, getPermissionChecker());
 
 		return objectActionLocalService.addObjectAction(
@@ -105,7 +105,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			getPermissionChecker(), objectAction.getObjectDefinitionId(),
 			ActionKeys.UPDATE);
 
-		_validateScriptConfiguration(
+		_validateConfigurationExecuteCode(
 			objectActionExecutorKey, getPermissionChecker());
 
 		return objectActionLocalService.updateObjectAction(
@@ -115,7 +115,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			parametersUnicodeProperties);
 	}
 
-	private void _validateScriptConfiguration(
+	private void _validateConfigurationExecuteCode(
 			String objectActionExecutorKey, PermissionChecker permissionChecker)
 		throws PortalException {
 

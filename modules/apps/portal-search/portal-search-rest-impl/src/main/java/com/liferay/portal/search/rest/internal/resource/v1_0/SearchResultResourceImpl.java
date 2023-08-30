@@ -51,7 +51,7 @@ import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.internal.facet.FacetRequestContributor;
 import com.liferay.portal.search.rest.internal.facet.FacetResponseProcessor;
 import com.liferay.portal.search.rest.internal.odata.entity.v1_0.SearchResultEntityModel;
-import com.liferay.portal.search.rest.internal.pagination.SearchPage;
+import com.liferay.portal.search.rest.pagination.SearchPage;
 import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;

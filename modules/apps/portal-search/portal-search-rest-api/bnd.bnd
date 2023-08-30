@@ -1,7 +1,8 @@
 Bundle-Name: Liferay Portal Search REST API
 Bundle-SymbolicName: com.liferay.portal.search.rest.api
-Bundle-Version: 4.1.4
+Bundle-Version: 4.2.0
 Export-Package:\
 	com.liferay.portal.search.rest.configuration,\
 	com.liferay.portal.search.rest.dto.v1_0,\
+	com.liferay.portal.search.rest.pagination,\
 	com.liferay.portal.search.rest.resource.v1_0

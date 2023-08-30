@@ -32,7 +32,7 @@ const MiscellaneousMarketingFields = ({
 		<>
 			<PRMFormik.Field
 				component={PRMForm.InputText}
-				label="Describe the marketing activity"
+				label="Describe the marketing Activity"
 				name={`activities[${currentActivityIndex}].activityDescription.marketingActivity`}
 				required
 			/>

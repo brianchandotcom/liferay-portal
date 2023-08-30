@@ -48,10 +48,12 @@ export default function FragmentList({
 	const dispatch = useContext(StoreDispatchContext);
 
 	const highlightFragment = ({
+		enableScroll = true,
 		hierarchy,
 		itemId,
 		name,
 	}: {
+		enableScroll?: boolean;
 		hierarchy?: string;
 		itemId: string;
 		name: string;
@@ -75,11 +77,13 @@ export default function FragmentList({
 			style: {left: rect.x, top: rect.y + rect.height + window.scrollY},
 		});
 
-		fragment?.scrollIntoView?.({
-			behavior: 'smooth',
-			block: 'center',
-			inline: 'nearest',
-		});
+		if (enableScroll) {
+			fragment?.scrollIntoView?.({
+				behavior: 'smooth',
+				block: 'center',
+				inline: 'nearest',
+			});
+		}
 	};
 
 	const removeHighlightFromFragment = () => {
@@ -127,11 +131,16 @@ export default function FragmentList({
 							onMouseLeave={removeHighlightFromFragment}
 							onMouseOver={() =>
 								highlightFragment({
+									enableScroll: false,
 									itemId,
 									name,
 								})
 							}
 						>
+							<span className="sr-only" role="status">
+								{highlightedFragment?.hierarchy}
+							</span>
+
 							<div className="align-items-center d-flex justify-content-between">
 								<span className="font-weight-bold">
 									{name}
@@ -273,10 +282,6 @@ export default function FragmentList({
 					</div>
 				</ReactPortal>
 			) : null}
-
-			<span className="sr-only" role="status">
-				{highlightedFragment?.hierarchy}
-			</span>
 		</div>
 	);
 }

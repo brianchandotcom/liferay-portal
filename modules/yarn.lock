@@ -1799,10 +1799,10 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@liferay/amd-loader@5.4.1":
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.4.1.tgz#85df6600131ae83542414e89ed8b3648af461ecc"
-  integrity sha512-ZeBwwc/0KmuCkY49P8xS0FAVW6q8jWj7Jk3soaPvAcXV/RQCbT0FCs1W+g8/nj6aMnr0KM7JWz8FbSky3YIFew==
+"@liferay/amd-loader@5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.4.2.tgz#f9202f5c041d8a27e719de31dce527435bb4c0f3"
+  integrity sha512-Q2lWf6nejdoy8DLrTWzvnWNc/nmJ1293j8ze9ODKLTmEurEvfSz1pYTvhpJ8anDz/G8+ufLQmmgcPYbZJmb1uQ==
   dependencies:
     webpack-cli "^3.0.0"
     webpack-dev-server "^3.0.0"
@@ -1883,10 +1883,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@48.1.1":
-  version "48.1.1"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-48.1.1.tgz#7651a46a047568827d5942980f7713d93dd5e3df"
-  integrity sha512-BbivZamRpOQiWkdygfL8/k5BK7sPZZMOHL7JnVkzUkDUHKEdd/aorSox3Wh0qbWfrR4ak0Ahw1IaVtKbPgcm5w==
+"@liferay/npm-scripts@48.1.3":
+  version "48.1.3"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-48.1.3.tgz#6da962207982b8357651c6dccbfa70d9855c80f6"
+  integrity sha512-M6vzG4x7uqugtrusxzEOos3CgKQ/RWiTl6w4QdgxxlWQps53dI1EpB3ayFpIiBXRh5K+beusUSA6LshxwKOBsQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

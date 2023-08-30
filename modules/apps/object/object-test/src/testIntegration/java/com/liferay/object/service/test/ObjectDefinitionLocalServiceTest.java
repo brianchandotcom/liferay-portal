@@ -1091,7 +1091,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionRootObjectDefinitionIdException.class,
-			"Object Definitions that belongs to a hierarchical structure " +
+			"Object Definitions that belong to a hierarchical structure " +
 				"cannot be deleted",
 			() -> _objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinitionLocalService.updateRootObjectDefinitionId(
@@ -1101,6 +1101,9 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
+
+		_objectDefinitionLocalService.updateRootObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId(), 0);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
@@ -1567,12 +1570,6 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				_objectDefinitionLocalService);
-
-		AssertUtils.assertFailure(
-			NoSuchObjectDefinitionException.class,
-			"No ObjectDefinition exists with the primary key 0",
-			() -> _objectDefinitionLocalService.updateRootObjectDefinitionId(
-				objectDefinition1.getObjectDefinitionId(), 0));
 
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addObjectDefinition(

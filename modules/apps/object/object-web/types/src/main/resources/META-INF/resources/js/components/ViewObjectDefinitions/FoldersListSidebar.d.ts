@@ -4,7 +4,6 @@
  */
 
 import {SetStateAction} from 'react';
-import {ViewObjectDefinitionsModals} from './ViewObjectDefinitions';
 interface FoldersListSidebarProps {
 	foldersList: ObjectFolder[];
 	selectedFolder: ObjectFolder;

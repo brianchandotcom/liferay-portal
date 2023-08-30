@@ -37,6 +37,30 @@ interface LabelNameObject {
 	name: string;
 }
 
+interface ViewObjectDefinitionsModals {
+	addFolder: boolean;
+	addObjectDefinition: boolean;
+	bindToRootObjectDefinition: boolean;
+	deleteFolder: boolean;
+	deleteObjectDefinition: boolean;
+	deletionNotAllowed: boolean;
+	editFolder: boolean;
+	moveObjectDefinition: boolean;
+	unbindFromRootObjectDefinition: boolean;
+}
+
+interface ModelBuilderModals
+	extends Omit<
+		ViewObjectDefinitionsModals,
+		| 'bindToRootObjectDefinition'
+		| 'deletionNotAllowed'
+		| 'unbindFromRootObjectDefinition'
+	> {
+	addRelationship: boolean;
+	editERC: boolean;
+	redirectEditObjectDefinition: boolean;
+}
+
 interface NameValueObject {
 	name: string;
 	value: string;

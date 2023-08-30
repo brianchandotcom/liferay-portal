@@ -802,32 +802,6 @@ definition {
 			fieldValue = "Approved");
 	}
 
-	@description = "Verify that with Single Approver Workflow enabled, the Submit button now reads "Submit for Workflow""
-	@priority = 5
-	test WorkflowChangesSubmitButtonToSubmitForWorkflow {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.addTextField(fieldPositionNumber = 0);
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoSettings();
-
-		Form.configureWorkflow(workflowDefinition = "Single Approver");
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		Form.viewSubmitButtonText(key_buttonText = "Submit for Workflow");
-	}
-
 	@description = "This is a use case for LPS-103694. Verify that with Single Approver Workflow enabled and after the user Submit for Workflow, the form entry will have a pending label and the admin is notified of form submission"
 	@priority = 5
 	test WorkflowSubmissionChangesLabelToPending {

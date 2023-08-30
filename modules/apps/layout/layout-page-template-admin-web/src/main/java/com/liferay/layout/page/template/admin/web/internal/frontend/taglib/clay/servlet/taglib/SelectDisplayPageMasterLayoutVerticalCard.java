@@ -46,9 +46,9 @@ public class SelectDisplayPageMasterLayoutVerticalCard implements VerticalCard {
 		).setParameter(
 			"masterLayoutPlid", _layoutPageTemplateEntry.getPlid()
 		).setParameter(
-			"parentLayoutPageTemplateCollectionId",
+			"layoutPageTemplateCollectionId",
 			ParamUtil.getLong(
-				_httpServletRequest, "parentLayoutPageTemplateCollectionId", -1)
+				_httpServletRequest, "layoutPageTemplateCollectionId", -1)
 		).setParameter(
 			"type", LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE
 		).buildString();

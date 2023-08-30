@@ -143,7 +143,7 @@ public class DisplayPageManagementToolbarDisplayContext
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"parentLayoutPageTemplateCollectionId",
+						"layoutPageTemplateCollectionId",
 						ParamUtil.getLong(
 							httpServletRequest,
 							"layoutPageTemplateCollectionId")
@@ -162,7 +162,7 @@ public class DisplayPageManagementToolbarDisplayContext
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
 					).setParameter(
-						"parentLayoutPageTemplateCollectionId",
+						"layoutPageTemplateCollectionId",
 						ParamUtil.getLong(
 							httpServletRequest,
 							"layoutPageTemplateCollectionId")

@@ -100,7 +100,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 			).setTabs1(
 				"display-page-templates"
 			).setParameter(
-				"parentLayoutPageTemplateCollectionId",
+				"layoutPageTemplateCollectionId",
 				ParamUtil.getLong(
 					actionRequest, "layoutPageTemplateCollectionId", -1)
 			).buildString());

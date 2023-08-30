@@ -59,7 +59,7 @@ public class AddDisplayPageCollectionMVCActionCommand
 					ParamUtil.getString(actionRequest, "name"),
 					ParamUtil.getString(actionRequest, "description"),
 					ParamUtil.getLong(
-						actionRequest, "parentLayoutPageTemplateCollectionId"),
+						actionRequest, "layoutPageTemplateCollectionId"),
 					ServiceContextFactory.getInstance(actionRequest));
 
 			jsonObject.put(

@@ -75,7 +75,7 @@ definition {
 
 			// Workaround for LXC server performance issues LRQA-81713
 
-			Pause(locator1 = 60000);
+			Pause(locator1 = 90000);
 		}
 	}
 

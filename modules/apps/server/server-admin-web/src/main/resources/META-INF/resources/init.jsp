@@ -35,7 +35,6 @@ page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil"
 page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
-page import="com.liferay.portal.kernel.image.ImageMagickUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.*" %><%@
 page import="com.liferay.portal.kernel.model.impl.*" %><%@
@@ -70,6 +69,7 @@ page import="com.liferay.server.admin.web.internal.constants.ServerAdminNavigati
 page import="com.liferay.server.admin.web.internal.display.context.ServerDisplayContext" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ViewPortalPropertiesDisplayContext" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ViewSystemPropertiesDisplayContext" %><%@
+page import="com.liferay.server.admin.web.internal.image.ImageMagickUtil" %><%@
 page import="com.liferay.server.admin.web.internal.scripting.util.ServerScriptingUtil" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 

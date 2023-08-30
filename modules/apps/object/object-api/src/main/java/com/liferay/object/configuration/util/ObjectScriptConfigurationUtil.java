@@ -5,7 +5,7 @@
 
 package com.liferay.object.configuration.util;
 
-import com.liferay.object.configuration.ObjectScriptConfiguration;
+import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -19,12 +19,12 @@ public class ObjectScriptConfigurationUtil {
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		ObjectScriptConfiguration objectScriptConfiguration =
+		ObjectConfiguration objectConfiguration =
 			ConfigurationProviderUtil.getSystemConfiguration(
-				ObjectScriptConfiguration.class);
+				ObjectConfiguration.class);
 
 		if (permissionChecker.isOmniadmin() ||
-			(objectScriptConfiguration.allowInstanceAdminExecuteCode() &&
+			(objectConfiguration.allowInstanceAdminExecuteScript() &&
 			 permissionChecker.isCompanyAdmin())) {
 
 			return true;

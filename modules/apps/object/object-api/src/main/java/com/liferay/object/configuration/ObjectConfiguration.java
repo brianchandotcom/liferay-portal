@@ -22,6 +22,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ObjectConfiguration {
 
 	@Meta.AD(
+		deflt = "false",
+		description = "allow-administrators-execute-script-help",
+		name = "allow-administrators-execute-script", required = false
+	)
+	public boolean allowInstanceAdminExecuteScript();
+
+	@Meta.AD(
 		deflt = "100",
 		description = "maximum-number-of-guest-user-object-entries-per-object-definition-help",
 		name = "maximum-number-of-guest-user-object-entries-per-object-definition",

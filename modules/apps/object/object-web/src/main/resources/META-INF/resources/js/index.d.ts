@@ -358,13 +358,12 @@ interface ObjectFieldNode extends Partial<ObjectField> {
 }
 
 interface ObjectDefinitionNodeData
-	extends Omit<ObjectDefinition, 'objectFields' | 'label'> {
+	extends Omit<ObjectDefinition, 'objectFields'> {
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
 	hasSelfRelationships: boolean;
-	label: string;
 	linkedDefinition: boolean;
 	nodeSelected: boolean;
 	objectFields: ObjectFieldNode[];

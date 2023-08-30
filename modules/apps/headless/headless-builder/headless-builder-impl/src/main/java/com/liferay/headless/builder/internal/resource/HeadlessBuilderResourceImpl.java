@@ -83,7 +83,27 @@ public class HeadlessBuilderResourceImpl {
 			APIApplication.Endpoint.Scope.COMPANY,
 			endpoint -> _endpointHelper.getResponseEntityMap(
 				_company.getCompanyId(), endpoint.getResponseSchema(),
-				pathParameterValue));
+				endpoint.getPathParameter(), pathParameterValue, null));
+	}
+
+	@GET
+	@Path(
+		HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX +
+			"/{path: .*}/{parameter}"
+	)
+	@Produces({"application/json", "application/xml"})
+	public Response get(
+			@PathParam("scopeKey") String scopeKey,
+			@PathParam("path") String path,
+			@PathParam("parameter") String pathParameterValue)
+		throws Exception {
+
+		return _executeEndpoint(
+			path + "/" + pathParameterValue,
+			APIApplication.Endpoint.Scope.GROUP,
+			endpoint -> _endpointHelper.getResponseEntityMap(
+				_company.getCompanyId(), endpoint.getResponseSchema(),
+				endpoint.getPathParameter(), pathParameterValue, scopeKey));
 	}
 
 	private <T> Response _executeEndpoint(

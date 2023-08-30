@@ -4,7 +4,7 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {ArrowHeadType, Edge, Node, isEdge, useStore} from 'react-flow-renderer';
+import {ArrowHeadType, Edge, Node, useStore} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarker';
@@ -54,19 +54,20 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				};
 			}
 
-			const linkedDefinition = elements.filter((element) => {
-				if (isEdge(element)) {
-					return element.target === newObjectDefinition.id.toString();
-				}
-			});
-
-			const isLinkedDefinition = !!linkedDefinition.length;
+			let definitionIsLinked = false;
 
 			const newLeftSidebarItems = leftSidebarItems.map((item) => {
 				let newDefinition;
 
 				if (item.folderName === selectedFolderName) {
-					if (!isLinkedDefinition) {
+					definitionIsLinked =
+						item.objectDefinitions?.find(
+							(objectDefinition) =>
+								objectDefinition.definitionId ===
+								newObjectDefinition.id
+						)?.type === 'objectLink';
+
+					if (!definitionIsLinked) {
 						newDefinition = {
 							definitionId: newObjectDefinition.id,
 							definitionName: newObjectDefinition.name,
@@ -83,7 +84,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 					const updatedObjectDefinitions = item.objectDefinitions?.map(
 						(objectDefinition) => {
 							if (
-								isLinkedDefinition &&
+								definitionIsLinked &&
 								objectDefinition.definitionId ===
 									newObjectDefinition.id
 							) {
@@ -145,11 +146,11 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 			let newNode = {} as Node<ObjectDefinitionNodeData>;
 
-			if (isLinkedDefinition) {
+			if (definitionIsLinked) {
 				const definitionNodes = updatedObjectDefinitionsNodes.map(
 					(node) => {
 						if (node.id === newObjectDefinition.id.toString()) {
-							newNode = {
+							return {
 								...node,
 								data: {
 									...node.data,
@@ -157,8 +158,6 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 									nodeSelected: true,
 								},
 							} as Node<ObjectDefinitionNodeData>;
-
-							return newNode;
 						}
 
 						return node;
@@ -358,7 +357,11 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							definitionId: definition.id,
 							definitionName: definition.name,
 							hiddenNode: false,
-							name: definition.label,
+							name: getLocalizableLabel(
+								definition.defaultLanguageId,
+								definition.label,
+								definition.name
+							),
 							selected: false,
 							type: definition.linkedDefinition
 								? 'objectLink'

@@ -19,6 +19,7 @@ import './DefinitionNode.scss';
 import {
 	API,
 	ModalEditExternalReferenceCode,
+	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 
 import {formatActionURL} from '../../../utils/fds';
@@ -140,7 +141,11 @@ export function DefinitionNode({
 						status,
 					})}
 					isLinkedNode={linkedDefinition}
-					objectDefinitionLabel={label}
+					objectDefinitionLabel={getLocalizableLabel(
+						defaultLanguageId,
+						label,
+						name
+					)}
 					status={status!}
 					system={system}
 				/>

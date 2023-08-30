@@ -105,6 +105,21 @@ definition {
 
 		FormsAdminNavigator.gotoViewEntries();
 
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Text",
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Text",
 			fieldValue = "Test Text");
@@ -184,45 +199,6 @@ definition {
 		FormsAdminNavigator.gotoEntriesLabel(
 			key_type = "Text",
 			key_value = "Text");
-	}
-
-	@description = "Verify that Entries can be viewed"
-	@priority = 5
-	test CanBeViewed {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.addTextField(fieldPositionNumber = 0);
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishedForm();
-
-		FormViewBuilder.editText(
-			fieldName = "Text",
-			fieldValue = "Test Text");
-
-		FormPortlet.submitSuccessfully();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdminNavigator.gotoView();
-
-		FormsAdmin.viewTextEntry(
-			fieldLabel = "Text",
-			fieldName = "Text",
-			fieldValue = "Test Text");
 	}
 
 	@description = "LPS-74997 - Verify that editing a Form does not affect previously submitted Form Entries"

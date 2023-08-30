@@ -37,83 +37,74 @@ import org.osgi.service.component.annotations.Reference;
 public class RankingIndexReindexer implements IndexReindexer {
 
 	@Override
-	public void reindex(long[] companyIds) throws Exception {
-		reindex(companyIds, null);
+	public void reindex(long companyId) throws Exception {
+		reindex(companyId, null);
 	}
 
 	@Override
-	public void reindex(long[] companyIds, String executionMode)
-		throws Exception {
-
+	public void reindex(long companyId, String executionMode) throws Exception {
 		if (!searchCapabilities.isResultRankingsSupported()) {
 			return;
 		}
 
-		for (long companyId : companyIds) {
-			List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
-				companyId, classNameLocalService.getClassNameId(Ranking.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameLocalService.getClassNameId(Ranking.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			RankingIndexName rankingIndexName =
-				rankingIndexNameBuilder.getRankingIndexName(companyId);
+		RankingIndexName rankingIndexName =
+			rankingIndexNameBuilder.getRankingIndexName(companyId);
 
-			if (ListUtil.isEmpty(classPKs)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Not reindexing ", rankingIndexName.getIndexName(),
-							" because the database has no ranking entries"));
-				}
-
-				continue;
+		if (ListUtil.isEmpty(classPKs)) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Not reindexing ", rankingIndexName.getIndexName(),
+						" because the database has no ranking entries"));
 			}
 
-			Date date = null;
+			return;
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				date = new Date();
+		Date date = null;
 
-				Thread.sleep(1000);
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Deleting index " + rankingIndexName.getIndexName());
-				}
+		if (_isExecuteSyncReindex(executionMode)) {
+			date = new Date();
 
-				try {
-					rankingIndexCreator.delete(rankingIndexName);
-				}
-				catch (RuntimeException runtimeException) {
-					_log.error(
-						"Unable to delete index " +
-							rankingIndexName.getIndexName(),
-						runtimeException);
-				}
+			Thread.sleep(1000);
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("Deleting index " + rankingIndexName.getIndexName());
 			}
 
-			if (!_isExecuteSyncReindex(executionMode)) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Creating index " + rankingIndexName.getIndexName());
-				}
+			try {
+				rankingIndexCreator.delete(rankingIndexName);
+			}
+			catch (RuntimeException runtimeException) {
+				_log.error(
+					"Unable to delete index " + rankingIndexName.getIndexName(),
+					runtimeException);
+			}
+		}
 
-				rankingIndexCreator.create(rankingIndexName);
+		if (!_isExecuteSyncReindex(executionMode)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Creating index " + rankingIndexName.getIndexName());
 			}
 
-			for (long classPK : classPKs) {
-				rankingIndexWriter.create(
-					rankingIndexName, _buildRanking(classPK));
-			}
+			rankingIndexCreator.create(rankingIndexName);
+		}
 
-			if (_isExecuteSyncReindex(executionMode)) {
-				SyncReindexManager syncReindexManager =
-					_syncReindexManagerSnapshot.get();
+		for (long classPK : classPKs) {
+			rankingIndexWriter.create(rankingIndexName, _buildRanking(classPK));
+		}
 
-				syncReindexManager.deleteStaleDocuments(
-					rankingIndexName.getIndexName(), date,
-					Collections.emptySet());
-			}
+		if (_isExecuteSyncReindex(executionMode)) {
+			SyncReindexManager syncReindexManager =
+				_syncReindexManagerSnapshot.get();
+
+			syncReindexManager.deleteStaleDocuments(
+				rankingIndexName.getIndexName(), date, Collections.emptySet());
 		}
 	}
 

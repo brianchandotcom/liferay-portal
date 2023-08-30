@@ -161,6 +161,11 @@ public class DisplayPageManagementToolbarDisplayContext
 						"/select_display_page_master_layout.jsp"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"parentLayoutPageTemplateCollectionId",
+						ParamUtil.getLong(
+							httpServletRequest,
+							"layoutPageTemplateCollectionId")
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(

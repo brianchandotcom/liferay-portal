@@ -16,7 +16,6 @@ import {fromControlsId} from '../../../app/components/layout_data_items/Collecti
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {
 	useHoverItem,
 	useHoveredItemId,
@@ -160,29 +159,6 @@ export default function PageContent({
 		externalReferenceCode,
 	]);
 
-	const handleOnClick = () => {
-		if (dropdownItems?.length) {
-			Object.values(layoutData.items).forEach((item) => {
-				if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
-					const collectionConfig = item.config?.collection;
-
-					if (
-						collectionConfig.classNameId === classNameId &&
-						collectionConfig.classPK === classPK
-					) {
-						selectItem(item.itemId, {
-							itemType: ITEM_TYPES.layoutDataItem,
-							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
-						});
-					}
-				}
-			});
-		}
-		else {
-			onClickEditInlineText();
-		}
-	};
-
 	const handleMouseOver = () => {
 		setIsHovered(true);
 
@@ -241,7 +217,6 @@ export default function PageContent({
 						isHovered || activeActions || isBeingEdited,
 				}
 			)}
-			onClick={handleOnClick}
 			onMouseLeave={handleMouseLeave}
 			onMouseOver={handleMouseOver}
 		>
@@ -336,9 +311,10 @@ export default function PageContent({
 								)}
 								disabled={isBeingEdited || !canUpdateEditables}
 								displayType="unstyled"
+								onClick={onClickEditInlineText}
 								size="sm"
 							>
-								{!isHovered && <ClayIcon symbol="pencil" />}
+								<ClayIcon symbol="pencil" />
 							</ClayButton>
 						)}
 					</ClayLayout.ContentCol>

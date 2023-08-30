@@ -225,10 +225,6 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "column-label"), "label", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(locale, "name"), "name", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -247,6 +243,35 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
 						_language.get(locale, "sortable"), "sortable", false)));
+
+		fdsFieldObjectDefinition.setEnableLocalization(true);
+
+		_objectDefinitionLocalService.updateObjectDefinition(fdsFieldObjectDefinition);
+
+		ObjectField fieldLabelObjectField = ObjectFieldUtil.createObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+			_language.get(locale, "column-label"), "label", false);
+
+		fieldLabelObjectField.setLocalized(true);
+
+		_objectFieldLocalService.addCustomObjectField(
+			fieldLabelObjectField.getExternalReferenceCode(), userId,
+			fieldLabelObjectField.getListTypeDefinitionId(),
+			fdsFieldObjectDefinition.getObjectDefinitionId(),
+			fieldLabelObjectField.getBusinessType(),
+			fieldLabelObjectField.getDBType(),
+			fieldLabelObjectField.isIndexed(),
+			fieldLabelObjectField.isIndexedAsKeyword(),
+			fieldLabelObjectField.getIndexedLanguageId(),
+			fieldLabelObjectField.getLabelMap(),
+			fieldLabelObjectField.isLocalized(),
+			fieldLabelObjectField.getName(),
+			fieldLabelObjectField.getReadOnly(),
+			fieldLabelObjectField.getReadOnlyConditionExpression(),
+			fieldLabelObjectField.isRequired(),
+			fieldLabelObjectField.isState(),
+			fieldLabelObjectField.getObjectFieldSettings());
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, fdsFieldObjectDefinition.getObjectDefinitionId());

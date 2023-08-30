@@ -705,26 +705,7 @@ definition {
 		}
 
 		task ("and Given that an entry is submitted using this form") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				panel = "Site Administration",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(pageName = "Form Page");
-
-			Navigator.gotoPage(pageName = "Form Page");
-
-			Portlet.addPG(
-				pageName = "Form Page",
-				portletName = "Form");
-
-			FormPortletNavigator.gotoSelectForm();
-
-			FormPortletConfiguration.selectForm();
-
-			PortletEntry.save();
-
-			Navigator.gotoPage(pageName = "Form Page");
+			FormsAdminNavigator.gotoPublishedForm();
 
 			FormFields.viewDateLabel(
 				fieldLabel = "Date",

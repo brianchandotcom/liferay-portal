@@ -4964,7 +4964,7 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPublishButtonNotPresent();
 	}
 
-	@description = "Verify that a role name containing multi-byte characters can be used in the workflow "
+	@description = "Verify that a role name containing multi-byte characters can be used in the workflow"
 	@priority = 4
 	test RoleNameContainingMultibyteCharactersCanBeUsedInWorkflow {
 		property test.liferay.virtual.instance = "true";

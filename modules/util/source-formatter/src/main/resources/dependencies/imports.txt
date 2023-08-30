@@ -1631,7 +1631,6 @@ com.liferay.portlet.expando.service.ExpandoValueLocalServiceWrapper=com.liferay.
 com.liferay.portlet.expando.service.ExpandoValueService=com.liferay.expando.kernel.service.ExpandoValueService
 com.liferay.portlet.expando.service.ExpandoValueServiceUtil=com.liferay.expando.kernel.service.ExpandoValueServiceUtil
 com.liferay.portlet.expando.service.ExpandoValueServiceWrapper=com.liferay.expando.kernel.service.ExpandoValueServiceWrapper
-com.liferay.portlet.expando.service.permission.ExpandoColumnPermission=com.liferay.expando.kernel.service.permission.ExpandoColumnPermission
 com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil=com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil
 com.liferay.portlet.expando.service.persistence.ExpandoColumnPersistence=com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence
 com.liferay.portlet.expando.service.persistence.ExpandoColumnUtil=com.liferay.expando.kernel.service.persistence.ExpandoColumnUtil

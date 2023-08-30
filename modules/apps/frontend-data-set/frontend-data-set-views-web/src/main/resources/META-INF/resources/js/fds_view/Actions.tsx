@@ -145,7 +145,7 @@ const Actions = () => {
 										'create-item-action'
 									)}
 									noItemsDescription={Liferay.Language.get(
-										'start-creating-one-action-to-interact-with-your-data'
+										'start-creating-an-action-to-interact-with-your-data'
 									)}
 									noItemsTitle={Liferay.Language.get(
 										'no-actions-were-created'

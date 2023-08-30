@@ -1423,7 +1423,7 @@
 	</entity>
 	<entity change-tracking-enabled="true" local-service="false" name="Permission" remote-service="true">
 	</entity>
-	<entity change-tracking-enabled="true" local-service="true" name="PermissionPropagationEntry" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="PermissionPropagationEntry" remote-service="false">
 
 		<!-- PK fields -->
 

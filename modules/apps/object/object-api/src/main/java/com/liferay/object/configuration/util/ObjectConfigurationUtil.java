@@ -24,7 +24,7 @@ public class ObjectConfigurationUtil {
 				ObjectConfiguration.class);
 
 		if (permissionChecker.isOmniadmin() ||
-			(objectConfiguration.allowInstanceAdminExecuteScript() &&
+			(objectConfiguration.allowAdministratorsExecuteScript() &&
 			 permissionChecker.isCompanyAdmin())) {
 
 			return true;

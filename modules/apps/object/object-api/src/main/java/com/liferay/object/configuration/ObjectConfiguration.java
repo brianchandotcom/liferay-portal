@@ -26,7 +26,7 @@ public interface ObjectConfiguration {
 		description = "allow-administrators-execute-script-help",
 		name = "allow-administrators-execute-script", required = false
 	)
-	public boolean allowInstanceAdminExecuteScript();
+	public boolean allowAdministratorsExecuteScript();
 
 	@Meta.AD(
 		deflt = "100",

@@ -34,10 +34,10 @@ public class ObjectConfigurationModelListener
 
 	@Override
 	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		boolean allowInstanceAdminExecuteScript = GetterUtil.getBoolean(
-			properties.get("allowInstanceAdminExecuteScript"));
+		boolean allowAdministratorsExecuteScript = GetterUtil.getBoolean(
+			properties.get("allowAdministratorsExecuteScript"));
 
-		if (!allowInstanceAdminExecuteScript) {
+		if (!allowAdministratorsExecuteScript) {
 			long defaultCompanyId = _portal.getDefaultCompanyId();
 
 			for (ObjectAction objectAction :

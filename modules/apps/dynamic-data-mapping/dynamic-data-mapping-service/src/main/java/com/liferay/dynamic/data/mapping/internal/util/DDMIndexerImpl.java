@@ -805,6 +805,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
+			if (ddmFormField == null) {
+				return;
+			}
+
 			try {
 				Locale ddmFormFieldLocale = locale;
 

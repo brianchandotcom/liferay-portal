@@ -1575,29 +1575,29 @@ definition {
 	test CanOrderUserFacetTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		for (var userList : list "carter.braxton,john.adams,jonathan.franklin") {
-			var firstName = StringUtil.extractFirst(${userList}, ".");
-			var lastName = StringUtil.extractLast(${userList}, ".");
+		for (var userName : list "carter braxton,john adams,jonathan franklin") {
+			var firstName = StringUtil.extractFirst(${userName}, " ");
+			var lastName = StringUtil.extractLast(${userName}, " ");
 
 			JSONUser.addUser(
-				userEmailAddress = "${userList}@liferay.com",
+				userEmailAddress = "${firstName}.${lastName}@liferay.com",
 				userFirstName = ${firstName},
 				userLastName = ${lastName},
 				userScreenName = ${firstName});
 
 			JSONUser.addUserToSite(
 				groupName = "Guest",
-				userEmailAddress = "${userList}@liferay.com");
+				userEmailAddress = "${firstName}.${lastName}@liferay.com");
 
 			JSONRole.assignSiteRoleToUser(
 				groupName = "Guest",
 				roleTitle = "Site Administrator",
-				userEmailAddress = "${userList}@liferay.com");
+				userEmailAddress = "${firstName}.${lastName}@liferay.com");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "${userList}@liferay.com");
+				userEmailAddress = "${firstName}.${lastName}@liferay.com");
 		}
 
 		for (var count : list "1,2,3,4") {
@@ -1624,11 +1624,9 @@ definition {
 			userEmailAddress = "jonathan.franklin@liferay.com",
 			userPassword = "test");
 
-		Navigator.gotoPage(pageName = "Home");
+		Search.openSearchPage(searchTerm = "test");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
-
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "test test,john adams,carter braxton,jonathan franklin");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Test Test,john adams,carter braxton,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1636,7 +1634,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,john adams,test test");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,john adams,Test Test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1644,7 +1642,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "carter braxton,john adams,jonathan franklin,test test");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Test Test,carter braxton,john adams,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1652,7 +1650,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "test test,jonathan franklin,john adams,carter braxton");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,john adams,carter braxton,Test Test");
 	}
 
 	@description = "This is a use case for LPS-130126 and LPS-145648."
@@ -2979,7 +2977,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "user",
-			facetValueName = "test test",
+			facetValueName = "Test Test",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(

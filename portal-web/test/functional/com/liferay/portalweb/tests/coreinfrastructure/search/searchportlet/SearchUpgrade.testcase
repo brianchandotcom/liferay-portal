@@ -492,7 +492,7 @@ definition {
 
 		AssertElementPresent(
 			facetName = "User Facet",
-			facetValue = "test test",
+			facetValue = "Test Test",
 			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 	}
 

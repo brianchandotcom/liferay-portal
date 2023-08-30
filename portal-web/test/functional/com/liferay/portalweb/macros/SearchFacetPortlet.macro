@@ -109,6 +109,9 @@ definition {
 		if (${facetClass} == "type") {
 			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = ${facetValueName});
 		}
+		else if (${facetClass} == "user") {
+			var facetValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetValueName});
+		}
 		else if (!(isSet(facetValue))) {
 			var facetValue = ${facetValueName};
 		}
@@ -159,6 +162,9 @@ definition {
 		if (${facetClass} == "type") {
 			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = ${facetValueName});
 		}
+		else if (${facetClass} == "user") {
+			var facetValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetValueName});
+		}
 		else if (!(isSet(facetValue))) {
 			var facetValue = ${facetValueName};
 		}
@@ -208,10 +214,18 @@ definition {
 		}
 
 		if (${facetValueFound} != "true") {
-			fail("Facet Type value name has not been set correctly.");
+			fail("Type Facet term URL value has not been set correctly.");
 		}
 
 		return ${facetTypeValue};
+	}
+
+	macro getUserFacetTermURLValue {
+		var firstName = StringUtil.extractFirst(${userFacetTerm}, " ");
+
+		var userFacetTermURLValue = JSONUserGetter.getUserIdByFirstName(firstName = ${firstName});
+
+		return ${userFacetTermURLValue};
 	}
 
 	macro moveAssetTypesToAvailable {

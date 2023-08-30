@@ -15,8 +15,14 @@ import React, {useEffect, useState} from 'react';
 import {DELTAS, SCOPE_TYPES} from '../../utils/constants.es';
 import {sub} from '../../utils/language.es';
 
-const SelectScopeModal = ({
-	fetchURL,
+/**
+ * Modal that opens when user clicks on "View More" in ScopeSelect dropdown.
+ * Displays a table of sites or blueprints and fetches more results as the user
+ * clicks through the pagination bar.
+ */
+
+const ScopeSelectModal = ({
+	fetchItemsUrl,
 	locator,
 	observer,
 	onSubmit,
@@ -41,7 +47,7 @@ const SelectScopeModal = ({
 				},
 				`${
 					window.location.origin
-				}${Liferay.ThemeDisplay.getPathContext()}${fetchURL}`
+				}${Liferay.ThemeDisplay.getPathContext()}${fetchItemsUrl}`
 			),
 			{
 				credentials: 'include',
@@ -62,7 +68,7 @@ const SelectScopeModal = ({
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [activePage, delta, fetchURL, type]);
+	}, [activePage, delta, fetchItemsUrl, type]);
 
 	/**
 	 * Handles what is displayed depending on loading/error/results/no results.
@@ -204,7 +210,7 @@ const SelectScopeModal = ({
 
 export default function ({
 	children,
-	fetchURL,
+	fetchItemsUrl,
 	locator,
 	onSubmit,
 	selected,
@@ -222,8 +228,8 @@ export default function ({
 	return (
 		<>
 			{open && (
-				<SelectScopeModal
-					fetchURL={fetchURL}
+				<ScopeSelectModal
+					fetchItemsUrl={fetchItemsUrl}
 					locator={locator}
 					observer={observer}
 					onSubmit={_handleSubmit}

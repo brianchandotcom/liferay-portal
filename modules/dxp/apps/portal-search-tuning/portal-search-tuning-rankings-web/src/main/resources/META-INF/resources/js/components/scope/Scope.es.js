@@ -13,32 +13,17 @@ import {
 	PORTAL_TOOLTIP_TRIGGER_CLASS,
 	SCOPE_TYPES,
 } from '../../utils/constants.es';
-import SelectScope from './SelectScope.es';
+import ScopeSelect from './ScopeSelect.es';
 
-export default function Scope({
-	disabled,
-	initialGroupExternalReferenceCode,
-	initialSxpBlueprintExternalReferenceCode,
-	onChange,
-	onResultsUpdate,
-	selectedType,
-	touched,
-}) {
-	const _handleScopeTypeChange = (type) =>
-		onChange({
-			touched: false,
-			type,
-			value: '',
-		});
-
-	const _renderRadioButton = (value, helptext, label) => (
+function ScopeCheckbox({checked, disabled, helptext, label, onChange}) {
+	return (
 		<div className="custom-control custom-radio">
 			<label>
 				<input
-					checked={value === selectedType}
+					checked={checked}
 					className="custom-control-input"
 					disabled={disabled}
-					onChange={() => _handleScopeTypeChange(value)}
+					onChange={onChange}
 					role="radio"
 					type="radio"
 				/>
@@ -62,27 +47,54 @@ export default function Scope({
 			</label>
 		</div>
 	);
+}
+
+export default function Scope({
+	disabled,
+	initialGroupExternalReferenceCode,
+	initialSxpBlueprintExternalReferenceCode,
+	onChange,
+	onResultsUpdate,
+	selectedType,
+	touched,
+}) {
+	const _handleScopeTypeChange = (type) =>
+		onChange({
+			touched: false,
+			type,
+			value: '',
+		});
 
 	return (
 		<div className="results-rankings-scope-selector">
-			{_renderRadioButton(
-				SCOPE_TYPES.EVERYWHERE,
-				Liferay.Language.get('result-rankings-scope-everything-help'),
-				Liferay.Language.get('everything')
-			)}
+			<ScopeCheckbox
+				checked={selectedType === SCOPE_TYPES.EVERYWHERE}
+				disabled={disabled}
+				helptext={Liferay.Language.get(
+					'result-rankings-scope-everything-help'
+				)}
+				label={Liferay.Language.get('everything')}
+				onChange={() => _handleScopeTypeChange(SCOPE_TYPES.EVERYWHERE)}
+			/>
 
 			{Liferay.FeatureFlags['LPS-157988'] && (
 				<>
-					{_renderRadioButton(
-						SCOPE_TYPES.SITE,
-						Liferay.Language.get('result-rankings-scope-site-help'),
-						Liferay.Language.get('site')
-					)}
-
-					<SelectScope
+					<ScopeCheckbox
+						checked={selectedType === SCOPE_TYPES.SITE}
 						disabled={disabled}
-						fetchByURL="/o/headless-admin-user/v1.0/sites/by-external-reference-code/"
-						fetchURL="/o/headless-admin-user/v1.0/sites"
+						helptext={Liferay.Language.get(
+							'result-rankings-scope-site-help'
+						)}
+						label={Liferay.Language.get('site')}
+						onChange={() =>
+							_handleScopeTypeChange(SCOPE_TYPES.SITE)
+						}
+					/>
+
+					<ScopeSelect
+						disabled={disabled}
+						fetchItemByIdUrl="/o/headless-admin-user/v1.0/sites/by-external-reference-code/"
+						fetchItemsUrl="/o/headless-admin-user/v1.0/sites"
 						hidden={selectedType !== SCOPE_TYPES.SITE}
 						initialSelected={initialGroupExternalReferenceCode}
 						locator={{
@@ -99,18 +111,22 @@ export default function Scope({
 
 			{Liferay.FeatureFlags['LPS-159650'] && (
 				<>
-					{_renderRadioButton(
-						SCOPE_TYPES.SXP_BLUEPRINT,
-						Liferay.Language.get(
-							'result-rankings-scope-blueprint-help'
-						),
-						Liferay.Language.get('blueprint')
-					)}
-
-					<SelectScope
+					<ScopeCheckbox
+						checked={selectedType === SCOPE_TYPES.SXP_BLUEPRINT}
 						disabled={disabled}
-						fetchByURL="/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/"
-						fetchURL="/o/search-experiences-rest/v1.0/sxp-blueprints"
+						helptext={Liferay.Language.get(
+							'result-rankings-scope-blueprint-help'
+						)}
+						label={Liferay.Language.get('blueprint')}
+						onChange={() =>
+							_handleScopeTypeChange(SCOPE_TYPES.SXP_BLUEPRINT)
+						}
+					/>
+
+					<ScopeSelect
+						disabled={disabled}
+						fetchItemByIdUrl="/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/"
+						fetchItemsUrl="/o/search-experiences-rest/v1.0/sxp-blueprints"
 						hidden={selectedType !== SCOPE_TYPES.SXP_BLUEPRINT}
 						initialSelected={
 							initialSxpBlueprintExternalReferenceCode

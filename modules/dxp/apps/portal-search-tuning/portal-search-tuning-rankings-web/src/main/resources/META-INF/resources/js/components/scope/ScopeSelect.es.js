@@ -13,12 +13,23 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {SCOPE_TYPES} from '../../utils/constants.es';
 import {sub} from '../../utils/language.es';
-import SelectScopeModal from './SelectScopeModal.es';
+import ScopeSelectModal from './ScopeSelectModal.es';
 
-const SelectScope = ({
+/**
+ * Input component that appears when site or blueprint option is chosen
+ * under the "Scope" tab.
+ *
+ * If the scope has been defined already, component is disabled and
+ * fetches the existing site/blueprint for display.
+ *
+ * If scope has not been defined yet, component is enabled and fetches a
+ * list of sites/blueprints for the user to select from in the dropdown.
+ */
+
+const ScopeSelect = ({
 	disabled,
-	fetchURL,
-	fetchByURL,
+	fetchItemsUrl,
+	fetchItemByIdUrl,
 	hidden,
 	initialSelected,
 	locator = {
@@ -47,7 +58,7 @@ const SelectScope = ({
 				{activePage: 1, pageSize: 5},
 				`${
 					window.location.origin
-				}${Liferay.ThemeDisplay.getPathContext()}${fetchURL}`
+				}${Liferay.ThemeDisplay.getPathContext()}${fetchItemsUrl}`
 			),
 			{
 				credentials: 'include',
@@ -108,7 +119,7 @@ const SelectScope = ({
 				`${
 					window.location.origin
 				}${Liferay.ThemeDisplay.getPathContext()}
-				${fetchByURL}${initialSelected}`,
+				${fetchItemByIdUrl}${initialSelected}`,
 				{
 					credentials: 'include',
 					headers: new Headers({
@@ -231,8 +242,8 @@ const SelectScope = ({
 
 					{!!resourceItems.length && (
 						<ClayDropDown.Section>
-							<SelectScopeModal
-								fetchURL={fetchURL}
+							<ScopeSelectModal
+								fetchItemsUrl={fetchItemsUrl}
 								locator={locator}
 								onSubmit={_handleSelect}
 								selected={selected}
@@ -246,7 +257,7 @@ const SelectScope = ({
 								>
 									{Liferay.Language.get('view-more')}
 								</ClayButton>
-							</SelectScopeModal>
+							</ScopeSelectModal>
 						</ClayDropDown.Section>
 					)}
 				</ClayDropDown.ItemList>
@@ -255,4 +266,4 @@ const SelectScope = ({
 	);
 };
 
-export default SelectScope;
+export default ScopeSelect;

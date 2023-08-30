@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -156,7 +156,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		RequestDispatcher requestDispatcher =
-			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				_servletContext.getRequestDispatcher(page));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -439,8 +439,5 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference
-	private TransferHeadersHelper _transferHeadersHelper;
 
 }

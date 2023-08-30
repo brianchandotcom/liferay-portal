@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -123,7 +123,7 @@ public class CollectionPageLayoutTypeController
 		}
 
 		RequestDispatcher requestDispatcher =
-			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				_servletContext.getRequestDispatcher(page));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -300,8 +300,5 @@ public class CollectionPageLayoutTypeController
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.collection)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference
-	private TransferHeadersHelper _transferHeadersHelper;
 
 }

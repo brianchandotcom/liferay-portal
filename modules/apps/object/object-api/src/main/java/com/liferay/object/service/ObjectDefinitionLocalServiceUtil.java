@@ -105,6 +105,12 @@ public class ObjectDefinitionLocalServiceUtil {
 			version, status, objectFields);
 	}
 
+	public static void bindObjectDefinitions(long[] objectRelationshipIds)
+		throws PortalException {
+
+		getService().bindObjectDefinitions(objectRelationshipIds);
+	}
+
 	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
@@ -498,6 +504,12 @@ public class ObjectDefinitionLocalServiceUtil {
 
 		return getService().publishSystemObjectDefinition(
 			userId, objectDefinitionId);
+	}
+
+	public static void unbindObjectDefinition(long objectDefinitionId)
+		throws PortalException {
+
+		getService().unbindObjectDefinition(objectDefinitionId);
 	}
 
 	public static void undeployObjectDefinition(

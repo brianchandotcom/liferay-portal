@@ -14,6 +14,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
@@ -39,6 +41,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.junit.AfterClass;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -136,6 +139,17 @@ public class AddUsersByAPIPerformanceTest {
 				"webUrls", JSONFactoryUtil.createJSONArray()
 			)
 		).toString();
+
+		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+			_FACTORY_PID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"access.token.expires.in", Integer.MAX_VALUE
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Before
@@ -305,6 +319,10 @@ public class AddUsersByAPIPerformanceTest {
 
 	private static final String _EMAILADDRESS_TOKEN = "@emailAddress@";
 
+	private static final String _FACTORY_PID =
+		"com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider." +
+			"configuration.DefaultBearerTokenProviderConfiguration";
+
 	private static final String _OAUTH1_APPLICATION_NAME = "rest_token";
 
 	private static final String _TOKEN_TYPE = "Bearer";
@@ -313,6 +331,7 @@ public class AddUsersByAPIPerformanceTest {
 		AddUsersByAPIPerformanceTest.class);
 
 	private static String _jsonTemplate;
+	private static String _pid;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

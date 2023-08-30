@@ -10,7 +10,6 @@ import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import React, {SetStateAction} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
-import {ViewObjectDefinitionsModals} from './ViewObjectDefinitions';
 
 interface FoldersListSidebarProps {
 	foldersList: ObjectFolder[];

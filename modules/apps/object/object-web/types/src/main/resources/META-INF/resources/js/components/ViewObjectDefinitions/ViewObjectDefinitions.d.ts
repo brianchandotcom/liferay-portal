@@ -13,19 +13,6 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	objectFolderPermissionsURL: string;
 	storages: LabelValueObject[];
 }
-export declare type ViewObjectDefinitionsModals = {
-	addFolder: boolean;
-	addObjectDefinition: boolean;
-	bindToRootObjectDefinition: boolean;
-	deleteFolder: boolean;
-	deleteObjectDefinition: boolean;
-	deletionNotAllowed: boolean;
-	editERC: boolean;
-	editFolder: boolean;
-	moveObjectDefinition: boolean;
-	redirectEditObjectDefinition: boolean;
-	unbindFromRootObjectDefinition: boolean;
-};
 export interface DeletedObjectDefinition {
 	hasObjectRelationship: boolean;
 	id: number;

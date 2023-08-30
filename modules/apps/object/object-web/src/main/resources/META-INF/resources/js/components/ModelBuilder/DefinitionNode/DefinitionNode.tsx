@@ -24,10 +24,7 @@ import {
 
 import {formatActionURL} from '../../../utils/fds';
 import {ModalDeleteObjectDefinition} from '../../ViewObjectDefinitions/ModalDeleteObjectDefinition';
-import {
-	DeletedObjectDefinition,
-	ViewObjectDefinitionsModals,
-} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
+import {DeletedObjectDefinition} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import {getDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
@@ -66,9 +63,7 @@ export function DefinitionNode({
 	] = useFolderContext();
 	const store = useStore();
 
-	const [showModal, setShowModal] = useState<
-		Partial<ViewObjectDefinitionsModals>
-	>({
+	const [showModal, setShowModal] = useState<Partial<ModelBuilderModals>>({
 		deleteObjectDefinition: false,
 		editERC: false,
 	});
@@ -224,11 +219,7 @@ export function DefinitionNode({
 					externalReferenceCode={newExternalReferenceCode as string}
 					handleOnClose={() => {
 						setShowModal(
-							(
-								previousState: Partial<
-									ViewObjectDefinitionsModals
-								>
-							) => ({
+							(previousState: Partial<ModelBuilderModals>) => ({
 								...previousState,
 								editERC: false,
 							})

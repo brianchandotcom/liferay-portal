@@ -22,7 +22,6 @@ import './Diagram.scss';
 import {API} from '@liferay/object-js-components-web';
 import React, {MouseEvent, useCallback} from 'react';
 
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import DefaultEdge from '../Edges/DefaultEdge';
 import SelfEdge from '../Edges/SelfEdge';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -41,7 +40,7 @@ const EDGE_TYPES = {
 function DiagramBuilder({
 	setShowModal,
 }: {
-	setShowModal: (value: ViewObjectDefinitionsModals) => void;
+	setShowModal: (value: ModelBuilderModals) => void;
 }) {
 	const [
 		{elements, selectedFolder, showChangesSaved},

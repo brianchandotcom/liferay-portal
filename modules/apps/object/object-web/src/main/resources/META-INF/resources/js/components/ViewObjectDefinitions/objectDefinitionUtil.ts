@@ -13,10 +13,7 @@ import {
 	removeAllSpecialCharacters,
 } from '../../utils/string';
 import {DropDownItems} from '../ModelBuilder/types';
-import {
-	DeletedObjectDefinition,
-	ViewObjectDefinitionsModals,
-} from './ViewObjectDefinitions';
+import {DeletedObjectDefinition} from './ViewObjectDefinitions';
 
 type DefinitionNodeActionsProps = {
 	baseResourceURL: string;

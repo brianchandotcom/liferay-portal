@@ -5,6 +5,7 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -46,6 +47,8 @@ import com.liferay.segments.exception.WinnerSegmentsExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.model.SegmentsExperimentRelTable;
+import com.liferay.segments.model.SegmentsExperimentTable;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
@@ -155,7 +158,7 @@ public class SegmentsExperimentLocalServiceImpl
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
-			segmentsExperimentPersistence.fetchByG_S_P(
+			segmentsExperimentLocalService.fetchSegmentsExperiment(
 				groupId, segmentsExperienceId, plid);
 
 		return segmentsExperimentLocalService.deleteSegmentsExperiment(
@@ -202,8 +205,31 @@ public class SegmentsExperimentLocalServiceImpl
 	public SegmentsExperiment fetchSegmentsExperiment(
 		long groupId, long segmentsExperienceId, long plid) {
 
-		return segmentsExperimentPersistence.fetchByG_S_P(
-			groupId, segmentsExperienceId, plid);
+		List<SegmentsExperiment> segmentsExperiments =
+			segmentsExperimentPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					SegmentsExperimentTable.INSTANCE
+				).from(
+					SegmentsExperimentTable.INSTANCE
+				).innerJoinON(
+					SegmentsExperimentRelTable.INSTANCE,
+					SegmentsExperimentRelTable.INSTANCE.segmentsExperimentId.eq(
+						SegmentsExperimentTable.INSTANCE.segmentsExperimentId)
+				).where(
+					SegmentsExperimentRelTable.INSTANCE.segmentsExperienceId.eq(
+						segmentsExperienceId
+					).and(
+						SegmentsExperimentTable.INSTANCE.groupId.eq(groupId)
+					).and(
+						SegmentsExperimentTable.INSTANCE.plid.eq(plid)
+					)
+				));
+
+		if (segmentsExperiments.isEmpty()) {
+			return null;
+		}
+
+		return segmentsExperiments.get(0);
 	}
 
 	@Override
@@ -541,7 +567,7 @@ public class SegmentsExperimentLocalServiceImpl
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
-			segmentsExperimentPersistence.fetchByG_S_P(
+			segmentsExperimentLocalService.fetchSegmentsExperiment(
 				groupId, segmentsExperienceId, plid);
 
 		if (segmentsExperiment == null) {

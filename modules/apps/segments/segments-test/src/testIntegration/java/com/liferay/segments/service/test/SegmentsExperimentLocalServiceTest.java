@@ -381,7 +381,7 @@ public class SegmentsExperimentLocalServiceTest {
 			segmentsExperience.getSegmentsExperienceId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Assert.assertNull(
+		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
 				segmentsExperience.getSegmentsExperienceId(),
@@ -486,7 +486,7 @@ public class SegmentsExperimentLocalServiceTest {
 			segmentsExperience.getSegmentsExperienceId(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Assert.assertNull(
+		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
 				segmentsExperience.getSegmentsExperienceId(),

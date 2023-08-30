@@ -197,13 +197,14 @@ definition {
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();
@@ -268,13 +269,14 @@ definition {
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();
@@ -343,13 +345,14 @@ definition {
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();
@@ -420,13 +423,14 @@ definition {
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();
@@ -483,13 +487,14 @@ definition {
 		task ("Given: A notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();
@@ -545,13 +550,14 @@ definition {
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();
@@ -954,13 +960,14 @@ definition {
 		task ("Given an email notification template") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();

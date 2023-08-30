@@ -88,6 +88,103 @@ definition {
 		}
 	}
 
+	@description = "Verify that with Single Approver Workflow enabled, when a user submits a form entry, the status of the entry will be Pending. When the entry is approved, the status will change to Approved."
+	@priority = 5
+	test CanApprovePendingFormEntries {
+		property portal.acceptance = "true";
+
+		task ("Given a published form that is assigned the Single Approver workflow") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Text");
+
+			FormsAdminNavigator.gotoSettings();
+
+			Form.configureWorkflow(workflowDefinition = "Single Approver");
+
+			Form.save();
+
+			Form.publishForm();
+		}
+
+		task ("When a new user is added and this user submits a form entry for workflow") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userScreenName = "user1");
+
+			var publishFormURL = Form.getPublishedFormPublicURL();
+
+			Navigator.openSpecificURL(url = ${publishFormURL});
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Text");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
+
+			FormPortlet.viewSuccessPage(
+				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+				successPageTitle = "Thank you.");
+		}
+
+		task ("Then the entry will have the Pending status") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userScreenName = "Test Test");
+
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
+		}
+
+		task ("When the reviewer approves the form entry") {
+			WorkflowAsset.gotoViaNotification(
+				assetType = "Form Record",
+				user = "user1 user1");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+			Workflow.confirmWorkflowAction();
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+			Workflow.confirmWorkflowAction();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the form entry status is Approved") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Status",
+				fieldValue = "Approved");
+		}
+	}
+
 	@description = "Verify that Entries can be deleted"
 	@priority = 5
 	test CanBeDeleted {
@@ -283,184 +380,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-74997 - Verify that editing a Form does not affect previously submitted Form Entries"
-	@priority = 4
-	test EditingTheFormDoesNotAffectSubmittedEntries {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
-
-		task ("Given a published form with Select from List that has 3 options") {
-			FormsAdmin.addForm();
-
-			Form.editName(formName = "Delete Select Option Test");
-
-			Form.gotoAddField(
-				fieldPositionNumber = 0,
-				fieldType = "Select from List");
-
-			var fieldName = FormFields.getFieldName();
-
-			Form.editFieldLabelMetal(fieldValue = "Select");
-
-			for (var number : list "1,2,3") {
-				FormFields.editOptionsRow(
-					optionName = "Select${number}",
-					optionValue = "Select ${number}",
-					rowNumber = ${number});
-			}
-
-			Form.closeSidebar();
-
-			Form.save();
-
-			Form.publishForm();
-		}
-
-		task ("and Given that a user has submitted an entry using the form") {
-			FormsAdminNavigator.gotoPublishedForm();
-
-			FormPortlet.waitFormRenderer(text = "Submit");
-
-			FormFields.selectSelectOption(
-				fieldName = "Select",
-				selectOption = "Select 2");
-
-			FormPortlet.submitSuccessfully();
-		}
-
-		task ("When the form is updated and an option was removed") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Forms");
-
-			FormsAdminNavigator.gotoEditFormByName(formName = "Delete Select Option Test");
-
-			FormsAdminNavigator.gotoEditField(fieldName = "Select");
-
-			FormFields.deleteOptionsRow(rowNumber = 2);
-
-			FormFields.viewDeletedSelectOptionsRowFieldValue(
-				fieldValue = "Select 2",
-				rowNumber = 2);
-
-			Form.closeSidebar();
-
-			Form.save();
-		}
-
-		task ("Then the submitted entry's values remain the same") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Forms");
-
-			FormsAdminNavigator.gotoViewEntries();
-
-			FormsAdminNavigator.gotoView();
-
-			FormsAdmin.viewSelectEntry(
-				fieldLabel = "Select",
-				fieldName = ${fieldName},
-				selectOption = "Select 2");
-		}
-	}
-
-	@description = "Verify that with Single Approver Workflow enabled, when a user submits a form entry, the status of the entry will be Pending. When the entry is approved, the status will change to Approved."
-	@priority = 5
-	test CanApprovePendingFormEntries {
-		property portal.acceptance = "true";
-
-		task ("Given a published form that is assigned the Single Approver workflow") {
-			FormsAdmin.addForm();
-
-			Form.editName(formName = "Form 1");
-
-			Form.gotoAddField(
-				fieldPositionNumber = 0,
-				fieldType = "Text");
-
-			FormsAdminNavigator.gotoSettings();
-
-			Form.configureWorkflow(workflowDefinition = "Single Approver");
-
-			Form.save();
-
-			Form.publishForm();
-		}
-
-		task ("When a new user is added and this user submits a form entry for workflow") {
-			JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "user1@liferay.com");
-
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user1@liferay.com",
-				userScreenName = "user1");
-
-			var publishFormURL = Form.getPublishedFormPublicURL();
-
-			Navigator.openSpecificURL(url = ${publishFormURL});
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Text");
-
-			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
-
-			FormPortlet.viewSuccessPage(
-				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-				successPageTitle = "Thank you.");
-		}
-
-		task ("Then the entry will have the Pending status") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userScreenName = "Test Test");
-
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-			FormsAdminNavigator.gotoViewEntries();
-
-			FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
-		}
-
-		task ("When the reviewer approves the form entry") {
-			WorkflowAsset.gotoViaNotification(
-				assetType = "Form Record",
-				user = "user1 user1");
-
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
-
-			Workflow.confirmWorkflowAction();
-
-			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
-
-			Workflow.confirmWorkflowAction();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Then the form entry status is Approved") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Forms");
-
-			FormsAdminNavigator.gotoViewEntries();
-
-			FormsAdmin.viewFormTableEntry(
-				fieldLabel = "Status",
-				fieldValue = "Approved");
-		}
-	}
-
 	@description = "Verify that Entries Previews display the correct information"
 	@priority = 5
 	test CanViewEntriesInFormEntriesPage {
@@ -518,58 +437,6 @@ definition {
 			for (var formEntryWorkflowStatus : list "Test Text,5,Approved,Test Test") {
 				FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = ${formEntryWorkflowStatus});
 			}
-		}
-	}
-
-	@description = "Verify that the correct number of Entries are displayed"
-	@priority = 3
-	test DisplayCorrectNumberOfEntries {
-		property portal.acceptance = "true";
-
-		task ("Given a published form") {
-			FormsAdmin.addForm();
-
-			Form.editName(formName = "Form1");
-
-			Form.addTextField(fieldPositionNumber = 0);
-
-			Form.save();
-
-			Form.publishForm();
-		}
-
-		task ("and Given two entries are submitted using the form") {
-			FormsAdminNavigator.gotoPublishedForm();
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Text");
-
-			FormPortlet.submitSuccessfully();
-
-			FormsAdminNavigator.closePublishedFormWindow();
-
-			FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
-
-			FormsAdminNavigator.gotoPublishedForm();
-
-			FormFields.editText(
-				fieldName = "Text",
-				fieldValue = "Test Text2");
-
-			FormPortlet.submitSuccessfully();
-
-			FormsAdminNavigator.closePublishedFormWindow();
-		}
-
-		task ("When the admin goes to the Entries tab of the form") {
-			FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
-
-			FormsAdminNavigator.gotoEntries();
-		}
-
-		task ("Then the correct number of entries displays") {
-			FormViewBuilder.viewEntriesTitle(key_entriesTitle = "2 Entries");
 		}
 	}
 
@@ -651,6 +518,218 @@ definition {
 				key_card = "Date",
 				key_entryName = "01/01/2001",
 				key_entryNumber = "1 entry");
+		}
+	}
+
+	@description = "Verify that the correct number of Entries are displayed"
+	@priority = 3
+	test DisplayCorrectNumberOfEntries {
+		property portal.acceptance = "true";
+
+		task ("Given a published form") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form1");
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Form.save();
+
+			Form.publishForm();
+		}
+
+		task ("and Given two entries are submitted using the form") {
+			FormsAdminNavigator.gotoPublishedForm();
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Text");
+
+			FormPortlet.submitSuccessfully();
+
+			FormsAdminNavigator.closePublishedFormWindow();
+
+			FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+			FormsAdminNavigator.gotoPublishedForm();
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Text2");
+
+			FormPortlet.submitSuccessfully();
+
+			FormsAdminNavigator.closePublishedFormWindow();
+		}
+
+		task ("When the admin goes to the Entries tab of the form") {
+			FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+			FormsAdminNavigator.gotoEntries();
+		}
+
+		task ("Then the correct number of entries displays") {
+			FormViewBuilder.viewEntriesTitle(key_entriesTitle = "2 Entries");
+		}
+	}
+
+	@description = "LPS-74997 - Verify that editing a Form does not affect previously submitted Form Entries"
+	@priority = 4
+	test EditingTheFormDoesNotAffectSubmittedEntries {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		task ("Given a published form with Select from List that has 3 options") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Delete Select Option Test");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Select from List");
+
+			var fieldName = FormFields.getFieldName();
+
+			Form.editFieldLabelMetal(fieldValue = "Select");
+
+			for (var number : list "1,2,3") {
+				FormFields.editOptionsRow(
+					optionName = "Select${number}",
+					optionValue = "Select ${number}",
+					rowNumber = ${number});
+			}
+
+			Form.closeSidebar();
+
+			Form.save();
+
+			Form.publishForm();
+		}
+
+		task ("and Given that a user has submitted an entry using the form") {
+			FormsAdminNavigator.gotoPublishedForm();
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+
+			FormFields.selectSelectOption(
+				fieldName = "Select",
+				selectOption = "Select 2");
+
+			FormPortlet.submitSuccessfully();
+		}
+
+		task ("When the form is updated and an option was removed") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoEditFormByName(formName = "Delete Select Option Test");
+
+			FormsAdminNavigator.gotoEditField(fieldName = "Select");
+
+			FormFields.deleteOptionsRow(rowNumber = 2);
+
+			FormFields.viewDeletedSelectOptionsRowFieldValue(
+				fieldValue = "Select 2",
+				rowNumber = 2);
+
+			Form.closeSidebar();
+
+			Form.save();
+		}
+
+		task ("Then the submitted entry's values remain the same") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdminNavigator.gotoView();
+
+			FormsAdmin.viewSelectEntry(
+				fieldLabel = "Select",
+				fieldName = ${fieldName},
+				selectOption = "Select 2");
+		}
+	}
+
+	@description = "LPS-61197 - Verify that with Single Approver Workflow enabled, the Date Field is properly displayed on an Entry submitted from the Forms Widget"
+	@priority = 5
+	test FormEntriesAreRenderedProperlyInMyWorkflowTasks {
+		property portal.acceptance = "true";
+
+		task ("Given a published form with Single Approver workflow assigned to it") {
+			FormsAdmin.addForm();
+
+			Form.editName();
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Date");
+
+			FormsAdminNavigator.gotoSettings();
+
+			Form.configureWorkflow(workflowDefinition = "Single Approver");
+
+			Form.publishForm();
+		}
+
+		task ("and Given that an entry is submitted using this form") {
+			FormsAdminNavigator.gotoPublishedForm();
+
+			FormFields.viewDateLabel(
+				fieldLabel = "Date",
+				fieldName = "Date");
+
+			FormFields.editDate(
+				fieldName = "Date",
+				fieldValue = "02/01/2016");
+
+			Button.clickSubmitForWorkflow();
+		}
+
+		task ("When the reviewer views this task via My Workflow Tasks") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.assignToMeTaskByDetails(
+				workflowAssetTitle = "Created Form Name",
+				workflowAssetType = "Form Record",
+				workflowTask = "Review");
+
+			Workflow.viewTaskAssignedToMe(
+				workflowAssetTitle = "Created Form Name",
+				workflowAssetType = "Form Record",
+				workflowTask = "Review");
+
+			Workflow.viewTaskAssignedToMeDetails(
+				workflowAssetContent = "Date",
+				workflowAssetTitle = "Created Form Name",
+				workflowTask = "Review");
+
+			Workflow.gotoPreviewView();
+		}
+
+		task ("Then the Form entry displays properly") {
+			FormFields.viewDateField(
+				fieldLabel = "Date",
+				fieldName = "Date");
+		}
+
+		task ("and When the reviewer approves this workflow task") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Created Form Name",
+				workflowAssetType = "Form Record",
+				workflowTask = "Review");
+		}
+
+		task ("Then the Form entry displays under the Completed filter") {
+			Workflow.viewCompletedTask(
+				workflowAssetTitle = "Created Form Name",
+				workflowAssetType = "Form Record",
+				workflowTask = "Review");
 		}
 	}
 
@@ -806,85 +885,6 @@ definition {
 				key_maxValue = 11,
 				key_minValue = 5,
 				key_sumValue = 16);
-		}
-	}
-
-	@description = "LPS-61197 - Verify that with Single Approver Workflow enabled, the Date Field is properly displayed on an Entry submitted from the Forms Widget"
-	@priority = 5
-	test FormEntriesAreRenderedProperlyInMyWorkflowTasks {
-		property portal.acceptance = "true";
-
-		task ("Given a published form with Single Approver workflow assigned to it") {
-			FormsAdmin.addForm();
-
-			Form.editName();
-
-			Form.gotoAddField(
-				fieldPositionNumber = 0,
-				fieldType = "Date");
-
-			FormsAdminNavigator.gotoSettings();
-
-			Form.configureWorkflow(workflowDefinition = "Single Approver");
-
-			Form.publishForm();
-		}
-
-		task ("and Given that an entry is submitted using this form") {
-			FormsAdminNavigator.gotoPublishedForm();
-
-			FormFields.viewDateLabel(
-				fieldLabel = "Date",
-				fieldName = "Date");
-
-			FormFields.editDate(
-				fieldName = "Date",
-				fieldValue = "02/01/2016");
-
-			Button.clickSubmitForWorkflow();
-		}
-
-		task ("When the reviewer views this task via My Workflow Tasks") {
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-			Workflow.assignToMeTaskByDetails(
-				workflowAssetTitle = "Created Form Name",
-				workflowAssetType = "Form Record",
-				workflowTask = "Review");
-
-			Workflow.viewTaskAssignedToMe(
-				workflowAssetTitle = "Created Form Name",
-				workflowAssetType = "Form Record",
-				workflowTask = "Review");
-
-			Workflow.viewTaskAssignedToMeDetails(
-				workflowAssetContent = "Date",
-				workflowAssetTitle = "Created Form Name",
-				workflowTask = "Review");
-
-			Workflow.gotoPreviewView();
-		}
-
-		task ("Then the Form entry displays properly") {
-			FormFields.viewDateField(
-				fieldLabel = "Date",
-				fieldName = "Date");
-		}
-
-		task ("and When the reviewer approves this workflow task") {
-			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-			Workflow.approveTaskByActions(
-				workflowAssetTitle = "Created Form Name",
-				workflowAssetType = "Form Record",
-				workflowTask = "Review");
-		}
-
-		task ("Then the Form entry displays under the Completed filter") {
-			Workflow.viewCompletedTask(
-				workflowAssetTitle = "Created Form Name",
-				workflowAssetType = "Form Record",
-				workflowTask = "Review");
 		}
 	}
 

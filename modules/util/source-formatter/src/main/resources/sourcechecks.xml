@@ -1639,6 +1639,10 @@
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil" />
 		</check>
+		<check name="UpgradeJavaAddCategoryParameterCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter of the method 'addCategory' of 'AssetCategoryLocalService' and 'AssetCategoryLocalServiceUtil' classes" />
+		</check>
 		<check name="UpgradeJavaAddFDSTableSchemaFieldCheck">
 			<category name="Upgrade" />
 			<description name="Replace method addFDSTableSchemaFieldCheck by add" />

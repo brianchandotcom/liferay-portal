@@ -82,6 +82,16 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaAddCategoryParameterCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaAddCategoryParameterCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addCategory from ",
+				"AssetCategoryLocalService and AssetCategoryLocalServiceUtil. ",
+				"Fill the new parameters manually, see LPS-192320"));
+	}
+
+	@Test
 	public void testUpgradeJavaAddFDSTableSchemaFieldCheck() throws Exception {
 		test("upgrade/UpgradeJavaAddFDSTableSchemaFieldCheck.testjava");
 	}

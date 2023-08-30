@@ -62,6 +62,13 @@ public class LayoutPageTemplateCollectionTable
 	public final Column<LayoutPageTemplateCollectionTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutPageTemplateCollectionTable, Long>
+		parentLayoutPageTemplateCollectionId = createColumn(
+			"parentLPTCollectionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<LayoutPageTemplateCollectionTable, Integer> type =
+		createColumn(
+			"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<LayoutPageTemplateCollectionTable, Date>
 		lastPublishDate = createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

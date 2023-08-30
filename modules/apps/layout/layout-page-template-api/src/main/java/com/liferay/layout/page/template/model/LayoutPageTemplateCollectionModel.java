@@ -279,6 +279,35 @@ public interface LayoutPageTemplateCollectionModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @return the parent layout page template collection ID of this layout page template collection
+	 */
+	public long getParentLayoutPageTemplateCollectionId();
+
+	/**
+	 * Sets the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID of this layout page template collection
+	 */
+	public void setParentLayoutPageTemplateCollectionId(
+		long parentLayoutPageTemplateCollectionId);
+
+	/**
+	 * Returns the type of this layout page template collection.
+	 *
+	 * @return the type of this layout page template collection
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this layout page template collection.
+	 *
+	 * @param type the type of this layout page template collection
+	 */
+	public void setType(int type);
+
+	/**
 	 * Returns the last publish date of this layout page template collection.
 	 *
 	 * @return the last publish date of this layout page template collection

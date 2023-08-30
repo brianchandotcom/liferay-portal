@@ -56,6 +56,10 @@ public class LayoutPageTemplateCollectionWrapper
 			getLayoutPageTemplateCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put(
+			"parentLayoutPageTemplateCollectionId",
+			getParentLayoutPageTemplateCollectionId());
+		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -141,6 +145,20 @@ public class LayoutPageTemplateCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long parentLayoutPageTemplateCollectionId = (Long)attributes.get(
+			"parentLayoutPageTemplateCollectionId");
+
+		if (parentLayoutPageTemplateCollectionId != null) {
+			setParentLayoutPageTemplateCollectionId(
+				parentLayoutPageTemplateCollectionId);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -266,6 +284,16 @@ public class LayoutPageTemplateCollectionWrapper
 	}
 
 	/**
+	 * Returns the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @return the parent layout page template collection ID of this layout page template collection
+	 */
+	@Override
+	public long getParentLayoutPageTemplateCollectionId() {
+		return model.getParentLayoutPageTemplateCollectionId();
+	}
+
+	/**
 	 * Returns the primary key of this layout page template collection.
 	 *
 	 * @return the primary key of this layout page template collection
@@ -273,6 +301,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type of this layout page template collection.
+	 *
+	 * @return the type of this layout page template collection
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
 	}
 
 	/**
@@ -436,6 +474,19 @@ public class LayoutPageTemplateCollectionWrapper
 	}
 
 	/**
+	 * Sets the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID of this layout page template collection
+	 */
+	@Override
+	public void setParentLayoutPageTemplateCollectionId(
+		long parentLayoutPageTemplateCollectionId) {
+
+		model.setParentLayoutPageTemplateCollectionId(
+			parentLayoutPageTemplateCollectionId);
+	}
+
+	/**
 	 * Sets the primary key of this layout page template collection.
 	 *
 	 * @param primaryKey the primary key of this layout page template collection
@@ -443,6 +494,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type of this layout page template collection.
+	 *
+	 * @param type the type of this layout page template collection
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

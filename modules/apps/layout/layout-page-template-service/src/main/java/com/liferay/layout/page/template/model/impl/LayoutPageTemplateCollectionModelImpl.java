@@ -72,7 +72,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"lptCollectionKey", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"description", Types.VARCHAR}, {"parentLPTCollectionId", Types.BIGINT},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,11 +93,13 @@ public class LayoutPageTemplateCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("lptCollectionKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("parentLPTCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lptCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null,primary key (layoutPageTemplateCollectionId, ctCollectionId))";
+		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lptCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,parentLPTCollectionId LONG,type_ INTEGER,lastPublishDate DATE null,primary key (layoutPageTemplateCollectionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateCollection";
@@ -290,6 +293,12 @@ public class LayoutPageTemplateCollectionModelImpl
 			attributeGetterFunctions.put(
 				"description", LayoutPageTemplateCollection::getDescription);
 			attributeGetterFunctions.put(
+				"parentLayoutPageTemplateCollectionId",
+				LayoutPageTemplateCollection::
+					getParentLayoutPageTemplateCollectionId);
+			attributeGetterFunctions.put(
+				"type", LayoutPageTemplateCollection::getType);
+			attributeGetterFunctions.put(
 				"lastPublishDate",
 				LayoutPageTemplateCollection::getLastPublishDate);
 
@@ -365,6 +374,15 @@ public class LayoutPageTemplateCollectionModelImpl
 				"description",
 				(BiConsumer<LayoutPageTemplateCollection, String>)
 					LayoutPageTemplateCollection::setDescription);
+			attributeSetterBiConsumers.put(
+				"parentLayoutPageTemplateCollectionId",
+				(BiConsumer<LayoutPageTemplateCollection, Long>)
+					LayoutPageTemplateCollection::
+						setParentLayoutPageTemplateCollectionId);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<LayoutPageTemplateCollection, Integer>)
+					LayoutPageTemplateCollection::setType);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<LayoutPageTemplateCollection, Date>)
@@ -670,6 +688,39 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	@JSON
 	@Override
+	public long getParentLayoutPageTemplateCollectionId() {
+		return _parentLayoutPageTemplateCollectionId;
+	}
+
+	@Override
+	public void setParentLayoutPageTemplateCollectionId(
+		long parentLayoutPageTemplateCollectionId) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_parentLayoutPageTemplateCollectionId =
+			parentLayoutPageTemplateCollectionId;
+	}
+
+	@JSON
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -763,6 +814,10 @@ public class LayoutPageTemplateCollectionModelImpl
 			getLayoutPageTemplateCollectionKey());
 		layoutPageTemplateCollectionImpl.setName(getName());
 		layoutPageTemplateCollectionImpl.setDescription(getDescription());
+		layoutPageTemplateCollectionImpl.
+			setParentLayoutPageTemplateCollectionId(
+				getParentLayoutPageTemplateCollectionId());
+		layoutPageTemplateCollectionImpl.setType(getType());
 		layoutPageTemplateCollectionImpl.setLastPublishDate(
 			getLastPublishDate());
 
@@ -803,6 +858,11 @@ public class LayoutPageTemplateCollectionModelImpl
 			this.<String>getColumnOriginalValue("name"));
 		layoutPageTemplateCollectionImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		layoutPageTemplateCollectionImpl.
+			setParentLayoutPageTemplateCollectionId(
+				this.<Long>getColumnOriginalValue("parentLPTCollectionId"));
+		layoutPageTemplateCollectionImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
 		layoutPageTemplateCollectionImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -966,6 +1026,12 @@ public class LayoutPageTemplateCollectionModelImpl
 			layoutPageTemplateCollectionCacheModel.description = null;
 		}
 
+		layoutPageTemplateCollectionCacheModel.
+			parentLayoutPageTemplateCollectionId =
+				getParentLayoutPageTemplateCollectionId();
+
+		layoutPageTemplateCollectionCacheModel.type = getType();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1054,6 +1120,8 @@ public class LayoutPageTemplateCollectionModelImpl
 	private String _layoutPageTemplateCollectionKey;
 	private String _name;
 	private String _description;
+	private long _parentLayoutPageTemplateCollectionId;
+	private int _type;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1101,6 +1169,9 @@ public class LayoutPageTemplateCollectionModelImpl
 			"lptCollectionKey", _layoutPageTemplateCollectionKey);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put(
+			"parentLPTCollectionId", _parentLayoutPageTemplateCollectionId);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1112,6 +1183,9 @@ public class LayoutPageTemplateCollectionModelImpl
 		attributeNames.put("uuid_", "uuid");
 		attributeNames.put(
 			"lptCollectionKey", "layoutPageTemplateCollectionKey");
+		attributeNames.put(
+			"parentLPTCollectionId", "parentLayoutPageTemplateCollectionId");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1153,7 +1227,11 @@ public class LayoutPageTemplateCollectionModelImpl
 
 		columnBitmasks.put("description", 4096L);
 
-		columnBitmasks.put("lastPublishDate", 8192L);
+		columnBitmasks.put("parentLPTCollectionId", 8192L);
+
+		columnBitmasks.put("type_", 16384L);
+
+		columnBitmasks.put("lastPublishDate", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

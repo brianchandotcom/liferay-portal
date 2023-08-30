@@ -137,10 +137,6 @@
 	<bean class="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil" id="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil">
 		<property name="directRequestDispatcherFactory" ref="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory" />
 	</bean>
-	<bean class="com.liferay.portal.servlet.TransferHeadersHelperImpl" id="com.liferay.portal.kernel.servlet.TransferHeadersHelper" />
-	<bean class="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil" id="com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil">
-		<property name="transferHeadersHelper" ref="com.liferay.portal.kernel.servlet.TransferHeadersHelper" />
-	</bean>
 	<bean class="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil" id="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil">
 		<property name="lastSessionRecorderHelper">
 			<bean class="com.liferay.portal.spring.hibernate.LastSessionRecorderHelperImpl" />

@@ -79,7 +79,7 @@ public class EndpointMatcher {
 			return endpointPath + "\\d+";
 		}
 
-		return endpointPath + "\\D+";
+		return endpointPath + "\\S+";
 	}
 
 	private final List<APIApplication.Endpoint> _endpoints;

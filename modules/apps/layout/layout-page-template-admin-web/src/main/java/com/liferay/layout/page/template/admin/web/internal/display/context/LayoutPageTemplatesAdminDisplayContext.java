@@ -84,7 +84,8 @@ public class LayoutPageTemplatesAdminDisplayContext {
 				navigationItem.setActive(
 					Objects.equals(getTabs1(), "display-page-templates"));
 				navigationItem.setHref(
-					getPortletURL(), "tabs1", "display-page-templates");
+					getPortletURL(), "tabs1", "display-page-templates",
+					"layoutPageTemplateCollectionId", 0);
 				navigationItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "display-page-templates"));

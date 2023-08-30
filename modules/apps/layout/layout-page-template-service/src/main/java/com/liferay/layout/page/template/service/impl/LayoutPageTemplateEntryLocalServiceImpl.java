@@ -279,7 +279,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				sourceLayoutPageTemplateEntry.getClassTypeId(), name,
 				sourceLayoutPageTemplateEntry.getType(), 0, false,
 				sourceLayoutPageTemplateEntry.getLayoutPrototypeId(), 0,
-				masterLayoutPlid, sourceLayoutPageTemplateEntry.getStatus(),
+				masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
 
 		FileEntry targetPreviewFileEntry = _copyPreviewFileEntry(

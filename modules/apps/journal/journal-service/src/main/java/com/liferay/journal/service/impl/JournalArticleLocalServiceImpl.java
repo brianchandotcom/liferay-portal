@@ -1442,12 +1442,15 @@ public class JournalArticleLocalServiceImpl
 			_journalArticleResourceLocalService.fetchArticleResource(
 				groupId, articleId);
 
+		String assetTitle = StringPool.BLANK;
+
 		try {
 			List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new ArticleVersionComparator(true));
 
 			for (JournalArticle article : articles) {
+				assetTitle = article.getTitleCurrentValue();
 				journalArticleLocalService.deleteArticle(
 					article, null, serviceContext);
 			}
@@ -1460,7 +1463,10 @@ public class JournalArticleLocalServiceImpl
 			_systemEventLocalService.addSystemEvent(
 				0, groupId, JournalArticle.class.getName(),
 				articleResource.getResourcePrimKey(), articleResource.getUuid(),
-				null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+				null, SystemEventConstants.TYPE_DELETE,
+				JSONUtil.put(
+					JournalArticleConstants.ASSET_TITLE, assetTitle
+				).toString());
 		}
 	}
 

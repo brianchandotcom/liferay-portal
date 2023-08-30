@@ -7,16 +7,13 @@ package com.liferay.layout.page.template.admin.web.internal.frontend.taglib.clay
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseHorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.LayoutPageTemplateCollectionActionDropdownItem;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
@@ -69,33 +66,16 @@ public class DisplayPageTemplateCollectionHorizontalCard
 
 	@Override
 	public String getHref() {
-		try {
-			if (!LayoutPageTemplateCollectionPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					_layoutPageTemplateCollection, ActionKeys.UPDATE)) {
-
-				return StringPool.BLANK;
-			}
-
-			return PortletURLBuilder.createRenderURL(
-				_renderResponse
-			).setTabs1(
-				"display-page-templates"
-			).setParameter(
-				"groupId", _layoutPageTemplateCollection.getGroupId()
-			).setParameter(
-				"layoutPageTemplateCollectionId",
-				_layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId()
-			).buildString();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setTabs1(
+			"display-page-templates"
+		).setParameter(
+			"groupId", _layoutPageTemplateCollection.getGroupId()
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).buildString();
 	}
 
 	@Override

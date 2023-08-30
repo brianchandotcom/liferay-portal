@@ -27,14 +27,14 @@ interface ModalAddObjectDefinitionProps {
 	apiURL: string;
 	handleOnClose: () => void;
 	objectFolderExternalReferenceCode?: string;
-	storages: LabelTypeObject[];
+	storages: LabelValueObject[];
 }
 
 type TInitialValues = {
 	label: string;
 	name?: string;
 	pluralLabel: string;
-	storage: LabelTypeObject;
+	storage: LabelValueObject;
 };
 
 export function ModalAddObjectDefinition({
@@ -99,7 +99,7 @@ export function ModalAddObjectDefinition({
 		}
 
 		if (Liferay.FeatureFlags['LPS-135430']) {
-			objectDefinition.storageType = storage.type;
+			objectDefinition.storageType = storage.value;
 		}
 		try {
 			await API.save(apiURL, objectDefinition, 'POST');
@@ -136,10 +136,10 @@ export function ModalAddObjectDefinition({
 
 	const selectedStorageType = (storageType: string) => {
 		const chooseStorage = storageSortedByLabel.find(
-			(currentStorage) => currentStorage.type === storageType
+			(currentStorage) => currentStorage.value === storageType
 		);
 
-		return chooseStorage?.type;
+		return chooseStorage?.value;
 	};
 
 	return (
@@ -195,14 +195,14 @@ export function ModalAddObjectDefinition({
 											...values,
 											storage: storageSortedByLabel.find(
 												(storage) =>
-													storage.type === value
+													storage.value === value
 											),
 										});
 									}}
 									options={storageSortedByLabel.map(
 										(storage) => {
 											return {
-												key: storage.type,
+												key: storage.value,
 												label: storage.label,
 											};
 										}
@@ -211,7 +211,7 @@ export function ModalAddObjectDefinition({
 										'object-definition-storage-type-tooltip'
 									)}
 									value={selectedStorageType(
-										values.storage.type
+										values.storage.value
 									)}
 								/>
 

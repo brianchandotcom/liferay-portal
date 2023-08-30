@@ -41,7 +41,7 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	modelBuilderURL: string;
 	objectFolderPermissionsURL: string;
-	storages: LabelTypeObject[];
+	storages: LabelValueObject[];
 }
 
 export type ViewObjectDefinitionsModals = {

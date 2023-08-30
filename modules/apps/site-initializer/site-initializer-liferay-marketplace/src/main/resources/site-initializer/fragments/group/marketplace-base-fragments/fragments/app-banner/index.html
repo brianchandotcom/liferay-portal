@@ -1,9 +1,7 @@
-[#assign
-publisherEmail = configuration.publisherEmail
-]
+[#assign publisherEmail = configuration.publisherEmail]
 
-<div class="banner">
-	<div class="banner__content d-flex justify-content-between">
+<div class="banner p-3 rounded">
+	<div class="banner__content d-flex justify-content-between align-items-center">
 		<div class="d-flex flex-column justify-content-between w-100">
 			<div class="align-items-center d-flex w-100">
 				<div class="banner__content__app__image_container">
@@ -12,9 +10,9 @@ publisherEmail = configuration.publisherEmail
 
 				<div class="banner__title__container">
 					<div class="banner__title__section">
-						<div class="banner__content-title">
+						<div class="banner__content-title ml-2 font-weight-bold">
 							Clarity Customer Portal
-							<span class="banner__content__brand-mobile">
+							<span class="banner__content__brand-mobile font-weight-normal">
 								Liferay
 							</span>
 						</div>
@@ -25,20 +23,20 @@ publisherEmail = configuration.publisherEmail
 					</div>
 
 					<div class="align-items-center d-flex flex-nowrap ml-2">
-						<div class="d-flex banner__content__brand">
+						<div class="d-flex">
 							<div class="liferay__icon">
 								<img alt="Liferay Logo" src="[resources:liferay.svg]" />
 							</div>
 
-							<span class="banner__content__brand ml-2">
+							<span class="banner__content__brand font-weight-normal ml-2">
 								Liferay
 							</span>
 						</div>
 
 						<div class="d-flex ml-3">
 							<div class="banner__tag-container">
-								<span class="banner__product-tag">Experience Management</span>
-								<span class="banner__product-tag">Analytics</span>
+								<span class="banner__product-tag rounded py-1 px-2">Experience Management</span>
+								<span class="banner__product-tag rounded py-1 px-2">Analytics</span>
 							</div>
 						</div>
 					</div>
@@ -47,21 +45,17 @@ publisherEmail = configuration.publisherEmail
 
 			<div class="d-flex">
 				<div class="banner__tag-container-mobile justify-content-between">
-					<span class="banner__product-tag">Experience Management</span>
-					<span class="banner__product-tag">Analytics</span>
+					<span class="banner__product-tag rounded py-1 px-2">Experience Management</span>
+					<span class="banner__product-tag rounded py-1 px-2">Analytics</span>
 				</div>
 			</div>
 		</div>
 
-		<div class="banner__buttons-container">
-			<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary" onclick="Liferay.fire('contact-publisher');" value=`${publisherEmail}`>
+		<div class="banner__buttons-container d-flex">
+			<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary w-100 text-nowrap" onclick="Liferay.fire('contact-publisher');" value=`${publisherEmail}`>
 				Contact Publisher
 			</button>
-
-			<button
-				aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary"
-				onclick="Liferay.fire('start-trial');"
-			>
+		<button aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary w-100 text-nowrap" onclick="Liferay.fire('start-trial');">
 				Free 7 Day Trial
 			</button>
 		</div>

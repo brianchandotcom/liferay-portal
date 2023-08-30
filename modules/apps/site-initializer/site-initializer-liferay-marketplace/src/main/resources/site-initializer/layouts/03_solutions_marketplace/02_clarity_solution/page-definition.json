@@ -11,115 +11,119 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginLeft": "5",
-								"marginRight": "5"
+								"marginTop": "5"
 							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"paddingLeft": "4",
-										"paddingRight": "4"
-									},
-									"id": "tablet"
-								}
-							],
 							"indexed": true,
 							"layout": {
-								"marginLeft": 4,
-								"marginRight": 4,
-								"widthType": "Fixed"
+								"marginTop": 4
 							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragment": {
-										"key": "app-banner",
-										"siteKey": "[$GROUP_KEY$]"
-									},
-									"fragmentConfig": {
-										"productID": "1111",
-										"productId": "",
-										"publisherEmail": ""
-									},
-									"fragmentFields": [
-										{
-											"id": "text-product-tag",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"en_US": "Experience Management"
-													}
-												}
-											}
-										},
-										{
-											"id": "image-editable-product-logo",
-											"value": {
-												"fragmentImage": {
-													"url": {
-														"value_i18n": {
-														}
-													}
-												},
-												"fragmentLink": {
-												}
-											}
-										},
-										{
-											"id": "text-product-tag-2",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"en_US": "Analytics"
-													}
-												}
-											}
-										},
-										{
-											"id": "text-product-name-2",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"en_US": "Clarity Customer Portal"
-													}
-												}
-											}
-										}
-									],
 									"fragmentStyle": {
-										"marginBottom": "7",
-										"width": "100%"
+										"marginLeft": "5",
+										"marginRight": "5"
 									},
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
-												"marginLeft": "0",
-												"marginRight": "0"
+												"paddingLeft": "4",
+												"paddingRight": "4"
 											},
 											"id": "tablet"
 										}
 									],
-									"indexed": true
+									"indexed": true,
+									"layout": {
+										"marginLeft": 4,
+										"marginRight": 4,
+										"widthType": "Fixed"
+									}
 								},
-								"type": "Fragment"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"indexed": true,
-							"layout": {
-							}
-						},
-						"pageElements": [
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "app-banner",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"productID": "1111",
+												"productId": "",
+												"publisherEmail": ""
+											},
+											"fragmentFields": [
+												{
+													"id": "text-product-tag",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Experience Management"
+															}
+														}
+													}
+												},
+												{
+													"id": "image-editable-product-logo",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"value_i18n": {
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "text-product-tag-2",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Analytics"
+															}
+														}
+													}
+												},
+												{
+													"id": "text-product-name-2",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Clarity Customer Portal"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "7",
+												"width": "100%"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginLeft": "0",
+														"marginRight": "0"
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
 							{
 								"definition": {
 									"fragmentStyle": {
@@ -436,7 +440,7 @@
 																			},
 																			"fragmentFields": [
 																				{
-																					"id": "03-01-image",
+																					"id": "01-01-image",
 																					"value": {
 																						"fragmentLink": {
 																							"value": {
@@ -448,8 +452,12 @@
 																							}
 																						},
 																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"title\":\"home_with_guide-png\", \"url\":\"/documents/d/Merketplace/home_with_guide-png?download=true\"}"
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/home_with_guide.png#]"
+																								}
 																							}
 																						}
 																					}
@@ -467,8 +475,35 @@
 																							}
 																						},
 																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"title\":\"trial_instructions-png\", \"url\":\"/documents/d/Merketplace/trial_instructions-png?download=true\"}"
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/trial_instructions.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "03-01-image",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": ""
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sign_in.png#]"
+																								}
 																							}
 																						}
 																					}
@@ -505,25 +540,6 @@
 																					"id": "03-03-subtitle",
 																					"value": {
 																						"fragmentLink": {
-																						}
-																					}
-																				},
-																				{
-																					"id": "01-01-image",
-																					"value": {
-																						"fragmentLink": {
-																							"value": {
-																								"href": {
-																									"value_i18n": {
-																										"en_US": ""
-																									}
-																								}
-																							}
-																						},
-																						"text": {
-																							"value_i18n": {
-																								"en_US": "{\"title\":\"sign_in-png\", \"url\":\"/documents/d/Merketplace/sign_in-png?download=true\"}"
-																							}
 																						}
 																					}
 																				},

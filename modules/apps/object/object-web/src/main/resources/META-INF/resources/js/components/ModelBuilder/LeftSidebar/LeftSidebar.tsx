@@ -12,6 +12,7 @@ import {
 	API,
 	CustomVerticalBar,
 	ManagementToolbarSearch,
+	getLocalizableLabel,
 	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
@@ -138,7 +139,10 @@ export default function LeftSidebar({
 				openToast({
 					message: sub(
 						Liferay.Language.get('x-was-moved-successfully'),
-						`<strong>${movedObjectDefinition.label}</strong>`
+						`<strong>${getLocalizableLabel(
+							objectDefinition.defaultLanguageId,
+							movedObjectDefinition.label
+						)}</strong>`
 					),
 					type: 'success',
 				});
@@ -189,7 +193,6 @@ export default function LeftSidebar({
 				nestedKey="objectDefinitions"
 				onSelect={(item) => {
 					if (
-						item.type === 'objectDefinition' &&
 						selectedFolder.objectDefinitions?.find(
 							(definition) =>
 								definition.definitionId ===
@@ -272,33 +275,39 @@ export default function LeftSidebar({
 								<TreeView.Item
 									actions={
 										showActions ? (
-											<>
-												<ClayDropDownWithItems
-													items={[
-														{
-															label: Liferay.Language.get(
-																'move-to-current-folder'
-															),
-															onClick: () =>
-																handleMove({
-																	definitionId,
-																	folderName:
-																		item.folderName,
-																}),
-															symbolLeft:
-																'move-folder',
-														},
-													]}
-													trigger={
-														<ClayButton
-															displayType={null}
-															monospaced
-														>
-															<Icon symbol="ellipsis-v" />
-														</ClayButton>
-													}
-												/>
-											</>
+											type === 'objectLink' ? (
+												<></>
+											) : (
+												<>
+													<ClayDropDownWithItems
+														items={[
+															{
+																label: Liferay.Language.get(
+																	'move-to-current-folder'
+																),
+																onClick: () =>
+																	handleMove({
+																		definitionId,
+																		folderName:
+																			item.folderName,
+																	}),
+																symbolLeft:
+																	'move-folder',
+															},
+														]}
+														trigger={
+															<ClayButton
+																displayType={
+																	null
+																}
+																monospaced
+															>
+																<Icon symbol="ellipsis-v" />
+															</ClayButton>
+														}
+													/>
+												</>
+											)
 										) : (
 											changeNodeViewButton(
 												hiddenNode,

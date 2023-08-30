@@ -73,7 +73,7 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,10 @@ public class LayoutPageTemplateCollectionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", parentLayoutPageTemplateCollectionId=");
+		sb.append(parentLayoutPageTemplateCollectionId);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -175,6 +179,11 @@ public class LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionImpl.setDescription(description);
 		}
 
+		layoutPageTemplateCollectionImpl.
+			setParentLayoutPageTemplateCollectionId(
+				parentLayoutPageTemplateCollectionId);
+		layoutPageTemplateCollectionImpl.setType(type);
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutPageTemplateCollectionImpl.setLastPublishDate(null);
 		}
@@ -208,6 +217,10 @@ public class LayoutPageTemplateCollectionCacheModel
 		layoutPageTemplateCollectionKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		parentLayoutPageTemplateCollectionId = objectInput.readLong();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -263,6 +276,9 @@ public class LayoutPageTemplateCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(parentLayoutPageTemplateCollectionId);
+
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -279,6 +295,8 @@ public class LayoutPageTemplateCollectionCacheModel
 	public String layoutPageTemplateCollectionKey;
 	public String name;
 	public String description;
+	public long parentLayoutPageTemplateCollectionId;
+	public int type;
 	public long lastPublishDate;
 
 }

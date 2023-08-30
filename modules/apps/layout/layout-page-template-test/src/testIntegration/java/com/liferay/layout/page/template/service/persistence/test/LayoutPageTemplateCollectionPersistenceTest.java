@@ -152,6 +152,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		newLayoutPageTemplateCollection.setDescription(
 			RandomTestUtil.randomString());
 
+		newLayoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			RandomTestUtil.nextLong());
+
+		newLayoutPageTemplateCollection.setType(RandomTestUtil.nextInt());
+
 		newLayoutPageTemplateCollection.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
@@ -209,6 +214,14 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutPageTemplateCollection.getDescription(),
 			newLayoutPageTemplateCollection.getDescription());
+		Assert.assertEquals(
+			existingLayoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId(),
+			newLayoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId());
+		Assert.assertEquals(
+			existingLayoutPageTemplateCollection.getType(),
+			newLayoutPageTemplateCollection.getType());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingLayoutPageTemplateCollection.getLastPublishDate()),
@@ -319,7 +332,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			"layoutPageTemplateCollectionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "layoutPageTemplateCollectionKey", true,
-			"name", true, "description", true, "lastPublishDate", true);
+			"name", true, "description", true,
+			"parentLayoutPageTemplateCollectionId", true, "type", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -695,6 +710,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		layoutPageTemplateCollection.setDescription(
 			RandomTestUtil.randomString());
+
+		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			RandomTestUtil.nextLong());
+
+		layoutPageTemplateCollection.setType(RandomTestUtil.nextInt());
 
 		layoutPageTemplateCollection.setLastPublishDate(
 			RandomTestUtil.nextDate());

@@ -4084,6 +4084,9 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put(
 			"layoutPageTemplateCollectionKey", "lptCollectionKey");
+		dbColumnNames.put(
+			"parentLayoutPageTemplateCollectionId", "parentLPTCollectionId");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -4961,6 +4964,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		ctStrictColumnNames.add("lptCollectionKey");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
+		ctStrictColumnNames.add("parentLPTCollectionId");
+		ctStrictColumnNames.add("type_");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
@@ -5199,7 +5204,10 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		LayoutPageTemplateCollectionPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "layoutPageTemplateCollectionKey"});
+		new String[] {
+			"uuid", "layoutPageTemplateCollectionKey",
+			"parentLayoutPageTemplateCollectionId", "type"
+		});
 
 	@Override
 	protected FinderCache getFinderCache() {

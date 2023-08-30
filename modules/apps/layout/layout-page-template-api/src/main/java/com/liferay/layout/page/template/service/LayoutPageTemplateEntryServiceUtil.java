@@ -124,38 +124,21 @@ public class LayoutPageTemplateEntryServiceUtil {
 
 	public static List<Object>
 		getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			long groupId, int type, int start, int end,
-			OrderByComparator<Object> orderByComparator) {
+			long groupId, long layoutPageTemplateCollectionId, int type,
+			int start, int end, OrderByComparator<Object> orderByComparator) {
 
 		return getService().
 			getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-				groupId, type, start, end, orderByComparator);
-	}
-
-	public static List<Object>
-		getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			long groupId, String name, int type, int start, int end,
-			OrderByComparator<Object> orderByComparator) {
-
-		return getService().
-			getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-				groupId, name, type, start, end, orderByComparator);
+				groupId, layoutPageTemplateCollectionId, type, start, end,
+				orderByComparator);
 	}
 
 	public static int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, int type) {
+		long groupId, long layoutPageTemplateCollectionId, int type) {
 
 		return getService().
 			getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-				groupId, type);
-	}
-
-	public static int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, String name, int type) {
-
-		return getService().
-			getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-				groupId, name, type);
+				groupId, layoutPageTemplateCollectionId, type);
 	}
 
 	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(

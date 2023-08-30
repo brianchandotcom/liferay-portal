@@ -12,6 +12,8 @@ create table LayoutPageTemplateCollection (
 	lptCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description STRING null,
+	parentLPTCollectionId LONG,
+	type_ INTEGER,
 	lastPublishDate DATE null,
 	primary key (layoutPageTemplateCollectionId, ctCollectionId)
 );

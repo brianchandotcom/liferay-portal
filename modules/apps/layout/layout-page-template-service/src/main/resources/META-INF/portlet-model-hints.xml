@@ -19,6 +19,8 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="parentLayoutPageTemplateCollectionId" type="long" />
+		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">

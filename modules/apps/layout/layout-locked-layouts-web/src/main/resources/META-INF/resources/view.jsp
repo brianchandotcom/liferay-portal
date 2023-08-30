@@ -51,12 +51,14 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 						HashMapBuilder.<String, Object>put(
 							"actions", "unlockLockedLayouts"
 						).build());
+
+					String name = HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout));
 					%>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="name"
-						value="<%= HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)) %>"
+						value="<%= name %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -75,12 +77,16 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 						value="<%= lockedLayoutsDisplayContext.getLastAutoSave(lockedLayout) %>"
 					/>
 
+					<%
+					String label = LanguageUtil.format(request, "actions-for-x", name, false);
+					%>
+
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
-							aria-label='<%= LanguageUtil.format(request, "actions-for-x", HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)), false) %>'
+							aria-label='<%= label %>'
 							dropdownItems="<%= lockedLayoutsDisplayContext.getLockedLayoutDropdownItems(lockedLayout) %>"
 							propsTransformer="js/LockedLayoutDropdownDefaultPropsTransformer"
-							title='<%= LanguageUtil.format(request, "actions-for-x", HtmlUtil.escape(lockedLayoutsDisplayContext.getName(lockedLayout)), false) %>'
+							title='<%= label %>'
 						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>

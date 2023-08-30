@@ -43,11 +43,12 @@ definition {
 		task ("And given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				fromAddress = "test@liferay",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email");
+				name = "Notification Template");
 		}
 
 		task ("When an attachment is added to the notification template") {
@@ -160,13 +161,14 @@ definition {
 		task ("And given an email notification template using the attachment field from Object A") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
 				fromAddress = "[%USER_AUTHOR_FIRST_NAME%]",
 				fromName = "[%CURRENT_USER_EMAIL_ADDRESS%]",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "[%USER_AUTHOR_LAST_NAME%]");
 
 			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object A 183441");
@@ -212,7 +214,9 @@ definition {
 		}
 
 		task ("When the user creates a new Email Notification Template") {
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				bcc = "test3@liferay.com",
 				cc = "test2@liferay.com",
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -221,7 +225,6 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();
@@ -269,10 +272,11 @@ definition {
 		}
 
 		task ("When the user adds a new user notification template") {
-			ObjectNotifications.addNewUserNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "User Notification");
+
+			ObjectNotifications.configureUserNotificationTemplate(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
 				name = "Notification Template",
-				notificationType = "User Notification",
 				recipientType = "User",
 				subject = "Subject content",
 				userName = "Test");
@@ -293,7 +297,9 @@ definition {
 				subject = "Subject content");
 
 			ObjectNotifications.selectEntity(entityName = "User");
+
 			var listOfTerms = "Middle Name,Screen Name,Create Date,First Name,Last Login Date,UUID";
+
 			for (var entityTerms : list ${listOfTerms}) {
 				AssertElementPresent(
 					key_termName = ${entityTerms},
@@ -324,11 +330,12 @@ definition {
 		task ("And given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				fromAddress = "test@liferay",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email");
+				name = "Notification Template");
 		}
 
 		task ("And given an attachment is added to the notification template") {
@@ -358,7 +365,9 @@ definition {
 		task ("Go to Templates and add a new Notification Template") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				bcc = "test3@liferay.com",
 				cc = "test2@liferay.com",
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -367,7 +376,6 @@ definition {
 				fromAddress = "Liferay",
 				fromName = "Test Test",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "Subject");
 
 			PortletEntry.save();
@@ -416,6 +424,7 @@ definition {
 				isRequired = "false",
 				objectName = "CustomObject161922",
 				showFilesInDocumentsAndMedia = "true");
+
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161922");
 		}
 
@@ -471,16 +480,17 @@ definition {
 				panel = "Control Panel",
 				portlet = "Templates");
 
-			ObjectNotifications.addNewUserNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "User Notification");
+
+			ObjectNotifications.configureUserNotificationTemplate(
 				description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
 				name = "User Notification Template",
-				notificationType = "User Notification",
 				recipientType = "User",
 				subject = "Subject content",
 				userName = "Test");
 
 			PortletEntry.save();
-			}
+		}
 
 		task ("When delete the User Notification Template") {
 			ObjectNotifications.deleteNotificationTemplate(templateName = "Notification Template");
@@ -504,13 +514,14 @@ definition {
 		task ("Given a user creates an email notification template") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body Content",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "Subject Field");
 
 			PortletEntry.save();
@@ -1096,13 +1107,14 @@ definition {
 				panel = "Control Panel",
 				portlet = "Templates");
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "[%RELATIONSHIP_CUSTOMOBJECTA_CUSTOMFIELD%] | [%CUSTOMOBJECTB_CUSTOMFIELD%]",
 				entryTo = "[%CUSTOMOBJECTB_AUTHOR_EMAIL_ADDRESS%]",
 				fromAddress = "[%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_EMAIL_ADDRESS%]",
 				fromName = "[%CUSTOMOBJECTB_AUTHOR_FIRST_NAME%]",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "[%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_EMAIL_ADDRESS%] | [%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_FIRST_NAME%] [%RELATIONSHIP_CUSTOMOBJECTA_AUTHOR_LAST_NAME%]");
 
 			PortletEntry.save();
@@ -1202,13 +1214,14 @@ definition {
 				panel = "Control Panel",
 				portlet = "Templates");
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "[%CUSTOMOBJECT182606_CUSTOMFIELD%]",
 				entryTo = "[%CUSTOMOBJECT182606_AUTHOR_EMAIL_ADDRESS%]",
 				fromAddress = "[%CUSTOMOBJECT182606_AUTHOR_EMAIL_ADDRESS%]",
 				fromName = "[%RELATIONSHIP_USER_AUTHOR_FIRST_NAME%]",
 				name = "Notification Template",
-				notificationType = "Email",
 				subject = "[%RELATIONSHIP_USER_AUTHOR_FIRST_NAME%] [%RELATIONSHIP_USER_AUTHOR_LAST_NAME%]");
 
 			PortletEntry.save();
@@ -1410,7 +1423,7 @@ definition {
 				subject = "[%CUSTOMOBJECT180337_CUSTOMOBJECTFIELD%]",
 				templateName = "Notification Template",
 				toAddress = "[%CURRENT_USER_EMAIL_ADDRESS%]");
-		}		
+		}
 
 		task ("And given an action to send an email notification after updating a custom object entry") {
 			ObjectAdmin.openObjectAdmin();

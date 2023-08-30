@@ -1485,13 +1485,14 @@ definition {
 		task ("Given a notification template related to Custom Object that contains a Notification action") {
 			Notifications.goToNotificationTemplateAdmin();
 
-			ObjectNotifications.addNewEmailNotificationTemplate(
+			ObjectNotifications.addNewNotificationTemplate(notificationType = "Email");
+
+			ObjectNotifications.configureEmailNotificationTemplate(
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
-				notificationType = "Email",
 				subject = "Subject Test");
 
 			PortletEntry.save();

@@ -129,7 +129,6 @@ theme.portlet.decorate.default
 theme.portlet.sharing.default
 theme.shortcut.icon
 time.zones
-upgrade.processes
 user.notification.event.confirmation.enabled
 users.email.address.generator
 users.email.address.required

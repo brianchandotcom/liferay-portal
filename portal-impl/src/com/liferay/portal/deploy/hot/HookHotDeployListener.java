@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.pwd.Toolkit;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
@@ -76,8 +75,6 @@ import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.url.ServletContextURLContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -1194,7 +1191,6 @@ public class HookHotDeployListener
 
 		portalProperties.remove(PropsKeys.RELEASE_INFO_BUILD_NUMBER);
 		portalProperties.remove(PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER);
-		portalProperties.remove(_PROPS_KEY_UPGRADE_PROCESSES);
 
 		_portalPropertiesMap.put(servletContextName, portalProperties);
 
@@ -1585,24 +1581,6 @@ public class HookHotDeployListener
 			for (LiferayFilter liferayFilter : liferayFilters) {
 				liferayFilter.setFilterEnabled(filterEnabled);
 			}
-		}
-
-		if (unfilteredPortalProperties.containsKey(
-				PropsKeys.RELEASE_INFO_BUILD_NUMBER) ||
-			unfilteredPortalProperties.containsKey(
-				_PROPS_KEY_UPGRADE_PROCESSES)) {
-
-			String[] upgradeProcessClassNames = StringUtil.split(
-				unfilteredPortalProperties.getProperty(
-					_PROPS_KEY_UPGRADE_PROCESSES));
-
-			List<UpgradeProcess> upgradeProcesses =
-				UpgradeProcessUtil.initUpgradeProcesses(
-					portletClassLoader, upgradeProcessClassNames);
-
-			ReleaseLocalServiceUtil.updateRelease(
-				servletContextName, upgradeProcesses,
-				unfilteredPortalProperties);
 		}
 	}
 
@@ -2105,9 +2083,6 @@ public class HookHotDeployListener
 					"JdkDynamicProxy and will not work with CGLIB");
 		}
 	}
-
-	private static final String _PROPS_KEY_UPGRADE_PROCESSES =
-		"upgrade.processes";
 
 	private static final String[] _PROPS_KEYS_EVENTS = {
 		LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,

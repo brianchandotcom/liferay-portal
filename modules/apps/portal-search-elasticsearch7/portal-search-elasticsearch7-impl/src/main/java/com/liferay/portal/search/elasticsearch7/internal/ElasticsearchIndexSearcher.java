@@ -351,8 +351,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			openPointInTimeResponse.pitId());
 
 		pointInTime.setKeepAlive(
-			_deepPaginationConfigurationWrapper.
-				getPointInTimeKeepAliveSeconds());
+			_validatePointInTimeKeepAliveSeconds(
+				_deepPaginationConfigurationWrapper.
+					getPointInTimeKeepAliveSeconds()));
 
 		return pointInTime;
 	}
@@ -708,6 +709,18 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		return lastSearchHit;
+	}
+
+	private int _validatePointInTimeKeepAliveSeconds(
+		int pointInTimeKeepAliveSeconds) {
+
+		if ((pointInTimeKeepAliveSeconds > 0) &&
+			(pointInTimeKeepAliveSeconds <= 60)) {
+
+			return pointInTimeKeepAliveSeconds;
+		}
+
+		return 60;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

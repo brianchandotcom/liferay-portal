@@ -43,8 +43,7 @@ public class DeepPaginationConfigurationWrapper {
 	}
 
 	public int getPointInTimeKeepAliveSeconds() {
-		return _validatePointInTimeKeepAliveSeconds(
-			_deepPaginationConfiguration.pointInTimeKeepAliveSeconds());
+		return _deepPaginationConfiguration.pointInTimeKeepAliveSeconds();
 	}
 
 	public boolean isEnableDeepPagination(long companyId) {
@@ -52,18 +51,6 @@ public class DeepPaginationConfigurationWrapper {
 			companyId);
 
 		return _deepPaginationConfiguration.enableDeepPagination();
-	}
-
-	private int _validatePointInTimeKeepAliveSeconds(
-		int pointInTimeKeepAliveSeconds) {
-
-		if ((pointInTimeKeepAliveSeconds > 0) &&
-			(pointInTimeKeepAliveSeconds <= 60)) {
-
-			return pointInTimeKeepAliveSeconds;
-		}
-
-		return 60;
 	}
 
 	@Reference

@@ -95,7 +95,7 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 						executionMode));
 			}
 
-			indexReindexer.reindex(new long[] {companyId}, executionMode);
+			indexReindexer.reindex(companyId, executionMode);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

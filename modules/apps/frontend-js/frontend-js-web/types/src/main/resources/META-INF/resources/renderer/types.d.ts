@@ -5,10 +5,12 @@
 
 /// <reference types="react" />
 
-import {FDSTableCellHTMLElementBuilder} from '@liferay/js-api/data-set';
+interface IHTMLElementBuilder {
+	(args: any): HTMLElement;
+}
 export interface IClientExtensionRenderer {
 	erc?: string;
-	htmlElementBuilder?: FDSTableCellHTMLElementBuilder;
+	htmlElementBuilder?: IHTMLElementBuilder;
 	name?: string;
 	type: 'clientExtension';
 	url?: string;
@@ -21,3 +23,4 @@ export interface IInternalRenderer {
 	url?: string;
 }
 export declare type TRenderer = IClientExtensionRenderer | IInternalRenderer;
+export {};

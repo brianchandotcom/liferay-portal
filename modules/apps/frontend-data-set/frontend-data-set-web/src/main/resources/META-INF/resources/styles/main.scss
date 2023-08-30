@@ -1,5 +1,7 @@
 @import 'variables';
+
 @import 'data_renderers/tooltip_summary';
+
 @import 'modal';
 @import 'side_panel';
 @import 'views/list';
@@ -7,6 +9,7 @@
 .fds {
 	@import 'data_renderers/comment';
 	@import 'data_renderers/quantity_selector';
+
 	@import 'data_set';
 	@import 'dnd_table';
 	@import 'management_bar';

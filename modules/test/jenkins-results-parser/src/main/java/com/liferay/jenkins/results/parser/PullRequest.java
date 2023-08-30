@@ -78,32 +78,28 @@ public class PullRequest {
 
 			return new Comment(responseJSONObject);
 		}
-		catch (GitHubSecondaryRateLimitIOException
-					gitHubSecondaryRateLimitIOException) {
+		catch (GitHubSecondaryRateLimitRuntimeException
+					gitHubSecondaryRateLimitRuntimeException) {
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Unable to post comment in GitHub pull request\n");
+			sb.append("pull request: ");
+			sb.append(getURL());
+			sb.append("\n message:\n");
+			sb.append(body);
+			sb.append("\n");
+
+			NotificationUtil.sendSlackNotification(
+				sb.toString(), "#ci-notifications", ":liferay-ci:",
+				"Secondary Rate Limit exceeded", "Liferay CI");
 
 			throw new GitHubSecondaryRateLimitRuntimeException(
-				"Unable to post comment in GitHub pull request " + getURL(),
-				gitHubSecondaryRateLimitIOException);
+				gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),
+				gitHubSecondaryRateLimitRuntimeException.getRetryAfterSeconds(),
+				sb.toString(), gitHubSecondaryRateLimitRuntimeException);
 		}
 		catch (IOException ioException) {
-			if (ioException instanceof GitHubSecondaryRateLimitIOException) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("Unable to post comment in GitHub pull request\n");
-				sb.append("pull request: ");
-				sb.append(getURL());
-				sb.append("\n message:\n");
-				sb.append(body);
-				sb.append("\n");
-
-				NotificationUtil.sendSlackNotification(
-					sb.toString(), "#ci-notifications", ":liferay-ci:",
-					"Secondary Rate Limit exceeded", "Liferay CI");
-
-				throw new GitHubSecondaryRateLimitRuntimeException(
-					sb.toString(), ioException);
-			}
-
 			throw new RuntimeException(
 				"Unable to post comment in GitHub pull request " + getURL(),
 				ioException);

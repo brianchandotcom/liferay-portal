@@ -153,6 +153,12 @@ public class CIForwardProcessor {
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":liferay-ci:",
 					"Secondary Rate Limit exceeded", "Liferay CI");
+
+				throw new GitHubSecondaryRateLimitRuntimeException(
+					gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),
+					gitHubSecondaryRateLimitRuntimeException.
+						getRetryAfterSeconds(),
+					sb.toString(), gitHubSecondaryRateLimitRuntimeException);
 			}
 			catch (Exception exception) {
 				exception.printStackTrace();

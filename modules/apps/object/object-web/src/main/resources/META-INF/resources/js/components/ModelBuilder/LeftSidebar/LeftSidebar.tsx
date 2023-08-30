@@ -21,7 +21,6 @@ import React, {useMemo, useState} from 'react';
 import {Node, useStore, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {LeftSidebarDefinitionItemType, LeftSidebarItemType} from '../types';
@@ -34,9 +33,7 @@ const TYPES_TO_SYMBOLS = {
 
 interface LeftSidebarProps {
 	selectedFolderName: string;
-	setShowModal: (
-		value: React.SetStateAction<ViewObjectDefinitionsModals>
-	) => void;
+	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 
 export default function LeftSidebar({
@@ -360,12 +357,10 @@ export default function LeftSidebar({
 				<ClayButton
 					className="lfr-objects__model-builder-left-sidebar-body-create-new-object-button"
 					onClick={() =>
-						setShowModal(
-							(previousState: ViewObjectDefinitionsModals) => ({
-								...previousState,
-								addObjectDefinition: true,
-							})
-						)
+						setShowModal((previousState: ModelBuilderModals) => ({
+							...previousState,
+							addObjectDefinition: true,
+						}))
 					}
 				>
 					{Liferay.Language.get('create-new-object')}

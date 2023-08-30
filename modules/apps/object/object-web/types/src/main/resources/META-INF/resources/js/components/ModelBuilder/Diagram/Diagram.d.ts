@@ -6,10 +6,9 @@
 /// <reference types="react" />
 
 import './Diagram.scss';
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 declare function DiagramBuilder({
 	setShowModal,
 }: {
-	setShowModal: (value: ViewObjectDefinitionsModals) => void;
+	setShowModal: (value: ModelBuilderModals) => void;
 }): JSX.Element;
 export default DiagramBuilder;

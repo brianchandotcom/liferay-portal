@@ -5,12 +5,9 @@
 
 import React from 'react';
 import './LeftSidebar.scss';
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 interface LeftSidebarProps {
 	selectedFolderName: string;
-	setShowModal: (
-		value: React.SetStateAction<ViewObjectDefinitionsModals>
-	) => void;
+	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 export default function LeftSidebar({
 	selectedFolderName,

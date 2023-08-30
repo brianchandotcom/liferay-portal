@@ -7,11 +7,8 @@ import React from 'react';
 import {NodeProps} from 'react-flow-renderer';
 import './DefinitionNode.scss';
 import './EmptyNode.scss';
-import {ViewObjectDefinitionsModals} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 interface EmptyNodeProps {
-	setShowModal: (
-		value: React.SetStateAction<ViewObjectDefinitionsModals>
-	) => void;
+	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 export declare function EmptyNode({
 	data: {setShowModal},

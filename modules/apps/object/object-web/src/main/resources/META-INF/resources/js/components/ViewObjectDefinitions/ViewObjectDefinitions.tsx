@@ -44,20 +44,6 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	storages: LabelValueObject[];
 }
 
-export type ViewObjectDefinitionsModals = {
-	addFolder: boolean;
-	addObjectDefinition: boolean;
-	bindToRootObjectDefinition: boolean;
-	deleteFolder: boolean;
-	deleteObjectDefinition: boolean;
-	deletionNotAllowed: boolean;
-	editERC: boolean;
-	editFolder: boolean;
-	moveObjectDefinition: boolean;
-	redirectEditObjectDefinition: boolean;
-	unbindFromRootObjectDefinition: boolean;
-};
-
 export interface DeletedObjectDefinition {
 	hasObjectRelationship: boolean;
 	id: number;
@@ -101,10 +87,8 @@ export default function ViewObjectDefinitions({
 		deleteFolder: false,
 		deleteObjectDefinition: false,
 		deletionNotAllowed: false,
-		editERC: false,
 		editFolder: false,
 		moveObjectDefinition: false,
-		redirectEditObjectDefinition: false,
 		unbindFromRootObjectDefinition: false,
 	});
 	const [selectedFolder, setSelectedFolder] = useState<Partial<ObjectFolder>>(

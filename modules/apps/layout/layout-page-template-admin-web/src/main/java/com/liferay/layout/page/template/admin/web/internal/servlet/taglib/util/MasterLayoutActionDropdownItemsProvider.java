@@ -327,7 +327,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 		_getExportMasterLayoutActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
+			dropdownItem.setDisabled(!_layout.isPublished());
 			dropdownItem.setHref(
 				ResourceURLBuilder.createResourceURL(
 					_renderResponse

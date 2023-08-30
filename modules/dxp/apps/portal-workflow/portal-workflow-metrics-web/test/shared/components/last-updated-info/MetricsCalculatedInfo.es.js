@@ -12,9 +12,9 @@ import {MockRouter} from '../../../../test/mock/MockRouter.es';
 
 describe('MetricsCalculatedInfo', () => {
 	test.skip('will be correctly rendered', async () => {
-		const date = moment
-			.utc(new Date())
-			.format(Liferay.Language.get('mmm-dd-hh-mm-a'));
+		const date = moment(new Date()).format(
+			Liferay.Language.get('mmm-dd-hh-mm-a')
+		);
 
 		fetch.mockResolvedValueOnce({
 			json: () => Promise.resolve(date),

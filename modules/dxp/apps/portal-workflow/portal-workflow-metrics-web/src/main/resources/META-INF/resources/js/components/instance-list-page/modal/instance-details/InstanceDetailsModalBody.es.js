@@ -170,9 +170,9 @@ function Body({
 					{dateCreated && (
 						<Body.SectionAttribute
 							description={Liferay.Language.get('creation-date')}
-							detail={moment
-								.utc(dateCreated)
-								.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
+							detail={moment(dateCreated).format(
+								Liferay.Language.get('mmm-dd-yyyy-lt')
+							)}
 						/>
 					)}
 
@@ -196,9 +196,9 @@ function Body({
 					{completed && dateCompletion && (
 						<Body.SectionAttribute
 							description={Liferay.Language.get('end-date')}
-							detail={moment
-								.utc(dateCompletion)
-								.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
+							detail={moment(dateCompletion).format(
+								Liferay.Language.get('mmm-dd-yyyy-lt')
+							)}
 						/>
 					)}
 
@@ -310,11 +310,9 @@ function SLAResultItem({dateOverdue, name, onTime, remainingTime, status}) {
 					remainingTime
 				);
 
-				return `${moment
-					.utc(dateOverdue)
-					.format(
-						Liferay.Language.get('mmm-dd-yyyy-lt')
-					)} (${durationText} ${onTimeText})`;
+				return `${moment(dateOverdue).format(
+					Liferay.Language.get('mmm-dd-yyyy-lt')
+				)} (${durationText} ${onTimeText})`;
 			}
 			default: {
 				if (status === 'STOPPED' && onTime) {

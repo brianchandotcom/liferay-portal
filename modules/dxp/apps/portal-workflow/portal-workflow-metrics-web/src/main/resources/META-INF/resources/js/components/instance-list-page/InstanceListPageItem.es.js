@@ -168,9 +168,9 @@ function Item({isAdmin, totalCount, ...instance}) {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				{moment
-					.utc(dateCreated)
-					.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}
+				{moment(dateCreated).format(
+					Liferay.Language.get('mmm-dd-yyyy-lt')
+				)}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell style={{paddingRight: '0rem'}}>
@@ -305,7 +305,7 @@ function DueDateSLAResults({slaResults, slaStatusIconInfo}) {
 				: Liferay.Language.get('mmm-dd-yyyy');
 		}
 
-		return moment.utc(dateOverdue).format(format);
+		return moment(dateOverdue).format(format);
 	};
 
 	const instanceSlaResults = slaResults.slice(0, 2).map((slaResult) => {

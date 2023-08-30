@@ -8,7 +8,7 @@ import moment from './moment.es';
 const defaultDateFormat = 'YYYY-MM-DD\\THH:mm:ss\\Z';
 
 const formatDate = (date, format = 'L', fromFormat = null) => {
-	return moment.utc(date, fromFormat).format(format);
+	return moment(date, fromFormat).format(format);
 };
 
 const getLocaleDateFormat = (format = 'L') => {
@@ -31,7 +31,7 @@ const getMaskByDateFormat = (format) => {
 };
 
 const isValidDate = (date, format = 'L') => {
-	return moment.utc(date, format, true).isValid();
+	return moment(date, format, true).isValid();
 };
 
 export {

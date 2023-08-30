@@ -23,13 +23,13 @@ const Details = ({definitionInfo}) => {
 	const titleLastModified = Liferay.Language.get('last-modified');
 	const titleTotalModifications = Liferay.Language.get('total-modifications');
 
-	const dateCreated = moment
-		.utc(definitionInfo.dateCreated)
-		.format(Liferay.Language.get('mmm-dd-yyyy-lt'));
+	const dateCreated = moment(definitionInfo.dateCreated).format(
+		Liferay.Language.get('mmm-dd-yyyy-lt')
+	);
 
-	const dateModified = moment
-		.utc(definitionInfo.dateModified)
-		.format(Liferay.Language.get('mmm-dd-yyyy-lt'));
+	const dateModified = moment(definitionInfo.dateModified).format(
+		Liferay.Language.get('mmm-dd-yyyy-lt')
+	);
 
 	const totalModifications = definitionInfo.totalModifications;
 

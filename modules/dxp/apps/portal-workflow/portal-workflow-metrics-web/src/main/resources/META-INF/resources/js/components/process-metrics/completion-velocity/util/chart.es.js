@@ -21,9 +21,9 @@ import {
 } from './chartConstants.es';
 
 export function formatMonthDate(date, timeRange) {
-	const currentDate = moment.utc(date);
-	const dateEnd = moment.utc(timeRange.dateEnd);
-	const dateStart = moment.utc(timeRange.dateStart);
+	const currentDate = moment(date);
+	const dateEnd = moment(timeRange.dateEnd);
+	const dateStart = moment(timeRange.dateStart);
 
 	let firstDayOfMonth = currentDate.clone().startOf('month');
 	let lastDayOfMonth = currentDate.clone().endOf('month');
@@ -45,9 +45,9 @@ export function formatMonthDate(date, timeRange) {
 }
 
 export function formatWeekDate(date, timeRange) {
-	const currentDate = moment.utc(date);
-	const dateEnd = moment.utc(timeRange.dateEnd);
-	const dateStart = moment.utc(timeRange.dateStart);
+	const currentDate = moment(date);
+	const dateEnd = moment(timeRange.dateEnd);
+	const dateStart = moment(timeRange.dateStart);
 
 	let firstDayOfWeek = currentDate.clone().startOf('week');
 	let lastDayOfWeek = currentDate.clone().endOf('week');
@@ -76,9 +76,9 @@ export function formatWeekDate(date, timeRange) {
 }
 
 export function formatWeekDateWithYear(date, timeRange) {
-	const currentDate = moment.utc(date);
-	const dateEnd = moment.utc(timeRange.dateEnd);
-	const dateStart = moment.utc(timeRange.dateStart);
+	const currentDate = moment(date);
+	const dateEnd = moment(timeRange.dateEnd);
+	const dateStart = moment(timeRange.dateStart);
 
 	let firstDayOfWeek = currentDate.clone().startOf('week');
 	let lastDayOfWeek = currentDate.clone().endOf('week');
@@ -115,8 +115,8 @@ export function formatWeekDateWithYear(date, timeRange) {
 }
 
 export function getRangeKey(timeRange) {
-	const endDate = moment.utc(timeRange.dateEnd);
-	const startDate = moment.utc(timeRange.dateStart);
+	const endDate = moment(timeRange.dateEnd);
+	const startDate = moment(timeRange.dateStart);
 
 	const diff = parseInt(moment.duration(endDate.diff(startDate)).asDays());
 
@@ -139,7 +139,7 @@ export function getRangeKey(timeRange) {
 }
 
 export function formatXAxisDate(date, isAmPm, timeRangeKey, timeRange) {
-	const currentDate = moment.utc(date);
+	const currentDate = moment(date);
 	const rangeUnit = getRangeKey(timeRange);
 
 	if (timeRangeKey === HOURS) {
@@ -171,9 +171,9 @@ export function formatXAxisDate(date, isAmPm, timeRangeKey, timeRange) {
 }
 
 export function formatYearDate(date, timeRange) {
-	const currentDate = moment.utc(date);
-	const dateEnd = moment.utc(timeRange.dateEnd);
-	const dateStart = moment.utc(timeRange.dateStart);
+	const currentDate = moment(date);
+	const dateEnd = moment(timeRange.dateEnd);
+	const dateStart = moment(timeRange.dateStart);
 
 	let firstDayOfYear = currentDate.clone().startOf('year');
 	let lastDayOfYear = currentDate.clone().endOf('year');
@@ -245,10 +245,10 @@ export function getAxisMeasuresFromData(data) {
 }
 
 export function getXAxisIntervals(timeRange, keys, type) {
-	const endDate = moment.utc(timeRange.dateEnd);
+	const endDate = moment(timeRange.dateEnd);
 	const lengthKeys = keys.length;
-	const secondDate = moment.utc(keys[1]);
-	const startDate = moment.utc(timeRange.dateStart);
+	const secondDate = moment(keys[1]);
+	const startDate = moment(timeRange.dateStart);
 
 	const diffLeftDays = parseInt(
 		moment.duration(secondDate.diff(startDate)).asDays()
@@ -258,7 +258,7 @@ export function getXAxisIntervals(timeRange, keys, type) {
 		moment.duration(secondDate.diff(startDate)).asMonths()
 	);
 
-	const nextToLastDay = moment.utc(keys[lengthKeys - 2]);
+	const nextToLastDay = moment(keys[lengthKeys - 2]);
 
 	const diffRightDays = parseInt(
 		moment.duration(endDate.diff(nextToLastDay)).asDays()

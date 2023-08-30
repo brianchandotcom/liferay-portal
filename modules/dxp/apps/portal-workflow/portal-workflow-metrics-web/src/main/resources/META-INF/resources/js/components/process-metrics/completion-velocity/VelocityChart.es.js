@@ -37,7 +37,7 @@ function VelocityChart({timeRange, velocityData = {}, velocityUnit}) {
 	const {intervals, maxValue} = getAxisMeasuresFromData(dataValues);
 
 	const dataChart = histograms.map((data) => {
-		const date = moment.utc(data.key).toDate();
+		const date = moment(data.key).toDate();
 		data.name = formatXAxisDate(date, isAmPm, unitKey, timeRange);
 
 		return data;
@@ -96,7 +96,7 @@ const CustomTooltip = ({active, isAmPm, payload, timeRange, unit, unitKey}) => {
 	const formatTooltipDate = (date, isAmPm, timeRange, unitKey) => {
 		let datePattern = Liferay.Language.get('ddd-mmm-d');
 
-		const dateUTC = moment.utc(date);
+		const dateMoment = moment(date);
 
 		if (unitKey === HOURS) {
 			if (isAmPm) {
@@ -106,7 +106,7 @@ const CustomTooltip = ({active, isAmPm, payload, timeRange, unit, unitKey}) => {
 				datePattern = Liferay.Language.get('mmm-dd-hh-mm');
 			}
 
-			return dateUTC.format(datePattern);
+			return dateMoment.format(datePattern);
 		}
 		else if (unitKey === WEEKS) {
 			return formatWeekDateWithYear(date, timeRange);
@@ -118,7 +118,7 @@ const CustomTooltip = ({active, isAmPm, payload, timeRange, unit, unitKey}) => {
 			return formatYearDate(date, timeRange);
 		}
 
-		return dateUTC.format(datePattern);
+		return dateMoment.format(datePattern);
 	};
 
 	const getDateTitle = (date, isAmPm, timeRange, unitKey) => {

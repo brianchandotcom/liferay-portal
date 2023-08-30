@@ -12,11 +12,11 @@ import {
 import moment from '../../../shared/util/moment.es';
 
 const convertQueryDate = (date = '', format = 'L') => {
-	return moment.utc(decodeURIComponent(date), null, 'en').format(format);
+	return moment(decodeURIComponent(date), null, 'en').format(format);
 };
 
 const parseDateMoment = (date, format = 'L') => {
-	return moment.utc(date, format, 'en');
+	return moment(date, format, 'en');
 };
 
 const formatDateTime = (date, format, isEndDate) => {
@@ -69,8 +69,8 @@ const formatTimeRange = (timeRange, isAmPm) => {
 		return null;
 	}
 
-	const dateEndMoment = moment.utc(dateEnd);
-	const dateStartMoment = moment.utc(dateStart);
+	const dateEndMoment = moment(dateEnd);
+	const dateStartMoment = moment(dateStart);
 
 	const {dateEndPattern, dateStartPattern} = getFormatPattern(
 		dateEndMoment,

@@ -22,7 +22,7 @@ const updateErrors = (errors, fieldName, message) => ({
 });
 
 const validateDate = (dateEndMoment, dateStartMoment) => {
-	const dateNow = moment.utc();
+	const dateNow = moment();
 	let errors;
 
 	if (!dateEndMoment.isValid() || dateEndMoment.isAfter(dateNow)) {

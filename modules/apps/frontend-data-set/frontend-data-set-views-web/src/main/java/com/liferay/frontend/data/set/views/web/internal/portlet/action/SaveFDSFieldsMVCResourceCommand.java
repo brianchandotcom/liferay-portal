@@ -72,7 +72,9 @@ public class SaveFDSFieldsMVCResourceCommand
 			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 				0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
-					"label", String.valueOf(creationDataJSONObject.get("name"))
+					"label_i18n", HashMapBuilder.put(
+						themeDisplay.getLanguageId(), String.valueOf(creationDataJSONObject.get("name"))
+					).build()
 				).put(
 					"name", String.valueOf(creationDataJSONObject.get("name"))
 				).put(

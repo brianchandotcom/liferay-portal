@@ -17,8 +17,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.object.configuration.ObjectConfiguration",
-	localization = "content/Language",
-	name = "object-configuration-name"
+	localization = "content/Language", name = "object-configuration-name"
 )
 public interface ObjectConfiguration {
 

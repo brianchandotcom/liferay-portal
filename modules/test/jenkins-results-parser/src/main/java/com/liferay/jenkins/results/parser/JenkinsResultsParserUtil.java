@@ -1814,6 +1814,44 @@ public class JenkinsResultsParserUtil {
 		return excludedFiles;
 	}
 
+	public static File getFileFromPathSnippet(
+		File baseDir, final String pathSnippet) {
+
+		final List<File> matchingFiles = new ArrayList<>();
+
+		try {
+			Files.walkFileTree(
+				baseDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						String filePathString = filePath.toString();
+
+						if (filePathString.contains(pathSnippet)) {
+							matchingFiles.add(filePath.toFile());
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (matchingFiles.isEmpty()) {
+			return null;
+		}
+
+		return matchingFiles.get(0);
+	}
+
 	public static String getGitDirectoryName(
 		String repositoryName, String upstreamBranchName) {
 

@@ -19,15 +19,12 @@ import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -45,7 +42,7 @@ public class MonitoringMessageListener extends BaseMessageListener {
 
 		String namespace = dataSample.getNamespace();
 
-		Level level = _levels.get(namespace);
+		Level level = _monitoringControl.getLevel(namespace);
 
 		if ((level != null) && level.equals(Level.OFF)) {
 			return;
@@ -67,8 +64,6 @@ public class MonitoringMessageListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			MonitoringControl.class, new MonitoringControlImpl(), null);
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext,
 			(Class<DataSampleProcessor<DataSample>>)
@@ -78,7 +73,6 @@ public class MonitoringMessageListener extends BaseMessageListener {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
 		_serviceTrackerMap.close();
 	}
 
@@ -94,34 +88,10 @@ public class MonitoringMessageListener extends BaseMessageListener {
 		}
 	}
 
-	private final Map<String, Level> _levels = new ConcurrentHashMap<>();
-	private ServiceRegistration<MonitoringControl> _serviceRegistration;
+	@Reference
+	private MonitoringControl _monitoringControl;
+
 	private ServiceTrackerMap<String, List<DataSampleProcessor<DataSample>>>
 		_serviceTrackerMap;
-
-	private class MonitoringControlImpl implements MonitoringControl {
-
-		@Override
-		public Level getLevel(String namespace) {
-			Level level = _levels.get(namespace);
-
-			if (level == null) {
-				return Level.OFF;
-			}
-
-			return level;
-		}
-
-		@Override
-		public Set<String> getNamespaces() {
-			return _levels.keySet();
-		}
-
-		@Override
-		public void setLevel(String namespace, Level level) {
-			_levels.put(namespace, level);
-		}
-
-	}
 
 }

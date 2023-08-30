@@ -5,8 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection.helper;
 
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+
 import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author André de Oliveira
@@ -15,7 +16,7 @@ public interface IndexCreationHelper {
 
 	public void contribute(CreateIndexRequest createIndexRequest);
 
-	public void contributeIndexSettings(Settings.Builder builder);
+	public void contributeIndexSettings(SettingsBuilder settingsBuilder);
 
 	public void whenIndexCreated(String indexName);
 

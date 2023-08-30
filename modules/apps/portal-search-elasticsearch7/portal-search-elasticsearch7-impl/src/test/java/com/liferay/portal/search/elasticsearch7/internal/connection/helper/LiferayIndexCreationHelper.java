@@ -8,10 +8,10 @@ package com.liferay.portal.search.elasticsearch7.internal.connection.helper;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.index.LiferayDocumentTypeFactory;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author André de Oliveira
@@ -34,11 +34,12 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	}
 
 	@Override
-	public void contributeIndexSettings(Settings.Builder builder) {
+	public void contributeIndexSettings(SettingsBuilder settingsBuilder) {
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
 			_getLiferayDocumentTypeFactory();
 
-		liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(builder);
+		liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(
+			settingsBuilder);
 	}
 
 	@Override

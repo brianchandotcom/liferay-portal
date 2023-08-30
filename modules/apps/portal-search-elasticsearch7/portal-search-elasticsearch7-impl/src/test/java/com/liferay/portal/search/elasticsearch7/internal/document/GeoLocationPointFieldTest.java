@@ -11,6 +11,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -24,7 +25,6 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.PutMappingRequest;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.junit.ClassRule;
@@ -107,7 +107,7 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 		}
 
 		@Override
-		public void contributeIndexSettings(Settings.Builder builder) {
+		public void contributeIndexSettings(SettingsBuilder settingsBuilder) {
 		}
 
 		@Override

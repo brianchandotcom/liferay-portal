@@ -25,6 +25,10 @@ public class SettingsBuilder {
 		return _builder.build();
 	}
 
+	public String get(String key) {
+		return _builder.get(key);
+	}
+
 	public Settings.Builder getBuilder() {
 		return _builder;
 	}

@@ -118,6 +118,10 @@ public class AssetListEntryUsagesManager {
 				_assetListEntryUsageLocalService.getAssetEntryListUsagesByPlid(
 					plid)) {
 
+			if (!_exist(assetListEntryUsage)) {
+				continue;
+			}
+
 			String uniqueKey = _generateUniqueLayoutClassedModelUsageKey(
 				assetListEntryUsage);
 
@@ -187,6 +191,43 @@ public class AssetListEntryUsagesManager {
 				httpServletResponse, liferayRenderRequest));
 
 		return liferayRenderRequest;
+	}
+
+	private boolean _exist(AssetListEntryUsage assetListEntryUsage) {
+		if (Objects.equals(
+				assetListEntryUsage.getClassName(),
+				AssetListEntry.class.getName())) {
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(
+					GetterUtil.getLong(assetListEntryUsage.getKey()));
+
+			if (assetListEntry != null) {
+				return true;
+			}
+		}
+
+		if (Objects.equals(
+				assetListEntryUsage.getClassName(),
+				InfoCollectionProvider.class.getName())) {
+
+			InfoCollectionProvider<?> infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					InfoCollectionProvider.class, assetListEntryUsage.getKey());
+
+			if (infoCollectionProvider == null) {
+				infoCollectionProvider =
+					_infoItemServiceRegistry.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						assetListEntryUsage.getKey());
+			}
+
+			if (infoCollectionProvider != null) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String _generateUniqueLayoutClassedModelUsageKey(

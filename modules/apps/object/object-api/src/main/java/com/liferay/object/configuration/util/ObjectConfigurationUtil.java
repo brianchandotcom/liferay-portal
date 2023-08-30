@@ -33,4 +33,12 @@ public class ObjectConfigurationUtil {
 		return false;
 	}
 
+	public static int maximumFileSizeForGuestUsers() throws PortalException {
+		ObjectConfiguration objectConfiguration =
+			ConfigurationProviderUtil.getSystemConfiguration(
+				ObjectConfiguration.class);
+
+		return objectConfiguration.maximumFileSizeForGuestUsers();
+	}
+
 }

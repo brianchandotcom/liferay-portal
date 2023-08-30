@@ -27,6 +27,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
@@ -48,7 +49,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.web.internal.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -569,27 +569,36 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private long _getMaximumFileSize(ObjectField objectField) {
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(), "maximumFileSize");
+		try {
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					objectField.getObjectFieldId(), "maximumFileSize");
 
-		long maximumFileSizeForGuestUsers =
-			ObjectConfigurationUtil.maximumFileSizeForGuestUsers();
+			long maximumFileSizeForGuestUsers =
+				ObjectConfigurationUtil.maximumFileSizeForGuestUsers();
 
-		if (objectFieldSetting == null) {
-			return maximumFileSizeForGuestUsers;
+			if (objectFieldSetting == null) {
+				return maximumFileSizeForGuestUsers;
+			}
+
+			long maximumFileSize = GetterUtil.getLong(
+				objectFieldSetting.getValue());
+
+			if ((maximumFileSizeForGuestUsers < maximumFileSize) &&
+				_isGuestUser()) {
+
+				maximumFileSize = maximumFileSizeForGuestUsers;
+			}
+
+			return maximumFileSize;
 		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 
-		long maximumFileSize = GetterUtil.getLong(
-			objectFieldSetting.getValue());
-
-		if ((maximumFileSizeForGuestUsers < maximumFileSize) &&
-			_isGuestUser()) {
-
-			maximumFileSize = maximumFileSizeForGuestUsers;
+			return 25L;
 		}
-
-		return maximumFileSize;
 	}
 
 	private long _getMaxLength(ObjectField objectField, long defaultMaxLength) {

@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -36,6 +37,7 @@ import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.graphql.dto.v1_0.Creator;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidator;
+import com.liferay.portal.vulcan.internal.configuration.GraphQLCompanyConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -44,6 +46,7 @@ import com.liferay.portal.vulcan.internal.graphql.data.fetcher.GraphQLDTOContrib
 import com.liferay.portal.vulcan.internal.graphql.data.fetcher.LiferayMethodDataFetcher;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.GraphQLDTOContributorDataFetchingProcessor;
 import com.liferay.portal.vulcan.internal.graphql.data.processor.LiferayMethodDataFetchingProcessor;
+import com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation.MaxQueryDepthInstrumentation;
 import com.liferay.portal.vulcan.internal.graphql.util.GraphQLUtil;
 import com.liferay.portal.vulcan.internal.graphql.validation.GraphQLDTOContributorRequestContext;
 import com.liferay.portal.vulcan.internal.graphql.validation.ServletDataRequestContext;
@@ -546,6 +549,7 @@ public class GraphQLServletExtender {
 				});
 		_graphQLRequestContextValidators = ServiceTrackerListFactory.open(
 			bundleContext, GraphQLRequestContextValidator.class);
+
 		_servletContextHelperServiceRegistration =
 			bundleContext.registerService(
 				ServletContextHelper.class,
@@ -936,6 +940,8 @@ public class GraphQLServletExtender {
 				GraphQLQueryInvoker.newBuilder(
 				).withExecutionStrategyProvider(
 					executionStrategyProvider
+				).withInstrumentation(
+					() -> _getMaxQueryDepthInstrumentation(companyId)
 				).build();
 
 			graphQLConfigurationBuilder.with(graphQLQueryInvoker);
@@ -1054,6 +1060,22 @@ public class GraphQLServletExtender {
 		}
 
 		return graphQLObjectTypeBuilder.build();
+	}
+
+	private MaxQueryDepthInstrumentation _getMaxQueryDepthInstrumentation(
+		long companyId) {
+
+		try {
+			GraphQLCompanyConfiguration graphQLCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					GraphQLCompanyConfiguration.class, companyId);
+
+			return new MaxQueryDepthInstrumentation(
+				graphQLCompanyConfiguration.queryDepthLimit());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private GraphQLObjectType _getPageGraphQLObjectType(
@@ -1853,6 +1875,9 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	private DefaultTypeFunction _defaultTypeFunction;
 

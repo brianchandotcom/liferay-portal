@@ -14,7 +14,8 @@ public class PriceEntry {
 
 	public PriceEntry(
 		String basePrice, ImageField image, String name, long priceEntryId,
-		String sku, String tieredPrice, String unitDiscount, String unitPrice) {
+		String sku, String tieredPrice, String unitDiscount,
+		String unitOfMeasureKey, String unitPrice) {
 
 		_basePrice = basePrice;
 		_image = image;
@@ -23,6 +24,7 @@ public class PriceEntry {
 		_sku = sku;
 		_tieredPrice = tieredPrice;
 		_unitDiscount = unitDiscount;
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_unitPrice = unitPrice;
 	}
 
@@ -54,6 +56,10 @@ public class PriceEntry {
 		return _unitDiscount;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	public String getUnitPrice() {
 		return _unitPrice;
 	}
@@ -65,6 +71,7 @@ public class PriceEntry {
 	private final String _sku;
 	private final String _tieredPrice;
 	private final String _unitDiscount;
+	private final String _unitOfMeasureKey;
 	private final String _unitPrice;
 
 }

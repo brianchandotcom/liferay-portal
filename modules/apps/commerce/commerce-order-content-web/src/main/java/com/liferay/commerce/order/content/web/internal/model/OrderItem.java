@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.order.content.web.internal.model;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -17,8 +19,8 @@ public class OrderItem {
 		String formattedQuantity, String formattedSubscriptionPeriod,
 		String name, String options, long orderId, long orderItemId,
 		List<OrderItem> orderItems, long parentOrderItemId, String price,
-		String promoPrice, int shippedQuantity, String sku, String thumbnail,
-		String total) {
+		String promoPrice, BigDecimal shippedQuantity, String sku,
+		String thumbnail, String total, String unitOfMeasureKey) {
 
 		_cpInstanceId = cpInstanceId;
 		_discount = discount;
@@ -37,6 +39,7 @@ public class OrderItem {
 		_sku = sku;
 		_thumbnail = thumbnail;
 		_total = total;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public long getCPInstanceId() {
@@ -91,7 +94,7 @@ public class OrderItem {
 		return _promoPrice;
 	}
 
-	public int getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return _shippedQuantity;
 	}
 
@@ -107,6 +110,10 @@ public class OrderItem {
 		return _total;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	private final long _cpInstanceId;
 	private final String _discount;
 	private final String[] _errorMessages;
@@ -120,9 +127,10 @@ public class OrderItem {
 	private final long _parentOrderItemId;
 	private final String _price;
 	private final String _promoPrice;
-	private final int _shippedQuantity;
+	private final BigDecimal _shippedQuantity;
 	private final String _sku;
 	private final String _thumbnail;
 	private final String _total;
+	private final String _unitOfMeasureKey;
 
 }

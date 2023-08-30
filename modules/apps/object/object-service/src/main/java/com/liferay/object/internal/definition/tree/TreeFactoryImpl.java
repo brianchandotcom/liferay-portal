@@ -9,9 +9,6 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
-import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,18 +28,8 @@ import org.osgi.service.component.annotations.Reference;
 public class TreeFactoryImpl implements TreeFactory {
 
 	@Override
-	public Tree create(long objectDefinitionId) throws PortalException {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		if (objectDefinition.getRootObjectDefinitionId() == 0) {
-			throw new ObjectDefinitionRootObjectDefinitionIdException(
-				"The object definition id " + objectDefinitionId +
-					" is not inside a hierarchical structure.");
-		}
-
-		Node rootNode = new Node(null, objectDefinitionId, null);
+	public Tree create(long rootObjectDefinitionId) throws PortalException {
+		Node rootNode = new Node(null, rootObjectDefinitionId, null);
 
 		Queue<Node> queue = new LinkedList<>();
 
@@ -71,9 +58,6 @@ public class TreeFactoryImpl implements TreeFactory {
 				new Edge(objectRelationship.getObjectRelationshipId()),
 				objectRelationship.getObjectDefinitionId2(), node));
 	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

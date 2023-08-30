@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +54,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Lily Chi
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class AddUsersByAPITest {
 
@@ -104,7 +107,7 @@ public class AddUsersByAPITest {
 		scopeAliasesList.add("Liferay.Headless.Admin.User.everything.read");
 		scopeAliasesList.add("Liferay.Headless.Admin.User.everything.write");
 
-		OAuth2Application oAuth2Application =
+		_oAuth2Application =
 			_oAuth2ApplicationLocalService.addOAuth2Application(
 				companyId, userId, userName, allowedGrantTypesList,
 				_CLIENT_AUTHENTICATION_METHOD, userId, _CLIENT_ID, 0,
@@ -114,7 +117,7 @@ public class AddUsersByAPITest {
 				false, new ServiceContext());
 
 		_jsonObject = JSONFactoryUtil.createJSONObject(
-			_localOAuthClient.requestTokens(oAuth2Application, userId));
+			_localOAuthClient.requestTokens(_oAuth2Application, userId));
 	}
 
 	@Test
@@ -267,6 +270,9 @@ public class AddUsersByAPITest {
 
 	@Inject
 	private LocalOAuthClient _localOAuthClient;
+
+	@DeleteAfterTestRun
+	private OAuth2Application _oAuth2Application;
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

@@ -32,19 +32,25 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.rest.client.dto.v1_0.FacetConfiguration;
-import com.liferay.portal.search.rest.client.dto.v1_0.SearchRequestBody;
-import com.liferay.portal.search.rest.client.dto.v1_0.SearchResult;
-import com.liferay.portal.search.rest.client.pagination.Page;
-import com.liferay.portal.search.rest.client.resource.v1_0.SearchResultResource;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration;
+import com.liferay.portal.search.rest.dto.v1_0.SearchRequestBody;
+import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
+import com.liferay.portal.search.rest.pagination.SearchPage;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,6 +60,8 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -68,6 +76,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
+ * @author Almir Ferreira
  * @author Petteri Karttunen
  */
 @RunWith(Arquillian.class)
@@ -187,7 +196,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		Arrays.sort(expectedValues);
 
-		Page<SearchResult> page = _postSearchPageWithFacetConfiguration(
+		SearchPage<SearchResult> page = _postSearchPageWithFacetConfiguration(
 			new FacetConfiguration() {
 				{
 					attributes = facetAttributes;
@@ -231,34 +240,90 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_assertFacetConfiguration(null, facetName, facetValues, expectedValues);
 	}
 
-	private Page<SearchResult> _postSearchPage(String keywords)
-		throws Exception {
+	private String _getEndpointWithParameters(
+		String entryClassNames, String filter, String nestedFields,
+		String keywords) throws UnsupportedEncodingException {
 
-		return _postSearchPage(null, keywords, null, new SearchRequestBody());
+		List<String> parameters = new ArrayList<>();
+
+		if (Validator.isNotNull(entryClassNames)) {
+			parameters.add(
+				"entryClassNames=" +
+					URLEncoder.encode(entryClassNames, StringPool.UTF8));
+		}
+
+		if (Validator.isNotNull(filter)) {
+			parameters.add(
+				"filter=" + URLEncoder.encode(filter, StringPool.UTF8));
+		}
+
+		if (Validator.isNotNull(keywords)) {
+			parameters.add(
+				"search=" + URLEncoder.encode(keywords, StringPool.UTF8));
+		}
+
+		if (Validator.isNotNull(nestedFields)) {
+			parameters.add(
+				"nestedFields=" +
+					URLEncoder.encode(nestedFields, StringPool.UTF8));
+		}
+
+		String endpoint = "portal-search-rest/v1.0/search";
+
+		if (!parameters.isEmpty()) {
+			endpoint += "?" + StringUtil.merge(parameters, "&");
+		}
+
+		return endpoint;
 	}
 
-	private Page<SearchResult> _postSearchPage(
-			String entryClassNames, String keywords, String nestedFields,
-			SearchRequestBody searchRequestBody)
-		throws Exception {
+	private HashMap<String, JSONArray> _getSearchFacets(JSONObject jsonObject) {
+		JSONObject searchFacetsJSONObject = jsonObject.getJSONObject(
+			"searchFacets");
 
-		SearchResultResource.Builder builder = SearchResultResource.builder();
+		if (searchFacetsJSONObject == null) {
+			return null;
+		}
 
-		searchResultResource = builder.authentication(
-			"test@liferay.com", "test"
-		).locale(
-			LocaleUtil.getDefault()
-		).parameters(
-			"nestedFields", nestedFields
-		).build();
+		HashMap<String, JSONArray> map = new HashMap<>();
+		Iterator<String> iterator = searchFacetsJSONObject.keys();
 
-		return searchResultResource.postSearchPage(
-			entryClassNames, keywords,
-			"groupIds/any(g:g%20eq%20" + String.valueOf(testGroup.getGroupId()),
-			null, null, searchRequestBody);
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			JSONArray valueJSONArray = searchFacetsJSONObject.getJSONArray(key);
+
+			map.put(key, valueJSONArray);
+		}
+
+		return map;
 	}
 
-	private Page<SearchResult> _postSearchPageWithFacetConfiguration(
+	private SearchPage<SearchResult> _postSearchPage(String keywords)
+		throws Exception {
+
+		return _postSearchPage(
+			null,
+			"groupIds/any(g:g eq " + String.valueOf(testGroup.getGroupId()) +
+				")",
+			keywords, null, new SearchRequestBody());
+	}
+
+	private SearchPage<SearchResult> _postSearchPage(
+			String entryClassNames, String filter, String keywords,
+			String nestedFields, SearchRequestBody searchRequestBody)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			searchRequestBody.toString(),
+			_getEndpointWithParameters(
+				entryClassNames, filter, nestedFields, keywords),
+			Http.Method.POST);
+
+		return _toSearchPage(jsonObject);
+	}
+
+	private SearchPage<SearchResult> _postSearchPageWithFacetConfiguration(
 			FacetConfiguration facetConfiguration)
 		throws Exception {
 
@@ -276,7 +341,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			}
 		};
 
-		return _postSearchPage(null, null, null, searchRequestBody);
+		return _postSearchPage(
+			null,
+			"groupIds/any(g:g eq " + String.valueOf(testGroup.getGroupId()) +
+				")",
+			null, null, searchRequestBody);
 	}
 
 	private void _testPostSearchPageWithCategoryFacetConfiguration(
@@ -358,7 +427,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithKeywords(JournalArticle journalArticle)
 		throws Exception {
 
-		Page<SearchResult> page = _postSearchPage(
+		SearchPage<SearchResult> page = _postSearchPage(
 			journalArticle.getArticleId());
 
 		Assert.assertEquals(1L, page.getTotalCount());
@@ -427,9 +496,35 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private void _testPostSearchPageZeroResults() throws Exception {
-		Page<SearchResult> page = _postSearchPage("shouldnotmatchanything");
+		SearchPage<SearchResult> page = _postSearchPage(
+			"shouldnotmatchanything");
 
 		Assert.assertEquals(0L, page.getTotalCount());
+	}
+
+	private SearchPage<SearchResult> _toSearchPage(JSONObject jsonObject) {
+		Pagination pagination = Pagination.of(
+			jsonObject.getInt("page"), jsonObject.getInt("pageSize"));
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		int length = itemsJSONArray.length();
+
+		List<SearchResult> searchResults = new ArrayList<>();
+
+		for (int index = 0; index < length; index++) {
+			searchResults.add(
+				SearchResult.toDTO(
+					itemsJSONArray.get(
+						index
+					).toString()));
+		}
+
+		long totalCount = jsonObject.getLong("totalCount");
+
+		return SearchPage.of(
+			null, null, _getSearchFacets(jsonObject), searchResults, pagination,
+			totalCount);
 	}
 
 	@Inject

@@ -379,6 +379,103 @@ definition {
 		}
 	}
 
+	@description = "Verify that with Single Approver Workflow enabled, when a user submits a form entry, the status of the entry will be Pending. When the entry is approved, the status will change to Approved."
+	@priority = 5
+	test CanSubmitFormEntryForWorkflow {
+		property portal.acceptance = "true";
+
+		task ("Given a published form that is assigned the Single Approver workflow") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Text");
+
+			FormsAdminNavigator.gotoSettings();
+
+			Form.configureWorkflow(workflowDefinition = "Single Approver");
+
+			Form.save();
+
+			Form.publishForm();
+		}
+
+		task ("When a new user is added and this user submits a form entry for workflow") {
+			JSONUser.addUser(
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userScreenName = "user1");
+
+			var publishFormURL = Form.getPublishedFormPublicURL();
+
+			Navigator.openSpecificURL(url = ${publishFormURL});
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Text");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
+
+			FormPortlet.viewSuccessPage(
+				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+				successPageTitle = "Thank you.");
+		}
+
+		task ("Then the entry will have the Pending status") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userScreenName = "Test Test");
+
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
+		}
+
+		task ("When the reviewer approves the form entry") {
+			WorkflowAsset.gotoViaNotification(
+				assetType = "Form Record",
+				user = "user1 user1");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+			Workflow.confirmWorkflowAction();
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+			Workflow.confirmWorkflowAction();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the form entry status is Approved") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "Status",
+				fieldValue = "Approved");
+		}
+	}
+
 	@description = "Verify that Entries Previews display the correct information"
 	@priority = 5
 	test DisplayCorrectInfoInPreviews {
@@ -818,147 +915,6 @@ definition {
 				workflowAssetType = "Form Record",
 				workflowTask = "Review");
 		}
-	}
-
-	@description = "Verify that with Single Approver Workflow enabled and after the form entry was approved, the entry will have an approved label"
-	@priority = 5
-	test WorkflowApprovalChangesLabelToApproved {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.addTextField(fieldPositionNumber = 0);
-
-		Form.closeSidebar();
-
-		FormsAdminNavigator.gotoSettings();
-
-		Form.configureWorkflow(workflowDefinition = "Single Approver");
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.gotoPublishCopyURLLink();
-
-		var publishedFormURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
-
-		JSONUser.addUser(
-			userEmailAddress = "user1@liferay.com",
-			userFirstName = "user1",
-			userLastName = "user1",
-			userScreenName = "user1");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "user1@liferay.com");
-
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "user1@liferay.com",
-			userScreenName = "user1");
-
-		Navigator.openURL();
-
-		Navigator.openSpecificURL(url = ${publishedFormURL});
-
-		FormViewBuilder.editText(
-			fieldName = "Text",
-			fieldValue = "Test Text");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_WORKFLOW",
-			value1 = "Submit for Workflow");
-
-		Alert.viewSuccessMessage();
-
-		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userScreenName = "Test Test");
-
-		WorkflowAsset.gotoViaNotification(
-			assetType = "Form Record",
-			user = "user1 user1");
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
-
-		Workflow.confirmWorkflowAction();
-
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
-
-		Workflow.confirmWorkflowAction();
-
-		Alert.viewSuccessMessage();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdmin.viewFormTableEntry(
-			fieldLabel = "Status",
-			fieldValue = "Approved");
-	}
-
-	@description = "This is a use case for LPS-103694. Verify that with Single Approver Workflow enabled and after the user Submit for Workflow, the form entry will have a pending label and the admin is notified of form submission"
-	@priority = 5
-	test WorkflowSubmissionChangesLabelToPending {
-		property portal.acceptance = "true";
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = 0,
-			fieldType = "Text");
-
-		FormsAdminNavigator.gotoSettings();
-
-		Form.configureWorkflow(workflowDefinition = "Single Approver");
-
-		Form.save();
-
-		Form.publishForm();
-
-		FormsAdminNavigator.openPublishURL(publishFormURL = ${publishedFormPublicURL});
-
-		FormFields.editText(
-			fieldName = "Text",
-			fieldValue = "Test Text");
-
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Workflow");
-
-		FormPortlet.viewSuccessPage(
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
-			successPageTitle = "Thank you.");
-
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
-
-		FormsAdminNavigator.gotoViewEntries();
-
-		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
 	}
 
 }

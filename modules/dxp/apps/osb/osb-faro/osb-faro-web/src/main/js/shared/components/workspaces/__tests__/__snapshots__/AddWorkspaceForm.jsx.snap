@@ -105,6 +105,11 @@ exports[`AddWorkspaceForm should render 1`] = `
                 name="serverLocation"
               >
                 <option
+                  value="MUMBAI, INDIA"
+                >
+                  Mumbai, India
+                </option>
+                <option
                   value="LONDON, ENGLAND"
                 >
                   London, England

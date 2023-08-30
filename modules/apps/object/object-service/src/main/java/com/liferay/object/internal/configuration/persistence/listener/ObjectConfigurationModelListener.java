@@ -26,18 +26,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Leite
  */
 @Component(
-	property = "model.class.name=com.liferay.object.configuration.ObjectScriptConfiguration",
+	property = "model.class.name=com.liferay.object.configuration.ObjectConfiguration",
 	service = ConfigurationModelListener.class
 )
-public class ObjectScriptConfigurationModelListener
+public class ObjectConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
 	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		boolean allowInstanceAdminExecuteCode = GetterUtil.getBoolean(
-			properties.get("allowInstanceAdminExecuteCode"));
+		boolean allowInstanceAdminExecuteScript = GetterUtil.getBoolean(
+			properties.get("allowInstanceAdminExecuteScript"));
 
-		if (!allowInstanceAdminExecuteCode) {
+		if (!allowInstanceAdminExecuteScript) {
 			long defaultCompanyId = _portal.getDefaultCompanyId();
 
 			for (ObjectAction objectAction :

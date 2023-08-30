@@ -1911,11 +1911,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			guestUser.setTimeZoneId(timeZone.getID());
 		}
 
-		String greeting = LanguageUtil.format(
-			guestUser.getLocale(), "welcome", null, false);
-
-		guestUser.setGreeting(greeting + StringPool.EXCLAMATION);
-
 		guestUser.setLoginDate(date);
 		guestUser.setFailedLoginAttempts(0);
 		guestUser.setAgreedToTermsOfUse(true);

@@ -5,7 +5,7 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
+import com.liferay.object.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.model.ObjectAction;
@@ -122,7 +122,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 		if (Objects.equals(
 				objectActionExecutorKey,
 				ObjectActionExecutorConstants.KEY_GROOVY) &&
-			!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+			!ObjectConfigurationUtil.hasPermissionExecuteCode(
 				permissionChecker)) {
 
 			throw new ObjectActionExecutorKeyException(

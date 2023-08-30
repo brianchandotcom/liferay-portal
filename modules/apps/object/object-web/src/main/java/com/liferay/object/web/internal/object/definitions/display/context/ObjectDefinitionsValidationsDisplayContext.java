@@ -8,7 +8,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.learn.LearnMessageUtil;
-import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
+import com.liferay.object.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -93,7 +93,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		boolean hasPermissionExecuteCode =
-			ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+			ObjectConfigurationUtil.hasPermissionExecuteCode(
 				_objectRequestHelper.getPermissionChecker());
 
 		return ListUtil.sort(

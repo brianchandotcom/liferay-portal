@@ -13,7 +13,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
-import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
+import com.liferay.object.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -157,7 +157,7 @@ public class ObjectDefinitionsActionsDisplayContext
 			if (StringUtil.equals(
 					objectActionExecutor.getKey(),
 					ObjectActionExecutorConstants.KEY_GROOVY) &&
-				!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+				!ObjectConfigurationUtil.hasPermissionExecuteCode(
 					_objectRequestHelper.getPermissionChecker())) {
 
 				continue;

@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 /**
  * @author Pedro Leite
  */
-public class ObjectScriptConfigurationUtil {
+public class ObjectConfigurationUtil {
 
 	public static boolean hasPermissionExecuteCode(
 			PermissionChecker permissionChecker)

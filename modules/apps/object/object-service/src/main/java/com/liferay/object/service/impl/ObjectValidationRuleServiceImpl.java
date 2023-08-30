@@ -5,7 +5,7 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.configuration.util.ObjectScriptConfigurationUtil;
+import com.liferay.object.configuration.util.ObjectConfigurationUtil;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
@@ -123,7 +123,7 @@ public class ObjectValidationRuleServiceImpl
 
 		if (Objects.equals(
 				engine, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) &&
-			!ObjectScriptConfigurationUtil.hasPermissionExecuteCode(
+			!ObjectConfigurationUtil.hasPermissionExecuteCode(
 				permissionChecker)) {
 
 			throw new ObjectValidationRuleEngineException.

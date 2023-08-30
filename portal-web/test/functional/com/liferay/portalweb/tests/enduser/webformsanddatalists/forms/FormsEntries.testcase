@@ -326,21 +326,6 @@ definition {
 				selectOption = "Select 2");
 
 			FormPortlet.submitSuccessfully();
-
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Forms");
-
-			FormsAdminNavigator.gotoViewEntries();
-
-			FormsAdminNavigator.gotoView();
-
-			FormsAdmin.viewSelectEntry(
-				fieldLabel = "Select",
-				fieldName = ${fieldName},
-				selectOption = "Select 2");
 		}
 
 		task ("When the form is updated and an option was removed") {

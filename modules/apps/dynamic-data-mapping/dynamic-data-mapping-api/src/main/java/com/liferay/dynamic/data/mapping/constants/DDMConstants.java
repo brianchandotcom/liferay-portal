@@ -33,10 +33,11 @@ public class DDMConstants {
 		DDMFormFieldType.IMAGE, DDMFormFieldType.INTEGER,
 		DDMFormFieldType.JOURNAL_ARTICLE, DDMFormFieldType.LINK_TO_PAGE,
 		DDMFormFieldType.LOCALIZABLE_TEXT, DDMFormFieldType.NUMBER,
-		DDMFormFieldType.NUMERIC, DDMFormFieldType.PASSWORD,
-		DDMFormFieldType.RADIO, DDMFormFieldType.SELECT,
-		DDMFormFieldType.SEPARATOR, DDMFormFieldType.TEXT,
-		DDMFormFieldType.TEXT_AREA, DDMFormFieldType.TEXT_HTML
+		DDMFormFieldType.NUMERIC, DDMFormFieldType.PARAGRAPH,
+		DDMFormFieldType.PASSWORD, DDMFormFieldType.RADIO,
+		DDMFormFieldType.SELECT, DDMFormFieldType.SEPARATOR,
+		DDMFormFieldType.TEXT, DDMFormFieldType.TEXT_AREA,
+		DDMFormFieldType.TEXT_HTML
 	};
 
 }

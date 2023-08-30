@@ -237,7 +237,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			contextUser.getUserId(), _getParentAccountId(account),
 			account.getName(), account.getDescription(), _getDomains(account),
 			null, null, account.getTaxId(), _getType(account),
-			_getStatus(account), _getServiceContext(account));
+			_getStatus(account), _createServiceContext(account));
 
 		if (_isValidId(account.getDefaultBillingAddressId())) {
 			_accountEntryLocalService.updateDefaultBillingAddressId(
@@ -273,7 +273,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				address.getRegionId(), address.getCountryId(),
 				address.getListTypeId(), address.getMailing(),
 				address.getPrimary(), address.getPhoneNumber(),
-				_getServiceContext(account));
+				_createServiceContext(account));
 		}
 
 		return _toAccount(accountEntry);
@@ -326,14 +326,15 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				address.getZip(), address.getRegionId(), address.getCountryId(),
 				address.getListTypeId(), address.getMailing(),
 				address.getPrimary(), address.getPhoneNumber(),
-				_getServiceContext(account));
+				_createServiceContext(account));
 		}
 
 		return _toAccount(
 			_accountEntryService.updateAccountEntry(
 				accountId, _getParentAccountId(account), account.getName(),
 				account.getDescription(), false, _getDomains(account), null,
-				null, null, _getStatus(account), _getServiceContext(account)));
+				null, null, _getStatus(account),
+				_createServiceContext(account)));
 	}
 
 	@Override
@@ -347,7 +348,25 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				_getParentAccountId(account), account.getName(),
 				account.getDescription(), _getDomains(account), null, null,
 				null, _getType(account), _getStatus(account),
-				_getServiceContext(account)));
+				_createServiceContext(account)));
+	}
+
+	private ServiceContext _createServiceContext(Account account)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				AccountEntry.class.getName(), contextCompany.getCompanyId(),
+				account.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setUserId(contextUser.getUserId());
+
+		return serviceContext;
 	}
 
 	private long[] _getAccountUserAccountIds(Account account) {
@@ -516,24 +535,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		}
 
 		return parentAccountId;
-	}
-
-	private ServiceContext _getServiceContext(Account account)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			contextCompany.getGroupId(), contextHttpServletRequest, null
-		).expandoBridgeAttributes(
-			CustomFieldsUtil.toMap(
-				AccountEntry.class.getName(), contextCompany.getCompanyId(),
-				account.getCustomFields(),
-				contextAcceptLanguage.getPreferredLocale())
-		).build();
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setUserId(contextUser.getUserId());
-
-		return serviceContext;
 	}
 
 	private int _getStatus(Account account) {

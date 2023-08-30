@@ -38,7 +38,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Address;
@@ -501,21 +500,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				_getBirthdayYear(userAccount), sms, facebook, jabber, skype,
 				twitter, user.getJobTitle(), user.getGroupIds(),
 				user.getOrganizationIds(), user.getRoleIds(), null,
-				user.getUserGroupIds(),
-				_createServiceContext(userAccount)));
-	}
-
-	private ServiceContext _createServiceContext(UserAccount userAccount)
-		throws PortalException {
-
-		return ServiceContextBuilder.create(
-			contextCompany.getGroupId(), contextHttpServletRequest, null
-		).expandoBridgeAttributes(
-			CustomFieldsUtil.toMap(
-				User.class.getName(), contextCompany.getCompanyId(),
-				userAccount.getCustomFields(),
-				contextAcceptLanguage.getPreferredLocale())
-		).build();
+				user.getUserGroupIds(), _createServiceContext(userAccount)));
 	}
 
 	@Override
@@ -818,8 +803,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			userAccount.getJobTitle(), _getAddresses(userAccount),
 			_getServiceBuilderEmailAddresses(userAccount),
 			_getServiceBuilderPhones(userAccount), _getWebsites(userAccount),
-			false,
-			_createServiceContext(userAccount));
+			false, _createServiceContext(userAccount));
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
@@ -960,6 +944,19 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UserPasswordException.MustMatchCurrentPassword(
 				user.getUserId());
 		}
+	}
+
+	private ServiceContext _createServiceContext(UserAccount userAccount)
+		throws Exception {
+
+		return ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				User.class.getName(), contextCompany.getCompanyId(),
+				userAccount.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private String _formatActionMapKey(String methodName) {

@@ -1,0 +1,16 @@
+$line-height-h1:                  50 / 44;
+$control-panel-spacing-mobile:    ( $spacer / 1.25 );
+
+@each {
+	.bg-#{$color} {
+	}
+}
+
+@mixin make($list: ".col-xs-#{$i}, .col-sm-#{$i}") {
+}
+
+.col-#{$class}-push-#{$index} {
+}
+
+.col-#{$class}-push-0 {
+}

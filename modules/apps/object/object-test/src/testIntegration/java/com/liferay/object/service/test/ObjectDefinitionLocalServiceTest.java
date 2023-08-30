@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -927,33 +926,23 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// External reference code
 
-		String liferayMode = SystemProperties.get("liferay.mode");
-
-		SystemProperties.clear("liferay.mode");
-
-		try {
-			AssertUtils.assertFailure(
-				ObjectDefinitionExternalReferenceCodeException.
-					ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode.class,
-				"Forbidden unmodifiable system object definition external " +
-					"reference code INVALID_TEST",
-				() ->
-					ObjectDefinitionTestUtil.
-						addUnmodifiableSystemObjectDefinition(
-							"INVALID_TEST", TestPropsValues.getUserId(), "Test",
-							null,
-							LocalizedMapUtil.getLocalizedMap(
-								RandomTestUtil.randomString()),
-							"Test", null, null,
-							LocalizedMapUtil.getLocalizedMap(
-								RandomTestUtil.randomString()),
-							ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-							_objectDefinitionLocalService,
-							Collections.<ObjectField>emptyList()));
-		}
-		finally {
-			SystemProperties.set("liferay.mode", liferayMode);
-		}
+		AssertUtils.assertFailure(
+			ObjectDefinitionExternalReferenceCodeException.
+				ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode.class,
+			false,
+			"Forbidden unmodifiable system object definition external " +
+				"reference code INVALID_TEST",
+			() ->
+				ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
+					"INVALID_TEST", TestPropsValues.getUserId(), "Test", null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"Test", null, null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+					_objectDefinitionLocalService,
+					Collections.<ObjectField>emptyList()));
 
 		// Label is null
 

@@ -250,7 +250,7 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 						<c:if test="<%= Validator.isNotNull(activeLanguageIds) && !activeLanguageIds.isEmpty() && adminMode %>">
 							<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 							<li>
-								<button class="dropdown-item" id="manage-translations">
+								<button class="dropdown-item" id="manage-translations" type="button">
 									<span class="inline-item inline-item-before">
 										<svg class="lexicon-icon lexicon-icon-automatic-translate" role="presentation">
 											<use xlink:href="<%= themeDisplay.getPathThemeSpritemap() %>#automatic-translate" />

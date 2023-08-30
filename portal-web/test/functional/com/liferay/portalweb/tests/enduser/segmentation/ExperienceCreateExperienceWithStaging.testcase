@@ -1,0 +1,233 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		task ("Create an user using JSONWS") {
+			JSONUser.addUser(
+				jobTitle = "Test Engineer1",
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+		}
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+	}
+
+	@description = "This is a test for LPS-128438. Changes after reordering experiences with Staging should be applied in live."
+	@priority = 5
+	test ViewChangeIsPublishedWhenReorderExperiences {
+		task ("Given a content page in staging site") {
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name (Staging)",
+					layoutName = "Experience Content Page",
+					site = "false",
+					type = "content");
+			}
+		}
+
+		task ("When adding a fragment and an experience") {
+			task ("Add a Heading fragment and an experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Default Heading");
+
+				PageEditor.addExperience(
+					experienceName = "Experience Name 1",
+					segmentName = "Anyone");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Experience Name 1 Heading");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("Then changes after reordering experiences with Staging should be applied in live") {
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Default Heading");
+			}
+
+			task ("Prioritize the first created experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(experienceName = "Experience Name 1");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 1 Heading");
+			}
+
+			task ("Add another experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addExperience(
+					experienceName = "Experience Name 2",
+					segmentName = "Anyone");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Experience Name 2 Heading");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 1 Heading");
+			}
+
+			task ("Prioritize the second created experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(
+					count = 2,
+					experienceName = "Experience Name 2");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 2 Heading");
+			}
+
+			task ("Add another experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addExperience(
+					experienceName = "Experience Name 3",
+					segmentName = "Anyone");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Experience Name 3 Heading");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 2 Heading");
+			}
+
+			task ("Prioritize the third created experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(
+					count = 3,
+					experienceName = "Experience Name 3");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 3 Heading");
+			}
+		}
+	}
+
+}

@@ -4320,7 +4320,23 @@ definition {
 			description = "Description in English",
 			title = "Title in English");
 
+		Blueprints.gotoEntry(title = "Title in English");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		AssertElementPresent(
+			key_text = "Title in English",
+			locator1 = "Blueprints#ELEMENT_EDIT_PAGE_PREVIEW_TEXT");
+
+		AssertElementPresent(
+			key_text = "Description in English",
+			locator1 = "Blueprints#ELEMENT_EDIT_PAGE_PREVIEW_TEXT");
+
 		Navigator.ensureLocaleURL(locale = "es");
+
+		Navigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Elementos");
 
 		Blueprints.viewEntryTitle(title = "Título en Español");
 
@@ -4337,6 +4353,18 @@ definition {
 		Blueprints.viewEntryDescription(
 			description = "Beschreibung auf Deutsch",
 			title = "Titel auf Deutsch");
+
+		Blueprints.gotoEntry(title = "Titel auf Deutsch");
+
+		Click(locator1 = "//button[contains(.,'Vorschau')]");
+
+		AssertElementPresent(
+			key_text = "Titel auf Deutsch",
+			locator1 = "Blueprints#ELEMENT_EDIT_PAGE_PREVIEW_TEXT");
+
+		AssertElementPresent(
+			key_text = "Beschreibung auf Deutsch",
+			locator1 = "Blueprints#ELEMENT_EDIT_PAGE_PREVIEW_TEXT");
 	}
 
 	test ViewElementLocalizationWithinQueryBuilder {

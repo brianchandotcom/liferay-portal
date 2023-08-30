@@ -16,6 +16,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLIENT_ID</td>
+	<td>//input[contains(@id,'PublicationsPortlet_clientId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLIENT_SECRET</td>
+	<td>//input[contains(@id,'PublicationsPortlet_clientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFLICTING_CHANGES_SUCCESS_CONTENT</td>
 	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_successMessage}')]</td>
 	<td></td>
@@ -38,6 +48,11 @@
 <tr>
 	<td>ENABLE_ALLOW_UNAPPROVED_CHANGES</td>
 	<td>//input[contains(@id,'enableUnapprovedChanges')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_MANAGE_REMOTELY</td>
+	<td>//input[contains(@id,'enableManageRemotely')]</td>
 	<td></td>
 </tr>
 <tr>

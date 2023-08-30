@@ -482,7 +482,19 @@ public class ObjectActionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		if (Objects.equals(
+		if (StringUtil.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&
+			!objectDefinition.isRootNode()) {
+
+			throw new ObjectActionTriggerKeyException(
+				StringBundler.concat(
+					"The object action trigger key ",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+					" can only be used by a root object definition"));
+		}
+
+		if (StringUtil.equals(
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 

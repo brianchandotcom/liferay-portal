@@ -176,7 +176,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="bookedQuantityId" type="long" />
+		<field name="commerceInventoryBookedQuantityId" type="long" />
 		<field name="commerceOrderId" type="long" />
 		<field name="commercePriceListId" type="long" />
 		<field name="CPInstanceId" type="long" />

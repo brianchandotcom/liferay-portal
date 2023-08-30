@@ -53,9 +53,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, Long> bookedQuantityId =
-		createColumn(
-			"bookedQuantityId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Long>
+		commerceInventoryBookedQuantityId = createColumn(
+			"CIBookedQuantityId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Long> commerceOrderId =
 		createColumn(
 			"commerceOrderId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

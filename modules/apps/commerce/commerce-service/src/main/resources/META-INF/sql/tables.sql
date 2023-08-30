@@ -169,7 +169,7 @@ create table CommerceOrderItem (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	bookedQuantityId LONG,
+	CIBookedQuantityId LONG,
 	commerceOrderId LONG,
 	commercePriceListId LONG,
 	CPInstanceId LONG,

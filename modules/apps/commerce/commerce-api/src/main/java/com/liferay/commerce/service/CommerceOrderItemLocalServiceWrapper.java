@@ -341,10 +341,12 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
-		fetchCommerceOrderItemByBookedQuantityId(long bookedQuantityId) {
+		fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId) {
 
 		return _commerceOrderItemLocalService.
-			fetchCommerceOrderItemByBookedQuantityId(bookedQuantityId);
+			fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+				commerceInventoryBookedQuantityId);
 	}
 
 	@Override
@@ -774,11 +776,11 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long bookedQuantityId)
+			long commerceOrderItemId, long commerceInventoryBookedQuantityId)
 		throws com.liferay.commerce.exception.NoSuchOrderItemException {
 
 		return _commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, bookedQuantityId);
+			commerceOrderItemId, commerceInventoryBookedQuantityId);
 	}
 
 	@Override

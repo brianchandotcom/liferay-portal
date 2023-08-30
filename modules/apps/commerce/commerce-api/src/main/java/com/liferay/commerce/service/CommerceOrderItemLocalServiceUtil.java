@@ -300,11 +300,13 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().fetchCommerceOrderItem(commerceOrderItemId);
 	}
 
-	public static CommerceOrderItem fetchCommerceOrderItemByBookedQuantityId(
-		long bookedQuantityId) {
+	public static CommerceOrderItem
+		fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId) {
 
-		return getService().fetchCommerceOrderItemByBookedQuantityId(
-			bookedQuantityId);
+		return getService().
+			fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+				commerceInventoryBookedQuantityId);
 	}
 
 	public static CommerceOrderItem
@@ -659,11 +661,11 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long bookedQuantityId)
+			long commerceOrderItemId, long commerceInventoryBookedQuantityId)
 		throws com.liferay.commerce.exception.NoSuchOrderItemException {
 
 		return getService().updateCommerceOrderItem(
-			commerceOrderItemId, bookedQuantityId);
+			commerceOrderItemId, commerceInventoryBookedQuantityId);
 	}
 
 	public static CommerceOrderItem updateCommerceOrderItem(

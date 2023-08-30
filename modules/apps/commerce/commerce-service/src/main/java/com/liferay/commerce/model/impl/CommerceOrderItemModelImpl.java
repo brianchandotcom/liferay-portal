@@ -78,7 +78,7 @@ public class CommerceOrderItemModelImpl
 		{"commerceOrderItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"bookedQuantityId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"CIBookedQuantityId", Types.BIGINT},
 		{"commerceOrderId", Types.BIGINT},
 		{"commercePriceListId", Types.BIGINT}, {"CPInstanceId", Types.BIGINT},
 		{"CPMeasurementUnitId", Types.BIGINT}, {"CProductId", Types.BIGINT},
@@ -136,7 +136,7 @@ public class CommerceOrderItemModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("bookedQuantityId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CIBookedQuantityId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceOrderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
@@ -197,7 +197,7 @@ public class CommerceOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
+		"create table CommerceOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CIBookedQuantityId LONG,commerceOrderId LONG,commercePriceListId LONG,CPInstanceId LONG,CPMeasurementUnitId LONG,CProductId LONG,customerCommerceOrderItemId LONG,parentCommerceOrderItemId LONG,shippingAddressId LONG,deliveryGroup VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,depth DOUBLE,discountAmount BIGDECIMAL null,discountManuallyAdjusted BOOLEAN,discountPercentageLevel1 BIGDECIMAL null,discountPercentageLevel2 BIGDECIMAL null,discountPercentageLevel3 BIGDECIMAL null,discountPercentageLevel4 BIGDECIMAL null,discountPctLevel1WithTaxAmount BIGDECIMAL null,discountPctLevel2WithTaxAmount BIGDECIMAL null,discountPctLevel3WithTaxAmount BIGDECIMAL null,discountPctLevel4WithTaxAmount BIGDECIMAL null,discountWithTaxAmount BIGDECIMAL null,finalPrice BIGDECIMAL null,finalPriceWithTaxAmount BIGDECIMAL null,freeShipping BOOLEAN,height DOUBLE,json TEXT null,manuallyAdjusted BOOLEAN,maxSubscriptionCycles LONG,name STRING null,priceManuallyAdjusted BOOLEAN,priceOnApplication BOOLEAN,printedNote STRING null,promoPrice BIGDECIMAL null,promoPriceWithTaxAmount BIGDECIMAL null,quantity BIGDECIMAL null,replacedCPInstanceId LONG,replacedSku VARCHAR(75) null,requestedDeliveryDate DATE null,shipSeparately BOOLEAN,shippable BOOLEAN,shippedQuantity INTEGER,shippingExtraPrice DOUBLE,sku VARCHAR(75) null,subscription BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings VARCHAR(75) null,UOMIncrementalOrderQuantity BIGDECIMAL null,unitOfMeasureKey VARCHAR(75) null,unitPrice BIGDECIMAL null,unitPriceWithTaxAmount BIGDECIMAL null,weight DOUBLE,width DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 
@@ -345,7 +345,8 @@ public class CommerceOrderItemModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", CommerceOrderItem::getModifiedDate);
 			attributeGetterFunctions.put(
-				"bookedQuantityId", CommerceOrderItem::getBookedQuantityId);
+				"commerceInventoryBookedQuantityId",
+				CommerceOrderItem::getCommerceInventoryBookedQuantityId);
 			attributeGetterFunctions.put(
 				"commerceOrderId", CommerceOrderItem::getCommerceOrderId);
 			attributeGetterFunctions.put(
@@ -541,9 +542,9 @@ public class CommerceOrderItemModelImpl
 				(BiConsumer<CommerceOrderItem, Date>)
 					CommerceOrderItem::setModifiedDate);
 			attributeSetterBiConsumers.put(
-				"bookedQuantityId",
+				"commerceInventoryBookedQuantityId",
 				(BiConsumer<CommerceOrderItem, Long>)
-					CommerceOrderItem::setBookedQuantityId);
+					CommerceOrderItem::setCommerceInventoryBookedQuantityId);
 			attributeSetterBiConsumers.put(
 				"commerceOrderId",
 				(BiConsumer<CommerceOrderItem, Long>)
@@ -1010,17 +1011,19 @@ public class CommerceOrderItemModelImpl
 
 	@JSON
 	@Override
-	public long getBookedQuantityId() {
-		return _bookedQuantityId;
+	public long getCommerceInventoryBookedQuantityId() {
+		return _commerceInventoryBookedQuantityId;
 	}
 
 	@Override
-	public void setBookedQuantityId(long bookedQuantityId) {
+	public void setCommerceInventoryBookedQuantityId(
+		long commerceInventoryBookedQuantityId) {
+
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_bookedQuantityId = bookedQuantityId;
+		_commerceInventoryBookedQuantityId = commerceInventoryBookedQuantityId;
 	}
 
 	/**
@@ -1028,9 +1031,9 @@ public class CommerceOrderItemModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalBookedQuantityId() {
+	public long getOriginalCommerceInventoryBookedQuantityId() {
 		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("bookedQuantityId"));
+			this.<Long>getColumnOriginalValue("CIBookedQuantityId"));
 	}
 
 	@JSON
@@ -2283,7 +2286,8 @@ public class CommerceOrderItemModelImpl
 		commerceOrderItemImpl.setUserName(getUserName());
 		commerceOrderItemImpl.setCreateDate(getCreateDate());
 		commerceOrderItemImpl.setModifiedDate(getModifiedDate());
-		commerceOrderItemImpl.setBookedQuantityId(getBookedQuantityId());
+		commerceOrderItemImpl.setCommerceInventoryBookedQuantityId(
+			getCommerceInventoryBookedQuantityId());
 		commerceOrderItemImpl.setCommerceOrderId(getCommerceOrderId());
 		commerceOrderItemImpl.setCommercePriceListId(getCommercePriceListId());
 		commerceOrderItemImpl.setCPInstanceId(getCPInstanceId());
@@ -2397,8 +2401,8 @@ public class CommerceOrderItemModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		commerceOrderItemImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		commerceOrderItemImpl.setBookedQuantityId(
-			this.<Long>getColumnOriginalValue("bookedQuantityId"));
+		commerceOrderItemImpl.setCommerceInventoryBookedQuantityId(
+			this.<Long>getColumnOriginalValue("CIBookedQuantityId"));
 		commerceOrderItemImpl.setCommerceOrderId(
 			this.<Long>getColumnOriginalValue("commerceOrderId"));
 		commerceOrderItemImpl.setCommercePriceListId(
@@ -2654,7 +2658,8 @@ public class CommerceOrderItemModelImpl
 			commerceOrderItemCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceOrderItemCacheModel.bookedQuantityId = getBookedQuantityId();
+		commerceOrderItemCacheModel.commerceInventoryBookedQuantityId =
+			getCommerceInventoryBookedQuantityId();
 
 		commerceOrderItemCacheModel.commerceOrderId = getCommerceOrderId();
 
@@ -2954,7 +2959,7 @@ public class CommerceOrderItemModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _bookedQuantityId;
+	private long _commerceInventoryBookedQuantityId;
 	private long _commerceOrderId;
 	private long _commercePriceListId;
 	private long _CPInstanceId;
@@ -3055,7 +3060,8 @@ public class CommerceOrderItemModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("bookedQuantityId", _bookedQuantityId);
+		_columnOriginalValues.put(
+			"CIBookedQuantityId", _commerceInventoryBookedQuantityId);
 		_columnOriginalValues.put("commerceOrderId", _commerceOrderId);
 		_columnOriginalValues.put("commercePriceListId", _commercePriceListId);
 		_columnOriginalValues.put("CPInstanceId", _CPInstanceId);
@@ -3151,6 +3157,8 @@ public class CommerceOrderItemModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put(
+			"CIBookedQuantityId", "commerceInventoryBookedQuantityId");
 		attributeNames.put(
 			"deliverySubTypeSettings", "deliverySubscriptionTypeSettings");
 		attributeNames.put(

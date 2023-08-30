@@ -31,20 +31,6 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 			commerceInventoryBookedQuantityLocalService;
 	}
 
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			addCommerceBookedQuantity(
-				long userId, java.util.Date expirationDate,
-				java.math.BigDecimal quantity, String sku,
-				String unitOfMeasureKey, java.util.Map<String, String> context)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryBookedQuantityLocalService.
-			addCommerceBookedQuantity(
-				userId, expirationDate, quantity, sku, unitOfMeasureKey,
-				context);
-	}
-
 	/**
 	 * Adds the commerce inventory booked quantity to the database. Also notifies the appropriate model listeners.
 	 *
@@ -66,6 +52,20 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
+			addCommerceInventoryBookedQuantity(
+				long userId, java.util.Date expirationDate,
+				java.math.BigDecimal quantity, String sku,
+				String unitOfMeasureKey, java.util.Map<String, String> context)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			addCommerceInventoryBookedQuantity(
+				userId, expirationDate, quantity, sku, unitOfMeasureKey,
+				context);
+	}
+
+	@Override
 	public void checkCommerceInventoryBookedQuantities() {
 		_commerceInventoryBookedQuantityLocalService.
 			checkCommerceInventoryBookedQuantities();
@@ -73,13 +73,15 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			consumeCommerceBookedQuantity(
-				long commerceBookedQuantityId, java.math.BigDecimal quantity)
+			consumeCommerceInventoryBookedQuantity(
+				long commerceInventoryBookedQuantityId,
+				java.math.BigDecimal quantity)
 		throws com.liferay.commerce.inventory.exception.
 			NoSuchInventoryBookedQuantityException {
 
 		return _commerceInventoryBookedQuantityLocalService.
-			consumeCommerceBookedQuantity(commerceBookedQuantityId, quantity);
+			consumeCommerceInventoryBookedQuantity(
+				commerceInventoryBookedQuantityId, quantity);
 	}
 
 	/**
@@ -289,24 +291,6 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
-	@Override
-	public java.math.BigDecimal getCommerceBookedQuantity(
-		long companyId, long commerceChannelGroupId, String sku,
-		String unitOfMeasureKey) {
-
-		return _commerceInventoryBookedQuantityLocalService.
-			getCommerceBookedQuantity(
-				companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
-	}
-
-	@Override
-	public java.math.BigDecimal getCommerceBookedQuantity(
-		long companyId, String sku, String unitOfMeasureKey) {
-
-		return _commerceInventoryBookedQuantityLocalService.
-			getCommerceBookedQuantity(companyId, sku, unitOfMeasureKey);
-	}
-
 	/**
 	 * Returns a range of all the commerce inventory booked quantities.
 	 *
@@ -402,6 +386,25 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	}
 
 	@Override
+	public java.math.BigDecimal getCommerceInventoryBookedQuantity(
+		long companyId, long commerceChannelGroupId, String sku,
+		String unitOfMeasureKey) {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			getCommerceInventoryBookedQuantity(
+				companyId, commerceChannelGroupId, sku, unitOfMeasureKey);
+	}
+
+	@Override
+	public java.math.BigDecimal getCommerceInventoryBookedQuantity(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			getCommerceInventoryBookedQuantity(
+				companyId, sku, unitOfMeasureKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -434,17 +437,17 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
-			resetCommerceBookedQuantity(
-				long commerceBookedQuantityId, long userId,
+			resetCommerceInventoryBookedQuantity(
+				long commerceInventoryBookedQuantityId, long userId,
 				java.util.Date expirationDate, java.math.BigDecimal quantity,
 				String sku, String unitOfMeasureKey,
 				java.util.Map<String, String> context)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryBookedQuantityLocalService.
-			resetCommerceBookedQuantity(
-				commerceBookedQuantityId, userId, expirationDate, quantity, sku,
-				unitOfMeasureKey, context);
+			resetCommerceInventoryBookedQuantity(
+				commerceInventoryBookedQuantityId, userId, expirationDate,
+				quantity, sku, unitOfMeasureKey, context);
 	}
 
 	@Override

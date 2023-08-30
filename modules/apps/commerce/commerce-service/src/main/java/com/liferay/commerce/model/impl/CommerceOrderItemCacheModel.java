@@ -93,8 +93,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", bookedQuantityId=");
-		sb.append(bookedQuantityId);
+		sb.append(", commerceInventoryBookedQuantityId=");
+		sb.append(commerceInventoryBookedQuantityId);
 		sb.append(", commerceOrderId=");
 		sb.append(commerceOrderId);
 		sb.append(", commercePriceListId=");
@@ -262,7 +262,8 @@ public class CommerceOrderItemCacheModel
 			commerceOrderItemImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		commerceOrderItemImpl.setBookedQuantityId(bookedQuantityId);
+		commerceOrderItemImpl.setCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 		commerceOrderItemImpl.setCommerceOrderId(commerceOrderId);
 		commerceOrderItemImpl.setCommercePriceListId(commercePriceListId);
 		commerceOrderItemImpl.setCPInstanceId(CPInstanceId);
@@ -446,7 +447,7 @@ public class CommerceOrderItemCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		bookedQuantityId = objectInput.readLong();
+		commerceInventoryBookedQuantityId = objectInput.readLong();
 
 		commerceOrderId = objectInput.readLong();
 
@@ -574,7 +575,7 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(bookedQuantityId);
+		objectOutput.writeLong(commerceInventoryBookedQuantityId);
 
 		objectOutput.writeLong(commerceOrderId);
 
@@ -741,7 +742,7 @@ public class CommerceOrderItemCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long bookedQuantityId;
+	public long commerceInventoryBookedQuantityId;
 	public long commerceOrderId;
 	public long commercePriceListId;
 	public long CPInstanceId;

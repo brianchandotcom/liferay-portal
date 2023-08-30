@@ -46,7 +46,9 @@ public class CommerceOrderItemWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("bookedQuantityId", getBookedQuantityId());
+		attributes.put(
+			"commerceInventoryBookedQuantityId",
+			getCommerceInventoryBookedQuantityId());
 		attributes.put("commerceOrderId", getCommerceOrderId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("CPInstanceId", getCPInstanceId());
@@ -195,10 +197,12 @@ public class CommerceOrderItemWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long bookedQuantityId = (Long)attributes.get("bookedQuantityId");
+		Long commerceInventoryBookedQuantityId = (Long)attributes.get(
+			"commerceInventoryBookedQuantityId");
 
-		if (bookedQuantityId != null) {
-			setBookedQuantityId(bookedQuantityId);
+		if (commerceInventoryBookedQuantityId != null) {
+			setCommerceInventoryBookedQuantityId(
+				commerceInventoryBookedQuantityId);
 		}
 
 		Long commerceOrderId = (Long)attributes.get("commerceOrderId");
@@ -606,19 +610,19 @@ public class CommerceOrderItemWrapper
 		return model.getAvailableLanguageIds();
 	}
 
-	/**
-	 * Returns the booked quantity ID of this commerce order item.
-	 *
-	 * @return the booked quantity ID of this commerce order item
-	 */
-	@Override
-	public long getBookedQuantityId() {
-		return model.getBookedQuantityId();
-	}
-
 	@Override
 	public java.util.List<CommerceOrderItem> getChildCommerceOrderItems() {
 		return model.getChildCommerceOrderItems();
+	}
+
+	/**
+	 * Returns the commerce inventory booked quantity ID of this commerce order item.
+	 *
+	 * @return the commerce inventory booked quantity ID of this commerce order item
+	 */
+	@Override
+	public long getCommerceInventoryBookedQuantityId() {
+		return model.getCommerceInventoryBookedQuantityId();
 	}
 
 	@Override
@@ -1597,13 +1601,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
-	 * Sets the booked quantity ID of this commerce order item.
+	 * Sets the commerce inventory booked quantity ID of this commerce order item.
 	 *
-	 * @param bookedQuantityId the booked quantity ID of this commerce order item
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID of this commerce order item
 	 */
 	@Override
-	public void setBookedQuantityId(long bookedQuantityId) {
-		model.setBookedQuantityId(bookedQuantityId);
+	public void setCommerceInventoryBookedQuantityId(
+		long commerceInventoryBookedQuantityId) {
+
+		model.setCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 	}
 
 	/**

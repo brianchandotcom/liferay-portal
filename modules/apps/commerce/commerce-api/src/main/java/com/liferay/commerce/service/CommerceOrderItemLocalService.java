@@ -252,8 +252,9 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderItem fetchCommerceOrderItemByBookedQuantityId(
-		long bookedQuantityId);
+	public CommerceOrderItem
+		fetchCommerceOrderItemByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
@@ -494,7 +495,7 @@ public interface CommerceOrderItemLocalService
 		CommerceOrderItem commerceOrderItem);
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, long bookedQuantityId)
+			long commerceOrderItemId, long commerceInventoryBookedQuantityId)
 		throws NoSuchOrderItemException;
 
 	public CommerceOrderItem updateCommerceOrderItem(

@@ -349,6 +349,8 @@ definition {
 
 		PortletEntry.publish();
 
+		TestUtils.hardRefresh();
+
 		AssertTextEquals(
 			key_webContentTitle = "Web Content Title",
 			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
@@ -372,6 +374,8 @@ definition {
 		WebContent.increaseDisplayDate(minuteIncrease = 2);
 
 		PortletEntry.publish();
+
+		TestUtils.hardRefresh();
 
 		AssertTextEquals(
 			key_webContentTitle = "Web Content Title",
@@ -657,6 +661,8 @@ definition {
 
 			PortletEntry.publish();
 
+			TestUtils.hardRefresh();	
+
 			AssertTextEquals(
 				key_webContentTitle = "WC WebContent Title New Company",
 				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
@@ -679,6 +685,8 @@ definition {
 			WebContent.increaseDisplayDate(minuteIncrease = 2);
 
 			PortletEntry.publish();
+
+			TestUtils.hardRefresh();
 
 			AssertTextEquals(
 				key_webContentTitle = "WC WebContent Title Default Company",

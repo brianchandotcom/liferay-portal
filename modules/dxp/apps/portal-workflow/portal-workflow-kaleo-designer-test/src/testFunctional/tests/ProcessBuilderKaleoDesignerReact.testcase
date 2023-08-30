@@ -4946,8 +4946,7 @@ definition {
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
 	@priority = 3
 	test PublishButtonTurnsUnavailableAfterPublish {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
+		property test.liferay.virtual.instance = "true";
 
 		Workflow.openWorkflowListView();
 

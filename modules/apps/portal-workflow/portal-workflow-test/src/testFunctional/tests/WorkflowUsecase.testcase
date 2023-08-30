@@ -813,10 +813,6 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "1-workflow-definition.xml");
 
-		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
-
-		Button.clickSave();
-
 		Button.clickPublish();
 
 		Navigator.gotoBack();

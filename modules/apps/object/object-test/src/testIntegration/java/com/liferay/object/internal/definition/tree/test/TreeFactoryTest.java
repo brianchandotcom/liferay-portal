@@ -11,8 +11,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -51,8 +49,7 @@ public class TreeFactoryTest {
 				"AAB", new String[0]
 			).build(),
 			TreeTestUtil.createTree(
-				_mvcResourceCommand, _objectDefinitionLocalService,
-				_objectRelationshipLocalService, _portletLocalService,
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
 				_treeFactory),
 			_objectDefinitionLocalService);
 	}
@@ -63,14 +60,6 @@ public class TreeFactoryTest {
 	@Inject
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-
-	@Inject(
-		filter = "mvc.command.name=/object_definitions/bind_object_definitions"
-	)
-	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private TreeFactory _treeFactory;

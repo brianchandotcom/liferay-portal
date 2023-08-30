@@ -59,9 +59,8 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		// Object definition, hierarchical structure, maximum height
 
 		Tree tree = TreeTestUtil.createTree(
-			_bindObjectDefinitionsMVCResourceCommand,
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_portletLocalService, _treeFactory);
+			_treeFactory);
 
 		ObjectDefinition objectDefinitionAAA =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -248,7 +247,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
-		_getObjectRelationshipEdgeCandidatesMVCResourceCommand.serveResource(
+		_mvcResourceCommand.serveResource(
 			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -266,19 +265,13 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 	private static ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 
-	@Inject(
-		filter = "mvc.command.name=/object_definitions/bind_object_definitions"
-	)
-	private MVCResourceCommand _bindObjectDefinitionsMVCResourceCommand;
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject(
 		filter = "mvc.command.name=/object_definitions/get_object_relationship_edge_candidates"
 	)
-	private MVCResourceCommand
-		_getObjectRelationshipEdgeCandidatesMVCResourceCommand;
-
-	@Inject
-	private JSONFactory _jsonFactory;
+	private MVCResourceCommand _mvcResourceCommand;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

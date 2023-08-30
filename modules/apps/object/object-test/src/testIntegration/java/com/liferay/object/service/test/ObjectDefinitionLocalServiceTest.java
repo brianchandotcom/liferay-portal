@@ -11,7 +11,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.exception.NoSuchObjectDefinitionException;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
@@ -42,6 +42,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -67,6 +69,7 @@ import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -1074,6 +1077,71 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testBindObjectDefinitions() throws Exception {
+
+		// Bind object definitions creating a new hierarchical structure
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"A", _objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"AA", _objectDefinitionLocalService);
+
+		ObjectRelationship objectRelationshipA_AA =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinitionA,
+				objectDefinitionAA);
+
+		TreeTestUtil.bind(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					ObjectDefinitionTestUtil.addObjectDefinition(
+						"AAA", _objectDefinitionLocalService)),
+				objectRelationshipA_AA));
+
+		TreeTestUtil.assertTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[] {"AAA"}
+			).put(
+				"AAA", new String[0]
+			).build(),
+			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		// Bind one object definition to an existing hierarchical structure
+
+		TreeTestUtil.bind(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					ObjectDefinitionTestUtil.addObjectDefinition(
+						"AAB", _objectDefinitionLocalService)),
+				objectRelationshipA_AA));
+
+		TreeTestUtil.assertTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build(),
+			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		TreeTestUtil.tearDown(_objectDefinitionLocalService);
+	}
+
+	@Test
 	public void testDeleteObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -1366,6 +1434,66 @@ public class ObjectDefinitionLocalServiceTest {
 		_testSystemObjectFields(objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testUnbindObjectDefinition() throws Exception {
+
+		// Unbind object definition internal node
+
+		TreeTestUtil.assertTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build(),
+			TreeTestUtil.createTree(
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				_treeFactory),
+			_objectDefinitionLocalService);
+
+		TreeTestUtil.unbind(_objectDefinitionLocalService, "C_AA");
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		TreeTestUtil.assertTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AB"}
+			).put(
+				"AB", new String[0]
+			).build(),
+			_treeFactory.create(objectDefinition.getRootObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		// Unbind object definition leaf node
+
+		TreeTestUtil.unbind(_objectDefinitionLocalService, "C_AB");
+
+		TreeTestUtil.assertTree(
+			LinkedHashMapBuilder.put(
+				"A", new String[0]
+			).build(),
+			_treeFactory.create(objectDefinition.getRootObjectDefinitionId()),
+			_objectDefinitionLocalService);
+
+		// Unbind object definition root node
+
+		TreeTestUtil.unbind(_objectDefinitionLocalService, "C_A");
+
+		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
+			TestPropsValues.getCompanyId(), "C_A");
+
+		Assert.assertEquals(0, objectDefinition.getRootObjectDefinitionId());
+
+		TreeTestUtil.tearDown(_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -2200,5 +2328,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private TreeFactory _treeFactory;
 
 }

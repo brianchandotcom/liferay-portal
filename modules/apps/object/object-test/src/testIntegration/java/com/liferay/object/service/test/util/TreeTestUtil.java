@@ -5,7 +5,6 @@
 
 package com.liferay.object.service.test.util;
 
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
@@ -16,20 +15,14 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletException;
 
 /**
  * @author Feliphe Marinho
@@ -61,38 +54,21 @@ public class TreeTestUtil {
 	}
 
 	public static void bind(
-			MVCResourceCommand mvcResourceCommand,
-			List<ObjectRelationship> objectRelationships,
-			PortletLocalService portletLocalService)
-		throws PortletException {
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			List<ObjectRelationship> objectRelationships)
+		throws PortalException {
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
-		mockLiferayResourceRequest.addParameter(
-			"objectRelationshipIds",
-			TransformUtil.transformToArray(
+		objectDefinitionLocalService.bindObjectDefinitions(
+			TransformUtil.transformToLongArray(
 				objectRelationships,
-				objectRelationship -> String.valueOf(
-					objectRelationship.getObjectRelationshipId()),
-				String.class));
-
-		mockLiferayResourceRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG,
-			PortletConfigFactoryUtil.create(
-				portletLocalService.getPortletById(
-					ObjectPortletKeys.OBJECT_DEFINITIONS),
-				null));
-
-		mvcResourceCommand.serveResource(mockLiferayResourceRequest, null);
+				ObjectRelationship::getObjectRelationshipId));
 	}
 
 	public static Tree createTree(
-			MVCResourceCommand bindObjectDefinitionsMVCResourceCommand,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
-			PortletLocalService portletLocalService, TreeFactory treeFactory)
-		throws PortalException, PortletException {
+			TreeFactory treeFactory)
+		throws PortalException {
 
 		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.addObjectDefinition(
@@ -103,7 +79,7 @@ public class TreeTestUtil {
 				"AA", objectDefinitionLocalService);
 
 		bind(
-			bindObjectDefinitionsMVCResourceCommand,
+			objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionA,
@@ -119,8 +95,7 @@ public class TreeTestUtil {
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					objectRelationshipLocalService, objectDefinitionA,
 					ObjectDefinitionTestUtil.addObjectDefinition(
-						"AB", objectDefinitionLocalService))),
-			portletLocalService);
+						"AB", objectDefinitionLocalService))));
 
 		return treeFactory.create(objectDefinitionA.getObjectDefinitionId());
 	}
@@ -137,6 +112,43 @@ public class TreeTestUtil {
 
 		return objectRelationshipLocalService.getObjectRelationship(
 			edge.getObjectRelationshipId());
+	}
+
+	public static void tearDown(
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws PortalException {
+
+		for (String objectDefinitionName :
+				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(), objectDefinitionName);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (objectDefinition.getRootObjectDefinitionId() != 0) {
+				unbind(objectDefinitionLocalService, objectDefinitionName);
+			}
+
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
+	public static void unbind(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			String objectDefinitionName)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), objectDefinitionName);
+
+		objectDefinitionLocalService.unbindObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private static String _getShortName(

@@ -21,13 +21,17 @@ jest.mock(
 );
 
 const renderImageSelectorSize = (
-	{imageSizeId = '1000px', onImageSizeIdChanged} = {imageSizeId: '1000px'}
+	{imageSizeId = '1000px', imageSizeLimit = null, onImageSizeIdChanged} = {
+		imageSizeId: '1000px',
+		imageSizeLimit: null,
+	}
 ) =>
 	render(
 		<StoreAPIContextProvider>
 			<ImageSelectorSize
 				fieldValue={{fileEntryId: '1234'}}
 				imageSizeId={imageSizeId}
+				imageSizeLimit={imageSizeLimit}
 				onImageSizeIdChanged={onImageSizeIdChanged}
 			/>
 		</StoreAPIContextProvider>
@@ -58,6 +62,8 @@ const imageSizesPromise = Promise.resolve([
 
 describe('ImageSelectorSize', () => {
 	beforeEach(() => {
+		Liferay.FeatureFlags['LPS-187285'] = true;
+
 		useGlobalContext.mockReturnValue({
 			document: {
 				body: {
@@ -80,6 +86,8 @@ describe('ImageSelectorSize', () => {
 	});
 
 	afterEach(() => {
+		Liferay.FeatureFlags['LPS-187285'] = false;
+
 		useGlobalContext.mockClear();
 		ImageService.getAvailableImageConfigurations.mockClear();
 	});
@@ -166,5 +174,19 @@ describe('ImageSelectorSize', () => {
 		const widthLabel = getByText('width:', {exact: false});
 
 		expect(widthLabel.parentElement.textContent).toBe('width:300px');
+	});
+
+	it('shows a warning if the image is larger than the specified size', async () => {
+		const {getByText} = renderImageSelectorSize({
+			imageSizeLimit: 100,
+		});
+
+		await act(() => imageSizesPromise);
+
+		expect(
+			getByText(
+				'big-image-file-size-used-please-consider-configuring-adaptive-media-lazy-loading-or-reducing-the-image-size'
+			)
+		).toBeInTheDocument();
 	});
 });

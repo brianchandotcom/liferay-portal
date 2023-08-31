@@ -5,23 +5,46 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.activator;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.eclipse.equinox.http.servlet.internal.Activator;
+import org.eclipse.equinox.http.servlet.internal.HttpServiceFactory;
+import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionTracker;
 import org.eclipse.equinox.http.servlet.internal.servlet.ProxyServlet;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.http.HttpService;
+import org.osgi.service.http.runtime.HttpServiceRuntime;
+import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -56,6 +79,60 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 		_activator.stop(bundleContext);
 	}
 
+	private static String[] _getHttpServiceEndpoints(
+		ServletContext servletContext, String servletName) {
+
+		int majorVersion = servletContext.getMajorVersion();
+
+		if (majorVersion < 3) {
+			_log.error(
+				StringBundler.concat(
+					"The http container does not support servlet 3.0+. ",
+					"Therefore, the value of ",
+					HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
+					" cannot be calculated."));
+
+			return new String[0];
+		}
+
+		ServletRegistration servletRegistration = null;
+
+		try {
+			servletRegistration = servletContext.getServletRegistration(
+				servletName);
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			_log.error(
+				"Could not find the servlet registration for: " + servletName,
+				unsupportedOperationException);
+		}
+
+		if (servletRegistration == null) {
+			return new String[0];
+		}
+
+		List<String> httpServiceEndpoints = new ArrayList<>();
+
+		for (String mapping : servletRegistration.getMappings()) {
+			if (mapping.indexOf('/') == 0) {
+				if (mapping.charAt(mapping.length() - 1) == '*') {
+					mapping = mapping.substring(0, mapping.length() - 2);
+
+					if ((mapping.length() > 1) &&
+						(mapping.charAt(mapping.length() - 1) != '/')) {
+
+						mapping += '/';
+					}
+				}
+
+				httpServiceEndpoints.add(
+					servletContext.getContextPath() + mapping);
+			}
+		}
+
+		return httpServiceEndpoints.toArray(new String[0]);
+	}
+
 	private static final HttpSessionListener _HTTP_SESSION_LISTENER =
 		new HttpSessionListener() {
 
@@ -73,47 +150,147 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 		};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		HttpServletImplBundleActivator.class.getName());
+
 	private Activator _activator;
-	private ServiceTracker
-		<HttpServletEndpoint, ServiceRegistration<HttpServlet>> _serviceTracker;
+	private ServiceTracker<HttpServletEndpoint, ServiceRegistrationsBag>
+		_serviceTracker;
 
 	private static class HttpServletServiceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<HttpServletEndpoint, ServiceRegistration<HttpServlet>> {
+			<HttpServletEndpoint, ServiceRegistrationsBag> {
 
 		@Override
-		public ServiceRegistration<HttpServlet> addingService(
+		public ServiceRegistrationsBag addingService(
 			ServiceReference<HttpServletEndpoint> serviceReference) {
 
 			HttpServletEndpoint httpServletEndpoint = _bundleContext.getService(
 				serviceReference);
 
+			ServletConfig servletConfig =
+				httpServletEndpoint.getServletConfig();
+
 			ProxyServlet proxyServlet = new ProxyServlet() {
 
 				@Override
 				public ServletConfig getServletConfig() {
-					return httpServletEndpoint.getServletConfig();
+					return servletConfig;
 				}
 
 			};
 
-			return _bundleContext.registerService(
-				HttpServlet.class, proxyServlet,
-				httpServletEndpoint.getProperties());
+			ServletContext servletContext = servletConfig.getServletContext();
+
+			Map<String, Object> attributesMap =
+				HashMapBuilder.<String, Object>put(
+					Activator.UNIQUE_SERVICE_ID, SecureRandomUtil.nextLong()
+				).put(
+					ListUtil.fromEnumeration(
+						servletConfig.getInitParameterNames()),
+					servletConfig::getInitParameter
+				).put(
+					HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
+					() -> {
+						Object httpServiceEndpoint =
+							servletConfig.getInitParameter(
+								HttpServiceRuntimeConstants.
+									HTTP_SERVICE_ENDPOINT);
+
+						if (httpServiceEndpoint != null) {
+							return null;
+						}
+
+						return _getHttpServiceEndpoints(
+							servletContext, servletConfig.getServletName());
+					}
+				).build();
+
+			attributesMap.putIfAbsent(Constants.SERVICE_VENDOR, "Liferay.com");
+			attributesMap.putIfAbsent(
+				Constants.SERVICE_DESCRIPTION,
+				"Liferay Portal OSGi Http Servlet");
+
+			BundleContext trackingBundleContext = _bundleContext;
+
+			if (Boolean.parseBoolean(
+					_bundleContext.getProperty(
+						"equinox.http.global.whiteboard"))) {
+
+				Bundle systemBundle = _bundleContext.getBundle(
+					Constants.SYSTEM_BUNDLE_LOCATION);
+
+				trackingBundleContext = systemBundle.getBundleContext();
+			}
+
+			HttpServiceRuntimeImpl httpServiceRuntimeImpl =
+				new HttpServiceRuntimeImpl(
+					trackingBundleContext, _bundleContext, servletContext,
+					Collections.unmodifiableMap(attributesMap));
+
+			proxyServlet.setHttpServiceRuntimeImpl(httpServiceRuntimeImpl);
+
+			return new ServiceRegistrationsBag(
+				httpServiceRuntimeImpl,
+				_bundleContext.registerService(
+					HttpServlet.class, proxyServlet,
+					httpServletEndpoint.getProperties()),
+				_bundleContext.registerService(
+					HttpService.class,
+					new HttpServiceFactory(httpServiceRuntimeImpl),
+					HashMapDictionaryBuilder.putAll(
+						attributesMap
+					).build()),
+				_bundleContext.registerService(
+					HttpServiceRuntime.class, httpServiceRuntimeImpl,
+					HashMapDictionaryBuilder.putAll(
+						attributesMap
+					).put(
+						HttpServiceRuntimeConstants.HTTP_SERVICE_ID,
+						() -> {
+							Collection<ServiceReference<HttpService>>
+								serviceReferences =
+									_bundleContext.getServiceReferences(
+										HttpService.class,
+										StringBundler.concat(
+											"(", Activator.UNIQUE_SERVICE_ID,
+											"=",
+											attributesMap.get(
+												Activator.UNIQUE_SERVICE_ID),
+											")"));
+
+							Iterator<ServiceReference<HttpService>> iterator =
+								serviceReferences.iterator();
+
+							ServiceReference<?>
+								httpServiceFactoryServiceReference =
+									iterator.next();
+
+							return Collections.singletonList(
+								httpServiceFactoryServiceReference.getProperty(
+									Constants.SERVICE_ID));
+						}
+					).build()));
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<HttpServletEndpoint> serviceReference,
-			ServiceRegistration<HttpServlet> serviceRegistration) {
+			ServiceRegistrationsBag serviceRegistrationsBag) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<HttpServletEndpoint> serviceReference,
-			ServiceRegistration<HttpServlet> serviceRegistration) {
+			ServiceRegistrationsBag serviceRegistrationsBag) {
 
-			serviceRegistration.unregister();
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrationsBag._serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrationsBag._httpServiceRuntimeImpl.destroy();
 
 			_bundleContext.ungetService(serviceReference);
 		}
@@ -125,6 +302,21 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 		}
 
 		private final BundleContext _bundleContext;
+
+	}
+
+	private static class ServiceRegistrationsBag {
+
+		private ServiceRegistrationsBag(
+			HttpServiceRuntimeImpl httpServiceRuntimeImpl,
+			ServiceRegistration<?>... serviceRegistrations) {
+
+			_httpServiceRuntimeImpl = httpServiceRuntimeImpl;
+			_serviceRegistrations = serviceRegistrations;
+		}
+
+		private final HttpServiceRuntimeImpl _httpServiceRuntimeImpl;
+		private final ServiceRegistration<?>[] _serviceRegistrations;
 
 	}
 

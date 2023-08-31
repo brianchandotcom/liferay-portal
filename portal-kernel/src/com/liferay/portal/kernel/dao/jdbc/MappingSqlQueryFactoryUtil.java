@@ -16,20 +16,8 @@ public class MappingSqlQueryFactoryUtil {
 		DataSource dataSource, String sql, RowMapper<T> rowMapper,
 		ParamSetter... paramSetters) {
 
-		return _mappingSqlUpdateFactory.getMappingSqlQuery(
+		return new MappingSqlQueryImpl<>(
 			dataSource, sql, rowMapper, paramSetters);
 	}
-
-	public static MappingSqlQueryFactory getMappingSqlQueryFactory() {
-		return _mappingSqlUpdateFactory;
-	}
-
-	public void setMappingSqlQueryFactory(
-		MappingSqlQueryFactory mappingSqlUpdateFactory) {
-
-		_mappingSqlUpdateFactory = mappingSqlUpdateFactory;
-	}
-
-	private static MappingSqlQueryFactory _mappingSqlUpdateFactory;
 
 }

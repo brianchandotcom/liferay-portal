@@ -15,17 +15,7 @@ public class SqlUpdateFactoryUtil {
 	public static SqlUpdate getSqlUpdate(
 		DataSource dataSource, String sql, ParamSetter... paramSetters) {
 
-		return _sqlUpdateFactory.getSqlUpdate(dataSource, sql, paramSetters);
+		return new SqlUpdateImpl(dataSource, sql, paramSetters);
 	}
-
-	public static SqlUpdateFactory getSqlUpdateFactory() {
-		return _sqlUpdateFactory;
-	}
-
-	public void setSqlUpdateFactory(SqlUpdateFactory sqlUpdateFactory) {
-		_sqlUpdateFactory = sqlUpdateFactory;
-	}
-
-	private static SqlUpdateFactory _sqlUpdateFactory;
 
 }

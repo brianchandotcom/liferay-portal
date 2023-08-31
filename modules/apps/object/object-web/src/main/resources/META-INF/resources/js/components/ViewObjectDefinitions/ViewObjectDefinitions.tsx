@@ -33,7 +33,7 @@ import {ModalDeleteFolder} from './ModalDeleteFolder';
 import {ModalDeleteObjectDefinition} from './ModalDeleteObjectDefinition';
 import {ModalEditFolder} from './ModalEditFolder';
 import {ModalMoveObjectDefinition} from './ModalMoveObjectDefinition';
-import {ModalUnbindObject} from './ModalUnbindObject';
+import {ModalUnbindObjectDefinition} from './ModalUnbindObjectDefinition';
 import {deleteObjectDefinition, getFolderActions} from './objectDefinitionUtil';
 
 import './ViewObjectDefinitions.scss';
@@ -535,7 +535,7 @@ export default function ViewObjectDefinitions({
 
 			{showModal.unbindFromRootObjectDefinition &&
 			 Liferay.FeatureFlags['LPS-187142'] && (
-					<ModalUnbindObject
+					<ModalUnbindObjectDefinition
 						baseResourceURL={baseResourceURL}
 						onVisibilityChange={() => {
 							setShowModal(

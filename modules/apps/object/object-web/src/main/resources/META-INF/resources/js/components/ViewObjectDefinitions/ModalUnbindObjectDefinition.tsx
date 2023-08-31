@@ -22,7 +22,7 @@ interface ModalUnbindObjectProps {
 	selectedObjectToUnbind?: ObjectDefinition;
 }
 
-export function ModalUnbindObject({
+export function ModalUnbindObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
 	selectedObjectToUnbind,

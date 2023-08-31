@@ -5,23 +5,24 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
-import com.liferay.portal.search.spi.reindexer.IndexReindexer;
-import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
 
 import java.io.Serializable;
 
@@ -89,7 +88,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		if (cmd.equals("reindex")) {
 			_reindex(actionRequest);
 
-			_reindexIndexReindexers(actionRequest);
+			_reindexIndexReindexer(actionRequest);
 		}
 		else if (cmd.equals("reindexDictionaries")) {
 			_reindexDictionaries(actionRequest);
@@ -211,51 +210,31 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 	private void _reindexIndexReindexer(ActionRequest actionRequest)
 		throws Exception {
 
-		String className = ParamUtil.getString(actionRequest, "className");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Reindexing ", className, " with execution mode ",
-					ParamUtil.getString(actionRequest, "executionMode")));
-		}
-
-		IndexReindexer indexReindexer =
-			_indexReindexerRegistry.getIndexReindexer(className);
-
-		indexReindexer.reindex(
-			ParamUtil.getLongValues(actionRequest, "companyIds"),
-			ParamUtil.getString(actionRequest, "executionMode"));
+		_backgroundTaskManager.addBackgroundTask(
+			themeDisplay.getUserId(), CompanyConstants.SYSTEM,
+			"reindexIndexReindexer",
+			"com.liferay.portal.search.internal.background.task." +
+				"ReindexIndexReindexerBackgroundTaskExecutor",
+			HashMapBuilder.<String, Serializable>put(
+				ReindexBackgroundTaskConstants.CLASS_NAME,
+				ParamUtil.getString(actionRequest, "className")
+			).put(
+				ReindexBackgroundTaskConstants.COMPANY_IDS,
+				ParamUtil.getLongValues(actionRequest, "companyIds")
+			).put(
+				ReindexBackgroundTaskConstants.EXECUTION_MODE,
+				ParamUtil.getString(actionRequest, "executionMode")
+			).build(),
+			new ServiceContext());
 	}
-
-	private void _reindexIndexReindexers(ActionRequest actionRequest)
-		throws Exception {
-
-		for (IndexReindexer indexReindexer :
-				_indexReindexerRegistry.getIndexReindexers()) {
-
-			if (_log.isInfoEnabled()) {
-				Class<?> clazz = indexReindexer.getClass();
-
-				_log.info(
-					StringBundler.concat(
-						"Reindexing ", clazz.getName(), " with execution mode ",
-						ParamUtil.getString(actionRequest, "executionMode")));
-			}
-
-			indexReindexer.reindex(
-				ParamUtil.getLongValues(actionRequest, "companyIds"),
-				ParamUtil.getString(actionRequest, "executionMode"));
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditMVCActionCommand.class);
-
-	private BundleContext _bundleContext;
 
 	@Reference
-	private IndexReindexerRegistry _indexReindexerRegistry;
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

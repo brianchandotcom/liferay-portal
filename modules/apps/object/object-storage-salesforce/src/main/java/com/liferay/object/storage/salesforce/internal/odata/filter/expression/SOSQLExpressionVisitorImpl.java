@@ -9,6 +9,7 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,10 +47,26 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		StringBuilder sb = new StringBuilder();
 
 		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			_buildBinaryOperation(left, " AND ", right, sb);
+			_buildBinaryOperation(
+				StringBundler.concat(
+					StringPool.OPEN_PARENTHESIS, left,
+					StringPool.CLOSE_PARENTHESIS),
+				" AND ",
+				StringBundler.concat(
+					StringPool.OPEN_PARENTHESIS, right,
+					StringPool.CLOSE_PARENTHESIS),
+				sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			_buildBinaryOperation(left, " OR ", right, sb);
+			_buildBinaryOperation(
+				StringBundler.concat(
+					StringPool.OPEN_PARENTHESIS, left,
+					StringPool.CLOSE_PARENTHESIS),
+				" OR ",
+				StringBundler.concat(
+					StringPool.OPEN_PARENTHESIS, right,
+					StringPool.CLOSE_PARENTHESIS),
+				sb);
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(

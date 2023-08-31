@@ -327,10 +327,16 @@ public class SalesforceObjectEntryManagerImplTest
 
 		// And/or with equals/not equals expression
 
+		String filter = StringBundler.concat(
+			"(title eq ", getValue(title1), " or title eq ", getValue(title2),
+			" or title eq ", getValue(title3), " or title eq ",
+			getValue(title4), ") and ");
+
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filter,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
 					" and ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
@@ -340,6 +346,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filter,
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" and ",
@@ -351,6 +358,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filter,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
 					" or ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
@@ -360,6 +368,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filter,
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" or ",
@@ -372,26 +381,33 @@ public class SalesforceObjectEntryManagerImplTest
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				buildEqualsExpressionFilterString("customStatus", "queued")
+				filter.concat(
+					buildEqualsExpressionFilterString("customStatus", "queued"))
 			).build(),
 			objectEntry1, objectEntry4);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				_buildNotEqualsExpressionFilterString("customStatus", "queued")
+				filter.concat(
+					_buildNotEqualsExpressionFilterString(
+						"customStatus", "queued"))
 			).build(),
 			objectEntry2, objectEntry3);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", buildEqualsExpressionFilterString("title", title1)
+				"filter",
+				filter.concat(
+					buildEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry1);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", _buildNotEqualsExpressionFilterString("title", title1)
+				"filter",
+				filter.concat(
+					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
 	}

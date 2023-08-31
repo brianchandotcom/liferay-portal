@@ -57,12 +57,12 @@ public class AddDisplayPageCollectionMVCActionCommand
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					themeDisplay.getScopeGroupId(),
-					ParamUtil.getString(actionRequest, "name"),
-					ParamUtil.getString(actionRequest, "description"),
 					ParamUtil.getLong(
 						actionRequest, "layoutPageTemplateCollectionId",
 						LayoutPageTemplateConstants.
 							DEFAULT_PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID),
+					ParamUtil.getString(actionRequest, "name"),
+					ParamUtil.getString(actionRequest, "description"),
 					ServiceContextFactory.getInstance(actionRequest));
 
 			jsonObject.put(

@@ -39,9 +39,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, String name, String description,
-			long parentLayoutPageTemplateCollection,
-			ServiceContext serviceContext)
+			long groupId, long parentLayoutPageTemplateCollection, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -50,8 +49,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		return layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				getUserId(), groupId, name, description,
-				parentLayoutPageTemplateCollection, serviceContext);
+				getUserId(), groupId, parentLayoutPageTemplateCollection, name,
+				description, serviceContext);
 	}
 
 	@Override

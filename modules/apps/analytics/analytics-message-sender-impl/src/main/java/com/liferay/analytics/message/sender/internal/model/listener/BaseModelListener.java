@@ -12,7 +12,6 @@ import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalServic
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.expando.kernel.model.ExpandoRow;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -155,20 +153,18 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 
 	protected abstract AnalyticsEntityModel<T> getAnalyticsEntityModel();
 
-	protected abstract T getModel(long id) throws Exception;
+	protected T getModel(long id) throws Exception {
+		AnalyticsEntityModel<T> analyticsEntityModel =
+			getAnalyticsEntityModel();
+
+		return analyticsEntityModel.getModel(id);
+	}
 
 	protected boolean isExcluded(T model) {
-		ShardedModel shardedModel = (ShardedModel)model;
+		AnalyticsEntityModel<T> analyticsEntityModel =
+			getAnalyticsEntityModel();
 
-		Dictionary<String, Object> analyticsConfigurationProperties =
-			analyticsConfigurationRegistry.getAnalyticsConfigurationProperties(
-				shardedModel.getCompanyId());
-
-		if (analyticsConfigurationProperties == null) {
-			return true;
-		}
-
-		return false;
+		return analyticsEntityModel.isExcluded(model);
 	}
 
 	protected void updateConfigurationProperties(
@@ -235,16 +231,10 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 	protected AnalyticsMessageLocalService analyticsMessageLocalService;
 
 	@Reference
-	protected ClassNameLocalService classNameLocalService;
-
-	@Reference
 	protected CompanyService companyService;
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;
-
-	@Reference
-	protected ExpandoTableLocalService expandoTableLocalService;
 
 	@Reference
 	protected UserLocalService userLocalService;

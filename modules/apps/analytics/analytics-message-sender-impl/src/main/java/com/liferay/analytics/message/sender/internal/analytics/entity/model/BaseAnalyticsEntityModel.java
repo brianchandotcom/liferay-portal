@@ -150,6 +150,21 @@ public abstract class BaseAnalyticsEntityModel<T extends BaseModel<T>>
 	}
 
 	@Override
+	public boolean isExcluded(T model) {
+		ShardedModel shardedModel = (ShardedModel)model;
+
+		Dictionary<String, Object> analyticsConfigurationProperties =
+			analyticsConfigurationRegistry.getAnalyticsConfigurationProperties(
+				shardedModel.getCompanyId());
+
+		if (analyticsConfigurationProperties == null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void syncAll(long companyId) throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
@@ -169,8 +184,6 @@ public abstract class BaseAnalyticsEntityModel<T extends BaseModel<T>>
 	protected ActionableDynamicQuery getActionableDynamicQuery() {
 		return null;
 	}
-
-	protected abstract T getModel(long id) throws Exception;
 
 	protected String getName(long id) {
 		try {
@@ -200,20 +213,6 @@ public abstract class BaseAnalyticsEntityModel<T extends BaseModel<T>>
 	}
 
 	protected abstract String getPrimaryKeyName();
-
-	protected boolean isExcluded(T model) {
-		ShardedModel shardedModel = (ShardedModel)model;
-
-		Dictionary<String, Object> analyticsConfigurationProperties =
-			analyticsConfigurationRegistry.getAnalyticsConfigurationProperties(
-				shardedModel.getCompanyId());
-
-		if (analyticsConfigurationProperties == null) {
-			return true;
-		}
-
-		return false;
-	}
 
 	protected JSONObject serialize(
 		BaseModel<?> baseModel, List<String> includeAttributeNames) {

@@ -9,7 +9,6 @@ import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,24 +35,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		return _groupAnalyticsEntityModel;
 	}
 
-	@Override
-	protected Group getModel(long id) throws Exception {
-		return _groupLocalService.getGroup(id);
-	}
-
-	@Override
-	protected boolean isExcluded(Group group) {
-		if (!group.isSite()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Reference(target = "(analytics.entity.model.type=group)")
 	private AnalyticsEntityModel<Group> _groupAnalyticsEntityModel;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

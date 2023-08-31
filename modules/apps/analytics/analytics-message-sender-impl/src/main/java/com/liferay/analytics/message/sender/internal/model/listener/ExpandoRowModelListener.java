@@ -5,13 +5,9 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.expando.kernel.model.ExpandoRow;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,46 +23,7 @@ public class ExpandoRowModelListener extends BaseModelListener<ExpandoRow> {
 		return _expandoRowAnalyticsEntityModel;
 	}
 
-	@Override
-	protected ExpandoRow getModel(long id) throws Exception {
-		return _expandoRowLocalService.getExpandoRow(id);
-	}
-
-	@Override
-	protected boolean isExcluded(ExpandoRow expandoRow) {
-		if (AnalyticsModelUtil.isCustomField(
-				classNameLocalService.getClassNameId(
-					Organization.class.getName()),
-				expandoTableLocalService.fetchExpandoTable(
-					expandoRow.getTableId()))) {
-
-			return false;
-		}
-
-		if (AnalyticsModelUtil.isCustomField(
-				classNameLocalService.getClassNameId(User.class.getName()),
-				expandoTableLocalService.fetchExpandoTable(
-					expandoRow.getTableId()))) {
-
-			User user = userLocalService.fetchUser(expandoRow.getClassPK());
-
-			if (!AnalyticsModelUtil.isUserActive(user)) {
-				return true;
-			}
-
-			return AnalyticsModelUtil.isUserExcluded(
-				analyticsConfigurationRegistry.getAnalyticsConfiguration(
-					user.getCompanyId()),
-				user);
-		}
-
-		return true;
-	}
-
 	@Reference(target = "(analytics.entity.model.type=expandoRow)")
 	private AnalyticsEntityModel<ExpandoRow> _expandoRowAnalyticsEntityModel;
-
-	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
 
 }

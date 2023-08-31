@@ -39,17 +39,12 @@ public class ExpandoRowAnalyticsEntityModel
 	}
 
 	@Override
-	protected ExpandoRow getModel(long id) throws Exception {
+	public ExpandoRow getModel(long id) throws Exception {
 		return _expandoRowLocalService.getExpandoRow(id);
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "classPK";
-	}
-
-	@Override
-	protected boolean isExcluded(ExpandoRow expandoRow) {
+	public boolean isExcluded(ExpandoRow expandoRow) {
 		if (AnalyticsModelUtil.isCustomField(
 				classNameLocalService.getClassNameId(
 					Organization.class.getName()),
@@ -77,6 +72,11 @@ public class ExpandoRowAnalyticsEntityModel
 		}
 
 		return true;
+	}
+
+	@Override
+	protected String getPrimaryKeyName() {
+		return "classPK";
 	}
 
 	@Override

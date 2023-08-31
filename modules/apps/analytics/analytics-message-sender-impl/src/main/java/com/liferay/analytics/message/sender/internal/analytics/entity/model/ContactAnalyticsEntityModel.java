@@ -44,17 +44,12 @@ public class ContactAnalyticsEntityModel
 	}
 
 	@Override
-	protected Contact getModel(long id) throws Exception {
+	public Contact getModel(long id) throws Exception {
 		return _contactLocalService.getContact(id);
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "contactId";
-	}
-
-	@Override
-	protected boolean isExcluded(Contact contact) {
+	public boolean isExcluded(Contact contact) {
 		User user = userLocalService.fetchUser(contact.getClassPK());
 
 		if (!AnalyticsModelUtil.isUserActive(user)) {
@@ -65,6 +60,11 @@ public class ContactAnalyticsEntityModel
 			analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				user.getCompanyId()),
 			user);
+	}
+
+	@Override
+	protected String getPrimaryKeyName() {
+		return "contactId";
 	}
 
 	private static final List<String> _attributeNames = Arrays.asList(

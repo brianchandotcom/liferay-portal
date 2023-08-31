@@ -38,6 +38,11 @@ public class UserGroupAnalyticsEntityModel
 	}
 
 	@Override
+	public UserGroup getModel(long id) throws Exception {
+		return _userGroupLocalService.getUserGroup(id);
+	}
+
+	@Override
 	public String getModelClassName() {
 		return UserGroup.class.getName();
 	}
@@ -45,11 +50,6 @@ public class UserGroupAnalyticsEntityModel
 	@Override
 	protected ActionableDynamicQuery getActionableDynamicQuery() {
 		return _userGroupLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	protected UserGroup getModel(long id) throws Exception {
-		return _userGroupLocalService.getUserGroup(id);
 	}
 
 	@Override

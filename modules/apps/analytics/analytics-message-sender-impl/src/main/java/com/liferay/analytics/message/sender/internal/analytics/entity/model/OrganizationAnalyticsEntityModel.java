@@ -38,6 +38,11 @@ public class OrganizationAnalyticsEntityModel
 	}
 
 	@Override
+	public Organization getModel(long id) throws Exception {
+		return _organizationLocalService.getOrganization(id);
+	}
+
+	@Override
 	public String getModelClassName() {
 		return Organization.class.getName();
 	}
@@ -45,11 +50,6 @@ public class OrganizationAnalyticsEntityModel
 	@Override
 	protected ActionableDynamicQuery getActionableDynamicQuery() {
 		return _organizationLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	protected Organization getModel(long id) throws Exception {
-		return _organizationLocalService.getOrganization(id);
 	}
 
 	@Override

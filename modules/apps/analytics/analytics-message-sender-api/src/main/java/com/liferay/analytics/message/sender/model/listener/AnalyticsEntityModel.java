@@ -25,7 +25,11 @@ public interface AnalyticsEntityModel<T extends BaseModel<T>> {
 
 	public long[] getMembershipIds(User user) throws Exception;
 
+	public T getModel(long id) throws Exception;
+
 	public String getModelClassName();
+
+	public boolean isExcluded(T model);
 
 	public void syncAll(long companyId) throws Exception;
 

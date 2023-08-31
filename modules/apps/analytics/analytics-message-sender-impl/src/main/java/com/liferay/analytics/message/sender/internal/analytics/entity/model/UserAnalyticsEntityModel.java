@@ -30,21 +30,21 @@ public class UserAnalyticsEntityModel extends BaseAnalyticsEntityModel<User> {
 	}
 
 	@Override
-	protected User getModel(long id) throws Exception {
+	public User getModel(long id) throws Exception {
 		return userLocalService.getUser(id);
+	}
+
+	@Override
+	public boolean isExcluded(User user) {
+		return AnalyticsModelUtil.isUserExcluded(
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				user.getCompanyId()),
+			user);
 	}
 
 	@Override
 	protected String getPrimaryKeyName() {
 		return "userId";
-	}
-
-	@Override
-	protected boolean isExcluded(User user) {
-		return AnalyticsModelUtil.isUserExcluded(
-			analyticsConfigurationRegistry.getAnalyticsConfiguration(
-				user.getCompanyId()),
-			user);
 	}
 
 }

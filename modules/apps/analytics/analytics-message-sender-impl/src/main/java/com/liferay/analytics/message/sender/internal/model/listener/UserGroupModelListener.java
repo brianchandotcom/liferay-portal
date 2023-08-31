@@ -9,7 +9,6 @@ import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,15 +39,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		return _userGroupAnalyticsEntityModel;
 	}
 
-	@Override
-	protected UserGroup getModel(long id) throws Exception {
-		return _userGroupLocalService.getUserGroup(id);
-	}
-
 	@Reference(target = "(analytics.entity.model.type=userGroup)")
 	private AnalyticsEntityModel<UserGroup> _userGroupAnalyticsEntityModel;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
 
 }

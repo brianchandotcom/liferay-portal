@@ -48,38 +48,12 @@ public class ExpandoColumnAnalyticsEntityModel
 	}
 
 	@Override
-	protected ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_expandoColumnLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property tableIdProperty = PropertyFactoryUtil.forName(
-					"tableId");
-
-				dynamicQuery.add(
-					tableIdProperty.in(
-						_getTableDynamicQuery(
-							classNameLocalService.getClassNameId(
-								Organization.class.getName()),
-							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
-			});
-
-		return actionableDynamicQuery;
-	}
-
-	@Override
-	protected ExpandoColumn getModel(long id) throws Exception {
+	public ExpandoColumn getModel(long id) throws Exception {
 		return _expandoColumnLocalService.getColumn(id);
 	}
 
 	@Override
-	protected String getPrimaryKeyName() {
-		return "name";
-	}
-
-	@Override
-	protected boolean isExcluded(ExpandoColumn expandoColumn) {
+	public boolean isExcluded(ExpandoColumn expandoColumn) {
 		if (AnalyticsModelUtil.isCustomField(
 				classNameLocalService.getClassNameId(
 					Organization.class.getName()),
@@ -118,6 +92,32 @@ public class ExpandoColumnAnalyticsEntityModel
 		}
 
 		return true;
+	}
+
+	@Override
+	protected ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_expandoColumnLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property tableIdProperty = PropertyFactoryUtil.forName(
+					"tableId");
+
+				dynamicQuery.add(
+					tableIdProperty.in(
+						_getTableDynamicQuery(
+							classNameLocalService.getClassNameId(
+								Organization.class.getName()),
+							ExpandoTableConstants.DEFAULT_TABLE_NAME)));
+			});
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	protected String getPrimaryKeyName() {
+		return "name";
 	}
 
 	@Override

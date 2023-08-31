@@ -8,7 +8,6 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.service.TeamLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -24,15 +23,7 @@ public class TeamModelListener extends BaseModelListener<Team> {
 		return _teamAnalyticsEntityModel;
 	}
 
-	@Override
-	protected Team getModel(long id) throws Exception {
-		return _teamLocalService.getTeam(id);
-	}
-
 	@Reference(target = "(analytics.entity.model.type=team)")
 	private AnalyticsEntityModel<Team> _teamAnalyticsEntityModel;
-
-	@Reference
-	private TeamLocalService _teamLocalService;
 
 }

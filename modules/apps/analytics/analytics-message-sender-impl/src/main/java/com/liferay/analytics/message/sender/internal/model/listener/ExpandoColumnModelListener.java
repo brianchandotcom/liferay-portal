@@ -5,16 +5,11 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
-import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Objects;
 
@@ -59,53 +54,6 @@ public class ExpandoColumnModelListener
 	@Override
 	protected AnalyticsEntityModel<ExpandoColumn> getAnalyticsEntityModel() {
 		return _expandoColumnAnalyticsEntityModel;
-	}
-
-	@Override
-	protected ExpandoColumn getModel(long id) throws Exception {
-		return _expandoColumnLocalService.getColumn(id);
-	}
-
-	@Override
-	protected boolean isExcluded(ExpandoColumn expandoColumn) {
-		if (AnalyticsModelUtil.isCustomField(
-				classNameLocalService.getClassNameId(
-					Organization.class.getName()),
-				expandoTableLocalService.fetchExpandoTable(
-					expandoColumn.getTableId()))) {
-
-			return false;
-		}
-
-		if (AnalyticsModelUtil.isCustomField(
-				classNameLocalService.getClassNameId(User.class.getName()),
-				expandoTableLocalService.fetchExpandoTable(
-					expandoColumn.getTableId()))) {
-
-			AnalyticsConfiguration analyticsConfiguration =
-				analyticsConfigurationRegistry.getAnalyticsConfiguration(
-					expandoColumn.getCompanyId());
-
-			if (ArrayUtil.isEmpty(
-					analyticsConfiguration.syncedUserFieldNames())) {
-
-				return true;
-			}
-
-			for (String syncedUserFieldName :
-					analyticsConfiguration.syncedUserFieldNames()) {
-
-				if (Objects.equals(
-						expandoColumn.getName(), syncedUserFieldName)) {
-
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		return true;
 	}
 
 	@Reference(target = "(analytics.entity.model.type=expandoColumn)")

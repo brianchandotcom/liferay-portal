@@ -39,7 +39,7 @@ public class ListTypeDefinitionServiceImpl
 	@Override
 	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, Map<Locale, String> nameMap,
-			List<ListTypeEntry> listTypeEntries)
+			boolean system, List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -47,7 +47,8 @@ public class ListTypeDefinitionServiceImpl
 			ListTypeActionKeys.ADD_LIST_TYPE_DEFINITION);
 
 		return listTypeDefinitionLocalService.addListTypeDefinition(
-			externalReferenceCode, getUserId(), nameMap, listTypeEntries);
+			externalReferenceCode, getUserId(), nameMap, system,
+			listTypeEntries);
 	}
 
 	@Override

@@ -59,14 +59,16 @@ public class ListTypeDefinitionLocalServiceImpl
 		return _addListTypeDefinition(
 			listTypeDefinition, externalReferenceCode, userId,
 			Collections.singletonMap(
-				LocaleUtil.getDefault(), externalReferenceCode));
+				LocaleUtil.getDefault(), externalReferenceCode),
+			false);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, long userId,
-			Map<Locale, String> nameMap, List<ListTypeEntry> listTypeEntries)
+			Map<Locale, String> nameMap, boolean system,
+			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
@@ -76,7 +78,7 @@ public class ListTypeDefinitionLocalServiceImpl
 				counterLocalService.increment());
 
 		listTypeDefinition = _addListTypeDefinition(
-			listTypeDefinition, externalReferenceCode, userId, nameMap);
+			listTypeDefinition, externalReferenceCode, userId, nameMap, system);
 
 		_addOrUpdateListTypeEntries(
 			userId, listTypeDefinition.getListTypeDefinitionId(),
@@ -153,7 +155,7 @@ public class ListTypeDefinitionLocalServiceImpl
 
 	private ListTypeDefinition _addListTypeDefinition(
 			ListTypeDefinition listTypeDefinition, String externalReferenceCode,
-			long userId, Map<Locale, String> nameMap)
+			long userId, Map<Locale, String> nameMap, boolean system)
 		throws PortalException {
 
 		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
@@ -165,6 +167,8 @@ public class ListTypeDefinitionLocalServiceImpl
 		listTypeDefinition.setUserName(user.getFullName());
 
 		listTypeDefinition.setNameMap(nameMap);
+
+		listTypeDefinition.setSystem(system);
 
 		listTypeDefinition = listTypeDefinitionPersistence.update(
 			listTypeDefinition);

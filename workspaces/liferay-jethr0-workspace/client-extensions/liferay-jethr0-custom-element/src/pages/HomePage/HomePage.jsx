@@ -1,0 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayCard from '@clayui/card';
+import ClayLayout from '@clayui/layout';
+import {Heading} from '@clayui/core';
+
+import "./HomePage.css";
+
+import ProjectQueue from '../../components/ProjectQueue/ProjectQueue';
+
+function Home() {
+	const breadcrumbs = [
+		{ active:true, link: "/", name: "Home" },
+	];
+
+	return (
+		<ClayLayout.Container>
+			<ClayCard className='jethr0-card'>
+				<Heading level={3} weight='lighter'>Project Queue</Heading>
+				<ProjectQueue />
+			</ClayCard>
+		</ClayLayout.Container>
+	);
+}
+
+export default Home;

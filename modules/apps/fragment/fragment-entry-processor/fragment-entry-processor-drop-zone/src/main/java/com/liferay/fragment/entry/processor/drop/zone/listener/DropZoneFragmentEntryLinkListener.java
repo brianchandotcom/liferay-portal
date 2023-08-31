@@ -182,7 +182,7 @@ public class DropZoneFragmentEntryLinkListener
 				updateLayoutPageTemplateStructureData(
 					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 					fragmentEntryLink.getSegmentsExperienceId(),
-					layoutStructure.toString());
+					layoutStructure.toString(), false);
 
 			return;
 		}
@@ -328,7 +328,7 @@ public class DropZoneFragmentEntryLinkListener
 				updateLayoutPageTemplateStructureData(
 					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 					fragmentEntryLink.getSegmentsExperienceId(),
-					layoutStructure.toString());
+					layoutStructure.toString(), false);
 		}
 	}
 

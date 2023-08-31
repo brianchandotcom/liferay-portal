@@ -75,19 +75,6 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 	private static String[] _getHttpServiceEndpoints(
 		ServletContext servletContext, String servletName) {
 
-		int majorVersion = servletContext.getMajorVersion();
-
-		if (majorVersion < 3) {
-			_log.error(
-				StringBundler.concat(
-					"The http container does not support servlet 3.0+. ",
-					"Therefore, the value of ",
-					HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
-					" cannot be calculated."));
-
-			return new String[0];
-		}
-
 		ServletRegistration servletRegistration = null;
 
 		try {

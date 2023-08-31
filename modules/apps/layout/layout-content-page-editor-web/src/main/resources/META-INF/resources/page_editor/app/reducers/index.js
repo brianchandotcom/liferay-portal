@@ -8,7 +8,7 @@ import collectionsReducer from './collectionsReducer';
 import draftReducer from './draftReducer';
 import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
 import fragmentsReducer from './fragmentsReducer';
-import languageIdReducer from './languageIdReducer';
+import languageReducer from './languageReducer';
 import layoutDataReducer from './layoutDataReducer';
 import mappingFieldsReducer from './mappingFieldsReducer';
 import masterLayoutReducer from './masterLayoutReducer';
@@ -28,7 +28,7 @@ const combinedReducer = (state, action) =>
 		draft: draftReducer,
 		fragmentEntryLinks: fragmentEntryLinksReducer,
 		fragments: fragmentsReducer,
-		languageId: languageIdReducer,
+		languageId: languageReducer,
 		layoutData: layoutDataReducer,
 		mappingFields: mappingFieldsReducer,
 		masterLayout: masterLayoutReducer,

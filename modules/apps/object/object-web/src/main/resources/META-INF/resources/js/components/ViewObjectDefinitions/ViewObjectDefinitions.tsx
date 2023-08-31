@@ -48,7 +48,7 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 export type ViewObjectDefinitionsModals = {
 	addFolder: boolean;
 	addObjectDefinition: boolean;
-	bindToRootObject: boolean;
+	bindToRootObjectDefinition: boolean;
 	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
 	deletionNotAllowed: boolean;
@@ -86,7 +86,7 @@ export default function ViewObjectDefinitions({
 	const [showModal, setShowModal] = useState<ViewObjectDefinitionsModals>({
 		addFolder: false,
 		addObjectDefinition: false,
-		bindToRootObject: false,
+		bindToRootObjectDefinition: false,
 		deleteFolder: false,
 		deleteObjectDefinition: false,
 		deletionNotAllowed: false,
@@ -183,7 +183,7 @@ export default function ViewObjectDefinitions({
 
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
-					bindToRootObject: true,
+					bindToRootObjectDefinition: true,
 				}));
 			}
 
@@ -518,14 +518,14 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
-			{showModal.bindToRootObject && Liferay.FeatureFlags['LPS-187142'] && (
+			{showModal.bindToRootObjectDefinition && Liferay.FeatureFlags['LPS-187142'] && (
 				<ModalBindToRootObject
 					baseResourceURL={baseResourceURL}
 					onVisibilityChange={() => {
 						setShowModal(
 							(previousState: ViewObjectDefinitionsModals) => ({
 								...previousState,
-								bindToRootObject: false,
+								bindToRootObjectDefinition: false,
 							})
 						);
 					}}

@@ -138,6 +138,7 @@ export type TState = {
 
 export interface LeftSidebarItem {
 	hiddenObjectFolderObjectDefinitionNodes: boolean;
+	id?: string;
 	leftSidebarObjectDefinitionItems?: LeftSidebarObjectDefinitionItem[];
 	name: string;
 	objectFolderName: string;

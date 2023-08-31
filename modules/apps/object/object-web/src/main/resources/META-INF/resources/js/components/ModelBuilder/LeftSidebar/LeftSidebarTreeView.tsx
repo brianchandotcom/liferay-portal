@@ -15,7 +15,7 @@ import {
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {openToast, sub} from 'frontend-js-web';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
 	FlowElement,
 	Node,
@@ -44,6 +44,9 @@ export default function LeftSidebarTreeView({
 	setEmptySearch: (value: boolean) => void;
 	showActions?: boolean;
 }) {
+	const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(
+		new Set(['uncategorized'])
+	);
 	const [
 		{elements, leftSidebarItems, selectedObjectFolder},
 		dispatch,
@@ -71,10 +74,11 @@ export default function LeftSidebarTreeView({
 	);
 
 	const filteredLeftSidebarItems = useMemo(() => {
-
+		
+		const keys = [] as string[];
 		setEmptySearch(false);
 
-		return leftSidebarItems.map((leftSidebarItem) => {
+		const newLeftSidebarItems = leftSidebarItems.map((leftSidebarItem) => {
 			if (!leftSidebarItem.leftSidebarObjectDefinitionItems) {
 				return leftSidebarItem;
 			}
@@ -87,12 +91,18 @@ export default function LeftSidebarTreeView({
 					)
 			);
 
+			keys.push(leftSidebarItem.name);
+
 			return {
 				...leftSidebarItem,
 				id: leftSidebarItem.name,
 				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
 			};
 		});
+
+		setExpandedKeys(new Set(keys));
+
+		return newLeftSidebarItems;
 	}, [leftSidebarItems, query]);
 
 	const handleMove = async ({
@@ -246,12 +256,14 @@ export default function LeftSidebarTreeView({
 
 	return (
 		<TreeView<LeftSidebarItem | LeftSidebarObjectDefinitionItem>
+			expandedKeys={expandedKeys}
 			items={
 				showActions
 					? newLeftSidebarOtherObjectFolderItems
 					: [leftSidebarSelectedObjectFolderItem]
 			}
 			nestedKey="objectDefinitions"
+			onExpandedChange={setExpandedKeys}
 			onSelect={(item) => {
 				if (
 					selectedObjectFolder.objectDefinitions?.find(

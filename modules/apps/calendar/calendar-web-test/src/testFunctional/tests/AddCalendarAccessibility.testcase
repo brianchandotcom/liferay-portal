@@ -76,4 +76,35 @@ definition {
 		}
 	}
 
+	@description = "LPS-185089 Verifies that the focus is not lost after closing the 'Edit Event' modal."
+	@priority = 3
+	test FocusIsNotLostAfterClosingTheModal {
+		task ("And a new event is added") {
+			CalendarNavigator.gotoAddEvent();
+		}
+
+		task ("When the user tries to edit the event") {
+			CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+		}
+
+		task ("And clicks any 'Select' button on 'CATEGORIZATION'") {
+			CalendarEvent._expandPanel(panelName = "Categorization");
+
+			ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RELATED_ASSETS_PANEL_COLLAPSED");
+
+			Click(locator1 = "Button#SELECT_CATEGORIES");
+		}
+
+		task ("When the modal is closed by the keyboard") {
+			KeyPress(
+				key_modalTitle = "Select Topic",
+				locator1 = "Button#CLOSE_MODAL",
+				value1 = "\ENTER");
+		}
+
+		task ("Then the focus indicator goes back to what triggered it") {
+			AssertElementFocused(locator1 = "Button#SELECT_CATEGORIES");
+		}
+	}
+
 }

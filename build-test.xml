@@ -12414,6 +12414,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			test.liferay.console.shut.down.file.name=${project.dir}/console-shut-down
 			test.poshi.warnings.file.name=${test.poshi.warnings.file.name}
 			test.retry.command.wait.time=${test.retry.command.wait.time}
+			validation.resource.file.types=${validation.resource.file.types}
 		</echo>
 
 		<if>

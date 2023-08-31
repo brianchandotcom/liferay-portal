@@ -1152,16 +1152,12 @@ definition {
 	test ViewPortalVersionInfoOnHomePage {
 		takeScreenshot();
 
-		var portalVersionInfo = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
-
-		var match = StringUtil.matches(${portalVersionInfo}, "Liferay Digital Experience Platform \/ \d+\.\d+\.\d{1,2} \([A-Z]\w+\)");
-
-		if (${match} == "true") {
-			echo("The portal version info ${portalVersionInfo} is shown on the Home page");
-		}
-		else {
-			fail("The portal version info ${portalVersionInfo} is missing on the Home page");
-		}
+		AssertTextMatches(
+			fragmentName = "paragraph",
+			id = "element-text",
+			index = 1,
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+			value1 = "Liferay Digital Experience Platform \/ \d+\.\d+\.\d{1,2} \([A-Z]\w+\)");
 	}
 
 }

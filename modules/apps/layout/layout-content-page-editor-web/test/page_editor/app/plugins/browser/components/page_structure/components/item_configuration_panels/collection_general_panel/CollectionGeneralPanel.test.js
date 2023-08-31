@@ -266,6 +266,23 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
+	it('shows a message saying that enabling Display All Collection Items could affect performance', async () => {
+		await act(async () => {
+			renderComponent({
+				itemConfig: {
+					displayAllItems: true,
+					paginationType: 'none',
+				},
+			});
+		});
+
+		expect(
+			await screen.findByText(
+				'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x.-we-strongly-recommend-using-pagination-instead'
+			)
+		).toBeInTheDocument();
+	});
+
 	it('allows changing the Display All Pages checkbox', async () => {
 		await act(async () => {
 			renderComponent();

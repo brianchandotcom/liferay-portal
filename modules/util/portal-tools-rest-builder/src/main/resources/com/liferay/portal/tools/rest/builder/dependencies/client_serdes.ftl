@@ -261,6 +261,8 @@ public class ${schemaName}SerDes {
 
 						<#if stringUtil.equals(propertyType, "BigDecimal")>
 							${schemaVarName}.set${capitalizedPropertyName}(new BigDecimal((String)jsonParserFieldValue));
+						<#elseif stringUtil.equals(propertyType, "BigDecimal[]")>
+							${schemaVarName}.set${capitalizedPropertyName}(toBigDecimals((Object[])jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "Date")>
 							${schemaVarName}.set${capitalizedPropertyName}(toDate((String)jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "Date[]")>

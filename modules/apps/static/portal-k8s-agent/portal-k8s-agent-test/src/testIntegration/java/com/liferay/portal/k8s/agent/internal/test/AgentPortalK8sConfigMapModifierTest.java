@@ -15,10 +15,14 @@ import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -185,7 +189,7 @@ public class AgentPortalK8sConfigMapModifierTest {
 	public void testCreateDXPMetadata() throws Exception {
 		String webId = "foo.lxc.com";
 
-		_companyLocalService.addCompany(
+		Company company = _companyLocalService.addCompany(
 			null, webId, webId, webId, 0, true, null, null, null, null, null,
 			null);
 
@@ -210,6 +214,25 @@ public class AgentPortalK8sConfigMapModifierTest {
 		Assert.assertEquals(
 			webId, labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
 		Assert.assertEquals("dxp", labels.get("lxc.liferay.com/metadataType"));
+
+		try {
+			UserTestUtil.setUser(TestPropsValues.getUser());
+
+			_companyLocalService.deleteCompany(company);
+		}
+		finally {
+			PrincipalThreadLocal.setName(null);
+			PermissionThreadLocal.setPermissionChecker(null);
+		}
+
+		configMap = _kubernetesMockClient.configMaps(
+		).withName(
+			webId.concat("-lxc-dxp-metadata")
+		).waitUntilCondition(
+			it -> it == null, 20, TimeUnit.SECONDS
+		);
+
+		Assert.assertNull(configMap);
 	}
 
 	@Test

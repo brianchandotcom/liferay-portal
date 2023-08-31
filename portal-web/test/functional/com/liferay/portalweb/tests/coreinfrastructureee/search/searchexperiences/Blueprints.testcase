@@ -4332,13 +4332,13 @@ definition {
 			key_text = "Description in English",
 			locator1 = "Blueprints#ELEMENT_EDIT_PAGE_PREVIEW_TEXT");
 
-		Navigator.ensureLocaleURL(locale = "es");
-
 		Navigator.gotoBack();
 
-		Navigator.gotoNavItem(navItem = "Elementos");
+		Navigator.ensureLocaleURL(locale = "es");
 
 		Blueprints.viewEntryTitle(title = "Título en Español");
+
+		Navigator.gotoNavItem(navItem = "Elementos");
 
 		Blueprints.viewEntryDescription(
 			description = "Descripción en Español",

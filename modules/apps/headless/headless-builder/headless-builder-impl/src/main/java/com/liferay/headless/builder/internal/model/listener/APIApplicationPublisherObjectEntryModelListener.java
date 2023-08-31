@@ -5,6 +5,8 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;

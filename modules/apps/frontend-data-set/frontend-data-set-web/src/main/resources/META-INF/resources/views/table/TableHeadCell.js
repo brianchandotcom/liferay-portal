@@ -75,25 +75,18 @@ function TableHeadCell({
 		>
 			{!hideColumnLabel && <span className="text-truncate">{label}</span>}
 
-			<span className="inline-item inline-item-after sorting-icons-wrapper">
-				<ClayIcon
-					className={classNames(
-						'sorting-icon',
-						sortingMatch?.direction === 'asc' && 'active'
-					)}
-					draggable
-					symbol="order-arrow-up"
-				/>
-
-				<ClayIcon
-					className={classNames(
-						'sorting-icon',
-						sortingMatch?.direction === 'desc' && 'active'
-					)}
-					draggable
-					symbol="order-arrow-down"
-				/>
-			</span>
+			{sortingMatch && (
+				<span className="inline-item inline-item-after">
+					<ClayIcon
+						draggable
+						symbol={
+							sortingMatch?.direction === 'asc'
+								? 'order-arrow-up'
+								: 'order-arrow-down'
+						}
+					/>
+				</span>
+			)}
 		</ClayLink>
 	) : (
 		<ClayButton

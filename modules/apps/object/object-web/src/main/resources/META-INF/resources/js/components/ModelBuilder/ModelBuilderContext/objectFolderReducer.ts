@@ -18,8 +18,9 @@ import {
 } from '../types';
 import {updateURLParam} from '../utils';
 import {
-	fieldsCustomSort,
+	convertAllObjectFieldsToUnselected,
 	getNonOverlappingEdges,
+	objectFieldsCustomSort,
 } from './objectFolderReducerUtil';
 import {TYPES} from './typesEnum';
 
@@ -27,6 +28,66 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 	const store = useStore();
 
 	switch (action.type) {
+		case TYPES.ADD_NEW_OBJECT_FIELD: {
+			const {
+				edges,
+				newObjectField,
+				nodes,
+				objectDefinitionExternalReferenceCode,
+			} = action.payload;
+
+			const newNodes = nodes.map((node) => {
+				if (
+					node.data?.externalReferenceCode ===
+					objectDefinitionExternalReferenceCode
+				) {
+					const {objectFields} = node.data;
+
+					const newObjectFields = convertAllObjectFieldsToUnselected(
+						objectFields
+					);
+
+					newObjectFields.push({
+						businessType: newObjectField.businessType,
+						externalReferenceCode:
+							newObjectField.externalReferenceCode,
+						label: newObjectField.label,
+						name: newObjectField.name,
+						primaryKey: false,
+						required: newObjectField.required,
+						selected: true,
+					});
+
+					return {
+						...node,
+						data: {
+							...node.data,
+							objectFields: newObjectFields,
+							selected: true,
+						},
+					};
+				}
+
+				const unselectedObjectFields = convertAllObjectFieldsToUnselected(
+					node.data?.objectFields as ObjectFieldNode[]
+				);
+
+				return {
+					...node,
+					data: {
+						...node.data,
+						objectFields: unselectedObjectFields,
+						selected: false,
+					},
+				};
+			}) as Node<ObjectDefinitionNodeData>[];
+
+			return {
+				...state,
+				elements: [...newNodes, ...edges],
+			};
+		}
+
 		case TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER: {
 			const {
 				newObjectDefinition,
@@ -133,11 +194,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 						businessType: objectField.businessType,
 						externalReferenceCode:
 							objectField.externalReferenceCode,
-						label: getLocalizableLabel(
-							newObjectDefinition.defaultLanguageId,
-							objectField.label,
-							objectField.name
-						),
+						label: objectField.label,
 						name: objectField.name,
 						primaryKey: objectField.name === 'id',
 						required: objectField.required,
@@ -202,7 +259,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							newObjectDefinition.name
 						),
 						linkedObjectDefinition: false,
-						objectFields: fieldsCustomSort(objectFields),
+						objectFields: objectFieldsCustomSort(objectFields),
 						selected: true,
 					},
 					id: newObjectDefinition.id.toString(),
@@ -526,7 +583,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								...objectDefinition,
 								hasSelfObjectRelationships:
 									selfObjectRelationships?.length > 0,
-								objectFields: fieldsCustomSort(
+								objectFields: objectFieldsCustomSort(
 									objectDefinition.objectFields
 								),
 							},

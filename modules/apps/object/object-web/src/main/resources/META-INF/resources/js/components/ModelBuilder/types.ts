@@ -42,6 +42,15 @@ export type TAction =
 	  }
 	| {
 			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
+				newObjectField: ObjectField;
+				nodes: Node<ObjectDefinitionNodeData>[];
+				objectDefinitionExternalReferenceCode: string;
+			};
+			type: TYPES.ADD_NEW_OBJECT_FIELD;
+	  }
+	| {
+			payload: {
 				hiddenObjectFolderObjectDefinitionNodes: boolean;
 				leftSidebarItem: LeftSidebarItem;
 			};

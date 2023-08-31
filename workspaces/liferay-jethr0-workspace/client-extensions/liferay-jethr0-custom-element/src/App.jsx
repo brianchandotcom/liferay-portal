@@ -4,6 +4,7 @@
  */
 
 import HomePage from './pages/HomePage/HomePage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 import {HashRouter, Routes, Route} from "react-router-dom";
 
@@ -14,6 +15,7 @@ function App() {
 		<HashRouter>
 			<Routes>
 				<Route path="/" element={<HomePage />} />
+				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 		</HashRouter>
 	);

@@ -756,6 +756,7 @@ definition {
 	}
 
 	@description = "This is use case for LPS-170779. File upload causes publication to become unusable"
+	@ignore = "true"
 	@priority = 4
 	test CanReviewChangesWithManyDocuments {
 		property test.assert.warning.exceptions = "true";

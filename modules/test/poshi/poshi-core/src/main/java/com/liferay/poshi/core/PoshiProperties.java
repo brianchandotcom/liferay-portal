@@ -262,6 +262,29 @@ public class PoshiProperties extends Properties {
 		return _poshiProperties;
 	}
 
+	public static void validateProperties(
+		String propertyName, String propertyValue) {
+
+		if (!_poshiPropertiesMap.containsKey(propertyName)) {
+			return;
+		}
+
+		String[] possiblePropertyValues = _poshiPropertiesMap.get(propertyName);
+
+		for (String possiblePropertyValue : possiblePropertyValues) {
+			System.out.println(possiblePropertyValue);
+
+			if (possiblePropertyValue.equals(propertyValue.trim())) {
+				return;
+			}
+		}
+
+		throw new IllegalArgumentException(
+			"Illegal value " + propertyValue + " for " + propertyName +
+				"\nPossible property values: " +
+					possiblePropertyValues.toString());
+	}
+
 	public PoshiProperties() {
 	}
 
@@ -408,6 +431,44 @@ public class PoshiProperties extends Properties {
 
 	private static final Properties _classProperties = new Properties();
 	private static final PoshiProperties _poshiProperties;
+	private static final Map<String, String[]> _poshiPropertiesMap =
+		new HashMap<String, String[]>() {
+			{
+				put(
+					ACCESSIBILITY_STANDARDS_TAGS,
+					new String[] {"wcag2a", "wcag2aa", "wcag21a", "wcag21aa"});
+				put(
+					BROWSER_TYPE,
+					new String[] {
+						"android", "androidchrome", "chrome", "edge", "firefox",
+						"internetexplorer", "iossafari", "safari"
+					});
+				put(DEBUG_STACKTRACE, new String[] {"true", "false"});
+				put(GENERATE_COMMAND_SIGNATURE, new String[] {"true", "false"});
+				put(PROXY_SERVER_ENABLED, new String[] {"true", "false"});
+				put(REPORT_TYPE, new String[] {"test-properties,usage"});
+				put(SAVE_SCREENSHOT, new String[] {"true", "false"});
+				put(SAVE_WEB_PAGE, new String[] {"true", "false"});
+				put(TCAT_ENABLED, new String[] {"true", "false"});
+				put(TEST_ASSERT_CONSOLE_ERRORS, new String[] {"true", "false"});
+				put(
+					TEST_ASSERT_JAVASCRIPT_ERRORS,
+					new String[] {"true", "false"});
+				put(
+					TEST_ASSERT_WARNING_EXCEPTIONS,
+					new String[] {"true", "false"});
+				put(TEST_BATCH_RUN_TYPE, new String[] {"sequential", "single"});
+				put(
+					TEST_POSHI_SCRIPT_VALIDATION,
+					new String[] {"true", "false"});
+				put(TEST_RUN_LOCALLY, new String[] {"true", "false"});
+				put(TEST_RUN_TYPE, new String[] {"parallel", "sequential"});
+				put(TEST_SKIP_TEAR_DOWN, new String[] {"true", "false"});
+				put(
+					VALIDATION_RESOURCE_FILE_TYPES,
+					new String[] {"path", "function", "macro", "testcase"});
+			}
+		};
 	private static final Map<String, PoshiProperties>
 		_threadBasedPoshiProperties = Collections.synchronizedMap(
 			new HashMap<>());
@@ -450,6 +511,21 @@ public class PoshiProperties extends Properties {
 					}
 
 					if (Validator.isNotNull(propertyValue)) {
+						if (propertyValue.contains(",")) {
+							List<String> propertyValues =
+								ListUtil.newListFromString(propertyValue);
+
+							for (String possiblePropertyValue :
+									propertyValues) {
+
+								validateProperties(
+									propertyName, possiblePropertyValue);
+							}
+						}
+						else {
+							validateProperties(propertyName, propertyValue);
+						}
+
 						properties.setProperty(propertyName, propertyValue);
 					}
 				}

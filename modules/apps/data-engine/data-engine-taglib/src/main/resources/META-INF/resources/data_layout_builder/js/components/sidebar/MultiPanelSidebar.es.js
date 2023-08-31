@@ -107,14 +107,19 @@ export default function MultiPanelSidebar({
 	};
 
 	const handlePanelClick = ({sidebarPanelId}) => {
-		const builder = document.querySelector('.ddm-form-builder');
+		const builder = document.querySelector('.container.ddm-form-builder');
 		const sidebar = document.querySelector('.multi-panel-sidebar-content');
 		const closeButtonPressed =
 			builder.classList.contains('ddm-form-builder--sidebar-open') !==
 			open;
 
 		if (closeButtonPressed) {
-			builder.classList.toggle('ddm-form-builder--sidebar-open');
+			if (!builder.classList.contains('ddm-form-builder--sidebar-open')) {
+				builder.classList.add('ddm-form-builder--sidebar-open');
+			}
+			else {
+				builder.classList.remove('ddm-form-builder--sidebar-open');
+			}
 			sidebar.classList.toggle('multi-panel-sidebar-content-open');
 		}
 

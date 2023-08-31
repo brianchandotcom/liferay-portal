@@ -6,67 +6,27 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
  */
-public class SearchBarTag extends ComponentRendererTag {
+public class SearchBarTag extends IncludeTag {
 
 	@Override
-	public int doStartTag() {
-		HttpServletRequest httpServletRequest = getRequest();
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		putValue(
-			"placeholder",
-			LanguageUtil.get(themeDisplay.getLocale(), "search"));
-
-		String query = ParamUtil.getString(httpServletRequest, "q");
-
-		putValue("query", query);
-
-		putValue("spritemap", themeDisplay.getPathThemeSpritemap());
-
-		Map<String, Object> context = getContext();
-
-		String id = GetterUtil.getString(context.get("id"));
-
-		setComponentId(id);
-
-		setTemplateNamespace("SearchBar.render");
-
-		return super.doStartTag();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override
-	public String getModule() {
-		NPMResolver npmResolver = ServletContextUtil.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName(
-			"commerce-frontend-taglib/search_bar/SearchBar.es");
+	protected String getPage() {
+		return _PAGE;
 	}
 
-	public void setId(String id) {
-		putValue("id", id);
-	}
+	private static final String _PAGE = "/search_bar/page.jsp";
 
 }

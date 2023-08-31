@@ -8,8 +8,10 @@
 import './LeftSidebar.scss';
 export default function LeftSidebarTreeView({
 	query,
+	setEmptySearch,
 	showActions,
 }: {
 	query: string;
+	setEmptySearch: (value: boolean) => void;
 	showActions?: boolean;
 }): JSX.Element;

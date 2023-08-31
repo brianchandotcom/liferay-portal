@@ -37,9 +37,11 @@ const TYPES_TO_SYMBOLS = {
 
 export default function LeftSidebarTreeView({
 	query,
+	setEmptySearch,
 	showActions,
 }: {
 	query: string;
+	setEmptySearch: (value: boolean) => void;
 	showActions?: boolean;
 }) {
 	const [
@@ -69,6 +71,9 @@ export default function LeftSidebarTreeView({
 	);
 
 	const filteredLeftSidebarItems = useMemo(() => {
+
+		setEmptySearch(false);
+
 		return leftSidebarItems.map((leftSidebarItem) => {
 			if (!leftSidebarItem.leftSidebarObjectDefinitionItems) {
 				return leftSidebarItem;
@@ -84,6 +89,7 @@ export default function LeftSidebarTreeView({
 
 			return {
 				...leftSidebarItem,
+				id: leftSidebarItem.name,
 				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
 			};
 		});
@@ -180,7 +186,17 @@ export default function LeftSidebarTreeView({
 	const leftSidebarOtherObjectFoldersItems = filteredLeftSidebarItems.filter(
 		(filteredLeftSidebarItem) =>
 			filteredLeftSidebarItem.objectFolderName !==
-			selectedObjectFolder.name
+				selectedObjectFolder.name &&
+			filteredLeftSidebarItem.leftSidebarObjectDefinitionItems?.length !==
+				0
+	);
+
+	leftSidebarOtherObjectFoldersItems.sort((a, b) =>
+		a.objectFolderName > b.objectFolderName
+			? 1
+			: b.objectFolderName > a.objectFolderName
+			? -1
+			: 0
 	);
 
 	const leftSidebarSelectedObjectFolderItem = filteredLeftSidebarItems.find(
@@ -220,6 +236,12 @@ export default function LeftSidebarTreeView({
 				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
 			};
 		}
+	);
+
+	setEmptySearch(
+		!newLeftSidebarOtherObjectFolderItems.length &&
+			leftSidebarSelectedObjectFolderItem.leftSidebarObjectDefinitionItems
+				?.length === 0
 	);
 
 	return (
@@ -264,6 +286,7 @@ export default function LeftSidebarTreeView({
 						const y =
 							selectedObjectDefinitionNode.__rf.position.y +
 							selectedObjectDefinitionNode.__rf.height / 2;
+
 						setCenter(x, y, 1.2);
 					}
 				}

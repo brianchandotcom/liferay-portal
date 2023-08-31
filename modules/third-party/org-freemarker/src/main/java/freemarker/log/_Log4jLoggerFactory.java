@@ -19,90 +19,97 @@
 
 package freemarker.log;
 
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Don't use this class; it's only public to work around Google App Engine Java
  * compliance issues. FreeMarker developers only: treat this class as package-visible.
  */
 public class _Log4jLoggerFactory implements LoggerFactory {
-    @Override
-    public Logger getLogger(String category) {
-        return new Log4jLogger(org.apache.log4j.Logger.getLogger(category));
-    }
+	public Logger getLogger(String name) {
+		return new Log4jLogger(LogManager.getLogger(name));
+	}
 
     private static class Log4jLogger
     extends
         Logger {
-        private final org.apache.log4j.Logger logger;
+		private final org.apache.logging.log4j.core.Logger logger;
         
-        Log4jLogger(org.apache.log4j.Logger logger) {
-            this.logger = logger;
+        Log4jLogger(org.apache.logging.log4j.Logger logger) {
+			this.logger = (org.apache.logging.log4j.core.Logger)logger;
         }
         
         @Override
         public void debug(String message) {
-            logger.debug(message);
+			logger.logIfEnabled(
+				_FQCN, Level.DEBUG, null, (Object)message, null);
         }
 
         @Override
         public void debug(String message, Throwable t) {
-            logger.debug(message, t);
+			logger.logIfEnabled(_FQCN, Level.DEBUG, null, (Object)message, t);
         }
 
         @Override
         public void error(String message) {
-            logger.error(message);
+			logger.logIfEnabled(
+				_FQCN, Level.ERROR, null, (Object)message, null);
         }
 
         @Override
         public void error(String message, Throwable t) {
-            logger.error(message, t);
+			logger.logIfEnabled(_FQCN, Level.ERROR, null, (Object)message, t);
         }
 
         @Override
         public void info(String message) {
-            logger.info(message);
+			logger.logIfEnabled(_FQCN, Level.INFO, null, (Object)message, null);
         }
 
         @Override
         public void info(String message, Throwable t) {
-            logger.info(message, t);
+			logger.logIfEnabled(_FQCN, Level.INFO, null, (Object)message, t);
         }
 
         @Override
         public void warn(String message) {
-            logger.warn(message);
+			logger.logIfEnabled(_FQCN, Level.WARN, null, (Object)message, null);
         }
 
         @Override
         public void warn(String message, Throwable t) {
-            logger.warn(message, t);
+			logger.logIfEnabled(_FQCN, Level.WARN, null, (Object)message, t);
         }
 
         @Override
         public boolean isDebugEnabled() {
-            return logger.isDebugEnabled();
+			return logger.isDebugEnabled();
         }
 
         @Override
         public boolean isInfoEnabled() {
-            return logger.isInfoEnabled();
+			return logger.isInfoEnabled();
         }
 
         @Override
         public boolean isWarnEnabled() {
-            return logger.isEnabledFor(Level.WARN);
+			return logger.isWarnEnabled();
         }
 
         @Override
         public boolean isErrorEnabled() {
-            return logger.isEnabledFor(Level.ERROR);
+			return logger.isErrorEnabled();
         }
 
         @Override
         public boolean isFatalEnabled() {
-            return logger.isEnabledFor(Level.FATAL);
+			return logger.isFatalEnabled();
         }
-    }
+
+		private static final String _FQCN = Log4jLogger.class.getName();
+
+	}
+
 }
+/* @generated */

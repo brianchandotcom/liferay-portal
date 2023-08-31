@@ -32,12 +32,14 @@ public class _Log4jOverSLF4JTester {
      * implementation around.
      */
     public static final boolean test() {
-        org.apache.log4j.MDC.put(MDC_KEY, "");
+		org.apache.logging.log4j.ThreadContext.put(MDC_KEY, "");
+
         try {
             return org.slf4j.MDC.get(MDC_KEY) != null;
         } finally {
-            org.apache.log4j.MDC.remove(MDC_KEY);
+			org.apache.logging.log4j.ThreadContext.remove(MDC_KEY);
         }
     }
 
 }
+/* @generated */

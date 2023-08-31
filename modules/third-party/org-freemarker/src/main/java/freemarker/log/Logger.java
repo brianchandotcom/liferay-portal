@@ -154,7 +154,8 @@ public abstract class Logger {
     public static final String LIBRARY_NAME_SLF4J = "SLF4J";
     private static final int MAX_LIBRARY_ENUM = LIBRARY_SLF4J;
 
-    private static final String REAL_LOG4J_PRESENCE_CLASS = "org.apache.log4j.FileAppender";
+    private static final String REAL_LOG4J_PRESENCE_CLASS =
+		"org.apache.logging.log4j.core.appender.FileAppender";
     private static final String LOG4J_OVER_SLF4J_TESTER_CLASS = "freemarker.log._Log4jOverSLF4JTester";
 
     /**
@@ -163,7 +164,7 @@ public abstract class Logger {
     private static final String[] LIBRARIES_BY_PRIORITY = {
             null, LIBRARY_NAME_JUL,
             "org.apache.log.Logger", LIBRARY_NAME_AVALON,
-            "org.apache.log4j.Logger", LIBRARY_NAME_LOG4J,
+            "org.apache.logging.log4j.Logger", LIBRARY_NAME_LOG4J,
             /* In 2.3.x this two is skipped by LIBRARY_AUTO: */
             "org.apache.commons.logging.Log", LIBRARY_NAME_COMMONS_LOGGING,
             "org.slf4j.Logger", LIBRARY_NAME_SLF4J,
@@ -578,3 +579,4 @@ public abstract class Logger {
     }
 
 }
+/* @generated */

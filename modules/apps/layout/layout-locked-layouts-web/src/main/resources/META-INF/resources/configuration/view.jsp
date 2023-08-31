@@ -57,20 +57,6 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		</clay:content-col>
 	</clay:content-row>
 
-	<clay:content-row>
-		<clay:content-col
-			expand="<%= true %>"
-		>
-			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "lockReviewFrequencyHiddenDescription" %>' label="lock-review-frequency" name="lockReviewFrequency" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getLockReviewFrequency() %>" wrapperCssClass="c-mb-1">
-				<aui:validator name="number" />
-				<aui:validator name="min">1</aui:validator>
-				<aui:validator name="max">99999</aui:validator>
-			</aui:input>
-
-			<p class="text-3 text-secondary" id="<portlet:namespace />lockReviewFrequencyHiddenDescription"><liferay-ui:message key="set-a-value-in-minutes-between-1-and-99.999" /></p>
-		</clay:content-col>
-	</clay:content-row>
-
 	<clay:content-row
 		cssClass="c-mt-2"
 	>

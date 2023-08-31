@@ -35,6 +35,12 @@ String previewFileURL = previewFileURLs[0];
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
+<clay:alert
+	dismissible="<%= true %>"
+	displayType="info"
+	message="the-document-preview-may-not-show-all-pages-.to-see-the-full-document,-please-download-it"
+/>
+
 <div id="<portlet:namespace /><%= randomNamespace %>previewDocument">
 	<react:component
 		module="preview/js/DocumentPreviewer.es"

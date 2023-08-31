@@ -1314,7 +1314,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given an object with a field is created") {
+		task ("Given a published object definition with a field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",

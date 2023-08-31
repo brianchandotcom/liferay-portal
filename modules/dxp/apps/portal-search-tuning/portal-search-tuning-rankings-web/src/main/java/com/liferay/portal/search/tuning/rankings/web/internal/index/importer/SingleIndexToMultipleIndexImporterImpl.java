@@ -9,27 +9,23 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
+import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,17 +39,18 @@ public class SingleIndexToMultipleIndexImporterImpl
 	implements SingleIndexToMultipleIndexImporter {
 
 	@Override
-	public void importRankings() {
+	public void importRankings(long companyId) {
 		try {
-			_createRankingIndices();
+			_importCompanyDocumentsAndDeleteFromSingleIndex(
+				_indexNameBuilder.getIndexName(companyId));
 
-			_importDocuments();
+			_deleteSingleIndexIfEmpty();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to create result ranking indices for existing " +
-						"companies",
+					"Unable to import result ranking documents for company " +
+						companyId,
 					exception);
 			}
 		}
@@ -61,15 +58,6 @@ public class SingleIndexToMultipleIndexImporterImpl
 
 	@Override
 	public boolean needImport() {
-		for (Company company : _companyService.getCompanies()) {
-			if (!_rankingIndexReader.isExists(
-					_rankingIndexNameBuilder.getRankingIndexName(
-						company.getCompanyId()))) {
-
-				return true;
-			}
-		}
-
 		return _rankingIndexReader.isExists(SINGLE_INDEX_NAME);
 	}
 
@@ -79,48 +67,28 @@ public class SingleIndexToMultipleIndexImporterImpl
 	protected static final RankingIndexName SINGLE_INDEX_NAME =
 		() -> "liferay-search-tuning-rankings";
 
-	private boolean _addDocuments(String indexName, List<Document> documents) {
-		boolean successed = true;
+	private void _deleteSingleIndexIfEmpty() {
+		List<Document> documents = _getSingleIndexDocuments(
+			_queries.matchAll());
 
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		documents.forEach(
-			document -> {
-				IndexDocumentRequest indexDocumentRequest =
-					new IndexDocumentRequest(
-						_getRankingIndexName(indexName), document);
-
-				bulkDocumentRequest.addBulkableDocumentRequest(
-					indexDocumentRequest);
-			});
-
-		BulkDocumentResponse bulkDocumentResponse =
-			_searchEngineAdapter.execute(bulkDocumentRequest);
-
-		if (bulkDocumentResponse.hasErrors()) {
-			successed = false;
-		}
-
-		return successed;
-	}
-
-	private void _createRankingIndices() {
-		for (Company company : _companyService.getCompanies()) {
-			RankingIndexName rankingIndexName =
-				_rankingIndexNameBuilder.getRankingIndexName(
-					company.getCompanyId());
-
-			if (!_rankingIndexReader.isExists(rankingIndexName)) {
-				_rankingIndexCreator.create(rankingIndexName);
+		if (documents.isEmpty()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Deleting index " + SINGLE_INDEX_NAME.getIndexName());
 			}
+
+			_rankingIndexCreator.delete(SINGLE_INDEX_NAME);
 		}
 	}
 
-	private List<Document> _getDocuments(RankingIndexName singleIndexName) {
+	private String _getRankingIndexName(String companyIndexName) {
+		return companyIndexName + StringPool.DASH + RANKINGS_INDEX_NAME_SUFFIX;
+	}
+
+	private List<Document> _getSingleIndexDocuments(Query query) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.setIndexNames(singleIndexName.getIndexName());
-		searchSearchRequest.setQuery(_queries.matchAll());
+		searchSearchRequest.setIndexNames(SINGLE_INDEX_NAME.getIndexName());
+		searchSearchRequest.setQuery(query);
 		searchSearchRequest.setFetchSource(true);
 
 		SearchSearchResponse searchSearchResponse =
@@ -132,66 +100,52 @@ public class SingleIndexToMultipleIndexImporterImpl
 			searchHits.getSearchHits(), SearchHit::getDocument);
 	}
 
-	private String _getRankingIndexName(String indexName) {
-		return indexName + StringPool.DASH + RANKINGS_INDEX_NAME_SUFFIX;
-	}
+	private void _importCompanyDocumentsAndDeleteFromSingleIndex(
+		String companyIndexName) {
 
-	private Map<String, List<Document>> _groupDocumentByIndex(
-		List<Document> documents) {
-
-		Map<String, List<Document>> documentsMap = new HashMap<>();
-
-		for (Document document : documents) {
-			List<Document> curDocuments = documentsMap.computeIfAbsent(
-				document.getString("index"), key -> new ArrayList<>());
-
-			curDocuments.add(document);
-		}
-
-		return documentsMap;
-	}
-
-	private void _importDocuments() {
-		if (!_rankingIndexReader.isExists(SINGLE_INDEX_NAME)) {
-			return;
-		}
-
-		List<Document> documents = _getDocuments(SINGLE_INDEX_NAME);
+		List<Document> documents = _getSingleIndexDocuments(
+			_queries.term("index", companyIndexName));
 
 		if (documents.isEmpty()) {
 			return;
 		}
 
-		boolean result = true;
+		String rankingIndexName = _getRankingIndexName(companyIndexName);
 
-		Map<String, List<Document>> documentsMap = _groupDocumentByIndex(
-			documents);
-
-		for (Map.Entry<String, List<Document>> entry :
-				documentsMap.entrySet()) {
-
-			result = result && _addDocuments(entry.getKey(), entry.getValue());
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Importing result ranking documents to index " +
+					rankingIndexName);
 		}
 
-		if (result) {
-			_rankingIndexCreator.delete(SINGLE_INDEX_NAME);
-		}
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		documents.forEach(
+			document -> {
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					new IndexDocumentRequest(rankingIndexName, document));
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					new DeleteDocumentRequest(
+						SINGLE_INDEX_NAME.getIndexName(),
+						document.getString("uid")));
+			});
+
+		bulkDocumentRequest.setRefresh(true);
+
+		_searchEngineAdapter.execute(bulkDocumentRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleIndexToMultipleIndexImporterImpl.class);
 
 	@Reference
-	private CompanyService _companyService;
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Queries _queries;
 
 	@Reference
 	private RankingIndexCreator _rankingIndexCreator;
-
-	@Reference
-	private RankingIndexNameBuilder _rankingIndexNameBuilder;
 
 	@Reference
 	private RankingIndexReader _rankingIndexReader;

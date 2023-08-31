@@ -33,21 +33,18 @@ public class RankingIndexPortalInstanceLifecycleListener
 			return;
 		}
 
-		if (_singleIndexToMultipleIndexImporter.needImport()) {
-			_singleIndexToMultipleIndexImporter.importRankings();
-
-			return;
-		}
-
 		RankingIndexName rankingIndexName =
 			_rankingIndexNameBuilder.getRankingIndexName(
 				company.getCompanyId());
 
-		if (_rankingIndexReader.isExists(rankingIndexName)) {
-			return;
+		if (!_rankingIndexReader.isExists(rankingIndexName)) {
+			_rankingIndexCreator.create(rankingIndexName);
 		}
 
-		_rankingIndexCreator.create(rankingIndexName);
+		if (_singleIndexToMultipleIndexImporter.needImport()) {
+			_singleIndexToMultipleIndexImporter.importRankings(
+				company.getCompanyId());
+		}
 	}
 
 	@Override

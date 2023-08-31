@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletEndpointServlet;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -33,7 +34,6 @@ import org.eclipse.equinox.http.servlet.internal.Activator;
 import org.eclipse.equinox.http.servlet.internal.HttpServiceFactory;
 import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionTracker;
-import org.eclipse.equinox.http.servlet.internal.servlet.ProxyServlet;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -149,15 +149,6 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 			ServletConfig servletConfig =
 				httpServletEndpoint.getServletConfig();
 
-			ProxyServlet proxyServlet = new ProxyServlet() {
-
-				@Override
-				public ServletConfig getServletConfig() {
-					return servletConfig;
-				}
-
-			};
-
 			ServletContext servletContext = servletConfig.getServletContext();
 
 			Map<String, Object> attributesMap =
@@ -189,12 +180,12 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 					_bundleContext, _bundleContext, servletContext,
 					Collections.unmodifiableMap(attributesMap));
 
-			proxyServlet.setHttpServiceRuntimeImpl(httpServiceRuntimeImpl);
-
 			return new ServiceRegistrationsBag(
 				httpServiceRuntimeImpl,
 				_bundleContext.registerService(
-					HttpServlet.class, proxyServlet,
+					HttpServlet.class,
+					new HttpServletEndpointServlet(
+						httpServiceRuntimeImpl, servletConfig),
 					httpServletEndpoint.getProperties()),
 				_bundleContext.registerService(
 					HttpService.class,

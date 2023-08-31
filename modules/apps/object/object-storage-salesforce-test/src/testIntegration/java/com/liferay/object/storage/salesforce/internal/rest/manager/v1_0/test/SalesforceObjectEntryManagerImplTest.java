@@ -37,8 +37,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -187,6 +189,13 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@After
 	public void tearDown() throws Exception {
+		for (ObjectEntry objectEntry : _objectEntries) {
+			_objectEntryManager.deleteObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry.getExternalReferenceCode(), _objectDefinition,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
+
 		if (_objectDefinition != null) {
 			objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinition.getObjectDefinitionId());
@@ -211,12 +220,9 @@ public class SalesforceObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
+		_objectEntries.add(objectEntry);
 
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
 	}
 
 	@Test
@@ -232,6 +238,8 @@ public class SalesforceObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		_objectEntries.add(objectEntry);
+
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		String title = RandomTestUtil.randomString();
@@ -245,19 +253,11 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
 		String title1 = "a" + RandomTestUtil.randomString();
-		String title2 = "b" + RandomTestUtil.randomString();
-		String title3 = "c" + RandomTestUtil.randomString();
-		String title4 = "d" + RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition,
@@ -271,6 +271,11 @@ public class SalesforceObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry1);
+
+		String title2 = "b" + RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry2 = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition,
 			new ObjectEntry() {
@@ -283,6 +288,11 @@ public class SalesforceObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry2);
+
+		String title3 = "c" + RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry3 = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition,
 			new ObjectEntry() {
@@ -295,6 +305,11 @@ public class SalesforceObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry3);
+
+		String title4 = "d" + RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry4 = _objectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition,
 			new ObjectEntry() {
@@ -307,6 +322,8 @@ public class SalesforceObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry4);
 
 		// And/or with equals/not equals expression
 
@@ -377,16 +394,6 @@ public class SalesforceObjectEntryManagerImplTest
 				"filter", _buildNotEqualsExpressionFilterString("title", title1)
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
-
-		for (ObjectEntry objectEntry :
-				Arrays.asList(
-					objectEntry1, objectEntry2, objectEntry3, objectEntry4)) {
-
-			_objectEntryManager.deleteObjectEntry(
-				companyId, dtoConverterContext,
-				objectEntry.getExternalReferenceCode(), _objectDefinition,
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-		}
 	}
 
 	@Test
@@ -404,6 +411,8 @@ public class SalesforceObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		_objectEntries.add(objectEntry);
+
 		objectEntry = _objectEntryManager.getObjectEntry(
 			companyId, dtoConverterContext,
 			objectEntry.getExternalReferenceCode(), _objectDefinition,
@@ -411,11 +420,6 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
@@ -430,6 +434,8 @@ public class SalesforceObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry);
 
 		_objectEntryManager.partialUpdateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -451,11 +457,6 @@ public class SalesforceObjectEntryManagerImplTest
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		Assert.assertEquals("Able", properties.get("title"));
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Override
@@ -483,6 +484,7 @@ public class SalesforceObjectEntryManagerImplTest
 	private static ConfigurationProvider _configurationProvider;
 
 	private ObjectDefinition _objectDefinition;
+	private final List<ObjectEntry> _objectEntries = new ArrayList<>();
 
 	@Inject(
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE

@@ -150,7 +150,20 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			long groupId, long plid, long segmentsExperienceId, String data)
 		throws PortalException {
 
-		_checkUnlockedLayout(plid);
+		return layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				groupId, plid, segmentsExperienceId, data, true);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
+			long groupId, long plid, long segmentsExperienceId, String data,
+			boolean checkUnlockedLayout)
+		throws PortalException {
+
+		if (checkUnlockedLayout) {
+			_checkUnlockedLayout(plid);
+		}
 
 		// Layout page template structure
 

@@ -5,8 +5,9 @@
 
 import HomePage from './pages/HomePage/HomePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import ProjectPage from './pages/ProjectPage/ProjectPage';
 
-import {HashRouter, Routes, Route} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 
 import './App.css';
 
@@ -15,6 +16,9 @@ function App() {
 		<HashRouter>
 			<Routes>
 				<Route path="/" element={<HomePage />} />
+				<Route path="/project">
+					<Route path=":id" element={<ProjectPage />} />
+				</Route>
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 		</HashRouter>

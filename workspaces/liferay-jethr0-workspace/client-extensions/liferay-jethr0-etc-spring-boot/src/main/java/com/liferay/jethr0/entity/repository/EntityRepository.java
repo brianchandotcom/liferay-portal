@@ -29,6 +29,8 @@ public interface EntityRepository<T extends Entity> {
 
 	public EntityDALO<T> getEntityDALO();
 
+	public boolean hasEntity(long id);
+
 	public void initialize();
 
 	public void initializeRelationships();

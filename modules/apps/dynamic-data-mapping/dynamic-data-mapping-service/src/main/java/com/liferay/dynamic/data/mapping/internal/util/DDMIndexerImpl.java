@@ -806,7 +806,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
 			if (ddmFormField == null) {
-				return;
+				continue;
 			}
 
 			try {

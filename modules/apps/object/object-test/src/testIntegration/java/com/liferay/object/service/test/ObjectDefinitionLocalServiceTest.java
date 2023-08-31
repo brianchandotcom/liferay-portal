@@ -1137,7 +1137,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
-		TreeTestUtil.tearDown(_objectDefinitionLocalService);
+		_deleteObjectDefinitionHierarchy(_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -1497,7 +1497,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(0, objectDefinition.getRootObjectDefinitionId());
 
-		TreeTestUtil.tearDown(_objectDefinitionLocalService);
+		_deleteObjectDefinitionHierarchy(_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -2040,6 +2040,31 @@ public class ObjectDefinitionLocalServiceTest {
 			).buildString());
 
 		return objectAction;
+	}
+
+	private void _deleteObjectDefinitionHierarchy(
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws PortalException {
+
+		for (String objectDefinitionName :
+				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(), objectDefinitionName);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (objectDefinition.getRootObjectDefinitionId() != 0) {
+				TreeTestUtil.unbind(
+					objectDefinitionLocalService, objectDefinitionName);
+			}
+
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

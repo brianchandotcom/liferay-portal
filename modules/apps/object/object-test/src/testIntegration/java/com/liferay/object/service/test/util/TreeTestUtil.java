@@ -114,30 +114,6 @@ public class TreeTestUtil {
 			edge.getObjectRelationshipId());
 	}
 
-	public static void tearDown(
-			ObjectDefinitionLocalService objectDefinitionLocalService)
-		throws PortalException {
-
-		for (String objectDefinitionName :
-				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
-
-			ObjectDefinition objectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
-					TestPropsValues.getCompanyId(), objectDefinitionName);
-
-			if (objectDefinition == null) {
-				continue;
-			}
-
-			if (objectDefinition.getRootObjectDefinitionId() != 0) {
-				unbind(objectDefinitionLocalService, objectDefinitionName);
-			}
-
-			objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition.getObjectDefinitionId());
-		}
-	}
-
 	public static void unbind(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			String objectDefinitionName)

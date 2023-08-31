@@ -43,6 +43,10 @@ public class CommercePriceEntryTableFDSView extends BaseTableFDSView {
 		).add(
 			"product.name.LANG", "name"
 		).add(
+			"unitOfMeasureKey", "uom"
+		).add(
+			"quantity", "quantity"
+		).add(
 			"sku.basePriceFormatted", "base-price"
 		).add(
 			"priceFormatted", "price-list-price"

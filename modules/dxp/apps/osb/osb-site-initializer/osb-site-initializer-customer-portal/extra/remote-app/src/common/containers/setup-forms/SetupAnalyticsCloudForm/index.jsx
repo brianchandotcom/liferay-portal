@@ -10,6 +10,8 @@ import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	addHighPriorityContactsList,
+	associateContactRole,
+	removeContactRole,
 	removeHighPriorityContactsList,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 
@@ -26,6 +28,7 @@ import {
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
+import {useCustomerPortal} from '../../../../routes/customer-portal/context';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
@@ -51,6 +54,7 @@ const SetupAnalyticsCloudPage = ({
 	touched,
 	values,
 }) => {
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [
 		addHighPriorityContactList,
@@ -89,7 +93,9 @@ const SetupAnalyticsCloudPage = ({
 		},
 	});
 
-	const {featureFlags} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+
+	const [{sessionId}] = useCustomerPortal();
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>
@@ -101,7 +107,6 @@ const SetupAnalyticsCloudPage = ({
 	);
 
 	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
-
 	useEffect(() => {
 		if (analyticsDataCenterLocations.length) {
 			setFieldValue(
@@ -177,6 +182,8 @@ const SetupAnalyticsCloudPage = ({
 			});
 
 			if (data) {
+				setIsLoadingSubmitButton(true);
+
 				await client.mutate({
 					context: {
 						displaySuccess: false,
@@ -199,7 +206,26 @@ const SetupAnalyticsCloudPage = ({
 						return removeHighPriorityContactsList(client, item);
 					})
 				);
-
+				await Promise.all(
+					removeHighPriorityContactList?.map(async (item) => {
+						removeContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
+				await Promise.all(
+					addHighPriorityContactList?.map(async (item) => {
+						return associateContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
 				await Promise.all(
 					addHighPriorityContactList?.map((item) => {
 						return addHighPriorityContactsList(client, item);
@@ -238,22 +264,23 @@ const SetupAnalyticsCloudPage = ({
 						}
 					);
 				}
+				setIsLoadingSubmitButton(false);
 			}
 
 			handlePage(true);
 		}
 	};
+
 	const handleButtonClick = () => {
 		// eslint-disable-next-line no-unused-expressions
 		step === 1 ? handlePage(false) : handlePreviousStep();
 	};
 	const addHighPriorityContacts = (contactList) => {
 		const contactsList = contactList.map((item) => item);
-
 		setAddHighPriorityContactList(contactsList);
 	};
 	const removeHighPriorityContacts = (contactList) => {
-		const contactsList = contactList.map(({objectId}) => objectId);
+		const contactsList = contactList.map((objectId) => objectId);
 		setRemoveHighPriorityContactList(contactsList);
 	};
 
@@ -284,9 +311,11 @@ const SetupAnalyticsCloudPage = ({
 							disabled={
 								step === 1
 									? baseButtonDisabled
-									: isMultiSelectEmpty
+									: isMultiSelectEmpty ||
+									  isLoadingSubmitButton
 							}
 							displayType="primary"
+							isLoading={isLoadingSubmitButton}
 							onClick={step === 1 ? handleNextStep : handleSubmit}
 						>
 							{step === 1

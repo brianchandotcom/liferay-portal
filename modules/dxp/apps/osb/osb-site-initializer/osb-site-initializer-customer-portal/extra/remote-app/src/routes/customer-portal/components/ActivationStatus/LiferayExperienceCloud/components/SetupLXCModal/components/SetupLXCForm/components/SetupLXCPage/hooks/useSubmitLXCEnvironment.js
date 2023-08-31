@@ -7,6 +7,8 @@ import {useMutation} from '@apollo/client';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {
 	addHighPriorityContactsList,
+	associateContactRole,
+	removeContactRole,
 	removeHighPriorityContactsList,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import NotificationQueueService from '../../../../../../../../../../../../../src/common/services/actions/notificationAction';
@@ -19,6 +21,7 @@ import {
 	getLiferayExperienceCloudEnvironments,
 	updateAccountSubscriptionGroups,
 } from '../../../../../../../../../../../../common/services/liferay/graphql/queries';
+import {useCustomerPortal} from '../../../../../../../../../../../../routes/customer-portal/context';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../../../../../../../utils/constants';
 
 export default function useSubmitLXCEnvironment(
@@ -28,11 +31,14 @@ export default function useSubmitLXCEnvironment(
 	addHighPriorityContactList,
 	removeHighPriorityContactList,
 	subscriptionGroupLxcId,
+	handleLoadingSubmitButton,
 	values
 ) {
 	const {client} = useAppPropertiesContext();
 
-	const {featureFlags} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+
+	const [{sessionId}] = useCustomerPortal();
 
 	const [
 		createLiferayExperienceCloudEnvironment,
@@ -72,6 +78,8 @@ export default function useSubmitLXCEnvironment(
 		}
 
 		if (!alreadySubmitted) {
+			handleLoadingSubmitButton(true);
+
 			const {data} = await createLiferayExperienceCloudEnvironment({
 				variables: {
 					LiferayExperienceCloudEnvironment: {
@@ -121,16 +129,32 @@ export default function useSubmitLXCEnvironment(
 					})
 				);
 
-				await Promise.allSettled(
+				await Promise.all(
 					removeHighPriorityContactList?.map((item) => {
-						return removeHighPriorityContactsList(
-							client,
-							item.objectId
+						return removeHighPriorityContactsList(client, item);
+					})
+				);
+				await Promise.all(
+					removeHighPriorityContactList?.map(async (item) => {
+						removeContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
 						);
 					})
 				);
-
-				await Promise.allSettled(
+				await Promise.all(
+					addHighPriorityContactList?.map(async (item) => {
+						return associateContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
+				await Promise.all(
 					addHighPriorityContactList?.map((item) => {
 						return addHighPriorityContactsList(client, item);
 					})
@@ -169,7 +193,7 @@ export default function useSubmitLXCEnvironment(
 					);
 				}
 			}
-
+			handleLoadingSubmitButton(false);
 			handleChangeForm(true);
 		}
 	};

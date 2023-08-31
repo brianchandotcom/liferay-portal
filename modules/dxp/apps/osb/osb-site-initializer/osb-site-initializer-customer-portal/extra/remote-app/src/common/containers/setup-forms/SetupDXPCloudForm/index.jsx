@@ -15,6 +15,8 @@ import NotificationQueueService from '~/common/services/actions/notificationActi
 import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	addHighPriorityContactsList,
+	associateContactRole,
+	removeContactRole,
 	removeHighPriorityContactsList,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import {
@@ -26,10 +28,12 @@ import {
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
+import {useCustomerPortal} from '../../../../routes/customer-portal/context';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
 import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
+
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
@@ -55,6 +59,7 @@ const SetupDXPCloudPage = ({
 	touched,
 	values,
 }) => {
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [dxpVersions, setDxpVersions] = useState([]);
 	const [selectedVersion, setSelectedVersion] = useState(dxpVersion || '');
@@ -63,7 +68,9 @@ const SetupDXPCloudPage = ({
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true or (name eq '${HA_DR_FILTER}' or name eq '${STD_DR_FILTER}'))`,
 		},
 	});
-	const {featureFlags} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+	const [{sessionId}] = useCustomerPortal();
+
 	const [
 		addHighPriorityContactList,
 		setAddHighPriorityContactList,
@@ -146,6 +153,7 @@ const SetupDXPCloudPage = ({
 	}, [touched, errors]);
 
 	const handleSubmit = async () => {
+		setIsLoadingSubmitButton(true);
 		const dxp = values?.dxp;
 
 		const getDXPCloudActivationSubmitedStatus = async (accountKey) => {
@@ -244,6 +252,28 @@ const SetupDXPCloudPage = ({
 				);
 
 				await Promise.all(
+					removeHighPriorityContactList?.map(async (item) => {
+						removeContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
+
+				await Promise.all(
+					addHighPriorityContactList?.map(async (item) => {
+						return associateContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
+
+				await Promise.all(
 					addHighPriorityContactList?.map((item) => {
 						return addHighPriorityContactsList(client, item);
 					})
@@ -278,7 +308,7 @@ const SetupDXPCloudPage = ({
 						console.error(error);
 					}
 				}
-
+				setIsLoadingSubmitButton(false);
 				handlePage(true);
 			}
 		}
@@ -322,9 +352,12 @@ const SetupDXPCloudPage = ({
 				middleButton: (
 					<Button
 						disabled={
-							step === 1 ? baseButtonDisabled : isMultiSelectEmpty
+							step === 1
+								? baseButtonDisabled
+								: isMultiSelectEmpty || isLoadingSubmitButton
 						}
 						displayType="primary"
+						isLoading={isLoadingSubmitButton}
 						onClick={step === 1 ? handleNextStep : handleSubmit}
 					>
 						{step === 1

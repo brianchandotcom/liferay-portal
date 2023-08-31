@@ -32,6 +32,7 @@ const SetupLiferayExperienceCloudPage = ({
 	touched,
 	values,
 }) => {
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [
 		addHighPriorityContactList,
@@ -98,6 +99,10 @@ const SetupLiferayExperienceCloudPage = ({
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
+	const handleLoadingSubmitButton = (state) => {
+		return setIsLoadingSubmitButton(state);
+	};
+
 	const handleSubmitLxcEnvironment = useSubmitLXCEnvironment(
 		handleChangeForm,
 		project,
@@ -105,6 +110,7 @@ const SetupLiferayExperienceCloudPage = ({
 		addHighPriorityContactList,
 		removeHighPriorityContactList,
 		subscriptionGroupLxcId,
+		handleLoadingSubmitButton,
 		values
 	);
 
@@ -137,9 +143,12 @@ const SetupLiferayExperienceCloudPage = ({
 				middleButton: (
 					<Button
 						disabled={
-							step === 1 ? baseButtonDisabled : isSubmitDisable()
+							step === 1
+								? baseButtonDisabled
+								: isSubmitDisable() || isLoadingSubmitButton
 						}
 						displayType="primary"
+						isLoading={isLoadingSubmitButton}
 						onClick={
 							step === 1
 								? handleNextStep

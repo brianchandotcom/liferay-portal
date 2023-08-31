@@ -127,7 +127,7 @@ definition {
 
 		Refresh();
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(siteURLKey = "Test Depot Name");
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMDocument.copy(
 			dmDocumentTitle = "DM Document Title",

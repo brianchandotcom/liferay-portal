@@ -635,6 +635,12 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommerceOrderItemModelImpl.TABLE_NAME,
 				"UOMIncrementalOrderQuantity BIGDECIMAL"));
 
+		registry.register(
+			"10.2.0", "11.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				CommerceOrderItemModelImpl.TABLE_NAME, "bookedQuantityId",
+				"CIBookedQuantityId LONG"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

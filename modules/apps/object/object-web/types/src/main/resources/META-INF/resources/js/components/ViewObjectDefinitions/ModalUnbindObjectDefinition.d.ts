@@ -6,14 +6,14 @@
 /// <reference types="react" />
 
 import './ModalUnbindObject.scss';
-interface ModalUnbindObjectProps {
+interface ModalUnbindObjectDefinitionProps {
 	baseResourceURL: string;
 	onVisibilityChange: () => void;
-	selectedObjectToUnbind?: ObjectDefinition;
+	selectedObjectDefinitionToUnbind?: ObjectDefinition;
 }
-export declare function ModalUnbindObject({
+export declare function ModalUnbindObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
-	selectedObjectToUnbind,
-}: ModalUnbindObjectProps): JSX.Element;
+	selectedObjectDefinitionToUnbind,
+}: ModalUnbindObjectDefinitionProps): JSX.Element;
 export {};

@@ -6,14 +6,14 @@
 /// <reference types="react" />
 
 import './ModalBindToRootObject.scss';
-interface ModalBindToRootObjectProps {
+interface ModalBindToRootObjectDefinitionProps {
 	baseResourceURL: string;
 	onVisibilityChange: () => void;
-	selectedObjectToBind?: ObjectDefinition;
+	selectedObjectDefinitionToBind?: ObjectDefinition;
 }
-export declare function ModalBindToRootObject({
+export declare function ModalBindToRootObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
-	selectedObjectToBind,
-}: ModalBindToRootObjectProps): JSX.Element;
+	selectedObjectDefinitionToBind,
+}: ModalBindToRootObjectDefinitionProps): JSX.Element;
 export {};

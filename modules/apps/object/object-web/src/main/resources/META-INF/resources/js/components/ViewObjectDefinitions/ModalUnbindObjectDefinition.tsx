@@ -27,7 +27,9 @@ export function ModalUnbindObjectDefinition({
 	onVisibilityChange,
 	selectedObjectDefinitionToUnbind,
 }: ModalUnbindObjectDefinitionProps) {
-	const [rootObjectDefinition, setRootObjectDefinition] = useState<ObjectDefinition>();
+	const [rootObjectDefinition, setRootObjectDefinition] = useState<
+		ObjectDefinition
+	>();
 	const [loading, setLoading] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -95,7 +97,7 @@ export function ModalUnbindObjectDefinition({
 				) : (
 					<span className="lfr__object-modal-unbind-object-description">
 						{selectedObjectDefinitionToUnbind?.externalReferenceCode ===
-						 rootObjectDefinition?.externalReferenceCode
+						rootObjectDefinition?.externalReferenceCode
 							? sub(
 									Liferay.Language.get(
 										'please-confirm-before-unbinding-the-root-x'

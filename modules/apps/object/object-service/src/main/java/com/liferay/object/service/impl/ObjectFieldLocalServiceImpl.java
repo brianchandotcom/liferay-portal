@@ -1021,7 +1021,8 @@ public class ObjectFieldLocalServiceImpl
 		if (objectField.isSystem() && objectDefinition.isModifiable() &&
 			!SystemUtil.allowManageSystemEntities()) {
 
-			throw new UnsupportedOperationException();
+			throw new ObjectFieldSystemException(
+				"Only allowed bundles can delete system object fields");
 		}
 
 		if (Objects.equals(

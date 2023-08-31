@@ -71,11 +71,11 @@ export function ModalUnbindObjectDefinition({
 			else if (
 				selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode
 			) {
-				const rootObjectResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				const rootObjectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
 					selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode
 				);
 
-				setRootObjectDefinition(rootObjectResponse);
+				setRootObjectDefinition(rootObjectDefinitionResponse);
 			}
 
 			setLoading(false);

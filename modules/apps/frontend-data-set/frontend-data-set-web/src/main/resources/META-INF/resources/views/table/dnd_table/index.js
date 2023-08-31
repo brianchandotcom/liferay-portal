@@ -13,18 +13,40 @@ import Row from './Row';
 import Table from './Table';
 
 function Body({children, className}) {
+	const Component = Liferay.FeatureFlags['LPS-193005']
+		? ClayTable.Body
+		: 'div';
+
 	return (
-		<ClayTable.Body className={classNames(className)}>
+		<Component
+			className={classNames(
+				{
+					'dnd-tbody': !Liferay.FeatureFlags['LPS-193005'],
+				},
+				className
+			)}
+		>
 			{children}
-		</ClayTable.Body>
+		</Component>
 	);
 }
 
 function Head({children, className}) {
+	const Component = Liferay.FeatureFlags['LPS-193005']
+		? ClayTable.Head
+		: 'div';
+
 	return (
-		<ClayTable.Head className={classNames(className)}>
+		<Component
+			className={classNames(
+				{
+					'dnd-thead': !Liferay.FeatureFlags['LPS-193005'],
+				},
+				className
+			)}
+		>
 			{children}
-		</ClayTable.Head>
+		</Component>
 	);
 }
 

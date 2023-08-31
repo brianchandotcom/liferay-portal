@@ -21,22 +21,40 @@ function Table({children, className}) {
 		updateTableWidth(tableWidth);
 	}, [updateTableWidth]);
 
+	if (Liferay.FeatureFlags['LPS-193005']) {
+		return (
+			<ClayTable
+				className={classNames(
+					{
+						'is-dragging': draggingColumnName !== null,
+					},
+					className
+				)}
+				ref={dndTableRef}
+				style={{
+					tableLayout: isFixed ? 'fixed' : 'auto',
+				}}
+				tableVerticalAlignment="middle"
+			>
+				{children}
+			</ClayTable>
+		);
+	}
+
 	return (
-		<ClayTable
+		<div
 			className={classNames(
+				'dnd-table',
 				{
+					'fixed': isFixed,
 					'is-dragging': draggingColumnName !== null,
 				},
 				className
 			)}
 			ref={dndTableRef}
-			style={{
-				tableLayout: isFixed ? 'fixed' : 'auto',
-			}}
-			tableVerticalAlignment="middle"
 		>
 			{children}
-		</ClayTable>
+		</div>
 	);
 }
 

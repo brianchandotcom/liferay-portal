@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -52,7 +53,9 @@ const FieldsSelectorDropdown = ({fields}) => {
 							: Liferay.Language.get('open-fields-menu')
 					}
 					borderless
-					className="component-action"
+					className={classnames({
+						'component-action': Liferay.FeatureFlags['LPS-193005'],
+					})}
 					displayType="secondary"
 					symbol={active ? 'caret-top' : 'caret-bottom'}
 				/>

@@ -43,12 +43,24 @@ function Row({children, className, paddingLeftCells}) {
 		}
 	}
 
+	const Container = Liferay.FeatureFlags['LPS-193005']
+		? ClayTable.Row
+		: 'div';
+
 	return (
-		<ClayTable.Row className={classNames(className)} style={style}>
+		<Container
+			className={classNames(
+				{
+					'dnd-tr': !Liferay.FeatureFlags['LPS-193005'],
+				},
+				className
+			)}
+			style={style}
+		>
 			{placeholderPaddingCells}
 
 			{children}
-		</ClayTable.Row>
+		</Container>
 	);
 }
 

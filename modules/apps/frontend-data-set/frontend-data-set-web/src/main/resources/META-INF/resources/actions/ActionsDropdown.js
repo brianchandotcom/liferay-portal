@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -184,7 +185,11 @@ function ActionsDropdown({
 		});
 
 	return (
-		<div className="d-flex">
+		<div
+			className={classnames('d-flex', {
+				'justify-content-end': !Liferay.FeatureFlags['LPS-193005'],
+			})}
+		>
 			{inlineEditingAlwaysOn && inlineEditingActions}
 
 			<ClayDropDown
@@ -192,7 +197,12 @@ function ActionsDropdown({
 				onActiveChange={onMenuActiveChange}
 				trigger={
 					<ClayButton
-						className="component-action dropdown-toggle"
+						className={classnames(
+							'component-action dropdown-toggle',
+							{
+								'ml-1': !Liferay.FeatureFlags['LPS-193005'],
+							}
+						)}
 						disabled={loading}
 						displayType="unstyled"
 					>

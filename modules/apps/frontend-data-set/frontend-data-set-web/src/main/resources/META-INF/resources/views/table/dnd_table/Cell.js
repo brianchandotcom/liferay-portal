@@ -85,15 +85,8 @@ function Cell({
 		return columnDetails && isFixed && columnDetails.width;
 	}, [isFixed, modifiedFields, columnName]);
 
-	return (
-		<ClayTable.Cell
-			className={classNames(className)}
-			headingCell={heading}
-			ref={cellRef}
-			style={{
-				width: width ?? defaultWidth,
-			}}
-		>
+	const content = (
+		<>
 			{children}
 
 			{resizable && (
@@ -105,7 +98,34 @@ function Cell({
 					onMouseDown={initializeDrag}
 				/>
 			)}
-		</ClayTable.Cell>
+		</>
+	);
+
+	if (Liferay.FeatureFlags['LPS-193005']) {
+		return (
+			<ClayTable.Cell
+				className={className}
+				headingCell={heading}
+				ref={cellRef}
+				style={{
+					width: width ?? defaultWidth,
+				}}
+			>
+				{content}
+			</ClayTable.Cell>
+		);
+	}
+
+	return (
+		<div
+			className={classNames(heading ? 'dnd-th' : 'dnd-td', className)}
+			ref={cellRef}
+			style={{
+				width,
+			}}
+		>
+			{content}
+		</div>
 	);
 }
 

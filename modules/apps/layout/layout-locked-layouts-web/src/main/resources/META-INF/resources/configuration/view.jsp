@@ -43,7 +43,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<p class="text-secondary"><liferay-ui:message key="configure-how-often-to-review-which-pages-are-locked-and-how-long-a-page-can-be-locked-without-an-autosave" /></p>
+			<p class="text-secondary"><liferay-ui:message key="set-how-long-a-page-can-remain-locked-without-being-autosaved" /></p>
 		</clay:content-col>
 	</clay:content-row>
 

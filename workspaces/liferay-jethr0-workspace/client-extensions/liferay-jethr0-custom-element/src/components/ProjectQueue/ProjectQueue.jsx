@@ -4,6 +4,7 @@
  */
 
 import ClayTable from '@clayui/table';
+import { Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
 let oAuth2Client;
@@ -62,7 +63,12 @@ function ProjectQueue() {
 				return (
 					<ClayTable.Row key={project.id}>
 						<ClayTable.Cell headingCell>
-							{project.id}
+							<Link
+								title={project.id}
+								to={"/projects/" + project.id}
+							>
+								{project.id}
+							</Link>
 						</ClayTable.Cell>
 
 						<ClayTable.Cell>{project.name}</ClayTable.Cell>

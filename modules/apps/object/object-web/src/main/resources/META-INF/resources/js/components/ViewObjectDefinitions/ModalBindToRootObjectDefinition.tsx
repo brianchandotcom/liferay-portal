@@ -46,7 +46,10 @@ export function ModalBindToRootObjectDefinition({
 		onClose: () => onVisibilityChange(),
 	});
 	const [currentDepth, setCurrentDepth] = useState(0);
-	const [currentRelationshipId, setCurrentRelationshipId] = useState(0);
+	const [
+		currentObjectRelationshipId,
+		setCurrentObjectRelationshipId,
+	] = useState(0);
 
 	const [allTreeEdgeOptions, setAllTreeEdgeOptions] = useState<
 		TreeEdgeOption[][]
@@ -149,7 +152,7 @@ export function ModalBindToRootObjectDefinition({
 
 		if (depth < 3) {
 			setCurrentDepth(depth + 1);
-			setCurrentRelationshipId(
+			setCurrentObjectRelationshipId(
 				selectedTreeEdgeOption.objectRelationshipId
 			);
 		}
@@ -174,12 +177,12 @@ export function ModalBindToRootObjectDefinition({
 					createResourceURL(baseResourceURL, {
 						depth: currentDepth,
 						objectDefinitionId:
-							currentRelationshipId === 0
+							currentObjectRelationshipId === 0
 								? selectedObjectDefinitionToBind?.id
 								: 0,
 						objectRelationshipId:
-							currentRelationshipId !== 0
-								? currentRelationshipId
+							currentObjectRelationshipId !== 0
+								? currentObjectRelationshipId
 								: 0,
 						p_p_resource_id:
 							'/object_definitions/get_object_relationship_edge_candidates',
@@ -202,7 +205,7 @@ export function ModalBindToRootObjectDefinition({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [baseResourceURL, currentDepth, currentRelationshipId]);
+	}, [baseResourceURL, currentDepth, currentObjectRelationshipId]);
 
 	return (
 		<ClayModal center observer={observer} size="lg">

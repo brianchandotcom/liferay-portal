@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -21,6 +22,8 @@ import java.util.Set;
 
 import org.apache.felix.service.command.Descriptor;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,7 +63,10 @@ public class ReleaseManagerOSGiCommands {
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> {
 				try {
-					_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
+					_upgradeExecutor.execute(
+						BundleUtil.getBundle(
+							_bundleContext, bundleSymbolicName),
+						upgradeInfos);
 				}
 				catch (Throwable throwable) {
 					_log.error(
@@ -87,7 +93,7 @@ public class ReleaseManagerOSGiCommands {
 
 		TeeLoggingUtil.runWithTeeLogging(
 			() -> _upgradeExecutor.executeUpgradeInfos(
-				bundleSymbolicName,
+				BundleUtil.getBundle(_bundleContext, bundleSymbolicName),
 				releaseGraphManager.getUpgradeInfos(
 					_releaseManagerImpl.getSchemaVersionString(
 						bundleSymbolicName),
@@ -168,6 +174,11 @@ public class ReleaseManagerOSGiCommands {
 		return sb.toString();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	protected void executeAll(
 		Set<String> upgradeThrewExceptionBundleSymbolicNames) {
 
@@ -191,7 +202,9 @@ public class ReleaseManagerOSGiCommands {
 							upgradableBundleSymbolicName);
 
 					_upgradeExecutor.execute(
-						upgradableBundleSymbolicName, upgradeInfos);
+						BundleUtil.getBundle(
+							_bundleContext, upgradableBundleSymbolicName),
+						upgradeInfos);
 				}
 				catch (Throwable throwable) {
 					_log.error(
@@ -208,6 +221,8 @@ public class ReleaseManagerOSGiCommands {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseManagerOSGiCommands.class);
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private ReleaseManagerImpl _releaseManagerImpl;

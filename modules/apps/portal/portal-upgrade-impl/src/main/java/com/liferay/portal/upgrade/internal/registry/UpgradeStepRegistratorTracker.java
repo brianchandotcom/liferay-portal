@@ -172,7 +172,7 @@ public class UpgradeStepRegistratorTracker {
 					null)) {
 
 				try {
-					_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
+					_upgradeExecutor.execute(bundle, upgradeInfos);
 				}
 				catch (Throwable throwable) {
 					_log.error(

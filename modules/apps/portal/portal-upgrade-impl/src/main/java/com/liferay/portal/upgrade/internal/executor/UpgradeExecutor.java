@@ -27,11 +27,9 @@ import com.liferay.portal.upgrade.log.UpgradeLogContext;
 
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -43,47 +41,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = UpgradeExecutor.class)
 public class UpgradeExecutor {
 
-	public void execute(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
-
-		Bundle bundle = null;
-
-		for (UpgradeInfo upgradeInfo : upgradeInfos) {
-			UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
-
-			Bundle currentBundle = FrameworkUtil.getBundle(
-				upgradeStep.getClass());
-
-			if (currentBundle == null) {
-				continue;
-			}
-
-			if (Objects.equals(
-					currentBundle.getSymbolicName(), bundleSymbolicName)) {
-
-				bundle = currentBundle;
-
-				break;
-			}
-		}
-
-		Version requiredVersion = null;
-
-		if (bundle != null) {
-			Dictionary<String, String> headers = bundle.getHeaders(
-				StringPool.BLANK);
-
-			requiredVersion = Version.parseVersion(
-				headers.get("Liferay-Require-SchemaVersion"));
-		}
-
+	public void execute(Bundle bundle, List<UpgradeInfo> upgradeInfos) {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			upgradeInfos);
 
 		String schemaVersionString = "0.0.0";
 
 		Release release = _upgradeStepRegistratorTracker.fetchUpgradedRelease(
-			bundleSymbolicName);
+			bundle.getSymbolicName());
 
 		if ((release != null) &&
 			Validator.isNotNull(release.getSchemaVersion())) {
@@ -104,14 +69,23 @@ public class UpgradeExecutor {
 		}
 
 		if (size != 0) {
-			release = executeUpgradeInfos(
-				bundleSymbolicName, upgradeInfosList.get(0));
+			release = executeUpgradeInfos(bundle, upgradeInfosList.get(0));
 		}
 
 		if (release != null) {
 			String schemaVersion = release.getSchemaVersion();
 
-			if (Validator.isNull(schemaVersion) || (requiredVersion == null)) {
+			if (Validator.isNull(schemaVersion)) {
+				return;
+			}
+
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			Version requiredVersion = Version.parseVersion(
+				headers.get("Liferay-Require-SchemaVersion"));
+
+			if (requiredVersion == null) {
 				return;
 			}
 
@@ -120,19 +94,21 @@ public class UpgradeExecutor {
 
 				throw new IllegalStateException(
 					StringBundler.concat(
-						"Unable to upgrade ", bundleSymbolicName, " to ",
+						"Unable to upgrade ", bundle.getSymbolicName(), " to ",
 						requiredVersion, " from ", schemaVersion));
 			}
 		}
 	}
 
 	public Release executeUpgradeInfos(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
+		Bundle bundle, List<UpgradeInfo> upgradeInfos) {
+
+		String bundleSymbolicName = bundle.getSymbolicName();
 
 		try {
 			UpgradeLogContext.setContext(bundleSymbolicName);
 
-			_executeUpgradeInfos(bundleSymbolicName, upgradeInfos);
+			_executeUpgradeInfos(bundle, upgradeInfos);
 
 			Release release = _releaseLocalService.fetchRelease(
 				bundleSymbolicName);
@@ -161,8 +137,6 @@ public class UpgradeExecutor {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_upgradeStepRegistratorTracker = new UpgradeStepRegistratorTracker(
 			bundleContext, _releaseLocalService, this);
 
@@ -175,10 +149,12 @@ public class UpgradeExecutor {
 	}
 
 	private void _executeUpgradeInfos(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
+		Bundle bundle, List<UpgradeInfo> upgradeInfos) {
 
 		int buildNumber = 0;
 		int state = ReleaseConstants.STATE_GOOD;
+
+		String bundleSymbolicName = bundle.getSymbolicName();
 
 		try {
 			_updateReleaseState(bundleSymbolicName, _STATE_IN_PROGRESS);
@@ -214,15 +190,6 @@ public class UpgradeExecutor {
 
 				_releaseLocalService.updateRelease(release);
 			}
-		}
-
-		Bundle bundle = BundleUtil.getBundle(
-			_bundleContext, bundleSymbolicName);
-
-		if (bundle == null) {
-			throw new IllegalArgumentException(
-				"Module with symbolic name " + bundleSymbolicName +
-					" does not exist");
 		}
 
 		if (_requiresUpdateIndexes(bundle, upgradeInfos)) {
@@ -277,8 +244,6 @@ public class UpgradeExecutor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeExecutor.class);
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

@@ -785,7 +785,7 @@ definition {
 
 		var directoryPath = PropsUtil.get("output.dir.name");
 
-		var tempFileDir = "${directoryPath}/${fileName}";
+		var tempFileDir = FileUtil.read("${directoryPath}/${fileName}");
 
 		if (isSet(fileContentList)) {
 			for (var fileContent : list ${fileContentList}) {

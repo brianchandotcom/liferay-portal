@@ -227,7 +227,7 @@
 </tr>
 <tr>
 	<td>FIELD_TYPE_SELECT</td>
-	<td>//div/select[contains(@id,'FieldTypeName')]</td>
+	<td>//div/select[contains(@id,'commerceOptionTypeKey')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -16,7 +16,7 @@ import React, {useEffect, useState} from 'react';
 
 import './ModalUnbindObject.scss';
 
-interface ModalUnbindObjectProps {
+interface ModalUnbindObjectDefinitionProps {
 	baseResourceURL: string;
 	onVisibilityChange: () => void;
 	selectedObjectToUnbind?: ObjectDefinition;
@@ -26,7 +26,7 @@ export function ModalUnbindObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
 	selectedObjectToUnbind,
-}: ModalUnbindObjectProps) {
+}: ModalUnbindObjectDefinitionProps) {
 	const [rootObject, setRootObject] = useState<ObjectDefinition>();
 	const [loading, setLoading] = useState(false);
 

@@ -223,7 +223,7 @@ export default function PageContent({
 	return (
 		<li
 			className={classNames(
-				'page-editor__page-contents__page-content mb-1 p-1',
+				'page-editor__page-contents__page-content position-relative mb-1 p-1 pr-3 d-inline-flex autofit-row',
 				{
 					'page-editor__page-contents__page-content--mapped-item-hovered':
 						isHovered || activeActions || isBeingEdited,

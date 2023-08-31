@@ -185,12 +185,8 @@ export default function PageContent({
 		hoverItem(null);
 	};
 
-	const onClickEditInlineText = () => {
-		if (isBeingEdited) {
-			return;
-		}
-
-		const itemId = getFirstControlsId({
+	const getInlineTextItemId = () => {
+		return getFirstControlsId({
 			item: {
 				id: editableId,
 				itemType: ITEM_TYPES.editable,
@@ -199,13 +195,29 @@ export default function PageContent({
 			},
 			layoutData,
 		});
+	};
+
+	const onClickEditInlineText = () => {
+		if (isBeingEdited || !editableId) {
+			return;
+		}
+
+		const itemId = getInlineTextItemId();
+
+		setNextEditableProcessorUniqueId(itemId);
+	};
+
+	const onClickSelectInlineText = () => {
+		if (isBeingEdited || !editableId) {
+			return;
+		}
+
+		const itemId = getInlineTextItemId();
 
 		selectItem(itemId, {
 			itemType: ITEM_TYPES.editable,
 			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		});
-
-		setNextEditableProcessorUniqueId(itemId);
 	};
 
 	return (

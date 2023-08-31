@@ -3,16 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Button} from '@clayui/core';
 import {Formik} from 'formik';
 import {useState} from 'react';
 import i18n from '~/common/I18n';
 import SetupHighPriorityContactForm from '~/common/components/HighPriorityContacts/SetupHighPriorityContact';
 import Layout from '~/common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import openToast from '~/common/utils/getToast';
+import {Button} from '../../../../../../common/components';
+import getKebabCase from '../../../../../../common/utils/getKebabCase';
+import {useCustomerPortal} from '../../../../../../routes/customer-portal/context';
 import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	addHighPriorityContactsList,
+	associateContactRole,
+	removeContactRole,
 	removeHighPriorityContactsList,
 } from '../../../../utils/getHighPriorityContacts';
 
@@ -24,6 +29,8 @@ const IncidentContactEditModal = ({
 	leftButton,
 	modalFilter,
 }) => {
+	const [{project, sessionId}] = useCustomerPortal();
+
 	const [
 		addHighPriorityContactList,
 		setAddHighPriorityContactList,
@@ -34,7 +41,8 @@ const IncidentContactEditModal = ({
 	] = useState([]);
 	const [isMultiSelectEmpty, setIsMultiSelectEmpty] = useState(false);
 
-	const {client} = useAppPropertiesContext();
+	const {client, provisioningServerAPI} = useAppPropertiesContext();
+	const [isLoadingSaveButton, setIsLoadingSaveButton] = useState(false);
 
 	const addHighPriorityContacts = (contactList) => {
 		const contactsList = contactList.map((item) => item);
@@ -42,7 +50,7 @@ const IncidentContactEditModal = ({
 		setAddHighPriorityContactList(contactsList);
 	};
 	const removeHighPriorityContacts = (contactList) => {
-		const contactsList = contactList.map(({objectId}) => objectId);
+		const contactsList = contactList.map((item) => item);
 		setRemoveHighPriorityContactList(contactsList);
 	};
 
@@ -51,19 +59,66 @@ const IncidentContactEditModal = ({
 	};
 
 	const handleSubmit = async () => {
-		await Promise.all(
+		try {
+			setIsLoadingSaveButton(true);
+
+			await Promise.all(
+				addHighPriorityContactList?.map((item) => {
+					return addHighPriorityContactsList(client, item);
+				})
+			);
+
+			await Promise.all(
+				addHighPriorityContactList?.map(async (item) => {
+					return associateContactRole(
+						item,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+				})
+			);
+
+			await Promise.all(
+				removeHighPriorityContactList?.map((item) => {
+					return removeHighPriorityContactsList(client, item);
+				})
+			);
+			await Promise.all(
+				removeHighPriorityContactList?.map(async (item) => {
+					return removeContactRole(
+						item,
+						project,
+						sessionId,
+						provisioningServerAPI
+					);
+				})
+			);
+
 			removeHighPriorityContactList?.map((item) => {
-				return removeHighPriorityContactsList(client, item);
-			})
-		);
+				openToast(
+					`${item.label}`,
+					`${i18n.translate('high-priority-contact-removed')} 
+						${i18n.translate(`${getKebabCase(item.filter.name)}-contact`)}`
+				);
+			});
 
-		await Promise.all(
 			addHighPriorityContactList?.map((item) => {
-				return addHighPriorityContactsList(client, item);
-			})
-		);
+				openToast(
+					`${item.label}`,
+					`${i18n.translate('high-priority-contact-added')} 
+						${i18n.translate(`${getKebabCase(item.category.name)}-contact`)}`
+				);
+			});
 
-		close();
+			setIsLoadingSaveButton(false);
+			close();
+		} catch (error) {
+			setIsLoadingSaveButton(false);
+			openToast('error', 'an-unexpected-error-occurred', {
+				type: 'danger',
+			});
+		}
 	};
 
 	const highPriorityContactCategorySelected = Object.values(
@@ -113,8 +168,9 @@ const IncidentContactEditModal = ({
 				),
 				middleButton: (
 					<Button
-						disabled={isMultiSelectEmpty}
+						disabled={isMultiSelectEmpty || isLoadingSaveButton}
 						displayType="primary"
+						isLoading={isLoadingSaveButton}
 						onClick={handleSubmit}
 					>
 						{i18n.translate('save')}

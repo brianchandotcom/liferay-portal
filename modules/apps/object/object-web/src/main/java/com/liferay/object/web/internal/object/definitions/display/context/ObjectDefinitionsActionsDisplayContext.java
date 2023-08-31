@@ -157,7 +157,7 @@ public class ObjectDefinitionsActionsDisplayContext
 			if (StringUtil.equals(
 					objectActionExecutor.getKey(),
 					ObjectActionExecutorConstants.KEY_GROOVY) &&
-				!ObjectConfigurationUtil.hasPermissionExecuteCode(
+				!ObjectConfigurationUtil.hasPermissionExecuteScript(
 					_objectRequestHelper.getPermissionChecker())) {
 
 				continue;

@@ -92,8 +92,8 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
-		boolean hasPermissionExecuteCode =
-			ObjectConfigurationUtil.hasPermissionExecuteCode(
+		boolean hasPermissionExecuteScript =
+			ObjectConfigurationUtil.hasPermissionExecuteScript(
 				_objectRequestHelper.getPermissionChecker());
 
 		return ListUtil.sort(
@@ -107,7 +107,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 						!StringUtil.equals(
 							objectValidationRuleEngine.getKey(),
 							ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) ||
-						hasPermissionExecuteCode),
+						hasPermissionExecuteScript),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
 					objectValidationRuleEngine.getLabel(

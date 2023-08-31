@@ -51,7 +51,7 @@ public class ObjectValidationRuleServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		_validateConfigurationExecuteCode(engine, getPermissionChecker());
+		_validateConfigurationExecuteScript(engine, getPermissionChecker());
 
 		return objectValidationRuleLocalService.addObjectValidationRule(
 			externalReferenceCode, getUserId(), objectDefinitionId, active,
@@ -109,7 +109,7 @@ public class ObjectValidationRuleServiceImpl
 			getPermissionChecker(),
 			objectValidationRule.getObjectDefinitionId(), ActionKeys.UPDATE);
 
-		_validateConfigurationExecuteCode(engine, getPermissionChecker());
+		_validateConfigurationExecuteScript(engine, getPermissionChecker());
 
 		return objectValidationRuleLocalService.updateObjectValidationRule(
 			externalReferenceCode, objectValidationRuleId, active, engine,
@@ -117,13 +117,13 @@ public class ObjectValidationRuleServiceImpl
 			objectValidationRuleSettings);
 	}
 
-	private void _validateConfigurationExecuteCode(
+	private void _validateConfigurationExecuteScript(
 			String engine, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		if (Objects.equals(
 				engine, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) &&
-			!ObjectConfigurationUtil.hasPermissionExecuteCode(
+			!ObjectConfigurationUtil.hasPermissionExecuteScript(
 				permissionChecker)) {
 
 			throw new ObjectValidationRuleEngineException.

@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  */
 public class ObjectConfigurationUtil {
 
-	public static boolean hasPermissionExecuteCode(
+	public static boolean hasPermissionExecuteScript(
 			PermissionChecker permissionChecker)
 		throws PortalException {
 

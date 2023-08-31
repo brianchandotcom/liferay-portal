@@ -2267,7 +2267,7 @@ definition {
 			Navigator.openURL();
 		}
 
-		UserBar.signOut();
+		UserBar.signOut(signOutLocalizationName = ${signOutLocalizationName});
 	}
 
 	@description = "Log out of Liferay Portal via URL."

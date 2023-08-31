@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>USER_AVATAR_DROPDOWN_SIGNOUT</td>
-	<td>//a[contains(@class,'dropdown-item')][contains(.,'Sign Out') or contains(.,'Salir')]</td>
+	<td>//a[contains(@class,'dropdown-item')][contains(.,'Sign Out') or contains(.,'${key_signOutLocalizationName}')]</td>
 	<td></td>
 </tr>
 <tr>

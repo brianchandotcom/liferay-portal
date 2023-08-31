@@ -167,7 +167,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 
 		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
 
-		if ((node.getDepth() + depth) > Tree.MAX_HEIGHT) {
+		if ((node.getDepth() + depth + 1) > Tree.MAX_HEIGHT) {
 			return false;
 		}
 

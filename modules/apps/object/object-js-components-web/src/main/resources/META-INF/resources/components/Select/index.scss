@@ -18,15 +18,23 @@
 	justify-content: space-between;
 }
 
-.base-select__input-icon {
-	bottom: 0;
-	margin: auto;
-	pointer-events: none;
-	position: absolute;
-	right: 1rem;
-	top: 0;
+.base-select__trigger {
+	&-content-right {
+		position: absolute;
+		right: 3rem;
+		top: 0.4rem;
+	}
 
-	&--disabled {
-		color: #a7a9bc;
+	&-input-icon {
+		bottom: 0;
+		margin: auto;
+		pointer-events: none;
+		position: absolute;
+		right: 1rem;
+		top: 0;
+
+		&--disabled {
+			color: #a7a9bc;
+		}
 	}
 }

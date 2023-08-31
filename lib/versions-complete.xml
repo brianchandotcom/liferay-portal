@@ -6189,8 +6189,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/hsql.jar</file-name>
-				<version>2.7.1</version>
-				<classifier>jdk8</classifier>
+				<version>2.7.1.LIFERAY-PATCHED-1</version>
 				<project-name>HSQL Database Engine</project-name>
 				<project-url>http://hsqldb.org</project-url>
 				<licenses>

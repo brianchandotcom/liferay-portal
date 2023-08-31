@@ -26,7 +26,7 @@ export default function Container({
 			)}
 		>
 			<ClayLayout.ContainerFluid
-				size={Liferay.FeatureFlags['LPS-184404'] ? false : 'xl'}
+				size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
 			>
 				{children}
 			</ClayLayout.ContainerFluid>

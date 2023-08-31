@@ -30,7 +30,7 @@ export default function Search({
 				content
 			) : (
 				<ClayLayout.ContainerFluid
-					size={Liferay.FeatureFlags['LPS-184404'] ? false : 'xl'}
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
 				>
 					{content}
 				</ClayLayout.ContainerFluid>

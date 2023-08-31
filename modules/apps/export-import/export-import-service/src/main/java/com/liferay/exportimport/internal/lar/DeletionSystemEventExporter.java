@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -89,12 +90,12 @@ public class DeletionSystemEventExporter {
 				SystemEvent systemEvent =
 					SystemEventLocalServiceUtil.fetchSystemEvent(systemEventId);
 
-				String extraData = systemEvent.getExtraData();
-
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					extraData);
+					systemEvent.getExtraData());
 
-				if (extraData.contains(_ASSET_TITLE)) {
+				if ((jsonObject.get(_ASSET_TITLE) != null) &&
+					FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+
 					String assetTitle = jsonObject.get(
 						_ASSET_TITLE
 					).toString();

@@ -18,6 +18,7 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -74,11 +75,13 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 		JournalArticle article = _journalArticleLocalService.getLatestArticle(
 			classPK);
 
-		JSONObject extraDataJSONObject = JSONUtil.put(
-			JournalArticleConstants.ASSET_TITLE,
-			article.getTitle(article.getDefaultLanguageId()));
+		JSONObject extraDataJSONObject = JSONUtil.put("inTrash", true);
 
-		extraDataJSONObject.put("inTrash", true);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+			extraDataJSONObject.put(
+				JournalArticleConstants.ASSET_TITLE,
+				article.getTitle(article.getDefaultLanguageId()));
+		}
 
 		return _systemEventLocalService.addSystemEvent(
 			userId, groupId, getSystemEventClassName(), classPK, classUuid,

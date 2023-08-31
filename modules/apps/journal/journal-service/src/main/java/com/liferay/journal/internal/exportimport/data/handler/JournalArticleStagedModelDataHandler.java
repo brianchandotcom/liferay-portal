@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -521,11 +522,13 @@ public class JournalArticleStagedModelDataHandler
 			articleElement.addAttribute("preloaded", "true");
 		}
 
-		portletDataContext.getManifestSummary(
-		).addAssetTitle(
-			JournalArticle.class.getName(),
-			article.getTitle(article.getDefaultLanguageId())
-		);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+			portletDataContext.getManifestSummary(
+			).addAssetTitle(
+				JournalArticle.class.getName(),
+				article.getTitle(article.getDefaultLanguageId())
+			);
+		}
 
 		_exportAssetDisplayPage(portletDataContext, article);
 

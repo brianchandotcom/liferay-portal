@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
@@ -57,6 +58,13 @@ public class LayoutModelDocumentContributor
 				layout.getName(locale));
 		}
 
+		document.addLocalizedKeyword(
+			"localized_title",
+			_localization.populateLocalizationMap(
+				layout.getNameMap(), layout.getDefaultLanguageId(),
+				layout.getGroupId()),
+			true, true);
+
 		List<LayoutLocalization> layoutLocalizations =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
 				layout.getPlid());
@@ -82,5 +90,8 @@ public class LayoutModelDocumentContributor
 
 	@Reference
 	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
+
+	@Reference
+	private Localization _localization;
 
 }

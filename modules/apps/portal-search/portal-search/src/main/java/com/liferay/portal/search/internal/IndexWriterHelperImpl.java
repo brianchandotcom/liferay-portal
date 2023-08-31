@@ -496,7 +496,7 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 		searchContext.setCompanyId(companyId);
 
-		_setCommitImmediately(searchContext, true);
+		_setCommitImmediately(searchContext, _commitImmediately);
 
 		indexWriter.updateDocument(searchContext, document);
 	}

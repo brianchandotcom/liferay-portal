@@ -36,7 +36,7 @@ public class CPInstancePriceListsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return language.get(resourceBundle, "price-lists");
+		return language.get(resourceBundle, "price");
 	}
 
 	@Override

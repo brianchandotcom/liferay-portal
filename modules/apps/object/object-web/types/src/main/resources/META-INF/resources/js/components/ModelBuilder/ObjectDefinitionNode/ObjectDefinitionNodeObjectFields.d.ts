@@ -12,6 +12,7 @@ interface ObjectDefinitionNodeFieldsProps {
 	showAllObjectFields: boolean;
 }
 export default function ObjectDefinitionNodeFields({
+	defaultLanguageId,
 	objectFields,
 	showAllObjectFields,
 }: ObjectDefinitionNodeFieldsProps): JSX.Element;

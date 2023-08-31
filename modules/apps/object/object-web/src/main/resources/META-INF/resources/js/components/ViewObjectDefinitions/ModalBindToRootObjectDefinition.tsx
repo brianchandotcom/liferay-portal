@@ -25,7 +25,7 @@ interface ModalBindToRootObjectDefinitionProps {
 	selectedObjectDefinitionToBind?: ObjectDefinition;
 }
 
-interface RootObjectPathOption {
+interface RootObjectDefinitionPathOption {
 	ancestors?: {
 		label: string;
 		objectRelationshipId: number;
@@ -49,11 +49,11 @@ export function ModalBindToRootObjectDefinition({
 	const [currentRelationshipId, setCurrentRelationshipId] = useState(0);
 
 	const [allRootObjectOptions, setAllRootObjectOptions] = useState<
-		RootObjectPathOption[][]
+		RootObjectDefinitionPathOption[][]
 	>([]);
 
 	const [selectedRootObjects, setSelectedRootObjects] = useState<
-		RootObjectPathOption[]
+		RootObjectDefinitionPathOption[]
 	>([]);
 
 	const onSubmit = async () => {
@@ -87,8 +87,8 @@ export function ModalBindToRootObjectDefinition({
 
 	const filterRootObjectsByDepth = (
 		depth: number,
-		newAllRootObjectOptions: RootObjectPathOption[][],
-		newSelectedRootObjects: RootObjectPathOption[]
+		newAllRootObjectOptions: RootObjectDefinitionPathOption[][],
+		newSelectedRootObjects: RootObjectDefinitionPathOption[]
 	) => {
 		const filteredSelectedRootObjects = newSelectedRootObjects.filter(
 			(_, index) => index <= depth
@@ -109,7 +109,7 @@ export function ModalBindToRootObjectDefinition({
 	};
 
 	const handleSelectRootObject = (
-		option: RootObjectPathOption,
+		option: RootObjectDefinitionPathOption,
 		depth: number
 	) => {
 		setLoading(true);
@@ -182,7 +182,7 @@ export function ModalBindToRootObjectDefinition({
 					}).toString()
 				);
 
-				const responseJSON = (await response.json()) as RootObjectPathOption[];
+				const responseJSON = (await response.json()) as RootObjectDefinitionPathOption[];
 
 				if (!!responseJSON.length && allRootObjectOptions.length <= 4) {
 					const newRootObjectOptions = allRootObjectOptions;
@@ -227,7 +227,7 @@ export function ModalBindToRootObjectDefinition({
 					<ClayLoadingIndicator displayType="secondary" size="sm" />
 				) : (
 					allRootObjectOptions.map((rootObjectOptions, index) => (
-						<SingleSelect<RootObjectPathOption>
+						<SingleSelect<RootObjectDefinitionPathOption>
 							contentRight={
 								selectedRootObjects[index]?.isRootObject && (
 									<ClayLabel displayType="info">

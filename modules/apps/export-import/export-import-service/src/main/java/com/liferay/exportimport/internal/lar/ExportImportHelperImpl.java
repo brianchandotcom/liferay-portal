@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1643,10 +1644,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				_manifestSummary.addModelDeletionCount(
 					manifestSummaryKey, modelDeletionCount);
 
-				String assetTitle = GetterUtil.getString(
-					element.attributeValue("asset-title"));
+				if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+					String assetTitle = GetterUtil.getString(
+						element.attributeValue("asset-title"));
 
-				_manifestSummary.addAssetTitle(manifestSummaryKey, assetTitle);
+					_manifestSummary.addAssetTitle(
+						manifestSummaryKey, assetTitle);
+				}
 			}
 		}
 

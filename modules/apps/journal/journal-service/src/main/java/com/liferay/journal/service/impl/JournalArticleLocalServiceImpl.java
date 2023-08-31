@@ -111,6 +111,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -1362,18 +1363,33 @@ public class JournalArticleLocalServiceImpl
 
 		// System event
 
-		if (articleResource != null) {
-			_systemEventLocalService.addSystemEvent(
-				0, article.getGroupId(), article.getModelClassName(),
-				article.getPrimaryKey(), articleResource.getUuid(), null,
-				SystemEventConstants.TYPE_DELETE,
-				JSONUtil.put(
-					JournalArticleConstants.ASSET_TITLE, assetTitle
-				).put(
-					"uuid", article.getUuid()
-				).put(
-					"version", article.getVersion()
-				).toString());
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+			if (articleResource != null) {
+				_systemEventLocalService.addSystemEvent(
+					0, article.getGroupId(), article.getModelClassName(),
+					article.getPrimaryKey(), articleResource.getUuid(), null,
+					SystemEventConstants.TYPE_DELETE,
+					JSONUtil.put(
+						JournalArticleConstants.ASSET_TITLE, assetTitle
+					).put(
+						"uuid", article.getUuid()
+					).put(
+						"version", article.getVersion()
+					).toString());
+			}
+		}
+		else {
+			if (articleResource != null) {
+				_systemEventLocalService.addSystemEvent(
+					0, article.getGroupId(), article.getModelClassName(),
+					article.getPrimaryKey(), articleResource.getUuid(), null,
+					SystemEventConstants.TYPE_DELETE,
+					JSONUtil.put(
+						"uuid", article.getUuid()
+					).put(
+						"version", article.getVersion()
+					).toString());
+			}
 		}
 
 		return article;
@@ -1438,7 +1454,7 @@ public class JournalArticleLocalServiceImpl
 				new ArticleVersionComparator(true));
 
 			for (JournalArticle article : articles) {
-				assetTitle = article.getTitleCurrentValue();
+				assetTitle = article.getTitle(article.getDefaultLanguageId());
 				journalArticleLocalService.deleteArticle(
 					article, null, serviceContext);
 			}
@@ -1447,14 +1463,26 @@ public class JournalArticleLocalServiceImpl
 			SystemEventHierarchyEntryThreadLocal.pop(JournalArticle.class);
 		}
 
-		if (articleResource != null) {
-			_systemEventLocalService.addSystemEvent(
-				0, groupId, JournalArticle.class.getName(),
-				articleResource.getResourcePrimKey(), articleResource.getUuid(),
-				null, SystemEventConstants.TYPE_DELETE,
-				JSONUtil.put(
-					JournalArticleConstants.ASSET_TITLE, assetTitle
-				).toString());
+		if (FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+			if (articleResource != null) {
+				_systemEventLocalService.addSystemEvent(
+					0, groupId, JournalArticle.class.getName(),
+					articleResource.getResourcePrimKey(),
+					articleResource.getUuid(), null,
+					SystemEventConstants.TYPE_DELETE,
+					JSONUtil.put(
+						JournalArticleConstants.ASSET_TITLE, assetTitle
+					).toString());
+			}
+		}
+		else {
+			if (articleResource != null) {
+				_systemEventLocalService.addSystemEvent(
+					0, groupId, JournalArticle.class.getName(),
+					articleResource.getResourcePrimKey(),
+					articleResource.getUuid(), null,
+					SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+			}
 		}
 	}
 

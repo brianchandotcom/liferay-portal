@@ -31,12 +31,14 @@ export interface SelectProps {
 	id?: string;
 	label?: string;
 	placeholder?: string;
+	readonly?: boolean;
 	required?: boolean;
 	value?: string;
 }
 
-interface IProps extends SelectProps {
+interface BaseSelectProps extends SelectProps {
 	children: ReactNode;
+	contentRight?: ReactNode;
 	dropdownActive: boolean;
 	setDropdownActive: React.Dispatch<React.SetStateAction<boolean>>;
 	trigger?: JSX.Element;
@@ -45,6 +47,7 @@ interface IProps extends SelectProps {
 export function BaseSelect({
 	children,
 	className,
+	contentRight,
 	disabled,
 	dropdownActive,
 	error,
@@ -52,12 +55,13 @@ export function BaseSelect({
 	id,
 	label,
 	placeholder = Liferay.Language.get('choose-an-option'),
+	readonly,
 	required,
 	setDropdownActive,
 	trigger,
 	value,
 	...restProps
-}: IProps) {
+}: BaseSelectProps) {
 	const inputRef = useRef(null);
 
 	return (
@@ -81,10 +85,20 @@ export function BaseSelect({
 					})
 				) : (
 					<>
+						{contentRight && (
+							<div className="base-select__trigger-content-right">
+								{contentRight}
+							</div>
+						)}
+
 						<ClayIcon
-							className={classNames('base-select__input-icon', {
-								'base-select__input-icon--disabled': disabled,
-							})}
+							className={classNames(
+								'base-select__trigger-input-icon',
+								{
+									'base-select__input-icon--disabled':
+										disabled || readonly,
+								}
+							)}
 							onClick={() =>
 								!disabled &&
 								setDropdownActive((active) => !active)
@@ -96,9 +110,11 @@ export function BaseSelect({
 							defaultValue={value}
 							disabled={disabled}
 							onClick={() =>
+								!readonly &&
 								setDropdownActive((active) => !active)
 							}
 							placeholder={placeholder}
+							readOnly={readonly}
 							ref={inputRef}
 							value={value}
 							{...restProps}

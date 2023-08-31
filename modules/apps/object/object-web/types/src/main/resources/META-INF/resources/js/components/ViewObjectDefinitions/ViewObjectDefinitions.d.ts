@@ -16,10 +16,13 @@ interface ViewObjectDefinitionsProps extends IFDSTableProps {
 export declare type ViewObjectDefinitionsModals = {
 	addFolder: boolean;
 	addObjectDefinition: boolean;
+	bindToRootObjectDefinition: boolean;
 	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
+	deletionNotAllowed: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
+	unbindFromRootObjectDefinition: boolean;
 };
 export interface DeletedObjectDefinition extends ObjectDefinition {
 	hasObjectRelationship: boolean;

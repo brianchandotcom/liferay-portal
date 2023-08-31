@@ -20,7 +20,6 @@ import com.liferay.portal.verify.VerifyProperties;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Luis Ortiz
@@ -28,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UpgradeLogContext implements LogContext {
 
 	public static void clearContext() {
-		_context.clear();
+		_component = "framework";
 	}
 
 	public static LogContext getInstance() {
@@ -36,17 +35,13 @@ public class UpgradeLogContext implements LogContext {
 	}
 
 	public static void setContext(String component) {
-		_context.put("component", component);
+		_component = component;
 	}
 
 	@Override
 	public Map<String, String> getContext(String logName) {
 		if (_isUpgradeClass(logName)) {
-			if (_context.isEmpty()) {
-				return _defaultContext;
-			}
-
-			return _context;
+			return Collections.singletonMap("component", _component);
 		}
 
 		return Collections.emptyMap();
@@ -88,15 +83,12 @@ public class UpgradeLogContext implements LogContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeLogContext.class);
 
-	private static final ConcurrentHashMap<String, String> _context =
-		new ConcurrentHashMap<>();
+	private static volatile String _component = "framework";
 
 	private final Class<?>[] _baseUpgradeClasses = new Class<?>[] {
 		BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
 		UpgradeStep.class
 	};
-	private final Map<String, String> _defaultContext =
-		Collections.singletonMap("component", "framework");
 	private final Set<String> _upgradeClassNames = SetUtil.fromArray(
 		DBUpgrader.class.getName(), LoggingTimer.class.getName(),
 		VerifyProperties.class.getName(),

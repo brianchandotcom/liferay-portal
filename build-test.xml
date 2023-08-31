@@ -12433,6 +12433,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			component.names=${component.names}
 			custom.super.admin.user.email=${custom.super.admin.user.email}
 			custom.super.admin.user.password=${custom.super.admin.user.password}
+			custom.default.user.first.password=${custom.default.user.first.password}
 			custom.default.user.password=${custom.default.user.password}
 			custom.default.user.email=${custom.default.user.email}
 			get.location.max.retries=${test.get.location.max.retries}

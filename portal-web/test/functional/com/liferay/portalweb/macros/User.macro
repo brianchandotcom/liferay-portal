@@ -1845,14 +1845,8 @@ definition {
 
 	macro firstLoginPG {
 		var appServerType = PropsUtil.get("app.server.type");
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = JSONUtil2.getDefaultUserEmail();
-		}
-
-		if (!(isSet(password))) {
-			var password = JSONUtil2.getDefaultUserPassword();
-		}
+		var password = JSONUtil2.getDefaultUserFirstPassword();
+		var userEmailAddress = JSONUtil2.getDefaultUserEmail();
 
 		if (${appServerType} == "weblogic") {
 

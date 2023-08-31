@@ -164,6 +164,16 @@ definition {
 		return ${customDefaultUserEmail};
 	}
 
+	macro getDefaultUserFirstPassword {
+		var customDefaultUserFirstPassword = PropsUtil.get("custom.default.user.first.password");
+
+		if (!(isSet(customDefaultUserFirstPassword))) {
+			var customDefaultUserFirstPassword = "test";
+		}
+
+		return ${customDefaultUserFirstPassword};
+	}
+
 	macro getDefaultUserPassword {
 		var customDefaultUserPassword = PropsUtil.get("custom.default.user.password");
 

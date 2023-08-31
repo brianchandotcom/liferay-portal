@@ -547,7 +547,7 @@ export default function ViewObjectDefinitions({
 								})
 							);
 						}}
-						selectedObjectToUnbind={selectedObjectDefinition}
+						selectedObjectDefinitionToUnbind={selectedObjectDefinition}
 					/>
 				)}
 		</>

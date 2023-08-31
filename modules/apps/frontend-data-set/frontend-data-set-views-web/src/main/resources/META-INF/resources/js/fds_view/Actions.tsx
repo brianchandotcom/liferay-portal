@@ -124,6 +124,17 @@ const Actions = () => {
 							>
 								<OrderableTable
 									className="mt-0 p-1"
+									creationMenuItems={[
+										{
+											label: Liferay.Language.get(
+												'add-action'
+											),
+											onClick: () =>
+												setActiveSection(
+													SECTIONS.NEW_ITEM_ACTION
+												),
+										},
+									]}
 									fields={[
 										{
 											label: Liferay.Language.get('icon'),
@@ -151,11 +162,6 @@ const Actions = () => {
 										'no-actions-were-created'
 									)}
 									onCancelButtonClick={noop}
-									onCreationButtonClick={() =>
-										setActiveSection(
-											SECTIONS.NEW_ITEM_ACTION
-										)
-									}
 									onOrderChange={noop}
 									onSaveButtonClick={noop}
 								/>

@@ -246,9 +246,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_accountEntryOrganizationRelLocalService,
 					_groupLocalService, objectDefinition.getClassName(),
 					_objectDefinitionLocalService, _objectEntryLocalService,
-					_objectFieldLocalService, portletResourcePermission,
-					_resourcePermissionLocalService,
-					_userGroupRoleLocalService),
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					portletResourcePermission, _resourcePermissionLocalService,
+					_treeFactory, _userGroupRoleLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.object", "true"
 				).put(

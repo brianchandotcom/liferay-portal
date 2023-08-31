@@ -330,6 +330,55 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 	}
 
+	@Override
+	public void unlockLayoutsByUserId(long companyId, long userId) {
+		List<Long> plids = _layoutLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				LayoutTable.INSTANCE.plid
+			).from(
+				LayoutTable.INSTANCE
+			).innerJoinON(
+				LockTable.INSTANCE,
+				LockTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					LockTable.INSTANCE.className.eq(Layout.class.getName())
+				).and(
+					LockTable.INSTANCE.key.eq(
+						DSLFunctionFactoryUtil.castText(
+							LayoutTable.INSTANCE.plid))
+				).and(
+					LockTable.INSTANCE.userId.eq(userId)
+				).and(
+					LockTable.INSTANCE.owner.eq(String.valueOf(userId))
+				)
+			).where(
+				LayoutTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					LayoutTable.INSTANCE.classPK.gt(0L)
+				).and(
+					LayoutTable.INSTANCE.hidden.eq(true)
+				).and(
+					LayoutTable.INSTANCE.system.eq(true)
+				).and(
+					LayoutTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_DRAFT)
+				).and(
+					LayoutTable.INSTANCE.type.in(
+						new String[] {
+							LayoutConstants.TYPE_ASSET_DISPLAY,
+							LayoutConstants.TYPE_COLLECTION,
+							LayoutConstants.TYPE_CONTENT
+						})
+				)
+			));
+
+		for (Long plid : plids) {
+			_lockManager.unlock(Layout.class.getName(), String.valueOf(plid));
+		}
+	}
+
 	private String _getLayoutPageTemplateEntryTypeLabel(
 		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
 

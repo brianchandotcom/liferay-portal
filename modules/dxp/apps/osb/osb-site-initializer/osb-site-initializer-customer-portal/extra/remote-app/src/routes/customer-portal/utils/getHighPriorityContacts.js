@@ -8,11 +8,47 @@ import {
 	addHighPriorityContact,
 	deleteHighPriorityContacts,
 } from '~/common/services/liferay/graphql/queries';
+import {
+	associateContactRoleNameByEmailByProject,
+	deleteContactRoleNameByEmailByProject,
+} from '../../../../src/common/services/liferay/rest/raysource/LicenseKeys';
 
 const HIGH_PRIORITY_CONTACT_CATEGORIES = {
 	criticalIncident: i18n.translate('critical-incident'),
 	privacyBreach: i18n.translate('privacy-breach'),
 	securityBreach: i18n.translate('security-breach'),
+};
+
+const removeContactRole = async (
+	item,
+	project,
+	sessionId,
+	provisioningServerAPI
+) => {
+	return await deleteContactRoleNameByEmailByProject({
+		accountKey: project.accountKey,
+		emailURI: encodeURI(item.email),
+		provisioningServerAPI,
+		rolesToDelete: item.filter.role,
+		sessionId,
+	});
+};
+
+const associateContactRole = async (
+	item,
+	project,
+	sessionId,
+	provisioningServerAPI
+) => {
+	return await associateContactRoleNameByEmailByProject({
+		accountKey: project.accountKey,
+		emailURI: encodeURI(item.email),
+		firstName: item.label,
+		lastName: item.label,
+		provisioningServerAPI,
+		roleName: item.category.role,
+		sessionId,
+	});
 };
 
 const removeHighPriorityContactsList = async (client, item) => {
@@ -23,7 +59,7 @@ const removeHighPriorityContactsList = async (client, item) => {
 		},
 		mutation: deleteHighPriorityContacts,
 		variables: {
-			highPriorityContactsId: item,
+			highPriorityContactsId: item.objectId,
 		},
 	});
 };
@@ -48,6 +84,8 @@ const addHighPriorityContactsList = async (client, item) => {
 };
 
 export {
+	removeContactRole,
+	associateContactRole,
 	addHighPriorityContactsList,
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	removeHighPriorityContactsList,

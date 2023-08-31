@@ -86,8 +86,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 	@Override
 	public Definition parse(String content) throws WorkflowException {
 		try {
-			Document document = SAXReaderUtil.read(
-				_toXML(content), _validate);
+			Document document = SAXReaderUtil.read(_toXML(content), _validate);
 
 			return _parse(document);
 		}

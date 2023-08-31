@@ -49,6 +49,9 @@ jest.mock(
 			})
 		),
 		getCollectionVariations: jest.fn(() => Promise.resolve([])),
+		getCollectionWarningMessage: jest.fn(() =>
+			Promise.resolve({warningMessage: ''})
+		),
 	})
 );
 
@@ -266,20 +269,19 @@ describe('CollectionGeneralPanel', () => {
 		});
 	});
 
-	it('shows a message saying that enabling Display All Collection Items could affect performance', async () => {
+	it('shows a warning message from backend when collection has some problematic configuration', async () => {
+		CollectionService.getCollectionWarningMessage.mockImplementation(() =>
+			Promise.resolve({
+				warningMessage: 'page-performance-warning-and-stuff',
+			})
+		);
+
 		await act(async () => {
-			renderComponent({
-				itemConfig: {
-					displayAllItems: true,
-					paginationType: 'none',
-				},
-			});
+			renderComponent();
 		});
 
 		expect(
-			await screen.findByText(
-				'this-setting-can-affect-page-performance-severely-if-the-number-of-collection-items-is-above-x.-we-strongly-recommend-using-pagination-instead'
-			)
+			await screen.findByText('page-performance-warning-and-stuff')
 		).toBeInTheDocument();
 	});
 
@@ -393,16 +395,6 @@ describe('CollectionGeneralPanel', () => {
 
 			expect(
 				await screen.findByText('this-collection-has-32-items')
-			).toBeInTheDocument();
-		});
-
-		it('shows a message saying that exceeding the default max value could affect performance', async () => {
-			renderComponent({itemConfig: {paginationType: 'none'}});
-
-			expect(
-				await screen.findByText(
-					'setting-a-value-above-50-can-affect-page-performance-severely'
-				)
 			).toBeInTheDocument();
 		});
 	});

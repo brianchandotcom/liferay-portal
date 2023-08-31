@@ -19,7 +19,7 @@ import {
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 
-interface ModalBindToRootObjectProps {
+interface ModalBindToRootObjectDefinitionProps {
 	baseResourceURL: string;
 	onVisibilityChange: () => void;
 	selectedObjectToBind?: ObjectDefinition;
@@ -40,7 +40,7 @@ export function ModalBindToRootObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
 	selectedObjectToBind,
-}: ModalBindToRootObjectProps) {
+}: ModalBindToRootObjectDefinitionProps) {
 	const [loading, setLoading] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => onVisibilityChange(),

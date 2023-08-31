@@ -16,22 +16,24 @@ import java.util.Collection;
 public class RepositoryClassDefinitionCatalogUtil {
 
 	public static Iterable<RepositoryClassDefinition>
-		getExternalRepositoryClassDefinitions() {
+		getExternalRepositoryClassDefinitions(long companyId) {
 
 		return _repositoryClassDefinitionCatalog.
-			getExternalRepositoryClassDefinitions();
+			getExternalRepositoryClassDefinitions(companyId);
 	}
 
-	public static Collection<String> getExternalRepositoryClassNames() {
+	public static Collection<String> getExternalRepositoryClassNames(
+		long companyId) {
+
 		return _repositoryClassDefinitionCatalog.
-			getExternalRepositoryClassNames();
+			getExternalRepositoryClassNames(companyId);
 	}
 
 	public static RepositoryClassDefinition getRepositoryClassDefinition(
-		String repositoryTypeKey) {
+		long companyId, String repositoryTypeKey) {
 
 		return _repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-			repositoryTypeKey);
+			companyId, repositoryTypeKey);
 	}
 
 	public static RepositoryClassDefinitionCatalog

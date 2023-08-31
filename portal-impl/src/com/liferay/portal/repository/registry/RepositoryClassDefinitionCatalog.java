@@ -16,12 +16,12 @@ import java.util.Collection;
 public interface RepositoryClassDefinitionCatalog {
 
 	public Iterable<RepositoryClassDefinition>
-		getExternalRepositoryClassDefinitions();
+		getExternalRepositoryClassDefinitions(long companyId);
 
-	public Collection<String> getExternalRepositoryClassNames();
+	public Collection<String> getExternalRepositoryClassNames(long companyId);
 
 	public RepositoryClassDefinition getRepositoryClassDefinition(
-		String className);
+		long companyId, String className);
 
 	public void registerLegacyExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory,

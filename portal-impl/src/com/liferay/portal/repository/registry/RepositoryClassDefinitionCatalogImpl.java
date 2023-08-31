@@ -60,13 +60,13 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public Iterable<RepositoryClassDefinition>
-		getExternalRepositoryClassDefinitions() {
+		getExternalRepositoryClassDefinitions(long companyId) {
 
 		return _externalRepositoryClassDefinitions.values();
 	}
 
 	@Override
-	public Collection<String> getExternalRepositoryClassNames() {
+	public Collection<String> getExternalRepositoryClassNames(long companyId) {
 		return _externalRepositoryClassDefinitions.keySet();
 	}
 
@@ -79,7 +79,7 @@ public class RepositoryClassDefinitionCatalogImpl
 
 	@Override
 	public RepositoryClassDefinition getRepositoryClassDefinition(
-		String className) {
+		long companyId, String className) {
 
 		return _repositoryClassDefinitions.get(className);
 	}

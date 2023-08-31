@@ -50,7 +50,7 @@ public class RepositoryUtil {
 
 		Collection<String> externalRepositoryClassNames =
 			RepositoryClassDefinitionCatalogUtil.
-				getExternalRepositoryClassNames();
+				getExternalRepositoryClassNames(repository.getCompanyId());
 
 		return externalRepositoryClassNames.contains(repository.getClassName());
 	}

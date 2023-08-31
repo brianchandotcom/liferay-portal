@@ -7,6 +7,7 @@ package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
@@ -25,9 +26,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
 
-		String className = getRepositoryClassName(repositoryId);
-
-		RepositoryFactory repositoryFactory = getRepositoryFactory(className);
+		RepositoryFactory repositoryFactory = getRepositoryFactory(
+			_getRepositoryCompanyId(repositoryId),
+			getRepositoryClassName(repositoryId));
 
 		return repositoryFactory.createLocalRepository(repositoryId);
 	}
@@ -36,9 +37,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 	public Repository createRepository(long repositoryId)
 		throws PortalException {
 
-		String className = getRepositoryClassName(repositoryId);
-
-		RepositoryFactory repositoryFactory = getRepositoryFactory(className);
+		RepositoryFactory repositoryFactory = getRepositoryFactory(
+			_getRepositoryCompanyId(repositoryId),
+			getRepositoryClassName(repositoryId));
 
 		return repositoryFactory.createRepository(repositoryId);
 	}
@@ -54,16 +55,29 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		return LiferayRepository.class.getName();
 	}
 
-	protected RepositoryFactory getRepositoryFactory(String className) {
+	protected RepositoryFactory getRepositoryFactory(
+		long companyId, String className) {
+
 		RepositoryClassDefinition repositoryDefinition =
 			_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-				className);
+				companyId, className);
 
 		if (repositoryDefinition == null) {
 			throw new UndeployedExternalRepositoryException(className);
 		}
 
 		return repositoryDefinition;
+	}
+
+	private long _getRepositoryCompanyId(long repositoryId) {
+		com.liferay.portal.kernel.model.Repository repository =
+			_repositoryLocalService.fetchRepository(repositoryId);
+
+		if (repository != null) {
+			return repository.getCompanyId();
+		}
+
+		return CompanyConstants.SYSTEM;
 	}
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)

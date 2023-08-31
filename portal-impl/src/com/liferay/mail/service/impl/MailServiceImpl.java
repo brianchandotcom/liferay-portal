@@ -39,8 +39,6 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -98,15 +96,10 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 		session = InfrastructureUtil.getMailSession();
 
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(companyId);
-		PortletPreferences systemPortletPreferences =
-			PrefsPropsUtil.getPreferences();
-
 		Function<String, String> function =
-			(String key) -> companyPortletPreferences.getValue(
-				key,
-				systemPortletPreferences.getValue(key, PropsUtil.get(key)));
+			(String key) -> PrefsPropsUtil.getString(
+				companyId, key,
+				PrefsPropsUtil.getString(key, PropsUtil.get(key)));
 
 		if (!GetterUtil.getBoolean(
 				function.apply(PropsKeys.MAIL_SESSION_MAIL))) {

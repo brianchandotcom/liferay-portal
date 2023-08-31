@@ -518,23 +518,28 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
-			{showModal.bindToRootObjectDefinition && Liferay.FeatureFlags['LPS-187142'] && (
-				<ModalBindToRootObjectDefinition
-					baseResourceURL={baseResourceURL}
-					onVisibilityChange={() => {
-						setShowModal(
-							(previousState: ViewObjectDefinitionsModals) => ({
-								...previousState,
-								bindToRootObjectDefinition: false,
-							})
-						);
-					}}
-					selectedObjectDefinitionToBind={selectedObjectDefinition}
-				/>
-			)}
+			{showModal.bindToRootObjectDefinition &&
+				Liferay.FeatureFlags['LPS-187142'] && (
+					<ModalBindToRootObjectDefinition
+						baseResourceURL={baseResourceURL}
+						onVisibilityChange={() => {
+							setShowModal(
+								(
+									previousState: ViewObjectDefinitionsModals
+								) => ({
+									...previousState,
+									bindToRootObjectDefinition: false,
+								})
+							);
+						}}
+						selectedObjectDefinitionToBind={
+							selectedObjectDefinition
+						}
+					/>
+				)}
 
 			{showModal.unbindFromRootObjectDefinition &&
-			 Liferay.FeatureFlags['LPS-187142'] && (
+				Liferay.FeatureFlags['LPS-187142'] && (
 					<ModalUnbindObjectDefinition
 						baseResourceURL={baseResourceURL}
 						onVisibilityChange={() => {
@@ -547,7 +552,9 @@ export default function ViewObjectDefinitions({
 								})
 							);
 						}}
-						selectedObjectDefinitionToUnbind={selectedObjectDefinition}
+						selectedObjectDefinitionToUnbind={
+							selectedObjectDefinition
+						}
 					/>
 				)}
 		</>

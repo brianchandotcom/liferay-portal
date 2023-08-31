@@ -99,12 +99,14 @@ export function ModalBindToRootObjectDefinition({
 		);
 
 		setSelectedTreeEdgeOptions(
-			filteredSelectedTreeEdgeOptions.map((selectedTreeEdgeOption, index) => {
-				return {
-					...selectedTreeEdgeOption,
-					isRoot: newSelectedTreeEdgeOptions.length === index + 1,
-				};
-			})
+			filteredSelectedTreeEdgeOptions.map(
+				(selectedTreeEdgeOption, index) => {
+					return {
+						...selectedTreeEdgeOption,
+						isRoot: newSelectedTreeEdgeOptions.length === index + 1,
+					};
+				}
+			)
 		);
 	};
 
@@ -147,7 +149,9 @@ export function ModalBindToRootObjectDefinition({
 
 		if (depth < 3) {
 			setCurrentDepth(depth + 1);
-			setCurrentRelationshipId(selectedTreeEdgeOption.objectRelationshipId);
+			setCurrentRelationshipId(
+				selectedTreeEdgeOption.objectRelationshipId
+			);
 		}
 
 		filterTreeEdgeOptionsByDepth(
@@ -247,11 +251,15 @@ export function ModalBindToRootObjectDefinition({
 									: ''
 							}
 							onChange={async (selectedTreeEdgeOption) => {
-								handleSelectTreeEdgeOption(selectedTreeEdgeOption, index);
+								handleSelectTreeEdgeOption(
+									selectedTreeEdgeOption,
+									index
+								);
 							}}
 							options={treeEdgeOptions}
 							readonly={
-								selectedTreeEdgeOptions[index]?.isAncestor ?? false
+								selectedTreeEdgeOptions[index]?.isAncestor ??
+								false
 							}
 							value={selectedTreeEdgeOptions[index]?.label ?? ''}
 						/>

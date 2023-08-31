@@ -1308,7 +1308,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		_setUserUserGroups(user.getUserId(), newUserGroupIds);
+		_updateUserUserGroups(user.getUserId(), newUserGroupIds);
 	}
 
 	private User _importUser(
@@ -1658,28 +1658,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		_beanProperties.setProperty(bean1, propertyName, value);
 	}
 
-	private void _setUserUserGroups(long userId, Set<Long> userGroupIds)
-		throws Exception {
-
-		List<UserGroup> oldUserGroups =
-			_userGroupLocalService.getUserUserGroups(userId);
-
-		Set<Long> oldUserGroupIds = new HashSet<>(oldUserGroups.size());
-
-		for (UserGroup userGroup : oldUserGroups) {
-			if (!userGroup.isAddedByLDAPImport()) {
-				userGroupIds.add(userGroup.getUserGroupId());
-			}
-
-			oldUserGroupIds.add(userGroup.getUserGroupId());
-		}
-
-		if (!oldUserGroupIds.equals(userGroupIds)) {
-			_userGroupLocalService.setUserUserGroups(
-				userId, ArrayUtil.toLongArray(userGroupIds));
-		}
-	}
-
 	private void _updateLDAPUser(
 			User ldapUser, Contact ldapContact, User user,
 			Properties userMappings, Properties contactMappings,
@@ -1969,6 +1947,37 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 
 		return password;
+	}
+
+	private void _updateUserUserGroups(long userId, Set<Long> userGroupIds)
+		throws Exception {
+
+		List<Long> deleteUserGroupIds = new ArrayList<>();
+
+		for (UserGroup userGroup :
+				_userGroupLocalService.getUserUserGroups(userId)) {
+
+			if (userGroup.isAddedByLDAPImport()) {
+				long userGroupId = userGroup.getUserGroupId();
+
+				if (userGroupIds.contains(userGroupId)) {
+					userGroupIds.remove(userGroupId);
+				}
+				else {
+					deleteUserGroupIds.add(userGroupId);
+				}
+			}
+		}
+
+		if (!deleteUserGroupIds.isEmpty()) {
+			_userGroupLocalService.deleteUserUserGroups(
+				userId, ArrayUtil.toLongArray(deleteUserGroupIds));
+		}
+
+		if (!userGroupIds.isEmpty()) {
+			_userGroupLocalService.addUserUserGroups(
+				userId, ArrayUtil.toLongArray(userGroupIds));
+		}
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {

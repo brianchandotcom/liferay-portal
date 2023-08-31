@@ -150,6 +150,7 @@ public class CommerceOrderItemInfoItemFieldValuesProvider
 				commerceOrderItem.getUuid()));
 
 		String discountAmount = StringPool.BLANK;
+		String options = StringPool.BLANK;
 		String promoPrice = StringPool.BLANK;
 		String thumbnailURL = StringPool.BLANK;
 		String totalPrice = StringPool.BLANK;
@@ -157,11 +158,14 @@ public class CommerceOrderItemInfoItemFieldValuesProvider
 		String url = StringPool.BLANK;
 
 		try {
+			if (commerceOrderItem.getParentCommerceOrderItemId() == 0) {
+				options = CommerceOrderItemUtil.getOptions(
+					commerceOrderItem, _cpInstanceHelper, locale);
+			}
+
 			commerceOrderItemInfoFieldValues.add(
 				new InfoFieldValue<>(
-					CommerceOrderItemInfoItemFields.optionsInfoField,
-					CommerceOrderItemUtil.getOptions(
-						commerceOrderItem, _cpInstanceHelper, locale)));
+					CommerceOrderItemInfoItemFields.optionsInfoField, options));
 
 			CommerceOrderItemPrice commerceOrderItemPrice =
 				_getCommerceOrderItemPrice(commerceOrderItem);

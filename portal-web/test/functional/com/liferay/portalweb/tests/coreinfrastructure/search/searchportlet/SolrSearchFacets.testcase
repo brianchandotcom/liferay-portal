@@ -21,6 +21,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertBasicFacetSelection {
 		JSONWebcontent.addWebContent(
 			assetTagNames = "fruit",
@@ -146,6 +147,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertNonAdminsCannotAddCertainWidgets {
 		property app.server.types = "tomcat";
 
@@ -263,6 +265,7 @@ definition {
 			searchTerm = "WebContent");
 	}
 
+	@priority = 3
 	test SearchWithModifiedFacet {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

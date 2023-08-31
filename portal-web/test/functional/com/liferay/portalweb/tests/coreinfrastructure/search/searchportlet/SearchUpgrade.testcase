@@ -423,6 +423,7 @@ definition {
 		ValidateSearchUpgrade.viewSearchPortletsConfiguration();
 	}
 
+	@priority = 3
 	test ViewSearchWidgetTemplatesArchive7413U43 {
 		property data.archive.type = "data-archive-search-widget-templates";
 		property portal.version = "7.4.13.u43";
@@ -496,6 +497,7 @@ definition {
 			locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 	}
 
+	@priority = 3
 	test ViewSXPBlueprintsAndElementsArchive7310U6 {
 		property data.archive.type = "data-archive-sxp";
 		property portal.version = "7.3.10.u6";
@@ -505,6 +507,7 @@ definition {
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
 
+	@priority = 3
 	test ViewSXPBlueprintsAndElementsArchive7413U33 {
 		property data.archive.type = "data-archive-sxp";
 		property portal.version = "7.4.13.u33";
@@ -521,6 +524,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-147329."
+	@priority = 3
 	test ViewSXPLocalizedElementsArchive7413U63 {
 		property data.archive.type = "data-archive-sxp-localized";
 		property portal.version = "7.4.13.u63";

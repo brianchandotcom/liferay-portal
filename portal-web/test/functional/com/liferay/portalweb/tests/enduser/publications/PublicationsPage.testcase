@@ -252,6 +252,7 @@ definition {
 	}
 
 	@description = "Assert that it's possible to add and apply widget template within publications"
+	@priority = 3
 	test CanAddWidgetTemplateAndApplyItWithinPublications {
 		task ("Add new Publication and select it for use") {
 			JSONPublications.addPublication(publicationName = "Publication Name");

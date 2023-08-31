@@ -1442,6 +1442,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test CanOrderTagFacetTerms {
 		task ("Create Web Contents with tags") {
 			JSONWebcontent.addWebContent(
@@ -2273,6 +2274,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = 3
 	test SearchWithCustomSortOption {
 		task ("Create 3 Web Content Articles. Add more words to some article's content fields to get them to show up lower in search results") {
 			JSONWebcontent.addWebContent(
@@ -2988,6 +2990,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-134052."
+	@priority = 3
 	test ViewSortWidgetConfigurationNewUI {
 		task ("Execute a search to populate the search widgets and add the Sort widget") {
 			Search.openSearchPage(searchTerm = "test");

@@ -22,6 +22,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-168704."
+	@priority = 3
 	test AssertBlacklistedTextEmbeddingProvidersAreUnavailable {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
@@ -89,6 +90,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174623."
+	@priority = 3
 	test AssertReindexWarningAppearsForCriticalChanges {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
@@ -299,6 +301,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertSearchUsingTxtaiWithTextEmbeddingElementHasNoError {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
@@ -329,6 +332,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 	}
 
+	@priority = 3
 	test AssertTxtaiTextEmbeddingIndexFieldAddedToAssets {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
@@ -373,6 +377,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertTxtaiWithTextEmbeddingElementAffectsBlueprintPreview {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property txtai.enabled = "true";
@@ -419,6 +424,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test ViewHuggingFaceSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-122920=true";
 
@@ -496,6 +502,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170345 and LPS-172161."
+	@priority = 3
 	test ViewSystemAndInstanceSettingsSaveUI {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
@@ -686,6 +693,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-173824."
+	@priority = 3
 	test ViewSystemSettingUnsuccessfulConnectionWarning {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";
@@ -762,6 +770,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test ViewTxtaiSystemSettingsRequiredFieldValidation {
 		property custom.properties = "feature.flag.LPS-122920=true";
 
@@ -793,6 +802,7 @@ definition {
 		SemanticSearch.saveAndContinue();
 	}
 
+	@priority = 3
 	test ViewTxtaiSystemSettingsTestConfiguration {
 		property custom.properties = "feature.flag.LPS-122920=true";
 		property test.liferay.virtual.instance = "false";

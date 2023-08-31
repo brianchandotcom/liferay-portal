@@ -2285,6 +2285,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-152937."
+	@priority = 3
 	test SortAccentedWords {
 		var digit = 1;
 

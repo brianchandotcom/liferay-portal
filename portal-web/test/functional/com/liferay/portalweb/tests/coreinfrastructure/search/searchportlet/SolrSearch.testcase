@@ -225,6 +225,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112599."
+	@priority = 3
 	test NavigateToAssetEditPageViaSearchResults {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
@@ -296,6 +297,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95798."
+	@priority = 3
 	test SearchAfterViewingResultDetails {
 		JSONWebcontent.addWebContent(
 			content = "Web Content",
@@ -656,6 +658,7 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"name1\"");
 	}
 
+	@priority = 3
 	test SearchBlogsScopedToPage {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1461,6 +1464,7 @@ definition {
 			userName = "Test Test");
 	}
 
+	@priority = 3
 	test ViewSortedSearchResults {
 		JSONWebcontent.addWebContent(
 			content = "Content",

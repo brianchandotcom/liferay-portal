@@ -106,8 +106,9 @@ public interface BuildEntity extends Entity {
 
 	public enum State {
 
-		BLOCKED("blocked"), COMPLETED("completed"), OPENED("opened"),
-		QUEUED("queued"), RUNNING("running");
+		BLOCKED("blocked", "Blocked"), COMPLETED("completed", "Completed"),
+		OPENED("opened", "Opened"), QUEUED("queued", "Queued"),
+		RUNNING("running", "Running");
 
 		public static State get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));
@@ -118,15 +119,24 @@ public interface BuildEntity extends Entity {
 		}
 
 		public JSONObject getJSONObject() {
-			return new JSONObject("{\"key\": \"" + getKey() + "\"}");
+			JSONObject jsonObject = new JSONObject();
+
+			jsonObject.put(
+				"key", _key
+			).put(
+				"name", _name
+			);
+
+			return jsonObject;
 		}
 
 		public String getKey() {
 			return _key;
 		}
 
-		private State(String key) {
+		private State(String key, String name) {
 			_key = key;
+			_name = name;
 		}
 
 		private static final Map<String, State> _states = new HashMap<>();
@@ -138,6 +148,7 @@ public interface BuildEntity extends Entity {
 		}
 
 		private final String _key;
+		private final String _name;
 
 	}
 

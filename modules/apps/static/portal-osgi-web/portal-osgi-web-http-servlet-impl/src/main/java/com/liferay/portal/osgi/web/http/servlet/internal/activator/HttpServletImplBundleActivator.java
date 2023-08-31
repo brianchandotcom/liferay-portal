@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.activator;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,11 +16,9 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
@@ -91,10 +90,13 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 			return new String[0];
 		}
 
-		List<String> httpServiceEndpoints = new ArrayList<>();
+		return TransformUtil.transformToArray(
+			servletRegistration.getMappings(),
+			mapping -> {
+				if (mapping.indexOf('/') != 0) {
+					return null;
+				}
 
-		for (String mapping : servletRegistration.getMappings()) {
-			if (mapping.indexOf('/') == 0) {
 				if (mapping.charAt(mapping.length() - 1) == '*') {
 					mapping = mapping.substring(0, mapping.length() - 2);
 
@@ -105,12 +107,9 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 					}
 				}
 
-				httpServiceEndpoints.add(
-					servletContext.getContextPath() + mapping);
-			}
-		}
-
-		return httpServiceEndpoints.toArray(new String[0]);
+				return servletContext.getContextPath() + mapping;
+			},
+			String.class);
 	}
 
 	private static final HttpSessionListener _HTTP_SESSION_LISTENER =

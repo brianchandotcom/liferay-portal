@@ -3142,9 +3142,9 @@ definition {
 	}
 
 	macro editFragmentTextViaPageContentPanel {
-		Click(
+		Click.clickAtNotVisible(
 			key_itemName = ${itemName},
-			locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			locator1 = "PageEditor#PAGE_CONTENTS_ITEM_EDIT_PENCIL");
 
 		AssertElementPresent(
 			key_text = "Edit Text",

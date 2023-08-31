@@ -154,7 +154,7 @@ public class FDSApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> singletons = new HashSet<>();
 
-		singletons.add(_paginationContextProvider);
+		singletons.add(new PaginationContextProvider());
 		singletons.add(_sortContextProvider);
 		singletons.add(_themeDisplayContextProvider);
 		singletons.add(this);
@@ -319,9 +319,6 @@ public class FDSApplication extends Application {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private PaginationContextProvider _paginationContextProvider;
 
 	@Reference
 	private SortContextProvider _sortContextProvider;

@@ -112,6 +112,10 @@ definition {
 		}
 
 		task ("When a new user is added and this user submits a form entry for workflow") {
+			FormsAdminNavigator.gotoPublishCopyURLLink();
+
+			var publishedFormURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
+
 			JSONUser.addUser(
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user1",
@@ -127,9 +131,7 @@ definition {
 				userLoginEmailAddress = "user1@liferay.com",
 				userScreenName = "user1");
 
-			var publishFormURL = Form.getPublishedFormPublicURL();
-
-			Navigator.openSpecificURL(url = ${publishFormURL});
+			Navigator.openSpecificURL(url = ${publishedFormURL});
 
 			FormFields.editText(
 				fieldName = "Text",
@@ -619,6 +621,8 @@ definition {
 		}
 
 		task ("When the form is updated and an option was removed") {
+			Navigator.openURL();
+
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
 				portlet = "Forms");
@@ -687,9 +691,13 @@ definition {
 				fieldValue = "02/01/2016");
 
 			Button.clickSubmitForWorkflow();
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("When the reviewer views this task via My Workflow Tasks") {
+			Navigator.openURL();
+
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 			Workflow.assignToMeTaskByDetails(

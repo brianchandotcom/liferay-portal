@@ -36,7 +36,7 @@ interface RootObjectPathOption {
 	objectRelationshipId: number;
 }
 
-export function ModalBindToRootObject({
+export function ModalBindToRootObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
 	selectedObjectToBind,

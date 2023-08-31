@@ -28,7 +28,7 @@ import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinit
 import FoldersListSideBar from './FoldersListSidebar';
 import {ModalAddFolder} from './ModalAddFolder';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
-import {ModalBindToRootObject} from './ModalBindToRootObject';
+import {ModalBindToRootObjectDefinition} from './ModalBindToRootObjectDefinition';
 import {ModalDeleteFolder} from './ModalDeleteFolder';
 import {ModalDeleteObjectDefinition} from './ModalDeleteObjectDefinition';
 import {ModalEditFolder} from './ModalEditFolder';
@@ -519,7 +519,7 @@ export default function ViewObjectDefinitions({
 			)}
 
 			{showModal.bindToRootObjectDefinition && Liferay.FeatureFlags['LPS-187142'] && (
-				<ModalBindToRootObject
+				<ModalBindToRootObjectDefinition
 					baseResourceURL={baseResourceURL}
 					onVisibilityChange={() => {
 						setShowModal(

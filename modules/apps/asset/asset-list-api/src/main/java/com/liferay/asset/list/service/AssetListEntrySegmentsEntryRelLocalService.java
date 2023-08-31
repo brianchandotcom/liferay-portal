@@ -79,6 +79,12 @@ public interface AssetListEntrySegmentsEntryRelLocalService
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel);
 
 	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
+			long userId, long groupId, long assetListEntryId, int priority,
+			long segmentsEntryId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
 			long userId, long groupId, long assetListEntryId,
 			long segmentsEntryId, String typeSettings,
 			ServiceContext serviceContext)

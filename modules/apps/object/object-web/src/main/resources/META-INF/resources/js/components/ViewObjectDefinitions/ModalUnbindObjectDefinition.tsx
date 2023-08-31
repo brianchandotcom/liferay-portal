@@ -27,7 +27,7 @@ export function ModalUnbindObjectDefinition({
 	onVisibilityChange,
 	selectedObjectDefinitionToUnbind,
 }: ModalUnbindObjectDefinitionProps) {
-	const [rootObject, setRootObject] = useState<ObjectDefinition>();
+	const [rootObjectDefinition, setRootObjectDefinition] = useState<ObjectDefinition>();
 	const [loading, setLoading] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -64,7 +64,7 @@ export function ModalUnbindObjectDefinition({
 				selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode ===
 				selectedObjectDefinitionToUnbind?.externalReferenceCode
 			) {
-				setRootObject(selectedObjectDefinitionToUnbind);
+				setRootObjectDefinition(selectedObjectDefinitionToUnbind);
 			}
 			else if (
 				selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode
@@ -73,7 +73,7 @@ export function ModalUnbindObjectDefinition({
 					selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode
 				);
 
-				setRootObject(rootObjectResponse);
+				setRootObjectDefinition(rootObjectResponse);
 			}
 
 			setLoading(false);
@@ -95,16 +95,16 @@ export function ModalUnbindObjectDefinition({
 				) : (
 					<span className="lfr__object-modal-unbind-object-description">
 						{selectedObjectDefinitionToUnbind?.externalReferenceCode ===
-						 rootObject?.externalReferenceCode
+						 rootObjectDefinition?.externalReferenceCode
 							? sub(
 									Liferay.Language.get(
 										'please-confirm-before-unbinding-the-root-x'
 									),
 									[
 										getLocalizableLabel(
-											rootObject?.defaultLanguageId as Liferay.Language.Locale,
-											rootObject?.label,
-											rootObject?.name
+											rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
+											rootObjectDefinition?.label,
+											rootObjectDefinition?.name
 										),
 									]
 							  )
@@ -119,9 +119,9 @@ export function ModalUnbindObjectDefinition({
 											selectedObjectDefinitionToUnbind?.name
 										),
 										getLocalizableLabel(
-											rootObject?.defaultLanguageId as Liferay.Language.Locale,
-											rootObject?.label,
-											rootObject?.name
+											rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
+											rootObjectDefinition?.label,
+											rootObjectDefinition?.name
 										),
 									]
 							  )}

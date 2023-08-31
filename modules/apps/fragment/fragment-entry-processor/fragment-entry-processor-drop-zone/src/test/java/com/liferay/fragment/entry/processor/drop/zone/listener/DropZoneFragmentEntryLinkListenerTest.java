@@ -306,7 +306,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 				_layoutPageTemplateStructureLocalService, Mockito.never()
 			).updateLayoutPageTemplateStructureData(
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong(),
-				Mockito.anyString()
+				Mockito.anyString(), Mockito.anyBoolean()
 			);
 
 			return;
@@ -319,7 +319,7 @@ public class DropZoneFragmentEntryLinkListenerTest {
 			_layoutPageTemplateStructureLocalService
 		).updateLayoutPageTemplateStructureData(
 			Mockito.anyLong(), Mockito.anyLong(), Mockito.anyLong(),
-			argumentCaptor.capture()
+			argumentCaptor.capture(), Mockito.anyBoolean()
 		);
 
 		LayoutStructure layoutStructure = LayoutStructure.of(

@@ -14,12 +14,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -43,51 +46,78 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			return null;
 		}
 
+		Tuple tuple = _getPathParts(friendlyURL);
+
+		String itemReference = (String)tuple.getObject(1);
+
+		long[] split = StringUtil.split(itemReference, StringPool.SLASH, 0L);
+
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(
-				GetterUtil.getLong(_getParam("classPK", params)));
+			new ClassPKInfoItemIdentifier(split[1]);
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(
-				_getParam("className", params), classPKInfoItemIdentifier));
+				_portal.getClassName(split[0]), classPKInfoItemIdentifier));
 	}
 
 	@Override
 	protected Layout getLayoutDisplayPageObjectProviderLayout(
-		long groupId,
+		long groupId, String friendlyURL,
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
-		Map<String, String[]> params) {
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 			return null;
 		}
 
-		return layoutLocalService.fetchLayout(
-			GetterUtil.getLong(_getParam("selPlid", params)));
+		Tuple tuple = _getPathParts(friendlyURL);
+
+		return layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, (String)tuple.getObject(0));
 	}
 
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-		String friendlyURL, Map<String, String[]> params) {
+		String friendlyURL) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 			return null;
 		}
 
+		Tuple tuple = _getPathParts(friendlyURL);
+
+		String itemReference = (String)tuple.getObject(1);
+
+		String[] split = StringUtil.split(itemReference, StringPool.SLASH);
+
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
-				_getParam("className", params));
+				_portal.getClassName(GetterUtil.getLong(split[0])));
 	}
 
-	private String _getParam(String name, Map<String, String[]> params) {
-		String[] param = params.get(name);
-
-		if (ArrayUtil.isEmpty(param)) {
-			return StringPool.BLANK;
-		}
-
-		return param[0];
+	@Override
+	protected boolean useOriginalFriendlyURL() {
+		return false;
 	}
+
+	private Tuple _getPathParts(String path) {
+		String urlSeparator = getURLSeparator();
+
+		String urlInfo = path.substring(
+			path.indexOf(urlSeparator) + urlSeparator.length() - 1);
+
+		String friendlyURL = urlInfo.substring(
+			0,
+			urlInfo.lastIndexOf(
+				StringPool.SLASH, urlInfo.lastIndexOf(StringPool.SLASH) - 1));
+
+		String itemReference = urlInfo.substring(
+			friendlyURL.indexOf(StringPool.SLASH) + friendlyURL.length() + 1);
+
+		return new Tuple(friendlyURL, itemReference);
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

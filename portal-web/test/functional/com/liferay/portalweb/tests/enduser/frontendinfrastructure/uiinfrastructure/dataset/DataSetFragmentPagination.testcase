@@ -13,12 +13,12 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Given creating a Data Set via API") {
+		task ("Given creating a Data Set via UI") {
 			DataSetAdmin.goToDataSetAdminPage();
 
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/entries");
+			DataSetAdmin.createDataSet(
+				key_name = "Data Set Test",
+				key_type = "/data-set-manager/entries");
 
 			Refresh();
 		}
@@ -65,7 +65,7 @@ definition {
 			DataSetAdmin.goToTab(tabName = "Pagination");
 		}
 
-		task ("Then the default List of items per Page values are: 10, 20, 30 ,40 and default value per gage is 10") {
+		task ("Then the default List of items per Page values are: 10, 20, 30 ,40 and default value per page is 10") {
 			Type(
 				key_label = "List of Items per Page",
 				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
@@ -89,7 +89,7 @@ definition {
 				fragmentName = "Data Set");
 		}
 
-		task ("And viewing the configuration menu of the portletAnd selects View Fields Test") {
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
 			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
 
 			Click.javaScriptClick(
@@ -137,7 +137,7 @@ definition {
 			DataSetAdmin.goToTab(tabName = "Fields");
 		}
 
-		task ("And add some fields//Go to fields tab and add") {
+		task ("And add some fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,status,label");
 		}
 
@@ -161,7 +161,7 @@ definition {
 				fragmentName = "Data Set");
 		}
 
-		task ("And viewing the configuration menu of the portletAnd selects View Fields Test") {
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
 			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
 
 			Click.javaScriptClick(
@@ -209,7 +209,7 @@ definition {
 			DataSetAdmin.goToTab(tabName = "Fields");
 		}
 
-		task ("And add some fields//Go to fields tab and add") {
+		task ("And add some fields") {
 			DataSetAdmin.addFields(key_fieldList = "id,status,label");
 		}
 
@@ -249,7 +249,7 @@ definition {
 				fragmentName = "Data Set");
 		}
 
-		task ("And viewing the configuration menu of the portletAnd selects View Fields Test") {
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
 			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
 
 			Click.javaScriptClick(
@@ -331,7 +331,7 @@ definition {
 				fragmentName = "Data Set");
 		}
 
-		task ("And viewing the configuration menu of the portletAnd selects View Fields Test") {
+		task ("And viewing the configuration menu of the portlet And selects View Fields Test") {
 			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
 
 			Click.javaScriptClick(

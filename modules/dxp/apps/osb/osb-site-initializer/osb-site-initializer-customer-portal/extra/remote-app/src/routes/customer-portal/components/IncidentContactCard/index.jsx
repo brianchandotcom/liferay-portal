@@ -30,14 +30,17 @@ const IncidentContactCard = ({
 		securityBreachContact: [],
 	});
 	const [modalFilter, setModalFilter] = useState();
+	const [modalMonitoring, setModalMonitoring] = useState();
 	const {observer, onOpenChange, open} = useModal();
 
 	const openModal = () => {
 		onOpenChange(true);
+		setModalMonitoring(true);
 	};
 
 	const closeModal = () => {
 		onOpenChange(false);
+		setModalMonitoring(false);
 	};
 
 	const isLXCEnvironment = accountSubscriptionGroupsNames?.includes(
@@ -118,7 +121,7 @@ const IncidentContactCard = ({
 
 		fetchHighPriorityContacts();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [modalMonitoring]);
 
 	const generateContactBody = ({contact, email, index, label}) => (
 		<div className="customer-portal-cards" key={index}>

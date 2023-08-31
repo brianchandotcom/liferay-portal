@@ -98,7 +98,11 @@
 .high-priority-contacts-modal {
 	.modal-content {
 		height: 21.75rem;
-		overflow-y: auto;
+	}
+
+	main {
+		max-height: 8.75rem;
+		overflow-y: scroll;
 	}
 }
 

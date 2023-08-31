@@ -145,8 +145,8 @@ const IncidentContactEditModal = ({
 
 	const highPriorityContactsModalHelper = () => {
 		const translationPrefix = !hasHighPriorityContactByCategory[modalFilter]
-			? 'add-contacts-to-be-notified-in-the-even-of-a'
-			: 'add-or-remove-contacts-to-be-notified-in-the-even-of-a';
+			? 'add-contacts-to-be-notified-in-the-event-of-a'
+			: 'add-or-remove-contacts-to-be-notified-in-the-event-of-a';
 
 		return `${i18n.translate(
 			translationPrefix

@@ -112,6 +112,43 @@ public class DisplayPageDisplayContext {
 			return _displayPagesSearchContainer;
 		}
 
+		if (isSearch()) {
+			SearchContainer<LayoutPageTemplateEntry>
+				displayPagesSearchContainer = new SearchContainer<>(
+					_renderRequest, getPortletURL(), null,
+					"there-are-no-display-page-templates");
+
+			displayPagesSearchContainer.setOrderByCol(getOrderByCol());
+			displayPagesSearchContainer.setOrderByComparator(
+				LayoutPageTemplatePortletUtil.
+					getLayoutPageTemplateEntryOrderByComparator(
+						getOrderByCol(), getOrderByType()));
+			displayPagesSearchContainer.setOrderByType(getOrderByType());
+
+			displayPagesSearchContainer.setResultsAndTotal(
+				() ->
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntries(
+							_themeDisplay.getScopeGroupId(), getKeywords(),
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_DISPLAY_PAGE,
+							displayPagesSearchContainer.getStart(),
+							displayPagesSearchContainer.getEnd(),
+							displayPagesSearchContainer.getOrderByComparator()),
+				LayoutPageTemplateEntryServiceUtil.
+					getLayoutPageTemplateEntriesCount(
+						_themeDisplay.getScopeGroupId(), getKeywords(),
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE));
+
+			displayPagesSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+
+			_displayPagesSearchContainer = displayPagesSearchContainer;
+
+			return _displayPagesSearchContainer;
+		}
+
 		SearchContainer<Object> displayPagesSearchContainer =
 			new SearchContainer<>(
 				_renderRequest, getPortletURL(), null,
@@ -122,44 +159,21 @@ public class DisplayPageDisplayContext {
 			_getOrderByComparator());
 		displayPagesSearchContainer.setOrderByType(getOrderByType());
 
-		if (isSearch()) {
-			displayPagesSearchContainer.setResultsAndTotal(
-				() ->
-					LayoutPageTemplateEntryServiceUtil.
-						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-							_themeDisplay.getScopeGroupId(),
-							_getLayoutPageTemplateCollectionId(), getKeywords(),
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE,
-							displayPagesSearchContainer.getStart(),
-							displayPagesSearchContainer.getEnd(),
-							displayPagesSearchContainer.getOrderByComparator()),
+		displayPagesSearchContainer.setResultsAndTotal(
+			() ->
 				LayoutPageTemplateEntryServiceUtil.
-					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-						_themeDisplay.getScopeGroupId(),
-						_getLayoutPageTemplateCollectionId(), getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_DISPLAY_PAGE));
-		}
-		else {
-			displayPagesSearchContainer.setResultsAndTotal(
-				() ->
-					LayoutPageTemplateEntryServiceUtil.
-						getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-							_themeDisplay.getScopeGroupId(),
-							_getLayoutPageTemplateCollectionId(),
-							LayoutPageTemplateEntryTypeConstants.
-								TYPE_DISPLAY_PAGE,
-							displayPagesSearchContainer.getStart(),
-							displayPagesSearchContainer.getEnd(),
-							displayPagesSearchContainer.getOrderByComparator()),
-				LayoutPageTemplateEntryServiceUtil.
-					getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+					getLayoutPageCollectionsAndLayoutPageTemplateEntries(
 						_themeDisplay.getScopeGroupId(),
 						_getLayoutPageTemplateCollectionId(),
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_DISPLAY_PAGE));
-		}
+						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+						displayPagesSearchContainer.getStart(),
+						displayPagesSearchContainer.getEnd(),
+						displayPagesSearchContainer.getOrderByComparator()),
+			LayoutPageTemplateEntryServiceUtil.
+				getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
+					_themeDisplay.getScopeGroupId(),
+					_getLayoutPageTemplateCollectionId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE));
 
 		displayPagesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

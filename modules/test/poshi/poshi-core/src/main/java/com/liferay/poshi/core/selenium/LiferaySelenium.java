@@ -19,7 +19,7 @@ public interface LiferaySelenium {
 
 	public void antCommand(String fileName, String target) throws Exception;
 
-	public void assertAccessible() throws Exception;
+	public void assertAccessible(String filterByImpacts) throws Exception;
 
 	public void assertAlert(String pattern) throws Exception;
 
@@ -53,7 +53,8 @@ public interface LiferaySelenium {
 
 	public void assertEditable(String locator) throws Exception;
 
-	public void assertElementAccessible(String locator) throws Exception;
+	public void assertElementAccessible(String locator, String filterByImpacts)
+		throws Exception;
 
 	public void assertElementFocused(String locator) throws Exception;
 

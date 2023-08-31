@@ -9,7 +9,6 @@ import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayout
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
@@ -17,11 +16,7 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -50,14 +45,7 @@ public class UnlockLayoutsSchedulerJobConfiguration
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
 		return TriggerConfiguration.createTriggerConfiguration(
-			_lockedLayoutsConfiguration.lockReviewFrequency(), TimeUnit.MINUTE);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_lockedLayoutsConfiguration = ConfigurableUtil.createConfigurable(
-			LockedLayoutsConfiguration.class, properties);
+			15, TimeUnit.MINUTE);
 	}
 
 	private UnsafeConsumer<Long, Exception>
@@ -89,7 +77,5 @@ public class UnlockLayoutsSchedulerJobConfiguration
 
 	@Reference
 	private LayoutLockManager _layoutLockManager;
-
-	private volatile LockedLayoutsConfiguration _lockedLayoutsConfiguration;
 
 }

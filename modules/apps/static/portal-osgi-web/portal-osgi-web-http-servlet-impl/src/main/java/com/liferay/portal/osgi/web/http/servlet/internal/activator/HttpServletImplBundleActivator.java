@@ -54,11 +54,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class HttpServletImplBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
-		_activator = new Activator();
-
-		_activator.start(bundleContext);
-
+	public void start(BundleContext bundleContext) {
 		PortletSessionListenerManager.addHttpSessionListener(
 			_HTTP_SESSION_LISTENER);
 
@@ -70,13 +66,11 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext bundleContext) {
 		_serviceTracker.close();
 
 		PortletSessionListenerManager.removeHttpSessionListener(
 			_HTTP_SESSION_LISTENER);
-
-		_activator.stop(bundleContext);
 	}
 
 	private static String[] _getHttpServiceEndpoints(
@@ -153,7 +147,6 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HttpServletImplBundleActivator.class.getName());
 
-	private Activator _activator;
 	private ServiceTracker<HttpServletEndpoint, ServiceRegistrationsBag>
 		_serviceTracker;
 

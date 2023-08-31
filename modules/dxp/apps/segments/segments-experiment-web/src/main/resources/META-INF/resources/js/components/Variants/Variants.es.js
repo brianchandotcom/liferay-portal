@@ -18,15 +18,10 @@ import {
 } from '../../state/actions.es';
 import {DispatchContext, StateContext} from '../../state/context.es';
 import {navigateToExperience} from '../../util/navigation.es';
-import {
-	STATUS_DRAFT,
-	STATUS_FINISHED_NO_WINNER,
-	STATUS_FINISHED_WINNER,
-	STATUS_TERMINATED,
-} from '../../util/statuses.es';
+import {STATUS_DRAFT} from '../../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../../util/toasts.es';
 import VariantForm from './internal/VariantForm.es';
-import VariantList from './internal/VariantList.es';
+import VariantTable from './internal/VariantTable.es';
 
 function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 	const dispatch = useContext(DispatchContext);
@@ -49,11 +44,6 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 	} = useModal({
 		onClose: () => setEditingVariant({active: false}),
 	});
-
-	const publishable =
-		experiment.status.value === STATUS_TERMINATED ||
-		experiment.status.value === STATUS_FINISHED_WINNER ||
-		experiment.status.value === STATUS_FINISHED_NO_WINNER;
 
 	return (
 		<>
@@ -109,24 +99,11 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 				</>
 			)}
 
-			{publishable && (
-				<div className="d-flex mb-2">
-					<strong style={{width: 116}}>
-						{Liferay.Language.get('name')}
-					</strong>
-
-					<strong className="text-secondary">
-						{Liferay.Language.get('improvement')}
-					</strong>
-				</div>
-			)}
-
-			<VariantList
-				editable={experiment.editable}
+			<VariantTable
+				experiment={experiment}
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
 				onVariantPublish={onVariantPublish}
-				publishable={publishable}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
 				variants={variants}
 			/>

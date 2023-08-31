@@ -1869,6 +1869,9 @@ definition {
 		if (isSet(virtualHostsURL)) {
 			var portalURL = ${virtualHostsURL};
 		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		var isLXC = JSONUtil2.getLXCEnvironment();
 

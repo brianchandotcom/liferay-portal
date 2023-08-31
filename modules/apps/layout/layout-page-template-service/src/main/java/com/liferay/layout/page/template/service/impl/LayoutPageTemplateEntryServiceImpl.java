@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -231,20 +230,9 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, long layoutPageTemplateCollectionId, int type, int start,
 		int end, OrderByComparator<Object> orderByComparator) {
 
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			groupId, layoutPageTemplateCollectionId, null, type, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, int start, int end,
-		OrderByComparator<Object> orderByComparator) {
-
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, name, type);
+				groupId, layoutPageTemplateCollectionId, type);
 
 		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			DSLQueryFactoryUtil.select(
@@ -263,18 +251,9 @@ public class LayoutPageTemplateEntryServiceImpl
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
 		long groupId, long layoutPageTemplateCollectionId, int type) {
 
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-			groupId, layoutPageTemplateCollectionId, null, type);
-	}
-
-	@Override
-	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type) {
-
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, layoutPageTemplateCollectionId, name, type);
+				groupId, layoutPageTemplateCollectionId, type);
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -865,8 +844,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			int type) {
+			long groupId, long layoutPageTemplateCollectionId, int type) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -886,15 +864,6 @@ public class LayoutPageTemplateEntryServiceImpl
 						return LayoutPageTemplateEntryTable.INSTANCE.
 							layoutPageTemplateCollectionId.eq(
 								layoutPageTemplateCollectionId);
-					}
-
-					return null;
-				}
-			).and(
-				() -> {
-					if (Validator.isNotNull(name)) {
-						return LayoutPageTemplateEntryTable.INSTANCE.name.eq(
-							name);
 					}
 
 					return null;

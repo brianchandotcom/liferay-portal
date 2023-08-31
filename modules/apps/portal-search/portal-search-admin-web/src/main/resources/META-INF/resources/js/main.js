@@ -328,10 +328,7 @@ AUI.add(
 
 					if (
 						Liferay.FeatureFlags['LPS-183661'] &&
-						[
-							'reindexDictionaries',
-							'reindexIndexReindexer',
-						].includes(data.cmd)
+						data.cmd === 'reindexDictionaries'
 					) {
 						document
 							.querySelectorAll(instance.get('submitButton'))

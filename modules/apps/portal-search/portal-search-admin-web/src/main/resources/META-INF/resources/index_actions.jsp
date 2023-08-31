@@ -65,6 +65,18 @@ page import="java.util.Map" %>
 	<%
 	Map<String, BackgroundTaskDisplay> classNameToBackgroundTaskDisplayMap = new HashMap<>();
 
+	List<BackgroundTask> indexReindexerBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.portal.search.internal.background.task.ReindexIndexReindexerBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+	if (!indexReindexerBackgroundTasks.isEmpty()) {
+		for (BackgroundTask backgroundTask : indexReindexerBackgroundTasks) {
+			Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+
+			String className = (String)taskContextMap.get("className");
+
+			classNameToBackgroundTaskDisplayMap.put(className, BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask));
+		}
+	}
+
 	List<BackgroundTask> reindexPortalBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
 	List<BackgroundTask> reindexSingleBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
@@ -211,6 +223,7 @@ page import="java.util.Map" %>
 								List<String> indexReindexerClassNames = searchAdminDisplayContext.getIndexReindexerClassNames();
 
 								for (String indexReindexerClassName : indexReindexerClassNames) {
+									backgroundTaskDisplay = classNameToBackgroundTaskDisplayMap.get(indexReindexerClassName);
 								%>
 
 									<li class="list-group-item list-group-item-flex">
@@ -221,7 +234,14 @@ page import="java.util.Map" %>
 										</div>
 
 										<div class="autofit-col index-action-wrapper" data-type="<%= indexReindexerClassName %>">
-											<aui:button cssClass="save-server-button" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" data-concurrent-disabled="<%= true %>" data-displayname='<%= LanguageUtil.get(request, "model.resource." + indexReindexerClassName) %>' disabled="<%= !reindexPortalBackgroundTasks.isEmpty() %>" value="execute" />
+											<c:choose>
+												<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
+													<aui:button cssClass="save-server-button" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" data-concurrent-disabled="<%= true %>" data-displayname='<%= LanguageUtil.get(request, "model.resource." + indexReindexerClassName) %>' disabled="<%= !reindexPortalBackgroundTasks.isEmpty() %>" value="execute" />
+												</c:when>
+												<c:otherwise>
+													<%= backgroundTaskDisplay.renderDisplayTemplate() %>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</li>
 
@@ -319,6 +339,7 @@ page import="java.util.Map" %>
 								List<String> indexReindexerClassNames = searchAdminDisplayContext.getIndexReindexerClassNames();
 
 								for (String indexReindexerClassName : indexReindexerClassNames) {
+									backgroundTaskDisplay = classNameToBackgroundTaskDisplayMap.get(indexReindexerClassName);
 								%>
 
 									<li class="list-group-item list-group-item-flex">
@@ -329,7 +350,14 @@ page import="java.util.Map" %>
 										</div>
 
 										<div class="autofit-col index-action-wrapper" data-type="<%= indexReindexerClassName %>">
-											<aui:button cssClass="save-server-button" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" data-concurrent-disabled="" value="execute" />
+											<c:choose>
+												<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
+													<aui:button cssClass="save-server-button" data-classname="<%= indexReindexerClassName %>" data-cmd="reindexIndexReindexer" data-concurrent-disabled="" disabled="<%= false %>" value="execute" />
+												</c:when>
+												<c:otherwise>
+													<%= backgroundTaskDisplay.renderDisplayTemplate() %>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</li>
 

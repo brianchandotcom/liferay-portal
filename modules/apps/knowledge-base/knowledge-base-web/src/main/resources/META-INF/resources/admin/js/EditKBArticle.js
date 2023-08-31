@@ -148,34 +148,49 @@ export default function EditKBArticle({
 		}
 	};
 
-	let eventHandlers = null;
+	const eventHandlers = [];
 
 	if (Liferay.FeatureFlags['LPS-188060']) {
-		eventHandlers = [
-			attachListener(publishButton, 'click', publishButtonOnClick),
-			attachListener(scheduleItem, 'click', scheduleItemOnClick),
+		eventHandlers.push(
+			attachListener(publishButton, 'click', publishButtonOnClick)
+		);
+
+		eventHandlers.push(
+			attachListener(scheduleItem, 'click', scheduleItemOnClick)
+		);
+
+		eventHandlers.push(
 			attachListener(
 				contextualSidebarButton,
 				'click',
 				contextualSidebarButtonOnClick
-			),
+			)
+		);
+
+		eventHandlers.push(
 			attachListener(form, 'submit', () => {
 				beforeSubmit();
-			}),
-		];
+			})
+		);
 	}
 	else {
-		eventHandlers = [
-			attachListener(publishButton, 'click', publishButtonOnClick),
+		eventHandlers.push(
+			attachListener(publishButton, 'click', publishButtonOnClick)
+		);
+
+		eventHandlers.push(
 			attachListener(
 				contextualSidebarButton,
 				'click',
 				contextualSidebarButtonOnClick
-			),
+			)
+		);
+
+		eventHandlers.push(
 			attachListener(form, 'submit', () => {
 				beforeSubmit();
-			}),
-		];
+			})
+		);
 	}
 
 	if (!kbArticle) {

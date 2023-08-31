@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
+import classnames from 'classnames';
 import {isAfter} from 'date-fns';
 import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -38,15 +39,12 @@ export default function ScheduleModal({
 	};
 
 	useEffect(() => {
-		if (
-			isAfter(Date.parse(scheduledDate), Date.now()) ||
-			(Number.isNaN(Date.parse(scheduledDate)) && !scheduledDate)
-		) {
-			setInvalidDate(false);
-		}
-		else {
-			setInvalidDate(true);
-		}
+		setInvalidDate(
+			!(
+				isAfter(Date.parse(scheduledDate), Date.now()) ||
+				(Number.isNaN(Date.parse(scheduledDate)) && !scheduledDate)
+			)
+		);
 	}, [scheduledDate]);
 
 	return (
@@ -56,38 +54,25 @@ export default function ScheduleModal({
 					{Liferay.Language.get('set-date-and-time-for-publication')}
 				</p>
 
-				{invalidDate === true ? (
-					<div>
-						<div className="has-error">
-							<ClayDatePicker
-								onChange={setScheduledDate}
-								placeholder="YYYY-MM-DD HH:mm"
-								time
-								value={scheduledDate}
-							/>
-						</div>
-
-						<div className="error-container mt-1">
-							<ClayAlert
-								displayType="danger"
-								title={
-									Liferay.Language.get('error-colon') + ' '
-								}
-								variant="feedback"
-							>
-								{Liferay.Language.get(
-									'please-enter-a-valid-date'
-								)}
-							</ClayAlert>
-						</div>
-					</div>
-				) : (
+				<div className={classnames({'has-error': invalidDate})}>
 					<ClayDatePicker
 						onChange={setScheduledDate}
 						placeholder="YYYY-MM-DD HH:mm"
 						time
 						value={scheduledDate}
 					/>
+				</div>
+
+				{invalidDate && (
+					<div className="error-container mt-1">
+						<ClayAlert
+							displayType="danger"
+							title={Liferay.Language.get('error-colon') + ' '}
+							variant="feedback"
+						>
+							{Liferay.Language.get('please-enter-a-valid-date')}
+						</ClayAlert>
+					</div>
 				)}
 			</div>
 

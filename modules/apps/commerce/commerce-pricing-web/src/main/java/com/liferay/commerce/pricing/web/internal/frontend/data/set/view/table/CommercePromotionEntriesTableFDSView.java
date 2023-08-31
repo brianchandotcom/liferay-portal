@@ -43,6 +43,10 @@ public class CommercePromotionEntriesTableFDSView extends BaseTableFDSView {
 		).add(
 			"product.name.LANG", "name"
 		).add(
+			"unitOfMeasureKey", "uom"
+		).add(
+			"quantity", "quantity"
+		).add(
 			"sku.basePromoPriceFormatted", "base-promotion-price"
 		).add(
 			"priceFormatted", "promotion-price"

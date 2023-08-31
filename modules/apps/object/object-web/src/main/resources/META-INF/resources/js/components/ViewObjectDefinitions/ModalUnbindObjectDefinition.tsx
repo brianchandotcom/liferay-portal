@@ -19,13 +19,13 @@ import './ModalUnbindObject.scss';
 interface ModalUnbindObjectDefinitionProps {
 	baseResourceURL: string;
 	onVisibilityChange: () => void;
-	selectedObjectToUnbind?: ObjectDefinition;
+	selectedObjectDefinitionToUnbind?: ObjectDefinition;
 }
 
 export function ModalUnbindObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
-	selectedObjectToUnbind,
+	selectedObjectDefinitionToUnbind,
 }: ModalUnbindObjectDefinitionProps) {
 	const [rootObject, setRootObject] = useState<ObjectDefinition>();
 	const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export function ModalUnbindObjectDefinition({
 	const onSubmit = async () => {
 		const response = await fetch(
 			createResourceURL(baseResourceURL, {
-				objectDefinitionId: selectedObjectToUnbind?.id,
+				objectDefinitionId: selectedObjectDefinitionToUnbind?.id,
 				p_p_resource_id: '/object_definitions/unbind_object_definition',
 			}).toString()
 		);
@@ -61,16 +61,16 @@ export function ModalUnbindObjectDefinition({
 			setLoading(true);
 
 			if (
-				selectedObjectToUnbind?.rootObjectDefinitionExternalReferenceCode ===
-				selectedObjectToUnbind?.externalReferenceCode
+				selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode ===
+				selectedObjectDefinitionToUnbind?.externalReferenceCode
 			) {
-				setRootObject(selectedObjectToUnbind);
+				setRootObject(selectedObjectDefinitionToUnbind);
 			}
 			else if (
-				selectedObjectToUnbind?.rootObjectDefinitionExternalReferenceCode
+				selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode
 			) {
 				const rootObjectResponse = await API.getObjectDefinitionByExternalReferenceCode(
-					selectedObjectToUnbind?.rootObjectDefinitionExternalReferenceCode
+					selectedObjectDefinitionToUnbind?.rootObjectDefinitionExternalReferenceCode
 				);
 
 				setRootObject(rootObjectResponse);
@@ -94,8 +94,8 @@ export function ModalUnbindObjectDefinition({
 					<ClayLoadingIndicator displayType="secondary" size="sm" />
 				) : (
 					<span className="lfr__object-modal-unbind-object-description">
-						{selectedObjectToUnbind?.externalReferenceCode ===
-						rootObject?.externalReferenceCode
+						{selectedObjectDefinitionToUnbind?.externalReferenceCode ===
+						 rootObject?.externalReferenceCode
 							? sub(
 									Liferay.Language.get(
 										'please-confirm-before-unbinding-the-root-x'
@@ -114,9 +114,9 @@ export function ModalUnbindObjectDefinition({
 									),
 									[
 										getLocalizableLabel(
-											selectedObjectToUnbind?.defaultLanguageId as Liferay.Language.Locale,
-											selectedObjectToUnbind?.label,
-											selectedObjectToUnbind?.name
+											selectedObjectDefinitionToUnbind?.defaultLanguageId as Liferay.Language.Locale,
+											selectedObjectDefinitionToUnbind?.label,
+											selectedObjectDefinitionToUnbind?.name
 										),
 										getLocalizableLabel(
 											rootObject?.defaultLanguageId as Liferay.Language.Locale,

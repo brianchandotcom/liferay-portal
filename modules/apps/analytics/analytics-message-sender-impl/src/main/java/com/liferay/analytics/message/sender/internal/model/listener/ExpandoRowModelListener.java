@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
+import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -45,20 +46,30 @@ public class ExpandoRowModelListener extends BaseModelListener<ExpandoRow> {
 
 	@Override
 	protected boolean isExcluded(ExpandoRow expandoRow) {
-		if (isCustomField(
-				Organization.class.getName(), expandoRow.getTableId())) {
+		if (AnalyticsModelUtil.isCustomField(
+				classNameLocalService.getClassNameId(
+					Organization.class.getName()),
+				expandoTableLocalService.fetchExpandoTable(
+					expandoRow.getTableId()))) {
 
 			return false;
 		}
 
-		if (isCustomField(User.class.getName(), expandoRow.getTableId())) {
+		if (AnalyticsModelUtil.isCustomField(
+				classNameLocalService.getClassNameId(User.class.getName()),
+				expandoTableLocalService.fetchExpandoTable(
+					expandoRow.getTableId()))) {
+
 			User user = userLocalService.fetchUser(expandoRow.getClassPK());
 
-			if (!isUserActive(user)) {
+			if (!AnalyticsModelUtil.isUserActive(user)) {
 				return true;
 			}
 
-			return isUserExcluded(user);
+			return AnalyticsModelUtil.isUserExcluded(
+				analyticsConfigurationRegistry.getAnalyticsConfiguration(
+					user.getCompanyId()),
+				user);
 		}
 
 		return true;
@@ -70,8 +81,11 @@ public class ExpandoRowModelListener extends BaseModelListener<ExpandoRow> {
 
 		ExpandoRow expandoRow = (ExpandoRow)baseModel;
 
-		if (isCustomField(
-				Organization.class.getName(), expandoRow.getTableId())) {
+		if (AnalyticsModelUtil.isCustomField(
+				classNameLocalService.getClassNameId(
+					Organization.class.getName()),
+				expandoTableLocalService.fetchExpandoTable(
+					expandoRow.getTableId()))) {
 
 			Organization organization =
 				_organizationLocalService.fetchOrganization(
@@ -87,12 +101,19 @@ public class ExpandoRowModelListener extends BaseModelListener<ExpandoRow> {
 					"organizationId", organization.getPrimaryKeyObj());
 			}
 		}
-		else if (isCustomField(User.class.getName(), expandoRow.getTableId())) {
+		else if (AnalyticsModelUtil.isCustomField(
+					classNameLocalService.getClassNameId(User.class.getName()),
+					expandoTableLocalService.fetchExpandoTable(
+						expandoRow.getTableId()))) {
+
 			User user = userLocalService.fetchUser(expandoRow.getClassPK());
 
 			if (user != null) {
 				JSONObject jsonObject = super.serialize(
-					user, getUserAttributeNames(user.getCompanyId()));
+					user,
+					AnalyticsModelUtil.getUserAttributeNames(
+						analyticsConfigurationRegistry.
+							getAnalyticsConfiguration(user.getCompanyId())));
 
 				jsonObject.remove(getPrimaryKeyName());
 

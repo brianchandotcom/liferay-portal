@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
+import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.model.Contact;
@@ -53,11 +54,14 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 	protected boolean isExcluded(Contact contact) {
 		User user = userLocalService.fetchUser(contact.getClassPK());
 
-		if (!isUserActive(user)) {
+		if (!AnalyticsModelUtil.isUserActive(user)) {
 			return true;
 		}
 
-		return isUserExcluded(user);
+		return AnalyticsModelUtil.isUserExcluded(
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				user.getCompanyId()),
+			user);
 	}
 
 	private static final List<String> _attributeNames = Arrays.asList(

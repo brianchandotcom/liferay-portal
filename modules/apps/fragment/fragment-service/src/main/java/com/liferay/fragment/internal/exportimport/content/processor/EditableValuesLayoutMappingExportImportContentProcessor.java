@@ -133,40 +133,9 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			return;
 		}
 
-		boolean contentPageTemplate = false;
-		boolean masterPageTemplate = false;
-
-		if (layout.isTypeContent()) {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-			if (layoutPageTemplateEntry == null) {
-				layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
-			}
-
-			if (layoutPageTemplateEntry != null) {
-				if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
-
-					contentPageTemplate = true;
-				}
-
-				if (layoutPageTemplateEntry.getType() ==
-						LayoutPageTemplateEntryTypeConstants.
-							TYPE_MASTER_LAYOUT) {
-
-					masterPageTemplate = true;
-				}
-			}
-		}
-
 		if ((layout.isPrivateLayout() !=
 				portletDataContext.isPrivateLayout()) &&
-			!contentPageTemplate && !masterPageTemplate &&
-			!layout.isTypeAssetDisplay()) {
+			!layout.isTypeAssetDisplay() && !_skipExportLayout(layout)) {
 
 			return;
 		}
@@ -217,6 +186,36 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 		).put(
 			"privateLayout", layout.isPrivateLayout()
 		);
+	}
+
+	private boolean _skipExportLayout(Layout layout) {
+		if (!layout.isTypeContent()) {
+			return false;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		if (layoutPageTemplateEntry == null) {
+			return false;
+		}
+
+		if ((layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

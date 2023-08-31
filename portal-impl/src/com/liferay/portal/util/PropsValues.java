@@ -588,9 +588,6 @@ public class PropsValues {
 	public static final int DISCUSSION_MAX_COMMENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DISCUSSION_MAX_COMMENTS));
 
-	public static final boolean DISCUSSION_SUBSCRIBE = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE));
-
 	public static final String[] DL_CHAR_BLACKLIST = PropsUtil.getArray(
 		PropsKeys.DL_CHAR_BLACKLIST);
 

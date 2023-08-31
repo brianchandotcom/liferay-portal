@@ -687,8 +687,6 @@ public interface PropsKeys {
 	public static final String DISCUSSION_MAX_COMMENTS =
 		"discussion.max.comments";
 
-	public static final String DISCUSSION_SUBSCRIBE = "discussion.subscribe";
-
 	public static final String DL_ACTIONS_VISIBLE = "dl.actions.visible";
 
 	public static final String DL_CHAR_BLACKLIST = "dl.char.blacklist";

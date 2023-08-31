@@ -1738,3 +1738,25 @@ Register `MessageListener` as OSGi service, with the property `destination.name`
 ### Why was this change made?
 
 Liferay decided to not support these API methods to simplify the message bus infrastructure and usage.
+
+---------------------------------------
+
+## Portal property `discussion.subscribe` moved to instance settings
+- **Date:** 2023-September-4
+- **JIRA Ticket:** [LPS-194379](https://liferay.atlassian.net/browse/LPS-194379)
+
+### What changed?
+
+The portal property `discussion.subscribe` can no longer be set from the `portal.properties` file.
+
+### Who is affected?
+
+This affects anyone using `discussion.subscribe` with a value different than the default.
+
+### How should I update my code?
+
+There's no need to update the code. Further changes to the property must be made through instance settings.
+
+### Why was this change made?
+
+Configuration options in portal properties are global. Product needs required it to be customizable at instance level.

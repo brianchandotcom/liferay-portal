@@ -6,10 +6,10 @@
 package com.liferay.comment.web.internal.upgrade.v6_1_0;
 
 import com.liferay.comment.configuration.CommentGroupServiceConfiguration;
+import com.liferay.comment.constants.LegacyDiscussionPropsKeys;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.PropsKeys;
 
 /**
  * @author Adolfo Pérez
@@ -28,7 +28,8 @@ public class DiscussionConfigurationUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			CommentGroupServiceConfiguration.class,
-			new KeyValuePair(PropsKeys.DISCUSSION_SUBSCRIBE, "subscribe"));
+			new KeyValuePair(
+				LegacyDiscussionPropsKeys.DISCUSSION_SUBSCRIBE, "subscribe"));
 	}
 
 	private final PrefsPropsToConfigurationUpgradeHelper

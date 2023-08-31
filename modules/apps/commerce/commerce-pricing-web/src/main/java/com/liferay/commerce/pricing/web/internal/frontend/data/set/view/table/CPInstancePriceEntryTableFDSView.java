@@ -36,13 +36,17 @@ public class CPInstancePriceEntryTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
 		).add(
+			"unitOfMeasure", "uom"
+		).add(
+			"quantity", "base-quantity"
+		).add(
 			"unitPrice", "unit-price"
 		).add(
 			"priceOnApplication", "price-on-application",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
 		).add(
-			"createDate", "create-date"
+			"createDateString", "create-date"
 		).build();
 	}
 

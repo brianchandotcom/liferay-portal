@@ -12,12 +12,15 @@ public class InstancePriceEntry {
 
 	public InstancePriceEntry(
 		long priceEntryId, String createDateString, String name,
-		boolean priceOnApplication, String unitPrice) {
+		boolean priceOnApplication, String quantity, String unitOfMeasure,
+		String unitPrice) {
 
 		_priceEntryId = priceEntryId;
 		_createDateString = createDateString;
 		_name = name;
 		_priceOnApplication = priceOnApplication;
+		_quantity = quantity;
+		_unitOfMeasure = unitOfMeasure;
 		_unitPrice = unitPrice;
 	}
 
@@ -33,6 +36,14 @@ public class InstancePriceEntry {
 		return _priceEntryId;
 	}
 
+	public String getQuantity() {
+		return _quantity;
+	}
+
+	public String getUnitOfMeasure() {
+		return _unitOfMeasure;
+	}
+
 	public String getUnitPrice() {
 		return _unitPrice;
 	}
@@ -45,6 +56,8 @@ public class InstancePriceEntry {
 	private final String _name;
 	private final long _priceEntryId;
 	private final boolean _priceOnApplication;
+	private final String _quantity;
+	private final String _unitOfMeasure;
 	private final String _unitPrice;
 
 }

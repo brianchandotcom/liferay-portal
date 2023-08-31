@@ -952,7 +952,7 @@ definition {
 	}
 
 	macro importFromOrder {
-		Click(locator1 = "CommerceEntry#DROPDOWN");
+		Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 		MenuItem.click(menuItem = "Import from Orders");
 
@@ -979,7 +979,7 @@ definition {
 	}
 
 	macro importOrderFromType {
-		Click(locator1 = "CommerceEntry#DROPDOWN");
+		Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 		MenuItem.viewPresent(menuItem = "Import from ${orderType}");
 

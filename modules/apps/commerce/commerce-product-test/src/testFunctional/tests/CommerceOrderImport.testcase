@@ -70,7 +70,7 @@ definition {
 		task ("When the buyer is importing a new order from CSV") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from CSV");
 
@@ -90,7 +90,7 @@ definition {
 		task ("When the buyer is importing a new order from orders") {
 			SelectFrameTop();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Orders");
 		}
@@ -108,7 +108,7 @@ definition {
 		task ("When the buyer is importing a new order from Wish List") {
 			SelectFrameTop();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Wish Lists");
 		}
@@ -157,7 +157,7 @@ definition {
 		task ("And given the buyer is importing the order and arrives at the import preview") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Orders");
 
@@ -181,7 +181,7 @@ definition {
 		task ("Given the buyer starts the import again and arrives at the import preview") {
 			SelectFrameTop();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Orders");
 		}
@@ -207,7 +207,7 @@ definition {
 		}
 
 		task ("When the buyer starts an import for a CSV with a valid requested delivery date") {
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from CSV");
 
@@ -601,7 +601,7 @@ definition {
 
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Orders");
 
@@ -638,7 +638,7 @@ definition {
 		}
 
 		task ("When the user tries to import an order when there are no orders to import") {
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.viewPresent(menuItem = "Import from Orders");
 
@@ -668,7 +668,7 @@ definition {
 		}
 
 		task ("When the buyer starts an import for a CSV with an invalid requested delivery date") {
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from CSV");
 
@@ -750,7 +750,7 @@ definition {
 
 			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Orders");
 		}
@@ -822,7 +822,7 @@ definition {
 
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
-			Click(locator1 = "CommerceEntry#DROPDOWN");
+			Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 			MenuItem.click(menuItem = "Import from Orders");
 

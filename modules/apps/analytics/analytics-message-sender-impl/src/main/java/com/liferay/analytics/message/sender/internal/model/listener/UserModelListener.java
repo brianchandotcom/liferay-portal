@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
+import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
@@ -21,7 +22,9 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public List<String> getAttributeNames(long companyId) {
-		return getUserAttributeNames(companyId);
+		return AnalyticsModelUtil.getUserAttributeNames(
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId));
 	}
 
 	@Override
@@ -36,7 +39,10 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	protected boolean isExcluded(User user) {
-		return isUserExcluded(user);
+		return AnalyticsModelUtil.isUserExcluded(
+			analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				user.getCompanyId()),
+			user);
 	}
 
 }

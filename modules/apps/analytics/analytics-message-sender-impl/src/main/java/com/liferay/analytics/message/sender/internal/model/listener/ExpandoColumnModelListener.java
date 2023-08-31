@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
+import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -104,13 +105,20 @@ public class ExpandoColumnModelListener
 
 	@Override
 	protected boolean isExcluded(ExpandoColumn expandoColumn) {
-		if (isCustomField(
-				Organization.class.getName(), expandoColumn.getTableId())) {
+		if (AnalyticsModelUtil.isCustomField(
+				classNameLocalService.getClassNameId(
+					Organization.class.getName()),
+				expandoTableLocalService.fetchExpandoTable(
+					expandoColumn.getTableId()))) {
 
 			return false;
 		}
 
-		if (isCustomField(User.class.getName(), expandoColumn.getTableId())) {
+		if (AnalyticsModelUtil.isCustomField(
+				classNameLocalService.getClassNameId(User.class.getName()),
+				expandoTableLocalService.fetchExpandoTable(
+					expandoColumn.getTableId()))) {
+
 			AnalyticsConfiguration analyticsConfiguration =
 				analyticsConfigurationRegistry.getAnalyticsConfiguration(
 					expandoColumn.getCompanyId());
@@ -145,8 +153,11 @@ public class ExpandoColumnModelListener
 
 		String className = User.class.getName();
 
-		if (isCustomField(
-				Organization.class.getName(), expandoColumn.getTableId())) {
+		if (AnalyticsModelUtil.isCustomField(
+				classNameLocalService.getClassNameId(
+					Organization.class.getName()),
+				expandoTableLocalService.fetchExpandoTable(
+					expandoColumn.getTableId()))) {
 
 			className = Organization.class.getName();
 		}

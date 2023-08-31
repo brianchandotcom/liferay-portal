@@ -5,16 +5,14 @@
 
 package com.liferay.analytics.message.sender.internal.model.listener;
 
+import com.liferay.analytics.message.sender.internal.util.AnalyticsModelUtil;
 import com.liferay.analytics.message.sender.model.AnalyticsMessage;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
 import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
-import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.expando.kernel.model.ExpandoRow;
-import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -50,7 +48,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.nio.charset.Charset;
 
@@ -85,8 +82,11 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 			User user = userLocalService.fetchUser(contact.getClassPK());
 
 			if ((!StringUtil.equalsIgnoreCase(eventType, "delete") &&
-				 !isUserActive(user)) ||
-				isUserExcluded(user)) {
+				 !AnalyticsModelUtil.isUserActive(user)) ||
+				AnalyticsModelUtil.isUserExcluded(
+					analyticsConfigurationRegistry.getAnalyticsConfiguration(
+						user.getCompanyId()),
+					user)) {
 
 				return;
 			}
@@ -95,8 +95,11 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 			User user = (User)model;
 
 			if ((!StringUtil.equalsIgnoreCase(eventType, "delete") &&
-				 !isUserActive(user)) ||
-				isUserExcluded(user)) {
+				 !AnalyticsModelUtil.isUserActive(user)) ||
+				AnalyticsModelUtil.isUserExcluded(
+					analyticsConfigurationRegistry.getAnalyticsConfiguration(
+						user.getCompanyId()),
+					user)) {
 
 				return;
 			}
@@ -112,8 +115,11 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 		if (modelClassName.equals(ExpandoRow.class.getName())) {
 			ExpandoRow expandoRow = (ExpandoRow)model;
 
-			if (isCustomField(
-					Organization.class.getName(), expandoRow.getTableId())) {
+			if (AnalyticsModelUtil.isCustomField(
+					classNameLocalService.getClassNameId(
+						Organization.class.getName()),
+					expandoTableLocalService.fetchExpandoTable(
+						expandoRow.getTableId()))) {
 
 				modelClassName = Organization.class.getName();
 			}
@@ -274,62 +280,6 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 
 	protected abstract String getPrimaryKeyName();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getUserAttributeNames(long)}
-	 */
-	@Deprecated
-	protected List<String> getUserAttributeNames() {
-		return null;
-	}
-
-	protected List<String> getUserAttributeNames(long companyId) {
-		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationRegistry.getAnalyticsConfiguration(companyId);
-
-		if (ArrayUtil.isEmpty(analyticsConfiguration.syncedUserFieldNames())) {
-			return _userAttributeNames;
-		}
-
-		List<String> attributeNames = new ArrayList<>();
-
-		attributeNames.add("expando");
-		attributeNames.add("memberships");
-
-		for (String name : _userAttributeNames) {
-			if (ArrayUtil.contains(
-					analyticsConfiguration.syncedUserFieldNames(), name)) {
-
-				attributeNames.add(name);
-			}
-		}
-
-		return attributeNames;
-	}
-
-	protected boolean isCustomField(String className, long tableId) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		try {
-			ExpandoTable expandoTable = expandoTableLocalService.getTable(
-				tableId);
-
-			if (Objects.equals(
-					ExpandoTableConstants.DEFAULT_TABLE_NAME,
-					expandoTable.getName()) &&
-				(expandoTable.getClassNameId() == classNameId)) {
-
-				return true;
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get expando table " + tableId, exception);
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean isExcluded(T model) {
 		ShardedModel shardedModel = (ShardedModel)model;
 
@@ -342,68 +292,6 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 		}
 
 		return false;
-	}
-
-	protected boolean isUserActive(User user) {
-		if ((user == null) ||
-			Objects.equals(
-				user.getStatus(), WorkflowConstants.STATUS_INACTIVE)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean isUserExcluded(User user) {
-		if ((user == null) ||
-			Objects.equals(
-				user.getScreenName(),
-				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN)) {
-
-			return true;
-		}
-
-		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationRegistry.getAnalyticsConfiguration(
-				user.getCompanyId());
-
-		if (analyticsConfiguration.syncAllContacts()) {
-			return false;
-		}
-
-		long[] organizationIds = null;
-
-		try {
-			organizationIds = user.getOrganizationIds();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return true;
-		}
-
-		for (long organizationId : organizationIds) {
-			if (ArrayUtil.contains(
-					analyticsConfiguration.syncedOrganizationIds(),
-					String.valueOf(organizationId))) {
-
-				return false;
-			}
-		}
-
-		for (long userGroupId : user.getUserGroupIds()) {
-			if (ArrayUtil.contains(
-					analyticsConfiguration.syncedUserGroupIds(),
-					String.valueOf(userGroupId))) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	protected JSONObject serialize(
@@ -724,14 +612,20 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 			User user = userLocalService.fetchUser((long)associationClassPK);
 
 			if (!eventType.equals("deleteAssociation") &&
-				(!isUserActive(user) || isUserExcluded(user))) {
+				(!AnalyticsModelUtil.isUserActive(user) ||
+				 AnalyticsModelUtil.isUserExcluded(
+					 analyticsConfigurationRegistry.getAnalyticsConfiguration(
+						 user.getCompanyId()),
+					 user))) {
 
 				return;
 			}
 
 			if (!eventType.equals("deleteAssociation")) {
-				List<String> userAttributeNames = getUserAttributeNames(
-					user.getCompanyId());
+				List<String> userAttributeNames =
+					AnalyticsModelUtil.getUserAttributeNames(
+						analyticsConfigurationRegistry.
+							getAnalyticsConfiguration(user.getCompanyId()));
 
 				userAttributeNames.add("associations");
 				userAttributeNames.add("userId");
@@ -792,12 +686,5 @@ public abstract class BaseModelListener<T extends BaseModel<T>>
 		Arrays.asList(
 			"expando", "modifiedDate", "name", "parentOrganizationId",
 			"treePath", "type");
-	private static final List<String> _userAttributeNames = Arrays.asList(
-		"agreedToTermsOfUse", "comments", "companyId", "contactId",
-		"createDate", "emailAddress", "emailAddressVerified", "expando",
-		"externalReferenceCode", "facebookId", "firstName", "googleUserId",
-		"greeting", "jobTitle", "languageId", "lastName", "ldapServerId",
-		"memberships", "middleName", "modifiedDate", "openId", "portraitId",
-		"screenName", "status", "timeZoneId", "uuid");
 
 }

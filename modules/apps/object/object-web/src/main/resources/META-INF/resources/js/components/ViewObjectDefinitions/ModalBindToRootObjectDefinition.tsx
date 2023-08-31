@@ -31,7 +31,7 @@ interface RootObjectDefinitionPathOption {
 		objectRelationshipId: number;
 	}[];
 	isAncestor?: boolean;
-	isRootObject?: boolean;
+	isRoot?: boolean;
 	label: string;
 	objectRelationshipId: number;
 }
@@ -102,7 +102,7 @@ export function ModalBindToRootObjectDefinition({
 			filteredSelectedRootObjects.map((selectedObject, index) => {
 				return {
 					...selectedObject,
-					isRootObject: newSelectedRootObjects.length === index + 1,
+					isRoot: newSelectedRootObjects.length === index + 1,
 				};
 			})
 		);
@@ -229,7 +229,7 @@ export function ModalBindToRootObjectDefinition({
 					allRootObjectOptions.map((rootObjectOptions, index) => (
 						<SingleSelect<RootObjectDefinitionPathOption>
 							contentRight={
-								selectedRootObjects[index]?.isRootObject && (
+								selectedRootObjects[index]?.isRoot && (
 									<ClayLabel displayType="info">
 										{Liferay.Language.get('root-object')}
 									</ClayLabel>

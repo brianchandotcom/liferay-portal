@@ -22,7 +22,7 @@ import {createResourceURL, fetch} from 'frontend-js-web';
 interface ModalBindToRootObjectDefinitionProps {
 	baseResourceURL: string;
 	onVisibilityChange: () => void;
-	selectedObjectToBind?: ObjectDefinition;
+	selectedObjectDefinitionToBind?: ObjectDefinition;
 }
 
 interface RootObjectPathOption {
@@ -39,7 +39,7 @@ interface RootObjectPathOption {
 export function ModalBindToRootObjectDefinition({
 	baseResourceURL,
 	onVisibilityChange,
-	selectedObjectToBind,
+	selectedObjectDefinitionToBind,
 }: ModalBindToRootObjectDefinitionProps) {
 	const [loading, setLoading] = useState(false);
 	const {observer, onClose} = useModal({
@@ -171,7 +171,7 @@ export function ModalBindToRootObjectDefinition({
 						depth: currentDepth,
 						objectDefinitionId:
 							currentRelationshipId === 0
-								? selectedObjectToBind?.id
+								? selectedObjectDefinitionToBind?.id
 								: 0,
 						objectRelationshipId:
 							currentRelationshipId !== 0
@@ -217,9 +217,9 @@ export function ModalBindToRootObjectDefinition({
 					disabled
 					label={Liferay.Language.get('object-to-be-bound')}
 					value={getLocalizableLabel(
-						selectedObjectToBind?.defaultLanguageId as Liferay.Language.Locale,
-						selectedObjectToBind?.label,
-						selectedObjectToBind?.name
+						selectedObjectDefinitionToBind?.defaultLanguageId as Liferay.Language.Locale,
+						selectedObjectDefinitionToBind?.label,
+						selectedObjectDefinitionToBind?.name
 					)}
 				/>
 

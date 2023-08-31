@@ -529,7 +529,7 @@ export default function ViewObjectDefinitions({
 							})
 						);
 					}}
-					selectedObjectToBind={selectedObjectDefinition}
+					selectedObjectDefinitionToBind={selectedObjectDefinition}
 				/>
 			)}
 

@@ -209,42 +209,25 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry);
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, RandomTestUtil.randomString());
 
 		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
 	}
 
 	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry);
-
-		Map<String, Object> properties = objectEntry.getProperties();
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, RandomTestUtil.randomString());
 
 		String title = RandomTestUtil.randomString();
 
-		properties.put("title", title);
+		objectEntry.setProperties(
+			HashMapBuilder.putAll(
+				objectEntry.getProperties()
+			).put(
+				"title", title
+			).build());
 
 		objectEntry = _objectEntryManager.updateObjectEntry(
 			companyId, dtoConverterContext,
@@ -258,72 +241,14 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testGetObjectEntries() throws Exception {
 		String title1 = "a" + RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "queued"
-					).put(
-						"title", title1
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry1);
-
 		String title2 = "b" + RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry2 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "started"
-					).put(
-						"title", title2
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry2);
-
 		String title3 = "c" + RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry3 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "completed"
-					).put(
-						"title", title3
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry3);
-
 		String title4 = "d" + RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry4 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "queued"
-					).put(
-						"title", title4
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry4);
+		ObjectEntry objectEntry1 = _addObjectEntry("queued", title1);
+		ObjectEntry objectEntry2 = _addObjectEntry("started", title2);
+		ObjectEntry objectEntry3 = _addObjectEntry("completed", title3);
+		ObjectEntry objectEntry4 = _addObjectEntry("queued", title4);
 
 		// And/or with equals/not equals expression
 
@@ -416,42 +341,15 @@ public class SalesforceObjectEntryManagerImplTest
 	public void testGetObjectEntry() throws Exception {
 		String title = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", title
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry = _addObjectEntry(null, title);
 
-		_objectEntries.add(objectEntry);
-
-		objectEntry = _objectEntryManager.getObjectEntry(
-			companyId, dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Assert.assertEquals(
-			title, MapUtil.getString(objectEntry.getProperties(), "title"));
+		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
 	}
 
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntries.add(objectEntry);
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, RandomTestUtil.randomString());
 
 		_objectEntryManager.partialUpdateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -465,14 +363,7 @@ public class SalesforceObjectEntryManagerImplTest
 			},
 			null);
 
-		objectEntry = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		Assert.assertEquals("Able", properties.get("title"));
+		_assertObjectEntry(objectEntry.getExternalReferenceCode(), "Able");
 	}
 
 	@Override
@@ -488,6 +379,38 @@ public class SalesforceObjectEntryManagerImplTest
 			companyId, _objectDefinition, null, null, dtoConverterContext,
 			context.get("filter"), Pagination.of(1, 3), context.get("search"),
 			sorts);
+	}
+
+	private ObjectEntry _addObjectEntry(String customStatus, String title)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"customStatus", customStatus
+					).put(
+						"title", title
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry);
+
+		return objectEntry;
+	}
+
+	private void _assertObjectEntry(String externalReferenceCode, String title)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			_objectDefinition, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
 	}
 
 	private String _buildNotEqualsExpressionFilterString(

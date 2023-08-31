@@ -233,8 +233,19 @@ export default function PageContent({
 				</div>
 			) : (
 				<ClayLayout.ContentRow
-					className={classNames({'align-items-center': !subtype})}
+					aria-label={`${Liferay.Language.get('select')} ${title}`}
+					className={classNames({
+						'align-items-center': !subtype,
+					})}
+					onClick={onClickSelectInlineText}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							onClickSelectInlineText();
+						}
+					}}
 					padded
+					role="button"
+					tabIndex="0"
 				>
 					<ClayLayout.ContentCol>
 						<ClayIcon
@@ -257,68 +268,60 @@ export default function PageContent({
 							</span>
 						)}
 					</ClayLayout.ContentCol>
-
-					<ClayLayout.ContentCol>
-						{dropdownItems?.length ? (
-							<ClayDropDownWithItems
-								active={activeActions}
-								className="align-self-center"
-								items={dropdownItems}
-								menuElementAttrs={{
-									containerProps: {
-										className: 'cadmin',
-									},
-								}}
-								onActiveChange={setActiveActions}
-								trigger={
-									<ClayButton
-										aria-label={sub(
-											Liferay.Language.get(
-												'actions-for-x'
-											),
-											title
-										)}
-										className={classNames(
-											'page-editor__page-contents__button',
-											{'mt-1': subtype}
-										)}
-										displayType="unstyled"
-										size="sm"
-										title={sub(
-											Liferay.Language.get(
-												'open-actions-menu'
-											),
-											title
-										)}
-									>
-										<ClayIcon symbol="ellipsis-v" />
-									</ClayButton>
-								}
-							/>
-						) : (
-							<ClayButton
-								aria-label={sub(
-									Liferay.Language.get('edit-inline-text-x'),
-									title
-								)}
-								className={classNames(
-									'page-editor__page-contents__button',
-									{
-										'not-allowed':
-											isBeingEdited ||
-											!canUpdateEditables,
-									}
-								)}
-								disabled={isBeingEdited || !canUpdateEditables}
-								displayType="unstyled"
-								onClick={onClickEditInlineText}
-								size="sm"
-							>
-								<ClayIcon symbol="pencil" />
-							</ClayButton>
-						)}
-					</ClayLayout.ContentCol>
 				</ClayLayout.ContentRow>
+			)}
+
+			{dropdownItems?.length ? (
+				<ClayDropDownWithItems
+					active={activeActions}
+					className="align-self-center"
+					items={dropdownItems}
+					menuElementAttrs={{
+						containerProps: {
+							className: 'cadmin',
+						},
+					}}
+					onActiveChange={setActiveActions}
+					trigger={
+						<ClayButton
+							aria-label={sub(
+								Liferay.Language.get('actions-for-x'),
+								title
+							)}
+							className={classNames(
+								'page-editor__page-contents__button',
+								{'mt-1': subtype}
+							)}
+							displayType="unstyled"
+							size="sm"
+							title={sub(
+								Liferay.Language.get('open-actions-menu'),
+								title
+							)}
+						>
+							<ClayIcon symbol="ellipsis-v" />
+						</ClayButton>
+					}
+				/>
+			) : (
+				<ClayButton
+					aria-label={sub(
+						Liferay.Language.get('edit-inline-text-x'),
+						title
+					)}
+					className={classNames(
+						'page-editor__page-contents__button',
+						{
+							'not-allowed': isBeingEdited || !canUpdateEditables,
+						}
+					)}
+					disabled={isBeingEdited || !canUpdateEditables}
+					displayType="unstyled"
+					onClick={onClickEditInlineText}
+					size="sm"
+				>
+					<ClayIcon symbol="pencil" />
+				</ClayButton>
 			)}
 
 			{imageEditorParams && (

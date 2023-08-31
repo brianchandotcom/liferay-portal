@@ -248,6 +248,10 @@ definition {
 	}
 
 	macro checkoutFullWorkflow {
+		if (!(isSet(quantityInShipment))) {
+			var quantityInShipment = 1;
+		}
+
 		Click(
 			key_index = "Create Shipment",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
@@ -303,10 +307,12 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-		Type(
-			key_warehouseName = ${warehouse},
-			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
-			value1 = 1);
+		for (var warehouse : list ${warehouse}) {
+			Type(
+				key_warehouseName = ${warehouse},
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = ${quantityInShipment});
+		}
 
 		Button.clickSave();
 

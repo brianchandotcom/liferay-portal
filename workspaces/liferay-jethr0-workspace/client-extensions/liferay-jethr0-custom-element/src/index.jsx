@@ -4,10 +4,10 @@
  */
 
 import React from 'react';
-import {createRoot} from 'react-dom/client';
 
-import BuildQueue from './common/components/BuildQueue.js';
-import {Liferay} from './common/services/liferay/liferay.js';
+import { createRoot } from 'react-dom/client';
+
+import ProjectQueue from './common/ProjectQueue/ProjectQueue';
 
 const App = () => {
 	return (

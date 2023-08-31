@@ -55,7 +55,7 @@ else {
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
-MBHomeDisplayContext mbHomeDisplayContext = mbDisplayContextProvider.getMBHomeDisplayContext(request, response);
+MBHomeDisplayContext mbHomeDisplayContext = MBDisplayContextUtil.getMBHomeDisplayContext(request, response);
 
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);

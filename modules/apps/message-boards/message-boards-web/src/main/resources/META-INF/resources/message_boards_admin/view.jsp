@@ -32,7 +32,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 <%@ include file="/message_boards/nav.jspf" %>
 
 <%
-MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
+MBAdminListDisplayContext mbAdminListDisplayContext = MBDisplayContextUtil.getMbAdminListDisplayContext(request, response, categoryId);
 
 PortletURL portletURL = mbEntriesManagementToolbarDisplayContext.getPortletURL();
 

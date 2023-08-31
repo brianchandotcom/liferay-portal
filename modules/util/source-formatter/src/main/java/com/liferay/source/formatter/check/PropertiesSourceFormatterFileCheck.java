@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.comparator.PropertyValueComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -46,6 +47,8 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			_checkCheckstyleGroupAndOrder(fileName, content, "checkstyle.");
 			_checkSourceCheckGroupAndOrder(fileName, content, "source.check.");
 
+			_sortByRootSourceFormatter(fileName, content);
+
 			return _formatSourceFormatterProperties(fileName, content);
 		}
 
@@ -53,8 +56,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkCheckstyleGroupAndOrder(
-			String fileName, String content, String prefix)
-		throws Exception {
+		String fileName, String content, String prefix) {
 
 		String properties = _getProperites(content, prefix);
 
@@ -114,8 +116,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkSourceCheckGroupAndOrder(
-			String fileName, String content, String prefix)
-		throws Exception {
+		String fileName, String content, String prefix) {
 
 		String properties = _getProperites(content, prefix);
 
@@ -310,6 +311,32 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return sourceCheckCheckNames;
 	}
 
+	private synchronized List<String> _getSourceFormatterCategories()
+		throws Exception {
+
+		if (_basePropertiesKeys != null) {
+			return _basePropertiesKeys;
+		}
+
+		_basePropertiesKeys = new ArrayList<>();
+
+		File file = new File(getPortalDir() + "/source-formatter.properties");
+
+		String content = FileUtil.read(file);
+
+		if (content == null) {
+			return _basePropertiesKeys;
+		}
+
+		Matcher matcher = _propertiesKeyPattern.matcher(content);
+
+		while (matcher.find()) {
+			_basePropertiesKeys.add(matcher.group(1));
+		}
+
+		return _basePropertiesKeys;
+	}
+
 	private synchronized boolean _hasPrivateAppsDir() {
 		if (_hasPrivateAppsDir != null) {
 			return _hasPrivateAppsDir;
@@ -336,6 +363,54 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 
 		return _hasPrivateAppsDir;
+	}
+
+	private void _sortByRootSourceFormatter(String fileName, String content)
+		throws Exception {
+
+		String path = getPortalDir().getCanonicalPath();
+
+		path = StringUtil.replace(path, CharPool.BACK_SLASH, CharPool.SLASH);
+
+		if (fileName.equals(path + "/source-formatter.properties")) {
+			return;
+		}
+
+		List<String> sourceFormatterCategories =
+			_getSourceFormatterCategories();
+
+		if (sourceFormatterCategories.isEmpty()) {
+			return;
+		}
+
+		Matcher matcher = _propertiesKeyPattern.matcher(content);
+
+		int preIndex = -1;
+
+		while (matcher.find()) {
+			int index = sourceFormatterCategories.indexOf(
+				StringUtil.trim(matcher.group(1)));
+
+			if (index == -1) {
+				System.out.println(fileName + " " + matcher.group(1));
+
+				continue;
+			}
+
+			if ((preIndex != -1) && (index < preIndex)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Property '", sourceFormatterCategories.get(preIndex),
+						"' and '", sourceFormatterCategories.get(index),
+						"' should follow root source-formatter.properties ",
+						"sort"));
+
+				return;
+			}
+
+			preIndex = index;
+		}
 	}
 
 	private String _sortPropertyValues(
@@ -408,8 +483,11 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static List<String> _basePropertiesKeys;
 	private static final Pattern _checkPropertyPattern = Pattern.compile(
 		"\n\\s*#?(checkstyle|source\\.check)\\.(.*\\.check)\\.");
+	private static final Pattern _propertiesKeyPattern = Pattern.compile(
+		"(?<=\\A|\n) +([\\w.]+)=");
 
 	private Boolean _hasPrivateAppsDir;
 

@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.project.repository;
 
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.ProjectEntity;
@@ -47,6 +48,24 @@ public class ProjectEntityRepository
 		);
 
 		return add(jsonObject);
+	}
+
+	@Override
+	public ProjectEntity getById(long id) {
+		if (hasEntity(id)) {
+			return super.getById(id);
+		}
+
+		ProjectEntity projectEntity = _projectEntityDALO.get(id);
+
+		projectEntity.addBuildEntities(
+			_buildEntityRepository.getAll(projectEntity));
+
+		for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
+			buildEntity.setProjectEntity(projectEntity);
+		}
+
+		return add(projectEntity);
 	}
 
 	@Override

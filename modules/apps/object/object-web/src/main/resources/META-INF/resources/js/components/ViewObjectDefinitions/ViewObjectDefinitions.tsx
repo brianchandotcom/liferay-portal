@@ -54,7 +54,7 @@ export type ViewObjectDefinitionsModals = {
 	deletionNotAllowed: boolean;
 	editFolder: boolean;
 	moveObjectDefinition: boolean;
-	unbindFromRootObject: boolean;
+	unbindFromRootObjectDefinition: boolean;
 };
 
 export interface DeletedObjectDefinition extends ObjectDefinition {
@@ -92,7 +92,7 @@ export default function ViewObjectDefinitions({
 		deletionNotAllowed: false,
 		editFolder: false,
 		moveObjectDefinition: false,
-		unbindFromRootObject: false,
+		unbindFromRootObjectDefinition: false,
 	});
 	const [selectedFolder, setSelectedFolder] = useState<Partial<Folder>>(
 		initialValues
@@ -261,7 +261,7 @@ export default function ViewObjectDefinitions({
 
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
-					unbindFromRootObject: true,
+					unbindFromRootObjectDefinition: true,
 				}));
 			}
 		},
@@ -533,8 +533,8 @@ export default function ViewObjectDefinitions({
 				/>
 			)}
 
-			{showModal.unbindFromRootObject &&
-				Liferay.FeatureFlags['LPS-187142'] && (
+			{showModal.unbindFromRootObjectDefinition &&
+			 Liferay.FeatureFlags['LPS-187142'] && (
 					<ModalUnbindObject
 						baseResourceURL={baseResourceURL}
 						onVisibilityChange={() => {
@@ -543,7 +543,7 @@ export default function ViewObjectDefinitions({
 									previousState: ViewObjectDefinitionsModals
 								) => ({
 									...previousState,
-									unbindFromRootObject: false,
+									unbindFromRootObjectDefinition: false,
 								})
 							);
 						}}

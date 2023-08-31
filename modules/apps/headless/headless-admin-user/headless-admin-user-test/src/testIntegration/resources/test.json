@@ -1,0 +1,52 @@
+{
+	"additionalName": "",
+	"alternateName": "@alternateName@",
+	"birthDate": "1977-01-01T00:00:00Z",
+	"customFields": [
+	],
+	"dashboardURL": "",
+	"dateCreated": "2021-05-19T16:04:46Z",
+	"dateModified": "2021-05-19T16:04:46Z",
+	"emailAddress": "@emailAddress@",
+	"familyName": "Foo",
+	"givenName": "hgh",
+	"id": 39321,
+	"jobTitle": "",
+	"keywords": [
+	],
+	"name": "Able Foo",
+	"organizationBriefs": [
+	],
+	"profileURL": "",
+	"roleBriefs": [
+		{
+			"id": 20113,
+			"name": "User"
+		}
+	],
+	"siteBriefs": [
+		{
+			"id": 20127,
+			"name": "Global"
+		},
+		{
+			"id": 20125,
+			"name": "Guest"
+		}
+	],
+	"userAccountContactInformation": {
+		"emailAddresses": [
+		],
+		"facebook": "",
+		"jabber": "",
+		"postalAddresses": [
+		],
+		"skype": "",
+		"sms": "",
+		"telephones": [
+		],
+		"twitter": "",
+		"webUrls": [
+		]
+	}
+}

@@ -1633,7 +1633,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Publishing knowledge base articles with display date " +
+					"Publishing knowledge base articles with display date ",
 					"prior to ", displayDate, " for company ",
 					company.getCompanyId()));
 		}
@@ -1646,8 +1646,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				_log.debug(
 					StringBundler.concat(
 						"Publish knowledge base article ",
-						kbArticle.getKbArticleId(),
-						" with display date ", kbArticle.getDisplayDate()));
+						kbArticle.getKbArticleId(), " with display date ",
+						kbArticle.getDisplayDate()));
 			}
 
 			updateStatus(
@@ -1664,7 +1664,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Expiring knowledge base articles with expiration date " +
+					"Expiring knowledge base articles with expiration date ",
 					"prior to ", expirationDate, " for company ",
 					company.getCompanyId()));
 		}
@@ -1695,7 +1695,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Sending review notification for knowledge base articles " +
+					"Sending review notification for knowledge base articles ",
 					"with review date between ",
 					_dates.get(company.getCompanyId()), " and ", reviewDate,
 					" for company ", company.getCompanyId()));
@@ -1709,7 +1709,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Sending review notification for knowledge base " +
+						"Sending review notification for knowledge base ",
 						"article ", kbArticle.getKbArticleId(),
 						" with reviewDate ", kbArticle.getReviewDate()));
 			}

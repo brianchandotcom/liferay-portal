@@ -31,16 +31,19 @@ import javax.ws.rs.ext.Provider;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  */
-@Component(service = ThemeDisplayContextProvider.class)
 @Provider
 public class ThemeDisplayContextProvider
 	implements ContextProvider<ThemeDisplay> {
+
+	public ThemeDisplayContextProvider(
+		Language language, LayoutLocalService layoutLocalService) {
+
+		_language = language;
+		_layoutLocalService = layoutLocalService;
+	}
 
 	@Override
 	public ThemeDisplay createContext(Message message) {
@@ -116,10 +119,7 @@ public class ThemeDisplayContextProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		ThemeDisplayContextProvider.class);
 
-	@Reference
-	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private final Language _language;
+	private final LayoutLocalService _layoutLocalService;
 
 }

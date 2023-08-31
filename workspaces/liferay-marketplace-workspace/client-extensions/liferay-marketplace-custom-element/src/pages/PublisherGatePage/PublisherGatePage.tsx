@@ -8,7 +8,6 @@ import ClayButton from '@clayui/button';
 import cash from '../../assets/images/cash.svg';
 import cloudUpload from '../../assets/images/cloud_upload.svg';
 import {GateCard} from '../../components/Card/GateCard';
-import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 
 import './PublisherGatePage.scss';
@@ -69,8 +68,6 @@ export function PublisherGatePage() {
 					</ClayLink>
 				</div>
 			</div>
-
-			<Footer />
 		</div>
 	);
 }

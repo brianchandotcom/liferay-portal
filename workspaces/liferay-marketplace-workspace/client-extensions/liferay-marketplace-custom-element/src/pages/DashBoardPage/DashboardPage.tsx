@@ -6,7 +6,6 @@
 import {ReactNode} from 'react';
 
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
-import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
 
@@ -90,8 +89,6 @@ export function DashboardPage({
 					)}
 				</div>
 			</div>
-
-			<Footer />
 		</div>
 	);
 }

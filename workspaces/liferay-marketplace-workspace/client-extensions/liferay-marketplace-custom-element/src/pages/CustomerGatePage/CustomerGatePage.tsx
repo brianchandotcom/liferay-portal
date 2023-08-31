@@ -12,7 +12,6 @@ import {useEffect, useState} from 'react';
 import magnifyingGlass from '../../assets/images/magnifying_glass.svg';
 import menu from '../../assets/images/menu.svg';
 import {GateCard} from '../../components/Card/GateCard';
-import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {getMyUserAccount} from '../../utils/api';
 import CreateCustomerAccountForm from './CustomerForm';
@@ -93,8 +92,6 @@ export function CustomerGatePage() {
 			{step.page === 'customerGateForm' && (
 				<CreateCustomerAccountForm setStep={setStep} user={myUser} />
 			)}
-
-			<Footer />
 		</>
 	);
 }

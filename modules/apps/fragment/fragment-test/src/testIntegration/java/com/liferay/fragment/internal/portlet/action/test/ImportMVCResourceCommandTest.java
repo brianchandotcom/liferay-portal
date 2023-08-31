@@ -6,6 +6,7 @@
 package com.liferay.fragment.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -76,10 +77,11 @@ public class ImportMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_importFragmentEntries",
 			new Class<?>[] {
-				File.class, long.class, long.class, Locale.class, boolean.class,
-				long.class
+				File.class, long.class, long.class,
+				FragmentsImportStrategy.class, Locale.class, long.class
 			},
-			_getFile(), _group.getGroupId(), 0, LocaleUtil.US, false,
+			_getFile(), _group.getGroupId(), 0,
+			FragmentsImportStrategy.DO_NOT_OVERWRITE, LocaleUtil.US,
 			TestPropsValues.getUserId());
 
 		JSONObject importResultsJSONObject = jsonObject.getJSONObject(

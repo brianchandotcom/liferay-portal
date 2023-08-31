@@ -50,7 +50,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags({"LPS-169992", "LPS-176083"})
+@FeatureFlags("LPS-169992")
 @RunWith(Arquillian.class)
 public class ObjectEntryInfoItemFormProviderTest {
 

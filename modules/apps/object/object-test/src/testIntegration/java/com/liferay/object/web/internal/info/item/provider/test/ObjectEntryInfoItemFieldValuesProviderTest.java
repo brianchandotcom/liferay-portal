@@ -81,7 +81,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags({"LPS-169992", "LPS-176083"})
+@FeatureFlags("LPS-169992")
 @RunWith(Arquillian.class)
 public class ObjectEntryInfoItemFieldValuesProviderTest {
 

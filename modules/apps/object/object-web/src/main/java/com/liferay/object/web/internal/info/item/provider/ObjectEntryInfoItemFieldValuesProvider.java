@@ -144,8 +144,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getAttachmentInfoFieldValues(
 		ObjectField objectField, Object value) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			!objectField.compareBusinessType(
+		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			return Collections.emptyList();
@@ -499,8 +498,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			Map<String, Object> values)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			!objectField.compareBusinessType(
+		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			return Collections.emptyList();

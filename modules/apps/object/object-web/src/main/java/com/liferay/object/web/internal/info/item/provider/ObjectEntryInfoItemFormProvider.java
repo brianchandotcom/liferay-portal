@@ -330,10 +330,6 @@ public class ObjectEntryInfoItemFormProvider
 		_getAttachmentObjectDefinitionInfoFieldSetEntries(
 			long objectDefinitionId) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083")) {
-			return Collections.emptyList();
-		}
-
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
 		for (ObjectField objectField :
@@ -744,9 +740,7 @@ public class ObjectEntryInfoItemFormProvider
 
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			(objectDefinitionId2 == 0)) {
-
+		if (objectDefinitionId2 == 0) {
 			return infoFieldSetEntries;
 		}
 

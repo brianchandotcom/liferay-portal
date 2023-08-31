@@ -16,7 +16,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,9 +100,8 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 
 	@Override
 	public boolean isAvailable() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			(_objectDefinition1.getCompanyId() !=
-				CompanyThreadLocal.getCompanyId())) {
+		if (_objectDefinition1.getCompanyId() !=
+				CompanyThreadLocal.getCompanyId()) {
 
 			return false;
 		}

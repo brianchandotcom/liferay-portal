@@ -239,7 +239,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 			ObjectEntry objectEntry, String pathParameter, String pathString)
 		throws Exception {
 
-		if (pathParameter == null) {
+		if ((pathParameter == null) || Objects.equals(pathParameter, "")) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				null,
 				"Path parameter cannot be null in a single element endpoint",

@@ -20,7 +20,7 @@ definition {
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -1235,94 +1235,74 @@ definition {
 	@description = "This is a test for LPS-159512. The user could view associated display page from of web content related."
 	@priority = 3
 	test NavigateToConvertedPageViaSearchResults {
-		task ("Given the user displays a web content on a widget page") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name ${i}");
+		task ("Given the user displays a web content on a converted content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Search");
 
-				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name ${i}",
-					widgetName = "Asset Publisher");
-			}
-		}
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Search",
+				widgetName = "Search Results");
 
-		task ("And: Set Asset Publisher in the second page as the Default Asset Publisher") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+
 			Navigator.gotoSitePage(
-				pageName = "Test Page Name 2",
-				siteName = "Test Site Name");
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
-		}
 
-		task ("And: Add the first web content and select the display page template in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContentNavigator.gotoAddCP();
 
 			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent 1");
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
 
 			WebContent.editDisplayPage(
-				pageName = "Test Page Name 2",
+				pageName = "Test Page Name",
 				pageType = "Pages");
 
 			PortletEntry.publish();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.publish();
 		}
 
-		task ("And: Copy the Web Content") {
-			WebContentNavigator.gotoEntryMenuItem(
-				entry = "WC WebContent 1",
-				menuItem = "Copy");
-		}
-
-		task ("When: Add the second web content and select the display page template in web content") {
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "WC WebContent Copy");
-
-			WebContent.editDisplayPage(
-				pageName = "Test Page Name 2",
-				pageType = "Pages");
-
-			PortletEntry.publish();
-		}
-
-		task ("And: View the friendly URL shown in address") {
+		task ("When the user searches the web content") {
 			Navigator.gotoSitePage(
-				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				pageName = "Search",
+				siteName = ${randomSiteName});
 
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent 1 Duplicate 2");
-
-			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/wc-webcontent-1-duplicate-2");
+			SearchPortlets.searchEmbedded(searchTerm = "Web Content");
 		}
 
-		task ("And: Configure the Search Bar to have a permission destinationPage enabled and search for Web content created") {
-			ProductMenu.gotoHomePage();
+		task ("Then the user could access to the display page via search results") {
+			Search.gotoResultAssetViaTitle(searchAssetTitle = "Web Content Title");
 
-			SearchPortlets.configureEmbeddedSearchBar(destinationPage = "");
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
 
-			Refresh();
+			AssertVisible(locator1 = "Icon#BACK");
 
-			AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
-
-			SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Copy");
-
-			Click(
-				key_assetTitle = "WC WebContent Copy",
-				key_viewCount = "WC WebContent Copy",
-				locator1 = "APAsset#ASSET_VIEW_COUNT");
-		}
-
-		task ("Then: Navigation happens to Test Page Name 2 where the web content is displayed in context") {
-			AssertVisible(
-				key_navItem = "Test Page Name 2",
-				locator1 = "NavBar#NAV_ITEM_LINK");
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
 		}
 	}
 

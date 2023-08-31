@@ -25,6 +25,19 @@ const SetupHighPriorityContact = ({
 		setCurrentHighPriorityContacts,
 	] = useState([]);
 
+	const getContactRoleByFilter = (filter) => {
+		if (filter.includes('Privacy')) {
+			return 'Data Breach Contact';
+		}
+
+		if (filter.includes('Security')) {
+			return 'Security Incident Contact';
+		}
+		if (filter.includes('Critical')) {
+			return 'Critical Incident Contact';
+		}
+	};
+
 	const mapFilterToContactsCategory = (filter) => {
 		const _filter = (
 			filter.charAt(0).toLowerCase() + filter.slice(1)
@@ -34,6 +47,7 @@ const SetupHighPriorityContact = ({
 			contactsCategory: {
 				key: _filter,
 				name: `${filter}`,
+				role: getContactRoleByFilter(`${filter}`),
 			},
 			filterRequest: SearchBuilder.eq('contactsCategory', _filter),
 		};

@@ -6,6 +6,9 @@
 package com.liferay.social.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -17,26 +20,30 @@ public class SocialActivityPermissionUtil {
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		_socialActivityPermission.check(permissionChecker, groupId, actionId);
+		if (!contains(permissionChecker, groupId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, _getPortletId(), groupId, actionId);
+		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return _socialActivityPermission.contains(
-			permissionChecker, groupId, actionId);
+		if (permissionChecker.isGroupAdmin(groupId) ||
+			permissionChecker.isGroupOwner(groupId) ||
+			permissionChecker.hasPermission(
+				groupId, _getPortletId(), _getPortletId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public static SocialActivityPermission getSocialActivityPermission() {
-		return _socialActivityPermission;
+	private static String _getPortletId() {
+		return PortletProviderUtil.getPortletId(
+			SocialActivityPermissionUtil.class.getName(),
+			PortletProvider.Action.EDIT);
 	}
-
-	public void setSocialActivityPermission(
-		SocialActivityPermission socialActivityPermission) {
-
-		_socialActivityPermission = socialActivityPermission;
-	}
-
-	private static SocialActivityPermission _socialActivityPermission;
 
 }

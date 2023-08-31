@@ -11,8 +11,10 @@
 			color: currentColor;
 			width: 100%;
 
-			&:focus {
-				outline: none;
+			&:focus-visible {
+				background-color: transparent;
+				box-shadow: none;
+				color: white;
 			}
 		}
 	}

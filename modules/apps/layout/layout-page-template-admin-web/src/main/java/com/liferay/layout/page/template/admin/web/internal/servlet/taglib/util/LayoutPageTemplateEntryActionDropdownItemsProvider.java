@@ -311,6 +311,10 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
 		throws Exception {
 
+		String backURLTitle =
+			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES;
+
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
@@ -332,6 +336,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				layoutFullURL = HttpComponentsUtil.setParameter(
 					layoutFullURL, "p_l_back_url",
 					_themeDisplay.getURLCurrent());
+				layoutFullURL = HttpComponentsUtil.setParameter(
+					layoutFullURL, "p_l_back_url_title",
+					LanguageUtil.get(_httpServletRequest, backURLTitle));
 
 				dropdownItem.setHref(layoutFullURL);
 
@@ -342,15 +349,13 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		}
 
 		return dropdownItem -> {
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				_draftLayout, _themeDisplay);
-
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_mode", Constants.EDIT);
-
-			dropdownItem.setHref(layoutFullURL);
+			dropdownItem.setHref(
+				HttpComponentsUtil.addParameters(
+					PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
+					"p_l_back_url", _themeDisplay.getURLCurrent(),
+					"p_l_back_url_title",
+					LanguageUtil.get(_httpServletRequest, backURLTitle),
+					"p_l_mode", Constants.EDIT));
 
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(

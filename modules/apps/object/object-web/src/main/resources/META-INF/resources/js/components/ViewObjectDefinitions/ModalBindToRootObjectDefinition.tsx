@@ -25,7 +25,7 @@ interface ModalBindToRootObjectDefinitionProps {
 	selectedObjectDefinitionToBind?: ObjectDefinition;
 }
 
-interface RootObjectDefinitionPathOption {
+interface TreeEdgeOption {
 	ancestors?: {
 		label: string;
 		objectRelationshipId: number;
@@ -48,16 +48,16 @@ export function ModalBindToRootObjectDefinition({
 	const [currentDepth, setCurrentDepth] = useState(0);
 	const [currentRelationshipId, setCurrentRelationshipId] = useState(0);
 
-	const [allRootObjectOptions, setAllRootObjectOptions] = useState<
-		RootObjectDefinitionPathOption[][]
+	const [allTreeEdgeOptions, setAllTreeEdgeOptions] = useState<
+		TreeEdgeOption[][]
 	>([]);
 
-	const [selectedRootObjects, setSelectedRootObjects] = useState<
-		RootObjectDefinitionPathOption[]
+	const [selectedTreeEdgeOptions, setSelectedTreeEdgeOptions] = useState<
+		TreeEdgeOption[]
 	>([]);
 
 	const onSubmit = async () => {
-		const objectRelationshipIds = selectedRootObjects.map(
+		const objectRelationshipIds = selectedTreeEdgeOptions.map(
 			(selectedObject) => selectedObject.objectRelationshipId
 		);
 
@@ -85,59 +85,59 @@ export function ModalBindToRootObjectDefinition({
 		}
 	};
 
-	const filterRootObjectsByDepth = (
+	const filterTreeEdgeOptionsByDepth = (
 		depth: number,
-		newAllRootObjectOptions: RootObjectDefinitionPathOption[][],
-		newSelectedRootObjects: RootObjectDefinitionPathOption[]
+		newTreeEdgeOptions: TreeEdgeOption[][],
+		newSelectedTreeEdgeOptions: TreeEdgeOption[]
 	) => {
-		const filteredSelectedRootObjects = newSelectedRootObjects.filter(
+		const filteredSelectedTreeEdgeOptions = newSelectedTreeEdgeOptions.filter(
 			(_, index) => index <= depth
 		);
 
-		setAllRootObjectOptions(
-			newAllRootObjectOptions.filter((_, index) => index <= depth)
+		setAllTreeEdgeOptions(
+			newTreeEdgeOptions.filter((_, index) => index <= depth)
 		);
 
-		setSelectedRootObjects(
-			filteredSelectedRootObjects.map((selectedObject, index) => {
+		setSelectedTreeEdgeOptions(
+			filteredSelectedTreeEdgeOptions.map((selectedTreeEdgeOption, index) => {
 				return {
-					...selectedObject,
-					isRoot: newSelectedRootObjects.length === index + 1,
+					...selectedTreeEdgeOption,
+					isRoot: newSelectedTreeEdgeOptions.length === index + 1,
 				};
 			})
 		);
 	};
 
-	const handleSelectRootObject = (
-		option: RootObjectDefinitionPathOption,
+	const handleSelectTreeEdgeOption = (
+		selectedTreeEdgeOption: TreeEdgeOption,
 		depth: number
 	) => {
 		setLoading(true);
 
-		const newSelectedRootObjects = selectedRootObjects;
+		const newSelectedTreeEdgeOptions = selectedTreeEdgeOptions;
 
-		newSelectedRootObjects[depth] = option;
+		newSelectedTreeEdgeOptions[depth] = selectedTreeEdgeOption;
 
-		if (option.ancestors) {
+		if (selectedTreeEdgeOption.ancestors) {
 			let ancestorsDepth = depth;
 
-			const newAllRootObjectOptions = allRootObjectOptions;
+			const newAllTreeEdgeOptions = allTreeEdgeOptions;
 
-			option.ancestors.forEach((ancestor) => {
-				newSelectedRootObjects[ancestorsDepth + 1] = {
+			selectedTreeEdgeOption.ancestors.forEach((ancestor) => {
+				newSelectedTreeEdgeOptions[ancestorsDepth + 1] = {
 					...ancestor,
 					isAncestor: true,
 				};
 
-				newAllRootObjectOptions[ancestorsDepth + 1] = [ancestor];
+				newAllTreeEdgeOptions[ancestorsDepth + 1] = [ancestor];
 
 				ancestorsDepth++;
 			});
 
-			filterRootObjectsByDepth(
+			filterTreeEdgeOptionsByDepth(
 				ancestorsDepth,
-				newAllRootObjectOptions,
-				newSelectedRootObjects
+				newAllTreeEdgeOptions,
+				newSelectedTreeEdgeOptions
 			);
 
 			setTimeout(() => setLoading(false), 500);
@@ -147,13 +147,13 @@ export function ModalBindToRootObjectDefinition({
 
 		if (depth < 3) {
 			setCurrentDepth(depth + 1);
-			setCurrentRelationshipId(option.objectRelationshipId);
+			setCurrentRelationshipId(selectedTreeEdgeOption.objectRelationshipId);
 		}
 
-		filterRootObjectsByDepth(
+		filterTreeEdgeOptionsByDepth(
 			depth,
-			allRootObjectOptions,
-			newSelectedRootObjects
+			allTreeEdgeOptions,
+			newSelectedTreeEdgeOptions
 		);
 
 		setTimeout(() => setLoading(false), 500);
@@ -182,14 +182,14 @@ export function ModalBindToRootObjectDefinition({
 					}).toString()
 				);
 
-				const responseJSON = (await response.json()) as RootObjectDefinitionPathOption[];
+				const responseJSON = (await response.json()) as TreeEdgeOption[];
 
-				if (!!responseJSON.length && allRootObjectOptions.length <= 4) {
-					const newRootObjectOptions = allRootObjectOptions;
+				if (!!responseJSON.length && allTreeEdgeOptions.length <= 4) {
+					const newTreeEdgeOptions = allTreeEdgeOptions;
 
-					newRootObjectOptions[currentDepth] = responseJSON;
+					newTreeEdgeOptions[currentDepth] = responseJSON;
 
-					setAllRootObjectOptions(newRootObjectOptions);
+					setAllTreeEdgeOptions(newTreeEdgeOptions);
 				}
 			}
 
@@ -226,17 +226,17 @@ export function ModalBindToRootObjectDefinition({
 				{loading ? (
 					<ClayLoadingIndicator displayType="secondary" size="sm" />
 				) : (
-					allRootObjectOptions.map((rootObjectOptions, index) => (
-						<SingleSelect<RootObjectDefinitionPathOption>
+					allTreeEdgeOptions.map((treeEdgeOptions, index) => (
+						<SingleSelect<TreeEdgeOption>
 							contentRight={
-								selectedRootObjects[index]?.isRoot && (
+								selectedTreeEdgeOptions[index]?.isRoot && (
 									<ClayLabel displayType="info">
 										{Liferay.Language.get('root-object')}
 									</ClayLabel>
 								)
 							}
 							key={
-								selectedRootObjects[index]
+								selectedTreeEdgeOptions[index]
 									?.objectRelationshipId ?? index
 							}
 							label={
@@ -246,14 +246,14 @@ export function ModalBindToRootObjectDefinition({
 									  )
 									: ''
 							}
-							onChange={async (option) => {
-								handleSelectRootObject(option, index);
+							onChange={async (selectedTreeEdgeOption) => {
+								handleSelectTreeEdgeOption(selectedTreeEdgeOption, index);
 							}}
-							options={rootObjectOptions}
+							options={treeEdgeOptions}
 							readonly={
-								selectedRootObjects[index]?.isAncestor ?? false
+								selectedTreeEdgeOptions[index]?.isAncestor ?? false
 							}
-							value={selectedRootObjects[index]?.label ?? ''}
+							value={selectedTreeEdgeOptions[index]?.label ?? ''}
 						/>
 					))
 				)}
@@ -270,7 +270,7 @@ export function ModalBindToRootObjectDefinition({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!selectedRootObjects[0]}
+							disabled={!selectedTreeEdgeOptions[0]}
 							displayType="primary"
 							onClick={() => onSubmit()}
 							type="submit"

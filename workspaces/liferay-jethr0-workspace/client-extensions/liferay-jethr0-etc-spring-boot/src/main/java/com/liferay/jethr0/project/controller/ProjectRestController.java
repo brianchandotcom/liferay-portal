@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0;
+package com.liferay.jethr0.project.controller;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.project.ProjectEntity;
 import com.liferay.jethr0.project.queue.ProjectQueue;
+import com.liferay.jethr0.project.repository.ProjectEntityRepository;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,18 +19,42 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Michael Hashimoto
  */
-@RequestMapping("/build-queue")
+@RequestMapping("/projects")
 @RestController
-public class BuildQueueRestController {
+public class ProjectRestController {
 
-	@GetMapping
-	public ResponseEntity<String> get(@AuthenticationPrincipal Jwt jwt) {
+	@GetMapping("/{id}")
+	public ResponseEntity<String> project(
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int projectId) {
+
+		ProjectEntity projectEntity = _projectEntityRepository.getById(
+			projectId);
+
+		JSONObject projectJSONObject = projectEntity.getJSONObject();
+
+		JSONArray buildsJSONArray = new JSONArray();
+
+		for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
+			buildsJSONArray.put(buildEntity.getJSONObject());
+		}
+
+		projectJSONObject.put("builds", buildsJSONArray);
+
+		return new ResponseEntity<>(
+			projectJSONObject.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping("/queue")
+	public ResponseEntity<String> projectQueue(
+		@AuthenticationPrincipal Jwt jwt) {
+
 		JSONArray projectsJSONArray = new JSONArray();
 
 		for (ProjectEntity projectEntity : _projectQueue.getProjectEntities()) {
@@ -70,6 +95,9 @@ public class BuildQueueRestController {
 		return new ResponseEntity<>(
 			projectsJSONArray.toString(), HttpStatus.OK);
 	}
+
+	@Autowired
+	private ProjectEntityRepository _projectEntityRepository;
 
 	@Autowired
 	private ProjectQueue _projectQueue;

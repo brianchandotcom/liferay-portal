@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
-import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistryUtil;
 import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
+import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
 
 import java.io.Serializable;
 
@@ -221,7 +221,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		IndexReindexer indexReindexer =
-			IndexReindexerRegistryUtil.getIndexReindexer(className);
+			_indexReindexerRegistry.getIndexReindexer(className);
 
 		indexReindexer.reindex(
 			ParamUtil.getLongValues(actionRequest, "companyIds"),
@@ -232,7 +232,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		for (IndexReindexer indexReindexer :
-				IndexReindexerRegistryUtil.getIndexReindexers()) {
+				_indexReindexerRegistry.getIndexReindexers()) {
 
 			if (_log.isInfoEnabled()) {
 				Class<?> clazz = indexReindexer.getClass();
@@ -253,6 +253,9 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		EditMVCActionCommand.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private IndexReindexerRegistry _indexReindexerRegistry;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

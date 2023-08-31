@@ -20,11 +20,11 @@ import com.liferay.portal.search.admin.web.internal.display.context.builder.Fiel
 import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
-import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistryUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
 
 import java.io.IOException;
 
@@ -83,7 +83,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 			_indexInformationSnapshot.get());
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
-			IndexReindexerRegistryUtil.getIndexReindexerClassNames());
+			_indexReindexerRegistry.getIndexReindexerClassNames());
 
 		Collections.sort(indexReindexerClassNames);
 
@@ -158,6 +158,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 		_searchEngineInformationSnapshot = new Snapshot<>(
 			SearchAdminPortlet.class, SearchEngineInformation.class, null,
 			true);
+
+	@Reference
+	private IndexReindexerRegistry _indexReindexerRegistry;
 
 	@Reference
 	private Language _language;

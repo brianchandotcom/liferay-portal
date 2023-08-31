@@ -791,7 +791,28 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionStatusException();
 		}
 
-		return _publishObjectDefinition(userId, objectDefinition);
+		if (!objectDefinition.isNode()) {
+			return _publishObjectDefinition(userId, objectDefinition);
+		}
+
+		if (objectDefinition.isRootDescendantNode()) {
+			throw new ObjectDefinitionStatusException(
+				"Non root object definitions within a hierarchical structure " +
+					"are ineligible for publication");
+		}
+
+		Tree tree = _treeFactory.create(objectDefinitionId);
+
+		Iterator<Node> iterator = tree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			_publishObjectDefinition(
+				userId, getObjectDefinition(node.getObjectDefinitionId()));
+		}
+
+		return getObjectDefinition(objectDefinitionId);
 	}
 
 	@Override

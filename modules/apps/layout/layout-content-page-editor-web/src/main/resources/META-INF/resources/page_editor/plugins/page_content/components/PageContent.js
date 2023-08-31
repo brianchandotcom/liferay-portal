@@ -248,6 +248,7 @@ export default function PageContent({
 					aria-label={`${Liferay.Language.get('select')} ${title}`}
 					className={classNames({
 						'align-items-center': !subtype,
+						'editable-hovered': !!editableId,
 					})}
 					onClick={onClickSelectInlineText}
 					onKeyDown={(event) => {

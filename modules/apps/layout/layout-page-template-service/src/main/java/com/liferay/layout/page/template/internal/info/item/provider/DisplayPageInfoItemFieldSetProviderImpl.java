@@ -201,11 +201,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 	}
 
 	private InfoFieldType _getDisplayPageInfoFieldType() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183498")) {
-			return DisplayPageInfoFieldType.INSTANCE;
-		}
-
-		return URLInfoFieldType.INSTANCE;
+		return DisplayPageInfoFieldType.INSTANCE;
 	}
 
 	private List<InfoFieldSetEntry> _getInfoFieldSetEntries(

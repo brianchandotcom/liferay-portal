@@ -188,10 +188,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				httpServletRequest, "status",
 				WorkflowConstants.STATUS_APPROVED);
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {
-				status = WorkflowConstants.STATUS_APPROVED;
-			}
-
 			if ((infoItemIdentifier != null) &&
 				FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 
@@ -282,28 +278,15 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				_log.debug(infoFormValidationException);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-182728")) {
-				SessionErrors.add(
-					httpServletRequest,
-					String.valueOf(
-						infoFormValidationException.getFragmentEntryLinkId()),
-					infoFormValidationException);
-			}
-			else {
-				SessionErrors.add(
-					httpServletRequest, formItemId,
-					infoFormValidationException);
-			}
+			SessionErrors.add(
+				httpServletRequest,
+				String.valueOf(
+					infoFormValidationException.getFragmentEntryLinkId()),
+				infoFormValidationException);
 		}
 		catch (InfoFormValidationException infoFormValidationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(infoFormValidationException);
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-182728")) {
-				SessionErrors.add(
-					httpServletRequest, formItemId,
-					infoFormValidationException);
 			}
 
 			boolean hasInfoFormValidationExceptionCustomValidationErrors =
@@ -342,9 +325,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				}
 			}
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-182728") ||
-				!hasInfoFormValidationExceptionCustomValidationErrors) {
-
+			if (!hasInfoFormValidationExceptionCustomValidationErrors) {
 				SessionErrors.add(
 					httpServletRequest, formItemId,
 					infoFormValidationException);

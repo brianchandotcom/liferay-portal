@@ -7,7 +7,6 @@ import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {LocalizedValue} from '../../index';
 import FieldBase from '../common/FieldBase';
 
 import './InputLocalized.scss';
@@ -20,13 +19,16 @@ interface InputLocalizedProps {
 	id?: string;
 	label: string;
 	name?: string;
-	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
+	onChange: (
+		value: Liferay.Language.LocalizedValue<string>,
+		locale: InputLocale
+	) => void;
 	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
 	required?: boolean;
 	resultFormatter?: (value: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
-	translations: LocalizedValue<string>;
+	translations: Liferay.Language.LocalizedValue<string>;
 }
 
 interface InputLocale {

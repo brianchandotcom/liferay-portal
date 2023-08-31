@@ -115,9 +115,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 					navigate(backURL);
 					openToast({
 						message: sub(
-							Liferay.Language.get(
-								'no-new-items-were-imported'
-							),
+							Liferay.Language.get('no-new-items-were-imported'),
 							fileName || ''
 						),
 						type: 'info',

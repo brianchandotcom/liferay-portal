@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import {LocalizedValue} from '../../index';
 import './InputLocalized.scss';
 interface InputLocalizedProps {
 	className?: string;
@@ -14,13 +13,16 @@ interface InputLocalizedProps {
 	id?: string;
 	label: string;
 	name?: string;
-	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
+	onChange: (
+		value: Liferay.Language.LocalizedValue<string>,
+		locale: InputLocale
+	) => void;
 	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
 	required?: boolean;
 	resultFormatter?: (value: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
-	translations: LocalizedValue<string>;
+	translations: Liferay.Language.LocalizedValue<string>;
 }
 interface InputLocale {
 	label: Liferay.Language.Locale;

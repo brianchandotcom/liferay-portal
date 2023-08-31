@@ -47,7 +47,7 @@ const SetupHighPriorityContact = ({
 			contactsCategory: {
 				key: _filter,
 				name: `${filter}`,
-				role: getContactRoleByFilter(`${filter}`),
+				role: getContactRoleByFilter(filter),
 			},
 			filterRequest: SearchBuilder.eq('contactsCategory', _filter),
 		};

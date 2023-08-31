@@ -93,12 +93,12 @@ const useProjectCategoryItems = () => {
 	);
 
 	const projectCategoryItems = useMemo(() => {
-		const teamMembersERC = myUserAccount.accountBriefs.map(
+		const teamMembersERC = myUserAccount?.accountBriefs?.map(
 			({externalReferenceCode}: any) => externalReferenceCode
 		);
 
 		const liferayContactERC = myUserAccount.accountBriefs
-			.filter(({roleBriefs}) =>
+			?.filter(({roleBriefs}) =>
 				roleBriefs.some(
 					(roleBrief) => roleBrief.name === 'Provisioning'
 				)
@@ -111,14 +111,14 @@ const useProjectCategoryItems = () => {
 
 		return [
 			{
-				disabled: !teamMembersERC.length,
+				disabled: !teamMembersERC?.length,
 				filter: (searchBuilder: SearchBuilder) =>
 					searchBuilder.in('externalReferenceCode', teamMembersERC),
 				key: 'team-member',
 				label: i18n.translate('team-member'),
 			},
 			{
-				disabled: !liferayContactERC.length,
+				disabled: !liferayContactERC?.length,
 				filter: (searchBuilder: SearchBuilder) =>
 					searchBuilder.in(
 						'externalReferenceCode',

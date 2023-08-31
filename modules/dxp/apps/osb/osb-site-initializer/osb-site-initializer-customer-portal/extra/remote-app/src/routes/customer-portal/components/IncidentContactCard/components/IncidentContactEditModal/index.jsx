@@ -99,7 +99,7 @@ const IncidentContactEditModal = ({
 				openToast(
 					`${item.label}`,
 					`${i18n.translate('high-priority-contact-removed')} 
-						${i18n.translate(`${getKebabCase(item.filter.name)}-contact`)}`
+					<b>${i18n.translate(`${getKebabCase(item.filter.name)}-contact`)}</b>`
 				);
 			});
 
@@ -107,7 +107,7 @@ const IncidentContactEditModal = ({
 				openToast(
 					`${item.label}`,
 					`${i18n.translate('high-priority-contact-added')} 
-						${i18n.translate(`${getKebabCase(item.category.name)}-contact`)}`
+					<b>${i18n.translate(`${getKebabCase(item.category.name)}-contact`)}</b>`
 				);
 			});
 

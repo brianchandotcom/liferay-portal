@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import addItem, {PageContent} from '../actions/addItem';
+import deleteItem from '../actions/deleteItem';
 import {
 	ADD_ITEM,
 	DELETE_ITEM,
@@ -14,12 +16,29 @@ import {
 	UPDATE_PREVIEW_IMAGE,
 	UPDATE_ROW_COLUMNS,
 } from '../actions/types';
+import updateCollectionDisplayCollection from '../actions/updateCollectionDisplayCollection';
+import updateEditableValues from '../actions/updateEditableValues';
+import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
+import updateItemConfig from '../actions/updateItemConfig';
+import updatePageContents from '../actions/updatePageContents';
+import updatePreviewImage from '../actions/updatePreviewImage';
+import updateRowColumns from '../actions/updateRowColumns';
 
-const INITIAL_STATE = [];
+const INITIAL_STATE: PageContent[] = [];
 
 export default function pageContentsReducer(
 	pageContents = INITIAL_STATE,
-	action
+	action: ReturnType<
+		| typeof addItem
+		| typeof deleteItem
+		| typeof updateCollectionDisplayCollection
+		| typeof updateEditableValues
+		| typeof updateFragmentEntryLinkConfiguration
+		| typeof updateItemConfig
+		| typeof updatePageContents
+		| typeof updatePreviewImage
+		| typeof updateRowColumns
+	>
 ) {
 	switch (action.type) {
 		case ADD_ITEM:

@@ -52,13 +52,13 @@ public class LayoutPageTemplateCollectionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
+			"parentLayoutPageTemplateCollectionId",
+			getParentLayoutPageTemplateCollectionId());
+		attributes.put(
 			"layoutPageTemplateCollectionKey",
 			getLayoutPageTemplateCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put(
-			"parentLayoutPageTemplateCollectionId",
-			getParentLayoutPageTemplateCollectionId());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -128,6 +128,14 @@ public class LayoutPageTemplateCollectionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long parentLayoutPageTemplateCollectionId = (Long)attributes.get(
+			"parentLayoutPageTemplateCollectionId");
+
+		if (parentLayoutPageTemplateCollectionId != null) {
+			setParentLayoutPageTemplateCollectionId(
+				parentLayoutPageTemplateCollectionId);
+		}
+
 		String layoutPageTemplateCollectionKey = (String)attributes.get(
 			"layoutPageTemplateCollectionKey");
 
@@ -145,14 +153,6 @@ public class LayoutPageTemplateCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
-		}
-
-		Long parentLayoutPageTemplateCollectionId = (Long)attributes.get(
-			"parentLayoutPageTemplateCollectionId");
-
-		if (parentLayoutPageTemplateCollectionId != null) {
-			setParentLayoutPageTemplateCollectionId(
-				parentLayoutPageTemplateCollectionId);
 		}
 
 		Integer type = (Integer)attributes.get("type");

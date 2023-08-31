@@ -233,6 +233,21 @@ public interface LayoutPageTemplateCollectionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @return the parent layout page template collection ID of this layout page template collection
+	 */
+	public long getParentLayoutPageTemplateCollectionId();
+
+	/**
+	 * Sets the parent layout page template collection ID of this layout page template collection.
+	 *
+	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID of this layout page template collection
+	 */
+	public void setParentLayoutPageTemplateCollectionId(
+		long parentLayoutPageTemplateCollectionId);
+
+	/**
 	 * Returns the layout page template collection key of this layout page template collection.
 	 *
 	 * @return the layout page template collection key of this layout page template collection
@@ -277,21 +292,6 @@ public interface LayoutPageTemplateCollectionModel
 	 * @param description the description of this layout page template collection
 	 */
 	public void setDescription(String description);
-
-	/**
-	 * Returns the parent layout page template collection ID of this layout page template collection.
-	 *
-	 * @return the parent layout page template collection ID of this layout page template collection
-	 */
-	public long getParentLayoutPageTemplateCollectionId();
-
-	/**
-	 * Sets the parent layout page template collection ID of this layout page template collection.
-	 *
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID of this layout page template collection
-	 */
-	public void setParentLayoutPageTemplateCollectionId(
-		long parentLayoutPageTemplateCollectionId);
 
 	/**
 	 * Returns the type of this layout page template collection.

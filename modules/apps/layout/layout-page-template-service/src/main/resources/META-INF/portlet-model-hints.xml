@@ -12,6 +12,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="parentLayoutPageTemplateCollectionId" type="long" />
 		<field name="layoutPageTemplateCollectionKey" type="String" />
 		<field name="name" type="String">
 			<validator name="required" />
@@ -19,7 +20,6 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="parentLayoutPageTemplateCollectionId" type="long" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

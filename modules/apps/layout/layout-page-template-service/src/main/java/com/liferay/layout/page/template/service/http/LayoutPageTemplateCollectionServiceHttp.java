@@ -44,8 +44,9 @@ public class LayoutPageTemplateCollectionServiceHttp {
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateCollection
 				addLayoutPageTemplateCollection(
-					HttpPrincipal httpPrincipal, long groupId, String name,
-					String description, long parentLayoutPageTemplateCollection,
+					HttpPrincipal httpPrincipal, long groupId,
+					long parentLayoutPageTemplateCollection, String name,
+					String description,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -57,8 +58,8 @@ public class LayoutPageTemplateCollectionServiceHttp {
 				_addLayoutPageTemplateCollectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, name, description,
-				parentLayoutPageTemplateCollection, serviceContext);
+				methodKey, groupId, parentLayoutPageTemplateCollection, name,
+				description, serviceContext);
 
 			Object returnObj = null;
 
@@ -533,7 +534,7 @@ public class LayoutPageTemplateCollectionServiceHttp {
 
 	private static final Class<?>[]
 		_addLayoutPageTemplateCollectionParameterTypes0 = new Class[] {
-			long.class, String.class, String.class, long.class,
+			long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

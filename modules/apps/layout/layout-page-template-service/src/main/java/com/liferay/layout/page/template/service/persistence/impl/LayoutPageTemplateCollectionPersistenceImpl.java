@@ -4083,9 +4083,9 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put(
-			"layoutPageTemplateCollectionKey", "lptCollectionKey");
-		dbColumnNames.put(
 			"parentLayoutPageTemplateCollectionId", "parentLPTCollectionId");
+		dbColumnNames.put(
+			"layoutPageTemplateCollectionKey", "lptCollectionKey");
 		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
@@ -4961,10 +4961,10 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("parentLPTCollectionId");
 		ctStrictColumnNames.add("lptCollectionKey");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("parentLPTCollectionId");
 		ctStrictColumnNames.add("type_");
 		ctStrictColumnNames.add("lastPublishDate");
 
@@ -5205,8 +5205,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
-			"uuid", "layoutPageTemplateCollectionKey",
-			"parentLayoutPageTemplateCollectionId", "type"
+			"uuid", "parentLayoutPageTemplateCollectionId",
+			"layoutPageTemplateCollectionKey", "type"
 		});
 
 	@Override

@@ -12,17 +12,11 @@ definition {
 			var description = "";
 		}
 
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u ${userEmailAddress}:${userPassword} \
+				-u ${userLoginInfo} \
 				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
@@ -38,13 +32,7 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 		var globalGroupId = JSONGroupAPI._getGroupIdByName(
@@ -58,7 +46,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
-				-u ${userEmailAddress}:${userPassword} \
+				-u ${userLoginInfo} \
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \

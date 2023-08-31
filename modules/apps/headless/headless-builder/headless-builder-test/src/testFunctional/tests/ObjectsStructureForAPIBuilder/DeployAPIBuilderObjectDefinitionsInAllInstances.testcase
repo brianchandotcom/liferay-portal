@@ -38,6 +38,8 @@ definition {
 	@priority = 4
 	test CanCreateAPIApplicationWithUIOnVirtualInstance {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I create a new API application through Control Panel > Object > API Builder") {
 			APIBuilderUI.createAPIApplication(title = "test");
@@ -55,6 +57,8 @@ definition {
 	@priority = 4
 	test CanCreatePublishedAPIApplicationWithAPIOnVirtualInstance {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When with postAPIApplication to create a published API application") {
 			var response = ApplicationAPI.createAPIApplication(
@@ -87,6 +91,8 @@ definition {
 	@priority = 5
 	test CanLoadHeadlessBuilderAPIsOnVirtualInstance {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I navigate to /o/api in the virtual instance") {
 			APIExplorer.navigateToOpenAPI(virtualHost = "www.able.com");
@@ -113,6 +119,8 @@ definition {
 	@priority = 5
 	test CannotCreateSchemaWithAPIIdOfOtherInstance {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given create an API application on default instance") {
 			var response = ApplicationAPI.createAPIApplication(
@@ -151,6 +159,8 @@ definition {
 	@priority = 4
 	test CanPublishAPIApplicationWithUIOnVirtualInstance {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("And Given I create a new API application through Control Panel > Object > API Builder") {
 			APIBuilderUI.createAPIApplication(title = "test");
@@ -170,6 +180,8 @@ definition {
 	@priority = 5
 	test CanSeeAPIObjectDefinitionsOnVirtualInstance {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("When I navigate to Control Panel > Objects") {
 			ObjectAdmin.openObjectAdmin(baseURL = "http://www.able.com:8080");

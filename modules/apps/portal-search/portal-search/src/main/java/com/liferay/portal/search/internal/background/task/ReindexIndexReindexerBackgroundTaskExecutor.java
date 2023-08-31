@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
@@ -46,7 +48,8 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 				Class<?> clazz = indexReindexer.getClass();
 
 				_reindex(
-					clazz.getName(), companyIds, executionMode, indexReindexer);
+					clazz.getName(), companyIds, executionMode, indexReindexer,
+					null, null);
 			}
 		}
 		else {
@@ -57,16 +60,24 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 				return;
 			}
 
-			_reindex(className, companyIds, executionMode, indexReindexer);
+			_reindex(
+				className, companyIds, executionMode, indexReindexer,
+				ReindexBackgroundTaskConstants.SINGLE_START,
+				ReindexBackgroundTaskConstants.SINGLE_END);
 		}
 	}
 
 	private void _reindex(
 			String className, long[] companyIds, String executionMode,
-			IndexReindexer indexReindexer)
+			IndexReindexer indexReindexer, String startPhase, String endPhase)
 		throws Exception {
 
 		for (long companyId : companyIds) {
+			if (startPhase != null) {
+				_reindexStatusMessageSender.sendStatusMessage(
+					startPhase, companyId, companyIds);
+			}
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
@@ -76,6 +87,11 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 			}
 
 			indexReindexer.reindex(companyId, executionMode);
+
+			if (endPhase != null) {
+				_reindexStatusMessageSender.sendStatusMessage(
+					endPhase, companyId, companyIds);
+			}
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -92,5 +108,8 @@ public class ReindexIndexReindexerBackgroundTaskExecutor
 
 	@Reference
 	private IndexReindexerRegistry _indexReindexerRegistry;
+
+	@Reference
+	private ReindexStatusMessageSender _reindexStatusMessageSender;
 
 }

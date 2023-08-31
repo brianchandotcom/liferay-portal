@@ -19,20 +19,20 @@ import {useObjectFieldForm} from './useObjectFieldForm';
 import './ModalAddObjectField.scss';
 
 interface ModalAddObjectField {
-	apiURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName?: string;
+	onAfterSubmit: (value: ObjectField) => void;
 	setVisibility: (value: boolean) => void;
 }
 
 export function ModalAddObjectField({
-	apiURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
+	onAfterSubmit,
 	setVisibility,
 }: ModalAddObjectField) {
 	const [error, setError] = useState<string>('');
@@ -77,10 +77,14 @@ export function ModalAddObjectField({
 			delete field.listTypeDefinitionId;
 
 			try {
-				await API.save({item: field, method: 'POST', url: apiURL});
+				const fieldResponse = await API.save({
+					item: field,
+					method: 'POST',
+					returnValue: true,
+					url: `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}/object-fields`,
+				});
 
-				onClose();
-				window.location.reload();
+				onAfterSubmit(fieldResponse);
 			}
 			catch (error) {
 				setError((error as Error).message);

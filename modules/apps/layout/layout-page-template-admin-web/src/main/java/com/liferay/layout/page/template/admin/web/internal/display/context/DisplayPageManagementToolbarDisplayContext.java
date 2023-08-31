@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,6 +120,10 @@ public class DisplayPageManagementToolbarDisplayContext
 			getPortletURL()
 		).setKeywords(
 			StringPool.BLANK
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			LayoutPageTemplateConstants.
+				DEFAULT_PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID
 		).buildString();
 	}
 
@@ -177,6 +182,15 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	public String getDefaultEventHandler() {
 		return "DISPLAY_PAGE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"layoutPageTemplateCollectionId", -1
+		).buildString();
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.extension.ScopedBean;
 import com.liferay.bean.portlet.extension.ViewRenderer;
-import com.liferay.bean.portlet.registration.BeanPortletRegistrarUtil;
+import com.liferay.bean.portlet.registration.util.BeanPortletRegistrarUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;

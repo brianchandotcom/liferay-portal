@@ -42,7 +42,7 @@
 
 				[#if role.name == "Finance User" &&
 					organization.organizationStatus.key == "awaitingFinanceApproval" &&	!organizationStatusListing?seqContains(organization.organizationStatus.key) ||
-					role.name == "EVP Manager" && organization.organizationStatus.key == "awaitingApprovalOnEvp" &&	!organizationStatusListing?seqContains(organization.organizationStatus.key)
+					role.name == "EVP Manager" && organization.organizationStatus.key == "awaitingApprovalOnEVP" &&	!organizationStatusListing?seqContains(organization.organizationStatus.key)
 
 				]
 					<div class="btn-open-modal">

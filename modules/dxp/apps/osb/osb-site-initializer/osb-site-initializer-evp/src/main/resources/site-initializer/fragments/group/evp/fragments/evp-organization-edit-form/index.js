@@ -83,7 +83,7 @@ function getOrganizationFormValues() {
 	);
 
 	if (!evpOrganizationForm) {
-		return console.error('Evp Form not found');
+		return console.error('EVP Form not found');
 	}
 
 	const organizationForm = {};
@@ -104,7 +104,7 @@ const organizationUpdate = async () => {
 	organizationForm.organizationStatus =
 		userRoles === ROLE.EMPLOYEE
 			? {
-					key: 'awaitingApprovalOnEvp',
+					key: 'awaitingApprovalOnEVP',
 					name: 'Awaiting Approval On EVP',
 			  }
 			: {

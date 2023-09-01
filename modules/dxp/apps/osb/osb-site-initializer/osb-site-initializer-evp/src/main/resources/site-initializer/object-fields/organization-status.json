@@ -3,7 +3,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"defaultValue": "awaitingApprovalOnEvp",
+			"defaultValue": "awaitingApprovalOnEVP",
 			"externalReferenceCode": "EVP-ORGANIZATION-STATUS-DEFAULT",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -22,7 +22,7 @@
 								"key": "rejected",
 								"objectStateTransitions": [
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingFinanceApproval"
@@ -36,7 +36,7 @@
 								]
 							},
 							{
-								"key": "awaitingApprovalOnEvp",
+								"key": "awaitingApprovalOnEVP",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -59,7 +59,7 @@
 										"key": "rejected"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingMoreInfoFromEmployee"
@@ -76,7 +76,7 @@
 										"key": "rejected"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingFinanceApproval"
@@ -93,7 +93,7 @@
 										"key": "rejected"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingFinanceApproval"

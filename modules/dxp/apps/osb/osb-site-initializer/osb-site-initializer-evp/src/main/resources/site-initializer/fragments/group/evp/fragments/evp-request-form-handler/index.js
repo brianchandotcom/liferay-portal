@@ -26,15 +26,15 @@ function setRequestStatusHandler() {
 	const requestStatusHandler = document.querySelector(
 		'.requestStatusHandler div div div div div input'
 	);
-	requestStatusHandler.setAttribute('value', 'Awaiting Approval On Evp');
+	requestStatusHandler.setAttribute('value', 'Awaiting Approval On EVP');
 
 	const requestStatus = document.querySelector('[name="requestStatus"]');
-	requestStatus.setAttribute('value', 'awaitingApprovalOnEvp');
+	requestStatus.setAttribute('value', 'awaitingApprovalOnEVP');
 
 	const requestStatusLabel = document.querySelector(
 		'[name="requestStatus-label"]'
 	);
-	requestStatusLabel.setAttribute('value', 'Awaiting Approval On Evp');
+	requestStatusLabel.setAttribute('value', 'Awaiting Approval On EVP');
 }
 setRequestStatusHandler();
 
@@ -540,7 +540,7 @@ function getRequestEditFormValues() {
 	];
 
 	if (!evpRequestEditForm) {
-		return console.error('Evp Form not found');
+		return console.error('EVP Form not found');
 	}
 
 	const requestEditForm = {};
@@ -637,7 +637,7 @@ if (editPage) {
 
 		const requestEditForm = getRequestEditFormValues();
 		requestEditForm.requestStatus = {
-			key: 'awaitingApprovalOnEvp',
+			key: 'awaitingApprovalOnEVP',
 			name: 'Awaiting Approval On EVP',
 		};
 

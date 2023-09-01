@@ -183,7 +183,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				printWriter.write("</li><li class=\"nav-item\"><div id=\"");
 
 				String betaBadgeComponentId =
-					fragmentRendererContext.getFragmentElementId() + "_beta";
+					fragmentRendererContext.getFragmentElementId() + "Beta";
 
 				printWriter.write(betaBadgeComponentId);
 

@@ -29,10 +29,10 @@ export default function ScheduleModal({
 	const handleScheduleButtonClick = () => {
 		const openerWindow = getOpener();
 
-		const scheduleDateInput = openerWindow.document.getElementById(
-			`${namespace}scheduleDate`
+		const displayDateInput = openerWindow.document.getElementById(
+			`${namespace}displayDate`
 		);
-		scheduleDateInput.value = scheduledDate;
+		displayDateInput.value = scheduledDate;
 
 		getOpener().Liferay.fire(SCHEDULE_EVENT_NAME);
 		closeModal();

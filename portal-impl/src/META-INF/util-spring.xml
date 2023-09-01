@@ -36,16 +36,6 @@
 	<bean class="com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil">
 		<property name="currentConnection" ref="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil" id="com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil">
-		<property name="mappingSqlQueryFactory">
-			<bean class="com.liferay.portal.dao.jdbc.spring.MappingSqlQueryFactoryImpl" />
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil" id="com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil">
-		<property name="sqlUpdateFactory">
-			<bean class="com.liferay.portal.dao.jdbc.spring.SqlUpdateFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil" id="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil">
 		<property name="portalCustomSQL">
 			<bean class="com.liferay.portal.dao.orm.common.PortalCustomSQLImpl" />

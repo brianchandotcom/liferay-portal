@@ -72,6 +72,24 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	public void testReindexPublishedDraftLayoutWithLayoutLocalization()
+		throws Exception {
+
+		String headingText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(true, headingText);
+
+		_assertReindex(headingText, layout);
+
+		Layout draftLayout = _addHeadingFragmentToLayout(
+			RandomTestUtil.randomString(), layout);
+
+		_assertReindexDraftLayout(draftLayout);
+
+		_assertSearch(headingText, layout.getPlid());
+	}
+
+	@Test
 	public void testReindexPublishedLayoutWithLayoutLocalization()
 		throws Exception {
 
@@ -117,6 +135,22 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertEquals(
 			layoutLocalizations.toString(), expectedLayoutLocalizationsSize,
 			layoutLocalizations.size());
+	}
+
+	@Test
+	public void testReindexUnpublishedDraftLayout() throws Exception {
+		String headingText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(false, headingText);
+
+		List<LayoutLocalization> layoutLocalizations =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				layout.getPlid());
+
+		Assert.assertTrue(
+			layoutLocalizations.toString(), layoutLocalizations.isEmpty());
+
+		_assertReindexDraftLayout(layout);
 	}
 
 	private Layout _addHeadingFragmentToLayout(
@@ -190,6 +224,21 @@ public class LayoutModelDocumentContributorTest {
 				layoutLocalization.getContent(), expectedContent));
 
 		_assertSearch(expectedContent, layout.getPlid());
+	}
+
+	private void _assertReindexDraftLayout(Layout draftLayout)
+		throws Exception {
+
+		List<LogEntry> logEntries = _reindexLogEntries(draftLayout);
+
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+
+		List<LayoutLocalization> layoutLocalizations =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				draftLayout.getPlid());
+
+		Assert.assertTrue(
+			layoutLocalizations.toString(), layoutLocalizations.isEmpty());
 	}
 
 	private void _assertSearch(String keywords, long plid) {

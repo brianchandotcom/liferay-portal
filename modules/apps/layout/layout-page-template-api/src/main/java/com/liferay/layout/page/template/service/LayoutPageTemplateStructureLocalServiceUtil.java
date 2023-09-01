@@ -411,6 +411,16 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 
 	public static LayoutPageTemplateStructure
 			updateLayoutPageTemplateStructureData(
+				long groupId, long plid, long segmentsExperienceId, String data,
+				boolean checkUnlockedLayout)
+		throws PortalException {
+
+		return getService().updateLayoutPageTemplateStructureData(
+			groupId, plid, segmentsExperienceId, data, checkUnlockedLayout);
+	}
+
+	public static LayoutPageTemplateStructure
+			updateLayoutPageTemplateStructureData(
 				long groupId, long plid, String data)
 		throws PortalException {
 

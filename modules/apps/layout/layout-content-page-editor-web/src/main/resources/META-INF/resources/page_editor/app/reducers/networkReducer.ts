@@ -4,19 +4,19 @@
  */
 
 import {UPDATE_NETWORK} from '../actions/types';
+import updateNetwork, {NetworkStatus} from '../actions/updateNetwork';
 
-export const INITIAL_STATE = {
-	error: null,
+export const INITIAL_STATE: NetworkStatus = {
 	status: null,
 };
 
-export default function networkReducer(networkStatus = INITIAL_STATE, action) {
+export default function networkReducer(
+	networkStatus = INITIAL_STATE,
+	action: ReturnType<typeof updateNetwork>
+) {
 	switch (action.type) {
 		case UPDATE_NETWORK:
-			return {
-				...networkStatus,
-				...action.network,
-			};
+			return action.network;
 		default:
 			return networkStatus;
 	}

@@ -13,6 +13,6 @@ export const SERVICE_NETWORK_STATUS_TYPES = {
 	draftSaved: 0,
 	error: 1,
 	savingDraft: 2,
-};
+} as const;
 
 export type ServiceNetworkStatusType = typeof SERVICE_NETWORK_STATUS_TYPES[keyof typeof SERVICE_NETWORK_STATUS_TYPES];

@@ -102,13 +102,6 @@ export function ModalAddObjectDefinition({
 			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
 		}
 
-		if (
-			Liferay.FeatureFlags['LPS-148856'] &&
-			objectFolderExternalReferenceCode
-		) {
-			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
-		}
-
 		if (Liferay.FeatureFlags['LPS-135430']) {
 			objectDefinition.storageType = storageType.value;
 		}

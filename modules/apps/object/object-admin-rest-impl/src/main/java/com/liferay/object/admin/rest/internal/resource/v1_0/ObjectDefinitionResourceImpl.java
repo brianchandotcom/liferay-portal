@@ -407,7 +407,7 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	@Override
-	public void postObjectDefinitionPublish(Long objectDefinitionId)
+	public ObjectDefinition postObjectDefinitionPublish(Long objectDefinitionId)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition
@@ -418,13 +418,14 @@ public class ObjectDefinitionResourceImpl
 		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem()) &&
 			FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
-			_objectDefinitionService.publishSystemObjectDefinition(
-				objectDefinitionId);
+			return _toObjectDefinition(
+				_objectDefinitionService.publishSystemObjectDefinition(
+					objectDefinitionId));
 		}
-		else {
+
+		return _toObjectDefinition(
 			_objectDefinitionService.publishCustomObjectDefinition(
-				objectDefinitionId);
-		}
+				objectDefinitionId));
 	}
 
 	@Override

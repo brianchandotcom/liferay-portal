@@ -10,9 +10,11 @@ package com.liferay.object.constants;
  */
 public class ObjectValidationRuleSettingConstants {
 
-	public static final String NAME_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE =
-		"objectFieldExternalReferenceCode";
+	public static final String
+		NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE =
+			"outputObjectFieldExternalReferenceCode";
 
-	public static final String NAME_OBJECT_FIELD_ID = "objectFieldId";
+	public static final String NAME_OUTPUT_OBJECT_FIELD_ID =
+		"outputObjectFieldId";
 
 }

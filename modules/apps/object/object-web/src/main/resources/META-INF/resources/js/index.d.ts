@@ -336,7 +336,7 @@ interface ObjectValidation {
 	lineCount?: number;
 	name: LocalizedValue<string>;
 	objectValidationRuleSettings?: {
-		name: 'objectFieldExternalReferenceCode';
+		name: 'outputObjectFieldExternalReferenceCode';
 		value: string;
 	}[];
 	outputType?: string;

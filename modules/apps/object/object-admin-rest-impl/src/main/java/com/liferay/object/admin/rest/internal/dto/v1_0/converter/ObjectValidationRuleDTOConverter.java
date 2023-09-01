@@ -111,10 +111,10 @@ public class ObjectValidationRuleDTOConverter
 					() -> {
 						if (objectValidationRuleSetting.compareName(
 								ObjectValidationRuleSettingConstants.
-									NAME_OBJECT_FIELD_ID)) {
+									NAME_OUTPUT_OBJECT_FIELD_ID)) {
 
 							return ObjectValidationRuleSettingConstants.
-								NAME_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE;
+								NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE;
 						}
 
 						return objectValidationRuleSetting.getName();
@@ -123,7 +123,7 @@ public class ObjectValidationRuleDTOConverter
 					() -> {
 						if (!objectValidationRuleSetting.compareName(
 								ObjectValidationRuleSettingConstants.
-									NAME_OBJECT_FIELD_ID)) {
+									NAME_OUTPUT_OBJECT_FIELD_ID)) {
 
 							return objectValidationRuleSetting.getValue();
 						}

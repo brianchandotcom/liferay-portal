@@ -5,7 +5,6 @@
 	border-bottom: 1px solid rgba(180, 187, 201, 0.2);
 	display: grid;
 	font-size: 12px;
-	max-height: 200px;
 	grid-template-areas:
 		'info quantity price delete'
 		'errors errors errors errors';
@@ -15,13 +14,17 @@
 	transition: height 0.2s ease-in, padding 0.1s ease-in;
 	width: 100%;
 
-	.mini-cart-item-anchor {
+	.mini-cart-item-details {
 		align-items: center;
 		color: inherit;
 		display: flex;
 		grid-area: info;
-		padding: 1rem;
+		margin: 1rem;
 		text-decoration: inherit;
+	}
+
+	.mini-cart-item-anchor {
+		z-index: 10;
 	}
 
 	.mini-cart-item-thumbnail {
@@ -49,7 +52,7 @@
 			white-space: nowrap;
 		}
 
-		&.has-options {
+		&.options {
 			align-items: initial;
 			display: grid;
 			height: 100%;

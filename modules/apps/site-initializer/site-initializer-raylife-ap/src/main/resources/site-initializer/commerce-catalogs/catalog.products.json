@@ -130,15 +130,6 @@
 		"categories": [
 			"Business"
 		],
-		"customFields": [
-			{
-				"customValue": {
-					"data": 0.02
-				},
-				"dataType": "Decimal",
-				"name": "Commission Rate"
-			}
-		],
 		"description": "Covers cost for property damage claims against your business, medical expenses if someone gets injured at your company and safeguards your business if you are sued.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,

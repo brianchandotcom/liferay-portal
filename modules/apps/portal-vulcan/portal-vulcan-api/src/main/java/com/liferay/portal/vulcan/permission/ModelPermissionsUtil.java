@@ -30,6 +30,10 @@ public class ModelPermissionsUtil {
 			RoleLocalService roleLocalService)
 		throws PortalException {
 
+		if (permissions == null) {
+			return null;
+		}
+
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			new String[0], new String[0], resourceName);
 

@@ -73,6 +73,7 @@ export default function App({portletNamespace: namespace}: IProps) {
 			<SizeSelector
 				activeSize={activeSize}
 				namespace={namespace}
+				open={open}
 				previewRef={previewRef}
 				setActiveSize={setActiveSize}
 			/>

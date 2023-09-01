@@ -18,6 +18,7 @@ import {SIZES, Size} from '../constants/sizes';
 interface ISizeSelectorProps {
 	activeSize: Size;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 	setActiveSize: Function;
 }
@@ -36,6 +37,7 @@ const MIN_CUSTOM_SIZE: number = 1;
 export default function SizeSelector({
 	activeSize,
 	namespace,
+	open,
 	previewRef,
 	setActiveSize,
 }: ISizeSelectorProps) {
@@ -78,6 +80,7 @@ export default function SizeSelector({
 						<CustomSizeSelector
 							id={customSizeSelectorId}
 							namespace={namespace}
+							open={open}
 							previewRef={previewRef}
 						/>
 					)}
@@ -108,6 +111,7 @@ export default function SizeSelector({
 						<CustomSizeSelector
 							id={customSizeSelectorId}
 							namespace={namespace}
+							open={open}
 							previewRef={previewRef}
 						/>
 					)}
@@ -199,12 +203,14 @@ SizeButton.propTypes = {
 interface ICustomSizeSelectorProps {
 	id: string;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
 function CustomSizeSelector({
 	id,
 	namespace,
+	open,
 	previewRef,
 }: ICustomSizeSelectorProps) {
 	const [height, setHeight] = useState<number>(
@@ -236,14 +242,14 @@ function CustomSizeSelector({
 			setWidth(preview.clientWidth);
 		});
 
-		if (previewRef.current) {
+		if (previewRef.current && open) {
 			resizeObserver.observe(previewRef.current);
 		}
 
 		return () => {
 			resizeObserver.disconnect();
 		};
-	}, [previewRef]);
+	}, [open, previewRef]);
 
 	return (
 		<div id={id}>

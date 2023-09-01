@@ -15,8 +15,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProjectPrioritizerEntity
-	extends BaseEntity implements ProjectPrioritizerEntity {
+public abstract class BaseJobPrioritizerEntity
+	extends BaseEntity implements JobPrioritizerEntity {
 
 	@Override
 	public void addProjectComparatorEntities(
@@ -70,7 +70,7 @@ public abstract class BaseProjectPrioritizerEntity
 		_name = name;
 	}
 
-	protected BaseProjectPrioritizerEntity(JSONObject jsonObject) {
+	protected BaseJobPrioritizerEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_name = jsonObject.getString("name");

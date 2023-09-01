@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.dalo.ProjectPrioritizerEntityDALO;
 import com.liferay.jethr0.job.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntityFactory;
 
 import java.util.Objects;
@@ -23,9 +23,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectPrioritizerEntityRepository
-	extends BaseEntityRepository<ProjectPrioritizerEntity> {
+	extends BaseEntityRepository<JobPrioritizerEntity> {
 
-	public ProjectPrioritizerEntity add(String name) {
+	public JobPrioritizerEntity add(String name) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("name", name);
@@ -33,13 +33,13 @@ public class ProjectPrioritizerEntityRepository
 		return add(jsonObject);
 	}
 
-	public ProjectPrioritizerEntity getByName(String name) {
-		for (ProjectPrioritizerEntity projectPrioritizerEntity : getAll()) {
-			if (!Objects.equals(projectPrioritizerEntity.getName(), name)) {
+	public JobPrioritizerEntity getByName(String name) {
+		for (JobPrioritizerEntity jobPrioritizerEntity : getAll()) {
+			if (!Objects.equals(jobPrioritizerEntity.getName(), name)) {
 				continue;
 			}
 
-			return projectPrioritizerEntity;
+			return jobPrioritizerEntity;
 		}
 
 		return null;
@@ -52,16 +52,16 @@ public class ProjectPrioritizerEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (ProjectPrioritizerEntity projectPrioritizerEntity : getAll()) {
+		for (JobPrioritizerEntity jobPrioritizerEntity : getAll()) {
 			for (long projectComparatorEntityId :
 					_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
-						getChildEntityIds(projectPrioritizerEntity)) {
+						getChildEntityIds(jobPrioritizerEntity)) {
 
 				if (projectComparatorEntityId == 0) {
 					continue;
 				}
 
-				projectPrioritizerEntity.addProjectComparatorEntity(
+				jobPrioritizerEntity.addProjectComparatorEntity(
 					_projectComparatorEntityRepository.getById(
 						projectComparatorEntityId));
 			}

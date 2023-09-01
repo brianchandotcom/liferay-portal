@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.comparator;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,20 +18,20 @@ import org.json.JSONObject;
  */
 public interface ProjectComparatorEntity extends Entity {
 
+	public JobPrioritizerEntity getJobPrioritizerEntity();
+
+	public long getJobPrioritizerEntityId();
+
 	public int getPosition();
-
-	public ProjectPrioritizerEntity getProjectPrioritizerEntity();
-
-	public long getProjectPrioritizerEntityId();
 
 	public Type getType();
 
 	public String getValue();
 
-	public void setPosition(int position);
+	public void setJobPrioritizerEntity(
+		JobPrioritizerEntity jobPrioritizerEntity);
 
-	public void setProjectPrioritizerEntity(
-		ProjectPrioritizerEntity projectPrioritizerEntity);
+	public void setPosition(int position);
 
 	public void setValue(String value);
 

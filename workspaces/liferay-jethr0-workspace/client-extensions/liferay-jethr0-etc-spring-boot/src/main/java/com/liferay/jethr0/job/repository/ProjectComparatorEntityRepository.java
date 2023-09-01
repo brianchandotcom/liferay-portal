@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.comparator.ProjectComparatorEntity;
 import com.liferay.jethr0.job.dalo.ProjectComparatorEntityDALO;
 import com.liferay.jethr0.job.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class ProjectComparatorEntityRepository
 	extends BaseEntityRepository<ProjectComparatorEntity> {
 
 	public ProjectComparatorEntity add(
-		ProjectPrioritizerEntity projectPrioritizerEntity, long position,
+		JobPrioritizerEntity jobPrioritizerEntity, long position,
 		ProjectComparatorEntity.Type type, String value) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -36,7 +36,7 @@ public class ProjectComparatorEntityRepository
 			"position", position
 		).put(
 			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
-			projectPrioritizerEntity.getId()
+			jobPrioritizerEntity.getId()
 		).put(
 			"type", type.getJSONObject()
 		).put(
@@ -45,24 +45,23 @@ public class ProjectComparatorEntityRepository
 
 		ProjectComparatorEntity projectComparatorEntity = add(jsonObject);
 
-		projectComparatorEntity.setProjectPrioritizerEntity(
-			projectPrioritizerEntity);
+		projectComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 
-		projectPrioritizerEntity.addProjectComparatorEntity(
+		jobPrioritizerEntity.addProjectComparatorEntity(
 			projectComparatorEntity);
 
 		return projectComparatorEntity;
 	}
 
 	public Set<ProjectComparatorEntity> getAll(
-		ProjectPrioritizerEntity projectPrioritizerEntity) {
+		JobPrioritizerEntity jobPrioritizerEntity) {
 
 		Set<ProjectComparatorEntity> projectComparatorEntities =
 			new HashSet<>();
 
 		Set<Long> projectComparatorIds =
 			_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
-				getChildEntityIds(projectPrioritizerEntity);
+				getChildEntityIds(jobPrioritizerEntity);
 
 		for (ProjectComparatorEntity projectComparatorEntity : getAll()) {
 			if (!projectComparatorIds.contains(
@@ -71,11 +70,11 @@ public class ProjectComparatorEntityRepository
 				continue;
 			}
 
-			projectPrioritizerEntity.addProjectComparatorEntity(
+			jobPrioritizerEntity.addProjectComparatorEntity(
 				projectComparatorEntity);
 
-			projectComparatorEntity.setProjectPrioritizerEntity(
-				projectPrioritizerEntity);
+			projectComparatorEntity.setJobPrioritizerEntity(
+				jobPrioritizerEntity);
 
 			projectComparatorEntities.add(projectComparatorEntity);
 		}
@@ -91,19 +90,19 @@ public class ProjectComparatorEntityRepository
 	@Override
 	public void initializeRelationships() {
 		for (ProjectComparatorEntity projectComparatorEntity : getAll()) {
-			ProjectPrioritizerEntity projectPrioritizerEntity = null;
+			JobPrioritizerEntity jobPrioritizerEntity = null;
 
 			long jenkinsServerId =
-				projectComparatorEntity.getProjectPrioritizerEntityId();
+				projectComparatorEntity.getJobPrioritizerEntityId();
 
 			if (jenkinsServerId != 0) {
-				projectPrioritizerEntity =
+				jobPrioritizerEntity =
 					_projectPrioritizerEntityRepository.getById(
 						jenkinsServerId);
 			}
 
-			projectComparatorEntity.setProjectPrioritizerEntity(
-				projectPrioritizerEntity);
+			projectComparatorEntity.setJobPrioritizerEntity(
+				jobPrioritizerEntity);
 		}
 	}
 

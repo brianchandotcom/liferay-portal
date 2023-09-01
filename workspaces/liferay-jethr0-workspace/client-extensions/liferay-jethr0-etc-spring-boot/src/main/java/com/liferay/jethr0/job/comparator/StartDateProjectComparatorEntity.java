@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.comparator;
 
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 
 import java.util.Date;
 
@@ -18,15 +18,14 @@ import org.json.JSONObject;
 public class StartDateProjectComparatorEntity
 	extends BaseProjectComparatorEntity {
 
-	public StartDateProjectComparatorEntity(JSONObject jsonObject) {
-		super(jsonObject);
+	public StartDateProjectComparatorEntity(
+		JobPrioritizerEntity jobPrioritizerEntity, JSONObject jsonObject) {
+
+		super(jobPrioritizerEntity, jsonObject);
 	}
 
-	public StartDateProjectComparatorEntity(
-		ProjectPrioritizerEntity projectPrioritizerEntity,
-		JSONObject jsonObject) {
-
-		super(projectPrioritizerEntity, jsonObject);
+	public StartDateProjectComparatorEntity(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	@Override

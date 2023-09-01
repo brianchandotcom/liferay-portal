@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public interface ProjectPrioritizerEntity extends Entity {
+public interface JobPrioritizerEntity extends Entity {
 
 	public void addProjectComparatorEntities(
 		Set<ProjectComparatorEntity> projectComparatorEntities);

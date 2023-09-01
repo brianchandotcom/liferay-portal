@@ -7,7 +7,7 @@ package com.liferay.jethr0.job.comparator;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 
 import java.util.Comparator;
 
@@ -21,6 +21,16 @@ public abstract class BaseProjectComparatorEntity
 	implements Comparator<JobEntity>, ProjectComparatorEntity {
 
 	@Override
+	public JobPrioritizerEntity getJobPrioritizerEntity() {
+		return _jobPrioritizerEntity;
+	}
+
+	@Override
+	public long getJobPrioritizerEntityId() {
+		return _jobPrioritizerEntityId;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -29,8 +39,8 @@ public abstract class BaseProjectComparatorEntity
 		jsonObject.put(
 			"position", getPosition()
 		).put(
-			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
-			getProjectPrioritizerEntityId()
+			"r_jobPrioritizerToProjectComparators_c_jobPrioritizerId",
+			getJobPrioritizerEntityId()
 		).put(
 			"type", type.getJSONObject()
 		).put(
@@ -46,16 +56,6 @@ public abstract class BaseProjectComparatorEntity
 	}
 
 	@Override
-	public ProjectPrioritizerEntity getProjectPrioritizerEntity() {
-		return _projectPrioritizerEntity;
-	}
-
-	@Override
-	public long getProjectPrioritizerEntityId() {
-		return _projectPrioritizerEntityId;
-	}
-
-	@Override
 	public Type getType() {
 		return _type;
 	}
@@ -66,22 +66,22 @@ public abstract class BaseProjectComparatorEntity
 	}
 
 	@Override
-	public void setPosition(int position) {
-		_position = position;
+	public void setJobPrioritizerEntity(
+		JobPrioritizerEntity jobPrioritizerEntity) {
+
+		_jobPrioritizerEntity = jobPrioritizerEntity;
+
+		if (_jobPrioritizerEntity != null) {
+			_jobPrioritizerEntityId = _jobPrioritizerEntity.getId();
+		}
+		else {
+			_jobPrioritizerEntityId = 0;
+		}
 	}
 
 	@Override
-	public void setProjectPrioritizerEntity(
-		ProjectPrioritizerEntity projectPrioritizerEntity) {
-
-		_projectPrioritizerEntity = projectPrioritizerEntity;
-
-		if (_projectPrioritizerEntity != null) {
-			_projectPrioritizerEntityId = _projectPrioritizerEntity.getId();
-		}
-		else {
-			_projectPrioritizerEntityId = 0;
-		}
+	public void setPosition(int position) {
+		_position = position;
 	}
 
 	@Override
@@ -89,32 +89,31 @@ public abstract class BaseProjectComparatorEntity
 		_value = value;
 	}
 
+	protected BaseProjectComparatorEntity(
+		JobPrioritizerEntity jobPrioritizerEntity, JSONObject jsonObject) {
+
+		super(jsonObject);
+
+		setJobPrioritizerEntity(jobPrioritizerEntity);
+
+		_position = jsonObject.getInt("position");
+		_type = Type.get(jsonObject.getJSONObject("type"));
+		_value = jsonObject.optString("value");
+	}
+
 	protected BaseProjectComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_position = jsonObject.getInt("position");
-		_projectPrioritizerEntityId = jsonObject.optLong(
-			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId");
+		_jobPrioritizerEntityId = jsonObject.optLong(
+			"r_jobPrioritizerToProjectComparators_c_jobPrioritizerId");
 		_type = Type.get(jsonObject.getJSONObject("type"));
 		_value = jsonObject.optString("value");
 	}
 
-	protected BaseProjectComparatorEntity(
-		ProjectPrioritizerEntity projectPrioritizerEntity,
-		JSONObject jsonObject) {
-
-		super(jsonObject);
-
-		setProjectPrioritizerEntity(projectPrioritizerEntity);
-
-		_position = jsonObject.getInt("position");
-		_type = Type.get(jsonObject.getJSONObject("type"));
-		_value = jsonObject.optString("value");
-	}
-
+	private JobPrioritizerEntity _jobPrioritizerEntity;
+	private long _jobPrioritizerEntityId;
 	private int _position;
-	private ProjectPrioritizerEntity _projectPrioritizerEntity;
-	private long _projectPrioritizerEntityId;
 	private final Type _type;
 	private String _value;
 

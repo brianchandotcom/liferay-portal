@@ -10,10 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultProjectPrioritizerEntity
-	extends BaseProjectPrioritizerEntity {
+public class DefaultJobPrioritizerEntity extends BaseJobPrioritizerEntity {
 
-	public DefaultProjectPrioritizerEntity(JSONObject jsonObject) {
+	public DefaultJobPrioritizerEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

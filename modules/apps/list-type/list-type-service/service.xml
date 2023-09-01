@@ -70,6 +70,7 @@
 		<exception>DuplicateListTypeEntry</exception>
 		<exception>DuplicateListTypeEntryExternalReferenceCode</exception>
 		<exception>ListTypeDefinitionName</exception>
+		<exception>ListTypeDefinitionSystem</exception>
 		<exception>ListTypeEntryKey</exception>
 		<exception>ListTypeEntryName</exception>
 		<exception>RequiredListTypeDefinition</exception>

@@ -25,7 +25,6 @@ interface EditObjectFolder {
 
 export default function EditObjectFolder({
 	companyKeyValuePairs,
-	objectFolderName,
 	objectRelationshipDeletionTypes,
 	siteKeyValuePairs,
 }: EditObjectFolder) {
@@ -33,6 +32,7 @@ export default function EditObjectFolder({
 		{
 			elements,
 			objectDefinitionsStorageTypes,
+			objectFolderName,
 			rightSidebarType,
 			selectedObjectFolder,
 		},
@@ -52,6 +52,13 @@ export default function EditObjectFolder({
 	});
 
 	useEffect(() => {
+		dispatch({
+			payload: {
+				isLoadingObjectFolder: true,
+			},
+			type: TYPES.SET_LOADING_OBJECT_FOLDER,
+		});
+
 		const makeFetch = async () => {
 			const objectFolders = await API.getAllObjectFolders();
 
@@ -163,12 +170,19 @@ export default function EditObjectFolder({
 				},
 				type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE,
 			});
+
+			dispatch({
+				payload: {
+					isLoadingObjectFolder: false,
+				},
+				type: TYPES.SET_LOADING_OBJECT_FOLDER,
+			});
 		};
 
 		makeFetch();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [objectFolderName]);
 
 	return (
 		<>

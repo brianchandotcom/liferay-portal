@@ -8,6 +8,109 @@ import {ArrowHeadType, Node, Position, XYPosition} from 'react-flow-renderer';
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
 
+export function createElements() {
+	const elements = [];
+	const center = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+
+	elements.push({
+		data: {label: 'Target'},
+		id: 'target',
+		position: center,
+	});
+
+	for (let i = 0; i < 8; i++) {
+		const degrees = i * (360 / 8);
+		const radians = degrees * (Math.PI / 180);
+		const x = 250 * Math.cos(radians) + center.x;
+		const y = 250 * Math.sin(radians) + center.y;
+
+		elements.push({
+			data: {label: 'Source'},
+			id: `${i}`,
+			position: {x, y},
+		});
+
+		elements.push({
+			arrowHeadType: ArrowHeadType.Arrow,
+			id: `edge-${i}`,
+			source: `${i}`,
+			target: 'target',
+			type: 'floating',
+		});
+	}
+
+	return elements;
+}
+
+export function getEdgeParams(
+	source: Node,
+	sourceIncrementY: number,
+	target: Node,
+	targetIncrementY: number
+) {
+	const sourceIntersectionPoint = getNodeIntersection(
+		source,
+		sourceIncrementY,
+		targetIncrementY,
+		target
+	);
+
+	const targetIntersectionPoint = getNodeIntersection(
+		target,
+		sourceIncrementY,
+		targetIncrementY,
+		source
+	);
+
+	const sourcePos = getEdgePosition(
+		sourceIntersectionPoint,
+		source,
+		sourceIncrementY
+	);
+
+	const targetPos = getEdgePosition(
+		targetIntersectionPoint,
+		target,
+		targetIncrementY
+	);
+
+	return {
+		sourcePos,
+		sourceX: sourceIntersectionPoint.x,
+		sourceY: sourceIntersectionPoint.y,
+		targetPos,
+		targetX: targetIntersectionPoint.x,
+		targetY: targetIntersectionPoint.y,
+	};
+}
+
+function getEdgePosition(
+	intersectionPoint: XYPosition,
+	node: Node,
+	nodeIncrementY: number
+) {
+	const nodeProperties = {...node.__rf.position, ...node.__rf};
+	const nodePositionX = Math.round(nodeProperties.x);
+	const nodePositionY = Math.round(nodeProperties.y + nodeIncrementY);
+	const intersectionPointX = Math.round(intersectionPoint.x);
+	const intersectionPointY = Math.round(intersectionPoint.y);
+
+	if (intersectionPointX <= nodePositionX + 1) {
+		return Position.Left;
+	}
+	if (intersectionPointX >= nodePositionX + nodeProperties.width - 1) {
+		return Position.Right;
+	}
+	if (intersectionPointY <= nodePositionY + 1) {
+		return Position.Top;
+	}
+	if (intersectionPointY >= nodeProperties.y + nodeProperties.height - 1) {
+		return Position.Bottom;
+	}
+
+	return Position.Top;
+}
+
 function getNodeIntersection(
 	intersectionNode: Node,
 	sourceIncrementY: number,
@@ -65,107 +168,19 @@ function getNodeIntersection(
 	return {x: intersectionPointX, y: intersectionPointY};
 }
 
-function getEdgePosition(
-	intersectionPoint: XYPosition,
-	node: Node,
-	nodeIncrementY: number
-) {
-	const nodeProperties = {...node.__rf.position, ...node.__rf};
-	const nodePositionX = Math.round(nodeProperties.x);
-	const nodePositionY = Math.round(nodeProperties.y + nodeIncrementY);
-	const intersectionPointX = Math.round(intersectionPoint.x);
-	const intersectionPointY = Math.round(intersectionPoint.y);
+export function getObjectFolderName(): string {
+	const urlSearchParams = new URLSearchParams(window.location.search);
 
-	if (intersectionPointX <= nodePositionX + 1) {
-		return Position.Left;
-	}
-	if (intersectionPointX >= nodePositionX + nodeProperties.width - 1) {
-		return Position.Right;
-	}
-	if (intersectionPointY <= nodePositionY + 1) {
-		return Position.Top;
-	}
-	if (intersectionPointY >= nodeProperties.y + nodeProperties.height - 1) {
-		return Position.Bottom;
-	}
-
-	return Position.Top;
+	return urlSearchParams.get('objectFolderName') || '';
 }
 
-// returns the parameters (sx, sy, tx, ty, sourcePos, targetPos) you need to create an edge
+export function updateURLParam(paramType: string, paramValue: string) {
+	const currentURL = window.location.href;
 
-export function getEdgeParams(
-	source: Node,
-	sourceIncrementY: number,
-	target: Node,
-	targetIncrementY: number
-) {
-	const sourceIntersectionPoint = getNodeIntersection(
-		source,
-		sourceIncrementY,
-		targetIncrementY,
-		target
+	const newURL = currentURL.replace(
+		new RegExp('(' + paramType + '=)([^&]*)'),
+		paramType + '=' + paramValue
 	);
 
-	const targetIntersectionPoint = getNodeIntersection(
-		target,
-		sourceIncrementY,
-		targetIncrementY,
-		source
-	);
-
-	const sourcePos = getEdgePosition(
-		sourceIntersectionPoint,
-		source,
-		sourceIncrementY
-	);
-
-	const targetPos = getEdgePosition(
-		targetIntersectionPoint,
-		target,
-		targetIncrementY
-	);
-
-	return {
-		sourcePos,
-		sourceX: sourceIntersectionPoint.x,
-		sourceY: sourceIntersectionPoint.y,
-		targetPos,
-		targetX: targetIntersectionPoint.x,
-		targetY: targetIntersectionPoint.y,
-	};
-}
-
-export function createElements() {
-	const elements = [];
-	const center = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-
-	elements.push({
-		data: {label: 'Target'},
-		id: 'target',
-		position: center,
-	});
-
-	for (let i = 0; i < 8; i++) {
-		const degrees = i * (360 / 8);
-		const radians = degrees * (Math.PI / 180);
-		const x = 250 * Math.cos(radians) + center.x;
-		const y = 250 * Math.sin(radians) + center.y;
-
-		elements.push({
-			data: {label: 'Source'},
-			id: `${i}`,
-			position: {x, y},
-		});
-
-		elements.push({
-			arrowHeadType: ArrowHeadType.Arrow,
-			id: `edge-${i}`,
-			source: `${i}`,
-			target: 'target',
-			type: 'floating',
-		});
-	}
-
-	return elements;
+	window.history.pushState({path: newURL}, '', newURL);
 }

@@ -17,6 +17,7 @@ import {
 	TAction,
 	TState,
 } from '../types';
+import {updateURLParam} from '../utils';
 import {
 	fieldsCustomSort,
 	getNonOverlappingEdges,
@@ -601,6 +602,26 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			return {
 				...state,
 				elements: newElements,
+			};
+		}
+
+		case TYPES.SET_OBJECT_FOLDER_NAME: {
+			const {objectFolderName} = action.payload;
+
+			updateURLParam('objectFolderName', objectFolderName);
+
+			return {
+				...state,
+				objectFolderName,
+			};
+		}
+
+		case TYPES.SET_LOADING_OBJECT_FOLDER: {
+			const {isLoadingObjectFolder} = action.payload;
+
+			return {
+				...state,
+				isLoadingObjectFolder,
 			};
 		}
 

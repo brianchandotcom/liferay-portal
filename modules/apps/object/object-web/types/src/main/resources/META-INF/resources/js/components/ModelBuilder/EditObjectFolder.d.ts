@@ -8,13 +8,11 @@
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 interface EditObjectFolder {
 	companyKeyValuePairs: KeyValuePair[];
-	objectFolderName: string;
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	siteKeyValuePairs: KeyValuePair[];
 }
 export default function EditObjectFolder({
 	companyKeyValuePairs,
-	objectFolderName,
 	objectRelationshipDeletionTypes,
 	siteKeyValuePairs,
 }: EditObjectFolder): JSX.Element;

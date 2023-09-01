@@ -29,10 +29,6 @@ export default function CustomObjectFolderWrapper({
 	objectRelationshipDeletionTypes,
 	siteKeyValuePairs,
 }: CustomObjectFolderWrapperProps) {
-	const urlSearchParams = new URLSearchParams(window.location.search);
-
-	const objectFolderName = urlSearchParams.get('objectFolderName');
-
 	return (
 		<ReactFlowProvider>
 			<ObjectFolderContextProvider
@@ -45,7 +41,6 @@ export default function CustomObjectFolderWrapper({
 			>
 				<EditObjectFolder
 					companyKeyValuePairs={companyKeyValuePairs}
-					objectFolderName={objectFolderName ?? ''}
 					objectRelationshipDeletionTypes={
 						objectRelationshipDeletionTypes
 					}

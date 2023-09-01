@@ -43,7 +43,12 @@ function DiagramBuilder({
 	setShowModal: (value: ModelBuilderModals) => void;
 }) {
 	const [
-		{elements, selectedObjectFolder, showChangesSaved},
+		{
+			elements,
+			isLoadingObjectFolder,
+			selectedObjectFolder,
+			showChangesSaved,
+		},
 		dispatch,
 	] = useObjectFolderContext();
 
@@ -121,7 +126,13 @@ function DiagramBuilder({
 			<ReactFlow
 				connectionMode={ConnectionMode.Loose}
 				edgeTypes={EDGE_TYPES}
-				elements={elements.length ? elements : emptyNode}
+				elements={
+					!isLoadingObjectFolder
+						? elements.length
+							? elements
+							: emptyNode
+						: []
+				}
 				minZoom={0.1}
 				nodeTypes={NODE_TYPES}
 				onConnect={onConnect}
@@ -129,9 +140,19 @@ function DiagramBuilder({
 			>
 				<Background size={1} />
 
-				<Controls showInteractive={false} />
-
-				<MiniMap />
+				{!isLoadingObjectFolder ? (
+					<>
+						<Controls showInteractive={false} />
+						<MiniMap />
+					</>
+				) : (
+					<div className="lfr-objects__model-builder-diagram-area-loading">
+						<span
+							aria-hidden="true"
+							className="loading-animation-lg loading-animation-primary loading-animation-squares"
+						/>
+					</div>
+				)}
 			</ReactFlow>
 		</div>
 	);

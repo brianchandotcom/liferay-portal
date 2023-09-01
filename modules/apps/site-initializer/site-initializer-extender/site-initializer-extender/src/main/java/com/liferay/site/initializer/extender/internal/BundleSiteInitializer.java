@@ -1156,7 +1156,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_siteNavigationMenuLocalService.deleteSiteNavigationMenus(
 			serviceContext.getScopeGroupId());
 
-		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
+		_addSiteNavigationMenus(
+			serviceContext, siteNavigationMenuItemSettings,
+			stringUtilReplaceValues);
 	}
 
 	private void _addLayoutUtilityPageEntries(
@@ -3881,7 +3883,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addSiteNavigationMenu(
 			JSONObject jsonObject, ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings)
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
@@ -3892,14 +3895,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_addSiteNavigationMenuItems(
 			jsonObject, siteNavigationMenu, 0, serviceContext,
-			siteNavigationMenuItemSettings);
+			siteNavigationMenuItemSettings, stringUtilReplaceValues);
 	}
 
 	private void _addSiteNavigationMenuItems(
 			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings)
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		for (Object object :
@@ -3993,17 +3997,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 					parentSiteNavigationMenuItemId, type, typeSettings,
 					serviceContext);
 
+			stringUtilReplaceValues.put(
+				"SITE_NAVIGATION_MENU_ITEM_ID:" +
+					siteNavigationMenuItem.getName(),
+				String.valueOf(
+					siteNavigationMenuItem.getSiteNavigationMenuItemId()));
+
 			_addSiteNavigationMenuItems(
 				menuItemJSONObject, siteNavigationMenu,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				serviceContext, siteNavigationMenuItemSettings);
+				serviceContext, siteNavigationMenuItemSettings,
+				stringUtilReplaceValues);
 		}
 	}
 
 	private void _addSiteNavigationMenus(
 			ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings)
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
@@ -4018,7 +4030,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addSiteNavigationMenu(
 				jsonArray.getJSONObject(i), serviceContext,
-				siteNavigationMenuItemSettings);
+				siteNavigationMenuItemSettings, stringUtilReplaceValues);
 		}
 	}
 

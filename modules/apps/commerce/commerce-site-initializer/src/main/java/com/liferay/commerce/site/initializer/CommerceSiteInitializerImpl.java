@@ -49,6 +49,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderTypeResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -140,8 +141,8 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	}
 
 	public void addCPDefinitions(
-			Bundle bundle,
-			ServiceContext serviceContext, ServletContext servletContext,
+			Bundle bundle, ServiceContext serviceContext,
+			ServletContext servletContext,
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
@@ -155,10 +156,10 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		_addOrUpdateCommerceCatalogs(
 			bundle, channel,
 			_addCommerceInventoryWarehouses(serviceContext, servletContext),
-			serviceContext, servletContext);
+			serviceContext, servletContext, stringUtilReplaceValues);
 		_addCommerceNotificationTemplates(
-			bundle, channel.getId(), serviceContext,
-			servletContext, stringUtilReplaceValues);
+			bundle, channel.getId(), serviceContext, servletContext,
+			stringUtilReplaceValues);
 		_addOrUpdateCommerceOrderTypes(serviceContext, servletContext);
 	}
 
@@ -247,10 +248,9 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	}
 
 	private void _addCommerceNotificationTemplate(
-		Bundle bundle, long commerceChannelId,
-		String resourcePath, ServiceContext serviceContext,
-		ServletContext servletContext,
-		Map<String, String> stringUtilReplaceValues)
+			Bundle bundle, long commerceChannelId, String resourcePath,
+			ServiceContext serviceContext, ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
@@ -323,8 +323,8 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
-				bundle, commerceChannelId, resourcePath,
-				serviceContext, servletContext, stringUtilReplaceValues);
+				bundle, commerceChannelId, resourcePath, serviceContext,
+				servletContext, stringUtilReplaceValues);
 		}
 	}
 
@@ -385,8 +385,26 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
 			String resourcePath, ServiceContext serviceContext,
-			ServletContext servletContext)
+			ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
+
+		Group commerceCatalogGroup =
+			_commerceCatalogLocalService.getCommerceCatalogGroup(
+				catalog.getId());
+
+		List<CPDefinition> existingCPDefinitions =
+			_cpDefinitionLocalService.getCPDefinitions(
+				commerceCatalogGroup.getGroupId(), WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (CPDefinition cpDefinition : existingCPDefinitions) {
+			stringUtilReplaceValues.put(
+				"CP_DEFINITION_ID:" +
+					cpDefinition.getCProduct(
+					).getExternalReferenceCode(),
+				String.valueOf(cpDefinition.getCPDefinitionId()));
+		}
 
 		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 
@@ -395,10 +413,6 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		}
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		Group commerceCatalogGroup =
-			_commerceCatalogLocalService.getCommerceCatalogGroup(
-				catalog.getId());
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionsImporter.importCPDefinitions(
@@ -417,6 +431,12 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		}
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
+			stringUtilReplaceValues.put(
+				"CP_DEFINITION_ID:" +
+					cpDefinition.getCProduct(
+					).getExternalReferenceCode(),
+				String.valueOf(cpDefinition.getCPDefinitionId()));
+
 			List<CPInstance> cpInstances = cpDefinition.getCPInstances();
 
 			if (ListUtil.isEmpty(cpInstances)) {
@@ -617,7 +637,8 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	private void _addOrUpdateCommerceCatalogs(
 			Bundle bundle, Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
-			ServiceContext serviceContext, ServletContext servletContext)
+			ServiceContext serviceContext, ServletContext servletContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
@@ -673,7 +694,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
-				serviceContext, servletContext);
+				serviceContext, servletContext, stringUtilReplaceValues);
 
 			_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 

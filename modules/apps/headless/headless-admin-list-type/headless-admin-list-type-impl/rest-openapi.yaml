@@ -33,6 +33,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                system:
+                    type: boolean
             type: object
         ListTypeEntry:
             properties:

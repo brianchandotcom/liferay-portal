@@ -304,7 +304,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 								getCustomValidations()) {
 
 					if (Validator.isNotNull(
-							infoFormValidationException.
+							infoFormValidationExceptionCustomValidation.
 								getInfoFieldUniqueId())) {
 
 						SessionErrors.add(

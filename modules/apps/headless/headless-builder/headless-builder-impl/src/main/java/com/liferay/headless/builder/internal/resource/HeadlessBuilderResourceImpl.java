@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.function.Function;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,10 +31,11 @@ import javax.ws.rs.core.Response;
 public class HeadlessBuilderResourceImpl {
 
 	public HeadlessBuilderResourceImpl(
-		EndpointHelper endpointHelper, EndpointMatcher endpointMatcher) {
+		EndpointHelper endpointHelper,
+		Function<Long, EndpointMatcher> endpointMatcherFunction) {
 
 		_endpointHelper = endpointHelper;
-		_endpointMatcher = endpointMatcher;
+		_endpointMatcherFunction = endpointMatcherFunction;
 	}
 
 	@GET
@@ -90,7 +93,16 @@ public class HeadlessBuilderResourceImpl {
 				successUnsafeFunction)
 		throws Exception {
 
-		APIApplication.Endpoint endpoint = _endpointMatcher.getEndpoint(
+		EndpointMatcher endpointMatcher = _endpointMatcherFunction.apply(
+			_company.getCompanyId());
+
+		if (endpointMatcher == null) {
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
+		}
+
+		APIApplication.Endpoint endpoint = endpointMatcher.getEndpoint(
 			"/" + path);
 
 		if ((endpoint == null) || (endpoint.getScope() != scope)) {
@@ -115,6 +127,6 @@ public class HeadlessBuilderResourceImpl {
 	private Company _company;
 
 	private final EndpointHelper _endpointHelper;
-	private final EndpointMatcher _endpointMatcher;
+	private final Function<Long, EndpointMatcher> _endpointMatcherFunction;
 
 }

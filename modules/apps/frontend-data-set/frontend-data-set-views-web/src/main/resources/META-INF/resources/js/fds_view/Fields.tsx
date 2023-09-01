@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
-import {ManagementToolbar} from 'frontend-js-components-web';
+import {InputLocalized, LocalizedValue, ManagementToolbar} from 'frontend-js-components-web';
 import {
 	IClientExtensionRenderer,
 	IInternalRenderer,
@@ -31,10 +31,13 @@ import OrderableTable from '../components/OrderableTable';
 
 import '../../css/FDSEntries.scss';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 interface IFDSField {
 	externalReferenceCode: string;
 	id: number;
 	label: string;
+	label_i18n: LocalizedValue<string>;
 	name: string;
 	renderer: string;
 	rendererLabel?: string;
@@ -409,9 +412,14 @@ const EditFDSFieldModalContent = ({
 		(cellRenderer: IInternalRenderer) => cellRenderer.name
 	);
 
+	let fdsFieldTranslations = fdsField.label_i18n;
+	let fieldLabel = fdsField.label_i18n[defaultLanguageId] || '';
+
+	const [translations, setTranslations] = useState(fdsFieldTranslations);
+
 	const editFDSField = async () => {
 		const body = {
-			label: fdsFieldLabelRef.current?.value,
+			label_i18n: translations,
 			renderer: selectedFDSFieldRenderer,
 			rendererType: !fdsInternalCellRendererNames.includes(
 				selectedFDSFieldRenderer
@@ -540,7 +548,7 @@ const EditFDSFieldModalContent = ({
 			<ClayModal.Header>
 				{Liferay.Util.sub(
 					Liferay.Language.get('edit-x'),
-					fdsField.label
+					fieldLabel
 				)}
 			</ClayModal.Header>
 
@@ -558,19 +566,35 @@ const EditFDSFieldModalContent = ({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
-					<label htmlFor={fdsFieldLabelInputId}>
-						{Liferay.Language.get('label')}
-					</label>
+				{Liferay.FeatureFlags['LPS-172017'] ? (
+					<ClayForm.Group>
+						<InputLocalized
+							label={Liferay.Language.get('label')}
+							name="label"
+							onChange={(translation: any) => {
+								console.log(translation);
+								setTranslations({
+									...translations,
+									...translation
+								});
+							}}
+							translations={translations}
+						/>
+					</ClayForm.Group>
+				) : (
+					<ClayForm.Group>
+						<label htmlFor={fdsFieldLabelInputId}>
+							{Liferay.Language.get('label')}
+						</label>
 
-					<ClayInput
-						defaultValue={fdsField.label}
-						id={fdsFieldLabelInputId}
-						ref={fdsFieldLabelRef}
-						type="text"
-					/>
-				</ClayForm.Group>
-
+						<ClayInput
+							// defaultValue={fdsField.label}
+							id={fdsFieldLabelInputId}
+							ref={fdsFieldLabelRef}
+							type="text"
+						/>
+					</ClayForm.Group>
+				)}
 				<ClayForm.Group>
 					<label htmlFor={fdsFieldRendererSelectId}>
 						{Liferay.Language.get('renderer')}

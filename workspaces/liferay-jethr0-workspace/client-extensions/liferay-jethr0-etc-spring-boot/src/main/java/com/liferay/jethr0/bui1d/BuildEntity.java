@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.project.ProjectEntity;
+import com.liferay.jethr0.job.ProjectEntity;
 import com.liferay.jethr0.task.TaskEntity;
 
 import java.util.HashMap;

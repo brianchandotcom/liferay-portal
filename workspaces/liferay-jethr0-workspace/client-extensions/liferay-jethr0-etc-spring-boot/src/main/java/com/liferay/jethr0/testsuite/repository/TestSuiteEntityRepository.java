@@ -6,7 +6,7 @@
 package com.liferay.jethr0.testsuite.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.ProjectEntity;
+import com.liferay.jethr0.job.ProjectEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.testsuite.dalo.ProjectsToTestSuitesEntityRelationshipDALO;
 import com.liferay.jethr0.testsuite.dalo.TestSuiteEntityDALO;

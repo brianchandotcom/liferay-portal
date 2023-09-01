@@ -9,8 +9,8 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
-import com.liferay.jethr0.project.ProjectEntity;
-import com.liferay.jethr0.project.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONArray;

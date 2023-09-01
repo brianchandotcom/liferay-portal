@@ -9,9 +9,9 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.ProjectEntity;
-import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
-import com.liferay.jethr0.project.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 
 import java.util.HashSet;
 import java.util.Set;

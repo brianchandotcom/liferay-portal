@@ -6,7 +6,7 @@
 package com.liferay.jethr0.gitbranch;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.project.ProjectEntity;
+import com.liferay.jethr0.job.ProjectEntity;
 
 import java.net.URL;
 

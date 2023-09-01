@@ -11,10 +11,10 @@ import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.project.ProjectEntity;
-import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
-import com.liferay.jethr0.project.queue.ProjectQueue;
-import com.liferay.jethr0.project.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.queue.ProjectQueue;
+import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 import com.liferay.jethr0.task.repository.TaskEntityRepository;
 
 import java.util.ArrayList;

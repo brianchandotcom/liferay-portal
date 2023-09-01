@@ -8,7 +8,7 @@ package com.liferay.jethr0.task;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
-import com.liferay.jethr0.project.ProjectEntity;
+import com.liferay.jethr0.job.ProjectEntity;
 import com.liferay.jethr0.task.run.TaskRunEntity;
 
 import java.util.Set;

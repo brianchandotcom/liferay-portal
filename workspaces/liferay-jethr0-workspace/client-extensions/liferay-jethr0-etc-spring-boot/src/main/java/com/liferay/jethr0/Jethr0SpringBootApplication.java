@@ -11,7 +11,7 @@ import com.liferay.jethr0.entity.repository.EntityRepository;
 import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.event.handler.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.project.queue.ProjectQueue;
+import com.liferay.jethr0.job.queue.ProjectQueue;
 
 import java.util.Map;
 

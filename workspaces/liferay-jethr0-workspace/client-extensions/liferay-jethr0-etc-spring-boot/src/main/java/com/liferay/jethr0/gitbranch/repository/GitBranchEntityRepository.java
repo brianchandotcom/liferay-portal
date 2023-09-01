@@ -8,8 +8,8 @@ package com.liferay.jethr0.gitbranch.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.gitbranch.dalo.GitBranchEntityDALO;
-import com.liferay.jethr0.project.ProjectEntity;
-import com.liferay.jethr0.project.dalo.ProjectsToGitBranchesEntityRelationshipDALO;
+import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.dalo.ProjectsToGitBranchesEntityRelationshipDALO;
 
 import java.util.HashSet;
 import java.util.Set;

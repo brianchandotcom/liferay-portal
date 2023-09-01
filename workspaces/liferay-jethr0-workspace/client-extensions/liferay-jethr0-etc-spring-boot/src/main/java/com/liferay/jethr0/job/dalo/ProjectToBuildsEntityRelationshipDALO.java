@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.testsuite.dalo;
+package com.liferay.jethr0.job.dalo;
 
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.BuildEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.job.ProjectEntity;
 import com.liferay.jethr0.job.ProjectEntityFactory;
-import com.liferay.jethr0.testsuite.TestSuiteEntity;
-import com.liferay.jethr0.testsuite.TestSuiteEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectsToTestSuitesEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<ProjectEntity, TestSuiteEntity> {
+public class ProjectToBuildsEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<ProjectEntity, BuildEntity> {
 
 	@Override
-	public EntityFactory<TestSuiteEntity> getChildEntityFactory() {
-		return _testSuiteEntityFactory;
+	public EntityFactory<BuildEntity> getChildEntityFactory() {
+		return _buildEntityFactory;
 	}
 
 	@Override
@@ -34,13 +34,13 @@ public class ProjectsToTestSuitesEntityRelationshipDALO
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "projectsToTestSuites";
+		return "projectToBuilds";
 	}
 
 	@Autowired
-	private ProjectEntityFactory _projectEntityFactory;
+	private BuildEntityFactory _buildEntityFactory;
 
 	@Autowired
-	private TestSuiteEntityFactory _testSuiteEntityFactory;
+	private ProjectEntityFactory _projectEntityFactory;
 
 }

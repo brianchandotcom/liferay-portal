@@ -8,8 +8,8 @@ package com.liferay.jethr0.task.repository;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.project.ProjectEntity;
-import com.liferay.jethr0.project.dalo.ProjectToTasksEntityRelationshipDALO;
+import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.dalo.ProjectToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.dalo.TaskEntityDALO;
 

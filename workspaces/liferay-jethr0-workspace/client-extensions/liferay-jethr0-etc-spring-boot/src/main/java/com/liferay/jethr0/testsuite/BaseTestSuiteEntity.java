@@ -6,7 +6,7 @@
 package com.liferay.jethr0.testsuite;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.project.ProjectEntity;
+import com.liferay.jethr0.job.ProjectEntity;
 
 import java.util.Collections;
 import java.util.HashSet;

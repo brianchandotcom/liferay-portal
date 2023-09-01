@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.ProjectEntityFactory;
+import com.liferay.jethr0.job.JobEntityFactory;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.TaskEntityFactory;
 
@@ -29,7 +29,7 @@ public class ProjectToTasksEntityRelationshipDALO
 
 	@Override
 	public EntityFactory<JobEntity> getParentEntityFactory() {
-		return _projectEntityFactory;
+		return _jobEntityFactory;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ProjectToTasksEntityRelationshipDALO
 	}
 
 	@Autowired
-	private ProjectEntityFactory _projectEntityFactory;
+	private JobEntityFactory _jobEntityFactory;
 
 	@Autowired
 	private TaskEntityFactory _taskEntityFactory;

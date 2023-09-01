@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.ProjectEntityFactory;
+import com.liferay.jethr0.job.JobEntityFactory;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Arrays;
@@ -55,10 +55,10 @@ public class ProjectEntityDALO extends BaseEntityDALO<JobEntity> {
 
 	@Override
 	protected EntityFactory<JobEntity> getEntityFactory() {
-		return _projectEntityFactory;
+		return _jobEntityFactory;
 	}
 
 	@Autowired
-	private ProjectEntityFactory _projectEntityFactory;
+	private JobEntityFactory _jobEntityFactory;
 
 }

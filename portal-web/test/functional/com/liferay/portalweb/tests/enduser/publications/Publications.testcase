@@ -567,6 +567,44 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Delete");
 	}
 
+	@description = "This is a use case for LPS-194210 - Fail to publish publication after deleted on publication and production."
+	@priority = 3
+	test CanPublishAfterDeleteOnPublicationAndProduction {
+		task ("Create 2 Pages") {
+			for (var count : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "Page ${count}");
+			}
+		}
+
+		task ("Create Publication and delete both pages") {
+			JSONPublications.addPublication(publicationName = "P1");
+
+			JSONPublications.selectPublication(publicationName = "P1");
+
+			for (var count : list "1,2") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "Page ${count}");
+			}
+		}
+
+		task ("Go to production mode, delete Page 1 and Publish Publication") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			Publications.workOnProduction();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Page 1");
+
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "P1");
+		}
+	}
+
 	@description = "LPS-136380 - Add localization for translated titles and content."
 	@priority = 4
 	test CanPublishLocalizedContent {

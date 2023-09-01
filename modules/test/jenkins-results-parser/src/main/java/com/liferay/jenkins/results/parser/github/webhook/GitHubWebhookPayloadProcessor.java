@@ -2405,7 +2405,7 @@ public class GitHubWebhookPayloadProcessor {
 		GitHubWebhookPayloadProcessor.class);
 
 	private static final List<String> _acRepositories = Arrays.asList(
-		"com-liferay-osb-asah-private", "com-liferay-osb-faro-private");
+		"com-liferay-osb-asah-private");
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"Build[\\w\\s]*started.*Job Link: <a href=\"(?<buildURL>[^\"]+)\"");
 	private static final List<String> _gauntletUsernames = Arrays.asList(

@@ -41,15 +41,6 @@ public class PullRequestSubrepositoryTopLevelBuild
 	}
 
 	@Override
-	public BranchInformation getOSBFaroBranchInformation() {
-		Workspace workspace = getWorkspace();
-
-		return new WorkspaceBranchInformation(
-			workspace.getWorkspaceGitRepository(
-				"com-liferay-osb-faro-private"));
-	}
-
-	@Override
 	public BranchInformation getPluginsBranchInformation() {
 		Workspace workspace = getWorkspace();
 

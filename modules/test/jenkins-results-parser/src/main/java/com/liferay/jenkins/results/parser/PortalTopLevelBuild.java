@@ -58,31 +58,6 @@ public class PortalTopLevelBuild
 	}
 
 	@Override
-	public BranchInformation getOSBFaroBranchInformation() {
-		if (fromArchive || !(this instanceof PortalWorkspaceBuild)) {
-			return getBranchInformation("osb.faro");
-		}
-
-		PortalWorkspaceBuild portalWorkspaceBuild = (PortalWorkspaceBuild)this;
-
-		PortalWorkspace portalWorkspace =
-			portalWorkspaceBuild.getPortalWorkspace();
-
-		if (portalWorkspace == null) {
-			return null;
-		}
-
-		WorkspaceGitRepository workspaceGitRepository =
-			portalWorkspace.getOSBFaroWorkspaceGitRepository();
-
-		if (workspaceGitRepository == null) {
-			return null;
-		}
-
-		return new WorkspaceBranchInformation(workspaceGitRepository);
-	}
-
-	@Override
 	public BranchInformation getPluginsBranchInformation() {
 		if (fromArchive || !(this instanceof PortalWorkspaceBuild)) {
 			return getBranchInformation("plugins");

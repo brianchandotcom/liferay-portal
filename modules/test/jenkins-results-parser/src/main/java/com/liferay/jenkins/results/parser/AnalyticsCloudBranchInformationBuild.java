@@ -12,6 +12,4 @@ public interface AnalyticsCloudBranchInformationBuild extends Build {
 
 	public BranchInformation getOSBAsahBranchInformation();
 
-	public BranchInformation getOSBFaroBranchInformation();
-
 }

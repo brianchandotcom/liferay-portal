@@ -6,6 +6,9 @@
 		"react": "16.12.0"
 	},
 	"jest": {
+		"setupFiles": [
+			"<rootDir>/test/js/jest-setup.config.js"
+		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/[^/]+\\.js"
 		]

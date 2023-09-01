@@ -338,19 +338,6 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
-	public static class UnmodifiableAccountEntryObjectField
-		extends ObjectEntryValuesException {
-
-		public UnmodifiableAccountEntryObjectField(String objectFieldName) {
-			super(
-				StringBundler.concat(
-					"The object field ", objectFieldName,
-					" is unmodifiable because it is the account entry ",
-					"restrictor"));
-		}
-
-	}
-
 	private ObjectEntryValuesException(
 		List<Object> arguments, String message, String messageKey) {
 

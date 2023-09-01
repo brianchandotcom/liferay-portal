@@ -1153,9 +1153,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				stringUtilReplaceValues);
 		}
 
-		_siteNavigationMenuLocalService.deleteSiteNavigationMenus(
-			serviceContext.getScopeGroupId());
-
 		_addSiteNavigationMenus(
 			serviceContext, siteNavigationMenuItemSettings,
 			stringUtilReplaceValues);
@@ -3888,10 +3885,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.addSiteNavigationMenu(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				jsonObject.getString("name"), jsonObject.getInt("typeSite"),
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
+				serviceContext.getScopeGroupId(), jsonObject.getString("name"));
+
+		if (siteNavigationMenu == null) {
+			siteNavigationMenu =
+				_siteNavigationMenuLocalService.addSiteNavigationMenu(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					jsonObject.getString("name"), jsonObject.getInt("typeSite"),
+					serviceContext);
+		}
+		else {
+			_siteNavigationMenuLocalService.updateSiteNavigationMenu(
+				serviceContext.getUserId(),
+				siteNavigationMenu.getSiteNavigationMenuId(),
+				jsonObject.getInt("typeSite"), jsonObject.getBoolean("auto"),
 				serviceContext);
+		}
 
 		_addSiteNavigationMenuItems(
 			jsonObject, siteNavigationMenu, 0, serviceContext,

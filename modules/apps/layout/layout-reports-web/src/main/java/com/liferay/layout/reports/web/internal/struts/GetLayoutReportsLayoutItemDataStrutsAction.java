@@ -224,6 +224,13 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 						fragmentEntryLink, themeDisplay.getLocale())
 				).put(
 					"renderTime", layoutStructureItemRenderTime.getRenderTime()
+				).put(
+					"warnings",
+					JSONUtil.put(
+						_layoutWarningMessageHelper.getFragmentWarningMessage(
+							(FragmentStyledLayoutStructureItem)
+								layoutStructureItem,
+							httpServletRequest, httpServletResponse))
 				));
 		}
 

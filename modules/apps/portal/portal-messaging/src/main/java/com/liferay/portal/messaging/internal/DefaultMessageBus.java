@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -25,12 +24,10 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -203,8 +200,6 @@ public class DefaultMessageBus implements MessageBus {
 
 		_messageListenerServiceTracker.close();
 
-		_messageBusEventListeners.clear();
-
 		shutdown(true);
 
 		for (Destination destination : _destinations.values()) {
@@ -234,27 +229,10 @@ public class DefaultMessageBus implements MessageBus {
 		_updateDestination(destination, destinationWorkerConfiguration);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void registerMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener) {
-
-		_messageBusEventListeners.add(messageBusEventListener);
-	}
-
 	protected synchronized void unregisterDestination(
 		Destination destination, Map<String, Object> properties) {
 
 		_removeDestination(destination.getName());
-	}
-
-	protected void unregisterMessageBusEventListener(
-		MessageBusEventListener messageBusEventListener) {
-
-		_messageBusEventListeners.remove(messageBusEventListener);
 	}
 
 	private void _addDestination(Destination destination) {
@@ -288,18 +266,6 @@ public class DefaultMessageBus implements MessageBus {
 
 		if (oldDestination != null) {
 			oldDestination.destroy();
-
-			for (MessageBusEventListener messageBusEventListener :
-					_messageBusEventListeners) {
-
-				messageBusEventListener.destinationRemoved(oldDestination);
-			}
-		}
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationAdded(destination);
 		}
 	}
 
@@ -341,12 +307,6 @@ public class DefaultMessageBus implements MessageBus {
 		}
 
 		destination.destroy();
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationRemoved(destination);
-		}
 
 		return destination;
 	}
@@ -399,8 +359,6 @@ public class DefaultMessageBus implements MessageBus {
 		_destinationWorkerConfigurations = new ConcurrentHashMap<>();
 	private final Map<String, String> _factoryPidsToDestinationNames =
 		new ConcurrentHashMap<>();
-	private final Set<MessageBusEventListener> _messageBusEventListeners =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private ServiceTracker
 		<MessageListener, ObjectValuePair<String, MessageListener>>
 			_messageListenerServiceTracker;

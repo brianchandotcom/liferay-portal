@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -55,7 +54,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 		_destinationConfigurations.clear();
 		_destinations.clear();
-		_messageBusEventListeners.clear();
 		_messageListeners.clear();
 	}
 
@@ -72,13 +70,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	}
 
 	@Override
-	public void setMessageBusEventListeners(
-		List<MessageBusEventListener> messageBusEventListeners) {
-
-		_messageBusEventListeners.addAll(messageBusEventListeners);
-	}
-
-	@Override
 	public void setMessageListeners(
 		Map<String, List<MessageListener>> messageListeners) {
 
@@ -86,8 +77,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	}
 
 	protected void initialize() {
-		registerMessageBusEventListeners();
-
 		registerDestinations();
 
 		for (Map.Entry<String, List<MessageListener>> messageListeners :
@@ -145,23 +134,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		}
 	}
 
-	protected void registerMessageBusEventListeners() {
-		if (_messageBusEventListeners.isEmpty()) {
-			return;
-		}
-
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			_serviceRegistrations.add(
-				bundleContext.registerService(
-					MessageBusEventListener.class, messageBusEventListener,
-					null));
-		}
-	}
-
 	private static volatile DestinationFactory _destinationFactory =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			DestinationFactory.class, DefaultMessagingConfigurator.class,
@@ -171,8 +143,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		new HashSet<>();
 	private final List<Destination> _destinations = new ArrayList<>();
 	private volatile MessageBus _messageBus;
-	private final List<MessageBusEventListener> _messageBusEventListeners =
-		new ArrayList<>();
 	private final Map<String, List<MessageListener>> _messageListeners =
 		new HashMap<>();
 	private final List<ServiceRegistration<?>> _serviceRegistrations =

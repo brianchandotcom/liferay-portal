@@ -144,10 +144,10 @@ public class JobQueue {
 		_jobEntities.removeAll(jobEntities);
 	}
 
-	@Scheduled(cron = "${liferay.jethr0.project.queue.update.cron}")
+	@Scheduled(cron = "${liferay.jethr0.job.queue.update.cron}")
 	public void scheduledUpdate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Updating project queue");
+			_log.info("Updating job queue");
 		}
 
 		update();
@@ -170,17 +170,17 @@ public class JobQueue {
 			_jobEntities.removeAll(Collections.singleton(null));
 
 			for (JobEntity jobEntity : new ArrayList<>(_jobEntities)) {
-				boolean keepProject = false;
+				boolean keepJob = false;
 
 				for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 					if (buildEntity.getState() != BuildEntity.State.COMPLETED) {
-						keepProject = true;
+						keepJob = true;
 
 						break;
 					}
 				}
 
-				if (!keepProject) {
+				if (!keepJob) {
 					_jobEntities.remove(jobEntity);
 				}
 			}

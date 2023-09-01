@@ -25,7 +25,7 @@ public class GitBranchEntityRepository
 	extends BaseEntityRepository<GitBranchEntity> {
 
 	public Set<GitBranchEntity> getAll(JobEntity jobEntity) {
-		Set<GitBranchEntity> projectGitBranchEntities = new HashSet<>();
+		Set<GitBranchEntity> gitBranchEntities = new HashSet<>();
 
 		Set<Long> gitBranchEntityIds =
 			_jobsToGitBranchesEntityRelationshipDALO.getChildEntityIds(
@@ -40,10 +40,10 @@ public class GitBranchEntityRepository
 
 			jobEntity.addGitBranchEntity(gitBranchEntity);
 
-			projectGitBranchEntities.add(gitBranchEntity);
+			gitBranchEntities.add(gitBranchEntity);
 		}
 
-		return projectGitBranchEntities;
+		return gitBranchEntities;
 	}
 
 	@Override

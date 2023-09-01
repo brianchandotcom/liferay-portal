@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Michael Hashimoto
  */
-@RequestMapping("/projects")
+@RequestMapping("/jobs")
 @RestController
-public class ProjectRestController {
+public class JobRestController {
 
 	@GetMapping("/queue")
 	public ResponseEntity<String> jobQueue(@AuthenticationPrincipal Jwt jwt) {
@@ -73,7 +73,7 @@ public class ProjectRestController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<String> project(
+	public ResponseEntity<String> job(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
 
 		JobEntity jobEntity = _jobEntityRepository.getById(jobEntityId);

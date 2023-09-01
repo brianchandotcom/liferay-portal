@@ -72,6 +72,32 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	public void testReindexPublishedLayoutWithLayoutLocalization()
+		throws Exception {
+
+		String headingText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(true, headingText);
+
+		List<LayoutLocalization> layoutLocalizations1 =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				layout.getPlid());
+
+		Assert.assertFalse(
+			layoutLocalizations1.toString(), layoutLocalizations1.isEmpty());
+
+		_assertReindex(headingText, layout);
+
+		List<LayoutLocalization> layoutLocalizations2 =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				layout.getPlid());
+
+		Assert.assertEquals(
+			layoutLocalizations2.toString(), layoutLocalizations1,
+			layoutLocalizations2);
+	}
+
+	@Test
 	public void testReindexPublishedLayoutWithoutLayoutLocalization()
 		throws Exception {
 

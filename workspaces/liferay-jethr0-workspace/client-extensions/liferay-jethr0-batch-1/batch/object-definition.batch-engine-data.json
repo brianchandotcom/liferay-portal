@@ -323,11 +323,11 @@
 			}
 		},
 		{
-			"externalReferenceCode": "ProjectComparator",
+			"externalReferenceCode": "JobComparator",
 			"label": {
-				"en_US": "Project Comparator"
+				"en_US": "Job Comparator"
 			},
-			"name": "ProjectComparator",
+			"name": "JobComparator",
 			"objectFields": [
 				{
 					"DBType": "Integer",
@@ -345,7 +345,7 @@
 					"label": {
 						"en_US": "Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "projectComparatorType",
+					"listTypeDefinitionExternalReferenceCode": "jobComparatorType",
 					"name": "type",
 					"required": true,
 					"state": false,
@@ -364,7 +364,7 @@
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "Project Comparators"
+				"en_US": "Job Comparators"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -515,11 +515,11 @@
 			}
 		},
 		{
-			"externalReferenceCode": "ProjectPrioritizer",
+			"externalReferenceCode": "JobPrioritizer",
 			"label": {
-				"en_US": "Project Prioritizer"
+				"en_US": "Job Prioritizer"
 			},
-			"name": "ProjectPrioritizer",
+			"name": "JobPrioritizer",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -536,17 +536,17 @@
 				{
 					"deletionType": "cascade",
 					"label": {
-						"en_US": "Project Prioritizer to Project Comparators"
+						"en_US": "Job Prioritizer to Job Comparators"
 					},
-					"name": "projectPrioritizerToProjectComparators",
-					"objectDefinitionExternalReferenceCode1": "ProjectPrioritizer",
-					"objectDefinitionExternalReferenceCode2": "ProjectComparator",
+					"name": "jobPrioritizerToJobComparators",
+					"objectDefinitionExternalReferenceCode1": "JobPrioritizer",
+					"objectDefinitionExternalReferenceCode2": "JobComparator",
 					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",
 			"pluralLabel": {
-				"en_US": "Project Prioritizers"
+				"en_US": "Job Prioritizers"
 			},
 			"portlet": false,
 			"scope": "company",
@@ -567,9 +567,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Build URL"
+						"en_US": "Jenkins Build URL"
 					},
-					"name": "buildURL",
+					"name": "jenkinsBuildURL",
 					"required": false,
 					"type": "String"
 				},
@@ -737,9 +737,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Build Name"
+						"en_US": "Name"
 					},
-					"name": "buildName",
+					"name": "name",
 					"required": true,
 					"type": "String"
 				},
@@ -747,9 +747,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Job Name"
+						"en_US": "Jenkins Job Name"
 					},
-					"name": "jobName",
+					"name": "jenkinsJobName",
 					"required": true,
 					"type": "String"
 				},
@@ -832,11 +832,11 @@
 			}
 		},
 		{
-			"externalReferenceCode": "Project",
+			"externalReferenceCode": "Job",
 			"label": {
-				"en_US": "Project"
+				"en_US": "Job"
 			},
-			"name": "Project",
+			"name": "Job",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -897,7 +897,7 @@
 					"label": {
 						"en_US": "Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "projectType",
+					"listTypeDefinitionExternalReferenceCode": "jobType",
 					"name": "type",
 					"required": true,
 					"state": false,
@@ -908,57 +908,57 @@
 				{
 					"deletionType": "cascade",
 					"label": {
-						"en_US": "Project to Builds"
+						"en_US": "Job to Builds"
 					},
-					"name": "projectToBuilds",
-					"objectDefinitionExternalReferenceCode1": "Project",
+					"name": "jobToBuilds",
+					"objectDefinitionExternalReferenceCode1": "Job",
 					"objectDefinitionExternalReferenceCode2": "Build",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Projects to Git Branches"
+						"en_US": "Jobs to Git Branches"
 					},
-					"name": "projectsToGitBranches",
-					"objectDefinitionExternalReferenceCode1": "Project",
+					"name": "jobsToGitBranches",
+					"objectDefinitionExternalReferenceCode1": "Job",
 					"objectDefinitionExternalReferenceCode2": "GitBranch",
 					"type": "manyToMany"
 				},
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Projects to Jenkins Cohorts"
+						"en_US": "Jobs to Jenkins Cohorts"
 					},
-					"name": "projectsToJenkinsCohorts",
-					"objectDefinitionExternalReferenceCode1": "Project",
+					"name": "jobsToJenkinsCohorts",
+					"objectDefinitionExternalReferenceCode1": "Job",
 					"objectDefinitionExternalReferenceCode2": "JenkinsCohort",
 					"type": "manyToMany"
 				},
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Project to Tasks"
+						"en_US": "Job to Tasks"
 					},
-					"name": "projectToTasks",
-					"objectDefinitionExternalReferenceCode1": "Project",
+					"name": "jobToTasks",
+					"objectDefinitionExternalReferenceCode1": "Job",
 					"objectDefinitionExternalReferenceCode2": "Task",
 					"type": "oneToMany"
 				},
 				{
 					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Projects to Test Suites"
+						"en_US": "Jobs to Test Suites"
 					},
-					"name": "projectsToTestSuites",
-					"objectDefinitionExternalReferenceCode1": "Project",
+					"name": "jobsToTestSuites",
+					"objectDefinitionExternalReferenceCode1": "Job",
 					"objectDefinitionExternalReferenceCode2": "TestSuite",
 					"type": "manyToMany"
 				}
 			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "Projects"
+				"en_US": "Jobs"
 			},
 			"portlet": true,
 			"scope": "company",

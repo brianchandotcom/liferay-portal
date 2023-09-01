@@ -170,7 +170,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "projectComparatorType",
+			"externalReferenceCode": "jobComparatorType",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "fifo",
@@ -181,27 +181,27 @@
 					}
 				},
 				{
-					"externalReferenceCode": "projectPriority",
-					"key": "projectPriority",
-					"name": "Project Priority",
+					"externalReferenceCode": "jobPriority",
+					"key": "jobPriority",
+					"name": "Job Priority",
 					"name_i18n": {
-						"en-US": "Project Priority"
+						"en-US": "Job Priority"
 					}
 				},
 				{
-					"externalReferenceCode": "projectStartDate",
-					"key": "projectStartDate",
-					"name": "Project Start Date",
+					"externalReferenceCode": "jobStartDate",
+					"key": "jobStartDate",
+					"name": "Job Start Date",
 					"name_i18n": {
-						"en-US": "Project Start Date"
+						"en-US": "Job Start Date"
 					}
 				},
 				{
-					"externalReferenceCode": "projectType",
-					"key": "projectType",
-					"name": "Project Type",
+					"externalReferenceCode": "jobType",
+					"key": "jobType",
+					"name": "Job Type",
 					"name_i18n": {
-						"en-US": "Project Type"
+						"en-US": "Job Type"
 					}
 				},
 				{
@@ -221,13 +221,13 @@
 					}
 				}
 			],
-			"name": "projectComparatorType",
+			"name": "jobComparatorType",
 			"name_i18n": {
-				"en-US": "Project Comparator Type"
+				"en-US": "Job Comparator Type"
 			}
 		},
 		{
-			"externalReferenceCode": "projectType",
+			"externalReferenceCode": "jobType",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "defaultJob",
@@ -270,9 +270,9 @@
 					}
 				}
 			],
-			"name": "projectType",
+			"name": "jobType",
 			"name_i18n": {
-				"en-US": "Project Type"
+				"en-US": "Job Type"
 			}
 		},
 		{

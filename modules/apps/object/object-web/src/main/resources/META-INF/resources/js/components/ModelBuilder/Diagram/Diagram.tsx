@@ -40,7 +40,7 @@ const EDGE_TYPES = {
 function DiagramBuilder({
 	setShowModal,
 }: {
-	setShowModal: (value: ModelBuilderModals) => void;
+	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }) {
 	const [
 		{

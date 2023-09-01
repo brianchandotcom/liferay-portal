@@ -255,9 +255,12 @@ export function ObjectDefinitionNode({
 			{showModal.deleteObjectDefinition && (
 				<ModalDeleteObjectDefinition
 					handleOnClose={() => {
-						setShowModal({
-							deleteObjectDefinition: false,
-						});
+						setShowModal(
+							(previousState: Partial<ModelBuilderModals>) => ({
+								...previousState,
+								deleteObjectDefinition: false,
+							})
+						);
 					}}
 					objectDefinition={
 						deletedObjectDefinition as DeletedObjectDefinition

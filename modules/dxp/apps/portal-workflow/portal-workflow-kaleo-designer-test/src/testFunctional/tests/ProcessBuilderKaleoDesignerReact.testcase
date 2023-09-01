@@ -812,7 +812,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "User: Test");
 	}
 
-	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
+	@description = "LRQA-72980 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
+	@priority = 3
 	test CanCancelDelete {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

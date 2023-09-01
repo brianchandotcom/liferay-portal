@@ -64,6 +64,192 @@ definition {
 		}
 	}
 
+	@description = "Test for COMMERCE-11974 | Verify that is not possible to perform XSS attack by injecting malicious script in Addressess"
+	@priority = 5
+	test CannotExecuteXSSInAddresses {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And Commerce Addresses widget is deployed on Minium's Catalog page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Commerce Addresses");
+		}
+
+		task ("And a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("When a billing and a shipping addresses with the XSS are created for the account") {
+			for (var address : list "billing,shipping") {
+				var city = "<script>alert('${address}-city')</script>";
+				var name = "<script>alert('${address}-name')</script>";
+				var street1 = "<script>alert('${address}-street-1')</script>";
+				var street2 = "<script>alert('${address}-street-2')</script>";
+				var street3 = "<script>alert('${address}-street-3')</script>";
+				var zip = "<script>alert('${address}-zip')</script>";
+
+				if (${address} == "billing") {
+					var type = 1;
+				}
+				else if (${address} == "shipping") {
+					var type = 3;
+				}
+
+				CommerceJSONAccountsAPI._addCommerceAccountAddress(
+					accountEntryName = "Commerce Account",
+					city = ${city},
+					countryISOCode = "US",
+					name = ${name},
+					street1 = ${street1},
+					street2 = ${street2},
+					street3 = ${street3},
+					type = ${type},
+					zip = ${zip});
+			}
+		}
+
+		task ("Then the injected script is not executed") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertAlertNotPresent();
+		}
+
+		task ("When an order is created with the XSS addresses") {
+			var billingAddressName = "<script>alert(billing-name)</script>";
+			var shippingAddressName = "<script>alert(shipping-name)</script>";
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = ${billingAddressName},
+				cartItems = "MIN55861:5",
+				shippingAddressName = ${shippingAddressName},
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("Then in the Orders UI the injected script is not executed") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+
+			AssertAlertNotPresent();
+		}
+	}
+
+	@description = "Test for COMMERCE-11984 | Verify that is not possible to perform XSS attack by injecting malicious script in Countries and Regions"
+	@priority = 5
+	test CannotExecuteXSSInCommerceCountriesAndRegions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		var countryName = '''<script>alert("country")</script>''';
+		var regionName = '''<script>alert("region")</script>''';
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And Commerce Addresses widget is deployed on Minium's Catalog page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Commerce Addresses");
+		}
+
+		task ("And a business account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And the admin navigates to Commerce's Countries page") {
+			CommerceNavigator.openCommerceCountriesAdmin();
+		}
+
+		task ("When the admin creates a country with XSS") {
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewCountriesEntry(
+				entryIsoNumber = 020,
+				entryIsoThreeLetters = "TCO",
+				entryIsoTwoLetters = 54,
+				entryName = ${countryName});
+		}
+
+		task ("Then the injected script is not executed") {
+			CommerceNavigator.openCommerceCountriesAdmin();
+
+			AssertAlertNotPresent();
+		}
+
+		task ("When the admin creates a region with XSS") {
+			Click(
+				locator1 = "CommerceEntry#WISH_LIST_NAME",
+				wishListName = ${countryName});
+
+			CommerceEntry.gotoMenuTab(menuTab = "Regions");
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewRegionsEntry(
+				code = "TRE",
+				entryName = ${regionName});
+		}
+
+		task ("Then the injected script is not executed, even if page is refreshed") {
+			AssertAlertNotPresent();
+
+			AssertElementPresent(
+				key_entry = ${regionName},
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			Refresh();
+
+			AssertAlertNotPresent();
+		}
+
+		task ("When an address with the XSS country and region is created for the account") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = 54,
+				name = "Test Address",
+				regionISOCode = "TRE",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("And the user navigates to Minium's Catalog page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+		}
+
+		task ("Then the injected script is not executed") {
+			AssertAlertNotPresent();
+		}
+
+		task ("When an order is created with the XSS address") {
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN55861:5",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("Then in the Orders UI the injected script is not executed") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+
+			AssertAlertNotPresent();
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11451. CanViewLanguageTagsForCategoryOnSitemapPage. Verify that the sitemap contain the URL for the translated category friendly URL"
 	@priority = 5
 	test CanViewLanguageTagsForCategoryOnSitemapPage {
@@ -319,8 +505,6 @@ definition {
 			entryIsoTwoLetters = 54,
 			entryName = "Test Country");
 
-		Button.clickSave();
-
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Regions");
@@ -330,8 +514,6 @@ definition {
 		CommerceEntry.addNewRegionsEntry(
 			code = "TRE",
 			entryName = "Test Region");
-
-		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 

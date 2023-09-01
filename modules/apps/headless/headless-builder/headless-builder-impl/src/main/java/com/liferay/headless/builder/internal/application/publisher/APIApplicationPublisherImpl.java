@@ -54,14 +54,19 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				{
 					add(_registerApplication(apiApplication, osgiJaxRsName));
 
-					EndpointMatcher endpointMatcher = new EndpointMatcher(
-						apiApplication.getEndpoints());
+					_endpointMatchersMap.put(
+						osgiJaxRsName,
+						new EndpointMatcher(apiApplication.getEndpoints()));
 
 					add(
 						_registerResource(
 							osgiJaxRsName, HeadlessBuilderResourceImpl.class,
 							() -> new HeadlessBuilderResourceImpl(
-								_endpointHelper, endpointMatcher)));
+								_endpointHelper,
+								companyId -> _endpointMatchersMap.get(
+									_getOSGiJaxRsName(
+										apiApplication.getBaseURL(),
+										companyId)))));
 
 					add(
 						_registerResource(
@@ -85,6 +90,8 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		if (serviceRegistrations != null) {
 			_unregisterServiceRegistrations(serviceRegistrations);
 		}
+
+		_endpointMatchersMap.remove(_getOSGiJaxRsName(baseURL, companyId));
 	}
 
 	@Activate
@@ -185,6 +192,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Reference
 	private EndpointHelper _endpointHelper;
+
+	private final Map<String, EndpointMatcher> _endpointMatchersMap =
+		new HashMap<>();
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

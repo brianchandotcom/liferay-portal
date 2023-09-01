@@ -11,8 +11,8 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseKaleoTaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
@@ -61,8 +61,8 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments = null;
 
-		KaleoInstanceToken kaleoInstanceToken =
-			executionContext.getKaleoInstanceToken();
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			executionContext.getKaleoTaskInstanceToken();
 
 		WorkflowTaskScriptConfiguration workflowTaskScriptConfiguration =
 			_configurationProvider.getConfiguration(
@@ -77,7 +77,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		if (scriptedAssignmentCacheExpirationTime > 0) {
 			kaleoTaskAssignments =
 				_kaleoTaskScriptedAssignmentCache.getKaleoTaskAssignments(
-					kaleoInstanceToken);
+					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		}
 
 		if (kaleoTaskAssignments == null) {
@@ -87,13 +87,14 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 
 			if (scriptedAssignmentCacheExpirationTime > 0) {
 				_kaleoTaskScriptedAssignmentCache.putKaleoTaskAssignments(
-					kaleoInstanceToken, kaleoTaskAssignments,
+					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+					kaleoTaskAssignments,
 					scriptedAssignmentCacheExpirationTime * 60);
 			}
 		}
 
 		_kaleoInstanceLocalService.updateKaleoInstance(
-			kaleoInstanceToken.getKaleoInstanceId(),
+			kaleoTaskInstanceToken.getKaleoInstanceId(),
 			executionContext.getWorkflowContext());
 
 		return kaleoTaskAssignments;

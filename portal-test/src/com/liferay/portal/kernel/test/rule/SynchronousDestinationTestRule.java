@@ -292,8 +292,6 @@ public class SynchronousDestinationTestRule
 				Destination synchronousDestination =
 					createSynchronousDestination(destinationName);
 
-				destination.copyDestinationEventListeners(
-					synchronousDestination);
 				destination.copyMessageListeners(synchronousDestination);
 
 				_destinations.put(destinationName, synchronousDestination);

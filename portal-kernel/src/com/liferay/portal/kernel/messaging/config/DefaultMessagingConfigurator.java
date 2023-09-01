@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.messaging.config;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
@@ -55,7 +54,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		_serviceRegistrations.clear();
 
 		_destinationConfigurations.clear();
-		_destinationEventListeners.clear();
 		_destinations.clear();
 		_messageBusEventListeners.clear();
 		_messageListeners.clear();
@@ -66,13 +64,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		Set<DestinationConfiguration> destinationConfigurations) {
 
 		_destinationConfigurations.addAll(destinationConfigurations);
-	}
-
-	@Override
-	public void setDestinationEventListeners(
-		Map<String, List<DestinationEventListener>> destinationEventListeners) {
-
-		_destinationEventListeners.putAll(destinationEventListeners);
 	}
 
 	@Override
@@ -98,8 +89,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		registerMessageBusEventListeners();
 
 		registerDestinations();
-
-		registerDestinationEventListeners();
 
 		for (Map.Entry<String, List<MessageListener>> messageListeners :
 				_messageListeners.entrySet()) {
@@ -127,41 +116,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 							bundleContext.registerService(
 								MessageListener.class, messageListener,
 								properties));
-					}
-				});
-		}
-	}
-
-	protected void registerDestinationEventListeners() {
-		if (_destinationEventListeners.isEmpty()) {
-			return;
-		}
-
-		for (final Map.Entry<String, List<DestinationEventListener>> entry :
-				_destinationEventListeners.entrySet()) {
-
-			String destinationName = entry.getKey();
-
-			ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
-
-			serviceLatch.waitFor(
-				StringBundler.concat(
-					"(&(destination.name=", destinationName, ")(objectClass=",
-					Destination.class.getName(), "))"));
-
-			serviceLatch.openOn(
-				bundleContext -> {
-					Dictionary<String, Object> properties =
-						MapUtil.singletonDictionary(
-							"destination.name", destinationName);
-
-					for (DestinationEventListener destinationEventListener :
-							entry.getValue()) {
-
-						_serviceRegistrations.add(
-							bundleContext.registerService(
-								DestinationEventListener.class,
-								destinationEventListener, properties));
 					}
 				});
 		}
@@ -215,8 +169,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();
-	private final Map<String, List<DestinationEventListener>>
-		_destinationEventListeners = new HashMap<>();
 	private final List<Destination> _destinations = new ArrayList<>();
 	private volatile MessageBus _messageBus;
 	private final List<MessageBusEventListener> _messageBusEventListeners =

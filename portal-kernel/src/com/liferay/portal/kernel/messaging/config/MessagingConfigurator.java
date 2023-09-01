@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.messaging.config;
 
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
@@ -24,9 +23,6 @@ public interface MessagingConfigurator {
 
 	public void setDestinationConfigurations(
 		Set<DestinationConfiguration> destinationConfigurations);
-
-	public void setDestinationEventListeners(
-		Map<String, List<DestinationEventListener>> destinationEventListeners);
 
 	public void setDestinations(List<Destination> destinations);
 

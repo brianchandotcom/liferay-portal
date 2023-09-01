@@ -19,28 +19,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class BaseDestination implements Destination {
 
 	@Override
-	public boolean addDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return _destinationEventListeners.add(destinationEventListener);
-	}
-
-	@Override
 	public void close() {
 		close(false);
 	}
 
 	@Override
 	public void close(boolean force) {
-	}
-
-	@Override
-	public void copyDestinationEventListeners(Destination destination) {
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destination.addDestinationEventListener(destinationEventListener);
-		}
 	}
 
 	@Override
@@ -56,16 +40,6 @@ public abstract class BaseDestination implements Destination {
 	@Override
 	public void destroy() {
 		close(true);
-
-		removeDestinationEventListeners();
-
-		for (MessageListener messageListener : messageListeners) {
-			InvokerMessageListener invokerMessageListener =
-				new InvokerMessageListener(messageListener);
-
-			fireMessageListenerUnregisteredEvent(
-				invokerMessageListener.getMessageListener());
-		}
 
 		messageListeners.clear();
 	}
@@ -112,18 +86,6 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public boolean removeDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return _destinationEventListeners.remove(destinationEventListener);
-	}
-
-	@Override
-	public void removeDestinationEventListeners() {
-		_destinationEventListeners.clear();
-	}
-
-	@Override
 	public void send(Message message) {
 		throw new UnsupportedOperationException();
 	}
@@ -144,57 +106,22 @@ public abstract class BaseDestination implements Destination {
 		return unregisterMessageListener(invokerMessageListener);
 	}
 
-	protected void fireMessageListenerRegisteredEvent(
-		MessageListener messageListener) {
-
-		for (DestinationEventListener destinationEventListener :
-				_destinationEventListeners) {
-
-			destinationEventListener.messageListenerRegistered(
-				getName(), messageListener);
-		}
-	}
-
-	protected void fireMessageListenerUnregisteredEvent(
-		MessageListener messageListener) {
-
-		for (DestinationEventListener listener : _destinationEventListeners) {
-			listener.messageListenerUnregistered(getName(), messageListener);
-		}
-	}
-
 	protected boolean registerMessageListener(
 		InvokerMessageListener invokerMessageListener) {
 
-		boolean registered = messageListeners.add(invokerMessageListener);
-
-		if (registered) {
-			fireMessageListenerRegisteredEvent(
-				invokerMessageListener.getMessageListener());
-		}
-
-		return registered;
+		return messageListeners.add(invokerMessageListener);
 	}
 
 	protected boolean unregisterMessageListener(
 		InvokerMessageListener invokerMessageListener) {
 
-		boolean unregistered = messageListeners.remove(invokerMessageListener);
-
-		if (unregistered) {
-			fireMessageListenerUnregisteredEvent(
-				invokerMessageListener.getMessageListener());
-		}
-
-		return unregistered;
+		return messageListeners.remove(invokerMessageListener);
 	}
 
 	protected Set<MessageListener> messageListeners = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
 	protected String name = StringPool.BLANK;
 
-	private final Set<DestinationEventListener> _destinationEventListeners =
-		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private String _destinationType;
 
 }

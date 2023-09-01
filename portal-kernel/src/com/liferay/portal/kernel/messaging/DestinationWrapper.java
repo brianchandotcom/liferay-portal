@@ -15,14 +15,6 @@ public class DestinationWrapper implements Destination {
 	}
 
 	@Override
-	public boolean addDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return destination.addDestinationEventListener(
-			destinationEventListener);
-	}
-
-	@Override
 	public void close() {
 		destination.close();
 	}
@@ -30,11 +22,6 @@ public class DestinationWrapper implements Destination {
 	@Override
 	public void close(boolean force) {
 		destination.close(force);
-	}
-
-	@Override
-	public void copyDestinationEventListeners(Destination destination) {
-		this.destination.copyDestinationEventListeners(destination);
 	}
 
 	@Override
@@ -80,19 +67,6 @@ public class DestinationWrapper implements Destination {
 	@Override
 	public boolean register(MessageListener messageListener) {
 		return destination.register(messageListener);
-	}
-
-	@Override
-	public boolean removeDestinationEventListener(
-		DestinationEventListener destinationEventListener) {
-
-		return destination.removeDestinationEventListener(
-			destinationEventListener);
-	}
-
-	@Override
-	public void removeDestinationEventListeners() {
-		destination.removeDestinationEventListeners();
 	}
 
 	@Override

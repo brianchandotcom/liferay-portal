@@ -388,18 +388,16 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean createObjectDefinitionPublish(
+	public ObjectDefinition createObjectDefinitionPublish(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_objectDefinitionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			objectDefinitionResource ->
 				objectDefinitionResource.postObjectDefinitionPublish(
 					objectDefinitionId));
-
-		return true;
 	}
 
 	@GraphQLField

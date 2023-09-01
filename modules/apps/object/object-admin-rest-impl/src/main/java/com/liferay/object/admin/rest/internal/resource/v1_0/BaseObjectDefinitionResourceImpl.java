@@ -705,12 +705,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postObjectDefinitionPublish(
+	public ObjectDefinition postObjectDefinitionPublish(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("objectDefinitionId")
 			Long objectDefinitionId)
 		throws Exception {
+
+		return new ObjectDefinition();
 	}
 
 	@Override

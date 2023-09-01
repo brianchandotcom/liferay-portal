@@ -7,17 +7,15 @@ package com.liferay.document.library.internal.configuration.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.lang.reflect.Method;
 
 import java.util.Dictionary;
 
@@ -190,22 +188,23 @@ public class DLSizeLimitManagedServiceFactoryTest {
 	private long _getCompanyMimeTypeSizeLimit(String mimeType)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			_managedServiceFactory.getClass(), "getCompanyMimeTypeSizeLimit",
-			long.class, String.class);
+		return ReflectionTestUtil.invoke(
+			_getDLSizeLimitConfigurationHelper(), "getCompanyMimeTypeSizeLimit",
+			new Class<?>[] {long.class, String.class},
+			TestPropsValues.getCompanyId(), mimeType);
+	}
 
-		return (long)method.invoke(
-			_managedServiceFactory, TestPropsValues.getCompanyId(), mimeType);
+	private Object _getDLSizeLimitConfigurationHelper() {
+		return ReflectionTestUtil.getFieldValue(
+			_managedServiceFactory, "_dlSizeLimitConfigurationHelper");
 	}
 
 	private long _getGroupMimeTypeSizeLimit(long groupId, String mimeType)
 		throws Exception {
 
-		Method method = ReflectionUtil.getDeclaredMethod(
-			_managedServiceFactory.getClass(), "getGroupMimeTypeSizeLimit",
-			long.class, String.class);
-
-		return (long)method.invoke(_managedServiceFactory, groupId, mimeType);
+		return ReflectionTestUtil.invoke(
+			_getDLSizeLimitConfigurationHelper(), "getGroupMimeTypeSizeLimit",
+			new Class<?>[] {long.class, String.class}, groupId, mimeType);
 	}
 
 	private long _getGroupMimeTypeSizeLimit(String mimeType) throws Exception {

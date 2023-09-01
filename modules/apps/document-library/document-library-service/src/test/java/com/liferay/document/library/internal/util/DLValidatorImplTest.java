@@ -6,7 +6,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
+import com.liferay.document.library.internal.configuration.helper.DLSizeLimitConfigurationHelper;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -35,19 +35,9 @@ public class DLValidatorImplTest {
 	public void setUp() {
 		DLValidatorImpl dlValidatorImpl = new DLValidatorImpl();
 
-		_dlConfiguration = Mockito.mock(DLConfiguration.class);
-
 		dlValidatorImpl.setDLConfiguration(_dlConfiguration);
 
-		_dlSizeLimitManagedServiceFactory = Mockito.mock(
-			DLSizeLimitManagedServiceFactory.class);
-
-		_groupLocalService = Mockito.mock(GroupLocalService.class);
-
 		dlValidatorImpl.setGroupLocalService(_groupLocalService);
-
-		_uploadServletRequestConfigurationProvider = Mockito.mock(
-			UploadServletRequestConfigurationProvider.class);
 
 		dlValidatorImpl.setUploadServletRequestConfigurationHelper(
 			_uploadServletRequestConfigurationProvider);
@@ -55,8 +45,8 @@ public class DLValidatorImplTest {
 		_dlValidator = dlValidatorImpl;
 
 		ReflectionTestUtil.setFieldValue(
-			dlValidatorImpl, "_dlSizeLimitManagedServiceFactory",
-			_dlSizeLimitManagedServiceFactory);
+			dlValidatorImpl, "_dlSizeLimitConfigurationHelper",
+			_dlSizeLimitConfigurationHelper);
 	}
 
 	@Test
@@ -64,14 +54,14 @@ public class DLValidatorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			10L
 		);
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			15L
@@ -93,14 +83,14 @@ public class DLValidatorImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+			_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
 				Mockito.anyLong())
 		).thenReturn(
 			10L
 		);
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			15L
@@ -121,14 +111,14 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+			_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
 				Mockito.anyLong())
 		).thenReturn(
 			10L
 		);
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+			_dlSizeLimitConfigurationHelper.getCompanyMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			5L
@@ -151,7 +141,7 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+			_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
 				Mockito.anyLong())
 		).thenReturn(
 			15L
@@ -196,11 +186,16 @@ public class DLValidatorImplTest {
 		_dlValidator.validateFileExtension(fileName);
 	}
 
-	private DLConfiguration _dlConfiguration;
-	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
+	private final DLConfiguration _dlConfiguration = Mockito.mock(
+		DLConfiguration.class);
+	private final DLSizeLimitConfigurationHelper
+		_dlSizeLimitConfigurationHelper = Mockito.mock(
+			DLSizeLimitConfigurationHelper.class);
 	private DLValidator _dlValidator;
-	private GroupLocalService _groupLocalService;
-	private UploadServletRequestConfigurationProvider
-		_uploadServletRequestConfigurationProvider;
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
+	private final UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider = Mockito.mock(
+			UploadServletRequestConfigurationProvider.class);
 
 }

@@ -43,8 +43,6 @@ public interface BuildEntity extends Entity {
 
 	public void addTaskEntity(TaskEntity taskEntity);
 
-	public String getBuildName();
-
 	public Set<BuildParameterEntity> getBuildParameterEntities();
 
 	public BuildParameterEntity getBuildParameterEntity(String name);
@@ -55,17 +53,19 @@ public interface BuildEntity extends Entity {
 
 	public Set<EnvironmentEntity> getEnvironmentEntities();
 
+	public String getJenkinsJobName();
+
 	public JenkinsNodeEntity.Type getJenkinsNodeType();
 
 	public JobEntity getJobEntity();
 
 	public long getJobEntityId();
 
-	public String getJobName();
-
 	public int getMaxNodeCount();
 
 	public int getMinNodeRAM();
+
+	public String getName();
 
 	public Set<BuildEntity> getParentBuildEntities();
 
@@ -98,9 +98,9 @@ public interface BuildEntity extends Entity {
 
 	public boolean requiresGoodBattery();
 
-	public void setJobEntity(JobEntity jobEntity);
+	public void setJenkinsJobName(String jenkinsJobName);
 
-	public void setJobName(String jobName);
+	public void setJobEntity(JobEntity jobEntity);
 
 	public void setState(State state);
 

@@ -73,11 +73,6 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public String getBuildName() {
-		return _buildName;
-	}
-
-	@Override
 	public Set<BuildParameterEntity> getBuildParameterEntities() {
 		return getRelatedEntities(BuildParameterEntity.class);
 	}
@@ -111,6 +106,11 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
+	public String getJenkinsJobName() {
+		return _jenkinsJobName;
+	}
+
+	@Override
 	public JenkinsNodeEntity.Type getJenkinsNodeType() {
 		BuildParameterEntity buildParameterEntity = getBuildParameterEntity(
 			"NODE_TYPE");
@@ -140,20 +140,15 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public String getJobName() {
-		return _jobName;
-	}
-
-	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
 		State state = getState();
 
 		jsonObject.put(
-			"buildName", getBuildName()
+			"jenkinsJobName", getJenkinsJobName()
 		).put(
-			"jobName", getJobName()
+			"name", getName()
 		).put(
 			"r_jobToBuilds_c_jobId", getJobEntityId()
 		).put(
@@ -197,6 +192,11 @@ public abstract class BaseBuildEntity
 		}
 
 		return Integer.valueOf(value);
+	}
+
+	@Override
+	public String getName() {
+		return _name;
 	}
 
 	public Set<BuildEntity> getParentBuildEntities() {
@@ -295,6 +295,11 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
+	public void setJenkinsJobName(String jenkinsJobName) {
+		_jenkinsJobName = jenkinsJobName;
+	}
+
+	@Override
 	public void setJobEntity(JobEntity jobEntity) {
 		_jobEntity = jobEntity;
 
@@ -307,11 +312,6 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void setJobName(String jobName) {
-		_jobName = jobName;
-	}
-
-	@Override
 	public void setState(State state) {
 		_state = state;
 	}
@@ -319,8 +319,8 @@ public abstract class BaseBuildEntity
 	protected BaseBuildEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_buildName = jsonObject.getString("buildName");
-		_jobName = jsonObject.getString("jobName");
+		_name = jsonObject.getString("name");
+		_jenkinsJobName = jsonObject.getString("jenkinsJobName");
 		_jobEntityId = jsonObject.optLong("r_jobToBuilds_c_jobId");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
@@ -352,11 +352,11 @@ public abstract class BaseBuildEntity
 
 	private static final int _DEFAULT_MIN_NODE_RAM = 12;
 
-	private final String _buildName;
 	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
+	private String _jenkinsJobName;
 	private JobEntity _jobEntity;
 	private long _jobEntityId;
-	private String _jobName;
+	private final String _name;
 	private final Set<BuildEntity> _parentBuildEntities = new HashSet<>();
 	private State _state;
 

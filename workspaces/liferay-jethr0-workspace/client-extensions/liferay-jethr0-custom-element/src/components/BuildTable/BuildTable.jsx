@@ -23,11 +23,11 @@ function BuildTable({ builds }) {
 
 							<ClayTable.Cell headingCell>Build Name</ClayTable.Cell>
 
-							<ClayTable.Cell headingCell>Job Name</ClayTable.Cell>
+							<ClayTable.Cell headingCell>Jenkins Job Name</ClayTable.Cell>
 
 							<ClayTable.Cell headingCell>Create Date</ClayTable.Cell>
 
-							<ClayTable.Cell headingCell>State</ClayTable.Cell>
+							<ClayTable.Cell headingCell>Build State</ClayTable.Cell>
 						</ClayTable.Row>
 					</ClayTable.Head>
 					<ClayTable.Body>
@@ -36,9 +36,9 @@ function BuildTable({ builds }) {
 								<ClayTable.Row>
 									<ClayTable.Cell headingCell>{build.id}</ClayTable.Cell>
 
-									<ClayTable.Cell>{build.buildName}</ClayTable.Cell>
+									<ClayTable.Cell>{build.name}</ClayTable.Cell>
 
-									<ClayTable.Cell>{build.jobName}</ClayTable.Cell>
+									<ClayTable.Cell>{build.jenkinsJobName}</ClayTable.Cell>
 
 									<ClayTable.Cell>
 										{build.dateCreated}

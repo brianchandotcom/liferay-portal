@@ -58,16 +58,16 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing build");
 		}
 
-		String buildName = buildJSONObject.optString("buildName");
+		String name = buildJSONObject.optString("name");
 
-		if (buildName.isEmpty()) {
-			throw new Exception("Missing build name from build");
+		if (name.isEmpty()) {
+			throw new Exception("Missing name from build");
 		}
 
-		String jobName = buildJSONObject.optString("jobName");
+		String jenkinsJobName = buildJSONObject.optString("jenkinsJobName");
 
-		if (jobName.isEmpty()) {
-			throw new Exception("Missing job name from build");
+		if (jenkinsJobName.isEmpty()) {
+			throw new Exception("Missing jenkins job name from build");
 		}
 
 		BuildEntity.State state = BuildEntity.State.getByKey(
@@ -80,9 +80,9 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"buildName", buildName
+			"jenkinsJobName", jenkinsJobName
 		).put(
-			"jobName", jobName
+			"name", name
 		).put(
 			"parameters", buildJSONObject.optJSONObject("parameters")
 		).put(

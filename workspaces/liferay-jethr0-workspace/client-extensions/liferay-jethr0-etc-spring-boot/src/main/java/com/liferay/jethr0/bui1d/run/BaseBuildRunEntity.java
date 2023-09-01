@@ -52,7 +52,7 @@ public abstract class BaseBuildRunEntity
 
 		BuildEntity buildEntity = getBuildEntity();
 
-		invokeJSONObject.put("jobName", buildEntity.getJobName());
+		invokeJSONObject.put("jobName", buildEntity.getJenkinsJobName());
 
 		JSONObject jobParametersJSONObject = new JSONObject();
 

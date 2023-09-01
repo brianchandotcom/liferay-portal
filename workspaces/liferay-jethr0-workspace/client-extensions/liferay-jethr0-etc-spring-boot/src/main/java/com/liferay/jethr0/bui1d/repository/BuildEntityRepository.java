@@ -40,15 +40,15 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 	}
 
 	public BuildEntity add(
-		JobEntity jobEntity, String buildName, String jobName,
+		JobEntity jobEntity, String name, String jenkinsJobName,
 		BuildEntity.State state) {
 
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
-			"buildName", buildName
+			"jenkinsJobName", jenkinsJobName
 		).put(
-			"jobName", jobName
+			"name", name
 		).put(
 			"state", state.getJSONObject()
 		);

@@ -7,9 +7,9 @@ package com.liferay.message.boards.web.internal.util;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

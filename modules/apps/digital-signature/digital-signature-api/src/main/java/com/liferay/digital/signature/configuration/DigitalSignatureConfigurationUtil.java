@@ -6,8 +6,8 @@
 package com.liferay.digital.signature.configuration;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;

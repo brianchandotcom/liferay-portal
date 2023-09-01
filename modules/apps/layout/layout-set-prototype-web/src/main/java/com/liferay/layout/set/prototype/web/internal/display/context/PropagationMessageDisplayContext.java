@@ -7,12 +7,12 @@ package com.liferay.layout.set.prototype.web.internal.display.context;
 
 import com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;

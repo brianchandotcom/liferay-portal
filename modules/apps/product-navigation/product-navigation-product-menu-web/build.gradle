@@ -18,6 +18,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-admin-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-taglib")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:product-navigation:product-navigation-applications-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
 	compileOnly project(":apps:product-navigation:product-navigation-product-menu-api")

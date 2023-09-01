@@ -14,10 +14,10 @@ import com.liferay.knowledge.base.web.internal.configuration.KBArticlePortletIns
 import com.liferay.knowledge.base.web.internal.social.SocialBookmarksUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.util.ParameterMapUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

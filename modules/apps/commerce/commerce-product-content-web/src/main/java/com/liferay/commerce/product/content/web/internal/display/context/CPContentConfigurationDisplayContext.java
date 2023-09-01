@@ -6,8 +6,8 @@
 package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.content.web.internal.configuration.CPContentPortletInstanceConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 

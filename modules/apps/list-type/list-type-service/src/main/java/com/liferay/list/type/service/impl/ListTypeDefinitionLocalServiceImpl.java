@@ -6,12 +6,14 @@
 package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
+import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.service.base.ListTypeDefinitionLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,6 +73,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
+		_validateInvokerBundle(system);
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
 
 		ListTypeDefinition listTypeDefinition =
@@ -93,6 +96,8 @@ public class ListTypeDefinitionLocalServiceImpl
 	public ListTypeDefinition deleteListTypeDefinition(
 			ListTypeDefinition listTypeDefinition)
 		throws PortalException {
+
+		_validateInvokerBundle(listTypeDefinition.isSystem());
 
 		int count =
 			_objectFieldLocalService.getObjectFieldsCountByListTypeDefinitionId(
@@ -141,7 +146,12 @@ public class ListTypeDefinitionLocalServiceImpl
 			listTypeDefinitionPersistence.findByPrimaryKey(
 				listTypeDefinitionId);
 
-		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
+		if (!listTypeDefinition.isSystem() ||
+			ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+
+			listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		listTypeDefinition.setNameMap(nameMap);
 
 		listTypeDefinition = listTypeDefinitionPersistence.update(
@@ -230,6 +240,13 @@ public class ListTypeDefinitionLocalServiceImpl
 		for (ListTypeEntry listTypeEntry : existingListTypeEntries) {
 			_listTypeEntryLocalService.deleteListTypeEntry(
 				listTypeEntry.getListTypeEntryId());
+		}
+	}
+
+	private void _validateInvokerBundle(boolean system) throws PortalException {
+		if (system && !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+			throw new ListTypeDefinitionSystemException(
+				"Only allowed bundles can manage system picklists");
 		}
 	}
 

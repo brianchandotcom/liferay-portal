@@ -50,25 +50,7 @@ ProductNavigationControlMenuTagDisplayContext productNavigationControlMenuTagDis
 		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#post" />
 	</div>
 
-	<aui:script use="liferay-product-navigation-control-menu">
-		Liferay.ControlMenu.init('#<portlet:namespace />controlMenu');
-
-		var sidenavToggles = document.querySelectorAll(
-			'#<portlet:namespace />ControlMenu [data-toggle="liferay-sidenav"]'
-		);
-
-		var sidenavInstances = Array.from(sidenavToggles)
-			.map((toggle) => Liferay.SideNavigation.instance(toggle))
-			.filter((instance) => instance);
-
-		sidenavInstances.forEach((instance) => {
-			instance.on('openStart.lexicon.sidenav', (event, source) => {
-				sidenavInstances.forEach((sidenav) => {
-					if (sidenav !== source) {
-						sidenav.hide();
-					}
-				});
-			});
-		});
-	</aui:script>
+	<liferay-frontend:component
+		module="control_menu/js/ProductNavigationControlMenu"
+	/>
 </c:if>

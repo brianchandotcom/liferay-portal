@@ -17,8 +17,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.KaleoTaskAssignmentFactory;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
@@ -113,9 +113,9 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 			ExecutionContext.class);
 
 		Mockito.when(
-			executionContext.getKaleoInstanceToken()
+			executionContext.getKaleoTaskInstanceToken()
 		).thenReturn(
-			Mockito.mock(KaleoInstanceToken.class)
+			Mockito.mock(KaleoTaskInstanceToken.class)
 		);
 
 		return executionContext;

@@ -968,14 +968,6 @@ public class BundleSiteInitializerTest {
 
 		_assertCPDefinitionSpecificationOptionValue(cpDefinition, 1);
 
-		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
-
-		Assert.assertEquals(
-			0.1, expandoBridge.getAttribute("Test Expando Column 1"));
-		Assert.assertEquals(
-			"Test Expando Column Value 2",
-			expandoBridge.getAttribute("Test Expando Column 2"));
-
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpDefinitionLocalService.getDefaultImageCPAttachmentFileEntry(
 				cpDefinition.getCPDefinitionId());
@@ -1247,10 +1239,10 @@ public class BundleSiteInitializerTest {
 			"com.liferay.commerce.product.model.CPDefinition");
 
 		Assert.assertEquals(
-			1.5, expandoBridge.getAttribute("Test Expando Column 1"));
+			1.5, expandoBridge.getAttributeDefault("Test Expando Column 1"));
 		Assert.assertEquals(
 			"Test Default Value",
-			expandoBridge.getAttribute("Test Expando Column 2"));
+			expandoBridge.getAttributeDefault("Test Expando Column 2"));
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 
 		UnicodeProperties unicodeProperties =
@@ -1303,10 +1295,10 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
-			1.5, expandoBridge.getAttribute("Test Expando Column 1"));
+			1.5, expandoBridge.getAttributeDefault("Test Expando Column 1"));
 		Assert.assertEquals(
 			"Test Default Value Update",
-			expandoBridge.getAttribute("Test Expando Column 2"));
+			expandoBridge.getAttributeDefault("Test Expando Column 2"));
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 
 		UnicodeProperties unicodeProperties =
@@ -1360,6 +1352,47 @@ public class BundleSiteInitializerTest {
 			"Test Expando Column 5");
 
 		Assert.assertTrue(unicodeProperties.isEmpty());
+	}
+
+	private void _assertExpandoValues1() throws Exception {
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TESTCOMMERCEPRODUCT1", _group.getCompanyId());
+
+		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
+
+		Assert.assertEquals(
+			0.1, expandoBridge.getAttribute("Test Expando Column 1"));
+		Assert.assertEquals(
+			"Test Value", expandoBridge.getAttribute("Test Expando Column 2"));
+	}
+
+	private void _assertExpandoValues2() throws Exception {
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TESTCOMMERCEPRODUCT1", _group.getCompanyId());
+
+		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
+
+		Assert.assertEquals(
+			0.1, expandoBridge.getAttribute("Test Expando Column 1"));
+		Assert.assertEquals(
+			"Test Value Update",
+			expandoBridge.getAttribute("Test Expando Column 2"));
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					"TESTSITENAVIGATIONMENUITEM1", _group.getGroupId());
+
+		expandoBridge = siteNavigationMenuItem.getExpandoBridge();
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new int[] {32, 40},
+				(int[])expandoBridge.getAttribute("Test Expando Column 6")));
 	}
 
 	private void _assertFragmentEntries() throws Exception {
@@ -3582,6 +3615,7 @@ public class BundleSiteInitializerTest {
 		_assertDDMTemplate1();
 		_assertDLFileEntry();
 		_assertExpandoColumns1();
+		_assertExpandoValues1();
 		_assertFragmentEntries();
 		_assertJournalArticles();
 		_assertKBArticles();
@@ -3620,6 +3654,7 @@ public class BundleSiteInitializerTest {
 		_assertCommerceSpecificationProducts2();
 		_assertDDMTemplate2();
 		_assertExpandoColumns2();
+		_assertExpandoValues2();
 		_assertLayouts2();
 		_assertListTypeDefinitions2();
 		_assertNotificationTemplate2();

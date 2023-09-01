@@ -11,7 +11,7 @@
 			"requestBehalf": "displacedDistressed",
 			"requestDescription": "Request Description",
 			"requestPurposes": "disasterRelief",
-			"requestStatus": "awaitingApprovalOnEvp",
+			"requestStatus": "awaitingApprovalOnEVP",
 			"requestType": "service",
 			"startDate": "2022-09-29T00:00:00Z",
 			"totalHoursRequested": 5

@@ -3,7 +3,7 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"defaultValue": "awaitingApprovalOnEvp",
+			"defaultValue": "awaitingApprovalOnEVP",
 			"externalReferenceCode": "EVP-REQUEST-STATUS-DEFAULT",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -25,7 +25,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingApprovalOnManager"
@@ -54,7 +54,7 @@
 										"key": "rejected"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingApprovalOnManager"
@@ -77,7 +77,7 @@
 								]
 							},
 							{
-								"key": "awaitingApprovalOnEvp",
+								"key": "awaitingApprovalOnEVP",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -115,7 +115,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitOrganizationReview"
@@ -144,7 +144,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingApprovalOnManager"
@@ -173,7 +173,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingApprovalOnManager"
@@ -202,7 +202,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingApprovalOnManager"
@@ -231,7 +231,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitingApprovalOnManager"
@@ -260,7 +260,7 @@
 										"key": "closed"
 									},
 									{
-										"key": "awaitingApprovalOnEvp"
+										"key": "awaitingApprovalOnEVP"
 									},
 									{
 										"key": "awaitOrganizationReview"

@@ -1,7 +1,7 @@
 assemble:
     - fromTask: bootJar
 liferay-evp-etc-spring-boot-oauth-application-user-agent:
-    .serviceAddress: 172.17.0.1:58081
+    .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay EVP Etc Spring Boot Spring Boot OAuth Application User Agent
     scopes:
@@ -10,13 +10,13 @@ liferay-evp-etc-spring-boot-oauth-application-user-agent:
         - C_EVPRequest.everything.write
         - C_EVPRequest.everything.read
     type: oAuthApplicationUserAgent
-liferay-evp-etc-spring-boot-object-action-evp-organization-status:
-    name: Liferay EVP Etc Spring Boot Spring Boot Object Action EVP Organization Status
+liferay-evp-etc-spring-boot-object-action-organization-status:
+    name: Liferay EVP Etc Spring Boot Spring Boot Object Action Organization Status
     oAuth2ApplicationExternalReferenceCode: liferay-evp-etc-spring-boot-oauth-application-user-agent
     resourcePath: /object/action/evp/organization/status/update
     type: objectAction
-liferay-evp-etc-spring-boot-object-action-evp-request-status:
-    name: Liferay EVP Etc Spring Boot Spring Boot Object Action EVP Request Status
+liferay-evp-etc-spring-boot-object-action-request-status:
+    name: Liferay EVP Etc Spring Boot Spring Boot Object Action Request Status
     oAuth2ApplicationExternalReferenceCode: liferay-evp-etc-spring-boot-oauth-application-user-agent
     resourcePath: /object/action/evp/request/status
     type: objectAction

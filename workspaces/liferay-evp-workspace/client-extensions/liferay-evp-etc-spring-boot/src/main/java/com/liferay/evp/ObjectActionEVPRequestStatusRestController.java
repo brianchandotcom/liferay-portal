@@ -25,48 +25,53 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping("/object/action/evp/request/status")
 @RestController
-public class ObjectActionEVPRequestStatusRestController extends BaseRestController {
+public class ObjectActionEVPRequestStatusRestController
+	extends BaseRestController {
 
 	@PostMapping
 	public ResponseEntity<String> post(
-			@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		JSONObject evpRequestJSONObject = new JSONObject(json);
 
-		JSONObject objectEntryDTOEVPRequestJSONObject = evpRequestJSONObject.getJSONObject("objectEntryDTOEVPRequest");
+		JSONObject objectEntryDTOEVPRequestJSONObject =
+			evpRequestJSONObject.getJSONObject("objectEntryDTOEVPRequest");
 
-		JSONObject propertiesJSONObject = objectEntryDTOEVPRequestJSONObject.getJSONObject("properties");
+		JSONObject propertiesJSONObject =
+			objectEntryDTOEVPRequestJSONObject.getJSONObject("properties");
 
 		long evpOrganizationId = propertiesJSONObject.getLong(
-				"r_organization_c_evpOrganizationId");
+			"r_organization_c_evpOrganizationId");
 
 		get(
-				response -> {
-					JSONObject evpOrganizationJSONObject = new JSONObject(response);
+			response -> {
+				JSONObject evpOrganizationJSONObject = new JSONObject(response);
 
-					String evpOrganizationStatus = evpOrganizationJSONObject.getJSONObject(
-							"organizationStatus").getString(
-									"key");
+				String evpOrganizationStatus =
+					evpOrganizationJSONObject.getJSONObject(
+						"organizationStatus"
+					).getString(
+						"key"
+					);
 
-					System.out.printf("evpOrganizationStatus ", evpOrganizationStatus);
+				if (evpOrganizationStatus.equals("awaitingApprovalOnEVP")) {
+					HashMap<String, HashMap<String, String>> map =
+						HashMapBuilder.<String, HashMap<String, String>>put(
+							"requestStatus",
+							HashMapBuilder.put(
+								"key", "awaitOrganizationReview"
+							).put(
+								"name", "Awaiting Organization Review"
+							).build()
+						).build();
 
-					if (evpOrganizationStatus.equals("awaitingApprovalOnEVP")) {
-						HashMap<String, HashMap<String, String>> map = HashMapBuilder
-								.<String, HashMap<String, String>>put(
-										"requestStatus",
-										HashMapBuilder.put(
-												"key", "awaitOrganizationReview").put(
-														"name", "Awaiting Organization Review")
-												.build())
-								.build();
-
-						put(
-								new JSONObject(map), jwt,
-								"/o/c/evprequests/" +
-										objectEntryDTOEVPRequestJSONObject.getLong("id"));
-					}
-				},
-				jwt, "/o/c/evporganizations/" + evpOrganizationId);
+					put(
+						new JSONObject(map), jwt,
+						"/o/c/evprequests/" +
+							objectEntryDTOEVPRequestJSONObject.getLong("id"));
+				}
+			},
+			jwt, "/o/c/evporganizations/" + evpOrganizationId);
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

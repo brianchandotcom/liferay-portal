@@ -17,7 +17,7 @@ const ROLE = {
 
 const REQUEST_STATUS = {
 	AWAITING_APPROVAL_ON_EVP: {
-		key: 'awaitingApprovalOnEvp',
+		key: 'awaitingApprovalOnEVP',
 		value: 'Awaiting Approval On EVP',
 	},
 	AWAITING_EMPLOYEE_PROOF_OF_EXPENSES: {

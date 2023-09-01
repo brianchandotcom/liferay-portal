@@ -29,42 +29,52 @@ public abstract class BaseRestController {
 
 	protected JSONObject get(Consumer<String> consumer, Jwt jwt, String path) {
 		return new JSONObject(
-				Objects.requireNonNull(
-						WebClient.create(
-								lxcDXPServerProtocol + "://" + lxcDXPMainDomain).get().uri(
-										uriBuilder -> uriBuilder.path(
-												path).build())
-								.header(
-										"Authorization", "Bearer " + jwt.getTokenValue())
-								.retrieve().bodyToMono(
-										String.class)
-								.retryWhen(
-										Retry.backoff(
-												3, Duration.ofSeconds(1)).doAfterRetry(
-														retrySignal -> _log.info("Retrying request")))
-								.doOnNext(
-										response -> consumer.accept(response))
-								.subscribe()));
+			Objects.requireNonNull(
+				WebClient.create(
+					lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+				).get(
+				).uri(
+					uriBuilder -> uriBuilder.path(
+						path
+					).build()
+				).header(
+					"Authorization", "Bearer " + jwt.getTokenValue()
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).retryWhen(
+					Retry.backoff(
+						3, Duration.ofSeconds(1)
+					).doAfterRetry(
+						retrySignal -> _log.info("Retrying request")
+					)
+				).doOnNext(
+					response -> consumer.accept(response)
+				).subscribe()));
 	}
 
 	protected JSONObject put(Object bodyValue, Jwt jwt, String path) {
 		return new JSONObject(
-				Objects.requireNonNull(
-						WebClient.create(
-								lxcDXPServerProtocol + "://" + lxcDXPMainDomain).put().uri(
-										uriBuilder -> uriBuilder.path(
-												path).build())
-								.accept(
-										MediaType.APPLICATION_JSON)
-								.contentType(
-										MediaType.APPLICATION_JSON)
-								.header(
-										"Authorization", "Bearer " + jwt.getTokenValue())
-								.bodyValue(
-										bodyValue.toString())
-								.retrieve().bodyToMono(
-										Void.class)
-								.subscribe()));
+			Objects.requireNonNull(
+				WebClient.create(
+					lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+				).put(
+				).uri(
+					uriBuilder -> uriBuilder.path(
+						path
+					).build()
+				).accept(
+					MediaType.APPLICATION_JSON
+				).contentType(
+					MediaType.APPLICATION_JSON
+				).header(
+					"Authorization", "Bearer " + jwt.getTokenValue()
+				).bodyValue(
+					bodyValue.toString()
+				).retrieve(
+				).bodyToMono(
+					Void.class
+				).subscribe()));
 	}
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
@@ -74,6 +84,6 @@ public abstract class BaseRestController {
 	protected String lxcDXPServerProtocol;
 
 	private static final Log _log = LogFactory.getLog(
-			ObjectActionEVPRequestStatusRestController.class);
+		ObjectActionEVPRequestStatusRestController.class);
 
 }

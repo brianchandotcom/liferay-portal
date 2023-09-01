@@ -5,12 +5,19 @@
 
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
+import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,6 +52,41 @@ public class LayoutModelDocumentContributor
 		List<LayoutLocalization> layoutLocalizations =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
 				layout.getPlid());
+
+		if (layoutLocalizations.isEmpty()) {
+			try (AutoCloseable autoCloseable =
+					_layoutServiceContextHelper.getServiceContextAutoCloseable(
+						layout)) {
+
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+				for (Locale locale :
+						_language.getAvailableLocales(layout.getGroupId())) {
+
+					_layoutLocalizationLocalService.updateLayoutLocalization(
+						_layoutContentProvider.getLayoutContent(
+							themeDisplay.getRequest(),
+							themeDisplay.getResponse(), layout, locale),
+						LocaleUtil.toLanguageId(locale), layout.getPlid(),
+						serviceContext);
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to add LayoutLocalization for plid " +
+							layout.getPlid(),
+						exception);
+				}
+			}
+
+			layoutLocalizations =
+				_layoutLocalizationLocalService.getLayoutLocalizations(
+					layout.getPlid());
+		}
 
 		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
 			document.addText(
@@ -85,11 +127,20 @@ public class LayoutModelDocumentContributor
 		return WorkflowConstants.STATUS_DRAFT;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutModelDocumentContributor.class);
+
 	@Reference
 	private Language _language;
 
 	@Reference
+	private LayoutContentProvider _layoutContentProvider;
+
+	@Reference
 	private LayoutLocalizationLocalService _layoutLocalizationLocalService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
 	private Localization _localization;

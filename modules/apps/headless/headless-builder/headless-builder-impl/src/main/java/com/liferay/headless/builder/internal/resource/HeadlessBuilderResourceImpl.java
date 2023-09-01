@@ -103,9 +103,9 @@ public class HeadlessBuilderResourceImpl {
 		}
 
 		APIApplication.Endpoint endpoint = endpointMatcher.getEndpoint(
-			"/" + path);
+			"/" + path, scope);
 
-		if ((endpoint == null) || (endpoint.getScope() != scope)) {
+		if (endpoint == null) {
 			throw new NoSuchModelException(
 				"Endpoint /%s does not exist for " + path);
 		}

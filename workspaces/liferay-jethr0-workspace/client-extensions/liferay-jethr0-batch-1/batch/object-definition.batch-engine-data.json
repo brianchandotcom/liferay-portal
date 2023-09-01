@@ -564,16 +564,6 @@
 			"name": "BuildRun",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Jenkins Build URL"
-					},
-					"name": "jenkinsBuildURL",
-					"required": false,
-					"type": "String"
-				},
-				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
 					"label": {
@@ -582,6 +572,16 @@
 					"name": "duration",
 					"required": false,
 					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Jenkins Build URL"
+					},
+					"name": "jenkinsBuildURL",
+					"required": false,
+					"type": "String"
 				},
 				{
 					"DBType": "String",
@@ -737,9 +737,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Name"
+						"en_US": "Jenkins Job Name"
 					},
-					"name": "name",
+					"name": "jenkinsJobName",
 					"required": true,
 					"type": "String"
 				},
@@ -747,9 +747,9 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Jenkins Job Name"
+						"en_US": "Name"
 					},
-					"name": "jenkinsJobName",
+					"name": "name",
 					"required": true,
 					"type": "String"
 				},
@@ -918,6 +918,16 @@
 				{
 					"deletionType": "disassociate",
 					"label": {
+						"en_US": "Job to Tasks"
+					},
+					"name": "jobToTasks",
+					"objectDefinitionExternalReferenceCode1": "Job",
+					"objectDefinitionExternalReferenceCode2": "Task",
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
 						"en_US": "Jobs to Git Branches"
 					},
 					"name": "jobsToGitBranches",
@@ -934,16 +944,6 @@
 					"objectDefinitionExternalReferenceCode1": "Job",
 					"objectDefinitionExternalReferenceCode2": "JenkinsCohort",
 					"type": "manyToMany"
-				},
-				{
-					"deletionType": "disassociate",
-					"label": {
-						"en_US": "Job to Tasks"
-					},
-					"name": "jobToTasks",
-					"objectDefinitionExternalReferenceCode1": "Job",
-					"objectDefinitionExternalReferenceCode2": "Task",
-					"type": "oneToMany"
 				},
 				{
 					"deletionType": "disassociate",

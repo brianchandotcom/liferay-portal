@@ -6,8 +6,10 @@
 package com.liferay.layout.helper;
 
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -22,5 +24,10 @@ public interface LayoutWarningMessageHelper {
 				collectionStyledLayoutStructureItem,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
+
+	public String getFragmentWarningMessage(
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

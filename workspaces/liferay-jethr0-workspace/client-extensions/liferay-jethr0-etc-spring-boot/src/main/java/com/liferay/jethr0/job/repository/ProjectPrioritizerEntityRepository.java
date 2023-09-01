@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.dalo.ProjectPrioritizerEntityDALO;
 import com.liferay.jethr0.job.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntityFactory;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntityFactory;
 
 import java.util.Objects;
 
@@ -81,7 +81,7 @@ public class ProjectPrioritizerEntityRepository
 	private ProjectPrioritizerEntityDALO _projectPrioritizerEntityDALO;
 
 	@Autowired
-	private ProjectPrioritizerEntityFactory _projectPrioritizerEntityFactory;
+	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
 
 	@Autowired
 	private ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO

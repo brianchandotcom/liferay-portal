@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
-import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntityFactory;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +22,10 @@ public class ProjectPrioritizerEntityDALO
 
 	@Override
 	protected EntityFactory<JobPrioritizerEntity> getEntityFactory() {
-		return _projectPrioritizerEntityFactory;
+		return _jobPrioritizerEntityFactory;
 	}
 
 	@Autowired
-	private ProjectPrioritizerEntityFactory _projectPrioritizerEntityFactory;
+	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
 
 }

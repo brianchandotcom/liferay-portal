@@ -5,11 +5,19 @@
 
 package com.liferay.layout.internal.helper;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.helper.LayoutWarningMessageHelper;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
@@ -19,26 +27,35 @@ import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,6 +108,48 @@ public class LayoutWarningMessageHelperImpl
 			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 	}
 
+	@Override
+	public String getFragmentWarningMessage(
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+		if (fragmentEntryLink == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			if (_showWarningMessage(
+					httpServletRequest, httpServletResponse, fragmentEntryLink,
+					themeDisplay)) {
+
+				return _language.get(
+					themeDisplay.getLocale(),
+					"big-image-file-size-used-please-consider-configuring-" +
+						"adaptive-media-lazy-loading-or-reducing-the-image-" +
+							"size");
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return _language.get(
+				themeDisplay.getLocale(), "an-unexpected-error-occurred");
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private Map<String, String[]> _getConfiguration(
 		JSONObject layoutObjectReferenceJSONObject) {
 
@@ -123,6 +182,70 @@ public class LayoutWarningMessageHelperImpl
 		}
 
 		return configuration;
+	}
+
+	private long _getFileEntryId(
+			JSONObject editableValueJSONObject,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale locale)
+		throws Exception {
+
+		if (_fragmentEntryProcessorHelper.isMapped(editableValueJSONObject) ||
+			_fragmentEntryProcessorHelper.isMappedCollection(
+				editableValueJSONObject) ||
+			_fragmentEntryProcessorHelper.isMappedDisplayPage(
+				editableValueJSONObject)) {
+
+			Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
+				editableValueJSONObject, new HashMap<>(),
+				new DefaultFragmentEntryProcessorContext(
+					httpServletRequest, httpServletResponse,
+					FragmentEntryLinkConstants.VIEW, locale));
+
+			if (fieldValue == null) {
+				return 0;
+			}
+
+			if (fieldValue instanceof JSONObject) {
+				JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
+
+				if (fieldValueJSONObject.has("className") &&
+					fieldValueJSONObject.has("classPK")) {
+
+					return _fragmentEntryProcessorHelper.getFileEntryId(
+						fieldValueJSONObject.getString("className"),
+						fieldValueJSONObject.getLong("classPK"));
+				}
+				else if (fieldValueJSONObject.has("fileEntryId")) {
+					return fieldValueJSONObject.getLong("fileEntryId");
+				}
+			}
+			else if (fieldValue instanceof WebImage) {
+				WebImage webImage = (WebImage)fieldValue;
+
+				return _fragmentEntryProcessorHelper.getFileEntryId(webImage);
+			}
+
+			return 0;
+		}
+
+		String value = _fragmentEntryProcessorHelper.getEditableValue(
+			editableValueJSONObject, locale);
+
+		if (JSONUtil.isJSONObject(value)) {
+			try {
+				JSONObject imageJSONObject = _jsonFactory.createJSONObject(
+					value);
+
+				return imageJSONObject.getLong("fileEntryId");
+			}
+			catch (JSONException jsonException) {
+				_log.error(
+					"Unable to parse JSON value " + value, jsonException);
+			}
+		}
+
+		return 0;
 	}
 
 	private Object _getInfoItem(JSONObject layoutObjectReferenceJSONObject) {
@@ -207,8 +330,70 @@ public class LayoutWarningMessageHelperImpl
 			infoPage.getTotalCount());
 	}
 
+	private boolean _showWarningMessage(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			FragmentEntryLink fragmentEntryLink, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (editableValuesJSONObject == null) {
+			return false;
+		}
+
+		Iterator<String> editableKeysIterator = editableValuesJSONObject.keys();
+
+		while (editableKeysIterator.hasNext()) {
+			JSONObject editableValueJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					editableKeysIterator.next());
+
+			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
+				"config");
+
+			if (configJSONObject.getBoolean("lazyLoading")) {
+				continue;
+			}
+
+			long fileEntryId = _getFileEntryId(
+				editableValueJSONObject, httpServletRequest,
+				httpServletResponse, themeDisplay.getLocale());
+
+			if (fileEntryId <= 0) {
+				continue;
+			}
+
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			long size = fileEntry.getSize();
+
+			if (size > _MAX_SIZE) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final int _MAX_SIZE = 500 * 1024;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutWarningMessageHelperImpl.class);
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

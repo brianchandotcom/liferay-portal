@@ -2797,7 +2797,7 @@ paths:
                 - AccountAddress
     /accountGroups:
         get:
-            operationId: getAccountGroupsPage
+            operationId: getAdminAccountGroupsPage
             parameters:
                 - in: query
                   name: filter

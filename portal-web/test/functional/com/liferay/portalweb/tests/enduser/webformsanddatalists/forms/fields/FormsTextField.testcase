@@ -1450,6 +1450,7 @@ definition {
 	}
 
 	@description = "Verify if the confirmation error message and validation error message together work correctly."
+	@priority = 4
 	test ViewConfirmationAndValidationErrorMessage {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";

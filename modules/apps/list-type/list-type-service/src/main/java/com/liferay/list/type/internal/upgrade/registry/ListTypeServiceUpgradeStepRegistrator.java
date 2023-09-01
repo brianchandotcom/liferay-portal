@@ -5,6 +5,7 @@
 
 package com.liferay.list.type.internal.upgrade.registry;
 
+import com.liferay.list.type.internal.upgrade.v1_3_0.ListTypeDefinitionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -44,6 +45,9 @@ public class ListTypeServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.2.0", "1.3.0", new ListTypeDefinitionUpgradeProcess());
 	}
 
 }

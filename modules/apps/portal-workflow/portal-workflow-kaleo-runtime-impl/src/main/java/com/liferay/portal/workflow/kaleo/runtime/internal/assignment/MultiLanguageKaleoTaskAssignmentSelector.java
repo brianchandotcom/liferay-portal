@@ -77,8 +77,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 		if (scriptedAssignmentCacheExpirationTime > 0) {
 			kaleoTaskAssignments =
 				_kaleoTaskScriptedAssignmentCache.getKaleoTaskAssignments(
-					_kaleoTaskScriptedAssignmentCache.getKey(
-						kaleoInstanceToken));
+					kaleoInstanceToken);
 		}
 
 		if (kaleoTaskAssignments == null) {
@@ -88,9 +87,7 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 
 			if (scriptedAssignmentCacheExpirationTime > 0) {
 				_kaleoTaskScriptedAssignmentCache.putKaleoTaskAssignments(
-					_kaleoTaskScriptedAssignmentCache.getKey(
-						kaleoInstanceToken),
-					kaleoTaskAssignments,
+					kaleoInstanceToken, kaleoTaskAssignments,
 					scriptedAssignmentCacheExpirationTime * 60);
 			}
 		}

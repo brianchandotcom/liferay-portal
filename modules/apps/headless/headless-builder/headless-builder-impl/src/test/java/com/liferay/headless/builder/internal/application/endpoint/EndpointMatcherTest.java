@@ -36,13 +36,16 @@ public class EndpointMatcherTest {
 
 		EndpointMatcher endpointMatcher = new EndpointMatcher(endpoints);
 
-		Assert.assertNull(endpointMatcher.getEndpoint("/path"));
+		Assert.assertNull(endpointMatcher.getEndpoint("/path", null));
+		Assert.assertNull(
+			endpointMatcher.getEndpoint(
+				"/path-name", APIApplication.Endpoint.Scope.GROUP));
 		Assert.assertEquals(
-			endpoints.get(0), endpointMatcher.getEndpoint("/path-name"));
+			endpoints.get(0), endpointMatcher.getEndpoint("/path-name", null));
 		Assert.assertEquals(
-			endpoints.get(1), endpointMatcher.getEndpoint("/path-name2"));
+			endpoints.get(1), endpointMatcher.getEndpoint("/path-name2", null));
 		Assert.assertEquals(
-			endpoints.get(2), endpointMatcher.getEndpoint("/path/1234"));
+			endpoints.get(2), endpointMatcher.getEndpoint("/path/1234", null));
 	}
 
 	private APIApplication.Endpoint _getEndpoint(

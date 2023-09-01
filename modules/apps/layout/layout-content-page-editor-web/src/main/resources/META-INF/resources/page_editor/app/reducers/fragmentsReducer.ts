@@ -3,20 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import addFragmentComposition from '../actions/addFragmentComposition';
+import toggleFragmentHighlighted from '../actions/toggleFragmentHighlighted';
 import {
 	ADD_FRAGMENT_COMPOSITION,
 	TOGGLE_FRAGMENT_HIGHLIGHTED,
 	UPDATE_FRAGMENTS,
 } from '../actions/types';
+import updateFragments, {FragmentSet} from '../actions/updateFragments';
 import {HIGHLIGHTED_COLLECTION_ID} from '../config/constants/highlightedCollectionId';
 
-const DEFAULT_HIGHLIGHTED_COLLECTION = {
+const DEFAULT_HIGHLIGHTED_COLLECTION: FragmentSet = {
 	fragmentCollectionId: HIGHLIGHTED_COLLECTION_ID,
 	fragmentEntries: [],
 	name: Liferay.Language.get('favorites'),
 };
 
-export default function fragmentsReducer(fragments = [], action) {
+export default function fragmentsReducer(
+	fragments: FragmentSet[] = [],
+	action: ReturnType<
+		| typeof addFragmentComposition
+		| typeof toggleFragmentHighlighted
+		| typeof updateFragments
+	>
+): FragmentSet[] {
 	switch (action.type) {
 		case ADD_FRAGMENT_COMPOSITION: {
 			const composition = action.fragmentComposition;

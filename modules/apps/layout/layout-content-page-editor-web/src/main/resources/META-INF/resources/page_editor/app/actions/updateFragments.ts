@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FragmentComposition} from './addFragmentComposition';
 import {UPDATE_FRAGMENTS} from './types';
 
 import type {FragmentEntryType} from '../config/constants/fragmentEntryTypes';
 
 export interface FragmentEntry {
 	fragmentEntryKey: string;
+	groupId?: string;
 	highlighted: boolean;
 	icon: string;
 	imagePreviewURL: string;
@@ -18,7 +20,7 @@ export interface FragmentEntry {
 
 export interface FragmentSet {
 	fragmentCollectionId: string;
-	fragmentEntries: FragmentEntry[];
+	fragmentEntries: Array<FragmentEntry | FragmentComposition>;
 	name: string;
 }
 

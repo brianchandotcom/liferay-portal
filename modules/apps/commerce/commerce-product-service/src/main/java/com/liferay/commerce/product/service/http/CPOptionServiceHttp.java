@@ -45,7 +45,7 @@ public class CPOptionServiceHttp {
 			HttpPrincipal httpPrincipal,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			String commerceOptionTypeKey, boolean facetable, boolean required,
 			boolean skuContributor, String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -56,7 +56,7 @@ public class CPOptionServiceHttp {
 				_addCPOptionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, nameMap, descriptionMap, ddmFormFieldTypeName,
+				methodKey, nameMap, descriptionMap, commerceOptionTypeKey,
 				facetable, required, skuContributor, key, serviceContext);
 
 			Object returnObj = null;
@@ -92,7 +92,7 @@ public class CPOptionServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String ddmFormFieldTypeName, boolean facetable,
+				String commerceOptionTypeKey, boolean facetable,
 				boolean required, boolean skuContributor, String key,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -104,7 +104,7 @@ public class CPOptionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, nameMap, descriptionMap,
-				ddmFormFieldTypeName, facetable, required, skuContributor, key,
+				commerceOptionTypeKey, facetable, required, skuContributor, key,
 				serviceContext);
 
 			Object returnObj = null;
@@ -425,7 +425,7 @@ public class CPOptionServiceHttp {
 			HttpPrincipal httpPrincipal, long cpOptionId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			String commerceOptionTypeKey, boolean facetable, boolean required,
 			boolean skuContributor, String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -437,7 +437,7 @@ public class CPOptionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpOptionId, nameMap, descriptionMap,
-				ddmFormFieldTypeName, facetable, required, skuContributor, key,
+				commerceOptionTypeKey, facetable, required, skuContributor, key,
 				serviceContext);
 
 			Object returnObj = null;

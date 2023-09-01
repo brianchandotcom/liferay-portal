@@ -465,19 +465,19 @@ public interface CPDefinitionOptionRelModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the ddm form field type name of this cp definition option rel.
+	 * Returns the commerce option type key of this cp definition option rel.
 	 *
-	 * @return the ddm form field type name of this cp definition option rel
+	 * @return the commerce option type key of this cp definition option rel
 	 */
 	@AutoEscape
-	public String getDDMFormFieldTypeName();
+	public String getCommerceOptionTypeKey();
 
 	/**
-	 * Sets the ddm form field type name of this cp definition option rel.
+	 * Sets the commerce option type key of this cp definition option rel.
 	 *
-	 * @param DDMFormFieldTypeName the ddm form field type name of this cp definition option rel
+	 * @param commerceOptionTypeKey the commerce option type key of this cp definition option rel
 	 */
-	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName);
+	public void setCommerceOptionTypeKey(String commerceOptionTypeKey);
 
 	/**
 	 * Returns the info item service key of this cp definition option rel.

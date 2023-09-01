@@ -4304,7 +4304,7 @@ public class CPOptionPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("DDMFormFieldTypeName");
+		ctStrictColumnNames.add("commerceOptionTypeKey");
 		ctStrictColumnNames.add("facetable");
 		ctStrictColumnNames.add("required");
 		ctStrictColumnNames.add("skuContributor");

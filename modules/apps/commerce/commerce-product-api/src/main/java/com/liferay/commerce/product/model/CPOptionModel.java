@@ -434,19 +434,19 @@ public interface CPOptionModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the ddm form field type name of this cp option.
+	 * Returns the commerce option type key of this cp option.
 	 *
-	 * @return the ddm form field type name of this cp option
+	 * @return the commerce option type key of this cp option
 	 */
 	@AutoEscape
-	public String getDDMFormFieldTypeName();
+	public String getCommerceOptionTypeKey();
 
 	/**
-	 * Sets the ddm form field type name of this cp option.
+	 * Sets the commerce option type key of this cp option.
 	 *
-	 * @param DDMFormFieldTypeName the ddm form field type name of this cp option
+	 * @param commerceOptionTypeKey the commerce option type key of this cp option
 	 */
-	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName);
+	public void setCommerceOptionTypeKey(String commerceOptionTypeKey);
 
 	/**
 	 * Returns the facetable of this cp option.

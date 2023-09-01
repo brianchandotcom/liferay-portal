@@ -52,7 +52,7 @@ public class CPDefinitionOptionRelWrapper
 		attributes.put("CPOptionId", getCPOptionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("DDMFormFieldTypeName", getDDMFormFieldTypeName());
+		attributes.put("commerceOptionTypeKey", getCommerceOptionTypeKey());
 		attributes.put("infoItemServiceKey", getInfoItemServiceKey());
 		attributes.put("priority", getPriority());
 		attributes.put("definedExternally", isDefinedExternally());
@@ -153,11 +153,11 @@ public class CPDefinitionOptionRelWrapper
 			setDescription(description);
 		}
 
-		String DDMFormFieldTypeName = (String)attributes.get(
-			"DDMFormFieldTypeName");
+		String commerceOptionTypeKey = (String)attributes.get(
+			"commerceOptionTypeKey");
 
-		if (DDMFormFieldTypeName != null) {
-			setDDMFormFieldTypeName(DDMFormFieldTypeName);
+		if (commerceOptionTypeKey != null) {
+			setCommerceOptionTypeKey(commerceOptionTypeKey);
 		}
 
 		String infoItemServiceKey = (String)attributes.get(
@@ -232,6 +232,16 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the commerce option type key of this cp definition option rel.
+	 *
+	 * @return the commerce option type key of this cp definition option rel
+	 */
+	@Override
+	public String getCommerceOptionTypeKey() {
+		return model.getCommerceOptionTypeKey();
 	}
 
 	/**
@@ -318,16 +328,6 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
-	}
-
-	/**
-	 * Returns the ddm form field type name of this cp definition option rel.
-	 *
-	 * @return the ddm form field type name of this cp definition option rel
-	 */
-	@Override
-	public String getDDMFormFieldTypeName() {
-		return model.getDDMFormFieldTypeName();
 	}
 
 	@Override
@@ -740,6 +740,16 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	/**
+	 * Sets the commerce option type key of this cp definition option rel.
+	 *
+	 * @param commerceOptionTypeKey the commerce option type key of this cp definition option rel
+	 */
+	@Override
+	public void setCommerceOptionTypeKey(String commerceOptionTypeKey) {
+		model.setCommerceOptionTypeKey(commerceOptionTypeKey);
+	}
+
+	/**
 	 * Sets the company ID of this cp definition option rel.
 	 *
 	 * @param companyId the company ID of this cp definition option rel
@@ -797,16 +807,6 @@ public class CPDefinitionOptionRelWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Sets the ddm form field type name of this cp definition option rel.
-	 *
-	 * @param DDMFormFieldTypeName the ddm form field type name of this cp definition option rel
-	 */
-	@Override
-	public void setDDMFormFieldTypeName(String DDMFormFieldTypeName) {
-		model.setDDMFormFieldTypeName(DDMFormFieldTypeName);
 	}
 
 	/**

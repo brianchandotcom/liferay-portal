@@ -52,13 +52,13 @@ public interface CPOptionService extends BaseService {
 	 */
 	public CPOption addCPOption(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			String commerceOptionTypeKey, boolean facetable, boolean required,
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPOption addOrUpdateCPOption(
 			String externalReferenceCode, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			Map<Locale, String> descriptionMap, String commerceOptionTypeKey,
 			boolean facetable, boolean required, boolean skuContributor,
 			String key, ServiceContext serviceContext)
 		throws PortalException;
@@ -99,7 +99,7 @@ public interface CPOptionService extends BaseService {
 
 	public CPOption updateCPOption(
 			long cpOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			Map<Locale, String> descriptionMap, String commerceOptionTypeKey,
 			boolean facetable, boolean required, boolean skuContributor,
 			String key, ServiceContext serviceContext)
 		throws PortalException;

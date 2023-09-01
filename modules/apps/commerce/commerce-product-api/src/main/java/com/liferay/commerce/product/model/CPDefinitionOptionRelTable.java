@@ -66,8 +66,8 @@ public class CPDefinitionOptionRelTable
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, String>
-		DDMFormFieldTypeName = createColumn(
-			"DDMFormFieldTypeName", String.class, Types.VARCHAR,
+		commerceOptionTypeKey = createColumn(
+			"commerceOptionTypeKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, String> infoItemServiceKey =
 		createColumn(

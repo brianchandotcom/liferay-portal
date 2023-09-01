@@ -49,9 +49,9 @@ public class CPOptionTable extends BaseTable<CPOptionTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPOptionTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPOptionTable, String> DDMFormFieldTypeName =
+	public final Column<CPOptionTable, String> commerceOptionTypeKey =
 		createColumn(
-			"DDMFormFieldTypeName", String.class, Types.VARCHAR,
+			"commerceOptionTypeKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<CPOptionTable, Boolean> facetable = createColumn(
 		"facetable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

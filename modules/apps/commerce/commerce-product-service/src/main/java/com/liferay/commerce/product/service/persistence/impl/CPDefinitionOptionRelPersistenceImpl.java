@@ -5592,7 +5592,7 @@ public class CPDefinitionOptionRelPersistenceImpl
 		ctStrictColumnNames.add("CPOptionId");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("DDMFormFieldTypeName");
+		ctStrictColumnNames.add("commerceOptionTypeKey");
 		ctStrictColumnNames.add("infoItemServiceKey");
 		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("definedExternally");

@@ -84,14 +84,14 @@ public interface CPOptionLocalService
 	public CPOption addCPOption(
 			String externalReferenceCode, long userId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			String commerceOptionTypeKey, boolean facetable, boolean required,
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPOption addOrUpdateCPOption(
 			String externalReferenceCode, long userId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			String commerceOptionTypeKey, boolean facetable, boolean required,
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -351,7 +351,7 @@ public interface CPOptionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption updateCPOption(
 			long cpOptionId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			Map<Locale, String> descriptionMap, String commerceOptionTypeKey,
 			boolean facetable, boolean required, boolean skuContributor,
 			String key, ServiceContext serviceContext)
 		throws PortalException;

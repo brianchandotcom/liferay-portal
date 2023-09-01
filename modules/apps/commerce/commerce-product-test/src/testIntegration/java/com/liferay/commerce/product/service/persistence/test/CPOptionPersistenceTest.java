@@ -138,7 +138,7 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setDescription(RandomTestUtil.randomString());
 
-		newCPOption.setDDMFormFieldTypeName(RandomTestUtil.randomString());
+		newCPOption.setCommerceOptionTypeKey(RandomTestUtil.randomString());
 
 		newCPOption.setFacetable(RandomTestUtil.randomBoolean());
 
@@ -182,8 +182,8 @@ public class CPOptionPersistenceTest {
 		Assert.assertEquals(
 			existingCPOption.getDescription(), newCPOption.getDescription());
 		Assert.assertEquals(
-			existingCPOption.getDDMFormFieldTypeName(),
-			newCPOption.getDDMFormFieldTypeName());
+			existingCPOption.getCommerceOptionTypeKey(),
+			newCPOption.getCommerceOptionTypeKey());
 		Assert.assertEquals(
 			existingCPOption.isFacetable(), newCPOption.isFacetable());
 		Assert.assertEquals(
@@ -289,7 +289,7 @@ public class CPOptionPersistenceTest {
 			true, "externalReferenceCode", true, "CPOptionId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
-			"DDMFormFieldTypeName", true, "facetable", true, "required", true,
+			"commerceOptionTypeKey", true, "facetable", true, "required", true,
 			"skuContributor", true, "key", true, "lastPublishDate", true);
 	}
 
@@ -600,7 +600,7 @@ public class CPOptionPersistenceTest {
 
 		cpOption.setDescription(RandomTestUtil.randomString());
 
-		cpOption.setDDMFormFieldTypeName(RandomTestUtil.randomString());
+		cpOption.setCommerceOptionTypeKey(RandomTestUtil.randomString());
 
 		cpOption.setFacetable(RandomTestUtil.randomBoolean());
 

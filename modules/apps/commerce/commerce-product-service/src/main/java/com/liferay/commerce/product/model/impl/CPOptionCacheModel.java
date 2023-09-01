@@ -93,8 +93,8 @@ public class CPOptionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", DDMFormFieldTypeName=");
-		sb.append(DDMFormFieldTypeName);
+		sb.append(", commerceOptionTypeKey=");
+		sb.append(commerceOptionTypeKey);
 		sb.append(", facetable=");
 		sb.append(facetable);
 		sb.append(", required=");
@@ -170,11 +170,11 @@ public class CPOptionCacheModel
 			cpOptionImpl.setDescription(description);
 		}
 
-		if (DDMFormFieldTypeName == null) {
-			cpOptionImpl.setDDMFormFieldTypeName("");
+		if (commerceOptionTypeKey == null) {
+			cpOptionImpl.setCommerceOptionTypeKey("");
 		}
 		else {
-			cpOptionImpl.setDDMFormFieldTypeName(DDMFormFieldTypeName);
+			cpOptionImpl.setCommerceOptionTypeKey(commerceOptionTypeKey);
 		}
 
 		cpOptionImpl.setFacetable(facetable);
@@ -218,7 +218,7 @@ public class CPOptionCacheModel
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		DDMFormFieldTypeName = objectInput.readUTF();
+		commerceOptionTypeKey = objectInput.readUTF();
 
 		facetable = objectInput.readBoolean();
 
@@ -279,11 +279,11 @@ public class CPOptionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
-		if (DDMFormFieldTypeName == null) {
+		if (commerceOptionTypeKey == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(DDMFormFieldTypeName);
+			objectOutput.writeUTF(commerceOptionTypeKey);
 		}
 
 		objectOutput.writeBoolean(facetable);
@@ -314,7 +314,7 @@ public class CPOptionCacheModel
 	public long modifiedDate;
 	public String name;
 	public String description;
-	public String DDMFormFieldTypeName;
+	public String commerceOptionTypeKey;
 	public boolean facetable;
 	public boolean required;
 	public boolean skuContributor;

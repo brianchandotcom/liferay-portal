@@ -47,8 +47,14 @@ public class EndpointMatcher {
 		}
 	}
 
-	public APIApplication.Endpoint getEndpoint(String path) {
+	public APIApplication.Endpoint getEndpoint(
+		String path, APIApplication.Endpoint.Scope scope) {
+
 		for (APIApplication.Endpoint endpoint : _endpoints) {
+			if (scope != endpoint.getScope()) {
+				continue;
+			}
+
 			Predicate<String> predicate = _predicates.get(endpoint);
 
 			if (predicate.test(path)) {

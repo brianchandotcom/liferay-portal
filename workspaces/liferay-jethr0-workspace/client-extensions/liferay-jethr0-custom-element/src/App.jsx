@@ -4,8 +4,8 @@
  */
 
 import HomePage from './pages/HomePage/HomePage';
+import JobPage from './pages/JobPage/JobPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import ProjectPage from './pages/ProjectPage/ProjectPage';
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
@@ -16,8 +16,8 @@ function App() {
 		<HashRouter>
 			<Routes>
 				<Route path="/" element={<HomePage />} />
-				<Route path="/projects">
-					<Route path=":id" element={<ProjectPage />} />
+				<Route path="/jobs">
+					<Route path=":id" element={<JobPage />} />
 				</Route>
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>

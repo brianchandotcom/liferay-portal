@@ -10,7 +10,7 @@ import {Heading} from '@clayui/core';
 import './HomePage.css';
 
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-import ProjectQueue from '../../components/ProjectQueue/ProjectQueue';
+import JobQueue from '../../components/JobQueue/JobQueue';
 
 function Home() {
 	const breadcrumbs = [
@@ -21,8 +21,8 @@ function Home() {
 		<ClayLayout.Container>
 			<ClayCard className="jethr0-card">
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight="lighter">Project Queue</Heading>
-				<ProjectQueue />
+				<Heading level={3} weight='lighter'>Job Queue</Heading>
+				<JobQueue />
 			</ClayCard>
 		</ClayLayout.Container>
 	);

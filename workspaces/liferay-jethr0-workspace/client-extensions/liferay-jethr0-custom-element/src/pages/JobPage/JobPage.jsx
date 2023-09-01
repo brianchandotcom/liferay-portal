@@ -24,61 +24,61 @@ catch (error) {
 	console.error(error);
 }
 
-function ProjectPage() {
-	const [project, setProject] = useState(null);
+function JobPage() {
+	const [job, setJob] = useState(null);
 	const {id} = useParams();
 
 	useEffect(() => {
 		oAuth2Client
-			?.fetch('/projects/' + id)
+			?.fetch('/jobs/' + id)
 			.then((response) => response.text())
-			.then((project) => {
-				setProject(JSON.parse(project));
+			.then((job) => {
+				setJob(JSON.parse(job));
 			})
 			// eslint-disable-next-line no-console
 			.catch((error) => console.log(error));
 	}, []);
 
-	let projectBuilds = [];
-	let projectName = 'Project #' + id;
+	let jobBuilds = [];
+	let jobName = 'Job #' + id;
 
-	if (project) {
-		projectBuilds = project.builds;
-		projectName = project.name;
+	if (job) {
+		jobBuilds = job.builds;
+		jobName = job.name;
 	}
 
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
-		{active: false, link: '/projects', name: 'Projects'},
-		{active: true, link: '/projects/{id}', name: projectName},
+		{active: false, link: '/jobs', name: 'Jobs'},
+		{active: true, link: '/jobs/{id}', name: jobName},
 	];
 
 	return (
 		<ClayLayout.Container>
 			<ClayCard className="jethr0-card">
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight="lighter">{projectName}</Heading>
-				<ProjectInformation project={project} />
-				<BuildTable builds={projectBuilds} />
+				<Heading level={3} weight="lighter">{jobName}</Heading>
+				<JobInformation job={job} />
+				<BuildTable builds={jobBuilds} />
 			</ClayCard>
 		</ClayLayout.Container>
 	);
 }
 
-function ProjectInformation({project}) {
-	let projectInformation = (<div>Loading...</div>);
+function JobInformation({job}) {
+	let jobInformation = (<div>Loading...</div>);
 
-	if (project) {
-		projectInformation = (<ClayPanel.Body>
-			Project ID: {project.id}
+	if (job) {
+		jobInformation = (<ClayPanel.Body>
+			Job ID: {job.id}
 			<br />
-			Create Date: {project.dateCreated}
+			Create Date: {job.dateCreated}
 			<br />
-			Modified Date: {project.dateModified}
+			Modified Date: {job.dateModified}
 			<br />
-			Project State: {project.state.name}
+			Job State: {job.state.name}
 			<br />
-			Project Type: {project.type.name}
+			Job Type: {job.type.name}
 		</ClayPanel.Body>);
 	}
 
@@ -86,12 +86,12 @@ function ProjectInformation({project}) {
 		<ClayPanel
 			collapsable
 			defaultExpanded
-			displayTitle="Project Information"
+			displayTitle="Job Information"
 			displayType="secondary"
 		>
-			{projectInformation}
+			{jobInformation}
 		</ClayPanel>
 	);
 }
 
-export default ProjectPage;
+export default JobPage;

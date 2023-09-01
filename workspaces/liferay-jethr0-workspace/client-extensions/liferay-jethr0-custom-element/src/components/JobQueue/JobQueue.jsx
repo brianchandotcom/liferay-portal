@@ -18,21 +18,21 @@ catch (error) {
 	console.error(error);
 }
 
-function ProjectQueue() {
-	const [projectQueue, setProjectQueue] = useState(null);
+function JobQueue() {
+	const [jobQueue, setJobQueue] = useState(null);
 
 	useEffect(() => {
 		oAuth2Client
-			?.fetch('/projects/queue')
+			?.fetch('/jobs/queue')
 			.then((response) => response.text())
-			.then((projectQueue) => {
-				setProjectQueue(JSON.parse(projectQueue));
+			.then((jobQueue) => {
+				setJobQueue(JSON.parse(jobQueue));
 			})
 			// eslint-disable-next-line no-console
 			.catch((error) => console.log(error));
 	}, []);
 
-	if (!projectQueue) {
+	if (!jobQueue) {
 		return (
 			<div>Loading...</div>
 		);
@@ -59,36 +59,36 @@ function ProjectQueue() {
 			</ClayTable.Row>
 		</ClayTable.Head>
 		<ClayTable.Body>
-			{projectQueue && projectQueue.map((project) => {
+			{jobQueue && jobQueue.map((job) => {
 				return (
-					<ClayTable.Row key={project.id}>
+					<ClayTable.Row key={job.id}>
 						<ClayTable.Cell headingCell>
 							<Link
-								title={project.id}
-								to={'/projects/' + project.id}
+								title={job.id}
+								to={'/jobs/' + job.id}
 							>
-								{project.id}
+								{job.id}
 							</Link>
 						</ClayTable.Cell>
 
-						<ClayTable.Cell>{project.name}</ClayTable.Cell>
+						<ClayTable.Cell>{job.name}</ClayTable.Cell>
 
-						<ClayTable.Cell>{project.priority}</ClayTable.Cell>
+						<ClayTable.Cell>{job.priority}</ClayTable.Cell>
 
 						<ClayTable.Cell>
-							{project.dateCreated}
+							{job.dateCreated}
 						</ClayTable.Cell>
 
-						<ClayTable.Cell>{project.startDate}</ClayTable.Cell>
+						<ClayTable.Cell>{job.startDate}</ClayTable.Cell>
 
 						<ClayTable.Cell>
-							{project.state.name}
+							{job.state.name}
 						</ClayTable.Cell>
 
-						<ClayTable.Cell>{project.type.name}</ClayTable.Cell>
+						<ClayTable.Cell>{job.type.name}</ClayTable.Cell>
 
 						<ClayTable.Cell>
-							{project.totalBuilds}
+							{job.totalBuilds}
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				);
@@ -97,4 +97,4 @@ function ProjectQueue() {
 	</ClayTable>);
 }
 
-export default ProjectQueue;
+export default JobQueue;

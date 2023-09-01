@@ -180,12 +180,24 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 						layoutStructureItemRenderTime.getRenderTime()
 					).put(
 						"warnings",
-						JSONUtil.put(
-							_layoutWarningMessageHelper.
-								getCollectionWarningMessage(
-									(CollectionStyledLayoutStructureItem)
-										layoutStructureItem,
-									httpServletRequest))
+						() -> {
+							JSONArray collectionWarningMessagesJSONArray =
+								_jsonFactory.createJSONArray();
+
+							String collectionWarningMessage =
+								_layoutWarningMessageHelper.
+									getCollectionWarningMessage(
+										(CollectionStyledLayoutStructureItem)
+											layoutStructureItem,
+										httpServletRequest);
+
+							if (Validator.isNotNull(collectionWarningMessage)) {
+								collectionWarningMessagesJSONArray.put(
+									collectionWarningMessage);
+							}
+
+							return collectionWarningMessagesJSONArray;
+						}
 					));
 
 				continue;
@@ -226,11 +238,24 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 					"renderTime", layoutStructureItemRenderTime.getRenderTime()
 				).put(
 					"warnings",
-					JSONUtil.put(
-						_layoutWarningMessageHelper.getFragmentWarningMessage(
-							(FragmentStyledLayoutStructureItem)
-								layoutStructureItem,
-							httpServletRequest, httpServletResponse))
+					() -> {
+						JSONArray fragmentWarningMessagesJSONArray =
+							_jsonFactory.createJSONArray();
+
+						String fragmentWarningMessage =
+							_layoutWarningMessageHelper.
+								getFragmentWarningMessage(
+									(FragmentStyledLayoutStructureItem)
+										layoutStructureItem,
+									httpServletRequest, httpServletResponse);
+
+						if (Validator.isNotNull(fragmentWarningMessage)) {
+							fragmentWarningMessagesJSONArray.put(
+								fragmentWarningMessage);
+						}
+
+						return fragmentWarningMessagesJSONArray;
+					}
 				));
 		}
 

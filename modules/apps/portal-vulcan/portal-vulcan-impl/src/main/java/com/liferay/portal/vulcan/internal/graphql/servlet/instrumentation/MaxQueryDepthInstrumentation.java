@@ -5,7 +5,7 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet.instrumentation;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.vulcan.internal.graphql.exception.MaxQueryDepthExceededException;
 
 import graphql.execution.AbortExecutionException;
 
@@ -29,10 +29,7 @@ public class MaxQueryDepthInstrumentation
 	protected AbortExecutionException mkAbortException(
 		int depth, int maxDepth) {
 
-		throw new AbortExecutionException(
-			StringBundler.concat(
-				"Maximum query depth exceeded ", depth, " > ",
-				_depthQueryLimit));
+		throw new MaxQueryDepthExceededException(depth, _depthQueryLimit);
 	}
 
 	private final int _depthQueryLimit;

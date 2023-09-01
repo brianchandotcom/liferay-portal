@@ -781,13 +781,8 @@ public class ObjectEntryDisplayContextImpl
 				objectEntry.getExternalReferenceCode());
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-			ddmFormField.setReadOnly(
-				_isReadOnly(objectEntry, objectField, readOnly));
-		}
-		else {
-			ddmFormField.setReadOnly(readOnly);
-		}
+		ddmFormField.setReadOnly(
+			_isReadOnly(objectEntry, objectField, readOnly));
 
 		ddmFormField.setRequired(objectField.isRequired());
 
@@ -1150,6 +1145,10 @@ public class ObjectEntryDisplayContextImpl
 	private boolean _isReadOnly(
 			ObjectEntry objectEntry, ObjectField objectField, boolean readOnly)
 		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+			return readOnly;
+		}
 
 		if (readOnly) {
 			return true;

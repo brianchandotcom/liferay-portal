@@ -8,25 +8,42 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.mail.messaging.MailMessageListener;
+import com.liferay.oauth.client.LocalOAuthClient;
+import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,6 +52,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AddUsersByAPIPerformanceTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -114,6 +136,44 @@ public class AddUsersByAPIPerformanceTest {
 				"webUrls", JSONFactoryUtil.createJSONArray()
 			)
 		).toString();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		long companyId = _companyLocalService.getCompanyIdByUserId(0);
+
+		User user = _userLocalService.getUserByEmailAddress(
+			companyId, "test@liferay.com");
+
+		long userId = user.getUserId();
+
+		String userName = user.getFullName();
+
+		List<GrantType> allowedGrantTypesList = new ArrayList<>(5);
+
+		allowedGrantTypesList.add(GrantType.CLIENT_CREDENTIALS);
+		allowedGrantTypesList.add(GrantType.REFRESH_TOKEN);
+		allowedGrantTypesList.add(GrantType.JWT_BEARER);
+		allowedGrantTypesList.add(GrantType.RESOURCE_OWNER_PASSWORD);
+		allowedGrantTypesList.add(GrantType.AUTHORIZATION_CODE);
+
+		List<String> scopeAliasesList = new ArrayList<>(3);
+
+		scopeAliasesList.add("Liferay.Headless.Admin.User.everything");
+		scopeAliasesList.add("Liferay.Headless.Admin.User.everything.read");
+		scopeAliasesList.add("Liferay.Headless.Admin.User.everything.write");
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.addOAuth2Application(
+				companyId, userId, userName, allowedGrantTypesList,
+				_CLIENT_AUTHENTICATION_METHOD, userId, _CLIENT_ID, 0,
+				_CLIENT_SECRET, "", Collections.emptyList(), "", 0, "",
+				_OAUTH1_APPLICATION_NAME, "",
+				Arrays.asList("http://localhost:8080"), false, scopeAliasesList,
+				false, new ServiceContext());
+
+		_jsonObject = JSONFactoryUtil.createJSONObject(
+			_localOAuthClient.requestTokens(oAuth2Application, userId));
 	}
 
 	@Test
@@ -201,7 +261,9 @@ public class AddUsersByAPIPerformanceTest {
 					"http://localhost:8080/o/headless-admin-user/v1.0" +
 						"/user-accounts");
 
-				httpInvoker.userNameAndPassword("test@liferay.com:test");
+				httpInvoker.header(
+					"Authorization",
+					_TOKEN_TYPE + " " + _jsonObject.getString("access_token"));
 
 				httpInvoker.invoke();
 			}
@@ -230,13 +292,40 @@ public class AddUsersByAPIPerformanceTest {
 
 	private static final String _ALTER_NAME_TOKEN = "@alternateName@";
 
+	private static final String _CLIENT_AUTHENTICATION_METHOD =
+		"client_secret_post";
+
+	private static final String _CLIENT_ID =
+		"id-bea359e9-7f19-732a-d423-093137a5515";
+
+	private static final String _CLIENT_SECRET =
+		"secret-1c7a64e0-9de0-22c9-f6ad-17a1dfb6575a";
+
 	private static final String _EMAIL_PREFIX = "@VodafoneIdea.com";
 
 	private static final String _EMAILADDRESS_TOKEN = "@emailAddress@";
+
+	private static final String _OAUTH1_APPLICATION_NAME = "rest_token";
+
+	private static final String _TOKEN_TYPE = "Bearer";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddUsersByAPIPerformanceTest.class);
 
 	private static String _jsonTemplate;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	private JSONObject _jsonObject;
+
+	@Inject
+	private LocalOAuthClient _localOAuthClient;
+
+	@Inject
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

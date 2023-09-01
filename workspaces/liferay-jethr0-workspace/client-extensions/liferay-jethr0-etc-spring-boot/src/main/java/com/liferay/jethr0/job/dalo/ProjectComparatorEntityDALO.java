@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.dalo;
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.job.comparator.JobComparatorEntity;
-import com.liferay.jethr0.job.comparator.ProjectComparatorEntityFactory;
+import com.liferay.jethr0.job.comparator.JobComparatorEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +22,10 @@ public class ProjectComparatorEntityDALO
 
 	@Override
 	public EntityFactory<JobComparatorEntity> getEntityFactory() {
-		return _projectComparatorEntityFactory;
+		return _jobComparatorEntityFactory;
 	}
 
 	@Autowired
-	private ProjectComparatorEntityFactory _projectComparatorEntityFactory;
+	private JobComparatorEntityFactory _jobComparatorEntityFactory;
 
 }

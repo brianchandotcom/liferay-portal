@@ -6,7 +6,6 @@
 package com.liferay.object.exception;
 
 import com.liferay.object.model.ObjectState;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;

@@ -321,8 +321,11 @@ public class UpdatePasswordAction implements Action {
 			login = String.valueOf(userId);
 		}
 
-		boolean mfaEnabled = (boolean)httpSession.getAttribute(
-			WebKeys.MFA_ENABLED);
+		boolean mfaEnabled = false;
+
+		if (httpSession.getAttribute(WebKeys.MFA_ENABLED) != null) {
+			mfaEnabled = (boolean)httpSession.getAttribute(WebKeys.MFA_ENABLED);
+		}
 
 		if (!mfaEnabled) {
 			AuthenticatedSessionManagerUtil.login(

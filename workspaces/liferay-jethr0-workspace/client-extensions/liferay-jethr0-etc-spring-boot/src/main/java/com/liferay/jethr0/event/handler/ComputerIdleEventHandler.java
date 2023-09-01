@@ -10,9 +10,9 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.jms.JMSEventHandler;
 
 import org.json.JSONObject;
 
@@ -59,9 +59,9 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		BuildRunEntity buildRunEntity = buildRunEntityRepository.add(
 			buildEntity, BuildRunEntity.State.QUEUED);
 
-		JMSEventHandler jmsEventHandler = getJMSEventHandler();
+		EventJmsController eventJmsController = getEventJmsController();
 
-		jmsEventHandler.send(
+		eventJmsController.send(
 			jenkinsNodeEntity.getJenkinsServerEntity(),
 			String.valueOf(
 				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));

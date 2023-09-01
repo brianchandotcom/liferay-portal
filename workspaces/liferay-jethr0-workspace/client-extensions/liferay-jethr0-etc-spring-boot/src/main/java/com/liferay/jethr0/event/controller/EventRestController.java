@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0;
+package com.liferay.jethr0.event.controller;
 
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
@@ -18,13 +18,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Michael Hashimoto
  */
+@RequestMapping("/events")
 @RestController
-public class Jethr0RestController {
+public class EventRestController {
 
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public ResponseEntity<String> process(@RequestBody String body) {
@@ -76,7 +78,7 @@ public class Jethr0RestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		Jethr0RestController.class);
+		EventRestController.class);
 
 	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;
